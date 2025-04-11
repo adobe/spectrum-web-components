@@ -28,19 +28,19 @@
     --system-action-button-border-color-focus: transparent;
     --system-action-button-border-color-disabled: transparent;
     --system-action-button-content-color-selected: var(--spectrum-gray-75);
-    --system-action-button-size-m-border-radius: var(
+    --system-action-button-size-m-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-xs-border-radius: var(
+    --system-action-button-size-xs-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-s-border-radius: var(
+    --system-action-button-size-s-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-l-border-radius: var(
+    --system-action-button-size-l-border-radius-default: var(
         --spectrum-corner-radius-100
     );
-    --system-action-button-size-xl-border-radius: var(
+    --system-action-button-size-xl-border-radius-default: var(
         --spectrum-corner-radius-100
     );
     --system-action-button-quiet-background-color-default: transparent;
@@ -185,15 +185,9 @@
     --system-button-secondary-background-color-default: var(
         --spectrum-gray-200
     );
-    --system-button-secondary-not-outline-background-color-hover: var(
-        --spectrum-gray-300
-    );
-    --system-button-secondary-not-outline-background-color-down: var(
-        --spectrum-gray-400
-    );
-    --system-button-secondary-not-outline-background-color-focus: var(
-        --spectrum-gray-300
-    );
+    --system-button-secondary-background-color-hover: var(--spectrum-gray-300);
+    --system-button-secondary-background-color-down: var(--spectrum-gray-400);
+    --system-button-secondary-background-color-focus: var(--spectrum-gray-300);
     --system-button-secondary-outline-background-color-hover: var(
         --spectrum-gray-300
     );
@@ -205,6 +199,9 @@
     );
     --system-button-secondary-outline-border-color-default: var(
         --spectrum-gray-300
+    );
+    --system-button-secondary-outline-border-color-down: var(
+        --spectrum-gray-500
     );
     --system-button-static-white-background-color-default: var(
         --spectrum-transparent-white-800
@@ -222,6 +219,42 @@
     --system-button-static-white-content-color-hover: var(--spectrum-black);
     --system-button-static-white-content-color-down: var(--spectrum-black);
     --system-button-static-white-content-color-focus: var(--spectrum-black);
+    --system-button-static-white-outline-background-color-default: var(
+        --spectrum-transparent-white-25
+    );
+    --system-button-static-white-outline-background-color-hover: var(
+        --spectrum-transparent-white-300
+    );
+    --system-button-static-white-outline-background-color-down: var(
+        --spectrum-transparent-white-400
+    );
+    --system-button-static-white-outline-background-color-focus: var(
+        --spectrum-transparent-white-300
+    );
+    --system-button-static-white-outline-content-color-default: var(
+        --spectrum-white
+    );
+    --system-button-static-white-outline-content-color-hover: var(
+        --spectrum-white
+    );
+    --system-button-static-white-outline-content-color-down: var(
+        --spectrum-white
+    );
+    --system-button-static-white-outline-content-color-focus: var(
+        --spectrum-white
+    );
+    --system-button-static-white-outline-border-color-default: var(
+        --spectrum-transparent-white-800
+    );
+    --system-button-static-white-outline-border-color-hover: var(
+        --spectrum-transparent-white-900
+    );
+    --system-button-static-white-outline-border-color-down: var(
+        --spectrum-transparent-white-900
+    );
+    --system-button-static-white-outline-border-color-focus: var(
+        --spectrum-transparent-white-900
+    );
     --system-button-static-white-secondary-background-color-default: var(
         --spectrum-transparent-white-200
     );
@@ -258,46 +291,16 @@
     --system-button-static-white-secondary-outline-border-color-focus: var(
         --spectrum-transparent-white-400
     );
-    --system-button-static-white-outline-not-secondary-background-color-hover: var(
-        --spectrum-transparent-white-300
-    );
-    --system-button-static-white-outline-not-secondary-background-color-down: var(
-        --spectrum-transparent-white-400
-    );
-    --system-button-static-white-outline-not-secondary-background-color-focus: var(
-        --spectrum-transparent-white-300
-    );
-    --system-button-static-white-outline-not-secondary-content-color-default: var(
-        --spectrum-white
-    );
-    --system-button-static-white-outline-not-secondary-content-color-hover: var(
-        --spectrum-white
-    );
-    --system-button-static-white-outline-not-secondary-content-color-down: var(
-        --spectrum-white
-    );
-    --system-button-static-white-outline-not-secondary-content-color-focus: var(
-        --spectrum-white
-    );
-    --system-button-static-white-outline-not-secondary-border-color-default: var(
+    --system-button-static-white-secondary-outline-background-color-default: var(
         --spectrum-transparent-white-800
     );
-    --system-button-static-white-outline-not-secondary-border-color-hover: var(
-        --spectrum-transparent-white-900
-    );
-    --system-button-static-white-outline-not-secondary-border-color-down: var(
-        --spectrum-transparent-white-900
-    );
-    --system-button-static-white-outline-not-secondary-border-color-focus: var(
-        --spectrum-transparent-white-900
-    );
-    --system-button-static-white-outline-secondary-background-color-hover: var(
+    --system-button-static-white-secondary-outline-background-color-hover: var(
         --spectrum-transparent-white-300
     );
-    --system-button-static-white-outline-secondary-background-color-down: var(
+    --system-button-static-white-secondary-outline-background-color-down: var(
         --spectrum-transparent-white-400
     );
-    --system-button-static-white-outline-secondary-background-color-focus: var(
+    --system-button-static-white-secondary-outline-background-color-focus: var(
         --spectrum-transparent-white-300
     );
     --system-button-static-black-background-color-default: var(
@@ -316,6 +319,42 @@
     --system-button-static-black-content-color-hover: var(--spectrum-white);
     --system-button-static-black-content-color-down: var(--spectrum-white);
     --system-button-static-black-content-color-focus: var(--spectrum-white);
+    --system-button-static-black-outline-background-color-default: var(
+        --spectrum-transparent-black-25
+    );
+    --system-button-static-black-outline-background-color-hover: var(
+        --spectrum-transparent-black-300
+    );
+    --system-button-static-black-outline-background-color-down: var(
+        --spectrum-transparent-black-400
+    );
+    --system-button-static-black-outline-background-color-focus: var(
+        --spectrum-transparent-black-300
+    );
+    --system-button-static-black-outline-content-color-default: var(
+        --spectrum-black
+    );
+    --system-button-static-black-outline-content-color-hover: var(
+        --spectrum-black
+    );
+    --system-button-static-black-outline-content-color-down: var(
+        --spectrum-black
+    );
+    --system-button-static-black-outline-content-color-focus: var(
+        --spectrum-black
+    );
+    --system-button-static-black-outline-border-color-default: var(
+        --spectrum-transparent-black-400
+    );
+    --system-button-static-black-outline-border-color-hover: var(
+        --spectrum-transparent-black-500
+    );
+    --system-button-static-black-outline-border-color-down: var(
+        --spectrum-transparent-black-600
+    );
+    --system-button-static-black-outline-border-color-focus: var(
+        --spectrum-transparent-black-500
+    );
     --system-button-static-black-secondary-background-color-default: var(
         --spectrum-transparent-black-200
     );
@@ -340,15 +379,6 @@
     --system-button-static-black-secondary-content-color-focus: var(
         --spectrum-black
     );
-    --system-button-static-black-secondary-outline-background-color-hover: var(
-        --spectrum-transparent-black-400
-    );
-    --system-button-static-black-secondary-outline-background-color-down: var(
-        --spectrum-transparent-black-500
-    );
-    --system-button-static-black-secondary-outline-background-color-focus: var(
-        --spectrum-transparent-black-400
-    );
     --system-button-static-black-secondary-outline-border-color-default: var(
         --spectrum-transparent-black-300
     );
@@ -361,46 +391,16 @@
     --system-button-static-black-secondary-outline-border-color-focus: var(
         --spectrum-transparent-black-400
     );
-    --system-button-static-black-outline-not-secondary-background-color-hover: var(
+    --system-button-static-black-secondary-outline-background-color-default: var(
+        --spectrum-transparent-black-800
+    );
+    --system-button-static-black-secondary-outline-background-color-hover: var(
         --spectrum-transparent-black-300
     );
-    --system-button-static-black-outline-not-secondary-background-color-down: var(
+    --system-button-static-black-secondary-outline-background-color-down: var(
         --spectrum-transparent-black-400
     );
-    --system-button-static-black-outline-not-secondary-background-color-focus: var(
-        --spectrum-transparent-black-300
-    );
-    --system-button-static-black-outline-not-secondary-content-color-default: var(
-        --spectrum-black
-    );
-    --system-button-static-black-outline-not-secondary-content-color-hover: var(
-        --spectrum-black
-    );
-    --system-button-static-black-outline-not-secondary-content-color-down: var(
-        --spectrum-black
-    );
-    --system-button-static-black-outline-not-secondary-content-color-focus: var(
-        --spectrum-black
-    );
-    --system-button-static-black-outline-not-secondary-border-color-default: var(
-        --spectrum-transparent-black-400
-    );
-    --system-button-static-black-outline-not-secondary-border-color-hover: var(
-        --spectrum-transparent-black-500
-    );
-    --system-button-static-black-outline-not-secondary-border-color-down: var(
-        --spectrum-transparent-black-600
-    );
-    --system-button-static-black-outline-not-secondary-border-color-focus: var(
-        --spectrum-transparent-black-500
-    );
-    --system-button-static-black-outline-secondary-background-color-hover: var(
-        --spectrum-transparent-black-300
-    );
-    --system-button-static-black-outline-secondary-background-color-down: var(
-        --spectrum-transparent-black-400
-    );
-    --system-button-static-black-outline-secondary-background-color-focus: var(
+    --system-button-static-black-secondary-outline-background-color-focus: var(
         --spectrum-transparent-black-300
     );
     --system-checkbox-control-color-default: var(--spectrum-gray-800);
