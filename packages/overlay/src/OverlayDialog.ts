@@ -31,6 +31,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
 ): T & Constructor<SpectrumElement> {
     class OverlayWithDialog extends constructor {
         private _focusTrap: FocusTrap | null = null;
+        private _escListener: ((event: KeyboardEvent) => void) | null = null;
 
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
@@ -66,6 +67,9 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
             }
             if (this.open && targetOpenState) {
                 this._focusTrap.activate();
+                if (this.type === 'modal') {
+                    this.setupEscapeListener();
+                }
             }
         }
 
@@ -79,6 +83,7 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     el.open = targetOpenState;
                     if (!targetOpenState) {
                         this.cleanupFocusTrap();
+                        this.removeEscapeListener();
                         const close = (): void => {
                             el.removeEventListener('close', close);
                             finish(el, index);
@@ -227,7 +232,36 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
 
         override disconnectedCallback(): void {
             this.cleanupFocusTrap();
+            this.removeEscapeListener();
             super.disconnectedCallback();
+        }
+
+        private setupEscapeListener(): void {
+            if (this._escListener) {
+                return;
+            }
+
+            this._escListener = (event: KeyboardEvent): void => {
+                if (
+                    event.key === 'Escape' &&
+                    this.open &&
+                    this.type === 'modal'
+                ) {
+                    event.preventDefault();
+                    this.open = false;
+                }
+            };
+
+            document.addEventListener('keydown', this._escListener, {
+                capture: true,
+            });
+        }
+
+        private removeEscapeListener(): void {
+            if (this._escListener) {
+                document.removeEventListener('keydown', this._escListener);
+                this._escListener = null;
+            }
         }
     }
     return OverlayWithDialog;
