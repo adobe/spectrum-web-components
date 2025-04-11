@@ -12,5 +12,9 @@
     "access": "public",
     "baseBranch": "main",
     "updateInternalDependencies": "patch",
-    "ignore": []
+    "ignore": [],
+    "snapshot": {
+        "useCalculatedVersion": true,
+        "prereleaseTemplate": "{tag}.{datetime}"
+    }
 }
