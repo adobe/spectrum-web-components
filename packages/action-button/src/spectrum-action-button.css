@@ -95,7 +95,7 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-background-color: var(--highcontrast-actionbutton-background-color, var(--mod-actionbutton-background-color-default, var(--spectrum-actionbutton-background-color-default)));
     --spectrum-actionbutton-border-color: var(--highcontrast-actionbutton-border-color, var(--mod-actionbutton-border-color-default, var(--spectrum-actionbutton-border-color-default)));
     --spectrum-actionbutton-content-color: var(--highcontrast-actionbutton-content-color, var(--mod-actionbutton-content-color-default, var(--spectrum-neutral-content-color-default)));
-    --spectrum-actionbutton-border-radius: var(--mod-actionbutton-border-radius, var(--spectrum-actionbutton-border-radius));
+    --spectrum-actionbutton-border-radius: var(--mod-actionbutton-border-radius, var(--spectrum-actionbutton-border-radius-default));
     --spectrum-actionbutton-border-width: var(--mod-actionbutton-border-width, var(--spectrum-border-width-100));
     --spectrum-actionbutton-focus-indicator-gap: var(--mod-actionbutton-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
     --spectrum-actionbutton-focus-indicator-thickness: var(--mod-actionbutton-focus-indicator-thickness, var(--spectrum-focus-indicator-thickness));
@@ -315,7 +315,6 @@ governing permissions and limitations under the License.
     line-height: var(--spectrum-actionbutton-height);
     font-size: var(--spectrum-actionbutton-font-size);
     white-space: nowrap;
-    color: inherit;
     color: var(--mod-actionbutton-label-color, inherit);
     text-overflow: ellipsis;
     overflow: hidden;
