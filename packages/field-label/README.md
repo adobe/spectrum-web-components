@@ -1,11 +1,12 @@
 ## Overview
 
-An `<sp-field-label>` provides context to information that a user needs to input. Field labels are commonly used in forms to give users clear guidance about what information is required.
+An `<sp-field-label>` provides accessible labelling for form elements. Use the `for` attribute to outline the `id` of an element in the same DOM tree to which it should associate itself. Field labels give context to information that a user needs to input and are commonly used in forms to provide users with clear guidance about what information is required.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/field-label?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/field-label)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/field-label?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/field-label)
+[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/fDq5bpzNQJzUUyEq6ENR/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/field-label
@@ -122,7 +123,7 @@ Using the `side-aligned` attribute will display the `<sp-field-label>` element i
 <sp-tab value="side-start">Side (Start Aligned)</sp-tab>
 <sp-tab-panel value="side-start">
 
-Using `side-aligned="start"` displays the `<sp-field-label>` inline and aligns the label text to the "start" of the flow of text:
+Use `side-aligned="start"` to display the `<sp-field-label>` inline and to align the label text to the "start" of the flow of text:
 
 ```html demo
 <sp-field-label for="lifestory-1" side-aligned="start" style="width: 120px">
@@ -159,7 +160,7 @@ Using `side-aligned="start"` displays the `<sp-field-label>` inline and aligns t
 <sp-tab value="side-end">Side (End Aligned)</sp-tab>
 <sp-tab-panel value="side-end">
 
-Using `side-aligned="end"` displays the `<sp-field-label>` inline and aligns the label text to the "end" of the flow of text:
+Use `side-aligned="end"` to display the `<sp-field-label>` inline and to align the label text to the "end" of the flow of text:
 
 ```html demo
 <sp-field-label
