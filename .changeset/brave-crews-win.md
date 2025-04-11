@@ -18,7 +18,9 @@
 '@spectrum-web-components/help-text': patch
 '@spectrum-web-components/illustrated-message': patch
 '@spectrum-web-components/link': patch
+'@spectrum-web-components/meter': patch
 '@spectrum-web-components/modal': patch
+'@spectrum-web-components/progressbar': patch
 '@spectrum-web-components/sidenav': patch
 '@spectrum-web-components/split-view': patch
 '@spectrum-web-components/styles': patch
