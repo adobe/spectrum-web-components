@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import { argTypes, StoryArgs, Template } from './index.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
@@ -28,12 +28,7 @@ active.args = { active: true };
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    icon: html`
-        <sp-icon-add
-            slot="icon"
-            class="spectrum-PickerButton-icon spectrum-Icon"
-        ></sp-icon-add>
-    `,
+    icon: `<sp-icon-add slot="icon" class="spectrum-PickerButton-icon spectrum-Icon"></sp-icon-add>`,
 };
 
 export const invalid = (args: StoryArgs): TemplateResult => Template(args);
