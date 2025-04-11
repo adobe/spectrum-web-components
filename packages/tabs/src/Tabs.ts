@@ -15,7 +15,6 @@ import {
     CSSResult,
     CSSResultArray,
     html,
-    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     TemplateResult,
@@ -161,7 +160,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     private slotEl!: HTMLSlotElement;
 
     @query('#list')
-    private tabList!: HTMLDivElement;
+    protected tabList!: HTMLDivElement;
 
     @property({ reflect: true })
     selected = '';
@@ -178,7 +177,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         this.rovingTabindexController.clearElementCache();
     }
 
-    private get tabs(): Tab[] {
+    protected get tabs(): Tab[] {
         return this._tabs;
     }
 
@@ -300,7 +299,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         return complete;
     }
 
-    private getNecessaryAutoScroll(index: number): number {
+    protected getNecessaryAutoScroll(index: number): number {
         const selectedTab = this.tabs[index];
         const selectionEnd = selectedTab.offsetLeft + selectedTab.offsetWidth;
         const viewportEnd = this.tabList.scrollLeft + this.tabList.offsetWidth;
@@ -350,9 +349,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
         }
     }
 
-    protected override updated(
-        changedProperties: PropertyValueMap<this>
-    ): void {
+    protected override updated(changedProperties: PropertyValues<this>): void {
         super.updated(changedProperties);
 
         if (changedProperties.has('selected')) {
