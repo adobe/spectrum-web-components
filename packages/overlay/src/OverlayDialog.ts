@@ -25,6 +25,7 @@ import {
 import type { AbstractOverlay } from './AbstractOverlay.js';
 import { userFocusableSelector } from '@spectrum-web-components/shared';
 import { FocusTrap } from 'focus-trap';
+import { overlayStack } from './OverlayStack.js';
 
 /**
  * A mixin that adds dialog behavior to an overlay element.
@@ -306,8 +307,12 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     this.open &&
                     this.type === 'modal'
                 ) {
-                    event.preventDefault();
-                    this.open = false;
+                    // Only close if this overlay is the topmost in the stack
+                    if (overlayStack.isTopmostOverlay(this)) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        this.open = false;
+                    }
                 }
             };
 

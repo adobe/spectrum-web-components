@@ -988,3 +988,62 @@ lazyElements.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export const nestedModalOverlays = (): TemplateResult => html`
+    <div style="padding: 20px;">
+        <sp-button id="outerTrigger" variant="primary">
+            Open Outer Modal
+        </sp-button>
+
+        <sp-overlay
+            id="outerOverlay"
+            type="modal"
+            .triggerInteraction=${'click'}
+        >
+            <sp-dialog-wrapper
+                headline="Outer Modal Dialog"
+                dismissable
+                underlay
+            >
+                <p>This is the outer modal content. Press ESC to close it.</p>
+                <sp-button id="innerTrigger" variant="primary">
+                    Open Inner Modal
+                </sp-button>
+            </sp-dialog-wrapper>
+        </sp-overlay>
+
+        <sp-overlay id="innerOverlay" type="modal" triggerInteraction="click">
+            <sp-dialog-wrapper
+                headline="Inner Modal Dialog"
+                dismissable
+                underlay
+            >
+                <p>
+                    This is the inner modal content. Press ESC to close this
+                    first, then the outer modal.
+                </p>
+            </sp-dialog-wrapper>
+        </sp-overlay>
+    </div>
+
+    <script>
+        (() => {
+            const outerTrigger = document.getElementById('outerTrigger');
+            const outerOverlay = document.getElementById('outerOverlay');
+            const innerTrigger = document.getElementById('innerTrigger');
+            const innerOverlay = document.getElementById('innerOverlay');
+
+            if (outerTrigger && outerOverlay) {
+                outerOverlay.triggerElement = outerTrigger;
+            }
+
+            if (innerTrigger && innerOverlay) {
+                innerOverlay.triggerElement = innerTrigger;
+                // Listen for when the inner trigger is clicked
+                innerTrigger.addEventListener('click', () => {
+                    innerOverlay.open = true;
+                });
+            }
+        })();
+    </script>
+`;

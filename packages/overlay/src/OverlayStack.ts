@@ -170,6 +170,20 @@ class OverlayStack {
     }
 
     /**
+     * Check if the given overlay is the topmost in the stack.
+     * This is useful for determining if an overlay should handle escape key presses.
+     *
+     * @param overlay {EventTarget} The overlay to check
+     * @returns {boolean} Whether the overlay is the topmost in the stack
+     */
+    isTopmostOverlay(overlay: EventTarget): boolean {
+        if (!this.stack.length) {
+            return false;
+        }
+        return this.stack[this.stack.length - 1] === overlay;
+    }
+
+    /**
      * When overlays are added manage the open state of exisiting overlays appropriately:
      * - 'modal': should close other non-'modal' and non-'manual' overlays
      * - 'page': should close other non-'modal' and non-'manual' overlays
