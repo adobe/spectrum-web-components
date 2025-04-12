@@ -36,6 +36,10 @@ import { FocusTrap } from 'focus-trap';
 export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
     constructor: T
 ): T & Constructor<SpectrumElement> {
+    /**
+     * @TODO Block body scroll
+     * When a "modal" or "page" type dialog is open, we should prevent the page from scrolling in the background.
+     */
     class OverlayWithDialog extends constructor {
         /**
          * Focus trap to keep focus within the dialog
@@ -167,13 +171,17 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                         this.dialogWrapper.showPopover();
 
                         /**
-                         *
-                         * TODO: focus-trap + block body scroll
-                         *
                          * Using show() instead of showModal() for performance reasons.
                          * showModal() is a slow operation because it makes all other elements
                          * on the page inert, which can be very expensive for complex DOMs.
+                         * For more information, see: PR-5307
                          *
+                         * If we ever go back to showModal(), please note that focus should be
+                         * handled natively in `<dialog>` elements when leveraging `.showModal()`,
+                         * but it's NOT working consistently across browsers:
+                         * - Webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
+                         * - Firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
+                         * - Recent discussion: https://github.com/whatwg/html/issues/9245
                          */
                         this.dialogEl.show();
                     }
