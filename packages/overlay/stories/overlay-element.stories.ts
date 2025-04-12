@@ -299,7 +299,7 @@ export const complexSlowPage = (): TemplateResult => html`
         </span>
 
         <div
-            style="margin: auto; width: 100px; height: 100px; background-color: red; z-index:2; position: relative;"
+            style="margin: auto; width: 100px; height: 100px; background-color: red; z-index:9999999; position: relative;"
         >
             element with large z-index
         </div>

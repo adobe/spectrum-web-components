@@ -72,6 +72,8 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                     getShadowRoot: true,
                 },
                 returnFocusOnDeactivate: true,
+                fallbackFocus: () => this.dialogEl,
+                escapeDeactivates: false,
             });
 
             // If the open state has changed during the delay, do not proceed.
@@ -87,7 +89,16 @@ export function OverlayDialog<T extends Constructor<AbstractOverlay>>(
                 return;
             }
             if (this.open && targetOpenState) {
-                this._focusTrap.activate();
+                try {
+                    this._focusTrap.activate();
+                } catch (error) {
+                    if (window.__swc.DEBUG) {
+                        console.error(
+                            'Error activating focus trap in dialog:',
+                            error
+                        );
+                    }
+                }
                 if (this.type === 'modal') {
                     this.setupEscapeListener();
                 }
