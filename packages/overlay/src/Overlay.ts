@@ -1061,6 +1061,7 @@ export class Overlay extends ComputedOverlayBase {
                 <dialog
                     class="dialog"
                     part="dialog"
+                    aria-modal=${this.type === 'modal' ? 'true' : 'false'}
                     placement=${ifDefined(
                         this.requiresPositioning
                             ? this.placement || 'right'
