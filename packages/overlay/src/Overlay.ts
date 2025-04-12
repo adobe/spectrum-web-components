@@ -690,7 +690,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
         // Prevent entering the manage workflow if the overlay is not connected to the DOM.
-        // The `.showPopover()` and `.showModal()` events will error on content that is not connected to the DOM.
+        // The `.showPopover()` and `.show()` events will error on content that is not connected to the DOM.
         if (!this.isConnected && this.open) return;
 
         // Wait for the component to finish updating if it has not already done so.
