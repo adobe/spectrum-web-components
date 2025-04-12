@@ -196,8 +196,11 @@ slot[name='longpress-describedby-descriptor'] {
     }
 
     .dialog:popover-open,
-    .dialog:modal,
-    .dialog:open {
+    .dialog:modal {
+        display: flex;
+    }
+
+    .dialog-wrapper .dialog:open {
         display: flex;
     }
 }
@@ -205,12 +208,6 @@ slot[name='longpress-describedby-descriptor'] {
 .dialog-wrapper[popover]:popover-open {
     background: none;
     border: none;
-}
-
-.dialog:open:not(:modal):not(:popover-open) {
-    z-index: calc(
-        var(--swc-overlay-z-index-base, 1000) + var(--swc-overlay-open-count)
-    );
 }
 
 @supports (not selector(:open)) and (not selector(:popover-open)) {
