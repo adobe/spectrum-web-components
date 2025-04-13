@@ -201,7 +201,7 @@ slot[name='longpress-describedby-descriptor'] {
     }
 
     .dialog-wrapper .dialog:open {
-        display: flex;
+        display: block;
     }
 }
 
