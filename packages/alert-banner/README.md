@@ -103,7 +103,7 @@ The component dispatches a `close` event to announce that the alert banner has b
 
 The `<sp-alert-banner>` is rendered with a `role` of `alert` to notify screen readers.
 
-Ensure the alert is placed in a container with a `role` of `region` for better accessibility.
+When rendering an alert that is dismissable or has actions on a page, ensure the alert is placed in a container with a `role` of `region` that includes a unique `aria-label` or `aria-labelledby` for better accessibility.
 
 It supports keyboard interactions, including:
 
