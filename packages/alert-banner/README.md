@@ -59,7 +59,7 @@ Use the `dismissible` attribute to include an icon-only close button used to dis
 
 #### Variants
 
-The `<sp-alert-banner>` supports different variants to convey the nature of the message:
+The `<sp-alert-banner>` supports two variants, `info` and `nagative`, to convey the nature of the message:
 
 <sp-tabs selected="info" auto label="Variants">
 <sp-tab value="info">Info</sp-tab>
