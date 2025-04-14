@@ -59,10 +59,8 @@ import { FocusTrap } from 'focus-trap';
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
 // Start the base class and add the popover or no-popover functionality
-let ComputedOverlayBase;
-if (browserSupportsPopover) {
-    ComputedOverlayBase = OverlayPopover(AbstractOverlay);
-} else {
+let ComputedOverlayBase = OverlayPopover(AbstractOverlay);
+if (!browserSupportsPopover) {
     ComputedOverlayBase = OverlayNoPopover(AbstractOverlay);
 }
 
