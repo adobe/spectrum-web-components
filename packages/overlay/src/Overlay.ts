@@ -532,6 +532,7 @@ export class Overlay extends ComputedOverlayBase {
                     getShadowRoot: true,
                 },
                 fallbackFocus: () => {
+                    // set tabIndex to -1 allow the focus-trap to still be applied
                     this.dialogEl.setAttribute('tabIndex', '-1');
                     return this.dialogEl;
                 },
@@ -685,6 +686,10 @@ export class Overlay extends ComputedOverlayBase {
         event.relatedTarget.dispatchEvent(relationEvent);
     };
 
+    private closeOnCancelEvent = (): void => {
+        this.open = false;
+    };
+
     /**
      * Manages the process of opening or closing the overlay.
      *
@@ -696,8 +701,6 @@ export class Overlay extends ComputedOverlayBase {
      * @returns {Promise<void>} A promise that resolves when the overlay has been fully managed.
      */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
-        console.log('manageopen', oldOpen);
-
         // Prevent entering the manage workflow if the overlay is not connected to the DOM.
         // The `.showPopover()` and `.show()` events will error on content that is not connected to the DOM.
         if (!this.isConnected && this.open) return;
@@ -750,9 +753,9 @@ export class Overlay extends ComputedOverlayBase {
 
         this.managePopoverOpen();
 
+        const listenerRoot = this.getRootNode() as Document;
         // Handle focus events for auto type overlays.
         if (this.type === 'auto') {
-            const listenerRoot = this.getRootNode() as Document;
             if (this.open) {
                 listenerRoot.addEventListener(
                     'focusout',
@@ -764,6 +767,27 @@ export class Overlay extends ComputedOverlayBase {
                     'focusout',
                     this.closeOnFocusOut,
                     { capture: true }
+                );
+            }
+        }
+
+        // Handle cancel events for modal and page type overlays.
+        if (this.type === 'modal' || this.type === 'page') {
+            if (this.open) {
+                listenerRoot.addEventListener(
+                    'cancel',
+                    this.closeOnCancelEvent,
+                    {
+                        capture: true,
+                    }
+                );
+            } else {
+                listenerRoot.removeEventListener(
+                    'cancel',
+                    this.closeOnCancelEvent,
+                    {
+                        capture: true,
+                    }
                 );
             }
         }

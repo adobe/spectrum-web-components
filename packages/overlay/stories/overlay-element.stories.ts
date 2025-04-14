@@ -181,7 +181,7 @@ export const complexFastPage = (): TemplateResult => html`
         <span>
             <sp-button style="margin: 20px;" id="trigger">open modal</sp-button>
             <sp-overlay trigger="trigger@click" type="modal">
-                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                <!-- <sp-dialog-wrapper headline="Signin form" dismissable underlay>
                     <p>I am a modal type overlay.</p>
                     Enter your email
                     <sp-action-button
@@ -196,11 +196,12 @@ export const complexFastPage = (): TemplateResult => html`
                     >
                         Sign in
                     </sp-action-button>
-                </sp-dialog-wrapper>
+                </sp-dialog-wrapper> -->
+                hello
             </sp-overlay>
 
             <sp-button id="pageTrigger">open page</sp-button>
-            <sp-overlay trigger="pageTrigger@click" type="auto">
+            <sp-overlay trigger="pageTrigger@click" type="page">
                 <sp-dialog-wrapper headline="Signin form" dismissable underlay>
                     <p>I am a modal type overlay.</p>
                     Enter your email
@@ -248,7 +249,7 @@ export const complexSlowPage = (): TemplateResult => html`
                     open modal
                 </sp-button>
                 <sp-overlay trigger="trigger@click" type="modal">
-                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                <!-- <sp-dialog-wrapper headline="Signin form" dismissable underlay>
         <p>I am a modal type overlay.</p>
         <sp-field-label>Enter your email</sp-field-label>
         <sp-textfield placeholder="test@gmail.com"></sp-textfield>
@@ -264,8 +265,11 @@ export const complexSlowPage = (): TemplateResult => html`
         >
             Sign in
         </sp-action-button>
-    </sp-dialog-wrapper>
-                </sp-overlay>        </div>
+            </sp-dialog-wrapper> -->
+            
+        hello</sp-overlay>
+
+            </div>
                 <sp-button id="pageTrigger">open page</sp-button>
             <sp-overlay trigger="pageTrigger@click" type="page">
                 <sp-dialog-wrapper
@@ -303,7 +307,7 @@ export const complexSlowPage = (): TemplateResult => html`
         >
             element with large z-index
         </div>
-        ${Array(50)
+        ${Array(1)
             .fill(0)
             .map(
                 () => html`
