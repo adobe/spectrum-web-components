@@ -107,7 +107,7 @@ Ensure the alert is placed in a container with a `role` of `region` for better a
 
 It supports keyboard interactions, including:
 
--   <kbd>>Tab</kbd>: Navigate to the next interactive element. Navigate to the next interactive element.
+-   <kbd>Tab</kbd>: Navigate to the next interactive element. Navigate to the next interactive element.
 -   <kbd>Shift + Tab</kbd>: Navigate to the previous interactive element.
 -   <kbd>Space</kbd>/<kbd>Enter</kbd>: Trigger the focused button.
 -   <kbd>Esc</kbd>: Dismiss a dismissible alert.
