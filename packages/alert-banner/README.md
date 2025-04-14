@@ -31,7 +31,7 @@ The message in its default slot.
 </sp-alert-banner>
 ```
 
-#### Buttons
+#### Action Buttons
 
 An optional action using `slot="action"`:
 
