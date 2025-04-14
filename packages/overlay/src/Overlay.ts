@@ -38,7 +38,6 @@ import type {
     TriggerInteraction,
 } from './overlay-types.js';
 import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
-import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
 import { overlayStack } from './OverlayStack.js';
@@ -55,16 +54,16 @@ import {
 } from './slottable-request-event.js';
 
 import styles from './overlay.css.js';
+import { FocusTrap } from 'focus-trap';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
 // Start the base class and add the popover or no-popover functionality
-let ComputedOverlayBase = OverlayDialog(AbstractOverlay);
-
+let ComputedOverlayBase;
 if (browserSupportsPopover) {
-    ComputedOverlayBase = OverlayPopover(ComputedOverlayBase);
+    ComputedOverlayBase = OverlayPopover(AbstractOverlay);
 } else {
-    ComputedOverlayBase = OverlayNoPopover(ComputedOverlayBase);
+    ComputedOverlayBase = OverlayNoPopover(AbstractOverlay);
 }
 
 /**
@@ -109,12 +108,6 @@ export class Overlay extends ComputedOverlayBase {
      */
     @query('.dialog')
     override dialogEl!: HTMLDialogElement & {
-        showPopover(): void;
-        hidePopover(): void;
-    };
-
-    @query('.dialog-wrapper')
-    override dialogWrapper?: HTMLElement & {
         showPopover(): void;
         hidePopover(): void;
     };
@@ -395,6 +388,12 @@ export class Overlay extends ComputedOverlayBase {
     protected wasOpen = false;
 
     /**
+     * Focus trap to keep focus within the dialog
+     * @private
+     */
+    private _focusTrap: FocusTrap | null = null;
+
+    /**
      * Provides an instance of the `ElementResolutionController` for managing the element
      * that the overlay should be associated with. If the instance does not already exist,
      * it is created and assigned to the `_elementResolver` property.
@@ -408,17 +407,6 @@ export class Overlay extends ComputedOverlayBase {
         }
 
         return this._elementResolver;
-    }
-
-    /**
-     * Determines if the overlay uses a dialog.
-     * Returns `true` if the overlay type is "modal" or "page".
-     *
-     * @private
-     * @returns {boolean} `true` if the overlay uses a dialog, otherwise `false`.
-     */
-    private get usesDialog(): boolean {
-        return this.type === 'modal' || this.type === 'page';
     }
 
     /**
@@ -436,8 +424,9 @@ export class Overlay extends ComputedOverlayBase {
 
         switch (this.type) {
             case 'modal':
+                return 'auto';
             case 'page':
-                return undefined;
+                return 'manual';
             case 'hint':
                 return 'manual';
             default:
@@ -535,7 +524,25 @@ export class Overlay extends ComputedOverlayBase {
         if (this.open !== targetOpenState) {
             return;
         }
+        if (targetOpenState) {
+            const focusTrap = await import('focus-trap');
+            this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
+                initialFocus: focusEl || undefined,
+                tabbableOptions: {
+                    getShadowRoot: true,
+                },
+                fallbackFocus: () => {
+                    this.dialogEl.setAttribute('tabIndex', '-1');
+                    return this.dialogEl;
+                },
+                // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
+                escapeDeactivates: false,
+            });
 
+            if (this.type === 'modal' || this.type === 'page') {
+                this._focusTrap.activate();
+            }
+        }
         // Apply focus to the appropriate element after opening the popover.
         await this.applyFocus(targetOpenState, focusEl);
     }
@@ -689,6 +696,8 @@ export class Overlay extends ComputedOverlayBase {
      * @returns {Promise<void>} A promise that resolves when the overlay has been fully managed.
      */
     protected async manageOpen(oldOpen: boolean): Promise<void> {
+        console.log('manageopen', oldOpen);
+
         // Prevent entering the manage workflow if the overlay is not connected to the DOM.
         // The `.showPopover()` and `.show()` events will error on content that is not connected to the DOM.
         if (!this.isConnected && this.open) return;
@@ -722,6 +731,8 @@ export class Overlay extends ComputedOverlayBase {
             }
         } else {
             if (oldOpen) {
+                this._focusTrap?.deactivate();
+                this._focusTrap = null;
                 // Dispose of the overlay if it was previously open.
                 this.dispose();
             }
@@ -737,12 +748,7 @@ export class Overlay extends ComputedOverlayBase {
             this.state = 'closing';
         }
 
-        // Manage the dialog or popover based on the overlay type.
-        if (this.usesDialog) {
-            this.manageDialogOpen();
-        } else {
-            this.managePopoverOpen();
-        }
+        this.managePopoverOpen();
 
         // Handle focus events for auto type overlays.
         if (this.type === 'auto') {
@@ -1038,48 +1044,6 @@ export class Overlay extends ComputedOverlayBase {
     }
 
     /**
-     * Renders the dialog element for the overlay.
-     *
-     * This method returns a template result containing a dialog element. The dialog element
-     * includes various attributes and event listeners to manage the overlay's state and behavior.
-     *
-     * @protected
-     * @returns {TemplateResult} The template result containing the dialog element.
-     */
-    protected renderDialog(): TemplateResult {
-        /**
-         * The `--swc-overlay-open-count` custom property is applied to mimic the single stack
-         * nature of the top layer in browsers that do not yet support it.
-         *
-         * The value should always represent the total number of overlays that have ever been opened.
-         * This value will be added to the `--swc-overlay-z-index-base` custom property, which can be
-         * provided by a consuming developer. By default, `--swc-overlay-z-index-base` is set to 1000
-         * to ensure that the overlay stacks above most other elements during fallback delivery.
-         */
-        return html`
-            <div class="dialog-wrapper" popover="manual">
-                <dialog
-                    class="dialog"
-                    part="dialog"
-                    aria-modal=${this.type === 'modal' ? 'true' : 'false'}
-                    placement=${ifDefined(
-                        this.requiresPositioning
-                            ? this.placement || 'right'
-                            : undefined
-                    )}
-                    style=${styleMap(this.dialogStyleMap)}
-                    @close=${this.handleBrowserClose}
-                    @cancel=${this.handleBrowserClose}
-                    @beforetoggle=${this.handleBeforetoggle}
-                    ?is-visible=${this.state !== 'closed'}
-                >
-                    ${this.renderContent()}
-                </dialog>
-            </div>
-        `;
-    }
-
-    /**
      * Renders the popover element for the overlay.
      *
      * This method returns a template result containing a div element styled as a popover.
@@ -1102,6 +1066,12 @@ export class Overlay extends ComputedOverlayBase {
             <div
                 class="dialog"
                 part="dialog"
+                role=${ifDefined(
+                    this.type === 'modal' || this.type === 'page'
+                        ? 'dialog'
+                        : undefined
+                )}
+                aria-modal=${this.type === 'modal' ? 'true' : 'false'}
                 placement=${ifDefined(
                     this.requiresPositioning
                         ? this.placement || 'right'
@@ -1128,9 +1098,8 @@ export class Overlay extends ComputedOverlayBase {
      * @returns {TemplateResult} The template result containing the overlay content.
      */
     public override render(): TemplateResult {
-        const isDialog = this.type === 'modal' || this.type === 'page';
         return html`
-            ${isDialog ? this.renderDialog() : this.renderPopover()}
+            ${this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
     }

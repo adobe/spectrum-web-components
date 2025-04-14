@@ -195,19 +195,9 @@ slot[name='longpress-describedby-descriptor'] {
         transition-behavior: allow-discrete;
     }
 
-    .dialog:popover-open,
-    .dialog:modal {
+    .dialog:popover-open {
         display: flex;
     }
-
-    .dialog-wrapper .dialog:open {
-        display: block;
-    }
-}
-
-.dialog-wrapper[popover]:popover-open {
-    background: none;
-    border: none;
 }
 
 @supports (not selector(:open)) and (not selector(:popover-open)) {

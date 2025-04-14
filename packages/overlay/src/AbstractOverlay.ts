@@ -132,10 +132,7 @@ export class AbstractOverlay extends SpectrumElement {
         showPopover(): void;
         hidePopover(): void;
     };
-    dialogWrapper?: HTMLElement & {
-        showPopover(): void;
-        hidePopover(): void;
-    };
+
     /* c8 ignore next 6 */
     get disabled(): boolean {
         return false;
@@ -163,10 +160,6 @@ export class AbstractOverlay extends SpectrumElement {
         return null;
     }
     protected async manageDelay(_targetOpenState: boolean): Promise<void> {
-        return;
-    }
-    /* c8 ignore next 3 */
-    protected async manageDialogOpen(): Promise<void> {
         return;
     }
     /* c8 ignore next 3 */
