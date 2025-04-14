@@ -20,101 +20,133 @@ import { version as newVersion } from '../tools/base/src/version.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
-const newTag = `v${newVersion}`;
-const prevTag = execSync('git tag --sort=-creatordate')
-    .toString()
-    .split('\n')
-    .filter(Boolean)
-    .find((tag) => tag !== newTag);
+async function createGlobalChangelog() {
+    const newTag = `v${newVersion}`;
+    let prevTag;
+    try {
+        const gitTagOutput = execSync('git tag --sort=-creatordate');
+        if (!gitTagOutput) {
+            throw new Error('Git tag command returned empty output');
+        }
 
-if (!prevTag) {
-    console.error('No previous tag found.');
-    process.exit(1);
-}
+        const tagList = gitTagOutput.toString().split('\n').filter(Boolean);
+        if (tagList.length === 0) {
+            throw new Error('No git tags found in repository');
+        }
 
-// Read the existing CHANGELOG.md early to check for existing entries
-const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
-let existingChangelog = fs.existsSync(changelogPath)
-    ? fs.readFileSync(changelogPath, 'utf-8')
-    : '';
+        prevTag = tagList.find((tag) => tag !== newTag);
+        if (!prevTag) {
+            throw new Error(
+                'Could not find a previous tag different from the new tag'
+            );
+        }
+    } catch (error) {
+        console.error(`Failed to get previous git tag: ${error.message}`);
+        process.exit(1);
+    }
 
-// Check if this version already has an entry in the changelog
-const versionEntryPattern = new RegExp(
-    `# \\[${newVersion.replace(/\./g, '\\.')}\\]`
-);
-if (versionEntryPattern.test(existingChangelog)) {
-    console.log(
-        `⚠️ Version ${newVersion} already has an entry in the CHANGELOG. Skipping update.`
+    if (!prevTag) {
+        console.error('No previous tag found.');
+        process.exit(1);
+    }
+
+    // Read the existing CHANGELOG.md early to check for existing entries
+    const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
+    let existingChangelog = fs.existsSync(changelogPath)
+        ? fs.readFileSync(changelogPath, 'utf-8')
+        : '';
+
+    // Check if this version already has an entry in the changelog
+    const versionEntryPattern = new RegExp(
+        `# \\[${newVersion.replace(/\./g, '\\.')}\\]`
     );
-    process.exit(0);
-}
+    if (versionEntryPattern.test(existingChangelog)) {
+        console.log(
+            `⚠️ Version ${newVersion} already has an entry in the CHANGELOG. Skipping update.`
+        );
+        process.exit(0);
+    }
 
-const date = new Date().toISOString().split('T')[0];
-const compareUrl = `${repoUrl}/compare/${prevTag}...${newTag}`;
-const commitLogs = execSync(`git log ${prevTag}..HEAD --pretty=format:"%s|%h"`)
-    .toString()
-    .trim();
+    const date = new Date().toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+    // We need to use a stable release tag (not a pre-release/beta) for the comparison URL
+    // to ensure the changelog shows changes between proper semver releases
+    const compareUrl = `${repoUrl}/compare/${prevTag}...${newTag}`;
+    const commitLogs = execSync(
+        `git log ${prevTag}..HEAD --pretty=format:"%s|%h"`
+    )
+        .toString()
+        .trim();
 
-const commits = commitLogs.split('\n').map((line) => {
-    const [message, hash] = line.split('|');
-    return { message, hash };
-});
+    const commits = commitLogs.split('\n').map((line) => {
+        const [message, hash] = line.split('|');
+        return { message, hash };
+    });
 
-const features = [];
-const fixes = [];
+    const features = [];
+    const fixes = [];
 
-commits.forEach(({ message, hash }) => {
-    const typeMatch = message.match(/^(feat|fix)\(([^)]+)\):\s*(.+)/i);
-    if (typeMatch) {
-        const [, type, scope, description] = typeMatch;
-        const entry = `-   **${scope}**: ${description} ([\`${hash}\`](${repoUrl}/commit/${hash}))`;
-        if (type === 'feat') {
-            features.push(entry);
-        } else if (type === 'fix') {
-            fixes.push(entry);
+    commits.forEach(({ message, hash }) => {
+        const typeMatch = message.match(/^(feat|fix)\(([^)]+)\):\s*(.+)/i);
+        if (typeMatch) {
+            const [, type, scope, description] = typeMatch;
+            const entry = `-   **${scope}**: ${description} ([\`${hash}\`](${repoUrl}/commit/${hash}))`;
+            if (type === 'feat') {
+                features.push(entry);
+            } else if (type === 'fix') {
+                fixes.push(entry);
+            }
+        }
+    });
+
+    // Skip if nothing relevant
+    if (!features.length && !fixes.length) {
+        console.log('🚫 No new feat() or fix() commits to add.');
+        process.exit(0);
+    }
+
+    // Format new changelog entry
+    let newEntry = `# [${newVersion}](${compareUrl}) (${date})\n\n`;
+
+    if (fixes.length) {
+        newEntry += `### Bug Fixes\n\n${fixes.join('\n')}\n\n`;
+    }
+
+    if (features.length) {
+        newEntry += `### Features\n\n${features.join('\n')}\n\n`;
+    }
+
+    // Preserve the header if it exists
+    let headerText = '';
+    const headerMatch = existingChangelog.match(
+        /^(# Change Log\n\n[\s\S]+?(?=\n\n# \[))/
+    );
+    if (headerMatch) {
+        headerText = headerMatch[1];
+        existingChangelog = existingChangelog.substring(headerMatch[0].length);
+    } else if (existingChangelog.startsWith('# Change Log')) {
+        // Handle case where there might not be any versions yet
+        const simpleHeaderMatch = existingChangelog.match(
+            /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
+        );
+        if (simpleHeaderMatch) {
+            headerText = simpleHeaderMatch[1];
+            existingChangelog = existingChangelog.substring(headerText.length);
         }
     }
-});
 
-// Skip if nothing relevant
-if (!features.length && !fixes.length) {
-    console.log('🚫 No new feat() or fix() commits to add.');
-    process.exit(0);
-}
-
-// Format new changelog entry
-let newEntry = `# [${newVersion}](${compareUrl}) (${date})\n\n`;
-
-if (fixes.length) {
-    newEntry += `### Bug Fixes\n\n${fixes.join('\n')}\n\n`;
-}
-
-if (features.length) {
-    newEntry += `### Features\n\n${features.join('\n')}\n\n`;
-}
-
-// Preserve the header if it exists
-let headerText = '';
-const headerMatch = existingChangelog.match(
-    /^(# Change Log\n\n[\s\S]+?(?=\n\n# \[))/
-);
-if (headerMatch) {
-    headerText = headerMatch[1];
-    existingChangelog = existingChangelog.substring(headerMatch[0].length);
-} else if (existingChangelog.startsWith('# Change Log')) {
-    // Handle case where there might not be any versions yet
-    const simpleHeaderMatch = existingChangelog.match(
-        /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
+    fs.writeFileSync(
+        changelogPath,
+        `${headerText}\n\n${newEntry.trim()}\n\n${existingChangelog.trim()}`,
+        'utf-8'
     );
-    if (simpleHeaderMatch) {
-        headerText = simpleHeaderMatch[1];
-        existingChangelog = existingChangelog.substring(headerText.length);
-    }
+    console.log(`✅ CHANGELOG updated for ${newVersion}`);
 }
 
-fs.writeFileSync(
-    changelogPath,
-    `${headerText}\n\n${newEntry.trim()}\n\n${existingChangelog.trim()}`,
-    'utf-8'
-);
-console.log(`✅ CHANGELOG updated for ${newVersion}`);
+createGlobalChangelog().catch((error) => {
+    console.error('Error updating changelog:', error);
+    process.exit(1);
+});
