@@ -393,10 +393,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 capture: true,
             }
         );
-
         this.addEventListener('click', this.handleClick);
         this.addEventListener('touchend', this.handlePointerup);
-        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
         this.addEventListener('pointerup', this.handlePointerup);
@@ -448,17 +446,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
-
-    private handleMouseover(event: MouseEvent): void {
-        const { target } = event;
-        const menuItem = target as MenuItem;
-        if (
-            this.childItems.includes(menuItem) &&
-            this.isFocusableElement(menuItem)
-        ) {
-            this.rovingTabindexController?.focusOnItem(menuItem);
-        }
-    }
 
     private handleFocusout(): void {
         if (!this.matches(':focus-within'))
@@ -696,7 +683,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             if (lastFocusedItem?.hasSubmenu) {
                 //open submenu and set focus
                 event.stopPropagation();
-                lastFocusedItem.openOverlay();
+                lastFocusedItem.openOverlay(true);
             }
         } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
             event.stopPropagation();
@@ -735,7 +722,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             // Remove focus while opening overlay from keyboard or the visible focus
             // will slip back to the first item in the menu.
             event.preventDefault();
-            root.openOverlay();
+            root.openOverlay(true);
             return;
         }
         if (key === ' ' || key === 'Enter') {

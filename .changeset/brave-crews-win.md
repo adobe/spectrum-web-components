@@ -1,6 +1,7 @@
 ---
 '@spectrum-web-components/accordion': patch
 '@spectrum-web-components/action-bar': patch
+'@spectrum-web-components/alert-banner': patch
 '@spectrum-web-components/alert-dialog': patch
 '@spectrum-web-components/asset': patch
 '@spectrum-web-components/avatar': patch
@@ -19,6 +20,7 @@
 '@spectrum-web-components/link': patch
 '@spectrum-web-components/modal': patch
 '@spectrum-web-components/sidenav': patch
+'@spectrum-web-components/split-view': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/tags': patch
 '@spectrum-web-components/tray': patch
