@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Page not found</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="https://opensource.adobe.com/spectrum-web-components/favicon.svg"
+        />
+        <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
+        <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+        <!-- This is the script that attempts to pre-load the typekit fonts -->
+        <script
+            src="https://use.typekit.net/rok6rmo.js"
+            id="typekit"
+            type="text/javascript"
+            async
+        ></script>
+
+        <style>
+            body {
+                --spectrum-sans-font-family-stack: 'Adobe Clean', adobe-clean,
+                    'Nunito Sans', -apple-system, '.SFNSText-Regular',
+                    'San Francisco', BlinkMacSystemFont, 'Segoe UI',
+                    'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+                font-size: 18px;
+                margin: 0;
+                padding: 0;
+                block-size: 100vh;
+                background-color: rgb(253, 253, 253);
+                color: rgb(34, 34, 34);
+                -webkit-font-smoothing: antialiased;
+                font-family: var(--spectrum-sans-font-family-stack);
+            }
+
+            header,
+            main {
+                max-inline-size: 1600px;
+                margin: auto;
+                padding-inline: 20px;
+                padding-block: 1rem;
+            }
+
+            header {
+                padding-block-start: 4rem;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 60px;
+                padding-block-end: 4rem;
+            }
+
+            img {
+                max-inline-size: 100%;
+                margin-block: -20px 20px;
+            }
+
+            h1 {
+                font-weight: 400;
+                font-size: 2rem;
+                margin-block-end: 8px;
+            }
+
+            h2 {
+                font-size: 4rem;
+                margin-block-end: 8px;
+                padding-block-end: 4px;
+            }
+
+            p {
+                line-height: 2rem;
+                margin-block: 16px;
+            }
+
+            .spectrum-logo {
+                margin: 0;
+                display: flex;
+                flex-flow: row nowrap;
+                text-decoration: none;
+                align-items: center;
+                gap: 2em;
+            }
+
+            .spectrum-logo p {
+                font-weight: 400;
+                font-size: 3.6em;
+                color: initial;
+            }
+
+            .spectrum-logo svg {
+                block-size: 100px;
+                inline-size: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <a
+                class="spectrum-logo"
+                href="https://opensource.adobe.com/spectrum-web-components/"
+                aria-label="Spectrum Web Components"
+            >
+                <svg
+                    viewBox="0 0 36 36"
+                    focusable="false"
+                    aria-hidden="true"
+                    aria-label="AdobeLogo"
+                >
+                    <path
+                        fill="rgb(250, 15, 0)"
+                        d="M22.175 4H34v28L22.175 4zm-8.336 0H2v28L13.839 4zm4.165 10.317l7.538 17.682h-4.939l-2.258-5.632h-5.517l5.176-12.05z"
+                    ></path>
+                </svg>
+                <p>Spectrum Web Components</p>
+            </a>
+        </header>
+        <main>
+            <h1>404: Page not found</h1>
+            <section>
+                <img
+                    src="https://opensource.adobe.com/spectrum-web-components/spectrum_illustration_2x.png"
+                    alt="An abstract illustrated image with a whimsical color palette"
+                />
+                <h2>It's not you. It's us.</h2>
+                <p>
+                    Let's get you back to
+                    <a
+                        href="https://opensource.adobe.com/spectrum-web-components/"
+                    >
+                        our landing page
+                    </a>
+                    .
+                </p>
+            </section>
+        </main>
+    </body>
+</html>

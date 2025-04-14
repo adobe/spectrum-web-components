@@ -1,0 +1,70 @@
+import { Meta, Title } from '@storybook/blocks';
+import { ThemeContainer, Heading } from '../blocks';
+
+import GrayMigrationGuide from '../assets/images/gray_migration-guide.png';
+
+<Meta title="Migration guide" />
+<Title>Migration guide</Title>
+
+## Deprecated components
+
+-   Cycle button: Use the quiet variant of action button with the appropriate icon(s) instead. Any icon swapping that happens on-click/on-key should be handled by the implementation.
+-   Quick actions: Use an action bar to allow users to perform actions on either a single or multiple items at the same time, instead.
+-   Search within: Use a search field with a separate control to filter the search instead.
+-   Split button: Use a button group to show any additional actions related to the most critical action. Reference [Spectrum documentation](https://spectrum.corp.adobe.com/page/button-group/#Use-a-button-group-to-show-additional-actions) for more information.
+
+## Grays
+
+<img
+    src={GrayMigrationGuide}
+    alt="Gray migration guide"
+    style={{ maxInlineSize: '400px', borderRadius: '8px', overflow: 'hidden' }}
+/>
+<br />
+<br />
+
+### Examples of using the new grays
+
+-   `Gray-25`, `-50`, and `-75` are reserved for background layers.
+-   `Gray-100`, `-200`, and `-300` are used for lower contrast component background progressions or borders.
+-   `Gray-800` and `-900` are used for higher contrast component backgrounds such as text and active borders. This ensures that components are always visible, regardless of the background color.
+
+## Transparent colors
+
+### Transparent white
+
+|                   |           |  Spectrum 2 |  Spectrum 1 |
+| ----------------- | :-------: | ----------: | ----------: |
+| **Color**         | **Value** | **Opacity** | **Opacity** |
+| transparent-white |    25     |           0 |             |
+| transparent-white |    50     |        0.04 |             |
+| transparent-white |    75     |        0.07 |             |
+| transparent-white |    100    |        0.11 |           0 |
+| transparent-white |    200    |        0.14 |         0.1 |
+| transparent-white |    300    |        0.17 |        0.25 |
+| transparent-white |    400    |        0.21 |         0.4 |
+| transparent-white |    500    |        0.39 |        0.55 |
+| transparent-white |    600    |        0.51 |         0.7 |
+| transparent-white |    700    |        0.66 |         0.8 |
+| transparent-white |    800    |        0.85 |         0.9 |
+| transparent-white |    900    |        0.94 |           1 |
+| transparent-white |   1000    |           1 |             |
+
+### Transparent black
+
+|                   |           |  Spectrum 2 |  Spectrum 1 |
+| ----------------- | :-------: | ----------: | ----------: |
+| **Color**         | **Value** | **Opacity** | **Opacity** |
+| transparent-black |    25     |           0 |             |
+| transparent-black |    50     |        0.03 |             |
+| transparent-black |    75     |        0.05 |             |
+| transparent-black |    100    |        0.09 |           0 |
+| transparent-black |    200    |        0.12 |         0.1 |
+| transparent-black |    300    |        0.15 |        0.25 |
+| transparent-black |    400    |        0.22 |         0.4 |
+| transparent-black |    500    |        0.44 |        0.55 |
+| transparent-black |    600    |        0.56 |         0.7 |
+| transparent-black |    700    |        0.69 |         0.8 |
+| transparent-black |    800    |        0.84 |         0.9 |
+| transparent-black |    900    |        0.93 |           1 |
+| transparent-black |   1000    |           1 |             |

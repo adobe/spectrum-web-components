@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg
+    class="spectrum-Site-logo spectrum-Icon spectrum-Icon--sizeXL"
+    version="1.1"
+    id="Layer_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0" y="0"
+    viewBox="0 0 190 26"
+    focusable="false"
+    aria-hidden="true"
+    aria-label="Adobe logo"
+    xml:space="preserve">
+<g style="fill:#FA0F00">
+	<polygon points="19,0 30,0 30,26"/>
+	<polygon points="11.1,0 0,0 0,26"/>
+	<polygon points="15,9.6 22.1,26 17.5,26 15.4,20.8 10.2,20.8"/>
+</g>
+<text
+    x="38"
+    y="20"
+    style="color: rgb(0,0,0);font-size: 22px;font-family: adobe-clean,'Source Sans Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Ubuntu,'Trebuchet MS','Lucida Grande',sans-serif; font-weight: 700; height: 28px; line-height: 28.6px;">Spectrum CSS</text>
+</svg>

@@ -1,0 +1,73 @@
+import { Meta, Title } from '@storybook/blocks';
+
+<Meta title="Release workflow" />
+
+<Title>Release workflow</Title>
+
+## Versioning
+
+This project versions components independently, meaning each component has its own version number, updated independently of other components. We follow [semantic versioning](https://semver.org/) and as such, each release is versioned according to the following rules:
+
+-   **Major**: Breaking changes such as API changes, the removal of features, or changes to `--mod` custom properties
+-   **Minor**: New features or enhancements
+-   **Patch**: Bug fixes or minor improvements
+
+Versioning (and package publishing) is handled by [Changesets](https://github.com/changesets/changesets), which lets contributors declare how their changes should be released.
+
+Additionally, we use the [Conventional Commits](https://www.conventionalcommits.org/) specification for writing our commit messages to help communicate the types of changes we're making to the codebase.
+
+### Changesets usage
+
+A changeset is a piece of information about changes made in a branch or a commit. It holds three bits of information:
+
+-   What we need to release
+-   What the next version we want to release is (using a [semver bump type](https://semver.org/))
+-   A changelog entry for the released packages
+
+Not every change to the codebase will require a release, but any changes to files within the `/components` directory **will** require a release. Generally, when thinking about versioning and releases, it's a good idea to consider the question: "does this change need to be consumed by someone or something outside of Spectrum CSS?" If the answer to that question is "yes", then the changes will likely require a changeset.
+
+A changeset can be [added locally by the author](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#i-am-in-a-multi-package-repository-a-mono-repo) by invoking the command line script, or it can be added during the Pull Request process by a project maintainer via the [Changesets GitHub bot](https://github.com/changesets/bot). The result of either method will be a single commit that adds a markdown file with YAML frontmatter describing the changes.
+
+Additionally, [multiple changesets](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#tips-on-adding-changesets) can be added to a Pull Request.
+
+## Releasing
+
+Releases are handled via Changesets. Specifically, via the [Changesets GitHub action](https://github.com/changesets/action). When there are new changesets on the [configured baseBranch](https://github.com/changesets/changesets/blob/main/docs/config-file-options.md#basebranch-git-branch-name) (usually `main` in our repo), the action will create a new Pull Request with all of the package versions updated and changelogs updated. The Pull Request can then be merged back into `main` and the updated packages can be published manually or automatically via the action.
+
+This allows for maintainers and contributors to review the proposed version and changelog updates and make changes as necessary before the publish step.
+
+## Prereleases
+
+Information about Changesets and prereleases can be found [here](https://github.com/changesets/changesets/blob/main/docs/prereleases.md).
+
+### Snapshot releases
+
+Snapshot releases are a way to release changes for testing without updating versions. Information about Changesets and snapshot releases can be found [here](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md).
+
+Spectrum CSS snapshot releases can be published via two different workflows:
+
+-   Preferred: via a GitHub Action, which is invoked by any contributor who has `write` access to the Spectrum CSS GitHub repository.
+-   Alternate: locally, from a contributor's computer (requires npm authorization and publish privileges).
+
+#### Snapshot releases via GitHub Actions
+
+Our recommended workflow for publishing snapshot releases is through our [GitHub Action](https://github.com/adobe/spectrum-css/blob/main/.github/workflows/release-snapshot.yml). Releasing snapshots via this method has several advantages over local publishing and poses less risk for publication failures.
+Any contributor with `write` access to the Spectrum CSS repository can publish snapshot releases.
+
+**Steps for publishing snapshot releases**
+
+1. First, ensure that the branch from which you want to publish has added a changeset so that you actually have something to release. No changeset = nothing to release.
+2. Next, navigate to the "Actions" tab near the top of the GitHub interface, and click-through to see all available workflows for the project.
+3. In the "Actions" navigation on the left side of the interface, choose "Release snapshot" from the list of available workflows.
+4. In this "Release snapshots" screen, you'll see a list of previous snapshot worklows that have been run. In the upper right part of the screen, you should see a **"Run Workflow"** button. Clicking the button will open a popover.
+5. In the popover, choose the branch from which you wish to release the snapshot ("Use workflow from"), and in the text field, type in a meaningful tag name (example: `s2-action-button`), or optionally, leave this field blank and the workflow will attempt to automatically create a tag name based on your branch's name.
+6. The workflow should then begin to run, using `changeset version` to version the affected components with the proper snapshot version name and tags (based upon what you specified in the text field). The workflow also automatically publishes to npm with the snapshot version and tags.
+7. Once complete, navigate to npm and check that your snapshot has been published.
+
+**Alternate steps for publishing snapshot releases locally**
+
+1. First, ensure that the branch from which you want to publish has added a changeset so that you actually have something to release. No changeset = nothing to release.
+2. On the command line, be sure that you've checked out that branch and are on it currently.
+3. Run `yarn changeset version --snapshot SOME_MEANINGFUL_TAG_NAME_HERE && && yarn --mode="update-lockfile"` to update the affected package versions to 0.0.0-SOME_MEANINGFUL_TAG_NAME_HERE-THE_TIME_YOU_DID_THIS
+4. Run `yarn ci` to run a full, cacheless build.
+5. Run `yarn changeset publish --tag SOME_MEANINGFUL_TAG_NAME_HERE` to invoke the publish step. This will publish your versioned packages to npm using the `SOME_MEANINGFUL_TAG_NAME_HERE` tag instead of `latest` on npm which is **VERY** important for the npm ecosystem.
