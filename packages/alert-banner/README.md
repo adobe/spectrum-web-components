@@ -111,4 +111,4 @@ It supports keyboard interactions, including:
 -   <kbd>Shift + Tab</kbd>: Navigate to the previous interactive element.
 -   <kbd>Space</kbd>/<kbd>Enter</kbd>: Trigger the focused button.
 -   <kbd>Esc</kbd>: Dismiss a dismissible alert.
--   <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd><kbd>ArrowUp</kbd><kbd>ArrowDown</kbd>: Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons.
+-   <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd>/<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>: Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons.
