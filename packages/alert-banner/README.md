@@ -107,8 +107,31 @@ When rendering an alert that is dismissable or has actions on a page, ensure the
 
 It supports keyboard interactions, including:
 
--   <kbd>Tab</kbd>: Navigate to the next interactive element. Navigate to the next interactive element.
--   <kbd>Shift + Tab</kbd>: Navigate to the previous interactive element.
--   <kbd>Space</kbd>/<kbd>Enter</kbd>: Trigger the focused button.
--   <kbd>Esc</kbd>: Dismiss a dismissible alert.
--   <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd>/<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd>: Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons.
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Key</sp-table-head-cell>
+        <sp-table-head-cell>Action</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><kbd>Tab</kbd></sp-table-cell>
+            <sp-table-cell>Navigate to the next interactive element</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Shift + Tab</kbd></sp-table-cell>
+            <sp-table-cell>Navigate to the previous interactive element</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Space</kbd>/<kbd>Enter</kbd></sp-table-cell>
+            <sp-table-cell>Trigger the focused button</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Esc</kbd></sp-table-cell>
+            <sp-table-cell>Dismiss a dismissible alert</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd>/<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd></sp-table-cell>
+            <sp-table-cell>Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
