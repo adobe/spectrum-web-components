@@ -3,6 +3,10 @@
 '@spectrum-web-components/styles': patch
 ---
 
+Adjust S1/Express static outline variant content color (from transparent-black/white to solid black/white) to fix unintentional regression.
+
+From [@spectrum-css/button v14.1.6](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.6): [#3665](https://github.com/adobe/spectrum-css/pull/3665) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
+
 This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
 
 From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
