@@ -38,7 +38,7 @@ An optional action using `slot="action"`:
 ```html
 <sp-alert-banner open>
     Your trial has expired
-    <sp-button treatment="outline" static-color="white" slot="action">
+    <sp-button treatment="outline" variant="secondary" slot="action">
         Buy now
     </sp-button>
 </sp-alert-banner>
