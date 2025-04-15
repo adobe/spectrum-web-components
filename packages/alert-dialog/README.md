@@ -58,7 +58,7 @@ The alert dialog consists of several key parts:
 
 #### Variants
 
-The alert dialog supports different variants to convey the nature and importance of the message:
+The alert dialog supports `confirmation`, `information`, `warning`, `error`, and `destructive` variants to convey the nature and importance of the message:
 
 <sp-tabs selected="confirmation" auto label="Variants">
 <sp-tab value="confirmation">Confirmation</sp-tab>
