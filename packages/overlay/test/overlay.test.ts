@@ -1058,3 +1058,140 @@ describe('Overlay - Interactive Content', () => {
         expect(overlay.open).to.be.true;
     });
 });
+
+describe('Overlay should correctly trap focus', () => {
+    it('should trap focus when the overlay type is modal', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay trigger="trigger@click" type="modal">
+                    <sp-dialog>
+                        <p>Overlay content</p>
+                        <sp-button id="button-1">button 1</sp-button>
+                        <sp-button id="button-2">button 2</sp-button>
+                    </sp-dialog>
+                </sp-overlay>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+
+        await elementUpdated(overlay);
+
+        const opened = oneEvent(overlay, 'sp-opened');
+        // use keyboard to open the overlay
+        trigger.focus();
+        await sendKeys({
+            press: 'Enter',
+        });
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        const button1 = el.querySelector('#button-1') as HTMLElement;
+        const button2 = el.querySelector('#button-2') as HTMLElement;
+
+        // expect button1 to be focused
+        expect(document.activeElement).to.equal(button1);
+
+        // press tab to focus on button2
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button2);
+
+        // press tab to focus on button1
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button1);
+
+        // press tab to focus on button2
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button2);
+    });
+    it('should trap focus when the overlay type is page', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay trigger="trigger@click" type="modal">
+                    <sp-dialog>
+                        <p>Overlay content</p>
+                        <sp-button id="button-1">button 1</sp-button>
+                        <sp-button id="button-2">button 2</sp-button>
+                    </sp-dialog>
+                </sp-overlay>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+
+        await elementUpdated(overlay);
+
+        const opened = oneEvent(overlay, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        const button1 = el.querySelector('#button-1') as HTMLElement;
+        const button2 = el.querySelector('#button-2') as HTMLElement;
+
+        // expect button1 to be focused
+        expect(document.activeElement).to.equal(button1);
+
+        // press tab to focus on button2
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button2);
+
+        // press tab to focus on button1
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button1);
+
+        // press tab to focus on button2
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(document.activeElement).to.equal(button2);
+    });
+    it('should not trap focus when the overlay type is auto', async () => {
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-button id="trigger">Open Overlay</sp-button>
+                <sp-overlay trigger="trigger@click" type="auto">
+                    <sp-dialog>
+                        <p>Overlay content</p>
+                        <sp-button id="test">test</sp-button>
+                    </sp-dialog>
+                </sp-overlay>
+                <input id="input" />
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as HTMLElement;
+        const overlay = el.querySelector('sp-overlay') as Overlay;
+
+        await elementUpdated(overlay);
+
+        const opened = oneEvent(overlay, 'sp-opened');
+        trigger.click();
+        await opened;
+
+        expect(overlay.open).to.be.true;
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        const input = el.querySelector('#input') as HTMLInputElement;
+        expect(document.activeElement).to.equal(input);
+    });
+});
