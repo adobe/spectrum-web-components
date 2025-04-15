@@ -52,8 +52,7 @@ import {
 } from '../../../test/testing-helpers.js';
 import { Menu } from '@spectrum-web-components/menu';
 import { Button } from '@spectrum-web-components/button';
-import { isWebKit } from '@spectrum-web-components/shared';
-import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/overlay/src/InteractionController.js';
+// import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -969,12 +968,8 @@ describe('Overlay - timing', () => {
     });
 });
 
-describe('maintains focus consistency in webkit', () => {
-    it('should apply remove-focus-ring class in webkit when focus happens after click', async () => {
-        if (!isWebKit()) {
-            return;
-        }
-
+describe('maintains focus consistency in all browsers', () => {
+    it('should not have a focus-visible on trigger when focus happens after click', async () => {
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
@@ -1013,7 +1008,7 @@ describe('maintains focus consistency in webkit', () => {
         });
         await closed;
 
-        expect(trigger.classList.contains(SAFARI_FOCUS_RING_CLASS)).to.be.true;
+        expect(trigger.matches(':focus-visible')).to.be.false;
     });
 });
 
