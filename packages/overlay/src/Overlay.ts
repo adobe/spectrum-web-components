@@ -1094,7 +1094,9 @@ export class Overlay extends ComputedOverlayBase {
                         : undefined
                 )}
                 aria-modal=${ifDefined(
-                    this.type === 'modal' ? 'true' : undefined
+                    this.type === 'modal' || this.type === 'page'
+                        ? 'true'
+                        : undefined
                 )}
                 placement=${ifDefined(
                     this.requiresPositioning
