@@ -74,7 +74,7 @@ export class ColorField extends TextfieldBase {
     }
 
     protected override render(): TemplateResult {
-        if (this.viewColor) {
+        if (this.viewColor && true) {
             import('@spectrum-web-components/color-handle/sp-color-handle.js');
         }
         return html`

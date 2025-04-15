@@ -87,7 +87,6 @@ jobs:
             - uses: actions/download-artifact@v4
               with:
                   pattern: tachometer-results-*
-                  merge-multiple: true
 
             - name: Post Tachometer Performance Comment
               uses: actions/github-script@v7
