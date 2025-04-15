@@ -28,7 +28,7 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 The alert dialog consists of several key parts:
 
 -   **Title:** All alert dialogs must have a title, using `slot="heading"`, that uses a few words to convey the outcome of what will happen if a user continues with an action
--   Content, using the default slot, that provides additional context
+-   **Description:** Alert dialogs can include a description using the default slot. A description briefly communicates any additional information or context that a user needs to know to continue with an action
 -   Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
