@@ -89,9 +89,6 @@ jobs:
                   pattern: tachometer-results-*
                   merge-multiple: true
 
-            - name: Display structure of downloaded files
-              run: ls -R
-
             - name: Post Tachometer Performance Comment
               uses: actions/github-script@v7
               with:
