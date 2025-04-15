@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`5a3bc6d`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24ea95f6dd5b5ead9d7eb45c393324ee9)]:
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/number-field@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes
