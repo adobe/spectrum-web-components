@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/tags"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/tags",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -62,10 +62,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@spectrum-web-components/base": "1.4.0",
@@ -74,8 +80,8 @@
         "@spectrum-web-components/shared": "1.4.0"
     },
     "devDependencies": {
-        "@spectrum-css/tag": "10.0.0-s2-foundations.15",
-        "@spectrum-css/taggroup": "6.0.0-s2-foundations.15"
+        "@spectrum-css/tag": "10.1.0",
+        "@spectrum-css/taggroup": "7.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -11,32 +11,26 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-helptext-content-color-default: CanvasText;
+        --highcontrast-helptext-icon-color-default: CanvasText;
+    }
+
+    :host,
+    .text,
+    .icon {
+        forced-color-adjust: none;
+    }
+}
+
 :host {
-    --spectrum-helptext-line-height: var(--spectrum-line-height-100);
     --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
     --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
-    --spectrum-helptext-disabled-content-color: var(--spectrum-disabled-content-color);
-}
-
-:host([variant='neutral']) {
-    --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
-    --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
-}
-
-:host([variant='negative']) {
-    --spectrum-helptext-content-color-default: var(--spectrum-negative-color-900);
-    --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
-}
-
-:host([disabled]) {
-    --spectrum-helptext-content-color-default: var(--spectrum-helptext-disabled-content-color);
-    --spectrum-helptext-icon-color-default: var(--spectrum-helptext-disabled-content-color);
-}
-
-:host(:lang(ja)),
-:host(:lang(ko)),
-:host(:lang(zh)) {
-    --spectrum-helptext-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
+    font-size: var(--mod-helptext-font-size, var(--spectrum-helptext-font-size));
+    min-block-size: var(--mod-helptext-min-height, var(--spectrum-helptext-min-height));
+    display: flex;
 }
 
 :host([size='s']) {
@@ -50,6 +44,7 @@ governing permissions and limitations under the License.
     --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
 }
 
+:host,
 :host {
     --spectrum-helptext-min-height: var(--spectrum-component-height-75);
     --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-100);
@@ -83,24 +78,25 @@ governing permissions and limitations under the License.
     --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
 }
 
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-helptext-content-color-default: CanvasText;
-        --highcontrast-helptext-icon-color-default: CanvasText;
-    }
-
-    :host,
-    .text,
-    .icon {
-        forced-color-adjust: none;
-    }
+:host([variant='neutral']) {
+    --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
 }
 
-:host {
-    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
-    font-size: var(--mod-helptext-font-size, var(--spectrum-helptext-font-size));
-    min-block-size: var(--mod-helptext-min-height, var(--spectrum-helptext-min-height));
-    display: flex;
+:host([variant='negative']) {
+    --spectrum-helptext-content-color-default: var(--spectrum-negative-color-900);
+    --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
+}
+
+:host([disabled]) {
+    --spectrum-helptext-content-color-default: var(--spectrum-disabled-content-color);
+    --spectrum-helptext-icon-color-default: var(--spectrum-disabled-content-color);
+}
+
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    --mod-helptext-line-height: var(--mod-helptext-line-height-cjk, var(--spectrum-cjk-line-height-100));
 }
 
 .icon {
@@ -113,15 +109,9 @@ governing permissions and limitations under the License.
 }
 
 .text {
-    line-height: var(--mod-helptext-line-height, var(--spectrum-helptext-line-height));
+    line-height: var(--mod-helptext-line-height, var(--spectrum-line-height-100));
     padding-block-start: var(--mod-helptext-top-to-text, var(--spectrum-helptext-top-to-text));
     padding-block-end: var(--mod-helptext-bottom-to-text, var(--spectrum-helptext-bottom-to-text));
-}
-
-:host(:lang(ja)) .text,
-:host(:lang(ko)) .text,
-:host(:lang(zh)) .text {
-    line-height: var(--mod-helptext-line-height-cjk, var(--spectrum-helptext-line-height-cjk));
 }
 
 :host([variant='neutral']) .text {
