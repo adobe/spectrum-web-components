@@ -1,5 +1,5 @@
 ---
-'@spectrum-web-components/color-field': patch
+'@spectrum-web-components/menu': patch
 ---
 
 testing
