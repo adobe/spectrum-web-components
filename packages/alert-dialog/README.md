@@ -59,11 +59,11 @@ The alert dialog consists of several key parts:
 Use `slot="button"` to render your action button(s) that allow users to respond
 
 -   An alert dialog must have one primary action button (with `variant="primary"`) with the option to include a secondary action and/or a cancel action.
--   Non-primary action buttons should be `variant="secondary"` and `treatment: "outline"`.
+-   Non-primary action buttons should be `variant="secondary"` and `treatment="outline"`.
 -   The three buttons should be rendered in the DOM in the following order:
     -   **Cancel action:** Offers an option to go back and cancel the action.
     -   **Secondary action:** Offers a secondary action. e.g. "Remind me later"
-    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the (Alert Dialog design options)[https://spectrum.adobe.com/page/alert-dialog/#Options].
+    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
 
 ```html
 <sp-alert-dialog variant="information">
@@ -257,7 +257,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 #### Context
 
-An alert dialog should be placed inside a model overaly:
+An alert dialog should be placed inside a modal overaly:
 
 ```html
 <sp-button id="trigger">open modal</sp-button>
