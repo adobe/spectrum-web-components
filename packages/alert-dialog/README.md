@@ -292,5 +292,5 @@ When implementing an alert dialog:
 -   Use concise, meaningful dialog title that clearly states the purpose
 -   Use semantic heading elements (`<h2>`) for the dialog title
 -   Ensure button labels clearly indicate the action they will perform
--   Provides clear, concise content that explains the situation and required actions
+-   Provide clear, concise content that explains the situation and required actions
 -   Consider the appropriate variant based on the message's importance and urgency
