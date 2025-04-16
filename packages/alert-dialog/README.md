@@ -1,6 +1,6 @@
 ## Overview
 
-`<sp-alert-dialog>` displays important information that users need to acknowledge. When used directly, the `<sp-alert-dialog>` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
+`<sp-alert-dialog role="alertdialog" aria-labelledby="xx-heading" aria-describedby="xx-message" role="alertdialog" aria-labelledby="" aria-describedby="">` displays important information that users need to acknowledge. When used directly, the `<sp-alert-dialog role="alertdialog" aria-labelledby="xx-heading" aria-describedby="xx-message" role="alertdialog" aria-labelledby="" aria-describedby="">` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 
 ### Usage
 
@@ -11,7 +11,7 @@
 yarn add @spectrum-web-components/alert-dialog
 ```
 
-Import the side effectful registration of `<sp-alert-dialog>` via:
+Import the side effectful registration of `<sp-alert-dialog role="alertdialog" aria-labelledby="xx-heading" aria-describedby="xx-message" role="alertdialog" aria-labelledby="" aria-describedby="">` via:
 
 ```javascript
 import '@spectrum-web-components/alert-dialog/sp-alert-dialog.js';
@@ -32,9 +32,14 @@ The alert dialog consists of several key parts:
 -   Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
-<sp-alert-dialog variant="confirmation">
-    <h2 slot="heading">Important Notice</h2>
-    <p>This action requires your confirmation.</p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="example-heading"
+    aria-describedby="example-message"
+    variant="confirmation"
+>
+    <h2 id="example-heading" slot="heading">Important Notice</h2>
+    <p id="example-message">This action requires your confirmation.</p>
     <sp-button
         slot="button"
         variant="secondary"
@@ -66,9 +71,16 @@ Use `slot="button"` to render your action button(s) that allow users to respond
     -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
 
 ```html
-<sp-alert-dialog variant="information">
-    <h2 slot="heading">Rate this app</h2>
-    <p>If you enjoy our app, would you mind taking a moment to rate it?</p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="rate-heading"
+    aria-describedby="rate-message"
+    variant="information"
+>
+    <h2 id="rate-heading" slot="heading">Rate this app</h2>
+    <p id="rate-message">
+        If you enjoy our app, would you mind taking a moment to rate it?
+    </p>
     <sp-button
         slot="button"
         variant="secondary"
@@ -109,9 +121,14 @@ The alert dialog supports `confirmation`, `information`, `warning`, `error`, and
 Confirmation is the default variant for alert dialogs. Use a confirmation variant for asking a user to confirm a choice.
 
 ```html
-<sp-alert-dialog variant="confirmation">
-    <h2 slot="heading">Disclaimer</h2>
-    <p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="disclaimer-heading"
+    aria-describedby="disclaimer-message"
+    variant="confirmation"
+>
+    <h2 id="disclaimer-heading" slot="heading">Disclaimer</h2>
+    <p id="disclaimer-message">
         Smart filters are nondestructive and will preserve your original images.
     </p>
     <sp-button
@@ -140,9 +157,14 @@ Confirmation is the default variant for alert dialogs. Use a confirmation varian
 Information alert dialogs communicate important information that a user needs to acknowledge. Before using this kind of alert dialog, make sure it’s the appropriate communication channel for the message instead of a toast or a more lightweight messaging option.
 
 ```html
-<sp-alert-dialog variant="information">
-    <h2 slot="heading">Connect to wifi</h2>
-    <p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="information-heading"
+    aria-describedby="information-message"
+    variant="information"
+>
+    <h2 id="information-heading" slot="heading">Connect to wifi</h2>
+    <p id="information-message">
         Please connect to wifi to sync your projects or go to Settings to change
         your preferences.
     </p>
@@ -172,9 +194,14 @@ Information alert dialogs communicate important information that a user needs to
 Warning alert dialogs communicate important information to users in relation to an issue that needs to be acknowledged, but does not block the user from moving forward.
 
 ```html
-<sp-alert-dialog variant="warning">
-    <h2 slot="heading">Unverified format</h2>
-    <p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="warning-heading"
+    aria-describedby="warning-message"
+    variant="warning"
+>
+    <h2 id="warning-heading" slot="heading">Unverified format</h2>
+    <p id="warning-message">
         This format has not been verified and may not be viewable for some
         users. Do you want to continue publishing?
     </p>
@@ -204,9 +231,14 @@ Warning alert dialogs communicate important information to users in relation to 
 Error alert dialogs communicate critical information about an issue that a user needs to acknowledge.
 
 ```html
-<sp-alert-dialog variant="error">
-    <h2 slot="heading">Unable to share</h2>
-    <p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="error-heading"
+    aria-describedby="error-message"
+    variant="error"
+>
+    <h2 id="error-heading" slot="heading">Unable to share</h2>
+    <p id="error-message">
         An error occurred while sharing your project. Please verify the email
         address and try again.
     </p>
@@ -228,9 +260,16 @@ Error alert dialogs communicate critical information about an issue that a user 
 Destructive alert dialogs are for when a user needs to confirm an action that will impact their data or experience in a potentially negative way, such as deleting files or contacts.
 
 ```html
-<sp-alert-dialog variant="destructive">
-    <h2 slot="heading">Delete 3 documents?</h2>
-    <p>Are you sure you want to delete the 3 selected documents?</p>
+<sp-alert-dialog
+    role="alertdialog"
+    aria-labelledby="destructive-heading"
+    aria-describedby="destructive-message"
+    variant="destructive"
+>
+    <h2 id="destructive-heading" slot="heading">Delete 3 documents?</h2>
+    <p id="destructive-message">
+        Are you sure you want to delete the 3 selected documents?
+    </p>
     <sp-button
         slot="button"
         variant="secondary"
@@ -262,9 +301,14 @@ An alert dialog should be placed inside a modal overaly:
 ```html
 <sp-button id="trigger">open modal</sp-button>
 <sp-overlay trigger="trigger@click" type="modal">
-    <sp-alert-dialog variant="confirmation">
-        <h2 slot="heading">Important Notice</h2>
-        <p>This action requires your confirmation.</p>
+    <sp-alert-dialog
+        role="alertdialog"
+        aria-labelledby="modal-heading"
+        aria-describedby="modal-message"
+        variant="confirmation"
+    >
+        <h2 id="modal-heading" slot="heading">Important Notice</h2>
+        <p id="modal-message">This action requires your confirmation.</p>
         <sp-button
             slot="button"
             variant="secondary"
@@ -287,10 +331,22 @@ An alert dialog should be placed inside a modal overaly:
 
 ### Accessibility
 
-When implementing an alert dialog:
+#### `<sp-alert-banner>` Element
 
+-   Use `role="alertdialog"` on the alert dialog
+-   Make sure the alert dialog has an `aria-labelledby` attribute that references the title's `id`.
+-   Make sure the alert dialog has an `aria-describedby` attribute that references the content's `id`.
+
+#### Title
+
+-   Consider the appropriate variant based on the message's importance and urgency
 -   Use concise, meaningful dialog title that clearly states the purpose
 -   Use semantic heading elements (`<h2>`) for the dialog title
--   Ensure button labels clearly indicate the action they will perform
+
+#### Content
+
 -   Provide clear, concise content that explains the situation and required actions
--   Consider the appropriate variant based on the message's importance and urgency
+
+####Buttons
+
+-   Ensure button labels clearly indicate the action they will perform
