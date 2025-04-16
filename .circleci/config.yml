@@ -159,7 +159,7 @@ jobs:
 
     test-chromium:
         executor: node
-
+        parallelism: 5
         steps:
             - downstream
             - run:
