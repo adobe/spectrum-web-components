@@ -28,33 +28,65 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 The alert dialog consists of several key parts:
 
 -   **Title:** All alert dialogs must have a title, using `slot="heading"`, that uses a few words to convey the outcome of what will happen if a user continues with an action
--   **Description:** Alert dialogs can include a description using the default slot. A description briefly communicates any additional information or context that a user needs to know to continue with an action
+-   **Content:** Alert dialogs can include a description using the default slot. A description briefly communicates any additional information or context that a user needs to know to continue with an action
 -   Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
-<sp-button id="trigger">open modal</sp-button>
-<sp-overlay trigger="trigger@click" type="modal">
-    <sp-alert-dialog variant="confirmation">
-        <h2 slot="heading">Important Notice</h2>
-        <p>This action requires your confirmation.</p>
-        <sp-button
-            slot="button"
-            variant="secondary"
-            treatment="outline"
-            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-        >
-            Cancel
-        </sp-button>
-        <sp-button
-            slot="button"
-            variant="accent"
-            treatment="fill"
-            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-        >
-            Confirm
-        </sp-button>
-    </sp-alert-dialog>
-</sp-overlay>
+<sp-alert-dialog variant="confirmation">
+    <h2 slot="heading">Important Notice</h2>
+    <p>This action requires your confirmation.</p>
+    <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+    >
+        Cancel
+    </sp-button>
+    <sp-button
+        slot="button"
+        variant="accent"
+        treatment="fill"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+    >
+        Confirm
+    </sp-button>
+</sp-alert-dialog>
+```
+
+#### Buttons
+
+An alert dialog can have up to three buttons when additional options are needed. Use `slot="button"`. Ideally only one button should be `variant="primary"`, and the others `variant="secondary"`.
+
+```html
+<sp-alert-dialog variant="secondary">
+    <h2 slot="heading">Rate this app</h2>
+    <p>If you enjoy our app, would you mind taking a moment to rate it?</p>
+    <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+    >
+        No, thanks
+    </sp-button>
+    <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+    >
+        Remind me later
+    </sp-button>
+    <sp-button
+        slot="button"
+        variant="primary"
+        treatment="outline"
+        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+    >
+        Rate now
+    </sp-button>
+</sp-alert-dialog>
 ```
 
 ### Options
@@ -216,39 +248,34 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 ### Behaviors
 
-#### Multiple Buttons
+#### Context
 
-An alert dialog can have up to three buttons when additional options are needed. Use `slot="button"`. Ideally only one button should be `variant="primary"`, and the others `variant="secondary"`.
+An alert dialog should be placed inside a model overaly:
 
 ```html
-<sp-alert-dialog variant="secondary">
-    <h2 slot="heading">Rate this app</h2>
-    <p>If you enjoy our app, would you mind taking a moment to rate it?</p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        No, thanks
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Remind me later
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="primary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Rate now
-    </sp-button>
-</sp-alert-dialog>
+<sp-button id="trigger">open modal</sp-button>
+<sp-overlay trigger="trigger@click" type="modal">
+    <sp-alert-dialog variant="confirmation">
+        <h2 slot="heading">Important Notice</h2>
+        <p>This action requires your confirmation.</p>
+        <sp-button
+            slot="button"
+            variant="secondary"
+            treatment="outline"
+            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+        >
+            Cancel
+        </sp-button>
+        <sp-button
+            slot="button"
+            variant="accent"
+            treatment="fill"
+            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+        >
+            Confirm
+        </sp-button>
+    </sp-alert-dialog>
+</sp-overlay>
 ```
 
 ### Accessibility
