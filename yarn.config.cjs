@@ -106,7 +106,12 @@ module.exports = defineConfig({
 
             // A subset of components have a different entry point than the default
             if (
-                ['clear-button', 'close-button', 'modal', 'opacity-checkerboard'].includes(folderName)
+                [
+                    'clear-button',
+                    'close-button',
+                    'modal',
+                    'opacity-checkerboard',
+                ].includes(folderName)
             ) {
                 workspace.set('main', `./src/${folderName}.css.js`);
                 workspace.set('module', `./src/${folderName}.css.js`);
