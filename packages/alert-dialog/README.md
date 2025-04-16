@@ -56,7 +56,14 @@ The alert dialog consists of several key parts:
 
 #### Buttons
 
-An alert dialog can have up to three buttons when additional options are needed. Use `slot="button"`. Ideally only one button should be `variant="primary"`, and the others `variant="secondary"`.
+Use `slot="button"` to render your action button(s) that allow users to respond
+
+-   An alert dialog must have one primary action button (with `variant="secondary"`) with the option to include a secondary action and/or a cancel action.
+-   Non-primary action buttons should be `variant="secondary"` and `treatment: "outline"`.
+-   The three buttons should be rendered in the DOM in the following order:
+    -   **Cancel action:** Offers an option to go back and cancel the action.
+    -   **Secondary action:** Offers a secondary action. e.g. "Remind me later"
+    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling.
 
 ```html
 <sp-alert-dialog variant="information">
