@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.5.0
+
+### Minor Changes
+
+-   [#5308](https://github.com/adobe/spectrum-web-components/pull/5308) [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - prevent overlay close on document scroll
+
+### Patch Changes
+
+-   Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
+    -   @spectrum-web-components/action-button@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

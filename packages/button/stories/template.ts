@@ -18,6 +18,7 @@ import {
 } from '@spectrum-web-components/button/src/Button.js';
 
 export interface Properties {
+    staticColor?: 'white' | 'black';
     variant?: ButtonVariants;
     treatment?: ButtonTreatments;
     quiet?: boolean;
