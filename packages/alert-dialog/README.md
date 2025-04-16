@@ -32,26 +32,29 @@ The alert dialog consists of several key parts:
 -   Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
-<sp-alert-dialog variant="confirmation">
-    <h2 slot="heading">Important Notice</h2>
-    <p>This action requires your confirmation.</p>
-    <sp-button
-        slot="button"
-        variant="secondary"
-        treatment="outline"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Cancel
-    </sp-button>
-    <sp-button
-        slot="button"
-        variant="accent"
-        treatment="fill"
-        onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-    >
-        Confirm
-    </sp-button>
-</sp-alert-dialog>
+<sp-button id="trigger">open modal</sp-button>
+<sp-overlay trigger="trigger@click" type="modal">
+    <sp-alert-dialog variant="confirmation">
+        <h2 slot="heading">Important Notice</h2>
+        <p>This action requires your confirmation.</p>
+        <sp-button
+            slot="button"
+            variant="secondary"
+            treatment="outline"
+            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+        >
+            Cancel
+        </sp-button>
+        <sp-button
+            slot="button"
+            variant="accent"
+            treatment="fill"
+            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+        >
+            Confirm
+        </sp-button>
+    </sp-alert-dialog>
+</sp-overlay>
 ```
 
 ### Options
@@ -250,23 +253,10 @@ An alert dialog can have up to three buttons when additional options are needed.
 
 ### Accessibility
 
-The `<sp-alert-dialog>` component follows these accessibility guidelines:
-
--   Uses semantic heading elements (`<h2>`) for the dialog title
--   Ensures all buttons have clear, descriptive labels
--   Supports keyboard navigation:
-    -   <kbd>Tab</kbd>: Move focus between buttons
-    -   <kbd>Space</kbd>/<kbd>Enter</kbd>: Activate the focused button
-    -   <kbd>Esc</kbd>: Close the dialog
--   Maintains proper focus management when opened and closed
--   Uses ARIA roles and attributes appropriately:
-    -   `role="alertdialog"` for critical messages
-    -   `role="dialog"` for non-critical messages
--   Provides clear, concise content that explains the situation and required actions
-
 When implementing an alert dialog:
 
--   Use concise, meaningful headings that clearly state the purpose
+-   Use concise, meaningful dialog title that clearly states the purpose
+-   Uses semantic heading elements (`<h2>`) for the dialog title
 -   Ensure button labels clearly indicate the action they will perform
--   Provide enough context in the content area for users to make informed decisions
+-   Provides clear, concise content that explains the situation and required actions
 -   Consider the appropriate variant based on the message's importance and urgency
