@@ -59,7 +59,7 @@ The alert dialog consists of several key parts:
 An alert dialog can have up to three buttons when additional options are needed. Use `slot="button"`. Ideally only one button should be `variant="primary"`, and the others `variant="secondary"`.
 
 ```html
-<sp-alert-dialog variant="secondary">
+<sp-alert-dialog variant="information">
     <h2 slot="heading">Rate this app</h2>
     <p>If you enjoy our app, would you mind taking a moment to rate it?</p>
     <sp-button
@@ -235,7 +235,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
     <sp-button
         slot="button"
         variant="negative"
-        treatment="fill"
+        treatment="outline"
         onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
     >
         Delete
