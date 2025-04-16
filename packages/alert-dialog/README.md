@@ -58,7 +58,7 @@ The alert dialog consists of several key parts:
 
 Use `slot="button"` to render your action button(s) that allow users to respond
 
--   An alert dialog must have one primary action button (with `variant="secondary"`) with the option to include a secondary action and/or a cancel action.
+-   An alert dialog must have one primary action button (with `variant="primary"`) with the option to include a secondary action and/or a cancel action.
 -   Non-primary action buttons should be `variant="secondary"` and `treatment: "outline"`.
 -   The three buttons should be rendered in the DOM in the following order:
     -   **Cancel action:** Offers an option to go back and cancel the action.
