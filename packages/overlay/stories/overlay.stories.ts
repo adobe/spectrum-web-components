@@ -303,6 +303,42 @@ accordion.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
+export const test = (): TemplateResult => {
+    return html`
+        <div class="container">
+            <style>
+                .container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+                sp-button {
+                    margin: 100vh 0;
+                    transform: translateY(-100%);
+                }
+            </style>
+            <overlay-trigger type="modal" id="trigger" placement="top">
+                <sp-button id="outer-button" variant="primary" slot="trigger">
+                    Show Popover
+                </sp-button>
+                <sp-popover
+                    id="outer-popover"
+                    slot="click-content"
+                    direction="bottom"
+                    tip
+                    tabindex="0"
+                    placement="top"
+                >
+                    <sp-dialog no-divider>
+                        This is the overlay content.
+                    </sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `;
+};
+
 export const clickAndHoverTarget = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal">

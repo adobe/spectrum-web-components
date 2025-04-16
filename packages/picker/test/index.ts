@@ -1166,19 +1166,16 @@ export function runPickerTests(): void {
             });
             it('tabs forward through the element', async () => {
                 let focused: Promise<CustomEvent<FocusEvent>>;
-                if (!isSafari) {
-                    // start at input1
-                    input1.focus();
-                    await nextFrame();
-                    expect(document.activeElement === input1, 'focuses input 1')
-                        .to.true;
-                    // tab to the picker
-                    focused = oneEvent(el, 'focus');
-                    await sendKeys({ press: 'Tab' });
-                } else {
-                    focused = oneEvent(el, 'focus');
-                    el.focus();
-                }
+
+                // start at input1
+                input1.focus();
+                await nextFrame();
+                expect(document.activeElement === input1, 'focuses input 1').to
+                    .true;
+                // tab to the picker
+                focused = oneEvent(el, 'focus');
+                await sendKeys({ press: 'Tab' });
+
                 await focused;
 
                 expect(el.focused, 'focused').to.be.true;

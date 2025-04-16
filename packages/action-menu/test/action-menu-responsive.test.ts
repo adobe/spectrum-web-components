@@ -126,7 +126,6 @@ describe('ActionMenu, responsive', () => {
              */
             el.isMobile.matches = true;
             el.bindEvents();
-
             /**
              * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
              * which prevents us from testing this at unit time. Hopefully there will be
@@ -136,9 +135,7 @@ describe('ActionMenu, responsive', () => {
             await setViewport({ width: 360, height: 640 });
             // Allow viewport update to propagate.
             await nextFrame();
-
             const opened = oneEvent(el, 'sp-opened');
-
             const boundingRect = el.button.getBoundingClientRect();
             sendMouse({
                 steps: [
@@ -151,12 +148,10 @@ describe('ActionMenu, responsive', () => {
                     },
                 ],
             });
-
+            await elementUpdated(el);
             await opened;
-
             const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');
-
             expect(tray).to.be.null;
             expect(popover).to.not.be.null;
         });

@@ -9,7 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { expect, html, nextFrame, oneEvent, waitUntil } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    html,
+    nextFrame,
+    oneEvent,
+    waitUntil,
+} from '@open-wc/testing';
 
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
@@ -30,42 +37,36 @@ const initTest = async (
     button: Button;
     popover: Popover;
 }> => {
-    const test = await fixture<HTMLDivElement>(
-        html`
-            <div class="container">
-                <style>
-                    .container {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-                    }
-                </style>
-                ${styles}
-                <overlay-trigger type="modal" id="trigger" placement="top">
-                    <sp-button
-                        id="outer-button"
-                        variant="primary"
-                        slot="trigger"
-                    >
-                        Show Popover
-                    </sp-button>
-                    <sp-popover
-                        id="outer-popover"
-                        slot="click-content"
-                        direction="bottom"
-                        tip
-                        tabindex="0"
-                        placement="top"
-                    >
-                        <sp-dialog no-divider>
-                            This is the overlay content.
-                        </sp-dialog>
-                    </sp-popover>
-                </overlay-trigger>
-            </div>
-        `
-    );
+    const test = await fixture<HTMLDivElement>(html`
+        <div class="container">
+            <style>
+                .container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                }
+            </style>
+            ${styles}
+            <overlay-trigger type="modal" id="trigger" placement="top">
+                <sp-button id="outer-button" variant="primary" slot="trigger">
+                    Show Popover
+                </sp-button>
+                <sp-popover
+                    id="outer-popover"
+                    slot="click-content"
+                    direction="bottom"
+                    tip
+                    tabindex="0"
+                    placement="top"
+                >
+                    <sp-dialog no-divider>
+                        This is the overlay content.
+                    </sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `);
     await nextFrame();
     await nextFrame();
     await nextFrame();
@@ -120,10 +121,12 @@ describe('Overlay Trigger - extended', () => {
             </style>
         `));
 
+        const buttonn = document.querySelector('sp-button') as Button;
+
         expect(popover.placement).to.equal('top');
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
-        button.click();
+        buttonn.click();
         await open;
 
         expect(popover.placement).to.equal('top');
@@ -132,18 +135,15 @@ describe('Overlay Trigger - extended', () => {
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
-
         await nextFrame();
         await nextFrame();
         await nextFrame();
         await nextFrame();
-
         expect(popover.placement).to.equal('bottom');
     });
 
     it('occludes content behind the overlay', async () => {
-        // currently fails most browsers in CI.
-        ({ overlayTrigger, button, popover } = await initTest());
+        const { overlayTrigger, button, popover } = await initTest();
         const textfield = document.createElement('sp-textfield');
         overlayTrigger.insertAdjacentElement('afterend', textfield);
 
@@ -153,17 +153,19 @@ describe('Overlay Trigger - extended', () => {
             steps: [
                 {
                     type: 'click',
-                    position: [textfieldRect.left + 5, textfieldRect.top + 5],
+                    position: [
+                        textfieldRect.left + textfieldRect.width / 2,
+                        textfieldRect.top + textfieldRect.height / 2,
+                    ],
                 },
             ],
         });
+        await elementUpdated(textfield);
         expect(
             document.activeElement === textfield,
             'clicking focuses the Textfield'
         ).to.be.true;
-
         expect(popover.placement).to.equal('top');
-
         const open = oneEvent(overlayTrigger, 'sp-opened');
         await sendKeys({
             press: 'Shift+Tab',
@@ -183,7 +185,10 @@ describe('Overlay Trigger - extended', () => {
             steps: [
                 {
                     type: 'click',
-                    position: [textfieldRect.left + 5, textfieldRect.top + 5],
+                    position: [
+                        textfieldRect.left + textfieldRect.width / 2,
+                        textfieldRect.top + textfieldRect.height / 2,
+                    ],
                 },
             ],
         });

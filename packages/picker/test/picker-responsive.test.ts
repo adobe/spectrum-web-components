@@ -156,7 +156,7 @@ describe('Picker, responsive', () => {
                     },
                 ],
             });
-
+            await elementUpdated(el);
             await opened;
 
             const tray = el.shadowRoot.querySelector('sp-tray');
