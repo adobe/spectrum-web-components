@@ -63,7 +63,7 @@ Use `slot="button"` to render your action button(s) that allow users to respond
 -   The three buttons should be rendered in the DOM in the following order:
     -   **Cancel action:** Offers an option to go back and cancel the action.
     -   **Secondary action:** Offers a secondary action. e.g. "Remind me later"
-    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling.
+    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the (Alert Dialog design options)[https://spectrum.adobe.com/page/alert-dialog/#Options].
 
 ```html
 <sp-alert-dialog variant="information">
