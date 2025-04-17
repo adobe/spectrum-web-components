@@ -11,8 +11,21 @@ governing permissions and limitations under the License.
 
 import { html } from '@open-wc/testing';
 import '@spectrum-web-components/color-area/sp-color-area.js';
-import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
+import { testCanvasComponentMemory } from '../../../test/testing-helpers.js';
+import type { ColorArea } from '@spectrum-web-components/color-area';
 
-testForMemoryLeaks(html`
-    <sp-color-area></sp-color-area>
-`);
+// Test ColorArea memory patterns
+testCanvasComponentMemory(
+    html`
+        <sp-color-area></sp-color-area>
+    `,
+    {
+        componentName: 'ColorArea',
+        // Test color changes which trigger canvas redraws
+        manipulate: async (component) => {
+            const colorArea = component as ColorArea;
+            colorArea.color = { space: 'hsv', coords: [250, 90, 80] };
+            await colorArea.updateComplete;
+        },
+    }
+);
