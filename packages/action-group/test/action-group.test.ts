@@ -177,11 +177,7 @@ describe('ActionGroup', () => {
         );
 
         await elementUpdated(el);
-
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+        await waitUntil(() => el.children.length === 4);
 
         // press Tab to focus into the action-group
         await sendKeys({ press: 'Tab' });
@@ -269,7 +265,7 @@ describe('ActionGroup', () => {
 
         await elementUpdated(el);
 
-        await aTimeout(500);
+        await aTimeout(100);
 
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
@@ -285,9 +281,7 @@ describe('ActionGroup', () => {
                 },
             ],
         });
-
-        await elementUpdated(el);
-        await aTimeout(500);
+        await elementUpdated(firstButton);
 
         // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
         expect(
@@ -318,7 +312,6 @@ describe('ActionGroup', () => {
         });
 
         await elementUpdated(el);
-        await aTimeout(500);
 
         // expect the first button to have a tabIndex of 0 and everything else to have a tabIndex of -1
         expect(
@@ -338,9 +331,13 @@ describe('ActionGroup', () => {
             'mouse2: should not be focused on the fourth button'
         ).to.equal(-1);
 
+        await aTimeout(100);
+
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
         const actionMenuRect = actionMenu.getBoundingClientRect();
+
+        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
         sendMouse({
             steps: [
                 {
@@ -352,20 +349,16 @@ describe('ActionGroup', () => {
                 },
             ],
         });
-
-        await elementUpdated(el);
-
-        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
         await opened;
+
+        await aTimeout(100);
+
+        expect(el.children[3]).to.equal(document.activeElement);
 
         // use keyboard to navigate to the second menu item and select it
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'Enter' });
 
-        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
-        await closed;
-
-        await aTimeout(500);
         expect(
             (el.children[0] as ActionButton)?.tabIndex,
             'final: should NOT be focused on the first button'
