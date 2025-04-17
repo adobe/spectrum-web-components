@@ -839,7 +839,20 @@ export function runPickerTests(): void {
             ) as MenuItem;
 
             const opened = oneEvent(el, 'sp-opened');
-            el.click();
+
+            const boundingRect = el.button.getBoundingClientRect();
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+
             await opened;
             await elementUpdated(el);
 
@@ -847,16 +860,14 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.be.undefined;
             expect(el.value).to.equal('');
             expect(secondItem.selected).to.be.false;
-
-            /*secondItem.click();
-            await waitUntil(() => document.activeElement === el, 'focused', {
-                timeout: 300,
-            });
+            const closed = oneEvent(el, 'sp-closed');
+            secondItem.click();
+            await closed;
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
             expect(secondItem.selected, 'selected changed').to.be.true;
-            input.remove();*/
+            input.remove();
         });
         it('should throw focus after `change`', async () => {
             const input = document.createElement('input');
@@ -882,6 +893,7 @@ export function runPickerTests(): void {
                 input.focus();
             });
 
+            // Clicking on an item in the picker triggers a change event
             secondItem.click();
             await waitUntil(
                 () => document.activeElement === input,
