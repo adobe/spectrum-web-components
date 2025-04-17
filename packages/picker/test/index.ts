@@ -860,9 +860,11 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.be.undefined;
             expect(el.value).to.equal('');
             expect(secondItem.selected).to.be.false;
-            const closed = oneEvent(el, 'sp-closed');
+
             secondItem.click();
-            await closed;
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
 
             expect(el.open, 'open?').to.be.false;
             expect(el.value, 'value changed').to.equal('option-2');
