@@ -1411,7 +1411,31 @@ export function runPickerTests(): void {
 
             // expect the tray to be closed
             expect(el.open, 'open?').to.be.false;
-            // TODO focus is not reset when  using keyboard to close
+            // Test focus behavior when using keyboard to close
+            expect(
+                document.activeElement,
+                'focus should be on picker after keyboard close'
+            ).to.equal(el);
+
+            // Verify that focus is maintained on the picker element when closed via keyboard
+            expect(
+                el.contains(document.activeElement) ||
+                    el === document.activeElement,
+                'focus should remain within picker component after keyboard close'
+            ).to.be.true;
+
+            // Click elsewhere to remove focus completely
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [0, 0],
+                    },
+                ],
+            });
+
+            // Now picker should not have focus
+            expect(document.activeElement).not.to.equal(el);
             // we should not have SAFARI_FOCUS_RING_CLASS in the classList
             expect(
                 button.classList.contains(SAFARI_FOCUS_RING_CLASS),
