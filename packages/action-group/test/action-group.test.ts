@@ -331,7 +331,7 @@ describe('ActionGroup', () => {
             'mouse2: should not be focused on the fourth button'
         ).to.equal(-1);
 
-        await aTimeout(100);
+        await elementUpdated(el);
 
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
@@ -354,10 +354,14 @@ describe('ActionGroup', () => {
         await aTimeout(100);
 
         expect(el.children[3]).to.equal(document.activeElement);
+        //todo test times out waiting for menu close
+        //const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
         // use keyboard to navigate to the second menu item and select it
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'Enter' });
+
+        //await closed
 
         expect(
             (el.children[0] as ActionButton)?.tabIndex,
