@@ -350,8 +350,7 @@ describe('ActionGroup', () => {
             ],
         });
         await opened;
-
-        await aTimeout(100);
+        await elementUpdated(el);
 
         expect(el.children[3]).to.equal(document.activeElement);
         //todo test times out waiting for menu close
