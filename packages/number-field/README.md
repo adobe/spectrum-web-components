@@ -338,7 +338,7 @@ The `required` attribute sets the number field to an indeterminate state, visual
 The `disabled` attribute prevents the number field from receiving focus or events. The number field will appear faded.
 
 ```html
-<sp-field-label for="disabled">Number of tickets</sp-field-label>
+<sp-field-label for="disabled" disabled>Number of tickets</sp-field-label>
 <sp-number-field id="disabled" disabled value="0"></sp-number-field>
 ```
 
