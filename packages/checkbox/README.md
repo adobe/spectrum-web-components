@@ -188,6 +188,14 @@ The `indeterminate` attribute sets the checkbox to an indeterminate state, visua
 <sp-checkbox indeterminate>Indeterminate</sp-checkbox>
 ```
 
+#### Read-only
+
+Checkboxes have a `readonly` attribute for when they’re in the disabled state but still need their labels to be shown. This allows for content to be copied, but not interacted with or changed.
+
+```html
+<sp-checkbox readonly>Read-only</sp-checkbox>
+```
+
 ### Behaviors
 
 #### Handling events
@@ -218,7 +226,7 @@ Every checkbox must have a label that clearly describes its purpose. The label c
 
 #### Label groups of related checkboxes
 
-Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option.  (See [field group's label documentation](/field-group/#label) for more information.)
+Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option. (See [field group's label documentation](/field-group/#label) for more information.)
 
 ```html
 <sp-field-group label="Select your toppings">
@@ -237,7 +245,8 @@ Checkboxes can be toggled using the <kbd>Space</kbd> key when focused. They foll
 Screen readers interpret checkboxes by announcing their role, label, current state, and role to the user. This allows users relying on assistive technology to understand and interact with the checkbox effectively.
 
 When focused, a screen reader will announce:
-- The label (text provided inside the or associated with it)
-- The state: "checked", "not checked", or "partially checked" (when indeterminate is set)
-- The role: "checkbox"
-- If the checkbox is marked as invalid, it may also announce "invalid entry" depending on the screen reader.
+
+-   The label (text provided inside the or associated with it)
+-   The state: "checked", "not checked", or "partially checked" (when indeterminate is set)
+-   The role: "checkbox"
+-   If the checkbox is marked as invalid, it may also announce "invalid entry" depending on the screen reader.
