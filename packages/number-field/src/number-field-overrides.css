@@ -64,6 +64,9 @@ governing permissions and limitations under the License.
     --spectrum-stepper-border-color-keyboard-focus-invalid: var(
         --system-stepper-border-color-keyboard-focus-invalid
     );
+    --spectrum-stepper-border-color-disabled: var(
+        --system-stepper-border-color-disabled
+    );
     --spectrum-stepper-button-border-width-disabled: var(
         --system-stepper-button-border-width-disabled
     );
