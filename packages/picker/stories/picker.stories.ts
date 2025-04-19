@@ -722,6 +722,82 @@ export const readonly = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const multipleSelection = (args: StoryArgs): TemplateResult => {
+    const items = [
+        { value: 'option-1', label: 'Option 1' },
+        { value: 'option-2', label: 'Option 2' },
+        { value: 'option-3', label: 'Option 3' },
+        { value: 'option-4', label: 'Option 4' },
+        { value: 'option-5', label: 'Option 5' },
+    ];
+
+    return html`
+        <sp-field-label for="picker-multiple" size=${ifDefined(args.size)}>
+            Select multiple items:
+        </sp-field-label>
+        <sp-picker
+            id="picker-multiple"
+            @change=${handleChange(args)}
+            label="Select options"
+            multiple
+            .maxOptionsVisible=${3}
+            ${spreadProps(args)}
+        >
+            ${items.map(
+                (item) => html`
+                    <sp-menu-item value="${item.value}">
+                        ${item.label}
+                    </sp-menu-item>
+                `
+            )}
+        </sp-picker>
+    `;
+};
+multipleSelection.args = {
+    maxOptionsVisible: 3,
+};
+
+export const multipleWithIcons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label
+            for="picker-multiple-icons"
+            size=${ifDefined(args.size)}
+        >
+            Select multiple actions:
+        </sp-field-label>
+        <sp-picker
+            id="picker-multiple-icons"
+            @change=${handleChange(args)}
+            label="Select actions"
+            multiple
+            .maxOptionsVisible=${3}
+            ${spreadProps(args)}
+        >
+            <sp-menu-item value="edit">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="copy">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="delete">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+        <sp-help-text>
+            The overlay stays open when making multiple selections. Selected
+            items appear as tags with icons from the menu items.
+        </sp-help-text>
+    `;
+};
+multipleWithIcons.args = {
+    open: true,
+    maxOptionsVisible: 3,
+};
+multipleWithIcons.decorators = [isOverlayOpen];
+
 export const custom = (args: StoryArgs): TemplateResult => {
     const initialState = 'lb1-mo';
     return html`
