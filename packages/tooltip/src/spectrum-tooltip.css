@@ -33,6 +33,37 @@ governing permissions and limitations under the License.
     transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
 }
 
+#tooltip {
+    --spectrum-tooltip-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-tooltip-margin: 0px;
+    --spectrum-tooltip-height: var(--spectrum-component-height-75);
+    --spectrum-tooltip-max-inline-size: var(--spectrum-tooltip-maximum-width);
+    --spectrum-tooltip-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tooltip-icon-width: var(--spectrum-workflow-icon-size-50);
+    --spectrum-tooltip-icon-height: var(--spectrum-workflow-icon-size-50);
+    --spectrum-tooltip-font-size: var(--spectrum-font-size-75);
+    --spectrum-tooltip-line-height: var(--spectrum-line-height-100);
+    --spectrum-tooltip-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-tooltip-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-tooltip-spacing-inline: var(--spectrum-component-edge-to-text-75);
+    --spectrum-tooltip-spacing-block-start: var(--spectrum-component-top-to-text-75);
+    --spectrum-tooltip-spacing-block-end: var(--spectrum-component-bottom-to-text-75);
+    --spectrum-tooltip-icon-spacing-inline-start: var(--spectrum-text-to-visual-75);
+    --spectrum-tooltip-icon-spacing-inline-end: var(--spectrum-text-to-visual-75);
+    --spectrum-tooltip-icon-spacing-block-start: var(--spectrum-component-top-to-workflow-icon-75);
+    --spectrum-tooltip-background-color-informative: var(--spectrum-informative-background-color-default);
+    --spectrum-tooltip-background-color-positive: var(--spectrum-positive-background-color-default);
+    --spectrum-tooltip-background-color-negative: var(--spectrum-negative-background-color-default);
+    --spectrum-tooltip-content-color: var(--spectrum-white);
+    --spectrum-tooltip-tip-inline-size: var(--spectrum-tooltip-tip-width);
+    --spectrum-tooltip-tip-block-size: var(--spectrum-tooltip-tip-height);
+    --spectrum-tooltip-tip-square-size: var(--spectrum-tooltip-tip-inline-size);
+    --spectrum-tooltip-tip-height-percentage: 50%;
+    --spectrum-tooltip-tip-antialiasing-inset: 0.5px;
+    --spectrum-tooltip-pointer-corner-spacing: var(--spectrum-corner-radius-100);
+    --spectrum-tooltip-background-color-default: var(--spectrum-tooltip-backgound-color-default-neutral);
+}
+
 @media (forced-colors: active) {
     #tooltip {
         border: 1px solid #0000;
