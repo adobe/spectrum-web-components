@@ -577,7 +577,7 @@ export class PickerBase extends ManageHelpText(
         return html`
             <button
                 aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
-                aria-describedby="tooltip ${DESCRIPTION_ID}"
+                aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
                 aria-labelledby="loader icon label applied-label"
