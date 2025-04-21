@@ -293,7 +293,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected handleKeydown = (event: KeyboardEvent): void => {
-        console.log('handleKeydown', event.key);
         this.focused = true;
         if (
             !['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(
@@ -951,7 +950,6 @@ export class Picker extends PickerBase {
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
-        console.log('handleKeydown 2', event.key);
         const { key } = event;
         const handledKeys = [
             'ArrowUp',
