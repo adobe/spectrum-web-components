@@ -28,6 +28,12 @@ governing permissions and limitations under the License.
         --system-search-border-color-key-focus
     );
     --spectrum-search-background-color: var(--system-search-background-color);
+    --spectrum-search-background-color-disabled: var(
+        --system-search-background-color-disabled
+    );
+    --spectrum-search-border-color-disabled: var(
+        --system-search-border-color-disabled
+    );
     --spectrum-search-border-radius: var(--system-search-border-radius);
     --spectrum-search-edge-to-visual: var(--system-search-edge-to-visual);
 }
@@ -36,5 +42,14 @@ governing permissions and limitations under the License.
     --spectrum-search-border-radius: var(--system-search-size-m-border-radius);
     --spectrum-search-edge-to-visual: var(
         --system-search-size-m-edge-to-visual
+    );
+}
+
+:host([quiet]) {
+    --spectrum-search-background-color-disabled: var(
+        --system-search-quiet-background-color-disabled
+    );
+    --spectrum-search-border-color-disabled: var(
+        --system-search-quiet-border-color-disabled
     );
 }

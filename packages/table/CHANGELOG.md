@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`a4de4c7`](https://github.com/adobe/spectrum-web-components/commit/a4de4c76c38ae274535fc7df8ab32490a796485a)]:
+    -   @spectrum-web-components/checkbox@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

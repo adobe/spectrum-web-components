@@ -89,12 +89,12 @@ export const argTypes = {
 };
 
 export const makeOverBackground =
-    (variant?: 'white' | 'black') =>
+    (staticColor?: 'white' | 'black') =>
     (story: () => TemplateResult): TemplateResult => {
         const color =
-            variant === 'black'
-                ? 'rgb(181, 209, 211)'
-                : 'var(--spectrum-seafoam-900)';
+            staticColor === 'black'
+                ? 'var(--spectrum-docs-static-black-background-color)'
+                : 'var(--spectrum-docs-static-white-background-color)';
         return html`
             <div
                 style="
@@ -117,10 +117,11 @@ export function renderButton(properties: Properties): TemplateResult {
             ?pending=${!!properties.pending}
             ?quiet="${!!properties.quiet}"
             ?no-wrap="${!!properties.noWrap}"
-            size=${properties.size}
+            size=${ifDefined(properties.size)}
             target=${ifDefined(properties.target)}
             treatment=${ifDefined(properties.treatment)}
             variant=${ifDefined(properties.variant)}
+            static-color=${ifDefined(properties.staticColor)}
         >
             ${properties.content || 'Click Me'}
         </sp-button>
