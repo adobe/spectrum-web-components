@@ -86,7 +86,7 @@ describe('Overlay Trigger - extended', () => {
     let popover!: Popover;
 
     afterEach(async () => {
-        if (overlayTrigger.open) {
+        if (overlayTrigger && overlayTrigger.open) {
             const closed = oneEvent(overlayTrigger, 'sp-closed');
             overlayTrigger.open = undefined;
             await closed;
