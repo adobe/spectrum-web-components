@@ -1,4 +1,5 @@
 ---
+'@spectrum-web-components/menu': patch
 '@spectrum-web-components/styles': patch
 '@spectrum-web-components/switch': patch
 '@spectrum-web-components/tabs': patch
