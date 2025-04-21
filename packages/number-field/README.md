@@ -295,6 +295,9 @@ The `invalid` attribute indicates that the number field's value is invalid. When
         "maximumFractionDigits": 2
     }'
 ></sp-number-field>
+<sp-help-text variant="negative">
+    Value should be between $0 and $0.3.
+</sp-help-text>
 ```
 
 #### Valid
@@ -330,7 +333,8 @@ The `required` attribute sets the number field to an indeterminate state, visual
 
 ```html
 <sp-field-label for="required" required>Number of tickets</sp-field-label>
-<sp-number-field id="required" required></sp-number-field>
+<sp-number-field id="required" required default="0"></sp-number-field>
+<sp-help-text>Number of tickets is required.</sp-help-text>
 ```
 
 #### Disabled
