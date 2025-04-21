@@ -1,5 +1,6 @@
 ---
 '@spectrum-web-components/styles': patch
+'@spectrum-web-components/switch': patch
 '@spectrum-web-components/tabs': patch
 '@spectrum-web-components/toast': patch
 '@spectrum-web-components/tooltip': patch
