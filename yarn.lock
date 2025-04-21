@@ -7064,13 +7064,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/closebutton@npm:6.0.0-s2-foundations.16":
-  version: 6.0.0-s2-foundations.16
-  resolution: "@spectrum-css/closebutton@npm:6.0.0-s2-foundations.16"
+"@spectrum-css/closebutton@npm:6.1.0":
+  version: 6.1.0
+  resolution: "@spectrum-css/closebutton@npm:6.1.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/72c6c72e3099bbe86806031a2d797124b379e74967354f8882139a362a0f0c77a96fee8d50cbf3c938906158720543b78f34a7181de9da5d7df4664e94a64538
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6764236c5b36c50f9d9a5f76174b19d1300a32cc28df70f43718b11b6ecfba61ece94adbc51cc7d8e5e99861ddc644402a9daabd16ed8e8205b68ef91aa7fae0
   languageName: node
   linkType: hard
 
@@ -7350,13 +7355,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/illustratedmessage@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@spectrum-css/illustratedmessage@npm:8.0.1"
+"@spectrum-css/illustratedmessage@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/illustratedmessage@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14 || >=15"
-    "@spectrum-css/typography": ">=6"
-  checksum: 10c0/7abe65b9e8a54181503810b632ff26f75cbd559665412867c01e37878b61db9c53973658dedc4685d0d3394952241caaf7470a84c70d7d997fdb85e29b4824ad
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/typography": ">=8.0.0 <9.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+    "@spectrum-css/typography":
+      optional: true
+  checksum: 10c0/3a9f61f978bc82feb8c9466a3fa72234b82922f1f2dd7604dece31263d654890216d1a91315e02f34cfb9351fd9e0129bb747039b46d58fc1911900512c86e35
   languageName: node
   linkType: hard
 
@@ -7387,9 +7397,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/menu@npm:9.1.1":
-  version: 9.1.1
-  resolution: "@spectrum-css/menu@npm:9.1.1"
+"@spectrum-css/menu@npm:9.2.0":
+  version: 9.2.0
+  resolution: "@spectrum-css/menu@npm:9.2.0"
   peerDependencies:
     "@spectrum-css/checkbox": ">=10.0.0 <11.0.0"
     "@spectrum-css/divider": ">=5.0.0 <6.0.0"
@@ -7410,7 +7420,7 @@ __metadata:
       optional: true
     "@spectrum-css/tray":
       optional: true
-  checksum: 10c0/3f0a4692daedce04df5100e9fdba3fc12b40eb1a90d9a190d264eaa4d908f38b15006d4e1ea21c65011c866a497f7f5d2a9b715bc15c457e25f4245e767ba8c5
+  checksum: 10c0/981206b82fad85b5be1d45b731d6e4558e1f71a4c84847aed0f4b9870cc737cdf88aa144c68a2bab88465ac4ab7fb70bd68f58b70ceed1b720f71c9ab3be4c51
   languageName: node
   linkType: hard
 
@@ -7613,12 +7623,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/statuslight@npm:8.0.0-s2-foundations.15":
-  version: 8.0.0-s2-foundations.15
-  resolution: "@spectrum-css/statuslight@npm:8.0.0-s2-foundations.15"
+"@spectrum-css/statuslight@npm:9.1.0":
+  version: 9.1.0
+  resolution: "@spectrum-css/statuslight@npm:9.1.0"
   peerDependencies:
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/a35b8b705e2394311bcbf9ecbe8f14ec9f35760eaa48065d72c745d7530f4f186bb6746e41d6862a0c568f449e694028cdedf6730415b1cd1a98be7d241e28cb
+    "@spectrum-css/tokens": ">=16.0.1"
+  peerDependenciesMeta:
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/6de3f854ee6c68212a0b4feefb524575bf44ed80083d613bfd8fcee07c044be852f379c136f5ef103cbc5ec18ddd189e671dc178eb8fd79ccca92ab07106b83a
   languageName: node
   linkType: hard
 
@@ -8193,7 +8206,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/close-button@workspace:packages/close-button"
   dependencies:
-    "@spectrum-css/closebutton": "npm:6.0.0-s2-foundations.16"
+    "@spectrum-css/closebutton": "npm:6.1.0"
     "@spectrum-web-components/base": "npm:1.5.0"
   languageName: unknown
   linkType: soft
@@ -8517,7 +8530,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/illustrated-message@workspace:packages/illustrated-message"
   dependencies:
-    "@spectrum-css/illustratedmessage": "npm:8.0.1"
+    "@spectrum-css/illustratedmessage": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.5.0"
     "@spectrum-web-components/styles": "npm:1.5.0"
   languageName: unknown
@@ -8548,7 +8561,7 @@ __metadata:
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@spectrum-css/menu": "npm:9.1.1"
+    "@spectrum-css/menu": "npm:9.2.0"
     "@spectrum-web-components/action-button": "npm:1.5.0"
     "@spectrum-web-components/base": "npm:1.5.0"
     "@spectrum-web-components/divider": "npm:1.5.0"
@@ -8776,7 +8789,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/status-light@workspace:packages/status-light"
   dependencies:
-    "@spectrum-css/statuslight": "npm:8.0.0-s2-foundations.15"
+    "@spectrum-css/statuslight": "npm:9.1.0"
     "@spectrum-web-components/base": "npm:1.5.0"
   languageName: unknown
   linkType: soft
