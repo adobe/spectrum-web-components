@@ -11,6 +11,13 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-illustrated-message-illustration-color: CanvasText;
+        --highcontrast-illustrated-message-illustration-accent-color: Highlight;
+    }
+}
+
 :host {
     --spectrum-illustrated-message-description-max-inline-size: var(--spectrum-illustrated-message-maximum-width);
     --spectrum-illustrated-message-heading-max-inline-size: var(--spectrum-illustrated-message-maximum-width);
@@ -30,22 +37,6 @@ governing permissions and limitations under the License.
     --spectrum-illustrated-message-description-font-size: var(--spectrum-illustrated-message-body-size);
     --spectrum-illustrated-message-description-line-height: var(--spectrum-body-line-height);
     --spectrum-illustrated-message-description-color: var(--spectrum-body-color);
-}
-
-:host:lang(ja),
-:host:lang(ko),
-:host:lang(zh) {
-    --spectrum-illustrated-message-title-font-size: var(--spectrum-illustrated-message-cjk-title-size);
-}
-
-@media (forced-colors: active) {
-    :host {
-        --highcontrast-illustrated-message-illustration-color: CanvasText;
-        --highcontrast-illustrated-message-illustration-accent-color: Highlight;
-    }
-}
-
-:host {
     block-size: 100%;
     display: flex;
     display: var(--mod-illustrated-message-display, flex);
@@ -56,6 +47,12 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --spectrum-illustrated-message-title-font-size: var(--spectrum-illustrated-message-cjk-title-size);
 }
 
 #illustration {
