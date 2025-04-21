@@ -353,14 +353,13 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         expect(el.children[3]).to.equal(document.activeElement);
-        //todo test times out waiting for menu close
-        //const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
+        const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
         // use keyboard to navigate to the second menu item and select it
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'Enter' });
 
-        //await closed
+        await closed;
 
         expect(
             (el.children[0] as ActionButton)?.tabIndex,

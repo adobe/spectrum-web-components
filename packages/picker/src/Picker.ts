@@ -293,6 +293,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected handleKeydown = (event: KeyboardEvent): void => {
+        console.log('handleKeydown', event.key);
         this.focused = true;
         if (
             !['ArrowUp', 'ArrowDown', 'Enter', ' ', 'Escape'].includes(
@@ -311,7 +312,20 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.toggle(true, true);
+        // if the menu is not open, we need to toggle it and wait for it to open to focus on the first selected item
+        if (!this.open || !this.strategy.open) {
+            this.addEventListener(
+                'sp-opened',
+                () => this.optionsMenu?.focusOnFirstSelectedItem(),
+                {
+                    once: true,
+                }
+            );
+            this.toggle(true);
+        } else {
+            // if the menu is already open, we need to focus on the first selected item
+            this.optionsMenu?.focusOnFirstSelectedItem();
+        }
     }
 
     protected async setValueFromItem(
@@ -368,19 +382,11 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         item.selected = value;
     }
 
-    public toggle(target?: boolean, focusOnOpen?: boolean): void {
+    public toggle(target?: boolean): void {
         if (this.readonly || this.pending || this.disabled) {
             return;
         }
         const open = typeof target !== 'undefined' ? target : !this.open;
-        if (open && !this.open && focusOnOpen)
-            this.addEventListener(
-                'sp-opened',
-                () => this.optionsMenu?.focusOnFirstSelectedItem(),
-                {
-                    once: true,
-                }
-            );
 
         this.open = open;
         if (this.strategy) {
@@ -945,6 +951,7 @@ export class Picker extends PickerBase {
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
+        console.log('handleKeydown 2', event.key);
         const { key } = event;
         const handledKeys = [
             'ArrowUp',
