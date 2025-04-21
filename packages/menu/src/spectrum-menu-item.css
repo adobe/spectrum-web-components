@@ -355,9 +355,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-back {
-    padding-inline: 0 var(--mod-menu-back-padding-inline-end, var(--spectrum-menu-item-label-inline-edge-to-content));
     padding-inline: var(--mod-menu-back-padding-inline-start, 0) var(--mod-menu-back-padding-inline-end, var(--spectrum-menu-item-label-inline-edge-to-content));
-    padding-block: 0;
     padding-block: var(--mod-menu-back-padding-block-start, 0) var(--mod-menu-back-padding-block-end, 0);
     flex-flow: wrap;
     align-items: center;
