@@ -27,9 +27,6 @@ governing permissions and limitations under the License.
 
 :host {
     border-block-start: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-divider-color, var(--mod-table-divider-color, var(--spectrum-table-divider-color)));
-}
-
-:host {
     box-sizing: border-box;
     font-size: var(--mod-table-row-font-size, var(--spectrum-table-row-font-size));
     font-weight: var(--mod-table-row-font-weight, var(--spectrum-table-row-font-weight));
@@ -44,6 +41,7 @@ governing permissions and limitations under the License.
 }
 
 :host {
+    display: table-cell;
     position: relative;
 }
 
@@ -58,10 +56,6 @@ governing permissions and limitations under the License.
 
 .divider {
     border-inline-end: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-divider-color, var(--mod-table-divider-color, var(--spectrum-table-divider-color)));
-}
-
-:host {
-    display: table-cell;
 }
 
 .spectrum-Table-cell--collapsible {
