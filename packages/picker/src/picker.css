@@ -14,6 +14,7 @@ governing permissions and limitations under the License.
 @import url('./picker-overrides.css');
 
 :host {
+    flex-wrap: wrap;
     display: inline-flex;
     vertical-align: top;
 

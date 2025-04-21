@@ -29,6 +29,7 @@ import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';
 import { argTypes } from './args.js';
 import { states } from './states.js';
 import { handleChange, StoryArgs, Template } from './template.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
     title: 'Picker',
@@ -790,3 +791,14 @@ export const BackgroundClickTest = (): TemplateResult => {
 BackgroundClickTest.swc_vrt = {
     skip: true,
 };
+export const withHelpText = (): TemplateResult => html`
+    <sp-field-label for="picker-help-text">Choose an option</sp-field-label>
+    <sp-picker id="picker-help-text">
+        <sp-menu-item value="option-1">Option 1</sp-menu-item>
+        <sp-menu-item value="option-2">Option 2</sp-menu-item>
+        <sp-menu-item value="option-3">Option 3</sp-menu-item>
+        <sp-help-text slot="help-text">
+            Select an option from the dropdown menu.
+        </sp-help-text>
+    </sp-picker>
+`;

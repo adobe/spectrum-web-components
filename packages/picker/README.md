@@ -627,11 +627,11 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
     <sp-menu-item>Phone</sp-menu-item>
     <sp-menu-item>Text</sp-menu-item>
     <sp-menu-item>Email</sp-menu-item>
+    <sp-help-text id="help-text" slot="help-text">
+        Choose the best way to contact you in case there's an issue with your
+        account.
+    </sp-help-text>
 </sp-picker>
-<sp-help-text id="help-text">
-    Choose the best way to contact you in case there's an issue with your
-    account.
-</sp-help-text>
 ```
 
 </sp-tab-panel>
@@ -652,10 +652,10 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
     <sp-menu-item>Phone</sp-menu-item>
     <sp-menu-item>Text</sp-menu-item>
     <sp-menu-item>Email</sp-menu-item>
+    <sp-help-text id="error-help-text" variant="negative" slot="help-text">
+        Select a contact method.
+    </sp-help-text>
 </sp-picker>
-<sp-help-text id="error-help-text" variant="negative">
-    Select a contact method.
-</sp-help-text>
 ```
 
 </sp-tab-panel>
