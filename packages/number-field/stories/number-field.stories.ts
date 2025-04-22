@@ -450,22 +450,22 @@ readOnly.args = {
 };
 export const validationIcons = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-field-label for="validation">
+        <sp-field-label for="invalidHiddenStepper">
             Invalid Number Field without Stepper
         </sp-field-label>
         <sp-number-field
-            id="validation"
+            id="invalidHiddenStepper"
             ...=${spreadProps(args)}
             @change=${args.onChange}
         ></sp-number-field>
-        <sp-field-label for="validation">
+        <sp-field-label for="validStepper">
             Valid Number Field with Stepper
         </sp-field-label>
-        <sp-number-field id="validation" valid></sp-number-field>
-        <sp-field-label for="validation">
+        <sp-number-field id="validStepper" valid></sp-number-field>
+        <sp-field-label for="invalidStepper">
             Invalid Number Field with Stepper
         </sp-field-label>
-        <sp-number-field id="validation" invalid></sp-number-field>
+        <sp-number-field id="invalidStepper" invalid></sp-number-field>
     `;
 };
 validationIcons.args = {
