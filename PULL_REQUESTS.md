@@ -79,7 +79,7 @@ When creating a pull request, you'll be presented with our template. Complete al
 
 -   Description of the changes
 -   Related issues (using proper GitHub keywords to auto-close issues)
--   Type of change (bug fix, feature, breaking change)
+-   Type of change in the PR title (bug fix, feature, breaking change)
 -   Checklist of items completed
 -   Screenshots/videos for visual changes
 -   Testing information
@@ -130,18 +130,21 @@ The code review process should be constructive, respectful, and focused on impro
 -   **Be Specific and Constructive**: Provide clear, actionable feedback rather than vague criticisms. Explain why a change is needed.
 -   **Prioritize Issues**: Focus on important issues first (architecture, functionality, performance) before minor stylistic concerns.
 -   **Ask Questions**: When something isn't clear, ask questions rather than making assumptions about intent.
--   **Suggest Alternatives**: When pointing out issues, suggest possible solutions or approaches.
+-   **Suggest Alternatives**: When pointing out issues, suggest possible solutions or approaches. Leverage the code suggestions feature to streamline applying feedback for the author.
 -   **Recognize Good Work**: Acknowledge well-written code and good design decisions. Positive reinforcement is valuable.
 -   **Remember Context**: Consider the PR author's experience level and the scope of changes when providing feedback.
 -   **Be Timely**: Complete reviews promptly to avoid blocking progress.
 -   **Avoid Nitpicking**: Focus on meaningful improvements rather than personal style preferences that don't violate project standards. Prepend comments with `nit:` to denote its non-blocking feedback.
+-   **Use Changes Requested Sparingly**: Changes Requested review status should only be used in instances where a bug or regression is still present in the PR.
+-   **Review VRTs Thoroughly**: Ensure the diffs in VRT are expected and inform the author via comment if they are approved so they know to update the golden hash.
 
 #### For PR Authors
 
+-   **Self Review Your PR**: Authors should take a first pass as reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answer questions they may have.
 -   **Be Receptive to Feedback**: Approach review comments with an open mind. The goal is better code, not personal criticism.
 -   **Respond to All Comments**: Address each review comment, either with code changes or explanations of your approach.
 -   **Ask for Clarification**: If review feedback is unclear, ask questions to understand the concern.
--   **Notify When Ready**: After addressing feedback, notify reviewers that the PR is ready for another look.
+-   **Notify When Ready**: After addressing feedback, notify reviewers that the PR is ready for another look either in Slack or by requesting a new review in GitHub.
 -   **Explain Complex Changes**: For non-obvious changes, explain your reasoning in the PR description or comments.
 -   **Break Down Large PRs**: When possible, split large changes into smaller, more manageable PRs.
 -   **Test Thoroughly**: Before requesting review, ensure your code meets the project's quality standards.
@@ -164,7 +167,7 @@ A PR is ready to merge when:
 2. All CI checks are passing
     - Unit tests passing
     - Integration tests passing
-    - Visual regression tests passing (VRT golden images should not be updated until an approver confirms they look good)
+    - Visual regression tests passing (**VRT golden images should not be updated until an approver confirms they look good**)
     - Linting checks passing
 3. All requested changes have been addressed
 4. PR follows conventional commit standards
@@ -181,16 +184,16 @@ When creating or reviewing new components, ensure:
 
 -   README contains a clear description and minimal example
 -   Inline documentation for all public APIs
--   Demo page under `/demo` showing all component states
+-   Accessibility documentation that aligns with WCAG patterns
 
 #### API Documentation
 
 -   **Slots**: All slots documented in the element class docblock
--   **CSS Custom Properties**: All public CSS custom properties documented
--   **CSS Shadow Parts**: All shadow parts documented
 -   **Events**: All dispatched events documented with `@fires` docblock
 -   **Class Fields**: All public/protected fields have proper docblocks
 -   **Methods**: All public/protected methods have docblocks with parameters and return types
+-   **CSS Custom Properties**: All public CSS custom properties documented
+-   **CSS Shadow Parts**: All shadow parts documented
 
 #### Technical Requirements
 
