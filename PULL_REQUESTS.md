@@ -47,7 +47,7 @@ For PRs that add or update a component:
 
 ### Conventional Commits
 
-We follow the Conventional Commits standard to make change tracking predictable and automate versioning:
+We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification to make change tracking predictable:
 
 Format: `type(component?): subject`
 
