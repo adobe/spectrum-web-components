@@ -147,7 +147,7 @@ Avoid editing distribution files (if present). Make changes to the source files,
 
 # 10. Developing Locally
 
-Read the steps outlined in the README.md to get your environment set up.
+Read the steps outlined in the [README.md](README.md) to get your environment set up.
 
 If you encounter hurdles, feel free to ask for help in your pull request or in the community forum.
 
