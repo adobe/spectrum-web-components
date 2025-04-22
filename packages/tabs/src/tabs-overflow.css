@@ -14,11 +14,13 @@ governing permissions and limitations under the License.
     inset: 0;
     width: 100%;
 
-    --sp-tabs-overflow-next-button-right: calc(
-        -1 * var(--spectrum-component-edge-to-text-100)
+    --sp-tabs-overflow-next-button-right: var(
+        --mod-sp-tabs-overflow-next-button-right,
+        calc(-1 * var(--spectrum-component-edge-to-text-100))
     );
-    --sp-tabs-overflow-previous-button-left: calc(
-        -1 * var(--spectrum-component-edge-to-text-100)
+    --sp-tabs-overflow-previous-button-left: var(
+        --mod-sp-tabs-overflow-previous-button-left,
+        calc(-1 * var(--spectrum-component-edge-to-text-100))
     );
     --sp-tabs-overflow-button-height: calc(
         var(--spectrum-tab-item-height-medium) -
@@ -26,7 +28,10 @@ governing permissions and limitations under the License.
     );
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-medium);
     --sp-tabs-overflow-icon-color: var(--spectrum-gray-800);
-    --sp-tabs-overflow-shadow-color: var(--spectrum-gray-100);
+    --sp-tabs-overflow-shadow-color: var(
+        --mod-sp-tabs-overflow-shadow-color,
+        var(--spectrum-gray-100)
+    );
     --sp-tabs-overflow-shadow-width: 50px;
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-100);
 }
