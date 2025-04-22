@@ -84,7 +84,7 @@ If you’re having a usage issue or need support, do not open an issue. Instead,
 ## 5.1. Before Submitting A Bug Report
 
 1. Check the Open Issues to see if the problem has already been reported.
-    1. TIP: Apply the component label to make your search process more straightforward.
+    - TIP: Apply the component label to make your search process more straightforward.
 2. If it has and the issue is still open, add a comment to the existing issue instead of opening a new one.
 3. Check if you can reproduce the problem in the latest version of Spectrum Web Components.
 4. If there are no related open issues and it is reproducible in isolation, then open a Bug Report.
