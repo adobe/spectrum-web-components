@@ -130,37 +130,7 @@ Is there something you wish the project did differently? Have a new component in
 
 # 8. Pull Requests
 
-If you plan to fix a bug, create a feature, or improve documentation, we recommend:
-
-1. Clone the Repo
-    - Click “<> Code” in the GitHub UI to copy the repository to your machine.
-    - Follow the README instructions for setup and the CONTRIBUTING guide
-2. Create a Descriptive Branch
-    - Use a clear name like `username/fix-header-bug` or `feature/new-sidebar-component`.
-    - Reference [Branches section](#9-branches)
-3. Commit Your Changes
-    - Follow Conventional Commits for structured commit messages.
-    - We use Commitlint to help manage the semantic versions across the various packages in this library.
-    - Generally, your commits should look like the following:
-      type(component?): subject
-      //component is optional, but should reference the package you are updating
-4. Open a Draft PR
-    - Opening a draft pull request early is a great way to get feedback before finalizing your work. Mark it as “Draft” if you aren’t ready for a full review.
-5. Complete the PR Template
-    1. Fill out the PR template to the best of your ability
-    2. When adding related issues to your PR, make sure to use the proper keywords so that the issues automatically close upon merging the PR.
-    3. If a PR does not include a completed template, it will delay the review and you will be asked to complete it before a maintainer looks at it.
-6. Ensure all CI checks and tests are passing
-    - PRs with failing checks will NOT be merged
-    - VRT checks golden hash should not be updated until an approver has commented that they look good.
-7. Mark PR Ready for Review
-    - The maintainers will be automatically add as reviewers and notified
-8. Solicit Feedback
-    - Once the PR is live, maintainers and contributors will review your changes. You might receive suggestions or requests for adjustments.
-9. Merge & Release
-    - After your PR is approved and passes all checks, a maintainer will merge your PR. We’ll update release notes as needed so everyone knows about the change.
-
-> Note: If your contribution is small (e.g., correcting a typo or fixing a tiny bug), you don’t necessarily need to open an issue first. Just create the PR!
+If you plan to fix a bug, create a feature, or improve documentation, follow the [Pull Request Guide](PULL_REQUESTS.md) to ensure you're contribution meets expectations for getting reviewed.
 
 ---
 
