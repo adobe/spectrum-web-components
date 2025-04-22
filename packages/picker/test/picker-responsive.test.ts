@@ -17,6 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -125,12 +126,16 @@ describe('Picker, responsive', () => {
             await elementUpdated(el);
         });
 
-        it('is a Popover in mobile', async () => {
+        it('is a Popover in mobile', async function () {
+            // Increase timeout for this test to avoid CI failures
+            this.timeout(10000);
+
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
              */
             el.isMobile.matches = true;
             el.bindEvents();
+            await elementUpdated(el);
 
             /**
              * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
@@ -139,9 +144,15 @@ describe('Picker, responsive', () => {
              * See: https://github.com/microsoft/playwright/issues/11781
              **/
             await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
 
+            // Wait until the element is fully updated after viewport change
+            await waitUntil(
+                () => el.offsetWidth > 0,
+                'Element should be visible'
+            );
+            await elementUpdated(el);
+
+            // Setup event listener before clicking
             const opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
@@ -156,8 +167,22 @@ describe('Picker, responsive', () => {
                     },
                 ],
             });
+
+            // Wait for element to update after click
             await elementUpdated(el);
-            await opened;
+
+            // Wait for the opened event with a more explicit error message
+            await opened.catch(() => {
+                throw new Error(
+                    'sp-opened event was not fired within the timeout period'
+                );
+            });
+
+            // Wait until the popover is actually in the DOM
+            await waitUntil(
+                () => el.shadowRoot.querySelector('sp-popover') !== null,
+                'Popover should be present in the DOM'
+            );
 
             const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');

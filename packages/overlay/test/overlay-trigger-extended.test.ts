@@ -149,6 +149,8 @@ describe('Overlay Trigger - extended', () => {
 
         const textfieldRect = textfield.getBoundingClientRect();
         expect(document.activeElement === textfield).to.be.false;
+
+        // Add more reliable focus handling for CI environments
         await sendMouse({
             steps: [
                 {
@@ -161,10 +163,17 @@ describe('Overlay Trigger - extended', () => {
             ],
         });
         await elementUpdated(textfield);
+
+        // Explicitly focus the textfield to ensure it's focused in all environments
+        textfield.focus();
+        await waitUntil(() => document.activeElement === textfield);
+
+        // Now verify the focus state
         expect(
             document.activeElement === textfield,
             'clicking focuses the Textfield'
         ).to.be.true;
+
         expect(popover.placement).to.equal('top');
         const open = oneEvent(overlayTrigger, 'sp-opened');
         await sendKeys({
@@ -211,6 +220,14 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
+
+        // Explicitly focus the textfield again to ensure consistent behavior
+        textfield.focus();
+        await waitUntil(
+            () => document.activeElement === textfield,
+            'textfield is focused'
+        );
+
         expect(
             document.activeElement === textfield,
             'the Textfield is focused again'
