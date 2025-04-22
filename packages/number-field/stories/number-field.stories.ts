@@ -15,7 +15,6 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
-import '@spectrum-web-components/slider/sp-slider.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 

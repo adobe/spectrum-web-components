@@ -45,6 +45,52 @@ export default {
                 },
                 // Default to `size='m'` without needing the attribute
                 converter.classToHost('spectrum-Textfield--sizeM'),
+
+                {
+                    // .spectrum-Textfield--quiet:after
+                    find: [
+                        builder.class('spectrum-Textfield--quiet'),
+                        builder.pseudoElement('after'),
+                    ],
+                    // :host([quiet]) #textfield:after {
+                    replace: [
+                        {
+                            replace: builder.attribute('quiet'),
+                        },
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Textfield--quiet.is-keyboardFocused:after
+                    find: [
+                        builder.class('spectrum-Textfield--quiet'),
+                        builder.class('is-keyboardFocused'),
+                        builder.pseudoElement('after'),
+                    ],
+                    // :host([quiet][focused]) #textfield:after
+                    replace: [
+                        {
+                            replace: builder.attribute('quiet'),
+                        },
+                        {
+                            replace: builder.attribute('focused'),
+                        },
+                        {
+                            replace: builder.combinator(' '),
+                        },
+                        {
+                            replace: builder.id('textfield'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
                 ...converter.enumerateAttributes(
                     [
                         ['spectrum-Textfield--sizeS', 's'],
