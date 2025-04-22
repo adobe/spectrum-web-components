@@ -78,7 +78,7 @@ For breaking changes, add a `!` after the type/scope:
 When creating a pull request, you'll be presented with our template. Complete all sections to the best of your ability, including:
 
 -   Description of the changes
--   Related issues (using proper GitHub keywords to auto-close issues)
+-   Related issues (using proper [GitHub keywords](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests#linking-a-pull-request-to-an-issue) to auto-close issues i.e. `fixes`, `resolves`, or `closes`)
 -   Type of change in the PR title (bug fix, feature, breaking change)
 -   Checklist of items completed
 -   Screenshots/videos for visual changes
