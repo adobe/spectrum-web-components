@@ -352,11 +352,12 @@ describe('ActionGroup', () => {
         await opened;
         await elementUpdated(el);
 
-        expect(el.children[3]).to.equal(document.activeElement);
+        expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
         // use keyboard to navigate to the second menu item and select it
         await sendKeys({ press: 'ArrowDown' });
+        expect(actionMenu.children[0]).to.equal(document.activeElement);
         await sendKeys({ press: 'Enter' });
 
         await closed;
