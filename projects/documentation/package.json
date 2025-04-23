@@ -43,7 +43,7 @@
         "esbuild-plugin-lit-css": "^3.0.0",
         "lunr": "^2.3.9",
         "markdown-it": "^14.0.0",
-        "markdown-it-anchor": "^8.4.1",
+        "markdown-it-anchor": "^9.2.0",
         "markdown-it-for-inline": "^2.0.1",
         "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^1.0.1",
