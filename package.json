@@ -103,7 +103,7 @@
         "@commitlint/config-conventional": "^19.8.0",
         "@custom-elements-manifest/analyzer": "^0.9.0",
         "@geometricpanda/storybook-addon-badges": "^2.0.2",
-        "@lit/react": "^1.0.4",
+        "@lit/react": "^1.0.7",
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^4.0.0",
