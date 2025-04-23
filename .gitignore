@@ -62,8 +62,9 @@ tools/**/*.test-vrt.ts
 !tools/base/src/version.js
 !tools/base/src/version.d.ts
 
-
+# cache directories
 .wireit
+.eslintcache
 
 stats.html
 
@@ -111,4 +112,4 @@ chromatic.config.json
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
-!.yarn/versio;/
+!.yarn/version
