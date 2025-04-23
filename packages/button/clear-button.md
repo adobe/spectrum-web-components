@@ -93,6 +93,22 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 </sp-tab-panel>
 </sp-tabs>
 
+#### Quiet
+
+The `quiet` attribute will render the `<sp-clear-button>` as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
+
+```html
+<sp-clear-button quiet label="Clear content"></sp-clear-button>
+```
+
+#### Static color
+
+The `static-color` attribute will render the `<sp-clear-button>` with a static color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
+
+```html
+<sp-clear-button static-color="white" label="Clear content"></sp-clear-button>
+```
+
 ### States
 
 In addition to the variant, the `<sp-clear-button>` elements supports a disabled state, which can be applied by adding the attribute `disabled`.

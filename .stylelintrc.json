@@ -6,6 +6,7 @@
     },
     "overrides": [
         {
+            "files": ["**/*"],
             "extends": ["stylelint-config-standard"],
             "rules": {
                 "header/header": ["config/license.js", {}],
