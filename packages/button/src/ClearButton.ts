@@ -64,16 +64,21 @@ export class ClearButton extends SizedMixin(StyledButton, {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
     /**
      * The visual variant to apply to this button.
      * @deprecated Use `static-color='white'` instead.
      */
     @property({ reflect: true })
     public set variant(variant: 'overBackground' | undefined) {
-        const oldValue = this.variant;
+        const oldValue = this._variant;
+        const oldStaticColor = this.staticColor;
         if (variant !== 'overBackground') {
             this.removeAttribute('variant');
             this._variant = undefined;
+            this.staticColor = undefined;
             return;
         }
 
@@ -92,6 +97,7 @@ export class ClearButton extends SizedMixin(StyledButton, {
         }
 
         this.requestUpdate('variant', oldValue);
+        this.requestUpdate('staticColor', oldStaticColor);
     }
 
     public get variant(): 'overBackground' | undefined {
@@ -103,7 +109,7 @@ export class ClearButton extends SizedMixin(StyledButton, {
     /**
      * The visual variant to apply to this button.
      */
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: 'static-color' })
     public staticColor: 'white' | undefined;
 
     protected override get buttonContent(): TemplateResult[] {

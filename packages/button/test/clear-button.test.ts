@@ -13,15 +13,15 @@
 import '@spectrum-web-components/button/sp-clear-button.js';
 import { ClearButton } from '@spectrum-web-components/button';
 import { ElementSize } from '@spectrum-web-components/base';
-import { expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { SinonStub, stub } from 'sinon';
 
 describe('Clear Button', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ClearButton>(html`
-                <sp-clear-button size="m" label="Clear"></sp-clear-button>
-            `)
+    testForLitDevWarnings(async () =>
+        fixture<ClearButton>(html`
+            <sp-clear-button size="m" label="Clear"></sp-clear-button>
+        `)
     );
     (['s', 'm', 'l', 'xl'] as ElementSize[]).map((size) => {
         it(`loads - ${size}`, async () => {
@@ -31,6 +31,21 @@ describe('Clear Button', () => {
 
             await expect(el).to.be.accessible();
         });
+    });
+    it(`loads static-color="white" when variant="overBackground"`, async () => {
+        const el = await fixture<ClearButton>(html`
+            <sp-clear-button
+                label="Clear"
+                variant="overBackground"
+            ></sp-clear-button>
+        `);
+
+        await elementUpdated(el);
+
+        // Check that the staticColor is set to white
+        expect(el.staticColor).to.equal('white');
+        expect(el.hasAttribute('static-color')).to.be.true;
+        expect(el.getAttribute('static-color')).to.equal('white');
     });
 
     describe('dev mode', () => {
@@ -61,11 +76,6 @@ describe('Clear Button', () => {
 
             expect(consoleStub).to.be.calledOnce;
             expect(warning.includes(expectedContent)).to.be.true;
-
-            // Check that the staticColor is set to white
-            expect(el.staticColor).to.equal('white');
-            expect(el.hasAttribute('static-color')).to.be.true;
-            expect(el.getAttribute('static-color')).to.equal('white');
         });
     });
 });
