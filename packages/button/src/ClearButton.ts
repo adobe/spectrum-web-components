@@ -69,7 +69,36 @@ export class ClearButton extends SizedMixin(StyledButton, {
      * @deprecated Use `static-color='white'` instead.
      */
     @property({ reflect: true })
-    public variant: 'overBackground' | undefined;
+    public set variant(variant: 'overBackground' | undefined) {
+        const oldValue = this.variant;
+        if (variant !== 'overBackground') {
+            this.removeAttribute('variant');
+            this._variant = undefined;
+            return;
+        }
+
+        this.setAttribute('variant', variant);
+        this._variant = variant;
+        // Set staticColor to white to reflect the updated and expected attribute
+        this.staticColor = 'white';
+
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                'The overBackground variant is deprecated. Please use `static-color="white"` instead.',
+                'https://opensource.adobe.com/spectrum-web-components/components/clear-button/',
+                { level: 'deprecation' }
+            );
+        }
+
+        this.requestUpdate('variant', oldValue);
+    }
+
+    public get variant(): 'overBackground' | undefined {
+        return this._variant;
+    }
+
+    private _variant: 'overBackground' | undefined;
 
     /**
      * The visual variant to apply to this button.
