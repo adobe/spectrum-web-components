@@ -13,15 +13,15 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/button/sp-clear-button.js';
 import { ClearButton } from '@spectrum-web-components/button';
 import { ElementSize } from '@spectrum-web-components/base';
-import { expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { SinonStub, stub } from 'sinon';
 
 describe('Clear Button', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<ClearButton>(html`
-                <sp-clear-button size="m" label="Clear"></sp-clear-button>
-            `)
+    testForLitDevWarnings(async () =>
+        fixture<ClearButton>(html`
+            <sp-clear-button size="m" label="Clear"></sp-clear-button>
+        `)
     );
     (['s', 'm', 'l', 'xl'] as ElementSize[]).map((size) => {
         it(`loads - ${size}`, async () => {

@@ -64,6 +64,9 @@ export class ClearButton extends SizedMixin(StyledButton, {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
     /**
      * The visual variant to apply to this button.
      * @deprecated Use `static-color='white'` instead.
