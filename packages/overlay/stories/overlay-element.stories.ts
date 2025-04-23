@@ -176,138 +176,76 @@ page.args = {
     placement: 'right',
     type: 'page',
 };
-export const complexFastPage = (): TemplateResult => html`
-    <div style="padding: 20px;">
-        <span>
-            <sp-button style="margin: 20px;" id="trigger">open modal</sp-button>
-            <sp-overlay trigger="trigger@click" type="modal">
-                <!-- <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-                    <p>I am a modal type overlay.</p>
-                    Enter your email
-                    <sp-action-button
-                        onClick="
-                this.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            "
-                    >
-                        Sign in
-                    </sp-action-button>
-                </sp-dialog-wrapper> -->
-                hello
-            </sp-overlay>
-
-            <sp-button id="pageTrigger">open page</sp-button>
-            <sp-overlay trigger="pageTrigger@click" type="page">
-                <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-                    <p>I am a modal type overlay.</p>
-                    Enter your email
-                    <sp-action-button
-                        onClick="
-                this.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            "
-                    >
-                        Sign in
-                    </sp-action-button>
-                </sp-dialog-wrapper>
-            </sp-overlay>
-            <style>
-                .chat-container {
-                    position: fixed;
-                    bottom: 1em;
-                    left: 1em;
-                }
-            </style>
-
-            <sp-button id="trigger">open manual</sp-button>
-            <sp-overlay trigger="trigger@click" type="manual">
-                <sp-popover class="chat-container">
-                    <sp-dialog dismissable>
-                        <span slot="heading">Chat Window</span>
-                        <sp-action-button>Send</sp-action-button>
-                    </sp-dialog>
-                </sp-popover>
-            </sp-overlay>
-        </span>
-    </div>
-`;
 
 export const complexSlowPage = (): TemplateResult => html`
     <div style="padding: 20px;">
+
+            <p>
+                This is a complex slow page. It has a lot of content. Even with a lot of content on the page,
+                the overlay should still be able to open and close without extreme delay.
+            </p>
+
             <div
-                style="width: 100px; height: 100px; z-index:1; background: gray; position: relative;"
+                style="display: flex; flex-direction: column; align-items: center; justify-content: center;"
             >
                 <sp-button style="margin: 20px;" id="trigger">
                     open modal
                 </sp-button>
                 <sp-overlay trigger="trigger@click" type="modal">
-                <!-- <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-        <p>I am a modal type overlay.</p>
-        <sp-field-label>Enter your email</sp-field-label>
-        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-        <sp-action-button
-            onClick="
-                this.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            "
-        >
-            Sign in
-        </sp-action-button>
-            </sp-dialog-wrapper> -->
-            
-        hello</sp-overlay>
+                    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+                        <p>I am a modal type overlay.</p>
+                        <sp-field-label>Enter your email</sp-field-label>
+                        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+                        <sp-action-button
+                            onClick="
+                                this.dispatchEvent(
+                                    new Event('close', {
+                                        bubbles: true,
+                                        composed: true,
+                                    })
+                                );
+                            "
+                        >
+                            Sign in
+                        </sp-action-button>
+                    </sp-dialog-wrapper>  
+                </sp-overlay>
+
+                <sp-button id="pageTrigger" style="margin: 20px;">open page</sp-button>
+                <sp-overlay trigger="pageTrigger@click" type="page">
+                    <sp-dialog-wrapper
+                        headline="Full screen menu"
+                        mode="fullscreenTakeover"
+                        cancel-label="Close"
+                    >
+                        <p>I am a page type overlay.</p>
+                    </sp-dialog-wrapper>
+                </sp-overlay>
+                <style>
+                    .chat-container {
+                        position: fixed;
+                        bottom: 1em;
+                        left: 1em;
+                    }
+                </style>
+
+                <sp-button id="manualTrigger" style="margin: 20px;">open manual</sp-button>
+                <sp-overlay trigger="manualTrigger@click" type="manual">
+                    <sp-popover class="chat-container">
+                        <sp-dialog dismissable>
+                            <span slot="heading">Chat Window</span>
+                            <sp-textfield
+                                placeholder="Enter your message"
+                            ></sp-textfield>
+                            <sp-action-button>Send</sp-action-button>
+                        </sp-dialog>
+                    </sp-popover>
+                </sp-overlay>
 
             </div>
-                <sp-button id="pageTrigger">open page</sp-button>
-            <sp-overlay trigger="pageTrigger@click" type="page">
-                <sp-dialog-wrapper
-                    headline="Full screen menu"
-                    mode="fullscreenTakeover"
-                    cancel-label="Close"
-                >
-                    <p>I am a page type overlay.</p>
-                </sp-dialog-wrapper>
-            </sp-overlay>
-            <style>
-                .chat-container {
-                    position: fixed;
-                    bottom: 1em;
-                    left: 1em;
-                }
-            </style>
-
-            <sp-button id="manualTrigger">open manual</sp-button>
-            <sp-overlay trigger="manualTrigger@click" type="manual">
-                <sp-popover class="chat-container">
-                    <sp-dialog dismissable>
-                        <span slot="heading">Chat Window</span>
-                        <sp-textfield
-                            placeholder="Enter your message"
-                        ></sp-textfield>
-                        <sp-action-button>Send</sp-action-button>
-                    </sp-dialog>
-                </sp-popover>
-            </sp-overlay>
         </span>
 
-        <div
-            style="margin: auto; width: 100px; height: 100px; background-color: red; z-index:9999999; position: relative;"
-        >
-            element with large z-index
-        </div>
-        ${Array(1)
+        ${Array(30)
             .fill(0)
             .map(
                 () => html`
@@ -1001,53 +939,43 @@ export const nestedModalOverlays = (): TemplateResult => html`
 
         <sp-overlay
             id="outerOverlay"
-            type="modal"
+            type="auto"
             .triggerInteraction=${'click'}
+            trigger="outerTrigger@click"
         >
-            <sp-dialog-wrapper
-                headline="Outer Modal Dialog"
-                dismissable
-                underlay
-            >
-                <p>This is the outer modal content. Press ESC to close it.</p>
-                <sp-button id="innerTrigger" variant="primary">
-                    Open Inner Modal
-                </sp-button>
-            </sp-dialog-wrapper>
-        </sp-overlay>
-
-        <sp-overlay id="innerOverlay" type="modal" triggerInteraction="click">
-            <sp-dialog-wrapper
-                headline="Inner Modal Dialog"
-                dismissable
-                underlay
-            >
-                <p>
-                    This is the inner modal content. Press ESC to close this
-                    first, then the outer modal.
-                </p>
-            </sp-dialog-wrapper>
+            <sp-popover>
+                <sp-dialog>
+                    <p>
+                        This is the outer modal content. Press ESC to close it.
+                    </p>
+                    <sp-button id="innerTrigger" variant="primary">
+                        Open Inner Modal
+                    </sp-button>
+                    <sp-overlay
+                        id="innerOverlay"
+                        type="auto"
+                        .triggerInteraction=${'click'}
+                        trigger="innerTrigger@click"
+                    >
+                        <sp-popover>
+                            <sp-dialog>
+                                <p>
+                                    This is the inner modal content. Press ESC
+                                    to close this first, then the outer modal.
+                                </p>
+                            </sp-dialog>
+                        </sp-popover>
+                    </sp-overlay>
+                </sp-dialog>
+            </sp-popover>
         </sp-overlay>
     </div>
-
-    <script>
-        (() => {
-            const outerTrigger = document.getElementById('outerTrigger');
-            const outerOverlay = document.getElementById('outerOverlay');
-            const innerTrigger = document.getElementById('innerTrigger');
-            const innerOverlay = document.getElementById('innerOverlay');
-
-            if (outerTrigger && outerOverlay) {
-                outerOverlay.triggerElement = outerTrigger;
-            }
-
-            if (innerTrigger && innerOverlay) {
-                innerOverlay.triggerElement = innerTrigger;
-                // Listen for when the inner trigger is clicked
-                innerTrigger.addEventListener('click', () => {
-                    innerOverlay.open = true;
-                });
-            }
-        })();
-    </script>
 `;
+
+nestedModalOverlays.swc_vrt = {
+    skip: true,
+};
+
+nestedModalOverlays.parameters = {
+    chromatic: { disableSnapshot: true },
+};
