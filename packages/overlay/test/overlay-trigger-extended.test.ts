@@ -121,12 +121,10 @@ describe('Overlay Trigger - extended', () => {
             </style>
         `));
 
-        const buttonn = document.querySelector('sp-button') as Button;
-
         expect(popover.placement).to.equal('top');
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
-        buttonn.click();
+        button.click();
         await open;
 
         expect(popover.placement).to.equal('top');
