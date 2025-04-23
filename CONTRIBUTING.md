@@ -44,7 +44,7 @@ If you work for Adobe, our slack channel #spectrum_web_components has some great
 
 ---
 
-# 2. Ways to Contribute
+# 2. How can you Contribute
 
 There’s a common misconception that you need to code in order to contribute. In reality, there are many different ways to help:
 
