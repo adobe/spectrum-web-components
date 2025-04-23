@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
+    -   @spectrum-web-components/menu@1.5.0
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/tray@1.5.0
+    -   @spectrum-web-components/button@1.5.0
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/popover@1.5.0
+    -   @spectrum-web-components/tooltip@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/progress-circle@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

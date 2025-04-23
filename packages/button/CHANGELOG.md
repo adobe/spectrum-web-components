@@ -1,5 +1,42 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5363](https://github.com/adobe/spectrum-web-components/pull/5363) [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5) Thanks [@castastrophe](https://github.com/castastrophe)!
+
+    Adjust S1/Express static outline variant content color (from transparent-black/white to solid black/white) to fix unintentional regression.
+
+    From [@spectrum-css/button v14.1.6](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.6): [#3665](https://github.com/adobe/spectrum-css/pull/3665) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
+
+    This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
+
+    From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+
+    Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
+
+    This PR includes changes to:
+
+    -   Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
+    -   Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
+    -   Static color buttons' content color
+    -   Static white primary button (fill variant) and static black primary button (fill variant) background colors
+
+    From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+
+    Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/clear-button@1.5.0
+    -   @spectrum-web-components/close-button@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/progress-circle@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

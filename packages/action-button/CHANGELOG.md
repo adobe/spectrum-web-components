@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5325](https://github.com/adobe/spectrum-web-components/pull/5325) [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8) Thanks [@renovate](https://github.com/apps/renovate)! - [#​3644](https://github.com/adobe/spectrum-css/pull/3644) Thanks [@​marissahuysentruyt](https://github.com/marissahuysentruyt)!
+
+    This patch update fixes support for `--mod-actionbutton-border-radius` to make sure it is accessible by consumers and overwrites the default border radius setting when used.
+
+-   Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
+    -   @spectrum-web-components/button@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

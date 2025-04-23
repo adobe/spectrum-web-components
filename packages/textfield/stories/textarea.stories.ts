@@ -75,9 +75,29 @@ export const Default = (): TemplateResult => {
 export const quiet = (): TemplateResult => html`
     <sp-field-label for="story">Enter your life story...</sp-field-label>
     <sp-textfield
-        autofocus
         multiline
         id="story"
+        quiet
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
+export const defaultAutofocus = (): TemplateResult => html`
+    <sp-field-label for="story">Enter your life story...</sp-field-label>
+    <sp-textfield
+        multiline
+        id="story"
+        autofocus
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
+export const quietAutofocus = (): TemplateResult => html`
+    <sp-field-label for="story">Enter your life story...</sp-field-label>
+    <sp-textfield
+        multiline
+        id="story"
+        autofocus
         quiet
         placeholder="Enter your life story"
     ></sp-textfield>
@@ -110,13 +130,7 @@ export const growsEmpty = (): TemplateResult => html`
     <sp-field-label for="empty">
         This textfield hasn't been used yet
     </sp-field-label>
-    <sp-textfield
-        multiline
-        id="empty"
-        grows
-        placeholder="You can type here"
-        autofocus
-    >
+    <sp-textfield multiline id="empty" grows placeholder="You can type here">
         <sp-help-text slot="help-text">
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>
@@ -177,7 +191,6 @@ export const sized = (): TemplateResult => html`
         multiline
         id="sized"
         placeholder="You can type here"
-        autofocus
         style="width: 400px"
     >
         <sp-help-text slot="help-text">

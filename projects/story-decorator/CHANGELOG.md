@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
+    -   @spectrum-web-components/menu@1.5.0
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/picker@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/switch@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

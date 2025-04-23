@@ -1,5 +1,49 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   [#5363](https://github.com/adobe/spectrum-web-components/pull/5363) [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5) Thanks [@castastrophe](https://github.com/castastrophe)! - This update aims to simplify `--mod-*` access by ensuring local variants and states aren't hooking into those custom properties for overrides. This updates all local variants and states to override the `--spectrum-button-*` properties instead and adjusts the specificity to ensure no regressions in rendered results.
+
+    From [@spectrum-css/button v14.1.3](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.3): [#3613](https://github.com/adobe/spectrum-css/pull/3613) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+
+    Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
+
+    This PR includes changes to:
+
+    -   Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
+    -   Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
+    -   Static color buttons' content color
+    -   Static white primary button (fill variant) and static black primary button (fill variant) background colors
+
+    From [@spectrum-css/button v14.1.2](https://www.npmjs.com/package/@spectrum-css/button/v/14.1.2): [#​3600](https://github.com/adobe/spectrum-css/pull/3600) Thanks [@​rise-erpelding](https://github.com/rise-erpelding)!
+
+    Adjust border colors for static black and static white outline buttons, primary variant to match S2 specifications.
+
+-   [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the picker button component from version 6.0.0-s2-foundations.16 to 6.1.2. The update should bring the background colors for the picker button in line with S2-foundations design specs:
+
+    default state: `gray-50` to `gray-100`
+    hover state: `gray-100` to `gray-200`
+    key-focus state: `gray-100` to `gray-200`
+
+-   [#5277](https://github.com/adobe/spectrum-web-components/pull/5277) [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4) Thanks [@renovate](https://github.com/apps/renovate)! - /Users/cas/Projects/work/spectrum-web-components/yarn.lock
+
+-   [#5325](https://github.com/adobe/spectrum-web-components/pull/5325) [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8) Thanks [@renovate](https://github.com/apps/renovate)! - [#​3644](https://github.com/adobe/spectrum-css/pull/3644) Thanks [@​marissahuysentruyt](https://github.com/marissahuysentruyt)!
+
+    This patch update fixes support for `--mod-actionbutton-border-radius` to make sure it is accessible by consumers and overwrites the default border radius setting when used.
+
+-   [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the combobox component from version 4.0.0-s2-foundations.21 to 4.1.2. This work also addresses the design feedback for combobox in S2 foundations:
+
+    -   corrects the border colors for several combobox states including focus, keyboardFocus, focus+hover, disabled, read-only for all themes
+    -   increases the specificity of the `#textfield:hover .input` selector to `#textfield:hover .input:focus` in order to properly render the focus+hover border color styles (within the `combobox.css` file)
+    -   adds an additional selector for disabled comboboxes that correctly renders the border colors based on theme context
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

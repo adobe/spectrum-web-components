@@ -115,24 +115,22 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 }
                 return;
             case 'white':
-                this.staticColor = variant;
-                this.removeAttribute('variant');
+                this.staticColor = 'white';
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
-                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> have been deprecated and will be removed in a future release. Use "static-color='black'" or "static-color='white'" instead.`,
+                        `The "white" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
                         'https://opensource.adobe.com/spectrum-web-components/components/button/api',
                         { level: 'deprecation' }
                     );
                 }
                 return;
             case 'black':
-                this.staticColor = variant;
-                this.removeAttribute('variant');
+                this.staticColor = 'black';
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
-                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> have been deprecated and will be removed in a future release. Use "static-color='black'" or "static-color='white'" instead.`,
+                        `The "black" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='black'" instead.`,
                         'https://opensource.adobe.com/spectrum-web-components/components/button/api',
                         { level: 'deprecation' }
                     );

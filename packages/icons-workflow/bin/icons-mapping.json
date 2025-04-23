@@ -60,7 +60,7 @@
     "Interaction": "Engagement",
     "Events": "CursorClick",
     "CursorClick": "Events",
-    "Export": "ExportTo",
+    "Export": "Export",
     "ExportTo": "MoveTo",
     "FileTxt": "FileText",
     "FileText": "FileTxt",

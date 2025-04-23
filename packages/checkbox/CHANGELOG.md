@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5228](https://github.com/adobe/spectrum-web-components/pull/5228) [`a4de4c7`](https://github.com/adobe/spectrum-web-components/commit/a4de4c76c38ae274535fc7df8ab32490a796485a) Thanks [@renovate](https://github.com/apps/renovate)! - 📝 [#3617](https://github.com/adobe/spectrum-css/pull/3617) Thanks [@marissahuysentruyt](https://redirect.github.com/marissahuysentruyt)!
+
+    Adds a `::before` pseudo element to properly target the checkbox checked input + box element. The selector update, specifically in the invalid + checked + hover state should now get the proper error background color, as opposed to the default background color.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

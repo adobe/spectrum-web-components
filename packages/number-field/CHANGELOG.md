@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.5.0
+
+### Minor Changes
+
+-   [#5284](https://github.com/adobe/spectrum-web-components/pull/5284) [`5a3bc6d`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24ea95f6dd5b5ead9d7eb45c393324ee9) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Fixed keyboard flickering on mobile devices when using NumberField's increment/decrement buttons
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/textfield@1.5.0
+    -   @spectrum-web-components/infield-button@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

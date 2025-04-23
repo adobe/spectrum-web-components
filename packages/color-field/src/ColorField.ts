@@ -18,7 +18,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-
+import styles from './color-field.css.js';
 /**
  * @element sp-color-field
  * @fires input - The value of the color-field has changed.
@@ -26,7 +26,7 @@ import { TextfieldBase } from '@spectrum-web-components/textfield';
  */
 export class ColorField extends TextfieldBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles];
+        return [...super.styles, styles];
     }
 
     @property({ type: Boolean, attribute: 'view-color' })

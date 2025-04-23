@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5277](https://github.com/adobe/spectrum-web-components/pull/5277) [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4) Thanks [@renovate](https://github.com/apps/renovate)! - /Users/cas/Projects/work/spectrum-web-components/yarn.lock
+
+-   Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
+    -   @spectrum-web-components/menu@1.5.0
+    -   @spectrum-web-components/link@1.5.0
+    -   @spectrum-web-components/action-menu@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

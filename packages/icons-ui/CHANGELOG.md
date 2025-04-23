@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/iconset@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

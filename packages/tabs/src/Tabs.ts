@@ -209,7 +209,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             let focusInIndex = 0;
             const firstFocusableElement = elements.find((el, index) => {
                 const focusInElement = this.selected
-                    ? !el.disabled && el.value === this.selected
+                    ? el.value === this.selected
                     : !el.disabled;
                 focusInIndex = index;
                 return focusInElement;
@@ -224,7 +224,7 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
             this.selectTarget(el);
         },
         elements: () => this.tabs,
-        isFocusableElement: (el) => !el.disabled,
+        isFocusableElement: (el) => !this.disabled && !el.disabled,
         listenerScope: () => this.tabList,
     });
 
