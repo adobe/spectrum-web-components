@@ -1,5 +1,6 @@
 ---
 '@spectrum-web-components/close-button': patch
+'@spectrum-web-components/dropzone': patch
 '@spectrum-web-components/illustrated-message': patch
 '@spectrum-web-components/menu': patch
 '@spectrum-web-components/status-light': patch
