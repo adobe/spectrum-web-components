@@ -5,7 +5,7 @@ Here you’ll find a broad overview of how you can get involved. Please read thr
 -   [1. Community \& Support](#1-community--support)
     -   [1.1. External Contributors](#11-external-contributors)
     -   [1.2. Internal Contributors](#12-internal-contributors)
--   [2. Ways to Contribute](#2-ways-to-contribute)
+-   [2. How can you Contribute](#2-how-can-you-contribute)
 -   [3. Contributor License Agreement](#3-contributor-license-agreement)
 -   [4. Code of Conduct](#4-code-of-conduct)
 -   [5. Using the Issue Tracker](#5-using-the-issue-tracker)
@@ -28,15 +28,16 @@ Here you’ll find a broad overview of how you can get involved. Please read thr
 
 # 1. Community & Support
 
-A fantastic first step to contributing is joining our community discussions. This is where you can:
+A fantastic first step to contributing is filing an issue. This is where you can:
 
--   Ask questions and troubleshoot with other users.
--   Propose new ideas or get feedback on your own.
--   Stay informed about what’s coming next.
+-   Ask questions, file bugs, and troubleshoot with other users.
+-   Propose new features and ideas or get feedback on your own through a linked pull request.
+    Additionally, you can check GitHub Discussions to stay up-to-date with any major announcements about the project.
 
 ## 1.1. External Contributors
 
-If you need support or have a question about how something works, GitHub Discussions is the best place to start.
+**Adobe Employees, read section 1.2 below.**
+If you need support or have a question about how something works, filing an issue is the best place to start. A team member will be in touch to either triage your issue or follow-up with you in the comments.
 
 ## 1.2. Internal Contributors
 
