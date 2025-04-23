@@ -1,8 +1,1 @@
-#!/usr/bin/env bash
-bash << EOF
-    yarn lint-staged
-
-    VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
-    yarn genversion --es6 --semi $VERSION_FILE
-    git add $VERSION_FILE
-EOF
+yarn lint-staged --allow-empty
