@@ -11,19 +11,22 @@ governing permissions and limitations under the License.
 */
 
 export default {
-    '*': [
+    '*.css': [
+        'stylelint --fix --cache --allow-empty-input',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
-    '*.css': [
-        'stylelint --fix --cache --allow-empty-input --report-descriptionless-disables --report-invalid-scope-disables --report-needless-disables',
-    ],
-    '{packages,tools}/**/*.ts': [
+    '*.ts': [
         'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
+        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
     '{packages,tools}/*/src/**/!(*.css).ts': ['yarn lit-analyzer'],
     'package.json': () => [
+        'genversion --es6 --semi tools/base/src/version.js',
         'yarn constraints --fix',
         'yarn install --refresh-lockfile',
-        'git add yarn.lock',
+        'git add tools/base/src/version.js yarn.lock',
+    ],
+    '!(*.css|*.ts)': [
+        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
 };
