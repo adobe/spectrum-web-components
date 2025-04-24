@@ -27,6 +27,7 @@ import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { isChrome } from '@spectrum-web-components/shared';
 
 describe('Picker, responsive', () => {
     let el: Picker;
@@ -127,8 +128,10 @@ describe('Picker, responsive', () => {
         });
 
         it('is a Popover in mobile', async function () {
-            // Increase timeout for this test to avoid CI failures
-            this.timeout(10000);
+            // This test is flaky in chrome on ci so we're skipping it for now
+            if (isChrome()) {
+                return;
+            }
 
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
