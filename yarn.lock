@@ -204,6 +204,7 @@ __metadata:
     "@commitlint/cli": "npm:^19.8.0"
     "@commitlint/config-conventional": "npm:^19.8.0"
     "@custom-elements-manifest/analyzer": "npm:^0.9.0"
+    "@fastly/compute-js-static-publish": "npm:^7.0.1"
     "@geometricpanda/storybook-addon-badges": "npm:^2.0.2"
     "@lit/react": "npm:^1.0.4"
     "@netlify/build": "npm:^29.17.3"
@@ -3863,6 +3864,129 @@ __metadata:
     fastq: "npm:^1.17.0"
     glob: "npm:^10.3.4"
   checksum: 10c0/4ca29a37226880fcc8e711b4a3b93858d4e23dd0458a9f65373b63b3df4768610c8cfbd9e51b749ab52d65b9139142a5c69571740265c9ace1660e268ebb38f6
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-darwin-arm64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-darwin-arm64@npm:11.2.0"
+  bin:
+    cli-darwin-arm64: fastly
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-darwin-x64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-darwin-x64@npm:11.2.0"
+  bin:
+    cli-darwin-x64: fastly
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-linux-arm64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-linux-arm64@npm:11.2.0"
+  bin:
+    cli-linux-arm64: fastly
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-linux-x32@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-linux-x32@npm:11.2.0"
+  bin:
+    cli-linux-x32: fastly
+  conditions: os=linux & cpu=x32
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-linux-x64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-linux-x64@npm:11.2.0"
+  bin:
+    cli-linux-x64: fastly
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-win32-arm64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-win32-arm64@npm:11.2.0"
+  bin:
+    cli-win32-arm64: fastly.exe
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-win32-x32@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-win32-x32@npm:11.2.0"
+  bin:
+    cli-win32-x32: fastly.exe
+  conditions: os=win32 & cpu=x32
+  languageName: node
+  linkType: hard
+
+"@fastly/cli-win32-x64@npm:=11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli-win32-x64@npm:11.2.0"
+  bin:
+    cli-win32-x64: fastly.exe
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@fastly/cli@npm:^11.2.0":
+  version: 11.2.0
+  resolution: "@fastly/cli@npm:11.2.0"
+  dependencies:
+    "@fastly/cli-darwin-arm64": "npm:=11.2.0"
+    "@fastly/cli-darwin-x64": "npm:=11.2.0"
+    "@fastly/cli-linux-arm64": "npm:=11.2.0"
+    "@fastly/cli-linux-x32": "npm:=11.2.0"
+    "@fastly/cli-linux-x64": "npm:=11.2.0"
+    "@fastly/cli-win32-arm64": "npm:=11.2.0"
+    "@fastly/cli-win32-x32": "npm:=11.2.0"
+    "@fastly/cli-win32-x64": "npm:=11.2.0"
+  dependenciesMeta:
+    "@fastly/cli-darwin-arm64":
+      optional: true
+    "@fastly/cli-darwin-x64":
+      optional: true
+    "@fastly/cli-linux-arm64":
+      optional: true
+    "@fastly/cli-linux-x32":
+      optional: true
+    "@fastly/cli-linux-x64":
+      optional: true
+    "@fastly/cli-win32-arm64":
+      optional: true
+    "@fastly/cli-win32-x32":
+      optional: true
+    "@fastly/cli-win32-x64":
+      optional: true
+  bin:
+    fastly: fastly.js
+  checksum: 10c0/6b6ae5cac1a10c3e41377b639f584f3bf9c78e71444f2cc64889f0906bcd1b6ec1d3911dc39626179559a7c4ee7707d88fc920aeaeddcec48ae2407e3a9df7fa
+  languageName: node
+  linkType: hard
+
+"@fastly/compute-js-static-publish@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@fastly/compute-js-static-publish@npm:7.0.1"
+  dependencies:
+    "@fastly/cli": "npm:^11.2.0"
+    command-line-args: "npm:^5.2.1"
+    glob-to-regexp: "npm:^0.4.1"
+    toml: "npm:^3.0.0"
+  peerDependencies:
+    "@fastly/js-compute": ^3.33.2
+  bin:
+    compute-js-static-publish: build/cli/index.js
+  checksum: 10c0/b9dc9739dc31e56d162bb2d8ee7d5256c92a2a4018963d7ac75886ce0cc9a992ae46e525e9a7681d51d080aedb4a018691b95ff04bf9a03c3b0d0853dd7e31ca
   languageName: node
   linkType: hard
 
