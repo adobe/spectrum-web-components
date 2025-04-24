@@ -107,11 +107,14 @@ commands:
                       echo "Fastly alias hash: $hash"
                       echo "Deploying from test/visual directory..."
                       cd compute-js
+                      echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
+                      echo "[setup]" >> fastly.toml
+                      echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
@@ -243,7 +246,10 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   cd compute-js
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
+                  echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
+                  echo "[setup]" >> fastly.toml
+                  echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=../projects/documentation
 
     beta-docs:
         executor: node
@@ -267,7 +273,10 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   cd compute-js
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
+                  echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
+                  echo "[setup]" >> fastly.toml
+                  echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=../projects/documentation
 
     hcm-visual:
         executor: node
@@ -320,11 +329,14 @@ jobs:
                       echo "Fastly alias hash: $hash"
                       echo "Deploying from test/visual directory..."
                       cd compute-js
+                      echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
+                      echo "[setup]" >> fastly.toml
+                      echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
