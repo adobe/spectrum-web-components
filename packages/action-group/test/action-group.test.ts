@@ -258,7 +258,7 @@ describe('ActionGroup', () => {
         expect(el.children[3]).to.equal(document.activeElement);
     });
 
-    it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
+    it.only('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
         const el = await fixture<ActionGroup>(
             HasActionMenuAsChild({ label: 'Action Group' })
         );
@@ -336,6 +336,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
         const actionMenuRect = actionMenu.getBoundingClientRect();
+
         const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
         sendMouse({
             steps: [

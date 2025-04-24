@@ -516,13 +516,13 @@ export class Overlay extends ComputedOverlayBase {
             return;
         }
 
-        // Earlier this nextFrame() was called in ensureOnDom. Without waiting here, the longpress state will be `null` when the overlay is opened and the overlay will close immediately.
-// Only wait for next frame if `longpress` is the trigger.
-// In Safari, awaiting nextFrame here causes layout issues
-// when rendering trays inside modals, so we skip it otherwise.
-if (this.triggerInteraction === 'longpress') {
-    await nextFrame();
-}
+        // Only wait for next frame if `longpress` is the trigger.
+        // In Safari, awaiting nextFrame here causes layout issues
+        // when rendering trays inside modals, so we skip it otherwise.
+        if (this.triggerInteraction === 'longpress') {
+            await nextFrame();
+        }
+
         // Ensure the popover is in the DOM before proceeding.
         await this.ensureOnDOM(targetOpenState);
 
