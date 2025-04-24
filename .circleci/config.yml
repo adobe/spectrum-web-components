@@ -115,7 +115,7 @@ commands:
 
                       while [ $attempt -lt $max_attempts ]; do
                           npm run fastly:deploy
-                          if npm run fastly:publish -- --collection-name=$hash --root-dir=../test/visual; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
@@ -251,7 +251,7 @@ jobs:
                   echo "[setup]" >> fastly.toml
                   echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
                   npm run fastly:deploy
-                  npm run fastly:publish -- --collection-name=$branch --root-dir=../projects/documentation
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=../projects/documentation
 
     beta-docs:
         executor: node
@@ -279,7 +279,7 @@ jobs:
                   echo "[setup]" >> fastly.toml
                   echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
                   npm run fastly:deploy
-                  npm run fastly:publish -- --collection-name=beta --root-dir=../projects/documentation
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=../projects/documentation
 
     hcm-visual:
         executor: node
@@ -340,7 +340,7 @@ jobs:
 
                       while [ $attempt -lt $max_attempts ]; do
                           npm run fastly:deploy
-                          if npm run fastly:publish -- --collection-name=$hash --root-dir=../test/visual; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
