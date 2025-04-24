@@ -111,7 +111,7 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash [--root-dir=test/visual]; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
@@ -242,7 +242,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch [--root-dir=projects/documentation]
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=projects/documentation
 
     beta-docs:
         executor: node
@@ -265,7 +265,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta [--root-dir=projects/documentation]
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=projects/documentation
 
     hcm-visual:
         executor: node
@@ -322,7 +322,7 @@ jobs:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash [--root-dir=test/visual]; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
