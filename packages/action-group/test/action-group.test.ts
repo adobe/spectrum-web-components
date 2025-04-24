@@ -357,7 +357,8 @@ describe('ActionGroup', () => {
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
         if (isWebKit()) {
-            // focus on the first menu item as not all items are keyboard focusable in Safari bu default
+            // focus on the first menu item as not all items are keyboard focusable in Safari by default
+            // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html
             actionMenu.optionsMenu.focus();
         } else {
             // use keyboard to navigate to the second menu item and select it
