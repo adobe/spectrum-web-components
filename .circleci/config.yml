@@ -106,7 +106,7 @@ commands:
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
                       echo "Fastly alias hash: $hash"
                       echo "Deploying from test/visual directory..."
-
+                      cd compute-js
                       max_attempts=3
                       attempt=0
 
@@ -242,6 +242,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
+                  cd compute-js
                   npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=projects/documentation
 
     beta-docs:
@@ -265,7 +266,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  npm install @fastly/compute-js-static-publish@latest
+                  cd compute-js
                   npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=projects/documentation
 
     hcm-visual:
@@ -318,7 +319,7 @@ jobs:
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
                       echo "Fastly alias hash: $hash"
                       echo "Deploying from test/visual directory..."
-
+                      cd compute-js
                       max_attempts=3
                       attempt=0
 
