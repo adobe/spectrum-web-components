@@ -10,8 +10,33 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import url('@spectrum-web-components/infield-button/src/infield-button.css');
 @import url('./spectrum-number-field.css');
 @import url('./number-field-overrides.css');
+
+:host {
+    --spectrum-stepper-width: calc(
+        var(--mod-stepper-height, var(--spectrum-textfield-height)) *
+            var(
+                --mod-stepper-min-width-multiplier,
+                var(--spectrum-text-field-minimum-width-multiplier)
+            ) +
+            var(
+                --mod-stepper-button-width,
+                var(--spectrum-infield-button-width)
+            ) +
+            var(
+                --mod-stepper-border-width,
+                var(--spectrum-stepper-border-width)
+            ) * 2
+    );
+
+    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+}
+
+#textfield {
+    inline-size: 100%;
+}
 
 .input {
     font-variant-numeric: tabular-nums;
@@ -57,5 +82,68 @@ governing permissions and limitations under the License.
     --mod-stepper-buttons-border-color-focus-hover: var(
         --mod-stepper-border-color-focus-hover,
         var(--spectrum-stepper-border-color-focus-hover)
+    );
+}
+
+:host(:not([hide-stepper])) #textfield {
+    --mod-stepper-width: calc(
+        var(--spectrum-stepper-height) *
+            var(
+                --mod-stepper-min-width-multiplier,
+                var(--spectrum-text-field-minimum-width-multiplier)
+            ) + var(--spectrum-stepper-button-width) * 2 +
+            var(
+                --mod-stepper-border-width,
+                var(--spectrum-stepper-border-width)
+            ) * 2
+    );
+}
+
+:host([invalid]) .input {
+    padding-inline-end: calc(
+        var(
+                --mod-textfield-icon-spacing-inline-start-valid,
+                var(--spectrum-textfield-icon-spacing-inline-start-valid)
+            ) +
+            var(
+                --mod-textfield-icon-size-valid,
+                var(--spectrum-textfield-icon-size-valid)
+            ) +
+            var(
+                --mod-textfield-icon-spacing-inline-end-valid,
+                var(--spectrum-textfield-icon-spacing-inline-end-valid)
+            ) -
+            var(
+                --mod-textfield-border-width,
+                var(--spectrum-textfield-border-width)
+            )
+    );
+}
+
+:host([invalid]:not([hide-stepper])) #textfield .icon {
+    inset-inline-end: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-icon-spacing-inline-end-invalid)
+    );
+}
+
+:host([valid]:not([hide-stepper])) #textfield .icon {
+    inset-inline-end: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-icon-spacing-inline-end-valid)
+    );
+}
+
+:host(:not([hide-stepper])) {
+    --mod-stepper-width: calc(
+        var(--spectrum-textfield-height) *
+            var(
+                --mod-stepper-min-width-multiplier,
+                var(--spectrum-text-field-minimum-width-multiplier)
+            ) + var(--spectrum-infield-button-width) * 2 +
+            var(
+                --mod-stepper-border-width,
+                var(--spectrum-stepper-border-width)
+            ) * 2
     );
 }
