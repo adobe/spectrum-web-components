@@ -111,7 +111,7 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --public-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
                               echo "Deployment successful!"
                               exit 0
                           else
@@ -243,7 +243,7 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   cd compute-js
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --public-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
 
     beta-docs:
         executor: node
@@ -267,7 +267,7 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   cd compute-js
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --public-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
+                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=../projects/documentation --service-id=$FASTLY_SERVICE_ID
 
     hcm-visual:
         executor: node
@@ -324,7 +324,7 @@ jobs:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --public-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
+                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual --service-id=$FASTLY_SERVICE_ID; then
                               echo "Deployment successful!"
                               exit 0
                           else
