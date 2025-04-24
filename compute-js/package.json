@@ -1,0 +1,25 @@
+{
+    "name": "@adobe/spectrum-web-components",
+    "version": "0.1.0",
+    "description": "",
+    "author": "Adobe",
+    "type": "module",
+    "devDependencies": {
+        "@fastly/cli": "^11.2.0",
+        "@fastly/compute-js-static-publish": "^7.0.1"
+    },
+    "dependencies": {
+        "@fastly/js-compute": "^3.26.0"
+    },
+    "engines": {
+        "node": ">=20.11.0"
+    },
+    "private": true,
+    "scripts": {
+        "dev:publish": "npx @fastly/compute-js-static-publish publish-content --local",
+        "dev:start": "fastly compute serve",
+        "fastly:deploy": "fastly compute publish",
+        "fastly:publish": "npx @fastly/compute-js-static-publish publish-content",
+        "build": "js-compute-runtime ./src/index.js ./bin/main.wasm"
+    }
+}

@@ -1,0 +1,16 @@
+# This file describes a Fastly Compute package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = [ "Adobe" ]
+description = ""
+language = "javascript"
+manifest_version = 3
+name = "@adobe/spectrum-web-components"
+
+[scripts]
+build = "npm run build"
+
+[local_server.kv_stores]
+swc = { file = "./static-publisher/kvstore.json", format = "json" }
+
+[setup.kv_stores.swc]
