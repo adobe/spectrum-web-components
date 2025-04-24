@@ -265,6 +265,7 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
+                  npm install@fastly/compute-js-static-publish
                   npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=projects/documentation
 
     hcm-visual:
