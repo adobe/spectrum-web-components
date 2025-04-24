@@ -65,7 +65,7 @@ export const buildPreviewURLComment = (ref) => {
         previewLinks.push(`
 - [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
             context
-        )}--spectrum-wc.netlify.app/review/)`);
+        )}--swc.edgecompute.app/review/)`);
     });
 
     // Add a high contrast mode preview link
@@ -73,13 +73,13 @@ export const buildPreviewURLComment = (ref) => {
         `
 - [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
-        )}--spectrum-wc.netlify.app/review/)`
+        )}--swc.edgecompute.app/review/)`
     );
 
     let comment = `## Branch preview
 
-- [Documentation Site](https://${branchSlug}--spectrum-wc.netlify.app/)
-- [Storybook](https://${branchSlug}--spectrum-wc.netlify.app/storybook/)
+- [Documentation Site](https://${branchSlug}--swc.edgecompute.app/)
+- [Storybook](https://${branchSlug}--swc.edgecompute.app/storybook/)
 
 
 

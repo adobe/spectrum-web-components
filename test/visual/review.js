@@ -33,7 +33,7 @@ const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
 vrts.push([
     `High Contrast Mode | Medium | LTR`,
-    `https://${getHash(`${branch}-hcm`)}--spectrum-wc.netlify.app/review/`,
+    `https://${getHash(`${branch}-hcm`)}--swc.edgecompute.app/review/`,
 ]);
 themes.map((theme) =>
     colors.map((color) => {
@@ -48,9 +48,7 @@ themes.map((theme) =>
                 const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
                 vrts.push([
                     `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${getHash(
-                        context
-                    )}--spectrum-wc.netlify.app/review/`,
+                    `https://${getHash(context)}--swc.edgecompute.app/review/`,
                 ]);
             })
         );
@@ -178,7 +176,7 @@ async function main() {
     const data = JSON.stringify({
         meta: {
             branch,
-            preview: `https://${slugify(branch)}--spectrum-wc.netlify.app`,
+            preview: `https://${slugify(branch)}--swc.edgecompute.app`,
             commit,
             system,
             vrts,
