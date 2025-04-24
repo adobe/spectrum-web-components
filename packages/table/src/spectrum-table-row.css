@@ -53,6 +53,14 @@ governing permissions and limitations under the License.
     border-inline-end: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
 }
 
+:host {
+    transition: background-color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
+    cursor: pointer;
+    cursor: var(--mod-table-cursor-row-default, pointer);
+    border-block-start: none;
+    position: relative;
+}
+
 :host(:first-child) ::slotted(:first-child) {
     border-start-start-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
 }
@@ -67,14 +75,6 @@ governing permissions and limitations under the License.
 
 :host(:last-child) ::slotted(:last-child) {
     border-end-end-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
-}
-
-:host {
-    transition: background-color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
-    cursor: pointer;
-    cursor: var(--mod-table-cursor-row-default, pointer);
-    border-block-start: none;
-    position: relative;
 }
 
 :host(:first-child) {
@@ -125,7 +125,7 @@ governing permissions and limitations under the License.
 }
 
 :host([drop-target]) {
-    --spectrum-table-border-color: var(--highcontrast-table-focus-indicator-color, transparent);
+    --mod-table-border-color: var(--highcontrast-table-focus-indicator-color, transparent);
     outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
     outline-style: solid;
     outline-color: var(--highcontrast-table-focus-indicator-color, var(--mod-table-drop-zone-outline-color, var(--spectrum-table-drop-zone-outline-color)));
@@ -259,12 +259,12 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--thumbnail {
-    --table-thumbnail-cell-block-spacing: var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing));
-    --table-thumbnail-inner-content-block-spacing: max(0px, calc((var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size)) - (var(--mod-table-row-line-height, var(--spectrum-table-row-line-height)) * var(--mod-table-header-font-size, var(--spectrum-table-row-font-size)))) / 2));
+    --spectrum-table-thumbnail-cell-block-spacing: var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing));
+    --spectrum-table-thumbnail-inner-content-block-spacing: max(0px, calc((var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size)) - (var(--mod-table-row-line-height, var(--spectrum-table-row-line-height)) * var(--mod-table-header-font-size, var(--spectrum-table-row-font-size)))) / 2));
 }
 
 .spectrum-Table-row--thumbnail ::slotted(*) {
-    padding-block: calc(var(--table-thumbnail-cell-block-spacing) + var(--table-thumbnail-inner-content-block-spacing));
+    padding-block: calc(var(--spectrum-table-thumbnail-cell-block-spacing) + var(--spectrum-table-thumbnail-inner-content-block-spacing));
 }
 
 .spectrum-Table-row--thumbnail .spectrum-Table-cell--thumbnail {
@@ -272,6 +272,6 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Table-row--thumbnail.spectrum-Table-row--collapsible {
-    --table-thumbnail-inner-minimum-block-spacing: max(0px, calc((var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size)) - var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size))) / 2));
-    --table-thumbnail-cell-block-spacing: max(var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing)), var(--table-thumbnail-inner-minimum-block-spacing));
+    --spectrum-table-thumbnail-inner-minimum-block-spacing: max(0px, calc((var(--mod-table-disclosure-icon-size, var(--spectrum-table-disclosure-icon-size)) - var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size))) / 2));
+    --spectrum-table-thumbnail-cell-block-spacing: max(var(--mod-table-thumbnail-block-spacing, var(--spectrum-table-thumbnail-block-spacing)), var(--spectrum-table-thumbnail-inner-minimum-block-spacing));
 }

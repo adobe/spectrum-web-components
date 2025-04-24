@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.5.0
+
+### Patch Changes
+
+-   [#5323](https://github.com/adobe/spectrum-web-components/pull/5323) [`c7efe31`](https://github.com/adobe/spectrum-web-components/commit/c7efe314c5954c20e65302544cb0577580ba0b7b) Thanks [@mizgaionutalexandru](https://github.com/mizgaionutalexandru)! - Fixed a bug where removing the `disabled` attribute (or setting it to `false`) on an `sp-tabs` element would not correctly enable the selected `sp-tab`. The fix updates the `focusInIndex` method in the component's `RovingTabindexController` to properly identify the selected tab that should become focusable when the parent tabs component is enabled.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes
