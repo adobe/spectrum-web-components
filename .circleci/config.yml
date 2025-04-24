@@ -114,7 +114,8 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
+                          npm run fastly:deploy
+                          if npm run fastly:publish -- --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
@@ -249,7 +250,8 @@ jobs:
                   echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
                   echo "[setup]" >> fastly.toml
                   echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=$branch --root-dir=../projects/documentation
+                  npm run fastly:deploy
+                  npm run fastly:publish -- --collection-name=$branch --root-dir=../projects/documentation
 
     beta-docs:
         executor: node
@@ -276,7 +278,8 @@ jobs:
                   echo "FASTLY_SERVICE_ID=$FASTLY_SERVICE_ID"
                   echo "[setup]" >> fastly.toml
                   echo "service_id = \"$FASTLY_SERVICE_ID\"" >> fastly.toml
-                  npx @fastly/compute-js-static-publish publish-content --collection-name=beta --root-dir=../projects/documentation
+                  npm run fastly:deploy
+                  npm run fastly:publish -- --collection-name=beta --root-dir=../projects/documentation
 
     hcm-visual:
         executor: node
@@ -336,7 +339,8 @@ jobs:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if npx @fastly/compute-js-static-publish publish-content --collection-name=$hash --root-dir=../test/visual; then
+                          npm run fastly:deploy
+                          if npm run fastly:publish -- --collection-name=$hash --root-dir=../test/visual; then
                               echo "Deployment successful!"
                               exit 0
                           else
