@@ -65,7 +65,7 @@ export const buildPreviewURLComment = (ref) => {
         previewLinks.push(`
 - [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
             context
-        )}--spectrum.edgecompute.app/review/)`);
+        )}.spectrum.app/review/)`);
     });
 
     // Add a high contrast mode preview link
@@ -73,13 +73,13 @@ export const buildPreviewURLComment = (ref) => {
         `
 - [High Contrast Mode | Medium | LTR](https://${createHash(
             `${branch}-hcm`
-        )}--spectrum.edgecompute.app/review/)`
+        )}.spectrum.app/review/)`
     );
 
     let comment = `## Branch preview
 
-- [Documentation Site](https://${branchSlug}--spectrum.edgecompute.app/)
-- [Storybook](https://${branchSlug}--spectrum.edgecompute.app/storybook/)
+- [Documentation Site](https://${branchSlug}.spectrum.app/)
+- [Storybook](https://${branchSlug}.spectrum.app/storybook/)
 
 
 
