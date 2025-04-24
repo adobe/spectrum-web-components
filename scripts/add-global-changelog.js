@@ -75,48 +75,77 @@ async function createGlobalChangelog() {
     // We need to use a stable release tag (not a pre-release/beta) for the comparison URL
     // to ensure the changelog shows changes between proper semver releases
     const compareUrl = `${repoUrl}/compare/${prevTag}...${newTag}`;
-    const commitLogs = execSync(
-        `git log ${prevTag}..HEAD --pretty=format:"%s|%h"`
-    )
-        .toString()
-        .trim();
+    // Read all changesets from the .changeset directory
+    const changesetDir = path.resolve(__dirname, '../.changeset');
+    const changesetFiles = fs
+        .readdirSync(changesetDir)
+        .filter((file) => file.endsWith('.md') && file !== 'README.md');
 
-    const commits = commitLogs.split('\n').map((line) => {
-        const [message, hash] = line.split('|');
-        return { message, hash };
-    });
+    const majorChanges = [];
+    const minorChanges = [];
+    const patchChanges = [];
 
-    const features = [];
-    const fixes = [];
+    // Process each changeset file
+    for (const file of changesetFiles) {
+        const filePath = path.join(changesetDir, file);
+        const content = fs.readFileSync(filePath, 'utf-8');
 
-    commits.forEach(({ message, hash }) => {
-        const typeMatch = message.match(/^(feat|fix)\(([^)]+)\):\s*(.+)/i);
-        if (typeMatch) {
-            const [, type, scope, description] = typeMatch;
-            const entry = `-   **${scope}**: ${description} ([\`${hash}\`](${repoUrl}/commit/${hash}))`;
-            if (type === 'feat') {
-                features.push(entry);
-            } else if (type === 'fix') {
-                fixes.push(entry);
+        // Extract the frontmatter from the changeset
+        const frontmatterMatch = content.match(
+            /---\n([\s\S]*?)\n---\n([\s\S]*)/
+        );
+
+        if (frontmatterMatch) {
+            const [, frontmatter, description] = frontmatterMatch;
+
+            // Parse the frontmatter to determine the change type
+            console.log(frontmatter);
+            const isMajor = frontmatter.includes('major');
+            const isMinor = frontmatter.includes('minor');
+            // If not major or minor, it's a patch
+
+            // Extract the package scope from the frontmatter
+            const packageMatch = frontmatter.match(
+                /'@spectrum-web-components\/([^']+)':|"@spectrum-web-components\/([^"]+)":/
+            );
+            // Extract component name from package name and prefix with "sp-"
+            const scope = packageMatch ? `sp-${packageMatch[1]}` : 'core';
+            // Clean up the description text
+            const cleanDescription = description.trim();
+
+            // Create the entry (without commit hash since we're using changesets)
+            const entry = `**${scope}**: ${cleanDescription}\n\n`;
+
+            // Categorize based on semver bump type
+            if (isMajor) {
+                majorChanges.push(entry);
+            } else if (isMinor) {
+                minorChanges.push(entry);
+            } else {
+                patchChanges.push(entry);
             }
         }
-    });
+    }
 
     // Skip if nothing relevant
-    if (!features.length && !fixes.length) {
-        console.log('🚫 No new feat() or fix() commits to add.');
+    if (!majorChanges.length && !minorChanges.length && !patchChanges.length) {
+        console.log('🚫 No changes to add to the changelog.');
         process.exit(0);
     }
 
     // Format new changelog entry
     let newEntry = `# [${newVersion}](${compareUrl}) (${date})\n\n`;
 
-    if (fixes.length) {
-        newEntry += `### Bug Fixes\n\n${fixes.join('\n')}\n\n`;
+    if (majorChanges.length) {
+        newEntry += `## Major Changes\n\n${majorChanges.join('\n')}\n\n`;
     }
 
-    if (features.length) {
-        newEntry += `### Features\n\n${features.join('\n')}\n\n`;
+    if (minorChanges.length) {
+        newEntry += `## Minor Changes\n\n${minorChanges.join('\n')}\n\n`;
+    }
+
+    if (patchChanges.length) {
+        newEntry += `## Patch Changes\n\n${patchChanges.join('\n')}\n\n`;
     }
 
     // Preserve the header if it exists
