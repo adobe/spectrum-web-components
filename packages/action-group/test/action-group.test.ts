@@ -54,6 +54,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
 import sinon from 'sinon';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -355,8 +356,14 @@ describe('ActionGroup', () => {
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
-        // use keyboard to navigate to the second menu item and select it
-        await sendKeys({ press: 'ArrowDown' });
+        if (isWebKit()) {
+            // focus on the first menu item as not all items are keyboard focusable in Safari by default
+            // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html
+            actionMenu.optionsMenu.focus();
+        } else {
+            // use keyboard to navigate to the second menu item and select it
+            await sendKeys({ press: 'ArrowDown' });
+        }
         expect(actionMenu.children[0]).to.equal(document.activeElement);
         await sendKeys({ press: 'Enter' });
 
