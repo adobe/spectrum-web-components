@@ -22,7 +22,7 @@ export default {
             description: 'Represents when the input is checked',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: 'boolean',
         },
@@ -33,7 +33,7 @@ export default {
                 'Disable this control. It will not receive focus or events.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -45,7 +45,7 @@ export default {
             description: "Set the button's state to emphasized.",
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -56,7 +56,7 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',

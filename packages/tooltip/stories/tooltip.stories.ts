@@ -92,7 +92,7 @@ Default.argTypes = {
         description: 'Whether the tooltip is open.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -177,7 +177,7 @@ wIcon.argTypes = {
         description: 'Whether the tooltip is open.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -360,7 +360,7 @@ selfManaged.argTypes = {
         description: 'Whether the tooltip is open.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',

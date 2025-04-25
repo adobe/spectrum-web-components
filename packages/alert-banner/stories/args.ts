@@ -17,6 +17,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'Your trial has expired' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -28,6 +29,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: true },
+            category: 'Attributes',
         },
         control: { type: 'boolean' },
     },
@@ -38,6 +40,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: true },
+            category: 'Attributes',
         },
         control: { type: 'boolean' },
     },
@@ -48,6 +51,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'neutral' },
+            category: 'Attributes',
         },
         control: {
             labels: {
