@@ -205,7 +205,7 @@ export const menuItemWithDescription = (): TemplateResult => {
     `;
 };
 
-export class SystemAwareMenu extends LitElement {
+class SystemAwareMenu extends LitElement {
     protected override update(changes: PropertyValues): void {
         super.update(changes);
     }
