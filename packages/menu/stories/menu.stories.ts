@@ -243,6 +243,10 @@ export const selectsWithIcons = (): TemplateResult => {
     `;
 };
 
+selectsWithIcons.swc_vrt = {
+    skip: true,
+};
+
 export const headersAndIcons = (): TemplateResult => {
     return html`
         <sp-popover open>
