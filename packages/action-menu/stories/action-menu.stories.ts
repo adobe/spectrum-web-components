@@ -19,7 +19,6 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { makeOverBackground } from '../../button/stories/index.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import { ActionMenuMarkup } from './';
 
@@ -41,7 +40,8 @@ export default {
                 'Disable this control. It will not receive focus or events.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -53,7 +53,8 @@ export default {
             description: 'Whether the menu is open or not.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -64,6 +65,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' },
+                category: 'Attributes',
             },
             control: 'text',
         },
@@ -74,6 +76,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: '' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
@@ -84,7 +87,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'Tooltip Placement.',
             table: {
+                type: { summary: 'string' },
                 defaultValue: { summary: 'bottom' },
+                category: 'Attributes',
             },
             control: {
                 options: [
@@ -114,7 +119,8 @@ export default {
             description: 'Quiet rendering',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -128,6 +134,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
+                category: 'Attributes',
             },
             control: {
                 type: 'select',
@@ -144,7 +151,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'Alignment of the Action Menu',
             table: {
+                type: { summary: 'string' },
                 defaultValue: { summary: 'start' },
+                category: 'Attributes',
             },
             control: {
                 type: 'select',
@@ -194,13 +203,11 @@ export const staticWhite = (args: StoryArgs = {}): TemplateResult =>
 staticWhite.args = {
     staticValue: 'white',
 };
-staticWhite.decorators = [makeOverBackground()];
 export const staticBlack = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
 staticBlack.args = {
     staticValue: 'black',
 };
-staticBlack.decorators = [makeOverBackground()];
 export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
 quiet.args = {
     quiet: true,

@@ -59,7 +59,7 @@ export const argTypes = {
         description: 'Whether the button is disabled or not.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -93,7 +93,7 @@ export const argTypes = {
         description: 'Whether the button is quiet or not.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',

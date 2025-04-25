@@ -25,7 +25,7 @@
         "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag --tag snapshot",
         "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn install && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "update-version": "node ./tasks/update-version.js",
-        "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
+        "chromatic": "chromatic --build-script-name storybook:build",
         "create-git-tag": "node --no-warnings tasks/create-git-tag.js",
         "custom-element-json": "node tasks/custom-element-json.js",
         "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
@@ -61,7 +61,7 @@
         "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
         "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
         "prestorybook": "wireit",
-        "prestorybook:build": "cem analyze --outdir storybook/",
+        "prestorybook:build": "cem analyze --outdir .storybook/",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
@@ -70,7 +70,7 @@
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
         "start": "yarn storybook",
         "storybook": "wireit",
-        "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
+        "storybook:build": "yarn workspace @spectrum-web-components/storybook build -o ../projects/documentation/dist/storybook",
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
         "test": "yarn test:focus unit",
@@ -102,7 +102,6 @@
         "@commitlint/cli": "^19.8.0",
         "@commitlint/config-conventional": "^19.8.0",
         "@custom-elements-manifest/analyzer": "^0.9.0",
-        "@geometricpanda/storybook-addon-badges": "^2.0.2",
         "@lit/react": "^1.0.4",
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
@@ -113,16 +112,6 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@sindresorhus/slugify": "^2.1.1",
         "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
-        "@storybook/addon-a11y": "^8.6.12",
-        "@storybook/addon-designs": "^8.2.1",
-        "@storybook/addon-essentials": "^8.6.12",
-        "@storybook/addon-interactions": "^8.6.12",
-        "@storybook/addon-links": "^8.6.12",
-        "@storybook/blocks": "^8.6.12",
-        "@storybook/manager-api": "^8.6.12",
-        "@storybook/theming": "^8.6.12",
-        "@storybook/types": "^8.6.12",
-        "@storybook/web-components-webpack5": "^8.6.12",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",
@@ -148,7 +137,7 @@
         "@yarnpkg/types": "^4.0.1",
         "alex": "^11.0.1",
         "cem-plugin-module-file-extensions": "^0.0.5",
-        "chromatic": "^11.20.0",
+        "chromatic": "^11.28.2",
         "chromedriver": "^134.0.5",
         "colors": "^1.4.0",
         "common-tags": "^1.8.2",
@@ -193,7 +182,6 @@
         "rimraf": "^5.0.1",
         "rollup": "^4.12.0",
         "sinon": "^17.0.1",
-        "storybook": "^8.6.12",
         "stylelint": "^16.15.0",
         "stylelint-config-standard": "^37.0.0",
         "stylelint-header": "^2.1.0",
@@ -369,13 +357,13 @@
             "clean": "if-file-deleted"
         },
         "prestorybook": {
-            "command": "cem analyze --outdir storybook/",
+            "command": "cem analyze --outdir .storybook/",
             "files": [
                 "packages/**/*.ts",
                 "tools/**/*.ts"
             ],
             "output": [
-                "storybook/custom-elements.json"
+                ".storybook/custom-elements.json"
             ]
         },
         "process-icons": {
@@ -413,7 +401,7 @@
             "clean": false
         },
         "storybook": {
-            "command": "storybook dev -p 8080 -c storybook",
+            "command": "yarn workspace @spectrum-web-components/storybook start",
             "service": true,
             "dependencies": [
                 "build:watch",
@@ -438,7 +426,8 @@
         "packages/*",
         "projects/*",
         "tools/*",
-        "react/*"
+        "react/*",
+        ".storybook"
     ],
     "packageManager": "yarn@4.6.0",
     "license": "Apache-2.0",
