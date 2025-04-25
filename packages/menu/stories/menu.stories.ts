@@ -237,14 +237,36 @@ class SystemAwareMenu extends LitElement {
 
 customElements.define('system-aware-menu', SystemAwareMenu);
 
-export const selectsWithIcons = (): TemplateResult => {
+export const menuWithIcons = (): TemplateResult => {
     return html`
         <system-aware-menu></system-aware-menu>
     `;
 };
 
-selectsWithIcons.swc_vrt = {
+menuWithIcons.swc_vrt = {
     skip: true,
+};
+
+export const selectsWithIcons = (): TemplateResult => {
+    return html`
+        <sp-popover open>
+            <sp-menu selects="single">
+                <sp-menu-item>
+                    <sp-icon-export slot="icon"></sp-icon-export>
+                    Quick export
+                </sp-menu-item>
+                <sp-menu-item selected>
+                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                    Open a copy
+                </sp-menu-item>
+                <sp-menu-item>
+                    <sp-icon-share slot="icon"></sp-icon-share>
+                    Share link
+                    <span slot="description">Enable comments and download</span>
+                </sp-menu-item>
+            </sp-menu>
+        </sp-popover>
+    `;
 };
 
 export const headersAndIcons = (): TemplateResult => {
