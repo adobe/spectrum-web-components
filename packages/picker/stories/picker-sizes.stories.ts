@@ -27,7 +27,7 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -38,7 +38,7 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',

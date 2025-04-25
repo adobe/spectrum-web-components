@@ -48,7 +48,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -59,7 +60,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -72,7 +74,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -83,7 +86,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -95,7 +99,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -106,7 +111,9 @@ export default {
             description:
                 'Whether the elements selects its children and how many it can select at a time.',
             table: {
+                type: { summary: 'string' },
                 defaultValue: { summary: '' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -120,6 +127,7 @@ export default {
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
                 defaultValue: { summary: 'm' },
+                category: 'Attributes',
             },
             control: {
                 type: 'select',

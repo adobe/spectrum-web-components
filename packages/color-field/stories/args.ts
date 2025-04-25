@@ -17,7 +17,8 @@ export const argTypes = {
         description: 'Whether the color-field type is quiet',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -29,7 +30,7 @@ export const argTypes = {
         description: 'Whether the color-field is disabled or not',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -41,7 +42,7 @@ export const argTypes = {
         description: 'Whether the color-field has color handle or not',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',

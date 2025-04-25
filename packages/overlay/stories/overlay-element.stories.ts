@@ -61,7 +61,7 @@ export default {
             description: 'Whether the second accordion item is open.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -73,7 +73,7 @@ export default {
             description: 'Whether the tooltips are delayed.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',

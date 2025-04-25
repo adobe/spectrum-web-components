@@ -10,14 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-export const argTypes = {
+import { ArgTypes } from '@storybook/types';
+
+export const argTypes: ArgTypes = {
     open: {
         name: 'open',
         type: { name: 'boolean', required: false },
         description: 'Whether the second accordion item is open.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -30,7 +33,8 @@ export const argTypes = {
             'Whether multipel Accordion Items can be open at the same time.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -41,7 +45,9 @@ export const argTypes = {
         type: { name: 'string', required: false },
         description: 'The density at which to display accordion items.',
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'default' },
+            category: 'Attributes',
         },
         control: {
             labels: {
@@ -57,7 +63,9 @@ export const argTypes = {
         type: { name: 'string', required: false },
         description: 'The size at which to display accordion items.',
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'm' },
+            category: 'Attributes',
         },
         control: {
             labels: {

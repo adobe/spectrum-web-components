@@ -110,7 +110,6 @@ export class StoryDecorator extends SpectrumElement {
                                 var(--spectrum-component-height-100)
                         );
                     box-sizing: border-box;
-                    background-color: var(--spectrum-background-base-color);
                     color: var(--spectrum-body-color);
 
                     --decorator-padding-100: calc(
@@ -239,9 +238,9 @@ export class StoryDecorator extends SpectrumElement {
 
     public get backgroundStyle() {
         if (this.system === 'spectrum-two') {
-            return `background-color: var(--spectrum-gray-50)`;
+            return `background: var(--mod-story-decorator-background, var(--spectrum-gray-50))`;
         }
-        return `background-color: var(--spectrum-gray-100);`;
+        return `background: var(--mod-story-decorator-background, var(--spectrum-gray-100));`;
     }
 
     protected handleKeydown(event: KeyboardEvent): void {

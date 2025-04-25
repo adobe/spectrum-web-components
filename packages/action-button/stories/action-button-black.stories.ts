@@ -11,14 +11,13 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 
 export default {
     component: 'sp-action-button',
     title: 'Action Button/Static Black',
-    decorators: [makeOverBackground('black')],
+    decorators: [],
 };
 
 const staticColor = 'black';

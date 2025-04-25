@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground, Properties, renderButtonSet } from './index.js';
+import { Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
 const variant = 'white';
@@ -19,7 +19,6 @@ const treatment = 'outline';
 export default {
     component: 'sp-button',
     title: 'Button/White/Outline/Sizes',
-    decorators: [makeOverBackground()],
     args: {
         ...args,
         variant,

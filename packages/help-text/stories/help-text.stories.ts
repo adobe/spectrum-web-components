@@ -24,7 +24,7 @@ export default {
             discription: 'Whether the Help Text is delivered with an icon.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -36,7 +36,7 @@ export default {
             description: 'Help Text for disabled form elements.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',

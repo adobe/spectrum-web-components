@@ -11,7 +11,6 @@
  */
 import { TemplateResult } from '@spectrum-web-components/base';
 import {
-    makeOverBackground,
     renderButtonSet,
     renderLink,
     renderLinkWithTarget,
@@ -29,7 +28,6 @@ const treatment = 'fill';
 export default {
     component: 'sp-button',
     title: 'Button/White/Fill',
-    decorators: [makeOverBackground(staticColor)],
     args: {
         ...args,
         staticColor,

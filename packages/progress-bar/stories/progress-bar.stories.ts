@@ -51,86 +51,50 @@ export const sideIndeterminate = (): TemplateResult => {
     `;
 };
 
-const makeOverBackground =
-    (variant?: 'white' | 'black') =>
-    (story: () => TemplateResult): TemplateResult => {
-        const color =
-            variant === 'black'
-                ? 'rgb(181, 209, 211)'
-                : 'var(--spectrum-seafoam-900)';
-        return html`
-            <div
-                style="
-                    --mod-actionbutton-static-content-color: ${color};
-                    --mod-button-static-content-color: ${color};
-                    background-color: ${color};
-                    color: ${color};
-                    padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
-                    display: inline-block;
-                "
-            >
-                ${story()}
-            </div>
-        `;
-    };
-
 export const staticWhite = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                progress="50"
-                static-color="white"
-            ></sp-progress-bar>
-        `
-    );
+    return html`
+        <sp-progress-bar progress="50" static-color="white"></sp-progress-bar>
+    `;
 };
 
 export const staticWhiteLabel = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                label="Loading"
-                progress="50"
-                static-color="white"
-            ></sp-progress-bar>
-        `
-    );
+    return html`
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            static-color="white"
+        ></sp-progress-bar>
+    `;
 };
 
 export const staticWhiteIndeterminate = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                label="Loading"
-                indeterminate
-                static-color="white"
-            ></sp-progress-bar>
-        `
-    );
+    return html`
+        <sp-progress-bar
+            label="Loading"
+            indeterminate
+            static-color="white"
+        ></sp-progress-bar>
+    `;
 };
 
 export const staticWhiteSideLabel = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                label="Loading"
-                progress="50"
-                static-color="white"
-                side-label
-            ></sp-progress-bar>
-        `
-    );
+    return html`
+        <sp-progress-bar
+            label="Loading"
+            progress="50"
+            static-color="white"
+            side-label
+        ></sp-progress-bar>
+    `;
 };
 
 export const staticWhiteSideLabelIndeterminate = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                label="Loading"
-                indeterminate
-                static-color="white"
-                side-label
-            ></sp-progress-bar>
-        `
-    );
+    return html`
+        <sp-progress-bar
+            label="Loading"
+            indeterminate
+            static-color="white"
+            side-label
+        ></sp-progress-bar>
+    `;
 };

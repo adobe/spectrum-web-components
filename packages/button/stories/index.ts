@@ -33,7 +33,8 @@ export const argTypes = {
             'Disable this control. It will not receive focus or events.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -46,6 +47,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'cta' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -68,6 +70,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'fill' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -80,33 +83,14 @@ export const argTypes = {
         description: 'Shows the pending state of the button.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
         },
     },
 };
-
-export const makeOverBackground =
-    (staticColor?: 'white' | 'black') =>
-    (story: () => TemplateResult): TemplateResult => {
-        const color =
-            staticColor === 'black'
-                ? 'var(--spectrum-docs-static-black-background-color)'
-                : 'var(--spectrum-docs-static-white-background-color)';
-        return html`
-            <div
-                style="
-                    background-color: ${color};
-                    padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
-                    display: inline-block;
-                "
-            >
-                ${story()}
-            </div>
-        `;
-    };
 
 export function renderButton(properties: Properties): TemplateResult {
     return html`

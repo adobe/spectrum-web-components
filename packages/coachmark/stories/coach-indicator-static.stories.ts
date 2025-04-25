@@ -11,13 +11,11 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
 import '@spectrum-web-components/coachmark/sp-coach-indicator.js';
 
 export default {
     title: 'CoachIndicator',
     component: 'sp-coach-indicator',
-    decorators: [makeOverBackground()],
 };
 
 export const staticWhite = (): TemplateResult => {

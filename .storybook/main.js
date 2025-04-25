@@ -11,29 +11,66 @@
  */
 
 import { merge } from 'webpack-merge';
+import remarkGfm from 'remark-gfm';
 
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
     addons: [
+        // '@storybook/addon-webpack5-compiler-babel',
         '@storybook/addon-links',
-        '@storybook/addon-essentials',
+        '@storybook/addon-controls',
+        '@storybook/addon-toolbars',
+        '@storybook/addon-measure',
+        '@storybook/addon-viewport',
+        '@storybook/addon-outline',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                // Enables JSX support in MDX for projects that aren't configured to handle the format.
+                configureJSX: true,
+                // Support markdown in MDX files
+                transcludeMarkdown: true,
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
+            },
+        },
+        '@storybook/addon-actions',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/a11y
         '@storybook/addon-a11y',
-        // Conditionally add the addon-designs addon temporarily
+        // https://storybook.js.org/addons/@etchteam/storybook-addon-status
+        '@etchteam/storybook-addon-status',
+        // https://github.com/storybookjs/storybook/tree/next/code/addons/interactions
+        '@storybook/addon-interactions',
+        // https://docs.chromatic.com/docs/visual-tests-addon/
+        '@chromatic-com/storybook',
+        // addon-designs in development mode only
         // https://storybook.js.org/addons/@storybook/addon-designs/
         ...(process.env.NODE_ENV === 'development'
             ? ['@storybook/addon-designs']
             : []),
-        // https://geometricpanda.github.io/storybook-addon-badges/
-        '@geometricpanda/storybook-addon-badges',
     ],
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+    },
     framework: {
         name: '@storybook/web-components-webpack5',
         options: {
-            // builder: '@web/storybook-builder',
             fsCache: true,
             lazyCompilation: true,
         },

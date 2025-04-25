@@ -12,21 +12,21 @@
 
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
-// import { setCustomElementsManifest } from '@storybook/web-components';
 import DocumentationTemplate from './DocumentationTemplate.mdx';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+import modes from '@spectrum-css/preview/modes';
+import { setCustomElementsManifest } from '@storybook/web-components';
+import cem from './custom-elements.json';
 
-// const cem = await import('./custom-elements.json', {
-//     assert: { type: 'json' },
-// });
+setCustomElementsManifest(cem);
 
-// setCustomElementsManifest(cem);
+import './assets/base.css';
 
 export const globalTypes = {
     system: {
         title: 'Design context',
         description: 'The variation of Spectrum to use in the component',
-        defaultValue: 'spectrum',
+        defaultValue: 'spectrum-two',
         type: 'string',
         showName: true,
         toolbar: {
@@ -121,49 +121,37 @@ export const parameters = {
     },
     controls: {
         expanded: true,
+        hideNoControlsWarning: true,
+        sort: 'requiredFirst',
         matchers: {
             color: /(backgroundColor|color)$/i,
             date: /Date$/,
         },
     },
-    layout: 'fullscreen',
+    layout: 'padded',
+    // layout: 'fullscreen',
     options: {
         storySort: {
             method: 'alphabetical-by-kind',
         },
     },
-    badgesConfig: {
-        deprecated: {
-            styles: {
-                backgroundColor: '#FFF',
-                borderColor: '#ea3829',
+    status: {
+        statuses: {
+            deprecated: {
+                background: '#FFF',
                 color: '#ea3829',
+                title: 'This component will be removed in a future release',
             },
-            title: 'Deprecated',
         },
     },
     chromatic: {
         forcedColors: 'none',
         prefersReducedMotion: 'no-preference',
         pauseAnimationAtEnd: true,
-        modes: {
-            'Context: Spectrum 1': {
-                scale: 'medium',
-                color: 'light',
-                textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
-            },
-            'Dark | RTL': {
-                color: 'dark',
-                textDirection: 'rtl',
-            },
-        },
+        modes,
     },
 };
 
 export const decorators = [swcThemeDecorator];
 
-export const tags = ['autodocs'];
+export const tags = ['autodocs', 'dev'];
