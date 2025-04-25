@@ -15,7 +15,9 @@ export const argTypes = {
         name: 'size',
         type: { name: 'string', required: false },
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'm' },
+            category: 'Attributes',
         },
         control: {
             labels: {
@@ -34,6 +36,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -47,6 +50,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -58,6 +62,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -69,6 +74,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -80,6 +86,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',

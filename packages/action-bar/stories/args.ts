@@ -17,7 +17,7 @@ export const argTypes = {
         description: 'Whether the Action Bar is open and visible.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
             category: 'Attributes',
         },
         control: {
@@ -43,7 +43,7 @@ export const argTypes = {
         description: 'Whether to display tools in the action bar.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
             category: 'Attributes',
         },
         control: {

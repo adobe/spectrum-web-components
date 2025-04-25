@@ -17,6 +17,7 @@ export const argTypes = {
         description: 'The size at which to display accordion items.',
         table: {
             defaultValue: { summary: 'm' },
+            category: 'Attributes',
         },
         control: {
             labels: {
@@ -35,6 +36,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -48,6 +50,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -59,6 +62,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',

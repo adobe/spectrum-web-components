@@ -34,7 +34,7 @@ export default {
             description: 'Determines the style of slider.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -46,7 +46,8 @@ export default {
             description: 'Tick spacing on slider.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: 0.1 },
+                defaultValue: { summary: '0.1' },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -57,7 +58,7 @@ export default {
             description: 'The labels visibily available in the UI',
             table: {
                 type: { summary: '"text" | "value" | "none" | undefined' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',

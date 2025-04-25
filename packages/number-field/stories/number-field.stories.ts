@@ -40,6 +40,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -53,6 +54,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -66,6 +68,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -79,6 +82,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -91,6 +95,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -102,7 +107,7 @@ export default {
             description: 'Value to apply to the control.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -115,7 +120,7 @@ export default {
                 'Amount to change the value by when using the stepper or arrow key interactions.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -129,6 +134,7 @@ export default {
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 10 },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -140,6 +146,7 @@ export default {
             description: 'Placeholder to apply to the control.',
             table: {
                 type: { summary: 'string' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
@@ -151,7 +158,7 @@ export default {
             description: 'The minimum value the control can be set to.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -163,7 +170,7 @@ export default {
             description: 'The maximum value the control can be set to.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',

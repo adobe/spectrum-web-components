@@ -11,7 +11,10 @@
  */
 
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    styleMap,
+} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
@@ -62,6 +65,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -74,6 +78,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -102,22 +107,18 @@ const Template = ({
     delayed,
     style,
 }: Properties): TemplateResult => html`
-    ${style === 'will-change'
-        ? html`
-              <style>
-                  .wrapper {
-                      will-change: transform;
+    <div
+        class="wrapper"
+        style=${styleMap(
+            style === 'will-change'
+                ? {
+                      willChange: 'transform',
                   }
-              </style>
-          `
-        : html`
-              <style>
-                  .wrapper {
-                      container-type: size;
+                : {
+                      containerType: 'size',
                   }
-              </style>
-          `}
-    <div class="wrapper">
+        )}
+    >
         <sp-action-button id="trigger">Open the overlay</sp-action-button>
         <sp-overlay
             ?open=${open}
@@ -404,12 +405,7 @@ export const hoverTooltip = ({
     placement,
     type,
 }: Properties): TemplateResult => html`
-    <style>
-        .wrapper {
-            will-change: transform;
-        }
-    </style>
-    <div class="wrapper">
+    <div class="wrapper" style=${styleMap({ willChange: 'transform' })}>
         <sp-action-button id="trigger">Open the overlay</sp-action-button>
         <sp-overlay
             ?open=${open}
@@ -471,18 +467,20 @@ receivesFocus.args = {
 } as Properties;
 
 export const transformed = (args: Properties): TemplateResult => html`
-    <style>
-        .transformed {
-            transform: translateX(-50%);
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 100px;
-            block-size: 50px;
-        }
-    </style>
-    <div class="transformed">${Template(args)}</div>
+    <div
+        class="transformed"
+        style=${styleMap({
+            transform: 'translateX(-50%)',
+            position: 'absolute',
+            inset: 'auto',
+            'inset-inline-start': '200px',
+            'inset-block-start': '200px',
+            'inline-size': '100px',
+            'block-size': '50px',
+        })}
+    >
+        ${Template(args)}
+    </div>
 `;
 transformed.args = {
     interaction: 'click',
@@ -491,20 +489,22 @@ transformed.args = {
 };
 
 export const contained = (args: Properties): TemplateResult => html`
-    <style>
-        .contained {
-            contain: strict;
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 200px;
-            block-size: 50px;
-            padding-block: 75px;
-            padding-inline-start: 300px;
-        }
-    </style>
-    <div class="contained">${Template(args)}</div>
+    <div
+        class="contained"
+        style=${styleMap({
+            contain: 'strict',
+            position: 'absolute',
+            inset: 'auto',
+            'inset-inline-start': '200px',
+            'inset-block-start': '200px',
+            'inline-size': '200px',
+            'block-size': '50px',
+            'padding-block': '75px',
+            'padding-inline-start': '300px',
+        })}
+    >
+        ${Template(args)}
+    </div>
 `;
 contained.args = {
     interaction: 'click',

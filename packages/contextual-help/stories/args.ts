@@ -26,6 +26,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -36,6 +37,7 @@ export const argTypes = {
         type: { name: 'string', required: false },
         table: {
             defaultValue: { summary: 'info' },
+            category: 'Attributes',
         },
         control: {
             labels: {
@@ -52,6 +54,7 @@ export const argTypes = {
         table: {
             type: { summary: 'label' },
             defaultValue: { summary: 'Informations' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -61,6 +64,7 @@ export const argTypes = {
         table: {
             type: { summary: 'offset' },
             defaultValue: { summary: 0 },
+            category: 'Attributes',
         },
         control: 'number',
     },
@@ -72,6 +76,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'bottom-start' },
+            category: 'Attributes',
         },
         control: {
             type: 'select',
