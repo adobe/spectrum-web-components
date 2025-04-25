@@ -9,14 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import rollupJson from '@rollup/plugin-json';
-import { mergeConfigs } from '@web/dev-server';
-import { fromRollup } from '@web/dev-server-rollup';
-import rollupCommonjs from '@rollup/plugin-commonjs';
-import { watchSWC } from '../web-test-runner.utils.js';
 
-/** @type { import('storybook-builder-wds').StorybookConfigWds } */
-const config = {
+import { merge } from 'webpack-merge';
+
+/** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
+export default {
     stories: [
         '../packages/*/stories/*.stories.js',
         '../tools/*/stories/*.stories.js',
@@ -34,56 +31,29 @@ const config = {
         '@geometricpanda/storybook-addon-badges',
     ],
     framework: {
-        name: '@web/storybook-framework-web-components',
+        name: '@storybook/web-components-webpack5',
+        options: {
+            // builder: '@web/storybook-builder',
+            fsCache: true,
+            lazyCompilation: true,
+        },
     },
-    wdsFinal(config) {
-        const json = fromRollup(rollupJson);
-        return mergeConfigs(config, {
-            nodeResolve: {
-                exportConditions: ['browser', 'development'],
-                moduleDirectories: [
-                    'node_modules',
-                    'packages',
-                    'projects',
-                    'tools',
-                ],
+    async webpackFinal(config) {
+        return merge(config, {
+            resolve: {
+                conditionNames: ['development', 'browser'],
+                modules: ['node_modules', 'packages', 'projects', 'tools'],
             },
-            clearTerminalOnReload: false,
-            mimeTypes: {
-                '**/*.json': 'js',
-            },
-            plugins: [json(), watchSWC()],
-            http2: true,
-            watch: true,
         });
     },
-    rollupFinal(config) {
-        // add a new plugin to the build
-        config.plugins.push(rollupJson());
-        config.plugins.push(
-            rollupCommonjs({
-                requireReturnsDefault: 'preferred',
-                include: [
-                    '**/node_modules/react-dom/**/*.js',
-                    '**/node_modules/react/**/*.js',
-                    '**/node_modules/memoizerific/**/*.js',
-                    '**/node_modules/lodash/**/*.js',
-                    '**/node_modules/@storybook/blocks/**/*.js',
-                ],
-            })
-        );
-        return config;
-    },
+    refs:
+        process.env.NODE_ENV === 'development'
+            ? {
+                  'design-system': {
+                      title: 'Spectrum CSS',
+                      url: 'https://opensource.adobe.com/spectrum-css/preview/',
+                      expanded: false, // Optional, true by default
+                  },
+              }
+            : {},
 };
-
-if (process.env.NODE_ENV === 'development') {
-    config.refs = {
-        'design-system': {
-            title: 'Spectrum CSS',
-            url: 'https://opensource.adobe.com/spectrum-css/preview/',
-            expanded: false, // Optional, true by default
-        },
-    };
-}
-
-export default config;
