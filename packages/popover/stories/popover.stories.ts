@@ -29,6 +29,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -40,6 +41,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
+                category: 'Attributes',
             },
             control: 'text',
         },
@@ -50,6 +52,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -79,7 +82,6 @@ Default.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
         },
         control: 'text',
     },

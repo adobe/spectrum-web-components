@@ -29,6 +29,7 @@ export default {
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
                 defaultValue: { summary: 'm' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
