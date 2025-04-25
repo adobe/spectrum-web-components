@@ -8108,13 +8108,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/swatchgroup@npm:4.0.0-s2-foundations.15":
-  version: 4.0.0-s2-foundations.15
-  resolution: "@spectrum-css/swatchgroup@npm:4.0.0-s2-foundations.15"
+"@spectrum-css/swatchgroup@npm:4.0.1":
+  version: 4.0.1
+  resolution: "@spectrum-css/swatchgroup@npm:4.0.1"
   peerDependencies:
     "@spectrum-css/swatch": ">=6"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/7c5c2416479d8602c009f191e71a046af33ca96e3bb4b847586a568e52a5cb884e75cf02457d0c87aa8b5130c6817a328ea124b47c5a04dabc5918b4d8df5497
+    "@spectrum-css/tokens": ">=14 || >=15"
+  checksum: 10c0/2052651824636f75edf8401736215b3f16b261666c8eeff6f7b05cdd791ae5012b229a55192b3838d99def417f0f3797d665771fec56ca127ac8449f3e57d1b9
   languageName: node
   linkType: hard
 
@@ -9274,7 +9274,7 @@ __metadata:
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
     "@spectrum-css/swatch": "npm:7.0.0-s2-foundations.17"
-    "@spectrum-css/swatchgroup": "npm:4.0.0-s2-foundations.15"
+    "@spectrum-css/swatchgroup": "npm:4.0.1"
     "@spectrum-web-components/base": "npm:1.5.0"
     "@spectrum-web-components/icon": "npm:1.5.0"
     "@spectrum-web-components/icons-ui": "npm:1.5.0"
