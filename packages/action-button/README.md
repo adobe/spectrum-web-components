@@ -8,23 +8,92 @@ An `<sp-action-button>` represents an action a user can take.
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/mOF1zUEjLJzODGXFYaIU/src/index.ts)
 
-```
+```bash
 yarn add @spectrum-web-components/action-button
 ```
 
 Import the side effectful registration of `<sp-action-button>` via:
 
-```
+```ts
 import '@spectrum-web-components/action-button/sp-action-button.js';
 ```
 
 When looking to leverage the `ActionButton` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { ActionButton } from '@spectrum-web-components/action-button';
 ```
 
-### Options
+### Anatomy
+
+```html
+<sp-action-button>Try me</sp-action-button>
+```
+
+#### Content
+
+`<sp-action-button>` elements can be provided a visible label,
+a label and an icon, or just an icon.
+
+An icon is provided by placing an icon element in the `icon` slot.
+
+If the button is `icon-only`, a non-visible label
+can be provided via the `label` attribute on an `<sp-action-button>`
+or on an `<sp-icon*>` element child to appropriately
+fulfill the accessibility contract of the button.
+
+<sp-tabs selected="label" auto label="Labelling a button">
+<sp-tab value="label">Label only</sp-tab>
+<sp-tab-panel value="label">
+
+```html demo
+<sp-action-button variant="primary">Label only</sp-action-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="icon-label">Icon + label</sp-tab>
+<sp-tab-panel value="icon-label">
+
+```html demo
+<sp-action-button variant="primary">
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Icon + Label
+</sp-action-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="svg-label">SVG Icon + label</sp-tab>
+<sp-tab-panel value="svg-label">
+
+```html demo
+<sp-action-button variant="primary">
+    <svg
+        slot="icon"
+        viewBox="0 0 36 36"
+        focusable="false"
+        aria-hidden="true"
+        role="img"
+    >
+        <path
+            d="M16 36a4.407 4.407 0 0 0 4-4h-8a4.407 4.407 0 0 0 4 4zm9.143-24.615c0-3.437-3.206-4.891-7.143-5.268V3a1.079 1.079 0 0 0-1.143-1h-1.714A1.079 1.079 0 0 0 14 3v3.117c-3.937.377-7.143 1.831-7.143 5.268C6.857 26.8 2 26.111 2 28.154V30h28v-1.846C30 26 25.143 26.8 25.143 11.385z"
+        ></path>
+    </svg>
+    SVG Icon + Label
+</sp-action-button>
+```
+
+</sp-tab-panel>
+<sp-tab value="icon-only">Icon only</sp-tab>
+<sp-tab-panel value="icon-only">
+
+```html demo
+<sp-action-button variant="primary" label="Icon only">
+    <sp-icon-help slot="icon"></sp-icon-help>
+</sp-action-button>
+```
+
+</sp-tab-panel>
+</sp-tabs>### Options
 
 #### Sizes
 
@@ -39,10 +108,10 @@ import { ActionButton } from '@spectrum-web-components/action-button';
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button>
+    <sp-action-button label="Edit">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button hold-affordance>
+    <sp-action-button label="Edit" hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -59,7 +128,7 @@ import { ActionButton } from '@spectrum-web-components/action-button';
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button>
+    <sp-action-button label="Edit">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
     <sp-action-button hold-affordance>
@@ -79,10 +148,10 @@ import { ActionButton } from '@spectrum-web-components/action-button';
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button>
+    <sp-action-button label="Edit">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button hold-affordance>
+    <sp-action-button label="Edit" hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -99,10 +168,10 @@ import { ActionButton } from '@spectrum-web-components/action-button';
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button>
+    <sp-action-button label="Edit">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button hold-affordance>
+    <sp-action-button label="Edit" hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -119,10 +188,10 @@ import { ActionButton } from '@spectrum-web-components/action-button';
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button>
+    <sp-action-button label="Edit">
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button hold-affordance>
+    <sp-action-button label="Edit" hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -151,10 +220,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button>
+            <sp-action-button label="Edit">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button hold-affordance>
+            <sp-action-button label="Edit" hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -168,10 +237,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button selected>
+            <sp-action-button label="Edit" selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button selected hold-affordance>
+            <sp-action-button label="Edit" selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -185,10 +254,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button disabled>
+            <sp-action-button label="Edit disabled>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button disabled hold-affordance>
+            <sp-action-button label="Edit disabled hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -204,10 +273,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button disabled selected>
+            <sp-action-button label="Edit disabled selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button disabled selected hold-affordance>
+            <sp-action-button label="Edit disabled selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -231,10 +300,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button quiet>
+            <sp-action-button label="Edit quiet>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button quiet hold-affordance>
+            <sp-action-button label="Edit quiet hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -248,10 +317,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button quiet selected>
+            <sp-action-button label="Edit quiet selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button quiet selected hold-affordance>
+            <sp-action-button label="Edit quiet selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -265,10 +334,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button quiet disabled>
+            <sp-action-button label="Edit quiet disabled>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button quiet disabled hold-affordance>
+            <sp-action-button label="Edit quiet disabled hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -284,10 +353,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button quiet disabled selected>
+            <sp-action-button label="Edit quiet disabled selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button quiet disabled selected hold-affordance>
+            <sp-action-button label="Edit quiet disabled selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -311,10 +380,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized>
+            <sp-action-button label="Edit emphasized>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized hold-affordance>
+            <sp-action-button label="Edit emphasized hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -328,10 +397,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized selected>
+            <sp-action-button label="Edit emphasized selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized selected hold-affordance>
+            <sp-action-button label="Edit emphasized selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -345,10 +414,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized disabled>
+            <sp-action-button label="Edit emphasized disabled>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized disabled hold-affordance>
+            <sp-action-button label="Edit emphasized disabled hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -366,10 +435,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized disabled selected>
+            <sp-action-button label="Edit emphasized disabled selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized disabled selected hold-affordance>
+            <sp-action-button label="Edit emphasized disabled selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -393,10 +462,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized quiet>
+            <sp-action-button label="Edit emphasized quiet>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized quiet hold-affordance>
+            <sp-action-button label="Edit emphasized quiet hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -410,10 +479,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized quiet selected>
+            <sp-action-button label="Edit emphasized quiet selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized quiet selected hold-affordance>
+            <sp-action-button label="Edit emphasized quiet selected hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -427,10 +496,10 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized quiet disabled>
+            <sp-action-button label="Edit emphasized quiet disabled>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
-            <sp-action-button emphasized quiet disabled hold-affordance>
+            <sp-action-button label="Edit emphasized quiet disabled hold-affordance>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
         </sp-action-group>
@@ -448,10 +517,11 @@ The `<sp-action-button>` can be customized with either or both of the `emphasize
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-action-button>
-            <sp-action-button emphasized quiet disabled selected>
+            <sp-action-button label="Edit emphasized quiet disabled selected>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
             </sp-action-button>
             <sp-action-button
+                label="Edit
                 emphasized
                 quiet
                 disabled
