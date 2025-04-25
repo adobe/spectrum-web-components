@@ -39,7 +39,7 @@ export default {
                 'Disable this control. It will not receive focus or events.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -52,7 +52,7 @@ export default {
                 'Whether the value of the Number Field can be determined for display.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -65,7 +65,7 @@ export default {
                 'When this control is read only, you will not be able to input an updated value.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -78,7 +78,7 @@ export default {
                 'An altered delivery with no background and only a bottom border.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
@@ -90,7 +90,7 @@ export default {
             description: 'Whether to remove the stepper UI from the control.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',

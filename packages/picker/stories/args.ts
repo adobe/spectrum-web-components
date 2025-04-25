@@ -34,7 +34,7 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -47,7 +47,7 @@ export const argTypes = {
             'Disable this control. It will not receive focus or events.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',
@@ -58,7 +58,7 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
         },
         control: {
             type: 'boolean',

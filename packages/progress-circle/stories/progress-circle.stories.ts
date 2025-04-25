@@ -25,7 +25,7 @@ export default {
             description: 'Whether the progress is indeterminate.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
             },
             control: {
                 type: 'boolean',
