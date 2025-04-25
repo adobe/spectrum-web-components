@@ -9,7 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    PropertyValues,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -200,25 +205,41 @@ export const menuItemWithDescription = (): TemplateResult => {
     `;
 };
 
+export class SystemAwareMenu extends LitElement {
+    protected override update(changes: PropertyValues): void {
+        super.update(changes);
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            <sp-popover open>
+                <sp-menu selects="single">
+                    <sp-menu-item>
+                        <sp-icon-export slot="icon"></sp-icon-export>
+                        Quick export
+                    </sp-menu-item>
+                    <sp-menu-item selected>
+                        <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                        Open a copy
+                    </sp-menu-item>
+                    <sp-menu-item>
+                        <sp-icon-share slot="icon"></sp-icon-share>
+                        Share link
+                        <span slot="description">
+                            Enable comments and download
+                        </span>
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-popover>
+        `;
+    }
+}
+
+customElements.define('system-aware-menu', SystemAwareMenu);
+
 export const selectsWithIcons = (): TemplateResult => {
     return html`
-        <sp-popover open>
-            <sp-menu selects="single">
-                <sp-menu-item>
-                    <sp-icon-export slot="icon"></sp-icon-export>
-                    Quick export
-                </sp-menu-item>
-                <sp-menu-item selected>
-                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
-                    Open a copy
-                </sp-menu-item>
-                <sp-menu-item>
-                    <sp-icon-share slot="icon"></sp-icon-share>
-                    Share link
-                    <span slot="description">Enable comments and download</span>
-                </sp-menu-item>
-            </sp-menu>
-        </sp-popover>
+        <system-aware-menu></system-aware-menu>
     `;
 };
 
