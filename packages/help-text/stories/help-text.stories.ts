@@ -25,6 +25,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -37,6 +38,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -49,6 +51,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'cta' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -61,6 +64,7 @@ export default {
             description: 'The visual variant to apply to the Help Text.',
             table: {
                 type: { summary: 'string' },
+                category: 'Attributes',
                 defaultValue: { summary: 'cta' },
             },
             control: {

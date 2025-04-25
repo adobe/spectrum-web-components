@@ -64,7 +64,6 @@ export default {
             type: { name: 'string', required: false },
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
                 category: 'Attributes',
             },
             control: 'text',
@@ -75,7 +74,6 @@ export default {
             description: 'Tooltip description',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
                 category: 'Attributes',
             },
             control: {
