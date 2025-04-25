@@ -2,4 +2,4 @@
 '@spectrum-web-components/overlay': patch
 ---
 
-This ensures the picker-tray is positioned correctly when nested inside a dialog type overlay in Safari.
+Fixed layout issues in Safari when an <sp-tray> is nested inside a dialog-type <sp-overlay>.
