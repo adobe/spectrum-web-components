@@ -15,7 +15,7 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { version as newVersion } from '../tools/base/src/version.js';
+import { version as newVersion } from '@spectrum-web-components/base/src/version.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
