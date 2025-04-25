@@ -74,7 +74,11 @@ export const Default = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            variant=${ifDefined(variant)}
+        >
             ${text}
         </sp-tooltip>
     `;
@@ -93,6 +97,7 @@ Default.argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -105,6 +110,7 @@ Default.argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'top' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -133,7 +139,7 @@ Default.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -143,7 +149,7 @@ Default.argTypes = {
         description: 'The style of the tooltip.',
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -159,7 +165,11 @@ export const wIcon = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            variant=${ifDefined(variant)}
+        >
             ${!!variant ? iconOptions[variant]() : nothing} ${text}
         </sp-tooltip>
     `;
@@ -178,6 +188,7 @@ wIcon.argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -190,6 +201,7 @@ wIcon.argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'top' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -218,7 +230,7 @@ wIcon.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -227,7 +239,7 @@ wIcon.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -319,8 +331,8 @@ export const selfManaged = ({
         This is a button.
         <sp-tooltip
             self-managed
-            placement=${placement}
-            offset=${offset}
+            placement=${ifDefined(placement)}
+            offset=${ifDefined(offset)}
             ?delayed=${delayed}
             ?disabled=${disabled}
             ?open=${open}
@@ -361,6 +373,7 @@ selfManaged.argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -373,6 +386,7 @@ selfManaged.argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'top' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',

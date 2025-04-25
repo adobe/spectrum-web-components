@@ -63,7 +63,7 @@ export default {
             type: { name: 'string', required: false },
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
+                category: 'Attributes',
             },
         },
         open: {
@@ -72,6 +72,7 @@ export default {
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
         },
         variant: {
@@ -79,7 +80,7 @@ export default {
             options: ['', 'negative', 'positive', 'info', 'error', 'warning'],
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
+                category: 'Attributes',
             },
             control: {
                 type: 'select',
@@ -91,6 +92,7 @@ export default {
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: null },
+                category: 'Attributes',
             },
         },
         iconLabel: {
@@ -98,7 +100,7 @@ export default {
             type: { name: 'string', required: false },
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
+                category: 'Attributes',
             },
         },
     },

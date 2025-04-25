@@ -12,9 +12,22 @@
  */
 
 :root {
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
+    --spectrum-font-family: var(
+        --spectrum-sans-font-family-stack,
+        adobe-clean,
+        'Adobe Clean',
+        'Source Sans Pro',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Roboto,
+        Ubuntu,
+        'Trebuchet MS',
+        'Lucida Grande',
+        sans-serif
+    );
+    --spectrum-font-style: var(--spectrum-default-font-style, normal);
+    --spectrum-font-size: var(--spectrum-font-size-100, 14px);
     --spectrum-gray-100: light-dark(rgb(248 248 248), rgb(34 34 34));
     --spectrum-gray-800: light-dark(rgb(34 34 34), rgb(255 255 255));
 
@@ -55,7 +68,7 @@ body {
     font-family: var(--spectrum-font-family);
     font-size: var(--spectrum-font-size);
     font-style: var(--spectrum-font-style);
-    background: var(--mod-story-decorator-background) !important;
+    background: var(--spectrum-gray-100);
     color: var(--spectrum-gray-800);
     -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
 }
@@ -72,9 +85,22 @@ body:has([static-color='white']) {
     );
 }
 
-body,
 body .docs-story {
     background: var(--mod-story-decorator-background) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+dl {
+    font-family: var(--spectrum-sans-font-family-stack);
+    font-style: var(--spectrum-default-font-style);
+    color: var(--spectrum-gray-800);
 }
 
 /* Hide the SVG elements that only include references */

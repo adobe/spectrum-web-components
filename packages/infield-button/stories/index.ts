@@ -48,7 +48,7 @@ export const argTypes = {
         description: 'Where to place the button along the block axis.',
         table: {
             type: { summary: '"start" | "end"' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'select',
         options: ['none', 'start', 'end'],
@@ -60,6 +60,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -71,7 +72,7 @@ export const argTypes = {
         description: 'Where to place the button along the inline axis.',
         table: {
             type: { summary: '"start" | "end"' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'select',
         options: ['none', 'start', 'end'],
@@ -82,7 +83,7 @@ export const argTypes = {
         description: 'The t-shit size of the button.',
         table: {
             type: { summary: '"s" | "m" | "l" | "xl"' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'select',
         options: ['s', 'm', 'l', 'xl'],
@@ -94,6 +95,7 @@ export const argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',

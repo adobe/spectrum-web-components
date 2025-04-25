@@ -39,7 +39,7 @@ jobs:
               run: yarn docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+              run: cp projects/documentation/custom-elements.json .storybook/
 
             - name: Publish to Chromatic
               id: chromatic

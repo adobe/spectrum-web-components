@@ -71,6 +71,7 @@ Default.argTypes = {
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -83,6 +84,7 @@ Default.argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'top' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',
@@ -111,7 +113,7 @@ Default.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -121,7 +123,7 @@ Default.argTypes = {
         description: 'The style of the tooltip.',
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
+            category: 'Attributes',
         },
         control: {
             type: 'inline-radio',

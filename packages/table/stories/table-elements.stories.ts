@@ -41,7 +41,7 @@ export default {
                 'Whether the elements selects its children and how many it can select at a time.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',

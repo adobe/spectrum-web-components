@@ -40,7 +40,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The border to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                category: 'Attributes',
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
             },
             control: {
                 type: 'inline-radio',
@@ -52,7 +54,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The density at which to display the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -64,7 +68,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The rounding to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -77,7 +83,9 @@ export default {
             description:
                 'Whether the Swatch Group manages a selection, and whether it is a sinlge or multiple selection.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'none' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -89,7 +97,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The shape to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',

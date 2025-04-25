@@ -258,6 +258,7 @@ sized.argTypes = {
         description: 'Spacing between items.',
         table: {
             type: { summary: 'number' },
+            category: 'Attributes',
         },
         control: {
             type: 'number',
@@ -269,6 +270,7 @@ sized.argTypes = {
         description: 'Spacing around all items.',
         table: {
             type: { summary: 'number' },
+            category: 'Attributes',
         },
         control: {
             type: 'number',

@@ -28,7 +28,7 @@ export const argTypes = {
             'Whether to include an icon-only close button to dismiss it',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
             category: 'Attributes',
         },
         control: { type: 'boolean' },
@@ -39,7 +39,7 @@ export const argTypes = {
         description: 'Whether the alert banner is open',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
             category: 'Attributes',
         },
         control: { type: 'boolean' },
