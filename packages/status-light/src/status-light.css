@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-status-light.css');
-@import url('./status-light-overrides.css');
 
 /* Force cascade position of [disabled] styling */
 :host([disabled]):before {

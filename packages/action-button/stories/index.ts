@@ -10,8 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
+import {
+    ifDefined,
+    unsafeHTML,
+} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
@@ -28,13 +31,17 @@ export interface Properties {
     size?: 's' | 'm' | 'l' | 'xl';
     staticColor?: 'white' | 'black';
     holdAffordance?: boolean;
-    icon?: TemplateResult;
+    icon?: string;
     label?: string;
     [prop: string]: unknown;
     href: undefined;
 }
 
-export function renderButton(properties: Properties): TemplateResult {
+export function renderButton({
+    icon,
+    label,
+    ...properties
+}: Properties): TemplateResult {
     return html`
         <sp-action-button
             href=${ifDefined(properties.href)}
@@ -48,7 +55,7 @@ export function renderButton(properties: Properties): TemplateResult {
             ?hold-affordance=${!!properties.holdAffordance}
             ?active=${!!properties.active}
         >
-            ${properties.icon}${properties.label}
+            ${icon ? unsafeHTML(icon) : nothing}${label}
         </sp-action-button>
     `;
 }
@@ -56,9 +63,7 @@ export function renderButton(properties: Properties): TemplateResult {
 function renderGroup(properties: Properties): TemplateResult {
     const label = 'Edit';
     const holdAffordance = true;
-    const icon = html`
-        <sp-icon-edit slot="icon"></sp-icon-edit>
-    `;
+    const icon = `<sp-icon-edit slot="icon"></sp-icon-edit>`;
     return html`
         <sp-action-group
             ?quiet="${!!properties.quiet}"
@@ -89,27 +94,23 @@ function renderGroup(properties: Properties): TemplateResult {
 }
 
 export function renderButtons(properties: Properties): TemplateResult {
-    const selected = true;
-    const disabled = true;
     return html`
         <div
             style="display: flex; flex-direction: column; gap: calc(var(--spectrum-spacing-100) * var(--swc-scale-factor));"
         >
+            ${renderGroup(properties)}
             ${renderGroup({
                 ...properties,
+                selected: true,
             })}
             ${renderGroup({
                 ...properties,
-                selected,
+                disabled: true,
             })}
             ${renderGroup({
                 ...properties,
-                disabled,
-            })}
-            ${renderGroup({
-                ...properties,
-                disabled,
-                selected,
+                disabled: true,
+                selected: true,
             })}
         </div>
     `;
