@@ -32,6 +32,8 @@ governing permissions and limitations under the License.
 }
 
 #textfield {
+    --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
+
     inline-size: 100%;
 }
 
@@ -41,7 +43,10 @@ textarea {
 }
 
 .input {
-    min-inline-size: var(--spectrum-textfield-min-width);
+    min-inline-size: var(
+        --mod-textfield-min-width,
+        var(--spectrum-textfield-width)
+    );
 }
 
 :host([focused]) .input {
