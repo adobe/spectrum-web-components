@@ -267,7 +267,7 @@ The dialog wrapper manages several behaviors:
 
 #### Receives focus
 
-The `receivesFocus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `interaction = modal` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
+The `receives-focus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `type="modal"` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
 ```html
 <overlay-trigger type="modal" receives-focus="auto">
