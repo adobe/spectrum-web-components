@@ -59,3 +59,11 @@ governing permissions and limitations under the License.
         var(--spectrum-stepper-border-color-focus-hover)
     );
 }
+
+:host([invalid]:not([hide-stepper])) #textfield .icon,
+:host([valid]:not([hide-stepper])) #textfield .icon {
+    inset-inline-end: calc(
+        var(--spectrum-stepper-button-width) +
+            var(--spectrum-textfield-icon-spacing-inline-end-invalid)
+    );
+}
