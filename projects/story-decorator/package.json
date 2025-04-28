@@ -78,6 +78,9 @@
         "@spectrum-web-components/switch": "1.5.0",
         "@spectrum-web-components/theme": "1.5.0"
     },
+    "peerDependencies": {
+        "@storybook/preview-api": ">=8"
+    },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
