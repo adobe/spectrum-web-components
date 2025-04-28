@@ -43,10 +43,9 @@ textarea {
 }
 
 .input {
-    min-inline-size: var(
-        --mod-textfield-min-width,
-        var(--spectrum-textfield-width)
-    );
+    --spectrum-textfield-min-width: calc(var(--spectrum-textfield-height) * 1.5)
+        min-inline-size:
+        var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
 }
 
 :host([focused]) .input {
