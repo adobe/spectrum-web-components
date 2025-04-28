@@ -57,6 +57,8 @@ The dialog base consists of a single default slot that expects an [`sp-dialog` e
 
 #### Sizes
 
+The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, `l`.
+
 <sp-tabs selected="m" auto label="Size attribute options">
     <sp-tab value="s">Small</sp-tab>
     <sp-tab-panel value="s">
@@ -96,22 +98,6 @@ The dialog base consists of a single default slot that expects an [`sp-dialog` e
 ```html
 <overlay-trigger type="modal">
     <sp-dialog-base underlay slot="click-content" size="l">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
-    </sp-dialog-base>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-</overlay-trigger>
-```
-
-</sp-tab-panel>
-<sp-tab value="xl">Extra Large</sp-tab>
-<sp-tab-panel value="xl">
-
-```html
-<overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content" size="xl">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
@@ -217,10 +203,10 @@ The dialog base manages several behaviors:
 
 #### Receives focus
 
-The `receivesFocus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `interaction = modal` and `receivesFocus = 'auto'` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
+The `receivesFocus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `interaction = modal` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
 ```html
-<overlay-trigger type="modal" receivesFocus="auto">
+<overlay-trigger type="modal" receives-focus="auto">
     <sp-dialog-base underlay mode="fullscreenTakeover" slot="click-content">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
