@@ -46,7 +46,7 @@ Polypane review:
 -   [ ] I have read the **[CONTRIBUTING](<(https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md)>)** and **[PULL_REQUESTS](<(https://github.com/adobe/spectrum-web-components/blob/main/PULL_REQUESTS.md)>)** documents.
 -   [ ] I have reviewed at the Accessibility Practices for this feature, see: [Aria Practices](https://www.w3.org/TR/wai-aria-practices/)
 -   [ ] I have added tests to cover my changes.
--   [ ] I have ensured documentation covers my changes.
+-   [ ] If my change required an update to the documentation, I have included it in this pull request.
 
 ## Best practices
 
