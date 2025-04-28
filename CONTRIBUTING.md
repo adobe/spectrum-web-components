@@ -187,7 +187,7 @@ We rely on automated tools like Prettier or ESLint to enforce style preferences.
 
 ## 13.2. Accessibility
 
-Since Spectrum Web Components is used by a diverse audience, we pay close attention to accessibility. Please keep features inclusive by:
+Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
 
 -   Using semantic markup when possible.
 -   Properly labeling interactive elements.
