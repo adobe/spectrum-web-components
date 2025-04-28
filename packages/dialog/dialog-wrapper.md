@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `sp-dialog-wrapper` supplies an attribute based interface for the managed customization of an `sp-dialog` element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an `sp-underlay` element between your page content and the `sp-dialog` that opens over it.
 
@@ -8,25 +8,36 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/MLYDVWpWhNxJZDW3Ywqq/src/index.ts)
 
-```
+```bash
 yarn add @spectrum-web-components/dialog
 ```
 
 Import the side effectful registration of `<sp-dialog-wrapper>` via:
 
-```
+```ts
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 ```
 
 When looking to leverage the `DialogWrapper` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { DialogWrapper } from '@spectrum-web-components/dialog';
 ```
 
-## Example
+### Anatomy
 
-### Small
+The dialog wrapper consists of several key parts:
+
+-   A headline (via `headline` attribute)
+-   Content (via default slot)
+-   Footer content (via `footer` attribute)
+-   Optional dismiss button (via `dismissable` attribute)
+
+### Options
+
+#### Size
+
+A small dialog can be created using the default configuration:
 
 ```html
 <overlay-trigger type="modal">
@@ -44,7 +55,11 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 </overlay-trigger>
 ```
 
-### Fullscreen Mode
+#### Mode
+
+The dialog wrapper supports different display modes:
+
+##### Fullscreen Mode
 
 ```html
 <overlay-trigger type="modal">
@@ -82,7 +97,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 </overlay-trigger>
 ```
 
-### Fullscreen Takeover Mode
+##### Fullscreen Takeover Mode
 
 ```html
 <overlay-trigger type="modal">
@@ -120,6 +135,6 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
 </overlay-trigger>
 ```
 
-## Accessibility
+### Accessibility
 
 An `sp-dialog-wrapper` element leverages the `headline` attribute/property to label the dialog content for screen readers. The `headline-visibility` attribute will accept a value of `"none"` to suppress the headline visually.
