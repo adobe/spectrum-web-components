@@ -31,13 +31,117 @@ The dialog wrapper consists of several key parts:
 -   A headline (via `headline` attribute)
 -   Content (via default slot)
 -   Footer content (via `footer` attribute)
--   Optional dismiss button (via `dismissable` attribute)
+-   An optional **Confirm** button (via `confirm-label` attribute)
+-   An optional **Secondary** button (via `secondary-label` attribute)
+-   An optional **Cancel** button (via `cancel-label` attribute)
+-   An optional **Dismiss** button (via `dismissable` attribute)
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        confirm-label="Keep Both"
+        secondary-label="Replace"
+        cancel-label="Cancel"
+        footer="Content for footer"
+        dismissable
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
 
 ### Options
 
 #### Size
 
-A small dialog can be created using the default configuration:
+The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, `l`.
+
+<sp-tabs selected="m" auto label="Size attribute options">
+    <sp-tab value="s">Small</sp-tab>
+    <sp-tab-panel value="s">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        size="s"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        size="m"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        size="l"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Underlay
+
+The `underlay` attribute can be used to add an underlay element between the page content and the dialog.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Dismissable
+
+The `dismissable` attribute can be used to add a dismiss button to the dialog. Use the `dismiss-label` attribute to set the label for the dismiss button.
 
 ```html
 <overlay-trigger type="modal">
@@ -67,33 +171,11 @@ The dialog wrapper supports different display modes:
         slot="click-content"
         headline="Dialog title"
         mode="fullscreen"
-        confirm-label="Keep Both"
-        secondary-label="Replace"
-        cancel-label="Cancel"
+        dismissable
         footer="Content for footer"
     >
         Content of the dialog
     </sp-dialog-wrapper>
-    <sp-button
-        slot="trigger"
-        variant="primary"
-        onClick="
-            const overlayTrigger = this.parentElement;
-            const dialogWrapper = overlayTrigger.clickContent;
-            function handleEvent({type}) {
-                spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
-                dialogWrapper.open = false;
-                dialogWrapper.removeEventListener('confirm', handleEvent);
-                dialogWrapper.removeEventListener('secondary', handleEvent);
-                dialogWrapper.removeEventListener('cancel', handleEvent);
-            }
-            dialogWrapper.addEventListener('confirm', handleEvent);
-            dialogWrapper.addEventListener('secondary', handleEvent);
-            dialogWrapper.addEventListener('cancel', handleEvent);
-        "
-    >
-        Toggle Dialog
-    </sp-button>
 </overlay-trigger>
 ```
 
@@ -105,9 +187,7 @@ The dialog wrapper supports different display modes:
         slot="click-content"
         headline="Dialog title"
         mode="fullscreenTakeover"
-        confirm-label="Keep Both"
-        secondary-label="Replace"
-        cancel-label="Cancel"
+        dismissable
         footer="Content for footer"
     >
         Content of the dialog
@@ -135,6 +215,105 @@ The dialog wrapper supports different display modes:
 </overlay-trigger>
 ```
 
+### Behaviors
+
+The dialog wrapper manages several behaviors:
+
+1. Animation of the dialog content when opening/closing
+2. Focus management when the dialog opens
+3. Event handling for closing the dialog
+4. Button firing for the **Confirm**, **Secondary**, and **Cancel** buttons.
+
+### Handling events
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        underlay
+        confirm-label="Keep Both"
+        secondary-label="Replace"
+        cancel-label="Cancel"
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button
+        slot="trigger"
+        variant="primary"
+        onClick="
+            const overlayTrigger = this.parentElement;
+            const dialogWrapper = overlayTrigger.clickContent;
+            function handleEvent({type}) {
+                spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
+                dialogWrapper.open = false;
+                dialogWrapper.removeEventListener('close', handleEvent);
+                dialogWrapper.removeEventListener('confirm', handleEvent);
+                dialogWrapper.removeEventListener('secondary', handleEvent);
+                dialogWrapper.removeEventListener('cancel', handleEvent);
+            }
+            dialogWrapper.addEventListener('close', handleEvent);
+            dialogWrapper.addEventListener('confirm', handleEvent);
+            dialogWrapper.addEventListener('secondary', handleEvent);
+            dialogWrapper.addEventListener('cancel', handleEvent);
+        "
+    >
+        Toggle Dialog
+    </sp-button>
+</overlay-trigger>
+```
+
+#### Receives focus
+
+The `receivesFocus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `interaction = modal` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
+
+```html
+<overlay-trigger type="modal" receives-focus="auto">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
 ### Accessibility
 
+#### Include a headline
+
 An `sp-dialog-wrapper` element leverages the `headline` attribute/property to label the dialog content for screen readers. The `headline-visibility` attribute will accept a value of `"none"` to suppress the headline visually.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        headline-visibility="none"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Focus Management
+
+The dialog wrapper component ensures proper focus management by:
+
+-   Moving focus into the dialog when opened
+-   Trapping tab order within the dialog while open
+-   Returning focus to the trigger element when closed
+
+See the [Dialog](./dialog) component for more information on the accessibility features of the dialog content.
