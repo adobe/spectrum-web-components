@@ -31,21 +31,22 @@ The dialog wrapper consists of several key parts:
 -   A headline (via `headline` attribute)
 -   Content (via default slot)
 -   Footer content (via `footer` attribute)
--   An optional **Confirm** button (via `confirm-label` attribute)
--   An optional **Secondary** button (via `secondary-label` attribute)
--   An optional **Cancel** button (via `cancel-label` attribute)
+-   Optional **Confirm** button (via `confirm-label` attribute)
+-   Optional **Secondary** button (via `secondary-label` attribute)
+-   Optional **Cancel** button (via `cancel-label` attribute)
 -   An optional **Dismiss** button (via `dismissable` attribute)
 
 ```html
 <overlay-trigger type="modal">
     <sp-dialog-wrapper
         slot="click-content"
+        hero="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
+        hero-label="Accessible label for hero image"
         headline="Dialog title"
         confirm-label="Keep Both"
         secondary-label="Replace"
         cancel-label="Cancel"
         footer="Content for footer"
-        dismissable
         underlay
     >
         Content of the dialog
@@ -171,11 +172,13 @@ The dialog wrapper supports different display modes:
         slot="click-content"
         headline="Dialog title"
         mode="fullscreen"
-        dismissable
+        confirm-label="OK"
+        cancel-label="Cancel"
         footer="Content for footer"
     >
         Content of the dialog
     </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -187,7 +190,8 @@ The dialog wrapper supports different display modes:
         slot="click-content"
         headline="Dialog title"
         mode="fullscreenTakeover"
-        dismissable
+        confirm-label="OK"
+        cancel-label="Cancel"
         footer="Content for footer"
     >
         Content of the dialog
@@ -212,6 +216,7 @@ The dialog wrapper supports different display modes:
     >
         Toggle Dialog
     </sp-button>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
@@ -223,8 +228,6 @@ The dialog wrapper manages several behaviors:
 2. Focus management when the dialog opens
 3. Event handling for closing the dialog
 4. Button firing for the **Confirm**, **Secondary**, and **Cancel** buttons.
-
-### Handling events
 
 ```html
 <overlay-trigger type="modal">
