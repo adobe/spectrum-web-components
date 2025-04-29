@@ -23,3 +23,28 @@ When looking to leverage the `Dialog` base class as a type and/or for extension 
 ```ts
 import { Dialog } from '@spectrum-web-components/dialog';
 ```
+
+### Anatomy
+
+The dialog consists of several key parts:
+
+-   A heading (via `slot="heading"`)
+-   Content (via default slot)
+-   Optional hero content (via `slot="hero"`)
+-   Optional buttons (via `slot="button"`)
+-   Optional footer content (via `slot="footer"`)
+-   Optional dismiss button (via `dismissable` attribute)
+
+```html
+<sp-dialog size="s">
+    <div
+        slot="hero"
+        style="background-image: url(https://picsum.photos/1400/260)"
+    ></div>
+    <h2 slot="heading">Disclaimer</h2>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.
+    <div slot="footer">Footer information</div>
+    <sp-button slot="button">Button</sp-button>
+</sp-dialog>
+```
