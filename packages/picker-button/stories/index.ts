@@ -11,11 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ifDefined,
+    unsafeHTML,
+} from '@spectrum-web-components/base/src/directives.js';
 
 export type StoryArgs = {
     active: boolean;
-    icon: TemplateResult;
+    icon?: string | undefined;
     invalid: boolean;
     label: boolean | string;
     open: boolean;
@@ -46,7 +49,7 @@ export const Template = ({
             ?rounded=${rounded}
             size=${size}
         >
-            ${icon ? icon : nothing}
+            ${icon ? unsafeHTML(icon) : nothing}
             ${label
                 ? html`
                       <span slot="label">
