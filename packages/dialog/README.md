@@ -176,23 +176,6 @@ Use the dialog with an overlay to create a dialog that appears over the current 
         </sp-dialog>
     </sp-popover>
 </sp-overlay>
-<overlay-trigger placement="top" type="replace">
-    <sp-button slot="trigger">Overlay Trigger 2</sp-button>
-    <sp-popover slot="click-content" open>
-        <sp-dialog size="s">
-            <h2 slot="heading">Overlay 2</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
-            augue mauris augue neque gravida. Libero volutpat sed ornare arcu.
-            <sp-button
-                slot="button"
-                onclick="javascript: this.dispatchEvent(new Event('close', {bubbles: true, composed: true}));"
-            >
-                I understand
-            </sp-button>
-        </sp-dialog>
-    </sp-popover>
-</overlay-trigger>
 ```
 
 #### Receives focus
