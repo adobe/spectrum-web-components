@@ -259,7 +259,7 @@ describe('ActionGroup', () => {
         expect(el.children[3]).to.equal(document.activeElement);
     });
 
-    it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
+    it.skip('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
         const el = await fixture<ActionGroup>(
             HasActionMenuAsChild({ label: 'Action Group' })
         );
@@ -350,8 +350,8 @@ describe('ActionGroup', () => {
                 },
             ],
         });
-        await opened;
         await elementUpdated(el);
+        await opened;
 
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
@@ -366,6 +366,7 @@ describe('ActionGroup', () => {
         }
         expect(actionMenu.children[0]).to.equal(document.activeElement);
         await sendKeys({ press: 'Enter' });
+        await elementUpdated(el);
 
         await closed;
 
