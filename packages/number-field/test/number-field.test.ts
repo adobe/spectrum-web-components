@@ -18,7 +18,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
     currency,
@@ -54,19 +53,6 @@ import {
 import { isMac } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('NumberField', () => {
-    before(async () => {
-        const shouldPolyfillEn = shouldPolyfill('en');
-        const shouldPolyfillFr = shouldPolyfill('fr');
-        if (shouldPolyfillEn || shouldPolyfillFr) {
-            await import('@formatjs/intl-numberformat/polyfill-force.js');
-        }
-        if (shouldPolyfillEn) {
-            await import('@formatjs/intl-numberformat/locale-data/en.js');
-        }
-        if (shouldPolyfillFr) {
-            await import('@formatjs/intl-numberformat/locale-data/fr.js');
-        }
-    });
     testForLitDevWarnings(async () => await getElFrom(Default({})));
     it('loads default number-field accessibly', async () => {
         const el = await getElFrom(Default({}));
