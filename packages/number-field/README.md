@@ -305,7 +305,7 @@ The `valid` attribute indicates that the number field's value is valid.
     It's one banana, Michael, how much could it cost?
 </sp-field-label>
 <sp-number-field
-    id="invalid"
+    id="valid"
     valid
     style="width: 200px"
     value="0.23"
@@ -325,12 +325,13 @@ The `valid` attribute indicates that the number field's value is valid.
 
 #### Required
 
-The `required` attribute sets the number field to an indeterminate state, visually distinct from both checked and unchecked states.
+Use the `required` attribute to indicate a number field value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
 
 ```html
-<sp-field-label for="required" required>Number of tickets</sp-field-label>
-<sp-number-field id="required" required default="0"></sp-number-field>
-<sp-help-text>Number of tickets is required.</sp-help-text>
+<sp-field-label for="number-1" required>Count</sp-field-label>
+<sp-number-field id="number-1" valid value="12343"></sp-number-field>
+<sp-field-label for="number-2" required>Size</sp-field-label>
+<sp-number-field id="number-2" invalid value="15212"></sp-number-field>
 ```
 
 #### Disabled
@@ -414,15 +415,3 @@ Consider providing help text to explain:
         });
     });
 </script>
-
-## States
-
-Use the `required` attribute to indicate a number field value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
-
-```html
-<sp-field-label for="number-1" required>Count</sp-field-label>
-<sp-number-field id="number-1" valid value="12343"></sp-number-field>
-<br />
-<sp-field-label for="number-2" required>Size</sp-field-label>
-<sp-number-field id="number-2" invalid value="15212"></sp-number-field>
-```
