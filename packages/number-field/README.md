@@ -1,6 +1,6 @@
 ## Overview
 
-`<sp-number-field>` elements are used for numeric inputs. Upon interaction via the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys, the scroll wheel, or the stepper UI, when not hidden by the `hide-stepper` attribute, the input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 times (or the value of the `step-modifier` attribute times) their normal rate.
+`<sp-number-field>` elements are used for numeric inputs. 
 
 ### Usage
 
@@ -353,6 +353,15 @@ Number fields have a `readonly` attribute for when they’re in the disabled sta
 ```
 
 ### Behaviors
+
+The number field works with the following interactions:
+
+- the input field,
+- <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys,
+- the scroll wheel, or
+- the stepper UI, when not hidden by the `hide-stepper` attribute.
+
+The input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 times (or the value of the `step-modifier` attribute times) their normal rate.
 
 #### Default value
 
