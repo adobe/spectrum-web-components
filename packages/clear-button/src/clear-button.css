@@ -10,9 +10,134 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-clear-button.css');
-@import url('./clear-button-overrides.css');
+:host {
+    --spectrum-clear-button-background-color: var(--system-clear-button-background-color);
+    --spectrum-clear-button-background-color-hover: var(--system-clear-button-background-color-hover);
+    --spectrum-clear-button-background-color-down: var(--system-clear-button-background-color-down);
+    --spectrum-clear-button-background-color-key-focus: var(--system-clear-button-background-color-key-focus);
+    --spectrum-clear-button-height: var(--system-clear-button-height);
+    --spectrum-clear-button-width: var(--system-clear-button-width);
+    --spectrum-clear-button-padding: var(--system-clear-button-padding);
+    --spectrum-clear-button-icon-color: var(--system-clear-button-icon-color);
+    --spectrum-clear-button-icon-color-hover: var(--system-clear-button-icon-color-hover);
+    --spectrum-clear-button-icon-color-down: var(--system-clear-button-icon-color-down);
+    --spectrum-clear-button-icon-color-key-focus: var(--system-clear-button-icon-color-key-focus);
+}
+
+:host([size='s']) {
+    --spectrum-clear-button-height: var(--system-clear-button-size-s-height);
+    --spectrum-clear-button-width: var(--system-clear-button-size-s-width);
+}
+
+:host([size='l']) {
+    --spectrum-clear-button-height: var(--system-clear-button-size-l-height);
+    --spectrum-clear-button-width: var(--system-clear-button-size-l-width);
+}
+
+:host([size='xl']) {
+    --spectrum-clear-button-height: var(--system-clear-button-size-xl-height);
+    --spectrum-clear-button-width: var(--system-clear-button-size-xl-width);
+}
+
+:host .spectrum-ClearButton--quiet {
+    --spectrum-clear-button-background-color: var(--system-clear-button-quiet-background-color);
+    --spectrum-clear-button-background-color-hover: var(--system-clear-button-quiet-background-color-hover);
+    --spectrum-clear-button-background-color-down: var(--system-clear-button-quiet-background-color-down);
+    --spectrum-clear-button-background-color-key-focus: var(--system-clear-button-quiet-background-color-key-focus);
+}
+
+:host([variant='overBackground']) {
+    --spectrum-clear-button-icon-color: var(--system-clear-button-over-background-icon-color);
+    --spectrum-clear-button-icon-color-hover: var(--system-clear-button-over-background-icon-color-hover);
+    --spectrum-clear-button-icon-color-down: var(--system-clear-button-over-background-icon-color-down);
+    --spectrum-clear-button-icon-color-key-focus: var(--system-clear-button-over-background-icon-color-key-focus);
+    --spectrum-clear-button-background-color: var(--system-clear-button-over-background-background-color);
+    --spectrum-clear-button-background-color-hover: var(--system-clear-button-over-background-background-color-hover);
+    --spectrum-clear-button-background-color-down: var(--system-clear-button-over-background-background-color-down);
+    --spectrum-clear-button-background-color-key-focus: var(--system-clear-button-over-background-background-color-key-focus);
+}
+
+:host([disabled]),
+:host([disabled]) {
+    --spectrum-clear-button-icon-color: var(--system-clear-button-disabled-icon-color);
+    --spectrum-clear-button-icon-color-hover: var(--system-clear-button-disabled-icon-color-hover);
+    --spectrum-clear-button-icon-color-down: var(--system-clear-button-disabled-icon-color-down);
+    --spectrum-clear-button-background-color: var(--system-clear-button-disabled-background-color);
+}
 
 :host {
     box-sizing: border-box;
+    block-size: var(--mod-clear-button-height, var(--spectrum-clear-button-height));
+    inline-size: var(--mod-clear-button-width, var(--spectrum-clear-button-width));
+    cursor: pointer;
+    background-color: initial;
+    background-color: var(--mod-clear-button-background-color, transparent);
+    padding: var(--mod-clear-button-padding, var(--spectrum-clear-button-padding));
+    color: var(--mod-clear-button-icon-color, var(--spectrum-clear-button-icon-color));
+    border: none;
+    border-radius: 100%;
+    margin: 0;
+}
+
+.icon {
+    margin-block: 0;
+    margin-inline: auto;
+}
+
+@media (hover: hover) {
+    :host(:hover) {
+        color: var(--highcontrast-clear-button-icon-color-hover, var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover)));
+    }
+
+    :host(:hover) .fill {
+        background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
+    }
+}
+
+:host(:is(:active, [active])) {
+    color: var(--mod-clear-button-icon-color-down, var(--spectrum-clear-button-icon-color-down));
+}
+
+:host(:is(:active, [active])) .fill {
+    background-color: var(--mod-clear-button-background-color-down, var(--spectrum-clear-button-background-color-down));
+}
+
+:host([focus-within]) .js-focus-within,
+:host(:focus-visible),
+:host:focus-within,
+:host([focus-within]) .js-focus-within {
+    color: var(--mod-clear-button-icon-color-key-focus, var(--spectrum-clear-button-icon-color-key-focus));
+}
+
+:host([focus-within]) .js-focus-within .fill,
+:host(:focus-visible) .fill,
+:host:focus-within .fill,
+:host([focus-within]) .js-focus-within .fill {
+    background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
+}
+
+:host([disabled]),
+:host([disabled]) {
+    --spectrum-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
+    --spectrum-clear-button-background-color: var(--mod-clear-button-background-color-disabled, transparent);
+}
+
+.fill {
+    background-color: var(--mod-clear-button-background-color, var(--spectrum-clear-button-background-color));
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+:host([variant='overBackground']:focus-visible) {
+    outline: none;
+}
+
+@media (forced-colors: active) {
+    :host:not(:disabled) {
+        --highcontrast-clear-button-icon-color-hover: Highlight;
+    }
 }

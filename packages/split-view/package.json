@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/split-view-overrides.css.js": "./src/split-view-overrides.css.js",
         "./src/split-view.css.js": "./src/split-view.css.js",
         "./src/types.js": {
             "development": "./src/types.dev.js",

@@ -34,7 +34,6 @@
             "default": "./src/index.js"
         },
         "./src/switch-legacy.css.js": "./src/switch-legacy.css.js",
-        "./src/switch-overrides.css.js": "./src/switch-overrides.css.js",
         "./src/switch.css.js": "./src/switch.css.js",
         "./sp-switch.js": {
             "development": "./sp-switch.dev.js",

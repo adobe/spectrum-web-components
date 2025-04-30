@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-alert-banner-min-height: var(--spectrum-alert-banner-minimum-height);
     --spectrum-alert-banner-max-inline-size: var(--spectrum-alert-banner-width);

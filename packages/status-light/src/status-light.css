@@ -14,10 +14,5 @@ governing permissions and limitations under the License.
 
 /* Force cascade position of [disabled] styling */
 :host([disabled]):before {
-    /* .spectrum-StatusLight.is-disabled:before,
-   * .spectrum-StatusLight[disabled]:before */
-    background-color: var(
-        --spectrum-statuslight-dot-color-disabled,
-        var(--spectrum-gray-400)
-    );
+    background-color: var(--spectrum-statuslight-dot-color-disabled, var(--spectrum-gray-400));
 }

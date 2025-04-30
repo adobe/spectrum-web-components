@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .tray {
     --spectrum-tray-max-inline-size: var(--mod-tray-max-inline-size, 375px);
     --spectrum-tray-spacing-edge-to-tray-safe-zone: var(--mod-tray-spacing-edge-to-tray-safe-zone, 64px);

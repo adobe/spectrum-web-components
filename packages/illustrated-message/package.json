@@ -30,7 +30,6 @@
             "default": "./src/IllustratedMessage.js"
         },
         "./src/illustrated-message.css.js": "./src/illustrated-message.css.js",
-        "./src/illustratedmessage-overrides.css.js": "./src/illustratedmessage-overrides.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

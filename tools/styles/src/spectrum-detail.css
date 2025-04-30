@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Typography .spectrum-Detail {
     --spectrum-detail-margin-start: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-top-multiplier));
     --spectrum-detail-margin-end: calc(var(--mod-detail-font-size, var(--spectrum-detail-font-size)) * var(--spectrum-detail-margin-bottom-multiplier));

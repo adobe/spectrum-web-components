@@ -29,7 +29,6 @@
             "development": "./src/Badge.dev.js",
             "default": "./src/Badge.js"
         },
-        "./src/badge-overrides.css.js": "./src/badge-overrides.css.js",
         "./src/badge.css.js": "./src/badge.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

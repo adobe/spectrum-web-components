@@ -10,19 +10,147 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-coachmark.css');
-@import url('./coachmark-overrides.css');
-
 :host {
-    /** custom to coachmark should be removed once keys component is developed by CSS **/
-    --spectrum-coachmark-dimension-size-175: 14px;
-    --spectrum-coachmark-dimension-size-200: 16px;
-    --spectrum-coachmark-dimension-size-100: 8px;
-    --spectrum-coachmark-dimension-size-50: 4px;
+    --spectrum-coachmark-min-width: var(--mod-coachmark-min-width, var(--system-coach-mark-min-width));
+    --spectrum-coachmark-width: var(--mod-coachmark-width, var(--system-coach-mark-width));
+    --spectrum-coachmark-max-width: var(--mod-coachmark-max-width, var(--system-coach-mark-max-width));
+    --spectrum-coachmark-media-height: var(--mod-coachmark-media-height, var(--system-coach-mark-media-height));
+    --spectrum-coachmark-media-min-height: var(--mod-coachmark-media-min-height, var(--system-coach-mark-media-min-height));
+    --spectrum-coachmark-padding: var(--mod-coachmark-padding, var(--system-coach-mark-padding));
+    --spectrum-coachmark-heading-to-action-button: var(--mod-coachmark-heading-to-action-button, var(--system-coach-mark-heading-to-action-button));
+    --spectrum-coachmark-header-to-body: var(--mod-coachmark-header-to-body, var(--system-coach-mark-header-to-body));
+    --spectrum-coachmark-body-to-footer: var(--mod-coachmark-body-to-footer, var(--system-coach-mark-body-to-footer));
+    --spectrum-coachmark-title-color: var(--mod-coachmark-title-color, var(--system-coach-mark-title-color));
+    --spectrum-coachmark-title-font-family: var(--mod-coachmark-title-font-family, var(--system-coach-mark-title-font-family));
+    --spectrum-coachmark-title-font-style: var(--mod-coachmark-title-font-style, var(--system-coach-mark-title-font-style));
+    --spectrum-coachmark-title-text-font-weight: var(--mod-coachmark-title-text-font-weight, var(--system-coach-mark-title-text-font-weight));
+    --spectrum-coachmark-title-font-size: var(--mod-coachmark-title-font-size, var(--system-coach-mark-title-font-size));
+    --spectrum-coachmark-title-text-line-height: var(--mod-coachmark-title-text-line-height, var(--system-coach-mark-title-text-line-height));
+    --spectrum-coachmark-content-font-color: var(--mod-coachmark-content-font-color, var(--system-coach-mark-content-font-color));
+    --spectrum-coachmark-content-font-weight: var(--mod-coachmark-content-font-weight, var(--system-coach-mark-content-font-weight));
+    --spectrum-coachmark-content-font-family: var(--mod-coachmark-content-font-family, var(--system-coach-mark-content-font-family));
+    --spectrum-coachmark-content-font-style: var(--mod-coachmark-content-font-style, var(--system-coach-mark-content-font-style));
+    --spectrum-coachmark-content-line-height: var(--mod-coachmark-content-line-height, var(--system-coach-mark-content-line-height));
+    --spectrum-coachmark-content-font-size: var(--mod-coachmark-content-font-size, var(--system-coach-mark-content-font-size));
+    --spectrum-coachmark-step-color: var(--mod-coachmark-step-color, var(--system-coach-mark-step-color));
+    --spectrum-coachmark-step-font-style: var(--mod-coachmark-step-font-style, var(--system-coach-mark-step-font-style));
+    --spectrum-coachmark-step-font-size: var(--mod-coachmark-step-font-size, var(--system-coach-mark-step-font-size));
+    --spectrum-coachmark-step-to-bottom: var(--mod-coachmark-step-to-bottom, var(--system-coach-mark-step-to-bottom));
+    --spectrum-coachmark-buttongroup-spacing-horizontal: var(--system-coach-mark-buttongroup-spacing-horizontal);
+    --spectrum-coachmark-border-size: var(--mod-coachmark-border-size, var(--system-coach-mark-popover-border-width));
+    --spectrum-coachmark-border-radius: var(--mod-coachmark-border-radius, var(--system-coach-mark-popover-corner-radius));
 
-    /** remove once font fixes are done from css team **/
+    /* Passthrough for popover and buttongroup */
+    --mod-buttongroup-justify-content: flex-end;
+    --mod-popover-border-width: var(--system-coach-mark-popover-border-width);
+    --mod-popover-corner-radius: var(--system-coach-mark-popover-corner-radius);
+    --mod-popover-content-area-spacing-vertical: 0;
+    --mod-button-edge-to-visual-only: 9px;
 
-    --spectrum-coachmark-content-font-family: var(--spectrum-font-family);
+    min-inline-size: var(--spectrum-coachmark-min-width);
+    max-inline-size: var(--spectrum-coachmark-max-width);
+    inline-size: var(--spectrum-coachmark-width);
+    position: relative;
+}
+
+.buttongroup {
+    display: var(--spectrum-coachmark-buttongroup-display);
+}
+
+.buttongroup-mobile {
+    --mod-buttongroup-spacing-horizontal: var(--system-coach-mark-buttongroup-spacing-horizontal);
+
+    display: var(--spectrum-coachmark-buttongroup-mobile-display);
+}
+
+.menu {
+    display: var(--spectrum-coachmark-menu-display);
+}
+
+.menu--mobile {
+    display: var(--spectrum-coachmark-menu-mobile-display);
+}
+
+.image-wrapper {
+    block-size: var(--spectrum-coachmark-media-height);
+    min-block-size: var(--spectrum-coachmark-media-min-height);
+    inline-size: calc(var(--spectrum-coachmark-width) - var(--spectrum-coachmark-border-size) * 2);
+    object-fit: cover;
+    object-position: center;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+}
+
+.image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-start-start-radius: calc(var(--spectrum-coachmark-border-radius) - var(--spectrum-coachmark-border-size));
+    border-start-end-radius: calc(var(--spectrum-coachmark-border-radius) - var(--spectrum-coachmark-border-size));
+    display: block;
+}
+
+.content,
+.footer,
+.header {
+    padding-block: 0;
+    padding-inline: var(--spectrum-coachmark-padding);
+}
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+    margin-block-end: var(--spectrum-coachmark-header-to-body);
+    padding-block-start: var(--spectrum-coachmark-padding);
+    display: flex;
+}
+
+.action-menu {
+    white-space: nowrap;
+    z-index: 1;
+    margin-inline-start: var(--spectrum-coachmark-heading-to-action-button);
+}
+
+.content {
+    color: var(--spectrum-coachmark-content-font-color);
+    font-size: var(--spectrum-coachmark-content-font-size);
+    font-weight: var(--spectrum-coachmark-content-font-weight);
+    font-family: var(--spectrum-coachmark-content-font-family);
+    font-style: var(--spectrum-coachmark-content-font-style);
+    line-height: var(--spectrum-coachmark-content-line-height);
+    margin-block-end: var(--spectrum-coachmark-body-to-footer);
+}
+
+.footer {
+    align-items: end;
+    margin-block-start: 0;
+    padding-block-end: var(--spectrum-coachmark-padding);
+    display: grid;
+}
+
+.footer sp-button-group {
+    grid-column-start: 2;
+}
+
+.title {
+    color: var(--spectrum-coachmark-title-color);
+    font-size: var(--spectrum-coachmark-title-font-size);
+    font-weight: var(--spectrum-coachmark-title-text-font-weight);
+    font-family: var(--spectrum-coachmark-title-font-family);
+    font-style: var(--spectrum-coachmark-title-font-style);
+    line-height: var(--spectrum-coachmark-title-text-line-height);
+    margin-block-end: 0;
+}
+
+.step {
+    color: var(--spectrum-coachmark-step-color);
+    font-size: var(--spectrum-coachmark-step-font-size);
+    font-weight: var(--mod-coachmark-step-text-font-weight, var(--spectrum-coachmark-step-text-font-weight));
+    font-style: var(--spectrum-coachmark-step-font-style);
+    line-height: var(--mod-coachmark-step-text-line-height, var(--spectrum-coachmark-step-text-line-height));
+    white-space: nowrap;
+    justify-self: start;
+    margin-block-end: calc(var(--spectrum-coachmark-step-to-bottom) - var(--spectrum-coachmark-padding));
 }
 
 /* These css needs to be added from css team once the keys component is created */
@@ -36,28 +164,23 @@ governing permissions and limitations under the License.
     flex-flow: row;
     justify-content: center;
     min-width: var(--spectrum-badge-min-width);
-    padding-block: var(--spectrum-coachmark-dimension-size-50);
-    padding-inline: var(--spectrum-coachmark-dimension-size-100);
+    padding-block: var(--spectrum-coachmark-dimension-size-50, 4px);
+    padding-inline: var(--spectrum-coachmark-dimension-size-100, 8px);
 }
 
 .keys {
     align-items: center;
-    gap: var(--spectrum-coachmark-dimension-size-175)
-        var(--spectrum-coachmark-dimension-size-50);
+    gap: var(--spectrum-coachmark-dimension-size-175, 14px) var(--spectrum-coachmark-dimension-size-50, 4px);
     display: flex;
     flex-flow: wrap;
-    font-family: var(
-        --mod-body-sans-serif-font-family,
-        var(--spectrum-body-sans-serif-font-family)
-    );
+    font-family: var(--mod-body-sans-serif-font-family, var(--spectrum-body-sans-serif-font-family));
 }
 
 .flex-container {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spectrum-coachmark-dimension-size-175)
-        var(--spectrum-coachmark-dimension-size-200);
+    gap: var(--spectrum-coachmark-dimension-size-175, 14px) var(--spectrum-coachmark-dimension-size-200, 16px);
 }
 
 .static-item {

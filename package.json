@@ -260,8 +260,6 @@
                 "!projects/templates",
                 "tools/**/*.js",
                 "tools/**/*.js.map",
-                "!**/spectrum-config.js",
-                "!**/spectrum-config.v1.js",
                 "!**/build.js",
                 "!**/build-icons-mapping.js",
                 "test/**/*.js",

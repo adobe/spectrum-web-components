@@ -38,11 +38,10 @@ export class ColorLoupe extends SpectrumElement {
     protected override render(): TemplateResult {
         return html`
             <div class="opacity-checkerboard loupe-clipped"></div>
-            <div class="spectrum-ColorLoupe-inner-border loupe-clipped"></div>
-            <div class="spectrum-ColorLoupe-outer-border loupe-clipped"></div>
+            <div class="inner-border loupe-clipped"></div>
+            <div class="outer-border loupe-clipped"></div>
             <svg
                 aria-hidden="true"
-                class="spectrum-ColorLoupe is-open"
                 overflow="visible"
                 style="--spectrum-picked-color: ${this
                     .color}; position: absolute;"
@@ -65,18 +64,18 @@ export class ColorLoupe extends SpectrumElement {
                     </mask>
                 </defs>
 
-                <g class="spectrum-ColorLoupe-loupe">
+                <g class="loupe">
                     <g>
                         <use
                             xlink:href="#loupe-path"
                             mask="url(#loupe-mask)"
                             transform="translate(2, 2)"
-                            class="spectrum-ColorLoupe-inner-border"
+                            class="inner-border"
                         />
                         <use
                             xlink:href="#loupe-path"
                             mask="url(#loupe-mask)"
-                            class="spectrum-ColorLoupe-outer-border"
+                            class="outer-border"
                         />
                     </g>
                 </g>

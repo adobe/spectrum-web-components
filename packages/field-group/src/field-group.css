@@ -10,19 +10,38 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-field-group.css');
-@import url('./field-group-overrides.css');
+:host {
+    --spectrum-fieldgroup-margin: var(--system-field-group-margin);
+    --spectrum-fieldgroup-readonly-delimiter: var(--system-field-group-readonly-delimiter);
+}
+
+.group {
+    flex-flow: column wrap;
+    display: flex;
+}
+
+:host([vertical]) .group {
+    flex-direction: column;
+}
+
+:host([horizontal]) .group {
+    flex-direction: row;
+}
+
+:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
+    margin-inline-end: var(--spectrum-fieldgroup-margin);
+}
+
+:host([horizontal]) .group sp-help-text {
+    flex-basis: 100%;
+}
 
 :host([horizontal][dir='rtl']) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir='rtl']:not([vertical]))
-    slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+:host([dir='rtl']:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
     margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }
 
 :host([horizontal][dir='ltr']) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir='ltr']:not([vertical]))
-    slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
+:host([dir='ltr']:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
     margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
 }

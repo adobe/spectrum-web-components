@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     font-size: var(--mod-progressbar-font-size, var(--spectrum-progressbar-font-size));
     vertical-align: top;

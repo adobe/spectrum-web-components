@@ -10,8 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-button-base.css');
-
 :host {
     display: inline-flex;
     vertical-align: top;
@@ -51,14 +49,8 @@ slot[name='icon']::slotted(svg),
 slot[name='icon']::slotted(img) {
     fill: currentcolor;
     stroke: currentcolor;
-    block-size: var(
-        --spectrum-icon-size,
-        var(--spectrum-workflow-icon-size-100)
-    );
-    inline-size: var(
-        --spectrum-icon-size,
-        var(--spectrum-workflow-icon-size-100)
-    );
+    block-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
+    inline-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
 }
 
 [icon-only] + #label {

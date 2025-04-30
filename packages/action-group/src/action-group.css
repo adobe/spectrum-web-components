@@ -11,12 +11,15 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-action-group.css');
-@import url('./action-group-overrides.css');
+
+:host {
+    --spectrum-actiongroup-gap-size-compact: var(--system-action-group-gap-size-compact);
+    --spectrum-actiongroup-horizontal-spacing-compact: var(--system-action-group-horizontal-spacing-compact);
+    --spectrum-actiongroup-vertical-spacing-compact: var(--system-action-group-vertical-spacing-compact);
+}
 
 :host([size='xs']) {
-    --spectrum-actiongroup-horizontal-spacing-regular: var(
-        --spectrum-spacing-75
-    );
+    --spectrum-actiongroup-horizontal-spacing-regular: var(--spectrum-spacing-75);
 
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
@@ -39,81 +42,27 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
-    --overriden-border-radius: var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0 0;
+    --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
-    --overriden-border-radius: 0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+    --overriden-border-radius: 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir='ltr'][compact]:not([quiet], [vertical]))
-    ::slotted(:not([role]):first-child) {
-    --overriden-border-radius: var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+:host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:not([role]):first-child) {
+    --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
-:host([dir='rtl'][compact]:not([quiet], [vertical]))
-    ::slotted(:not([role]):first-child) {
-    --overriden-border-radius: 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0;
+:host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:not([role]):first-child) {
+    --overriden-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir='ltr'][compact]:not([quiet], [vertical]))
-    ::slotted(:not([role]):last-child) {
-    --overriden-border-radius: 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0;
+:host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:not([role]):last-child) {
+    --overriden-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
-:host([dir='rtl'][compact]:not([quiet], [vertical]))
-    ::slotted(:not([role]):last-child) {
-    --overriden-border-radius: var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+:host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:not([role]):last-child) {
+    --overriden-border-radius: var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
 :host([compact]:not([quiet])) ::slotted(*) {
@@ -121,74 +70,27 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    --mod-actionbutton-focus-ring-border-radius: var(
-            --spectrum-alias-component-border-radius
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0 0;
+    --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    --mod-actionbutton-focus-ring-border-radius: 0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+    --mod-actionbutton-focus-ring-border-radius: 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
 :host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    --mod-actionbutton-focus-ring-border-radius: var(
-            --spectrum-alias-component-border-radius
-        )
-        0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+    --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
 :host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    --mod-actionbutton-focus-ring-border-radius: 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0;
+    --mod-actionbutton-focus-ring-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
 :host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    --mod-actionbutton-focus-ring-border-radius: 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        )
-        0;
+    --mod-actionbutton-focus-ring-border-radius: 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius)) 0;
 }
 
 :host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    --mod-actionbutton-focus-ring-border-radius: var(
-            --spectrum-alias-component-border-radius
-        )
-        0 0
-        var(
-            --mod-actiongroup-border-radius,
-            var(--spectrum-actiongroup-border-radius)
-        );
+    --mod-actionbutton-focus-ring-border-radius: var(--spectrum-alias-component-border-radius) 0 0 var(--mod-actiongroup-border-radius, var(--spectrum-actiongroup-border-radius));
 }
 
 /** flex-grow: 1; isn't enough to fully justify the action group */

@@ -10,10 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-toast-background-color-default: var(
-        --system-toast-background-color-default
-    );
+    --spectrum-toast-background-color-default: var(--system-toast-background-color-default);
     --spectrum-toast-divider-color: var(--system-toast-divider-color);
 }

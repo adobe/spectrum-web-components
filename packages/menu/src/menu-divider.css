@@ -10,10 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-menu-divider.css');
-@import url('./menu-divider-overrides.css');
-
 :host {
+    --spectrum-menu-divider-thickness: var(--spectrum-divider-thickness-medium);
+
+    inline-size: auto;
+    margin-block: var(--mod-menu-section-divider-margin-block, max(0px, (var(--spectrum-menu-item-section-divider-height) - var(--spectrum-menu-divider-thickness)) / 2));
+    margin-inline: var(--mod-menu-item-label-inline-edge-to-content, var(--spectrum-menu-item-label-inline-edge-to-content));
+    overflow: visible;
     display: block;
     flex-shrink: 0;
 }

@@ -10,13 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-menu-sectionHeading.css');
-
 :host {
     margin: 0;
     display: flex;
     overflow: visible;
     flex-direction: column;
+}
+
+.header {
+    min-inline-size: var(--mod-menu-section-header-min-width, var(--spectrum-menu-section-header-min-width));
+    padding-block-start: var(--mod-menu-section-header-top-edge-to-text, var(--mod-menu-item-top-edge-to-text, var(--spectrum-menu-item-top-edge-to-text)));
+    padding-block-end: var(--mod-menu-section-header-bottom-edge-to-text, var(--mod-menu-item-bottom-edge-to-text, var(--spectrum-menu-item-bottom-edge-to-text)));
+    padding-inline: var(--mod-menu-item-label-inline-edge-to-content, var(--spectrum-menu-item-label-inline-edge-to-content));
+    grid-area: sectionHeadingArea / 1 / sectionHeadingArea / -1;
+    display: block;
+}
+
+.header ::slotted(*) {
+    color: var(--highcontrast-menu-item-color-default, var(--mod-menu-section-header-color, var(--spectrum-menu-section-header-color)));
+    font-size: var(--mod-menu-section-header-font-size, var(--spectrum-menu-section-header-font-size));
+    font-weight: var(--mod-menu-section-header-font-weight, var(--spectrum-menu-section-header-font-weight));
+    line-height: var(--mod-menu-section-header-line-height, var(--spectrum-menu-section-header-line-height));
 }
 
 [hidden] {

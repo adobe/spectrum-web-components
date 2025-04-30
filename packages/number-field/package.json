@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/number-field-overrides.css.js": "./src/number-field-overrides.css.js",
         "./src/number-field.css.js": "./src/number-field.css.js",
         "./sp-number-field.js": {
             "development": "./sp-number-field.dev.js",

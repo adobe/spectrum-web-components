@@ -10,11 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Body {
-    --spectrum-body-sans-serif-font-family: var(
-        --system-body-sans-serif-font-family
-    );
+    --spectrum-body-sans-serif-font-family: var(--system-body-sans-serif-font-family);
     --spectrum-body-serif-font-family: var(--system-body-serif-font-family);
     --spectrum-body-cjk-font-family: var(--system-body-cjk-font-family);
     --spectrum-body-cjk-letter-spacing: var(--system-body-cjk-letter-spacing);

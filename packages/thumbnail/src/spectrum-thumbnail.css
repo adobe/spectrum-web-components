@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host,
 :host([size='500']) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-500);

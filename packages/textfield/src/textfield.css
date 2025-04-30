@@ -11,7 +11,35 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-textfield.css');
-@import url('./textfield-overrides.css');
+
+:host {
+    --spectrum-textfield-background-color: var(--system-textfield-background-color);
+    --spectrum-textfield-background-color-disabled: var(--system-textfield-background-color-disabled);
+    --spectrum-textfield-border-color: var(--system-textfield-border-color);
+    --spectrum-textfield-border-color-hover: var(--system-textfield-border-color-hover);
+    --spectrum-textfield-border-color-focus: var(--system-textfield-border-color-focus);
+    --spectrum-textfield-border-color-focus-hover: var(--system-textfield-border-color-focus-hover);
+    --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
+    --spectrum-textfield-border-color-disabled: var(--system-textfield-border-color-disabled);
+    --spectrum-textfield-border-width: var(--system-textfield-border-width);
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-icon-spacing-block-invalid);
+}
+
+:host([size='s']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-s-icon-spacing-block-invalid);
+}
+
+:host([size='l']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-l-icon-spacing-block-invalid);
+}
+
+:host([size='xl']) #textfield#textfield {
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-xl-icon-spacing-block-invalid);
+}
+
+:host([quiet]) #textfield {
+    --spectrum-textfield-border-color-disabled: var(--system-textfield-quiet-border-color-disabled);
+}
 
 :host {
     display: inline-flex;
@@ -51,10 +79,7 @@ textarea {
 
 :host([focused]) #textfield:hover .input,
 :host([focused]) .input:hover {
-    border-color: var(
-        --mod-textfield-border-color-focus-hover,
-        var(--spectrum-textfield-border-color-focus-hover)
-    );
+    border-color: var(--mod-textfield-border-color-focus-hover, var(--spectrum-textfield-border-color-focus-hover));
 }
 
 #sizer {
@@ -101,49 +126,22 @@ textarea {
 :host([disabled][quiet]) #textfield:hover .input,
 :host([quiet]) .input :disabled {
     background-color: #0000;
-    border-color: var(
-        --mod-textfield-border-color-disabled,
-        var(--spectrum-textfield-border-color-disabled)
-    );
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    border-color: var(--mod-textfield-border-color-disabled, var(--spectrum-textfield-border-color-disabled));
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 :host([disabled]) #textfield .icon.icon-search,
 :host([readonly]) #textfield .icon.icon-search {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 :host([focused]) #textfield .icon.icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(--mod-search-color-focus, var(--spectrum-search-color-focus))
-    );
+    --spectrum-search-color: var(--highcontrast-search-color-focus, var(--mod-search-color-focus, var(--spectrum-search-color-focus)));
 }
 
 :host([multiline][grows]:not([quiet])) #textfield:after {
     grid-area: unset;
-    min-block-size: calc(
-        var(
-                --mod-text-area-min-block-size,
-                var(--spectrum-text-area-min-block-size)
-            ) +
-            var(
-                --mod-textfield-focus-indicator-gap,
-                var(--spectrum-textfield-focus-indicator-gap)
-            ) * 2
-    );
+    min-block-size: calc(var(--mod-text-area-min-block-size, var(--spectrum-text-area-min-block-size)) + var(--mod-textfield-focus-indicator-gap, var(--spectrum-textfield-focus-indicator-gap)) * 2);
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {
