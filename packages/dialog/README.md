@@ -48,3 +48,13 @@ The dialog consists of several key parts:
     <sp-button slot="button">Button</sp-button>
 </sp-dialog>
 ```
+
+### Accessibility
+
+The dialog component ensures proper focus management by:
+
+-   Moving focus into the dialog when opened
+-   Trapping tab order within the dialog while open
+-   Returning focus to the trigger element when closed
+
+For more information on accessibility features, see the [Dialog Base](./dialog-base) component.
