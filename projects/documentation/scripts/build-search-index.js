@@ -164,9 +164,9 @@ async function main() {
         // Configure the index fields
         this.ref('metadata');
         // Boost title field for higher relevance when matching titles
-        this.field('title', { boost: 100 });
+        this.field('title', { boost: 50 });
         this.field('body');
-        this.field('category');
+        this.field('category', { boost: 10 });
 
         // Add all documents to the index
         for (const document of documents) {
