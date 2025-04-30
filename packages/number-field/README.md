@@ -34,7 +34,6 @@ A number field consists of an input field for numeric values and optional steppe
 </sp-field-label>
 <sp-number-field
     id="anatomy"
-    style="width: 200px"
     format-options='{
         "style": "unit",
         "unit": "MPH",
@@ -115,7 +114,6 @@ The following example uses the `signDisplay` option to include the plus sign for
 <sp-number-field
     id="decimals"
     value="0"
-    style="width: 200px"
     format-options='{
         "signDisplay": "exceptZero",
         "minimumFractionDigits": 1,
@@ -134,7 +132,6 @@ The `style: 'percent'` option can be passed to the `formatOptions` property to t
 <sp-field-label for="percents">Sales tax</sp-field-label>
 <sp-number-field
     id="percents"
-    style="width: 200px"
     value="0.05"
     format-options='{
         "style": "percent"
@@ -154,7 +151,6 @@ If you need to allow the user to change the currency, you should include a separ
 <sp-field-label for="currency">Transaction amount</sp-field-label>
 <sp-number-field
     id="currency"
-    style="width: 200px"
     value="45"
     format-options='{
         "style": "currency",
@@ -179,7 +175,6 @@ Note: The unit style is not currently supported in Safari. A [polyfill](https://
 <sp-field-label for="units">Package width</sp-field-label>
 <sp-number-field
     id="units"
-    style="width: 200px"
     value="4"
     format-options='{
         "style": "unit",
@@ -199,7 +194,6 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 <sp-field-label for="units">Document width in pixels</sp-field-label>
 <sp-number-field
     id="units"
-    style="width: 200px"
     value="500"
     format-options='{
         "style": "unit",
@@ -277,7 +271,7 @@ The `invalid` attribute indicates that the number field's value is invalid. When
 <sp-number-field
     id="invalid"
     invalid
-    style="width: 200px"
+    style="width: 130px"
     value="10"
     min="0"
     max="0.3"
@@ -307,7 +301,7 @@ The `valid` attribute indicates that the number field's value is valid.
 <sp-number-field
     id="valid"
     valid
-    style="width: 200px"
+    style="width: 130px"
     value="0.23"
     min="0"
     max="0.3"
@@ -329,9 +323,9 @@ Use the `required` attribute to indicate a number field value is required. Dicta
 
 ```html
 <sp-field-label for="number-1" required>Count</sp-field-label>
-<sp-number-field id="number-1" valid value="12343"></sp-number-field>
+<sp-number-field id="number-1" valid value="123"></sp-number-field>
 <sp-field-label for="number-2" required>Size</sp-field-label>
-<sp-number-field id="number-2" invalid value="15212"></sp-number-field>
+<sp-number-field id="number-2" invalid value="152"></sp-number-field>
 ```
 
 #### Disabled
@@ -371,19 +365,17 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 <sp-field-label for="default">
     Default value of this number field is 42
 </sp-field-label>
-<sp-number-field id="default" value="42"></sp-number-field>
+<sp-number-field id="default" value="20"></sp-number-field>
 
 <script type="module">
-    customElements.whenDefined('sp-number-field').then(() => {
-        const numberField = document.querySelector('#default');
+    const numberField = document.querySelector('#default');
 
-        numberField.addEventListener('change', (event) => {
-            alert('change');
-            const target = event.target;
-            if (isNaN(target.value)) {
-                target.value = '42';
-            }
-        });
+    numberField.addEventListener('change', (event) => {
+        alert('change');
+        const target = event.target;
+        if (isNaN(target.value)) {
+            target.value = '42';
+        }
     });
 </script>
 ```
