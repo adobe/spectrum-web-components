@@ -1,6 +1,6 @@
 ## Overview
 
-`<sp-number-field>` elements are used for numeric inputs. Upon interaction via the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys, the scroll wheel, or the stepper UI, when not hidden by the `hide-stepper` attribute, the input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 time (or the value of the `step-modifier` attribute times) their normal rate.
+`<sp-number-field>` elements are used for numeric inputs. Upon interaction via the <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys, the scroll wheel, or the stepper UI, when not hidden by the `hide-stepper` attribute, the input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 times (or the value of the `step-modifier` attribute times) their normal rate.
 
 ### Usage
 
@@ -218,7 +218,7 @@ Note: the polyfilling done here is very simplistic and is triggered by supplying
 <sp-tab value="min-max">Minimum and maximum values</sp-tab>
 <sp-tab-panel value="min-max">
 
-The `max` and `max` properties can be used to limit the entered value to a specific range. The value will be clamped when the user commits the value to the `<sp-number-field>` element. In addition, the increment and decrement buttons will be disabled when the value is within one step value from the bounds. Ranges can be open ended by only providing a value for either `min` or `max` rather than both.
+The `min` and `max` properties can be used to limit the entered value to a specific range. The value will be clamped when the user commits the value to the `<sp-number-field>` element. In addition, the increment and decrement buttons will be disabled when the value is within one step value from the bounds. Ranges can be open ended by only providing a value for either `min` or `max` rather than both.
 
 If a valid range is known ahead of time, it is a good idea to provide it to `<sp-number-field>` so it can optimize the experience. For example, when the minimum value is greater than or equal to zero, it is possible to use a numeric keyboard on iOS rather than a full text keyboard (necessary to enter a minus sign).
 
@@ -348,7 +348,7 @@ The `disabled` attribute prevents the number field from receiving focus or event
 
 #### Read-only
 
-number fieldes have a `readonly` attribute for when they’re in the disabled state but still need their labels to be shown. This allows for content to be copied, but not interacted with or changed.
+Number fields have a `readonly` attribute for when they’re in the disabled state but still need their labels to be shown. This allows for content to be copied, but not interacted with or changed.
 
 ```html
 <sp-field-label for="readonly">Number of tickets</sp-field-label>
