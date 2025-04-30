@@ -2,7 +2,7 @@ Welcome! We’re excited you’re interested in improving Spectrum Web Component
 
 Here you’ll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we’re all on the same page.
 
--   [1. Community \& Support](#1-community--support)
+-   [Community \& Support](community--support)
     -   [1.1. External Contributors](#11-external-contributors)
     -   [1.2. Internal Contributors](#12-internal-contributors)
 -   [2. How can you Contribute](#2-how-can-you-contribute)
@@ -41,7 +41,7 @@ If you need support or have a question about how something works, filing an issu
 
 ## 1.2. Internal Contributors
 
-If you work for Adobe, our slack channel #spectrum_web_components has some great workflows to get you started. Be sure to read the Welcome Canvas when you join.
+If you work for Adobe, our Slack channel #spectrum_web_components has some great workflows to get you started. Be sure to read the Welcome Canvas when you join.
 
 ---
 
@@ -84,11 +84,11 @@ If you’re having a usage issue or need support, do not open an issue. Instead,
 
 ## 5.1. Before Submitting A Bug Report
 
-1. Check the Open Issues to see if the problem has already been reported.
+1. Check the [Open Issues](https://github.com/adobe/spectrum-web-components/issues) to see if the problem has already been reported.
     - TIP: Apply the component label to make your search process more straightforward.
 2. If it has and the issue is still open, add a comment to the existing issue instead of opening a new one.
 3. Check if you can reproduce the problem in the latest version of Spectrum Web Components.
-4. If there are no related open issues and it is reproducible in isolation, then open a Bug Report.
+4. If there are no related open issues and it is reproducible in isolation, then open a [Bug Report](https://github.com/adobe/spectrum-web-components/issues/new?template=bug_report.yaml).
 
 ---
 
@@ -105,7 +105,7 @@ When you file a bug, please use the `Bug Report` template provided in GitHub. In
 
 Clear bug reports speed up the triage process, help us replicate the issue, and keep the project robust.
 
-## 6.1. Issue Severity Classification
+## Issue severity classification
 
 Providing the correct issue severity classification helps us adequately assess and prioritize your issue. We reserve the right to adjust the severity of your bug during triage.
 Below is our issue severity classification criteria:
@@ -162,7 +162,7 @@ Quality and stability are important. We require writing tests for any fixes or f
 -   New features work as intended for all users.
 -   Overall library reliability remains high.
 
-Read about our testing guidance in the README.md.
+Read about our testing guidance in the [README.md](README.md).
 
 If you’re unsure how to write tests for certain parts of the library, don’t hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
 
@@ -173,7 +173,7 @@ If you’re unsure how to write tests for certain parts of the library, don’t 
 In addition to well-tested code, documentation is crucial. Whenever you add or change a feature,include documentation for it in the relevant areas:
 
 -   **README.md**: Each component has a README within its directory. Ensure your changes are included here. This file is used in our generated documentation site.
--   **Comment Annotations**: We use comment-based documentation (JSDocs) so that references are generated automatically where possible.
+-   **Comment Annotations**: We use comment-based documentation ([JSDocs](https://jsdoc.app/)) so that references are generated automatically where possible.
 
 Accessible, helpful docs are a huge win for everyone, especially newcomers.
 
@@ -189,15 +189,15 @@ We rely on automated tools like Prettier or ESLint to enforce style preferences.
 
 Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
 
--   Using semantic markup when possible.
--   Properly labeling interactive elements.
--   Ensuring focus states and keyboard navigation are well supported.
+-   The use of semantic markup.
+-   Labeled interactive elements with appropriate affordances.
+-   Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
 
-If you’re unsure about an accessibility detail, open a discussion or ask in your PR.
+If you’re unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
 
 ## 13.3. Commit Guidelines
 
-As mentioned previously, we use Conventional Commit syntax:
+As mentioned previously, we use [Conventional Commit](https://www.conventionalcommits.org) syntax:
 
     type(component?): subject
     //component is optional, but should reference the package you are updating

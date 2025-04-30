@@ -132,12 +132,12 @@ Both reviewers and PR authors should follow these guidelines:
 
 -   **Be specific and constructive**: By providing clear, actionable feedback and explaining why a change is needed, we help contributors make updates to their code more quickly and accurately.
 -   **Prioritize Issues**: Focus on important issues first (architecture, functionality, performance) before minor stylistic concerns.
--   **Ask Questions**: When something isn't clear, ask questions rather than making assumptions about intent.
+-   **Ask Questions**: When something isn't clear, start with asking questions. We don't assume intent or meaning and focus instead on curiosity and clarification.
 -   **Suggest Alternatives**: When pointing out issues, suggest possible solutions or approaches. Leverage the code suggestions feature to streamline applying feedback for the author.
--   **Recognize Good Work**: Acknowledge well-written code and good design decisions. Positive reinforcement is valuable.
+-   **Celebrate good work**: By acknowledging well-written code and good design decisions, we celebrate our contributors and the hard work they put in. Positive reinforcement is valued and makes for a fun and engaging project!
 -   **Remember Context**: Consider the PR author's experience level and the scope of changes when providing feedback.
 -   **Be Timely**: Complete reviews promptly to avoid blocking progress.
--   **Avoid Nitpicking**: Focus on meaningful improvements rather than personal style preferences that don't violate project standards. Prepend comments with `nit:` to denote its non-blocking feedback.
+-   **Avoid Nitpicking**: Focus on meaningful improvements rather than personal style preferences that don't violate project standards. Prepend comments with `nit:` to denote that it is non-blocking feedback.
 -   **Use Changes Requested Sparingly**: Changes Requested review status should only be used in instances where a bug or regression is still present in the PR.
 -   **Review VRTs Thoroughly**: Ensure the diffs in VRT are expected and inform the author via comment if they are approved so they know to update the golden hash.
 
@@ -188,6 +188,8 @@ When creating or reviewing new components, ensure:
 -   README contains a clear description and minimal example
 -   Inline documentation for all public APIs
 -   Accessibility documentation that aligns with WCAG patterns
+
+See [Documenting a component](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documenting-the-component) for more information on our documentation standards and structure.
 
 #### API Documentation
 
