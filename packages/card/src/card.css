@@ -35,7 +35,7 @@ governing permissions and limitations under the License.
     margin-right: auto;
 }
 
-/* The description slot has a psuedo-element that also needs to receive the font styling. 
+/* The description slot has a psuedo-element that also needs to receive the font styling.
 We need to add the declaration to the slot as well */
 slot[name='description'] {
     font-size: var(
@@ -54,8 +54,7 @@ slot[name='description'] {
     display: block;
 
     /* Since we're using <img> tags instead of background-image for the cover photo,
-    we need an additional object-fit property to preserve the aspect ratio of the image
-    In spectrum-css, background-size is used */
+    we need an additional object-fit property to preserve the aspect ratio of the image */
     object-fit: cover;
 }
 
@@ -81,7 +80,7 @@ sp-popover {
 }
 
 /**
- * Allow that the heading element will take specified use of the available width whether 
+ * Allow that the heading element will take specified use of the available width whether
  * "actions" are supplied to the element or not.
  **/
 .title {
@@ -89,7 +88,6 @@ sp-popover {
 }
 
 .subtitle {
-    /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
     text-transform: none;
 }
 

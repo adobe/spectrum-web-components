@@ -55,11 +55,6 @@ governing permissions and limitations under the License.
     color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
 }
 
-/*
- * TODO remove after next tabs release
- * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
- * then we'll need to place this at `top: 0;` ourselves.
- */
 :host([direction='vertical-right']) #list #selection-indicator,
 :host([direction='vertical']) #list #selection-indicator {
     inset-block-start: 0;

@@ -222,7 +222,6 @@
                 "../../tools/**/args.js",
                 "../../tools/**/template.js",
                 "scripts/gather-wcd-urls.js",
-                "scripts/gather-spectrum-urls.js",
                 "scripts/gather-storybook-urls.js",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"

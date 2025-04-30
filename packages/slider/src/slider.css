@@ -13,12 +13,10 @@ governing permissions and limitations under the License.
 @import url('./spectrum-slider.css');
 @import url('./slider-overrides.css');
 
-/*
+/**
  * Removes blue outline from :host when it is being focused.
- * This situation is not addressed in spectrum-css because the slider element itself
- * is not intended to receive focus.
- * This is not the case with web-components. The :host will receive focus when
- * interacting with the slider via the mouse.
+ * The :host will receive focus when interacting with the
+ * slider via the mouse.
 */
 :host(:focus) {
     outline: 0;
@@ -94,11 +92,6 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .handle:before {
     transform: translate(50%, -50%);
 }
-
-/*
- * The following three declarationsa required while https://github.com/adobe/spectrum-css/issues/521
- * waits to be addressed at the Spectrum CSS level.
- */
 
 .track:before {
     background-size: var(--spectrum-slider-track-background-size) !important;

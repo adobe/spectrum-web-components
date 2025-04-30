@@ -11,9 +11,6 @@ governing permissions and limitations under the License.
 */
 
 #switch::before {
-    /* This rule includes all of the transitions from spectrum-css except the
-     * one for the transform attribute, which causes issue in Edge.
-     */
     transition:
         background var(--spectrum-animation-duration-100, 0.13s) ease-in-out,
         border var(--spectrum-animation-duration-100, 0.13s) ease-in-out,

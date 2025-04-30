@@ -20,7 +20,6 @@ governing permissions and limitations under the License.
 :host {
     display: block;
 
-    /* Workaround while https://github.com/adobe/spectrum-css/issues/2162 remains open */
     --spectrum-picker-border-width: var(--spectrum-border-width-100);
 
     /* end workaround */

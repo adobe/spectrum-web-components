@@ -114,7 +114,6 @@ textarea {
     );
 }
 
-/* :not selector not working with regex for process-spectrum so had to override here */
 :host([disabled]) #textfield .icon.icon-search,
 :host([readonly]) #textfield .icon.icon-search {
     color: var(

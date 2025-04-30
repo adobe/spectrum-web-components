@@ -16,28 +16,15 @@ governing permissions and limitations under the License.
 :host([size='xs']) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(
         --spectrum-spacing-75
-    ); /* .spectrum-ActionGroup--sizeS */
+    );
 
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
-
-/**
- * The following styles corrects issues found in the Spectrum CSS output
- * that are tracked via: https://github.com/adobe/spectrum-css/issues/795
- */
 
 :host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
     margin-right: 0;
     margin-left: 0;
 }
-
-/**
- * End Spectrum CSS #795 fixes.
- */
-
-/**
- * The following styles correct realities outlined in https://github.com/adobe/spectrum-web-components/issues/1434
- */
 
 :host([justified]) ::slotted(:not([role])),
 :host([vertical]) ::slotted(:not([role])) {
@@ -47,13 +34,11 @@ governing permissions and limitations under the License.
 }
 
 :host([compact]:not([quiet])) ::slotted(:not([role])) {
-    /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
     --overriden-border-radius: 0;
     --mod-actionbutton-border-radius: var(--overriden-border-radius);
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --overriden-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -66,7 +51,6 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --overriden-border-radius: 0 0
         var(
             --mod-actiongroup-border-radius,
@@ -80,7 +64,6 @@ governing permissions and limitations under the License.
 
 :host([dir='ltr'][compact]:not([quiet], [vertical]))
     ::slotted(:not([role]):first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --overriden-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -94,7 +77,6 @@ governing permissions and limitations under the License.
 
 :host([dir='rtl'][compact]:not([quiet], [vertical]))
     ::slotted(:not([role]):first-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --overriden-border-radius: 0
         var(
             --mod-actiongroup-border-radius,
@@ -109,7 +91,6 @@ governing permissions and limitations under the License.
 
 :host([dir='ltr'][compact]:not([quiet], [vertical]))
     ::slotted(:not([role]):last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --overriden-border-radius: 0
         var(
             --mod-actiongroup-border-radius,
@@ -124,7 +105,6 @@ governing permissions and limitations under the License.
 
 :host([dir='rtl'][compact]:not([quiet], [vertical]))
     ::slotted(:not([role]):last-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --overriden-border-radius: var(
             --mod-actiongroup-border-radius,
             var(--spectrum-actiongroup-border-radius)
@@ -141,7 +121,6 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --mod-actionbutton-focus-ring-border-radius: var(
             --spectrum-alias-component-border-radius
         )
@@ -153,7 +132,6 @@ governing permissions and limitations under the License.
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --mod-actionbutton-focus-ring-border-radius: 0 0
         var(
             --mod-actiongroup-border-radius,
@@ -166,7 +144,6 @@ governing permissions and limitations under the License.
 }
 
 :host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --mod-actionbutton-focus-ring-border-radius: var(
             --spectrum-alias-component-border-radius
         )
@@ -178,7 +155,6 @@ governing permissions and limitations under the License.
 }
 
 :host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:first-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
     --mod-actionbutton-focus-ring-border-radius: 0
         var(
             --mod-actiongroup-border-radius,
@@ -192,7 +168,6 @@ governing permissions and limitations under the License.
 }
 
 :host([dir='ltr'][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --mod-actionbutton-focus-ring-border-radius: 0
         var(
             --mod-actiongroup-border-radius,
@@ -206,7 +181,6 @@ governing permissions and limitations under the License.
 }
 
 :host([dir='rtl'][compact]:not([quiet], [vertical])) ::slotted(:last-child) {
-    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
     --mod-actionbutton-focus-ring-border-radius: var(
             --spectrum-alias-component-border-radius
         )

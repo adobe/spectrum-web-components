@@ -21,13 +21,6 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-/**
- * Work around for https://github.com/adobe/spectrum-css/issues/2251
- **/
 :host([dir='rtl']) #button:after {
     transform: translateX(50%) translateY(-50%);
 }
-
-/**
- * End workaround
- **/
