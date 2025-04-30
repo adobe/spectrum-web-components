@@ -1,10 +1,10 @@
-# Spectrum Web Components: Pull Request Best Practices
+# Pull Request Best Practices
 
 This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
 
 ## Table of Contents
 
--   [Spectrum Web Components: Pull Request Best Practices](#spectrum-web-components-pull-request-best-practices)
+-   [Pull Request Best Practices](#pull-request-best-practices)
     -   [Table of Contents](#table-of-contents)
     -   [Pull Request Creation](#pull-request-creation)
         -   [Branch Naming](#branch-naming)
@@ -80,25 +80,26 @@ When creating a pull request, you'll be presented with our template. Complete al
 -   Description of the changes
 -   Related issues (using proper [GitHub keywords](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests#linking-a-pull-request-to-an-issue) to auto-close issues i.e. `fixes`, `resolves`, or `closes`)
 -   Type of change in the PR title (bug fix, feature, breaking change)
+-   Steps you took to test your changes that reviewers can follow to also test them
 -   Checklist of items completed
 -   Screenshots/videos for visual changes
--   Testing information
 
-Incomplete templates will delay the review process.
+Incomplete templates may delay the review process.
 
 ## Labels and Their Meanings
 
 -   `ready-for-review`: PR is ready for maintainer review
--   `work-in-progress`: PR is still being worked on, not ready for review
--   `needs-changes`: PR requires changes based on review feedback
+-   `WIP`: PR is still being worked on, not ready for review
+-   `blocked`: PR is blocked for some reason i.e. another PR needs to go in first
 -   `needs-tests`: PR is missing necessary tests
 -   `needs-docs`: PR requires documentation updates
 -   `needs-self-review`: PR requires that the author does a self-review of code to answer preliminary questions
--   `needs-style-review`: PR needs to be checked by CSS and/or Design
+-   `needs-style-review`: PR needs to be checked by a CSS expert
+-   `needs-design-review`: PR needs to be checked by the Spectrum Design team
 -   `breaking-change`: PR contains changes that break backward compatibility
 -   `help-wanted`: Extra attention is needed on this PR
--   `on-hold`: PR is blocked and/or needs more discussion.
--   `Spectrum CSS`: Contains a version bump of Spectrum CSS and will require a review by CSS expert
+-   `on-hold`: PR needs more discussion.
+-   `Spectrum CSS`: An issue or pull request specific to the CSS being used by components.
 -   `Component: [Name]`: PR effects this component
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
@@ -107,27 +108,29 @@ Apply labels promptly to help maintainers prioritize and manage the review queue
 
 ### Review Timing
 
--   Maintainers aim to review PRs within 2 business days
--   If your PR hasn't received attention after 3 business days, feel free to ping the team in the PR comments
+-   Maintainers aim to review PRs in a timely manner
+-   If your PR hasn't received attention, feel free to ping the team in the PR comments
 
 ### Review Expectations
 
 Reviewers will check for:
 
-1. Adherence to code style and component patterns
-2. Proper test coverage
-3. Documentation completeness
-4. Accessibility compliance
-5. Visual regression test coverage
-6. Performance considerations
+-   Adherence to code style and component patterns
+-   Proper test coverage
+-   Documentation completeness
+-   Accessibility compliance
+-   Visual regression test coverage
+-   Performance considerations
 
 ### Review Etiquette
 
-The code review process should be constructive, respectful, and focused on improvement. Both reviewers and PR authors should follow these guidelines:
+Pull requests are the start of a conversation. During the process, we aim to provide feedback that is constructive, respectful, and actionable. Suggestions will be focused on team coding standards but not on an individual's coding preferences unless there are specific considerations or risks in one approach over another.
+
+Both reviewers and PR authors should follow these guidelines:
 
 #### For Reviewers
 
--   **Be Specific and Constructive**: Provide clear, actionable feedback rather than vague criticisms. Explain why a change is needed.
+-   **Be specific and constructive**: By providing clear, actionable feedback and explaining why a change is needed, we help contributors make updates to their code more quickly and accurately.
 -   **Prioritize Issues**: Focus on important issues first (architecture, functionality, performance) before minor stylistic concerns.
 -   **Ask Questions**: When something isn't clear, ask questions rather than making assumptions about intent.
 -   **Suggest Alternatives**: When pointing out issues, suggest possible solutions or approaches. Leverage the code suggestions feature to streamline applying feedback for the author.

@@ -1,5 +1,6 @@
 <!--- Provide a general summary of your changes in the Title above -->
 <!--- PR titles should follow conventional commit and should include commit type as defined in in the PULL_REQUESTS guide -->
+<!--- Conventional commit docs can be referenced here: https://www.conventionalcommits.org/en/v1.0.0/#summary -->
 
 ## Description
 
@@ -19,6 +20,7 @@
 
 <!--- Please describe in detail how you tested your changes. -->
 <!--- Include details of your testing environment, and the tests you ran to see how your change affects other areas of the code, etc. -->
+<!--- Include steps to help reviewers test as well. -->
 
 -   [ ] _Descriptive Test Statement_
 
