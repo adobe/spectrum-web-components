@@ -24,14 +24,14 @@
 
 -   [ ] _Descriptive Test Statement_
 
-    1. Go here
-    2. Do this
-    3. Expect this
+    1. Go [here](url)
+    2. Do this action
+    3. Expect this result
 
 -   [ ] _Descriptive Test Statement_
-    1. Go here
-    2. Do this
-    3. Expect this
+    1. Go [here](url)
+    2. Do this action
+    3. Expect this result
 
 Polypane review:
 

@@ -1,51 +1,53 @@
+# Contributing Best Practices
+
 Welcome! We’re excited you’re interested in improving Spectrum Web Components. Whether you’re reporting bugs, adding new features, writing documentation, or helping other users, your contributions make this project better for everyone.
 
 Here you’ll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we’re all on the same page.
 
 -   [Community \& Support](community--support)
-    -   [1.1. External Contributors](#11-external-contributors)
-    -   [1.2. Internal Contributors](#12-internal-contributors)
--   [2. How can you Contribute](#2-how-can-you-contribute)
--   [3. Contributor License Agreement](#3-contributor-license-agreement)
--   [4. Code of Conduct](#4-code-of-conduct)
--   [5. Using the Issue Tracker](#5-using-the-issue-tracker)
-    -   [5.1. Before Submitting A Bug Report](#51-before-submitting-a-bug-report)
--   [6. Bug Reports](#6-bug-reports)
-    -   [6.1. Issue Severity Classification](#61-issue-severity-classification)
--   [7. Feature Requests/New Component](#7-feature-requestsnew-component)
--   [8. Pull Requests](#8-pull-requests)
--   [9. Branches](#9-branches)
--   [10. Developing Locally](#10-developing-locally)
--   [11. Testing](#11-testing)
--   [12. Documentation](#12-documentation)
--   [13. Best Practices \& Guidelines](#13-best-practices--guidelines)
-    -   [13.1. Code Formatting](#131-code-formatting)
-    -   [13.2. Accessibility](#132-accessibility)
-    -   [13.3. Commit Guidelines](#133-commit-guidelines)
--   [14. Thank You](#14-thank-you)
+    -   [External Contributors](external-contributors)
+    -   [Internal Contributors](internal-contributors)
+-   [How can you Contribute](how-can-you-contribute)
+-   [Contributor License Agreement](contributor-license-agreement)
+-   [Code of Conduct](code-of-conduct)
+-   [Using the Issue Tracker](using-the-issue-tracker)
+    -   [Before Submitting A Bug Report](before-submitting-a-bug-report)
+-   [Bug Reports](bug-reports)
+    -   [Issue Severity Classification](issue-severity-classification)
+-   [Feature Requests/New Component](feature-requestsnew-component)
+-   [Pull Requests](pull-requests)
+-   [Branches](branches)
+-   [Developing Locally](developing-locally)
+-   [Testing](testing)
+-   [Documentation](documentation)
+-   [Best Practices \& Guidelines](best-practices--guidelines)
+    -   [Code Formatting](code-formatting)
+    -   [Accessibility](accessibility)
+    -   [Commit Guidelines](commit-guidelines)
+-   [Thank You](thank-you)
 
 ---
 
-# 1. Community & Support
+## Community & Support
 
 A fantastic first step to contributing is filing an issue. This is where you can:
 
 -   Ask questions, file bugs, and troubleshoot with other users.
 -   Propose new features and ideas or get feedback on your own through a linked pull request.
-    Additionally, you can check GitHub Discussions to stay up-to-date with any major announcements about the project.
+-   Additionally, you can check GitHub Discussions to stay up-to-date with any major announcements about the project.
 
-## 1.1. External Contributors
+### External Contributors
 
-**Adobe Employees, read section 1.2 below.**
+**Adobe Employees, read Internal Contributors section below.**
 If you need support or have a question about how something works, filing an issue is the best place to start. A team member will be in touch to either triage your issue or follow-up with you in the comments.
 
-## 1.2. Internal Contributors
+### Internal Contributors
 
 If you work for Adobe, our Slack channel #spectrum_web_components has some great workflows to get you started. Be sure to read the Welcome Canvas when you join.
 
 ---
 
-# 2. How can you Contribute
+## How can you Contribute
 
 There’s a common misconception that you need to code in order to contribute. In reality, there are many different ways to help:
 
@@ -60,20 +62,20 @@ Of course, contributing code is also welcome from fixing a bug to building a bra
 
 ---
 
-# 3. Contributor License Agreement
+## Contributor License Agreement
 
 We require all external contributors to sign our Contributor License Agreement (CLA). If you haven’t signed it before making your first contribution, please do so—otherwise, we can’t merge your changes.
 
 ---
 
-# 4. Code of Conduct
+## Code of Conduct
 
 Spectrum Web Components abides by the Adobe Code of Conduct. By participating, you agree to treat all community members kindly and respectfully. We’re committed to fostering a welcoming, inclusive environment.
 Should any behavior fall short of these expectations, please report it to <Grp-opensourceoffice@adobe.com>.
 
 ---
 
-# 5. Using the Issue Tracker
+## Using the Issue Tracker
 
 We use GitHub Issues for two purposes:
 
@@ -82,7 +84,7 @@ We use GitHub Issues for two purposes:
 
 If you’re having a usage issue or need support, do not open an issue. Instead, reference the Community & Support section. This helps us keep issues focused on actual bugs and actionable tasks.
 
-## 5.1. Before Submitting A Bug Report
+### Before Submitting A Bug Report
 
 1. Check the [Open Issues](https://github.com/adobe/spectrum-web-components/issues) to see if the problem has already been reported.
     - TIP: Apply the component label to make your search process more straightforward.
@@ -92,20 +94,20 @@ If you’re having a usage issue or need support, do not open an issue. Instead,
 
 ---
 
-# 6. Bug Reports
+## Bug Reports
 
 When you file a bug, please use the `Bug Report` template provided in GitHub. Include the following information:
 
-1. A concise summary of the problem.
-2. Relevant components involved in the issue.
-3. Issue Severity based on our classifications defined below.
-4. What you expected vs. what actually happened, along with any errors logged in the console.
-5. Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
-6. Relevant environment details (OS, browser, library version).
+-   A concise summary of the problem.
+-   Relevant components involved in the issue.
+-   Issue Severity based on our classifications defined below.
+-   What you expected vs. what actually happened, along with any errors logged in the console.
+-   Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
+-   Relevant environment details (OS, browser, library version).
 
 Clear bug reports speed up the triage process, help us replicate the issue, and keep the project robust.
 
-## Issue severity classification
+### Issue severity classification
 
 Providing the correct issue severity classification helps us adequately assess and prioritize your issue. We reserve the right to adjust the severity of your bug during triage.
 Below is our issue severity classification criteria:
@@ -120,7 +122,7 @@ Below is our issue severity classification criteria:
 
 ---
 
-# 7. Feature Requests/New Component
+## Feature Requests/New Component
 
 Is there something you wish the project did differently? Have a new component in mind? We love hearing new ideas and are eager to collaborate!
 
@@ -129,13 +131,13 @@ Is there something you wish the project did differently? Have a new component in
 
 ---
 
-# 8. Pull Requests
+## Pull Requests
 
 If you plan to fix a bug, create a feature, or improve documentation, follow the [Pull Request Guide](PULL_REQUESTS.md) to ensure you're contribution meets expectations for getting reviewed.
 
 ---
 
-# 9. Branches
+## Branches
 
 We keep things straightforward with branching:
 
@@ -146,7 +148,7 @@ Avoid editing distribution files (if present). Make changes to the source files,
 
 ---
 
-# 10. Developing Locally
+## Developing Locally
 
 Read the steps outlined in the [README.md](README.md) to get your environment set up.
 
@@ -154,7 +156,7 @@ If you encounter hurdles, feel free to ask for help in your pull request or in t
 
 ---
 
-# 11. Testing
+## Testing
 
 Quality and stability are important. We require writing tests for any fixes or features you introduce. This helps ensure:
 
@@ -168,7 +170,7 @@ If you’re unsure how to write tests for certain parts of the library, don’t 
 
 ---
 
-# 12. Documentation
+## Documentation
 
 In addition to well-tested code, documentation is crucial. Whenever you add or change a feature,include documentation for it in the relevant areas:
 
@@ -179,23 +181,23 @@ Accessible, helpful docs are a huge win for everyone, especially newcomers.
 
 ---
 
-# 13. Best Practices & Guidelines
+## Best Practices & Guidelines
 
-## 13.1. Code Formatting
+### Code Formatting
 
-We rely on automated tools like Prettier or ESLint to enforce style preferences. Setting up these tools in your editor saves time and prevents minor style conflicts from slowing down reviews.
+We rely on automated tools like Prettier, ESLint, and Stylelint to enforce style preferences. Setting up these tools in your editor saves time and prevents minor style conflicts from slowing down reviews.
 
-## 13.2. Accessibility
+### Accessibility
 
 Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
 
 -   The use of semantic markup.
--   Labeled interactive elements with appropriate affordances.
+-   Labeled interactive elements with appropriate accordance's.
 -   Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
 
 If you’re unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
 
-## 13.3. Commit Guidelines
+### Commit Guidelines
 
 As mentioned previously, we use [Conventional Commit](https://www.conventionalcommits.org) syntax:
 
@@ -212,7 +214,7 @@ This helps us track changes in a predictable way and automate versioning.
 
 ---
 
-# 14. Thank You
+## Thank You
 
 We appreciate everyone who invests time, energy, and expertise into Spectrum Web Components. Your contributions—big or small—help this library evolve to serve a broader audience and remain at a high standard of quality.
 

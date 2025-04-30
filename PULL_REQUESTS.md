@@ -23,7 +23,7 @@ This document outlines our team's expectations and best practices for creating, 
     -   [Specific Requirements by Element Type](#specific-requirements-by-element-type)
         -   [New Components](#new-components)
             -   [Documentation](#documentation)
-            -   [API Documentation](#api-documentation)
+            -   [API Documentation Utilizing JSDocs](#api-documentation-utilizing-jsdocs)
             -   [Technical Requirements](#technical-requirements)
 
 ## Pull Request Creation
@@ -130,16 +130,16 @@ Both reviewers and PR authors should follow these guidelines:
 
 #### For Reviewers
 
--   **Be specific and constructive**: By providing clear, actionable feedback and explaining why a change is needed, we help contributors make updates to their code more quickly and accurately.
--   **Prioritize Issues**: Focus on important issues first (architecture, functionality, performance) before minor stylistic concerns.
--   **Ask Questions**: When something isn't clear, start with asking questions. We don't assume intent or meaning and focus instead on curiosity and clarification.
--   **Suggest Alternatives**: When pointing out issues, suggest possible solutions or approaches. Leverage the code suggestions feature to streamline applying feedback for the author.
--   **Celebrate good work**: By acknowledging well-written code and good design decisions, we celebrate our contributors and the hard work they put in. Positive reinforcement is valued and makes for a fun and engaging project!
--   **Remember Context**: Consider the PR author's experience level and the scope of changes when providing feedback.
--   **Be Timely**: Complete reviews promptly to avoid blocking progress.
--   **Avoid Nitpicking**: Focus on meaningful improvements rather than personal style preferences that don't violate project standards. Prepend comments with `nit:` to denote that it is non-blocking feedback.
--   **Use Changes Requested Sparingly**: Changes Requested review status should only be used in instances where a bug or regression is still present in the PR.
--   **Review VRTs Thoroughly**: Ensure the diffs in VRT are expected and inform the author via comment if they are approved so they know to update the golden hash.
+-   **Maintain Momentum**: Complete reviews in a timely manner to keep the project moving forward.
+-   **Provide Clear, Actionable Feedback**: Help contributors succeed by offering specific guidance and explaining the reasoning behind suggested changes.
+-   **Offer Solutions**: When identifying areas for improvement, suggest alternative approaches and use code suggestions to make implementation easier.
+-   **Seek Understanding**: Ask questions to clarify intent and approach, fostering a collaborative environment for learning and improvement.
+-   **Recognize Excellence**: Celebrate well-written code and thoughtful design decisions to encourage continued high-quality contributions.
+-   **Focus on Impact**: Prioritize feedback on architecture, functionality, and performance to ensure the most important aspects are addressed first.
+-   **Focus on Value**: Prioritize feedback that improves code quality and maintainability over personal style preferences. If you make a suggestion that is non-blocking feedback, prepend the comment with `nit:`.
+-   **Consider Context**: Tailor feedback to the PR author's experience level and the scope of changes.
+-   **Use Changes Requested Thoughtfully**: Reserve the Changes Requested status for instances where critical issues need to be addressed.
+-   **Review VRTs with Care**: Thoroughly examine visual regression test results and communicate approval status to authors.
 
 #### For PR Authors
 
@@ -191,7 +191,7 @@ When creating or reviewing new components, ensure:
 
 See [Documenting a component](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documenting-the-component) for more information on our documentation standards and structure.
 
-#### API Documentation
+#### API Documentation Utilizing [JSDocs](https://jsdoc.app/)
 
 -   **Slots**: All slots documented in the element class docblock
 -   **Events**: All dispatched events documented with `@fires` docblock
@@ -205,4 +205,4 @@ See [Documenting a component](https://opensource.adobe.com/spectrum-web-componen
 -   Component follows established patterns and conventions
 -   Accessibility is thoroughly considered
 -   Responsive design best practices are followed
--   Cross-browser compatibility is verified
+-   Supported cross-browser compatibility is verified
