@@ -38,6 +38,7 @@ async function verifyCustomElementsJson() {
     await Promise.all(checks);
 }
 
+/** @todo Is this a duplicate of the lint-versions.js script? */
 function verifyVersionJs() {
     let basePackageJson;
     try {

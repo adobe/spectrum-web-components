@@ -51,7 +51,7 @@ export default {
             ? {
                   'design-system': {
                       title: 'Spectrum CSS',
-                      url: 'https://opensource.adobe.com/spectrum-css/preview/',
+                      url: 'https://opensource.adobe.com/spectrum-css/',
                       expanded: false, // Optional, true by default
                   },
               }
