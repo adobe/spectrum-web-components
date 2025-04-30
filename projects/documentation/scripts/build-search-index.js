@@ -164,7 +164,7 @@ async function main() {
         // Configure the index fields
         this.ref('metadata');
         // Boost title field for higher relevance when matching titles
-        this.field('title', { boost: 10 });
+        this.field('title', { boost: 100 });
         this.field('body');
         this.field('category');
 
