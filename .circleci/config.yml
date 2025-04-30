@@ -228,7 +228,7 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  command: yarn analyze:docs
             - run:
                   name: Move CEM to Storybook directory
                   command: cp projects/documentation/custom-elements.json storybook/
@@ -251,7 +251,7 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  command: yarn analyze:docs
             - run:
                   name: Move CEM to Storybook directory
                   command: cp projects/documentation/custom-elements.json storybook/

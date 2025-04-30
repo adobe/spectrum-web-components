@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 
 import chokidar from 'chokidar';
 import debounce from 'debounce';
-import { processCSS } from './css-tools.js';
+import { processCSS } from './build-css.js';
 
 const debounceProcessCSS = debounce(processCSS, 200);
 
