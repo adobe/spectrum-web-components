@@ -202,12 +202,14 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 ```html
 <sp-button id="focus">Overlay Trigger</sp-button>
 <sp-overlay trigger="focus@click" type="modal" receives-focus="auto">
-    <sp-dialog>
-        <h2 slot="heading">Dialog Heading</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-        augue neque gravida. Libero volutpat sed ornare arcu.
-    </sp-dialog>
+    <sp-popover>
+        <sp-dialog>
+            <h2 slot="heading">Dialog Heading</h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
+            augue neque gravida. Libero volutpat sed ornare arcu.
+        </sp-dialog>
+    </sp-popover>
 </sp-overlay>
 ```
 
