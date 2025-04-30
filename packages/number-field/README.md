@@ -34,7 +34,7 @@ A number field consists of an input field for numeric values and optional steppe
 </sp-field-label>
 <sp-number-field
     id="anatomy"
-    style="width: 400px"
+    style="width: 200px"
     format-options='{
         "style": "unit",
         "unit": "MPH",
@@ -56,7 +56,6 @@ A number field consists of an input field for numeric values and optional steppe
     label="Size"
     value="1024"
     size="s"
-    style="--spectrum-stepper-width: 170px"
 ></sp-number-field>
 ```
 
@@ -69,7 +68,6 @@ A number field consists of an input field for numeric values and optional steppe
     label="Size"
     value="1024"
     size="m"
-    style="--spectrum-stepper-width: 220px"
 ></sp-number-field>
 ```
 
@@ -82,7 +80,6 @@ A number field consists of an input field for numeric values and optional steppe
     label="Size"
     value="1024"
     size="l"
-    style="--spectrum-stepper-width: 270px"
 ></sp-number-field>
 ```
 
@@ -95,7 +92,6 @@ A number field consists of an input field for numeric values and optional steppe
     label="Size"
     value="1024"
     size="xl"
-    style="--spectrum-stepper-width: 320px"
 ></sp-number-field>
 ```
 
@@ -138,7 +134,7 @@ The `style: 'percent'` option can be passed to the `formatOptions` property to t
 <sp-field-label for="percents">Sales tax</sp-field-label>
 <sp-number-field
     id="percents"
-    style="width: 400px"
+    style="width: 200px"
     value="0.05"
     format-options='{
         "style": "percent"
@@ -158,7 +154,7 @@ If you need to allow the user to change the currency, you should include a separ
 <sp-field-label for="currency">Transaction amount</sp-field-label>
 <sp-number-field
     id="currency"
-    style="width: 400px"
+    style="width: 200px"
     value="45"
     format-options='{
         "style": "currency",
@@ -183,7 +179,7 @@ Note: The unit style is not currently supported in Safari. A [polyfill](https://
 <sp-field-label for="units">Package width</sp-field-label>
 <sp-number-field
     id="units"
-    style="width: 400px"
+    style="width: 200px"
     value="4"
     format-options='{
         "style": "unit",
@@ -203,7 +199,7 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
 <sp-field-label for="units">Document width in pixels</sp-field-label>
 <sp-number-field
     id="units"
-    style="width: 400px"
+    style="width: 200px"
     value="500"
     format-options='{
         "style": "unit",
@@ -281,7 +277,7 @@ The `invalid` attribute indicates that the number field's value is invalid. When
 <sp-number-field
     id="invalid"
     invalid
-    style="width: 400px"
+    style="width: 200px"
     value="10"
     min="0"
     max="0.3"
@@ -311,7 +307,7 @@ The `valid` attribute indicates that the number field's value is valid.
 <sp-number-field
     id="invalid"
     valid
-    style="width: 400px"
+    style="width: 200px"
     value="0.23"
     min="0"
     max="0.3"
