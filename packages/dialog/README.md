@@ -48,7 +48,3 @@ The dialog consists of several key parts:
     <sp-button slot="button">Button</sp-button>
 </sp-dialog>
 ```
-
-### Accessibility
-
-The dialog component ensures proper focus management by:
