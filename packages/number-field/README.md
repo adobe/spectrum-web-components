@@ -362,7 +362,7 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 <sp-field-label for="default">
     Default value of this number field is 42
 </sp-field-label>
-<sp-number-field id="default" value="20"></sp-number-field>
+<sp-number-field id="default" value="42"></sp-number-field>
 
 <script type="module">
     customElements.whenDefined('sp-number-field').then(() => {
