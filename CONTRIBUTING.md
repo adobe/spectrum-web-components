@@ -139,7 +139,7 @@ If you plan to fix a bug, create a feature, or improve documentation, follow the
 
 ## Branches
 
-We keep things straightforward with branching:
+We keep things organized with a branch naming strategy:
 
 -   `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`) is often all you need.
 -   If your work references a known issue, you could also incorporate the issue number (e.g., `alex/123-bug-fix`).
