@@ -49,22 +49,6 @@ The dialog consists of several key parts:
 </sp-dialog>
 ```
 
-### Options
-
-#### Sizes
-
-<sp-tabs selected="m" auto label="Size Attribute Options">
-<sp-tab value="s">Small</sp-tab>
-<sp-tab-panel value="s">1
-</sp-tab-panel>
-<sp-tab value="m">Medium</sp-tab>
-<sp-tab-panel value="m">2
-</sp-tab-panel>
-<sp-tab value="l">Large</sp-tab>
-<sp-tab-panel value="l">3
-</sp-tab-panel>
-</sp-tabs>
-
 #### Dismissable
 
 When supplied with the `dissmissable` attribute an `<sp-dialog>` element will surface a "close" button afordance that will dispatch a DOM event with the name of `close` when pressed.
