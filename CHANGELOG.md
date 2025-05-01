@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/adobe/spectrum-web-components/compare/v1.5.0...v1.6.0) (2025-05-01) — ([f2b6a32](https://github.com/adobe/spectrum-web-components/commit/f2b6a322c379752f4f7dfcd02b3007c4130dc1e0))
+
+### Minor Fixes
+
+-   **icons-workflow**: added missing S2 icons
+
+### Bug Fixes
+
+-   **slider**: ensure tracks become properly rounded when offset variant is activated
+-   **popover**: prevent overflow clipping in Safari with translateZ and visible tips
+-   **picker**: fix focus to prevent setting focus on menu items when opened via mouse
+-   **button**: update deprecation warning to allow variant and static-color to coexist
+-   **number-field**: fix UI issues and improve width calculation
+-   **tooltip**: add DelayedTooltipWithOverlay story for handling interactions
+-   **infield-button, number-field, textfield, search, styles**: update disabled border colors and styling across components
+-   **close-button, dropzone, illustrated-message, menu, status-light, styles, switch, table, tabs, toast, tooltip**: remove unnecessary system theme references
+-   **overlay**: fix layout issues in Safari for nested trays in dialogs
+
 # [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-04-15)
 
 ### Bug Fixes
@@ -224,10 +242,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **progress-bar:** removed duplicate label ([#4494](https://github.com/adobe/spectrum-web-components/issues/4494)) ([39b6622](https://github.com/adobe/spectrum-web-components/commit/39b6622658270400c6e44909096d0c6a9be5a040))
 -   **tabs:** prevent vertical auto scroll ([#4613](https://github.com/adobe/spectrum-web-components/issues/4613)) ([e1ef097](https://github.com/adobe/spectrum-web-components/commit/e1ef097bc4c4a1e888de028f40b6f2bb5ea2d7b8))
 -   **overlay** replace at() polyfill ([#4628](https://github.com/adobe/spectrum-web-components/issues/4628)) ([8cef2c6](https://github.com/adobe/spectrum-web-components/commit/8cef2c639433248257a72bfc2c98d0663e265b09))
--   **picker** pointerup in mobile does not automatically make a selection ([4227](https://github.com/adobe/spectrum-web-components/issues/4227)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
--   **action-menu** clicking a menu item in an action menu tray doesn't register a click behind it ([4461] (https://github.com/adobe/spectrum-web-components/issues/4461)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
--   **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
--   **action-menu** ActionMenu tray in mobile device doesn't dispatch multiple events ([4459] (https://github.com/adobe/spectrum-web-components/issues/4459)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+-   **picker** pointerup in mobile does not automatically make a selection ([4227](https://github.com/adobe/spectrum-web-components/issues/4227)) ([56366ce] (<https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb>))
+-   **action-menu** clicking a menu item in an action menu tray doesn't register a click behind it ([4461] (<https://github.com/adobe/spectrum-web-components/issues/4461>)) ([56366ce] (<https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb>))
+-   **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (<https://github.com/adobe/spectrum-web-components/issues/4572>)) ([56366ce] (<https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb>))
+-   **action-menu** ActionMenu tray in mobile device doesn't dispatch multiple events ([4459] (<https://github.com/adobe/spectrum-web-components/issues/4459>)) ([56366ce] (<https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb>))
 
 ### Features
 
@@ -693,7 +711,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-slider:** use inset-block-_ and inset-inline-_ and fix RTL orientation and behavior [#3301](https://github.com/adobe/spectrum-web-components/issues/3301) ([52aa328](https://github.com/adobe/spectrum-web-components/commit/52aa328ea7e4c2e40c7688ce9daa233cc9936be0))
+-   **color-slider:** use inset-block-_and inset-inline-_ and fix RTL orientation and behavior [#3301](https://github.com/adobe/spectrum-web-components/issues/3301) ([52aa328](https://github.com/adobe/spectrum-web-components/commit/52aa328ea7e4c2e40c7688ce9daa233cc9936be0))
 -   **menu:** [#3164](https://github.com/adobe/spectrum-web-components/issues/3164) plug memory leak with gobal events ([ff589d4](https://github.com/adobe/spectrum-web-components/commit/ff589d4ec86f8dcda15c386907d27c7b3cc8c325))
 
 ### Reverts
