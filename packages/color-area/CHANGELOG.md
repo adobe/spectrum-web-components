@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/color-handle@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/opacity-checkerboard@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

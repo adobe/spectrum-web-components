@@ -1,5 +1,23 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5344](https://github.com/adobe/spectrum-web-components/pull/5344) [`02af616`](https://github.com/adobe/spectrum-web-components/commit/02af6167c2f69345a4d7fdd1672d56777f7962ee) Thanks [@renovate](https://github.com/apps/renovate)! - [#​3611](https://github.com/adobe/spectrum-css/pull/3611) Thanks [@​aramos-adobe](https://github.com/aramos-adobe)!
+
+    The border radius styles were not being applied to the second instance of the slider track when the offset variant is activated. When the offset is selected, the template structure changes as fill gets added to the slider.
+
+    Adding a sibling combinator to track when offset is activated resolved the issue.
+
+-   Updated dependencies [[`74386e8`](https://github.com/adobe/spectrum-web-components/commit/74386e8c5b4717270fcccd9ebb72dab8cf757515), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd)]:
+    -   @spectrum-web-components/number-field@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes
