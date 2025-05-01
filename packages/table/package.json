@@ -134,9 +134,6 @@
         "@spectrum-web-components/icon": "1.6.0",
         "@spectrum-web-components/icons-ui": "1.6.0"
     },
-    "devDependencies": {
-        "@spectrum-css/table": "8.1.0"
-    },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
