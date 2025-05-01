@@ -1,41 +1,39 @@
-# Pull Request Best Practices
+<!-- omit from toc -->
+
+# Pull request best practices
 
 This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
 
-## Table of Contents
+-   [Pull request creation](#pull-request-creation)
+    -   [Branch naming](#branch-naming)
+    -   [Changeset requirements](#changeset-requirements)
+    -   [Conventional commits](#conventional-commits)
+-   [Pull request template](#pull-request-template)
+-   [Labels and their meanings](#labels-and-their-meanings)
+-   [Pull request review process](#pull-request-review-process)
+    -   [Review timing](#review-timing)
+    -   [Review expectations](#review-expectations)
+    -   [Review etiquette](#review-etiquette)
+        -   [For reviewers](#for-reviewers)
+        -   [For PR authors](#for-pr-authors)
+        -   [Resolving disagreements](#resolving-disagreements)
+-   [Merge criteria](#merge-criteria)
+-   [Specific requirements by element type](#specific-requirements-by-element-type)
+    -   [New components](#new-components)
+        -   [Documentation](#documentation)
+        -   [API documentation utilizing JSDocs](#api-documentation-utilizing-jsdocs)
+        -   [Technical requirements](#technical-requirements)
 
--   [Pull Request Best Practices](#pull-request-best-practices)
-    -   [Table of Contents](#table-of-contents)
-    -   [Pull Request Creation](#pull-request-creation)
-        -   [Branch Naming](#branch-naming)
-        -   [Changeset Requirements](#changeset-requirements)
-        -   [Conventional Commits](#conventional-commits)
-    -   [Pull Request Template](#pull-request-template)
-    -   [Labels and Their Meanings](#labels-and-their-meanings)
-    -   [Pull Request Review Process](#pull-request-review-process)
-        -   [Review Timing](#review-timing)
-        -   [Review Expectations](#review-expectations)
-        -   [Review Etiquette](#review-etiquette)
-            -   [For Reviewers](#for-reviewers)
-            -   [For PR Authors](#for-pr-authors)
-            -   [Resolving Disagreements](#resolving-disagreements)
-    -   [Merge Criteria](#merge-criteria)
-    -   [Specific Requirements by Element Type](#specific-requirements-by-element-type)
-        -   [New Components](#new-components)
-            -   [Documentation](#documentation)
-            -   [API Documentation Utilizing JSDocs](#api-documentation-utilizing-jsdocs)
-            -   [Technical Requirements](#technical-requirements)
+## Pull request creation
 
-## Pull Request Creation
-
-### Branch Naming
+### Branch naming
 
 We use a straightforward branch naming convention:
 
 -   `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`)
 -   If referencing a known issue, incorporate the issue number (e.g., `alex/123-fix-dropdown-bug`)
 
-### Changeset Requirements
+### Changeset requirements
 
 For PRs that add or update a component:
 
@@ -45,7 +43,7 @@ For PRs that add or update a component:
     -   `minor` - for new components or new APIs in an existing component
     -   `major` - for breaking changes to a component or public library API
 
-### Conventional Commits
+### Conventional commits
 
 We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification to make change tracking predictable:
 
@@ -73,7 +71,7 @@ For breaking changes, add a `!` after the type/scope:
 
 -   `feat(sp-button)!: change API for icon placement`
 
-## Pull Request Template
+## Pull request template
 
 When creating a pull request, you'll be presented with our template. Complete all sections to the best of your ability, including:
 
@@ -86,7 +84,7 @@ When creating a pull request, you'll be presented with our template. Complete al
 
 Incomplete templates may delay the review process.
 
-## Labels and Their Meanings
+## Labels and their meanings
 
 -   `ready-for-review`: PR is ready for maintainer review
 -   `WIP`: PR is still being worked on, not ready for review
@@ -104,14 +102,14 @@ Incomplete templates may delay the review process.
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
 
-## Pull Request Review Process
+## Pull request review process
 
-### Review Timing
+### Review timing
 
 -   Maintainers aim to review PRs in a timely manner
 -   If your PR hasn't received attention, feel free to ping the team in the PR comments
 
-### Review Expectations
+### Review expectations
 
 Reviewers will check for:
 
@@ -122,13 +120,13 @@ Reviewers will check for:
 -   Visual regression test coverage
 -   Performance considerations
 
-### Review Etiquette
+### Review etiquette
 
 Pull requests are the start of a conversation. During the process, we aim to provide feedback that is constructive, respectful, and actionable. Suggestions will be focused on team coding standards but not on an individual's coding preferences unless there are specific considerations or risks in one approach over another.
 
 Both reviewers and PR authors should follow these guidelines:
 
-#### For Reviewers
+#### For reviewers
 
 -   **Maintain Momentum**: Complete reviews in a timely manner to keep the project moving forward.
 -   **Provide Clear, Actionable Feedback**: Help contributors succeed by offering specific guidance and explaining the reasoning behind suggested changes.
@@ -141,7 +139,7 @@ Both reviewers and PR authors should follow these guidelines:
 -   **Use Changes Requested Thoughtfully**: Reserve the Changes Requested status for instances where critical issues need to be addressed.
 -   **Review VRTs with Care**: Thoroughly examine visual regression test results and communicate approval status to authors.
 
-#### For PR Authors
+#### For PR authors
 
 -   **Self Review Your PR**: Authors should take a first pass as reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answer questions they may have.
 -   **Be Receptive to Feedback**: Approach review comments with an open mind. The goal is better code, not personal criticism.
@@ -152,7 +150,7 @@ Both reviewers and PR authors should follow these guidelines:
 -   **Break Down Large PRs**: When possible, split large changes into smaller, more manageable PRs.
 -   **Test Thoroughly**: Before requesting review, ensure your code meets the project's quality standards.
 
-#### Resolving Disagreements
+#### Resolving disagreements
 
 -   **Focus on Data**: Back up opinions with data, documentation, or examples where possible.
 -   **Refer to Standards**: Use project conventions and industry best practices to guide decisions.
@@ -162,7 +160,7 @@ Both reviewers and PR authors should follow these guidelines:
 
 Remember that code reviews are a collaborative process aimed at improving code quality, knowledge sharing, and maintaining project standards. Approaching reviews with empathy and professionalism benefits everyone involved.
 
-## Merge Criteria
+## Merge criteria
 
 A PR is ready to merge when:
 
@@ -177,9 +175,9 @@ A PR is ready to merge when:
 5. Includes proper changeset (when applicable)
 6. Documentation has been updated as needed
 
-## Specific Requirements by Element Type
+## Specific requirements by element type
 
-### New Components
+### New components
 
 When creating or reviewing new components, ensure:
 
@@ -191,7 +189,7 @@ When creating or reviewing new components, ensure:
 
 See [Documenting a component](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documenting-the-component) for more information on our documentation standards and structure.
 
-#### API Documentation Utilizing [JSDocs](https://jsdoc.app/)
+#### API documentation utilizing JSDocs
 
 -   **Slots**: All slots documented in the element class docblock
 -   **Events**: All dispatched events documented with `@fires` docblock
@@ -200,7 +198,7 @@ See [Documenting a component](https://opensource.adobe.com/spectrum-web-componen
 -   **CSS Custom Properties**: All public CSS custom properties documented
 -   **CSS Shadow Parts**: All shadow parts documented
 
-#### Technical Requirements
+#### Technical requirements
 
 -   Component follows established patterns and conventions
 -   Accessibility is thoroughly considered

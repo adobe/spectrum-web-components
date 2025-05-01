@@ -10,17 +10,17 @@
 
 <!---
     - If suggesting a new feature or change, please discuss it in an issue first.
-    - If fixing a bug, there should be an issue describing it with steps to reproduce.
-    - If you're Adobe internal, add a Jira ticket number but do NOT link directly to Jira.
+    - If fixing a bug, include the issue number where the reviewers can find a description of the bug with steps to reproduce.
+    - If you're an Adobe employee, add a Jira ticket number but DO NOT LINK directly to Jira.
 -->
 
 -   fixes [Issue Number]
 
-## How has this been tested?
+## Manual review test cases
 
-<!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, and the tests you ran to see how your change affects other areas of the code, etc. -->
-<!--- Include steps to help reviewers test as well. -->
+<!--- Please describe in detail what reviewers should test. -->
+<!--- Include links and manual steps for how the reviewer should go through to verify your changes. -->
+<!--- Be sure to include manual tests for all areas of the codebase that might be effected. Components are reused regularly and should be cross-checked for regressions. -->
 
 -   [ ] _Descriptive Test Statement_
 
@@ -33,7 +33,9 @@
     2. Do this action
     3. Expect this result
 
-Polypane review:
+### Polypane review
+
+<!--- Verify the above manual tests and visual accuracy utilizing Polypane browser. -->
 
 -   [ ] Did it pass in Desktop?
 -   [ ] Did it pass in (emulated) Mobile?
