@@ -82,10 +82,6 @@
         "@spectrum-web-components/reactive-controllers": "1.6.0",
         "@spectrum-web-components/shared": "1.6.0"
     },
-    "devDependencies": {
-        "@spectrum-css/swatch": "7.0.0-s2-foundations.17",
-        "@spectrum-css/swatchgroup": "4.0.0-s2-foundations.15"
-    },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
