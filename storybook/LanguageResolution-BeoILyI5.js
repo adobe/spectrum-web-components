@@ -1,3 +1,0 @@
-const languageResolverUpdatedSymbol=Symbol("language resolver updated");class LanguageResolutionController{constructor(e){this.language=document.documentElement.lang||navigator.language;this.host=e,this.host.addController(this);}hostConnected(){this.resolveLanguage();}hostDisconnected(){var e;(e=this.unsubscribe)==null||e.call(this);}resolveLanguage(){const e=new CustomEvent("sp-language-context",{bubbles:!0,composed:!0,detail:{callback:(t,o)=>{const a=this.language;this.language=t,this.unsubscribe=o,this.host.requestUpdate(languageResolverUpdatedSymbol,a);}},cancelable:!0});this.host.dispatchEvent(e);}}
-
-export { LanguageResolutionController as L, languageResolverUpdatedSymbol as l };

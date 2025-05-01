@@ -1,0 +1,2 @@
+const t=["input:not([inert])","select:not([inert])","textarea:not([inert])","a[href]:not([inert])","button:not([inert])","label:not([inert])","[tabindex]:not([inert])","audio[controls]:not([inert])","video[controls]:not([inert])",'[contenteditable]:not([contenteditable="false"]):not([inert])',"details>summary:first-of-type:not([inert])","details:not([inert])","[focusable]"],n=':not([tabindex="-1"])',e=t.join(`${n}, `)+n,o=t.join(", ");export{o as f,e as u};
+//# sourceMappingURL=swc.DtwQd4Wj.js.map
