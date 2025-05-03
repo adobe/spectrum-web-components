@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-04-15)
+
+### Bug Fixes
+
+-   **sp-tabs**: ensure tabs become enabled when parent disabled attribute is removed (#5323) ([`c7efe314c5`](https://github.com/adobe/spectrum-web-components/commit/c7efe314c5))
+-   **sp-color-field**: color handle positioning within scrollable containers (#5322) ([`e19e55f6f1`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1))
+-   **sp-menu**: fixes larger margin in menu-item (#5350) ([`86bcd12200`](https://github.com/adobe/spectrum-web-components/commit/86bcd12200))
+-   **sp-menu**: menuitem now correctly focus and applies hover styles (#5270) ([`a69accb8b4`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b4))
+-   **sp-menu**: captures touchend events on mobile (#5313) ([`4c2f908a92`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92))
+-   **overlay**: prevent overlay close on document scroll (#5308) ([`8f8735c9ec`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec))
+-   **sp-number-field**: prevent keyboard on mobile devices by setting inpu… (#5284) ([`5a3bc6d24e`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24e))
+
 # [1.4.0](https://github.com/adobe/spectrum-web-components/compare/v1.3.0...v1.4.0) (2025-03-26)
 
 ### Bug Fixes
