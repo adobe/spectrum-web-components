@@ -21,6 +21,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 async function createGlobalChangelog() {
+    if (!newVersion) {
+        console.error('Error: newVersion is undefined or empty');
+        process.exit(1);
+    }
     const newTag = `v${newVersion}`;
     let prevTag;
     try {
