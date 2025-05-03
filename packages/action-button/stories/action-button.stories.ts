@@ -23,15 +23,13 @@ export default {
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {
-    const disabled = Object.assign({}, args, { disabled: true });
-    const selected = Object.assign({}, args, { selected: true });
     return html`
         <sp-action-group
             ?emphasized="${!!args.emphasized}"
             ?quiet="${!!args.quiet}"
         >
-            ${renderButton(args)} ${renderButton(selected)}
-            ${renderButton(disabled)}
+            ${renderButton(args)} ${renderButton({ ...args, selected: true })}
+            ${renderButton({ ...args, disabled: true })}
         </sp-action-group>
     `;
 }
@@ -40,16 +38,12 @@ export const toggles = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
 toggles.args = {
     toggles: true,
-    icon: html`
-        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
-    `,
+    icon: `<sp-icon-edit hidden slot="icon"></sp-icon-edit>`,
 };
 
 export const href = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
 href.args = {
     href: 'https://github.com/adobe/spectrum-web-components',
-    icon: html`
-        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
-    `,
+    icon: `<sp-icon-edit hidden slot="icon"></sp-icon-edit>`,
 };

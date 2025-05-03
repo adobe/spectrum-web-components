@@ -22,6 +22,10 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+// Import Overlay type for type casting
+import type { Overlay } from '@spectrum-web-components/overlay';
 
 const iconOptions: {
     [key: string]: ({
@@ -453,4 +457,101 @@ draggable.swc_vrt = {
 draggable.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
+};
+
+export const DelayedTooltipWithOverlay = (): TemplateResult => {
+    return html`
+        <div
+            style="width: 100%; max-width: 800px; margin: 0 auto; padding: 20px;"
+        >
+            <h2>Delayed Tooltip Overlay Interaction Issue</h2>
+
+            <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+                <!-- First overlay - this should stay open during tooltip warmup -->
+                <sp-button variant="primary" id="button1">
+                    Click to Open Popover
+                </sp-button>
+                <sp-overlay
+                    trigger="button1@click"
+                    placement="bottom"
+                    id="popover-overlay"
+                >
+                    <sp-popover>
+                        <div style="padding: 20px;">
+                            <h3 style="margin-top: 0;">Opened Popover</h3>
+                            <p>
+                                This popover should stay open during tooltip
+                                warmup
+                            </p>
+                            <p>
+                                <strong>Steps to test:</strong>
+                                With this popover open, hover the button to the
+                                right.
+                            </p>
+                        </div>
+                    </sp-popover>
+                </sp-overlay>
+
+                <overlay-trigger triggered-by="hover">
+                    <sp-button
+                        slot="trigger"
+                        variant="secondary"
+                        @pointerenter=${(event: Event) => {
+                            // Capture phase event handler to stop propagation during warmup
+                            // This ensures other overlays don't close prematurely
+                            event.stopPropagation();
+                        }}
+                    >
+                        Hover me
+                    </sp-button>
+                    <sp-tooltip
+                        slot="hover-content"
+                        delayed
+                        placement="bottom"
+                        @sp-opened=${() => {
+                            const popoverOverlay = document.getElementById(
+                                'popover-overlay'
+                            ) as Overlay;
+                            if (
+                                popoverOverlay &&
+                                popoverOverlay.hasAttribute('open')
+                            ) {
+                                popoverOverlay.open = false;
+                            }
+                        }}
+                    >
+                        This is a delayed tooltip
+                    </sp-tooltip>
+                </overlay-trigger>
+            </div>
+
+            <div
+                style="border: 1px solid #ccc; padding: 20px; border-radius: 4px; background-color: #f5f5f5;"
+            >
+                <h3 style="margin-top: 0;">Expected Behavior</h3>
+                <ol style="margin-left: 16px;">
+                    <li>
+                        Click the
+                        <strong>Click to Open Popover</strong>
+                        button to open the popover
+                    </li>
+                    <li>
+                        Hover over the
+                        <strong>Hover me</strong>
+                        button
+                    </li>
+                    <li>
+                        The popover should
+                        <strong>remain open</strong>
+                        during the tooltip's 1-second warmup period
+                    </li>
+                    <li>
+                        The popover should
+                        <strong>automatically close</strong>
+                        when the tooltip appears in DOM
+                    </li>
+                </ol>
+            </div>
+        </div>
+    `;
 };

@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    -   @spectrum-web-components/button@1.6.0
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/icons-ui@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

@@ -410,7 +410,7 @@ Information on how to import the component.
 ### Anatomy
 
 <--
-Information and examples about options
+Information and examples about the parts of the component
 (eg., labels, icons, etc.)
 of the component. -->
 
@@ -419,6 +419,14 @@ of the component. -->
 <--
 Information and examples about options
 (eg., sizes, variants, states, etc.)
+of the component.
+-->
+
+### States
+
+<--
+Information and examples about states
+(eg., disabled, loading, etc.)
 of the component.
 -->
 

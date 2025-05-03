@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`700489f`](https://github.com/adobe/spectrum-web-components/commit/700489f87e96b895a687431486fb329c7497f2d6), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/tooltip@1.6.0
+    -   @spectrum-web-components/styles@1.6.0
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

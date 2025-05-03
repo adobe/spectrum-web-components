@@ -223,8 +223,8 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
 
 The `type` of an Overlay outlines a number of things about the interaction model within which is works.
 
--   `'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
--   `'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+-   `'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
+-   `'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
 -   `'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
 -   `'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus but will close when losing that focus, or when interacting with other parts of the page.
 -   `'manual'` Overlays act much like `"auto"` Overlays, but do not close when losing focus or interacting with other parts of the page. When a `"manual"` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.

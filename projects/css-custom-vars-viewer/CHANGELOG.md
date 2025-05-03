@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`3c3bc2b`](https://github.com/adobe/spectrum-web-components/commit/3c3bc2bed9f1c731bc662220fe96f67f03331015), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/picker@1.6.0
+    -   @spectrum-web-components/styles@1.6.0
+    -   @spectrum-web-components/menu@1.6.0
+    -   @spectrum-web-components/table@1.6.0
+    -   @spectrum-web-components/toast@1.6.0
+    -   @spectrum-web-components/story-decorator@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+    -   @spectrum-web-components/link@1.6.0
+    -   @spectrum-web-components/swatch@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

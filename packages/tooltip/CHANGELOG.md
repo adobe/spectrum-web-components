@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5384](https://github.com/adobe/spectrum-web-components/pull/5384) [`700489f`](https://github.com/adobe/spectrum-web-components/commit/700489f87e96b895a687431486fb329c7497f2d6) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - docs: add DelayedTooltipWithOverlay story demonstrating how to handle interactions between delayed tooltips and other overlay components
+
+-   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   Updated dependencies [[`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

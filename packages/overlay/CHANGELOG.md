@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5392](https://github.com/adobe/spectrum-web-components/pull/5392) [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Fixed layout issues in Safari when an <sp-tray> is nested inside a dialog-type <sp-overlay>.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-button@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Minor Changes

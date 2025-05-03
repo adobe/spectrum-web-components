@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5174](https://github.com/adobe/spectrum-web-components/pull/5174) [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updated the deprecation warning to allow `variant` and `static-color` exist on the same component.
+    Added `primary` and `secondary` stories to `white` and `black` button directories on storybook.
+    Updates documentation site to reflect this as well.
+-   Updated dependencies [[`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/close-button@1.6.0
+    -   @spectrum-web-components/clear-button@1.6.0
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/icons-ui@1.6.0
+    -   @spectrum-web-components/progress-circle@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

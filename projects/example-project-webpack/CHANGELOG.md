@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.2.4
+
+### Patch Changes
+
+-   Updated dependencies [[`3c3bc2b`](https://github.com/adobe/spectrum-web-components/commit/3c3bc2bed9f1c731bc662220fe96f67f03331015), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/picker@1.6.0
+    -   @spectrum-web-components/button@1.6.0
+    -   @spectrum-web-components/styles@1.6.0
+    -   @spectrum-web-components/menu@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+
 ## 1.2.3
 
 ### Patch Changes

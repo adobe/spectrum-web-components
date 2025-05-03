@@ -186,7 +186,7 @@ The `type` of an Overlay outlines a number of things about the interaction model
 
 ### Modal
 
-`'modal'` Overlays are opened with the `showModal()` method on a `<dialog>` element, which causes the Overlay to accept focus and trap the tab stop within the content of said Overlay.
+`'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
 
 They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
 
@@ -215,7 +215,7 @@ They should be used when you need to ensure that the user has interacted with th
 
 ### Page
 
-`'page'` Overlays will act in a similar manner to a `'modal'` Overlay, however they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+`'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
 
 A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
 
@@ -310,6 +310,40 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 -   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
 This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
+
+## Nested Overlays
+
+When nesting multiple overlays, it is important to ensure that the nested overlays are actually nested in the HTML as well, otherwise it will not be accessible.
+
+```html
+<div style="padding: 20px;">
+    <sp-button id="outerTrigger" variant="primary">Open Outer Modal</sp-button>
+    <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
+        <sp-popover>
+            <sp-dialog>
+                <p>This is the outer modal content. Press ESC to close it.</p>
+                <sp-button id="innerTrigger" variant="primary">
+                    Open Inner Modal
+                </sp-button>
+                <sp-overlay
+                    id="innerOverlay"
+                    type="auto"
+                    trigger="innerTrigger@click"
+                >
+                    <sp-popover>
+                        <sp-dialog>
+                            <p>
+                                This is the inner modal content. Press ESC to
+                                close this first, then the outer modal.
+                            </p>
+                        </sp-dialog>
+                    </sp-popover>
+                </sp-overlay>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+</div>
+```
 
 ## Styling
 
