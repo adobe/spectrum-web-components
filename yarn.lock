@@ -10345,11 +10345,11 @@ __metadata:
   linkType: hard
 
 "@types/sinon@npm:*, @types/sinon@npm:^17.0.3":
-  version: 17.0.3
-  resolution: "@types/sinon@npm:17.0.3"
+  version: 17.0.4
+  resolution: "@types/sinon@npm:17.0.4"
   dependencies:
     "@types/sinonjs__fake-timers": "npm:*"
-  checksum: 10c0/6fc3aa497fd87826375de3dbddc2bf01c281b517c32c05edf95b5ad906382dc221bca01ca9d44fc7d5cb4c768f996f268154e87633a45b3c0b5cddca7ef5e2be
+  checksum: 10c0/7c67ae1050d98a86d8dd771f0a764e97adb9d54812bf3b001195f8cfaa1e2bdfc725d5b970b91e7b0bb6b7c1ca209f47993f2c6f84f1f868313c37441313ca5b
   languageName: node
   linkType: hard
 
