@@ -24,6 +24,8 @@ This document outlines our team's expectations and best practices for creating, 
         -   [API documentation utilizing JSDocs](#api-documentation-utilizing-jsdocs)
         -   [Technical requirements](#technical-requirements)
 
+---
+
 ## Pull request creation
 
 ### Branch naming
@@ -71,6 +73,8 @@ For breaking changes, add a `!` after the type/scope:
 
 -   `feat(sp-button)!: change API for icon placement`
 
+---
+
 ## Pull request template
 
 When creating a pull request, you'll be presented with our template. Complete all sections to the best of your ability, including:
@@ -83,6 +87,8 @@ When creating a pull request, you'll be presented with our template. Complete al
 -   Screenshots/videos for visual changes
 
 Incomplete templates may delay the review process.
+
+---
 
 ## Labels and their meanings
 
@@ -101,6 +107,8 @@ Incomplete templates may delay the review process.
 -   `Component: [Name]`: PR effects this component
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
+
+---
 
 ## Pull request review process
 
@@ -128,37 +136,39 @@ Both reviewers and PR authors should follow these guidelines:
 
 #### For reviewers
 
--   **Maintain Momentum**: Complete reviews in a timely manner to keep the project moving forward.
--   **Provide Clear, Actionable Feedback**: Help contributors succeed by offering specific guidance and explaining the reasoning behind suggested changes.
--   **Offer Solutions**: When identifying areas for improvement, suggest alternative approaches and use code suggestions to make implementation easier.
--   **Seek Understanding**: Ask questions to clarify intent and approach, fostering a collaborative environment for learning and improvement.
--   **Recognize Excellence**: Celebrate well-written code and thoughtful design decisions to encourage continued high-quality contributions.
--   **Focus on Impact**: Prioritize feedback on architecture, functionality, and performance to ensure the most important aspects are addressed first.
--   **Focus on Value**: Prioritize feedback that improves code quality and maintainability over personal style preferences. If you make a suggestion that is non-blocking feedback, prepend the comment with `nit:`.
--   **Consider Context**: Tailor feedback to the PR author's experience level and the scope of changes.
--   **Use Changes Requested Thoughtfully**: Reserve the Changes Requested status for instances where critical issues need to be addressed.
--   **Review VRTs with Care**: Thoroughly examine visual regression test results and communicate approval status to authors.
+-   **Maintain momentum**: Complete reviews in a timely manner to keep the project moving forward.
+-   **Provide clear, actionable feedback**: Help contributors succeed by offering specific guidance and explaining the reasoning behind suggested changes.
+-   **Offer solutions**: When identifying areas for improvement, suggest alternative approaches and use code suggestions to make implementation easier.
+-   **Seek understanding**: Ask questions to clarify intent and approach, fostering a collaborative environment for learning and improvement.
+-   **Recognize excellence**: Celebrate well-written code and thoughtful design decisions to encourage continued high-quality contributions.
+-   **Focus on impact**: Prioritize feedback on architecture, functionality, and performance to ensure the most important aspects are addressed first.
+-   **Focus on value**: Prioritize feedback that improves code quality and maintainability over personal style preferences. If you make a suggestion that is non-blocking feedback, prepend the comment with `nit:`.
+-   **Consider context**: Tailor feedback to the PR author's experience level and the scope of changes.
+-   **Use changes requested thoughtfully**: Reserve the Changes Requested status for instances where critical issues need to be addressed.
+-   **Review VRTs with care**: Thoroughly examine visual regression test results and communicate approval status to authors.
 
 #### For PR authors
 
--   **Self Review Your PR**: Authors should take a first pass as reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answer questions they may have.
--   **Be Receptive to Feedback**: Approach review comments with an open mind. The goal is better code, not personal criticism.
--   **Respond to All Comments**: Address each review comment, either with code changes or explanations of your approach.
--   **Ask for Clarification**: If review feedback is unclear, ask questions to understand the concern.
--   **Notify When Ready**: After addressing feedback, notify reviewers that the PR is ready for another look either in Slack or by requesting a new review in GitHub.
--   **Explain Complex Changes**: For non-obvious changes, explain your reasoning in the PR description or comments.
--   **Break Down Large PRs**: When possible, split large changes into smaller, more manageable PRs.
--   **Test Thoroughly**: Before requesting review, ensure your code meets the project's quality standards.
+-   **Self review your PR**: Authors should take a first pass as reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answer questions they may have.
+-   **Be receptive to feedback**: Approach review comments with an open mind. The goal is better code, not personal criticism.
+-   **Resolve/respond to all comments**: Address each review comment, either with code changes or explanations of your approach.
+-   **Ask for clarification**: If review feedback is unclear, ask questions to understand the concern.
+-   **Notify when ready**: After addressing feedback, notify reviewers that the PR is ready for another look either in Slack or by requesting a new review in GitHub.
+-   **Explain complex changes**: For non-obvious changes, explain your reasoning in the PR description or comments.
+-   **Break down large PRs**: When possible, split large changes into smaller, more manageable PRs.
+-   **Test thoroughly**: Before requesting review, ensure your code meets the project's quality standards.
 
 #### Resolving disagreements
 
--   **Focus on Data**: Back up opinions with data, documentation, or examples where possible.
--   **Refer to Standards**: Use project conventions and industry best practices to guide decisions.
--   **Compromise When Appropriate**: Be willing to find middle ground when opinions differ.
--   **Escalate Respectfully**: If consensus can't be reached, involve a third team member or technical lead for guidance.
--   **Document Decisions**: Record the reasoning behind significant technical decisions for future reference.
+-   **Focus on data**: Back up opinions with data, documentation, or examples where possible.
+-   **Refer to standards**: Use project conventions and industry best practices to guide decisions.
+-   **Compromise when appropriate**: Be willing to find middle ground when opinions differ.
+-   **Escalate respectfully**: If consensus can't be reached, involve a third team member or technical lead for guidance.
+-   **Document decisions**: Record the reasoning behind significant technical decisions for future reference.
 
 Remember that code reviews are a collaborative process aimed at improving code quality, knowledge sharing, and maintaining project standards. Approaching reviews with empathy and professionalism benefits everyone involved.
+
+---
 
 ## Merge criteria
 
@@ -174,6 +184,8 @@ A PR is ready to merge when:
 4. PR follows conventional commit standards
 5. Includes proper changeset (when applicable)
 6. Documentation has been updated as needed
+
+---
 
 ## Specific requirements by element type
 
@@ -193,10 +205,10 @@ See [Documenting a component](https://opensource.adobe.com/spectrum-web-componen
 
 -   **Slots**: All slots documented in the element class docblock
 -   **Events**: All dispatched events documented with `@fires` docblock
--   **Class Fields**: All public/protected fields have proper docblocks
+-   **Class fields**: All public/protected fields have proper docblocks
 -   **Methods**: All public/protected methods have docblocks with parameters and return types
--   **CSS Custom Properties**: All public CSS custom properties documented
--   **CSS Shadow Parts**: All shadow parts documented
+-   **CSS custom properties**: All public CSS custom properties documented
+-   **CSS shadow parts**: All shadow parts documented
 
 #### Technical requirements
 
