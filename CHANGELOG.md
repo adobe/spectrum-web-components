@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **icons-workflow**: added missing S2 icons
 
-### Bug Fixes
+### Patch Fixes
 
 -   **slider**: ensure tracks become properly rounded when offset variant is activated
 -   **popover**: prevent overflow clipping in Safari with translateZ and visible tips
