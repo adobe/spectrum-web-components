@@ -1,13 +1,13 @@
 ## Overview
 
-`sp-dialog-wrapper` accepts slotted dialog content (often an `<sp-dialog>`) and presents that content in a container that is animated into place when toggling the `open` attribute. In concert with the [Overlay API](../overlay) or [Overlay Trigger](../overlay-trigger), the provided dialog content will be displayed over the rest of the page.
+`sp-dialog-wrapper` supplies an attribute-based interface for the managed customization of an sp-dialog element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an [`sp-underlay`](./underlay) element between your page content and the [`sp-dialog`](./dialog) that opens over it.
 
 Use `sp-dialog-wrapper` when:
 
 -   You need to present important information that requires user acknowledgment
 -   You're building a modal interface that blocks interaction with the page
 -   You need a structured container with features like backdrop/underlay
--   Your content is complex and requires formal layout with headings, content sections, and actions
+-   Your content is requires formal layout with headings, content sections, and actions
 
 Use [`sp-popover`](./popover) when:
 
@@ -32,36 +32,100 @@ Import the side effectful registration of `<sp-dialog-wrapper>` via:
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 ```
 
-When looking to leverage the `DialogBase` base class as a type and/or for extension purposes, do so via:
-
-```ts
-import { DialogBase } from '@spectrum-web-components/dialog';
-```
-
 ### Anatomy
 
-The dialog base consists of a single default slot that expects an [`sp-dialog` element](./dialog) to be provided. The dialog base manages the presentation and animation of this content.
+The dialog wrapper is a high-level component that combines the [`sp-dialog-base`](./dialog-base) functionality and the [`sp-dialog`](./dialog) layout and stylingwith an attribute-based API.
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <p>
-                The click events for the "OK" button are bound to the story not
-                to the components in specific.
-            </p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-            <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Hero
+
+The hero content is displayed above the dialog content. Use the `hero` attribute to provide the hero content.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        hero="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Headline
+
+The headline content is displayed as the dialog title. Use the `headline` attribute to provide the headline content.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Footer
+
+The footer content is displayed as below the dialog content. Use the `footer` attribute to provide the footer content.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+#### Buttons
+
+The dialog wrapper supports different buttons via the `confirm-label`, `cancel-label`, `secondary-label`, `dismiss-label` attributes.
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        confirm-label="Confirm"
+        cancel-label="Cancel"
+        secondary-label="Secondary"
+        underlay
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -79,11 +143,16 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay slot="click-content" size="s">
-        <sp-dialog size="s" dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        size="s"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -95,11 +164,16 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay slot="click-content" size="m">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        size="m"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -111,11 +185,16 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay slot="click-content" size="l">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        size="l"
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -128,62 +207,110 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 The `underlay` attribute can be used to add an underlay element between the page content and the dialog.
 
+<sp-tabs selected="underlay" auto label="Underlay options">
+    <sp-tab value="underlay">With underlay</sp-tab>
+    <sp-tab-panel value="underlay">
+
 ```html
-</style>
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay slot="click-content">
-        <sp-dialog>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <p>
-                The click events for the "OK" button are bound to the story not
-                to the components in specific.
-            </p>
-            <sp-button
-                variant="secondary"
-                treatment="fill"
-                slot="button"
-                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-            >
-                Ok
-            </sp-button>
-            <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
+
+</sp-tab-panel>
+<sp-tab value="no-underlay">Without underlay</sp-tab>
+<sp-tab-panel value="no-underlay">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Dismissable
 
 The `dismissable` attribute can be used to add an underlay element between the page content and the dialog.
 
+<sp-tabs selected="dismissable" auto label="Dismissable options">
+    <sp-tab value="dismissable">Dismissable</sp-tab>
+    <sp-tab-panel value="dismissable">
+
 ```html
-</style>
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay slot="click-content">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
 
+</sp-tab-panel>
+<sp-tab value="not-dismissable">Not dismissable</sp-tab>
+<sp-tab-panel value="not-dismissable">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        underlay
+        footer="Content for footer"
+    >
+        Content of the dialog
+    </sp-dialog-wrapper>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 #### Mode
 
-The dialog base supports different display modes:
+The dialog wrapper supports different display modes:
 
 ##### Fullscreen Mode
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay mode="fullscreen" slot="click-content">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        cancel-label="Cancel"
+        underlay
+        footer="Content for footer"
+        mode="fullscreen"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -193,15 +320,15 @@ The dialog base supports different display modes:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-wrapper underlay mode="fullscreenTakeover" slot="click-content">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <p>
-                The click events for the "OK" button are bound to the story not
-                to the components in specific.
-            </p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        cancel-label="Cancel"
+        underlay
+        footer="Content for footer"
+        mode="fullscreenTakeover"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -209,7 +336,7 @@ The dialog base supports different display modes:
 
 ### Behaviors
 
-The dialog base manages several behaviors:
+The dialog wrapper manages several behaviors:
 
 1. Animation of the dialog content when opening/closing
 2. Focus management when the dialog opens
@@ -221,15 +348,16 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 
 ```html
 <overlay-trigger type="modal" receives-focus="auto">
-    <sp-dialog-wrapper underlay mode="fullscreenTakeover" slot="click-content">
-        <sp-dialog dismissable>
-            <h2 slot="heading">A thing is about to happen</h2>
-            <p>Something that might happen a lot is about to happen.</p>
-            <p>
-                The click events for the "OK" button are bound to the story not
-                to the components in specific.
-            </p>
-        </sp-dialog>
+    <sp-dialog-wrapper
+        slot="click-content"
+        headline="Dialog title"
+        dismissable
+        dismiss-label="Close"
+        underlay
+        footer="Content for footer"
+        mode="fullscreenTakeover"
+    >
+        Content of the dialog
     </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
@@ -237,7 +365,13 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 
 ### Accessibility
 
-The dialog base component ensures proper focus management by:
+#### Include a headline
+
+An sp-dialog-wrapper element leverages the headline attribute/property to label the dialog content for screen readers. The headline-visibility attribute will accept a value of "none" to suppress the headline visually.
+
+#### Focus management
+
+The dialog wrapper component ensures proper focus management by:
 
 -   Moving focus into the dialog when opened
 -   Trapping tab order within the dialog while open

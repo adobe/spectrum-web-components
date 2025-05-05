@@ -2,6 +2,8 @@
 
 `sp-dialog` displays important information that users need to acknowledge. They appear over the interface and block further interactions. When used directly the `sp-dialog` element surfaces a `slot` based API for deep customization of the content to be included in the overlay.
 
+Note: the `sp-dialog` element is a component that is used to create a dialog layout. For modal and popover behavior, it should be used within a component that manages the overlay state.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
@@ -205,9 +207,9 @@ The `receives-focus` attribute can be used to control whether the dialog should 
     <sp-popover>
         <sp-dialog>
             <h2 slot="heading">Dialog Heading</h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Auctor augue mauris
-            augue neque gravida. Libero volutpat sed ornare arcu.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor
+            augue mauris augue neque gravida. Libero volutpat sed ornare arcu.
         </sp-dialog>
     </sp-popover>
 </sp-overlay>

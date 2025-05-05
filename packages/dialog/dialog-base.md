@@ -2,14 +2,14 @@
 
 `DialogBase` is a foundational class that handles the core functionality of displaying and managing dialog content in an overlay. This base class provides the foundation for more specific dialog implementations like [`sp-dialog`](./dialog) and [`sp-dialog-wrapper`](./dialog-wrapper), handling the core functionality while allowing those implementations to focus on their specific features.
 
-Use `sp-dialog-wrapper`, or `DialogBase` when:
+Use `DialogBase` when:
 
 -   You need to present important information that requires user acknowledgment
 -   You're building a modal interface that blocks interaction with the page
 -   You need a structured container with features like backdrop/underlay
 -   Your content is complex and requires formal layout with headings, content sections, and actions
 
-Use [`sp-popover`](./popover) when:
+Use an [`sp-popover`](./popover) when:
 
 -   You need a lightweight, contextual container that's positioned relative to a trigger element
 -   You want to display simple content like menus, tooltips, or additional options
@@ -38,18 +38,33 @@ When looking to leverage the `DialogBase` base class as a type and/or for extens
 import { DialogBase } from '@spectrum-web-components/dialog';
 ```
 
-Extend the dialog base to create a new component that uses the same base functionality but with additional features. See [`DialogWrapper.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/dialog/src/DialogWrapper.ts) for an example component that extends the dialog base.
+### Anatomy
 
-```ts
-export class MyCustomDialog extends DialogBase {
-    public static override get styles(): CSSResultArray {
-        return [...super.styles];
-    }
+The `sp-dialog-base` element is a wrapper that provides animation and positioning for the dialog content.
 
-    protected override renderDialog(): TemplateResult {
-        ...
-    }
-}
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base underlay slot="click-content">
+        <sp-dialog size="s">
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <p>
+                The click events for the "OK" button are bound to the story not
+                to the components in specific.
+            </p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+            <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
 ```
 
 ### Options
@@ -73,6 +88,35 @@ The dialog base manages several behaviors:
 1. Animation of the dialog content when opening/closing
 2. Focus management when the dialog opens
 3. Event handling for closing the dialog
+
+### Extending `DialogBase`
+
+Extend the dialog base to create a new component that uses the same base functionality but with additional features.
+
+`sp-dialog-base` expects a single slotted child element to play the role of the dialog that it will deliver within your application. When leveraging it as a base class be sure to customize the `dialog` getter to ensure that it acquires the appropriate element for your use case in order to correctly pass focus into your content when the dialog is opened.
+
+See [`DialogWrapper.ts`](https://github.com/adobe/spectrum-web-components/blob/main/packages/dialog/src/DialogWrapper.ts) for an example component that extends the dialog base.
+
+```ts
+import { DialogBase } from '@spectrum-web-components/dialog';
+
+export class MyCustomDialogWrapper extends DialogBase {
+    public static override get styles(): CSSResultArray {
+        return [...super.styles];
+
+    protected override renderDialog(): TemplateResult {
+        return html`
+            <my-custom-dialog>
+                <slot></slot>
+            </my-custom-dialog>
+        `;
+    }
+
+    protected override get dialog(): Dialog {
+        return this.shadowRoot.querySelector('my-custom-dialog') as Dialog;
+    }
+}
+```
 
 ### Accessibility
 
