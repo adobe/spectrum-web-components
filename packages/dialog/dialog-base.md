@@ -45,7 +45,7 @@ The `sp-dialog-base` element is a wrapper that provides animation and positionin
 ```html
 <overlay-trigger type="modal">
     <sp-dialog-base underlay slot="click-content">
-        <sp-dialog size="s">
+        <sp-dialog>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
             <p>
@@ -73,13 +73,158 @@ The `sp-dialog-base` element is a wrapper that provides animation and positionin
 
 The `underlay` attribute can be used to add an underlay element between the page content and the dialog.
 
+<sp-tabs selected="underlay" auto label="Underlay options">
+    <sp-tab value="underlay">With underlay</sp-tab>
+    <sp-tab-panel value="underlay">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base underlay slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+<sp-tab value="no-underlay">Without underlay</sp-tab>
+<sp-tab-panel value="no-underlay">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 #### Dismissable
 
 The `dismissable` attribute can be used to add an underlay element between the page content and the dialog.
 
+<sp-tabs selected="dismissable" auto label="Dismissable options">
+    <sp-tab value="dismissable">Dismissable</sp-tab>
+    <sp-tab-panel value="dismissable">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base dismissable slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+<sp-tab value="not-dismissable">Not dismissable</sp-tab>
+<sp-tab-panel value="not-dismissable">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base underlay slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 #### Mode
 
 The dialog base supports different display modes: `fullscreen` and `fullscreenTakeover`.
+
+<sp-tabs selected="fullscreen" auto label="Modes">
+    <sp-tab value="fullscreen">Fullscreen</sp-tab>
+    <sp-tab-panel value="fullscreen">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base mode="fullscreen" slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+<sp-tab value="fullscreen-takeover">Fullscreen Takeover</sp-tab>
+<sp-tab-panel value="fullscreen-takeover">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base mode="fullscreenTakeover" slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">A thing is about to happen</h2>
+            <p>Something that might happen a lot is about to happen.</p>
+            <sp-button
+                variant="secondary"
+                treatment="fill"
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Ok
+            </sp-button>
+        </sp-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Behaviors
 

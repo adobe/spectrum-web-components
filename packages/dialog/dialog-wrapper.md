@@ -2,20 +2,6 @@
 
 `sp-dialog-wrapper` supplies an attribute-based interface for the managed customization of an sp-dialog element and the light DOM supplied to it. This is paired it with an `underlay` attribute that opts-in to the use of an [`sp-underlay`](./underlay) element between your page content and the [`sp-dialog`](./dialog) that opens over it.
 
-Use `sp-dialog-wrapper` when:
-
--   You need to present important information that requires user acknowledgment
--   You're building a modal interface that blocks interaction with the page
--   You need a structured container with features like backdrop/underlay
--   Your content is requires formal layout with headings, content sections, and actions
-
-Use [`sp-popover`](./popover) when:
-
--   You need a lightweight, contextual container that's positioned relative to a trigger element
--   You want to display simple content like menus, tooltips, or additional options
--   You're building a non-modal interface where users can still interact with the page
--   You need an element with an arrow/tip pointing to the trigger
-
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
@@ -36,94 +22,27 @@ import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 
 The dialog wrapper is a high-level component that combines the [`sp-dialog-base`](./dialog-base) functionality and the [`sp-dialog`](./dialog) layout and stylingwith an attribute-based API.
 
+The dialog wrapper consists of several key parts:
+
+-   A headline used as the dialog title (via the `headline` attribute)
+-   Content (via default slot)
+-   Optional hero content (via the `hero` attribute)
+-   Optional footer content (via the `footer` attribute)
+-   Optional underlay (via the `underlay` attribute)
+-   Optional buttons (via the `confirm-label`, `cancel-label`, and `secondary-label` attributes)
+-   Optional dismiss button (via the `dismissable` attribute and the `dismiss-label` attribute)
+
 ```html
 <overlay-trigger type="modal">
     <sp-dialog-wrapper
         slot="click-content"
         headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-</overlay-trigger>
-```
-
-#### Hero
-
-The hero content is displayed above the dialog content. Use the `hero` attribute to provide the hero content.
-
-```html
-<overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
         hero="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-</overlay-trigger>
-```
-
-#### Headline
-
-The headline content is displayed as the dialog title. Use the `headline` attribute to provide the headline content.
-
-```html
-<overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-</overlay-trigger>
-```
-
-#### Footer
-
-The footer content is displayed as below the dialog content. Use the `footer` attribute to provide the footer content.
-
-```html
-<overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
-        dismissable
-        dismiss-label="Close"
-        underlay
-        footer="Content for footer"
-    >
-        Content of the dialog
-    </sp-dialog-wrapper>
-    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
-</overlay-trigger>
-```
-
-#### Buttons
-
-The dialog wrapper supports different buttons via the `confirm-label`, `cancel-label`, `secondary-label`, `dismiss-label` attributes.
-
-```html
-<overlay-trigger type="modal">
-    <sp-dialog-wrapper
-        slot="click-content"
-        headline="Dialog title"
         confirm-label="Confirm"
         cancel-label="Cancel"
         secondary-label="Secondary"
         underlay
+        footer="Content for footer"
     >
         Content of the dialog
     </sp-dialog-wrapper>
