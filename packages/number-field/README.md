@@ -1,6 +1,6 @@
 ## Overview
 
-`<sp-number-field>` elements are used for numeric inputs. 
+`<sp-number-field>` elements are used for numeric inputs.
 
 ### Usage
 
@@ -51,11 +51,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="s">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="s"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="s"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -63,11 +59,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="m">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="m"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="m"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -75,11 +67,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="l">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="l"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="l"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -87,11 +75,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="xl">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="xl"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="xl"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -350,10 +334,10 @@ Number fields have a `readonly` attribute for when they’re in the disabled sta
 
 The number field works with the following interactions:
 
-- the input field,
-- <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys,
-- the scroll wheel, or
-- the stepper UI, when not hidden by the `hide-stepper` attribute.
+-   the input field,
+-   <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> keys,
+-   the scroll wheel, or
+-   the stepper UI, when not hidden by the `hide-stepper` attribute.
 
 The input value incrementally increases or decreases by the value of the `step` attribute. The <kbd>shift</kbd> key can be used to apply steps at 10 times (or the value of the `step-modifier` attribute times) their normal rate.
 

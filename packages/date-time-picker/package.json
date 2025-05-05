@@ -1,0 +1,85 @@
+{
+    "name": "@spectrum-web-components/date-time-picker",
+    "version": "1.6.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design DateTimePicker",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/date-time-picker"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/date-time-picker",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/DateTimePicker.js": {
+            "development": "./src/DateTimePicker.dev.js",
+            "default": "./src/DateTimePicker.js"
+        },
+        "./src/date-time-picker-overrides.css.js": "./src/date-time-picker-overrides.css.js",
+        "./src/date-time-picker.css.js": "./src/date-time-picker.css.js",
+        "./src/helpers.js": {
+            "development": "./src/helpers.dev.js",
+            "default": "./src/helpers.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-date-time-picker.js": {
+            "development": "./sp-date-time-picker.dev.js",
+            "default": "./sp-date-time-picker.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/calendar": "^1.6.0",
+        "@spectrum-web-components/field-label": "^1.6.0",
+        "@spectrum-web-components/icons-workflow": "^1.6.0",
+        "@spectrum-web-components/overlay": "^1.6.0",
+        "@spectrum-web-components/picker-button": "^1.6.0",
+        "@spectrum-web-components/popover": "^1.6.0"
+    },
+    "devDependencies": {
+        "@spectrum-css/datepicker": "^4.0.0-s2-foundations.16"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

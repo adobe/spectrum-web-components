@@ -152,6 +152,7 @@ export default {
                 converter.classToAttribute('is-invalid', 'invalid'),
                 converter.classToAttribute('is-disabled', 'disabled'),
                 converter.classToAttribute('is-readOnly', 'readonly'),
+                converter.pseudoToAttribute('read-only', 'readonly'),
             ],
         },
     ],
