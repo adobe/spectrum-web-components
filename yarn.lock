@@ -7495,7 +7495,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-button@npm:1.6.0, @spectrum-web-components/action-button@npm:^1.0.3, @spectrum-web-components/action-button@workspace:packages/action-button":
+"@spectrum-web-components/action-button@npm:1.6.0, @spectrum-web-components/action-button@npm:^1.6.0, @spectrum-web-components/action-button@workspace:packages/action-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:packages/action-button"
   dependencies:
@@ -7590,7 +7590,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/base@npm:1.6.0, @spectrum-web-components/base@npm:^1.0.3, @spectrum-web-components/base@workspace:tools/base":
+"@spectrum-web-components/base@npm:1.6.0, @spectrum-web-components/base@npm:^1.6.0, @spectrum-web-components/base@workspace:tools/base":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:tools/base"
   dependencies:
@@ -7718,17 +7718,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/calendar@npm:^1.0.3, @spectrum-web-components/calendar@workspace:packages/calendar":
+"@spectrum-web-components/calendar@npm:^1.6.0, @spectrum-web-components/calendar@workspace:packages/calendar":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/calendar@workspace:packages/calendar"
   dependencies:
     "@internationalized/date": "npm:^3.6.0"
     "@internationalized/number": "npm:^3.6.0"
     "@spectrum-css/calendar": "npm:^6.0.0-s2-foundations.15"
-    "@spectrum-web-components/action-button": "npm:^1.0.3"
-    "@spectrum-web-components/base": "npm:^1.0.3"
-    "@spectrum-web-components/icons-workflow": "npm:^1.0.3"
-    "@spectrum-web-components/reactive-controllers": "npm:^1.0.3"
+    "@spectrum-web-components/action-button": "npm:^1.6.0"
+    "@spectrum-web-components/base": "npm:^1.6.0"
+    "@spectrum-web-components/icons-workflow": "npm:^1.6.0"
+    "@spectrum-web-components/reactive-controllers": "npm:^1.6.0"
   languageName: unknown
   linkType: soft
 
@@ -7940,12 +7940,12 @@ __metadata:
   resolution: "@spectrum-web-components/date-time-picker@workspace:packages/date-time-picker"
   dependencies:
     "@spectrum-css/datepicker": "npm:^4.0.0-s2-foundations.16"
-    "@spectrum-web-components/calendar": "npm:^1.0.3"
-    "@spectrum-web-components/field-label": "npm:^1.0.3"
-    "@spectrum-web-components/icons-workflow": "npm:^1.0.3"
-    "@spectrum-web-components/overlay": "npm:^1.0.3"
-    "@spectrum-web-components/picker-button": "npm:^1.0.3"
-    "@spectrum-web-components/popover": "npm:^1.0.3"
+    "@spectrum-web-components/calendar": "npm:^1.6.0"
+    "@spectrum-web-components/field-label": "npm:^1.6.0"
+    "@spectrum-web-components/icons-workflow": "npm:^1.6.0"
+    "@spectrum-web-components/overlay": "npm:^1.6.0"
+    "@spectrum-web-components/picker-button": "npm:^1.6.0"
+    "@spectrum-web-components/popover": "npm:^1.6.0"
   languageName: unknown
   linkType: soft
 
@@ -8007,7 +8007,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/field-label@npm:1.6.0, @spectrum-web-components/field-label@npm:^1.0.3, @spectrum-web-components/field-label@workspace:packages/field-label":
+"@spectrum-web-components/field-label@npm:1.6.0, @spectrum-web-components/field-label@npm:^1.6.0, @spectrum-web-components/field-label@workspace:packages/field-label":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-label@workspace:packages/field-label"
   dependencies:
@@ -8071,7 +8071,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons-workflow@npm:1.6.0, @spectrum-web-components/icons-workflow@npm:^1.0.3, @spectrum-web-components/icons-workflow@workspace:packages/icons-workflow":
+"@spectrum-web-components/icons-workflow@npm:1.6.0, @spectrum-web-components/icons-workflow@npm:^1.6.0, @spectrum-web-components/icons-workflow@workspace:packages/icons-workflow":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons-workflow@workspace:packages/icons-workflow"
   dependencies:
@@ -8202,7 +8202,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/overlay@npm:1.6.0, @spectrum-web-components/overlay@npm:^1.0.3, @spectrum-web-components/overlay@workspace:packages/overlay":
+"@spectrum-web-components/overlay@npm:1.6.0, @spectrum-web-components/overlay@npm:^1.6.0, @spectrum-web-components/overlay@workspace:packages/overlay":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/overlay@workspace:packages/overlay"
   dependencies:
@@ -8217,7 +8217,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/picker-button@npm:1.6.0, @spectrum-web-components/picker-button@npm:^1.0.3, @spectrum-web-components/picker-button@workspace:packages/picker-button":
+"@spectrum-web-components/picker-button@npm:1.6.0, @spectrum-web-components/picker-button@npm:^1.6.0, @spectrum-web-components/picker-button@workspace:packages/picker-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker-button@workspace:packages/picker-button"
   dependencies:
@@ -8252,7 +8252,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/popover@npm:1.6.0, @spectrum-web-components/popover@npm:^1.0.3, @spectrum-web-components/popover@workspace:packages/popover":
+"@spectrum-web-components/popover@npm:1.6.0, @spectrum-web-components/popover@npm:^1.6.0, @spectrum-web-components/popover@workspace:packages/popover":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/popover@workspace:packages/popover"
   dependencies:
@@ -8297,7 +8297,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/reactive-controllers@npm:1.6.0, @spectrum-web-components/reactive-controllers@npm:^1.0.3, @spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers":
+"@spectrum-web-components/reactive-controllers@npm:1.6.0, @spectrum-web-components/reactive-controllers@npm:^1.6.0, @spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers"
   dependencies:
