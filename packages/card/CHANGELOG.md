@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/styles@1.6.0
+    -   @spectrum-web-components/asset@1.6.0
+    -   @spectrum-web-components/checkbox@1.6.0
+    -   @spectrum-web-components/divider@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes

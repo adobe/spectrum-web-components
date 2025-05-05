@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/button@1.6.0
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
 ## 1.5.0
 
 ### Patch Changes
