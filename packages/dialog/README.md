@@ -201,6 +201,14 @@ Use the dialog with an overlay to create a dialog that appears over the current 
 
 The `receives-focus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `type="modal"` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
+The `receives-focus` attribute on `overlay-trigger` has three possible values:
+
+-   `auto` (default): Focus will automatically move to the first focusable element in the dialog
+-   `true`: Forces focus to move to the overlay content
+-   `false`: Prevents focus from moving to the overlay
+
+For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="true"` to ensure keyboard users can interact with the dialog content.
+
 ```html
 <sp-button id="focus">Overlay Trigger</sp-button>
 <sp-overlay trigger="focus@click" type="modal" receives-focus="auto">
@@ -217,10 +225,6 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 
 ### Accessibility
 
-The dialog component ensures proper focus management by:
+#### Include a heading
 
--   Moving focus into the dialog when opened
--   Trapping tab order within the dialog while open
--   Returning focus to the trigger element when closed
-
-For more information on accessibility features, see the [Dialog Base](./dialog-base) component.
+The `heading` slot is of the `sp-dialog` dialog element is used to label the dialog content for screen readers.

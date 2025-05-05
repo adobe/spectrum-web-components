@@ -253,20 +253,32 @@ The dialog wrapper supports different display modes:
 </overlay-trigger>
 ```
 
-### Behaviors
+### Accessibility
 
-The dialog wrapper manages several behaviors:
+#### Include a headline
 
-1. Animation of the dialog content when opening/closing
-2. Focus management when the dialog opens
-3. Event handling for closing the dialog
+An sp-dialog-wrapper element leverages the headline attribute/property to label the dialog content for screen readers. The headline-visibility attribute will accept a value of "none" to suppress the headline visually.
 
-#### Receives focus
+#### Manage focus
+
+The dialog wrapper component ensures proper focus management by:
+
+-   Moving focus into the dialog when opened
+-   Trapping tab order within the dialog while open
+-   Returning focus to the trigger element when closed
 
 The `receives-focus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `type="modal"` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
+The `receives-focus` attribute on `overlay-trigger` has three possible values:
+
+-   `auto` (default): Focus will automatically move to the first focusable element in the dialog
+-   `true`: Forces focus to move to the overlay content
+-   `false`: Prevents focus from moving to the overlay
+
+For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="true"` to ensure keyboard users can interact with the dialog content.
+
 ```html
-<overlay-trigger type="modal" receives-focus="auto">
+<overlay-trigger type="modal" receives-focus="true">
     <sp-dialog-wrapper
         slot="click-content"
         headline="Dialog title"
@@ -281,19 +293,3 @@ The `receives-focus` attribute can be used to control whether the dialog should 
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
-
-### Accessibility
-
-#### Include a headline
-
-An sp-dialog-wrapper element leverages the headline attribute/property to label the dialog content for screen readers. The headline-visibility attribute will accept a value of "none" to suppress the headline visually.
-
-#### Focus management
-
-The dialog wrapper component ensures proper focus management by:
-
--   Moving focus into the dialog when opened
--   Trapping tab order within the dialog while open
--   Returning focus to the trigger element when closed
-
-See the [Dialog](./dialog) component for more information on the accessibility features of the dialog content.
