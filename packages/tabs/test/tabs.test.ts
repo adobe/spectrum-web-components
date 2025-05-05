@@ -88,6 +88,26 @@ describe('Tabs', () => {
         expect(tabs.selected).to.equal('first');
     });
 
+    it('can have disabled state set to true and then to false', async () => {
+        const tabs = await createTabs();
+        tabs.disabled = true;
+        await elementUpdated(tabs);
+
+        expect(tabs.selected).to.equal('first');
+        const selectedTab = tabs.querySelector('sp-tab[selected]') as Tab;
+        expect(selectedTab.disabled).to.be.true;
+
+        const anotherTab = tabs.querySelector('[label="Tab 3"]') as Tab;
+        anotherTab.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+
+        tabs.disabled = false;
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+        expect(selectedTab.disabled).to.be.false;
+    });
+
     it('can have disabled sp-tab children', async () => {
         const tabs = await createTabs();
         const tab2 = tabs.querySelector('[label="Tab 2"]') as Tab;

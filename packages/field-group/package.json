@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/field-group",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -64,8 +64,8 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/help-text": "1.4.0"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/help-text": "1.6.0"
     },
     "devDependencies": {
         "@spectrum-css/fieldgroup": "6.0.0-s2-foundations.16"

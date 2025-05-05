@@ -9,15 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
-import { setCustomElementsManifest } from '@storybook/web-components';
+// import { setCustomElementsManifest } from '@storybook/web-components';
+import DocumentationTemplate from './DocumentationTemplate.mdx';
+import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
-const cem = await import('./custom-elements.json', {
-    assert: { type: 'json' },
-});
+// const cem = await import('./custom-elements.json', {
+//     assert: { type: 'json' },
+// });
 
-setCustomElementsManifest(cem);
+// setCustomElementsManifest(cem);
 
 export const globalTypes = {
     system: {
@@ -127,9 +130,22 @@ export const globalTypes = {
 };
 
 export const parameters = {
-    docs: { hidden: true },
-    controls: { expanded: true },
+    docs: {
+        template: DocumentationTemplate,
+    },
+    controls: {
+        expanded: true,
+        matchers: {
+            color: /(backgroundColor|color)$/i,
+            date: /Date$/,
+        },
+    },
     layout: 'fullscreen',
+    options: {
+        storySort: {
+            method: 'alphabetical-by-kind',
+        },
+    },
     badgesConfig: {
         deprecated: {
             styles: {
@@ -163,3 +179,5 @@ export const parameters = {
 };
 
 export const decorators = [swcThemeDecorator];
+
+export const tags = ['autodocs'];
