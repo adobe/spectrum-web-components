@@ -439,6 +439,7 @@ export class DateTimePicker extends ManageHelpText(
                 ?disabled=${this.disabled}
                 @click=${() => (this.isCalendarOpen = true)}
                 label=${this.labels.calendar}
+                size=${this.size}
             >
                 <slot name="calendar-icon" slot="icon">
                     <sp-icon-calendar></sp-icon-calendar>
