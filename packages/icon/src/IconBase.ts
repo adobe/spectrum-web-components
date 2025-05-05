@@ -35,7 +35,7 @@ export class IconBase extends SpectrumElement {
     }
     constructor() {
         super();
-        console.log('IconBase constructor');
+        console.log('IconBase constructor1');
     }
     private unsubscribeSystemContext: (() => void) | null = null;
 

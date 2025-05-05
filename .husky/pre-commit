@@ -5,9 +5,36 @@ bash << EOF
     STAGED_CSS_FILES=$(git diff --name-only --cached --diff-filter=d -- "{packages,tools}/**/*.css")
     VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
 
-    [ -z "$STAGED_FILES_TO_LINT" ] || yarn eslint -f pretty $STAGED_FILES_TO_LINT
-    [ -z "$STAGED_FILES_TO_ANALYZE" ] || yarn lit-analyzer $STAGED_FILES_TO_ANALYZE
-    [ -z "$STAGED_CSS_FILES" ] || yarn stylelint $STAGED_CSS_FILES
+    # Run eslint and capture output and exit code
+    LINT_EXIT_CODE=0
+    if [ -n "$STAGED_FILES_TO_LINT" ]; then
+        LINT_OUTPUT=$(yarn eslint -f pretty $STAGED_FILES_TO_LINT || echo "ESLINT_FAILED")
+        LINT_EXIT_CODE=$?
+        
+        # Print the output
+        echo "$LINT_OUTPUT"
+        
+        # Check for dependency errors
+        if echo "$LINT_OUTPUT" | grep -q "should be listed in the project's dependencies"; then
+            echo ""
+            echo "❌ ERROR: Missing dependencies in package.json detected!"
+            echo "Please run the suggested npm command to add the dependencies before committing."
+            echo ""
+            exit 1
+        fi
+        
+        # If lint failed for any other reason, also exit
+        if [ $LINT_EXIT_CODE -ne 0 ]; then
+            echo ""
+            echo "❌ ESLint failed. Please fix the errors before committing."
+            echo ""
+            exit 1
+        fi
+    fi
+
+    # Only continue if ESLint passed
+    [ -z "$STAGED_FILES_TO_ANALYZE" ] || yarn lit-analyzer $STAGED_FILES_TO_ANALYZE || exit 1
+    [ -z "$STAGED_CSS_FILES" ] || yarn stylelint $STAGED_CSS_FILES || exit 1
 
     yarn pretty-quick --staged
 
