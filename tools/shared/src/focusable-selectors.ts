@@ -24,7 +24,7 @@ const focusables = [
     '[contenteditable]:not([contenteditable="false"]):not([inert])',
     'details>summary:first-of-type:not([inert])',
     'details:not([inert])',
-    '[focusable]', // custom dev use-case
+    '[focusable]:not([focusable="false"])', // custom dev use-case
 ];
 
 const userFocuable = ':not([tabindex="-1"])';
