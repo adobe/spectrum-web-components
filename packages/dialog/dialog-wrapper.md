@@ -1,6 +1,20 @@
 ## Overview
 
-`sp-dialog-base` accepts slotted dialog content (often an `<sp-dialog>`) and presents that content in a container that is animated into place when toggling the `open` attribute. In concert with the [Overlay API](../overlay) or [Overlay Trigger](../overlay-trigger), the provided dialog content will be displayed over the rest of the page.
+`sp-dialog-wrapper` accepts slotted dialog content (often an `<sp-dialog>`) and presents that content in a container that is animated into place when toggling the `open` attribute. In concert with the [Overlay API](../overlay) or [Overlay Trigger](../overlay-trigger), the provided dialog content will be displayed over the rest of the page.
+
+Use `sp-dialog-wrapper` when:
+
+-   You need to present important information that requires user acknowledgment
+-   You're building a modal interface that blocks interaction with the page
+-   You need a structured container with features like backdrop/underlay
+-   Your content is complex and requires formal layout with headings, content sections, and actions
+
+Use [`sp-popover`](./popover) when:
+
+-   You need a lightweight, contextual container that's positioned relative to a trigger element
+-   You want to display simple content like menus, tooltips, or additional options
+-   You're building a non-modal interface where users can still interact with the page
+-   You need an element with an arrow/tip pointing to the trigger
 
 ### Usage
 
@@ -12,10 +26,10 @@
 yarn add @spectrum-web-components/dialog
 ```
 
-Import the side effectful registration of `<sp-dialog-base>` via:
+Import the side effectful registration of `<sp-dialog-wrapper>` via:
 
 ```ts
-import '@spectrum-web-components/dialog/sp-dialog-base.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 ```
 
 When looking to leverage the `DialogBase` base class as a type and/or for extension purposes, do so via:
@@ -30,7 +44,7 @@ The dialog base consists of a single default slot that expects an [`sp-dialog` e
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base slot="click-content">
+    <sp-dialog-wrapper slot="click-content">
         <sp-dialog>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
@@ -48,7 +62,7 @@ The dialog base consists of a single default slot that expects an [`sp-dialog` e
             </sp-button>
             <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -65,12 +79,12 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content" size="s">
+    <sp-dialog-wrapper underlay slot="click-content" size="s">
         <sp-dialog size="s" dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -81,12 +95,12 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content" size="m">
+    <sp-dialog-wrapper underlay slot="click-content" size="m">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -97,12 +111,12 @@ The dialog wrapper supports different sizes via the `size` attribute: `s`, `m`, 
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content" size="l">
+    <sp-dialog-wrapper underlay slot="click-content" size="l">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -117,7 +131,7 @@ The `underlay` attribute can be used to add an underlay element between the page
 ```html
 </style>
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
+    <sp-dialog-wrapper underlay slot="click-content">
         <sp-dialog>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
@@ -135,7 +149,7 @@ The `underlay` attribute can be used to add an underlay element between the page
             </sp-button>
             <sp-checkbox slot="footer">Don't show me this again</sp-checkbox>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -147,12 +161,12 @@ The `dismissable` attribute can be used to add an underlay element between the p
 ```html
 </style>
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay slot="click-content">
+    <sp-dialog-wrapper underlay slot="click-content">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -165,12 +179,12 @@ The dialog base supports different display modes:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay mode="fullscreen" slot="click-content">
+    <sp-dialog-wrapper underlay mode="fullscreen" slot="click-content">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -179,7 +193,7 @@ The dialog base supports different display modes:
 
 ```html
 <overlay-trigger type="modal">
-    <sp-dialog-base underlay mode="fullscreenTakeover" slot="click-content">
+    <sp-dialog-wrapper underlay mode="fullscreenTakeover" slot="click-content">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
@@ -188,7 +202,7 @@ The dialog base supports different display modes:
                 to the components in specific.
             </p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
@@ -207,7 +221,7 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 
 ```html
 <overlay-trigger type="modal" receives-focus="auto">
-    <sp-dialog-base underlay mode="fullscreenTakeover" slot="click-content">
+    <sp-dialog-wrapper underlay mode="fullscreenTakeover" slot="click-content">
         <sp-dialog dismissable>
             <h2 slot="heading">A thing is about to happen</h2>
             <p>Something that might happen a lot is about to happen.</p>
@@ -216,7 +230,7 @@ The `receives-focus` attribute can be used to control whether the dialog should 
                 to the components in specific.
             </p>
         </sp-dialog>
-    </sp-dialog-base>
+    </sp-dialog-wrapper>
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
