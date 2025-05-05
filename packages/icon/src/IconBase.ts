@@ -33,10 +33,6 @@ export class IconBase extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [iconStyles];
     }
-    constructor() {
-        super();
-        console.log('IconBase constructor1');
-    }
     private unsubscribeSystemContext: (() => void) | null = null;
 
     @state()

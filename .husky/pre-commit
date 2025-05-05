@@ -1,43 +1,16 @@
-#!/usr/bin/env bash
-bash << EOF
-    STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
-    STAGED_FILES_TO_ANALYZE=$(git diff --name-only --cached --diff-filter=d -- "{packages,tools}/*/src/**/!(*.css).ts")
-    STAGED_CSS_FILES=$(git diff --name-only --cached --diff-filter=d -- "{packages,tools}/**/*.css")
-    VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
+#!/bin/bash
+set -e
 
-    # Run eslint and capture output and exit code
-    LINT_EXIT_CODE=0
-    if [ -n "$STAGED_FILES_TO_LINT" ]; then
-        LINT_OUTPUT=$(yarn eslint -f pretty $STAGED_FILES_TO_LINT || echo "ESLINT_FAILED")
-        LINT_EXIT_CODE=$?
-        
-        # Print the output
-        echo "$LINT_OUTPUT"
-        
-        # Check for dependency errors
-        if echo "$LINT_OUTPUT" | grep -q "should be listed in the project's dependencies"; then
-            echo ""
-            echo "❌ ERROR: Missing dependencies in package.json detected!"
-            echo "Please run the suggested npm command to add the dependencies before committing."
-            echo ""
-            exit 1
-        fi
-        
-        # If lint failed for any other reason, also exit
-        if [ $LINT_EXIT_CODE -ne 0 ]; then
-            echo ""
-            echo "❌ ESLint failed. Please fix the errors before committing."
-            echo ""
-            exit 1
-        fi
-    fi
+STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- '*.ts' '*.js')
+STAGED_FILES_TO_ANALYZE=$(git diff --name-only --cached --diff-filter=d -- packages/*/src/**/*.ts tools/*/src/**/*.ts)
+STAGED_CSS_FILES=$(git diff --name-only --cached --diff-filter=d -- 'packages/**/*.css' 'tools/**/*.css')
+VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
 
-    # Only continue if ESLint passed
-    [ -z "$STAGED_FILES_TO_ANALYZE" ] || yarn lit-analyzer $STAGED_FILES_TO_ANALYZE || exit 1
-    [ -z "$STAGED_CSS_FILES" ] || yarn stylelint $STAGED_CSS_FILES || exit 1
+[ -z "$STAGED_FILES_TO_LINT" ] || yarn eslint -f pretty $STAGED_FILES_TO_LINT
+[ -z "$STAGED_FILES_TO_ANALYZE" ] || yarn lit-analyzer $STAGED_FILES_TO_ANALYZE
+[ -z "$STAGED_CSS_FILES" ] || yarn stylelint $STAGED_CSS_FILES
 
-    yarn pretty-quick --staged
+yarn pretty-quick --staged
 
-    yarn genversion --es6 --semi $VERSION_FILE
-    git add $VERSION_FILE
-EOF
+yarn genversion --es6 --semi "$VERSION_FILE"
+git add "$VERSION_FILE"
