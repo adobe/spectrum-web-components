@@ -217,7 +217,9 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 The dialog wrapper supports different display modes:
 
-##### Fullscreen Mode
+<sp-tabs selected="fullscreen" auto label="Mode attribute options">
+    <sp-tab value="fullscreen">Fullscreen</sp-tab>
+    <sp-tab-panel value="fullscreen">
 
 ```html
 <overlay-trigger type="modal">
@@ -235,7 +237,9 @@ The dialog wrapper supports different display modes:
 </overlay-trigger>
 ```
 
-##### Fullscreen Takeover Mode
+</sp-tab-panel>
+<sp-tab value="fullscreen-takeover">Fullscreen Takeover</sp-tab>
+<sp-tab-panel value="fullscreen-takeover">
 
 ```html
 <overlay-trigger type="modal">
@@ -252,6 +256,9 @@ The dialog wrapper supports different display modes:
     <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
 </overlay-trigger>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Accessibility
 

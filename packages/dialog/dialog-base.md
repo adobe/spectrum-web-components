@@ -181,7 +181,7 @@ The `dismissable` attribute can be used to add an underlay element between the p
 
 The dialog base supports different display modes: `fullscreen` and `fullscreenTakeover`.
 
-<sp-tabs selected="fullscreen" auto label="Modes">
+<sp-tabs selected="fullscreen" auto label="Mode attribute options">
     <sp-tab value="fullscreen">Fullscreen</sp-tab>
     <sp-tab-panel value="fullscreen">
 
