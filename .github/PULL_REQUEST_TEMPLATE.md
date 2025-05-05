@@ -33,7 +33,7 @@
     2. Do this action
     3. Expect this result
 
-### Polypane review
+## Polypane review checklist
 
 <!--- Verify the above manual tests and visual accuracy utilizing Polypane browser. -->
 
@@ -43,13 +43,14 @@
 
 ## Screenshots (if appropriate)
 
-## Checklist
+## Authoring checklist
 
 <!--- Go over all the following points, and put an `x` in all the boxes that apply.  If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 
 -   [ ] I have read the **[CONTRIBUTING](<(https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md)>)** and **[PULL_REQUESTS](<(https://github.com/adobe/spectrum-web-components/blob/main/PULL_REQUESTS.md)>)** documents.
 -   [ ] I have reviewed at the Accessibility Practices for this feature, see: [Aria Practices](https://www.w3.org/TR/wai-aria-practices/)
 -   [ ] I have added tests to cover my changes.
+-   [ ] I have included a well-written changeset if my change needs to be published.
 -   [ ] If my change required an update to the documentation, I have included it in this pull request.
 
 ## Best practices
