@@ -8292,6 +8292,7 @@ __metadata:
   dependencies:
     "@spectrum-css/splitview": "npm:7.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
+    "@spectrum-web-components/shared": "npm:1.6.0"
   languageName: unknown
   linkType: soft
 
