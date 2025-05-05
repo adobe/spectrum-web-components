@@ -711,7 +711,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-slider:** use inset-block-_and inset-inline-_ and fix RTL orientation and behavior [#3301](https://github.com/adobe/spectrum-web-components/issues/3301) ([52aa328](https://github.com/adobe/spectrum-web-components/commit/52aa328ea7e4c2e40c7688ce9daa233cc9936be0))
+-   **color-slider:** use `inset-block-_` and `inset-inline-_` and fix RTL orientation and behavior [#3301](https://github.com/adobe/spectrum-web-components/issues/3301) ([52aa328](https://github.com/adobe/spectrum-web-components/commit/52aa328ea7e4c2e40c7688ce9daa233cc9936be0))
 -   **menu:** [#3164](https://github.com/adobe/spectrum-web-components/issues/3164) plug memory leak with gobal events ([ff589d4](https://github.com/adobe/spectrum-web-components/commit/ff589d4ec86f8dcda15c386907d27c7b3cc8c325))
 
 ### Reverts
