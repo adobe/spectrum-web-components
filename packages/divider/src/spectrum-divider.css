@@ -21,36 +21,36 @@ governing permissions and limitations under the License.
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
     --spectrum-divider-background-color: var(--spectrum-gray-800);
 }
 
-:host([static-color='white']) {
+:host([static-color="white"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-medium-static-white, var(--spectrum-divider-background-color-static-white));
 }
 
-:host([static-color='white'][size='s']) {
+:host([static-color="white"][size="s"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-small-static-white, var(--spectrum-divider-background-color-static-white));
 }
 
-:host([static-color='white'][size='l']) {
+:host([static-color="white"][size="l"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-large-static-white, var(--spectrum-transparent-white-800));
 }
 
-:host([static-color='black']) {
+:host([static-color="black"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-medium-static-black, var(--spectrum-divider-background-color-static-black));
 }
 
-:host([static-color='black'][size='s']) {
+:host([static-color="black"][size="s"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-small-static-black, var(--spectrum-divider-background-color-static-black));
 }
 
-:host([static-color='black'][size='l']) {
+:host([static-color="black"][size="l"]) {
     --mod-divider-background-color: var(--mod-divider-background-color-large-static-black, var(--spectrum-transparent-black-800));
 }
 

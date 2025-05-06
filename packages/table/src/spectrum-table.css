@@ -88,7 +88,7 @@ governing permissions and limitations under the License.
 }
 
 :host:dir(rtl),
-:host([dir='rtl']) {
+:host([dir="rtl"]) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -113,7 +113,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-300);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-100);
     --spectrum-table-header-top-to-text: var(--spectrum-table-column-header-row-top-to-text-small);
     --spectrum-table-header-bottom-to-text: var(--spectrum-table-column-header-row-bottom-to-text-small);
@@ -133,7 +133,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-200);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-200);
     --spectrum-table-header-top-to-text: var(--spectrum-table-column-header-row-top-to-text-large);
     --spectrum-table-header-bottom-to-text: var(--spectrum-table-column-header-row-bottom-to-text-large);
@@ -153,7 +153,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-500);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-table-min-header-height: var(--spectrum-component-height-300);
     --spectrum-table-header-top-to-text: var(--spectrum-table-column-header-row-top-to-text-extra-large);
     --spectrum-table-header-bottom-to-text: var(--spectrum-table-column-header-row-bottom-to-text-extra-large);
@@ -173,7 +173,7 @@ governing permissions and limitations under the License.
     --spectrum-table-thumbnail-size: var(--spectrum-thumbnail-size-700);
 }
 
-:host([density='compact']) {
+:host([density="compact"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-medium-compact));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-medium-compact));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-medium-compact));
@@ -182,7 +182,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-200));
 }
 
-:host([density='compact'][size='s']) {
+:host([density="compact"][size="s"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-small-compact));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-small-compact));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-small-compact));
@@ -191,7 +191,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-50));
 }
 
-:host([density='compact'][size='l']) {
+:host([density="compact"][size="l"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-large-compact));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-large-compact));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-large-compact));
@@ -200,7 +200,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-300));
 }
 
-:host([density='compact'][size='xl']) {
+:host([density="compact"][size="xl"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--compact, var(--spectrum-table-row-height-extra-large-compact));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--compact, var(--spectrum-table-row-top-to-text-extra-large-compact));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--compact, var(--spectrum-table-row-bottom-to-text-extra-large-compact));
@@ -209,7 +209,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-compact, var(--spectrum-thumbnail-size-500));
 }
 
-:host([density='spacious']) {
+:host([density="spacious"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-medium-spacious));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-medium-spacious));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-medium-spacious));
@@ -218,7 +218,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-500));
 }
 
-:host([density='spacious'][size='s']) {
+:host([density="spacious"][size="s"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-small-spacious));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-small-spacious));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-small-spacious));
@@ -227,7 +227,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-300));
 }
 
-:host([density='spacious'][size='l']) {
+:host([density="spacious"][size="l"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-large-spacious));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-large-spacious));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-large-spacious));
@@ -236,7 +236,7 @@ governing permissions and limitations under the License.
     --mod-table-thumbnail-size: var(--mod-table-thumbnail-size-spacious, var(--spectrum-thumbnail-size-700));
 }
 
-:host([density='spacious'][size='xl']) {
+:host([density="spacious"][size="xl"]) {
     --mod-table-min-row-height: var(--mod-table-min-row-height--spacious, var(--spectrum-table-row-height-extra-large-spacious));
     --mod-table-row-top-to-text: var(--mod-table-row-top-to-text--spacious, var(--spectrum-table-row-top-to-text-extra-large-spacious));
     --mod-table-row-bottom-to-text: var(--mod-table-row-bottom-to-text--spacious, var(--spectrum-table-row-bottom-to-text-extra-large-spacious));

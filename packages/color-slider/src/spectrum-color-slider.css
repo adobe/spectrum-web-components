@@ -68,7 +68,7 @@ governing permissions and limitations under the License.
 }
 
 .checkerboard:before {
-    content: '';
+    content: "";
     z-index: 1;
     box-shadow: inset 0 0 0 var(--mod-color-slider-border-width, var(--spectrum-color-slider-border-width)) var(--spectrum-color-slider-border-color-local);
     border-radius: var(--mod-color-slider-border-rounding, var(--spectrum-color-slider-border-rounding));
@@ -89,7 +89,7 @@ governing permissions and limitations under the License.
 }
 
 .gradient:dir(rtl),
-:host([dir='rtl']) .gradient {
+:host([dir="rtl"]) .gradient {
     transform: scaleX(-1);
 }
 
