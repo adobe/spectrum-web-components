@@ -62,30 +62,30 @@ governing permissions and limitations under the License.
     display: inline-flex;
 }
 
-:host([variant='negative']) {
+:host([variant="negative"]) {
     background-color: var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default));
 }
 
-:host([variant='negative']),
-:host([variant='negative']) .closeButton:focus-visible:not(:active) {
+:host([variant="negative"]),
+:host([variant="negative"]) .closeButton:focus-visible:not(:active) {
     color: var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default));
 }
 
-:host([variant='info']) {
+:host([variant="info"]) {
     background-color: var(--mod-toast-informative-background-color-default, var(--spectrum-toast-informative-background-color-default));
 }
 
-:host([variant='info']),
-:host([variant='info']) .closeButton:focus-visible:not(:active) {
+:host([variant="info"]),
+:host([variant="info"]) .closeButton:focus-visible:not(:active) {
     color: var(--mod-toast-informative-background-color-default, var(--spectrum-toast-informative-background-color-default));
 }
 
-:host([variant='positive']) {
+:host([variant="positive"]) {
     background-color: var(--mod-toast-positive-background-color-default, var(--spectrum-toast-positive-background-color-default));
 }
 
-:host([variant='positive']),
-:host([variant='positive']) .closeButton:focus-visible:not(:active) {
+:host([variant="positive"]),
+:host([variant="positive"]) .closeButton:focus-visible:not(:active) {
     color: var(--mod-toast-positive-background-color-default, var(--spectrum-toast-positive-background-color-default));
 }
 
@@ -144,13 +144,13 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-.body ::slotted([slot='action']) {
+.body ::slotted([slot="action"]) {
     margin-inline-start: auto;
     margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 
-.body ::slotted([slot='action']:dir(rtl)),
-:host([dir='rtl']) .body ::slotted([slot='action']) {
+.body ::slotted([slot="action"]:dir(rtl)),
+:host([dir="rtl"]) .body ::slotted([slot="action"]) {
     margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 

@@ -60,7 +60,7 @@ governing permissions and limitations under the License.
 }
 
 .handle:dir(rtl),
-:host([dir='rtl']) .handle {
+:host([dir="rtl"]) .handle {
     inset-inline-end: 0;
 }
 
