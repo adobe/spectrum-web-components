@@ -95,9 +95,9 @@ For an accessible label that renders within the bounds of the picker itself, but
 
 #### Menu
 
-The picker menu is a menu element that is used to display the options for the picker. A picker menu can include menu items, menu dividers, and menu groups. A picker menu should never contain submenus, as doing so would render it in accessible.
+The picker menu is a menu element that is used to display the options for the picker. A picker menu can include menu items, menu dividers, and menu groups. A picker menu should never contain submenus, as doing so would render it inaccessible.
 
-If you require a submenu, use and [action menu](./action-menu) instead.
+If you require a submenu, use and [action menu](./action-menu) instead of a picker.
 
 ```html demo
 <sp-picker>
