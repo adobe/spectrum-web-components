@@ -38,7 +38,6 @@
     height: auto;
 }
 
-/* We may remove this override when CSS fixes unused `header` and `typeIcon` areas */
 .grid {
     grid-template-areas:
         "hero hero hero hero hero hero"
