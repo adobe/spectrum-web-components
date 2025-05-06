@@ -33,26 +33,26 @@ governing permissions and limitations under the License.
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
 }
 
-:host([size='xxs']) {
+:host([size="xxs"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-xxs);
 }
 
-:host([size='xs']) {
+:host([size="xs"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
 }
 
-:host([size='xxl']) {
+:host([size="xxl"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-xxl);
 }

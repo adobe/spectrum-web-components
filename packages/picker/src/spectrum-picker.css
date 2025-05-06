@@ -96,7 +96,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-focus-indicator-color: var(--spectrum-focus-indicator-color);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-picker-font-size: var(--spectrum-font-size-75);
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
@@ -112,7 +112,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-picker-font-size: var(--spectrum-font-size-200);
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
@@ -128,7 +128,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-spacing-edge-to-disclosure-icon: var(--spectrum-field-end-edge-to-disclosure-icon-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-picker-font-size: var(--spectrum-font-size-300);
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-300);
@@ -191,7 +191,7 @@ governing permissions and limitations under the License.
 
 #button:after {
     pointer-events: none;
-    content: '';
+    content: "";
     block-size: calc(100% + var(--mod-picker-focus-indicator-gap, var(--spectrum-picker-focus-indicator-gap)) * 2 + var(--mod-picker-border-width, var(--spectrum-picker-border-width)) * 2);
     inline-size: calc(100% + var(--mod-picker-focus-indicator-gap, var(--spectrum-picker-focus-indicator-gap)) * 2 + var(--mod-picker-border-width, var(--spectrum-picker-border-width)) * 2);
     border-style: solid;
