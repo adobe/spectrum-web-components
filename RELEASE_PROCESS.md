@@ -25,10 +25,11 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 ### Main successfully builds
 
-1. Merge all pull requests to be included in the release, and wait for the `main` branch to show that it has completed the required Circle CI jobs.
-    1. Check [Circle Ci build for `main`](https://app.circleci.com/pipelines/github/adobe/spectrum-web-components?branch=main) shows a `success` status
-        1. If it failed, click `rerun` dropdown and select `rerun from failed`.
-        2. If it continues to fail, investigate further until you can successfully get the `main` branch building.
+Merge all pull requests to be included in the release, and wait for the `main` branch to show that it has completed the required Circle CI jobs.
+
+Check [Circle Ci build for `main`](https://app.circleci.com/pipelines/github/adobe/spectrum-web-components?branch=main) shows a `success` status.
+    1. If it failed, click `rerun` dropdown and select `rerun from failed`.
+    2. If it continues to fail, investigate further until you can successfully get the `main` branch building.
 
 ---
 
@@ -55,7 +56,7 @@ This is important to confirm before next step because differing node versions wi
 
 ### Github Token is set up
 
-1. Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`
+Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`.
 
 #### Generate a Github token
 
