@@ -22,6 +22,9 @@ const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 /**
  * Creates or updates the global CHANGELOG.md file based on changeset files.
+ * This function should be run as part of the release process after changeset version
+ * but before publishing to ensure the global changelog is updated with the latest changes.
+ * It is automatically called by the `yarn changeset-publish` command.
  * @returns {Promise<void>} A promise that resolves when the changelog is updated
  * @throws {Error} If there's an issue with git tags or file operations
  */
