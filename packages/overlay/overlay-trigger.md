@@ -1,12 +1,6 @@
-<div id="notice" style="border-color: var(--spectrum-notice-visual-color); margin-block-start: 24px; font-size: 14px;" class="spectrum-InLineAlert spectrum-InLineAlert--notice">
+<sp-alert-banner open variant="info">
     <div class="spectrum-InLineAlert-header">
         <span> <code class="spectrum-Code" style="font-size: 17px;">triggered-by</code> performance optimization</span>
-        <sp-icon-alert
-            class="spectrum-InLineAlert-icon"
-            dir="ltr"
-            aria-hidden="true"
-            style="color: var(--spectrum-notice-visual-color);"
-        ></sp-icon-alert>
     </div>
     <div class="spectrum-InLineAlert-content">
         Use the new <code class="spectrum-Code"  style="font-size: 17px;">triggered-by</code> attribute to declare which types of overlays
@@ -15,7 +9,7 @@
         rendering. For more information, read the <a href="#performance-optimization">Performance
         optimization</a> section.
     </div>
-</div>
+</sp-alert-banner>
 
 ## Overview
 

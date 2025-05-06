@@ -1,12 +1,11 @@
-<div id="notice" style="border-color: var(--spectrum-notice-visual-color); margin-block-start: 24px; font-size: 14px;" class="spectrum-InLineAlert spectrum-InLineAlert--notice">
+<sp-alert-banner open variant="negative">
     <div class="spectrum-InLineAlert-header">
         <span>Experimental Feature</span>
-        <sp-icon-alert class="spectrum-InLineAlert-icon" size="m"></sp-icon-alert>
     </div>
     <div class="spectrum-InLineAlert-content">
         The <code>slottable-request</code> event system is experimental. Its shape and presence in the library may change. For stable overlay content management, consider using <code>sp-overlay</code> or <code>Overlay.open()</code>.
     </div>
-</div>
+</sp-alert-banner>
 
 ## Overview
 
