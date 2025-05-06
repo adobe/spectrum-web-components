@@ -31,7 +31,7 @@ export default {
         return [`stylelint --fix ${files.join(' ')}`];
     },
 
-    // Formats all staged files with Prettier
+    // Formats selected staged files with Prettier
     '!(*.css|*.ts)': [
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
