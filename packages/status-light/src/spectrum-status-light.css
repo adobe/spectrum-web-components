@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
     --spectrum-statuslight-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-100);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-statuslight-height: var(--spectrum-component-height-75);
     --spectrum-statuslight-dot-size: var(--spectrum-status-light-dot-size-small);
     --spectrum-statuslight-font-size: var(--spectrum-font-size-75);
@@ -32,7 +32,7 @@ governing permissions and limitations under the License.
     --spectrum-statuslight-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-statuslight-height: var(--spectrum-component-height-200);
     --spectrum-statuslight-dot-size: var(--spectrum-status-light-dot-size-large);
     --spectrum-statuslight-font-size: var(--spectrum-font-size-200);
@@ -42,7 +42,7 @@ governing permissions and limitations under the License.
     --spectrum-statuslight-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-statuslight-height: var(--spectrum-component-height-300);
     --spectrum-statuslight-dot-size: var(--spectrum-status-light-dot-size-extra-large);
     --spectrum-statuslight-font-size: var(--spectrum-font-size-300);
@@ -103,7 +103,7 @@ governing permissions and limitations under the License.
 
 :host:before {
     --spectrum-statuslight-spacing-computed-top-to-dot: calc(var(--mod-statuslight-spacing-top-to-dot, var(--spectrum-statuslight-spacing-top-to-dot)) - var(--mod-statuslight-spacing-top-to-label, var(--spectrum-statuslight-spacing-top-to-label)));
-    content: '';
+    content: "";
     inline-size: var(--mod-statuslight-dot-size, var(--spectrum-statuslight-dot-size));
     block-size: var(--mod-statuslight-dot-size, var(--spectrum-statuslight-dot-size));
     border-radius: var(--mod-statuslight-corner-radius, var(--spectrum-statuslight-corner-radius));
@@ -114,12 +114,12 @@ governing permissions and limitations under the License.
     display: inline-block;
 }
 
-:host([variant='neutral']) {
+:host([variant="neutral"]) {
     color: var(--highcontrast-statuslight-subdued-content-color-default, var(--mod-statuslight-subdued-content-color-default, var(--spectrum-statuslight-subdued-content-color-default)));
     font-style: italic;
 }
 
-:host([variant='neutral']):before {
+:host([variant="neutral"]):before {
     background-color: var(--mod-statuslight-semantic-neutral-color, var(--spectrum-statuslight-semantic-neutral-color));
 }
 
@@ -127,19 +127,19 @@ governing permissions and limitations under the License.
     background-color: var(--mod-statuslight-semantic-accent-color, var(--spectrum-statuslight-semantic-accent-color));
 }
 
-:host([variant='info']):before {
+:host([variant="info"]):before {
     background-color: var(--mod-statuslight-semantic-info-color, var(--spectrum-statuslight-semantic-info-color));
 }
 
-:host([variant='negative']):before {
+:host([variant="negative"]):before {
     background-color: var(--mod-statuslight-semantic-negative-color, var(--spectrum-statuslight-semantic-negative-color));
 }
 
-:host([variant='notice']):before {
+:host([variant="notice"]):before {
     background-color: var(--mod-statuslight-semantic-notice-color, var(--spectrum-statuslight-semantic-notice-color));
 }
 
-:host([variant='positive']):before {
+:host([variant="positive"]):before {
     background-color: var(--mod-statuslight-semantic-positive-color, var(--spectrum-statuslight-semantic-positive-color));
 }
 
@@ -155,15 +155,15 @@ governing permissions and limitations under the License.
     background-color: var(--mod-statuslight-nonsemantic-orange-color, var(--spectrum-statuslight-nonsemantic-orange-color));
 }
 
-:host([variant='yellow']):before {
+:host([variant="yellow"]):before {
     background-color: var(--mod-statuslight-nonsemantic-yellow-color, var(--spectrum-statuslight-nonsemantic-yellow-color));
 }
 
-:host([variant='chartreuse']):before {
+:host([variant="chartreuse"]):before {
     background-color: var(--mod-statuslight-nonsemantic-chartreuse-color, var(--spectrum-statuslight-nonsemantic-chartreuse-color));
 }
 
-:host([variant='celery']):before {
+:host([variant="celery"]):before {
     background-color: var(--mod-statuslight-nonsemantic-celery-color, var(--spectrum-statuslight-nonsemantic-celery-color));
 }
 
@@ -171,7 +171,7 @@ governing permissions and limitations under the License.
     background-color: var(--mod-statuslight-nonsemantic-green-color, var(--spectrum-statuslight-nonsemantic-green-color));
 }
 
-:host([variant='seafoam']):before {
+:host([variant="seafoam"]):before {
     background-color: var(--mod-statuslight-nonsemantic-seafoam-color, var(--spectrum-statuslight-nonsemantic-seafoam-color));
 }
 
@@ -183,19 +183,19 @@ governing permissions and limitations under the License.
     background-color: var(--mod-statuslight-nonsemantic-blue-color, var(--spectrum-statuslight-nonsemantic-blue-color));
 }
 
-:host([variant='indigo']):before {
+:host([variant="indigo"]):before {
     background-color: var(--mod-statuslight-nonsemantic-indigo-color, var(--spectrum-statuslight-nonsemantic-indigo-color));
 }
 
-:host([variant='purple']):before {
+:host([variant="purple"]):before {
     background-color: var(--mod-statuslight-nonsemantic-purple-color, var(--spectrum-statuslight-nonsemantic-purple-color));
 }
 
-:host([variant='fuchsia']):before {
+:host([variant="fuchsia"]):before {
     background-color: var(--mod-statuslight-nonsemantic-fuchsia-color, var(--spectrum-statuslight-nonsemantic-fuchsia-color));
 }
 
-:host([variant='magenta']):before {
+:host([variant="magenta"]):before {
     background-color: var(--mod-statuslight-nonsemantic-magenta-color, var(--spectrum-statuslight-nonsemantic-magenta-color));
 }
 
