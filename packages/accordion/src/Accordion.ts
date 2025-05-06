@@ -11,11 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
+    consume,
+    css,
     CSSResultArray,
     html,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
+    systemContext,
+    SystemThemeConfig,
+    SystemThemes,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -28,6 +33,19 @@ import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
 
+const legacy = css`
+:host {
+	--spectrum-accordion-divider-color: var(--spectrum-gray-300);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-gray-400);
+	--spectrum-accordion-item-content-color: var(--spectrum-gray-800);
+}`;
+const spectrum2 = css`
+:host {
+	--spectrum-accordion-divider-color: var(--spectrum-gray-200);
+	--spectrum-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
+	--spectrum-accordion-item-content-color: var(--spectrum-body-color);
+}`;
+
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
@@ -38,6 +56,18 @@ export class Accordion extends SizedMixin(SpectrumElement, {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
+
+    public override get systemTheming(): SystemThemeConfig {
+        return new Map([
+            ['spectrum', legacy],
+            ['express', legacy],
+            ['spectrum-two', spectrum2],
+        ]);
+    }
+
+    @consume({ context: systemContext })
+    @property({attribute: false})
+    public logger?: SystemThemes;
 
     /**
      * Allows multiple accordion items to be opened at the same time

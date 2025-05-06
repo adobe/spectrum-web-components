@@ -303,6 +303,7 @@ __metadata:
     rollup: "npm:^4.12.0"
     sinon: "npm:^17.0.1"
     storybook: "npm:^8.6.12"
+    style-observer: "npm:^0.0.3"
     stylelint: "npm:^16.15.0"
     stylelint-config-standard: "npm:^37.0.0"
     stylelint-header: "npm:^2.1.0"
@@ -4357,6 +4358,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/context@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@lit/context@npm:1.1.4"
+  dependencies:
+    "@lit/reactive-element": "npm:^1.6.2 || ^2.0.0"
+  checksum: 10c0/53bb69952e642aa4f064d8c3afe74b36e1a8e148156114523850040ff333cb99e31c5de02096fd8e8c9773ecf524bad7af901cbd19b28492960ce28ef1f421c4
+  languageName: node
+  linkType: hard
+
 "@lit/react@npm:^1.0.4":
   version: 1.0.6
   resolution: "@lit/react@npm:1.0.6"
@@ -4366,7 +4376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit/reactive-element@npm:^1.0.0 || ^2.0.0, @lit/reactive-element@npm:^2.0.4":
+"@lit/reactive-element@npm:^1.0.0 || ^2.0.0, @lit/reactive-element@npm:^1.6.2 || ^2.0.0, @lit/reactive-element@npm:^2.0.4":
   version: 2.0.4
   resolution: "@lit/reactive-element@npm:2.0.4"
   dependencies:
@@ -7551,7 +7561,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:tools/base"
   dependencies:
+    "@lit/context": "npm:^1.1.4"
     lit: "npm:^2.5.0 || ^3.1.3"
+    style-observer: "npm:^0.0.5"
   languageName: unknown
   linkType: soft
 
@@ -32368,6 +32380,20 @@ __metadata:
   peerDependencies:
     webpack: ^5.27.0
   checksum: 10c0/214bc0f3b018f8c374f79b9fa16da43df78c7fef2261e9a99e36c2f8387601fad10ac75a171aa8edba75903db214bc46952ae08b94a1f8544bd146c2c8d07d27
+  languageName: node
+  linkType: hard
+
+"style-observer@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "style-observer@npm:0.0.3"
+  checksum: 10c0/f27dccb506b4a683cb34a37d3b5a1e053233478f0497683699af67baef507de1bbb06e4386eb81714ac6e9a849f9779de64f12cb1386a3fc463ba39fb2fb96e3
+  languageName: node
+  linkType: hard
+
+"style-observer@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "style-observer@npm:0.0.5"
+  checksum: 10c0/f7a1412964497f5a67ba9937952c6c4d283f84b48c11014118624e55c8255e95933c9842f3f21ebcc7ce9e04567737399369f1f26ab749310f58939c3331427c
   languageName: node
   linkType: hard
 
