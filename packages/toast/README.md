@@ -85,21 +85,9 @@ By default, the toast is rendered in gray and does not have an icon. This is use
 
 However, the toast supports several variants to convey different types of messages:
 
-<sp-tabs selected="neutral" auto label="Toast Variants">
-<sp-tab value="neutral" label="Neutral"></sp-tab>
-<sp-tab-panel value="neutral">
-
-```html
-<sp-toast open>
-    This is neutral information that you should read, soon.
-</sp-toast>
-```
-
-</sp-tab-panel>
+<sp-tabs selected="negative" auto label="Toast Variants">
 <sp-tab value="negative" label="Negative"></sp-tab>
 <sp-tab-panel value="negative">
-
-##### Negative
 
 Use `variant="negative"` to show an error or failure.
 
@@ -113,8 +101,6 @@ Use `variant="negative"` to show an error or failure.
 <sp-tab value="positive" label="Positive"></sp-tab>
 <sp-tab-panel value="positive">
 
-##### Positive
-
 Use `variant="positive"` to show a successful action or completion of a task.
 
 ```html
@@ -122,8 +108,6 @@ Use `variant="positive"` to show a successful action or completion of a task.
     This is positive information that you should read, soon.
 </sp-toast>
 ```
-
-##### Info
 
 </sp-tab-panel>
 <sp-tab value="info" label="Info"></sp-tab>
@@ -193,7 +177,7 @@ For example, a message with 240 words should have a timeout of 7000ms, and a mes
 -   Action buttons should have clear, descriptive labels
 
 ```html
-<sp-toast open variant="warning" icon-label="Warning">
+<sp-toast open variant="negative" icon-label="Warning">
     This is important information that you should read, soon.
     <sp-button
         slot="action"
