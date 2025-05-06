@@ -67,9 +67,18 @@ if (!browserSupportsPopover) {
 /**
  * @element sp-overlay
  *
+ * @slot default - The content that will be displayed in the overlay
+ *
  * @fires sp-opened - announces that an overlay has completed any entry animations
  * @fires sp-closed - announce that an overlay has compelted any exit animations
  * @fires slottable-request - requests to add or remove slottable content
+ *
+ * @attr {string} placement - The placement of the overlay relative to the trigger
+ * @attr {number} offset - The distance between the overlay and the trigger
+ * @attr {boolean} disabled - Whether the overlay trigger is disabled
+ * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
+ * @attr {boolean} delayed - Whether the overlay should wait for a warm-up period before opening
+ * @attr {boolean} open - Whether the overlay is currently open
  */
 export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
