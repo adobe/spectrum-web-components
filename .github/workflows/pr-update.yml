@@ -1,6 +1,8 @@
 name: Update PRs
 
-on: workflow_dispatch
+on:
+    pull_request:
+        types: [labeled, auto_merge_enabled]
 
 jobs:
     autoupdate:
