@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-100);
 }
 
-:host([size='s']) #textfield {
+:host([size="s"]) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-75);
     --spectrum-textfield-label-spacing-block-quiet: var(--spectrum-field-label-to-component-quiet-small);
     --spectrum-textfield-label-spacing-inline-side-label: var(--spectrum-spacing-100);
@@ -91,7 +91,7 @@ governing permissions and limitations under the License.
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-75);
 }
 
-:host([size='l']) #textfield {
+:host([size="l"]) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-200);
     --spectrum-textfield-label-spacing-block-quiet: var(--spectrum-field-label-to-component-quiet-large);
     --spectrum-textfield-label-spacing-inline-side-label: var(--spectrum-spacing-200);
@@ -111,7 +111,7 @@ governing permissions and limitations under the License.
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-200);
 }
 
-:host([size='xl']) #textfield {
+:host([size="xl"]) #textfield {
     --spectrum-textfield-height: var(--spectrum-component-height-300);
     --spectrum-textfield-label-spacing-block-quiet: var(--spectrum-field-label-to-component-quiet-extra-large);
     --spectrum-textfield-label-spacing-inline-side-label: var(--spectrum-spacing-200);
@@ -252,12 +252,12 @@ governing permissions and limitations under the License.
     margin: 0;
 }
 
-:host([type='number']) .input {
+:host([type="number"]) .input {
     -moz-appearance: textfield;
 }
 
-:host([type='number']) .input::-webkit-inner-spin-button,
-:host([type='number']) .input::-webkit-outer-spin-button {
+:host([type="number"]) .input::-webkit-inner-spin-button,
+:host([type="number"]) .input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -507,7 +507,7 @@ governing permissions and limitations under the License.
 }
 
 :host([quiet]) #textfield:after {
-    content: '';
+    content: "";
     pointer-events: none;
     inline-size: 100%;
     block-size: var(--mod-textfield-focus-indicator-width, var(--spectrum-textfield-focus-indicator-width));

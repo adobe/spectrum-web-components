@@ -50,11 +50,11 @@ governing permissions and limitations under the License.
     margin-inline-start: var(--mod-alert-dialog-title-to-icon, var(--spectrum-alert-dialog-title-to-icon));
 }
 
-:host([variant='warning']) {
+:host([variant="warning"]) {
     --mod-icon-color: var(--mod-alert-dialog-warning-icon-color, var(--spectrum-alert-dialog-warning-icon-color));
 }
 
-:host([variant='error']) {
+:host([variant="error"]) {
     --mod-icon-color: var(--mod-alert-dialog-error-icon-color, var(--spectrum-alert-dialog-error-icon-color));
 }
 
@@ -68,7 +68,7 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-::slotted([slot='heading']) {
+::slotted([slot="heading"]) {
     font-family: var(--mod-alert-dialog-title-font-family, var(--spectrum-alert-dialog-title-font-family));
     font-weight: var(--mod-alert-dialog-title-font-weight, var(--spectrum-alert-dialog-title-font-weight));
     font-style: var(--mod-alert-dialog-title-font-style, var(--spectrum-alert-dialog-title-font-style));

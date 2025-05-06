@@ -49,7 +49,7 @@ governing permissions and limitations under the License.
 }
 
 :host:after {
-    content: '';
+    content: "";
     inset-inline: calc(50% - var(--mod-colorhandle-hitarea-size, var(--spectrum-color-control-track-width)) / 2);
     inset-block: calc(50% - var(--mod-colorhandle-hitarea-size, var(--spectrum-color-control-track-width)) / 2);
     inline-size: var(--mod-colorhandle-hitarea-size, var(--spectrum-color-control-track-width));
