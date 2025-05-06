@@ -43,7 +43,7 @@ A typical changeset file looks like this:
 -   **Fixed**: Fixed `<sp-theme>` theme compatibility issues [#10000](https://github.com/adobe/spectrum-web-components/pull/10000)
 ```
 
-For our guidelines on writing changesets, see [our documentation](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/).
+For our guidelines on writing changesets, see [our writing changesets guide](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/).
 
 ## Common Questions
 
