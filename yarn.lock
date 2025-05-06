@@ -8382,6 +8382,7 @@ __metadata:
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
     "@spectrum-css/tabs": "npm:6.1.1"
+    "@spectrum-web-components/action-button": "npm:1.6.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/icon": "npm:1.6.0"
     "@spectrum-web-components/icons-ui": "npm:1.6.0"
