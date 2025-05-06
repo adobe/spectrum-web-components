@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line -->
 <!-- omit from toc -->
 
 # Contributing best practices

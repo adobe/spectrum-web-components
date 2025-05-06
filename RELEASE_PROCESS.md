@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line -->
 <!-- omit from toc -->
 
 # Releasing a new version of Spectrum Web Components
@@ -27,9 +28,7 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 Merge all pull requests to be included in the release, and wait for the `main` branch to show that it has completed the required Circle CI jobs.
 
-Check [Circle Ci build for `main`](https://app.circleci.com/pipelines/github/adobe/spectrum-web-components?branch=main) shows a `success` status.
-    1. If it failed, click `rerun` dropdown and select `rerun from failed`.
-    2. If it continues to fail, investigate further until you can successfully get the `main` branch building.
+Check [Circle Ci build for `main`](https://app.circleci.com/pipelines/github/adobe/spectrum-web-components?branch=main) shows a `success` status. 1. If it failed, click `rerun` dropdown and select `rerun from failed`. 2. If it continues to fail, investigate further until you can successfully get the `main` branch building.
 
 ---
 
@@ -39,7 +38,7 @@ This is important to confirm before next step because differing node versions wi
 
 #### Using Node Version Manager
 
-1. Run `nvm use` (assumes a Node Version Manager install), and confirm you’re on an operable version of Node.
+Run `nvm use` (assumes a Node Version Manager install), and confirm you’re on an operable version of Node.
 
 #### Manually checking
 
@@ -49,8 +48,7 @@ This is important to confirm before next step because differing node versions wi
 
 #### Troubleshooting
 
--   If you need to install the correct yarn version and have issues with `yarn` command not being recognized, run `corepack enabled`.
-    -   Yarn 4 uses corepack and needs to be enabled to access the commands
+If you need to install the correct yarn version and/or have issues with `yarn` command not being recognized, run `corepack enabled`. Yarn 4 uses corepack and needs to be enabled to access the commands.
 
 ---
 
@@ -75,8 +73,9 @@ Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`.
 
 ### Logged in to NPM
 
-1. Run `npm whoami` ensure that you are logged in with the user account for the public NPM registry
-    1. If not logged in, run `npm login` to sign in to your account
+Run `npm whoami` ensure that you are logged in with the user account for the public NPM registry.
+
+If not logged in, run `npm login` to sign in to your account.
 
 ---
 
@@ -110,9 +109,10 @@ Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`.
 
 ### Troubleshooting
 
--   If publishing fails with an error:
-    -   Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
-    -   If they were, run `yarn changeset-publish` again.
+If publishing fails with an error:
+
+-   Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
+-   If they were, run `yarn changeset-publish` again.
 
 ---
 
@@ -125,8 +125,8 @@ Check you have a GitHub token set up, run `echo $GITHUB_TOKEN`.
 
 ### From the terminal
 
-1. If you have the [GitHub CLI](https://cli.github.com) installed, you can alternatively run `gh workflow run publish.yml --ref main` from the command line.
+If you have the [GitHub CLI](https://cli.github.com) installed, you can alternatively run `gh workflow run publish.yml --ref main` from the command line.
 
 ### References
 
-1. [Running manual workflows](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow), GitHub documentation
+[Running manual workflows](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow), GitHub documentation
