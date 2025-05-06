@@ -32,6 +32,21 @@ governing permissions and limitations under the License.
     );
 }
 
+:host([multiple]) {
+    display: flex;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+
+    --spectrum-picker-block-size: var(--spectrum-component-height-200);
+}
+
+:host([multiple]) #button {
+    justify-content: flex-start;
+}
+
 :host([quiet]) {
     width: auto;
     min-width: 0;
