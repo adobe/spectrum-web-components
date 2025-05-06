@@ -39,8 +39,11 @@ A typical changeset file looks like this:
 '@spectrum-web-components/theme': patch
 ---
 
-Added new variant to button component and fixed theme compatibility issues
+-   **Added**: Added new variant `tertiary` to `<sp-button>` component [#9999](https://github.com/adobe/spectrum-web-components/pull/9999)
+-   **Fixed**: Fixed `<sp-theme>` theme compatibility issues [#10000](https://github.com/adobe/spectrum-web-components/pull/10000)
 ```
+
+For our guidelines on writing changesets, see [our documentation](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/).
 
 ## Common Questions
 
