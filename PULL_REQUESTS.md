@@ -1,7 +1,4 @@
-<!-- markdownlint-disable-next-line -->
-<!-- omit from toc -->
-
-# Pull request best practices
+# Pull request best practices <!-- omit from toc -->
 
 This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
 

@@ -1,7 +1,4 @@
-<!-- markdownlint-disable-next-line -->
-<!-- omit from toc -->
-
-# Releasing a new version of Spectrum Web Components
+# Releasing a new version of Spectrum Web Components <!-- omit from toc -->
 
 Users with permissions in the `@spectrum-web-components` organization on NPM can follow these steps to create and publish a new version.
 
