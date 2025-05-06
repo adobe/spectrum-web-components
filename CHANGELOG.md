@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/adobe/spectrum-web-components/compare/v1.5.0...v1.6.0) (2025-05-01) — ([f2b6a32](https://github.com/adobe/spectrum-web-components/commit/f2b6a322c379752f4f7dfcd02b3007c4130dc1e0))
+
+### Minor Fixes
+
+-   **icons-workflow**: added missing S2 icons
+
+### Patch Fixes
+
+-   **slider**: ensure tracks become properly rounded when offset variant is activated
+-   **popover**: prevent overflow clipping in Safari with translateZ and visible tips
+-   **picker**: fix focus to prevent setting focus on menu items when opened via mouse
+-   **button**: update deprecation warning to allow variant and static-color to coexist
+-   **number-field**: fix UI issues and improve width calculation
+-   **tooltip**: add DelayedTooltipWithOverlay story for handling interactions
+-   **infield-button, number-field, textfield, search, styles**: update disabled border colors and styling across components
+-   **close-button, dropzone, illustrated-message, menu, status-light, styles, switch, table, tabs, toast, tooltip**: remove unnecessary system theme references
+-   **overlay**: fix layout issues in Safari for nested trays in dialogs
+
 # [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-04-15)
 
 ### Bug Fixes

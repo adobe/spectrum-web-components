@@ -20,10 +20,6 @@ export const themeStyles = html`
         #root {
             padding: 0;
         }
-        sp-story-decorator::part(container) {
-            min-height: auto;
-            position: relative;
-        }
         sp-story-decorator::part(controls) {
             position: absolute;
         }
@@ -77,10 +73,6 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
         <style>
             #root {
                 padding: 0;
-            }
-            sp-story-decorator::part(container) {
-                min-height: auto;
-                position: relative;
             }
             sp-story-decorator::part(controls) {
                 position: absolute;
