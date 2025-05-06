@@ -1,16 +1,4 @@
 #!/bin/bash
 set -e
-
-STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- '*.ts' '*.js')
-STAGED_FILES_TO_ANALYZE=$(git diff --name-only --cached --diff-filter=d -- packages/*/src/**/*.ts tools/*/src/**/*.ts)
-STAGED_CSS_FILES=$(git diff --name-only --cached --diff-filter=d -- 'packages/**/*.css' 'tools/**/*.css')
-VERSION_FILE=$(dirname "$0")/../tools/base/src/version.js
-
-[ -z "$STAGED_FILES_TO_LINT" ] || yarn eslint -f pretty $STAGED_FILES_TO_LINT
-[ -z "$STAGED_FILES_TO_ANALYZE" ] || yarn lit-analyzer $STAGED_FILES_TO_ANALYZE
-[ -z "$STAGED_CSS_FILES" ] || yarn stylelint $STAGED_CSS_FILES
-
-yarn pretty-quick --staged
-
-yarn genversion --es6 --semi "$VERSION_FILE"
-git add "$VERSION_FILE"
+echo "Running pre-commit hook via lint-staged..."
+yarn lint-staged --allow-empty
