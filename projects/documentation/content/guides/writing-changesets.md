@@ -1,13 +1,15 @@
 ---
 layout: guide.njk
-title: 'Changesets and Changelogs'
-displayName: Changesets and Changelogs
+title: 'Writing Changesets'
+displayName: Writing Changesets
 slug: writing-changesets
 ---
 
-# Changesets and changelogs
+# What are changesets?
 
-A changelog represents a single release. A changelog may contain several changesets. Each changeset represents changes that have enough significance to warrant a new version. There are three levels of releases that a changeset can describe, which are described by semantic versioning:
+Each changeset represents changes that have enough significance to warrant a new version. A changelog represents a single release. A changelog may contain several changesets.
+
+There are three levels of releases that a changeset can describe, which are described by semantic versioning:
 
 -   **Patch** (1.0.0 → 1.0.1): Bug fixes and non-breaking changes
 -   **Minor** (1.0.0 → 1.1.0): New features, backwards-compatible
@@ -23,7 +25,7 @@ Each change should be categorized under one of these types:
 
 ## Writing changesets
 
-Changesets are different from commit messages. **Commit messages** are used to document the changes for _contributors_. **Changesets** are used to communicate the changes to the _users_.
+Changesets are different from commit messages. **Commit messages** are used to document the changes for _contributors_. **Changesets** are used to communicate the changes to the _consumers_ of the design system.
 
 ### Be specific and component-focused
 
