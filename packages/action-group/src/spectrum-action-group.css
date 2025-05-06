@@ -17,15 +17,15 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
 }
 
-:host([size='s']),
-:host([size='xs']) {
+:host([size="s"]),
+:host([size="xs"]) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(--spectrum-spacing-75);
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
-:host([size='l']),
+:host([size="l"]),
 :host,
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-actiongroup-horizontal-spacing-regular: var(--spectrum-spacing-100);
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-100);
 }
@@ -44,7 +44,7 @@ governing permissions and limitations under the License.
     z-index: 3;
 }
 
-:host(:not([vertical='true'][compact='true'])) ::slotted(*) {
+:host(:not([vertical="true"][compact="true"])) ::slotted(*) {
     flex-shrink: 0;
 }
 
