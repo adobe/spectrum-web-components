@@ -7860,7 +7860,7 @@ __metadata:
     "@storybook/addon-a11y": "npm:^8.6.12"
     "@storybook/addon-essentials": "npm:^8.6.12"
     "@storybook/addon-links": "npm:^8.6.12"
-    "@storybook/web-components": "npm:^7.5.0"
+    "@storybook/web-components": "npm:^8.6.12"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"
     "@typescript-eslint/parser": "npm:^7.0.2"
     "@web/dev-server": "npm:^0.4.6"
@@ -9234,7 +9234,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/web-components@npm:8.6.12":
+"@storybook/web-components@npm:8.6.12, @storybook/web-components@npm:^8.6.12":
   version: 8.6.12
   resolution: "@storybook/web-components@npm:8.6.12"
   dependencies:
@@ -9252,7 +9252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/web-components@npm:^7.0.0, @storybook/web-components@npm:^7.5.0":
+"@storybook/web-components@npm:^7.0.0":
   version: 7.6.19
   resolution: "@storybook/web-components@npm:7.6.19"
   dependencies:
