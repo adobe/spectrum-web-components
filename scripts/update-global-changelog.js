@@ -20,6 +20,11 @@ import { version as newVersion } from '@spectrum-web-components/base/src/version
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
+/**
+ * Creates or updates the global CHANGELOG.md file based on changeset files.
+ * @returns {Promise<void>} A promise that resolves when the changelog is updated
+ * @throws {Error} If there's an issue with git tags or file operations
+ */
 async function createGlobalChangelog() {
     if (!newVersion) {
         console.error('Error: newVersion is undefined or empty');
