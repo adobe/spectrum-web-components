@@ -17,11 +17,11 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([align='center']) {
+:host([align="center"]) {
     text-align: center;
 }
 
-:host([align='end']) {
+:host([align="end"]) {
     text-align: end;
 }
 

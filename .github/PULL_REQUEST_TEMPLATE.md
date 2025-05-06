@@ -1,6 +1,8 @@
-<!--- Provide a general summary of your changes in the Title above -->
-<!--- PR titles should follow conventional commit and should include commit type as defined in in the PULL_REQUESTS guide -->
-<!--- Conventional commit docs can be referenced here: https://www.conventionalcommits.org/en/v1.0.0/#summary -->
+<!---
+    - Following conventional commit format, provide a general summary of your changes in the title above.
+    - Acceptable commit types in order of severity (high to low): feat, fix, docs, style, chore, perf, and test. Commit types are defined in PULL_REQUESTS.md.
+    - For example,`type(component): general summary`
+-->
 
 ## Description
 
@@ -42,14 +44,16 @@
 -   [ ] Includes thoughtfully written changeset if changes suggested include `patch`, `minor`, or `major` features
 -   [ ] Automated tests cover all use cases and follow best practices for writing
 -   [ ] Validated on all supported browsers
--   [ ] All VRTs are approved before author can update Golden Hash
+-   [ ] All VRTs are approved before the author can update Golden Hash
 
 ### Manual review test cases
 
-<!--- For the author, please describe in detail what reviewers should test. -->
-<!--- Include links and manual steps for how the reviewer should go through to verify your changes. -->
-<!--- Be sure to include manual tests for all areas of the codebase that might be affected. Any components that use this for a dependency should be cross-checked for regressions. -->
-<!--- For example, changes to Menu Item will effect Picker, Menu, and Action Menu. -->
+<!---
+    - For the author, please describe in detail what reviewers should test.
+    - Include links and manual steps for how the reviewer should go through to verify your changes.
+    - Be sure to include all areas of the codebase that might be affected. Any components that use these changes for a dependency should be cross-checked for regressions.
+    - For example, changes to Menu Item will affect Picker, Menu, and Action Menu.
+-->
 
 -   [ ] _Descriptive Test Statement_
 
