@@ -32,7 +32,7 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ### Anatomy
 
-A picker includes a label and a menu..
+A picker includes a label and a menu.
 
 #### Labels
 
