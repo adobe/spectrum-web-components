@@ -13,34 +13,40 @@ jobs:
             - name: Checkout PR branch
               uses: actions/checkout@v4
 
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
-
-            - name: Set Git identity
+            - name: Test tag format
               run: |
-                  git config --global user.email "support+actions@github.com"
-                  git config --global user.name "github-actions-bot"
+                  echo "Full SHA: $GITHUB_SHA"
+                  echo "Short SHA: ${GITHUB_SHA::8}"
+                  echo "Tag would be: beta-${GITHUB_SHA::8}"
 
-            - name: Update package versions for beta snapshot release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  yarn changeset version --snapshot beta
-                  yarn lint:versions --fix
-                  yarn update-version
+            # - name: Setup Job and Install Dependencies
+            #   uses: ./.github/actions/setup-job
 
-            - name: Configure NPM for changeset publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: |
-                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+            # - name: Set Git identity
+            #   run: |
+            #       git config --global user.email "support+actions@github.com"
+            #       git config --global user.name "github-actions-bot"
 
-            - name: Publish beta snapshot release
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: |
-                  git add .
-                  git commit -am "chore: publish beta snapshot version"
-                  yarn prepublishOnly
-                  yarn changeset publish --no-git-tag --tag beta
-                  git reset --hard HEAD^
+            # - name: Update package versions for beta snapshot release
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #   run: |
+            #       yarn changeset version --snapshot beta
+            #       yarn lint:versions --fix
+            #       yarn update-version
+
+            # - name: Configure NPM for changeset publish
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            #   run: |
+            #       echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+            # - name: Publish beta snapshot release
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            #   run: |
+            #       git add .
+            #       git commit -am "chore: publish beta snapshot version"
+            #       yarn prepublishOnly
+            #       yarn changeset publish --no-git-tag --tag beta-${GITHUB_SHA::8}
+            #       git reset --hard HEAD^
