@@ -691,4 +691,4 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 
 #### Do not use submenus
 
-A picker menu should never contain submenus, as doing so would render it in accessible. A picker's menu role is a listbox and it's menu items are listbox options, which are not allowed to have submenus.
+A picker menu should never contain submenus, as doing so would render it inaccessible. A picker's menu role is a listbox, and its menu items are listbox options, which are not allowed to have submenus.
