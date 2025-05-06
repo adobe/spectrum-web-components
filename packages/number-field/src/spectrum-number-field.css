@@ -75,22 +75,22 @@ governing permissions and limitations under the License.
 }
 
 #textfield,
-:host([size='m']) #textfield {
+:host([size="m"]) #textfield {
     --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-medium));
     --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-100));
 }
 
-:host([size='s']) #textfield {
+:host([size="s"]) #textfield {
     --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-small));
     --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-75));
 }
 
-:host([size='l']) #textfield {
+:host([size="l"]) #textfield {
     --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-large));
     --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-200));
 }
 
-:host([size='xl']) #textfield {
+:host([size="xl"]) #textfield {
     --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-extra-large));
     --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-300));
 }
@@ -259,7 +259,7 @@ governing permissions and limitations under the License.
 }
 
 #textfield:before {
-    content: '';
+    content: "";
 }
 
 .input {
@@ -308,7 +308,7 @@ governing permissions and limitations under the License.
 :host([quiet]):after {
     visibility: hidden;
     visibility: var(--mod-stepper-focus-indicator-visibility, hidden);
-    content: '';
+    content: "";
     inline-size: 100%;
     block-size: var(--spectrum-stepper-focus-indicator-width);
     background-color: var(--spectrum-stepper-focus-indicator-color);

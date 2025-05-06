@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @media (forced-colors: active) {
-    #list ::slotted([slot='icon']) {
+    #list ::slotted([slot="icon"]) {
         forced-color-adjust: preserve-parent-color;
     }
 
@@ -161,7 +161,7 @@ governing permissions and limitations under the License.
     margin-block-end: var(--mod-sidenav-bottom-to-label, var(--spectrum-sidenav-bottom-to-label));
 }
 
-#item-link ::slotted([slot='icon']) {
+#item-link ::slotted([slot="icon"]) {
     inline-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
     block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
     flex-shrink: 0;
@@ -203,19 +203,19 @@ governing permissions and limitations under the License.
     line-height: var(--mod-sidenav-top-level-line-height, var(--spectrum-sidenav-top-level-line-height));
 }
 
-#item-link:not([data-level='0']) {
+#item-link:not([data-level="0"]) {
     font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
     padding-inline-start: var(--mod-sidenav-start-to-content-second-level, var(--spectrum-sidenav-start-to-content-second-level));
 }
 
-#item-link[data-level='2'] {
+#item-link[data-level="2"] {
     padding-inline-start: var(--mod-sidenav-start-to-content-third-level, var(--spectrum-sidenav-start-to-content-third-level));
 }
 
-.spectrum-SideNav--hasIcon#item-link:not([data-level='0']) {
+.spectrum-SideNav--hasIcon#item-link:not([data-level="0"]) {
     padding-inline-start: var(--mod-sidenav-start-to-content-with-icon-second-level, var(--spectrum-sidenav-start-to-content-with-icon-second-level));
 }
 
-.spectrum-SideNav--hasIcon#item-link[data-level='2'] {
+.spectrum-SideNav--hasIcon#item-link[data-level="2"] {
     padding-inline-start: var(--mod-sidenav-start-to-content-with-icon-third-level, var(--spectrum-sidenav-start-to-content-with-icon-third-level));
 }
