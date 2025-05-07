@@ -194,7 +194,7 @@
         "rollup": "^4.12.0",
         "sinon": "^17.0.1",
         "storybook": "^8.6.12",
-        "stylelint": "^16.15.0",
+        "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0",
         "stylelint-header": "^2.1.0",
         "tachometer": "^0.7.1",
