@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/coachmark",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/coachmark"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/coachmark",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -66,20 +66,26 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "1.4.0",
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/button": "1.4.0",
-        "@spectrum-web-components/button-group": "1.4.0",
-        "@spectrum-web-components/icon": "1.4.0",
-        "@spectrum-web-components/icons-ui": "1.4.0",
-        "@spectrum-web-components/reactive-controllers": "1.4.0",
-        "@spectrum-web-components/shared": "1.4.0"
+        "@spectrum-web-components/asset": "1.6.0",
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/button": "1.6.0",
+        "@spectrum-web-components/button-group": "1.6.0",
+        "@spectrum-web-components/icon": "1.6.0",
+        "@spectrum-web-components/icons-ui": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0"
     },
     "devDependencies": {
         "@spectrum-css/coachindicator": "3.0.0-s2-foundations.16",

@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/color-loupe@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/opacity-checkerboard@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    -   @spectrum-web-components/color-loupe@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/opacity-checkerboard@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

@@ -20,14 +20,14 @@ governing permissions and limitations under the License.
     --mod-progressbar-spacing-top-to-text: var(--spectrum-meter-top-to-text);
 }
 
-:host([variant='positive']) {
+:host([variant="positive"]) {
     --mod-progressbar-fill-color: var(--mod-meter-fill-color-positive, var(--spectrum-meter-fill-color-positive));
 }
 
-:host([variant='notice']) {
+:host([variant="notice"]) {
     --mod-progressbar-fill-color: var(--mod-meter-fill-color-notice, var(--spectrum-meter-fill-color-notice));
 }
 
-:host([variant='negative']) {
+:host([variant="negative"]) {
     --mod-progressbar-fill-color: var(--mod-meter-fill-color-negative, var(--spectrum-meter-fill-color-negative));
 }

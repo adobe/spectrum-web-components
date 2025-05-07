@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/meter"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/meter",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -53,16 +53,22 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/field-label": "1.4.0",
-        "@spectrum-web-components/reactive-controllers": "1.4.0",
-        "@spectrum-web-components/shared": "1.4.0"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/field-label": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0"
     },
     "devDependencies": {
         "@spectrum-css/meter": "0.0.0-s2-foundations.2",

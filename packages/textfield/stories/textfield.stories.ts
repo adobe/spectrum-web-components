@@ -70,9 +70,31 @@ export const quiet = (): TemplateResult => {
     return html`
         <sp-field-label for="name">Enter your name</sp-field-label>
         <sp-textfield
-            autofocus
             id="name"
             placeholder="This Text Field doesn't make much noise"
+            quiet
+        ></sp-textfield>
+    `;
+};
+
+export const defaultAutofocus = (): TemplateResult => {
+    return html`
+        <sp-field-label for="name">Enter your name</sp-field-label>
+        <sp-textfield
+            id="name"
+            placeholder="Include your first and last name"
+            autofocus
+        ></sp-textfield>
+    `;
+};
+
+export const quietAutofocus = (): TemplateResult => {
+    return html`
+        <sp-field-label for="name">Enter your name</sp-field-label>
+        <sp-textfield
+            id="name"
+            placeholder="Include your first and last name"
+            autofocus
             quiet
         ></sp-textfield>
     `;
@@ -136,7 +158,7 @@ export const empty = (): TemplateResult => html`
     <sp-field-label for="empty">
         This textfield hasn't been used yet
     </sp-field-label>
-    <sp-textfield id="empty" placeholder="You can type here" autofocus>
+    <sp-textfield id="empty" placeholder="You can type here">
         <sp-help-text slot="help-text">
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>
@@ -150,7 +172,6 @@ export const sized = (): TemplateResult => html`
     <sp-textfield
         id="sized"
         placeholder="You can type here"
-        autofocus
         style="width: 400px"
     >
         <sp-help-text slot="help-text">

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/vrt-compare",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -9,9 +9,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/vrt-compare"
+        "directory": "projects/vrt-compare"
     },
-    "author": "",
+    "author": "Adobe",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -60,15 +60,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-bar": "1.4.0",
-        "@spectrum-web-components/action-button": "1.4.0",
-        "@spectrum-web-components/action-group": "1.4.0",
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/icons-workflow": "1.4.0",
-        "@spectrum-web-components/shared": "1.4.0",
-        "@spectrum-web-components/split-view": "1.4.0",
-        "@spectrum-web-components/styles": "1.4.0",
-        "@spectrum-web-components/theme": "1.4.0"
+        "@spectrum-web-components/action-bar": "1.6.0",
+        "@spectrum-web-components/action-button": "1.6.0",
+        "@spectrum-web-components/action-group": "1.6.0",
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/icons-workflow": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0",
+        "@spectrum-web-components/split-view": "1.6.0",
+        "@spectrum-web-components/styles": "1.6.0",
+        "@spectrum-web-components/theme": "1.6.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
@@ -77,5 +77,6 @@
         "./onion-skinner.ts",
         "./vrt-compare.js",
         "./vrt-compare.ts"
-    ]
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }
