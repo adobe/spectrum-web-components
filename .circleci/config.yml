@@ -98,31 +98,41 @@ commands:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
+                  name: Install Azure CLI and Static Web Apps CLI
+                  command: |
+                        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+                        npm install -g @azure/static-web-apps-cli
+            - run:
                   when: always
                   name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
+                      echo "Azure alias hash: $hash"
                       echo "Deploying from test/visual directory..."
 
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
-                          else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
-                          fi
-                      done
+                        if az staticwebapp upload \
+                            --name my-visual-regression-site \
+                            --resource-group swc-previews \
+                            --source test/visual \
+                            --token $AZURE_VR_STATIC_WEB_APPS_TOKEN \
+                            --output none; then
+                            echo "Deployment successful!"
+                            exit 0
+                        else
+                            attempt=$((attempt + 1))
+                            echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                            sleep 10
+                        fi
+                    done
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                    echo "Deployment failed after $max_attempts attempts."
+                    exit 1  
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -238,10 +248,18 @@ jobs:
                   name: Build Storybook
                   command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
+            - run:
+                  name: Deploy Documentation Site to Azure Static Web Apps
+                  command: |
+                    branch=$(git symbolic-ref --short HEAD)
+                    branch=$(npx slugify-cli $branch)
+                    az login --identity || echo "Skipping login for GitHub token-based deploy"
+                    az staticwebapp upload \
+                        --name my-docs-site \
+                        --resource-group swc-previews \
+                        --source projects/documentation/dist \
+                        --token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN \
+                        --output none
 
     beta-docs:
         executor: node
@@ -264,7 +282,13 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
+                  az login --identity || echo "Skipping login for GitHub token-based deploy"
+                  az staticwebapp upload \
+                    --name my-docs-site \
+                    --resource-group swc-previews \
+                    --source projects/documentation/dist \
+                    --token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN \
+                    --output none
 
     hcm-visual:
         executor: node
@@ -308,31 +332,34 @@ jobs:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  when: always
-                  name: Publish review site
+                  name: Deploy Visual Regression Site to Azure
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                    branch=$(git symbolic-ref --short HEAD)
+                    hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
+                    echo "Azure deployment hash: $hash"
 
-                      max_attempts=3
-                      attempt=0
+                    max_attempts=3
+                    attempt=0
 
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
-                          else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
-                          fi
-                      done
+                    while [ $attempt -lt $max_attempts ]; do
+                        if az staticwebapp upload \
+                            --name my-visual-regression-site \
+                            --resource-group swc-previews \
+                            --source test/visual \
+                            --token $AZURE_VR_STATIC_WEB_APPS_TOKEN \
+                            --output none; then
+                            echo "Deployment successful!"
+                            exit 0
+                        else
+                            attempt=$((attempt + 1))
+                            echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                            sleep 10
+                        fi
+                    done
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                    echo "Deployment failed after $max_attempts attempts."
+                    exit 1  
+
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
