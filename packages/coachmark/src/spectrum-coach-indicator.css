@@ -58,11 +58,11 @@ governing permissions and limitations under the License.
     animation-delay: calc(var(--mod-coach-animation-indicator-ring-duration, var(--spectrum-coach-animation-indicator-ring-duration)) * var(--mod-coach-animation-indicator-ring-outer-delay-multiple, var(--spectrum-coach-animation-indicator-ring-outer-delay-multiple)));
 }
 
-:host([static-color='white']) .ring {
+:host([static-color="white"]) .ring {
     border-color: var(--mod-coach-indicator-ring-light-color, var(--spectrum-coach-indicator-ring-light-color));
 }
 
-:host([static-color='black']) .ring {
+:host([static-color="black"]) .ring {
     border-color: var(--mod-coach-indicator-ring-dark-color, var(--spectrum-coach-indicator-ring-dark-color));
 }
 

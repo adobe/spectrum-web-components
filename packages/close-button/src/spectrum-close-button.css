@@ -68,13 +68,13 @@ governing permissions and limitations under the License.
             margin var(--mod-closebutton-animation-duraction, var(--spectrum-closebutton-animation-duration)) ease-out;
     }
 
-    :host([static-color='black']) {
+    :host([static-color="black"]) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: GrayText;
     }
 
-    :host([static-color='white']) {
+    :host([static-color="white"]) {
         --highcontrast-closebutton-static-background-color-default: ButtonFace;
         --highcontrast-closebutton-icon-color-default: Highlight;
         --highcontrast-closebutton-icon-color-disabled: Highlight;
@@ -109,7 +109,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-closebutton-size: var(--spectrum-component-height-75);
     --spectrum-closebutton-border-radius: var(--spectrum-component-height-75);
 }
@@ -120,24 +120,24 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-border-radius: var(--spectrum-component-height-100);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-closebutton-size: var(--spectrum-component-height-200);
     --spectrum-closebutton-border-radius: var(--spectrum-component-height-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-closebutton-size: var(--spectrum-component-height-300);
     --spectrum-closebutton-border-radius: var(--spectrum-component-height-300);
 }
 
-:host([static-color='white']) {
+:host([static-color="white"]) {
     --spectrum-closebutton-static-background-color-default: transparent;
     --spectrum-closebutton-icon-color-default: var(--spectrum-white);
     --spectrum-closebutton-icon-color-disabled: var(--spectrum-disabled-static-white-content-color);
     --spectrum-closebutton-focus-indicator-color: var(--spectrum-static-white-focus-indicator-color);
 }
 
-:host([static-color='black']) {
+:host([static-color="black"]) {
     --spectrum-closebutton-static-background-color-default: transparent;
     --spectrum-closebutton-icon-color-default: var(--spectrum-black);
     --spectrum-closebutton-icon-color-disabled: var(--spectrum-disabled-static-black-content-color);
@@ -146,7 +146,7 @@ governing permissions and limitations under the License.
 
 :host:after {
     pointer-events: none;
-    content: '';
+    content: "";
     margin: calc(var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)) * -1);
     border-radius: calc(var(--mod-closebutton-size, var(--spectrum-closebutton-size)) + var(--mod-closebutton-focus-indicator-gap, var(--spectrum-closebutton-focus-indicator-gap)));
     transition: box-shadow var(--mod-closebutton-animation-duration, var(--spectrum-closebutton-animation-duration)) ease-in-out;
@@ -203,8 +203,8 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-closebutton-icon-color-disabled, var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled)));
 }
 
-:host([static-color='black']:not([disabled])),
-:host([static-color='white']:not([disabled])) {
+:host([static-color="black"]:not([disabled])),
+:host([static-color="white"]:not([disabled])) {
     background-color: var(--highcontrast-closebutton-static-background-color-default, var(--mod-closebutton-static-background-color-default, var(--spectrum-closebutton-static-background-color-default)));
 }
 
@@ -217,52 +217,52 @@ governing permissions and limitations under the License.
         color: var(--highcontrast-closebutton-icon-color-hover, var(--mod-closebutton-icon-color-hover, var(--spectrum-closebutton-icon-color-hover)));
     }
 
-    :host([static-color='black']:not([disabled]):hover),
-    :host([static-color='white']:not([disabled]):hover) {
+    :host([static-color="black"]:not([disabled]):hover),
+    :host([static-color="white"]:not([disabled]):hover) {
         background-color: var(--mod-closebutton-static-background-color-hover, var(--spectrum-closebutton-static-background-color-hover));
     }
 
-    :host([static-color='black']:not([disabled]):hover) .icon,
-    :host([static-color='white']:not([disabled]):hover) .icon {
+    :host([static-color="black"]:not([disabled]):hover) .icon,
+    :host([static-color="white"]:not([disabled]):hover) .icon {
         color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
     }
 }
 
-:host([static-color='black']:not([disabled]):is(:active, [active])),
-:host([static-color='white']:not([disabled]):is(:active, [active])) {
+:host([static-color="black"]:not([disabled]):is(:active, [active])),
+:host([static-color="white"]:not([disabled]):is(:active, [active])) {
     background-color: var(--mod-closebutton-static-background-color-down, var(--spectrum-closebutton-static-background-color-down));
 }
 
-:host([static-color='black']:not([disabled]):is(:active, [active])) .icon,
-:host([static-color='white']:not([disabled]):is(:active, [active])) .icon {
+:host([static-color="black"]:not([disabled]):is(:active, [active])) .icon,
+:host([static-color="white"]:not([disabled]):is(:active, [active])) .icon {
     color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
 }
 
-:host([static-color='black'][focused]:not([disabled])),
-:host([static-color='black']:not([disabled]):focus-visible),
-:host([static-color='white'][focused]:not([disabled])),
-:host([static-color='white']:not([disabled]):focus-visible) {
+:host([static-color="black"][focused]:not([disabled])),
+:host([static-color="black"]:not([disabled]):focus-visible),
+:host([static-color="white"][focused]:not([disabled])),
+:host([static-color="white"]:not([disabled]):focus-visible) {
     background-color: var(--mod-closebutton-static-background-color-focus, var(--spectrum-closebutton-static-background-color-focus));
 }
 
-:host([static-color='black'][focused]:not([disabled])) .icon,
-:host([static-color='black'][focused]:not([disabled])) .icon,
-:host([static-color='black']:not([disabled]):focus) .icon,
-:host([static-color='black']:not([disabled]):focus-visible) .icon,
-:host([static-color='white'][focused]:not([disabled])) .icon,
-:host([static-color='white'][focused]:not([disabled])) .icon,
-:host([static-color='white']:not([disabled]):focus) .icon,
-:host([static-color='white']:not([disabled]):focus-visible) .icon {
+:host([static-color="black"][focused]:not([disabled])) .icon,
+:host([static-color="black"][focused]:not([disabled])) .icon,
+:host([static-color="black"]:not([disabled]):focus) .icon,
+:host([static-color="black"]:not([disabled]):focus-visible) .icon,
+:host([static-color="white"][focused]:not([disabled])) .icon,
+:host([static-color="white"][focused]:not([disabled])) .icon,
+:host([static-color="white"]:not([disabled]):focus) .icon,
+:host([static-color="white"]:not([disabled]):focus-visible) .icon {
     color: var(--highcontrast-closebutton-icon-color-default, var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default)));
 }
 
-:host([static-color='black']:not([disabled])) .icon,
-:host([static-color='white']:not([disabled])) .icon {
+:host([static-color="black"]:not([disabled])) .icon,
+:host([static-color="white"]:not([disabled])) .icon {
     color: var(--mod-closebutton-icon-color-default, var(--spectrum-closebutton-icon-color-default));
 }
 
-:host([static-color='black'][disabled]) .icon,
-:host([static-color='white'][disabled]) .icon {
+:host([static-color="black"][disabled]) .icon,
+:host([static-color="white"][disabled]) .icon {
     color: var(--mod-closebutton-icon-color-disabled, var(--spectrum-closebutton-icon-color-disabled));
 }
 

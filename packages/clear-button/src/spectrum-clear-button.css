@@ -77,7 +77,7 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([variant='overBackground']:focus-visible) {
+:host([variant="overBackground"]:focus-visible) {
     outline: none;
 }
 

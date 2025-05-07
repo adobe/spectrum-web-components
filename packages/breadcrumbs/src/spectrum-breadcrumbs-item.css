@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
 }
 
 #separator:dir(rtl),
-:host([dir='rtl']) #separator {
+:host([dir="rtl"]) #separator {
     transform: scaleX(-1);
 }
 
@@ -75,7 +75,7 @@ governing permissions and limitations under the License.
 }
 
 #item-link.is-disabled,
-:host([aria-disabled='true']) #item-link {
+:host([aria-disabled="true"]) #item-link {
     color: var(--highcontrast-breadcrumbs-text-color-disabled, var(--mod-breadcrumbs-text-color-disabled, var(--spectrum-breadcrumbs-text-color-disabled)));
 }
 
@@ -113,7 +113,7 @@ governing permissions and limitations under the License.
     block-size: calc(100% + var(--mod-breadcrumbs-focus-indicator-gap, var(--spectrum-breadcrumbs-focus-indicator-gap)) * 2 + var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness)) * 2);
     border-width: var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness));
     border-radius: var(--mod-breadcrumbs-item-link-border-radius, var(--spectrum-breadcrumbs-item-link-border-radius));
-    content: '';
+    content: "";
     pointer-events: none;
     border-style: solid;
     border-color: var(--highcontrast-breadcrumbs-focus-indicator-color, var(--mod-breadcrumbs-focus-indicator-color, var(--spectrum-breadcrumbs-focus-indicator-color)));

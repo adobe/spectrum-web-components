@@ -94,6 +94,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/action-button": "1.6.0",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/icon": "1.6.0",
         "@spectrum-web-components/icons-ui": "1.6.0",

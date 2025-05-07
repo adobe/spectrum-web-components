@@ -100,7 +100,7 @@ governing permissions and limitations under the License.
     --spectrum-menu-item-focus-indicator-border-width: calc(var(--spectrum-menu-item-focus-indicator-width) * var(--spectrum-menu-item-focus-indicator-direction-scalar, 1));
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-75);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-75);
     --spectrum-menu-item-icon-width: var(--spectrum-workflow-icon-size-75);
@@ -120,7 +120,7 @@ governing permissions and limitations under the License.
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-small);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-200);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-200);
     --spectrum-menu-item-icon-width: var(--spectrum-workflow-icon-size-200);
@@ -140,7 +140,7 @@ governing permissions and limitations under the License.
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-large);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-menu-item-min-height: var(--spectrum-component-height-300);
     --spectrum-menu-item-icon-height: var(--spectrum-workflow-icon-size-300);
     --spectrum-menu-item-icon-width: var(--spectrum-workflow-icon-size-300);
@@ -161,7 +161,7 @@ governing permissions and limitations under the License.
 }
 
 :host:dir(rtl),
-:host([dir='rtl']) {
+:host([dir="rtl"]) {
     --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 

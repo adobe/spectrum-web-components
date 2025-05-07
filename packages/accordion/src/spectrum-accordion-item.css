@@ -47,7 +47,7 @@ governing permissions and limitations under the License.
 }
 
 .iconContainer:dir(rtl),
-:host([dir='rtl']) .iconContainer {
+:host([dir="rtl"]) .iconContainer {
     transform: scaleX(-1);
 }
 
@@ -93,7 +93,7 @@ governing permissions and limitations under the License.
 }
 
 #header:focus:after {
-    content: '';
+    content: "";
     position: absolute;
     inset-inline-start: 0;
 }
@@ -148,7 +148,7 @@ governing permissions and limitations under the License.
 @media (forced-colors: active) {
     #header:after {
         forced-color-adjust: none;
-        content: '';
+        content: "";
         position: absolute;
         inset-inline-start: 0;
     }

@@ -36,7 +36,7 @@ governing permissions and limitations under the License.
 }
 
 #gripper {
-    content: '';
+    content: "";
     border-radius: var(--mod-splitview-gripper-border-radius, var(--spectrum-splitview-gripper-border-radius));
     border-style: solid;
     border-color: var(--highcontrast-splitview-handle-background-color, var(--mod-splitview-handle-background-color, var(--spectrum-splitview-handle-background-color)));
@@ -68,7 +68,7 @@ governing permissions and limitations under the License.
 
 #splitter.is-collapsed-end #gripper:before,
 #splitter.is-collapsed-start #gripper:before {
-    content: '';
+    content: "";
     inline-size: var(--mod-splitview-handle-width, var(--spectrum-splitview-handle-width));
     block-size: 100%;
     position: absolute;

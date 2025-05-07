@@ -77,7 +77,7 @@ governing permissions and limitations under the License.
 }
 
 :host([indeterminate]) .fill:dir(rtl),
-:host([dir='rtl'][indeterminate]) .fill {
+:host([dir="rtl"][indeterminate]) .fill {
     animation-name: indeterminate-loop-rtl;
 }
 
@@ -104,17 +104,17 @@ governing permissions and limitations under the License.
     margin-inline-start: var(--mod-spacing-progressbar-label-to-text, var(--spectrum-progressbar-spacing-label-to-text));
 }
 
-:host([static-color='white']) .fill {
+:host([static-color="white"]) .fill {
     background: var(--mod-progressbar-fill-color-white, var(--spectrum-progressbar-fill-color-white));
 }
 
-:host([static-color='white']) .fill,
-:host([static-color='white']) .label,
-:host([static-color='white']) .percentage {
+:host([static-color="white"]) .fill,
+:host([static-color="white"]) .label,
+:host([static-color="white"]) .percentage {
     color: var(--mod-progressbar-label-and-value-white, var(--spectrum-progressbar-label-and-value-white));
 }
 
-:host([static-color='white']) .track {
+:host([static-color="white"]) .track {
     background: var(--spectrum-progressbar-track-color-white);
 }
 

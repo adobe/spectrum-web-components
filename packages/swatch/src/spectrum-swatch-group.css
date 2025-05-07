@@ -19,10 +19,10 @@ governing permissions and limitations under the License.
     display: inline-flex;
 }
 
-:host([density='compact']) {
+:host([density="compact"]) {
     gap: var(--mod-swatchgroup-spacing-compact, var(--spectrum-swatchgroup-spacing-compact));
 }
 
-:host([density='spacious']) {
+:host([density="spacious"]) {
     gap: var(--mod-swatchgroup-spacing-spacious, var(--spectrum-swatchgroup-spacing-spacious));
 }

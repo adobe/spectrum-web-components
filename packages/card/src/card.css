@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-card.css');
-@import url('./card-overrides.css');
+@import url("./spectrum-card.css");
+@import url("./card-overrides.css");
 
-:host([href]:not([href=''])) {
+:host([href]:not([href=""])) {
     cursor: pointer;
 }
 
@@ -27,21 +27,18 @@ governing permissions and limitations under the License.
     flex-grow: 0;
 }
 
-:host([dir='ltr']) .action-button {
+:host([dir="ltr"]) .action-button {
     margin-left: auto;
 }
 
-:host([dir='rtl']) .action-button {
+:host([dir="rtl"]) .action-button {
     margin-right: auto;
 }
 
-/* The description slot has a psuedo-element that also needs to receive the font styling. 
+/* The description slot has a psuedo-element that also needs to receive the font styling.
 We need to add the declaration to the slot as well */
-slot[name='description'] {
-    font-size: var(
-        --spectrum-card-subtitle-text-size,
-        var(--spectrum-font-size-50)
-    );
+slot[name="description"] {
+    font-size: var(--spectrum-card-subtitle-text-size, var(--spectrum-font-size-50));
 }
 
 #preview + #cover-photo {
@@ -49,7 +46,7 @@ slot[name='description'] {
 }
 
 #cover-photo ::slotted(*),
-:host(:not([variant='quiet'])) #preview ::slotted(*) {
+:host(:not([variant="quiet"])) #preview ::slotted(*) {
     width: 100%;
     display: block;
 
@@ -59,7 +56,7 @@ slot[name='description'] {
     object-fit: cover;
 }
 
-:host(:not([variant='gallery'])) #preview ::slotted(*) {
+:host(:not([variant="gallery"])) #preview ::slotted(*) {
     height: 100%;
 }
 
@@ -81,7 +78,7 @@ sp-popover {
 }
 
 /**
- * Allow that the heading element will take specified use of the available width whether 
+ * Allow that the heading element will take specified use of the available width whether
  * "actions" are supplied to the element or not.
  **/
 .title {
@@ -89,8 +86,10 @@ sp-popover {
 }
 
 .subtitle {
-    /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
-    text-transform: none;
+    font-family: var(--spectrum-sans-font-family-stack);
+    font-size: var(--spectrum-detail-size-s);
+    font-weight: var(--spectrum-detail-sans-serif-font-weight);
+    line-height: var(--spectrum-detail-line-height);
 }
 
 :host:before,

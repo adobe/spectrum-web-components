@@ -12,51 +12,51 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host,
-:host([size='500']) {
+:host([size="500"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-500);
 }
 
-:host([size='50']) {
+:host([size="50"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-50);
 }
 
-:host([size='75']) {
+:host([size="75"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-75);
 }
 
-:host([size='100']) {
+:host([size="100"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-100);
 }
 
-:host([size='200']) {
+:host([size="200"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-200);
 }
 
-:host([size='300']) {
+:host([size="300"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-300);
 }
 
-:host([size='400']) {
+:host([size="400"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-400);
 }
 
-:host([size='600']) {
+:host([size="600"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-600);
 }
 
-:host([size='700']) {
+:host([size="700"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-700);
 }
 
-:host([size='800']) {
+:host([size="800"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-800);
 }
 
-:host([size='900']) {
+:host([size="900"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-900);
 }
 
-:host([size='1000']) {
+:host([size="1000"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-1000);
 }
 
@@ -91,7 +91,7 @@ governing permissions and limitations under the License.
 }
 
 :host:before {
-    content: '';
+    content: "";
     z-index: 2;
     inline-size: 100%;
     block-size: 100%;
@@ -108,7 +108,7 @@ governing permissions and limitations under the License.
 }
 
 :host([focused]):after {
-    content: '';
+    content: "";
     border-style: solid;
     border-width: var(--spectrum-thumbnail-focus-indicator-thickness);
     border-color: var(--spectrum-thumbnail-focus-indicator-color);

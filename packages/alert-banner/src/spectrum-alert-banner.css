@@ -53,11 +53,11 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([variant='info']) {
+:host([variant="info"]) {
     background-color: var(--mod-alert-banner-informative-background, var(--spectrum-alert-banner-informative-background));
 }
 
-:host([variant='negative']) {
+:host([variant="negative"]) {
     background-color: var(--mod-alert-banner-negative-background, var(--spectrum-alert-banner-negative-background));
 }
 

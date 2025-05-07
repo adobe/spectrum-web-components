@@ -49,21 +49,21 @@ governing permissions and limitations under the License.
     --mod-tabs-selection-indicator-color: var(--mod-tabs-selection-indicator-color-emphasized, var(--spectrum-accent-content-color-default));
 }
 
-:host([direction^='vertical']) #list {
+:host([direction^="vertical"]) #list {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical, right);
 }
 
-:host([direction^='vertical-right']) #list {
+:host([direction^="vertical-right"]) #list {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical-right, left);
 }
 
-:host([direction^='vertical']) #list:dir(rtl),
-:host([dir='rtl'][direction^='vertical']) #list {
+:host([direction^="vertical"]) #list:dir(rtl),
+:host([dir="rtl"][direction^="vertical"]) #list {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical, left);
 }
 
-:host([direction^='vertical-right']) #list:dir(rtl),
-:host([dir='rtl'][direction^='vertical-right']) #list {
+:host([direction^="vertical-right"]) #list:dir(rtl),
+:host([dir="rtl"][direction^="vertical-right"]) #list {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical, right);
 }
 
@@ -103,25 +103,25 @@ governing permissions and limitations under the License.
     inset-inline-start: 0;
 }
 
-:host([direction^='horizontal']) #list {
+:host([direction^="horizontal"]) #list {
     align-items: center;
 }
 
-:host([direction^='horizontal']) #list ::slotted(:not([slot])) {
+:host([direction^="horizontal"]) #list ::slotted(:not([slot])) {
     vertical-align: top;
 }
 
-:host([direction^='horizontal']) ::slotted(:not(:first-child)) {
+:host([direction^="horizontal"]) ::slotted(:not(:first-child)) {
     margin-inline-start: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
 }
 
-:host([direction^='horizontal']) #list #selection-indicator {
+:host([direction^="horizontal"]) #list #selection-indicator {
     block-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
     position: absolute;
     inset-block-end: 0;
 }
 
-:host([direction^='horizontal'][compact]) #list {
+:host([direction^="horizontal"][compact]) #list {
     box-sizing: initial;
     align-items: end;
 }
@@ -136,20 +136,20 @@ governing permissions and limitations under the License.
     padding-inline-start: var(--mod-tabs-start-to-item-quiet);
 }
 
-:host([direction^='vertical']) #list,
-:host([direction^='vertical-right']) #list {
+:host([direction^="vertical"]) #list,
+:host([direction^="vertical-right"]) #list {
     flex-direction: column;
     padding: 0;
     display: inline-flex;
 }
 
-:host([direction^='vertical-right'][quiet]) #list,
-:host([direction^='vertical'][quiet]) #list {
+:host([direction^="vertical-right"][quiet]) #list,
+:host([direction^="vertical"][quiet]) #list {
     border-color: #0000;
 }
 
-:host([direction^='vertical']) #list ::slotted(:not([slot])),
-:host([direction^='vertical-right']) #list ::slotted(:not([slot])) {
+:host([direction^="vertical"]) #list ::slotted(:not([slot])),
+:host([direction^="vertical-right"]) #list ::slotted(:not([slot])) {
     block-size: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
     line-height: var(--mod-tabs-item-height, var(--spectrum-tabs-item-height));
     margin-block-end: var(--mod-tabs-item-vertical-spacing, var(--spectrum-tabs-item-vertical-spacing));
@@ -158,20 +158,20 @@ governing permissions and limitations under the License.
     padding-block: 0;
 }
 
-:host([direction^='vertical']) #list ::slotted(:not([slot])):before,
-:host([direction^='vertical-right']) #list ::slotted(:not([slot])):before {
+:host([direction^="vertical"]) #list ::slotted(:not([slot])):before,
+:host([direction^="vertical-right"]) #list ::slotted(:not([slot])):before {
     inset-inline-start: calc(var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * -1);
 }
 
-:host([direction^='vertical']) #list #selection-indicator,
-:host([direction^='vertical-right']) #list #selection-indicator {
+:host([direction^="vertical"]) #list #selection-indicator,
+:host([direction^="vertical-right"]) #list #selection-indicator {
     inline-size: var(--mod-tabs-divider-size, var(--spectrum-tabs-divider-size));
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
 }
 
-:host([direction^='vertical-right']) #list #selection-indicator {
+:host([direction^="vertical-right"]) #list #selection-indicator {
     inset-inline: auto 0;
 }
 
@@ -193,7 +193,7 @@ governing permissions and limitations under the License.
         background-color: var(--highcontrast-tabs-focus-indicator-background-color);
     }
 
-    :host([direction^='vertical'][compact]) #list #list ::slotted(:not([slot])):before {
+    :host([direction^="vertical"][compact]) #list #list ::slotted(:not([slot])):before {
         block-size: 100%;
         inset-block-start: 0;
     }

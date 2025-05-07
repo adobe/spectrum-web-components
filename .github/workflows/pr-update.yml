@@ -1,6 +1,8 @@
 name: Update PRs
 
-on: workflow_dispatch
+on:
+    pull_request:
+        types: [labeled, auto_merge_enabled]
 
 jobs:
     autoupdate:
@@ -23,4 +25,4 @@ jobs:
                   include_drafts: false
                   limit: 50
                   exclude_labels: blocked,wip
-                  include_labels: in-review,ready-for-merge
+                  include_labels: auto-update,ready-for-merge

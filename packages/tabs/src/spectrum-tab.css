@@ -25,18 +25,18 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     block-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     inline-size: var(--mod-tabs-icon-size, var(--spectrum-tabs-icon-size));
     margin-block-start: var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon));
 }
 
-[name='icon'] + #item-label {
+[name="icon"] + #item-label {
     margin-inline-start: var(--mod-tabs-icon-to-text, var(--spectrum-tabs-icon-to-text));
 }
 
 :host:before {
-    content: '';
+    content: "";
     box-sizing: border-box;
     block-size: calc(100% - var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)));
     inline-size: calc(100% + var(--mod-tabs-focus-indicator-gap, var(--spectrum-tabs-focus-indicator-gap)) * 2);

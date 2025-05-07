@@ -115,12 +115,12 @@ governing permissions and limitations under the License.
     color: var(--mod-actionbar-emphasized-item-counter-color, var(--spectrum-actionbar-emphasized-item-counter-color));
 }
 
-:host([variant='sticky']) {
+:host([variant="sticky"]) {
     position: sticky;
     inset-inline: 0;
 }
 
-:host([variant='fixed']) {
+:host([variant="fixed"]) {
     position: fixed;
 }
 
