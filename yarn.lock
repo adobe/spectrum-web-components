@@ -6734,23 +6734,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/dialog@npm:11.0.0-s2-foundations.15":
-  version: 11.0.0-s2-foundations.15
-  resolution: "@spectrum-css/dialog@npm:11.0.0-s2-foundations.15"
+"@spectrum-css/dialog@npm:12.1.0":
+  version: 12.1.0
+  resolution: "@spectrum-css/dialog@npm:12.1.0"
   peerDependencies:
-    "@spectrum-css/closebutton": ">=5"
-    "@spectrum-css/divider": ">=3"
-    "@spectrum-css/modal": ">=5"
-    "@spectrum-css/tokens": ">=14"
-    "@spectrum-css/underlay": ">=4"
+    "@spectrum-css/closebutton": ">=6.0.0 <7.0.0"
+    "@spectrum-css/divider": ">=5.0.0 <6.0.0"
+    "@spectrum-css/modal": ">=7.0.0 <8.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+    "@spectrum-css/underlay": ">=6.0.0 <7.0.0"
   peerDependenciesMeta:
+    "@spectrum-css/closebutton":
+      optional: true
     "@spectrum-css/divider":
       optional: true
     "@spectrum-css/modal":
       optional: true
+    "@spectrum-css/tokens":
+      optional: true
     "@spectrum-css/underlay":
       optional: true
-  checksum: 10c0/0911458424815f49f08a1c47aa10fb06fbfbdd4ccce9578039730f9f50aae1714997ab0d653ccc58bb6a11f8e776b4ccdb677b22627adb4b43682ac8abe39a91
+  checksum: 10c0/e6c761eb29e070f5b979dd6925e1b43aa727a24efa0389aa67cad25c1193a6149e1277c6270d0c44c831d6c0c0b2aa1e3c3cec6dde11677567bff756d1090e75
   languageName: node
   linkType: hard
 
@@ -7885,7 +7889,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/dialog@workspace:packages/dialog"
   dependencies:
-    "@spectrum-css/dialog": "npm:11.0.0-s2-foundations.15"
+    "@spectrum-css/dialog": "npm:12.1.0"
     "@spectrum-web-components/alert-dialog": "npm:1.6.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/button": "npm:1.6.0"
