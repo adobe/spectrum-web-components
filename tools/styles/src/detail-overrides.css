@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .spectrum-Detail {
-    --spectrum-detail-sans-serif-font-family: var(
-        --system-detail-sans-serif-font-family
-    );
+    --spectrum-detail-sans-serif-font-family: var(--system-detail-sans-serif-font-family);
     --spectrum-detail-serif-font-family: var(--system-detail-serif-font-family);
     --spectrum-detail-cjk-font-family: var(--system-detail-cjk-font-family);
     --spectrum-detail-font-color: var(--system-detail-font-color);

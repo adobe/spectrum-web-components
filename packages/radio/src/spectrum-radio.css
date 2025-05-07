@@ -201,7 +201,7 @@ governing permissions and limitations under the License.
 
 #button:before {
     z-index: 0;
-    content: '';
+    content: "";
     box-sizing: border-box;
     inline-size: var(--mod-radio-button-control-size, var(--spectrum-radio-button-control-size));
     block-size: var(--mod-radio-button-control-size, var(--spectrum-radio-button-control-size));
@@ -218,7 +218,7 @@ governing permissions and limitations under the License.
 }
 
 #button:after {
-    content: '';
+    content: "";
     transition:
         opacity var(--mod-radio-animation-duration, var(--spectrum-radio-animation-duration)) ease-out,
         margin var(--mod-radio-animation-duration, var(--spectrum-radio-animation-duration)) ease-out;
@@ -231,6 +231,6 @@ governing permissions and limitations under the License.
 }
 
 :host:dir(rtl) #button:after,
-:host([dir='rtl']) #button:after {
+:host([dir="rtl"]) #button:after {
     transform: translateX(50%) translateY(-50%);
 }

@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     fill: var(--highcontrast-menu-item-color-default, var(--mod-menu-item-label-icon-color-default, var(--spectrum-menu-item-label-icon-color-default)));
     color: var(--highcontrast-menu-item-color-default, var(--mod-menu-item-label-icon-color-default, var(--spectrum-menu-item-label-icon-color-default)));
     grid-area: iconArea;
     align-self: start;
 }
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     margin-inline-end: var(--mod-menu-item-label-text-to-visual, var(--spectrum-menu-item-label-text-to-visual));
 }
 
@@ -34,10 +34,10 @@ governing permissions and limitations under the License.
     padding-inline: var(--mod-menu-item-label-inline-edge-to-content, var(--spectrum-menu-item-label-inline-edge-to-content));
     margin: calc((var(--spectrum-menu-item-focus-indicator-offset) + var(--spectrum-menu-item-focus-indicator-width)) * var(--spectrum-menu-item-spacing-multiplier));
     grid-template:
-        '. chevronAreaCollapsible . headingIconArea sectionHeadingArea . . .' 1fr
-        'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn'
-        '. . . . descriptionArea . . .'
-        '. . . . submenuArea . . .'
+        ". chevronAreaCollapsible . headingIconArea sectionHeadingArea . . ." 1fr
+        "selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn"
+        ". . . . descriptionArea . . ."
+        ". . . . submenuArea . . ."
         / auto auto auto auto 1fr auto auto auto;
     align-items: center;
     -webkit-text-decoration: none;
@@ -71,7 +71,7 @@ governing permissions and limitations under the License.
     grid-area: submenuItemLabelArea;
 }
 
-::slotted([slot='value']) {
+::slotted([slot="value"]) {
     grid-area: submenuItemValueArea;
 }
 
@@ -86,13 +86,13 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-label-content-color-focus, var(--spectrum-menu-item-label-content-color-focus)));
 }
 
-:host([focused]) > [name='description']::slotted(*),
-:host(:focus) > [name='description']::slotted(*) {
+:host([focused]) > [name="description"]::slotted(*),
+:host(:focus) > [name="description"]::slotted(*) {
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-description-color-focus, var(--spectrum-menu-item-description-color-focus)));
 }
 
-:host([focused]) > ::slotted([slot='value']),
-:host(:focus) > ::slotted([slot='value']) {
+:host([focused]) > ::slotted([slot="value"]),
+:host(:focus) > ::slotted([slot="value"]) {
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-value-color-focus, var(--spectrum-menu-item-value-color-focus)));
 }
 
@@ -122,11 +122,11 @@ governing permissions and limitations under the License.
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-label-content-color-down, var(--spectrum-menu-item-label-content-color-down)));
 }
 
-:host(:is(:active, [active])) > [name='description']::slotted(*) {
+:host(:is(:active, [active])) > [name="description"]::slotted(*) {
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-description-color-down, var(--spectrum-menu-item-description-color-down)));
 }
 
-:host(:is(:active, [active])) > ::slotted([slot='value']) {
+:host(:is(:active, [active])) > ::slotted([slot="value"]) {
     color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-value-color-down, var(--spectrum-menu-item-value-color-down)));
 }
 
@@ -146,24 +146,24 @@ governing permissions and limitations under the License.
 }
 
 :host([disabled]),
-:host([aria-disabled='true']) {
+:host([aria-disabled="true"]) {
     background-color: initial;
 }
 
 :host([disabled]) #label,
-:host([disabled]) ::slotted([slot='value']),
-:host([aria-disabled='true']) #label,
-:host([aria-disabled='true']) ::slotted([slot='value']) {
+:host([disabled]) ::slotted([slot="value"]),
+:host([aria-disabled="true"]) #label,
+:host([aria-disabled="true"]) ::slotted([slot="value"]) {
     color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-content-color-disabled, var(--spectrum-menu-item-label-content-color-disabled)));
 }
 
-:host([disabled]) [name='description']::slotted(*),
-:host([aria-disabled='true']) [name='description']::slotted(*) {
+:host([disabled]) [name="description"]::slotted(*),
+:host([aria-disabled="true"]) [name="description"]::slotted(*) {
     color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-description-color-disabled, var(--spectrum-menu-item-description-color-disabled)));
 }
 
-:host([disabled]) ::slotted([slot='icon']),
-:host([aria-disabled='true']) ::slotted([slot='icon']) {
+:host([disabled]) ::slotted([slot="icon"]),
+:host([aria-disabled="true"]) ::slotted([slot="icon"]) {
     color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
     fill: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
@@ -190,7 +190,7 @@ governing permissions and limitations under the License.
     grid-area: labelArea;
 }
 
-::slotted([slot='value']) {
+::slotted([slot="value"]) {
     color: var(--highcontrast-menu-item-color-default, var(--mod-menu-item-value-color-default, var(--spectrum-menu-item-value-color-default)));
     font-size: var(--mod-menu-item-label-font-size, var(--spectrum-menu-item-label-font-size));
     grid-area: valueArea;
@@ -198,7 +198,7 @@ governing permissions and limitations under the License.
 }
 
 .spectrum-Menu-itemActions,
-::slotted([slot='value']) {
+::slotted([slot="value"]) {
     align-self: start;
     margin-inline-start: var(--mod-menu-item-label-to-value-area-min-spacing, var(--spectrum-menu-item-label-to-value-area-min-spacing));
 }
@@ -207,7 +207,7 @@ governing permissions and limitations under the License.
     grid-area: actionsArea;
 }
 
-[name='description']::slotted(*) {
+[name="description"]::slotted(*) {
     color: var(--highcontrast-menu-item-color-default, var(--mod-menu-item-description-color-default, var(--spectrum-menu-item-description-color-default)));
     font-size: var(--mod-menu-item-description-font-size, var(--spectrum-menu-item-description-font-size));
     hyphens: auto;
@@ -237,11 +237,11 @@ governing permissions and limitations under the License.
     background-color: var(--highcontrast-menu-item-background-color-default, var(--mod-menu-item-background-color-default, var(--spectrum-menu-item-background-color-default)));
 }
 
-.spectrum-Menu-item--collapsible ::slotted([slot='icon']) {
+.spectrum-Menu-item--collapsible ::slotted([slot="icon"]) {
     grid-area: headingIconArea;
 }
 
-.spectrum-Menu-item--collapsible > ::slotted([slot='icon']) {
+.spectrum-Menu-item--collapsible > ::slotted([slot="icon"]) {
     padding-block-start: var(--mod-menu-section-header-top-edge-to-text, var(--mod-menu-item-top-edge-to-text, var(--spectrum-menu-item-top-edge-to-text)));
     padding-block-end: var(--mod-menu-section-header-bottom-edge-to-text, var(--mod-menu-item-bottom-edge-to-text, var(--spectrum-menu-item-bottom-edge-to-text)));
 }
@@ -286,11 +286,11 @@ governing permissions and limitations under the License.
         color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-label-content-color-hover, var(--spectrum-menu-item-label-content-color-hover)));
     }
 
-    :host(:hover) > [name='description']::slotted(*) {
+    :host(:hover) > [name="description"]::slotted(*) {
         color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-description-color-hover, var(--spectrum-menu-item-description-color-hover)));
     }
 
-    :host(:hover) > ::slotted([slot='value']) {
+    :host(:hover) > ::slotted([slot="value"]) {
         color: var(--highcontrast-menu-item-color-focus, var(--mod-menu-item-value-color-hover, var(--spectrum-menu-item-value-color-hover)));
     }
 
@@ -310,25 +310,25 @@ governing permissions and limitations under the License.
     }
 
     :host([disabled]:hover),
-    :host([aria-disabled='true']:hover) {
+    :host([aria-disabled="true"]:hover) {
         cursor: default;
         background-color: initial;
     }
 
     :host([disabled]:hover) #label,
-    :host([disabled]:hover) ::slotted([slot='value']),
-    :host([aria-disabled='true']:hover) #label,
-    :host([aria-disabled='true']:hover) ::slotted([slot='value']) {
+    :host([disabled]:hover) ::slotted([slot="value"]),
+    :host([aria-disabled="true"]:hover) #label,
+    :host([aria-disabled="true"]:hover) ::slotted([slot="value"]) {
         color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-content-color-disabled, var(--spectrum-menu-item-label-content-color-disabled)));
     }
 
-    :host([disabled]:hover) [name='description']::slotted(*),
-    :host([aria-disabled='true']:hover) [name='description']::slotted(*) {
+    :host([disabled]:hover) [name="description"]::slotted(*),
+    :host([aria-disabled="true"]:hover) [name="description"]::slotted(*) {
         color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-description-color-disabled, var(--spectrum-menu-item-description-color-disabled)));
     }
 
-    :host([disabled]:hover) ::slotted([slot='icon']),
-    :host([aria-disabled='true']:hover) ::slotted([slot='icon']) {
+    :host([disabled]:hover) ::slotted([slot="icon"]),
+    :host([aria-disabled="true"]:hover) ::slotted([slot="icon"]) {
         color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
         fill: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
     }

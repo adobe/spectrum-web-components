@@ -65,12 +65,12 @@ governing permissions and limitations under the License.
     --spectrum-table-icon-color: var(--highcontrast-table-icon-color-focus, var(--mod-table-icon-color-key-focus, var(--spectrum-table-icon-color-key-focus)));
 }
 
-:host([sort-direction='asc']) .sortedIcon,
-:host([sort-direction='desc']) .sortedIcon {
+:host([sort-direction="asc"]) .sortedIcon,
+:host([sort-direction="desc"]) .sortedIcon {
     display: inline-block;
 }
 
-:host([sort-direction='asc']) .sortedIcon {
+:host([sort-direction="asc"]) .sortedIcon {
     transform: rotate(-90deg);
 }
 

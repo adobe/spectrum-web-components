@@ -1,6 +1,4 @@
-<!-- omit from toc -->
-
-# Pull request best practices
+# Pull request best practices <!-- omit from toc -->
 
 This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
 
@@ -93,6 +91,7 @@ Incomplete templates may delay the review process.
 ## Labels and their meanings
 
 -   `ready-for-review`: PR is ready for maintainer review
+-   `ready-for-merge`: PR has two approvals and all tests pass. This label will keep the base of the PR up-to-date with main until it's merged.
 -   `WIP`: PR is still being worked on, not ready for review
 -   `blocked`: PR is blocked for some reason i.e. another PR needs to go in first
 -   `needs-tests`: PR is missing necessary tests
@@ -105,6 +104,7 @@ Incomplete templates may delay the review process.
 -   `on-hold`: PR needs more discussion.
 -   `Spectrum CSS`: An issue or pull request specific to the CSS being used by components.
 -   `Component: [Name]`: PR effects this component
+-   `auto-update`: Keep the base of the PR up-to-date with main automatically if there are no conflicts.
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
 

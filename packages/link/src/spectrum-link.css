@@ -17,7 +17,7 @@ governing permissions and limitations under the License.
     }
 }
 
-:host([variant='secondary']) a {
+:host([variant="secondary"]) a {
     --mod-link-text-color: var(--mod-link-text-color-secondary-default, var(--spectrum-neutral-content-color-default));
     --mod-link-text-color-hover: var(--mod-link-text-color-secondary-hover, var(--spectrum-neutral-content-color-hover));
     --mod-link-text-color-active: var(--mod-link-text-color-secondary-active, var(--spectrum-neutral-content-color-down));
@@ -63,14 +63,14 @@ a:focus-visible {
     }
 }
 
-:host([static-color='white']) a {
+:host([static-color="white"]) a {
     --mod-link-text-color: var(--mod-link-text-color-white, var(--spectrum-white));
     --mod-link-text-color-hover: var(--mod-link-text-color-white, var(--spectrum-white));
     --mod-link-text-color-active: var(--mod-link-text-color-white, var(--spectrum-white));
     --mod-link-text-color-focus: var(--mod-link-text-color-white, var(--spectrum-white));
 }
 
-:host([static-color='black']) a {
+:host([static-color="black"]) a {
     --mod-link-text-color: var(--mod-link-text-color-black, var(--spectrum-black));
     --mod-link-text-color-hover: var(--mod-link-text-color-black, var(--spectrum-black));
     --mod-link-text-color-active: var(--mod-link-text-color-black, var(--spectrum-black));

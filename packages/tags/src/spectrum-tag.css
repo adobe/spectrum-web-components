@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
     --spectrum-tag-clear-button-spacing-inline-end: var(--spectrum-tag-size-medium-clear-button-spacing-inline-end);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-tag-height: var(--spectrum-component-height-75);
     --spectrum-tag-font-size: var(--spectrum-font-size-75);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-75);
@@ -92,7 +92,7 @@ governing permissions and limitations under the License.
     --spectrum-tag-clear-button-spacing-inline-end: var(--spectrum-tag-size-small-clear-button-spacing-inline-end);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-tag-height: var(--spectrum-component-height-200);
     --spectrum-tag-font-size: var(--spectrum-font-size-200);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-200);
@@ -137,7 +137,7 @@ governing permissions and limitations under the License.
     position: relative;
 }
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     flex-shrink: 0;
@@ -146,7 +146,7 @@ governing permissions and limitations under the License.
     margin-inline-end: var(--mod-tag-icon-spacing-inline-end, var(--spectrum-tag-icon-spacing-inline-end));
 }
 
-::slotted([slot='avatar']) {
+::slotted([slot="avatar"]) {
     margin-block-start: calc(var(--mod-tag-avatar-spacing-block-start, var(--spectrum-tag-avatar-spacing-block-start)) - var(--mod-tag-border-width, var(--spectrum-tag-border-width)));
     margin-block-end: calc(var(--mod-tag-avatar-spacing-block-end, var(--spectrum-tag-avatar-spacing-block-end)) - var(--mod-tag-border-width, var(--spectrum-tag-border-width)));
     margin-inline-end: var(--mod-tag-avatar-spacing-inline-end, var(--spectrum-tag-avatar-spacing-inline-end));
@@ -200,7 +200,7 @@ governing permissions and limitations under the License.
 
 :host([focused]):after,
 :host(:focus-visible):after {
-    content: '';
+    content: "";
     border-color: var(--highcontrast-tag-focus-ring-color, var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color)));
     border-radius: calc(var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) + var(--mod-tag-border-width, var(--spectrum-tag-border-width)));
     border-width: var(--mod-tag-focus-ring-thickness, var(--spectrum-tag-focus-ring-thickness));
@@ -319,7 +319,7 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-:host([disabled]) ::slotted([slot='avatar']) {
+:host([disabled]) ::slotted([slot="avatar"]) {
     opacity: var(--mod-avatar-opacity-disabled, var(--spectrum-avatar-opacity-disabled));
 }
 

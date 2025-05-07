@@ -39,7 +39,7 @@ governing permissions and limitations under the License.
     --mod-infield-button-icon-color-key-focus: var(--mod-infield-button-icon-color-key-focus-disabled, var(--spectrum-disabled-content-color));
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-infield-button-height: var(--spectrum-component-height-75);
     --spectrum-infield-button-width: var(--spectrum-component-height-75);
     --spectrum-infield-button-stacked-fill-padding-inline: var(--spectrum-in-field-button-edge-to-disclosure-icon-stacked-small);
@@ -47,7 +47,7 @@ governing permissions and limitations under the License.
     --spectrum-infield-button-stacked-fill-padding-inner: var(--spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-small);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-infield-button-height: var(--spectrum-component-height-200);
     --spectrum-infield-button-width: var(--spectrum-component-height-200);
     --spectrum-infield-button-stacked-fill-padding-inline: var(--spectrum-in-field-button-edge-to-disclosure-icon-stacked-large);
@@ -55,7 +55,7 @@ governing permissions and limitations under the License.
     --spectrum-infield-button-stacked-fill-padding-inner: var(--spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-large);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-infield-button-height: var(--spectrum-component-height-300);
     --spectrum-infield-button-width: var(--spectrum-component-height-300);
     --spectrum-infield-button-stacked-fill-padding-inline: var(--spectrum-in-field-button-edge-to-disclosure-icon-stacked-extra-large);
@@ -63,23 +63,23 @@ governing permissions and limitations under the License.
     --spectrum-infield-button-stacked-fill-padding-inner: var(--spectrum-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large);
 }
 
-:host([block='end']),
-:host([block='start']) {
+:host([block="end"]),
+:host([block="start"]) {
     --mod-infield-button-width: var(--mod-infield-button-width-stacked, var(--spectrum-in-field-button-width-stacked-medium));
 }
 
-:host([block='end'][size='s']),
-:host([block='start'][size='s']) {
+:host([block="end"][size="s"]),
+:host([block="start"][size="s"]) {
     --mod-infield-button-width: var(--mod-infield-button-width-stacked, var(--spectrum-in-field-button-width-stacked-small));
 }
 
-:host([block='end'][size='l']),
-:host([block='start'][size='l']) {
+:host([block="end"][size="l"]),
+:host([block="start"][size="l"]) {
     --mod-infield-button-width: var(--mod-infield-button-width-stacked, var(--spectrum-in-field-button-width-stacked-large));
 }
 
-:host([block='end'][size='xl']),
-:host([block='start'][size='xl']) {
+:host([block="end"][size="xl"]),
+:host([block="start"][size="xl"]) {
     --mod-infield-button-width: var(--mod-infield-button-width-stacked, var(--spectrum-in-field-button-width-stacked-extra-large));
 }
 
@@ -156,16 +156,16 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
-:host([block='end']),
-:host([block='start']) {
+:host([block="end"]),
+:host([block="start"]) {
     block-size: calc(var(--mod-infield-button-height, var(--spectrum-infield-button-height)) / 2);
 }
 
-:host([block='start']) {
+:host([block="start"]) {
     padding-block-end: var(--mod-infield-button-inner-edge-to-fill, var(--spectrum-infield-button-inner-edge-to-fill));
 }
 
-:host([block='end']) {
+:host([block="end"]) {
     padding-block-start: var(--mod-infield-button-inner-edge-to-fill, var(--spectrum-infield-button-inner-edge-to-fill));
 }
 
@@ -187,24 +187,24 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([inline='end']) .fill {
+:host([inline="end"]) .fill {
     border-start-start-radius: var(--mod-infield-button-border-radius-reset, var(--spectrum-infield-button-border-radius-reset));
     border-end-start-radius: var(--mod-infield-button-border-radius-reset, var(--spectrum-infield-button-border-radius-reset));
 }
 
-:host([inline='start']) .fill {
+:host([inline="start"]) .fill {
     border-start-end-radius: var(--mod-infield-button-border-radius-reset, var(--spectrum-infield-button-border-radius-reset));
     border-end-end-radius: var(--mod-infield-button-border-radius-reset, var(--spectrum-infield-button-border-radius-reset));
 }
 
-:host([block='end']) .fill,
-:host([block='start']) .fill {
+:host([block="end"]) .fill,
+:host([block="start"]) .fill {
     box-sizing: border-box;
     padding-inline-start: calc(var(--mod-infield-button-stacked-fill-padding-inline, var(--spectrum-infield-button-stacked-fill-padding-inline)) - var(--mod-infield-button-edge-to-fill, var(--spectrum-infield-button-edge-to-fill)) - var(--mod-infield-button-border-width, var(--spectrum-infield-button-border-width)));
     padding-inline-end: calc(var(--mod-infield-button-stacked-fill-padding-inline, var(--spectrum-infield-button-stacked-fill-padding-inline)) - var(--mod-infield-button-edge-to-fill, var(--spectrum-infield-button-edge-to-fill)) - var(--mod-infield-button-border-width, var(--spectrum-infield-button-border-width)));
 }
 
-:host([block='start']) .fill {
+:host([block="start"]) .fill {
     border-block-end: none;
     border-start-start-radius: var(--mod-infield-button-stacked-top-border-radius-start-start, var(--spectrum-infield-button-stacked-top-border-radius-start-start));
     border-end-end-radius: var(--mod-infield-button-stacked-border-radius-reset, var(--spectrum-infield-button-stacked-border-radius-reset));
@@ -213,7 +213,7 @@ governing permissions and limitations under the License.
     padding-block-end: calc(var(--mod-infield-button-stacked-fill-padding-inner, var(--spectrum-infield-button-stacked-fill-padding-inner)) - var(--mod-infield-button-inner-edge-to-fill, var(--spectrum-infield-button-inner-edge-to-fill)));
 }
 
-:host([block='end']) .fill {
+:host([block="end"]) .fill {
     border-block-end-width: var(--mod-infield-button-stacked-bottom-border-block-end-width, var(--mod-infield-button-border-width, var(--spectrum-infield-button-border-width)));
     border-start-start-radius: var(--mod-infield-button-stacked-border-radius-reset, var(--spectrum-infield-button-stacked-border-radius-reset));
     border-start-end-radius: var(--mod-infield-button-stacked-border-radius-reset, var(--spectrum-infield-button-stacked-border-radius-reset));

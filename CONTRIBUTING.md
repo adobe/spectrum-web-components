@@ -1,6 +1,4 @@
-<!-- omit from toc -->
-
-# Contributing best practices
+# Contributing best practices <!-- omit from toc -->
 
 Welcome! We're excited you're interested in improving Spectrum Web Components. Whether you're reporting bugs, adding new features, writing documentation, or helping other users, your contributions make this project better for everyone.
 

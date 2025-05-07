@@ -22,47 +22,47 @@ governing permissions and limitations under the License.
     --spectrum-avatar-color-opacity-disabled: var(--spectrum-avatar-opacity-disabled);
 }
 
-:host([size='50']) {
+:host([size="50"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-50);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-50);
 }
 
-:host([size='75']) {
+:host([size="75"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-75);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-75);
 }
 
-:host([size='100']) {
+:host([size="100"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
 }
 
-:host([size='200']) {
+:host([size="200"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-200);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-200);
 }
 
-:host([size='300']) {
+:host([size="300"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-300);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-300);
 }
 
-:host([size='400']) {
+:host([size="400"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-400);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-400);
 }
 
-:host([size='500']) {
+:host([size="500"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-500);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-500);
 }
 
-:host([size='600']) {
+:host([size="600"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-600);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-600);
 }
 
-:host([size='700']) {
+:host([size="700"]) {
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-700);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-700);
 }
@@ -95,7 +95,7 @@ governing permissions and limitations under the License.
 :host(:not([disabled])) .is-focused:after,
 :host(:not([disabled])) .link:focus-visible:after {
     pointer-events: none;
-    content: '';
+    content: "";
     inline-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
     block-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
     border-style: solid;

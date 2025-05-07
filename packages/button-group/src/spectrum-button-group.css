@@ -18,7 +18,7 @@ governing permissions and limitations under the License.
     --spectrum-buttongroup-justify-content: var(--mod-buttongroup-justify-content, normal);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-buttongroup-spacing: var(--mod-buttongroup-spacing, var(--mod-buttongroup-spacing-horizontal, var(--spectrum-spacing-200)));
 }
 

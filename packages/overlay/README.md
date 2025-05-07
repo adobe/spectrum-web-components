@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-overlay>` element is used to decorate content that you would like to present to your visitors as "overlaid" on the rest of the application. This includes dialogs (modal and not), pickers, tooltips, context menus, et al.
 
@@ -7,27 +7,25 @@ An `<sp-overlay>` element is used to decorate content that you would like to pre
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/overlay?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/overlay)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/overlay?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/overlay)
 
-```
+```zsh
 yarn add @spectrum-web-components/overlay
 ```
 
 Import the side effectful registration of `<sp-overlay>` as follows:
 
-```
+```ts
 import '@spectrum-web-components/overlay/sp-overlay.js';
 ```
 
 When looking to leverage the `Overlay` base class as a type and/or for extension purposes, do so via:
 
-```
-import {
-    Overlay
-} from '@spectrum-web-components/overlay';
+```ts
+import { Overlay } from '@spectrum-web-components/overlay';
 ```
 
-## Example
+### Example
 
-By leveraging the `trigger` attribute to pass an ID reference to another element with in the same DOM tree, your overlay will be positioned in relation to this element. When the ID reference is followed by an `@` symbol and interaction type, like `click`, `hover`, or `longpress`, the overlay will bind itself to the referenced element via the DOM events associated with that interaction. For example, the `<sp-button>` below has an id of `trigger`, and the `<sp-overlay>` is provided the `trigger` attribute with the value `trigger@click`. This creates an association between the overlay and the `<sp-button>` that opens the overlay when the button is clicked.
+By leveraging the `trigger` attribute to pass an ID reference to another element within the same DOM tree, your overlay will be positioned in relation to this element. When the ID reference is followed by an `@` symbol and interaction type, like `click`, `hover`, or `longpress`, the overlay will bind itself to the referenced element via the DOM events associated with that interaction.
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
@@ -50,9 +48,378 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 </sp-overlay>
 ```
 
+### Anatomy
+
 When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
 
-### Action Bar
+### Options
+
+<sp-tabs selected="delayed" auto label="Overlay options">
+<sp-tab value="delayed">delayed</sp-tab>
+<sp-tab-panel value="delayed">
+
+An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period of 1000ms will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
+
+```html
+<sp-button id="trigger">Overlay Trigger</sp-button>
+
+<sp-overlay trigger="trigger@hover" placement="bottom" delayed>
+    <sp-tooltip>I'm a tooltip and I'm delayed!</sp-tooltip>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="notImmediatelyCloseable">notImmediatelyCloseable</sp-tab>
+<sp-tab-panel value="notImmediatelyCloseable">
+
+When an Overlay is `notImmediatelyCloseable` that means that the first interaction that would lead to the closure of the Overlay in question will be ignored. This is useful when working with non-"click" mouse interactions, like `contextmenu`, where the trigger event (e.g. `contextmenu`) occurs _before_ an event that would close said overlay (e.g. `pointerup`).
+
+```html-live
+<style>
+    #root {
+        position: relative;
+        width: 100%;
+        height: 20vh;
+        background-color: var(--spectrum-gray-100);
+        border: 1px solid var(--spectrum-gray-400);
+    }
+</style>
+
+<p>Right click anywhere in bounded rectangle to open the menu</p>
+<div id="root">
+    <sp-overlay
+        offset="0"
+        type="auto"
+        placement="right-start"
+    >
+        <sp-popover style="width:300px;">
+            <sp-menu>
+                <sp-menu-group>
+                    <span slot="header">Menu</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        </sp-popover>
+    </sp-overlay>
+</div>
+
+<script type="module">
+    import { VirtualTrigger } from '@spectrum-web-components/overlay';
+
+    const init = () => {
+        const overlay = document.querySelector('sp-overlay');
+        const popover = overlay.querySelector('sp-popover');
+
+        // Set up the virtual trigger
+        overlay.triggerElement = new VirtualTrigger(0, 0);
+
+        // Set up change handler for menu items
+        popover.addEventListener('change', (event) => {
+            event.target.dispatchEvent(new Event('close', { bubbles: true }));
+        });
+
+        const handleContextmenu = async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (overlay.triggerElement instanceof VirtualTrigger) {
+                overlay.triggerElement.updateBoundingClientRect(
+                    event.clientX,
+                    event.clientY
+                );
+            }
+            overlay.willPreventClose = true;
+            overlay.open = true;
+        };
+
+        const root = document.getElementById('root');
+        root.addEventListener('contextmenu', handleContextmenu, { capture: true });
+    }
+
+   customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            init();
+        });
+    });
+</script>
+```
+
+<script type="module">
+    import { VirtualTrigger } from '@spectrum-web-components/overlay';
+     
+    const init = () => {
+        const overlay = document.querySelector('sp-overlay');
+        const popover = overlay.querySelector('sp-popover');
+        
+        // Set up the virtual trigger
+        overlay.triggerElement = new VirtualTrigger(0, 0);
+        
+        // Set up change handler for menu items
+        popover.addEventListener('change', (event) => {
+            event.target.dispatchEvent(new Event('close', { bubbles: true }));
+        });
+
+        const handleContextmenu = async (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (overlay.triggerElement instanceof VirtualTrigger) {
+                overlay.triggerElement.updateBoundingClientRect(
+                    event.clientX,
+                    event.clientY
+                );
+            }
+            overlay.willPreventClose = true;
+            overlay.open = true;
+        };
+
+        const root = document.getElementById('root');
+        root.addEventListener('contextmenu', handleContextmenu, { capture: true });
+    }
+
+   customElements.whenDefined('code-example').then(() => {
+        Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
+            init();
+        });
+    });
+</script>
+
+</sp-tab-panel>
+<sp-tab value="offset">offset</sp-tab>
+<sp-tab-panel value="offset">
+
+The `offset` property accepts either a single number, to define the offset of the Overlay along the main axis from the trigger, or 2-tuple, to define the offset along the main axis and the cross axis. This option has no effect when there is no trigger element.
+
+```html
+<sp-button id="trigger">Overlay Trigger</sp-button>
+
+<sp-overlay trigger="trigger@click" placement="bottom" offset="50">
+    <sp-popover>
+        <sp-dialog>
+            <h2 slot="heading">Clicking opens this popover...</h2>
+            <p>An offset of 50px is applied to the overlay.</p>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="placement">placement</sp-tab>
+<sp-tab-panel value="placement">
+
+A `placement` of `"auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"` will instruct the Overlay where to place itself in relationship to the trigger element.
+
+```html
+<sp-button id="trigger">Overlay Trigger</sp-button>
+
+<sp-overlay trigger="trigger@click" placement="right-start">
+    <sp-popover>
+        <sp-dialog>
+            <h2 slot="heading">Clicking opens this popover...</h2>
+            <p>The overlay is placed to the right of the trigger.</p>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="receivesFocus">receivesFocus</sp-tab>
+<sp-tab-panel value="receivesFocus">
+
+Some Overlays will always be passed focus (e.g. modal or page Overlays). When this is not true, the `receivesFocus` option will inform the API whether to attempt to pass focus into the Overlay once it is open. `'true'` will pass focus, `'false'` will not (when possible), and `"auto"` (the default), will make a decision based on the `type` of the Overlay.
+
+```html
+<sp-button id="trigger">Overlay Trigger</sp-button>
+
+<sp-overlay trigger="trigger@click" placement="bottom" receives-focus="false">
+    <sp-popover>
+        <sp-dialog>
+            <h2 slot="heading">
+                Clicking opens this popover but does not receive focus
+            </h2>
+            <sp-field-label>Enter your email</sp-field-label>
+            <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+            <sp-action-button
+                onClick="
+                    this.dispatchEvent(
+                        new Event('close', {
+                            bubbles: true,
+                            composed: true,
+                        })
+                    );
+                "
+            >
+                Sign in
+            </sp-action-button>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### trigger
+
+The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
+
+-   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+
+<sp-tabs selected="type" auto label="Type attribute options">
+<sp-tab value="type">type</sp-tab>
+<sp-tab-panel value="type">
+
+The `type` of an Overlay outlines a number of things about the interaction model within which it works:
+
+<sp-tabs selected="modal" auto label="Type attribute options">
+<sp-tab value="modal">Modal</sp-tab>
+<sp-tab-panel value="modal">
+
+`'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
+
+They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
+
+```html
+<sp-button id="trigger">open modal</sp-button>
+<sp-overlay trigger="trigger@click" type="modal">
+    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
+        <p>I am a modal type overlay.</p>
+        <sp-field-label>Enter your email</sp-field-label>
+        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
+        <sp-action-button
+            onClick="
+                this.dispatchEvent(
+                    new Event('close', {
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            "
+        >
+            Sign in
+        </sp-action-button>
+    </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="page">Page</sp-tab>
+<sp-tab-panel value="page">
+
+`'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+
+A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
+
+```html
+<sp-button id="trigger">open page</sp-button>
+<sp-overlay trigger="trigger@click" type="page">
+    <sp-dialog-wrapper
+        headline="Full screen menu"
+        mode="fullscreenTakeover"
+        cancel-label="Close"
+    >
+        <p>I am a page type overlay.</p>
+    </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="hint">Hint</sp-tab>
+<sp-tab-panel value="hint">
+
+`'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
+
+This overlay type does not accept focus and does not interfere with the user's interaction with the rest of the page.
+
+```html
+<sp-button id="trigger">open hint</sp-button>
+<sp-overlay trigger="trigger@hover" type="hint">
+    <sp-tooltip>
+        I am a hint type overlay. I am not interactive and will close when the
+        user interacts with the page.
+    </sp-tooltip>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="auto">Auto</sp-tab>
+<sp-tab-panel value="auto">
+
+`'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus and remain open while interacting with their content. They will close when focus moves outside the overlay or when clicking elsewhere on the page.
+
+```html
+<sp-button id="trigger">Open Overlay</sp-button>
+<sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+    <sp-popover dialog>
+        <p>
+            My slider in overlay element:
+            <sp-slider label="Slider Label - Editable" editable></sp-slider>
+        </p>
+    </sp-popover>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+<sp-tab value="manual">Manual</sp-tab>
+<sp-tab-panel value="manual">
+
+`'manual'` Overlays act much like `'auto'` Overlays, but do not close when losing focus or interacting with other parts of the page.
+
+Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
+
+```html
+<style>
+    .chat-container {
+        position: fixed;
+        bottom: 1em;
+        left: 1em;
+    }
+</style>
+<sp-button id="trigger">open manual</sp-button>
+<sp-overlay trigger="trigger@click" type="manual">
+    <sp-popover class="chat-container">
+        <sp-dialog dismissable>
+            <span slot="heading">Chat Window</span>
+            <sp-textfield placeholder="Enter your message"></sp-textfield>
+            <sp-action-button>Send</sp-action-button>
+        </sp-dialog>
+    </sp-popover>
+</sp-overlay>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Events
+
+When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. Both of these events are of type:
+
+```ts
+type OverlayStateEvent = Event & {
+    overlay: Overlay;
+};
+```
+
+The `overlay` value in this case will hold a reference to the actual `<sp-overlay>` that is opening or closing to trigger this event. Remember that some `<sp-overlay>` element (like those creates via the imperative API) can be transiently available in the DOM, so if you choose to build a cache of Overlay elements to some end, be sure to leverage a weak reference so that the `<sp-overlay>` can be garbage collected as desired by the browser.
+
+#### When it is "fully" open or closed?
+
+"Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
+
+-   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
+-   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
+
+This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
+
+### Integration patterns
+
+#### Action bar system
 
 ```html
 <style>
@@ -154,7 +521,9 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
 </sp-popover>
 ```
 
-## API
+### Advanced topics
+
+#### API
 
 ```ts
 <sp-overlay
@@ -170,194 +539,57 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
 ></sp-overlay>
 ```
 
-### API value interactions
+##### API value interactions
 
-When a `triggerElement` is present, either through an ID reference established via the `trigger` attribute or by directly setting the `triggerElement` property, a chain on configuration begins:
+When a `triggerElement` is present (via `trigger` attribute or direct property setting), the following configurations apply:
 
--   **if a `triggerInteraction` is available**, either through the `id@interaction` IDL on the `trigger` attribute or directly setting the `triggerInteraction` property, the `<sp-overlay>` will be bound to the resolved `triggerElement` via the `triggerInteraction` provided
--   **if a `placement` is available** when the `<sp-overlay>` is `open` and displaying its contents, those contents will be positioned relative to the `triggerElement` as per that `placement`
-    -   **if an `offset` is also available** the `<sp-overlay>` will distance itself from the `triggerElement` in accordance with the value of the `offset`
-    -   **if you have a `placement` but not a `triggerElement`** the `<sp-overlay>` will not be positioned due to their being nothing for the `placement` to reference when so doing
--   **if no `placement` is available** the content will not be placed with the expectation that the content itself or the consuming application will handle placement of the overlaid content. This is commonly what will happen for `type="modal"` and `type="page"` overlays as they are likely meant to cover the entire screen, whether visibly (via an `<sp-underlay>`, an element that includes one, or similar) or figuratively (as when modal content is not delivered with a backdrop or scrim).
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Configuration</sp-table-head-cell>
+        <sp-table-head-cell>Required Properties</sp-table-head-cell>
+        <sp-table-head-cell>Behavior</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>Basic Placement</sp-table-cell>
+            <sp-table-cell>`placement` + `triggerElement`</sp-table-cell>
+            <sp-table-cell>Content positions next to trigger</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Placement + Offset</sp-table-cell>
+            <sp-table-cell>`placement` + `offset` + `triggerElement`</sp-table-cell>
+            <sp-table-cell>Content positions with extra spacing</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Invalid Placement</sp-table-cell>
+            <sp-table-cell>`placement` without `triggerElement`</sp-table-cell>
+            <sp-table-cell>No positioning occurs</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>No Placement</sp-table-cell>
+            <sp-table-cell>No `placement` specified</sp-table-cell>
+            <sp-table-cell>Content positioning handled by:
+• Content itself
+• Application
 
-### Overlay types
+Common in `modal`/`page` overlays for full-screen content</sp-table-cell>
+</sp-table-row>
+</sp-table-body>
+</sp-table>
 
-The `type` of an Overlay outlines a number of things about the interaction model within which is works.
-
-### Modal
-
-`'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
-
-They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
-
-```html
-<sp-button id="trigger">open modal</sp-button>
-<sp-overlay trigger="trigger@click" type="modal">
-    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-        <p>I am a modal type overlay.</p>
-        <sp-field-label>Enter your email</sp-field-label>
-        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-        <sp-action-button
-            onClick="
-                this.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            "
-        >
-            Sign in
-        </sp-action-button>
-    </sp-dialog-wrapper>
-</sp-overlay>
-```
-
-### Page
-
-`'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
-
-A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
-
-```html
-<sp-button id="trigger">open page</sp-button>
-<sp-overlay trigger="trigger@click" type="page">
-    <sp-dialog-wrapper
-        headline="Full screen menu"
-        mode="fullscreenTakeover"
-        cancel-label="Close"
-    >
-        <p>I am a page type overlay.</p>
-    </sp-dialog-wrapper>
-</sp-overlay>
-```
-
-### Hint
-
-`'hint'` Overlays are much like tooltips so they are not just ephemeral, but they are delivered primarily as a visual helper and exist outside of the tab order. In this way, be sure _not_ to place interactive content within this type of Overlay.
-
-This overlay type does not accept focus and does not interfere with the user's interaction with the rest of the page.
-
-```html
-<sp-button id="trigger">open hint</sp-button>
-<sp-overlay trigger="trigger@hover" type="hint">
-    <sp-tooltip>
-        I am a hint type overlay. I am not interactive and will close when the
-        user interacts with the page.
-    </sp-tooltip>
-</sp-overlay>
-```
-
-### Auto
-
-`'auto'` Overlays provide a place for content that is ephemeral _and_ interactive. These Overlays can accept focus and remain open while interacting with their content. They will close when focus moves outside the overlay or when clicking elsewhere on the page.
-
-```html
-<sp-button id="trigger">Open Overlay</sp-button>
-<sp-overlay trigger="trigger@click" type="auto" placement="bottom">
-    <sp-popover dialog>
-        <p>
-            My slider in overlay element:
-            <sp-slider label="Slider Label - Editable" editable></sp-slider>
-        </p>
-    </sp-popover>
-</sp-overlay>
-```
-
-### Manual
-
-`'manual'` Overlays act much like `'auto'` Overlays, but do not close when losing focus or interacting with other parts of the page.
-
-Note: When a `'manual'` Overlay is at the top of the "overlay stack", it will still respond to the Escape key and close.
-
-```html
-<style>
-    .chat-container {
-        position: fixed;
-        bottom: 1em;
-        left: 1em;
-    }
-</style>
-<sp-button id="trigger">open manual</sp-button>
-<sp-overlay trigger="trigger@click" type="manual">
-    <sp-popover class="chat-container">
-        <sp-dialog dismissable>
-            <span slot="heading">Chat Window</span>
-            <sp-textfield placeholder="Enter your message"></sp-textfield>
-            <sp-action-button>Send</sp-action-button>
-        </sp-dialog>
-    </sp-popover>
-</sp-overlay>
-```
-
-### Events
-
-When fully open the `<sp-overlay>` element will dispatch the `sp-opened` event, and when fully closed the `sp-closed` event will be dispatched. Both of these events are of type:
-
-```ts
-type OverlayStateEvent = Event & {
-    overlay: Overlay;
-};
-```
-
-The `overlay` value in this case will hold a reference to the actual `<sp-overlay>` that is opening or closing to trigger this event. Remember that some `<sp-overlay>` element (like those creates via the imperative API) can be transiently available in the DOM, so if you choose to build a cache of Overlay elements to some end, be sure to leverage a weak reference so that the `<sp-overlay>` can be garbage collected as desired by the browser.
-
-#### When it is "fully" open or closed?
-
-"Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
-
--   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
--   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
-
-This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
-
-## Nested Overlays
-
-When nesting multiple overlays, it is important to ensure that the nested overlays are actually nested in the HTML as well, otherwise it will not be accessible.
-
-```html
-<div style="padding: 20px;">
-    <sp-button id="outerTrigger" variant="primary">Open Outer Modal</sp-button>
-    <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
-        <sp-popover>
-            <sp-dialog>
-                <p>This is the outer modal content. Press ESC to close it.</p>
-                <sp-button id="innerTrigger" variant="primary">
-                    Open Inner Modal
-                </sp-button>
-                <sp-overlay
-                    id="innerOverlay"
-                    type="auto"
-                    trigger="innerTrigger@click"
-                >
-                    <sp-popover>
-                        <sp-dialog>
-                            <p>
-                                This is the inner modal content. Press ESC to
-                                close this first, then the outer modal.
-                            </p>
-                        </sp-dialog>
-                    </sp-popover>
-                </sp-overlay>
-            </sp-dialog>
-        </sp-popover>
-    </sp-overlay>
-</div>
-```
-
-## Styling
+#### Styling
 
 `<sp-overlay>` element will use the `<dialog>` element or `popover` attribute to project your content onto the top-layer of the browser, without being moved in the DOM tree. That means that you can style your overlay content with whatever techniques you are already leveraging to style the content that doesn't get overlaid. This means standard CSS selectors, CSS Custom Properties, and CSS Parts applied in your parent context will always apply to your overlaid content.
 
-## Top Layer over Complex CSS
+#### Top layer over complex CSS
 
 There are some complex CSS values that have not yet been covered by the positioning API that the `<sp-overlay>` element leverages to associate overlaid content with their trigger elements. In specific, properties like `filter`, when applied to a trigger element within which lives the related content to be overlaid, are not currently supported by the relationship created herein. If support for this is something that you and the work you are addressing would require, we'd love to hear from you in [an issue](https://github.com/adobe/spectrum-web-components/issues). We'd be particularly interested in speaking with you if you were interested in contributing support/testing to ensure this capability for all consumers of the library.
 
-## Fallback support
+#### Fallback support
 
 While the [`<dialog>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) is widely supported by browsers, the [`popover` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover) is still quite new. When leveraged in browsers that do not yet support the `popover` attribute, there may be additional intervention required to ensure your content is delivered to your visitors as expected.
 
-### Complex layered
+##### Complex layered
 
 When an overlay is placed within a page with complex layering, the content therein can fall behind other content in the `z-index` stack. The following example is somewhat contrived but, imagine a toolbar next to a properties panel. If the toolbar has a lower `z-index` than the properties panel, any overlaid content (tooltips, etc.) within that toolbar will display underneath any content in the properties panel with which it may share pixels.
 
@@ -397,7 +629,7 @@ When an overlay is placed within a page with complex layering, the content there
 
 Properly managed `z-index` values will support working around this issue while browsers work to adopt the `popover` attribute. In this demo, you can achieve the same output by sharing one `z-index` between the various pieces of content, removing `z-index` values altogether, or raising the `.complex-layered-holder` element to a higher `z-index` than the `.complex-layered-blocker` element.
 
-### Contained
+##### Contained
 
 [CSS Containment](https://developer.mozilla.org/en-US/docs/Web/CSS/contain) gives a developer direct control over how the internals of one element affect the paint and layout of the internals of other elements on the same page. While leveraging some of its values can offer performance gains, they can interrupt the delivery of your overlaid content.
 
@@ -439,7 +671,7 @@ You could just _remove_ the `contain` rule. But, if you are not OK with simply r
 
 `<sp-overlay>` accepts an ID reference via the `trigger` attribute to relate it to interactions and positioning in the DOM. To fulfill this reference the two elements need to be in the same DOM tree. However, `<sp-overlay>` alternatively accepts a `triggerElement` _property_ that opens even more flexibility in addressing this situation.
 
-### Clip pathed
+##### Clip pathed
 
 `clip-path` can also restrict how content in an element is surfaced at paint time. When overlaid content should display outside of the `clip-path`, without the `popover` attribute, that content could be _clipped_.
 
@@ -483,7 +715,7 @@ Here, again, working with your content needs (whether or not you want to leverag
 </style>
 ```
 
-### Non-overflowing, relative containers with z-index in Safari
+##### Non-overflowing, relative containers with z-index in Safari
 
 Under very specific conditions, [WebKit will incorrectly clip fixed-position content](https://bugs.webkit.org/show_bug.cgi?id=160953).
 WebKit clips `position: fixed` elements within containers that have all of:
@@ -493,3 +725,139 @@ WebKit clips `position: fixed` elements within containers that have all of:
 3. `z-index` greater than zero
 
 If you notice overlay clipping _only_ in Safari, this is likely the culprit. The solution is to break up the conditions into separate elements to avoid triggering WebKit's bug. For example, leaving relative positioning and z-index on the outermost container while creating an inner container that enforces the overflow rules.
+
+### Accessibility
+
+#### Nested overlays
+
+When nesting multiple overlays, it is important to ensure that the nested overlays are actually nested in the HTML as well, otherwise it will not be accessible.
+
+```html
+<div style="padding: 20px;">
+    <sp-button id="outerTrigger" variant="primary" aria-haspopup="dialog">
+        Open Outer Modal
+    </sp-button>
+    <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
+        <sp-popover>
+            <sp-dialog>
+                <h2 slot="heading" id="outer-dialog-heading">Outer Dialog</h2>
+                <p>This is the outer modal content. Press ESC to close it.</p>
+                <sp-button
+                    id="innerTrigger"
+                    variant="primary"
+                    aria-haspopup="dialog"
+                >
+                    Open Inner Modal
+                </sp-button>
+                <sp-overlay
+                    id="innerOverlay"
+                    type="auto"
+                    trigger="innerTrigger@click"
+                >
+                    <sp-popover>
+                        <sp-dialog>
+                            <h2 slot="heading" id="inner-dialog-heading">
+                                Inner Dialog
+                            </h2>
+                            <p>
+                                This is the inner modal content. Press ESC to
+                                close this first, then the outer modal.
+                            </p>
+                        </sp-dialog>
+                    </sp-popover>
+                </sp-overlay>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+</div>
+```
+
+#### Focus management
+
+The overlay manages focus based on its type:
+
+-   For `modal` and `page` types, focus is always trapped within the overlay
+-   For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
+-   For `hint` type, focus remains on the trigger element
+
+Example of proper focus management:
+
+```html
+<sp-button id="modal-trigger" aria-haspopup="dialog" aria-expanded="false">
+    Open Settings
+</sp-button>
+<sp-overlay trigger="modal-trigger@click" type="modal">
+    <sp-dialog-wrapper
+        headline="Settings"
+        dismissable
+        underlay
+        aria-labelledby="settings-heading"
+    >
+        <h2 id="settings-heading" slot="heading">Settings</h2>
+        <sp-field-label for="setting1">Email Notifications</sp-field-label>
+        <sp-switch id="setting1">Enable notifications</sp-switch>
+
+        <div slot="footer">
+            <sp-button
+                variant="secondary"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
+            >
+                Cancel
+            </sp-button>
+            <sp-button
+                variant="accent"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true }))"
+            >
+                Save
+            </sp-button>
+        </div>
+    </sp-dialog-wrapper>
+</sp-overlay>
+```
+
+#### Keyboard navigation
+
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Key</sp-table-head-cell>
+        <sp-table-head-cell>Action</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><kbd>ESC</kbd></sp-table-cell>
+            <sp-table-cell>Closes overlays in reverse order of opening</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>TAB</kbd>/<kbd>Shift+TAB</kbd></sp-table-cell>
+            <sp-table-cell>Navigates through focusable elements within modal/page overlays</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Arrow keys</kbd></sp-table-cell>
+            <sp-table-cell>Navigate through menu items in menu overlays</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>ENTER</kbd>/<kbd>SPACE</kbd></sp-table-cell>
+            <sp-table-cell>Activates buttons and controls</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+
+#### Screen reader considerations
+
+-   Use `aria-haspopup` on trigger elements to indicate the type of overlay
+-   Provide descriptive labels using `aria-label` or `aria-labelledby`
+-   Use proper heading structure within overlays
+-   Ensure error messages are announced using `aria-live`
+
+Example of a tooltip with proper screen reader support:
+
+```html
+<sp-button id="help-trigger" aria-describedby="help-tooltip" label="Help">
+    <sp-icon-help slot="icon"></sp-icon-help>
+</sp-button>
+<sp-overlay trigger="help-trigger@hover" type="hint">
+    <sp-tooltip id="help-tooltip">
+        Click for more information about this feature
+    </sp-tooltip>
+</sp-overlay>
+```

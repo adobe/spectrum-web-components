@@ -37,7 +37,7 @@ governing permissions and limitations under the License.
     transform: translateZ(0);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
     --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-small);
 }
@@ -47,7 +47,7 @@ governing permissions and limitations under the License.
     --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-medium);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
     --spectrum-progress-circle-thickness: var(--spectrum-progress-circle-thickness-large);
 }
@@ -80,11 +80,11 @@ governing permissions and limitations under the License.
     border-color: var(--highcontrast-progress-circle-fill-border-color, var(--mod-progress-circle-fill-border-color, var(--spectrum-progress-circle-fill-border-color)));
 }
 
-:host([static-color='white']) .track {
+:host([static-color="white"]) .track {
     border-color: var(--mod-progress-circle-track-border-color-over-background, var(--spectrum-progress-circle-track-border-color-over-background));
 }
 
-:host([static-color='white']) .fill {
+:host([static-color="white"]) .fill {
     border-color: var(--highcontrast-progress-circle-fill-border-color-over-background, var(--mod-progress-circle-fill-border-color-over-background, var(--spectrum-progress-circle-fill-border-color-over-background)));
 }
 

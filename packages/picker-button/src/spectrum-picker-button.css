@@ -78,7 +78,7 @@ governing permissions and limitations under the License.
     --mod-picker-button-border-color: var(--mod-picker-button-border-color-quiet, transparent);
 }
 
-:host([size='s']) .root {
+:host([size="s"]) .root {
     --spectrum-picker-button-height: var(--spectrum-component-height-75);
     --spectrum-picker-button-width: var(--spectrum-component-height-75);
     --spectrum-picker-button-label-padding: var(--spectrum-spacing-75);
@@ -86,7 +86,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-button-fill-padding: var(--spectrum-field-edge-to-disclosure-icon-75);
 }
 
-:host([size='l']) .root {
+:host([size="l"]) .root {
     --spectrum-picker-button-height: var(--spectrum-component-height-200);
     --spectrum-picker-button-width: var(--spectrum-component-height-200);
     --spectrum-picker-button-label-padding: var(--spectrum-text-to-visual-200);
@@ -94,7 +94,7 @@ governing permissions and limitations under the License.
     --spectrum-picker-button-fill-padding: var(--spectrum-field-edge-to-disclosure-icon-200);
 }
 
-:host([size='xl']) .root {
+:host([size="xl"]) .root {
     --spectrum-picker-button-height: var(--spectrum-component-height-300);
     --spectrum-picker-button-width: var(--spectrum-component-height-300);
     --spectrum-picker-button-label-padding: var(--spectrum-text-to-visual-300);
@@ -154,22 +154,22 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([position='right']) .spectrum-PickerButton-fill {
+:host([position="right"]) .spectrum-PickerButton-fill {
     border-start-start-radius: var(--mod-picker-button-border-radius-sided, var(--spectrum-picker-button-border-radius-sided));
     border-end-start-radius: var(--mod-picker-button-border-radius-sided, var(--spectrum-picker-button-border-radius-sided));
 }
 
-:host([position='right'][rounded]) .spectrum-PickerButton-fill {
+:host([position="right"][rounded]) .spectrum-PickerButton-fill {
     border-start-start-radius: var(--mod-picker-button-border-radius-rounded-sided, var(--spectrum-picker-button-border-radius-rounded-sided));
     border-end-start-radius: var(--mod-picker-button-border-radius-rounded-sided, var(--spectrum-picker-button-border-radius-rounded-sided));
 }
 
-:host([position='left']) .spectrum-PickerButton-fill {
+:host([position="left"]) .spectrum-PickerButton-fill {
     border-start-end-radius: var(--mod-picker-button-border-radius-sided, var(--spectrum-picker-button-border-radius-sided));
     border-end-end-radius: var(--mod-picker-button-border-radius-sided, var(--spectrum-picker-button-border-radius-sided));
 }
 
-:host([position='left'][rounded]) .spectrum-PickerButton-fill {
+:host([position="left"][rounded]) .spectrum-PickerButton-fill {
     border-start-end-radius: var(--mod-picker-button-border-radius-rounded-sided, var(--spectrum-picker-button-border-radius-rounded-sided));
     border-end-end-radius: var(--mod-picker-button-border-radius-rounded-sided, var(--spectrum-picker-button-border-radius-rounded-sided));
 }

@@ -98,14 +98,14 @@ governing permissions and limitations under the License.
 
 :host([nothing]) .fill:after {
     inline-size: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness));
-    content: '';
+    content: "";
     block-size: 200%;
     background: var(--highcontrast-swatch-fill-foreground-color, var(--mod-swatch-slash-icon-color, var(--spectrum-swatch-slash-icon-color)));
     position: absolute;
     transform: rotate(-45deg);
 }
 
-:host([nothing][shape='rectangle']) .fill:after {
+:host([nothing][shape="rectangle"]) .fill:after {
     transform: rotate(-25deg);
 }
 
@@ -115,7 +115,7 @@ governing permissions and limitations under the License.
 }
 
 :host:before {
-    content: '';
+    content: "";
     border-width: var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected));
     border-style: solid;
     border-color: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-swatch-border-color-selected)));
@@ -126,7 +126,7 @@ governing permissions and limitations under the License.
 }
 
 :host:after {
-    content: '';
+    content: "";
     inset: calc(var(--mod-swatch-focus-indicator-gap, var(--spectrum-swatch-focus-indicator-gap)) * -2);
     opacity: 0;
     border-width: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-swatch-focus-indicator-thickness));
@@ -154,7 +154,7 @@ governing permissions and limitations under the License.
 }
 
 .fill:before {
-    content: '';
+    content: "";
     z-index: 0;
     box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)));
     border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
@@ -162,17 +162,17 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
-:host([border='none']) .fill:before,
+:host([border="none"]) .fill:before,
 .fill:before {
     background-color: initial;
     background-color: var(--spectrum-picked-color, transparent);
 }
 
-:host([border='none']) .fill:before {
+:host([border="none"]) .fill:before {
     box-shadow: none;
 }
 
-:host([border='light']) .fill:before {
+:host([border="light"]) .fill:before {
     box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color-light, var(--mod-swatch-border-color-light, var(--spectrum-swatch-border-color-light)));
 }
 
@@ -200,35 +200,35 @@ governing permissions and limitations under the License.
     fill: var(--mod-swatch-icon-border-color, var(--spectrum-swatch-icon-border-color));
 }
 
-:host([shape='rectangle']) {
+:host([shape="rectangle"]) {
     inline-size: calc(var(--mod-swatch-size, var(--spectrum-swatch-size)) * 2);
 }
 
-:host([rounding='none']),
-:host([rounding='none']) .fill,
-:host([rounding='none']) .fill:before,
-:host([rounding='none'][selected]) .fill,
-:host([rounding='none'][selected]) .fill:before,
-:host([rounding='none']):after,
-:host([rounding='none']):before {
+:host([rounding="none"]),
+:host([rounding="none"]) .fill,
+:host([rounding="none"]) .fill:before,
+:host([rounding="none"][selected]) .fill,
+:host([rounding="none"][selected]) .fill:before,
+:host([rounding="none"]):after,
+:host([rounding="none"]):before {
     border-radius: 0;
 }
 
-:host([rounding='full'][selected]:not([shape='rectangle'])) .fill,
-:host([rounding='full'][selected]:not([shape='rectangle'])) .fill:before,
-:host([rounding='full']:not([shape='rectangle'])),
-:host([rounding='full']:not([shape='rectangle'])) .fill,
-:host([rounding='full']:not([shape='rectangle'])) .fill:before,
-:host([rounding='full']:not([shape='rectangle'])):after,
-:host([rounding='full']:not([shape='rectangle'])):before {
+:host([rounding="full"][selected]:not([shape="rectangle"])) .fill,
+:host([rounding="full"][selected]:not([shape="rectangle"])) .fill:before,
+:host([rounding="full"]:not([shape="rectangle"])),
+:host([rounding="full"]:not([shape="rectangle"])) .fill,
+:host([rounding="full"]:not([shape="rectangle"])) .fill:before,
+:host([rounding="full"]:not([shape="rectangle"])):after,
+:host([rounding="full"]:not([shape="rectangle"])):before {
     border-radius: 100%;
 }
 
-:host([rounding='full'][selected]:not([shape='rectangle'])) .fill {
+:host([rounding="full"][selected]:not([shape="rectangle"])) .fill {
     clip-path: circle(calc(50% - var(--mod-swatch-border-thickness-selected, var(--spectrum-swatch-border-thickness-selected)) * 2) at 50% 50%);
 }
 
-::slotted([slot='image']) {
+::slotted([slot="image"]) {
     object-fit: contain;
     inline-size: 100%;
     block-size: 100%;

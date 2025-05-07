@@ -53,7 +53,7 @@ governing permissions and limitations under the License.
     --spectrum-switch-font-size: var(--spectrum-font-size-100);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-switch-min-height: var(--spectrum-component-height-75);
     --spectrum-switch-control-width: var(--spectrum-switch-control-width-small);
     --spectrum-switch-control-height: var(--spectrum-switch-control-height-small);
@@ -63,7 +63,7 @@ governing permissions and limitations under the License.
     --spectrum-switch-font-size: var(--spectrum-font-size-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-switch-min-height: var(--spectrum-component-height-200);
     --spectrum-switch-control-width: var(--spectrum-switch-control-width-large);
     --spectrum-switch-control-height: var(--spectrum-switch-control-height-large);
@@ -73,7 +73,7 @@ governing permissions and limitations under the License.
     --spectrum-switch-font-size: var(--spectrum-font-size-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-switch-min-height: var(--spectrum-component-height-300);
     --spectrum-switch-control-width: var(--spectrum-switch-control-width-extra-large);
     --spectrum-switch-control-height: var(--spectrum-switch-control-height-extra-large);
@@ -111,7 +111,7 @@ governing permissions and limitations under the License.
 }
 
 :host([checked]) #input + #switch:dir(rtl):before,
-:host([dir='rtl'][checked]) #input + #switch:before {
+:host([dir="rtl"][checked]) #input + #switch:before {
     transform: translateX(calc((var(--mod-switch-control-width, var(--spectrum-switch-control-width)) - 100%) * -1));
 }
 
@@ -168,7 +168,7 @@ governing permissions and limitations under the License.
 
 #switch:after,
 #switch:before {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     inset-block-start: 0;
