@@ -249,9 +249,9 @@ jobs:
                   command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run:
-                    name: Install Azure CLI
-                    command: |
-                    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+                  name: Install Azure CLI
+                  command: |
+                      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
             - run:
                   name: Deploy Documentation Site to Azure Static Web Apps
                   command: |
