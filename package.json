@@ -61,6 +61,7 @@
         "process-icons": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag latest --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
+        "release": "yarn build && changeset publish",
         "start": "yarn storybook",
         "storybook": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
@@ -83,6 +84,7 @@
         "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
         "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
         "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
+        "version:packages": "yarn config set -H enableImmutableInstalls false && changeset version && yarn lint",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
     },

@@ -1,0 +1,29 @@
+name: Release
+
+on:
+    workflow_dispatch:
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Create Release Pull Request or Publish to npm
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  title: 'chore: release'
+                  commit: 'chore: release new versions #publish'
+                  # This expects you to have a script called release / version:packages
+                  # which does a build for your packages and calls changeset publish
+                  publish: yarn release
+                  version: yarn version:packages
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
