@@ -251,13 +251,10 @@ jobs:
             - run:
                   name: Install Azure CLI
                   command: |
-                      curl -L https://aka.ms/azure-cli-linux-x64 -o azure-cli.tar.gz
-                      mkdir -p $HOME/azure-cli
-                      tar -xzf azure-cli.tar.gz -C $HOME/azure-cli
-                      echo 'export PATH=$HOME/azure-cli/bin:$PATH' >> $BASH_ENV
-                      source $BASH_ENV
-                      az version
-                      shell: /bin/bash
+                      python3 -m venv ~/.azure-cli
+                      source ~/.azure-cli/bin/activate
+                      pip install --upgrade pip
+                      pip install azure-cli
             - run:
                   name: Deploy Documentation Site to Azure Static Web Apps
                   command: |
