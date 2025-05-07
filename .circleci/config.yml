@@ -100,7 +100,7 @@ commands:
             - run:
                   name: Install Azure CLI and Static Web Apps CLI
                   command: |
-                      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+                      curl -L https://aka.ms/InstallAzureCli | bash
                       npm install -g @azure/static-web-apps-cli
             - run:
                   when: always
