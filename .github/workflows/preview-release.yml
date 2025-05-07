@@ -21,7 +21,7 @@ jobs:
                   git config --global user.email "support+actions@github.com"
                   git config --global user.name "github-actions-bot"
 
-            - name: Update package versions for beta snapshot release
+            - name: Update package versions for previewsnapshot release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
@@ -35,12 +35,12 @@ jobs:
               run: |
                   echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
-            - name: Publish beta snapshot release
+            - name: Publish preview snapshot release
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   git add .
-                  git commit -am "chore: publish beta snapshot version"
+                  git commit -am "chore: publish preview snapshot version"
                   yarn prepublishOnly
-                  yarn changeset publish --no-git-tag --tag beta
+                  yarn changeset publish --no-git-tag --tag preview
                   git reset --hard HEAD^
