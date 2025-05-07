@@ -1,4 +1,6 @@
-version: 2.1
+version: '2.1'
+orbs:
+    azure-cli: circleci/azure-cli@1.0.0
 
 executors:
     node:
@@ -97,18 +99,6 @@ commands:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
-            - run:
-                  name: Install Python pip (if needed)
-                  command: |
-                      python3 -m ensurepip --upgrade || true
-                      python3 -m pip install --upgrade pip
-
-            - run:
-                  name: Install Azure CLI (non-interactive, user install)
-                  command: |
-                      python3 -m pip install --user azure-cli
-                      echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
-
             - run:
                   name: Check Azure CLI
                   command: |
