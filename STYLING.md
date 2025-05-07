@@ -20,6 +20,6 @@ We will try to keep the concerns separate for the component styling and so depen
 
 ## Global styling (WIP)
 
-SWC project uses styles package to manage the global css variables and styles for all three themes. The styles package can be found in `tools/styles`.
+SWC project uses styles package to manage the global css tokens for all three themes. The styles package can be found in `tools/styles`.
 
-Hopefully, we'd never need to edit the styles package directly as these files are build from the processing of tokens package in the spectrum-css project.
+Hopefully, we'd never need to edit the styles package directly as these files were built from the processing of tokens package in the spectrum-css project before the cutoff.
