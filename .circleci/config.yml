@@ -251,7 +251,7 @@ jobs:
             - run:
                   name: Install Azure CLI
                   command: |
-                      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+                      curl -L https://aka.ms/InstallAzureCli | bash
             - run:
                   name: Deploy Documentation Site to Azure Static Web Apps
                   command: |
