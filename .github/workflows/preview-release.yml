@@ -1,4 +1,4 @@
-name: Beta Release
+name: Preview Release
 
 on:
     push:

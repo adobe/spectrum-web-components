@@ -1,4 +1,4 @@
-name: Site publish
+name: Publish Documentation Site
 
 on:
     workflow_dispatch:
@@ -11,7 +11,7 @@ jobs:
         name: Build & publish site
         runs-on: ubuntu-latest
         # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed or if the commit message includes 'docs' and the check suite has passed
-        if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish') || contains(github.event.head_commit.message, 'docs')
+        if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '#publish') || contains(github.event.head_commit.message, 'docs:') || contains(github.event.head_commit.message, 'docs(')
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
