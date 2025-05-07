@@ -29,9 +29,9 @@ export default {
             description: 'The color displayed by the ColorArea.',
             table: {
                 type: { summary: 'ColorTypes' },
-                defaultValue: { summary: '' },
+                category: 'Attributes',
             },
-            control: 'text',
+            control: 'color',
         },
     },
 };
