@@ -98,10 +98,22 @@ commands:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  name: Install Azure CLI and Static Web Apps CLI
+                  name: Install Python pip (if needed)
                   command: |
-                      curl -L https://aka.ms/InstallAzureCli | bash
-                      npm install -g @azure/static-web-apps-cli
+                      python3 -m ensurepip --upgrade || true
+                      python3 -m pip install --upgrade pip
+
+            - run:
+                  name: Install Azure CLI (non-interactive, user install)
+                  command: |
+                      python3 -m pip install --user azure-cli
+                      echo 'export PATH=$HOME/.local/bin:$PATH' >> $BASH_ENV
+
+            - run:
+                  name: Check Azure CLI
+                  command: |
+                      source $BASH_ENV
+                      az version
             - run:
                   when: always
                   name: Publish review site
