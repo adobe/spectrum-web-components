@@ -68,6 +68,7 @@
         "process-spectrum": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag snapshot --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
+        "release": "yarn build && changeset publish",
         "start": "yarn storybook",
         "storybook": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
@@ -93,6 +94,7 @@
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
         "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
         "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js",
+        "version:packages": "yarn config set -H enableImmutableInstalls false && changeset version && yarn lint",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
     },
