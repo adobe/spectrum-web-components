@@ -17,7 +17,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import styles from './table-cell.css.js';
+import styles from './table-cell.css' with { type: 'css' };
 
 /**
  * @element sp-table-cell
