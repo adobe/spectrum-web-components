@@ -440,7 +440,7 @@
         "tools/*",
         "react/*"
     ],
-    "packageManager": "yarn@4.6.0",
+    "packageManager": "yarn@4.9.1",
     "license": "Apache-2.0",
     "author": "Adobe",
     "repository": {
