@@ -37,7 +37,19 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: |
-                      corepack enable
+                      # Check if we're in an Azure job
+                      if [[ "$CIRCLE_JOB" == "preview-docs" || "$CIRCLE_JOB" == "beta-docs" || "$CIRCLE_JOB" == "hcm-visual" ]]; then
+                          echo "Skipping corepack in Azure job"
+                          # Check if yarn is already installed
+                          if ! command -v yarn &> /dev/null; then
+                              echo "Installing yarn..."
+                              sudo npm install -g yarn --force
+                          else
+                              echo "Yarn is already installed: $(yarn --version)"
+                          fi
+                      else
+                          corepack enable
+                      fi
                       yarn --immutable
             - run:
                   name: Build the project
