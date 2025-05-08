@@ -196,7 +196,7 @@
         "storybook": "^8.6.12",
         "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0",
-        "stylelint-header": "^2.1.0",
+        "stylelint-header": "^3.0.0",
         "tachometer": "^0.7.1",
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
