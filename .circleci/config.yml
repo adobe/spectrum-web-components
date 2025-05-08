@@ -1,13 +1,16 @@
 version: '2.1'
-orbs:
-    azure-cli: circleci/azure-cli@1.3.2
-    node: circleci/node@7.1.0
 
 executors:
     node:
         docker:
             - image: mcr.microsoft.com/playwright:v1.44.0
         resource_class: xlarge
+        environment:
+            NODE_ENV: development
+    azure:
+        docker:
+            - image: cimg/azure:2024.03.1 # Use latest version
+        resource_class: medium
         environment:
             NODE_ENV: development
 parameters:
@@ -119,12 +122,11 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                        if az staticwebapp upload \
-                            --name my-visual-regression-site \
+                        if npx swa deploy \
+                            --app-name my-visual-regression-site \
                             --resource-group swc-previews \
-                            --source test/visual \
-                            --token $AZURE_VR_STATIC_WEB_APPS_TOKEN \
-                            --output none; then
+                            --app-location test/visual \
+                            --deployment-token $AZURE_VR_STATIC_WEB_APPS_TOKEN \; then
                             echo "Deployment successful!"
                             exit 0
                         else
@@ -235,7 +237,7 @@ jobs:
                   command: git diff-files --exit-code
 
     preview-docs:
-        executor: node
+        executor: azure
         steps:
             - downstream
             - run:
@@ -257,15 +259,14 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       branch=$(npx slugify-cli $branch)
                       az login --identity || echo "Skipping login for GitHub token-based deploy"
-                      az staticwebapp upload \
-                          --name my-docs-site \
+                      npx swa deploy \
+                          --app-name my-docs-site \
                           --resource-group swc-previews \
-                          --source projects/documentation/dist \
-                          --token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN \
-                          --output none
+                          --app-location projects/documentation/dist \
+                          --deployment-token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN
 
     beta-docs:
-        executor: node
+        executor: azure
 
         steps:
             - downstream
@@ -286,15 +287,14 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   az login --identity || echo "Skipping login for GitHub token-based deploy"
-                  az staticwebapp upload \
-                    --name my-docs-site \
+                  npx swa deploy \
+                    --app-name my-docs-site \
                     --resource-group swc-previews \
-                    --source projects/documentation/dist \
-                    --token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN \
-                    --output none
+                    --app-location projects/documentation/dist \
+                    --deployment-token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN
 
     hcm-visual:
-        executor: node
+        executor: azure
 
         steps:
             - downstream
@@ -345,12 +345,11 @@ jobs:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if az staticwebapp upload \
-                              --name my-visual-regression-site \
+                          if npx swa deploy \
+                              --app-name my-visual-regression-site \
                               --resource-group swc-previews \
-                              --source test/visual \
-                              --token $AZURE_VR_STATIC_WEB_APPS_TOKEN \
-                              --output none; then
+                              --app-location test/visual \
+                              --deployment-token $AZURE_VR_STATIC_WEB_APPS_TOKEN \; then
                               echo "Deployment successful!"
                               exit 0
                           else
