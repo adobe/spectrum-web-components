@@ -2,4 +2,4 @@
 '@spectrum-web-components/card': patch
 ---
 
-fix(card) - added missing sp-popover dependency in sp-card dependency tree
+-   **Fixed**: `sp-card` component relies on `sp-popover` for certain toggle interactive behaviors, but this dependency was missing from its dependency tree.
