@@ -52,19 +52,19 @@ SWC project uses styles package to manage the global css tokens for all three th
 -   `styles/tokens` - This is the tokens package for the express + spectrum theme.
 -   `styles/tokens-v2` - This is the tokens package for the spectrum 2 theme.
 
-NOTE: In all likelhood, you would only need to do minor changes to the styles package. However, if you feel like you need to make major changes to the styles package, the correct approach would be to start a discussion among the team and figure out a plan together.
+NOTE: In all likelihood, you would only need to do minor changes to the styles package. However, if you feel like you need to make major changes to the styles package, the correct approach would be to start a discussion among the team and figure out a plan together.
 
 ### How to update the global styling
 
-In our styles package, we have separation of vars for different contexts i.e, size and color.
+In our styles package, we have separation of separate variables for different contexts i.e, size and color.
 
-#### Updating size-specific vars
+#### Updating size-specific css variables
 
 If you're updating a size (e.g. `--spectrum-accordion-item-height`) variable, you'll need to update the `tools/styles/tokens/[express | spectrum]/[large | medium]-vars.css` file or the `tools/styles/tokens-v2/[large | medium]-vars.css` file depending on the theme.
 
-#### Updating color-specific vars
+#### Updating color-specific css variables
 
 If you're updating a color (e.g. `--spectrum-accordion-background-color`) variable, you'll need to update the `tools/styles/tokens/[express | spectrum]/[dark | light]-vars.css` file or the `tools/styles/tokens-v2/[dark | light]-vars.css` file depending on the theme.
 
-NOTE: If the variable that you're updating is not present in those files, chances are that this variable had the same value for both contexts in that tokens package. In that case, if you want the variable to continue to have the same value then you can update the `tools/styles/[tokens | tokens-v2]/index.css` file.
+**NOTE:** If the variable that you're updating is not present in those files, chances are that this variable had the same value for both contexts in that tokens package. In that case, if you want the variable to continue to have the same value then you can update the `tools/styles/[tokens | tokens-v2]/index.css` file.
 Or if you want to make the variable context-specific, then you can add those new values in both of the files like we talked about above.

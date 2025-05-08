@@ -50,31 +50,6 @@ module.exports = function (plop) {
         }
     });
 
-    plop.setActionType('format files', function (answers) {
-        try {
-            // Run formatters separately so one failing doesn't block the others
-            execSync(
-                `cd ../../ && yarn prettier --write packages/${answers.name}`
-            );
-        } catch (error) {
-            // Continue if prettier fails
-        }
-        try {
-            execSync(
-                `cd ../../ && yarn eslint --fix -f pretty packages/${answers.name}`
-            );
-        } catch (error) {
-            // Continue if eslint fails
-        }
-        try {
-            execSync(
-                `cd ../../ && yarn stylelint --fix packages/${answers.name}/src/*.css`
-            );
-        } catch (error) {
-            // Continue if stylelint fails
-        }
-    });
-
     plop.setGenerator('component', {
         description: 'application controller logic',
         prompts: [
