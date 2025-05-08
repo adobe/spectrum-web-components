@@ -16,19 +16,22 @@ $ yarn new-package
 ```
 
 ```
-> spectrum-pattern
+> package-name
    > src/
        index.ts
-       SpectrumPattern.ts
-       spectrum-pattern.css
+       SpectrumPackageName.ts
+       package-name.css
+       package-name-overrides.css
+       spectrum-package-name.css
+       spectrum-package-name-overrides.css
        spectrum-config.js
    > test/
        > benchmark/
            basic-test.ts
-       spectrum-pattern.test.ts
+       package-name.test.ts
    > stories/
-       spectrum-pattern.stories.ts
-   sp-spectrum-pattern.ts
+       package-name.stories.ts
+   sp-package-name.ts
    README.md
    tsconfig.json
    package.json
@@ -36,15 +39,15 @@ $ yarn new-package
 
 Outside of your new package, you will need to manually add information about your new package to the `tsconfig-all.json` and `tsconfig-react-wrapper.json` files, as well as the `bundle` package:
 
-Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/spectrum-pattern" }`) alphabetically (replacing "spectrum-pattern" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
+Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/package-name" }`) alphabetically (replacing "package-name" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
 
-Open `tsconfig-react-wrapper.json`, find "references", and add an entry for your package (`{ "path": "react/spectrum-pattern" }`) alphabetically (replacing "spectrum-pattern" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-react-wrapper.json` config is used to build types for the `@swc-react` project, so that consumers can benefit of type definitions for SWC components even when using the React wrapper.
+Open `tsconfig-react-wrapper.json`, find "references", and add an entry for your package (`{ "path": "react/package-name" }`) alphabetically (replacing "package-name" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-react-wrapper.json` config is used to build types for the `@swc-react` project, so that consumers can benefit of type definitions for SWC components even when using the React wrapper.
 
 Include a listing for your package in `bundle/elements.ts` and `bundle/src/index.js`. Then, confirm that your new package is already listed in `tools/bundle/package.json`. The `bundle` package makes it possible to build demo projects with _all_ of the components from the library registered in a single place, and is also leveraged for ease of component consumption in the documentation site build.
 
--   In `bundle/tsconfig.json`, please add a listing for your new package to the `"references"` field, e.g. `{ "path": "../../packages/spectrum-pattern" },`. This will ensure the types of your new package are built before the `bundle` package is built.
--   In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/spectrum-pattern/sp-spectrum-pattern.js';`.
--   In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/spectrum-pattern';`, so that any classes exported from your package can be imported from this location.
+-   In `bundle/tsconfig.json`, please add a listing for your new package to the `"references"` field, e.g. `{ "path": "../../packages/package-name" },`. This will ensure the types of your new package are built before the `bundle` package is built.
+-   In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/package-name/sp-package-name.js';`.
+-   In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/package-name';`, so that any classes exported from your package can be imported from this location.
 
 Finally, run `yarn` in your terminal. This will grab any newly-added packages, as well as to ensure that you have the provided CSS processed for use in your component. You can now see your component in the Storybook, using the command `yarn storybook`, or test its functionality via `yarn test`.
 

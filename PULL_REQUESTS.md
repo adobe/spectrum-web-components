@@ -103,7 +103,6 @@ Incomplete templates may delay the review process.
 -   `breaking-change`: PR contains changes that break backward compatibility
 -   `help-wanted`: Extra attention is needed on this PR
 -   `on-hold`: PR needs more discussion.
--   `Spectrum CSS`: An issue or pull request specific to the CSS being used by components.
 -   `Component: [Name]`: PR effects this component
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
