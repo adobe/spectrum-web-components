@@ -56,7 +56,7 @@
         "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"chore: commit React watch\" --no-verify",
         "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
-        "publish:react": "yarn changeset publish --no-git-tag --tag snapshot --no-push",
+        "publish:react": "yarn changeset publish --no-git-tag --tag latest --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
         "start": "yarn storybook",
         "storybook": "wireit",
