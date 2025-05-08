@@ -79,3 +79,10 @@ body:
       attributes:
           label: Logs taken while reproducing problem
           description: You can attach log files by clicking this area to highlight it and then dragging files in.
+    - type: checkboxes
+      id: jira-number
+      attributes:
+          label: Would you like to track this issue in Jira?
+          description: We will share the Jira ticket ID in a comment on the issue once it has been triaged.
+          options:
+              - label: Yes, please tell me the ticket number!
