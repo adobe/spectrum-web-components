@@ -10,7 +10,7 @@ executors:
     azure:
         docker:
             - image: cimg/azure:2024.03.1 # Use latest version
-        resource_class: medium
+        resource_class: xlarge
         environment:
             NODE_ENV: development
 parameters:
@@ -37,7 +37,19 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: |
-                      corepack enable
+                      # Check if we're in an Azure job
+                      if [[ "$CIRCLE_JOB" == "preview-docs" || "$CIRCLE_JOB" == "beta-docs" || "$CIRCLE_JOB" == "hcm-visual" ]]; then
+                          echo "Skipping corepack in Azure job"
+                          # Check if yarn is already installed
+                          if ! command -v yarn &> /dev/null; then
+                              echo "Installing yarn..."
+                              sudo npm install -g yarn --force
+                          else
+                              echo "Yarn is already installed: $(yarn --version)"
+                          fi
+                      else
+                          corepack enable
+                      fi
                       yarn --immutable
             - run:
                   name: Build the project
@@ -254,16 +266,35 @@ jobs:
                   command: yarn storybook:build
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run:
+                  name: Install Azure Static Web Apps CLI
+                  command: |
+                      echo "Installing Azure Static Web Apps CLI..."
+                      sudo npm install -g @azure/static-web-apps-cli
+            - run:
                   name: Deploy Documentation Site to Azure Static Web Apps
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
                       branch=$(npx slugify-cli $branch)
-                      az login --identity || echo "Skipping login for GitHub token-based deploy"
-                      npx swa deploy \
-                          --app-name my-docs-site \
-                          --resource-group swc-previews \
-                          --app-location projects/documentation/dist \
-                          --deployment-token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN
+                      max_attempts=3
+                      attempt=0
+
+                      while [ $attempt -lt $max_attempts ]; do
+                        if npx swa deploy \
+                            --app-name my-docs-site \
+                            --resource-group swc-previews \
+                            --app-location projects/documentation/dist \
+                            --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                            echo "Deployment successful!"
+                            exit 0
+                        else
+                            attempt=$((attempt + 1))
+                            echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                            sleep 10
+                        fi
+                      done
+
+                      echo "Deployment failed after $max_attempts attempts."
+                      exit 1
 
     beta-docs:
         executor: azure
@@ -291,7 +322,7 @@ jobs:
                     --app-name my-docs-site \
                     --resource-group swc-previews \
                     --app-location projects/documentation/dist \
-                    --deployment-token $AZURE_DOCS_STATIC_WEB_APPS_TOKEN
+                    --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN
 
     hcm-visual:
         executor: azure
