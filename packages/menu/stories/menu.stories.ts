@@ -217,8 +217,12 @@ export const menuItemWithDescription = (): TemplateResult => html`
 class WithIcons extends LitElement {
     public override render(): TemplateResult {
         return html`
-            <sp-popover open slot="withIcons">
+            <sp-popover open>
                 <sp-menu selects="single">
+                    <sp-menu-item>
+                        <sp-icon-export slot="icon"></sp-icon-export>
+                        Quick export
+                    </sp-menu-item>
                     <sp-menu-item selected>
                         <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
                         Open a copy
