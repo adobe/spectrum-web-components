@@ -31,7 +31,7 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
-import iconsList from './iconsList.json' assert { type: 'json' };
+import iconsList from './iconsList.json' with { type: 'json' };
 
 import {
     SystemResolutionController,
