@@ -19,3 +19,10 @@ body:
       attributes:
           label: Description of issue
           description: Please tell us about the issue. You can attach images or files by clicking this area to highlight it and then dragging files in.
+    - type: checkboxes
+      id: jira-number
+      attributes:
+          label: Would you like to track this issue in Jira?
+          description: We will share the Jira ticket ID in a comment on the issue once it has been triaged.
+          options:
+              - label: Yes, please tell me the ticket number!
