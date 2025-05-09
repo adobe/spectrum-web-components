@@ -339,37 +339,7 @@ export class AbstractOverlay extends SpectrumElement {
         overlay.willPreventClose = !!options.notImmediatelyClosable;
     }
 
-    private iosEventPropagationController?: AbortController;
-
-    protected setupIOSEventManagement(): void {
-        // This is a workaround for a bug in iOS <17 where the event leaks out of the dialog to the element below it.
-        // Issue - https://github.com/adobe/spectrum-web-components/issues/5042
-        this.iosEventPropagationController = new AbortController();
-        this.dialogEl.addEventListener(
-            'pointerup',
-            (event) => event.stopPropagation(),
-            {
-                capture: true,
-                signal: this.iosEventPropagationController.signal,
-            }
-        );
-        this.dialogEl.addEventListener(
-            'touchend',
-            (event) => event.stopPropagation(),
-            {
-                capture: true,
-                signal: this.iosEventPropagationController.signal,
-            }
-        );
-    }
-
-    protected cleanupIOSEventManagement(): void {
-        this.iosEventPropagationController?.abort();
-        this.iosEventPropagationController = undefined;
-    }
-
     override disconnectedCallback(): void {
-        this.cleanupIOSEventManagement();
         super.disconnectedCallback();
     }
 }

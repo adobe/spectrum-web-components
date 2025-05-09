@@ -20,7 +20,9 @@ const getTachometerResults = () => {
         chrome: [],
         firefox: [],
     };
-    for (const result of fg.sync(`./tach-results.*.json`)) {
+    for (const result of fg.sync(
+        './tachometer-results-*/tach-results.*.json'
+    )) {
         const file = fs.readFileSync(result, 'utf8');
         // Grab the ${bowserName}.${package} part of the results file name as an array of [browserName, package].
         const match = /tach-results\.(.*)\.json/.exec(result);

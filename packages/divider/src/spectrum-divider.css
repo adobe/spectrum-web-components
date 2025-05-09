@@ -20,93 +20,57 @@ governing permissions and limitations under the License.
 :host,
 :host {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-medium
-    );
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-medium);
 }
 
 :host([size='s']) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-small
-    );
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-small);
 }
 
 :host([size='l']) {
     --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
-    --spectrum-divider-background-color: var(
-        --spectrum-divider-background-color-large
-    );
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-large);
 }
 
 :host {
     block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
     inline-size: 100%;
     border: none;
-    border-width: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    border-radius: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    background-color: var(
-        --mod-divider-background-color,
-        var(--spectrum-divider-background-color)
-    );
+    border-width: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    border-radius: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    background-color: var(--mod-divider-background-color, var(--spectrum-divider-background-color));
     overflow: visible;
 }
 
 :host([static-color='white']),
 :host([static-color='white']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-medium-static-white,
-        var(--spectrum-divider-background-color-medium-static-white)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-medium-static-white, var(--spectrum-divider-background-color-medium-static-white));
 }
 
 :host([static-color='white'][size='s']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-small-static-white,
-        var(--spectrum-divider-background-color-small-static-white)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-small-static-white, var(--spectrum-divider-background-color-small-static-white));
 }
 
 :host([static-color='white'][size='l']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-large-static-white,
-        var(--spectrum-divider-background-color-large-static-white)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-large-static-white, var(--spectrum-divider-background-color-large-static-white));
 }
 
 :host([static-color='black']),
 :host([static-color='black']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-medium-static-black,
-        var(--spectrum-divider-background-color-medium-static-black)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-medium-static-black, var(--spectrum-divider-background-color-medium-static-black));
 }
 
 :host([static-color='black'][size='s']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-small-static-black,
-        var(--spectrum-divider-background-color-small-static-black)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-small-static-black, var(--spectrum-divider-background-color-small-static-black));
 }
 
 :host([static-color='black'][size='l']) {
-    --spectrum-divider-background-color: var(
-        --mod-divider-background-color-large-static-black,
-        var(--spectrum-divider-background-color-large-static-black)
-    );
+    --spectrum-divider-background-color: var(--mod-divider-background-color-large-static-black, var(--spectrum-divider-background-color-large-static-black));
 }
 
 :host([vertical]) {
-    inline-size: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
+    inline-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
     margin-block: var(--mod-divider-vertical-margin);
     block-size: 100%;
     block-size: var(--mod-divider-vertical-height, 100%);

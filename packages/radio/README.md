@@ -1,6 +1,6 @@
 ## Overview
 
-`<sp-radio>` and `<sp-radio-group>` allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
+`<sp-radio>` and [`<sp-radio-group>`](../radio-group) allow users to select a single option from a list of mutually exclusive options. All possible options are exposed up front for users to compare.
 
 ### Usage
 
@@ -8,24 +8,21 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/radio)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/vUinRWkhayMTAmr9AK9J/src/index.ts)
 
-```
+```zsh
 yarn add @spectrum-web-components/radio
 ```
 
 Import the side effectful registration of `<sp-radio>` or `<sp-radio-group>` via:
 
-```
+```js
 import '@spectrum-web-components/radio/sp-radio.js';
 import '@spectrum-web-components/radio/sp-radio-group.js';
 ```
 
 When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/or for extension purposes, do so via:
 
-```
-import {
-    Radio,
-    RadioGroup
-} from '@spectrum-web-components/radio';
+```js
+import { Radio, RadioGroup } from '@spectrum-web-components/radio';
 ```
 
 ### Anatomy
@@ -45,12 +42,6 @@ import {
 
 The `<sp-radio>` elements are labelled with text in their default slot.
 
-The `<sp-radio-group>` element can be labeled with the `label` property or with an <`sp-field-label>` element:
-
-<sp-tabs selected="property" auto label="Label Anatomy">
-<sp-tab value="property">`label` property</sp-tab>
-<sp-tab-panel value="self">
-
 ```html
 <sp-radio-group label="Choose an option" name="anatomy">
     <sp-radio value="first">Option 1</sp-radio>
@@ -59,97 +50,6 @@ The `<sp-radio-group>` element can be labeled with the `label` property or with 
     <sp-radio value="fourth">Option 4</sp-radio>
 </sp-radio-group>
 ```
-
-</sp-tab-panel>
-<sp-tab value="sp-field-label">Using a field bale</sp-tab>
-<sp-tab-panel value="above">
-
-```html
-<sp-field-label for="options">Choose an option</sp-field-label>
-<sp-radio-group id="options" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
-</sp-radio-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="sp-field-label">Using a field bale</sp-tab>
-<sp-tab-panel value="above">
-
-```html
-<sp-field-label for="options">Choose an option</sp-field-label>
-<sp-radio-group id="options" name="anatomy">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
-</sp-radio-group>
-```
-
-</sp-tab-panel>
-</sp-tabs>
-
-#### Help Text
-
-Help text can be accessibly associated with an `<sp-radio-group>` element by using the `help-text` or `negative-help-text` slots. When using the `negative-help-text` slot, `<sp-radio-group>` will self manage the presence of this content based on the value of the `invalid` property on your `<sp-radio-group>` element. Content within the `help-text` slot will be show by default. When your `<sp-radio-group>` should receive help text based on state outside of the complexity of `invalid` or not, manage the content addressed to the `help-text` from above to ensure that it displays the right messaging and possesses the right `variant`.
-
-Read more about using [help text](../help-text).
-
-<sp-tabs selected="self" auto label="Help text usage in radio groups">
-<sp-tab value="self">Self managed</sp-tab>
-<sp-tab-panel value="self">
-
-```html
-<sp-field-label for="self">
-    What is your favorite ice cream flavor?
-</sp-field-label>
-<sp-radio-group
-    id="self"
-    onchange="
-        this.invalid = this.selected === 'fourth';
-    "
->
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
-    <sp-help-text slot="negative-help-text" icon>
-        You can't not like ice cream.
-    </sp-help-text>
-</sp-radio-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="above">Managed from above</sp-tab>
-<sp-tab-panel value="above">
-
-```html
-<sp-field-label for="managed">
-    What is your favorite ice cream flavor?
-</sp-field-label>
-<sp-radio-group
-    id="managed"
-    onchange="
-        const helpText = this.querySelector(`[slot='help-text']`);
-        const isInvalid = this.selected === 'fourth';
-        helpText.icon = isInvalid;
-        helpText.textContent = isInvalid ? 'You can\'t not like ice cream.' : 'Everyone likes ice cream.';
-        helpText.variant = isInvalid ? 'negative' : 'neutral';
-    "
->
-    <sp-radio value="first">Vanilla</sp-radio>
-    <sp-radio value="second">Chocolate</sp-radio>
-    <sp-radio value="third">Strawberry</sp-radio>
-    <sp-radio value="fourth">I don't like ice cream</sp-radio>
-    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
-</sp-radio-group>
-```
-
-</sp-tab-panel>
-</sp-tabs>
 
 ### Options
 
@@ -320,11 +220,3 @@ Tabbing into a group of radio buttons places the focus on the first radio button
 #### Provide a label
 
 Radio groups and radio items should always have labels.
-
-#### Provide help text in the correct location
-
-Radio groups should use help text for error messaging and descriptions. Descriptions are valuable for giving context behind why a selection is required, or for clarifying the options.
-
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"`.
-
-See [help text](../help-text) for more information.

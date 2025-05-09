@@ -11,23 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-tray-exit-animation-delay: var(
-        --system-tray-exit-animation-delay
-    );
-    --spectrum-tray-entry-animation-delay: var(
-        --system-tray-entry-animation-delay
-    );
-    --spectrum-tray-max-inline-size: var(--system-tray-max-inline-size);
-    --spectrum-tray-spacing-edge-to-tray-safe-zone: var(
-        --system-tray-spacing-edge-to-safe-zone
-    );
-    --spectrum-tray-entry-animation-duration: var(
-        --system-tray-entry-animation-duration
-    );
-    --spectrum-tray-exit-animation-duration: var(
-        --system-tray-exit-animation-duration
-    );
-    --spectrum-tray-corner-radius: var(--system-tray-corner-radius);
-    --spectrum-tray-background-color: var(--system-tray-background-color);
-}

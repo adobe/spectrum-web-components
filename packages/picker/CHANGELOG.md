@@ -1,5 +1,36 @@
 # Change Log
 
+## 1.4.0
+
+### Minor Changes
+
+-   [#5187](https://github.com/adobe/spectrum-web-components/pull/5187) [`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
+
+    -   Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
+    -   Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
+
+-   [#5247](https://github.com/adobe/spectrum-web-components/pull/5247) [`1fc141c`](https://github.com/adobe/spectrum-web-components/commit/1fc141cefc01b8a98910c43a1e4ffaa61e952225) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - fix: moved tooltip outside of the trigger button content which prevents event propagation issues and fixes CSS hover state problems by properly separating the tooltip from the button's content (it no longer is a direct child in the DOM).
+
+### Patch Changes
+
+-   [#5213](https://github.com/adobe/spectrum-web-components/pull/5213) [`82212f4`](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updated the attribute name from `forcePopover` to `force-popover` in the Picker and Action menu documentation
+
+-   Updated dependencies [[`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`6618422`](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
+    -   @spectrum-web-components/menu@1.4.0
+    -   @spectrum-web-components/overlay@1.4.0
+    -   @spectrum-web-components/popover@1.4.0
+    -   @spectrum-web-components/tooltip@1.4.0
+    -   @spectrum-web-components/button@1.4.0
+    -   @spectrum-web-components/field-label@1.4.0
+    -   @spectrum-web-components/icon@1.4.0
+    -   @spectrum-web-components/icons-ui@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/progress-circle@1.4.0
+    -   @spectrum-web-components/tray@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
 ## 1.3.0
 
 ### Minor Changes

@@ -499,9 +499,11 @@ describe('Combobox', () => {
             await elementUpdated(el);
             expect(
                 el.activeDescendant?.value,
-                'activeDscendant after open?'
+                'activeDescendant after open?'
             ).to.equal('apple');
+            const changed = oneEvent(el, 'change');
             el.focusElement.dispatchEvent(enterEvent());
+            await changed;
 
             await elementUpdated(el);
             expect(el.open, 'open?').to.be.false;
@@ -659,8 +661,9 @@ describe('Combobox', () => {
 
             const itemValue = item.itemText;
 
+            const closed = oneEvent(el, 'sp-closed');
             item.click();
-
+            await closed;
             await elementUpdated(el);
 
             expect(el.value).to.equal(itemValue);

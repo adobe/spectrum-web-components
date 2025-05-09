@@ -28,6 +28,8 @@ jobs:
                   yarn changeset pre enter beta
                   # Apply the changeset with specific beta tag
                   yarn changeset version
+                  yarn lint:versions --fix
+                  yarn update-version
 
             - name: Configure NPM for changeset publish
               env:
@@ -39,6 +41,7 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
+                  git add .
                   git commit -am "chore: publish beta version"
                   yarn prepublishOnly
                   yarn changeset publish --no-git-tag
