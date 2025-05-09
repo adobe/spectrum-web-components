@@ -41,7 +41,8 @@
         }
     },
     "scripts": {
-        "test": "karma start --coverage"
+        "test": "karma start --coverage",
+        "analyze": "yarn analyze:components --outdir packages/action-group"
     },
     "files": [
         "**/*.d.ts",

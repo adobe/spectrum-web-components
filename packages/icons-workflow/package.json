@@ -27,7 +27,8 @@
     },
     "scripts": {
         "build": "node ./bin/build.js",
-        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
+        "build-icons-mapping": "node ./bin/build-icons-mapping.js",
+        "analyze": "yarn analyze:components --outdir packages/icons-workflow"
     },
     "files": [
         "**/*.d.ts",
@@ -57,8 +58,8 @@
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "1.7.0",
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0",
-        "case": "^1.6.1",
-        "cheerio": "^1.0.0-rc.2",
+        "case": "^1.6.3",
+        "cheerio": "^1.0.0",
         "fast-glob": "^3.2.12",
         "prettier": "^3.0.0"
     },

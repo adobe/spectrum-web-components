@@ -1,39 +1,38 @@
 {
     "name": "@adobe/spectrum-web-components",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "version": "0.0.9",
     "private": true,
-    "description": "",
+    "description": "The official implementation of Spectrum CSS in Web Components.",
     "type": "module",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
     },
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
-        "analyze:docs": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
-        "analyze:storybook": "wireit",
+        "analyze:components": "cem analyze --config ./custom-elements-manifest.config.js --litelement",
         "build": "wireit",
-        "build:clean": "rimraf packages/*/tsconfig.tsbuildinfo tools/*/tsconfig.tsbuildinfo",
-        "build:confirm": "node ./tasks/confirm-build.js",
-        "build:css": "wireit",
-        "build:css:watch": "wireit",
+        "build:cem": "wireit",
         "build:icons": "wireit",
-        "build:react": "node ./tasks/build-react.js && tsc --build tsconfig-react-wrapper.json",
-        "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
+        "build:react": "wireit",
+        "build:tests": "wireit",
         "build:ts": "wireit",
-        "build:ts:watch": "wireit",
         "build:types": "wireit",
-        "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag --tag snapshot",
-        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn install && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
-        "update-version": "node ./tasks/update-version.js",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
-        "custom-element-json": "yarn custom-element-json:clean && node tasks/custom-element-json.js && yarn custom-element-json:validate",
-        "custom-element-json:clean": "rimraf packages/*/custom-elements.json tools/*/custom-elements.json",
-        "custom-element-json:validate": "node ./tasks/run-check-cem.js",
         "docs:build": "yarn workspace documentation build",
-        "docs:ci": "yarn analyze:docs && run-p docs:production storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
-        "docs:preview": "yarn analyze:docs && run-p docs:build storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
+        "docs:cem": "wireit",
+        "docs:ci": "yarn docs:cem && run-p docs:production storybook:build:docs && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
+        "docs:preview": "yarn docs:cem && run-p docs:build storybook:build:docs && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
         "docs:production": "yarn workspace documentation build:production",
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
@@ -41,24 +40,26 @@
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
         "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
-        "lint:versions": "node ./scripts/lint-versions.js",
+        "lint:versions": "yarn constraints",
         "new-package": "yarn workspace swc-templates plop",
         "postinstall": "husky || true && patch-package",
         "postpack": "pinst --enable",
-        "postpublish": "yarn prepublish:react && yarn publish:react && yarn postpublish:react",
-        "postpublish:react": "git reset --hard HEAD^ && git prune && rimraf react",
         "prepack": "pinst --disable",
-        "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"chore: commit React watch\" --no-verify",
-        "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
+        "prepublishOnly": "rimraf react && yarn build",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
-        "publish:react": "yarn changeset publish --no-git-tag --tag latest --no-push",
-        "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
+        "publish": "yarn prepublishOnly && yarn changeset version && yarn lint:versions --fix && yarn install && git add . && yarn changeset publish && git push -f --follow-tags && yarn publish:react",
+        "publish:react": "yarn publish:react:build && yarn publish:react:tag && yarn publish:react:clean",
+        "publish:react:build": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"chore: commit React watch\" --no-verify",
+        "publish:react:clean": "git reset --hard HEAD^ && git prune && rimraf react",
+        "publish:react:tag": "yarn changeset publish --no-git-tag --tag latest --no-push",
+        "publish:snapshot": "yarn prepublishOnly && yarn changeset version --snapshot latest && genversion --esm --semi tools/base/src/version.js && yarn lint:versions --fix && yarn install && git add . && yarn changeset publish --no-git-tag --tag snapshot",
         "start": "yarn storybook",
         "storybook": "wireit",
-        "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
+        "storybook:build": "wireit",
+        "storybook:build:docs": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
         "test": "yarn test:focus unit",
         "test:bench": "yarn build:tests && node test/benchmark/cli.js",
-        "test:changed": "node ./tasks/test-changes.js",
+        "test:changed": "node ./scripts/test-changes.js",
         "test:ci": "yarn test:start",
         "test:create": "wireit",
         "test:errors": "yarn test | grep -A 32 ❌",
@@ -70,12 +71,20 @@
         "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
-        "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
-        "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
-        "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js",
+        "test:watch:flags:focus": "yarn build && run-p watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
+        "test:watch:focus": "yarn build && run-p watch \"test:start --watch --group {1}\" --",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
-        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
+        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link",
+        "watch": "wireit",
+        "watch:ts": "wireit"
     },
+    "workspaces": [
+        "linters/*",
+        "packages/*",
+        "projects/*",
+        "tools/*",
+        "react/*"
+    ],
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",
         "@changesets/cli": "^2.27.5",
@@ -141,7 +150,7 @@
         "eslint-formatter-pretty": "^5.0.0",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-lit-a11y": "^2.2.2",
-        "eslint-plugin-notice": "^0.9.10",
+        "eslint-plugin-notice": "^1.0.0",
         "eslint-plugin-prettier": "^5.1.3",
         "eslint-plugin-require-extensions": "^0.1.3",
         "eslint-plugin-storybook": "^0.8.0",
@@ -185,30 +194,135 @@
         "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
     "wireit": {
-        "build:css:watch": {
-            "command": "node ./tasks/watch-css.js",
-            "service": true
+        "build": {
+            "dependencies": [
+                "build:icons",
+                "build:ts",
+                "build:types",
+                "build:cem"
+            ]
+        },
+        "build:cem": {
+            "command": "yarn workspaces foreach --all --parallel --no-private --verbose run analyze",
+            "files": [
+                "packages/**/*.ts",
+                "!packages/clear-button/**/*.ts",
+                "!packages/close-button/**/*.ts",
+                "!packages/modal/**/*.ts",
+                "!packages/iconset/**/*.ts",
+                "tools/grid/**/*.ts",
+                "tools/theme/**/*.ts",
+                "tools/trucated/**/*.ts",
+                "tools/reactive-controllers/**/*.ts",
+                "projects/story-decorator/**/*.ts"
+            ],
+            "outputs": [
+                "packages/*/custom-elements.json",
+                "!packages/clear-button/custom-elements.json",
+                "!packages/close-button/custom-elements.json",
+                "!packages/modal/custom-elements.json",
+                "!packages/iconset/custom-elements.json",
+                "tools/grid/custom-elements.json",
+                "tools/theme/custom-elements.json",
+                "tools/trucated/custom-elements.json",
+                "tools/reactive-controllers/custom-elements.json",
+                "projects/story-decorator/custom-elements.json"
+            ]
+        },
+        "docs:cem": {
+            "command": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/{stories,icons,elements}/**\" --outdir projects/documentation --litelement",
+            "files": [
+                "packages/**/*.ts",
+                "!packages/**/*.d.ts",
+                "!**/{stories,icons,elements}/**",
+                "tools/**/*.ts"
+            ],
+            "output": [
+                "projects/documentation/custom-elements.json"
+            ]
+        },
+        "build:cem:storybook": {
+            "command": "cem analyze --outdir storybook/",
+            "files": [
+                "packages/**/*.ts",
+                "tools/**/*.ts"
+            ],
+            "output": [
+                "storybook/custom-elements.json"
+            ]
         },
         "build:css": {
-            "command": "node ./tasks/build-css.js",
+            "command": "node ./scripts/build-css.js",
             "files": [
                 "packages/**/*.css",
                 "tools/**/*.css",
-                "tasks/build-css.js"
+                "scripts/build-css.js"
             ],
             "output": [
                 "packages/**/*.css.ts",
                 "tools/**/*.css.ts"
-            ],
-            "clean": "if-file-deleted"
+            ]
         },
-        "build:ts:watch": {
-            "command": "node ./tasks/watch-packages.js",
-            "service": true
+        "build:icons": {
+            "dependencies": [
+                "build:icons:scales",
+                "build:icons:ui",
+                "build:icons:workflow"
+            ]
+        },
+        "build:react": {
+            "clean": "if-file-deleted",
+            "command": "node ./scripts/build-react.js && tsc --build tsconfig-react-wrapper.json",
+            "files": [
+                "packages/react/src/**/*.ts",
+                "packages/react/src/**/*.js",
+                "packages/react/tsconfig-react-wrapper.json",
+                "packages/react/tsconfig.json",
+                "scripts/build-react.js"
+            ],
+            "output": [
+                "packages/react/src/**/*.js",
+                "packages/react/src/**/*.js.map",
+                "packages/react/tsconfig-react-wrapper.json",
+                "packages/react/tsconfig.json"
+            ]
+        },
+        "build:tests": {
+            "command": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
+            "files": [
+                "test/**/*.ts",
+                "test/**/*.js",
+                "!test/visual/create.js",
+                "!test/visual/review.js",
+                "!test/visual/rollup.config.js",
+                "!test/visual/src/review.js",
+                "!test/visual/src/index.html",
+                "!test/visual/wds-vrt.config.js"
+            ],
+            "output": [
+                "test/**/*.js",
+                "test/**/*.js.map",
+                "!test/visual/create.js",
+                "!test/visual/review.js",
+                "!test/visual/rollup.config.js",
+                "!test/visual/src/review.js",
+                "!test/visual/src/index.html",
+                "!test/visual/wds-vrt.config.js"
+            ]
         },
         "build:ts": {
-            "command": "node ./tasks/esbuild-packages.js",
+            "command": "node ./scripts/esbuild-packages.js",
             "dependencies": [
                 "build:icons",
                 "test:create",
@@ -226,8 +340,8 @@
                 "!projects/templates/**/*",
                 "tools/**/*.ts",
                 "!tools/**/*.d.ts",
-                "tasks/esbuild-packages.js",
-                "tasks/ts-tools.js",
+                "scripts/esbuild-packages.js",
+                "scripts/ts-tools.js",
                 "packages/**/exports.json",
                 "tools/**/exports.json"
             ],
@@ -257,8 +371,7 @@
                 "!test/visual/src/index.html",
                 "!test/visual/wds-vrt.config.js",
                 "!tools/base/src/version.js"
-            ],
-            "clean": "if-file-deleted"
+            ]
         },
         "build:types": {
             "command": "tsc --build tsconfig-all.json --pretty",
@@ -281,31 +394,37 @@
                 "tools/**/tsconfig.tsbuildinfo",
                 "!**/local.d.ts",
                 "!tools/base/src/version.d.ts"
-            ],
-            "clean": "if-file-deleted"
-        },
-        "build:watch": {
-            "dependencies": [
-                "build:css:watch",
-                "build:ts:watch"
             ]
         },
-        "build": {
+        "build:validate": {
+            "command": "node ./scripts/verify-build-artifacts.js",
             "dependencies": [
                 "build:ts",
                 "build:types"
-            ]
-        },
-        "icons": {
-            "command": "node ./scripts/process-icons.js && yarn lint",
+            ],
             "files": [
-                "scripts/process-icons.js"
+                "packages/**/*.ts",
+                "tools/**/*.ts",
+                "scripts/verify-build-artifacts.js"
+            ],
+            "outputs": []
+        },
+        "build:icons:scales": {
+            "clean": "if-file-deleted",
+            "command": "yarn workspace @spectrum-web-components/icons build",
+            "files": [
+                "packages/icons/bin/build.js",
+                "packages/icons/packages.json",
+                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
+                "node_modules/@spectrum-css/ui-icons/dist/large/**.svg"
             ],
             "output": [
-                "packages/**/*.svg.ts"
+                "packages/icons/src/icons-medium.svg.ts",
+                "packages/icons/src/icons-large.svg.ts"
             ]
         },
-        "icons:ui": {
+        "build:icons:ui": {
+            "clean": "if-file-deleted",
             "command": "yarn workspace @spectrum-web-components/icons-ui build",
             "files": [
                 "packages/icons-ui/bin/build.js",
@@ -314,18 +433,16 @@
                 "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
             ],
             "output": [
-                "packages/icons-ui/**/*.ts",
-                "!packages/icons-ui/**/*.d.ts",
-                "!packages/icons-ui/stories/**/*.ts",
                 "packages/icons-ui/stories/icon-manifest.ts",
-                "!packages/icons-ui/test/**/*.ts",
+                "packages/icons-ui/src/**/*.ts",
+                "!packages/icons-ui/src/**/*.d.ts",
                 "!packages/icons-ui/src/index.ts",
                 "!packages/icons-ui/src/custom-tag.ts",
                 "!packages/icons-workflow/src/DefaultIcon.ts"
-            ],
-            "clean": "if-file-deleted"
+            ]
         },
-        "icons:workflow": {
+        "build:icons:workflow": {
+            "clean": "if-file-deleted",
             "command": "yarn workspace @spectrum-web-components/icons-workflow build",
             "files": [
                 "!packages/icons-workflow/bin/build.js",
@@ -341,35 +458,28 @@
                 "!packages/icons-workflow/src/custom-tag.ts",
                 "!packages/icons-workflow/src/DefaultIcon.ts",
                 "!packages/icons-workflow/bin/icons-mapping.json"
-            ],
-            "clean": "if-file-deleted"
-        },
-        "analyze:storybook": {
-            "command": "cem analyze --outdir storybook/",
-            "files": [
-                "packages/**/*.ts",
-                "tools/**/*.ts"
-            ],
-            "output": [
-                "storybook/custom-elements.json"
-            ]
-        },
-        "build:icons": {
-            "dependencies": [
-                "icons",
-                "icons:ui",
-                "icons:workflow"
             ]
         },
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
-            "service": true,
             "dependencies": [
-                "build:watch",
-                "analyze:storybook"
+                "watch",
+                "build:cem:storybook"
+            ],
+            "service": true
+        },
+        "storybook:build": {
+            "command": "storybook build -c storybook",
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "dependencies": [
+                "build",
+                "build:cem:storybook"
             ]
         },
         "test:create": {
+            "clean": "if-file-deleted",
             "command": "node test/visual/create.js",
             "files": [
                 "packages/*/stories/*.stories.ts",
@@ -378,36 +488,23 @@
             "output": [
                 "packages/*/test/*.test-vrt.ts",
                 "tools/*/test/*.test-vrt.ts"
-            ],
-            "clean": "if-file-deleted"
+            ]
+        },
+        "watch": {
+            "dependencies": [
+                "watch:css",
+                "watch:ts"
+            ]
+        },
+        "watch:css": {
+            "command": "node ./scripts/watch-css.js",
+            "service": true
+        },
+        "watch:ts": {
+            "command": "node ./scripts/watch-packages.js",
+            "service": true
         }
     },
-    "workspaces": [
-        "linters/*",
-        "packages/*",
-        "projects/*",
-        "tools/*",
-        "react/*"
-    ],
     "packageManager": "yarn@4.9.1",
-    "license": "Apache-2.0",
-    "author": "Adobe",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
-    },
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html"
-    ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    "customElements": "custom-elements.json"
 }

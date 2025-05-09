@@ -28,8 +28,5 @@ export default {
         'node_modules/*',
         '**/*.dev.*',
     ],
-    outdir: '.',
-    litelement: true,
-    packagejson: false,
     plugins: [moduleFileExtensionsPlugin(), defineElementPlugin()],
 };
