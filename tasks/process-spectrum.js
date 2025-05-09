@@ -177,6 +177,9 @@ async function processComponent(componentPath) {
             sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
         }
 
+        // Fetch the CSS
+        sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
+
         const outputPath = path.join(
             ...(Array.isArray(conversion.outPackage)
                 ? conversion.outPackage
