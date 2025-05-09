@@ -1,22 +1,25 @@
-#!/usr/bin/env node
-
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software distributed under
 the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
-const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
+const processIcon = (srcPath, fd) => {
     // get icon name from filename
     const iconName = path.basename(srcPath, path.extname(srcPath));
     // regex will extract width, height and svg content into $1, $2 and $3 respectively
@@ -41,54 +44,44 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     );
 };
 
-// where is spectrum-css?
-// TODO: use resolve package to find node_modules
-const spectrumIconsPath = path.resolve(
-    path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'ui-icons',
-        'dist'
-    )
-);
-
-// define the target icon sizes for each scale
-const scales = {
-    medium: { width: 18, height: 18 },
-    large: { width: 24, height: 24 },
-};
-
-// process the scales
-Object.keys(scales).forEach((scaleKey) => {
-    console.log(`processing scale ${scaleKey}...`);
-
-    const scale = scales[scaleKey];
-    const srcPath = path.join(spectrumIconsPath, scaleKey);
-    const outputPath = path.join(
-        __dirname,
-        '..',
-        'packages',
-        'icons',
-        'src',
-        `icons-${scaleKey}.svg.ts`
-    );
-    let outputFd = fs.openSync(outputPath, 'w');
-
-    fs.writeSync(
-        outputFd,
-        'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
-    );
-
-    fs.readdirSync(srcPath).forEach((iconFile) => {
-        const srcIconPath = path.join(srcPath, iconFile);
-        console.log(`\ticon ${iconFile}`);
-        processIcon(srcIconPath, outputFd, scale.width, scale.height);
+/**
+ * @returns {Promise<void}
+ */
+async function main() {
+    const spectrumIconsPath = require.resolve('@spectrum-css/ui-icons', {
+        paths: [
+            path.join(__dirname, '..', 'node_modules'),
+            path.join(__dirname, '..', '..', '..', 'node_modules'),
+        ],
     });
 
-    fs.writeSync(outputFd, '</svg>`;');
-    fs.closeSync(outputFd);
-});
+    return Promise.all(
+        ['medium', 'large'].map(async (scale) => {
+            const srcPath = path.join(path.dirname(spectrumIconsPath), scale);
+            const outputPath = path.join(
+                __dirname,
+                '..',
+                'src',
+                `icons-${scale}.svg.ts`
+            );
 
-console.log('complete.');
+            const outputFd = fs.openSync(outputPath, 'w');
+
+            fs.writeSync(
+                outputFd,
+                'import { svg } from \'@spectrum-web-components/base\';\n\nexport default svg`<svg xmlns="http://www.w3.org/2000/svg">'
+            );
+
+            fs.readdirSync(srcPath).forEach((iconFile) => {
+                processIcon(path.join(srcPath, iconFile), outputFd);
+            });
+
+            fs.writeSync(outputFd, '</svg>`;\n');
+            fs.closeSync(outputFd);
+        })
+    ).catch((error) => {
+        console.error('Error processing icons:', error);
+    });
+}
+
+await main();

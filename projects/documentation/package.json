@@ -49,7 +49,7 @@
         "posthtml-attrs-parser": "^1.0.1",
         "posthtml-match-helper": "^2.0.0",
         "prismjs": "^1.29.0",
-        "rimraf": "^5.0.1",
+        "rimraf": "^6.0.1",
         "rollup": "^4.12.0",
         "rollup-plugin-lit-css": "^5.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
@@ -222,7 +222,6 @@
                 "../../tools/**/args.js",
                 "../../tools/**/template.js",
                 "scripts/gather-wcd-urls.js",
-                "scripts/gather-spectrum-urls.js",
                 "scripts/gather-storybook-urls.js",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
@@ -239,7 +238,7 @@
             ],
             "dependencies": [
                 {
-                    "script": "../../:docs:analyze",
+                    "script": "../../:docs:cem",
                     "cascade": false
                 }
             ]

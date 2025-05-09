@@ -25,13 +25,15 @@ lib
 # build artifacts
 custom-elements.json
 
+!packages/icons/bin/build.js
+!packages/icons-ui/bin/build.js
 !packages/icons-workflow/bin/build.js
+
 !packages/icons-workflow/src/DefaultIcon.ts
 
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
-packages/**/spectrum-vars.json
 packages/**/*.js.map
 packages/**/*.d.ts
 packages/**/*.test-vrt.ts
@@ -50,7 +52,6 @@ projects/**/*.d.ts
 
 tools/*/src/**/*.css.js
 tools/*/custom-elements.json
-tools/**/spectrum-vars.json
 tools/**/*.js
 tools/**/*.js.map
 tools/**/*.d.ts
@@ -61,7 +62,6 @@ tools/**/*.test-vrt.ts
 !tools/*/local.d.ts
 !tools/base/src/version.js
 !tools/base/src/version.d.ts
-
 
 .wireit
 

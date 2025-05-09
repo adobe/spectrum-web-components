@@ -10,26 +10,34 @@ governing permissions and limitations under the License.
 */
 
 /**
- * @fileoverview This task generates and updates custom elements manifest JSON files
- * for all workspace packages using the Custom Elements Manifest analyzer (CEM).
+ * @fileoverview This task generates React wrapper components for Spectrum Web Components
+ * using the Custom Elements Manifest (CEM) analyzer.
  *
  * @description
  * This script:
- * 1. Gets a list of all workspace packages excluding specified ignored packages
- * 2. Uses the Custom Elements Manifest analyzer to generate JSON documentation
- * 3. Processes each package using a custom configuration file
- * 4. Includes package.json data in the generated manifest
+ * 1. Removes any existing 'react' directory for clean generation
+ * 2. Analyzes all workspace packages (except ignored ones) using CEM
+ * 3. Generates React wrapper components using a custom configuration
+ * 4. Creates icon-specific React wrappers using a separate script
  *
  * @output
- * - Start: "Updating custom elements JSON files..."
- * - Success: "All custom elements JSON files have been updated successfully."
- * - Error: "Error executing custom-element-json command:" followed by error details
+ * - Info: "Removed react directory."
+ * - Info: "Generated React wrapper."
+ * - Error: "Error removing react directory:" followed by error details
+ * - Error: "Error generating React wrapper:" followed by error details
+ * - Error: "Error running command in [path]:" followed by error details
  */
 
 import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import fs from 'fs';
 import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+import fg from 'fast-glob';
+import { cli } from '@custom-elements-manifest/analyzer/cli.js';
+import { buildPackage } from './ts-tools.js';
+import { generateIconWrapper } from '../scripts/cem-plugin-react-wrapper.js';
 
 // Get a list of all packages except those you want to ignore
 const getWorkspacePackages = (ignoredPackages) => {
@@ -51,14 +59,6 @@ const getWorkspacePackages = (ignoredPackages) => {
         }));
 };
 
-const __filename = dirname(fileURLToPath(import.meta.url));
-const __dirname = dirname(__filename);
-const configPath = path.resolve(
-    __dirname,
-    'custom-elements-manifest.config.js'
-);
-
-// Define the packages to ignore
 const ignoredPackages = [
     '@spectrum-web-components/base',
     '@spectrum-web-components/bundle',
@@ -80,18 +80,37 @@ const ignoredPackages = [
     '@types/swc',
 ];
 
-// Use the function
-const allPackages = getWorkspacePackages(ignoredPackages);
-// Define the command to execute
-const command = `cem analyze --config ${configPath} --packagejson`;
+const __filename = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(__filename);
 
-console.log(__dirname, 'Updating custom elements JSON files...');
-allPackages.forEach((pkg) => {
-    try {
-        execSync(command, { cwd: pkg.path, stdio: 'inherit' });
-    } catch (error) {
-        console.error('Error executing custom-element-json command:', error);
-        process.exit(1);
-    }
-});
-console.log('All custom elements JSON files have been updated successfully.');
+async function runCemAnalyze(packages) {
+    const configPath = path.resolve(__dirname, 'cem-react-wrapper.config.js');
+    return Promise.all(
+        packages.map((pkg) =>
+            cli({
+                argv: ['analyze', '--config', configPath],
+                cwd: pkg.path,
+            })
+        )
+    );
+}
+
+async function main() {
+    fs.rmSync('react', { recursive: true, force: true });
+    const allPackages = getWorkspacePackages(ignoredPackages);
+
+    return Promise.all([
+        runCemAnalyze(allPackages),
+        Promise.all([
+            generateIconWrapper('icons-ui'),
+            generateIconWrapper('icons-workflow'),
+        ]).then(async () => {
+            // Build React wrapper packages
+            return fg(['./react/**/!(*.d).ts']).then((files) =>
+                buildPackage(files)
+            );
+        }),
+    ]);
+}
+
+await main();

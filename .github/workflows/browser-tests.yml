@@ -31,8 +31,7 @@ jobs:
                   fetch-depth: 0 # Get full history
 
             - name: Fetch main branch
-              run: |
-                  git fetch origin main:main
+              run: git fetch origin main:main
 
             - name: Setup Job and Install Dependencies
               uses: ./.github/actions/setup-job
@@ -93,7 +92,7 @@ jobs:
               uses: actions/github-script@v7
               with:
                   script: |
-                      const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
+                      const { buildTachometerComment } = await import('${{ github.workspace }}/.github/scripts/build-tachometer-comment.js');
                       const body = buildTachometerComment();
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/tasks/comment-or-update.js');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
                       commentOrUpdate(github, context, '## Tachometer results', body);
