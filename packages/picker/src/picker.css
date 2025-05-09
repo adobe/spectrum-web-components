@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-picker.css');
-@import url('./picker-overrides.css');
+@import url("./spectrum-picker.css");
+@import url("./picker-overrides.css");
 
 :host {
     display: inline-flex;
@@ -22,14 +22,8 @@ governing permissions and limitations under the License.
      * Move width management to :host
      **/
     max-inline-size: 100%;
-    inline-size: var(
-        --mod-picker-inline-size,
-        var(--spectrum-picker-inline-size)
-    );
-    min-inline-size: calc(
-        var(--spectrum-picker-minimum-width-multiplier) *
-            var(--mod-picker-block-size, var(--spectrum-picker-block-size))
-    );
+    inline-size: var(--mod-picker-inline-size, var(--spectrum-picker-inline-size));
+    min-inline-size: calc(var(--spectrum-picker-minimum-width-multiplier) * var(--mod-picker-block-size, var(--spectrum-picker-block-size)));
 }
 
 :host([quiet]) {
@@ -80,10 +74,7 @@ sp-menu {
  **/
 :host([focused]:not([quiet])) #button #label.placeholder {
     /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-label.is-placeholder */
-    color: var(
-        --spectrum-picker-placeholder-text-color-key-focus,
-        var(--spectrum-alias-placeholder-text-color-hover)
-    );
+    color: var(--spectrum-picker-placeholder-text-color-key-focus, var(--spectrum-alias-placeholder-text-color-hover));
 }
 
 #label.visually-hidden ~ .picker {
@@ -92,10 +83,7 @@ sp-menu {
 
 :host([focused]:not([quiet], [pending])) #button .picker {
     /* .spectrum-Picker-trigger.focus-ring .spectrum-Picker-icon */
-    color: var(
-        --spectrum-picker-icon-color-key-focus,
-        var(--spectrum-alias-icon-color-focus)
-    );
+    color: var(--spectrum-picker-icon-color-key-focus, var(--spectrum-alias-icon-color-focus));
 }
 
 .visually-hidden {
@@ -120,27 +108,9 @@ unset the focus ring styles in safari. This is a temporary fix because safari
 sets the :focus-visible pseudo class on the parent element when the dialog is closed.
 */
 #button.remove-focus-ring-safari-hack:focus-visible {
-    background-color: var(
-        --highcontrast-picker-background-color,
-        var(
-            --mod-picker-background-color-default,
-            var(--spectrum-picker-background-color-default)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-default,
-        var(
-            --mod-picker-border-color-default,
-            var(--spectrum-picker-border-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-picker-content-color-default,
-        var(
-            --mod-picker-font-color-default,
-            var(--spectrum-picker-font-color-default)
-        )
-    );
+    background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-default, var(--spectrum-picker-background-color-default)));
+    border-color: var(--highcontrast-picker-border-color-default, var(--mod-picker-border-color-default, var(--spectrum-picker-border-color-default)));
+    color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
 }
 
 #button.remove-focus-ring-safari-hack:after {
@@ -152,25 +122,7 @@ sets the :focus-visible pseudo class on the parent element when the dialog is cl
 }
 
 #button.remove-focus-ring-safari-hack:active {
-    background-color: var(
-        --highcontrast-picker-background-color,
-        var(
-            --mod-picker-background-color-default,
-            var(--spectrum-picker-background-color-default)
-        )
-    );
-    border-color: var(
-        --highcontrast-picker-border-color-default,
-        var(
-            --mod-picker-border-color-default,
-            var(--spectrum-picker-border-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-picker-content-color-default,
-        var(
-            --mod-picker-font-color-default,
-            var(--spectrum-picker-font-color-default)
-        )
-    );
+    background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-default, var(--spectrum-picker-background-color-default)));
+    border-color: var(--highcontrast-picker-border-color-default, var(--mod-picker-border-color-default, var(--spectrum-picker-border-color-default)));
+    color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
 }

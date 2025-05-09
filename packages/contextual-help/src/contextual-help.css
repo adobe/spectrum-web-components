@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-contextual-help.css');
-@import url('./contextual-help-overrides.css');
+@import url("./spectrum-contextual-help.css");
+@import url("./contextual-help-overrides.css");
 
 :host {
     display: inline-block;
 }
 
-::slotted([slot='link']) {
+::slotted([slot="link"]) {
     display: block;
 }

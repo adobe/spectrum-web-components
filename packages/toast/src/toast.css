@@ -10,14 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-toast.css');
-@import url('./toast-overrides.css');
+@import url("./spectrum-toast.css");
+@import url("./toast-overrides.css");
 
 :host {
     --spectrum-overlay-animation-distance: var(--spectrum-spacing-100);
-    --spectrum-overlay-animation-duration: var(
-        --spectrum-animation-duration-100
-    );
+    --spectrum-overlay-animation-duration: var(--spectrum-animation-duration-100);
 
     opacity: 0;
     pointer-events: none;
@@ -35,26 +33,14 @@ governing permissions and limitations under the License.
     visibility: visible;
 }
 
-:host([variant='error']),
-:host([variant='warning']) {
-    background-color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
+:host([variant="error"]),
+:host([variant="warning"]) {
+    background-color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
 }
 
-:host([variant='negative']),
-:host([variant='negative']) .closeButton:focus-visible:not(:active),
-:host([variant='warning']),
-:host([variant='warning']) .closeButton:focus-visible:not(:active) {
-    color: var(
-        --highcontrast-toast-negative-background-color-default,
-        var(
-            --mod-toast-negative-background-color-default,
-            var(--spectrum-toast-negative-background-color-default)
-        )
-    );
+:host([variant="negative"]),
+:host([variant="negative"]) .closeButton:focus-visible:not(:active),
+:host([variant="warning"]),
+:host([variant="warning"]) .closeButton:focus-visible:not(:active) {
+    color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
 }

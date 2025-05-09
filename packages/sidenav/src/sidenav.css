@@ -10,22 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-sidenav.css');
-@import url('./sidenav-overrides.css');
+@import url("./spectrum-sidenav.css");
+@import url("./sidenav-overrides.css");
 
 :host {
     display: block;
     width: 240px;
 
-    --spectrum-web-component-sidenav-font-weight: var(
-        --mod-sidenav-text-font-weight,
-        var(--spectrum-sidenav-text-font-weight)
-    );
+    --spectrum-web-component-sidenav-font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
 }
 
-:host(:not([variant='multilevel'])) {
-    --mod-sidenav-top-level-font-weight: var(
-        --mod-sidenav-text-font-weight,
-        var(--spectrum-sidenav-text-font-weight)
-    );
+:host(:not([variant="multilevel"])) {
+    --mod-sidenav-top-level-font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
 }

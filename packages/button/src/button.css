@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-button.css');
-@import url('./button-overrides.css');
+@import url("./spectrum-button.css");
+@import url("./button-overrides.css");
 
 @media (forced-colors: active) {
     :host([treatment][disabled]) {
@@ -50,27 +50,9 @@ governing permissions and limitations under the License.
 
 @keyframes update-pending-button-styles {
     100% {
-        background-color: var(
-            --highcontrast-button-background-color-disabled,
-            var(
-                --mod-button-background-color-disabled,
-                var(--spectrum-button-background-color-disabled)
-            )
-        );
-        border-color: var(
-            --highcontrast-button-border-color-disabled,
-            var(
-                --mod-button-border-color-disabled,
-                var(--spectrum-button-border-color-disabled)
-            )
-        );
-        color: var(
-            --highcontrast-button-content-color-disabled,
-            var(
-                --mod-button-content-color-disabled,
-                var(--spectrum-button-content-color-disabled)
-            )
-        );
+        background-color: var(--highcontrast-button-background-color-disabled, var(--mod-button-background-color-disabled, var(--spectrum-button-background-color-disabled)));
+        border-color: var(--highcontrast-button-border-color-disabled, var(--mod-button-border-color-disabled, var(--spectrum-button-border-color-disabled)));
+        color: var(--highcontrast-button-content-color-disabled, var(--mod-button-content-color-disabled, var(--spectrum-button-content-color-disabled)));
     }
 }
 
@@ -80,7 +62,7 @@ governing permissions and limitations under the License.
     animation: update-pending-button-styles 0s var(--pending-delay, 1s) forwards;
 }
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     /* Correct CSS output taking too much control of this element */
     visibility: revert-layer;
 
@@ -100,15 +82,13 @@ sp-progress-circle {
     animation: show-progress-circle 0s var(--pending-delay, 1s) forwards;
 }
 
-:host([pending]:not([disabled])) slot[name='icon'],
+:host([pending]:not([disabled])) slot[name="icon"],
 :host([pending]:not([disabled])) #label {
     animation: hide-icons-label 0s var(--pending-delay, 1s) forwards;
 }
 
 :host(.remove-focus-ring-safari-hack:focus-visible):after {
-    margin: calc(
-        -1 * var(--mod-button-focus-indicator-gap, var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)))
-    );
+    margin: calc(-1 * var(--mod-button-focus-indicator-gap, var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap))));
     box-shadow: none;
 }
 
@@ -118,25 +98,7 @@ sp-progress-circle {
 }
 
 :host(.remove-focus-ring-safari-hack:focus-visible:not(:hover)) {
-    background-color: var(
-        --highcontrast-button-background-color-default,
-        var(
-            --mod-button-background-color-default,
-            var(--spectrum-button-background-color-default)
-        )
-    );
-    border-color: var(
-        --highcontrast-button-border-color-default,
-        var(
-            --mod-button-border-color-default,
-            var(--spectrum-button-border-color-default)
-        )
-    );
-    color: var(
-        --highcontrast-button-content-color-default,
-        var(
-            --mod-button-content-color-default,
-            var(--spectrum-button-content-color-default)
-        )
-    );
+    background-color: var(--highcontrast-button-background-color-default, var(--mod-button-background-color-default, var(--spectrum-button-background-color-default)));
+    border-color: var(--highcontrast-button-border-color-default, var(--mod-button-border-color-default, var(--spectrum-button-border-color-default)));
+    color: var(--highcontrast-button-content-color-default, var(--mod-button-content-color-default, var(--spectrum-button-content-color-default)));
 }

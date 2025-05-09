@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-table-row.css');
+@import url("./spectrum-table-row.css");
 
 :host,
-:host([role='row']) {
+:host([role="row"]) {
     display: flex;
     width: 100%;
 }

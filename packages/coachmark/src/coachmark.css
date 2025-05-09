@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-coachmark.css');
-@import url('./coachmark-overrides.css');
+@import url("./spectrum-coachmark.css");
+@import url("./coachmark-overrides.css");
 
 :host {
     /** custom to coachmark should be removed once keys component is developed by CSS **/
@@ -42,22 +42,17 @@ governing permissions and limitations under the License.
 
 .keys {
     align-items: center;
-    gap: var(--spectrum-coachmark-dimension-size-175)
-        var(--spectrum-coachmark-dimension-size-50);
+    gap: var(--spectrum-coachmark-dimension-size-175) var(--spectrum-coachmark-dimension-size-50);
     display: flex;
     flex-flow: wrap;
-    font-family: var(
-        --mod-body-sans-serif-font-family,
-        var(--spectrum-body-sans-serif-font-family)
-    );
+    font-family: var(--mod-body-sans-serif-font-family, var(--spectrum-body-sans-serif-font-family));
 }
 
 .flex-container {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spectrum-coachmark-dimension-size-175)
-        var(--spectrum-coachmark-dimension-size-200);
+    gap: var(--spectrum-coachmark-dimension-size-175) var(--spectrum-coachmark-dimension-size-200);
 }
 
 .static-item {
