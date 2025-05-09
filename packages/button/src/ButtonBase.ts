@@ -93,7 +93,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             return false;
         }
 
-        if (this.shouldProxyClick()) {
+        if (this.shouldProxyClick(event as MouseEvent)) {
             return;
         }
     }
@@ -102,9 +102,20 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.focus();
     }
 
-    private shouldProxyClick(): boolean {
+    private shouldProxyClick(event?: MouseEvent): boolean {
         let handled = false;
+
+        // Don't proxy clicks with modifier keys (Command/Meta, Ctrl, Shift, Alt)
+        if (
+            event &&
+            (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        ) {
+            return false;
+        }
+
         if (this.anchorElement) {
+            // Click HTML anchor element by proxy, but only for non-modified clicks
+            this.anchorElement.click();
             handled = true;
             // if the button type is `submit` or `reset`
         } else if (this.type !== 'button') {
@@ -125,7 +136,8 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             ${super.renderAnchor({
                 id: 'button',
                 ariaHidden: true,
-                className: 'button anchor hidden',
+                className: 'button anchor',
+                tabindex: -1,
             })}
         `;
     }
@@ -232,8 +244,16 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
 
         if (this.anchorElement) {
-            this.anchorElement.addEventListener('focus', this.proxyFocus);
+            // Ensure the anchor element is not focusable directly via tab
             this.anchorElement.tabIndex = -1;
+
+            // Make sure it has proper ARIA attributes
+            if (!this.anchorElement.hasAttribute('aria-hidden')) {
+                this.anchorElement.setAttribute('aria-hidden', 'true');
+            }
+
+            // Set up focus delegation
+            this.anchorElement.addEventListener('focus', this.proxyFocus);
         }
     }
     protected override update(changes: PropertyValues): void {
