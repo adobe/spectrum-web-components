@@ -41,6 +41,11 @@ governing permissions and limitations under the License.
     }
 }
 
+/* Manual override: can remove after cutover */
+:host {
+    --system-radio-button-background-color: var(--spectrum-gray-50);
+}
+
 #scale,
 #theme {
     width: 100%;
