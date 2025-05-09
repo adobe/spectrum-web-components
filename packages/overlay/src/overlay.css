@@ -29,9 +29,7 @@ governing permissions and limitations under the License.
  **/
 
 :host(:has(> sp-tooltip)) {
-    --swc-overlay-animation-distance: var(
-        --spectrum-tooltip-animation-distance
-    );
+    --swc-overlay-animation-distance: var(--spectrum-tooltip-animation-distance);
 }
 
 .dialog {
@@ -78,7 +76,7 @@ dialog:modal {
 .dialog:before {
     position: absolute;
     inset: -999em;
-    content: '';
+    content: "";
     pointer-events: auto !important;
 }
 
@@ -108,47 +106,47 @@ dialog:modal {
  * that _should_ still be under the pointer when `pointerup` is dispatched.
  * </HACK>
  **/
-.dialog:not([actual-placement])[placement*='top'] {
+.dialog:not([actual-placement])[placement*="top"] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: var(--swc-overlay-animation-distance);
 }
 
-.dialog:not([actual-placement])[placement*='right'] {
+.dialog:not([actual-placement])[placement*="right"] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-.dialog:not([actual-placement])[placement*='bottom'] {
+.dialog:not([actual-placement])[placement*="bottom"] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-.dialog:not([actual-placement])[placement*='left'] {
+.dialog:not([actual-placement])[placement*="left"] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: var(--swc-overlay-animation-distance);
 }
 
-.dialog[actual-placement*='top'] {
+.dialog[actual-placement*="top"] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: var(--swc-overlay-animation-distance);
 }
 
-.dialog[actual-placement*='right'] {
+.dialog[actual-placement*="right"] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-.dialog[actual-placement*='bottom'] {
+.dialog[actual-placement*="bottom"] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-.dialog[actual-placement*='left'] {
+.dialog[actual-placement*="left"] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: var(--swc-overlay-animation-distance);
 }
 
-slot[name='longpress-describedby-descriptor'] {
+slot[name="longpress-describedby-descriptor"] {
     display: none;
 }
 
@@ -181,17 +179,9 @@ slot[name='longpress-describedby-descriptor'] {
     .dialog {
         display: none;
         transition:
-            all
-                var(
-                    --mod-overlay-animation-duration,
-                    var(--spectrum-animation-duration-100, 0.13s)
-                ),
+            all var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)),
             translate 0s,
-            display
-                var(
-                    --mod-overlay-animation-duration,
-                    var(--spectrum-animation-duration-100, 0.13s)
-                );
+            display var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s));
         transition-behavior: allow-discrete;
     }
 
@@ -206,10 +196,7 @@ slot[name='longpress-describedby-descriptor'] {
     }
 
     .dialog[actual-placement] {
-        z-index: calc(
-            var(--swc-overlay-z-index-base, 1000) +
-                var(--swc-overlay-open-count)
-        );
+        z-index: calc(var(--swc-overlay-z-index-base, 1000) + var(--swc-overlay-open-count));
     }
 }
 /* stylelint-enable */
