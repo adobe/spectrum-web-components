@@ -6550,13 +6550,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-css/clearbutton@npm:7.0.0-s2-foundations.16":
-  version: 7.0.0-s2-foundations.16
-  resolution: "@spectrum-css/clearbutton@npm:7.0.0-s2-foundations.16"
+"@spectrum-css/clearbutton@npm:7.2.0":
+  version: 7.2.0
+  resolution: "@spectrum-css/clearbutton@npm:7.2.0"
   peerDependencies:
-    "@spectrum-css/icon": ">=7"
-    "@spectrum-css/tokens": ">=14"
-  checksum: 10c0/6434ffd030908888f5b2898696fd20aba31c5eb9a8c41bb0426bc133990f80f4b326fd1186b77b7bbbb3ca7720b1eb801581412be9500063e5729978f542c1d9
+    "@spectrum-css/icon": ">=9.0.0 <10.0.0"
+    "@spectrum-css/tokens": ">=16.0.0 <17.0.0"
+  peerDependenciesMeta:
+    "@spectrum-css/icon":
+      optional: true
+    "@spectrum-css/tokens":
+      optional: true
+  checksum: 10c0/10b0bd2a6c3a54ce55b99c3cd7287a9af1118822a81b0a9619d7e6cc7521032f9a6dcd9a6f697464645d9db9f7547e6a67124fa762dc66c7317130e8458b965b
   languageName: node
   linkType: hard
 
@@ -7709,7 +7714,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/clear-button@workspace:packages/clear-button"
   dependencies:
-    "@spectrum-css/clearbutton": "npm:7.0.0-s2-foundations.16"
+    "@spectrum-css/clearbutton": "npm:7.2.0"
     "@spectrum-web-components/base": "npm:1.6.0"
   languageName: unknown
   linkType: soft
