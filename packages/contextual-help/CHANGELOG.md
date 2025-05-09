@@ -1,5 +1,29 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e), [`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/popover@1.6.0
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/dialog@1.6.0
+    -   @spectrum-web-components/action-button@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/action-button@1.5.0
+    -   @spectrum-web-components/dialog@1.5.0
+    -   @spectrum-web-components/popover@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

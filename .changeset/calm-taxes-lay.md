@@ -1,5 +1,4 @@
 ---
-'@spectrum-web-components/field-label': patch
 '@spectrum-web-components/styles': patch
 ---
 

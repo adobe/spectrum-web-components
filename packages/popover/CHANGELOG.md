@@ -1,5 +1,28 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5341](https://github.com/adobe/spectrum-web-components/pull/5341) [`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e) Thanks [@renovate](https://github.com/apps/renovate)! - 📝 #[​3566](https://github.com/adobe/spectrum-css/pull/3566) Thanks [@​aramos-adobe](https://github.com/aramos-adobe)!
+
+    Popover overflow bug on Safari
+
+    -   `translateZ` has been added to the open popover to prevent clipping of the `filter: drop-shadow` when overflow is applied. `translateZ` or `translate3d` on the open state accelerates the component to the GPU layer maintaining any transformations and animations.
+    -   `overflow: visible` applied to CSS `*--withTip` so the tip is still visible if overflow is applied to the component.
+
+-   Updated dependencies [[`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70)]:
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

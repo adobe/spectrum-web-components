@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/menu",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/menu"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/menu",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -83,25 +83,31 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/action-button": "1.4.0",
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/divider": "1.4.0",
-        "@spectrum-web-components/icon": "1.4.0",
-        "@spectrum-web-components/icons-ui": "1.4.0",
-        "@spectrum-web-components/overlay": "1.4.0",
-        "@spectrum-web-components/popover": "1.4.0",
-        "@spectrum-web-components/reactive-controllers": "1.4.0",
-        "@spectrum-web-components/shared": "1.4.0"
+        "@spectrum-web-components/action-button": "1.6.0",
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/divider": "1.6.0",
+        "@spectrum-web-components/icon": "1.6.0",
+        "@spectrum-web-components/icons-ui": "1.6.0",
+        "@spectrum-web-components/overlay": "1.6.0",
+        "@spectrum-web-components/popover": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0"
     },
     "devDependencies": {
-        "@spectrum-css/menu": "9.1.1"
+        "@spectrum-css/menu": "9.2.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

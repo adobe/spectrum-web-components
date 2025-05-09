@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.6.0
+
+### Minor Changes
+
+-   [#5367](https://github.com/adobe/spectrum-web-components/pull/5367) [`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Added missing S2 icons
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

@@ -388,11 +388,16 @@ for an example.
 Each component's `packages/_componentname_/README.md`. These files must meet our standards below:
 
 -   Heading structure must communicate the organization of the docs page. See W3C WAI's Tutorial on [Headings](https://www.w3.org/WAI/tutorials/page-structure/headings/).
--   Main headings (level 2 and 3) should be consistent from component to component. See W3C WAI's [Understanding SC 3.2: Predictable](https://www.w3.org/WAI/WCAG21/Understanding/predictable.html) and the [Documentation structure](#documentatio-structuren) section below.
+-   Main headings (level 2 and 3) should be consistent from component to component. See W3C WAI's [Understanding SC 3.2: Predictable](https://www.w3.org/WAI/WCAG21/Understanding/predictable.html) and the [Documentation structure](#documentation-structure) section below.
+-   Consider using `<sp-tabs>` for related sections/examples, such as tabs for each of the sizes, states, types, or variants.
+-   Consider using an `<sp-table>` to make content like keyboard actions easiert to read.
+-   Use the `<kbd>` tag to semantically indicate keyboard input and make keyboard actions easier to read.
+-   Use the plain language to make the docs easier to understand.
 -   All examples code must be accessible.
 -   The example code must show the component with enough context to demonstrate how to use it with other elements in an accessible way. See how the examples in [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md) show the component used with field elements.
 -   The "Accessibility" section contains tips on how to use the component accessibly. See the Accessibility section of [`packages/picker/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/menu/README.md).
 -   The "Accessibility" section contains notes on any accessibility considerations that affect the component's development. See the notes on cross-root ARIA in Accessibility section of [`packages/help-text/README.md`](https://github.com/adobe/spectrum-web-components/blob/main/packages/help-text/README.md).
+-   Check out the [Spectrum Design System documentation](https://spectrum.adobe.com/) to ensure our documentation is uses consistent langauge and component recommendations.
 
 #### Documentation structure
 
@@ -410,7 +415,7 @@ Information on how to import the component.
 ### Anatomy
 
 <--
-Information and examples about options
+Information and examples about the parts of the component
 (eg., labels, icons, etc.)
 of the component. -->
 
@@ -419,6 +424,14 @@ of the component. -->
 <--
 Information and examples about options
 (eg., sizes, variants, states, etc.)
+of the component.
+-->
+
+### States
+
+<--
+Information and examples about states
+(eg., disabled, loading, etc.)
 of the component.
 -->
 

@@ -796,6 +796,36 @@ describe('Button', () => {
                 await elementUpdated(el);
                 expect(el.variant).to.equal('accent');
             });
+            it('allows variant and static-color to coexist', async () => {
+                const el = await fixture<Button>(html`
+                    <sp-button variant="accent" static-color="white">
+                        Button
+                    </sp-button>
+                `);
+
+                await elementUpdated(el);
+                expect(el.variant).to.equal('accent');
+                expect(el.getAttribute('variant')).to.equal('accent');
+                expect(el.staticColor).to.equal('white');
+                expect(el.getAttribute('static-color')).to.equal('white');
+
+                // Test changing both properties
+                el.variant = 'primary';
+                el.staticColor = 'black';
+                await elementUpdated(el);
+                expect(el.variant).to.equal('primary');
+                expect(el.getAttribute('variant')).to.equal('primary');
+                expect(el.staticColor).to.equal('black');
+                expect(el.getAttribute('static-color')).to.equal('black');
+
+                // Test removing static-color while keeping variant
+                el.staticColor = undefined;
+                await elementUpdated(el);
+                expect(el.variant).to.equal('primary');
+                expect(el.getAttribute('variant')).to.equal('primary');
+                expect(el.staticColor).to.be.undefined;
+                expect(el.hasAttribute('static-color')).to.be.false;
+            });
         });
         it('handles modifier key clicks correctly', async () => {
             const el = await fixture<Button>(html`

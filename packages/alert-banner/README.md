@@ -1,31 +1,29 @@
-## Description
+## Overview
 
-The `<sp-alert-banner>` shows pressing and high-signal messages, such as system alerts. It is meant to be noticed and prompt users to take action.
+The `<sp-alert-banner>` displays pressing and high-signal messages, such as system alerts. It is intended to be noticeable and prompt users to take action.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/alert-banner?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/alert-banner)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/alert-banner?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/alert-banner)
 
-```
+```bash
 yarn add @spectrum-web-components/alert-banner
 ```
 
 Import the side effectful registration of `<sp-alert-banner>` via:
 
-```
+```javascript
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 ```
 
-When looking to leverage the `AlertBanner` base class as a type and/or for extension purposes, do so via:
+### Anatomy
 
-```
-import { AlertBanner } from '@spectrum-web-components/alert-banner';
-```
+The alert dialog consists of several key parts:
 
-## Examples
+#### Content
 
-The alert banner accepts text context in the default slot provided:
+The message in its default slot.
 
 ```html
 <sp-alert-banner open>
@@ -33,7 +31,23 @@ The alert banner accepts text context in the default slot provided:
 </sp-alert-banner>
 ```
 
-### Dismissible
+#### Action
+
+An optional action using `slot="action"`:
+
+```html
+<sp-alert-banner open>
+    Your trial has expired
+    <sp-button treatment="outline" variant="secondary" slot="action">
+        Buy now
+    </sp-button>
+</sp-alert-banner>
+<bd></bd>
+```
+
+### Options
+
+#### Dismissable
 
 Use the `dismissible` attribute to include an icon-only close button used to dismiss the alert banner:
 
@@ -43,22 +57,15 @@ Use the `dismissible` attribute to include an icon-only close button used to dis
 </sp-alert-banner>
 ```
 
-### Actionable
+#### Variants
 
-Use the action slot for the contextual action that a user can take in response to the issue described:
+The `<sp-alert-banner>` supports three variants, `neutral`(default), `info` and `negative`, to convey the nature of the message:
 
-```html
-<sp-alert-banner open dismissible>
-    Your trial has expired
-    <sp-button treatment="outline" static-color="white" slot="action">
-        Buy now
-    </sp-button>
-</sp-alert-banner>
-```
+<sp-tabs selected="info" auto label="Variants">
+<sp-tab value="info">Info</sp-tab>
+<sp-tab-panel value="info">
 
-## Variants
-
-### Info
+Use `variant="info"` for informational messages.
 
 ```html
 <sp-alert-banner open variant="info" dismissible>
@@ -69,15 +76,22 @@ Use the action slot for the contextual action that a user can take in response t
 </sp-alert-banner>
 ```
 
-### Negative
+</sp-tab-panel>
+<sp-tab value="negative">Negative</sp-tab>
+<sp-tab-panel value="negative">
+
+Use `variant="negative"` for error or warning messages.
 
 ```html
 <sp-alert-banner open variant="negative" dismissible>
-    Connection interupted. Check your network to continue
+    Connection interrupted. Check your network to continue
 </sp-alert-banner>
 ```
 
-## Closing the alert banner
+</sp-tab-panel>
+</sp-tabs>
+
+### Behaviors
 
 Alert banners should be used for system-level messages and they should be dismissed only as a result of a user action or if the internal state that triggered the alert has been resolved.
 
@@ -85,15 +99,39 @@ The alert can be dismissed by triggering the close button in case of a dismissib
 
 The component dispatches a `close` event to announce that the alert banner has been closed. This can be prevented by using the `event.preventDefault()` API.
 
-## Accessibility
+### Accessibility
 
-The `sp-alert-banner` element is rendered with a `role` of `alert`, to inform screen readers and notify users accordingly. When rendering an alert that is dismissable or has actions on a page, it should be placed in a container with a `role` of `region` and that region should be labelled for screen readers users to quickly navigate.
+The `<sp-alert-banner>` is rendered with a `role` of `alert` to notify screen readers.
 
-The alert banner supports keyboard interaction as follows:
+When rendering an alert that is dismissable or has actions on a page, ensure the alert is placed in a container with a `role` of `region` that includes a unique `aria-label` or `aria-labelledby` for better accessibility.
 
--   _Tab_ should place focus on the next interactive element, which can be either the actionable button or the close button.
--   _Tab + Shift_ should place focus on the previous interactive element.
--   _Space_ or _Enter_ should trigger the interaction if one of the buttons is focused, thus dismissing the alert in case of the close button or triggering the corresponding contextual action.
--   _Esc_ will dismiss an alert banner if it’s a dismissible alert.
+It supports keyboard interactions, including:
 
-Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons.
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Key</sp-table-head-cell>
+        <sp-table-head-cell>Action</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><kbd>Tab</kbd></sp-table-cell>
+            <sp-table-cell>Navigate to the next interactive element</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Shift + Tab</kbd></sp-table-cell>
+            <sp-table-cell>Navigate to the previous interactive element</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Space</kbd>/<kbd>Enter</kbd></sp-table-cell>
+            <sp-table-cell>Trigger the focused button</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Esc</kbd></sp-table-cell>
+            <sp-table-cell>Dismiss a dismissible alert</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd>/<kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd></sp-table-cell>
+            <sp-table-cell>Once focus is on the alert banner, arrow keys can be used to navigate between the close button and the slotted action buttons</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>

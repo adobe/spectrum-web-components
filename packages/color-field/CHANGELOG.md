@@ -1,5 +1,27 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd)]:
+    -   @spectrum-web-components/textfield@1.6.0
+    -   @spectrum-web-components/color-handle@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+
+## 1.5.0
+
+### Minor Changes
+
+-   [#5322](https://github.com/adobe/spectrum-web-components/pull/5322) [`e19e55f`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1fe860d45814462905384ab83444fcf) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Fix Color Handle Positioning in Scrollable Containers
+
+### Patch Changes
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    -   @spectrum-web-components/color-handle@1.5.0
+    -   @spectrum-web-components/textfield@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

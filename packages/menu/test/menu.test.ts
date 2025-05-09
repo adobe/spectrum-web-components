@@ -27,11 +27,11 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowUpEvent,
     fixture,
+    sendMouseTo,
     tabEvent,
     testForLitDevWarnings,
     tEvent,
@@ -338,29 +338,25 @@ describe('Menu', () => {
 
         expect(document.activeElement).to.equal(firstItem);
         expect(firstItem.focused, 'first item focused').to.be.true;
-        const rect = secondItem.getBoundingClientRect();
 
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'move',
-                },
-            ],
-        });
+        await sendMouseTo(secondItem);
 
         expect(document.activeElement, 'active element after hover').to.equal(
             secondItem
         );
-        expect(secondItem.focused, 'second item focused').to.be.true;
+        expect(document.activeElement).to.equal(secondItem);
+        expect(
+            secondItem.focused,
+            'second item should not have focus styling on hover'
+        ).to.be.false;
 
         await sendKeys({ press: 'ArrowUp' });
 
         expect(document.activeElement).to.equal(firstItem);
-        expect(firstItem.focused, 'first item focused').to.be.true;
+        expect(
+            firstItem.focused,
+            'first item should have focus styling after keyboard'
+        ).to.be.true;
     });
 
     it('handle focus and late descendant additions', async () => {
@@ -562,6 +558,7 @@ describe('Menu', () => {
         const changeSpy = spy();
         const el = await fixture<Menu>(html`
             <sp-menu
+                id="debug"
                 selects="single"
                 @change=${() => {
                     changeSpy();
@@ -584,41 +581,14 @@ describe('Menu', () => {
         ) as MenuItem;
 
         // send right mouse click to the secondItem
-        const rect = secondItem.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                    options: {
-                        button: 'right',
-                    },
-                },
-            ],
-        });
+        sendMouseTo(secondItem, 'click', 'right');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                    options: {
-                        button: 'middle',
-                    },
-                },
-            ],
-        });
+        await sendMouseTo(secondItem, 'click', 'middle');
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);

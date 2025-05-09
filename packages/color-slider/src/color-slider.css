@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import url('./spectrum-color-slider.css');
-@import url('./color-slider-overrides.css');
 
 :host {
     --sp-color-slider-gradient-fallback: rgb(255 0 0) 0%, rgb(255 255 0) 17%,
@@ -27,7 +26,7 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) .slider {
-    /* stylelint-disable-next-line declaration-property-value-no-unknown */
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- known experimental property */
     appearance: slider-vertical;
 }
 

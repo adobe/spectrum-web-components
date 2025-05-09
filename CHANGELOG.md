@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/adobe/spectrum-web-components/compare/v1.5.0...v1.6.0) (2025-05-01) — ([f2b6a32](https://github.com/adobe/spectrum-web-components/commit/f2b6a322c379752f4f7dfcd02b3007c4130dc1e0))
+
+### Minor Fixes
+
+-   **icons-workflow**: added missing S2 icons
+
+### Patch Fixes
+
+-   **slider**: ensure tracks become properly rounded when offset variant is activated
+-   **popover**: prevent overflow clipping in Safari with translateZ and visible tips
+-   **picker**: fix focus to prevent setting focus on menu items when opened via mouse
+-   **button**: update deprecation warning to allow variant and static-color to coexist
+-   **number-field**: fix UI issues and improve width calculation
+-   **tooltip**: add DelayedTooltipWithOverlay story for handling interactions
+-   **infield-button, number-field, textfield, search, styles**: update disabled border colors and styling across components
+-   **close-button, dropzone, illustrated-message, menu, status-light, styles, switch, table, tabs, toast, tooltip**: remove unnecessary system theme references
+-   **overlay**: fix layout issues in Safari for nested trays in dialogs
+
+# [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-04-15)
+
+### Bug Fixes
+
+-   **sp-tabs**: ensure tabs become enabled when parent disabled attribute is removed (#5323) ([`c7efe314c5`](https://github.com/adobe/spectrum-web-components/commit/c7efe314c5))
+-   **sp-color-field**: color handle positioning within scrollable containers (#5322) ([`e19e55f6f1`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1))
+-   **sp-menu**: fixes larger margin in menu-item (#5350) ([`86bcd12200`](https://github.com/adobe/spectrum-web-components/commit/86bcd12200))
+-   **sp-menu**: menuitem now correctly focus and applies hover styles (#5270) ([`a69accb8b4`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b4))
+-   **sp-menu**: captures touchend events on mobile (#5313) ([`4c2f908a92`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92))
+-   **overlay**: prevent overlay close on document scroll (#5308) ([`8f8735c9ec`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec))
+-   **sp-number-field**: prevent keyboard on mobile devices by setting inpu… (#5284) ([`5a3bc6d24e`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24e))
+
+# [1.4.0](https://github.com/adobe/spectrum-web-components/compare/v1.3.0...v1.4.0) (2025-03-26)
+
+### Bug Fixes
+
+-   **sp-picker** force popover documentation and API tab listing fix ([#5213](https://github.com/adobe/spectrum-web-components/issues/5213)) ([82212f4](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7))
+-   **sp-menu**: Mouse click, arrow keys, and mouseover should set the focused item ([#5197](https://github.com/adobe/spectrum-web-components/issues/5197)) ([6618422](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f))
+-   **sp-picker**: disable drag and select for mobile picker.([#5187](https://github.com/adobe/spectrum-web-components/issues/5187)) ([2a0422e](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f))
+-   **sp-color-field**: respects alpha value in hex form.([#5246](https://github.com/adobe/spectrum-web-components/issues/5246)) ([e247de9](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e90872120fb53a5650f237bdb18111c))
+-   **overlay**: respects alpha value in hex form.([#5246](https://github.com/adobe/spectrum-web-components/issues/5246)) ([70f5f6f](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d))
+-   **sp-picker**: move tooltip outside of action-menu's button.([#5077](https://github.com/adobe/spectrum-web-components/issues/5077)) ([549ff4a](https://github.com/adobe/spectrum-web-components/commit/549ff4ac360c04fa1bd73c85ca8de4f6b367704d))
+
+### Features
+
+-   **sp-contextual-help**: stays open when interacting with elements inside.([#5248](https://github.com/adobe/spectrum-web-components/issues/5248)) ([3cca7ea](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc))
+
 # [1.3.0](https://github.com/adobe/spectrum-web-components/compare/v1.2.0...v1.3.0) (2025-03-13)
 
 ### Bug Fixes

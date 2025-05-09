@@ -1,5 +1,35 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/styles@1.6.0
+    -   @spectrum-web-components/action-bar@1.6.0
+    -   @spectrum-web-components/action-group@1.6.0
+    -   @spectrum-web-components/action-button@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/split-view@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3), [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3)]:
+    -   @spectrum-web-components/action-bar@1.5.0
+    -   @spectrum-web-components/split-view@1.5.0
+    -   @spectrum-web-components/styles@1.5.0
+    -   @spectrum-web-components/action-button@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/action-group@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

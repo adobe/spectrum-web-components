@@ -21,7 +21,11 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { fixture } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    sendMouseFrom,
+    sendMouseTo,
+} from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
@@ -56,44 +60,18 @@ const selectsWithKeyboardData = [
 describe('Submenu', () => {
     function selectWithPointer(): void {
         it('with pointer', async function () {
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
             await opened;
 
             expect(this.rootItem.open).to.be.true;
 
             const item2 = document.querySelector('.submenu-item-2') as MenuItem;
-            const item2BoundingRect = item2.getBoundingClientRect();
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            item2BoundingRect.left +
-                                item2BoundingRect.width / 2,
-                            item2BoundingRect.top +
-                                item2BoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(item2, 'click');
             await closed;
 
             expect(
@@ -103,6 +81,44 @@ describe('Submenu', () => {
             expect(
                 this.rootChanged.withArgs('Has submenu').calledOnce,
                 'root changed'
+            ).to.be.true;
+        });
+    }
+    function selectsWithBoth(testData: SelectsWithKeyboardTest): void {
+        it(`with pointer and keyboard: ${testData.dir}`, async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            await sendMouseTo(this.rootItem);
+            await opened;
+            const item1 = document.querySelector('.submenu-item-1') as MenuItem;
+            const item2 = document.querySelector('.submenu-item-2') as MenuItem;
+
+            expect(this.rootItem.open, `submenu should open`).to.be.true;
+            expect(document.activeElement).not.to.equal(item1);
+
+            const prev = this.rootItem.previousElementSibling as MenuItem;
+
+            // arrow up should move focus away from the submenu
+            // but submenu stays open while pointer is over it
+            await sendKeys({
+                press: 'ArrowUp',
+            });
+            expect(document.activeElement).to.equal(prev);
+            expect(prev.focused, `focus is on previous item`).to.be.true;
+            expect(this.rootItem.open, `submenu should stay open`).to.be.true;
+
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            await sendMouseTo(item2, 'click');
+            await closed;
+
+            expect(
+                this.submenuChanged.withArgs('Two').calledOnce,
+                `submenu changed ${this.submenuChanged.callCount} times`
+            ).to.be.true;
+            expect(
+                this.rootChanged.withArgs('Has submenu').calledOnce,
+                `root changed ${this.submenuChanged.callCount} times`
             ).to.be.true;
         });
     }
@@ -185,8 +201,8 @@ describe('Submenu', () => {
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
 
-            expect(this.rootItem.open).to.be.true;
-            expect(submenuItem.focused).to.be.true;
+            expect(this.rootItem.open, 'rootItem.open').to.be.true;
+            expect(submenuItem.focused, 'submenuItem.focused').to.be.true;
             expect(document.activeElement).to.equal(submenuItem);
 
             await sendKeys({
@@ -278,41 +294,16 @@ describe('Submenu', () => {
     }
     function closesOnPointerLeave(): void {
         it('closes on `pointerleave`', async function () {
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
             await opened;
 
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height * 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseFrom(this.rootItem);
             await closed;
 
             expect(this.rootItem.open).to.be.false;
@@ -320,66 +311,17 @@ describe('Submenu', () => {
     }
     function persistsThroughMouseLeaveAndReturn(): void {
         it('stays open when mousing off menu item and back again', async function () {
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height * 2,
-                        ],
-                    },
-                ],
-            });
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
+            await sendMouseFrom(this.rootItem);
+            await sendMouseTo(this.rootItem);
             await opened;
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height * 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseFrom(this.rootItem);
             await closed;
         });
     }
@@ -388,22 +330,10 @@ describe('Submenu', () => {
             this.rootItem.disabled = true;
             await elementUpdated(this.rootItem);
 
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
+
             // wait 200ms for open
             await new Promise((r) => setTimeout(r, 200));
 
@@ -412,23 +342,10 @@ describe('Submenu', () => {
     }
     function persistsWhenMovingBetweenItemAndSubmenu(): void {
         it('stays open when mousing between menu item and submenu', async function () {
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
             await opened;
             await nextFrame();
             await nextFrame();
@@ -438,22 +355,9 @@ describe('Submenu', () => {
             ) as MenuItem;
             const clickSpy = spy();
             subItem.addEventListener('click', () => clickSpy());
-            const subItemBoundingRect = subItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.true;
 
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            subItemBoundingRect.left +
-                                subItemBoundingRect.width / 2,
-                            subItemBoundingRect.top +
-                                subItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(subItem);
             expect(this.rootItem.open).to.be.true;
             // Ensure it _doesn't_ get closed.
             await aTimeout(150);
@@ -461,19 +365,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            subItemBoundingRect.left +
-                                subItemBoundingRect.width / 2,
-                            subItemBoundingRect.top +
-                                subItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(subItem, 'click');
             await closed;
 
             expect(clickSpy.callCount).to.equal(1);
@@ -481,23 +373,10 @@ describe('Submenu', () => {
     }
     function continuesToOpenWhenMovingBetweenItemAndSubmenu(): void {
         it('continues to open when mousing between menu item and submenu', async function () {
-            const rootItemBoundingRect = this.rootItem.getBoundingClientRect();
             expect(this.rootItem.open).to.be.false;
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rootItemBoundingRect.left +
-                                rootItemBoundingRect.width / 2,
-                            rootItemBoundingRect.top +
-                                rootItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(this.rootItem);
             // Wait for the overlay system to position the submenu before measuring it's position and moving to it.
             await nextFrame();
             await nextFrame();
@@ -512,20 +391,7 @@ describe('Submenu', () => {
             ) as MenuItem;
             const clickSpy = spy();
             subItem.addEventListener('click', () => clickSpy());
-            const subItemBoundingRect = subItem.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            subItemBoundingRect.left +
-                                subItemBoundingRect.width / 2,
-                            subItemBoundingRect.top +
-                                subItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(subItem);
             await opened;
             expect(this.rootItem.open).to.be.true;
             // Ensure it _doesn't_ get closed.
@@ -534,19 +400,7 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            subItemBoundingRect.left +
-                                subItemBoundingRect.width / 2,
-                            subItemBoundingRect.top +
-                                subItemBoundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(subItem, 'click');
             await closed;
 
             expect(clickSpy.callCount).to.equal(1);
@@ -589,6 +443,7 @@ describe('Submenu', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
+                selectsWithBoth(testData);
             });
         });
         closesOnPointerLeave();
@@ -629,6 +484,7 @@ describe('Submenu', () => {
             selectWithPointer();
             selectsWithKeyboardData.map((testData) => {
                 selectsWithKeyboard(testData);
+                selectsWithBoth(testData);
             });
         });
         closesOnPointerLeave();
@@ -684,63 +540,27 @@ describe('Submenu', () => {
             </sp-menu>
         `);
         const rootItem = el.querySelector('.root') as MenuItem;
-        const rootItemBoundingRect = rootItem.getBoundingClientRect();
         const item2 = document.querySelector('.submenu-item-2') as MenuItem;
         const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
         expect(rootItem.open).to.be.false;
 
         let opened = oneEvent(rootItem, 'sp-opened');
         // Hover the root menu item to open a submenu
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect.left +
-                            rootItemBoundingRect.width / 2,
-                        rootItemBoundingRect.top +
-                            rootItemBoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItem);
         await opened;
 
         expect(rootItem.open).to.be.true;
 
-        const item2BoundingRect = item2.getBoundingClientRect();
-
         opened = oneEvent(item2, 'sp-opened');
         // Move to the submenu item to open a submenu
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        item2BoundingRect.left + item2BoundingRect.width / 2,
-                        item2BoundingRect.top + item2BoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(item2);
         await opened;
 
         expect(item2.open).to.be.true;
 
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
-        const itemCBoundingRect = itemC.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
-                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(itemC, 'click');
         await closed;
 
         expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
@@ -801,16 +621,12 @@ describe('Submenu', () => {
         expect(el.open).to.be.true;
 
         opened = oneEvent(rootMenu1, 'sp-opened');
-        rootMenu1.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true })
-        );
+        sendMouseTo(rootMenu1);
         await opened;
         expect(rootMenu1.open).to.be.true;
 
         opened = oneEvent(childMenu2, 'sp-opened');
-        childMenu2.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true })
-        );
+        sendMouseTo(childMenu2);
         await opened;
         expect(childMenu2.open).to.be.true;
 
@@ -827,7 +643,7 @@ describe('Submenu', () => {
     describe('deep tree', () => {
         beforeEach(async function () {
             this.el = await fixture<ActionMenu>(html`
-                <sp-action-menu label="Deep submenu tree">
+                <sp-action-menu id="action-menu" label="Deep submenu tree">
                     <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
                     <sp-menu-group role="none">
                         <span slot="header">New York</span>
@@ -879,6 +695,7 @@ describe('Submenu', () => {
         it('closes back to the first overlay without a `root` when clicking away', async function () {
             const rootMenu1 = this.el.querySelector('#submenu-item-1') as Menu;
             const childMenu2 = this.el.querySelector('#submenu-item-2') as Menu;
+            document.body.style.setProperty('padding', '50px');
 
             expect(this.el.open).to.be.false;
             let opened = oneEvent(this.el, 'sp-opened');
@@ -887,29 +704,17 @@ describe('Submenu', () => {
             expect(this.el.open).to.be.true;
 
             opened = oneEvent(rootMenu1, 'sp-opened');
-            rootMenu1.dispatchEvent(
-                new PointerEvent('pointerenter', { bubbles: true })
-            );
+            await sendMouseTo(rootMenu1);
             await opened;
 
             opened = oneEvent(childMenu2, 'sp-opened');
-            childMenu2.dispatchEvent(
-                new PointerEvent('pointerenter', { bubbles: true })
-            );
+            await sendMouseTo(childMenu2);
             await opened;
             const closed = Promise.all([
                 oneEvent(childMenu2, 'sp-closed'),
                 oneEvent(rootMenu1, 'sp-closed'),
-                oneEvent(this.el, 'sp-closed'),
             ]);
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [600, 5],
-                    },
-                ],
-            });
+            await sendMouseFrom(this.el);
             await closed;
         });
         it('closes descendant menus when Menu Item in ancestor without a submenu is pointerentered', async function () {
@@ -954,34 +759,18 @@ describe('Submenu', () => {
             expect(this.el.open).to.be.true;
 
             opened = oneEvent(rootMenu1, 'sp-opened');
-            rootMenu1.dispatchEvent(
-                new PointerEvent('pointerenter', { bubbles: true })
-            );
+            sendMouseTo(rootMenu1);
             await opened;
 
             opened = oneEvent(childMenu2, 'sp-opened');
-            childMenu2.dispatchEvent(
-                new PointerEvent('pointerenter', { bubbles: true })
-            );
+            sendMouseTo(childMenu2);
             await opened;
 
             const closed = Promise.all([
                 oneEvent(childMenu2, 'sp-closed'),
                 oneEvent(rootMenu1, 'sp-closed'),
-                oneEvent(this.el, 'sp-closed'),
             ]);
-            const rect = ancestorItem.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(ancestorItem, 'click');
             await closed;
         });
     });
@@ -1020,61 +809,13 @@ describe('Submenu', () => {
         const rootItemBoundingRect2 = rootItem2.getBoundingClientRect();
 
         // Open the first submenu
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect1.left +
-                            rootItemBoundingRect1.width / 2,
-                        rootItemBoundingRect1.top +
-                            rootItemBoundingRect1.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItemBoundingRect1);
         // Open the second submenu, closing the first
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect2.left +
-                            rootItemBoundingRect2.width / 2,
-                        rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItemBoundingRect2);
         // Open the first submenu, closing the second
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect1.left +
-                            rootItemBoundingRect1.width / 2,
-                        rootItemBoundingRect1.top +
-                            rootItemBoundingRect1.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItemBoundingRect1);
         // Open the second submenu, closing the first
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect2.left +
-                            rootItemBoundingRect2.width / 2,
-                        rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItemBoundingRect2);
         await nextFrame();
         await nextFrame();
         await nextFrame();
@@ -1083,19 +824,7 @@ describe('Submenu', () => {
         await nextFrame();
         const closed = oneEvent(rootItem2, 'sp-closed');
         // Close the second submenu
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect2.left +
-                            rootItemBoundingRect2.width / 2,
-                        rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.height * 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseFrom(rootItemBoundingRect2);
         await closed;
 
         expect(rootItem1.open, 'finally closed 1').to.be.false;
@@ -1117,22 +846,9 @@ describe('Submenu', () => {
         `);
         await elementUpdated(el);
         const rootItem = el.querySelector('.root') as MenuItem;
-        const rootItemBoundingRect = rootItem.getBoundingClientRect();
 
         // Open the first submenu
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rootItemBoundingRect.left +
-                            rootItemBoundingRect.width / 2,
-                        rootItemBoundingRect.top +
-                            rootItemBoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(rootItem);
 
         expect(rootItem.open).to.be.true;
 
@@ -1145,19 +861,7 @@ describe('Submenu', () => {
         }
 
         // click to select
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        firstSubMenuItemRect.left +
-                            firstSubMenuItemRect.width / 2,
-                        firstSubMenuItemRect.top +
-                            firstSubMenuItemRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(firstSubMenuItemRect);
 
         // This test will fail if the click event throws an error
         // because the submenu root is not a menu-item
