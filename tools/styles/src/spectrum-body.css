@@ -21,14 +21,48 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Body,
+.spectrum-Body--sizeM {
+    --spectrum-body-font-size: var(--spectrum-body-size-m);
+}
+
+.spectrum-Body--sizeXS {
+    --spectrum-body-font-size: var(--spectrum-body-size-xs);
+}
+
+.spectrum-Body--sizeS {
+    --spectrum-body-font-size: var(--spectrum-body-size-s);
+}
+
+.spectrum-Body--sizeL {
+    --spectrum-body-font-size: var(--spectrum-body-size-l);
+}
+
+.spectrum-Body--sizeXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xl);
+}
+
+.spectrum-Body--sizeXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxl);
+}
+
+.spectrum-Body--sizeXXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxxl);
+}
+
 .spectrum-Body {
+    --spectrum-body-sans-serif-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-body-font-color: var(--spectrum-body-color);
     font-family: var(--mod-body-sans-serif-font-family, var(--spectrum-body-sans-serif-font-family));
     font-style: var(--mod-body-sans-serif-font-style, var(--spectrum-body-sans-serif-font-style));
     font-weight: var(--mod-body-sans-serif-font-weight, var(--spectrum-body-sans-serif-font-weight));
     font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
     color: var(--highcontrast-body-font-color, var(--mod-body-font-color, var(--spectrum-body-font-color)));
     line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
-    margin-block-start: var(--mod-body-margin-start, var(--mod-body-margin, var(--spectrum-body-margin-start, 0)));
+    margin-block-start: var(--mod-body-margin-start, var(--mod-body-margin, 0));
     margin-block-end: var(--mod-body-margin-end, var(--mod-body-margin, var(--spectrum-body-margin-end, 0)));
 }
 

@@ -32,6 +32,8 @@ import { Picker } from '@spectrum-web-components/picker';
 
 ### Anatomy
 
+A picker includes a label and a menu.
+
 #### Labels
 
 To render accessibly, an `<sp-picker>` element should be paired with an `<sp-field-label>` element that has the `for` attribute referencing the `id` of the `<sp-picker>` element.
@@ -90,6 +92,32 @@ For an accessible label that renders within the bounds of the picker itself, but
 
 </sp-tab-panel>
 </sp-tabs>
+
+#### Menu
+
+The picker menu is a menu element that is used to display the options for the picker. A picker menu can include menu items, menu dividers, and menu groups. A picker menu should never contain submenus, as doing so would render it inaccessible.
+
+If you require a submenu, use and [action menu](./action-menu) instead of a picker.
+
+```html demo
+<sp-picker>
+    <span slot="label">Select a free food item:</span>
+    <sp-menu-group>
+        <span slot="header">Fruits</span>
+        <sp-menu-item>Apple</sp-menu-item>
+        <sp-menu-item>Banana</sp-menu-item>
+        <sp-menu-item>Pear</sp-menu-item>
+    </sp-menu-group>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-group>
+        <span slot="header">Vegetables</span>
+        <sp-menu-item>Artichoke</sp-menu-item>
+        <sp-menu-item>Carrot</sp-menu-item>
+        <sp-menu-item>Potato</sp-menu-item>
+    </sp-menu-group>
+    <sp-menu-group>
+</sp-picker>
+```
 
 #### Icons
 
@@ -660,3 +688,7 @@ Use [`<sp-help-text>`](../help-text/) to add help text and error text:
 
 </sp-tab-panel>
 </sp-tabs>
+
+#### Do not use submenus
+
+A picker menu should never contain submenus, as doing so would render it inaccessible. A picker's menu role is a listbox, and its menu items are listbox options, which are not allowed to have submenus.

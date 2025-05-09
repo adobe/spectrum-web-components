@@ -1,4 +1,4 @@
-name: Links, and Smoke Tests
+name: Review URLs and Smoke Tests
 
 on:
     pull_request:

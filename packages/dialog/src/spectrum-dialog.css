@@ -21,19 +21,19 @@ governing permissions and limitations under the License.
     display: flex;
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     inline-size: var(--mod-dialog-confirm-small-width, var(--spectrum-dialog-confirm-small-width));
 }
 
-:host([size='m']) {
+:host([size="m"]) {
     inline-size: var(--mod-dialog-confirm-medium-width, var(--spectrum-dialog-confirm-medium-width));
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     inline-size: var(--mod-dialog-confirm-large-width, var(--spectrum-dialog-confirm-large-width));
 }
 
-::slotted([slot='hero']) {
+::slotted([slot="hero"]) {
     block-size: var(--mod-dialog-confirm-hero-height, var(--spectrum-dialog-confirm-hero-height));
     background-position: 50%;
     background-size: cover;
@@ -46,19 +46,19 @@ governing permissions and limitations under the License.
 .grid {
     grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
-        'hero hero hero hero hero hero'
-        '. . . . . .'
-        '. heading header header header .'
-        '. divider divider divider divider .'
-        '. content content content content .'
-        '. footer footer buttonGroup buttonGroup .'
-        '. . . . . .';
+        "hero hero hero hero hero hero"
+        ". . . . . ."
+        ". heading header header header ."
+        ". divider divider divider divider ."
+        ". content content content content ."
+        ". footer footer buttonGroup buttonGroup ."
+        ". . . . . .";
     grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     inline-size: 100%;
     display: grid;
 }
 
-::slotted([slot='heading']) {
+::slotted([slot="heading"]) {
     font-size: var(--mod-dialog-confirm-title-text-size, var(--spectrum-dialog-confirm-title-text-size));
     font-weight: var(--mod-dialog-heading-font-weight, var(--spectrum-dialog-heading-font-weight));
     line-height: var(--mod-dialog-confirm-title-text-line-height, var(--spectrum-dialog-confirm-title-text-line-height));
@@ -69,7 +69,7 @@ governing permissions and limitations under the License.
     padding-inline-end: var(--mod-dialog-confirm-gap-size, var(--spectrum-dialog-confirm-gap-size));
 }
 
-.no-header::slotted([slot='heading']) {
+.no-header::slotted([slot="heading"]) {
     grid-area: heading-start / heading-start / header-end / header-end;
     padding-inline-end: 0;
 }
@@ -90,7 +90,7 @@ governing permissions and limitations under the License.
     margin-block-end: var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start));
 }
 
-:host([mode='fullscreen']) [name='heading'] + .divider {
+:host([mode="fullscreen"]) [name="heading"] + .divider {
     margin-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) - var(--mod-dialog-confirm-description-padding, var(--spectrum-dialog-confirm-description-padding)) * 2);
 }
 
@@ -98,7 +98,7 @@ governing permissions and limitations under the License.
     display: none;
 }
 
-:host([no-divider]) ::slotted([slot='heading']) {
+:host([no-divider]) ::slotted([slot="heading"]) {
     padding-block-end: calc(var(--mod-dialog-confirm-divider-block-spacing-end, var(--spectrum-dialog-confirm-divider-block-spacing-end)) + var(--mod-dialog-confirm-divider-block-spacing-start, var(--spectrum-dialog-confirm-divider-block-spacing-start)) + var(--mod-dialog-confirm-divider-height, var(--spectrum-dialog-confirm-divider-height)));
 }
 
@@ -144,13 +144,13 @@ governing permissions and limitations under the License.
 :host([dismissable]) .grid {
     grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) minmax(0, var(--mod-dialog-confirm-close-button-size, var(--spectrum-dialog-confirm-close-button-size))) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
-        'hero hero hero hero hero hero hero'
-        '. . . . . closeButton closeButton'
-        '. heading header header typeIcon closeButton closeButton'
-        '. divider divider divider divider divider .'
-        '. content content content content content .'
-        '. footer footer buttonGroup buttonGroup buttonGroup .'
-        '. . . . . . .';
+        "hero hero hero hero hero hero hero"
+        ". . . . . closeButton closeButton"
+        ". heading header header typeIcon closeButton closeButton"
+        ". divider divider divider divider divider ."
+        ". content content content content content ."
+        ". footer footer buttonGroup buttonGroup buttonGroup ."
+        ". . . . . . .";
     grid-template-rows: auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
 }
 
@@ -170,60 +170,60 @@ governing permissions and limitations under the License.
     margin-inline-end: var(--mod-dialog-confirm-close-button-padding, var(--spectrum-dialog-confirm-close-button-padding));
 }
 
-:host([mode='fullscreen']) {
+:host([mode="fullscreen"]) {
     inline-size: 100%;
     block-size: 100%;
 }
 
-:host([mode='fullscreenTakeover']) {
+:host([mode="fullscreenTakeover"]) {
     inline-size: 100%;
     block-size: 100%;
     border-radius: 0;
 }
 
-:host([mode='fullscreen']),
-:host([mode='fullscreenTakeover']) {
+:host([mode="fullscreen"]),
+:host([mode="fullscreenTakeover"]) {
     max-block-size: none;
     max-inline-size: none;
 }
 
-:host([mode='fullscreen']) .grid,
-:host([mode='fullscreenTakeover']) .grid {
+:host([mode="fullscreen"]) .grid,
+:host([mode="fullscreenTakeover"]) .grid {
     grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) 1fr auto auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-rows: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto 1fr var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
     grid-template-areas:
-        '. . . . .'
-        '. heading header buttonGroup .'
-        '. divider divider divider .'
-        '. content content content .'
-        '. . . . .';
+        ". . . . ."
+        ". heading header buttonGroup ."
+        ". divider divider divider ."
+        ". content content content ."
+        ". . . . .";
     display: grid;
 }
 
-:host([mode='fullscreen']) ::slotted([slot='heading']),
-:host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
+:host([mode="fullscreen"]) ::slotted([slot="heading"]),
+:host([mode="fullscreenTakeover"]) ::slotted([slot="heading"]) {
     font-size: var(--mod-dialog-fullscreen-header-text-size, var(--spectrum-dialog-fullscreen-header-text-size));
 }
 
-:host([mode='fullscreen']) .content,
-:host([mode='fullscreenTakeover']) .content {
+:host([mode="fullscreen"]) .content,
+:host([mode="fullscreenTakeover"]) .content {
     max-block-size: none;
 }
 
-:host([mode='fullscreen']) .button-group,
-:host([mode='fullscreen']) .footer,
-:host([mode='fullscreenTakeover']) .button-group,
-:host([mode='fullscreenTakeover']) .footer {
+:host([mode="fullscreen"]) .button-group,
+:host([mode="fullscreen"]) .footer,
+:host([mode="fullscreenTakeover"]) .button-group,
+:host([mode="fullscreenTakeover"]) .footer {
     padding-block-start: 0;
 }
 
-:host([mode='fullscreen']) .footer,
-:host([mode='fullscreenTakeover']) .footer {
+:host([mode="fullscreen"]) .footer,
+:host([mode="fullscreenTakeover"]) .footer {
     display: none;
 }
 
-:host([mode='fullscreen']) .button-group,
-:host([mode='fullscreenTakeover']) .button-group {
+:host([mode="fullscreen"]) .button-group,
+:host([mode="fullscreenTakeover"]) .button-group {
     grid-area: buttonGroup;
     align-self: start;
 }
@@ -232,14 +232,14 @@ governing permissions and limitations under the License.
     .grid {
         grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
-            'hero hero hero hero hero hero'
-            '. . . . . .'
-            '. heading heading heading heading .'
-            '. header header header header .'
-            '. divider divider divider divider .'
-            '. content content content content .'
-            '. footer footer buttonGroup buttonGroup .'
-            '. . . . . .';
+            "hero hero hero hero hero hero"
+            ". . . . . ."
+            ". heading heading heading heading ."
+            ". header header header header ."
+            ". divider divider divider divider ."
+            ". content content content content ."
+            ". footer footer buttonGroup buttonGroup ."
+            ". . . . . .";
     }
 
     .grid,
@@ -250,42 +250,42 @@ governing permissions and limitations under the License.
     :host([dismissable]) .grid {
         grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto 1fr auto minmax(0, auto) minmax(0, var(--mod-dialog-confirm-close-button-size, var(--spectrum-dialog-confirm-close-button-size))) var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
-            'hero hero hero hero hero hero hero'
-            '. . . . . closeButton closeButton'
-            '. heading heading heading heading closeButton closeButton'
-            '. header header header header header .'
-            '. divider divider divider divider divider .'
-            '. content content content content content .'
-            '. footer footer buttonGroup buttonGroup buttonGroup .'
-            '. . . . . . .';
+            "hero hero hero hero hero hero hero"
+            ". . . . . closeButton closeButton"
+            ". heading heading heading heading closeButton closeButton"
+            ". header header header header header ."
+            ". divider divider divider divider divider ."
+            ". content content content content content ."
+            ". footer footer buttonGroup buttonGroup buttonGroup ."
+            ". . . . . . .";
     }
 
     .header {
         justify-content: flex-start;
     }
 
-    :host([mode='fullscreen']) .grid,
-    :host([mode='fullscreenTakeover']) .grid {
+    :host([mode="fullscreen"]) .grid,
+    :host([mode="fullscreenTakeover"]) .grid {
         grid-template-columns: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) 1fr var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-rows: var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid)) auto auto auto 1fr auto var(--mod-dialog-confirm-padding-grid, var(--spectrum-dialog-confirm-padding-grid));
         grid-template-areas:
-            '. . .'
-            '. heading .'
-            '. header .'
-            '. divider .'
-            '. content .'
-            '. buttonGroup .'
-            '. . .';
+            ". . ."
+            ". heading ."
+            ". header ."
+            ". divider ."
+            ". content ."
+            ". buttonGroup ."
+            ". . .";
         display: grid;
     }
 
-    :host([mode='fullscreen']) .button-group,
-    :host([mode='fullscreenTakeover']) .button-group {
+    :host([mode="fullscreen"]) .button-group,
+    :host([mode="fullscreenTakeover"]) .button-group {
         padding-block-start: var(--mod-dialog-confirm-buttongroup-padding-top, var(--spectrum-dialog-confirm-buttongroup-padding-top));
     }
 
-    :host([mode='fullscreen']) ::slotted([slot='heading']),
-    :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
+    :host([mode="fullscreen"]) ::slotted([slot="heading"]),
+    :host([mode="fullscreenTakeover"]) ::slotted([slot="heading"]) {
         font-size: var(--mod-dialog-confirm-title-text-size, var(--spectrum-dialog-confirm-title-text-size));
     }
 }

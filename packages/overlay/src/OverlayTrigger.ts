@@ -60,6 +60,7 @@ export type TriggeredByType = Combinations<OverlayContentTypes>;
  * @attr {number} offset - The distance between the overlay and the trigger
  * @attr {boolean} disabled - Whether the overlay trigger is disabled
  * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
+ * @attr {string} triggered-by - The type of interaction that will trigger the overlay ('click'|'hover'|'longpress')
  */
 export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
