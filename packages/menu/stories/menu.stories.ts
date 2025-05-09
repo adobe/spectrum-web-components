@@ -9,7 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    html,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -160,105 +164,133 @@ controlled.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
-export const menuItemWithDescription = (): TemplateResult => {
-    return html`
-        <sp-menu>
-            <sp-menu-item>
-                <sp-icon-export slot="icon"></sp-icon-export>
-                Quick export
-                <span slot="description">Share a snapshot</span>
-            </sp-menu-item>
-            <sp-menu-item>
-                <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
-                Open a copy
-                <span slot="description">Illustrator for iPad</span>
-            </sp-menu-item>
-            <sp-menu-item disabled>
-                <sp-icon-share slot="icon"></sp-icon-share>
-                Share link
-                <span slot="description">Enable comments and download</span>
-            </sp-menu-item>
-        </sp-menu>
-
-        <sp-popover open>
-            <sp-menu selects="multiple">
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item selected>
-                    Select Inverse
-                    <span slot="description">Enable inverse selection</span>
-                </sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item selected>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>
-                    Make Work Path
-                    <span slot="description">Create a reusable work path</span>
-                </sp-menu-item>
-            </sp-menu>
-        </sp-popover>
-    `;
-};
-
-export const selectsWithIcons = (): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu selects="single">
+class MenuItemWithDescription extends LitElement {
+    public overriderender(): TemplateResult {
+        return html`
+            <sp-menu>
                 <sp-menu-item>
                     <sp-icon-export slot="icon"></sp-icon-export>
                     Quick export
-                </sp-menu-item>
-                <sp-menu-item selected>
-                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
-                    Open a copy
+                    <span slot="description">Share a snapshot</span>
                 </sp-menu-item>
                 <sp-menu-item>
+                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                    Open a copy
+                    <span slot="description">Illustrator for iPad</span>
+                </sp-menu-item>
+                <sp-menu-item disabled>
                     <sp-icon-share slot="icon"></sp-icon-share>
                     Share link
                     <span slot="description">Enable comments and download</span>
                 </sp-menu-item>
             </sp-menu>
-        </sp-popover>
-    `;
-};
 
-export const headersAndIcons = (): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu selects="single">
-                <sp-menu-group>
-                    <span slot="header">Section Heading</span>
-                    <sp-menu-item>Action 1</sp-menu-item>
-                    <sp-menu-item>Action 2</sp-menu-item>
-                    <sp-menu-item>Action 3</sp-menu-item>
-                </sp-menu-group>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-group>
-                    <span slot="header">Section Heading</span>
+            <sp-popover open>
+                <sp-menu selects="multiple">
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item selected>
+                        Select Inverse
+                        <span slot="description">Enable inverse selection</span>
+                    </sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item selected>Select and Mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save Selection</sp-menu-item>
+                    <sp-menu-item disabled>
+                        Make Work Path
+                        <span slot="description">
+                            Create a reusable work path
+                        </span>
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-popover>
+        `;
+    }
+}
+
+customElements.define('menu-item-with-description', MenuItemWithDescription);
+
+export const menuItemWithDescription = (): TemplateResult => html`
+    <menu-item-with-description></menu-item-with-description>
+`;
+
+class WithIcons extends LitElement {
+    public override render(): TemplateResult {
+        return html`
+            <sp-popover open>
+                <sp-menu selects="single">
                     <sp-menu-item>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Save
+                        <sp-icon-export slot="icon"></sp-icon-export>
+                        Quick export
                     </sp-menu-item>
-                    <sp-menu-item disabled>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
-                        Download
+                    <sp-menu-item selected>
+                        <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                        Open a copy
                     </sp-menu-item>
-                    <sp-menu-item disabled>
-                        <sp-icon-checkmark-circle
-                            slot="icon"
-                        ></sp-icon-checkmark-circle>
+                    <sp-menu-item>
+                        <sp-icon-share slot="icon"></sp-icon-share>
                         Share link
-                        <span slot="description">Enable comments</span>
+                        <span slot="description">
+                            Enable comments and download
+                        </span>
                     </sp-menu-item>
-                </sp-menu-group>
-            </sp-menu>
-        </sp-popover>
-    `;
-};
+                </sp-menu>
+            </sp-popover>
+        `;
+    }
+}
+
+customElements.define('menu-with-icons', WithIcons);
+
+export const SelectsWithIcons = (): TemplateResult => html`
+    <menu-with-icons></menu-with-icons>
+`;
+
+class HeadersAndIcons extends LitElement {
+    public override render(): TemplateResult {
+        return html`
+            <sp-popover open>
+                <sp-menu selects="single">
+                    <sp-menu-group>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>Action 1</sp-menu-item>
+                        <sp-menu-item>Action 2</sp-menu-item>
+                        <sp-menu-item>Action 3</sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-group>
+                        <span slot="header">Section Heading</span>
+                        <sp-menu-item>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Save
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Download
+                        </sp-menu-item>
+                        <sp-menu-item disabled>
+                            <sp-icon-checkmark-circle
+                                slot="icon"
+                            ></sp-icon-checkmark-circle>
+                            Share link
+                            <span slot="description">Enable comments</span>
+                        </sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            </sp-popover>
+        `;
+    }
+}
+
+customElements.define('headers-and-icons', HeadersAndIcons);
+
+export const headersAndIcons = (): TemplateResult => html`
+    <headers-and-icons></headers-and-icons>
+`;
 
 headersAndIcons.storyName = 'Headers and Icons';
 
