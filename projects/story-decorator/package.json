@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -9,9 +9,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/story-decorator"
+        "directory": "projects/story-decorator"
     },
-    "author": "",
+    "author": "Adobe",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -69,14 +69,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/field-label": "1.4.0",
-        "@spectrum-web-components/menu": "1.4.0",
-        "@spectrum-web-components/overlay": "1.4.0",
-        "@spectrum-web-components/picker": "1.4.0",
-        "@spectrum-web-components/reactive-controllers": "1.4.0",
-        "@spectrum-web-components/switch": "1.4.0",
-        "@spectrum-web-components/theme": "1.4.0"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/field-label": "1.6.0",
+        "@spectrum-web-components/menu": "1.6.0",
+        "@spectrum-web-components/overlay": "1.6.0",
+        "@spectrum-web-components/picker": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/switch": "1.6.0",
+        "@spectrum-web-components/theme": "1.6.0"
+    },
+    "peerDependencies": {
+        "@storybook/preview-api": ">=8"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
@@ -84,5 +87,6 @@
         "./sp-*.js",
         "./**/*.dev.js",
         "./sp-*.ts"
-    ]
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }

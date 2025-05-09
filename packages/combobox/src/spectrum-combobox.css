@@ -93,7 +93,7 @@ governing permissions and limitations under the License.
     --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-100);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-combobox-block-size: var(--spectrum-component-height-75);
     --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-combobox-font-size: var(--spectrum-font-size-75);
@@ -107,7 +107,7 @@ governing permissions and limitations under the License.
     --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-combobox-block-size: var(--spectrum-component-height-200);
     --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-combobox-font-size: var(--spectrum-font-size-200);
@@ -121,7 +121,7 @@ governing permissions and limitations under the License.
     --spectrum-combobox-spacing-inline-end-edge-to-text: var(--spectrum-component-edge-to-text-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-combobox-block-size: var(--spectrum-component-height-300);
     --spectrum-combobox-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-combobox-font-size: var(--spectrum-font-size-300);
@@ -146,7 +146,7 @@ governing permissions and limitations under the License.
     --mod-picker-button-border-color-quiet: transparent;
 }
 
-:host([quiet][size='s']) {
+:host([quiet][size="s"]) {
     --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-small);
 }
 
@@ -154,11 +154,11 @@ governing permissions and limitations under the License.
     --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-medium);
 }
 
-:host([quiet][size='l']) {
+:host([quiet][size="l"]) {
     --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-large);
 }
 
-:host([quiet][size='xl']) {
+:host([quiet][size="xl"]) {
     --spectrum-combobox-spacing-label-to-combobox: var(--spectrum-field-label-to-component-quiet-extra-large);
 }
 
@@ -222,7 +222,7 @@ governing permissions and limitations under the License.
 }
 
 .progress-circle:dir(rtl),
-:host([dir='rtl']) .progress-circle {
+:host([dir="rtl"]) .progress-circle {
     inset-inline-start: calc(var(--mod-combobox-spacing-inline-icon-to-button, var(--spectrum-combobox-spacing-inline-icon-to-button)) + var(--mod-combobox-button-width, var(--spectrum-combobox-button-width)));
     inset-inline-end: inherit;
 }

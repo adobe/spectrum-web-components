@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 
 :host {
     margin: 0;
-    display: inline-flex;
+    display: flex;
     overflow: visible;
     flex-direction: column;
 }

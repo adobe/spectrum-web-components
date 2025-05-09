@@ -1,5 +1,53 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5358](https://github.com/adobe/spectrum-web-components/pull/5358) [`3c3bc2b`](https://github.com/adobe/spectrum-web-components/commit/3c3bc2bed9f1c731bc662220fe96f67f03331015) Thanks [@nikkimk](https://github.com/nikkimk)! - `PickerBase`(used in `<sp-picker>` and `sp-action-menu>`):
+
+    Fixes focus so that it is not set on `<sp-menu-item>` elements when opened via mouse.
+
+    A keyboard interaction is the only interaction that should set focus on an `<sp-menu-item>` when the menu is opened. A user with a mouse would expect the focus to stay where the mouse is.
+
+    Fixes: #2950
+
+-   Updated dependencies [[`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e), [`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e), [`700489f`](https://github.com/adobe/spectrum-web-components/commit/700489f87e96b895a687431486fb329c7497f2d6), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/popover@1.6.0
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/button@1.6.0
+    -   @spectrum-web-components/tooltip@1.6.0
+    -   @spectrum-web-components/menu@1.6.0
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/icons-ui@1.6.0
+    -   @spectrum-web-components/progress-circle@1.6.0
+    -   @spectrum-web-components/tray@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
+    -   @spectrum-web-components/menu@1.5.0
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/tray@1.5.0
+    -   @spectrum-web-components/button@1.5.0
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/popover@1.5.0
+    -   @spectrum-web-components/tooltip@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/progress-circle@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes

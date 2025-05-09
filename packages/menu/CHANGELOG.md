@@ -1,5 +1,45 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   Updated dependencies [[`03a4439`](https://github.com/adobe/spectrum-web-components/commit/03a443946b760aedc668630f33ac660443ff915e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/popover@1.6.0
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/action-button@1.6.0
+    -   @spectrum-web-components/divider@1.6.0
+    -   @spectrum-web-components/icon@1.6.0
+    -   @spectrum-web-components/icons-ui@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Minor Changes
+
+-   [#5350](https://github.com/adobe/spectrum-web-components/pull/5350) [`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - change display property from inline-flex to flex to eliminate unwanted spacing between menu items
+
+### Patch Changes
+
+-   [#5313](https://github.com/adobe/spectrum-web-components/pull/5313) [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Tapping on an `sp-menu-item` was causing the tap event to propagate to an `sp-checkbox` underneath it, resulting in the checkbox being checked unintentionally. The fix involves capturing the `touchend` event on the `sp-menu` to prevent this propagation.
+
+-   [#5270](https://github.com/adobe/spectrum-web-components/pull/5270) [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a) Thanks [@nikkimk](https://github.com/nikkimk)! - correctly applies menuitem hover styling with pointerenter actions and only applies menuitem focus styling with keyboard/click action [#5269](https://github.com/adobe/spectrum-web-components/issues/5269)
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
+    -   @spectrum-web-components/divider@1.5.0
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/action-button@1.5.0
+    -   @spectrum-web-components/popover@1.5.0
+    -   @spectrum-web-components/icon@1.5.0
+    -   @spectrum-web-components/icons-ui@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Minor Changes
