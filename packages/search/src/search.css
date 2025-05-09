@@ -10,13 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-search.css');
-@import url('./search-overrides.css');
+@import url("./spectrum-search.css");
+@import url("./search-overrides.css");
 
 :host {
-    --mod-textfield-spacing-inline: var(
-        --spectrum-alias-infieldbutton-full-height-m
-    );
+    --mod-textfield-spacing-inline: var(--spectrum-alias-infieldbutton-full-height-m);
 }
 
 input::-webkit-search-cancel-button {
@@ -27,25 +25,19 @@ input::-webkit-search-cancel-button {
  * Hardcoded values for the multiple search field sizes.
  * Feel free to remove this if you find a better way to handle this on the spectrum-config.
  **/
-:host([size='s']) #textfield {
+:host([size="s"]) #textfield {
     --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-s-edge-to-visual
-    );
+    --spectrum-search-edge-to-visual: var(--system-search-size-s-edge-to-visual);
 }
 
-:host([size='l']) #textfield {
+:host([size="l"]) #textfield {
     --spectrum-search-border-radius: var(--system-search-size-l-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-l-edge-to-visual
-    );
+    --spectrum-search-edge-to-visual: var(--system-search-size-l-edge-to-visual);
 }
 
-:host([size='xl']) #textfield {
+:host([size="xl"]) #textfield {
     --spectrum-search-border-radius: var(--system-search-size-xl-border-radius);
-    --spectrum-search-edge-to-visual: var(
-        --system-search-size-xl-edge-to-visual
-    );
+    --spectrum-search-edge-to-visual: var(--system-search-size-xl-edge-to-visual);
 }
 
 /**

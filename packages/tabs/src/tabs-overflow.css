@@ -14,16 +14,9 @@ governing permissions and limitations under the License.
     inset: 0;
     width: 100%;
 
-    --sp-tabs-overflow-next-button-right: calc(
-        -1 * var(--spectrum-component-edge-to-text-100)
-    );
-    --sp-tabs-overflow-previous-button-left: calc(
-        -1 * var(--spectrum-component-edge-to-text-100)
-    );
-    --sp-tabs-overflow-button-height: calc(
-        var(--spectrum-tab-item-height-medium) -
-            var(--spectrum-border-width-200)
-    );
+    --sp-tabs-overflow-next-button-right: calc(-1 * var(--spectrum-component-edge-to-text-100));
+    --sp-tabs-overflow-previous-button-left: calc(-1 * var(--spectrum-component-edge-to-text-100));
+    --sp-tabs-overflow-button-height: calc(var(--spectrum-tab-item-height-medium) - var(--spectrum-border-width-200));
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-medium);
     --sp-tabs-overflow-icon-color: var(--spectrum-gray-800);
     --sp-tabs-overflow-shadow-color: var(--spectrum-gray-100);
@@ -31,36 +24,26 @@ governing permissions and limitations under the License.
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-100);
 }
 
-:host([size='s']) {
-    --sp-tabs-overflow-button-height: calc(
-        var(--spectrum-tab-item-height-small) - var(--spectrum-border-width-200)
-    );
+:host([size="s"]) {
+    --sp-tabs-overflow-button-height: calc(var(--spectrum-tab-item-height-small) - var(--spectrum-border-width-200));
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-small);
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
-:host([size='l']) {
-    --sp-tabs-overflow-button-height: calc(
-        var(--spectrum-tab-item-height-large) - var(--spectrum-border-width-200)
-    );
+:host([size="l"]) {
+    --sp-tabs-overflow-button-height: calc(var(--spectrum-tab-item-height-large) - var(--spectrum-border-width-200));
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-large);
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-200);
 }
 
-:host([size='xl']) {
-    --sp-tabs-overflow-button-height: calc(
-        var(--spectrum-tab-item-height-extra-large) -
-            var(--spectrum-border-width-200)
-    );
+:host([size="xl"]) {
+    --sp-tabs-overflow-button-height: calc(var(--spectrum-tab-item-height-extra-large) - var(--spectrum-border-width-200));
     --sp-tabs-overflow-button-size: var(--spectrum-tab-item-height-extra-large);
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-300);
 }
 
 :host([compact]) {
-    --sp-tabs-overflow-button-height: calc(
-        var(--spectrum-tab-item-compact-height-medium) -
-            var(--spectrum-border-width-200)
-    );
+    --sp-tabs-overflow-button-height: calc(var(--spectrum-tab-item-compact-height-medium) - var(--spectrum-border-width-200));
     --mod-actionbutton-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
@@ -98,7 +81,7 @@ sp-action-button.right-scroll.show {
 /* styling for shadow behind the left and right buttons */
 .tabs-overflow-container:before,
 .tabs-overflow-container:after {
-    content: '';
+    content: "";
     visibility: hidden;
     position: absolute;
     z-index: 1;
@@ -109,24 +92,12 @@ sp-action-button.right-scroll.show {
 }
 
 .tabs-overflow-container:before {
-    background: transparent
-        linear-gradient(
-            270deg,
-            transparent,
-            var(--sp-tabs-overflow-shadow-color)
-        )
-        0 0 no-repeat padding-box;
+    background: transparent linear-gradient(270deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
     left: 0;
 }
 
 .tabs-overflow-container:after {
-    background: transparent
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--sp-tabs-overflow-shadow-color)
-        )
-        0 0 no-repeat padding-box;
+    background: transparent linear-gradient(90deg, transparent, var(--sp-tabs-overflow-shadow-color)) 0 0 no-repeat padding-box;
     right: 0;
 }
 
