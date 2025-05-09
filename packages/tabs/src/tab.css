@@ -10,13 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-tab.css');
+@import url("./spectrum-tab.css");
 
 :host {
-    scroll-margin-inline: var(
-        --mod-tabs-item-horizontal-spacing,
-        var(--spectrum-tabs-item-horizontal-spacing)
-    );
+    scroll-margin-inline: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
 }
 
 :host([disabled]) {
@@ -32,7 +29,7 @@ governing permissions and limitations under the License.
         background-color: ButtonFace;
     }
 
-    :host ::slotted([slot='icon']) {
+    :host ::slotted([slot="icon"]) {
         z-index: 1;
         position: relative;
         color: inherit;
@@ -47,7 +44,7 @@ governing permissions and limitations under the License.
         color: HighlightText;
     }
 
-    :host([selected]) ::slotted([slot='icon']) {
+    :host([selected]) ::slotted([slot="icon"]) {
         color: HighlightText;
     }
 
@@ -64,19 +61,11 @@ governing permissions and limitations under the License.
     height: auto;
 }
 
-:host([dir][vertical]) slot[name='icon'] + #item-label {
+:host([dir][vertical]) slot[name="icon"] + #item-label {
     margin-inline-start: 0;
-    margin-block: calc(
-            var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2
-        )
-        calc(
-            var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) /
-                2
-        );
+    margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
 }
 
-:host([vertical]) ::slotted([slot='icon']) {
-    margin-block-start: calc(
-        var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2
-    );
+:host([vertical]) ::slotted([slot="icon"]) {
+    margin-block-start: calc(var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2);
 }

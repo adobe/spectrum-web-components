@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-progress-bar.css');
-@import url('./progress-bar-overrides.css');
+@import url("./spectrum-progress-bar.css");
+@import url("./progress-bar-overrides.css");
 
 .fill {
     width: 100%;
     transform-origin: left;
 }
 
-:host([dir='rtl']) .fill {
+:host([dir="rtl"]) .fill {
     transform-origin: right;
 }

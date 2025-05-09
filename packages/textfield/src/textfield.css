@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-textfield.css');
-@import url('./textfield-overrides.css');
+@import url("./spectrum-textfield.css");
+@import url("./textfield-overrides.css");
 
 :host {
     display: inline-flex;
@@ -51,10 +51,7 @@ textarea {
 
 :host([focused]) #textfield:hover .input,
 :host([focused]) .input:hover {
-    border-color: var(
-        --mod-textfield-border-color-focus-hover,
-        var(--spectrum-textfield-border-color-focus-hover)
-    );
+    border-color: var(--mod-textfield-border-color-focus-hover, var(--spectrum-textfield-border-color-focus-hover));
 }
 
 #sizer {
@@ -91,7 +88,7 @@ textarea {
     resize: none;
 }
 
-:host([multiline][rows='1']) .input {
+:host([multiline][rows="1"]) .input {
     min-block-size: auto;
 }
 
@@ -101,50 +98,23 @@ textarea {
 :host([disabled][quiet]) #textfield:hover .input,
 :host([quiet]) .input :disabled {
     background-color: #0000;
-    border-color: var(
-        --mod-textfield-border-color-disabled,
-        var(--spectrum-textfield-border-color-disabled)
-    );
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    border-color: var(--mod-textfield-border-color-disabled, var(--spectrum-textfield-border-color-disabled));
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 /* :not selector not working with regex for process-spectrum so had to override here */
 :host([disabled]) #textfield .icon.icon-search,
 :host([readonly]) #textfield .icon.icon-search {
-    color: var(
-        --highcontrast-textfield-text-color-disabled,
-        var(
-            --mod-textfield-text-color-disabled,
-            var(--spectrum-textfield-text-color-disabled)
-        )
-    );
+    color: var(--highcontrast-textfield-text-color-disabled, var(--mod-textfield-text-color-disabled, var(--spectrum-textfield-text-color-disabled)));
 }
 
 :host([focused]) #textfield .icon.icon-search {
-    --spectrum-search-color: var(
-        --highcontrast-search-color-focus,
-        var(--mod-search-color-focus, var(--spectrum-search-color-focus))
-    );
+    --spectrum-search-color: var(--highcontrast-search-color-focus, var(--mod-search-color-focus, var(--spectrum-search-color-focus)));
 }
 
 :host([multiline][grows]:not([quiet])) #textfield:after {
     grid-area: unset;
-    min-block-size: calc(
-        var(
-                --mod-text-area-min-block-size,
-                var(--spectrum-text-area-min-block-size)
-            ) +
-            var(
-                --mod-textfield-focus-indicator-gap,
-                var(--spectrum-textfield-focus-indicator-gap)
-            ) * 2
-    );
+    min-block-size: calc(var(--mod-text-area-min-block-size, var(--spectrum-text-area-min-block-size)) + var(--mod-textfield-focus-indicator-gap, var(--spectrum-textfield-focus-indicator-gap)) * 2);
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {

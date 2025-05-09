@@ -10,17 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-modal.css');
-@import url('./modal-overrides.css');
+@import url("./spectrum-modal.css");
+@import url("./modal-overrides.css");
 
 :host {
     --spectrum-dialog-confirm-exit-animation-duration: var(--swc-test-duration);
-    --spectrum-dialog-confirm-entry-animation-duration: var(
-        --swc-test-duration
-    );
-    --spectrum-modal-confirm-entry-animation-distance: var(
-        --spectrum-dialog-confirm-entry-animation-distance
-    );
+    --spectrum-dialog-confirm-entry-animation-duration: var(--swc-test-duration);
+    --spectrum-modal-confirm-entry-animation-distance: var(--spectrum-dialog-confirm-entry-animation-distance);
 
     height: 100dvh;
 }

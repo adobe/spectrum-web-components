@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-sidenav-heading.css');
-@import url('./sidenav-heading-overrides.css');
+@import url("./spectrum-sidenav-heading.css");
+@import url("./sidenav-heading-overrides.css");
 
 :host {
     display: block;

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-illustratedmessage.css');
-@import url('./illustratedmessage-overrides.css');
+@import url("./spectrum-illustratedmessage.css");
+@import url("./illustratedmessage-overrides.css");
 
 /* Ensure that SVGs with viewBox attributes size correctly. */
 ::slotted(svg[viewBox]) {
