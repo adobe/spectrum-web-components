@@ -61,7 +61,7 @@
         "case": "^1.6.3",
         "cheerio": "^1.0.0",
         "fast-glob": "^3.2.12",
-        "prettier": "^3.0.0"
+        "prettier": "^3.5.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

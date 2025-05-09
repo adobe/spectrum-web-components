@@ -47,11 +47,7 @@
         "prepack": "pinst --disable",
         "prepublishOnly": "rimraf react && yarn build",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
-        "publish": "yarn prepublishOnly && yarn changeset version && yarn lint:versions --fix && yarn install && git add . && yarn changeset publish && git push -f --follow-tags && yarn publish:react",
-        "publish:react": "yarn publish:react:build && yarn publish:react:tag && yarn publish:react:clean",
-        "publish:react:build": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"chore: commit React watch\" --no-verify",
-        "publish:react:clean": "git reset --hard HEAD^ && git prune && rimraf react",
-        "publish:react:tag": "yarn changeset publish --no-git-tag --tag latest --no-push",
+        "publish": "wireit",
         "publish:snapshot": "yarn prepublishOnly && yarn changeset version --snapshot latest && genversion --esm --semi tools/base/src/version.js && yarn lint:versions --fix && yarn install && git add . && yarn changeset publish --no-git-tag --tag snapshot",
         "start": "yarn storybook",
         "storybook": "wireit",
@@ -206,6 +202,7 @@
     ],
     "wireit": {
         "build": {
+            "command": "yarn lint:ts --fix",
             "dependencies": [
                 "build:icons",
                 "build:ts",
@@ -214,6 +211,9 @@
             ]
         },
         "build:cem": {
+            "dependencies": [
+                "build:icons"
+            ],
             "command": "yarn workspaces foreach --all --parallel --no-private --verbose run analyze",
             "files": [
                 "packages/**/*.ts",
@@ -274,16 +274,9 @@
                 "tools/**/*.css.ts"
             ]
         },
-        "build:icons": {
-            "dependencies": [
-                "build:icons:scales",
-                "build:icons:ui",
-                "build:icons:workflow"
-            ]
-        },
         "build:react": {
             "clean": "if-file-deleted",
-            "command": "node ./scripts/build-react.js && tsc --build tsconfig-react-wrapper.json",
+            "command": "rimraf react && node ./scripts/build-react.js && tsc --build tsconfig-react-wrapper.json",
             "files": [
                 "packages/react/src/**/*.ts",
                 "packages/react/src/**/*.js",
@@ -409,6 +402,14 @@
             ],
             "outputs": []
         },
+        "build:icons": {
+            "command": "eslint -f pretty \"packages/icons*/src/*/*.ts\" --fix",
+            "dependencies": [
+                "build:icons:scales",
+                "build:icons:ui",
+                "build:icons:workflow"
+            ]
+        },
         "build:icons:scales": {
             "clean": "if-file-deleted",
             "command": "yarn workspace @spectrum-web-components/icons build",
@@ -489,6 +490,49 @@
                 "packages/*/test/*.test-vrt.ts",
                 "tools/*/test/*.test-vrt.ts"
             ]
+        },
+        "publish": {
+            "dependencies": [
+                "build",
+                "version",
+                "publish:tags",
+                "publish:react"
+            ]
+        },
+        "version": {
+            "dependencies": [
+                "build"
+            ],
+            "command": "yarn changeset version && yarn lint:versions --fix && yarn install && git add ."
+        },
+        "publish:tags": {
+            "dependencies": [
+                "build",
+                "version"
+            ],
+            "command": "yarn changeset publish && git push -f --follow-tags"
+        },
+        "publish:react": {
+            "command": "git reset --hard HEAD^ && git prune && rimraf react",
+            "dependencies": [
+                "build",
+                "version",
+                "publish:tags",
+                "publish:react:build",
+                "publish:react:tag"
+            ]
+        },
+        "publish:react:build": {
+            "dependencies": [
+                "build:react"
+            ],
+            "command": "sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"chore: commit React watch\" --no-verify"
+        },
+        "publish:react:tag": {
+            "dependencies": [
+                "publish:react:build"
+            ],
+            "command": "yarn changeset publish --no-git-tag --tag latest --no-push"
         },
         "watch": {
             "dependencies": [

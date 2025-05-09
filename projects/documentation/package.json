@@ -238,7 +238,7 @@
             ],
             "dependencies": [
                 {
-                    "script": "../../:analyze:docs",
+                    "script": "../../:docs:cem",
                     "cascade": false
                 }
             ]
