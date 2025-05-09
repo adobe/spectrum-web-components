@@ -165,7 +165,7 @@ controlled.parameters = {
 };
 
 class MenuItemWithDescription extends LitElement {
-    render(): TemplateResult {
+    public overriderender(): TemplateResult {
         return html`
             <sp-menu>
                 <sp-menu-item>
@@ -215,7 +215,7 @@ export const menuItemWithDescription = (): TemplateResult => html`
 `;
 
 class WithIcons extends LitElement {
-    render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <sp-popover open slot="withIcons">
                 <sp-menu selects="single">
@@ -243,7 +243,7 @@ export const SelectsWithIcons = (): TemplateResult => html`
 `;
 
 class HeadersAndIcons extends LitElement {
-    render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <sp-popover open>
                 <sp-menu selects="single">
