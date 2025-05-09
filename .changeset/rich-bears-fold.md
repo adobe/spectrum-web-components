@@ -2,4 +2,4 @@
 '@spectrum-web-components/action-button': minor
 ---
 
-action button with href now opens one tab instead of registering double clicks with target="blank"
+-   **Fixed** : Action buttons with href attributes now properly detects modifier keys and skips the proxy click, allowing only native browser behavior to proceed.
