@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([size='s']) #list {
+:host([size="s"]) #list {
     --spectrum-tabs-item-height: var(--spectrum-tab-item-height-small);
     --spectrum-tabs-item-horizontal-spacing: var(--spectrum-tab-item-to-tab-item-horizontal-small);
     --spectrum-tabs-item-vertical-spacing: var(--spectrum-tab-item-to-tab-item-vertical-small);
@@ -25,7 +25,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-font-size: var(--spectrum-font-size-75);
 }
 
-:host([size='l']) #list {
+:host([size="l"]) #list {
     --spectrum-tabs-item-height: var(--spectrum-tab-item-height-large);
     --spectrum-tabs-item-horizontal-spacing: var(--spectrum-tab-item-to-tab-item-horizontal-large);
     --spectrum-tabs-item-vertical-spacing: var(--spectrum-tab-item-to-tab-item-vertical-large);
@@ -39,7 +39,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-font-size: var(--spectrum-font-size-200);
 }
 
-:host([size='xl']) #list {
+:host([size="xl"]) #list {
     --spectrum-tabs-item-height: var(--spectrum-tab-item-height-extra-large);
     --spectrum-tabs-item-horizontal-spacing: var(--spectrum-tab-item-to-tab-item-horizontal-extra-large);
     --spectrum-tabs-item-vertical-spacing: var(--spectrum-tab-item-to-tab-item-vertical-extra-large);
@@ -53,21 +53,21 @@ governing permissions and limitations under the License.
     --spectrum-tabs-font-size: var(--spectrum-font-size-300);
 }
 
-:host([size='s']) #list.spectrum-Tabs--compact {
+:host([size="s"]) #list.spectrum-Tabs--compact {
     --mod-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-small));
     --mod-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-small));
     --mod-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-small));
     --mod-tabs-top-to-icon: var(--mod-tabs-top-to-icon-compact, var(--spectrum-tab-item-top-to-workflow-icon-compact-small));
 }
 
-:host([size='l']) #list.spectrum-Tabs--compact {
+:host([size="l"]) #list.spectrum-Tabs--compact {
     --mod-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-large));
     --mod-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-large));
     --mod-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-large));
     --mod-tabs-top-to-icon: var(--mod-tabs-top-to-icon-compact, var(--spectrum-tab-item-top-to-workflow-icon-compact-large));
 }
 
-:host([size='xl']) #list.spectrum-Tabs--compact {
+:host([size="xl"]) #list.spectrum-Tabs--compact {
     --mod-tabs-item-height: var(--mod-tabs-item-height-compact, var(--spectrum-tab-item-compact-height-extra-large));
     --mod-tabs-top-to-text: var(--mod-tabs-top-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-extra-large));
     --mod-tabs-bottom-to-text: var(--mod-tabs-bottom-to-text-compact, var(--spectrum-tab-item-top-to-text-compact-extra-large));

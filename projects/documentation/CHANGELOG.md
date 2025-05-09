@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.2.4
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/bundle@1.6.0
+    -   @spectrum-web-components/custom-vars-viewer@1.6.0
+
 ## 1.2.3
 
 ### Patch Changes

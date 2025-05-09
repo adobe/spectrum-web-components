@@ -22,7 +22,55 @@ governing permissions and limitations under the License.
     }
 }
 
+.spectrum-Heading,
+.spectrum-Heading--sizeM {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-m);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-m);
+}
+
+.spectrum-Heading--sizeXXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
+}
+
+.spectrum-Heading--sizeXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xs);
+}
+
+.spectrum-Heading--sizeS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
+}
+
+.spectrum-Heading--sizeL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-l);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-l);
+}
+
+.spectrum-Heading--sizeXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xl);
+}
+
+.spectrum-Heading--sizeXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxl);
+}
+
+.spectrum-Heading--sizeXXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxxl);
+}
+
 .spectrum-Heading {
+    --spectrum-heading-sans-serif-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-heading-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-heading-font-color: var(--spectrum-heading-color);
+    --spectrum-heading-margin-start: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-top-multiplier));
+    --spectrum-heading-margin-end: calc(var(--mod-heading-font-size, var(--spectrum-heading-font-size)) * var(--spectrum-heading-margin-bottom-multiplier));
     font-family: var(--mod-heading-sans-serif-font-family, var(--spectrum-heading-sans-serif-font-family));
     font-style: var(--mod-heading-sans-serif-font-style, var(--spectrum-heading-sans-serif-font-style));
     font-weight: var(--mod-heading-sans-serif-font-weight, var(--spectrum-heading-sans-serif-font-weight));
