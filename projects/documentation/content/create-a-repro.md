@@ -5,7 +5,7 @@ displayName: Create a Reproduction
 slug: create-a-repro
 ---
 
-# Spectrum Web Components Repro Template
+# Repro Template
 
 This template helps you quickly set up a minimal repro case for Spectrum Web Components. Use it to report bugs, test ideas, or showcase usage examples.
 
@@ -64,7 +64,7 @@ export default class MyElement extends LitElement {
 
 Once you’ve set up your custom use case:
 
-- Run it on StackBlitz.
+- Run it on your choice of Hosting Platform For e.g Stackblitz or Codesandbox.
 
 - Make sure it reproduces the issue clearly.
 
@@ -80,7 +80,7 @@ Once you’ve set up your custom use case:
 
 - Use the component docs for guidance.
 
-## Example
+## Example (Stackblitz)
 
 👉 [Live Demo on StackBlitz](https://stackblitz.com/orgs/custom/SWC-Team/collections)
 
