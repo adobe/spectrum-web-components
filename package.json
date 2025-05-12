@@ -22,7 +22,7 @@
         "build:ts:watch": "wireit",
         "build:types": "wireit",
         "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag --tag snapshot",
+        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag --tag snapshot",
         "changeset-publish": "yarn prepublishOnly && yarn changelog:global && yarn changeset version && yarn install && yarn lint:versions --fix && yarn update-version && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "changelog:global": "node ./scripts/update-global-changelog.js",
         "update-version": "node ./tasks/update-version.js",
