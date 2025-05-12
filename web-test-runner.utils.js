@@ -38,8 +38,6 @@ export const coverallsChromium = playwrightLauncher({
             permissions: ['clipboard-read', 'clipboard-write'],
         }),
     launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
         headless: true,
     },
 });

@@ -18,7 +18,6 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
     currency,
@@ -54,19 +53,6 @@ import {
 import { isMac } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('NumberField', () => {
-    before(async () => {
-        const shouldPolyfillEn = shouldPolyfill('en');
-        const shouldPolyfillFr = shouldPolyfill('fr');
-        if (shouldPolyfillEn || shouldPolyfillFr) {
-            await import('@formatjs/intl-numberformat/polyfill-force.js');
-        }
-        if (shouldPolyfillEn) {
-            await import('@formatjs/intl-numberformat/locale-data/en.js');
-        }
-        if (shouldPolyfillFr) {
-            await import('@formatjs/intl-numberformat/locale-data/fr.js');
-        }
-    });
     testForLitDevWarnings(async () => await getElFrom(Default({})));
     it('loads default number-field accessibly', async () => {
         const el = await getElFrom(Default({}));
@@ -575,21 +561,21 @@ describe('NumberField', () => {
             el.value = 45;
             expect(el.value).to.equal(45);
             el.focus();
-            await sendKeys({ type: '7' }); // Visible text: EUR 45.007
+            await sendKeys({ type: '7' }); // Visible text: EUR 45.007
             expect(el.value).to.equal(45.007);
             expect(inputSpy.calledWith(el.value), 'first input').to.be.true;
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
-            await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
-            await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ press: 'ArrowLeft' }); // Visible text: EUR 45.007
+            await sendKeys({ type: '1' }); // Visible text: 1EUR 45.007
+            await sendKeys({ press: 'Enter' }); // Visible text: EUR 145.01
             expect(el.value).to.equal(145.007);
             expect(inputSpy.calledWith(145.007), 'second input').to.be.true;
             expect(changeSpy.calledWith(145.007), 'change').to.be.true;
@@ -616,7 +602,9 @@ describe('NumberField', () => {
             expect(el.value).to.equal(50);
         });
         it('click with modifier key', async () => {
-            let target = el.shadowRoot.querySelector('.step-up') as HTMLElement;
+            let target = el.shadowRoot!.querySelector(
+                '.step-up'
+            ) as HTMLElement;
             const stepUpRect = target.getBoundingClientRect();
             const options = {
                 bubbles: true,
@@ -646,7 +634,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.equal(1);
             expect(changeSpy.callCount).to.equal(1);
             expect(el.value).to.equal(60);
-            target = el.shadowRoot.querySelector('.step-down') as HTMLElement;
+            target = el.shadowRoot!.querySelector('.step-down') as HTMLElement;
             const stepDownRect = target.getBoundingClientRect();
             options.clientX = stepDownRect.x + 1;
             options.clientY = stepDownRect.y + 1;
@@ -659,7 +647,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(50);
         });
         it('many input, but one change', async () => {
-            const buttonUp = el.shadowRoot.querySelector(
+            const buttonUp = el.shadowRoot!.querySelector(
                 '.step-up'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
@@ -667,7 +655,7 @@ describe('NumberField', () => {
                 buttonUpRect.x + buttonUpRect.width / 2,
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
-            const buttonDown = el.shadowRoot.querySelector(
+            const buttonDown = el.shadowRoot!.querySelector(
                 '.step-down'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
@@ -725,7 +713,7 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(1);
         });
         it('no change in committed value - using buttons', async () => {
-            const buttonUp = el.shadowRoot.querySelector(
+            const buttonUp = el.shadowRoot!.querySelector(
                 '.step-up'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
@@ -733,7 +721,7 @@ describe('NumberField', () => {
                 buttonUpRect.x + buttonUpRect.width / 2,
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
-            const buttonDown = el.shadowRoot.querySelector(
+            const buttonDown = el.shadowRoot!.querySelector(
                 '.step-down'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
@@ -797,13 +785,15 @@ describe('NumberField', () => {
         expect(el.formattedValue).to.equal('50');
         expect(el.valueAsString).to.equal('50');
         expect(el.value).to.equal(50);
-        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
+        const buttonUp = el.shadowRoot!.querySelector(
+            '.step-up'
+        ) as HTMLElement;
         const buttonUpRect = buttonUp.getBoundingClientRect();
         const buttonUpPosition: [number, number] = [
             buttonUpRect.x + buttonUpRect.width / 2,
             buttonUpRect.y + buttonUpRect.height / 2,
         ];
-        const buttonDown = el.shadowRoot.querySelector(
+        const buttonDown = el.shadowRoot!.querySelector(
             '.step-down'
         ) as HTMLElement;
         const buttonDownRect = buttonDown.getBoundingClientRect();
@@ -1088,7 +1078,7 @@ describe('NumberField', () => {
         });
         it('constrains pointer usage', async () => {
             expect(el.value).to.equal(10);
-            const buttonUp = el.shadowRoot.querySelector(
+            const buttonUp = el.shadowRoot!.querySelector(
                 '.step-up'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
@@ -1328,7 +1318,7 @@ describe('NumberField', () => {
             el.value = 0;
             await elementUpdated(el);
             expect(el.value).to.equal(0);
-            const buttonDown = el.shadowRoot.querySelector(
+            const buttonDown = el.shadowRoot!.querySelector(
                 '.step-down'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
@@ -1667,8 +1657,8 @@ describe('NumberField', () => {
     });
     it('removes the stepper UI with [hide-stepper]', async () => {
         const el = await getElFrom(Default({ hideStepper: true }));
-        const stepUp = el.shadowRoot.querySelector('.step-up');
-        const stepDown = el.shadowRoot.querySelector('.step-down');
+        const stepUp = el.shadowRoot!.querySelector('.step-up');
+        const stepDown = el.shadowRoot!.querySelector('.step-down');
         expect(stepUp).to.be.null;
         expect(stepDown).to.be.null;
     });

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('@spectrum-web-components/styles/spectrum-two/scale-large.css');
-@import url('@spectrum-web-components/styles/tokens-v2/large-vars.css');
+@import url("@spectrum-web-components/styles/spectrum-two/scale-large.css");
+@import url("@spectrum-web-components/styles/tokens-v2/large-vars.css");
 
 :root,
 :host {

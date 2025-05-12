@@ -2,8 +2,18 @@
     "name": "@adobe/spectrum-web-components",
     "version": "0.0.9",
     "private": true,
-    "description": "",
+    "description": "A web-component implementation of the Adobe Spectrum design system.",
     "type": "module",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
@@ -101,7 +111,7 @@
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^4.0.0",
-        "@playwright/test": "^1.44.0",
+        "@playwright/test": "^1.52.0",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
@@ -199,6 +209,27 @@
         "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
+    "resolutions": {
+        "playwright": "^1.52.0"
+    },
+    "workspaces": [
+        "linters/*",
+        "packages/*",
+        "projects/*",
+        "tools/*",
+        "react/*"
+    ],
+    "packageManager": "yarn@4.6.0",
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
     "wireit": {
         "build:css:watch": {
             "command": "node ./tasks/watch-css.js",
@@ -426,33 +457,5 @@
             ],
             "clean": "if-file-deleted"
         }
-    },
-    "workspaces": [
-        "linters/*",
-        "packages/*",
-        "projects/*",
-        "tools/*",
-        "react/*"
-    ],
-    "packageManager": "yarn@4.9.1",
-    "license": "Apache-2.0",
-    "author": "Adobe",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
-    },
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html"
-    ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    }
 }

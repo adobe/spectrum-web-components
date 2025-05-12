@@ -34,6 +34,7 @@
             }
         ],
         "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off",
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -82,6 +83,21 @@
             "files": ["tasks/*", "scripts/*"],
             "rules": {
                 "no-console": ["off"]
+            }
+        },
+        {
+            "files": [
+                "packages/*/src/*.ts",
+                "tools/*/src/*.ts",
+                "projects/*/src/*.ts"
+            ],
+            "rules": {
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": true
+                    }
+                ]
             }
         }
     ]
