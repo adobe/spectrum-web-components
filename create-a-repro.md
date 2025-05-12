@@ -1,3 +1,10 @@
+---
+layout: introduction.njk
+title: 'Create a Reproduction: Spectrum Web Components'
+displayName: Create a Reproduction
+slug: create-a-repro
+---
+
 # Spectrum Web Components Repro Template
 
 This template helps you quickly set up a minimal repro case for Spectrum Web Components. Use it to report bugs, test ideas, or showcase usage examples.
