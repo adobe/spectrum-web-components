@@ -217,7 +217,6 @@ jobs:
             - run:
                   name: Lint
                   command: yarn lint
-            - run: yarn analyze
             - run:
                   name: Are there changes?
                   command: git diff-files --exit-code
