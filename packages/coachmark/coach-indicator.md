@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-`<sp-coach-indicator>` show the connection between an object and its explanation in a touring mode — for example, the source of <sp-coachmark> in an onboarding tour.
+`<sp-coach-indicator>` shows the connection between an object and its explanation in a touring mode — for example, the source of a coachmark in an onboarding tour.
 
 ### Usage
 
@@ -23,7 +23,19 @@ When looking to leverage the `CoachIndicator` base class as a type and/or for ex
 import { CoachIndicator } from '@spectrum-web-components/coachmark';
 ```
 
-## Static color variants
+### Anatomy
+
+A coach indicator consists of a single animated visual indicator.
+
+```html
+<sp-coach-indicator></sp-coach-indicator>
+```
+
+### Options
+
+#### Static Colors
+
+Coach indicators support different static color options to ensure visibility against different backgrounds:
 
 <sp-tabs selected="standard" auto label="Static Color Options">
 <sp-tab value="standard">Standard</sp-tab>
@@ -47,3 +59,11 @@ import { CoachIndicator } from '@spectrum-web-components/coachmark';
 
 </sp-tab-panel>
 </sp-tabs>
+
+### Accessibility
+
+Coach indicators are typically paired with coachmarks to create accessible user onboarding experiences. When using coach indicators:
+
+- Ensure they are clearly visible against their background
+- Use appropriate static colors based on the background color
+- Pair them with descriptive coachmarks that explain the indicated UI element
