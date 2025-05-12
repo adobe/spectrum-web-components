@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('@spectrum-web-components/styles/tokens/dark-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/dark-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/dark-vars.css');
+@import url("@spectrum-web-components/styles/tokens/dark-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/dark-vars.css");
+@import url("@spectrum-web-components/styles/tokens/express/dark-vars.css");
 
 :host,
 :root {
