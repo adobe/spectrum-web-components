@@ -6,16 +6,16 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 
 # Requirements
 
--   NodeJS >= 20.0.0
--   Typescript
--   Supported desktop browsers:
-    -   Last 2 versions of Chrome
-    -   Last 2 versions of Firefox
-    -   Last 2 versions of Safari
-    -   Last 2 versions of Edge
--   Or appropriate [polyfills](https://github.com/webcomponents/webcomponentsjs) in older browsers.
--   We support all viewport sizes across supported desktop browsers.
--   While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.
+- NodeJS >= 20.0.0
+- Typescript
+- Supported desktop browsers:
+    - Last 2 versions of Chrome
+    - Last 2 versions of Firefox
+    - Last 2 versions of Safari
+    - Last 2 versions of Edge
+- Or appropriate [polyfills](https://github.com/webcomponents/webcomponentsjs) in older browsers.
+- We support all viewport sizes across supported desktop browsers.
+- While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.
 
 # Getting started
 
@@ -34,7 +34,7 @@ Typical development will involve running `yarn storybook`, `yarn test`, and `yar
 Creating a new component from the command line can be done by running the following:
 
 ```bash
-$ yarn new-package
+yarn new-package
 ```
 
 This will scaffold your component's required architecture by prompting you for 2 data points - the desired name for your package and the name of the Spectrum CSS asset from which you will be building.
@@ -81,8 +81,8 @@ yarn docs:build
 
 There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:
 
--   `yarn update:spectrum-css` brings all Spectrum CSS dependencies to 'latest'
--   `yarn update:spectrum-css:nonbreaking` brings them to the latest minor or patch version
+- `yarn update:spectrum-css` brings all Spectrum CSS dependencies to 'latest'
+- `yarn update:spectrum-css:nonbreaking` brings them to the latest minor or patch version
 
 We aim to keep Spectrum CSS as current as possible, to track the Spectrum design system closely.
 The `:nonbreaking` variant lets us release patch updates quickly in cases where more work is required to be compatible with 'latest.'
@@ -91,11 +91,10 @@ The `:nonbreaking` variant lets us release patch updates quickly in cases where 
 
 There are several commands that can be useful in specific scenarios:
 
--   `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
--   `yarn spectrum-vars` to ensure that theme files are up-to-date.
--   `yarn process-icons` to make sure that the most recent icons are included.
--   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
--   `yarn build` to make sure the available JS has been built from the current TS source.
+- `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
+- `yarn process-icons` to make sure that the most recent icons are included.
+- `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
+- `yarn build` to make sure the available JS has been built from the current TS source.
 
 ## Linting
 
@@ -179,23 +178,23 @@ This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer)
 
 There is extended documentation on adding a new component to the library in the [documentation site](https://opensource.adobe.com/spectrum-web-components/guides/generating-components). However, at a high level, you will be building the following structure:
 
--   packages
-    -   new-component-name
-        -   src
-            -   index.ts
-            -   new-component-name.css
-            -   new-component-name.ts
-            -   spectrum-config.js
-            -   spectrum-new-component-name.css
-        -   stories
-            -   new-component-name.stories.ts
-        -   test
-            -   benchmark
-                -   test-basic.ts
-            -   new-component-name.test.ts
-        -   package.json
-        -   README.md
-        -   tsconfig.json
+- packages
+    - new-component-name
+        - src
+            - index.ts
+            - new-component-name.css
+            - new-component-name.ts
+            - spectrum-config.js
+            - spectrum-new-component-name.css
+        - stories
+            - new-component-name.stories.ts
+        - test
+            - benchmark
+                - test-basic.ts
+            - new-component-name.test.ts
+        - package.json
+        - README.md
+        - tsconfig.json
 
 For a list of component waiting to be implemented, visit our [`missing components`](https://github.com/adobe/spectrum-web-components/labels/missing%20components) tag.
 

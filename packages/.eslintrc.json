@@ -6,13 +6,26 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "notice", "@spectrum-web-components"],
+    "plugins": [
+        "@typescript-eslint",
+        "notice",
+        "@spectrum-web-components",
+        "import"
+    ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
         "plugin:lit-a11y/recommended"
     ],
     "rules": {
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": false
+            }
+        ],
         "no-debugger": 2,
         "no-console": [
             "error",
