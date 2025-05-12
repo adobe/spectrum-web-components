@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-split-view.css');
-@import url('./split-view-overrides.css');
+@import url("./spectrum-split-view.css");
+@import url("./split-view-overrides.css");
 
 :host {
     --spectrum-split-view-first-pane-size: 50%;
@@ -61,13 +61,13 @@ governing permissions and limitations under the License.
     cursor: ns-resize;
 }
 
-:host([resizable][dir='ltr']) #splitter.is-resized-start,
-:host([resizable][dir='rtl']) #splitter.is-resized-end {
+:host([resizable][dir="ltr"]) #splitter.is-resized-start,
+:host([resizable][dir="rtl"]) #splitter.is-resized-end {
     cursor: e-resize;
 }
 
-:host([resizable][dir='ltr']) #splitter.is-resized-end,
-:host([resizable][dir='rtl']) #splitter.is-resized-start {
+:host([resizable][dir="ltr"]) #splitter.is-resized-end,
+:host([resizable][dir="rtl"]) #splitter.is-resized-start {
     cursor: w-resize;
 }
 
@@ -84,13 +84,13 @@ governing permissions and limitations under the License.
     cursor: ew-resize;
 }
 
-:host([resizable][dir='ltr'][collapsible]) #splitter.is-collapsed-start,
-:host([resizable][dir='rtl'][collapsible]) #splitter.is-collapsed-end {
+:host([resizable][dir="ltr"][collapsible]) #splitter.is-collapsed-start,
+:host([resizable][dir="rtl"][collapsible]) #splitter.is-collapsed-end {
     cursor: e-resize;
 }
 
-:host([resizable][dir='ltr'][collapsible]) #splitter.is-collapsed-end,
-:host([resizable][dir='rtl'][collapsible]) #splitter.is-collapsed-start {
+:host([resizable][dir="ltr"][collapsible]) #splitter.is-collapsed-end,
+:host([resizable][dir="rtl"][collapsible]) #splitter.is-collapsed-start {
     cursor: w-resize;
 }
 

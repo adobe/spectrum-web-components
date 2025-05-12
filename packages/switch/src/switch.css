@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-switch.css');
-@import url('./switch-overrides.css');
+@import url("./spectrum-switch.css");
+@import url("./switch-overrides.css");
 
 :host([disabled]) {
     pointer-events: none;

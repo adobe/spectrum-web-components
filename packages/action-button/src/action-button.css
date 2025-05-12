@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-action-button.css');
-@import url('./action-button-overrides.css');
+@import url("./spectrum-action-button.css");
+@import url("./action-button-overrides.css");
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     flex-shrink: 0;
 }
 
@@ -25,42 +25,27 @@ governing permissions and limitations under the License.
 
 /* confirm with css if we can keep it as css level */
 
-:host([size='xs']) {
+:host([size="xs"]) {
     /* Work around non-square icon only Action Buttons in Spectrum CSS */
     min-width: var(--spectrum-actionbutton-height, 0);
 
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-50) -
-            var(--spectrum-actionbutton-border-width)
-    );
+    --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-50) - var(--spectrum-actionbutton-border-width));
 }
 
-:host([size='s']) {
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-75) -
-            var(--spectrum-actionbutton-border-width)
-    );
+:host([size="s"]) {
+    --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-75) - var(--spectrum-actionbutton-border-width));
 }
 
-:host([size='m']) {
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-100) -
-            var(--spectrum-actionbutton-border-width)
-    );
+:host([size="m"]) {
+    --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-100) - var(--spectrum-actionbutton-border-width));
 }
 
-:host([size='l']) {
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-200) -
-            var(--spectrum-actionbutton-border-width)
-    );
+:host([size="l"]) {
+    --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-200) - var(--spectrum-actionbutton-border-width));
 }
 
-:host([size='xl']) {
-    --spectrum-actionbutton-edge-to-visual-only: calc(
-        var(--spectrum-component-edge-to-visual-only-300) -
-            var(--spectrum-actionbutton-border-width)
-    );
+:host([size="xl"]) {
+    --spectrum-actionbutton-edge-to-visual-only: calc(var(--spectrum-component-edge-to-visual-only-300) - var(--spectrum-actionbutton-border-width));
 }
 
 @media (forced-colors: active) {
