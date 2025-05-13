@@ -64,7 +64,7 @@ const findDeprecationNotice = async function (filePath) {
         const hasDeprecation = fs.existsSync(mdPath);
         if (hasDeprecation) {
             const packageJSON = await import(mdPath, {
-                with: { type: 'json' },
+                assert: { type: 'json' },
             }).then((packageDefault) => packageDefault.default);
             return packageJSON.deprecationNotice;
         }

@@ -17,7 +17,7 @@ import DocumentationTemplate from './DocumentationTemplate.mdx';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
 // const cem = await import('./custom-elements.json', {
-//     with: { type: 'json' },
+//     assert: { type: 'json' },
 // });
 
 // setCustomElementsManifest(cem);

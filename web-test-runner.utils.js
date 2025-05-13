@@ -32,6 +32,7 @@ export const chromium = playwrightLauncher({
  */
 export const coverallsChromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 10,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -66,7 +67,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
 
 export const chromiumWithMemoryToolingCI = playwrightLauncher({
     product: 'chromium',
-    concurrency: 2,
+    concurrency: 10,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -74,16 +75,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
         }),
     launchOptions: {
         headless: false,
-        args: [
-            '--js-flags=--expose-gc',
-            '--headless=new',
-            /**
-             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
-             * instead of up to 20s later:
-             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
-             **/
-            '--enable-blink-features=ForceEagerMeasureMemory',
-        ],
+        args: ['--js-flags=--expose-gc', '--headless=new'],
     },
 });
 
@@ -106,7 +98,9 @@ export const firefox = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
         }),
+    createPage: ({ context }) => context.newPage(),
     launchOptions: {
+        headless: true,
         firefoxUserPrefs: {
             'toolkit.telemetry.reportingpolicy.firstRun': false,
             'browser.shell.checkDefaultBrowser': false,
@@ -124,7 +118,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
-    concurrency: 4,
+    concurrency: 10,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
