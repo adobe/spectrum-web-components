@@ -35,7 +35,7 @@ export class LanguageResolutionController implements ReactiveController {
     //     if (this.language === value) {
     //         return;
     //     }
-
+    //
     //     document.documentElement.lang = value;
     //     this.host.requestUpdate(languageResolverUpdatedSymbol, value);
     // }
