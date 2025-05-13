@@ -235,7 +235,7 @@ $ node test/benchmark/cli -n 20
                     'package.json'
                 ),
                 {
-                    with: { type: 'json' },
+                    assert: { type: 'json' },
                 }
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
