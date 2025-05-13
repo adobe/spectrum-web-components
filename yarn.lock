@@ -4347,13 +4347,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit-labs/virtualizer@npm:^2.0.12":
-  version: 2.0.12
-  resolution: "@lit-labs/virtualizer@npm:2.0.12"
+"@lit-labs/virtualizer@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@lit-labs/virtualizer@npm:2.1.0"
   dependencies:
-    lit: "npm:^3.1.0"
+    lit: "npm:^3.2.0"
     tslib: "npm:^2.0.3"
-  checksum: 10c0/f554454ff452ffdfdf646ef91fcb4124ff8f170a0064f021753684ba1afc72fbacae88744be5d932bcc62e5de2945e2f82f4609af11ab7a2381be0eec150c461
+  checksum: 10c0/70ffa0e5182af4b06e73a5dcd3202bd8e159b2c0ca6241b26a471de815798fdd54c3169f03fc56e38b9db9bba5bfa08d45b716ebee22fd84ea7b9b66da007061
   languageName: node
   linkType: hard
 
@@ -4381,6 +4381,15 @@ __metadata:
   dependencies:
     "@lit-labs/ssr-dom-shim": "npm:^1.0.0"
   checksum: 10c0/10f1d25e24e32feb21c4c6f9e11d062901241602e12c4ecf746b3138f87fed4d8394194645514d5c1bfd5f33f3fd56ee8ef41344e2cb4413c40fe4961ec9d419
+  languageName: node
+  linkType: hard
+
+"@lit/reactive-element@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@lit/reactive-element@npm:2.1.0"
+  dependencies:
+    "@lit-labs/ssr-dom-shim": "npm:^1.2.0"
+  checksum: 10c0/3cd61c4e7cc8effeb2c246d5dada8fbe0a730e9e0dd488eb38c91a4f63b773e3b7f86f8384051677298e73de470c7ca6b5634df3ca190b307f8bb8e0d51bb91c
   languageName: node
   linkType: hard
 
@@ -7958,7 +7967,7 @@ __metadata:
   resolution: "@spectrum-web-components/grid@workspace:tools/grid"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@lit-labs/virtualizer": "npm:^2.0.12"
+    "@lit-labs/virtualizer": "npm:^2.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.6.0"
     lit: "npm:^2.5.0 || ^3.1.3"
@@ -8371,7 +8380,7 @@ __metadata:
   resolution: "@spectrum-web-components/table@workspace:packages/table"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
-    "@lit-labs/virtualizer": "npm:^2.0.12"
+    "@lit-labs/virtualizer": "npm:^2.1.0"
     "@spectrum-css/table": "npm:8.1.0"
     "@spectrum-web-components/base": "npm:1.6.0"
     "@spectrum-web-components/checkbox": "npm:1.6.0"
@@ -23549,6 +23558,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lit-element@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lit-element@npm:4.2.0"
+  dependencies:
+    "@lit-labs/ssr-dom-shim": "npm:^1.2.0"
+    "@lit/reactive-element": "npm:^2.1.0"
+    lit-html: "npm:^3.3.0"
+  checksum: 10c0/20577f2092ac1e1bd82fba2bbc9ce0122b35dc2495906d3fbcb437c3727b9c8ed1c0691b8b859f65a51e910db1341d95233c117e1e1c88c450b30e2d3b62fdb8
+  languageName: node
+  linkType: hard
+
 "lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.1.2":
   version: 3.1.3
   resolution: "lit-html@npm:3.1.3"
@@ -23567,7 +23587,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:^2.0.0 || ^3.0.0, lit@npm:^2.5.0 || ^3.1.3, lit@npm:^3.0.0, lit@npm:^3.1.0":
+"lit-html@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "lit-html@npm:3.3.0"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.2"
+  checksum: 10c0/c1065048d89d93df6a46cdeed9abd637ae9bcc0847ee108dccbb2e1627a4074074e1d3ac9360e08a736d76f8c76b2c88166dbe465406da123b9137e29c2e0034
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.0.0 || ^3.0.0, lit@npm:^2.5.0 || ^3.1.3, lit@npm:^3.0.0":
   version: 3.1.3
   resolution: "lit@npm:3.1.3"
   dependencies:
@@ -23586,6 +23615,17 @@ __metadata:
     lit-element: "npm:^3.3.0"
     lit-html: "npm:^2.8.0"
   checksum: 10c0/bf33c26b1937ee204aed1adbfa4b3d43a284e85aad8ea9763c7865365917426eded4e5888158b4136095ea42054812561fe272862b61775f1198fad3588b071f
+  languageName: node
+  linkType: hard
+
+"lit@npm:^3.2.0":
+  version: 3.3.0
+  resolution: "lit@npm:3.3.0"
+  dependencies:
+    "@lit/reactive-element": "npm:^2.1.0"
+    lit-element: "npm:^4.2.0"
+    lit-html: "npm:^3.3.0"
+  checksum: 10c0/27e6d109c04c8995f47c82a546407c5ed8d399705f9511d1f3ee562eb1ab4bc00fae5ec897da55fb50f202b2a659466e23cccd809d039e7d4f935fcecb2bc6a7
   languageName: node
   linkType: hard
 
