@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { ReactiveController, ReactiveElement } from 'lit';
 import { ProvideLang } from '@spectrum-web-components/theme';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 export const languageResolverUpdatedSymbol = Symbol(
     'language resolver updated'
@@ -19,20 +19,26 @@ export const languageResolverUpdatedSymbol = Symbol(
 
 export class LanguageResolutionController implements ReactiveController {
     private host: ReactiveElement;
-    get language(): string {
-        return document.documentElement.lang || navigator.language;
-    }
-    set language(value: string) {
-        // Replace all _ with - in the language string
-        value = value.replace(/_/g, '-');
-        // Set the document language
-        if (this.language === value) {
-            return;
-        }
+    language = document.documentElement.lang || navigator.language;
+    /**
+     * @todo: This was the original solution above.
+     * Suggested solution: This should use a getter and setting to ensure the language is set correctly.
+     * This is fetching the root-level language but shouldn't we also be honoring if the language attribute is set on a container too?
+     */
+    // get language(): string {
+    //     return document.documentElement.lang || navigator.language;
+    // }
+    // set language(value: string) {
+    //     // Replace all _ with - in the language string
+    //     value = value.replace(/_/g, '-');
+    //     // Set the document language
+    //     if (this.language === value) {
+    //         return;
+    //     }
 
-        document.documentElement.lang = value;
-        this.host.requestUpdate(languageResolverUpdatedSymbol, value);
-    }
+    //     document.documentElement.lang = value;
+    //     this.host.requestUpdate(languageResolverUpdatedSymbol, value);
+    // }
     private unsubscribe?: () => void;
 
     constructor(host: ReactiveElement) {
