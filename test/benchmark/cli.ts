@@ -235,7 +235,7 @@ $ node test/benchmark/cli -n 20
                     'package.json'
                 ),
                 {
-                    assert: { type: 'json' },
+                    with: { type: 'json' },
                 }
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
@@ -245,7 +245,9 @@ $ node test/benchmark/cli -n 20
                 );
                 return;
             }
-            if (!config.benchmarks) return;
+            if (!config.benchmarks) {
+                return;
+            }
             if (opts.compare !== 'none') {
                 config.benchmarks.push({
                     name: `${packageName}:${benchmark}`,
