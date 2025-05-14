@@ -39,7 +39,7 @@ $ yarn new-package
 
 Outside of your new package, you will need to manually add information about your new package to the `tsconfig-all.json` and `tsconfig-react-wrapper.json` files, as well as the `bundle` package:
 
-Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/package-name" }`) alphabetically (replacing "package-name" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
+Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/package-name" }`), alphabetically (replacing "package-name" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, including at demonstration and test time.
 
 Open `tsconfig-react-wrapper.json`, find "references", and add an entry for your package (`{ "path": "react/package-name" }`), alphabetically (replacing "package-name" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-react-wrapper.json` config is used to build types for the `@swc-react` project, so that consumers can benefit from type definitions for SWC components even when using the React wrapper.
 
