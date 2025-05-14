@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import fs from 'fs';
 import path from 'path';
+
 import glob from 'fast-glob';
 import 'colors';
 
@@ -35,7 +36,8 @@ async function verifyCustomElementsJson() {
             throw new Error(`Missing custom-elements.json in ${pkg}`);
         }
     });
-    await Promise.all(checks);
+
+    return Promise.all(checks);
 }
 
 function verifyVersionJs() {

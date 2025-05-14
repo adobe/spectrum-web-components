@@ -13,11 +13,12 @@ governing permissions and limitations under the License.
 import { readFile } from 'fs/promises';
 import fsExtra from 'fs-extra';
 import { basename, dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+
 import prettier from 'prettier';
 import Case from 'case';
 import fg from 'fast-glob';
 import yaml from 'js-yaml';
-import { fileURLToPath } from 'url';
 
 const { existsSync, outputFile, readFileSync, readJSON } = fsExtra;
 
@@ -403,10 +404,10 @@ governing permissions and limitations under the License.
 
 import { createComponent } from '@lit/react';
 import * as React from 'react';
-  
+
 import { ${component} as ${componentAliasName} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
 import '@spectrum-web-components/${iconPkg}/icons/${iconElementName}.js';
-  
+
 export const ${component} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: ${componentAliasName}, events: {}, displayName: '${component}' });
 
 export type ${component}Type = ${componentAliasName};
@@ -432,73 +433,10 @@ governing permissions and limitations under the License.
 import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
 import type { Icon${displayName}Type } from '../${displayName}';
-    
+
 export const Icon${displayName}: ComponentType<Partial<Icon${displayName}Type> | { slot: string }> = dynamic<Partial<Icon${displayName}Type> | { slot: string }>(
     () => import('../${displayName}').then((m) => m.Icon${displayName} as any),
     { ssr: false}
 );
 `;
-}
-
-/**
- * Core entry function
- */
-export async function generateIconWrapper(iconType) {
-    const icons = await fg(
-        resolve(__dirname, '..', `packages/${iconType}/src/elements/**.d.ts`)
-    );
-    for (let icon of icons) {
-        const id = basename(icon).split('.')[0].substring('Icon'.length);
-        const componentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-        const iconElementName = `sp-icon-${Case.kebab(componentName)}`;
-        await outputFile(
-            resolve(__dirname, '..', `react/${iconType}/${componentName}.ts`),
-            await prettier.format(
-                genIconReactComponent(
-                    `Icon${componentName}`,
-                    `Icon${id}`,
-                    iconElementName,
-                    `${iconType}`
-                ),
-                {
-                    parser: 'typescript',
-                    ...prettierConfig,
-                }
-            )
-        );
-        await outputFile(
-            resolve(
-                __dirname,
-                '..',
-                `react/${iconType}/next/${componentName}.ts`
-            ),
-            await prettier.format(genIconNextComponent(Case.pascal(id)), {
-                parser: 'typescript',
-                ...prettierConfig,
-            })
-        );
-    }
-
-    const { name: pkgName, version: pkgVersion } = await readJSON(
-        resolve(__dirname, '..', `packages/${iconType}/package.json`)
-    );
-
-    await outputFile(
-        resolve(__dirname, '..', `react/${iconType}/package.json`),
-        await prettier.format(
-            genPackageJson(iconType, pkgName, pkgVersion, true),
-            {
-                parser: 'json',
-                ...prettierConfig,
-            }
-        )
-    );
-
-    await outputFile(
-        resolve(__dirname, '..', `react/${iconType}/tsconfig.json`),
-        await prettier.format(genTsconfigJson(), {
-            parser: 'json',
-            ...prettierConfig,
-        })
-    );
 }

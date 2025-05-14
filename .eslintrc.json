@@ -79,7 +79,7 @@
     ],
     "overrides": [
         {
-            "files": ["tasks/*", "scripts/*"],
+            "files": ["scripts/*"],
             "rules": {
                 "no-console": ["off"]
             }

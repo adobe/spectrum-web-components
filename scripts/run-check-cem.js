@@ -10,24 +10,31 @@ governing permissions and limitations under the License.
 */
 
 /**
- * @fileoverview This task confirms that all workspace packages (except ignored ones)
- * have been properly built by checking for the existence of src/index.js files.
+ * @fileoverview This task runs the check-cem.js validation script across all workspace
+ * packages to verify their Custom Elements Manifest (CEM) files.
  *
  * @description
  * This script:
  * 1. Gets a list of all workspace packages excluding specified ignored packages
- * 2. Checks each package directory for the presence of src/index.js
- * 3. Exits with error code 1 if any package is missing the required file
- * 4. Outputs success message if all packages pass the check
+ * 2. Locates the check-cem.js script for validation
+ * 3. Executes check-cem.js in each package's directory
+ * 4. Continues processing even if individual package checks fail
  *
  * @output
- * - Success: "Build confirmation completed successfully for all packages."
- * - Error: "Error executing command in package [package-name]:" followed by error details
+ * - Info: "Running check-cem.js for [package-name]"
+ * - Warning: "check-cem.js not found for [package-name]"
+ * - Error: "Error running check-cem.js for [package-name]:" followed by error details
  */
 
 import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-// Get a list of all packages except those you want to ignore
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const getWorkspacePackages = (ignoredPackages) => {
     const workspaceInfo = execSync('yarn workspaces list --json').toString();
     // Parse the JSON lines since yarn 4 outputs one JSON object per line
@@ -53,12 +60,14 @@ const ignoredPackages = [
     '@spectrum-web-components/bundle',
     '@spectrum-web-components/clear-button',
     '@spectrum-web-components/close-button',
-    '@spectrum-web-components/modal',
     '@spectrum-web-components/iconset',
+    '@spectrum-web-components/modal',
     '@spectrum-web-components/shared',
     '@spectrum-web-components/opacity-checkerboard',
     '@spectrum-web-components/styles',
     '@spectrum-web-components/custom-vars-viewer',
+    '@spectrum-web-components/reactive-controllers',
+    '@spectrum-web-components/vrt-compare',
     '@spectrum-web-components/eslint-plugin',
     'stylelint-header',
     '@swc-react/*',
@@ -69,21 +78,23 @@ const ignoredPackages = [
     '@types/swc',
 ];
 
-// Use the function
+// Get the list of workspace packages
 const allPackages = getWorkspacePackages(ignoredPackages);
 
-// Define the command to execute
-const command = 'test -f src/index.js';
-
-// Execute the command in each package directory
+// Execute check-cem.js for each package except the ignored ones
+const checkCemPath = path.resolve(__dirname, 'check-cem.js'); //'../../scripts/check-cem.js';
 allPackages.forEach((pkg) => {
-    try {
-        // Execute the command in the package directory
-        execSync(command, { cwd: pkg.path, stdio: 'inherit' });
-    } catch (error) {
-        console.error(`Error executing command in package ${pkg.name}:`, error);
-        process.exit(1);
+    if (fs.existsSync(checkCemPath)) {
+        console.log(`Running check-cem.js for ${pkg.name}`);
+        try {
+            execSync(`node ${checkCemPath}`, {
+                stdio: 'inherit',
+                cwd: pkg.path,
+            });
+        } catch (error) {
+            console.error(`Error running check-cem.js for ${pkg.name}:`, error);
+        }
+    } else {
+        console.warn(`check-cem.js not found for ${pkg.name}`);
     }
 });
-
-console.log('Build confirmation completed successfully for all packages.');

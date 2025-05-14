@@ -16,7 +16,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
+const processIcon = (srcPath, fd) => {
     // get icon name from filename
     const iconName = path.basename(srcPath, path.extname(srcPath));
     // regex will extract width, height and svg content into $1, $2 and $3 respectively
@@ -54,17 +54,10 @@ const spectrumIconsPath = path.resolve(
     )
 );
 
-// define the target icon sizes for each scale
-const scales = {
-    medium: { width: 18, height: 18 },
-    large: { width: 24, height: 24 },
-};
-
 // process the scales
-Object.keys(scales).forEach((scaleKey) => {
+['medium', 'large'].forEach((scaleKey) => {
     console.log(`processing scale ${scaleKey}...`);
 
-    const scale = scales[scaleKey];
     const srcPath = path.join(spectrumIconsPath, scaleKey);
     const outputPath = path.join(
         __dirname,
@@ -84,7 +77,7 @@ Object.keys(scales).forEach((scaleKey) => {
     fs.readdirSync(srcPath).forEach((iconFile) => {
         const srcIconPath = path.join(srcPath, iconFile);
         console.log(`\ticon ${iconFile}`);
-        processIcon(srcIconPath, outputFd, scale.width, scale.height);
+        processIcon(srcIconPath, outputFd);
     });
 
     fs.writeSync(outputFd, '</svg>`;');

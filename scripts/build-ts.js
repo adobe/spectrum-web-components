@@ -1,18 +1,20 @@
+#!/usr/bin/env node
+
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software distributed under
 the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
 
+import fs from 'fs';
+
 import fg from 'fast-glob';
 import { build } from 'esbuild';
-import fs from 'fs';
 
 const relativeImportRegex = RegExp(
     'import([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
@@ -116,8 +118,8 @@ export const buildPackage = async (paths) => {
     }
 };
 
-export const watchFiles = async () => {
-    const files = await fg([
+export const buildTSFiles = async () => {
+    return fg([
         './packages/**/!(*.d).ts',
         './tools/**/!(*.d).ts',
         './test/plugins/**/!(*.d).ts',
@@ -127,11 +129,7 @@ export const watchFiles = async () => {
         './test/testing-helpers.ts',
         './test/testing-helpers-a11y.ts',
         './test/visual/test.ts',
-    ]);
-    return files;
+    ]).then((files) => buildPackage(files));
 };
 
-export const buildTSFiles = async () => {
-    const files = await watchFiles();
-    buildPackage(files);
-};
+await buildTSFiles();

@@ -11,8 +11,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import fg from 'fast-glob';
 import fs from 'fs';
+
+import fg from 'fast-glob';
 import prettyBytes from 'pretty-bytes';
 
 const getTachometerResults = () => {
@@ -156,7 +157,7 @@ export const buildTachometerComment = () => {
     const firefoxTables = results.firefox.map(buildTable);
     const chromeBody = chromeTables.length
         ? chromeTables.join(`
-    
+
 `)
         : 'Currently, no packages are changed by this PR...';
     const firefoxBody = firefoxTables.length

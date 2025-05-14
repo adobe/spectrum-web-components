@@ -11,14 +11,28 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { buildPackage, watchFiles } from './ts-tools.js';
 import chokidar from 'chokidar';
 import debounce from 'debounce';
+
+import fg from 'fast-glob';
+
+import { buildPackage } from './build-ts.js';
 
 const debounceBuildTSFiles = debounce(buildPackage, 200);
 
 const watchTS = async () => {
-    const files = await watchFiles();
+    const files = await fg([
+        './packages/**/!(*.d).ts',
+        './tools/**/!(*.d).ts',
+        './test/plugins/**/!(*.d).ts',
+        './projects/story-decorator/**/!(*.d).ts',
+        './projects/vrt-compare/**/!(*.d).ts',
+        './test/lit-helpers.ts',
+        './test/testing-helpers.ts',
+        './test/testing-helpers-a11y.ts',
+        './test/visual/test.ts',
+    ]);
+
     // One-liner for current directory
     chokidar
         .watch(files, {
