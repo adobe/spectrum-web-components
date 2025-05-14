@@ -4,7 +4,7 @@ Spectrum Web Components is a future-looking project to develop Adobe Spectrum de
 
 To this end, Spectrum Web Components only targets _modern_, evergreen browsers that fully implement the Custom Elements V1 specification, e.g. Chrome, Firefox, Safari. Polyfills will be avoided as much as possible but documented if necessary.
 
-# Requirements
+## Requirements
 
 - NodeJS >= 20.0.0
 - Typescript
@@ -17,9 +17,9 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 - We support all viewport sizes across supported desktop browsers.
 - While our components are designed to be responsive and mobile-friendly, we do not yet fully support mobile browsers due to limited testing in mobile hardware. We advise testing updates on mobile devices before updating and are happy to address any reported issues.
 
-# Getting started
+## Getting started
 
-```bash
+```sh
 git clone https://github.com/adobe/spectrum-web-components.git
 cd spectrum-web-components
 yarn
@@ -29,11 +29,11 @@ The call to `yarn` will install and setup everything you need for developing and
 
 Typical development will involve running `yarn storybook`, `yarn test`, and `yarn docs:start` if you're making documentation changes (see below for additional details).
 
-## Building a new component
+### New components
 
 Creating a new component from the command line can be done by running the following:
 
-```bash
+```sh
 yarn new-package
 ```
 
@@ -49,23 +49,23 @@ You can find this information in the [Spectrum CSS GitHub project](https://githu
 
 For additional information, please see the [generating components documentation](https://opensource.adobe.com/spectrum-web-components/guides/generating-components) and capturing the value of the package name: `"name": "@spectrum-css/accordion"`. In this example, that name is `accordion`. _Note_ that the project scope `@spectrum-css` is stripped out of the response.
 
-# Storybook
+## Storybook
 
 Testing & reviewing changes can be done using the Storybook instance. Running `yarn storybook` will spin up a local instance of Storybook, triggering the browser to open at completion. From there you can make changes to your code and the browser will automatically refresh.
 
 You can run [Storybook](https://storybook.js.org) through the command:
 
-```bash
+```sh
 yarn storybook
 ```
 
 By default, the resulting site will be available at [http://localhost:8000](http://localhost:8000).
 
-# Documentation
+## Documentation
 
 The Spectrum Web Components documentation site is available via the following command:
 
-```bash
+```sh
 yarn docs:start
 ```
 
@@ -73,7 +73,7 @@ By default, the resulting site will be available at [http://localhost:8080](http
 
 In the case that you'd like to serve and test a static build of the documentation from the root directory (`localhost` or otherwise), use:
 
-```bash
+```sh
 yarn docs:build
 ```
 
@@ -91,9 +91,9 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 #### Dependency linting
 
-There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, [changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/) will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn lint:versions` will check that all version strings for each dependency match across the repo.
+There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, [changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/) will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn constraints` will check that all version strings for each dependency match across the repo.
 
-`yarn list:versions --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library — _a potentially dangerous operation_. If this is what you want to do when `yarn lint:versions` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
+`yarn constraints --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library - _a potentially dangerous operation_. If this is what you want to do when `yarn constraints` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
 
 ### Testing
 
@@ -115,7 +115,7 @@ Visual regressions are tracked via screenshot testing powered by [`@web/test-run
 
 To create a local baseline for comparing your changes to later in the development cycle, use the following:
 
-```bash
+```sh
 yarn test:visual:clean # start with a clean slate
 # yarn test:visual:clean:baseline # removes only baseline images
 # yarn test:visual:clean:current # removes only images updated in the most recent test pass
