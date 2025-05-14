@@ -42,7 +42,6 @@
         "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
         "new-package": "cd projects/templates && plop",
         "postcustom-element-json": "node ./tasks/run-check-cem.js",
-        "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"projects/documentation/custom-elements.json\"",
         "postinstall": "husky || true && patch-package",
         "postpack": "pinst --enable",
         "postpublish": "yarn prepublish:react && yarn publish:react && yarn postpublish:react",
@@ -57,7 +56,6 @@
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
-        "process-spectrum": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag snapshot --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
         "start": "yarn storybook",
@@ -81,9 +79,6 @@
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
         "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
-        "update:spectrum-css": "node ./scripts/update-spectrum-css.js --latest || yarn update:spectrum-css:cleanup",
-        "update:spectrum-css:cleanup": "yarn --ignore-scripts && yarn process-spectrum && yarn lint",
-        "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
         "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js",
         "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
@@ -205,9 +200,6 @@
         },
         "build:css": {
             "command": "node ./tasks/build-css.js",
-            "dependencies": [
-                "process-spectrum"
-            ],
             "files": [
                 "packages/**/*.css",
                 "tools/**/*.css",
@@ -377,33 +369,6 @@
                 "icons:ui",
                 "icons:workflow"
             ]
-        },
-        "process-spectrum": {
-            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/generate-tokens.js && yarn lint",
-            "files": [
-                "tasks/process-spectrum.js",
-                "packages/**/spectrum-config.js",
-                "tools/**/spectrum-config.js",
-                "node_modules/@spectrum-css/**/index-vars.css",
-                "scripts/generate-tokens.js",
-                "scripts/generate-tokens-wrapper.js",
-                "node_modules/@spectrum-css/**/*.css",
-                "scripts/spectrum-vars.js",
-                "tools/styles/package.json",
-                ".prettierrc.yaml",
-                ".stylelintrc.json"
-            ],
-            "output": [
-                "packages/*/src/spectrum-*.css",
-                "tools/*/src/spectrum-*.css",
-                "tools/styles/*.css",
-                "tools/styles/express/*.css",
-                "!tools/styles/scale-*.css",
-                "!tools/styles/theme-*.css",
-                "!tools/styles/express/scale-*.css",
-                "!tools/styles/express/theme-*.css"
-            ],
-            "clean": false
         },
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
