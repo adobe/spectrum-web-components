@@ -83,6 +83,12 @@
             "rules": {
                 "no-console": ["off"]
             }
+        },
+        {
+            "files": ["react/**/*.ts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "off"
+            }
         }
     ]
 }

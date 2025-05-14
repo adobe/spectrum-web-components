@@ -27,7 +27,6 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   yarn changeset version --snapshot preview-${GITHUB_SHA::8}
-                  yarn constraints --fix
                   yarn update-version
 
             - name: Configure NPM for changeset publish
