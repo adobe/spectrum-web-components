@@ -23,7 +23,6 @@ $ yarn new-package
        package-name.css
        package-name-overrides.css
        spectrum-package-name.css
-       spectrum-config.js
    > test/
        > benchmark/
            basic-test.ts
