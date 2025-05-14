@@ -77,48 +77,37 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
-# Updating Spectrum CSS
-
-There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:
-
-- `yarn update:spectrum-css` brings all Spectrum CSS dependencies to 'latest'
-- `yarn update:spectrum-css:nonbreaking` brings them to the latest minor or patch version
-
-We aim to keep Spectrum CSS as current as possible, to track the Spectrum design system closely.
-The `:nonbreaking` variant lets us release patch updates quickly in cases where more work is required to be compatible with 'latest.'
-
-# Advanced development
+## Advanced development
 
 There are several commands that can be useful in specific scenarios:
 
 - `yarn build:clear-cache` to remove previously created artifacts of the `tsc build` process.
 - `yarn process-icons` to make sure that the most recent icons are included.
-- `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
 - `yarn build` to make sure the available JS has been built from the current TS source.
 
-## Linting
+### Linting
 
 The project will be linted on a pre-commit hook, but you can also run the lint suite with `yarn lint`. It uses ESLint to lint the JS / TS files, and StyleLint to lint the CSS files.
 
-### Dependency linting
+#### Dependency linting
 
 There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, [changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/) will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn lint:versions` will check that all version strings for each dependency match across the repo.
 
 `yarn list:versions --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library — _a potentially dangerous operation_. If this is what you want to do when `yarn lint:versions` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
 
-## Testing
+### Testing
 
-### Unit tests
+#### Unit tests
 
 Unit tests are run with [Web Test Runner](https://modern-web.dev/docs/test-runner/overview/) in Playwright using the Chai, Mocha and Sinon helper libraries. These tests can be executed with:
 
-```
+```sh
 yarn test
 ```
 
 During development you may wish to use `yarn test:watch` to automatically build and re-run the test suites.
 
-### Screenshot testing
+#### Screenshot testing
 
 Note: visual regression is done automatically on pull requests via CircleCI; however, the following outlines how you can run these tests local to your machine.
 
@@ -144,17 +133,17 @@ yarn test:visual vrt-${component name}-single
 eg: yarn test:visual vrt-accordion-single
 ```
 
-#### Screenshot coverage
+##### Screenshot coverage
 
 Visual regression testing is done against screens derived from the exports of the `*.stories.js` files in each package. As you add packages or story files to existing packages, they will automatically be added to the visual regression suite and will require updating the cache key (outlined below).
 
-#### Keeping CI assets updated
+##### Keeping CI assets updated
 
 If you find the `visual-*` jobs failing on CircleCI for reasons that you expect (you've updated the Spectrum CSS dependencies, you've added new tests, etc.) then you will need to update the golden images cache key before your build will pass. You can review and share the diffs for a test pass via a URL shaped like `vrt--spectrum-wc.netlify.app/${branchName}`. Before updating the cache key, be sure that the updated caches are both complete (there are times when process errors prevent images from being correctly created or when certain test passes take longer than others) and appear as expected. If you agree with the updated cache content, update the golden images cache key as follows.
 
 Your failing branch will have created a new cache with a key of `v1-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.dir >>-{{ epoch }}`. Here `{{ .Revision }}` outlines the git commit hash of the current CI pass. In `.circleci/config.yml`, you will use that to update the cache that is requested at the beginning of the `run-regressions` job. As part of the review site, the git commit hash will be listed in the side navigation UI for easy access, use this number to update the `current_golden_images_hash` paramater that appears as follows:
 
-```
+```yaml
 parameters:
     current_golden_images_hash:
         type: string
@@ -163,18 +152,18 @@ parameters:
 
 This will ensure that tests on this branch point to this cache key for at least the next 30 days (keep-alive time of caches on CircleCI). Once the branch is merged to `main`, a cache key of `v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}` will be created on each successful build of `main` that will be long-lived and act as the "fallback" once the revision keyed cache has expired.
 
-## Benchmarking
+### Benchmarking
 
 You can acquire current runtimes for the individual elements with:
 
-```
+```sh
 yarn build:tests
 yarn test:bench
 ```
 
 This will run the defined [Tachometer](https://www.npmjs.com/package/tachometer) tests and report the current runtime cost of each individual element. When not making changes to the benchmarks on your local machine, you can skip `yarn build:tests` for later passes.
 
-## Anatomy of a component
+### Anatomy of a component
 
 There is extended documentation on adding a new component to the library in the [documentation site](https://opensource.adobe.com/spectrum-web-components/guides/generating-components). However, at a high level, you will be building the following structure:
 
@@ -198,11 +187,11 @@ There is extended documentation on adding a new component to the library in the 
 
 For a list of component waiting to be implemented, visit our [`missing components`](https://github.com/adobe/spectrum-web-components/labels/missing%20components) tag.
 
-## IDE Notes
+### IDE Notes
 
 The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
 
-# Contributing
+## Contributing
 
 We'd be very grateful if you contributed to the project! Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
 
@@ -210,7 +199,7 @@ We'd be very grateful if you contributed to the project! Check out our [contribu
 
 <details><summary><strong>Active patches</strong></summary>
 
-### lru-cache
+#### lru-cache
 
 The `lru-cache` leveraged by `@web/dev-server` can interact negatively with ARM based macOS machines causing a critical hang in the cache of transpiled file responses. This only effects development time operations and specifically effects the local test passes. To avoid this `lru-cache@6.0` has been patched to make its `set` method a noop, avoiding the caching process all together.
 
