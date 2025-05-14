@@ -23,7 +23,6 @@ $ yarn new-package
        package-name.css
        package-name-overrides.css
        spectrum-package-name.css
-       spectrum-package-name-overrides.css
        spectrum-config.js
    > test/
        > benchmark/
@@ -35,6 +34,8 @@ $ yarn new-package
    README.md
    tsconfig.json
    package.json
+   .npmignore
+   exports.json
 ```
 
 Outside of your new package, you will need to manually add information about your new package to the `tsconfig-all.json` and `tsconfig-react-wrapper.json` files, as well as the `bundle` package:
@@ -45,9 +46,9 @@ Open `tsconfig-react-wrapper.json`, find "references", and add an entry for your
 
 Include a listing for your package in `bundle/elements.ts` and `bundle/src/index.js`. Then, confirm that your new package is already listed in `tools/bundle/package.json`. The `bundle` package makes it possible to build demo projects with _all_ of the components from the library registered in a single place, and is also leveraged for ease of component consumption in the documentation site build.
 
--   In `bundle/tsconfig.json`, please add a listing for your new package to the `"references"` field, e.g. `{ "path": "../../packages/package-name" },`. This will ensure the types of your new package are built before the `bundle` package is built.
--   In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/package-name/sp-package-name.js';`.
--   In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/package-name';`, so that any classes exported from your package can be imported from this location.
+- In `bundle/tsconfig.json`, please add a listing for your new package to the `"references"` field, e.g. `{ "path": "../../packages/package-name" },`. This will ensure the types of your new package are built before the `bundle` package is built.
+- In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/package-name/sp-package-name.js';`.
+- In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/package-name';`, so that any classes exported from your package can be imported from this location.
 
 Finally, run `yarn` in your terminal. This will grab any newly-added packages, as well as to ensure that you have the provided CSS processed for use in your component. You can now see your component in the Storybook, using the command `yarn storybook`, or test its functionality via `yarn test`.
 
