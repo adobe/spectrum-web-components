@@ -94,10 +94,16 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.2",
