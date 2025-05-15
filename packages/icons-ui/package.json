@@ -62,7 +62,7 @@
         "fast-glob": "^3.2.12",
         "fs": "^0.0.1-security",
         "path": "^0.12.7",
-        "prettier": "^3.0.0"
+        "prettier": "^3.5.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
