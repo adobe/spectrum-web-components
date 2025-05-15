@@ -22,14 +22,14 @@ commands:
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
-                  name: Installing Dependencies
+                  name: Installing dependencies
                   command: |
                       corepack enable
                       yarn --immutable
@@ -200,17 +200,8 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
                   name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
+                  command: yarn docs:preview
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
@@ -223,17 +214,8 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
                   name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
+                  command: yarn docs:ci
             - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)

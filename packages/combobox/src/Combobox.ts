@@ -596,11 +596,7 @@ export class Combobox extends Textfield {
         }
     }
 
-    protected override updated(
-        changed: PropertyValues<
-            this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
-        >
-    ): void {
+    protected override updated(changed: Map<PropertyKey, unknown>): void {
         if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }

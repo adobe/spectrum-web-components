@@ -14,13 +14,7 @@ import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 import defineElementPlugin from './scripts/define-element-plugin.js';
 
 export default {
-    globs: [
-        '**/sp-*.ts',
-        '**/overlay-trigger.ts',
-        '**/src/[A-Z]*.ts',
-        '**/src/elements/[A-Z]*.ts',
-        '**/tools/shared/src/*.ts',
-    ],
+    litelement: true,
     exclude: [
         '**/*.d.ts',
         '**/stories/**',
@@ -28,8 +22,5 @@ export default {
         'node_modules/*',
         '**/*.dev.*',
     ],
-    outdir: '.',
-    litelement: true,
-    packagejson: false,
     plugins: [moduleFileExtensionsPlugin(), defineElementPlugin()],
 };

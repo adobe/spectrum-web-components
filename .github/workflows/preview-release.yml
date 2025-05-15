@@ -43,6 +43,4 @@ jobs:
               run: |
                   git add .
                   git commit -am "chore: publish preview snapshot version"
-                  yarn prepublishOnly
                   yarn changeset publish --no-git-tag --tag preview
-                  git reset --hard HEAD^

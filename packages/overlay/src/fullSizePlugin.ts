@@ -11,11 +11,14 @@
  */
 import {
     detectOverflow,
+    Middleware,
     MiddlewareArguments,
     MiddlewareReturn,
 } from '@floating-ui/dom';
 
-export const fullSize = (options: { padding: number } = { padding: 0 }) => ({
+export const fullSize = (
+    options: { padding: number } = { padding: 0 }
+): Middleware => ({
     name: 'fullSize',
     async fn(middlewareArguments: MiddlewareArguments): Promise<
         MiddlewareReturn & {

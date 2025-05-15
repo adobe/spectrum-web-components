@@ -272,7 +272,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.26.0"
     eslint-plugin-jsonc: "npm:^2.20.1"
     eslint-plugin-lit-a11y: "npm:^2.2.2"
-    eslint-plugin-notice: "npm:^0.9.10"
+    eslint-plugin-notice: "npm:^1.0.0"
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-require-extensions: "npm:^0.1.3"
     eslint-plugin-storybook: "npm:^0.8.0"
@@ -6840,11 +6840,9 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/icon": "npm:1.7.0"
     "@spectrum-web-components/iconset": "npm:1.7.0"
-    case: "npm:^1.6.1"
-    cheerio: "npm:^1.0.0-rc.2"
+    case: "npm:^1.6.3"
+    cheerio: "npm:^1.0.0"
     fast-glob: "npm:^3.3.3"
-    fs: "npm:^0.0.1-security"
-    path: "npm:^0.12.7"
     prettier: "npm:^3.5.3"
   languageName: unknown
   linkType: soft
@@ -6857,11 +6855,9 @@ __metadata:
     "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0"
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/icon": "npm:1.7.0"
-    case: "npm:^1.6.1"
-    cheerio: "npm:^1.0.0-rc.2"
+    case: "npm:^1.6.3"
+    cheerio: "npm:^1.0.0"
     fast-glob: "npm:^3.3.3"
-    fs: "npm:^0.0.1-security"
-    path: "npm:^0.12.7"
     prettier: "npm:^3.5.3"
   languageName: unknown
   linkType: soft
@@ -6870,6 +6866,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons@workspace:packages/icons"
   dependencies:
+    "@spectrum-css/ui-icons": "npm:^1.1.2"
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/iconset": "npm:1.7.0"
   languageName: unknown
@@ -12394,7 +12391,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"case@npm:^1.6.1":
+"case@npm:^1.6.3":
   version: 1.6.3
   resolution: "case@npm:1.6.3"
   checksum: 10c0/43fcbb1dff1c4add94dd2bc98bd923d6616f10bff6959adf686d192c3db7d7ced35410761e1ac94cc4a1f5c41c86406ad79d390805539e421e8a77e553f67223
@@ -12596,18 +12593,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cheerio@npm:^1.0.0-rc.2":
-  version: 1.0.0-rc.12
-  resolution: "cheerio@npm:1.0.0-rc.12"
+"cheerio@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "cheerio@npm:1.0.0"
   dependencies:
     cheerio-select: "npm:^2.1.0"
     dom-serializer: "npm:^2.0.0"
     domhandler: "npm:^5.0.3"
-    domutils: "npm:^3.0.1"
-    htmlparser2: "npm:^8.0.1"
-    parse5: "npm:^7.0.0"
+    domutils: "npm:^3.1.0"
+    encoding-sniffer: "npm:^0.2.0"
+    htmlparser2: "npm:^9.1.0"
+    parse5: "npm:^7.1.2"
     parse5-htmlparser2-tree-adapter: "npm:^7.0.0"
-  checksum: 10c0/c85d2f2461e3f024345b78e0bb16ad8e41492356210470dd1e7d5a91391da9fcf6c0a7cb48a9ba8820330153f0cedb4d0a60c7af15d96ecdb3092299b9d9c0cc
+    parse5-parser-stream: "npm:^7.1.2"
+    undici: "npm:^6.19.5"
+    whatwg-mimetype: "npm:^4.0.0"
+  checksum: 10c0/d0e16925d9c36c879edfaef1c0244c866375a4c7b8d6ccd7ae0ad42da7d26263ea1a3c17b9a1aa5965918deeff2d40ac2e7223824f8e6eca972df3b81316a09f
   languageName: node
   linkType: hard
 
@@ -15107,6 +15108,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"domutils@npm:^3.1.0":
+  version: 3.2.2
+  resolution: "domutils@npm:3.2.2"
+  dependencies:
+    dom-serializer: "npm:^2.0.0"
+    domelementtype: "npm:^2.3.0"
+    domhandler: "npm:^5.0.3"
+  checksum: 10c0/47938f473b987ea71cd59e59626eb8666d3aa8feba5266e45527f3b636c7883cca7e582d901531961f742c519d7514636b7973353b648762b2e3bedbf235fada
+  languageName: node
+  linkType: hard
+
 "dot-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "dot-case@npm:3.0.4"
@@ -15331,6 +15343,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"encoding-sniffer@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "encoding-sniffer@npm:0.2.0"
+  dependencies:
+    iconv-lite: "npm:^0.6.3"
+    whatwg-encoding: "npm:^3.1.1"
+  checksum: 10c0/b312e0d67f339bec44e021e5210ee8ee90d7b8f9975eb2c79a36fd467eb07709e88dcf62ee20f62ee0d74a13874307d99557852a2de9b448f1e3fb991fc68257
+  languageName: node
+  linkType: hard
+
 "encoding@npm:^0.1.13":
   version: 0.1.13
   resolution: "encoding@npm:0.1.13"
@@ -15400,7 +15422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:^4.4.0":
+"entities@npm:^4.4.0, entities@npm:^4.5.0":
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
   checksum: 10c0/5b039739f7621f5d1ad996715e53d964035f75ad3b9a4d38c6b3804bb226e282ffeae2443624d8fdd9c47d8e926ae9ac009c54671243f0c3294c26af7cc85250
@@ -16661,16 +16683,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-notice@npm:^0.9.10":
-  version: 0.9.10
-  resolution: "eslint-plugin-notice@npm:0.9.10"
+"eslint-plugin-notice@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "eslint-plugin-notice@npm:1.0.0"
   dependencies:
     find-root: "npm:^1.1.0"
-    lodash: "npm:^4.17.15"
+    lodash: "npm:^4.17.21"
     metric-lcs: "npm:^0.1.2"
   peerDependencies:
     eslint: ">=3.0.0"
-  checksum: 10c0/05b45467299d050242045e75073429c6ab6e4826bc53aba9aa15f5736782d102a6ac15aa4f36c9f564d10c04dd3f7cf4e46cff4f2a555f1b4cb828f3d533852a
+  checksum: 10c0/40b162fea014efad8e24c38f58c84729cf0ce0ee7a21fdb79ccfde9c2f5d219e4e74e7729679b6321400b34cc80c51beb00a46ba03a7c13265ceab573262f9ea
   languageName: node
   linkType: hard
 
@@ -18304,13 +18326,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs@npm:^0.0.1-security":
-  version: 0.0.1-security
-  resolution: "fs@npm:0.0.1-security"
-  checksum: 10c0/e0c0b585ec6f7483d63d067215d9d6bb2e0dba5912060d32554c8e566a0e22ee65e4c2a2b0567476efbbfb47682554b4711d69cab49950d01f227a3dfa7d671a
-  languageName: node
-  linkType: hard
-
 "fsevents@npm:2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
@@ -19715,6 +19730,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"htmlparser2@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "htmlparser2@npm:9.1.0"
+  dependencies:
+    domelementtype: "npm:^2.3.0"
+    domhandler: "npm:^5.0.3"
+    domutils: "npm:^3.1.0"
+    entities: "npm:^4.5.0"
+  checksum: 10c0/394f6323efc265bbc791d8c0d96bfe95984e0407565248521ab92e2dc7668e5ceeca7bc6ed18d408b9ee3b25032c5743368a4280d280332d782821d5d467ad8f
+  languageName: node
+  linkType: hard
+
 "http-assert@npm:^1.3.0":
   version: 1.5.0
   resolution: "http-assert@npm:1.5.0"
@@ -19976,7 +20003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.6.3":
+"iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.3":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -26429,6 +26456,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse5-parser-stream@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "parse5-parser-stream@npm:7.1.2"
+  dependencies:
+    parse5: "npm:^7.0.0"
+  checksum: 10c0/e236c61000d38ecad369e725a48506b051cebad8abb00e6d4e8bff7aa85c183820fcb45db1559cc90955bdbbdbd665ea94c41259594e74566fff411478dc7fcb
+  languageName: node
+  linkType: hard
+
 "parse5@npm:5.1.0":
   version: 5.1.0
   resolution: "parse5@npm:5.1.0"
@@ -26683,16 +26719,6 @@ __metadata:
   version: 5.0.0
   resolution: "path-type@npm:5.0.0"
   checksum: 10c0/e8f4b15111bf483900c75609e5e74e3fcb79f2ddb73e41470028fcd3e4b5162ec65da9907be077ee5012c18801ff7fffb35f9f37a077f3f81d85a0b7d6578efd
-  languageName: node
-  linkType: hard
-
-"path@npm:^0.12.7":
-  version: 0.12.7
-  resolution: "path@npm:0.12.7"
-  dependencies:
-    process: "npm:^0.11.1"
-    util: "npm:^0.10.3"
-  checksum: 10c0/f795ce5438a988a590c7b6dfd450ec9baa1c391a8be4c2dea48baa6e0f5b199e56cd83b8c9ebf3991b81bea58236d2c32bdafe2c17a2e70c3a2e4c69891ade59
   languageName: node
   linkType: hard
 
@@ -28103,7 +28129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"process@npm:^0.11.1, process@npm:^0.11.10":
+"process@npm:^0.11.10":
   version: 0.11.10
   resolution: "process@npm:0.11.10"
   checksum: 10c0/40c3ce4b7e6d4b8c3355479df77aeed46f81b279818ccdc500124e6a5ab882c0cc81ff7ea16384873a95a74c4570b01b120f287abbdd4c877931460eca6084b3
@@ -32941,6 +32967,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici@npm:^6.19.5":
+  version: 6.21.3
+  resolution: "undici@npm:6.21.3"
+  checksum: 10c0/294da109853fad7a6ef5a172ad0ca3fb3f1f60cf34703d062a5ec967daf69ad8c03b52e6d536c5cba3bb65615769bf08e5b30798915cbccdddaca01045173dda
+  languageName: node
+  linkType: hard
+
 "unenv@npm:^1.9.0":
   version: 1.10.0
   resolution: "unenv@npm:1.10.0"
@@ -33571,15 +33604,6 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 10c0/41a5bdd214df2f6c3ecf8622745e4a366c4adced864bc3c833739791aeeeb1838119af7daed4ba36428114b5c67dcda034a79c882e97e43c03e66a4dd7389942
-  languageName: node
-  linkType: hard
-
-"util@npm:^0.10.3":
-  version: 0.10.4
-  resolution: "util@npm:0.10.4"
-  dependencies:
-    inherits: "npm:2.0.3"
-  checksum: 10c0/d29f6893e406b63b088ce9924da03201df89b31490d4d011f1c07a386ea4b3dbe907464c274023c237da470258e1805d806c7e4009a5974cd6b1d474b675852a
   languageName: node
   linkType: hard
 
@@ -34244,10 +34268,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"whatwg-encoding@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "whatwg-encoding@npm:3.1.1"
+  dependencies:
+    iconv-lite: "npm:0.6.3"
+  checksum: 10c0/273b5f441c2f7fda3368a496c3009edbaa5e43b71b09728f90425e7f487e5cef9eb2b846a31bd760dd8077739c26faf6b5ca43a5f24033172b003b72cf61a93e
+  languageName: node
+  linkType: hard
+
 "whatwg-fetch@npm:^3.5.0":
   version: 3.6.2
   resolution: "whatwg-fetch@npm:3.6.2"
   checksum: 10c0/cc10f6893fe71839250b6e2fa9bc293bcf0ca5b93129712a7d1097fb7528b3ff617eb065098dc972e74d1455378e514aa34c0901ded41584be16508db63477c8
+  languageName: node
+  linkType: hard
+
+"whatwg-mimetype@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "whatwg-mimetype@npm:4.0.0"
+  checksum: 10c0/a773cdc8126b514d790bdae7052e8bf242970cebd84af62fb2f35a33411e78e981f6c0ab9ed1fe6ec5071b09d5340ac9178e05b52d35a9c4bcf558ba1b1551df
   languageName: node
   linkType: hard
 

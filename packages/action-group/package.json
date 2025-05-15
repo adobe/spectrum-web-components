@@ -41,7 +41,9 @@
         }
     },
     "scripts": {
-        "test": "karma start --coverage"
+        "test": "karma start --coverage",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/sp-*.ts $INIT_CWD/src/[A-Z]*.ts --outdir packages/action-group",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",

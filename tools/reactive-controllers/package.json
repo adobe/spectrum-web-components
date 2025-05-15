@@ -67,7 +67,9 @@
         }
     },
     "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/src/[A-Z]*.ts --outdir tools/reactive-controllers",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",

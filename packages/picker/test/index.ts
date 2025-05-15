@@ -12,7 +12,6 @@
 
 import type { Picker } from '@spectrum-web-components/picker';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
     aTimeout,
     elementUpdated,
@@ -1513,76 +1512,6 @@ export function runPickerTests(): void {
                 () => picker.open === true,
                 'Waiting for picker to remain open after scroll'
             );
-
-            expect(picker.open).to.be.true;
-        });
-        it('ignores component scrolling but handles document scrolling', async () => {
-            const scrollSpy = spy(document, 'dispatchEvent');
-
-            const el = await fixture(html`
-                <div style="height: 200vh; padding: 50vh 0;">
-                    <div
-                        id="scrollable-container"
-                        style="height: 100px; overflow-y: auto;"
-                    >
-                        <div style="height: 200px;">Scrollable content</div>
-                    </div>
-                    <sp-picker label="Select an option" placement="right">
-                        <sp-menu-item value="option-1">Option 1</sp-menu-item>
-                        <sp-menu-item value="option-2">Option 2</sp-menu-item>
-                        <sp-menu-item value="option-3">Option 3</sp-menu-item>
-                    </sp-picker>
-                </div>
-            `);
-
-            const picker = el.querySelector('sp-picker') as Picker;
-            const scrollableContainer = el.querySelector(
-                '#scrollable-container'
-            ) as HTMLElement;
-
-            await elementUpdated(picker);
-
-            const opened = oneEvent(picker, 'sp-opened');
-            picker.click();
-            await opened;
-
-            expect(picker.open).to.be.true;
-
-            scrollSpy.resetHistory();
-
-            scrollableContainer.scrollTop = 50;
-
-            await aTimeout(50);
-
-            const componentScrollUpdateCount = scrollSpy
-                .getCalls()
-                .filter(
-                    (call) =>
-                        call.args[0] instanceof CustomEvent &&
-                        call.args[0].type === 'sp-update-overlays'
-                ).length;
-
-            scrollSpy.resetHistory();
-
-            if (document.scrollingElement) {
-                document.scrollingElement.scrollTop = 100;
-            }
-
-            await aTimeout(50);
-
-            const documentScrollUpdateCount = scrollSpy
-                .getCalls()
-                .filter(
-                    (call) =>
-                        call.args[0] instanceof CustomEvent &&
-                        call.args[0].type === 'sp-update-overlays'
-                ).length;
-
-            scrollSpy.restore();
-
-            expect(componentScrollUpdateCount).to.equal(0);
-
-            expect(documentScrollUpdateCount).to.be.greaterThan(0);
 
             expect(picker.open).to.be.true;
         });

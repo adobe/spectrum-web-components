@@ -18,7 +18,7 @@
         "yarn": ">=1.16.0"
     },
     "scripts": {
-        "analyze": "cem analyze --litelement",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/sp-*.ts $INIT_CWD/src/[A-Z]*.ts --outdir projects/css-custom-vars-viewer",
         "build": "yarn parse-json && tsc && npm run analyze -- --exclude dist",
         "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
         "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
