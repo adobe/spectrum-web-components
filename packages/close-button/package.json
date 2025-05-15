@@ -26,7 +26,8 @@
         "./src/close-button.css.js": "./src/close-button.css.js"
     },
     "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",
