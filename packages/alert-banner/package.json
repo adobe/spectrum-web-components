@@ -41,7 +41,9 @@
         }
     },
     "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/sp-*.ts $INIT_CWD/src/[A-Z]*.ts --outdir packages/alert-banner",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",

@@ -14,6 +14,7 @@ import { resolveModuleOrPackageSpecifier } from '@custom-elements-manifest/analy
 
 /**
  * Resolve the use of `defineElement()` as if it were `customElements.define()`
+ * @type {import('@custom-elements-manifest/analyzer').Plugin}
  */
 export default function defineElementPlugin() {
     return {

@@ -97,7 +97,8 @@
         "./tokens-v2/spectrum/custom-light-vars.css": "./tokens-v2/light-vars.css"
     },
     "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.css",
