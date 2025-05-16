@@ -96,7 +96,8 @@
         }
     },
     "scripts": {
-        "test": "karma start --coverage"
+        "test": "karma start --coverage",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",
