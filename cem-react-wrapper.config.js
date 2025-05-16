@@ -10,11 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
-import defineElementPlugin from './scripts/define-element-plugin.js';
 import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
 import yaml from 'js-yaml';
+
+import defineElementPlugin from './scripts/define-element-plugin.js';
+import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
     globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
@@ -26,16 +31,15 @@ export default {
         'node_modules/*',
         '**/*.dev.*',
     ],
-    outdir: '.',
     litelement: true,
     packagejson: false,
     plugins: [
         defineElementPlugin(),
         reactWrapperPlugin({
             exclude: ['StoryDecorator', 'TooltipOpenable'],
-            outDir: '../../react',
+            outDir: join(__dirname, 'react'),
             prettierConfig: yaml.load(
-                readFileSync(resolve('../../.prettierrc.yaml'))
+                readFileSync(join(__dirname, '.prettierrc.yaml'))
             ),
         }),
     ],
