@@ -12,5 +12,6 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
+  --spectrum-colorwheel-border-color: var(--system-color-wheel-border-color);
 }
+
