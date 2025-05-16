@@ -196,9 +196,7 @@
     --spectrum-color-slider-length: 240px;
     --spectrum-color-slider-minimum-length: 100px;
     --spectrum-illustrated-message-title-size: var(--spectrum-heading-size-s);
-    --spectrum-illustrated-message-cjk-title-size: var(
-        --spectrum-heading-cjk-size-s
-    );
+    --spectrum-illustrated-message-cjk-title-size: var(--spectrum-heading-cjk-size-s);
     --spectrum-illustrated-message-body-size: var(--spectrum-body-size-xs);
     --spectrum-coach-mark-width: 216px;
     --spectrum-coach-mark-minimum-width: 216px;

@@ -36,18 +36,10 @@
     --spectrum-slider-handle-size-medium: 24px;
     --spectrum-slider-handle-size-large: 28px;
     --spectrum-slider-handle-size-extra-large: 30px;
-    --spectrum-slider-handle-border-width-down-small: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-medium: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-extra-large: var(
-        --spectrum-border-width-200
-    );
+    --spectrum-slider-handle-border-width-down-small: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-medium: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-large: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-extra-large: var(--spectrum-border-width-200);
     --spectrum-slider-bottom-to-handle-small: 4px;
     --spectrum-slider-bottom-to-handle-medium: 8px;
     --spectrum-slider-bottom-to-handle-large: 12px;
@@ -58,8 +50,8 @@
     --spectrum-drop-shadow-x: 0px;
     --spectrum-drop-shadow-y: 4px;
     --spectrum-drop-shadow-blur: 16px;
-    --spectrum-colorwheel-path: 'M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0';
-    --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
+    --spectrum-colorwheel-path: "M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0";
+    --spectrum-colorwheel-path-borders: "M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0";
     --spectrum-dialog-confirm-border-radius: 8px;
     --spectrum-dial-border-radius: 15px;
     --spectrum-assetcard-focus-ring-border-radius: 12px;

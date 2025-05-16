@@ -240,9 +240,7 @@
     --spectrum-color-slider-length: 192px;
     --spectrum-color-slider-minimum-length: 80px;
     --spectrum-illustrated-message-title-size: var(--spectrum-heading-size-m);
-    --spectrum-illustrated-message-cjk-title-size: var(
-        --spectrum-heading-cjk-size-m
-    );
+    --spectrum-illustrated-message-cjk-title-size: var(--spectrum-heading-cjk-size-m);
     --spectrum-illustrated-message-body-size: var(--spectrum-body-size-s);
     --spectrum-coach-mark-width: 296px;
     --spectrum-coach-mark-minimum-width: 296px;
@@ -542,16 +540,12 @@
     --spectrum-alert-banner-close-button-spacing: var(--spectrum-spacing-100);
     --spectrum-alert-banner-edge-to-button: var(--spectrum-spacing-100);
     --spectrum-alert-banner-edge-to-divider: var(--spectrum-spacing-100);
-    --spectrum-alert-banner-text-to-button-vertical: var(
-        --spectrum-spacing-100
-    );
+    --spectrum-alert-banner-text-to-button-vertical: var(--spectrum-spacing-100);
     --spectrum-alert-dialog-description-to-buttons: var(--spectrum-spacing-700);
     --spectrum-alert-dialog-padding: var(--spectrum-spacing-500);
     --spectrum-assetcard-content-font-size: var(--spectrum-body-size-s);
     --spectrum-assetcard-focus-ring-border-radius: 8px;
-    --spectrum-assetcard-header-content-font-size: var(
-        --spectrum-heading-size-xs
-    );
+    --spectrum-assetcard-header-content-font-size: var(--spectrum-heading-size-xs);
     --spectrum-assetcard-selectionindicator-margin: 12px;
     --spectrum-assetcard-title-font-size: var(--spectrum-heading-size-xs);
     --spectrum-button-bottom-to-text-small: 4px;
@@ -571,8 +565,8 @@
     --spectrum-coachmark-menu-mobile-display: none;
     --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
     --spectrum-colorwheel-colorarea-container-size: 144px;
-    --spectrum-colorwheel-path: 'M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0';
-    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+    --spectrum-colorwheel-path: "M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0";
+    --spectrum-colorwheel-path-borders: "M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0";
     --spectrum-contextual-help-content-spacing: var(--spectrum-spacing-100);
     --spectrum-datepicker-dash-line-height: 24px;
     --spectrum-datepicker-datetime-width-first: 36px;
@@ -617,9 +611,7 @@
     --spectrum-treeview-item-indentation-small: var(--spectrum-spacing-200);
     --spectrum-treeview-item-indentation-medium: var(--spectrum-spacing-300);
     --spectrum-treeview-item-indentation-large: 20px;
-    --spectrum-treeview-item-indentation-extra-large: var(
-        --spectrum-spacing-400
-    );
+    --spectrum-treeview-item-indentation-extra-large: var(--spectrum-spacing-400);
     --spectrum-treeview-item-min-block-size-thumbnail-offset-medium: 0px;
     --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
     --spectrum-ui-icon-medium-display: block;
