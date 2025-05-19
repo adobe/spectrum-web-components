@@ -170,14 +170,19 @@ There are downstream issues that can arise from multiple packages in this mono-r
 
 There is extended documentation on adding a new component to the library in the [documentation site](https://opensource.adobe.com/spectrum-web-components/guides/generating-components). However, at a high level, you will be building the following structure:
 
+```json
 - packages
     - [new-component-name]
         - src
             - index.ts
+            - spectrum-[new-component-name].css
+            - [new-component-name]-overrides.css
             - [new-component-name].css
             - [NewComponentName].ts
         - stories
             - [new-component-name].stories.ts
+            - args.ts
+            - template.ts
         - test
             - benchmark
                 - basic-test.ts
@@ -189,6 +194,7 @@ There is extended documentation on adding a new component to the library in the 
         - README.md
         - sp-[new-component-name].ts
         - tsconfig.json
+```
 
 For a list of component waiting to be implemented, visit our [`missing components`](https://github.com/adobe/spectrum-web-components/labels/missing%20components) tag.
 

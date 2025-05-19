@@ -18,37 +18,18 @@ $ yarn new-package
 _Note_ that your component name should be provided in kebab case and should relate as closely as possible to the Spectrum core naming.
 
 ```json
-> package-name
-   > src/
-       index.ts
-       SpectrumPackageName.ts
-       package-name.css
-       package-name-overrides.css
-       spectrum-package-name.css
-   > test/
-       > benchmark/
-           basic-test.ts
-       package-name.test.ts
-   > stories/
-       package-name.stories.ts
-       args.ts
-       template.ts
-   sp-package-name.ts
-   README.md
-   tsconfig.json
-   package.json
-   .npmignore
-   exports.json
-```
-
 - packages
     - [new-component-name]
         - src
             - index.ts
+            - spectrum-[new-component-name].css
+            - [new-component-name]-overrides.css
             - [new-component-name].css
             - [NewComponentName].ts
         - stories
             - [new-component-name].stories.ts
+            - args.ts
+            - template.ts
         - test
             - benchmark
                 - basic-test.ts
@@ -60,6 +41,7 @@ _Note_ that your component name should be provided in kebab case and should rela
         - README.md
         - sp-[new-component-name].ts
         - tsconfig.json
+```
 
 Outside of your new package, you will need to manually add information about your new package to the `tsconfig-all.json` and `tsconfig-react-wrapper.json` files, as well as the `bundle` package:
 
