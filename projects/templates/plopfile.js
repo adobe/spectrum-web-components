@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 const { execSync } = require('child_process');
 const { kebabCase } = require('lodash');
+const fs = require('fs');
 
 module.exports = function (plop) {
     // name of custom element tag
@@ -36,10 +37,24 @@ module.exports = function (plop) {
     });
 
     plop.setActionType('install deps', function (answers) {
+        const versionJsPath = '../../tools/base/src/version.js';
+
+        if (!fs.existsSync(versionJsPath)) {
+            throw new Error('version.js file is missing');
+        }
+
+        const versionContent = fs.readFileSync(versionJsPath, 'utf8');
+        const versionMatch = versionContent.match(/version = ['"]([^'"]+)['"]/);
+
+        if (!versionMatch) {
+            throw new Error('Could not find version in version.js');
+        }
+
+        const versionJs = versionMatch[1];
         try {
             // Add base as a workspace dependency to the new package
             execSync(
-                `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@workspace:^`
+                `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@${versionJs}`
             );
             // Add the new package to bundle with a fixed version
             execSync(
@@ -47,7 +62,12 @@ module.exports = function (plop) {
             );
         } catch (error) {
             // Silently fail, dependencies will need to be added manually
+            console.warn('dependencies were not added', error);
         }
+    });
+
+    plop.setActionType('format files', function () {
+        execSync(`cd ../../ && yarn lint`);
     });
 
     plop.setGenerator('component', {
@@ -60,7 +80,9 @@ module.exports = function (plop) {
                 validate: (answer) => {
                     if (answer.length < 1) {
                         return "It's a fact universally acknowledged that naming is hard; but it must have a name. You can always change it later.";
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 },
                 // Convert the input into kebab case if not provided as such and strip swc- prefixing if present
                 filter: (response) => kebabCase(response.replace(/^sp-/, '')),

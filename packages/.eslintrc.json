@@ -93,7 +93,8 @@
             "rules": {
                 "@spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
-                "lit-a11y/tabindex-no-positive": ["off"]
+                "lit-a11y/tabindex-no-positive": ["off"],
+                "import/no-extraneous-dependencies": ["off"]
             }
         },
         {
