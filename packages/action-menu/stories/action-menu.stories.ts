@@ -560,3 +560,88 @@ export const MenuItemAlerts = (): TemplateResult => html`
         <sp-menu-item disabled>Make work path</sp-menu-item>
     </sp-action-menu>
 `;
+export const PersistMenuOpen = (): TemplateResult => html`
+    <sp-action-menu size="m" force-popover style="margin-left: 200px">
+        <span slot="label">More Actions</span>
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item style="max-width:200px">
+            I am a very very very very very long text which truncates in a
+            longer text
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Save selection</sp-menu-item>
+        <sp-menu-item disabled>Make work path</sp-menu-item>
+    </sp-action-menu>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <sp-action-menu size="m" force-popover>
+        <span slot="label">More Actions</span>
+        <sp-menu-item>Deselect</sp-menu-item>
+        <sp-menu-item>Select inverse</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item>Feather...</sp-menu-item>
+        <sp-menu-item style="max-width:200px">
+            I am a very very very very very long text which truncates in a
+            longer text
+        </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item>Save selection</sp-menu-item>
+        <sp-menu-item disabled>Make work path</sp-menu-item>
+    </sp-action-menu>
+
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+    <div style="height:100px"></div>
+`;

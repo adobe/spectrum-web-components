@@ -815,3 +815,70 @@ export const PickerInModal = (): TemplateResult => {
 PickerInModal.swc_vrt = {
     skip: true,
 };
+
+export const ScrollBehavior = (): TemplateResult => {
+    return html`
+        <div style="height: 200vh; padding: 20px;">
+            <div style="position: sticky; top: 20px;">
+                <sp-picker label="Sticky Picker" size="m">
+                    <sp-menu-item>Option 1</sp-menu-item>
+                    <sp-menu-item>Option 2</sp-menu-item>
+                    <sp-menu-item>Option 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Large Picker" size="l">
+                    <sp-menu-item>Item 1</sp-menu-item>
+                    <sp-menu-item>Item 2</sp-menu-item>
+                    <sp-menu-item>Item 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Small Picker" size="s">
+                    <sp-menu-item>Choice 1</sp-menu-item>
+                    <sp-menu-item>Choice 2</sp-menu-item>
+                    <sp-menu-item>Choice 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Disabled Picker" disabled size="m">
+                    <sp-menu-item>Disabled 1</sp-menu-item>
+                    <sp-menu-item>Disabled 2</sp-menu-item>
+                    <sp-menu-item>Disabled 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Invalid Picker" invalid size="m">
+                    <sp-menu-item>Invalid 1</sp-menu-item>
+                    <sp-menu-item>Invalid 2</sp-menu-item>
+                    <sp-menu-item>Invalid 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Quiet Picker" quiet size="m">
+                    <sp-menu-item>Quiet 1</sp-menu-item>
+                    <sp-menu-item>Quiet 2</sp-menu-item>
+                    <sp-menu-item>Quiet 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker label="Pending Picker" pending size="m">
+                    <sp-menu-item>Pending 1</sp-menu-item>
+                    <sp-menu-item>Pending 2</sp-menu-item>
+                    <sp-menu-item>Pending 3</sp-menu-item>
+                </sp-picker>
+            </div>
+            <div style="margin-top: 100px;">
+                <sp-picker
+                    label="With Selected Value"
+                    value="selected-2"
+                    size="m"
+                >
+                    <sp-menu-item value="selected-1">Selected 1</sp-menu-item>
+                    <sp-menu-item value="selected-2">Selected 2</sp-menu-item>
+                    <sp-menu-item value="selected-3">Selected 3</sp-menu-item>
+                </sp-picker>
+            </div>
+        </div>
+    `;
+};
