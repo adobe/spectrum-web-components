@@ -88,13 +88,7 @@ yarn docs:build
 
 ## Spectrum CSS and Icons
 
-While we've moved away from using Spectrum CSS for component styling, we still maintain a dependency on Spectrum CSS for icons. There are two mechanisms for updating these dependencies:
-
-- `yarn update:spectrum-css` brings all Spectrum CSS dependencies to 'latest'
-- `yarn update:spectrum-css:nonbreaking` brings them to the latest minor or patch version
-
-We aim to keep the icon packages as current as possible to track the Spectrum design system closely.
-The `:nonbreaking` variant lets us release patch updates quickly in cases where more work is required to be compatible with 'latest.'
+While we've moved away from using Spectrum CSS for component styling, we still maintain a dependency on Spectrum CSS for icons. We aim to keep the icon packages as current as possible to track the Spectrum design system closely.
 
 ## Testing
 
