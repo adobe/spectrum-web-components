@@ -85,6 +85,15 @@
     "overrides": [
         {
             "files": [
+                "**/test/**/*.test.{js,ts,jsx,tsx}",
+                "**/stories/**/*.{js,ts,jsx,tsx}"
+            ],
+            "rules": {
+                "import/no-extraneous-dependencies": "off"
+            }
+        },
+        {
+            "files": [
                 "*.test.ts",
                 "*.stories.ts",
                 "**/benchmark/*.ts",
