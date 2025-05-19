@@ -15,7 +15,9 @@ $ yarn new-package
 ? SWC package name (i.e. color-area)
 ```
 
-```
+_Note_ that your component name should be provided in kebab case and should relate as closely as possible to the Spectrum core naming.
+
+```json
 > package-name
    > src/
        index.ts
@@ -29,6 +31,8 @@ $ yarn new-package
        package-name.test.ts
    > stories/
        package-name.stories.ts
+       args.ts
+       template.ts
    sp-package-name.ts
    README.md
    tsconfig.json
@@ -36,6 +40,26 @@ $ yarn new-package
    .npmignore
    exports.json
 ```
+
+- packages
+    - [new-component-name]
+        - src
+            - index.ts
+            - [new-component-name].css
+            - [NewComponentName].ts
+        - stories
+            - [new-component-name].stories.ts
+        - test
+            - benchmark
+                - basic-test.ts
+            - [new-component-name].test.ts
+        - .npmrc
+        - CHANGELOG.md
+        - custom-elements.json
+        - package.json
+        - README.md
+        - sp-[new-component-name].ts
+        - tsconfig.json
 
 Outside of your new package, you will need to manually add information about your new package to the `tsconfig-all.json` and `tsconfig-react-wrapper.json` files, as well as the `bundle` package:
 
