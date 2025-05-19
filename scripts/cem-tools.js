@@ -95,13 +95,16 @@ export async function customElementJson(
             )
         );
     }
-
     return cli({
         argv: [
             'analyze',
             '--config',
             path.join(rootDir, config),
             ...Object.entries(options)
+                .filter(
+                    ([key, value]) =>
+                        key !== '_' && key !== '$0' && value !== undefined
+                )
                 .map(([key, value]) => [`--${key}`, value])
                 .flat(),
         ],
