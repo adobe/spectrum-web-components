@@ -3,26 +3,16 @@
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-900-rgb);
     --spectrum-well-border-color: rgba(var(--spectrum-white-rgb), 0.05);
     --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-700);
-    --spectrum-assetcard-border-color-selected-hover: var(
-        --spectrum-indigo-700
-    );
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-indigo-700);
     --spectrum-assetcard-border-color-selected-down: var(--spectrum-indigo-800);
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-indigo-700
-    );
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(--spectrum-indigo-700);
 }
 :host,
 :root {
-    --spectrum-neutral-background-color-selected-default: var(
-        --spectrum-gray-800
-    );
-    --spectrum-neutral-background-color-selected-hover: var(
-        --spectrum-gray-900
-    );
+    --spectrum-neutral-background-color-selected-default: var(--spectrum-gray-800);
+    --spectrum-neutral-background-color-selected-hover: var(--spectrum-gray-900);
     --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
-    --spectrum-neutral-background-color-selected-key-focus: var(
-        --spectrum-gray-900
-    );
+    --spectrum-neutral-background-color-selected-key-focus: var(--spectrum-gray-900);
     --spectrum-slider-track-thickness: 4px;
     --spectrum-slider-handle-gap: 0px;
     --spectrum-picker-border-width: 0;
@@ -51,17 +41,11 @@
     --spectrum-accent-color-1200: var(--spectrum-indigo-1200);
     --spectrum-accent-color-1300: var(--spectrum-indigo-1300);
     --spectrum-accent-color-1400: var(--spectrum-indigo-1400);
-    --spectrum-heading-sans-serif-font-weight: var(
-        --spectrum-black-font-weight
-    );
+    --spectrum-heading-sans-serif-font-weight: var(--spectrum-black-font-weight);
     --spectrum-heading-serif-font-weight: var(--spectrum-black-font-weight);
     --spectrum-heading-cjk-font-weight: var(--spectrum-black-font-weight);
-    --spectrum-heading-sans-serif-emphasized-font-weight: var(
-        --spectrum-black-font-weight
-    );
-    --spectrum-heading-serif-emphasized-font-weight: var(
-        --spectrum-black-font-weight
-    );
+    --spectrum-heading-sans-serif-emphasized-font-weight: var(--spectrum-black-font-weight);
+    --spectrum-heading-serif-emphasized-font-weight: var(--spectrum-black-font-weight);
     --system: express;
 }
 :host,
@@ -102,18 +86,10 @@
     --spectrum-slider-handle-size-medium: 24px;
     --spectrum-slider-handle-size-large: 28px;
     --spectrum-slider-handle-size-extra-large: 30px;
-    --spectrum-slider-handle-border-width-down-small: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-medium: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-extra-large: var(
-        --spectrum-border-width-200
-    );
+    --spectrum-slider-handle-border-width-down-small: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-medium: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-large: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-extra-large: var(--spectrum-border-width-200);
     --spectrum-slider-bottom-to-handle-small: 4px;
     --spectrum-slider-bottom-to-handle-medium: 8px;
     --spectrum-slider-bottom-to-handle-large: 12px;
@@ -124,8 +100,8 @@
     --spectrum-drop-shadow-x: 0px;
     --spectrum-drop-shadow-y: 4px;
     --spectrum-drop-shadow-blur: 16px;
-    --spectrum-colorwheel-path: 'M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0';
-    --spectrum-colorwheel-path-borders: 'M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0';
+    --spectrum-colorwheel-path: "M 118 118 m -118 0 a 118 118 0 1 0 236 0 a 118 118 0 1 0 -236 0.2 M 118 118 m -92 0 a 92 92 0 1 0 184 0 a 92 92 0 1 0 -184 0";
+    --spectrum-colorwheel-path-borders: "M 120 120 m -120 0 a 120 120 0 1 0 240 0 a 120 120 0 1 0 -240 0.2 M 120 120 m -90 0 a 90 90 0 1 0 180 0 a 90 90 0 1 0 -180 0";
     --spectrum-dialog-confirm-border-radius: 8px;
     --spectrum-dial-border-radius: 15px;
     --spectrum-assetcard-focus-ring-border-radius: 12px;
@@ -135,15 +111,9 @@
     --spectrum-drop-zone-background-color-rgb: var(--spectrum-indigo-800-rgb);
     --spectrum-well-border-color: rgba(var(--spectrum-black-rgb), 0.05);
     --spectrum-assetcard-border-color-selected: var(--spectrum-indigo-900);
-    --spectrum-assetcard-border-color-selected-hover: var(
-        --spectrum-indigo-900
-    );
-    --spectrum-assetcard-border-color-selected-down: var(
-        --spectrum-indigo-1000
-    );
-    --spectrum-assetcard-selectionindicator-background-color-ordered: var(
-        --spectrum-indigo-900
-    );
+    --spectrum-assetcard-border-color-selected-hover: var(--spectrum-indigo-900);
+    --spectrum-assetcard-border-color-selected-down: var(--spectrum-indigo-1000);
+    --spectrum-assetcard-selectionindicator-background-color-ordered: var(--spectrum-indigo-900);
 }
 :host,
 :root {
@@ -183,18 +153,10 @@
     --spectrum-slider-handle-size-medium: 20px;
     --spectrum-slider-handle-size-large: 22px;
     --spectrum-slider-handle-size-extra-large: 24px;
-    --spectrum-slider-handle-border-width-down-small: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-medium: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-large: var(
-        --spectrum-border-width-200
-    );
-    --spectrum-slider-handle-border-width-down-extra-large: var(
-        --spectrum-border-width-200
-    );
+    --spectrum-slider-handle-border-width-down-small: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-medium: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-large: var(--spectrum-border-width-200);
+    --spectrum-slider-handle-border-width-down-extra-large: var(--spectrum-border-width-200);
     --spectrum-slider-bottom-to-handle-small: 3px;
     --spectrum-slider-bottom-to-handle-medium: 6px;
     --spectrum-slider-bottom-to-handle-large: 9px;
@@ -205,8 +167,8 @@
     --spectrum-drop-shadow-x: 0px;
     --spectrum-drop-shadow-y: 4px;
     --spectrum-drop-shadow-blur: 16px;
-    --spectrum-colorwheel-path: 'M 94 94 m -94 0 a 94 94 0 1 0 188 0 a 94 94 0 1 0 -188 0.2 M 94 94 m -74 0 a 74 74 0 1 0 148 0 a 74 74 0 1 0 -148 0';
-    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+    --spectrum-colorwheel-path: "M 94 94 m -94 0 a 94 94 0 1 0 188 0 a 94 94 0 1 0 -188 0.2 M 94 94 m -74 0 a 74 74 0 1 0 148 0 a 74 74 0 1 0 -148 0";
+    --spectrum-colorwheel-path-borders: "M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0";
     --spectrum-dialog-confirm-border-radius: 6px;
     --spectrum-dial-border-radius: 12px;
     --spectrum-assetcard-focus-ring-border-radius: 10px;
