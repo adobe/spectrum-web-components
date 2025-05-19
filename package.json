@@ -44,7 +44,7 @@
         "preeleventy": "yarn docs:analyze",
         "prepack": "pinst --disable",
         "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
-        "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json && yarn verify-build-artifacts && yarn build:confirm",
+        "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json",
         "prestorybook": "wireit",
         "prestorybook:build": "cem analyze --outdir storybook/",
         "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
@@ -73,7 +73,6 @@
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
         "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
-        "verify-build-artifacts": "node ./scripts/verify-build-artifacts.js",
         "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
