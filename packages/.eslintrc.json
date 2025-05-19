@@ -85,8 +85,8 @@
     "overrides": [
         {
             "files": [
-                "**/test/**/*.test.{js,ts,jsx,tsx}",
-                "**/stories/**/*.{js,ts,jsx,tsx}"
+                "{packages,tools}/*/test/*.test.ts",
+                "{packages,tools}/*/stories/*.ts"
             ],
             "rules": {
                 "import/no-extraneous-dependencies": "off"
