@@ -136,6 +136,16 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
+                path: '../../packages/{{name}}/stories/args.ts',
+                templateFile: 'plop-templates/args.ts.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/stories/template.ts',
+                templateFile: 'plop-templates/template.ts.hbs',
+            },
+            {
+                type: 'add',
                 path: '../../packages/{{name}}/README.md',
                 templateFile: 'plop-templates/README.md.hbs',
             },
@@ -151,13 +161,8 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/exports.json',
-                templateFile: 'plop-templates/exports.json.hbs',
-            },
-            {
-                type: 'add',
-                path: '../../packages/{{name}}/.npmignore',
-                templateFile: 'plop-templates/.npmignore.hbs',
+                path: '../../packages/{{name}}/.npmrc',
+                templateFile: 'plop-templates/.npmrc.hbs',
             },
             {
                 type: 'install deps',
