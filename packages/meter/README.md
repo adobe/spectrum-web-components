@@ -37,6 +37,16 @@ The meter consists of several key parts:
 <sp-meter progress="71">Tasks Completed</sp-meter>
 ```
 
+#### Label
+
+The label is the text that describes what is being measured. It can be provided either through the default slot or the `label` attribute.
+
+```html
+<sp-meter progress="15">Course Progress</sp-meter>
+<br />
+<sp-meter progress="15" label="Course Progress"></sp-meter>
+```
+
 ### Options
 
 #### Sizes
@@ -46,7 +56,7 @@ The meter consists of several key parts:
 <sp-tab-panel value="s">
 
 ```html
-<sp-meter size="s" progress="71">Tasks Completed</sp-meter>
+<sp-meter size="s" progress="25">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
@@ -54,7 +64,7 @@ The meter consists of several key parts:
 <sp-tab-panel value="m">
 
 ```html
-<sp-meter size="m" progress="71">Tasks Completed</sp-meter>
+<sp-meter size="m" progress="25">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
@@ -62,7 +72,7 @@ The meter consists of several key parts:
 <sp-tab-panel value="l">
 
 ```html
-<sp-meter size="l" progress="71">Tasks Completed</sp-meter>
+<sp-meter size="l" progress="25">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
@@ -70,7 +80,7 @@ The meter consists of several key parts:
 <sp-tab-panel value="xl">
 
 ```html
-<sp-meter size="xl" progress="71">Tasks Completed</sp-meter>
+<sp-meter size="xl" progress="25">Tasks Completed</sp-meter>
 ```
 
 </sp-tab-panel>
@@ -131,31 +141,21 @@ Use value `variant="negative"` to define a negative variant.
 A meter can be delivered with its labeling displayed above its visual indicator or to either side. Use the boolean `side-label` attribute to define where this content should appear.
 
 ```html
-<sp-meter side-label>Side Label</sp-meter>
-```
-
-### Behaviors
-
-The meter updates its visual representation based on the `progress` attribute, which accepts values from 0 to 100. The progress is displayed both visually through the fill bar and numerically as a percentage.
-
-```html
-<sp-meter progress="50">Half Complete</sp-meter>
+<sp-meter side-label progress="68">Side Label</sp-meter>
 ```
 
 ### Accessibility
 
-The `<sp-meter>` element is rendered with `role="meter progressbar"` to ensure proper semantics for assistive technologies. It includes several accessibility features:
-
-#### Labels and ARIA
-
-- The meter requires a label, which can be provided either through the default slot or the `label` attribute
-- The current progress value is exposed via `aria-valuenow`
-- The label is associated with the meter through `aria-label`
+The `<sp-meter>` element is rendered with `role="meter progressbar"` to ensure proper semantics for assistive technologies. The current progress value is set as a percentager via the `progress` attribute and is exposed to assistive technology via `aria-valuenow`.
 
 ```html
 <sp-meter progress="71" label="Download Progress">Download Progress</sp-meter>
 ```
 
-#### Color and Contrast
+#### Include a label
+
+A meter is required to have either a visible text label or a `label` attribute.
+
+#### Don't override color
 
 The meter's variants provide semantic meaning through both color and ARIA attributes, ensuring that information is not conveyed through color alone. The progress track and fill maintain sufficient contrast for visibility.
