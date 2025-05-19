@@ -40,6 +40,15 @@ class OverlayStack {
     }
 
     private handleScroll = (event: Event): void => {
+        // Only handle document/body level scrolls
+        // Skip any component scrolls
+        if (
+            event.target !== document &&
+            event.target !== document.documentElement &&
+            event.target !== document.body
+        ) {
+            return;
+        }
         // Update positions of all open overlays
         this.stack.forEach((overlay) => {
             if (overlay.open) {

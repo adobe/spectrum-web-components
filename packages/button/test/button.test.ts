@@ -719,28 +719,6 @@ describe('Button', () => {
             expect(submitSpy.callCount).to.equal(1);
             expect(resetSpy.callCount).to.equal(1);
         });
-        it('proxies click by [href]', async () => {
-            const clickSpy = spy();
-            const el = await fixture<Button>(html`
-                <sp-button href="test_url">With Href</sp-button>
-            `);
-
-            await elementUpdated(el);
-            (
-                el as unknown as {
-                    anchorElement: HTMLAnchorElement;
-                }
-            ).anchorElement.addEventListener('click', (event: Event): void => {
-                event.preventDefault();
-                event.stopPropagation();
-                clickSpy();
-            });
-            expect(clickSpy.callCount).to.equal(0);
-
-            el.click();
-            await elementUpdated(el);
-            expect(clickSpy.callCount).to.equal(1);
-        });
         it('manages "active" while focused', async () => {
             const el = await fixture<Button>(html`
                 <sp-button label="Button">
@@ -848,6 +826,90 @@ describe('Button', () => {
                 expect(el.staticColor).to.be.undefined;
                 expect(el.hasAttribute('static-color')).to.be.false;
             });
+        });
+        it('handles modifier key clicks correctly', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button href="#test">Button with href</sp-button>
+            `);
+
+            await elementUpdated(el);
+
+            const anchorElement = el.shadowRoot?.querySelector(
+                '.anchor'
+            ) as HTMLAnchorElement;
+            expect(anchorElement).to.not.be.undefined;
+
+            // Set up spies instead of counters
+            const buttonClickSpy = spy();
+            const anchorClickSpy = spy();
+
+            // Prevent actual navigation but track anchor clicks with spy
+            anchorElement.addEventListener('click', (event) => {
+                event.preventDefault();
+                anchorClickSpy();
+            });
+
+            // Track button clicks with spy
+            el.addEventListener('click', buttonClickSpy);
+
+            // Test normal click - should proxy to anchor
+            const normalClick = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+            });
+
+            buttonClickSpy.resetHistory();
+            anchorClickSpy.resetHistory();
+
+            el.dispatchEvent(normalClick);
+            await elementUpdated(el);
+
+            expect(
+                anchorClickSpy.called,
+                'Normal click should be proxied to the anchor'
+            ).to.be.true;
+
+            buttonClickSpy.resetHistory();
+            anchorClickSpy.resetHistory();
+
+            const metaClick = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                metaKey: true,
+            });
+
+            el.dispatchEvent(metaClick);
+            await elementUpdated(el);
+
+            expect(
+                buttonClickSpy.called,
+                'Meta+click should be received by the button'
+            ).to.be.true;
+            expect(
+                anchorClickSpy.called,
+                'Meta+click should NOT be proxied to the anchor'
+            ).to.be.false;
+
+            buttonClickSpy.resetHistory();
+            anchorClickSpy.resetHistory();
+
+            const ctrlClick = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                ctrlKey: true,
+            });
+
+            el.dispatchEvent(ctrlClick);
+            await elementUpdated(el);
+
+            expect(
+                buttonClickSpy.called,
+                'Ctrl+click should be received by the button'
+            ).to.be.true;
+            expect(
+                anchorClickSpy.called,
+                'Ctrl+click should NOT be proxied to the anchor'
+            ).to.be.false;
         });
     });
 });

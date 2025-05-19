@@ -47,3 +47,12 @@ href.args = {
     href: 'https://github.com/adobe/spectrum-web-components',
     icon: `<sp-icon-edit hidden slot="icon"></sp-icon-edit>`,
 };
+
+export const hrefWithTarget = (): TemplateResult => html`
+    <sp-action-button
+        href="https://github.com/adobe/spectrum-web-components"
+        target="_blank"
+    >
+        Click me
+    </sp-action-button>
+`;

@@ -102,9 +102,9 @@ The project will be linted on a pre-commit hook, but you can also run the lint s
 
 ### Dependency linting
 
-There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, [changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/) will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn lint:versions` will check that all version strings for each dependency match across the repo.
+There are downstream issues that can arise from multiple packages in this mono-repo using dependencies with mismatched version strings. By default, [changesets](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/) will bump version numbers of internal dependencies when the various packages are published and the depended version is pointing to the latest release, which can help to mitigate this issue. Running `yarn constraints` will check that all version strings for each dependency match across the repo.
 
-`yarn list:versions --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library — _a potentially dangerous operation_. If this is what you want to do when `yarn lint:versions` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
+`yarn constraints --fix` will modify the `package.json` files, updating all dependencies to the latest version available in the library — _a potentially dangerous operation_. If this is what you want to do when `yarn constraints` discovers mismatched versions, this step can greatly reduce the amount of work to achieve matching version numbers.
 
 ## Testing
 
