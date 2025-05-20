@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 const { execSync } = require('child_process');
 const { kebabCase } = require('lodash');
 const fs = require('fs');
-const currentVersion = require('../../packages/base/package.json').version;
+const currentVersion = require('../../tools/base/package.json').version;
 
 module.exports = function (plop) {
     // name of custom element tag
