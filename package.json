@@ -37,7 +37,7 @@
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
         "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
-        "new-package": "cd projects/templates && yarn plop",
+        "new-package": "yarn workspace swc-templates plop",
         "postinstall": "husky || true && patch-package",
         "postpack": "pinst --enable",
         "postpublish": "yarn prepublish:react && yarn publish:react && yarn postpublish:react",

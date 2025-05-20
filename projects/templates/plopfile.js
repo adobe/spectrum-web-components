@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 const { execSync } = require('child_process');
 const { kebabCase } = require('lodash');
 const fs = require('fs');
+const currentVersion = require('../../packages/base/package.json').version;
 
 module.exports = function (plop) {
     // name of custom element tag
@@ -37,24 +38,10 @@ module.exports = function (plop) {
     });
 
     plop.setActionType('install deps', function (answers) {
-        const versionJsPath = '../../tools/base/src/version.js';
-
-        if (!fs.existsSync(versionJsPath)) {
-            throw new Error('version.js file is missing');
-        }
-
-        const versionContent = fs.readFileSync(versionJsPath, 'utf8');
-        const versionMatch = versionContent.match(/version = ['"]([^'"]+)['"]/);
-
-        if (!versionMatch) {
-            throw new Error('Could not find version in version.js');
-        }
-
-        const versionJs = versionMatch[1];
         try {
             // Add base as a workspace dependency to the new package
             execSync(
-                `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@${versionJs}`
+                `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@${currentVersion ?? 'latest'}`
             );
             // Add the new package to bundle with a fixed version
             execSync(
@@ -108,11 +95,6 @@ module.exports = function (plop) {
                 type: 'add',
                 path: '../../packages/{{name}}/src/{{name}}.css',
                 templateFile: 'plop-templates/component.css.hbs',
-            },
-            {
-                type: 'add',
-                path: '../../packages/{{name}}/src/spectrum-{{name}}.css',
-                templateFile: 'plop-templates/spectrum-component.css.hbs',
             },
             {
                 type: 'add',
