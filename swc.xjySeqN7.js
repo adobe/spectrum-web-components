@@ -6,4 +6,4 @@ import"./swc.CslJ8xa1.js";import{i as t}from"./swc.Cl2X6-fK.js";import{S as e}fr
                   `:r}
             <div class="text"><slot></slot></div>
         `}}a([c({type:Boolean,reflect:!0})],i.prototype,"icon"),a([c({reflect:!0})],i.prototype,"variant"),p("sp-help-text",i);
-//# sourceMappingURL=swc.Dm9CaXUB.js.map
+//# sourceMappingURL=swc.Cvi_OLfr.js.map

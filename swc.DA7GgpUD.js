@@ -7,4 +7,4 @@ import{I as e}from"./swc.DX-iw9La.js";import{x as t}from"./swc.CfKxAKYm.js";impo
                     @error=${this.announceIconImageSrcError}
                 />
             `:super.render()}async updateIcon(){if(this.updateIconPromise&&await this.updateIconPromise,!this.name)return Promise.resolve();const e=this.parseIcon(this.name),t=r.getInstance().getIconset(e.iconset);return t&&this.iconContainer?(this.iconContainer.innerHTML="",t.applyIconToElement(this.iconContainer,e.icon,this.size||"",this.label?this.label:"")):Promise.resolve()}parseIcon(e){const t=e.split(":");let s="default",n=e;return t.length>1&&(s=t[0],n=t[1]),{iconset:s,icon:n}}async getUpdateComplete(){const e=await super.getUpdateComplete();return await this.updateIconPromise,e}}a([n()],d.prototype,"src"),a([n()],d.prototype,"name"),a([o("#container")],d.prototype,"iconContainer"),i("sp-icon",d);export{r as I};
-//# sourceMappingURL=swc.l2nnmq3k.js.map
+//# sourceMappingURL=swc.CqJG02Kn.js.map

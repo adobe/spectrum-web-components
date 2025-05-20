@@ -33,4 +33,4 @@ import{t,s as e}from"./swc.CJygKO7k.js";import{I as a}from"./swc.DX-iw9La.js";im
       d="M10.8 8H16v11a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V8h5.2a.8.8 0 0 0 .8-.8.787.787 0 0 0-.2-.527L18.351.144a.5.5 0 0 0-.7 0L10.2 6.668a.787.787 0 0 0-.2.532.8.8 0 0 0 .8.8Z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.CFtUy3r9.js.map
+//# sourceMappingURL=swc.C8QXWvqB.js.map
