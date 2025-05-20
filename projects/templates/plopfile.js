@@ -43,9 +43,9 @@ module.exports = function (plop) {
             execSync(
                 `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@${currentVersion ?? 'latest'}`
             );
-            // Add the new package to bundle with a fixed version
+            // Add the new package to bundle with a fixed version. Setting it to currentVersion since our release process enforces matching versions and the component will never start with a version of 0.0.0.
             execSync(
-                `cd ../../ && yarn workspace @spectrum-web-components/bundle add @spectrum-web-components/${answers.name}@0.0.1`
+                `cd ../../ && yarn workspace @spectrum-web-components/bundle add @spectrum-web-components/${answers.name}@${currentVersion ?? '0.0.0'}`
             );
         } catch (error) {
             // Silently fail, dependencies will need to be added manually
