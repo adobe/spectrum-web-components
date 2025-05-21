@@ -1,7 +1,6 @@
 {
     "files.exclude": {
         "**/*.css.ts": { "when": "$(basename)" },
-        "packages/*/src/spectrum-vars.json": true,
         "packages/**/*.js.map": true,
         "packages/**/*.js": { "when": "$(basename).ts" },
         "packages/**/*.dev.js": { "when": "$(basename).js" },

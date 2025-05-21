@@ -3,10 +3,7 @@
     --spectrum-overlay-opacity: 0.6;
     --spectrum-drop-shadow-color-rgb: 0, 0, 0;
     --spectrum-drop-shadow-color-opacity: 0.8;
-    --spectrum-drop-shadow-color: rgba(
-        var(--spectrum-drop-shadow-color-rgb),
-        var(--spectrum-drop-shadow-color-opacity)
-    );
+    --spectrum-drop-shadow-color: rgba(var(--spectrum-drop-shadow-color-rgb), var(--spectrum-drop-shadow-color-opacity));
     --spectrum-background-base-color: var(--spectrum-gray-50);
     --spectrum-background-layer-1-color: var(--spectrum-gray-75);
     --spectrum-background-layer-2-color: var(--spectrum-gray-100);
@@ -14,68 +11,32 @@
     --spectrum-neutral-background-color-hover: var(--spectrum-gray-300);
     --spectrum-neutral-background-color-down: var(--spectrum-gray-200);
     --spectrum-neutral-background-color-key-focus: var(--spectrum-gray-300);
-    --spectrum-neutral-subdued-background-color-default: var(
-        --spectrum-gray-400
-    );
+    --spectrum-neutral-subdued-background-color-default: var(--spectrum-gray-400);
     --spectrum-neutral-subdued-background-color-hover: var(--spectrum-gray-300);
     --spectrum-neutral-subdued-background-color-down: var(--spectrum-gray-200);
-    --spectrum-neutral-subdued-background-color-key-focus: var(
-        --spectrum-gray-300
-    );
-    --spectrum-accent-background-color-default: var(
-        --spectrum-accent-color-600
-    );
+    --spectrum-neutral-subdued-background-color-key-focus: var(--spectrum-gray-300);
+    --spectrum-accent-background-color-default: var(--spectrum-accent-color-600);
     --spectrum-accent-background-color-hover: var(--spectrum-accent-color-500);
     --spectrum-accent-background-color-down: var(--spectrum-accent-color-400);
-    --spectrum-accent-background-color-key-focus: var(
-        --spectrum-accent-color-500
-    );
-    --spectrum-informative-background-color-default: var(
-        --spectrum-informative-color-600
-    );
-    --spectrum-informative-background-color-hover: var(
-        --spectrum-informative-color-500
-    );
-    --spectrum-informative-background-color-down: var(
-        --spectrum-informative-color-400
-    );
-    --spectrum-informative-background-color-key-focus: var(
-        --spectrum-informative-color-500
-    );
-    --spectrum-negative-background-color-default: var(
-        --spectrum-negative-color-600
-    );
-    --spectrum-negative-background-color-hover: var(
-        --spectrum-negative-color-500
-    );
-    --spectrum-negative-background-color-down: var(
-        --spectrum-negative-color-400
-    );
-    --spectrum-negative-background-color-key-focus: var(
-        --spectrum-negative-color-500
-    );
-    --spectrum-positive-background-color-default: var(
-        --spectrum-positive-color-600
-    );
-    --spectrum-positive-background-color-hover: var(
-        --spectrum-positive-color-500
-    );
-    --spectrum-positive-background-color-down: var(
-        --spectrum-positive-color-400
-    );
-    --spectrum-positive-background-color-key-focus: var(
-        --spectrum-positive-color-500
-    );
-    --spectrum-notice-background-color-default: var(
-        --spectrum-notice-color-800
-    );
+    --spectrum-accent-background-color-key-focus: var(--spectrum-accent-color-500);
+    --spectrum-informative-background-color-default: var(--spectrum-informative-color-600);
+    --spectrum-informative-background-color-hover: var(--spectrum-informative-color-500);
+    --spectrum-informative-background-color-down: var(--spectrum-informative-color-400);
+    --spectrum-informative-background-color-key-focus: var(--spectrum-informative-color-500);
+    --spectrum-negative-background-color-default: var(--spectrum-negative-color-600);
+    --spectrum-negative-background-color-hover: var(--spectrum-negative-color-500);
+    --spectrum-negative-background-color-down: var(--spectrum-negative-color-400);
+    --spectrum-negative-background-color-key-focus: var(--spectrum-negative-color-500);
+    --spectrum-positive-background-color-default: var(--spectrum-positive-color-600);
+    --spectrum-positive-background-color-hover: var(--spectrum-positive-color-500);
+    --spectrum-positive-background-color-down: var(--spectrum-positive-color-400);
+    --spectrum-positive-background-color-key-focus: var(--spectrum-positive-color-500);
+    --spectrum-notice-background-color-default: var(--spectrum-notice-color-800);
     --spectrum-gray-background-color-default: var(--spectrum-gray-700);
     --spectrum-red-background-color-default: var(--spectrum-red-700);
     --spectrum-orange-background-color-default: var(--spectrum-orange-800);
     --spectrum-yellow-background-color-default: var(--spectrum-yellow-1000);
-    --spectrum-chartreuse-background-color-default: var(
-        --spectrum-chartreuse-900
-    );
+    --spectrum-chartreuse-background-color-default: var(--spectrum-chartreuse-900);
     --spectrum-celery-background-color-default: var(--spectrum-celery-800);
     --spectrum-green-background-color-default: var(--spectrum-green-700);
     --spectrum-seafoam-background-color-default: var(--spectrum-seafoam-700);

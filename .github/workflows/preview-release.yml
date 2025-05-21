@@ -30,6 +30,7 @@ jobs:
                   yarn constraints --fix
                   yarn version:update
                   yarn install --refresh-lockfile
+
             - name: Configure NPM for changeset publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

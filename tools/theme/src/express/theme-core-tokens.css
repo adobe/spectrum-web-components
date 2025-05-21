@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('@spectrum-web-components/styles/tokens/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens/spectrum/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/global-vars.css');
-@import url('@spectrum-web-components/styles/tokens/express/system-theme-bridge.css');
-@import url('@spectrum-web-components/styles/typography.css');
+@import url("@spectrum-web-components/styles/tokens/global-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/global-vars.css");
+@import url("@spectrum-web-components/styles/tokens/express/global-vars.css");
+@import url("@spectrum-web-components/styles/tokens/express/system-theme-bridge.css");
+@import url("@spectrum-web-components/styles/typography.css");
 
 :host {
     display: block;
