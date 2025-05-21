@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 const { execSync } = require('child_process');
 const { kebabCase } = require('lodash');
+const fs = require('fs');
+const currentVersion = require('../../tools/base/package.json').version;
 
 module.exports = function (plop) {
     // name of custom element tag
@@ -25,10 +27,6 @@ module.exports = function (plop) {
         const capitalized = camel.charAt(0).toUpperCase() + camel.substring(1);
         return capitalized;
     });
-    // name of Spectrum CSS package
-    plop.setHelper('spectrumCSS', function (name) {
-        return name.replace(/-/g, '');
-    });
     // name used as title in storybook and documentation
     plop.setHelper('displayName', function (name) {
         const camel = name.replace(/-([a-z])/g, (g) => {
@@ -40,22 +38,23 @@ module.exports = function (plop) {
     });
 
     plop.setActionType('install deps', function (answers) {
-        execSync(
-            `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
-        );
-        execSync(
-            `cd ../../ && yarn lerna add @spectrum-web-components/${answers.name} --scope=@spectrum-web-components/bundle --no-bootstrap`
-        );
-        if (answers.spectrum)
+        try {
+            // Add base as a workspace dependency to the new package
             execSync(
-                `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+                `cd ../../ && yarn workspace @spectrum-web-components/${answers.name} add @spectrum-web-components/base@${currentVersion ?? 'latest'}`
             );
+            // Add the new package to bundle with a fixed version. Setting it to currentVersion since our release process enforces matching versions and the component will never start with a version of 0.0.0.
+            execSync(
+                `cd ../../ && yarn workspace @spectrum-web-components/bundle add @spectrum-web-components/${answers.name}@${currentVersion ?? '0.0.0'}`
+            );
+        } catch (error) {
+            // Silently fail, dependencies will need to be added manually
+            console.warn('dependencies were not added', error);
+        }
     });
 
-    plop.setActionType('format files', function (answers) {
-        execSync(
-            `cd ../../ && yarn prettier --write packages/${answers.name} && yarn eslint --fix -f pretty packages/${answers.name} && yarn stylelint --fix packages/${answers.name}`
-        );
+    plop.setActionType('format files', function () {
+        execSync(`cd ../../ && yarn lint`);
     });
 
     plop.setGenerator('component', {
@@ -68,21 +67,12 @@ module.exports = function (plop) {
                 validate: (answer) => {
                     if (answer.length < 1) {
                         return "It's a fact universally acknowledged that naming is hard; but it must have a name. You can always change it later.";
-                    } else return true;
+                    } else {
+                        return true;
+                    }
                 },
                 // Convert the input into kebab case if not provided as such and strip swc- prefixing if present
                 filter: (response) => kebabCase(response.replace(/^sp-/, '')),
-            },
-            {
-                type: 'input',
-                name: 'spectrum',
-                message: 'Spectrum CSS package name (i.e. colorarea)',
-                // Remove the package prefix if provided and strip out any dashes or spaces in the result
-                filter: (response) => {
-                    return response
-                        .replace(/^\@spectrum-css\//, '')
-                        .replace(/[-|\s]/g, '');
-                },
             },
         ],
         actions: [
@@ -108,8 +98,8 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/src/spectrum-config.js',
-                templateFile: 'plop-templates/spectrum-config.js.hbs',
+                path: '../../packages/{{name}}/src/{{name}}-overrides.css',
+                templateFile: 'plop-templates/component-overrides.css.hbs',
             },
             {
                 type: 'add',
@@ -153,13 +143,8 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/exports.json',
-                templateFile: 'plop-templates/exports.json.hbs',
-            },
-            {
-                type: 'add',
-                path: '../../packages/{{name}}/.npmignore',
-                templateFile: 'plop-templates/.npmignore.hbs',
+                path: '../../packages/{{name}}/.npmrc',
+                templateFile: 'plop-templates/.npmrc.hbs',
             },
             {
                 type: 'install deps',

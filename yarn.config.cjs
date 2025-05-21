@@ -23,8 +23,6 @@ const semver = require('semver');
 
 module.exports = defineConfig({
     async constraints({ Yarn }) {
-        let hasChanges = false;
-
         /**
          * Fetch a list of all the component workspaces using a glob pattern
          * @type {string[]} components
@@ -142,7 +140,6 @@ module.exports = defineConfig({
          * @param {import('@yarnpkg/types').Context} context
          */
         function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
-            let hasChanges = false;
             const workspaceVersions = new Map();
 
             // Iterate over all external dependencies and ensure that the version is consistent across all workspaces
@@ -182,11 +179,8 @@ module.exports = defineConfig({
                     ident: dependencyName,
                 })) {
                     dep.update(highestVersion);
-                    hasChanges = true;
                 }
             }
-
-            return hasChanges;
         }
 
         /**
@@ -261,16 +255,7 @@ module.exports = defineConfig({
          */
         for (const workspace of Yarn.workspaces()) {
             validatePackageJson(workspace);
-            hasChanges =
-                hasChanges ||
-                enforceConsistentDependenciesAcrossTheProject({
-                    Yarn,
-                });
-        }
-
-        // If there are changes and we're in fix mode, need to refresh the lockfile
-        if (hasChanges && process.env.YARN_FIX) {
-            console.log('⚠️   Lockfile needs to be updated');
+            enforceConsistentDependenciesAcrossTheProject({ Yarn });
         }
     },
 });

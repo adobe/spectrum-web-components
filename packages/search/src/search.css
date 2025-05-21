@@ -21,10 +21,6 @@ input::-webkit-search-cancel-button {
     display: none;
 }
 
-/**
- * Hardcoded values for the multiple search field sizes.
- * Feel free to remove this if you find a better way to handle this on the spectrum-config.
- **/
 :host([size="s"]) #textfield {
     --spectrum-search-border-radius: var(--system-search-size-s-border-radius);
     --spectrum-search-edge-to-visual: var(--system-search-size-s-edge-to-visual);
