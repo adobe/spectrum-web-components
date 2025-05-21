@@ -85,15 +85,6 @@
     "overrides": [
         {
             "files": [
-                "{packages,tools}/*/test/*.test.ts",
-                "{packages,tools}/*/stories/*.ts"
-            ],
-            "rules": {
-                "import/no-extraneous-dependencies": "off"
-            }
-        },
-        {
-            "files": [
                 "*.test.ts",
                 "*.stories.ts",
                 "**/benchmark/*.ts",
@@ -102,7 +93,8 @@
             "rules": {
                 "@spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
-                "lit-a11y/tabindex-no-positive": ["off"]
+                "lit-a11y/tabindex-no-positive": ["off"],
+                "import/no-extraneous-dependencies": "off"
             }
         },
         {
