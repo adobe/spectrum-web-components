@@ -31,6 +31,10 @@ const packageNameCorrections = {
     tag: 'tags',
 };
 
+/**
+ * @todo Analyze and remove if not necessary. This currently returns nothing since Spectrum CSS does not use YAML files anymore.
+ * Also with removing Spectrum CSS as a dependency this will need to be updated or removed.
+ */
 export const gatherUrls = async () => {
     const packageNames = await gatherPackageNames();
     const flatPackageNames = packageNames.map((name) => name.replace('-', ''));

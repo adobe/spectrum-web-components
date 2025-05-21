@@ -103,9 +103,6 @@
         "@spectrum-web-components/tooltip": "1.6.0",
         "@spectrum-web-components/tray": "1.6.0"
     },
-    "devDependencies": {
-        "@spectrum-css/picker": "9.1.4"
-    },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
