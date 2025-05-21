@@ -248,54 +248,6 @@ jobs:
                   name: Are there changes?
                   command: git diff-files --exit-code
 
-    preview-docs:
-        executor: azure
-        steps:
-            - downstream
-            - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run:
-                  name: Install Azure Static Web Apps CLI
-                  command: |
-                      echo "Installing Azure Static Web Apps CLI..."
-                      sudo npm install -g @azure/static-web-apps-cli
-            - run:
-                  name: Deploy Documentation Site to Azure Static Web Apps
-                  command: |
-                      branch=$(git symbolic-ref --short HEAD)
-                      branch=$(npx slugify-cli $branch)
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                        if npx swa deploy \
-                            --app-name my-docs-site \
-                            --resource-group swc-previews \
-                            --app-location projects/documentation/dist \
-                            --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
-                            echo "Deployment successful!"
-                            exit 0
-                        else
-                            attempt=$((attempt + 1))
-                            echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                            sleep 10
-                        fi
-                      done
-
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
-
     beta-docs:
         executor: azure
 
@@ -443,11 +395,6 @@ workflows:
             - test-webkit
             - lint
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
