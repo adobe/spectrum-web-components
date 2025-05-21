@@ -1,0 +1,40 @@
+name: Build validation
+on:
+    workflow_dispatch:
+    workflow_call:
+
+jobs:
+    build:
+        name: Build ${{ matrix.system }}, node v${{ matrix.node-version }}
+        strategy:
+            fail-fast: false
+            matrix:
+                system:
+                    - macos-latest
+                    - ubuntu-latest
+                    # - windows-latest
+                node-version:
+                    - 20
+        runs-on: ${{ matrix.system }}
+        timeout-minutes: 10
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            # This step will evaluate the repo status and report the change
+            # If there are changes, capture the changes and upload them as an artifact
+            - name: Check if there are changes
+              run: |
+                  if [[ -z $(git status --porcelain) ]]; then
+                      echo "No changes detected"
+                      exit 0
+                  else
+                      echo "Changes detected"
+                      git status
+                      exit 1
+                  fi
