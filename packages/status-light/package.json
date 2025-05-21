@@ -66,9 +66,6 @@
     "dependencies": {
         "@spectrum-web-components/base": "1.6.0"
     },
-    "devDependencies": {
-        "@spectrum-css/statuslight": "9.1.0"
-    },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [

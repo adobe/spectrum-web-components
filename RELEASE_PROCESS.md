@@ -2,22 +2,22 @@
 
 Users with permissions in the `@spectrum-web-components` organization on NPM can follow these steps to create and publish a new version.
 
--   [Prerequisites](#prerequisites)
-    -   [Main successfully builds](#main-successfully-builds)
-    -   [The correct version of Node is installed](#the-correct-version-of-node-is-installed)
-        -   [Using Node Version Manager](#using-node-version-manager)
-        -   [Manually checking](#manually-checking)
-        -   [Troubleshooting](#troubleshooting)
-    -   [Github Token is set up](#github-token-is-set-up)
-        -   [Generate a Github token](#generate-a-github-token)
-    -   [Logged in to NPM](#logged-in-to-npm)
-    -   [NPM 2FA authenticator app](#npm-2fa-authenticator-app)
--   [Releasing to NPM — the good stuff](#releasing-to-npm--the-good-stuff)
-    -   [Troubleshooting](#troubleshooting-1)
--   [Publishing the documentation site manually](#publishing-the-documentation-site-manually)
-    -   [From GitHub](#from-github)
-    -   [From the terminal](#from-the-terminal)
-    -   [References](#references)
+- [Prerequisites](#prerequisites)
+    - [Main successfully builds](#main-successfully-builds)
+    - [The correct version of Node is installed](#the-correct-version-of-node-is-installed)
+        - [Using Node Version Manager](#using-node-version-manager)
+        - [Manually checking](#manually-checking)
+        - [Troubleshooting](#troubleshooting)
+    - [Github Token is set up](#github-token-is-set-up)
+        - [Generate a Github token](#generate-a-github-token)
+    - [Logged in to NPM](#logged-in-to-npm)
+    - [NPM 2FA authenticator app](#npm-2fa-authenticator-app)
+- [Releasing to NPM — the good stuff](#releasing-to-npm--the-good-stuff)
+    - [Troubleshooting](#troubleshooting-1)
+- [Publishing the documentation site manually](#publishing-the-documentation-site-manually)
+    - [From GitHub](#from-github)
+    - [From the terminal](#from-the-terminal)
+    - [References](#references)
 
 ## Prerequisites
 
@@ -94,13 +94,13 @@ If not logged in, run `npm login` to sign in to your account.
     1. In your IDE search `': major` , `': minor`, `': patch` , based on the results in the order of this search list, the highest level takes precedence
         1. exclude files: `.changeset/README.md`
 4. Open your authenticator app to have it ready
-5. Run`yarn changeset-publish`
+5. Run`yarn publish:changeset`
 6. Enter the one-time password from your authenticator for NPM.
     1. Wait for a fresh password; a stale timer might cause issues.
 7. After the SWC packages are released, the React Wrapper packages will be generated.
     1. This multi-phase approach ensures that the wrapped packages share the same version as the standard packages.
 8. Enter a new one-time password from your authenticator for NPM.
-9. The `yarn changeset-publish` command will automatically commit the changes to main with a commit message of `chore: release new versions #publish`
+9. The `yarn publish:changeset` command will automatically commit the changes to main with a commit message of `chore: release new versions #publish`
     1. The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 10. Confirm the build on `main` passes
 
@@ -108,8 +108,8 @@ If not logged in, run `npm login` to sign in to your account.
 
 If publishing fails with an error:
 
--   Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
--   If they were, run `yarn changeset-publish` again.
+- Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
+- If they were, run `yarn publish:changeset` again.
 
 ---
 

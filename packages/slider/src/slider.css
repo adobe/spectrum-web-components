@@ -14,11 +14,8 @@ governing permissions and limitations under the License.
 @import url("./slider-overrides.css");
 
 /*
- * Removes blue outline from :host when it is being focused.
- * This situation is not addressed in spectrum-css because the slider element itself
- * is not intended to receive focus.
- * This is not the case with web-components. The :host will receive focus when
- * interacting with the slider via the mouse.
+ * The :host will receive focus when interacting with the slider via the mouse.
+ * Removes blue outline from :host when it is being focused. 
 */
 :host(:focus) {
     outline: 0;

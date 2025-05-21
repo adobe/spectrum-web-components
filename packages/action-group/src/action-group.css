@@ -18,19 +18,10 @@ governing permissions and limitations under the License.
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
-/**
- * The following styles corrects issues found in the Spectrum CSS output
- * that are tracked via: https://github.com/adobe/spectrum-css/issues/795
- */
-
 :host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
     margin-right: 0;
     margin-left: 0;
 }
-
-/**
- * End Spectrum CSS #795 fixes.
- */
 
 /**
  * The following styles correct realities outlined in https://github.com/adobe/spectrum-web-components/issues/1434
