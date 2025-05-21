@@ -11,7 +11,7 @@
     "labels": ["dependencies"],
     "packageRules": [
         {
-            "matchPackageNames": ["@spectrum-css/*"],
+            "matchFileNames": ["@*/*.css"],
             "labels": ["Spectrum CSS"]
         },
         {
