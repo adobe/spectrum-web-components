@@ -49,8 +49,8 @@ The process to update the overrides file involves a few extra steps:
 
 SWC project uses styles package to manage the global css tokens for all three themes. The styles package can be found in `tools/styles`. There is one very small caveat in the way we manage the styles package. We have two different tokens packages, one for the express + spectrum theme and one for the spectrum 2 theme.
 
-- `styles/tokens` - This is the tokens package for the express + spectrum theme.
-- `styles/tokens-v2` - This is the tokens package for the spectrum 2 theme.
+- `styles/tokens` - This is the tokens package for the Express + Spectrum theme.
+- `styles/tokens-v2` - This is the tokens package for the Spectrum 2 theme.
 
 NOTE: In all likelihood, you would only need to do minor changes to the styles package. However, if you feel like you need to make major changes to the styles package, the correct approach would be to start a discussion among the team and figure out a plan together.
 
