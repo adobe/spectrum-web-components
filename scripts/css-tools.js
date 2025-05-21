@@ -29,7 +29,7 @@ const require = createRequire(import.meta.url);
 const eslint = new ESLint({
     fix: true,
     useEslintrc: true,
-    cwd: path.join(__dirname, '..')
+    cwd: path.join(__dirname, '..'),
 });
 
 const log = {
@@ -48,7 +48,7 @@ export default styles;
 `,
         { filePath }
     );
-    await eslint.outputFixes(formattedResults);
+    await ESLint.outputFixes(formattedResults);
     return formattedResults;
 };
 
