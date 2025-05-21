@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,6 @@ import {
 import {
     customElement,
     property,
-    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
@@ -32,11 +32,6 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 import iconsList from './iconsList.json' assert { type: 'json' };
-
-import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -99,11 +94,6 @@ export class IconsDemo extends SpectrumElement {
         tag: string;
     }[] = [];
 
-    private unsubscribeSystemContext: (() => void) | null = null;
-
-    @state()
-    public spectrumVersion = 1;
-
     private iconset: string[] = [];
     public constructor() {
         super();
@@ -118,20 +108,15 @@ export class IconsDemo extends SpectrumElement {
     public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
-        if (this.unsubscribeSystemContext) {
-            this.unsubscribeSystemContext();
-            this.unsubscribeSystemContext = null;
-        }
     }
 
-    private filterIconsBySpectrumVersion(): void {
-        const iconVersion = this.spectrumVersion === 2 ? 's2' : 's1';
+    private filterIcons(): void {
         let filteredIcons = this.icons;
         // Filter out icons that are not in the current version for workflow icons
         if (this.name === 'workflow') {
             filteredIcons = filteredIcons.filter((icon) => {
                 const iconName = icon.name.replace(/\s/g, '').toLowerCase();
-                return iconsList[iconVersion].includes(iconName);
+                return iconsList.icons.includes(iconName);
             });
         }
 
@@ -148,17 +133,9 @@ export class IconsDemo extends SpectrumElement {
         this.filteredIcons = filteredIcons;
     }
 
-    private systemResolver = new SystemResolutionController(this);
-
     protected override update(changes: PropertyValues): void {
-        if (changes.has(systemResolverUpdatedSymbol)) {
-            this.spectrumVersion =
-                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
-            this.filterIconsBySpectrumVersion();
-        }
-
         if (changes.has('icons')) {
-            this.filterIconsBySpectrumVersion();
+            this.filterIcons();
         }
 
         super.update(changes);
@@ -169,6 +146,7 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
+
     public static override get styles(): CSSResultGroup {
         return [
             ...bodyStyles,
@@ -184,10 +162,7 @@ export class IconsDemo extends SpectrumElement {
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
-                    border-radius: var(
-                        --spectrum-alias-focus-ring-gap,
-                        var(--spectrum-spacing-50)
-                    );
+                    border-radius: var(--spectrum-spacing-50);
                 }
                 :host([package]) .icon {
                     cursor: pointer;
@@ -205,12 +180,7 @@ export class IconsDemo extends SpectrumElement {
                 .icon[tabindex]:focus-visible {
                     outline: var(--spectrum-alias-focus-ring-size) solid
                         var(--spectrum-alias-focus-ring-color);
-                    outline-offset: calc(
-                        var(
-                                --spectrum-alias-focus-ring-gap,
-                                var(--spectrum-spacing-50)
-                            ) * 2
-                    );
+                    outline-offset: calc(var(--spectrum-spacing-50) * 2);
                 }
             `,
         ];
