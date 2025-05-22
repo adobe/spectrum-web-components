@@ -29,7 +29,9 @@ import { Grid } from '@spectrum-web-components/grid';
 
 ## Example
 
-```html-live
+To interact with a fully accessible grid example, reference our [Grid Storybook](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/grid/) documentation.
+
+```html-no-demo
 <sp-grid
     id="grid-demo"
     style="
@@ -88,14 +90,12 @@ import { Grid } from '@spectrum-web-components/grid';
             card.label = `Card Heading ${index}`;
             card.ariaSelected = grid.selectedItems.includes(card.value);
             card.ariaRowIndex = `${index + 1}`;
-            card.addEventListener('click', () => {
-                console.log('clicked', card.value, grid.selectedItems);
+            card.addEventListener('change', () => {
                 if(grid.selectedItems.includes(card.value)) {
                     grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
                 } else {
                     grid.selectedItems.push(card.value);
                 }
-                console.log('updated', card.value, grid.selectedItems);
             });
             img.alt = '';
             img.slot = 'preview';
@@ -115,7 +115,8 @@ import { Grid } from '@spectrum-web-components/grid';
 </script>
 ```
 
-<script type="module">
+<!-- @todo make the example work for a keyboard -->
+<!-- <script type="module">
     const initItems = (count) => {
         const total = count;
         const items = [];
@@ -165,14 +166,12 @@ import { Grid } from '@spectrum-web-components/grid';
             card.label = `Card Heading ${index}`;
             card.ariaSelected = grid.selectedItems.includes(card.value);
             card.ariaRowIndex = `${index + 1}`;
-            card.addEventListener('click', () => {
-                console.log('clicked', card.value, grid.selectedItems);
+            card.addEventListener('change', () => {
                 if(grid.selectedItems.includes(card.value)) {
                     grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
                 } else {
                     grid.selectedItems.push(card.value);
                 }
-                console.log('updated', card.value, grid.selectedItems);
             });
             img.alt = '';
             img.slot = 'preview';
@@ -189,4 +188,4 @@ import { Grid } from '@spectrum-web-components/grid';
     customElements.whenDefined('sp-grid').then(() => {
         initGrid();
     });
-</script>
+</script> -->

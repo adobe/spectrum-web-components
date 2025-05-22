@@ -125,7 +125,7 @@ const handleActionBarChange = (event: Event): void => {
 };
 
 export const Default = (): TemplateResult => {
-    const items = generateItems(1000);
+    const items = generateItems(40);
 
     return html`
         <h1>
