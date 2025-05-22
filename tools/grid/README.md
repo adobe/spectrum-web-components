@@ -65,6 +65,7 @@ import { Grid } from '@spectrum-web-components/grid';
         grid.ariaMultiSelectable = 'true';
         grid.ariaRowCount = `${grid.items.length}`;
         grid.ariaColCount = 1;
+        grid.selectedItems = [];
 
         grid.renderItem = (
             item,
@@ -81,12 +82,21 @@ import { Grid } from '@spectrum-web-components/grid';
             card.subheading = 'JPG Photo'
             card.style = 'contain: strict; padding: 1px;'
             card.value = `card-${index}`
-            card.selected = selected;
+            card.selected = grid.selectedItems.includes(card.value);
             card.key = index;
             card.role = 'row';
             card.label = `Card Heading ${index}`;
-            card.ariaSelected = selected;
+            card.ariaSelected = grid.selectedItems.includes(card.value);
             card.ariaRowIndex = `${index + 1}`;
+            card.addEventListener('click', () => {
+                console.log('clicked', card.value, grid.selectedItems);
+                if(grid.selectedItems.includes(card.value)) {
+                    grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
+                } else {
+                    grid.selectedItems.push(card.value);
+                }
+                console.log('updated', card.value, grid.selectedItems);
+            });
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
@@ -132,6 +142,7 @@ import { Grid } from '@spectrum-web-components/grid';
         grid.ariaMultiSelectable = 'true';
         grid.ariaRowCount = `${grid.items.length}`;
         grid.ariaColCount = 1;
+        grid.selectedItems = [];
 
         grid.renderItem = (
             item,
@@ -148,12 +159,21 @@ import { Grid } from '@spectrum-web-components/grid';
             card.subheading = 'JPG Photo'
             card.style = 'contain: strict; padding: 1px;'
             card.value = `card-${index}`
-            card.selected = selected;
+            card.selected = grid.selectedItems.includes(card.value);
             card.key = index;
             card.role = 'row';
             card.label = `Card Heading ${index}`;
-            card.ariaSelected = selected;
+            card.ariaSelected = grid.selectedItems.includes(card.value);
             card.ariaRowIndex = `${index + 1}`;
+            card.addEventListener('click', () => {
+                console.log('clicked', card.value, grid.selectedItems);
+                if(grid.selectedItems.includes(card.value)) {
+                    grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
+                } else {
+                    grid.selectedItems.push(card.value);
+                }
+                console.log('updated', card.value, grid.selectedItems);
+            });
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
