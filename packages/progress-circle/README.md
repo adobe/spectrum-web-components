@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-An `<sp-progress-circle>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
+An `<sp-progress-circle>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent both determinate and indeterminate progress, helping users understand the status of ongoing operations.
 
 ### Usage
 
@@ -24,90 +24,118 @@ When looking to leverage the `ProgressCircle` base class as a type and/or for ex
 import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 ```
 
-## Variants
+### Anatomy
 
-### Default
+A progress circle consists of several key parts:
 
-An `<sp-progress-circle>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc.
+- A label (via `slot="label"`)
+- A progress value (via `progress` attribute)
+- An optional indeterminate state (via `indeterminate` attribute)
 
 ```html
-<div
-    style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
->
+<sp-progress-circle
+    label="Download progress"
+    progress="75"
+></sp-progress-circle>
+```
+
+### Options
+
+#### Sizes
+
+Progress circles come in three sizes to fit various contexts:
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html demo
+<sp-progress-circle
+    size="s"
+    label="Small progress indicator"
+    progress="42"
+></sp-progress-circle>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html demo
+<sp-progress-circle
+    label="Medium progress indicator"
+    progress="67"
+></sp-progress-circle>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html demo
+<sp-progress-circle
+    size="l"
+    label="Large progress indicator"
+    progress="89"
+></sp-progress-circle>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Static Colors
+
+When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast:
+
+```html demo
+<div style="background-color: rgb(15, 15, 15); padding: 20px;">
     <sp-progress-circle
-        label="A small representation of a somewhat completed action"
-        progress="71"
-        size="s"
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A medium representation of a recently started action"
-        progress="22"
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A large representation of an almost completed action"
-        progress="86"
-        size="l"
+        label="Progress on dark background"
+        progress="50"
+        static-color="white"
     ></sp-progress-circle>
 </div>
 ```
 
-### Static color
+#### Indeterminate Progress
 
-If you display your `<sp-progress-cicle>` element over the top of other content, e.g. an image or an alternate background color, it may become appropariate to update the colors with which the circle and loading progress indicator are delivered. To do this, leverage the `static-color` attribute with the value of `white` to ensure the content of your page is being delivered accessibly.
+Use indeterminate progress when the duration cannot be calculated:
 
-```html
-<div
-    style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;  background-color: rgba(0,0,0,0.4);"
->
-    <sp-progress-circle
-        label="A small representation of a partially completed action"
-        progress="42"
-        static-color="white"
-        size="s"
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A medium representation of a barely started action"
-        progress="7"
-        static-color="white"
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A large representation of a somewhat completed action"
-        progress="68"
-        static-color="white"
-        size="l"
-    ></sp-progress-circle>
-</div>
+```html demo
+<sp-progress-circle label="Loading content" indeterminate></sp-progress-circle>
 ```
 
-### Indeterminate
+### Accessibility
 
-A progress circle can be either determinate or indeterminate as signified by `[indeterminate]`. By default, loaders are determinate. Use a determinate loader when progress can be calculated against a specific goal (e.g., downloading a file of a known size). Use an indeterminate loader when progress is happening but the time or effort to completion can’t be determined (e.g., attempting to reconnect to a server).
+The `<sp-progress-circle>` element implements several accessibility features:
+
+1. **ARIA Role**: Automatically sets `role="progressbar"` for proper semantic meaning
+2. **Labeling**:
+    - Uses the `label` attribute value as `aria-label`
+    - When determinate, adds `aria-valuenow` with the current progress
+    - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
+3. **Status Communication**:
+    - Screen readers announce progress updates
+    - Indeterminate state is properly conveyed to assistive technologies
+
+#### Best Practices
+
+- Always provide a descriptive `label` that explains what the progress represents
+- Use determinate progress when possible to give users a clear sense of completion
+- For determinate progress, ensure the `progress` value accurately reflects the actual progress
+- Consider using size="l" for primary loading states to improve visibility
+- Ensure sufficient color contrast when using `static-color="white"`
 
 ```html
-<div
-    style="width: 250px; height: 150px; display: flex; align-items: center; justify-content: space-around;"
->
-    <sp-progress-circle
-        label="A small representation of an unclear amount of work"
-        indeterminate
-        size="s"
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A medium representation of an unclear amount of work"
-        indeterminate
-    ></sp-progress-circle>
-    <sp-progress-circle
-        label="A large representation of an unclear amount of work"
-        indeterminate
-        size="l"
-    ></sp-progress-circle>
-</div>
+<!-- Example with good accessibility -->
+<sp-progress-circle
+    label="Downloading report.pdf - 24 MB of 50 MB"
+    progress="48"
+></sp-progress-circle>
+
+<!-- For unknown duration operations -->
+<sp-progress-circle
+    label="Connecting to server"
+    indeterminate
+></sp-progress-circle>
 ```
-
-### Size
-
-Progress Circles come in 3 sizes: small (`[size="s"]`), medium (`[size="m"]`, default), or large (`[size="l"]`). These are available to fit various contexts. For example, the small loader can be used in place of an icon or in tight spaces, while the large one can be used for full-page loading.
-
-## Accessibility
-
-An `sp-progress-circle` element will register itself as a `role="progressbar"` element in the accessibility tree. Any value applied to the `label` attribute will be set as the `aria-label` attribute on the host. These two attributes can be used interchangably to ensure that the `sp-progress-circle` elements in your UI correctly fulfills its responsibilities to visitors of you site of all abilities.
