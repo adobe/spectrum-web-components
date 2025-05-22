@@ -26,6 +26,60 @@ import { TemplateResult } from '@spectrum-web-components/base';
 
 import { sendMouse } from './plugins/browser.js';
 
+/**
+ * send mouse to the middle of a specific DOM rect or HTMLElement
+ */
+export async function sendMouseTo(
+    elementOrRect: HTMLElement | DOMRect,
+    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
+    button?: 'left' | 'right' | 'middle'
+): Promise<unknown> {
+    const rect =
+        elementOrRect instanceof HTMLElement
+            ? elementOrRect.getBoundingClientRect()
+            : elementOrRect;
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const options = button ? { button: button } : {};
+
+    return await sendMouse({
+        steps: [
+            {
+                options: options,
+                position: [x, y],
+                type: type,
+            },
+        ],
+    });
+}
+
+/**
+ * send mouse outside of a particular DOMRect or HTMLElement
+ */
+export async function sendMouseFrom(
+    elementOrRect: HTMLElement | DOMRect,
+    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
+    button?: 'left' | 'right' | 'middle'
+): Promise<unknown> {
+    const rect =
+        elementOrRect instanceof HTMLElement
+            ? elementOrRect.getBoundingClientRect()
+            : elementOrRect;
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height * 2;
+    const options = button ? { button: button } : {};
+
+    return await sendMouse({
+        steps: [
+            {
+                options: options,
+                position: [x, y],
+                type: type,
+            },
+        ],
+    });
+}
+
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
 ): Promise<void> {

@@ -10,15 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-status-light.css');
-@import url('./status-light-overrides.css');
+@import url("./spectrum-status-light.css");
 
 /* Force cascade position of [disabled] styling */
 :host([disabled]):before {
     /* .spectrum-StatusLight.is-disabled:before,
    * .spectrum-StatusLight[disabled]:before */
-    background-color: var(
-        --spectrum-statuslight-dot-color-disabled,
-        var(--spectrum-gray-400)
-    );
+    background-color: var(--spectrum-statuslight-dot-color-disabled, var(--spectrum-gray-400));
 }

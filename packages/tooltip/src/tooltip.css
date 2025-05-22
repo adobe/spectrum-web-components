@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-tooltip.css');
-@import url('./tooltip-overrides.css');
+@import url("./spectrum-tooltip.css");
+@import url("./tooltip-overrides.css");
 
 :host {
     display: contents;
@@ -33,38 +33,32 @@ governing permissions and limitations under the License.
     transform: none !important;
 }
 
-:host(:not([placement*='top'])) #tooltip {
+:host(:not([placement*="top"])) #tooltip {
     margin-bottom: 0;
 }
 
-:host([placement*='top']) #tooltip #tip {
+:host([placement*="top"]) #tooltip #tip {
     inset-block-start: 100%;
 }
 
-:host([placement*='bottom']) #tooltip #tip {
+:host([placement*="bottom"]) #tooltip #tip {
     inset-block-end: 100%;
     clip-path: polygon(50% 50%, 0 105%, 100% 105%);
     top: auto;
 }
 
-:host([placement*='left']) #tooltip #tip,
-:host([placement*='right']) #tooltip #tip {
+:host([placement*="left"]) #tooltip #tip,
+:host([placement*="right"]) #tooltip #tip {
     inset-block-start: 50%;
     transform: translateY(-50%);
 }
 
-:host([placement*='right']) #tooltip #tip {
+:host([placement*="right"]) #tooltip #tip {
     clip-path: polygon(50% 50%, 105% 100%, 105% 0);
-    inset-inline: calc(
-            var(
-                    --mod-tooltip-tip-block-size,
-                    var(--spectrum-tooltip-tip-block-size)
-                ) * -2
-        )
-        100%;
+    inset-inline: calc(var(--mod-tooltip-tip-block-size, var(--spectrum-tooltip-tip-block-size)) * -2) 100%;
 }
 
-:host([placement*='left']) #tooltip #tip {
+:host([placement*="left"]) #tooltip #tip {
     clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
     inset-inline-start: 100%;
 }

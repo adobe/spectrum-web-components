@@ -11,25 +11,27 @@ loudness for various attention-getting needs.
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Zjc3o94DWuBkT4ve3dny/src/index.ts)
 
-```
+```zsh
 yarn add @spectrum-web-components/button
 ```
 
-Import the side effectful registration of `<sp-button>` or `<sp-clear-button>` as follows:
+Import the side effectful registration of `<sp-button>` as follows:
 
-```
+```ts
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/button/sp-close-button.js';
 ```
 
-When looking to leverage the `Button`, `ClearButton`, or `CloseButton` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `Button` base classes as a type and/or for extension purposes, do so via:
 
-```
-import { Button, ClearButton, CloseButton } from '@spectrum-web-components/button';
+```ts
+import { Button } from '@spectrum-web-components/button';
 ```
 
 ### Anatomy
+
+```html
+<sp-button>Try me</sp-button>
+```
 
 #### Content
 
@@ -138,7 +140,7 @@ fulfill the accessibility contract of the button.
 #### Variants
 
 There are many button variants to choose from in Spectrum. The `variant`
-attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
+attribute defaults to `accent`, but also accepts the following value: `accent`, `primary`, `secondary`, `negative`. They display as follows:
 
 <sp-tabs selected="accent" auto label="Variant Attribute Options">
 <sp-tab value="accent">Accent</sp-tab>
@@ -203,40 +205,6 @@ attribute defaults to `accent`, but also accepts the following value: `accent`, 
         Icon + Label
     </sp-button>
     <sp-button variant="negative" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="black">Black</sp-tab>
-<sp-tab-panel value="black">
-
-```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="black">Label only</sp-button>
-    <sp-button static-color="black">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button static-color="black" label="Icon only" icon-only>
-        <sp-icon-help slot="icon"></sp-icon-help>
-    </sp-button>
-</sp-button-group>
-```
-
-</sp-tab-panel>
-<sp-tab value="white">White</sp-tab>
-<sp-tab-panel value="white">
-
-```html demo
-<sp-button-group style="min-width: max-content">
-    <sp-button static-color="white">Label only</sp-button>
-    <sp-button static-color="white">
-        <sp-icon-help slot="icon"></sp-icon-help>
-        Icon + Label
-    </sp-button>
-    <sp-button static-color="white" label="Icon only" icon-only>
         <sp-icon-help slot="icon"></sp-icon-help>
     </sp-button>
 </sp-button-group>
@@ -388,7 +356,13 @@ mounts. This is useful for setting focus to a specific sp-button when a
 popover or dialog opens.
 
 ```html
-<sp-button autofocus>Confirm</sp-button>
+<sp-button id="trigger">Open</sp-button>
+<sp-overlay trigger="trigger@click" placement="bottom">
+    <sp-popover>
+        <!-- Button will autofocus when open -->
+        <sp-button autofocus>Confirm</sp-button>
+    </sp-popover>
+</sp-overlay>
 ```
 
 ### Accessibility
@@ -415,9 +389,11 @@ To ensure maximum contrast with the background, use static black for light backg
 <sp-tab-panel value="black">
 
 ```html demo
-<div style="background-color: #ccffee; padding: 20px">
-    <sp-button static="black">Click me</sp-button>
-    <sp-button static="black" treatment="outline">Click me</sp-button>
+<div
+    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
+>
+    <sp-button static-color="black">Click me</sp-button>
+    <sp-button static-color="black" treatment="outline">Click me</sp-button>
 </div>
 ```
 
@@ -426,9 +402,11 @@ To ensure maximum contrast with the background, use static black for light backg
 <sp-tab-panel value="white">
 
 ```html demo
-<div style="background-color: #220033; padding: 20px">
-    <sp-button static="white">Click me</sp-button>
-    <sp-button static="white" treatment="outline">Click me</sp-button>
+<div
+    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px"
+>
+    <sp-button static-color="white">Click me</sp-button>
+    <sp-button static-color="white" treatment="outline">Click me</sp-button>
 </div>
 ```
 

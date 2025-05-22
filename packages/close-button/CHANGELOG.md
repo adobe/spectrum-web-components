@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/base@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/base@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

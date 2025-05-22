@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-field",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/color-field"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://adobe.github.io/spectrum-web-components/components/color-field",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -29,6 +29,7 @@
             "development": "./src/ColorField.dev.js",
             "default": "./src/ColorField.js"
         },
+        "./src/color-field.css.js": "./src/color-field.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -50,15 +51,21 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.4.0",
-        "@spectrum-web-components/color-handle": "1.4.0",
-        "@spectrum-web-components/textfield": "1.4.0"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/color-handle": "1.6.0",
+        "@spectrum-web-components/textfield": "1.6.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

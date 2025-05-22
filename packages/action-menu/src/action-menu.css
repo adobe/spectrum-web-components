@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
     display: none;
 }
 
-::slotted([slot='icon']) {
+::slotted([slot="icon"]) {
     flex-shrink: 0;
 }
 
@@ -38,38 +38,21 @@ governing permissions and limitations under the License.
     max-width: none;
 }
 
-:host([dir='ltr']) ::slotted([slot='icon']),
-:host([dir='ltr']) .icon {
+:host([dir="ltr"]) ::slotted([slot="icon"]),
+:host([dir="ltr"]) .icon {
     /* [dir=ltr] .spectrum-ActionButton .spectrum-Icon */
-    margin-left: calc(
-        -1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) -
-                    var(--spectrum-actionbutton-padding-left-adjusted))
-    );
+    margin-left: calc(-1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) - var(--spectrum-actionbutton-padding-left-adjusted)));
 }
 
-:host([dir='rtl']) ::slotted([slot='icon']),
-:host([dir='rtl']) .icon {
+:host([dir="rtl"]) ::slotted([slot="icon"]),
+:host([dir="rtl"]) .icon {
     /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon */
-    margin-right: calc(
-        -1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) -
-                    var(--spectrum-actionbutton-padding-left-adjusted))
-    );
+    margin-right: calc(-1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) - var(--spectrum-actionbutton-padding-left-adjusted)));
 }
 
-:host([dir]) slot[icon-only]::slotted([slot='icon']),
+:host([dir]) slot[icon-only]::slotted([slot="icon"]),
 :host([dir]) slot[icon-only] .icon {
-    margin-inline: calc(
-        (
-                var(
-                        --custom-actionbutton-edge-to-text,
-                        var(--spectrum-actionbutton-edge-to-text)
-                    ) -
-                    var(
-                        --custom-actionbutton-edge-to-visual-only,
-                        var(--spectrum-actionbutton-edge-to-visual-only)
-                    )
-            ) * -1
-    ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
+    margin-inline: calc((var(--custom-actionbutton-edge-to-text, var(--spectrum-actionbutton-edge-to-text)) - var(--custom-actionbutton-edge-to-visual-only, var(--spectrum-actionbutton-edge-to-visual-only))) * -1); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
    * .spectrum-ActionButton-icon:only-child */
 }
 

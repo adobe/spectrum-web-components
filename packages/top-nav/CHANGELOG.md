@@ -1,5 +1,23 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e)]:
+    -   @spectrum-web-components/tabs@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`c7efe31`](https://github.com/adobe/spectrum-web-components/commit/c7efe314c5954c20e65302544cb0577580ba0b7b)]:
+    -   @spectrum-web-components/tabs@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
 ## 1.4.0
 
 ### Patch Changes

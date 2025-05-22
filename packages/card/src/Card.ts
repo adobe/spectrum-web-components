@@ -34,8 +34,6 @@ import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import cardStyles from './card.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import detailStyles from '@spectrum-web-components/styles/detail.js';
 
 /**
  * @element sp-card
@@ -62,7 +60,7 @@ export class Card extends LikeAnchor(
     )
 ) {
     public static override get styles(): CSSResultArray {
-        return [headingStyles, detailStyles, cardStyles];
+        return [cardStyles];
     }
 
     @property()
@@ -215,10 +213,7 @@ export class Card extends LikeAnchor(
 
     protected get renderHeading(): TemplateResult {
         return html`
-            <div
-                class="title spectrum-Heading spectrum-Heading--sizeXS"
-                id="heading"
-            >
+            <div class="title" id="heading">
                 <slot name="heading">${this.heading}</slot>
             </div>
         `;
@@ -269,7 +264,7 @@ export class Card extends LikeAnchor(
 
     private get renderSubtitleAndDescription(): TemplateResult {
         return html`
-            <div class="subtitle spectrum-Detail spectrum-Detail--sizeS">
+            <div class="subtitle">
                 <slot name="subheading">${this.subheading}</slot>
             </div>
             <slot name="description"></slot>

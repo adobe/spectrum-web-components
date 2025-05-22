@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-menu-sectionHeading.css');
+@import url("./spectrum-menu-sectionHeading.css");
 
 :host {
     margin: 0;
-    display: inline-flex;
+    display: flex;
     overflow: visible;
     flex-direction: column;
 }

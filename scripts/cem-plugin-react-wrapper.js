@@ -1,14 +1,14 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { readFile } from 'fs/promises';
 import fsExtra from 'fs-extra';
@@ -59,7 +59,7 @@ function genPackageJson(
         },
         "description": "React and Next.js wrapper of the ${dependencyPkgName} component",
         "license": "Apache-2.0",
-        "author": "",
+        "author": "Adobe",
         "type": "module",${
             isIconPkg
                 ? ''
@@ -133,7 +133,7 @@ async function getEvents(decl, declMap, events) {
                 )}/custom-elements.json`
             )
         );
-        const [superDecl, ...rest] = modules.flatMap((m) =>
+        const [superDecl] = modules.flatMap((m) =>
             m.declarations.filter((d) => d.name === decl?.superclass?.name)
         );
         if (superDecl) {
@@ -206,19 +206,7 @@ async function genReactComponentSourceCode(modules, exclude, pkgName) {
         reactComponents.push(reactComponent);
     }
 
-    const componentSrc = `/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-import * as React from 'react';
+    const componentSrc = `import * as React from 'react';
 import { createComponent } from '@lit/react';${
         reactComponents.flatMap((component) => component.events).length > 0
             ? "\nimport type { EventName } from '@lit/react';"
@@ -274,24 +262,12 @@ async function genNextComponentSourceCode(modules, exclude) {
                 return {
                     name: d.name,
                     tagName: d.tagName,
-                    import: `import { ${d.name} as Sp${d.name} } from '.';`,
+                    import: `import { ${d.name} as Sp${d.name} } from './index.js';`,
                 };
             });
     });
 
-    const nextWrapperSource = `/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-import { ComponentProps } from 'react';
+    const nextWrapperSource = `import { ComponentProps } from 'react';
 import dynamic from 'next/dynamic';
 
 ${elements.reduce((pre, element) => pre + element.import + '\n', '')}
@@ -299,7 +275,7 @@ ${elements.reduce((pre, element) => pre + element.import + '\n', '')}
 ${elements.reduce(
     (pre, element) =>
         pre +
-        `export const ${element.name} = dynamic<JSX.LibraryManagedAttributes<typeof Sp${element.name}, ComponentProps<typeof Sp${element.name}>>>(() => import('.').then(({${element.name}}) => ${element.name}), { ssr: false });` +
+        `export const ${element.name} = dynamic<JSX.LibraryManagedAttributes<typeof Sp${element.name}, ComponentProps<typeof Sp${element.name}>>>(() => import('./index.js').then(({${element.name}}) => ${element.name}), { ssr: false });` +
         '\n',
     ''
 )}`;
@@ -389,24 +365,12 @@ export default function genWrappers({
  */
 function genIconReactComponent(component, id, iconElementName, iconPkg) {
     const componentAliasName = `Sp${component}`;
-    return `/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-import { createComponent } from '@lit/react';
+    return `import { createComponent } from '@lit/react';
 import * as React from 'react';
-  
+
 import { ${component} as ${componentAliasName} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
 import '@spectrum-web-components/${iconPkg}/icons/${iconElementName}.js';
-  
+
 export const ${component} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: ${componentAliasName}, events: {}, displayName: '${component}' });
 
 export type ${component}Type = ${componentAliasName};
@@ -417,24 +381,13 @@ export type ${component}Type = ${componentAliasName};
  * Generate Next.js wrapper for Icon component
  */
 function genIconNextComponent(displayName) {
-    return `/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-import dynamic from 'next/dynamic';
+    return `import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
-import type { Icon${displayName}Type } from '../${displayName}';
-    
+import type { Icon${displayName}Type } from '../${displayName}.js';
+
 export const Icon${displayName}: ComponentType<Partial<Icon${displayName}Type> | { slot: string }> = dynamic<Partial<Icon${displayName}Type> | { slot: string }>(
-    () => import('../${displayName}').then((m) => m.Icon${displayName} as any),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    () => import('../${displayName}.js').then((m) => m.Icon${displayName} as any),
     { ssr: false}
 );
 `;

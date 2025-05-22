@@ -10,38 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-dropzone.css');
-@import url('./dropzone-overrides.css');
+@import url("./spectrum-dropzone.css");
+@import url("./dropzone-overrides.css");
 
-/* 
+/*
  * Host is inline-block by default which caused all the computed styling to be wrong.
- * We need it as a block 
+ * We need it as a block
  */
 :host {
     display: block;
 }
 
 ::slotted(*) {
-    font-family: var(
-        --mod-drop-zone-body-font-family,
-        var(--spectrum-drop-zone-body-font-family)
-    );
-    font-size: var(
-        --mod-drop-zone-body-font-size,
-        var(--spectrum-drop-zone-body-font-size)
-    );
-    font-weight: var(
-        --mod-drop-zone-body-font-weight,
-        var(--spectrum-drop-zone-body-font-weight)
-    );
-    line-height: var(
-        --mod-drop-zone-body-line-height,
-        var(--spectrum-drop-zone-body-line-height)
-    );
-    font-style: var(
-        --spectrum-drop-zone-body-font-style,
-        var(--spectrum-drop-zone-body-font-style)
-    );
-    margin-top: 0;
-    margin-bottom: 0;
+    font-family: var(--mod-drop-zone-body-font-family, var(--spectrum-sans-font-family-stack));
+    font-size: var(--mod-drop-zone-body-font-size, var(--spectrum-drop-zone-body-size));
+    font-weight: var(--mod-drop-zone-body-font-weight, var(--spectrum-body-sans-serif-font-weight));
+    line-height: var(--mod-drop-zone-body-line-height, var(--spectrum-body-line-height));
+    font-style: var(--mod-drop-zone-body-font-style, var(--spectrum-body-sans-serif-font-style));
+    margin-block: 0;
 }

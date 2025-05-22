@@ -1,0 +1,48 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":widenPeerDependencies",
+        "group:githubArtifactActions"
+    ],
+    "timezone": "America/Los_Angeles",
+    "schedule": ["after 12pm on thursday"],
+    "semanticCommitScope": "",
+    "labels": ["dependencies"],
+    "packageRules": [
+        {
+            "matchFileNames": ["@*/*.css"],
+            "labels": ["Spectrum CSS"]
+        },
+        {
+            "groupName": "storybook ecosystem",
+            "matchPackageNames": [
+                "storybook",
+                "@storybook/*",
+                "@types/storybook*"
+            ]
+        },
+        {
+            "groupName": "commitlint ecosystem",
+            "matchPackageNames": ["commitlint", "@commitlint/*"]
+        },
+        {
+            "groupName": "eleventy ecosystem",
+            "matchPackageNames": ["@11ty/*", "eleventy", "eleventy-plugin-*"]
+        },
+        {
+            "groupName": "web and open wc ecosystem",
+            "matchPackageNames": ["@open-wc/*", "@web/*"]
+        },
+        {
+            "groupName": "postcss ecosystem",
+            "matchPackageNames": ["postcss", "postcss-**"]
+        },
+        {
+            "groupName": "stylelint ecosystem",
+            "matchPackageNames": ["stylelint", "stylelint-**"]
+        }
+    ],
+    "rebaseWhen": "behind-base-branch",
+    "reviewers": ["team:swc-maintainers"]
+}

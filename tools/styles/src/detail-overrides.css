@@ -11,28 +11,3 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-Detail {
-    --spectrum-detail-sans-serif-font-family: var(
-        --system-detail-sans-serif-font-family
-    );
-    --spectrum-detail-serif-font-family: var(--system-detail-serif-font-family);
-    --spectrum-detail-cjk-font-family: var(--system-detail-cjk-font-family);
-    --spectrum-detail-font-color: var(--system-detail-font-color);
-    --spectrum-detail-font-size: var(--system-detail-font-size);
-}
-
-.spectrum-Detail--sizeS {
-    --spectrum-detail-font-size: var(--system-detail-size-s-font-size);
-}
-
-.spectrum-Detail--sizeM {
-    --spectrum-detail-font-size: var(--system-detail-size-m-font-size);
-}
-
-.spectrum-Detail--sizeL {
-    --spectrum-detail-font-size: var(--system-detail-size-l-font-size);
-}
-
-.spectrum-Detail--sizeXL {
-    --spectrum-detail-font-size: var(--system-detail-size-xl-font-size);
-}

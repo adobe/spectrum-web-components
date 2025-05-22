@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-infield-button.css');
-@import url('./infield-button-overrides.css');
+@import url("./spectrum-infield-button.css");
+@import url("./infield-button-overrides.css");
 
 :host {
     box-sizing: border-box;

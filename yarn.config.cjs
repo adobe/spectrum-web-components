@@ -14,6 +14,7 @@
 /** @type {import('@yarnpkg/types')} */
 const { defineConfig } = require('@yarnpkg/types');
 const fg = require('fast-glob');
+const semver = require('semver');
 
 /**
  * The workspace object used in the constraints function
@@ -26,7 +27,7 @@ module.exports = defineConfig({
          * Fetch a list of all the component workspaces using a glob pattern
          * @type {string[]} components
          */
-        const components = fg.sync('packages/*', {
+        const components = fg.sync('{packages,tools}/*', {
             cwd: __dirname,
             onlyDirectories: true,
         });
@@ -83,6 +84,17 @@ module.exports = defineConfig({
             ];
         }
 
+        const semverSort = (a, b) => {
+            // Push latest & * to the bottom because we want to use the highest *specified* version
+            if (['latest', '*'].includes(a)) {
+                return 0;
+            }
+            if (['latest', '*'].includes(b)) {
+                return 1;
+            }
+            return semver.gt(semver.coerce(a), semver.coerce(b));
+        };
+
         /**
          * This function rolls up all the component package.json
          * requirements for all workspaces into a single function
@@ -106,13 +118,68 @@ module.exports = defineConfig({
 
             // A subset of components have a different entry point than the default
             if (
-                ['clear-button', 'close-button', 'modal', 'opacity-checkerboard'].includes(folderName)
+                [
+                    'clear-button',
+                    'close-button',
+                    'modal',
+                    'opacity-checkerboard',
+                ].includes(folderName)
             ) {
                 workspace.set('main', `./src/${folderName}.css.js`);
                 workspace.set('module', `./src/${folderName}.css.js`);
             } else {
                 workspace.set('main', './src/index.js');
                 workspace.set('module', './src/index.js');
+            }
+        }
+
+        /**
+         * This rule will enforce that a workspace MUST depend on the same version of
+         * a dependency as the one used by the other workspaces.
+         *
+         * @param {import('@yarnpkg/types').Context} context
+         */
+        function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
+            const workspaceVersions = new Map();
+
+            // Iterate over all external dependencies and ensure that the version is consistent across all workspaces
+            for (const dependency of Yarn.dependencies()) {
+                for (const workspace of Yarn.workspaces()) {
+                    const version =
+                        workspace.manifest.dependencies?.[dependency.ident] ??
+                        workspace.manifest.devDependencies?.[dependency.ident];
+
+                    if (version) {
+                        workspaceVersions.set(
+                            dependency.ident,
+                            workspaceVersions.has(dependency.ident)
+                                ? workspaceVersions
+                                      .get(dependency.ident)
+                                      .add(version)
+                                : new Set([version])
+                        );
+                    }
+                }
+            }
+
+            // Iterate over the dependencies in the map and ensure that the versions are consistent across all workspaces
+            for (const [dependencyName, versions] of workspaceVersions) {
+                // We only need to continue if there are multiple versions of the dependency
+                if (versions.size <= 1) {
+                    continue;
+                }
+
+                // Use semver to determine the highest version of the dependencies in the versions list and use that as the version
+                const highestVersion = Array.from(versions)
+                    .sort(semverSort)
+                    .shift();
+
+                // Update all the workspaces with the highest version
+                for (const dep of Yarn.dependencies({
+                    ident: dependencyName,
+                })) {
+                    dep.update(highestVersion);
+                }
             }
         }
 
@@ -188,6 +255,7 @@ module.exports = defineConfig({
          */
         for (const workspace of Yarn.workspaces()) {
             validatePackageJson(workspace);
+            enforceConsistentDependenciesAcrossTheProject({ Yarn });
         }
     },
 });

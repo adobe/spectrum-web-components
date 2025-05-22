@@ -10,11 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-table-row.css');
-@import url('./table-row-overrides.css');
+@import url("./spectrum-table-row.css");
 
 :host,
-:host([role='row']) {
+:host([role="row"]) {
     display: flex;
     width: 100%;
 }
@@ -37,5 +36,5 @@ governing permissions and limitations under the License.
     border-inline-end: none;
 }
 
-/* @todo: When section header is supported, set selector equivalent of 
+/* @todo: When section header is supported, set selector equivalent of
    ".spectrum-Table-row--sectionHeader .spectrum-Table-cell" to "block-size: auto". */
