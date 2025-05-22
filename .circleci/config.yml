@@ -7,6 +7,12 @@ executors:
         resource_class: xlarge
         environment:
             NODE_ENV: development
+    azure:
+        docker:
+            - image: alpine:latest
+        resource_class: xlarge
+        environment:
+            NODE_ENV: development
 parameters:
     # In order to update the VRT baseline images:
     # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
@@ -31,7 +37,19 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: |
-                      corepack enable
+                      # Check if we're in an Azure job
+                      if [[ "$CIRCLE_JOB" == "preview-docs" || "$CIRCLE_JOB" == "beta-docs" || "$CIRCLE_JOB" == "hcm-visual" ]]; then
+                          echo "Skipping corepack in Azure job"
+                          # Check if yarn is already installed
+                          if ! command -v yarn &> /dev/null; then
+                              echo "Installing yarn..."
+                              sudo npm install -g yarn --force
+                          else
+                              echo "Yarn is already installed: $(yarn --version)"
+                          fi
+                      else
+                          corepack enable
+                      fi
                       yarn --immutable
             - run:
                   name: Build the project
@@ -98,31 +116,75 @@ commands:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
+                  name: Check Azure CLI
+                  command: |
+                      source $BASH_ENV
+                      az version
+            - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy to Azure Static Web Apps
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
+                      echo "Azure deployment hash: $hash"
                       echo "Deploying from test/visual directory..."
 
-                      max_attempts=3
-                      attempt=0
+                      max_retries=3
+                      retry_count=0
+                      
+                      while [ $retry_count -lt $max_retries ]; do
+                          # Install required tools
+                          apk add --no-cache jq gh
+                          npm install -g @azure/static-web-apps-cli
+                          
+                          if swa deploy \
+                              --app-name my-visual-regression-site \
+                              --resource-group swc-previews \
+                              --app-location test/visual \
+                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              
+                              # Get the deployment URL
+                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
+                              echo "Deployment URL: $url"
 
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                              # Add or update the PR comment if this is a PR
+                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
+                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+                                  COMMENT_MARKER="Visual Regression Test Results (<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>)"
+                                  
+                                  # Use gh CLI instead of direct API calls
+                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
+                                  
+                                  # Search for existing comment
+                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
+                                  
+                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
+                                  
+                                  if [ -n "$COMMENT_ID" ]; then
+                                      # Update existing comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
+                                          --method PATCH \
+                                          -f body="$COMMENT_BODY"
+                                  else
+                                      # Create new comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
+                                          -f body="$COMMENT_BODY"
+                                  fi
+                              fi
+                              
+                              break
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              retry_count=$((retry_count + 1))
+                              if [ $retry_count -lt $max_retries ]; then
+                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
+                                  sleep 10
+                              else
+                                  echo "Deployment failed after $max_retries attempts"
+                                  exit 1
+                              fi
                           fi
                       done
-
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -221,30 +283,8 @@ jobs:
                   name: Are there changes?
                   command: git diff-files --exit-code
 
-    preview-docs:
-        executor: node
-        steps:
-            - downstream
-            - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
-
     beta-docs:
-        executor: node
+        executor: azure
 
         steps:
             - downstream
@@ -264,11 +304,23 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
+                  # Install required tools
+                  apk add --no-cache jq gh
+                  npm install -g @azure/static-web-apps-cli
+                  
+                  if swa deploy \
+                    --app-name my-docs-site \
+                    --resource-group swc-previews \
+                    --app-location projects/documentation/dist \
+                    --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                    echo "Deployment successful"
+                  else
+                    echo "Deployment failed"
+                    exit 1
+                  fi
 
     hcm-visual:
-        executor: node
-
+        executor: azure
         steps:
             - downstream
             - restore_cache:
@@ -308,31 +360,75 @@ jobs:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
+                  name: Check Azure CLI
+                  command: |
+                      source $BASH_ENV
+                      az version
+            - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy to Azure Static Web Apps
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
+                      echo "Azure deployment hash: $hash"
                       echo "Deploying from test/visual directory..."
 
-                      max_attempts=3
-                      attempt=0
+                      max_retries=3
+                      retry_count=0
+                      
+                      while [ $retry_count -lt $max_retries ]; do
+                          # Install required tools
+                          apk add --no-cache jq gh
+                          npm install -g @azure/static-web-apps-cli
+                          
+                          if swa deploy \
+                              --app-name my-visual-regression-site \
+                              --resource-group swc-previews \
+                              --app-location test/visual \
+                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              
+                              # Get the deployment URL
+                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
+                              echo "Deployment URL: $url"
 
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                              # Add or update the PR comment if this is a PR
+                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
+                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+                                  COMMENT_MARKER="Visual Regression Test Results (High Contrast Mode)"
+                                  
+                                  # Use gh CLI instead of direct API calls
+                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
+                                  
+                                  # Search for existing comment
+                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
+                                  
+                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
+                                  
+                                  if [ -n "$COMMENT_ID" ]; then
+                                      # Update existing comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
+                                          --method PATCH \
+                                          -f body="$COMMENT_BODY"
+                                  else
+                                      # Create new comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
+                                          -f body="$COMMENT_BODY"
+                                  fi
+                              fi
+                              
+                              break
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              retry_count=$((retry_count + 1))
+                              if [ $retry_count -lt $max_retries ]; then
+                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
+                                  sleep 10
+                              else
+                                  echo "Deployment failed after $max_retries attempts"
+                                  exit 1
+                              fi
                           fi
                       done
-
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -384,11 +480,6 @@ workflows:
             - test-webkit
             - lint
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
