@@ -18,8 +18,12 @@ import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import path from 'path';
+import path, { dirname } from 'path';
 import Terser from 'terser';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const stringReplaceHtml = (source) => {
     return source
@@ -57,12 +61,19 @@ export default async () => {
     });
 
     mpaConfig.output.dir = 'dist';
+    
+    // Tell Rollup which imports should be left as is and not bundled
+    mpaConfig.external = [
+        (id) => id.startsWith('@swc-packages-internal/')
+    ];
 
     const mode =
         process.env.ROLLUP_WATCH !== 'true' ? 'production' : 'development';
     mpaConfig.plugins.unshift(
         nodeResolve({
             exportConditions: ['browser', 'import', mode],
+            // Help resolving the @swc-packages-internal modules
+            moduleDirectories: ['node_modules', 'packages', 'projects']
         })
     );
     mpaConfig.plugins.push(
@@ -131,6 +142,7 @@ export default async () => {
 
     mpaConfig.moduleContext = {
         ['focus-visible']: 'window',
+        ['../../node_modules/focus-visible/dist/focus-visible.js']: 'window'
     };
     const {
         default: { default: minifyHTML },
@@ -205,6 +217,14 @@ export default async () => {
         })
     );
 
+    mpaConfig.plugins.push(
+        copy({
+            patterns: ['../../packages/**/stories/*.js'],
+            rootDir: '../../',
+            flatten: false
+        })
+    );
+
     const {
         default: { default: visualizer },
     } = await import('rollup-plugin-visualizer');
@@ -223,7 +243,7 @@ export default async () => {
             entries: [
                 {
                     find: '@swc-packages-internal',
-                    replacement: '../../packages/',
+                    replacement: path.resolve(__dirname, '../../packages'),
                 },
             ],
         })
