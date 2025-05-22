@@ -9,7 +9,7 @@ executors:
             NODE_ENV: development
     azure:
         docker:
-            - image: cimg/azure:2024.03.1 # Use latest version
+            - image: alpine:latest
         resource_class: xlarge
         environment:
             NODE_ENV: development
@@ -122,34 +122,69 @@ commands:
                       az version
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy to Azure Static Web Apps
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Azure alias hash: $hash"
+                      echo "Azure deployment hash: $hash"
                       echo "Deploying from test/visual directory..."
 
-                      max_attempts=3
-                      attempt=0
+                      max_retries=3
+                      retry_count=0
+                      
+                      while [ $retry_count -lt $max_retries ]; do
+                          # Install required tools
+                          apk add --no-cache jq gh
+                          npm install -g @azure/static-web-apps-cli
+                          
+                          if swa deploy \
+                              --app-name my-visual-regression-site \
+                              --resource-group swc-previews \
+                              --app-location test/visual \
+                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              
+                              # Get the deployment URL
+                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
+                              echo "Deployment URL: $url"
 
-                      while [ $attempt -lt $max_attempts ]; do
-                        if npx swa deploy \
-                            --app-name my-visual-regression-site \
-                            --resource-group swc-previews \
-                            --app-location test/visual \
-                            --deployment-token $AZURE_VR_STATIC_WEB_APPS_TOKEN \; then
-                            echo "Deployment successful!"
-                            exit 0
-                        else
-                            attempt=$((attempt + 1))
-                            echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                            sleep 10
-                        fi
-                        done
-
-                        echo "Deployment failed after $max_attempts attempts."
-                        exit 1
+                              # Add or update the PR comment if this is a PR
+                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
+                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+                                  COMMENT_MARKER="Visual Regression Test Results (<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>)"
+                                  
+                                  # Use gh CLI instead of direct API calls
+                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
+                                  
+                                  # Search for existing comment
+                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
+                                  
+                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
+                                  
+                                  if [ -n "$COMMENT_ID" ]; then
+                                      # Update existing comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
+                                          --method PATCH \
+                                          -f body="$COMMENT_BODY"
+                                  else
+                                      # Create new comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
+                                          -f body="$COMMENT_BODY"
+                                  fi
+                              fi
+                              
+                              break
+                          else
+                              retry_count=$((retry_count + 1))
+                              if [ $retry_count -lt $max_retries ]; then
+                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
+                                  sleep 10
+                              else
+                                  echo "Deployment failed after $max_retries attempts"
+                                  exit 1
+                              fi
+                          fi
+                      done
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -269,16 +304,23 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  az login --identity || echo "Skipping login for GitHub token-based deploy"
-                  npx swa deploy \
+                  # Install required tools
+                  apk add --no-cache jq gh
+                  npm install -g @azure/static-web-apps-cli
+                  
+                  if swa deploy \
                     --app-name my-docs-site \
                     --resource-group swc-previews \
                     --app-location projects/documentation/dist \
-                    --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN
+                    --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                    echo "Deployment successful"
+                  else
+                    echo "Deployment failed"
+                    exit 1
+                  fi
 
     hcm-visual:
         executor: azure
-
         steps:
             - downstream
             - restore_cache:
@@ -318,32 +360,75 @@ jobs:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  name: Deploy Visual Regression Site to Azure
+                  name: Check Azure CLI
                   command: |
+                      source $BASH_ENV
+                      az version
+            - run:
+                  when: always
+                  name: Deploy to Azure Static Web Apps
+                  command: |
+                      cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
                       echo "Azure deployment hash: $hash"
+                      echo "Deploying from test/visual directory..."
 
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                          if npx swa deploy \
+                      max_retries=3
+                      retry_count=0
+                      
+                      while [ $retry_count -lt $max_retries ]; do
+                          # Install required tools
+                          apk add --no-cache jq gh
+                          npm install -g @azure/static-web-apps-cli
+                          
+                          if swa deploy \
                               --app-name my-visual-regression-site \
                               --resource-group swc-previews \
                               --app-location test/visual \
-                              --deployment-token $AZURE_VR_STATIC_WEB_APPS_TOKEN \; then
-                              echo "Deployment successful!"
-                              exit 0
+                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              
+                              # Get the deployment URL
+                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
+                              echo "Deployment URL: $url"
+
+                              # Add or update the PR comment if this is a PR
+                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
+                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+                                  COMMENT_MARKER="Visual Regression Test Results (High Contrast Mode)"
+                                  
+                                  # Use gh CLI instead of direct API calls
+                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
+                                  
+                                  # Search for existing comment
+                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
+                                  
+                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
+                                  
+                                  if [ -n "$COMMENT_ID" ]; then
+                                      # Update existing comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
+                                          --method PATCH \
+                                          -f body="$COMMENT_BODY"
+                                  else
+                                      # Create new comment
+                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
+                                          -f body="$COMMENT_BODY"
+                                  fi
+                              fi
+                              
+                              break
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10
+                              retry_count=$((retry_count + 1))
+                              if [ $retry_count -lt $max_retries ]; then
+                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
+                                  sleep 10
+                              else
+                                  echo "Deployment failed after $max_retries attempts"
+                                  exit 1
+                              fi
                           fi
                       done
-
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
