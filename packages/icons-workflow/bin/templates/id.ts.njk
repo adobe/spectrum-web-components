@@ -9,3 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import {tag as html, TemplateResult} from '../custom-tag.js';
+
+export { setCustomTemplateLiteralTag } from '../custom-tag.js';
+
+export const {{ ComponentName }}Icon = ({
+    width = {{ width }},
+    height = {{ height }},
+    hidden = false,
+    title = '{{ title }}',
+} = {}): string | TemplateResult => {
+    return html\`{{ svg }}\`;
+};

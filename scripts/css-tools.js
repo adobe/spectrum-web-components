@@ -14,56 +14,43 @@
 
 import path from 'path';
 import fs from 'fs';
+import fsp from 'fs/promises';
 import { bundleAsync } from 'lightningcss';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
 import { stripIndent } from 'common-tags';
 import 'colors';
+import { ESLint } from 'eslint';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+
+// Initialize ESLint with formatting rules enabled
+const eslint = new ESLint({
+    fix: true,
+    useEslintrc: true,
+    cwd: path.join(__dirname, '..'),
+});
 
 const log = {
     success: (message) => console.log(`${'✓'.green}  ${message}`),
     fail: (message) => console.log(`${'✗'.red}  ${message}`),
 };
 
-const getPackagePath = (packageName) => {
-    let filepath;
-
-    // Escape hatch for local packages: @spectrum-web-components
-    if (packageName.startsWith('@spectrum-web-components')) {
-        return path.resolve(
-            path.join(__dirname, '..', 'node_modules', packageName)
-        );
-    }
-
-    try {
-        filepath = require.resolve(packageName);
-    } catch (er) {
-        log.fail(`Could not find ${packageName} installed as a dependency`);
-        return new Error(er);
-    }
-
-    return filepath;
+const wrapCSSResult = async (content, filePath) => {
+    const formattedResults = await eslint.lintText(
+        stripIndent`
+import { css } from '@spectrum-web-components/base';
+const styles = css\`
+    ${content}
+\`;
+export default styles;
+`,
+        { filePath }
+    );
+    await ESLint.outputFixes(formattedResults);
+    return formattedResults;
 };
-
-const wrapCSSResult = (content) => {
-    return stripIndent`
-        import { css } from '@spectrum-web-components/base';
-        const styles = css\`
-            ${content}
-        \`;
-        export default styles;
-    `;
-};
-
-const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
-let header = '';
-if (fs.existsSync(licensePath)) {
-    header = fs.readFileSync(licensePath, 'utf8');
-    header = header.replace('<%= YEAR %>', new Date().getFullYear());
-}
 
 /**
  * Processes a CSS file using lightningcss, minifies it, and outputs a TypeScript module.
@@ -87,7 +74,7 @@ export const processCSS = async (cssPath) => {
                 if (specifier.startsWith('./')) {
                     return path.resolve(from, '..', specifier);
                 } else {
-                    return getPackagePath(specifier);
+                    return require.resolve(specifier);
                 }
             },
         },
@@ -95,11 +82,13 @@ export const processCSS = async (cssPath) => {
         .then(({ code }) => {
             log.success(cssPath.yellow + ' bundled successfully');
 
-            fs.writeFileSync(
-                `${cssPath}.ts`,
-                header + wrapCSSResult(code),
-                'utf-8'
-            );
+            return wrapCSSResult(code, cssPath).then((results) => {
+                return fsp.writeFile(
+                    `${cssPath}.ts`,
+                    results?.[0]?.output ?? code,
+                    'utf-8'
+                );
+            });
         })
         .catch((er) => {
             log.fail(cssPath.yellow + ' failed to bundle');

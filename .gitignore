@@ -26,7 +26,6 @@ lib
 custom-elements.json
 
 !packages/icons-workflow/bin/build.js
-!packages/icons-workflow/src/DefaultIcon.ts
 
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json

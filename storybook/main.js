@@ -17,6 +17,7 @@ export default {
     stories: [
         '../packages/*/stories/*.stories.js',
         '../tools/*/stories/*.stories.js',
+        '../projects/css-custom-vars-viewer/stories/*.stories.js',
     ],
     addons: [
         '@storybook/addon-links',

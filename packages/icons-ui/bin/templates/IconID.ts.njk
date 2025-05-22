@@ -9,3 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { IconBase } from '@spectrum-web-components/icon';
+import { setCustomTemplateLiteralTag } from '../custom-tag.js';
+import { {{ ComponentName }}Icon as Icon } from '../icons/{{ id }}.js';
+
+/**
+ * @element {{ iconElementName }}
+ */
+export class Icon{{ ComponentName }} extends IconBase {
+    protected override render(): TemplateResult {
+        setCustomTemplateLiteralTag(html);
+        return Icon({ hidden: !this.label, title: this.label }) as TemplateResult;
+    }
+}
