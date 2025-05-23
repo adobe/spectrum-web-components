@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-`sp-tooltip` allow users to get contextual help or information about specific components when hovering or focusing on them.
+`<sp-tooltip>` allow users to get contextual help or information about specific components when hovering or focusing on them.
 
 ### Usage
 
@@ -8,126 +8,168 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tooltip)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/VmbuRedDUMmN4amLK7ie/src/index.ts)
 
-```
+```bash
 yarn add @spectrum-web-components/tooltip
 ```
 
 Import the side effectful registration of `<sp-tooltip>` via:
 
-```
+```javascript
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 ```
 
 When looking to leverage the `Tooltip` base class as a type and/or for extension purposes, do so via:
 
-```
+```javascript
 import { Tooltip } from '@spectrum-web-components/tooltip';
 ```
 
-## Example
+### Anatomy
 
-Tooltips can be top, bottom, left, or right.
+The tooltip consists of several key parts:
+
+- The message content in its default slot
+- An optional icon using `slot="icon"`
+- A tip element that points to the trigger
 
 ```html
-<sp-tooltip open placement="top">Label</sp-tooltip>
-<br />
-<br />
-<sp-tooltip open placement="bottom">Label</sp-tooltip>
-<br />
-<br />
+<sp-tooltip open>
+    <sp-icon-info slot="icon"></sp-icon-info>
+    Tooltip message
+</sp-tooltip>
+```
+
+### Options
+
+#### Placement
+
+Tooltips can be positioned relative to their trigger element using the `placement` attribute:
+
+```html
+<sp-tooltip open placement="top">Top</sp-tooltip>
+<sp-tooltip open placement="bottom">Bottom</sp-tooltip>
 <sp-tooltip open placement="left">Label</sp-tooltip>
-<br />
-<br />
 <sp-tooltip open placement="right">Label</sp-tooltip>
 ```
 
-### Self-managed overlays
+#### Variants
 
-By default, Tooltip provides styling without behavior.
-You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) in order to manage its overlay behavior.
+The tooltip supports several variants to convey different types of messages:
 
-You can use the tooltip as the descendant of an interactive element, such as [Action Button](https://opensource.adobe.com/spectrum-web-components/components/action-button/), by applying the `self-managed` attribute which automatically binds the Tooltip to its first interactive ancestor element's focus/hover interactions:
+<sp-tabs selected="info" auto label="Variant Options">
+<sp-tab value="info">Info</sp-tab>
+<sp-tab-panel value="info">
+
+Use `variant="info"` for informational messages.
+
+```html
+<sp-tooltip open placement="top" variant="info">
+    <sp-icon-info slot="icon" size="s"></sp-icon-info>
+    Embark on a side quest.
+</sp-tooltip>
+```
+
+</sp-tab-panel>
+<sp-tab value="positive">Positive</sp-tab>
+<sp-tab-panel value="positive">
+
+Use `variant="positive"` for success messages.
+
+```html
+<sp-tooltip open placement="top" variant="positive">
+    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
+    You've defeated the final boss!
+</sp-tooltip>
+```
+
+</sp-tab-panel>
+<sp-tab value="negative">Negative</sp-tab>
+<sp-tab-panel value="negative">
+
+Use `variant="negative"` for error messages.
+
+```html
+<sp-tooltip open placement="top" variant="negative">
+    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
+    Your party was wiped out!
+</sp-tooltip>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Behaviors
+
+#### Used with Overlay Trigger
+
+By default, Tooltip provides styling without behavior. You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) to manage its overlay behavior.
+
+```html
+<overlay-trigger triggered-by="hover">
+    <sp-button slot="trigger" variant="secondary">Hover me</sp-button>
+    <sp-tooltip slot="hover-content" placement="bottom">
+        Tooltip overlay triggered by hover
+    </sp-tooltip>
+</overlay-trigger>
+```
+
+#### Self-managed Overlays
+
+For simpler use cases, you can use the `self-managed` attribute which automatically binds the Tooltip to its first interactive ancestor element's focus/hover interactions:
 
 ```html
 <sp-action-button>
-    Trigger
-    <sp-tooltip self-managed>Content</sp-tooltip>
+    Items
+    <sp-tooltip self-managed>Use items during battle.</sp-tooltip>
 </sp-action-button>
 ```
 
-This is especially useful when inserting an intermediate `<overlay-trigger>` would interfere with
-parent/child relationships, such as between `<sp-action-group>` and `<sp-action-button>`.
+This is especially useful when inserting an intermediate `<overlay-trigger>` would interfere with parent/child relationships, such as between `<sp-action-group>` and `<sp-action-button>`.
 
-Note that an interactive element is an element that can receive focus during tab navigation, such as `sp-action-button`, `sp-action-menu`, `sp-field-label` etc.
+#### Delayed Opening
 
-Given that tooltip is not focusable by itself, it would not show up during tab navigation. Thus a tooltip would not be accessible if used with a non-interactive element, such as `<sp-icon-*>`.
+A tooltip can be configured to delay its opening using the `delayed` attribute. This adds a warm-up period of 1000ms before showing the tooltip:
 
-The correct way to make it accessible would be to wrap it under an interactive element, such as `sp-action-button`:
+```html
+<sp-tooltip self-managed delayed>
+    This tooltip will show after a delay
+</sp-tooltip>
+```
+
+### Accessibility
+
+The tooltip is automatically assigned appropriate ARIA attributes:
+
+- `role="tooltip"` is applied to the tooltip content
+- The tooltip is associated with its trigger element via `aria-describedby`
+
+When using `self-managed` tooltips:
+
+- The tooltip appears on hover or focus of the trigger element
+- The tooltip disappears when focus or hover leaves the trigger element
+- <kbd>Escape</kbd> dismisses the tooltip
+
+#### Use tooltips to describe icons
+
+Icons are not always easy to identify on their own. When you use components that don’t have labels — for example, icon-only action buttons and tabs — make sure to use tooltips to provide context for the icons.
+
+Given that tooltip is not focusable by itself, it would not show up during tab navigation. A tooltip should only be used with interactive elements that can receive focus during tab navigation, such as:
+
+- `<sp-action-button>`
+- `<sp-action-menu>`
+- `<sp-field-label>`
+
+For non-interactive elements like icons, wrap them in an interactive element:
 
 ```html
 <sp-action-button size="s">
-    <sp-icon-info slot="icon"></sp-icon-info>
-    <sp-tooltip self-managed placement="right">
-        Display something here
-    </sp-tooltip>
+    <sp-icon-book slot="icon"></sp-icon-book>
+    <sp-tooltip self-managed placement="right">Save progress.</sp-tooltip>
 </sp-action-button>
 ```
 
-## Variants
+#### Don't use tooltips to communicate crucial information
 
-### Informative
+Show crucial information at all times, not just when a tooltip is displayed. A tooltip should only be used to provide supplementary context or hints to the message shown in help text.
 
-This is the informative or info variant of Tooltip
-
-```html
-<sp-tooltip open placement="top" variant="info">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
-    <sp-icon-info slot="icon" size="s"></sp-icon-info>
-    Label
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
-    <sp-icon-info slot="icon" size="s"></sp-icon-info>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-```
-
-### Positive
-
-This is the postive (a.k.a.) success variant of Tooltip
-
-```html
-<sp-tooltip open placement="top" variant="positive">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
-    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
-    Label
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
-    <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-```
-
-### Negative
-
-This is the negative a.k.a. error variant of Tooltip
-
-```html
-<sp-tooltip open placement="top" variant="negative">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
-    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
-    Label
-</sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
-    <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-</sp-tooltip>
-```
+For example, in a scenario where a user is entering their password into a field, the crucial information would be to state the password requirements. Supplementary context would be a message about how to get help if they have forgotten their password.
