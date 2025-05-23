@@ -1,30 +1,30 @@
-## Description
+## Overview
 
-While `<sp-tooltip>` element are general fairly innocumous amounts of DOM, it is possible that your page will quickly leverage so many Tooltips that their presence could begin to negatively effect its performane. To support consumers that leverage `lit-html`, Spectrum Web Components also vends a [directive](https://lit.dev/docs/api/directives/) to further simplify the delivery of `<sp-tooltip>` elements.
+While `<sp-tooltip>` elements are generally fairly innocuous amounts of DOM, it is possible impact performance with too many Tooltips. To support consumers that use `lit-html`, Spectrum Web Components also proives a [directive](https://lit.dev/docs/api/directives/) to improve performance when using many `<sp-tooltip>` elements.
 
-### Uusage
+### Usage
 
 ```
 yarn add @spectrum-web-components/tooltip
 ```
 
-Import the `trigger` directive as follows:
+Import the tooltip directive as follows:
 
 ```
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 ```
 
-## Arguments
+### Anatomy
 
-The `trigger()` directive accepts two arguments:
+The tooltip directive consists of two main parts:
 
--   a required method returning the `TemplateResult` defining the content of the open overlay
+1. A method returning the `TemplateResult` defining the content of the open overlay:
 
 ```ts
 () => TemplateResult;
 ```
 
--   an optional options object which is shaped as follows:
+2. An optional options object for configuring the tooltip behavior:
 
 ```ts
 {
@@ -36,9 +36,15 @@ The `trigger()` directive accepts two arguments:
 }
 ```
 
-The `triggerInteraction` is applied as `hover` when using the `tooltip()` directive.
+### Options
 
-`OverlayOptions` are leveraged in the same way as outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions) and `InsertionOptions` are leveraged to outline where in the DOM the Overlay should be inserted:
+#### Overlay Options
+
+The `overlayOptions` are leveraged in the same way as outlined [here](https://opensource.adobe.com/spectrum-web-components/components/imperative-api/#overlayoptions).
+
+#### Insertion Options
+
+The `insertionOptions` define where in the DOM the Overlay should be inserted:
 
 ```ts
 type InsertionOptions = {
@@ -47,14 +53,13 @@ type InsertionOptions = {
 };
 ```
 
-## Consumption via `lit-html`
+### Behaviors
 
-The `tooltip()` directive will automatically wrap whatever content you provide in an `<sp-tooltip>` element for you, so you will not need to supply one in this case.
+#### Consumption via `lit-html`
 
-Pass a `TemplateResult` into the `tooltip()` directive, as follows in order to have it rendered to the DOM when the associated Tooltip is about to open and the removed after the Tooltip has closed.
+The `tooltip()` directive will automatically wrap whatever content you provide in an `<sp-tooltip>` element. Pass a `TemplateResult` into the `tooltip()` directive to have it rendered to the DOM when the associated Tooltip is about to open and then removed after the Tooltip has closed.
 
 ```html-live
-
 <div id="root"></div>
 
 <script type="module">
@@ -71,7 +76,6 @@ Pass a `TemplateResult` into the `tooltip()` directive, as follows in order to h
         })}>Trigger</sp-button>
     `;
 
-
     customElements.whenDefined('code-example').then(() => {
         Promise.all([...document.querySelectorAll('code-example')].map(example => example.updateComplete)).then(() => {
             const appRoot = document.querySelector('#root');
@@ -104,3 +108,14 @@ Pass a `TemplateResult` into the `tooltip()` directive, as follows in order to h
         });
     });
 </script>
+
+### Accessibility
+
+The tooltip directive automatically manages accessibility features:
+
+- Tooltips are associated with their trigger elements via `aria-describedby`
+- Content is only rendered when needed, reducing DOM complexity
+- Hover and focus interactions are handled automatically
+- Keyboard navigation support is built-in
+
+For more information on accessibility, see the [Accessibility](https://opensource.adobe.com/spectrum-web-components/components/tooltip/#accessibility) section of the tooltip component.
