@@ -46,10 +46,10 @@ The tooltip consists of several key parts:
 Tooltips can be positioned relative to their trigger element using the `placement` attribute:
 
 ```html
-<sp-tooltip open placement="top">Top</sp-tooltip>
+<sp-tooltip open placement="left">Left</sp-tooltip>
 <sp-tooltip open placement="bottom">Bottom</sp-tooltip>
-<sp-tooltip open placement="left">Label</sp-tooltip>
-<sp-tooltip open placement="right">Label</sp-tooltip>
+<sp-tooltip open placement="right">Right</sp-tooltip>
+<sp-tooltip open placement="top">Top</sp-tooltip>
 ```
 
 #### Variants
@@ -78,7 +78,7 @@ Use `variant="positive"` for success messages.
 ```html
 <sp-tooltip open placement="top" variant="positive">
     <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
-    You've defeated the final boss!
+    Quest completed!
 </sp-tooltip>
 ```
 
@@ -91,7 +91,7 @@ Use `variant="negative"` for error messages.
 ```html
 <sp-tooltip open placement="top" variant="negative">
     <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
-    Your party was wiped out!
+    Quest failed!
 </sp-tooltip>
 ```
 
@@ -100,9 +100,15 @@ Use `variant="negative"` for error messages.
 
 ### Behaviors
 
-#### Used with Overlay Trigger
+#### Overlay
 
-By default, Tooltip provides styling without behavior. You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) to manage its overlay behavior.
+By default, Tooltip provides styling without behavior.
+
+<sp-tabs selected="overlay-trigger" auto label="Overlay Behaviors">
+<sp-tab value="overlay-trigger">Overlay Trigger</sp-tab>
+<sp-tab-panel value="overlay-trigger">
+
+You must combine it with an [Overlay Trigger](https://opensource.adobe.com/spectrum-web-components/components/overlay-trigger/#%22hover%22-content-only) to manage its overlay behavior.
 
 ```html
 <overlay-trigger triggered-by="hover">
@@ -113,7 +119,9 @@ By default, Tooltip provides styling without behavior. You must combine it with 
 </overlay-trigger>
 ```
 
-#### Self-managed Overlays
+</sp-tab-panel>
+<sp-tab value="self-managed">Self-managed</sp-tab>
+<sp-tab-panel value="self-managed">
 
 For simpler use cases, you can use the `self-managed` attribute which automatically binds the Tooltip to its first interactive ancestor element's focus/hover interactions:
 
@@ -125,6 +133,9 @@ For simpler use cases, you can use the `self-managed` attribute which automatica
 ```
 
 This is especially useful when inserting an intermediate `<overlay-trigger>` would interfere with parent/child relationships, such as between `<sp-action-group>` and `<sp-action-button>`.
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Delayed Opening
 
