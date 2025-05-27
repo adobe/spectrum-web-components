@@ -80,12 +80,12 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.6.0",
-        "@spectrum-web-components/field-label": "^1.6.0",
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/field-label": "1.6.0",
         "@spectrum-web-components/number-field": "^1.6.0",
-        "@spectrum-web-components/shared": "^1.6.0",
+        "@spectrum-web-components/shared": "1.6.0",
         "@spectrum-web-components/swan": "workspace:*",
-        "@spectrum-web-components/theme": "^1.6.0"
+        "@spectrum-web-components/theme": "1.6.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -64,10 +64,10 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.6.0",
-        "@spectrum-web-components/field-label": "^1.6.0",
-        "@spectrum-web-components/reactive-controllers": "^1.6.0",
-        "@spectrum-web-components/shared": "^1.6.0",
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/field-label": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0",
         "@spectrum-web-components/swan": "workspace:*"
     },
     "types": "./src/index.d.ts",
