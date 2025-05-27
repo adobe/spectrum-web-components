@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-color-area.css');
-@import url('./color-area-overrides.css');
+@import url("./spectrum-color-area.css");
+@import url("./color-area-overrides.css");
 
 :host {
     touch-action: none;
@@ -34,11 +34,12 @@ governing permissions and limitations under the License.
     height: 100%;
 }
 
-:host([dir='rtl']) .gradient {
+:host([dir="rtl"]) .gradient {
     transform: scaleX(-1);
 }
 
-.slider[orient='vertical'] {
+.slider[orient="vertical"] {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown */
     appearance: slider-vertical;
 }
 

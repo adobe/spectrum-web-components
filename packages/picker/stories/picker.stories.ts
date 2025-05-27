@@ -22,6 +22,8 @@ import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
@@ -102,7 +104,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
         <div style="padding: 40px">
             <h1>Force Popover on Mobile</h1>
             <p>
-                The forcePopover attribute overrides the mobile device
+                The force-popover attribute overrides the mobile device
                 functionality of rendering a tray so that a popover will always
                 render no matter the device.
             </p>
@@ -134,7 +136,7 @@ export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
             </sp-field-label>
             <sp-picker
                 id="picker-2"
-                forcePopover
+                force-popover
                 @change=${handleChange(args)}
                 label="Select an option"
             >
@@ -395,7 +397,7 @@ export const iconsNone = (args: StoryArgs): TemplateResult => {
             value="1"
             icons="none"
         >
-            <sp-menu-item value="1">
+            <sp-menu-item value="1" selected active focused>
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit
             </sp-menu-item>
@@ -772,8 +774,11 @@ export const BackgroundClickTest = (): TemplateResult => {
             <div style="position: absolute; bottom: 50px;">
                 <sp-button
                     @click=${() => {
+                        alert(
+                            'this button should not receive a click event on menu-item selection'
+                        );
                         console.log(
-                            'this button should not have been clicked...'
+                            'this button should not receive a click event on menu-item selection'
                         );
                     }}
                     size="l"
@@ -785,5 +790,28 @@ export const BackgroundClickTest = (): TemplateResult => {
     `;
 };
 BackgroundClickTest.swc_vrt = {
+    skip: true,
+};
+
+export const PickerInModal = (): TemplateResult => {
+    return html`
+        <sp-button id="trigger">Overlay Trigger</sp-button>
+        <sp-overlay trigger="trigger@click" placement="bottom">
+            <sp-popover>
+                <sp-picker
+                    label="What would you like to do?"
+                    value="item-2"
+                    id="picker-icons"
+                    style="margin: 20px"
+                >
+                    <sp-menu-item>Save</sp-menu-item>
+                    <sp-menu-item>Finish</sp-menu-item>
+                    <sp-menu-item>Review</sp-menu-item>
+                </sp-picker>
+            </sp-popover>
+        </sp-overlay>
+    `;
+};
+PickerInModal.swc_vrt = {
     skip: true,
 };

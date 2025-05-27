@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-An `<sp-action-menu>` is an action button that triggers an overlay with `<sp-menu-items>` for activation. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `<sp-action-menu>` element. By default `<sp-action-menu>` does not manage a selection. If you'd like for a selection to be held by the `<sp-menu>` that is presented in its overlay, use `selects="single"` to activate this functionality.
+An `<sp-action-menu>` is an action button that triggers an overlay with `<sp-menu-items>` for activation. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `<sp-action-menu>` element. By default, `<sp-action-menu>` does not manage a selection. If you'd like for a selection to be managed, use `selects="single"` on the `<sp-menu>` to activate this functionality.
 
 ### Usage
 
@@ -30,9 +30,11 @@ When looking to leverage the `ActionMenu` base class as a type and/or for extens
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 ```
 
-## Sizes
+### Options
 
-<sp-tabs selected="m" auto label="Size Attribute Options">
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size attribute options">
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -274,7 +276,7 @@ When `selects` is set to `single`, the `<sp-action-menu>` element will maintain 
 
 ## Force Popover on Mobile Devices
 
-On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-action-menu` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `forcePopover` to the `sp-action-menu`.
+On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By default, `sp-action-menu` will render an `sp-tray`. If you would like to render `sp-popover` on mobile, add the attribute `force-popover` to the `sp-action-menu`.
 
 Usage Guidance:
 
@@ -284,7 +286,7 @@ Usage Guidance:
 To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
 
 ```html
-<sp-action-menu forcePopover>
+<sp-action-menu force-popover>
     <span slot="label">Action Menu</span>
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select Inverse</sp-menu-item>

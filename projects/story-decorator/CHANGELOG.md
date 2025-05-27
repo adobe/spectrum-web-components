@@ -1,5 +1,65 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`3c3bc2b`](https://github.com/adobe/spectrum-web-components/commit/3c3bc2bed9f1c731bc662220fe96f67f03331015), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    -   @spectrum-web-components/picker@1.6.0
+    -   @spectrum-web-components/menu@1.6.0
+    -   @spectrum-web-components/switch@1.6.0
+    -   @spectrum-web-components/overlay@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`86bcd12`](https://github.com/adobe/spectrum-web-components/commit/86bcd122003e99d490a64d466dab3e7d609a6ff3), [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`4c2f908`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92b383d49eb7197d954966fe1798aa20), [`a69accb`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b44b2612d53d31ba52c99aa751ce9f3a)]:
+    -   @spectrum-web-components/menu@1.5.0
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/overlay@1.5.0
+    -   @spectrum-web-components/picker@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/switch@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies [[`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`6618422`](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f), [`1fc141c`](https://github.com/adobe/spectrum-web-components/commit/1fc141cefc01b8a98910c43a1e4ffaa61e952225), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d), [`82212f4`](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7)]:
+    -   @spectrum-web-components/picker@1.4.0
+    -   @spectrum-web-components/menu@1.4.0
+    -   @spectrum-web-components/overlay@1.4.0
+    -   @spectrum-web-components/theme@1.4.0
+    -   @spectrum-web-components/field-label@1.4.0
+    -   @spectrum-web-components/switch@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+
+## 1.3.0
+
+### Patch Changes
+
+-   [#5158](https://github.com/adobe/spectrum-web-components/pull/5158) [`30adee2`](https://github.com/adobe/spectrum-web-components/commit/30adee2f95236e595055baff466af55a8425bf05) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Decorator now sets the **swc_hack_knobs** correctly so that the stories with nested sp-theme updates the theme attributes correctly
+
+-   [#5175](https://github.com/adobe/spectrum-web-components/pull/5175) [`20df69e`](https://github.com/adobe/spectrum-web-components/commit/20df69ecb7ad6b3d3c0a63a4174ec164a79568ee) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - added the locale picker back to the storybook decorator
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f), [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/picker@1.3.0
+    -   @spectrum-web-components/menu@1.3.0
+    -   @spectrum-web-components/overlay@1.3.0
+    -   @spectrum-web-components/field-label@1.3.0
+    -   @spectrum-web-components/switch@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

@@ -10,56 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-breadcrumbs.css');
-@import url('./breadcrumbs-overrides.css');
+@import url("./spectrum-breadcrumbs.css");
+@import url("./breadcrumbs-overrides.css");
 
 :host {
     display: block;
 }
 
 :host([compact]) {
-    --mod-breadcrumbs-icon-spacing-block: var(
-        --mod-breadcrumbs-icon-spacing-block-compact,
-        var(--spectrum-breadcrumbs-icon-spacing-block-compact)
-    );
-    --mod-breadcrumbs-text-spacing-block-start: var(
-        --mod-breadcrumbs-text-spacing-block-start-compact,
-        var(--spectrum-breadcrumbs-text-spacing-block-start-compact)
-    );
-    --mod-breadcrumbs-text-spacing-block-end: var(
-        --mod-breadcrumbs-text-spacing-block-end-compact,
-        var(--spectrum-breadcrumbs-text-spacing-block-end-compact)
-    );
-    --mod-breadcrumbs-action-button-spacing-block: var(
-        --mod-breadcrumbs-action-button-spacing-block-compact,
-        var(--spectrum-breadcrumbs-action-button-spacing-block-compact)
-    );
+    --mod-breadcrumbs-icon-spacing-block: var(--mod-breadcrumbs-icon-spacing-block-compact, var(--spectrum-breadcrumbs-icon-spacing-block-compact));
+    --mod-breadcrumbs-text-spacing-block-start: var(--mod-breadcrumbs-text-spacing-block-start-compact, var(--spectrum-breadcrumbs-text-spacing-block-start-compact));
+    --mod-breadcrumbs-text-spacing-block-end: var(--mod-breadcrumbs-text-spacing-block-end-compact, var(--spectrum-breadcrumbs-text-spacing-block-end-compact));
+    --mod-breadcrumbs-action-button-spacing-block: var(--mod-breadcrumbs-action-button-spacing-block-compact, var(--spectrum-breadcrumbs-action-button-spacing-block-compact));
 }
 
-:host([dir]) slot[slot='icon']::slotted([slot='icon']),
-:host([dir]) slot[slot='icon'] .icon {
-    margin-inline: calc(
-            (
-                    var(
-                            --custom-actionbutton-edge-to-text,
-                            var(--spectrum-actionbutton-edge-to-text)
-                        ) -
-                        var(
-                            --custom-actionbutton-edge-to-visual-only,
-                            var(--spectrum-actionbutton-edge-to-visual-only)
-                        )
-                ) * -1
-        )
-        calc(
-            (
-                    var(
-                            --custom-actionbutton-edge-to-text,
-                            var(--spectrum-actionbutton-edge-to-text)
-                        ) -
-                        var(
-                            --custom-actionbutton-edge-to-visual-only,
-                            var(--spectrum-actionbutton-edge-to-visual-only)
-                        )
-                ) * -1
-        );
+:host([dir]) slot[slot="icon"]::slotted([slot="icon"]),
+:host([dir]) slot[slot="icon"] .icon {
+    margin-inline: calc((var(--custom-actionbutton-edge-to-text, var(--spectrum-actionbutton-edge-to-text)) - var(--custom-actionbutton-edge-to-visual-only, var(--spectrum-actionbutton-edge-to-visual-only))) * -1);
 }

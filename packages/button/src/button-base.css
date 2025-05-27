@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-button-base.css');
+@import url("./spectrum-button-base.css");
 
 :host {
     display: inline-flex;
@@ -21,7 +21,7 @@ governing permissions and limitations under the License.
 }
 
 :host([dir]) {
-    /* spectrum-css uses "-webkit-appearance: button" to workaround an
+    /* spectrum-button.css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host
      */
@@ -51,45 +51,39 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-slot[name='icon']::slotted(svg),
-slot[name='icon']::slotted(img) {
+slot[name="icon"]::slotted(svg),
+slot[name="icon"]::slotted(img) {
     fill: currentcolor;
     stroke: currentcolor;
-    block-size: var(
-        --spectrum-icon-size,
-        var(--spectrum-workflow-icon-size-100)
-    );
-    inline-size: var(
-        --spectrum-icon-size,
-        var(--spectrum-workflow-icon-size-100)
-    );
+    block-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
+    inline-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
 }
 
 [icon-only] + #label {
     display: contents;
 }
 
-:host([size='xs']) {
+:host([size="xs"]) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-50);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
-:host([size='s']) {
+:host([size="s"]) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
 }
 
-:host([size='l']) {
+:host([size="l"]) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
 }
 
-:host([size='xl']) {
+:host([size="xl"]) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
 }
 
-:host([size='xxl']) {
+:host([size="xxl"]) {
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-400);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
 }

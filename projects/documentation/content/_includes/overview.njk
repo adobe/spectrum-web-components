@@ -1,0 +1,28 @@
+---
+layout: component.njk
+---
+<sp-tabs
+    selected="overview"
+    direction="horizontal"
+    aria-labelledby="component-name"
+    size="xl"
+>
+    <sp-tab value="overview">Overview</sp-tab>
+    {% set hasAPI = false %}
+    {% for component in collections['component-api'] %}
+        {% if component.data.componentName === componentName %}
+            {% set hasAPI = true %}
+        {% endif %}
+    {% endfor %}
+    {% set hasChangelog = false %}
+    {% for component in collections['component-changelog'] %}
+        {% if component.data.componentName === componentName %}
+            {% set hasChangelog = true %}
+        {% endif %}
+    {% endfor %}
+    {% if hasAPI === true %}
+        <sp-tab value="api">API</sp-tab>
+    {% endif %}
+    {% if hasChangelog === true %}
+        <sp-tab value="changelog">Changelog</sp-tab>
+    {% endif %}

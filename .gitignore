@@ -16,7 +16,6 @@ tach-results.*
 documentation/components/searchIndex.json
 documentation/api-docs
 documentation/dist
-.lighthouseci
 searchIndex.json
 
 # dependency folders
@@ -32,7 +31,6 @@ custom-elements.json
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
-packages/**/spectrum-vars.json
 packages/**/*.js.map
 packages/**/*.d.ts
 packages/**/*.test-vrt.ts
@@ -51,7 +49,6 @@ projects/**/*.d.ts
 
 tools/*/src/**/*.css.js
 tools/*/custom-elements.json
-tools/**/spectrum-vars.json
 tools/**/*.js
 tools/**/*.js.map
 tools/**/*.d.ts
@@ -63,8 +60,10 @@ tools/**/*.test-vrt.ts
 !tools/base/src/version.js
 !tools/base/src/version.d.ts
 
-
+# cache directories
 .wireit
+.eslintcache
+.stylelintcache
 
 stats.html
 
@@ -115,3 +114,4 @@ chromatic.config.json
 !.yarn/versio;/
 
 .specstory
+!.yarn/version

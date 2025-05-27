@@ -8,7 +8,7 @@ You can build the entirety of the documentation site from the root of the projec
 
 ## Copy Docs
 
-Working from the `README.md` files (as well as any other `*.md` file that is not `CHANGELOG.md`) in the individual packages as well as the content in `custom-elements.json`, the `yarn copy-docs` command will prepare the content for the "examples" and "api" sections relative to each package as available. The `README.md` files will have 11ty specific front matter prepended to their content, but with otherwise we copied directly into the documentation project. The data in `custom-elements.json` will be parsed as appropriate to create API tables outlining the interface (attributes, properties, events, slots, and CSS Custom Properties) that is available for each element.
+Working from the `README.md` files (as well as any other `*.md` file that is not `CHANGELOG.md`) in the individual packages as well as the content in `custom-elements.json`, the `yarn copy-docs` command will prepare the content for the "overview" and "api" sections relative to each package as available. The `README.md` files will have 11ty specific front matter prepended to their content, but with otherwise we copied directly into the documentation project. The data in `custom-elements.json` will be parsed as appropriate to create API tables outlining the interface (attributes, properties, events, slots, and CSS Custom Properties) that is available for each element.
 
 ## Typescript
 

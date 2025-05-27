@@ -10,13 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-color-slider.css');
-@import url('./color-slider-overrides.css');
+@import url("./spectrum-color-slider.css");
 
 :host {
-    --sp-color-slider-gradient-fallback: rgb(255 0 0) 0%, rgb(255 255 0) 17%,
-        rgb(0 255 0) 33%, rgb(0 255 255) 50%, rgb(0 0 255) 67%,
-        rgb(255 0 255) 83%, rgb(255 0 0) 100%;
+    --sp-color-slider-gradient-fallback: rgb(255 0 0) 0%, rgb(255 255 0) 17%, rgb(0 255 0) 33%, rgb(0 255 255) 50%, rgb(0 0 255) 67%, rgb(255 0 255) 83%, rgb(255 0 0) 100%;
 
     touch-action: none;
 }
@@ -27,6 +24,7 @@ governing permissions and limitations under the License.
 }
 
 :host([vertical]) .slider {
+    /* stylelint-disable-next-line declaration-property-value-no-unknown -- known experimental property */
     appearance: slider-vertical;
 }
 

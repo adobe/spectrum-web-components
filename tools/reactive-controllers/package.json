@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "1.2.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "tools/reactive-controllers"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/reactive-controllers",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -77,14 +77,19 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
         "lit-html",
-        "reactive controllers"
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/progress-circle": "^1.2.0",
+        "@spectrum-web-components/progress-circle": "1.6.0",
         "colorjs.io": "^0.5.2",
         "lit": "^2.5.0 || ^3.1.3"
     },

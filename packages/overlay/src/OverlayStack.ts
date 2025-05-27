@@ -34,7 +34,43 @@ class OverlayStack {
         this.document.addEventListener('pointerdown', this.handlePointerdown);
         this.document.addEventListener('pointerup', this.handlePointerup);
         this.document.addEventListener('keydown', this.handleKeydown);
+        this.document.addEventListener('scroll', this.handleScroll, {
+            capture: true,
+        });
     }
+
+    private handleScroll = (event: Event): void => {
+        // Only handle document/body level scrolls
+        // Skip any component scrolls
+        if (
+            event.target !== document &&
+            event.target !== document.documentElement &&
+            event.target !== document.body
+        ) {
+            return;
+        }
+        // Update positions of all open overlays
+        this.stack.forEach((overlay) => {
+            if (overlay.open) {
+                // Don't close pickers on document scroll
+                if (
+                    overlay.type === 'auto' &&
+                    overlay.triggerElement instanceof HTMLElement &&
+                    overlay.triggerElement.closest('sp-picker, sp-action-menu')
+                ) {
+                    event.stopPropagation();
+                }
+                // Update the overlay's position by dispatching the update event
+                document.dispatchEvent(
+                    new CustomEvent('sp-update-overlays', {
+                        bubbles: true,
+                        composed: true,
+                        cancelable: true,
+                    })
+                );
+            }
+        });
+    };
 
     private closeOverlay(overlay: Overlay): void {
         const overlayIndex = this.stack.indexOf(overlay);
@@ -120,12 +156,12 @@ class OverlayStack {
             event.preventDefault();
             return;
         }
-        if (supportsPopover) return;
         if (last?.type === 'manual') {
-            // Manual Overlays should not close on "light dismiss".
+            // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
+            this.closeOverlay(last);
             return;
         }
-
+        if (supportsPopover) return;
         if (!last) return;
         this.closeOverlay(last);
     };

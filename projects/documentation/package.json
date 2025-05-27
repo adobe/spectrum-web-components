@@ -1,10 +1,10 @@
 {
     "name": "documentation",
-    "version": "1.2.0",
+    "version": "1.2.4",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
-    "author": "",
+    "author": "Adobe",
     "main": "index.js",
     "type": "module",
     "scripts": {
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^1.2.0",
-        "@spectrum-web-components/custom-vars-viewer": "^1.2.0"
+        "@spectrum-web-components/bundle": "1.6.0",
+        "@spectrum-web-components/custom-vars-viewer": "1.6.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "^3.0.0-alpha.4",
@@ -36,9 +36,9 @@
         "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
-        "@web/dev-server": "^0.4.3",
+        "@web/dev-server": "^0.4.6",
         "@web/rollup-plugin-copy": "^0.5.1",
-        "@web/rollup-plugin-html": "^2.1.2",
+        "@web/rollup-plugin-html": "^2.3.0",
         "alex": "^11.0.1",
         "esbuild-plugin-lit-css": "^3.0.0",
         "lunr": "^2.3.9",
@@ -49,7 +49,7 @@
         "posthtml-attrs-parser": "^1.0.1",
         "posthtml-match-helper": "^2.0.0",
         "prismjs": "^1.29.0",
-        "rimraf": "^5.0.1",
+        "rimraf": "^6.0.1",
         "rollup": "^4.12.0",
         "rollup-plugin-lit-css": "^5.0.0",
         "rollup-plugin-minify-html-literals": "^1.2.6",
@@ -257,5 +257,24 @@
                 }
             ]
         }
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/documentation"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
 }

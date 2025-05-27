@@ -1,5 +1,59 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5344](https://github.com/adobe/spectrum-web-components/pull/5344) [`02af616`](https://github.com/adobe/spectrum-web-components/commit/02af6167c2f69345a4d7fdd1672d56777f7962ee) Thanks [@renovate](https://github.com/apps/renovate)! - [#​3611](https://github.com/adobe/spectrum-css/pull/3611) Thanks [@​aramos-adobe](https://github.com/aramos-adobe)!
+
+    The border radius styles were not being applied to the second instance of the slider track when the offset variant is activated. When the offset is selected, the template structure changes as fill gets added to the slider.
+
+    Adding a sibling combinator to track when offset is activated resolved the issue.
+
+-   Updated dependencies [[`74386e8`](https://github.com/adobe/spectrum-web-components/commit/74386e8c5b4717270fcccd9ebb72dab8cf757515), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd)]:
+    -   @spectrum-web-components/number-field@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/field-label@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`5a3bc6d`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24ea95f6dd5b5ead9d7eb45c393324ee9)]:
+    -   @spectrum-web-components/field-label@1.5.0
+    -   @spectrum-web-components/number-field@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/theme@1.4.0
+    -   @spectrum-web-components/field-label@1.4.0
+    -   @spectrum-web-components/number-field@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
+## 1.3.0
+
+### Patch Changes
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/field-label@1.3.0
+    -   @spectrum-web-components/number-field@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

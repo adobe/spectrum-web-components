@@ -174,7 +174,7 @@ interface StoryArgs {
     visibleLabel?: string;
     disabled?: boolean;
     open?: boolean;
-    customIcon?: string | TemplateResult;
+    customIcon?: string | undefined;
     selects?: 'single';
     selected?: boolean;
     quiet?: boolean;
@@ -210,9 +210,9 @@ export const forcePopoverOnMobile = (): TemplateResult => html`
     <div style="padding: 40px">
         <h1>Force Popover on Mobile</h1>
         <p>
-            The forcePopover attribute overrides the mobile device functionality
-            of rendering a tray so that a popover will always render no matter
-            the device.
+            The force-popover attribute overrides the mobile device
+            functionality of rendering a tray so that a popover will always
+            render no matter the device.
         </p>
         <ol>
             <li>Open Chrome DevTools (or equivalent).</li>
@@ -225,7 +225,7 @@ export const forcePopoverOnMobile = (): TemplateResult => html`
             <li>Reload the page</li>
             <li>Click the Action Menu and see a popover</li>
         </ol>
-        <sp-action-menu forcePopover>
+        <sp-action-menu force-popover>
             <span slot="icon">
                 <sp-icon-settings></sp-icon-settings>
             </span>
@@ -299,9 +299,7 @@ tooltipDescriptionAndPlacement.args = {
 
 export const customIcon = (args: StoryArgs): TemplateResult => Template(args);
 customIcon.args = {
-    customIcon: html`
-        <sp-icon-settings slot="icon"></sp-icon-settings>
-    `,
+    customIcon: `<sp-icon-settings slot="icon"></sp-icon-settings>`,
     visibleLabel: '',
 };
 

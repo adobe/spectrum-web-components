@@ -1,5 +1,73 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    -   @spectrum-web-components/icons-workflow@1.6.0
+    -   @spectrum-web-components/button@1.6.0
+    -   @spectrum-web-components/alert-dialog@1.6.0
+    -   @spectrum-web-components/button-group@1.6.0
+    -   @spectrum-web-components/divider@1.6.0
+    -   @spectrum-web-components/modal@1.6.0
+    -   @spectrum-web-components/underlay@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Patch Changes
+
+-   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
+    -   @spectrum-web-components/alert-dialog@1.5.0
+    -   @spectrum-web-components/button-group@1.5.0
+    -   @spectrum-web-components/divider@1.5.0
+    -   @spectrum-web-components/modal@1.5.0
+    -   @spectrum-web-components/underlay@1.5.0
+    -   @spectrum-web-components/button@1.5.0
+    -   @spectrum-web-components/icons-workflow@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
+## 1.4.0
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/alert-dialog@1.4.0
+    -   @spectrum-web-components/button@1.4.0
+    -   @spectrum-web-components/button-group@1.4.0
+    -   @spectrum-web-components/divider@1.4.0
+    -   @spectrum-web-components/icons-workflow@1.4.0
+    -   @spectrum-web-components/modal@1.4.0
+    -   @spectrum-web-components/underlay@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
+## 1.3.0
+
+### Patch Changes
+
+-   [#5176](https://github.com/adobe/spectrum-web-components/pull/5176) [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - 1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
+
+    2. chore(dialog):
+       The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
+    3. chore(menu): updated to latest css v9.1.1 for s2 fast follow
+    4. fix(overlay):
+       sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/button@1.3.0
+    -   @spectrum-web-components/alert-dialog@1.3.0
+    -   @spectrum-web-components/button-group@1.3.0
+    -   @spectrum-web-components/divider@1.3.0
+    -   @spectrum-web-components/icons-workflow@1.3.0
+    -   @spectrum-web-components/modal@1.3.0
+    -   @spectrum-web-components/underlay@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-popover.css');
-@import url('./popover-overrides.css');
+@import url("./spectrum-popover.css");
+@import url("./popover-overrides.css");
 
 :host {
     min-width: min-content;
@@ -26,13 +26,13 @@ governing permissions and limitations under the License.
 
 /* orient the tip */
 
-:host([placement*='left']) #tip[style],
-:host([placement*='right']) #tip[style] {
+:host([placement*="left"]) #tip[style],
+:host([placement*="right"]) #tip[style] {
     inset-block-end: auto;
 }
 
-:host([placement*='top']) #tip[style],
-:host([placement*='bottom']) #tip[style] {
+:host([placement*="top"]) #tip[style],
+:host([placement*="bottom"]) #tip[style] {
     inset-inline-end: auto;
 }
 
@@ -43,13 +43,13 @@ governing permissions and limitations under the License.
     display: block;
 }
 
-:host([placement*='left']) .block,
-:host([placement*='right']) .block {
+:host([placement*="left"]) .block,
+:host([placement*="right"]) .block {
     display: none;
 }
 
-:host([placement*='top']) .inline,
-:host([placement*='bottom']) .inline {
+:host([placement*="top"]) .inline,
+:host([placement*="bottom"]) .inline {
     display: none;
 }
 
@@ -71,14 +71,8 @@ governing permissions and limitations under the License.
 }
 
 :host([dialog]) {
-    min-width: var(
-        --mod-popover-dialog-min-width,
-        var(--spectrum-popover-dialog-min-width, 270px)
-    );
-    padding: var(
-        --mod-popover-dialog-padding,
-        var(--spectrum-popover-dialog-padding, 30px 29px)
-    );
+    min-width: var(--mod-popover-dialog-min-width, var(--spectrum-popover-dialog-min-width, 270px));
+    padding: var(--mod-popover-dialog-padding, var(--spectrum-popover-dialog-padding, 30px 29px));
 }
 
 :host([tip][placement]) #tip {

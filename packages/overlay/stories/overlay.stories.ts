@@ -47,6 +47,8 @@ import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+
 import '../../../projects/story-decorator/src/types.js';
 
 import { Button } from '@spectrum-web-components/button';
@@ -1608,6 +1610,173 @@ export const triggeredByOptimization = (): TemplateResult => {
                 <sp-button slot="trigger">Hover only trigger</sp-button>
                 <sp-tooltip slot="hover-content">Hover content</sp-tooltip>
             </overlay-trigger>
+        </div>
+    `;
+};
+
+export const pickerInDialog = (): TemplateResult => {
+    return html`
+        <sp-button variant="primary" id="mybutton">Button popover</sp-button>
+        <sp-overlay trigger="mybutton@click" type="modal" placement="bottom">
+            <sp-popover tip>
+                <sp-dialog no-divider>
+                    <sp-field-label for="picker-value">
+                        Open picker, then try clicking outside to close it:
+                    </sp-field-label>
+                    <sp-picker
+                        label="Select a Country with a very long label, too long in fact"
+                        value="item-2"
+                        id="picker-value"
+                    >
+                        <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                        <sp-menu-item value="item-2">
+                            Select inverse
+                        </sp-menu-item>
+                        <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                        <sp-menu-item value="item-4">
+                            Select and mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item value="item-5">
+                            Save selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled value="item-6">
+                            Make work path
+                        </sp-menu-item>
+                    </sp-picker>
+                </sp-dialog>
+            </sp-popover>
+        </sp-overlay>
+    `;
+};
+
+pickerInDialog.swc_vrt = {
+    skip: true,
+};
+
+pickerInDialog.args = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
+
+export const disabledOverlayTrigger = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <h2>Disabled Overlay Trigger</h2>
+        <p>This demonstrates how disabled overlay-triggers should work:</p>
+        <ul>
+            <li>
+                The overlay (tooltip/popover) functionality should be disabled
+            </li>
+            <li>But the trigger content itself should remain interactive</li>
+        </ul>
+
+        <div style="display: flex; gap: 24px; margin: 24px 0;">
+            <!-- Disabled overlay-trigger with interactive content -->
+            <div>
+                <h3>Disabled overlay-trigger</h3>
+                <overlay-trigger triggered-by="click hover" disabled>
+                    <div
+                        slot="trigger"
+                        style="padding: 8px; border: 1px solid #ccc;"
+                    >
+                        <p>This container has a disabled overlay-trigger</p>
+                        <sp-button variant="primary" id="test-button-disabled">
+                            This button should still be clickable
+                        </sp-button>
+                    </div>
+                    <sp-tooltip slot="hover-content">
+                        This tooltip should not appear (disabled)
+                    </sp-tooltip>
+                    <sp-popover slot="click-content" placement="bottom" tip>
+                        <sp-dialog size="s" no-divider>
+                            This popover should not appear (disabled)
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <p id="disabled-click-indicator">Button not clicked yet</p>
+            </div>
+
+            <!-- Regular overlay-trigger for comparison -->
+            <div>
+                <h3>Regular overlay-trigger (for comparison)</h3>
+                <overlay-trigger triggered-by="click hover">
+                    <div
+                        slot="trigger"
+                        style="padding: 8px; border: 1px solid #ccc;"
+                    >
+                        <p>This container has a regular overlay-trigger</p>
+                        <sp-button variant="primary" id="test-button-enabled">
+                            This button should be clickable
+                        </sp-button>
+                    </div>
+                    <sp-tooltip slot="hover-content">
+                        This tooltip should appear on hover
+                    </sp-tooltip>
+                    <sp-popover slot="click-content" placement="bottom" tip>
+                        <sp-dialog size="s" no-divider>
+                            This popover should appear on click
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <p id="enabled-click-indicator">Button not clicked yet</p>
+            </div>
+        </div>
+
+        <script>
+            // Add click handlers to demonstrate button interactivity
+            setTimeout(() => {
+                const disabledButton = document.getElementById(
+                    'test-button-disabled'
+                );
+                const enabledButton = document.getElementById(
+                    'test-button-enabled'
+                );
+                const disabledIndicator = document.getElementById(
+                    'disabled-click-indicator'
+                );
+                const enabledIndicator = document.getElementById(
+                    'enabled-click-indicator'
+                );
+
+                if (disabledButton) {
+                    disabledButton.addEventListener('click', () => {
+                        disabledIndicator.textContent =
+                            'Button was clicked! ✅';
+                        disabledIndicator.style.color = 'green';
+                    });
+                }
+
+                if (enabledButton) {
+                    enabledButton.addEventListener('click', () => {
+                        enabledIndicator.textContent = 'Button was clicked! ✅';
+                        enabledIndicator.style.color = 'green';
+                    });
+                }
+            }, 100);
+        </script>
+    `;
+};
+
+disabledOverlayTrigger.swc_vrt = {
+    skip: true,
+};
+
+export const WithInteractiveContent = (): TemplateResult => {
+    return html`
+        <div>
+            <sp-button id="trigger">Open Overlay</sp-button>
+            <sp-overlay trigger="trigger@click" type="auto" placement="bottom">
+                <sp-popover dialog>
+                    <p>
+                        My slider in overlay element:
+                        <sp-slider
+                            label="Slider Label - Editable"
+                            editable
+                        ></sp-slider>
+                    </p>
+                </sp-popover>
+            </sp-overlay>
         </div>
     `;
 };

@@ -1,5 +1,37 @@
 # Change Log
 
+## 1.2.4
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/bundle@1.6.0
+    -   @spectrum-web-components/custom-vars-viewer@1.6.0
+
+## 1.2.3
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/custom-vars-viewer@1.5.0
+    -   @spectrum-web-components/bundle@1.5.0
+
+## 1.2.2
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/custom-vars-viewer@1.4.0
+    -   @spectrum-web-components/bundle@1.4.0
+
+## 1.2.1
+
+### Patch Changes
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/custom-vars-viewer@1.3.0
+    -   @spectrum-web-components/bundle@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

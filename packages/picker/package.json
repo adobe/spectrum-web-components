@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker",
-    "version": "1.2.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,13 +11,13 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/picker"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/picker",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -76,29 +76,32 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.2.0",
-        "@spectrum-web-components/button": "^1.2.0",
-        "@spectrum-web-components/field-label": "^1.2.0",
-        "@spectrum-web-components/icon": "^1.2.0",
-        "@spectrum-web-components/icons-ui": "^1.2.0",
-        "@spectrum-web-components/icons-workflow": "^1.2.0",
-        "@spectrum-web-components/menu": "^1.2.0",
-        "@spectrum-web-components/overlay": "^1.2.0",
-        "@spectrum-web-components/popover": "^1.2.0",
-        "@spectrum-web-components/progress-circle": "^1.2.0",
-        "@spectrum-web-components/reactive-controllers": "^1.2.0",
-        "@spectrum-web-components/shared": "^1.2.0",
-        "@spectrum-web-components/tooltip": "^1.2.0",
-        "@spectrum-web-components/tray": "^1.2.0"
-    },
-    "devDependencies": {
-        "@spectrum-css/picker": "9.0.0-s2-foundations.17"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/button": "1.6.0",
+        "@spectrum-web-components/field-label": "1.6.0",
+        "@spectrum-web-components/icon": "1.6.0",
+        "@spectrum-web-components/icons-ui": "1.6.0",
+        "@spectrum-web-components/icons-workflow": "1.6.0",
+        "@spectrum-web-components/menu": "1.6.0",
+        "@spectrum-web-components/overlay": "1.6.0",
+        "@spectrum-web-components/popover": "1.6.0",
+        "@spectrum-web-components/progress-circle": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0",
+        "@spectrum-web-components/tooltip": "1.6.0",
+        "@spectrum-web-components/tray": "1.6.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

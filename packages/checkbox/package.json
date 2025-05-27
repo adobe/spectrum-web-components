@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/checkbox",
-    "version": "1.2.0",
+    "version": "1.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -11,7 +11,7 @@
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/checkbox"
     },
-    "author": "",
+    "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/checkbox",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -60,19 +60,22 @@
         "!test/"
     ],
     "keywords": [
-        "spectrum css",
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
         "web components",
+        "web-components",
         "lit-element",
-        "lit-html"
+        "lit-html",
+        "component",
+        "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^1.2.0",
-        "@spectrum-web-components/icon": "^1.2.0",
-        "@spectrum-web-components/icons-ui": "^1.2.0",
-        "@spectrum-web-components/shared": "^1.2.0"
-    },
-    "devDependencies": {
-        "@spectrum-css/checkbox": "10.0.0-s2-foundations.20"
+        "@spectrum-web-components/base": "1.6.0",
+        "@spectrum-web-components/icon": "1.6.0",
+        "@spectrum-web-components/icons-ui": "1.6.0",
+        "@spectrum-web-components/shared": "1.6.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

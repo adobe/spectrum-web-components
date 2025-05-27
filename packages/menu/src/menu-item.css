@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import url('./spectrum-checkmark.css');
-@import url('./spectrum-chevron.css');
-@import url('./spectrum-menu-item.css');
-@import url('./menu-item-overrides.css');
+@import url("./spectrum-checkmark.css");
+@import url("./spectrum-chevron.css");
+@import url("./spectrum-menu-item.css");
+@import url("./menu-item-overrides.css");
 
 :host {
     text-align: initial;
@@ -27,24 +27,12 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-:host([disabled]) [name='value']::slotted(*) {
-    color: var(
-        --highcontrast-menu-item-color-disabled,
-        var(
-            --mod-menu-item-label-icon-color-disabled,
-            var(--spectrum-menu-item-label-icon-color-disabled)
-        )
-    );
+:host([disabled]) [name="value"]::slotted(*) {
+    color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
 
 :host([has-submenu][disabled]) .chevron {
-    color: var(
-        --highcontrast-menu-item-color-disabled,
-        var(
-            --mod-menu-item-label-icon-color-disabled,
-            var(--spectrum-menu-item-label-icon-color-disabled)
-        )
-    );
+    color: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
 
 #button {
@@ -52,11 +40,11 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
-:host([dir='ltr']) [icon-only]::slotted(:last-of-type) {
+:host([dir="ltr"]) [icon-only]::slotted(:last-of-type) {
     margin-right: auto;
 }
 
-:host([dir='rtl']) [icon-only]::slotted(:last-of-type) {
+:host([dir="rtl"]) [icon-only]::slotted(:last-of-type) {
     margin-left: auto;
 }
 
@@ -70,7 +58,7 @@ governing permissions and limitations under the License.
     }
 }
 
-::slotted([slot='submenu']) {
+::slotted([slot="submenu"]) {
     width: max-content;
     max-width: 100%;
     overflow-y: auto;
@@ -78,4 +66,10 @@ governing permissions and limitations under the License.
 
 :host([no-wrap]) #label {
     display: block;
+}
+
+/** Host is :focus bt not :focus-visible so we remove the outline */
+:host([focused]:not(:focus-visible)) {
+    outline: none;
+    box-shadow: none;
 }

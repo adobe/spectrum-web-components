@@ -1,5 +1,69 @@
 # Change Log
 
+## 1.6.0
+
+### Patch Changes
+
+-   [#5392](https://github.com/adobe/spectrum-web-components/pull/5392) [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Fixed layout issues in Safari when an <sp-tray> is nested inside a dialog-type <sp-overlay>.
+
+-   Updated dependencies []:
+    -   @spectrum-web-components/action-button@1.6.0
+    -   @spectrum-web-components/theme@1.6.0
+    -   @spectrum-web-components/base@1.6.0
+    -   @spectrum-web-components/reactive-controllers@1.6.0
+    -   @spectrum-web-components/shared@1.6.0
+
+## 1.5.0
+
+### Minor Changes
+
+-   [#5308](https://github.com/adobe/spectrum-web-components/pull/5308) [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - prevent overlay close on document scroll
+
+### Patch Changes
+
+-   Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
+    -   @spectrum-web-components/action-button@1.5.0
+    -   @spectrum-web-components/theme@1.5.0
+    -   @spectrum-web-components/base@1.5.0
+    -   @spectrum-web-components/reactive-controllers@1.5.0
+    -   @spectrum-web-components/shared@1.5.0
+
+## 1.4.0
+
+### Minor Changes
+
+-   [#5223](https://github.com/adobe/spectrum-web-components/pull/5223) [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Removed pointer-events:none from the slot-trigger under overlay-trigger to disable the overlay content and not the trigger element.
+
+-   [#5248](https://github.com/adobe/spectrum-web-components/pull/5248) [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - overlay type auto stays open when interacting with elements inside
+
+### Patch Changes
+
+-   Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
+    -   @spectrum-web-components/action-button@1.4.0
+    -   @spectrum-web-components/theme@1.4.0
+    -   @spectrum-web-components/base@1.4.0
+    -   @spectrum-web-components/reactive-controllers@1.4.0
+    -   @spectrum-web-components/shared@1.4.0
+
+## 1.3.0
+
+### Patch Changes
+
+-   [#5176](https://github.com/adobe/spectrum-web-components/pull/5176) [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - 1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
+
+    2. chore(dialog):
+       The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
+    3. chore(menu): updated to latest css v9.1.1 for s2 fast follow
+    4. fix(overlay):
+       sp-overlay with type="manual" should close on pressing ESC key. When the last item is on overlay stack we are triggering the close method on esc key event.
+
+-   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    -   @spectrum-web-components/reactive-controllers@1.3.0
+    -   @spectrum-web-components/action-button@1.3.0
+    -   @spectrum-web-components/base@1.3.0
+    -   @spectrum-web-components/shared@1.3.0
+    -   @spectrum-web-components/theme@1.3.0
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 

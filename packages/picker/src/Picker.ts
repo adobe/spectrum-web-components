@@ -70,6 +70,16 @@ const chevronClass = {
 };
 
 export const DESCRIPTION_ID = 'option-picker';
+
+/**
+ * @element sp-picker
+ * @slot label - The placeholder content for the Picker
+ * @slot description - The description content for the Picker
+ * @slot tooltip - Tooltip to to be applied to the the Picker Button
+ * @slot - menu items to be listed in the Picker
+ * @fires change - Announces that the `value` of the element has changed
+ * @fires sp-opened - Announces that the overlay has been opened
+ */
 export class PickerBase extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
@@ -301,7 +311,20 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     protected async keyboardOpen(): Promise<void> {
-        this.toggle(true);
+        // if the menu is not open, we need to toggle it and wait for it to open to focus on the first selected item
+        if (!this.open || !this.strategy.open) {
+            this.addEventListener(
+                'sp-opened',
+                () => this.optionsMenu?.focusOnFirstSelectedItem(),
+                {
+                    once: true,
+                }
+            );
+            this.toggle(true);
+        } else {
+            // if the menu is already open, we need to focus on the first selected item
+            this.optionsMenu?.focusOnFirstSelectedItem();
+        }
     }
 
     protected async setValueFromItem(
@@ -310,9 +333,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     ): Promise<void> {
         this.open = false;
         // should always close when "setting" a value
-        if (this.strategy) {
-            this.strategy.open = false;
-        }
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
 
@@ -366,14 +386,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             return;
         }
         const open = typeof target !== 'undefined' ? target : !this.open;
-        if (open && !this.open)
-            this.addEventListener(
-                'sp-opened',
-                () => this.optionsMenu?.focusOnFirstSelectedItem(),
-                {
-                    once: true,
-                }
-            );
 
         this.open = open;
         if (this.strategy) {
@@ -493,13 +505,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-chevron100>
-                <slot
-                    aria-hidden="true"
-                    name="tooltip"
-                    id="tooltip"
-                    @keydown=${this.handleKeydown}
-                    @slotchange=${this.handleTooltipSlotchange}
-                ></slot>
             `,
         ];
     }
@@ -594,6 +599,13 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             >
                 ${this.buttonContent}
             </button>
+            <slot
+                aria-hidden="true"
+                name="tooltip"
+                id="tooltip"
+                @keydown=${this.handleKeydown}
+                @slotchange=${this.handleTooltipSlotchange}
+            ></slot>
             ${this.renderMenu} ${this.renderDescriptionSlot}
         `;
     }
@@ -892,6 +904,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     public override connectedCallback(): void {
         super.connectedCallback();
+        this.updateComplete.then(() => {
+            if (!this.tooltipEl?.selfManaged) {
+                return;
+            }
+            const overlayElement = this.tooltipEl.overlayElement;
+            if (overlayElement) {
+                overlayElement.triggerElement = this.button;
+            }
+        });
+
         this.recentlyConnected = this.hasUpdated;
         this.addEventListener('focus', this.handleFocus);
     }

@@ -9,9 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { create } from '@storybook/theming/create';
+
+import { create } from '@storybook/theming';
 
 export default create({
+    base: 'light',
     brandTitle: 'Spectrum Web Components',
     brandUrl: 'https://opensource.adobe.com/spectrum-web-components',
     brandImage:
