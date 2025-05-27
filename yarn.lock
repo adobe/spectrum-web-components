@@ -4185,7 +4185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/number@npm:^3.2.0, @internationalized/number@npm:^3.6.0":
+"@internationalized/number@npm:^3.6.0":
   version: 3.6.0
   resolution: "@internationalized/number@npm:3.6.0"
   dependencies:
@@ -6398,7 +6398,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/base@npm:1.6.0, @spectrum-web-components/base@npm:^1.6.0, @spectrum-web-components/base@workspace:tools/base":
+"@spectrum-web-components/base@npm:1.6.0, @spectrum-web-components/base@workspace:tools/base":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:tools/base"
   dependencies:
@@ -6466,7 +6466,7 @@ __metadata:
     "@spectrum-web-components/menu": "npm:1.6.0"
     "@spectrum-web-components/meter": "npm:1.6.0"
     "@spectrum-web-components/modal": "npm:1.6.0"
-    "@spectrum-web-components/number-field": "npm:1.6.0"
+    "@spectrum-web-components/number-field": "npm:^1.6.0"
     "@spectrum-web-components/overlay": "npm:1.6.0"
     "@spectrum-web-components/picker": "npm:1.6.0"
     "@spectrum-web-components/picker-button": "npm:1.6.0"
@@ -6768,7 +6768,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/field-label@npm:1.6.0, @spectrum-web-components/field-label@npm:^1.6.0, @spectrum-web-components/field-label@workspace:packages/field-label":
+"@spectrum-web-components/field-label@npm:1.6.0, @spectrum-web-components/field-label@workspace:packages/field-label":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-label@workspace:packages/field-label"
   dependencies:
@@ -6926,7 +6926,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/number-field@npm:1.6.0, @spectrum-web-components/number-field@npm:^1.6.0, @spectrum-web-components/number-field@workspace:packages/number-field":
+"@spectrum-web-components/number-field@npm:^1.6.0, @spectrum-web-components/number-field@workspace:packages/number-field":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/number-field@workspace:packages/number-field"
   dependencies:
@@ -7011,10 +7011,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-bar@workspace:packages/progress-bar"
   dependencies:
-    "@spectrum-web-components/base": "npm:^1.6.0"
-    "@spectrum-web-components/field-label": "npm:^1.6.0"
-    "@spectrum-web-components/reactive-controllers": "npm:^1.6.0"
-    "@spectrum-web-components/shared": "npm:^1.6.0"
+    "@spectrum-web-components/base": "npm:1.6.0"
+    "@spectrum-web-components/field-label": "npm:1.6.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.6.0"
+    "@spectrum-web-components/shared": "npm:1.6.0"
     "@spectrum-web-components/swan": "workspace:*"
   languageName: unknown
   linkType: soft
@@ -7040,7 +7040,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/reactive-controllers@npm:1.6.0, @spectrum-web-components/reactive-controllers@npm:^1.6.0, @spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers":
+"@spectrum-web-components/reactive-controllers@npm:1.6.0, @spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/reactive-controllers@workspace:tools/reactive-controllers"
   dependencies:
@@ -7062,13 +7062,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/shared@npm:1.6.0, @spectrum-web-components/shared@npm:^1.6.0, @spectrum-web-components/shared@workspace:tools/shared":
+"@spectrum-web-components/shared@npm:1.6.0, @spectrum-web-components/shared@workspace:tools/shared":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/shared@workspace:tools/shared"
   dependencies:
     "@lit-labs/observers": "npm:^2.0.2"
     "@spectrum-web-components/base": "npm:1.6.0"
-    focus-visible: "npm:^5.1.0"
+    focus-visible: "npm:^5.2.0"
   languageName: unknown
   linkType: soft
 
@@ -7086,12 +7086,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/slider@workspace:packages/slider"
   dependencies:
-    "@spectrum-web-components/base": "npm:^1.6.0"
-    "@spectrum-web-components/field-label": "npm:^1.6.0"
+    "@spectrum-web-components/base": "npm:1.6.0"
+    "@spectrum-web-components/field-label": "npm:1.6.0"
     "@spectrum-web-components/number-field": "npm:^1.6.0"
-    "@spectrum-web-components/shared": "npm:^1.6.0"
+    "@spectrum-web-components/shared": "npm:1.6.0"
     "@spectrum-web-components/swan": "workspace:*"
-    "@spectrum-web-components/theme": "npm:^1.6.0"
+    "@spectrum-web-components/theme": "npm:1.6.0"
   languageName: unknown
   linkType: soft
 
@@ -7142,15 +7142,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/swan@workspace:swan"
   dependencies:
-    "@internationalized/number": "npm:^3.2.0"
+    "@geometricpanda/storybook-addon-badges": "npm:^2.0.2"
+    "@internationalized/number": "npm:^3.6.0"
     "@lit-labs/observers": "npm:^2.0.2"
-    "@web/test-runner": "npm:^0.18.0"
+    "@storybook/addon-a11y": "npm:^8.6.12"
+    "@storybook/addon-essentials": "npm:^8.6.12"
+    "@storybook/addon-interactions": "npm:^8.6.12"
+    "@storybook/addon-links": "npm:^8.6.12"
+    "@storybook/blocks": "npm:^8.6.12"
+    "@storybook/web-components": "npm:^7.5.0"
+    "@storybook/web-components-webpack5": "npm:^8.6.12"
+    "@web/test-runner": "npm:^0.18.3"
     colorjs.io: "npm:^0.5.2"
     esbuild: "npm:^0.21.0"
     focus-visible: "npm:^5.2.0"
     lit: "npm:^2.5.0 || ^3.1.3"
-    prettier: "npm:^3.0.0"
+    prettier: "npm:^3.5.3"
+    storybook: "npm:^8.6.12"
+    ts-loader: "npm:^9.5.2"
     typescript: "npm:^5.3.3"
+    webpack: "npm:^5.90.3"
+    webpack-merge: "npm:^6.0.1"
   languageName: unknown
   linkType: soft
 
@@ -7228,7 +7240,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/theme@npm:1.6.0, @spectrum-web-components/theme@npm:^1.6.0, @spectrum-web-components/theme@workspace:tools/theme":
+"@spectrum-web-components/theme@npm:1.6.0, @spectrum-web-components/theme@workspace:tools/theme":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/theme@workspace:tools/theme"
   dependencies:
@@ -10105,7 +10117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:^0.18.0, @web/test-runner@npm:^0.18.3":
+"@web/test-runner@npm:^0.18.3":
   version: 0.18.3
   resolution: "@web/test-runner@npm:0.18.3"
   dependencies:
@@ -15344,6 +15356,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.17.1":
+  version: 5.18.1
+  resolution: "enhanced-resolve@npm:5.18.1"
+  dependencies:
+    graceful-fs: "npm:^4.2.4"
+    tapable: "npm:^2.2.0"
+  checksum: 10c0/4cffd9b125225184e2abed9fdf0ed3dbd2224c873b165d0838fd066cde32e0918626cba2f1f4bf6860762f13a7e2364fd89a82b99566be2873d813573ac71846
+  languageName: node
+  linkType: hard
+
 "enhanced-resolve@npm:^5.16.0":
   version: 5.16.0
   resolution: "enhanced-resolve@npm:5.16.0"
@@ -15351,16 +15373,6 @@ __metadata:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.2.0"
   checksum: 10c0/dd69669cbb638ccacefd03e04d5e195ee6a99b7f5f8012f86d2df7781834de357923e06064ea621137c4ce0b37cc12b872b4e6d1ac6ab15fe98e7f1dfbbb08c4
-  languageName: node
-  linkType: hard
-
-"enhanced-resolve@npm:^5.17.1":
-  version: 5.18.1
-  resolution: "enhanced-resolve@npm:5.18.1"
-  dependencies:
-    graceful-fs: "npm:^4.2.4"
-    tapable: "npm:^2.2.0"
-  checksum: 10c0/4cffd9b125225184e2abed9fdf0ed3dbd2224c873b165d0838fd066cde32e0918626cba2f1f4bf6860762f13a7e2364fd89a82b99566be2873d813573ac71846
   languageName: node
   linkType: hard
 
@@ -17961,13 +17973,6 @@ __metadata:
   dependencies:
     tabbable: "npm:^6.2.0"
   checksum: 10c0/ed810d47fd904a5e0269e822d98e634c6cbdd7222046c712ef299bdd26a422db754e3cec04e6517065b12be4b47f65c21f6244e0c07a308b1060985463d518cb
-  languageName: node
-  linkType: hard
-
-"focus-visible@npm:^5.1.0":
-  version: 5.2.0
-  resolution: "focus-visible@npm:5.2.0"
-  checksum: 10c0/bc746775e4c17d05faf7219a91fd5ae6fec320b87f20cde5402eff17fab148b6253f25748f0235b3110528a1335ee0c6d4dc3692cc6b6174d0ebd253dd28a50d
   languageName: node
   linkType: hard
 
@@ -24043,6 +24048,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"micromatch@npm:^4.0.0, micromatch@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "micromatch@npm:4.0.8"
+  dependencies:
+    braces: "npm:^3.0.3"
+    picomatch: "npm:^2.3.1"
+  checksum: 10c0/166fa6eb926b9553f32ef81f5f531d27b4ce7da60e5baf8c021d043b27a388fb95e46a8038d5045877881e673f8134122b59624d5cecbd16eb50a42e7a6b5ca8
+  languageName: node
+  linkType: hard
+
 "micromatch@npm:^4.0.2, micromatch@npm:^4.0.4":
   version: 4.0.7
   resolution: "micromatch@npm:4.0.7"
@@ -24060,16 +24075,6 @@ __metadata:
     braces: "npm:^3.0.2"
     picomatch: "npm:^2.3.1"
   checksum: 10c0/3d6505b20f9fa804af5d8c596cb1c5e475b9b0cd05f652c5b56141cf941bd72adaeb7a436fda344235cef93a7f29b7472efc779fcdb83b478eab0867b95cdeff
-  languageName: node
-  linkType: hard
-
-"micromatch@npm:^4.0.8":
-  version: 4.0.8
-  resolution: "micromatch@npm:4.0.8"
-  dependencies:
-    braces: "npm:^3.0.3"
-    picomatch: "npm:^2.3.1"
-  checksum: 10c0/166fa6eb926b9553f32ef81f5f531d27b4ce7da60e5baf8c021d043b27a388fb95e46a8038d5045877881e673f8134122b59624d5cecbd16eb50a42e7a6b5ca8
   languageName: node
   linkType: hard
 
@@ -27901,7 +27906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.0, prettier@npm:^3.5.3":
+"prettier@npm:^3.5.3":
   version: 3.5.3
   resolution: "prettier@npm:3.5.3"
   bin:
@@ -32359,6 +32364,22 @@ __metadata:
   version: 2.2.0
   resolution: "ts-dedent@npm:2.2.0"
   checksum: 10c0/175adea838468cc2ff7d5e97f970dcb798bbcb623f29c6088cb21aa2880d207c5784be81ab1741f56b9ac37840cbaba0c0d79f7f8b67ffe61c02634cafa5c303
+  languageName: node
+  linkType: hard
+
+"ts-loader@npm:^9.5.2":
+  version: 9.5.2
+  resolution: "ts-loader@npm:9.5.2"
+  dependencies:
+    chalk: "npm:^4.1.0"
+    enhanced-resolve: "npm:^5.0.0"
+    micromatch: "npm:^4.0.0"
+    semver: "npm:^7.3.4"
+    source-map: "npm:^0.7.4"
+  peerDependencies:
+    typescript: "*"
+    webpack: ^5.0.0
+  checksum: 10c0/d4f4e67f1365a8c4a929d26148611b6a82a9241bd988863386c9cc0c034eec8b14562206e09540fae38154595e0b3b9520b701b5c83c0e5d743c4016cd91d9f1
   languageName: node
   linkType: hard
 
