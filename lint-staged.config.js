@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 
 export default {
     '*.css': [
-        'stylelint --fix --cache --allow-empty-input',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+        'stylelint --fix --cache --allow-empty-input',
     ],
     '*.ts': [
-        'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
+        'eslint --fix --format pretty --config .eslintrc.json --cache --no-error-on-unmatched-pattern --quiet',
     ],
     '{packages,tools}/*/src/**/!(*.css).ts': ['yarn lit-analyzer'],
     'package.json': () => [
