@@ -133,7 +133,7 @@ describe('Overlay Trigger - extended', () => {
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-        expect(overlayTrigger.open, 'open 1').to.be.true;
+        expect(overlayTrigger.open, 'open 1').to.equal('click');
         expect(
             overlayTrigger.clickOverlayElement.state,
             'clickOverlayElement'
