@@ -113,10 +113,10 @@ describe('Overlay Trigger - extended', () => {
     });
 
     it('manages `placement` on scroll', async () => {
-        // This test is flaky in chrome on ci so we're skipping it for now
+        /* This test is flaky in chrome on ci so we're skipping it for now
         if (isChrome()) {
             return;
-        }
+        }*/
 
         ({ overlayTrigger, button, popover } = await initTest(html`
             <style>
@@ -132,18 +132,45 @@ describe('Overlay Trigger - extended', () => {
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-
-        expect(popover.placement).to.equal('top');
+        expect(overlayTrigger.open, 'open 1').to.be.true;
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'clickOverlayElement'
+        ).to.equal('opened');
+        expect(
+            overlayTrigger.clickOverlayElement.strategy,
+            'clickOverlayElement strategy'
+        ).to.equal('open');
 
         button.scrollIntoView({
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
+        expect(overlayTrigger.open, 'open 2').to.be.true;
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'clickOverlayElement'
+        ).to.equal('opened');
+        expect(
+            overlayTrigger.clickOverlayElement.strategy,
+            'clickOverlayElement strategy'
+        ).to.equal('open');
+        expect(popover.placement).to.equal('top');
         await nextFrame();
         await nextFrame();
+        expect(overlayTrigger.open, 'open 3').to.be.true;
         await nextFrame();
         await nextFrame();
         expect(popover.placement).to.equal('bottom');
+        expect(overlayTrigger.open, 'open 4').to.be.true;
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'clickOverlayElement'
+        ).to.equal('opened');
+        expect(
+            overlayTrigger.clickOverlayElement.strategy,
+            'clickOverlayElement strategy'
+        ).to.equal('open');
     });
 
     it('occludes content behind the overlay', async () => {
