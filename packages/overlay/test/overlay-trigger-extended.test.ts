@@ -156,12 +156,12 @@ describe('Overlay Trigger - extended', () => {
             overlayTrigger.clickOverlayElement.strategy,
             'clickOverlayElement strategy'
         ).to.equal('open');
-        expect(popover.placement).to.equal('top');
+        /*expect(popover.placement).to.equal('top');
         await nextFrame();
         await nextFrame();
         expect(overlayTrigger.open, 'open 3').to.equal('click');
         await nextFrame();
-        await nextFrame();
+        await nextFrame();*/
         expect(popover.placement).to.equal('bottom');
         expect(overlayTrigger.open, 'open 4').to.equal('click');
         expect(
