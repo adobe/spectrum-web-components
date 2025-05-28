@@ -141,10 +141,13 @@ This is especially useful when inserting an intermediate `<overlay-trigger>` wou
 
 A tooltip can be configured to delay its opening using the `delayed` attribute. This adds a warm-up period of 1000ms before showing the tooltip:
 
-```html
-<sp-tooltip self-managed delayed>
-    This tooltip will show after a delay
-</sp-tooltip>
+```htm
+<sp-action-button>
+    Show delayed tooltip
+    <sp-tooltip self-managed delayed>
+        This tooltip will show after a delay
+    </sp-tooltip>
+</sp-action-button>
 ```
 
 ### Accessibility
@@ -178,6 +181,10 @@ For non-interactive elements like icons, wrap them in an interactive element:
     <sp-tooltip self-managed placement="right">Save progress.</sp-tooltip>
 </sp-action-button>
 ```
+
+#### Use plain text in your tooltips
+
+Because a tooltip is not focusable by itself, it should not contain any interactive elements. Additionally, because a tooltip is referenced in an `aria-describedby` attribute, it should not contain any rich formatting, such as headings, lists, bold, italic, or other complex content.
 
 #### Don't use tooltips to communicate crucial information
 
