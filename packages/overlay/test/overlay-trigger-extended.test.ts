@@ -128,6 +128,7 @@ describe('Overlay Trigger - extended', () => {
         `));
 
         expect(popover.placement).to.equal('top');
+        expect(overlayTrigger.open, 'open 0').to.be.undefined;
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
@@ -146,7 +147,7 @@ describe('Overlay Trigger - extended', () => {
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
-        expect(overlayTrigger.open, 'open 2').to.be.true;
+        expect(overlayTrigger.open, 'open 2').to.equal('click');
         expect(
             overlayTrigger.clickOverlayElement.state,
             'clickOverlayElement'
@@ -158,11 +159,11 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('top');
         await nextFrame();
         await nextFrame();
-        expect(overlayTrigger.open, 'open 3').to.be.true;
+        expect(overlayTrigger.open, 'open 3').to.equal('click');
         await nextFrame();
         await nextFrame();
         expect(popover.placement).to.equal('bottom');
-        expect(overlayTrigger.open, 'open 4').to.be.true;
+        expect(overlayTrigger.open, 'open 4').to.equal('click');
         expect(
             overlayTrigger.clickOverlayElement.state,
             'clickOverlayElement'
