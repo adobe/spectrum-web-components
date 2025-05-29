@@ -1,0 +1,15 @@
+import { TemplateResult, html } from '@spectrum-web-components/base';
+
+{{ imports }}
+
+type IconSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+
+type IconStory = {
+    name: string;
+    tag: string;
+    story: (size: IconSize) => TemplateResult;
+};
+
+export const iconManifest: IconStory[] = [
+    {{ listings }}
+];

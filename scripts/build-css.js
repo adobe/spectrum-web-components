@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/**
+/*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -25,11 +25,9 @@ async function buildCSS() {
         './tools/*/src/**/*.css',
     ])) {
         promises.push(
-            processCSS(cssPath)
-                .then(() => console.log(`Processed ${cssPath.yellow}`))
-                .catch((error) =>
-                    console.error(`Error processing ${cssPath}`, error)
-                )
+            processCSS(cssPath).catch((error) =>
+                console.error(`Error processing ${cssPath}`, error)
+            )
         );
     }
 

@@ -29,8 +29,7 @@
             "development": "./src/ActionButton.dev.js",
             "default": "./src/ActionButton.js"
         },
-        "./src/action-button-overrides.css.js": "./src/action-button-overrides.css.js",
-        "./src/action-button.css.js": "./src/action-button.css.js",
+        "./src/action-button.css": "./src/action-button.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

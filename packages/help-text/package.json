@@ -37,8 +37,7 @@
             "development": "./src/HelpTextManager.dev.js",
             "default": "./src/HelpTextManager.js"
         },
-        "./src/help-text-overrides.css.js": "./src/help-text-overrides.css.js",
-        "./src/help-text.css.js": "./src/help-text.css.js",
+        "./src/help-text.css": "./src/help-text.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

@@ -12,6 +12,8 @@ tach-results.*
 .gitconfig
 .netlify/plugins
 
+!.cursor
+
 # documentation
 documentation/components/searchIndex.json
 documentation/api-docs
@@ -26,9 +28,7 @@ lib
 custom-elements.json
 
 !packages/icons-workflow/bin/build.js
-!packages/icons-workflow/src/DefaultIcon.ts
 
-packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
 packages/**/*.js.map
@@ -47,7 +47,6 @@ projects/**/*.js.map
 projects/**/*.d.ts
 !projects/*/global.d.ts
 
-tools/*/src/**/*.css.js
 tools/*/custom-elements.json
 tools/**/*.js
 tools/**/*.js.map

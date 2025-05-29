@@ -29,8 +29,7 @@
             "development": "./src/FieldLabel.dev.js",
             "default": "./src/FieldLabel.js"
         },
-        "./src/field-label-overrides.css.js": "./src/field-label-overrides.css.js",
-        "./src/field-label.css.js": "./src/field-label.css.js",
+        "./src/field-label.css": "./src/field-label.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

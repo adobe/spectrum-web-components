@@ -29,8 +29,7 @@
             "development": "./src/ActionBar.dev.js",
             "default": "./src/ActionBar.js"
         },
-        "./src/action-bar-overrides.css.js": "./src/action-bar-overrides.css.js",
-        "./src/action-bar.css.js": "./src/action-bar.css.js",
+        "./src/action-bar.css": "./src/action-bar.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -75,5 +74,8 @@
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js"
-    ]
+    ],
+    "spectrum-web": {
+        "migrated": true
+    }
 }

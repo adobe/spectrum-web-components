@@ -1,17 +1,42 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 @import url("./spectrum-switch.css");
-@import url("./switch-overrides.css");
+
+/* base variables */
+/* Base variables */
+:host {
+    /* colors */
+    --spectrum-switch-handle-border-color-default: var(--spectrum-gray-700);
+    --spectrum-switch-handle-border-color-hover: var(--spectrum-gray-800);
+    --spectrum-switch-handle-border-color-down: var(--spectrum-gray-900);
+    --spectrum-switch-handle-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-switch-handle-border-color-selected-default: var(--spectrum-accent-color-900);
+    --spectrum-switch-handle-border-color-selected-hover: var(--spectrum-accent-color-1000);
+    --spectrum-switch-handle-border-color-selected-down: var(--spectrum-accent-color-1100);
+    --spectrum-switch-handle-border-color-selected-focus: var(--spectrum-accent-color-1000);
+    --spectrum-switch-background-color: var(--spectrum-gray-400);
+    --spectrum-switch-background-color-disabled: var(--spectrum-disabled-background-color);
+    --spectrum-switch-handle-background-color: var(--spectrum-white);
+
+    /* base styles */
+    display: inline-flex;
+    align-items: flex-start;
+    position: relative;
+    min-block-size: var(--mod-switch-height, var(--spectrum-switch-height));
+    max-inline-size: 100%;
+    vertical-align: top;
+    cursor: pointer;
+}
 
 :host([disabled]) {
     pointer-events: none;

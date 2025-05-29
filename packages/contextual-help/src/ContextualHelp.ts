@@ -1,14 +1,14 @@
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import {
     CSSResultArray,
     html,
@@ -18,8 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
@@ -31,7 +31,7 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import styles from './contextual-help.css.js';
+import styles from './contextual-help.css' with { type: 'css' };
 
 /**
  * Spectrum Contextual help provides additional information about
@@ -152,9 +152,9 @@ export class ContextualHelp extends SpectrumElement {
             >
                 ${this.variant === 'help'
                     ? html`
-                          <sp-icon-help-outline
+                          <sp-icon-help-circle
                               slot="icon"
-                          ></sp-icon-help-outline>
+                          ></sp-icon-help-circle>
                       `
                     : html`
                           <sp-icon-info-outline

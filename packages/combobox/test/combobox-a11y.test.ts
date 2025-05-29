@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     elementUpdated,
@@ -85,7 +85,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pick something' && !node.value && node.role === 'combobox'
+                node.name === 'Pick something' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -108,11 +110,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "name" value in the accessibility tree', async () => {
@@ -131,7 +129,9 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Combobox' && !node.value && node.role === 'combobox'
+                node.name === 'Combobox' &&
+                !node.value &&
+                node.role === 'combobox'
         );
         // by default, is there a combobox that has `name` as the label?
         expect(a11yNode, '`name` is the label text').to.not.be.null;
@@ -154,11 +154,7 @@ describe('Combobox accessibility', () => {
 
         expect(
             node,
-            `node not available: ${JSON.stringify(
-                snapshot,
-                null,
-                '  '
-            )}`
+            `node not available: ${JSON.stringify(snapshot, null, '  ')}`
         ).to.not.be.null;
     });
     it('manages its "description" value with slotted <sp-tooltip>', async () => {

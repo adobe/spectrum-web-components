@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -29,41 +29,25 @@ export const buildPreviewURLComment = (ref) => {
 
     const previewCombinations = [
         {
-            system: 'Spectrum',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-        },
-        { system: 'Spectrum', color: 'Dark', scale: 'Large', direction: 'RTL' },
-        {
-            system: 'Express',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-        },
-        { system: 'Express', color: 'Dark', scale: 'Large', direction: 'RTL' },
-        {
-            system: 'Spectrum-two',
             color: 'Light',
             scale: 'Medium',
             direction: 'LTR',
         },
         {
-            system: 'Spectrum-two',
             color: 'Dark',
             scale: 'Large',
             direction: 'RTL',
         },
     ];
 
-    // Generate preview links for each combination of system, color, scale, and direction
-    previewCombinations.forEach(({ system, color, scale, direction }) => {
+    // Generate preview links for each combination of color, scale, and direction
+    previewCombinations.forEach(({ color, scale, direction }) => {
         // Create a unique context string for each combination
-        const context = `${branch}-${system.toLowerCase()}-${color.toLowerCase()}-${scale.toLowerCase()}-${direction.toLowerCase()}`;
+        const context = `${branch}-${color.toLowerCase()}-${scale.toLowerCase()}-${direction.toLowerCase()}`;
 
         // Add the generated preview link to the array
         previewLinks.push(`
-- [${system} | ${color} | ${scale} | ${direction}](https://${createHash(
+- [${color} | ${scale} | ${direction}](https://${createHash(
             context
         )}--spectrum-wc.netlify.app/review/)`);
     });
@@ -89,7 +73,7 @@ When a visual regression test fails (or has previously failed while working on t
 
 ${previewLinks.join('')}
 
-If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file.
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
     return comment;

@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     css,
@@ -25,7 +25,7 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/split-view/sp-split-view.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-out.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js';
@@ -84,7 +84,10 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
 
     protected get error() {
         return html`
-            <sp-icon-alert class="icon" size="xl"></sp-icon-alert>
+            <sp-icon-alert-triangle
+                class="icon"
+                size="xl"
+            ></sp-icon-alert-triangle>
             <p class="spectrum-Body spectrum-Body--sizeXL">
                 Please be sure to supply some combination of actual, baseline,
                 and diff screenshots for review.

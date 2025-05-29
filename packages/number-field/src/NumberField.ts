@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 import {
@@ -28,14 +28,14 @@ import {
     languageResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css' with { type: 'css' };
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron50.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/infield-button/sp-infield-button.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
-import styles from './number-field.css.js';
+import styles from './number-field.css' with { type: 'css' };
 import { isAndroid, isIOS, isIPhone } from '@spectrum-web-components/shared';
 
 export const FRAMES_PER_CHANGE = 5;
@@ -74,22 +74,22 @@ export const remapMultiByteCharacters: Record<string, string> = {
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
         <sp-icon-chevron50
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}50"
+            class="stepper-icon icon-Chevron${dir}50"
         ></sp-icon-chevron50>
     `,
     m: (dir) => html`
         <sp-icon-chevron75
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
+            class="stepper-icon icon-Chevron${dir}75"
         ></sp-icon-chevron75>
     `,
     l: (dir) => html`
         <sp-icon-chevron100
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}100"
+            class="stepper-icon icon-Chevron${dir}100"
         ></sp-icon-chevron100>
     `,
     xl: (dir) => html`
         <sp-icon-chevron200
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}200"
+            class="stepper-icon icon-Chevron${dir}200"
         ></sp-icon-chevron200>
     `,
 };

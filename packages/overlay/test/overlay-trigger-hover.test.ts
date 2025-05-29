@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import {
     elementUpdated,
     expect,
@@ -23,7 +23,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
@@ -45,9 +45,7 @@ async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme system="spectrum" scale="medium" color="light">
-            ${story}
-        </sp-theme>
+        <sp-theme scale="medium" color="light">${story}</sp-theme>
     `);
     return test.children[0] as T;
 }
@@ -65,7 +63,7 @@ describe('Overlay Trigger - Hover', () => {
                     @sp-closed=${() => closedSpy()}
                 >
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>
@@ -95,7 +93,7 @@ describe('Overlay Trigger - Hover', () => {
                 (() => html`
                     <overlay-trigger placement="right-start">
                         <sp-action-button slot="trigger">
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-tooltip slot="hover-content" tip>
                             Magnify
@@ -205,7 +203,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>
@@ -238,7 +236,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                     <sp-popover slot="longpress-content" tip></sp-popover>
@@ -275,7 +273,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start" type="modal">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>

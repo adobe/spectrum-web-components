@@ -45,8 +45,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/picker-overrides.css.js": "./src/picker-overrides.css.js",
-        "./src/picker.css.js": "./src/picker.css.js",
+        "./src/picker.css": "./src/picker.css",
         "./src/strategies.js": {
             "development": "./src/strategies.dev.js",
             "default": "./src/strategies.js"

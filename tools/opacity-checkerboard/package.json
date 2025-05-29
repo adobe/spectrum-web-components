@@ -16,16 +16,14 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/opacity-checkerboard.css.js",
-    "module": "./src/opacity-checkerboard.css.js",
+    "main": "./src/opacity-checkerboard.css",
+    "module": "./src/opacity-checkerboard.css",
     "type": "module",
     "exports": {
-        ".": "./src/opacity-checkerboard.css.js",
+        ".": "./src/opacity-checkerboard.css",
         "./package.json": "./package.json",
-        "./src/is-opacity-checkerboard-overrides.css.js": "./src/is-opacity-checkerboard-overrides.css.js",
-        "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
-        "./src/opacity-checkerboard-overrides.css.js": "./src/opacity-checkerboard-overrides.css.js",
-        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
+        "./src/is-opacity-checkerboard.css": "./src/is-opacity-checkerboard.css",
+        "./src/opacity-checkerboard.css": "./src/opacity-checkerboard.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -1,5 +1,4 @@
 {
-    "private": true,
     "name": "@spectrum-web-components/eslint-plugin",
     "version": "1.6.0",
     "license": "Apache-2.0",
@@ -13,7 +12,16 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "index.js",
+    "type": "module",
+    "exports": {
+        ".": "./index.js"
+    },
+    "devDependencies": {
+        "eslint": "^9.27.0"
+    },
+    "peerDependencies": {
+        "eslint": ">=9.0.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",

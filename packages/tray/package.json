@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/tray-overrides.css.js": "./src/tray-overrides.css.js",
-        "./src/tray.css.js": "./src/tray.css.js",
+        "./src/tray.css": "./src/tray.css",
         "./sp-tray.js": {
             "development": "./sp-tray.dev.js",
             "default": "./sp-tray.js"

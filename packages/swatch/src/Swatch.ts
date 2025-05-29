@@ -1,14 +1,14 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import {
     CSSResultArray,
     html,
@@ -22,14 +22,14 @@ import {
     when,
 } from '@spectrum-web-components/base/src/directives.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css.js';
+import opacityCheckerboardStyles from '@spectrum-web-components/opacity-checkerboard/src/opacity-checkerboard.css' with { type: 'css' };
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
 
-import styles from './swatch.css.js';
-import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+import styles from './swatch.css' with { type: 'css' };
+import dashStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css' with { type: 'css' };
 
 export type SwatchBorder = 'light' | 'none' | undefined;
 export type SwatchRounding = 'none' | 'full' | undefined;
@@ -39,25 +39,25 @@ const dashIcon: Record<string, () => TemplateResult> = {
     xs: () => html`
         <sp-icon-dash75
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash75"
+            class="mixedValueIcon icon-Dash75"
         ></sp-icon-dash75>
     `,
     s: () => html`
         <sp-icon-dash100
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash100"
+            class="mixedValueIcon icon-Dash100"
         ></sp-icon-dash100>
     `,
     m: () => html`
         <sp-icon-dash200
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash200"
+            class="mixedValueIcon icon-Dash200"
         ></sp-icon-dash200>
     `,
     l: () => html`
         <sp-icon-dash300
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash300"
+            class="mixedValueIcon icon-Dash300"
         ></sp-icon-dash300>
     `,
 };
