@@ -154,39 +154,45 @@ describe('Overlay Trigger - extended', () => {
         `));
         expect(popover.placement, 'initial placement').to.equal('top');
 
-        // scroll until button is at the bottom of the viewport
-        button.scrollIntoView({
-            behavior: 'instant' as ScrollBehavior,
-            block: 'start',
-        });
-
-        const open = oneEvent(overlayTrigger, 'sp-opened');
-        button.click();
-        await open;
-
-        // if button is at the top of the viewport, the popover should be below it
-        expect(
-            popover.placement,
-            `placement after clicking ${getRects([button, popover])}`
-        ).to.equal('bottom');
-
         // scroll until button is at the top of the viewport
         button.scrollIntoView({
             behavior: 'instant' as ScrollBehavior,
             block: 'end',
         });
 
+        const open = oneEvent(overlayTrigger, 'sp-opened');
+        button.click();
+        await open;
+
+        // wait until ready; if button is at the bottom of the viewport, the popover should be above it
         await waitUntil(
             () => popover.placement === 'top',
             `popover placement is top ${getRects([button, popover])}`,
             { timeout: 100 }
         );
 
-        // if button is at the bottom of the viewport, the popover should be above it
+        expect(
+            popover.placement,
+            `placement after clicking ${getRects([button, popover])}`
+        ).to.equal('top');
+
+        // scroll until button is at the bottom of the viewport
+        button.scrollIntoView({
+            behavior: 'instant' as ScrollBehavior,
+            block: 'start',
+        });
+
+        // wait; if button is at the top of the viewport, the popover should be below it
+        await waitUntil(
+            () => popover.placement === 'bottom',
+            `popover placement is top ${getRects([button, popover])}`,
+            { timeout: 100 }
+        );
+
         expect(
             popover.placement,
             `placement after scrolling ${getRects([button, popover])}`
-        ).to.equal('top');
+        ).to.equal('bottom');
     });
 
     it('occludes content behind the overlay', async () => {
@@ -232,7 +238,10 @@ describe('Overlay Trigger - extended', () => {
         await sendKeys({
             press: 'Shift+Tab',
         });
-        expect(document.activeElement === button, `button focused`).to.be.true;
+        expect(
+            document.activeElement === button,
+            `button focused ${getRects([textfield, overlayTrigger, button, popover])}`
+        ).to.be.true;
         await sendKeys({
             press: 'Enter',
         });
@@ -284,12 +293,12 @@ describe('Overlay Trigger - extended', () => {
         textfield.focus();
         await waitUntil(
             () => document.activeElement === textfield,
-            'textfield is focused'
+            `textfield is focused again  ${getRects([textfield, overlayTrigger, button, popover])}`
         );
 
         expect(
             document.activeElement === textfield,
-            `the Textfield is focused again ${getRects([textfield, overlayTrigger, button, popover])}`
+            `the Textfield is focused again`
         ).to.be.true;
     });
 
