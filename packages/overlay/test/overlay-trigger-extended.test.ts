@@ -160,13 +160,16 @@ describe('Overlay Trigger - extended', () => {
             block: 'end',
         });
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
+        //const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        await open;
+        expect(overlayTrigger.open).to.be.true;
+        //await open;
 
         // wait until ready; if button is at the bottom of the viewport, the popover should be above it
         await waitUntil(
-            () => popover.placement === 'top',
+            () =>
+                popover.placement === 'top' &&
+                popover.getBoundingClientRect().height > 0,
             `popover placement is top ${getRects([button, popover])}`,
             { timeout: 100 }
         );
