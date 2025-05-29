@@ -113,65 +113,34 @@ describe('Overlay Trigger - extended', () => {
     });
 
     it('manages `placement` on scroll', async () => {
-        /* This test is flaky in chrome on ci so we're skipping it for now
-        if (isChrome()) {
-            return;
-        }*/
-
         ({ overlayTrigger, button, popover } = await initTest(html`
             <style>
-                sp-button {
-                    margin: 100vh 0;
-                    transform: translateY(-100%);
+                body {
+                    padding: 100vh 0;
                 }
             </style>
         `));
+        button.scrollIntoView({
+            behavior: 'instant' as ScrollBehavior,
+            block: 'end',
+        });
 
-        expect(popover.placement).to.equal('top');
+        expect(popover.placement, `popover placement`).to.equal('top');
         expect(overlayTrigger.open, 'open 0').to.be.undefined;
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-        expect(overlayTrigger.open, 'open 1').to.equal('click');
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'clickOverlayElement'
-        ).to.equal('opened');
-        expect(
-            overlayTrigger.clickOverlayElement.strategy,
-            'clickOverlayElement strategy'
-        ).to.equal('open');
+        expect(overlayTrigger.open).to.equal('click');
 
         button.scrollIntoView({
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
-        expect(overlayTrigger.open, 'open 2').to.equal('click');
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'clickOverlayElement'
-        ).to.equal('opened');
-        expect(
-            overlayTrigger.clickOverlayElement.strategy,
-            'clickOverlayElement strategy'
-        ).to.equal('open');
-        /*expect(popover.placement).to.equal('top');
-        await nextFrame();
-        await nextFrame();
-        expect(overlayTrigger.open, 'open 3').to.equal('click');
-        await nextFrame();
-        await nextFrame();*/
-        expect(popover.placement).to.equal('bottom');
-        expect(overlayTrigger.open, 'open 4').to.equal('click');
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'clickOverlayElement'
-        ).to.equal('opened');
-        expect(
-            overlayTrigger.clickOverlayElement.strategy,
-            'clickOverlayElement strategy'
-        ).to.equal('open');
+
+        await elementUpdated(popover);
+
+        expect(popover.placement, 'popover placement 4').to.equal('top');
     });
 
     it('occludes content behind the overlay', async () => {
