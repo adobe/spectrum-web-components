@@ -152,6 +152,12 @@ describe('Overlay Trigger - extended', () => {
                 }
             </style>
         `));
+        expect(
+            !!overlayTrigger,
+            `overlayTrigger is ready ${getRects([button, popover])}`
+        ).to.be.true;
+        expect(!!button, 'button is ready').to.be.true;
+        expect(!!popover, 'popover is ready').to.be.true;
         expect(popover.placement, 'initial placement').to.equal('top');
 
         // scroll until button is at the top of the viewport
@@ -202,6 +208,12 @@ describe('Overlay Trigger - extended', () => {
         const { overlayTrigger, button, popover } = await initTest();
         const textfield = document.createElement('sp-textfield');
         overlayTrigger.insertAdjacentElement('afterend', textfield);
+        expect(
+            !!overlayTrigger,
+            `overlayTrigger is ready ${getRects([button, popover])}`
+        ).to.be.true;
+        expect(!!button, 'button is ready').to.be.true;
+        expect(!!popover, 'popover is ready').to.be.true;
 
         const textfieldRect = textfield.getBoundingClientRect();
         expect(
