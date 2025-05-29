@@ -6,7 +6,6 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/MLYDVWpWhNxJZDW3Ywqq/src/index.ts)
 
 ```bash
 yarn add @spectrum-web-components/dialog
@@ -24,13 +23,13 @@ The dialog wrapper is a high-level component that combines the [`sp-dialog-base`
 
 The dialog wrapper consists of several key parts:
 
--   A headline used as the dialog title (via the `headline` attribute)
--   Content (via default slot)
--   Optional hero content (via the `hero` attribute)
--   Optional footer content (via the `footer` attribute)
--   Optional underlay (via the `underlay` attribute)
--   Optional buttons (via the `confirm-label`, `cancel-label`, and `secondary-label` attributes)
--   Optional dismiss button (via the `dismissable` attribute and the `dismiss-label` attribute)
+- A headline used as the dialog title (via the `headline` attribute)
+- Content (via default slot)
+- Optional hero content (via the `hero` attribute)
+- Optional footer content (via the `footer` attribute)
+- Optional underlay (via the `underlay` attribute)
+- Optional buttons (via the `confirm-label`, `cancel-label`, and `secondary-label` attributes)
+- Optional dismiss button (via the `dismissable` attribute and the `dismiss-label` attribute)
 
 ```html
 <overlay-trigger type="modal">
@@ -270,17 +269,17 @@ An sp-dialog-wrapper element leverages the headline attribute/property to label 
 
 The dialog wrapper component ensures proper focus management by:
 
--   Moving focus into the dialog when opened
--   Trapping tab order within the dialog while open
--   Returning focus to the trigger element when closed
+- Moving focus into the dialog when opened
+- Trapping tab order within the dialog while open
+- Returning focus to the trigger element when closed
 
 The `receives-focus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `type="modal"` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
 The `receives-focus` attribute on `overlay-trigger` has three possible values:
 
--   `auto` (default): Focus will automatically move to the first focusable element in the dialog
--   `true`: Forces focus to move to the overlay content
--   `false`: Prevents focus from moving to the overlay
+- `auto` (default): Focus will automatically move to the first focusable element in the dialog
+- `true`: Forces focus to move to the overlay content
+- `false`: Prevents focus from moving to the overlay
 
 For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="true"` to ensure keyboard users can interact with the dialog content.
 

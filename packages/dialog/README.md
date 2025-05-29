@@ -8,7 +8,7 @@ Note: the `sp-dialog` element is a component that is used to create a dialog lay
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/RSDikStPmUPSioVpCsYb/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-dx2gwzss)
 
 ```bash
 yarn add @spectrum-web-components/dialog
@@ -30,12 +30,12 @@ import { Dialog } from '@spectrum-web-components/dialog';
 
 The dialog consists of several key parts:
 
--   A heading (via `slot="heading"`)
--   Content (via default slot)
--   Optional hero content (via `slot="hero"`)
--   Optional buttons (via `slot="button"`)
--   Optional footer content (via `slot="footer"`)
--   Optional dismiss button (via `dismissable` attribute)
+- A heading (via `slot="heading"`)
+- Content (via default slot)
+- Optional hero content (via `slot="hero"`)
+- Optional buttons (via `slot="button"`)
+- Optional footer content (via `slot="footer"`)
+- Optional dismiss button (via `dismissable` attribute)
 
 ```html
 <sp-dialog size="s">
@@ -203,9 +203,9 @@ The `receives-focus` attribute can be used to control whether the dialog should 
 
 The `receives-focus` attribute on `overlay-trigger` has three possible values:
 
--   `auto` (default): Focus will automatically move to the first focusable element in the dialog
--   `true`: Forces focus to move to the overlay content
--   `false`: Prevents focus from moving to the overlay
+- `auto` (default): Focus will automatically move to the first focusable element in the dialog
+- `true`: Forces focus to move to the overlay content
+- `false`: Prevents focus from moving to the overlay
 
 For accessible dialogs, always use `receives-focus="auto"` or `receives-focus="true"` to ensure keyboard users can interact with the dialog content.
 
