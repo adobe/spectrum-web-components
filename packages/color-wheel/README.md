@@ -6,7 +6,7 @@ An `<sp-color-wheel>` lets users visually change an individual channel of a colo
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-wheel)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-wheel)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/m5lUgBAAejgIkESwRvEs/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-cqyqwmbq)
 
 ```
 yarn add @spectrum-web-components/color-wheel
@@ -30,11 +30,11 @@ When using the color elements, use `el.color` to access the `color` property, wh
 
 The current color formats supported are as follows:
 
--   Hex3, Hex4, Hex6, Hex8
--   HSV, HSVA
--   HSL, HSLA
--   RGB, RGBA
--   Strings (eg "red", "blue")
+- Hex3, Hex4, Hex6, Hex8
+- HSV, HSVA
+- HSL, HSLA
+- RGB, RGBA
+- Strings (eg "red", "blue")
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
 When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [colorjs documentation](https://colorjs.io/docs/). Seperately, the element's `value` property is directly managed by the hue as represented in the interface.

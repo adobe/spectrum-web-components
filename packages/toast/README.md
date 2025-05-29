@@ -6,7 +6,7 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/toast?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/toast)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/toast?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/toast)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/74g0Hq6Hwy0ehvo7tssT/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-q323vw3s)
 
 ```bash
 yarn add @spectrum-web-components/toast
@@ -28,8 +28,8 @@ import { Toast } from '@spectrum-web-components/toast';
 
 The toast consists of two key parts:
 
--   The message content in its default slot
--   An optional action button using `slot="action"`
+- The message content in its default slot
+- An optional action button using `slot="action"`
 
 #### Content
 
@@ -146,8 +146,8 @@ The toast dispatches a `close` event when it's being closed, either by user acti
 
 The toast supports keyboard navigation:
 
--   When an action button is present, it can be accessed using the <kbd>Tab</kbd> key
--   The close button (when present) can be activated using <kbd>Enter</kbd> or <kbd>Space</kbd>
+- When an action button is present, it can be accessed using the <kbd>Tab</kbd> key
+- The close button (when present) can be activated using <kbd>Enter</kbd> or <kbd>Space</kbd>
 
 #### Place toasts in a region
 
@@ -173,8 +173,8 @@ For example, a message with 240 words should have a timeout of 7000ms, and a mes
 
 #### Provide appropriate labels
 
--   The toast's variant icon includes an appropriate `icon-label` for screen readers (e.g., "Information" for info variant)
--   Action buttons should have clear, descriptive labels
+- The toast's variant icon includes an appropriate `icon-label` for screen readers (e.g., "Information" for info variant)
+- Action buttons should have clear, descriptive labels
 
 ```html
 <sp-toast open variant="negative" icon-label="Warning">
