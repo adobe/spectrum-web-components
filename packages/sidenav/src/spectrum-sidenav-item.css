@@ -130,7 +130,7 @@ governing permissions and limitations under the License.
 #item-link {
     padding-inline: var(--mod-sidenav-inline-padding, var(--spectrum-sidenav-inline-padding));
     box-sizing: border-box;
-    word-break: break-word;
+    overflow-wrap: break-word;
     hyphens: auto;
     cursor: pointer;
     transition:
