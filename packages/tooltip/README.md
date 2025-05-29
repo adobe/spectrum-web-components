@@ -141,7 +141,7 @@ This is especially useful when inserting an intermediate `<overlay-trigger>` wou
 
 A tooltip can be configured to delay its opening using the `delayed` attribute. This adds a warm-up period of 1000ms before showing the tooltip:
 
-```htm
+```html
 <sp-action-button>
     Show delayed tooltip
     <sp-tooltip self-managed delayed>
