@@ -38,7 +38,10 @@ export const gatherDemoURLs = async () => {
         if (readme === null) {
             return;
         }
-        const [url] = readme.match(/https:\/\/webcomponents.dev\/[^\)]+/) || [];
+
+        // Updated pattern to match Stackblitz URLs
+        const [url] =
+            readme.match(/https:\/\/stackblitz\.com\/edit\/[^)]+/) || [];
         if (url) {
             links[packageName] = url;
         }

@@ -1,12 +1,12 @@
 ## Overview
 
-`<sp-number-field>` elements are used for numeric inputs. 
+`<sp-number-field>` elements are used for numeric inputs.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/number-field?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/number-field)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/number-field?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/number-field)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/TXlwVZIWMyzDa0XPl4tq/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-drmcfxlv)
 
 ```
 yarn add @spectrum-web-components/number-field
@@ -51,11 +51,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="s">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="s"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="s"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -63,11 +59,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="m">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="m"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="m"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -75,11 +67,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="l">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="l"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="l"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -87,11 +75,7 @@ A number field consists of an input field for numeric values and optional steppe
 <sp-tab-panel value="xl">
 
 ```html
-<sp-number-field
-    label="Size"
-    value="1024"
-    size="xl"
-></sp-number-field>
+<sp-number-field label="Size" value="1024" size="xl"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -390,18 +374,18 @@ Every number field must have a label that clearly describes its purpose. The lab
 
 Number fields support the following keyboard interactions:
 
--   <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> keys increment and decrement the value
--   <kbd>Shift</kbd> + <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> applies steps at 10 times (or the value of `step-modifier`) the normal rate
--   The scroll wheel can be used to increment and decrement the value when focused
+- <kbd>ArrowUp</kbd> and <kbd>ArrowDown</kbd> keys increment and decrement the value
+- <kbd>Shift</kbd> + <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> applies steps at 10 times (or the value of `step-modifier`) the normal rate
+- The scroll wheel can be used to increment and decrement the value when focused
 
 #### Help Text
 
 Consider providing help text to explain:
 
--   The expected format of the input
--   Any minimum or maximum values
--   The meaning of units or special formatting (e.g., currency, percentages)
--   Step increments if they differ from the default
+- The expected format of the input
+- Any minimum or maximum values
+- The meaning of units or special formatting (e.g., currency, percentages)
+- Step increments if they differ from the default
 
 <script type="module">
     customElements.whenDefined('sp-number-field').then(() => {

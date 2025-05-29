@@ -6,7 +6,7 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/slider?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/slider)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/slider)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/U7LQv7LsAVBwJayJXG3B/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-qma2pz85)
 
 ```
 yarn add @spectrum-web-components/slider
@@ -445,8 +445,8 @@ Slider will reset to its `default-value` when the user double clicks on the slid
 
 Note: If a slider with `default-value` attribute is contained in a modal and the slider handle is focused then the following interaction will occur on pressing the `escape` key:
 
--   If the slider value is different from the default value then the slider value will be reset to the default value and the modal will not be closed.
--   If the slider value is equal to the default value then the modal will be closed.
+- If the slider value is different from the default value then the slider value will be reset to the default value and the modal will not be closed.
+- If the slider value is equal to the default value then the modal will be closed.
 
 #### Advanced normalization
 

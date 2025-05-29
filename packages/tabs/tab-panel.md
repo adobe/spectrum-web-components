@@ -6,7 +6,6 @@ An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tabs?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tabs)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tabs)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/2JFFTBPXfCZpePD0wk58/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/tabs
@@ -54,14 +53,18 @@ The state of the `<sp-tab-panel>` is reflected to the boolean `selected` attribu
     }
     sp-tab-panel {
         grid-area: 1/2/1/2;
-        transition: opacity 0.5s ease-in-out 0s, transform 0.5s ease-in-out 0s;
+        transition:
+            opacity 0.5s ease-in-out 0s,
+            transform 0.5s ease-in-out 0s;
         opacity: 1;
         height: 100%;
         position: relative;
         z-index: 2;
     }
     sp-tab-panel:not([selected]) {
-        transition: opacity 0.5s ease-in-out 0s, height 0s ease-in-out 0.5s,
+        transition:
+            opacity 0.5s ease-in-out 0s,
+            height 0s ease-in-out 0.5s,
             transform 0.5s ease-in-out 0s;
         display: block;
         opacity: 0;

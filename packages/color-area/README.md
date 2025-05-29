@@ -6,7 +6,7 @@ An `<sp-color-area>` allows users to visually select two properties of a color s
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-area?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-area)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-area?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-area)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/crxLSSCXLFPpmUsM6GJQ/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-nqupkmym)
 
 ```
 yarn add @spectrum-web-components/color-area
@@ -30,11 +30,11 @@ When using the color elements, use `el.color` to access the `color` property, wh
 
 The current color formats supported are as follows:
 
--   Hex3, Hex4, Hex6, Hex8
--   HSV, HSVA
--   HSL, HSLA
--   RGB, RGBA
--   Strings (eg "red", "blue")
+- Hex3, Hex4, Hex6, Hex8
+- HSV, HSVA
+- HSL, HSLA
+- RGB, RGBA
+- Named color strings (see [full list](https://developer.mozilla.org/en-US/docs/Web/CSS/named-color))
 
 ## Standard
 
