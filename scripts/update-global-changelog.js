@@ -109,7 +109,6 @@ async function createGlobalChangelog() {
             const [, frontmatter, description] = frontmatterMatch;
 
             // Parse the frontmatter to determine the change type
-            console.log(frontmatter);
             const isMajor = frontmatter.includes('major');
             const isMinor = frontmatter.includes('minor');
             // If not major or minor, it's a patch
@@ -119,7 +118,8 @@ async function createGlobalChangelog() {
                 /'@spectrum-web-components\/([^']+)':|"@spectrum-web-components\/([^"]+)":/
             );
             // Extract component name from package name and prefix with "sp-"
-            const scope = packageMatch ? `sp-${packageMatch[1]}` : 'core';
+            const match = packageMatch?.[1] || packageMatch?.[2];
+            const scope = match ? `sp-${match}` : 'core';
             // Clean up the description text
             const cleanDescription = description.trim();
 
@@ -210,7 +210,7 @@ async function createGlobalChangelog() {
     // Preserve the header if it exists in the current changelog
     let headerText = '';
     const headerMatch = existingChangelog.match(
-        /^(# Change Log\n\n[\s\S]+?(?=\n\n# \[))/
+        /^(# ChangeLog\n\n[\s\S]+?(?=\n\n# \[))/
     );
     if (headerMatch) {
         headerText = headerMatch[1];
