@@ -240,7 +240,7 @@ describe('Overlay Trigger - extended', () => {
         });
         expect(
             document.activeElement === button,
-            `button focused ${getRects([textfield, overlayTrigger, button, popover])}`
+            `button focused ${getRects([textfield, overlayTrigger, button, popover])}\n${document.body.innerHTML}`
         ).to.be.true;
         await sendKeys({
             press: 'Enter',
