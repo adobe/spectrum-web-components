@@ -125,22 +125,40 @@ describe('Overlay Trigger - extended', () => {
             block: 'end',
         });
 
-        expect(popover.placement, `popover placement`).to.equal('top');
-        expect(overlayTrigger.open, 'open 0').to.be.undefined;
+        expect(popover.placement, 'popover placement before clicking').to.equal(
+            'top'
+        );
+        expect(overlayTrigger.open, 'overlay before clicking').to.equal(
+            'click'
+        );
 
         const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
         await open;
-        expect(overlayTrigger.open).to.equal('click');
+        expect(popover.placement, 'popover placement after clicking').to.equal(
+            'top'
+        );
+        expect(
+            overlayTrigger.placement,
+            'overlayTrigger placement after clicking'
+        ).to.equal('top');
+        expect(overlayTrigger.open, 'overlay after clicking').to.equal('click');
 
         button.scrollIntoView({
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
 
-        await elementUpdated(popover);
+        await elementUpdated(overlayTrigger);
 
-        expect(popover.placement, 'popover placement 4').to.equal('top');
+        expect(popover.placement, 'popover placement after clicking').to.equal(
+            'top'
+        );
+        expect(
+            overlayTrigger.placement,
+            'overlayTrigger placement after clicking'
+        ).to.equal('top');
+        expect(overlayTrigger.open, 'overlay after clicking').to.equal('click');
     });
 
     it('occludes content behind the overlay', async () => {
