@@ -6,7 +6,7 @@ An `<sp-status-light>` is a great way to convey semantic meaning, such as status
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/status-light?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/status-light)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/status-light?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/status-light)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/9rvftzUUo2pNorfAypRl/src/index.stories.js)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-y2kz1rkx)
 
 ```
 yarn add @spectrum-web-components/status-light
@@ -66,19 +66,19 @@ import { StatusLight } from '@spectrum-web-components/status-light';
 There are many variants to choose from in Spectrum. The `variant`
 attribute controls the main variant of the status light, and `neutral` being the default. Following are the supported variants:
 
--   positive
--   negative
--   notice
--   info
--   neutral
--   yellow
--   fuchsia
--   indigo
--   seafoam
--   chartreuse
--   magenta
--   celery
--   purple
+- positive
+- negative
+- notice
+- info
+- neutral
+- yellow
+- fuchsia
+- indigo
+- seafoam
+- chartreuse
+- magenta
+- celery
+- purple
 
 ## Disabled
 

@@ -86,6 +86,26 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
+## Using Stackblitz for reproductions
+
+We provide Stackblitz demos for all our components to help you quickly test, experiment, and create reproductions. These interactive environments are perfect for:
+
+- **Bug reports**: Create a minimal reproduction of issues you encounter
+- **Experiment**: Test and experiment with components in a live environment to understand their features and behavior
+
+### Finding component demos
+
+Each component's README includes a "Try it on Stackblitz" badge that links to a pre-configured demo environment. You can also find links to all component demos in our [documentation site](https://opensource.adobe.com/spectrum-web-components/).
+
+### Creating reproductions
+
+When reporting bugs or requesting features:
+
+1. **Start with the component demo**: Click the Stackblitz badge in the relevant component's README
+2. **Fork the demo**: Click "Fork" in Stackblitz to create your own copy
+3. **Reproduce the issue**: Modify the code to demonstrate the problem or desired behavior
+4. **Share the link**: Include the Stackblitz URL in your GitHub issue
+
 ## Spectrum CSS and Icons
 
 While we've moved away from using Spectrum CSS for component styling, we still maintain a dependency on Spectrum CSS for icons. We aim to keep the icon packages as current as possible to track the Spectrum design system closely.

@@ -6,7 +6,6 @@ For use within an `<sp-breadcrumbs>` element, an `<sp-breadcrumb-item>` represen
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/breadcrumbs?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/breadcrumbs)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/breadcrumbs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/breadcrumbs)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/JsuqWBLZTpGVAkZuHTPA/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/breadcrumbs
