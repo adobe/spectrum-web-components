@@ -1,31 +1,173 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-@import url("./spectrum-coachmark.css");
-@import url("./coachmark-overrides.css");
-
+/* base variables */
+/* Base variables */
 :host {
-    /** custom to coachmark should be removed once keys component is developed by CSS **/
-    --spectrum-coachmark-dimension-size-175: 14px;
-    --spectrum-coachmark-dimension-size-200: 16px;
-    --spectrum-coachmark-dimension-size-100: 8px;
-    --spectrum-coachmark-dimension-size-50: 4px;
+    /* layout */
+    --spectrum-coachmark-min-width: var(--spectrum-coachmark-minimum-width);
+    --spectrum-coachmark-max-width: var(--spectrum-coachmark-maximum-width);
+    --spectrum-coachmark-padding: var(--spectrum-coachmark-padding);
+    --spectrum-coachmark-margin: var(--spectrum-coachmark-margin);
+    --spectrum-coachmark-border-radius: var(--spectrum-coachmark-border-radius);
+    --spectrum-coachmark-border-width: var(--spectrum-coachmark-border-width);
+    --spectrum-coachmark-spacing: var(--spectrum-coachmark-spacing);
 
-    /** remove once font fixes are done from css team **/
+    /* colors */
+    --spectrum-coachmark-background-color: var(--spectrum-coachmark-background-color);
+    --spectrum-coachmark-border-color: var(--spectrum-coachmark-border-color);
+    --spectrum-coachmark-text-color: var(--spectrum-coachmark-text-color);
 
-    --spectrum-coachmark-content-font-family: var(--spectrum-font-family);
+    /* animation */
+    --spectrum-coachmark-animation-duration: var(--spectrum-animation-duration-100);
+
+    /* typography */
+    font-family: var(--spectrum-sans-font-family-stack);
+    font-size: var(--spectrum-coachmark-font-size);
+    font-weight: var(--spectrum-coachmark-font-weight);
+    line-height: var(--spectrum-coachmark-line-height);
+
+    /* base styles */
+    display: inline-flex;
+    flex-direction: column;
+    min-inline-size: var(--spectrum-coachmark-min-width);
+    max-inline-size: var(--spectrum-coachmark-max-width);
+    padding: var(--spectrum-coachmark-padding);
+    margin: var(--spectrum-coachmark-margin);
+    border-radius: var(--spectrum-coachmark-border-radius);
+    border: var(--spectrum-coachmark-border-width) solid var(--spectrum-coachmark-border-color);
+    background-color: var(--spectrum-coachmark-background-color);
+    color: var(--spectrum-coachmark-text-color);
 }
 
-/* These css needs to be added from css team once the keys component is created */
+/* content */
+.content {
+    margin-block-end: var(--spectrum-coachmark-spacing);
+}
+
+/* footer */
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spectrum-coachmark-spacing);
+}
+
+/* button group styles */
+.buttongroup {
+    display: var(--spectrum-coachmark-buttongroup-display);
+}
+
+.buttongroup-mobile {
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-coachmark-buttongroup-spacing-horizontal);
+
+    display: var(--spectrum-coachmark-buttongroup-mobile-display);
+}
+
+/* menu styles */
+.menu {
+    display: var(--spectrum-coachmark-menu-display);
+}
+
+.spectrum-CoachMark-menu--mobile {
+    display: var(--spectrum-coachmark-menu-mobile-display);
+}
+
+/* image styles */
+.image-wrapper {
+    block-size: var(--spectrum-coachmark-media-height);
+    min-block-size: var(--spectrum-coachmark-media-min-height);
+    inline-size: calc(var(--spectrum-coachmark-width) - var(--spectrum-coachmark-border-size) * 2);
+    object-fit: cover;
+    object-position: center;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+}
+
+.image {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-start-start-radius: calc(var(--spectrum-coachmark-border-radius) - var(--spectrum-coachmark-border-size));
+    border-start-end-radius: calc(var(--spectrum-coachmark-border-radius) - var(--spectrum-coachmark-border-size));
+    display: block;
+}
+
+/* content sections */
+.content,
+.footer,
+.header {
+    padding-block: 0;
+    padding-inline: var(--spectrum-coachmark-padding);
+}
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+    margin-block-end: var(--spectrum-coachmark-header-to-body);
+    padding-block-start: var(--spectrum-coachmark-padding);
+    display: flex;
+}
+
+.action-menu {
+    white-space: nowrap;
+    z-index: 1;
+    margin-inline-start: var(--spectrum-coachmark-heading-to-action-button);
+}
+
+.content {
+    color: var(--spectrum-coachmark-content-font-color);
+    font-size: var(--spectrum-coachmark-content-font-size);
+    font-weight: var(--spectrum-coachmark-content-font-weight);
+    font-family: var(--spectrum-body-sans-serif-font-family);
+    font-style: var(--spectrum-coachmark-content-font-style);
+    line-height: var(--spectrum-coachmark-content-line-height);
+    margin-block-end: var(--spectrum-coachmark-body-to-footer);
+}
+
+.footer {
+    align-items: end;
+    margin-block-start: 0;
+    padding-block-end: var(--spectrum-coachmark-padding);
+    display: grid;
+}
+
+.footer .spectrum-ButtonGroup {
+    grid-column-start: 2;
+}
+
+/* title styles */
+.title {
+    color: var(--spectrum-coachmark-title-color);
+    font-size: var(--spectrum-coachmark-title-font-size);
+    font-weight: var(--spectrum-coachmark-title-text-font-weight);
+    font-family: var(--spectrum-coachmark-title-font-family);
+    font-style: var(--spectrum-coachmark-title-font-style);
+    line-height: var(--spectrum-coachmark-title-text-line-height);
+    margin-block-end: 0;
+}
+
+/* step styles */
+.step {
+    color: var(--spectrum-coachmark-step-color);
+    font-size: var(--spectrum-coachmark-step-font-size);
+    font-weight: var(--spectrum-coachmark-step-text-font-weight);
+    font-style: var(--spectrum-coachmark-step-font-style);
+    line-height: var(--spectrum-coachmark-step-text-line-height);
+    white-space: nowrap;
+    justify-self: start;
+    margin-block-end: calc(var(--spectrum-coachmark-step-to-bottom) - var(--spectrum-coachmark-padding));
+}
+
+/* keyboard shortcut styles */
 .keyboard-shortcut {
     align-items: center;
     background-color: var(--spectrum-gray-200);
@@ -35,7 +177,7 @@ governing permissions and limitations under the License.
     display: inline-flex;
     flex-flow: row;
     justify-content: center;
-    min-width: var(--spectrum-badge-min-width);
+    min-inline-size: var(--spectrum-badge-min-width);
     padding-block: var(--spectrum-coachmark-dimension-size-50);
     padding-inline: var(--spectrum-coachmark-dimension-size-100);
 }
@@ -45,9 +187,10 @@ governing permissions and limitations under the License.
     gap: var(--spectrum-coachmark-dimension-size-175) var(--spectrum-coachmark-dimension-size-50);
     display: flex;
     flex-flow: wrap;
-    font-family: var(--mod-body-sans-serif-font-family, var(--spectrum-body-sans-serif-font-family));
+    font-family: var(--spectrum-body-sans-serif-font-family);
 }
 
+/* layout utilities */
 .flex-container {
     align-items: center;
     display: flex;
@@ -62,4 +205,15 @@ governing permissions and limitations under the License.
 
 #cover-photo {
     display: contents;
+}
+
+#coachmark {
+    --spectrum-buttongroup-justify-content: flex-end;
+    --spectrum-popover-border-width: var(--spectrum-coachmark-popover-border-width);
+    --spectrum-popover-corner-radius: var(--spectrum-coachmark-popover-corner-radius);
+    --spectrum-popover-content-area-spacing-vertical: 0;
+    --spectrum-button-edge-to-visual-only: 9px;
+}
+
+:host([variant="quiet"]) #coachmark {
 }

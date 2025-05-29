@@ -1,19 +1,19 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -71,8 +71,8 @@ export const Default = (args: Properties): TemplateResult => {
             }
             sp-tab-panel {
                 grid-area: 2/1/2/1;
-                transition: opacity var(--spectrum-animation-duration-300)
-                        ease-in-out,
+                transition:
+                    opacity var(--spectrum-animation-duration-300) ease-in-out,
                     transform var(--spectrum-animation-duration-300) ease-in-out;
             }
             sp-tab-panel:not([selected]) {
@@ -81,8 +81,8 @@ export const Default = (args: Properties): TemplateResult => {
                 height: 0;
                 pointer-events: none;
                 transform: translateY(calc(var(--swc-scale-factor) * 6px));
-                transition: opacity var(--spectrum-animation-duration-300)
-                        ease-in-out,
+                transition:
+                    opacity var(--spectrum-animation-duration-300) ease-in-out,
                     transform var(--spectrum-animation-duration-300) ease-in-out,
                     height 0s ease var(--spectrum-animation-duration-300);
             }
@@ -367,7 +367,7 @@ export const Icons = ({
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" ?vertical=${verticalTab}>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -395,7 +395,7 @@ export const IconsWithSlottedLabel = ({
             </sp-tab>
             <sp-tab value="4" ?vertical=${verticalTab}>
                 Tab 4
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -419,7 +419,7 @@ export const IconsOnly = ({
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab aria-label="Tab 4" value="4" ?vertical=${verticalTab}>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -444,7 +444,7 @@ export const iconsIi = (args: Properties): TemplateResult => {
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" vertical>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -473,7 +473,7 @@ export const iconsIii = (args: Properties): TemplateResult => {
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4">
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>

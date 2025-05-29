@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/toast-overrides.css.js": "./src/toast-overrides.css.js",
-        "./src/toast.css.js": "./src/toast.css.js",
+        "./src/toast.css": "./src/toast.css",
         "./sp-toast.js": {
             "development": "./sp-toast.dev.js",
             "default": "./sp-toast.js"

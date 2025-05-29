@@ -1,17 +1,22 @@
 # Change Log
 
-## 1.6.0
+## [1.6.0](https://github.com/adobe/spectrum-web-components/compare/v1.5.0...v1.6.0) (2025-05-28)
 
-## 1.5.0
+**Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-## 1.4.0
+## [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-05-28)
 
-## 1.3.0
+**Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+## [1.4.0](https://github.com/adobe/spectrum-web-components/compare/v1.3.0...v1.4.0) (2025-05-28)
 
-# [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
+**Note:** Version bump only for package @spectrum-web-components/eslint-plugin
+
+## [1.3.0](https://github.com/adobe/spectrum-web-components/compare/v1.2.0...v1.3.0) (2025-05-28)
+
+**Note:** Version bump only for package @spectrum-web-components/eslint-plugin
+
+## [1.2.0](https://github.com/adobe/spectrum-web-components/compare/v1.1.2...v1.2.0) (2025-02-27)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -23,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
+## [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -31,7 +36,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
+## [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -55,23 +60,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
+## [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
+## [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
+## [0.45.0](https://github.com/adobe/spectrum-web-components/compare/v0.44.0...v0.45.0) (2024-07-30)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
+## [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
+## [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -95,7 +100,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
+## [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -107,7 +112,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
+## [0.41.0](https://github.com/adobe/spectrum-web-components/compare/v0.40.5...v0.41.0) (2024-02-13)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -131,7 +136,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
+## [0.40.0](https://github.com/adobe/spectrum-web-components/compare/v0.39.4...v0.40.0) (2023-11-16)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
@@ -151,22 +156,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
+## [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
+## [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
+## [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
+## [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin
 
-# [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
+## [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 **Note:** Version bump only for package @spectrum-web-components/eslint-plugin

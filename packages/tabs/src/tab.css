@@ -1,56 +1,119 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-@import url("./spectrum-tab.css");
-
+/* Base variables */
 :host {
-    scroll-margin-inline: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
+    box-sizing: border-box;
+    block-size: calc(var(--spectrum-tabs-item-height) - var(--spectrum-tabs-divider-size));
+    z-index: 1;
+    white-space: nowrap;
+    color: var(--highcontrast-tabs-color, var(--spectrum-tabs-color));
+    transition: color var(--spectrum-tabs-animation-duration) ease-out;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    position: relative;
+}
+
+::slotted([slot="icon"]) {
+    block-size: var(--spectrum-tabs-icon-size);
+    inline-size: var(--spectrum-tabs-icon-size);
+    margin-block-start: var(--spectrum-tabs-top-to-icon);
+}
+
+[name="icon"] + #item-label {
+    margin-inline-start: var(--spectrum-tabs-icon-to-text);
+}
+
+:host::before {
+    content: "";
+    box-sizing: border-box;
+    block-size: calc(100% - var(--spectrum-tabs-top-to-text));
+    inline-size: calc(100% + var(--spectrum-tabs-focus-indicator-gap) * 2);
+    border: var(--spectrum-tabs-focus-indicator-width) solid transparent;
+    border-radius: var(--spectrum-tabs-focus-indicator-border-radius);
+    pointer-events: none;
+    position: absolute;
+    inset-block-start: calc(var(--spectrum-tabs-top-to-text) / 2);
+    inset-inline-start: calc(var(--spectrum-tabs-focus-indicator-gap) * -1);
+    inset-inline-end: calc(var(--spectrum-tabs-focus-indicator-gap) * -1);
+}
+
+:host([selected]) {
+    color: var(--highcontrast-tabs-color-selected, var(--spectrum-tabs-color-selected));
+
+    color: HighlightText;
 }
 
 :host([disabled]) {
+    cursor: default;
+    color: var(--highcontrast-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+
     pointer-events: none;
+}
+
+:host([disabled]) #item-label {
+    cursor: default;
+}
+
+:host(:focus-visible) {
+    color: var(--highcontrast-tabs-color-key-focus, var(--spectrum-tabs-color-key-focus));
+}
+
+:host(:focus-visible)::before {
+    border-color: var(--highcontrast-tabs-focus-indicator-color, var(--spectrum-tabs-focus-indicator-color));
+}
+
+#item-label {
+    cursor: pointer;
+    vertical-align: top;
+    font-family: var(--spectrum-tabs-font-family);
+    font-style: var(--spectrum-tabs-font-style);
+    font-size: var(--spectrum-tabs-font-size);
+    font-weight: var(--spectrum-tabs-font-weight);
+    line-height: var(--spectrum-tabs-line-height);
+    margin-block-start: var(--spectrum-tabs-top-to-text);
+    margin-block-end: var(--spectrum-tabs-bottom-to-text);
+    text-decoration: none;
+    display: inline-block;
+
+    position: relative;
+    z-index: 1;
+}
+
+#item-label:empty {
+    display: none;
+}
+
+:host {
+    scroll-margin-inline: var(--spectrum-tabs-item-horizontal-spacing);
 }
 
 #item-label[hidden] {
     display: none;
 }
 
-@media (forced-colors: active) {
-    :host:before {
-        background-color: ButtonFace;
-    }
+:host ::slotted([slot="icon"]) {
+    z-index: 1;
+    position: relative;
+    color: inherit;
+}
 
-    :host ::slotted([slot="icon"]) {
-        z-index: 1;
-        position: relative;
-        color: inherit;
-    }
+:host([selected]) ::slotted([slot="icon"]) {
+    color: HighlightText;
+}
 
-    #item-label {
-        position: relative;
-        z-index: 1;
-    }
-
-    :host([selected]) {
-        color: HighlightText;
-    }
-
-    :host([selected]) ::slotted([slot="icon"]) {
-        color: HighlightText;
-    }
-
-    :host([selected]) #item-label {
-        color: HighlightText;
-    }
+:host([selected]) #item-label {
+    color: HighlightText;
 }
 
 :host([vertical]) {
@@ -58,14 +121,14 @@ governing permissions and limitations under the License.
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: auto;
+    block-size: auto;
 }
 
 :host([dir][vertical]) slot[name="icon"] + #item-label {
     margin-inline-start: 0;
-    margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
+    margin-block: calc(var(--spectrum-tabs-top-to-text) / 2) calc(var(--spectrum-tabs-bottom-to-text) / 2);
 }
 
 :host([vertical]) ::slotted([slot="icon"]) {
-    margin-block-start: calc(var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2);
+    margin-block-start: calc(var(--spectrum-tabs-top-to-icon) / 2);
 }

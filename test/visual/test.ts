@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 /**
  * Visual Regression Test Framework for Spectrum Web Components
@@ -137,7 +137,7 @@ async function ensureComponentStable(root: Element): Promise<void> {
  *
  * @param tests - Collection of stories to test
  * @param name - Name of the component being tested
- * @param color - Theme color (lightest, light, dark, darkest)
+ * @param color - Theme color (light, dark)
  * @param scale - Component scale (medium, large)
  * @param dir - Text direction (ltr, rtl)
  */
@@ -324,7 +324,7 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
             test(stories, name, color, scale, dir);
         } else {
             // Otherwise test all combinations
-            const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
+            const colors: Color[] = ['light', 'dark'];
             const scales: Scale[] = ['medium', 'large'];
             const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
 

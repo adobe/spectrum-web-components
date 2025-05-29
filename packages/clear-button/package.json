@@ -16,14 +16,13 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/clear-button.css.js",
-    "module": "./src/clear-button.css.js",
+    "main": "./src/clear-button.css",
+    "module": "./src/clear-button.css",
     "type": "module",
     "exports": {
-        ".": "./src/clear-button.css.js",
+        ".": "./src/clear-button.css",
         "./package.json": "./package.json",
-        "./src/clear-button-overrides.css.js": "./src/clear-button-overrides.css.js",
-        "./src/clear-button.css.js": "./src/clear-button.css.js"
+        "./src/clear-button.css": "./src/clear-button.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

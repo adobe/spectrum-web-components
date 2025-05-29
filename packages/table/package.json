@@ -57,19 +57,13 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/table-body.css.js": "./src/table-body.css.js",
-        "./src/table-cell-overrides.css.js": "./src/table-cell-overrides.css.js",
-        "./src/table-cell.css.js": "./src/table-cell.css.js",
-        "./src/table-checkbox-cell-overrides.css.js": "./src/table-checkbox-cell-overrides.css.js",
-        "./src/table-checkbox-cell.css.js": "./src/table-checkbox-cell.css.js",
-        "./src/table-head-cell-overrides.css.js": "./src/table-head-cell-overrides.css.js",
-        "./src/table-head-cell.css.js": "./src/table-head-cell.css.js",
-        "./src/table-head-overrides.css.js": "./src/table-head-overrides.css.js",
-        "./src/table-head.css.js": "./src/table-head.css.js",
-        "./src/table-overrides.css.js": "./src/table-overrides.css.js",
-        "./src/table-row-overrides.css.js": "./src/table-row-overrides.css.js",
-        "./src/table-row.css.js": "./src/table-row.css.js",
-        "./src/table.css.js": "./src/table.css.js",
+        "./src/table-body.css": "./src/table-body.css",
+        "./src/table-cell.css": "./src/table-cell.css",
+        "./src/table-checkbox-cell.css": "./src/table-checkbox-cell.css",
+        "./src/table-head-cell.css": "./src/table-head-cell.css",
+        "./src/table-head.css": "./src/table-head.css",
+        "./src/table-row.css": "./src/table-row.css",
+        "./src/table.css": "./src/table.css",
         "./elements.js": {
             "development": "./elements.dev.js",
             "default": "./elements.js"
@@ -127,8 +121,8 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@lit-labs/virtualizer": "^2.0.12",
+        "@lit-labs/observers": "^2.0.5",
+        "@lit-labs/virtualizer": "^2.1.0",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/checkbox": "1.6.0",
         "@spectrum-web-components/icon": "1.6.0",

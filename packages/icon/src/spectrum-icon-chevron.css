@@ -1,145 +1,117 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.spectrum-UIIcon-ChevronRight50 {
+.icon-ChevronRight50 {
     --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
 }
 
-.spectrum-UIIcon-ChevronRight75 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+.icon-ChevronRight75 {
 }
 
-.spectrum-UIIcon-ChevronRight100 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+.icon-ChevronRight100 {
 }
 
-.spectrum-UIIcon-ChevronRight200 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+.icon-ChevronRight200 {
 }
 
-.spectrum-UIIcon-ChevronRight300 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+.icon-ChevronRight300 {
 }
 
-.spectrum-UIIcon-ChevronRight400 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+.icon-ChevronRight400 {
 }
 
-.spectrum-UIIcon-ChevronRight500 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+.icon-ChevronRight500 {
 }
 
-.spectrum-UIIcon-ChevronDown50 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
+.icon-ChevronDown50 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown75 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+.icon-ChevronDown75 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown100 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+.icon-ChevronDown100 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown200 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+.icon-ChevronDown200 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown300 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+.icon-ChevronDown300 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown400 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+.icon-ChevronDown400 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronDown500 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+.icon-ChevronDown500 {
     transform: rotate(90deg);
 }
 
-.spectrum-UIIcon-ChevronLeft50 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
+.icon-ChevronLeft50 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft75 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+.icon-ChevronLeft75 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft100 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+.icon-ChevronLeft100 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft200 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+.icon-ChevronLeft200 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft300 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+.icon-ChevronLeft300 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft400 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+.icon-ChevronLeft400 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronLeft500 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+.icon-ChevronLeft500 {
     transform: rotate(180deg);
 }
 
-.spectrum-UIIcon-ChevronUp50 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-50);
+.icon-ChevronUp50 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp75 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-75);
+.icon-ChevronUp75 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp100 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-100);
+.icon-ChevronUp100 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp200 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-200);
+.icon-ChevronUp200 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp300 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-300);
+.icon-ChevronUp300 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp400 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-400);
+.icon-ChevronUp400 {
     transform: rotate(270deg);
 }
 
-.spectrum-UIIcon-ChevronUp500 {
-    --spectrum-icon-size: var(--spectrum-chevron-icon-size-500);
+.icon-ChevronUp500 {
     transform: rotate(270deg);
 }

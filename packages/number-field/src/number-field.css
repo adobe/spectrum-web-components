@@ -1,60 +1,311 @@
-/*
-Copyright 2025 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License./
+ */
 
-@import url("./spectrum-number-field.css");
-@import url("./number-field-overrides.css");
+:host([invalid]) #textfield {
+    --highcontrast-stepper-border-color: Highlight;
+    --highcontrast-stepper-border-color-hover: Highlight;
+    --highcontrast-stepper-border-color-focus: Highlight;
+    --highcontrast-stepper-border-color-focus-hover: Highlight;
+    --highcontrast-stepper-border-color-keyboard-focus: Highlight;
 
-/* sets the missing variables for the width calcs for each size- found in spectrum-number-field.css */
-:host,
-:host([size="m"]) {
+    --mod-stepper-border-color: var(--mod-stepper-border-color-invalid, var(--spectrum-negative-border-color-default));
+    --mod-stepper-border-color-hover: var(--mod-stepper-border-color-hover-invalid, var(--spectrum-negative-border-color-hover));
+    --mod-stepper-border-color-focus: var(--mod-stepper-border-color-focus-invalid, var(--spectrum-negative-border-color-focus));
+    --mod-stepper-border-color-focus-hover: var(--mod-stepper-border-color-focus-hover-invalid, var(--spectrum-negative-border-color-focus-hover));
+    --mod-stepper-border-color-keyboard-focus: var(--mod-stepper-border-color-keyboard-focus-invalid, var(--spectrum-negative-border-color-key-focus));
+
+    --mod-infield-button-border-color: var(--highcontrast-stepper-border-color, var(--mod-stepper-border-color-invalid, var(--spectrum-stepper-border-color-invalid)));
+    --mod-textfield-icon-spacing-inline-start-invalid: 0;
+}
+
+:host([disabled]) #textfield {
+    --highcontrast-stepper-buttons-border-width: var(--mod-stepper-border-width, var(--spectrum-stepper-border-width));
+
+    --spectrum-stepper-buttons-border-width: var(--spectrum-stepper-button-border-width-disabled);
+    --spectrum-stepper-buttons-background-color: var(--spectrum-stepper-buttons-background-color-disabled);
+}
+
+:host([focused]:not([disabled])) #textfield,
+:host(:not([disabled])) #textfield:focus {
+}
+
+:host([focused]:not([disabled]):hover) #textfield,
+:host(:not([disabled]):hover) #textfield:focus {
+}
+
+:host([keyboard-focused]:not([disabled])) #textfield,
+:host(:not([disabled])) #textfield:focus-visible {
+}
+
+.input {
+    --highcontrast-textfield-border-color: var(--highcontrast-stepper-border-color);
+
+    border-inline-end-width: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.button {
+    --highcontrast-infield-button-border-color: var(--highcontrast-stepper-border-color);
+    --highcontrast-infield-button-border-color-active: var(--highcontrast-stepper-border-color);
+}
+
+:host {
+    --spectrum-stepper-border-color: var(--highcontrast-stepper-border-color, var(--mod-stepper-border-color, var(--spectrum-stepper-border-color-default)));
+    --spectrum-stepper-border-radius: var(--mod-stepper-border-radius, var(--spectrum-corner-radius-100));
+    --spectrum-stepper-focus-indicator-width: var(--mod-stepper-focus-indicator-width, var(--spectrum-focus-indicator-thickness));
+    --spectrum-stepper-focus-indicator-gap: var(--mod-stepper-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
+    --spectrum-stepper-focus-indicator-color: var(--highcontrast-stepper-focus-indicator-color, var(--mod-stepper-focus-indicator-color, var(--spectrum-focus-indicator-color)));
+    --spectrum-stepper-animation-duration: var(--mod-stepper-animation-duration, var(--spectrum-animation-duration-100));
+
+    --mod-infield-button-border-color-quiet-disabled: var(--spectrum-disabled-border-color);
+    --mod-infield-button-border-width: var(--mod-stepper-button-border-width, var(--spectrum-stepper-button-border-width));
+    --mod-textfield-border-width: var(--mod-stepper-border-width, var(--spectrum-stepper-border-width));
+    --mod-textfield-border-color: var(--spectrum-stepper-border-color);
+
+    /* tODO: added stepper-button-width multiplied by 2 just to give extra space to the input field.
+    That "2" is a magic number and should be removed when we are able (possibly after S2 migration). */
+    --spectrum-stepper-width: calc(var(--spectrum-stepper-height) * var(--spectrum-text-field-minimum-width-multiplier) + var(--spectrum-stepper-button-width) * 2 + var(--spectrum-stepper-border-width) * 2);
+
+    /* resets the inline-size of sp-number-field to the newly defined stepper-width */
+    inline-size: var(--spectrum-stepper-width);
+}
+
+#textfield,
+:host([size="m"]) #textfield {
     --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-medium));
     --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-100));
 }
 
+:host([size="s"]) #textfield {
+}
+
+:host([size="l"]) #textfield {
+}
+
+:host([size="xl"]) #textfield {
+}
+
+:host([focused]:not([disabled])) #textfield,
+:host(:not([disabled])) #textfield:focus {
+    --mod-stepper-buttons-border-color: var(--highcontrast-stepper-border-color-focus, var(--mod-stepper-border-color-focus, var(--spectrum-stepper-border-color-focus)));
+}
+
+:host([keyboard-focused]:not([disabled])) #textfield {
+}
+
+:host([quiet]) #textfield {
+    --mod-stepper-buttons-background-color: transparent;
+
+    --mod-infield-button-width-stacked: var(--mod-stepper-button-width-quiet, var(--spectrum-stepper-button-width));
+    --mod-infield-button-border-color-quiet: var(--spectrum-stepper-border-color);
+    --mod-infield-button-border-block-end-width: var(--mod-stepper-border-width, var(--spectrum-stepper-border-width));
+    --mod-infield-button-stacked-bottom-border-block-end-width: var(--mod-stepper-border-width, var(--spectrum-stepper-border-width));
+    --mod-infield-button-stacked-bottom-border-radius-end-end: 0;
+    --mod-infield-button-stacked-bottom-border-radius-end-start: 0;
+    --mod-infield-button-fill-justify-content: flex-end;
+    --mod-infield-button-inner-edge-to-fill: var(--spectrum-stepper-button-edge-to-fill);
+    --mod-infield-button-edge-to-fill: var(--spectrum-stepper-button-edge-to-fill);
+    --mod-textfield-focus-indicator-color: transparent;
+    --mod-textfield-background-color: transparent;
+    --mod-textfield-border-color-hover: var(--highcontrast-stepper-border-color, var(--mod-stepper-border-color-hover, var(--spectrum-stepper-border-color-hover)));
+
+    --spectrum-stepper-buttons-border-style: none;
+    --spectrum-stepper-button-edge-to-fill: 0;
+
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+}
+
+:host([quiet][keyboard-focused]:not([disabled])) #textfield {
+    --mod-stepper-focus-indicator-visibility: visible;
+}
+
+:host([quiet][invalid]) #textfield {
+}
+
+#textfield:not(.spectrum-Stepper--quiet) {
+    --mod-textfield-border-color-disabled: var(--spectrum-stepper-border-color-disabled);
+}
+
+:host(:not([disabled])[focused]) #textfield,
+:host(:not([disabled])) #textfield:focus {
+    --mod-textfield-focus-indicator-width: 0;
+}
+
+:host([keyboard-focused]:not([disabled])) #textfield,
+:host(:not([disabled])) #textfield:focus-visible {
+    outline: var(--spectrum-stepper-focus-indicator-width) solid;
+    outline-color: var(--spectrum-stepper-focus-indicator-color);
+    outline-offset: var(--spectrum-stepper-focus-indicator-gap);
+}
+
+:host([invalid][focused]) #textfield,
+:host([invalid]) #textfield:focus {
+}
+
+:host([invalid][keyboard-focused]) #textfield,
+:host([invalid]) #textfield:focus-visible {
+}
+
+:host([quiet][focused]:not([disabled])) #textfield,
+:host([quiet]:not([disabled])) #textfield:focus {
+}
+
+:host([focused]:not([disabled]):hover) #textfield,
+:host(:not([disabled]):hover) #textfield:focus {
+}
+
+:host([quiet]:not([disabled]):hover) #textfield {
+}
+
+:host(:hover) #textfield:not(.is-invalid, .is-disabled, .is-focused) {
+}
+
+:host(:not([disabled])[focused]:hover) #textfield,
+:host(:not([disabled]):hover) #textfield:focus {
+}
+
+:host([invalid]:hover) #textfield {
+}
+
+:host([invalid][focused]:hover) #textfield,
+:host([invalid]:hover) #textfield:focus {
+}
+
+:host([quiet][focused]:not([disabled]):hover) #textfield,
+:host([quiet]:not([disabled]):hover) #textfield:focus {
+}
+
+:host([quiet][keyboard-focused]:not([disabled]):hover) #textfield {
+}
+
+#textfield {
+    inline-size: var(--spectrum-stepper-width);
+    block-size: var(--spectrum-stepper-height);
+    border-radius: var(--spectrum-stepper-border-radius);
+    flex-flow: row;
+    display: inline-flex;
+    position: relative;
+}
+
+#textfield::before {
+    content: "";
+}
+
+.buttons {
+    box-sizing: border-box;
+    block-size: var(--spectrum-stepper-height);
+    inline-size: var(--spectrum-stepper-button-width);
+    border-color: var(--spectrum-stepper-border-color);
+    border-style: var(--mod-stepper-buttons-border-style, var(--spectrum-stepper-buttons-border-style));
+    border-width: var(--highcontrast-stepper-buttons-border-width, var(--mod-stepper-buttons-border-width, var(--spectrum-stepper-buttons-border-width)));
+    background-color: var(--mod-stepper-buttons-background-color, var(--spectrum-stepper-buttons-background-color));
+    transition: border-color var(--spectrum-stepper-animation-duration) ease-in-out;
+    border-inline-start-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+}
+
+.buttons,
+#textfield.hide-stepper .input {
+    border-start-end-radius: var(--spectrum-stepper-border-radius);
+    border-end-end-radius: var(--spectrum-stepper-border-radius);
+}
+
+#textfield.hide-stepper .input {
+    border-inline-end-width: var(--mod-stepper-border-width, var(--spectrum-stepper-border-width));
+}
+
+:host([quiet]) .hide-stepper .input {
+    border-inline-end-width: 0;
+    border-end-end-radius: 0;
+}
+
+:host([quiet])::after {
+    visibility: hidden;
+    visibility: var(--mod-stepper-focus-indicator-visibility, hidden);
+    content: "";
+    inline-size: 100%;
+    block-size: var(--spectrum-stepper-focus-indicator-width);
+    background-color: var(--spectrum-stepper-focus-indicator-color);
+    position: absolute;
+    inset-block-end: calc((var(--spectrum-stepper-focus-indicator-gap) + var(--spectrum-stepper-focus-indicator-width)) * -1);
+    inset-inline-start: 0;
+}
+
+:host([quiet][keyboard-focused]:not([disabled])) {
+    outline: none;
+}
+
+/* number field tokens */
+:host {
+    --spectrum-stepper-border-width: var(--spectrum-border-width-100);
+    --spectrum-stepper-border-color-default: var(--spectrum-gray-500);
+    --spectrum-stepper-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-border-color-focus-hover: var(--spectrum-gray-900);
+    --spectrum-stepper-border-color-keyboard-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-buttons-border-color: var(--spectrum-gray-500);
+    --spectrum-stepper-buttons-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-stepper-buttons-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-buttons-border-color-keyboard-focus: var(--spectrum-gray-800);
+    --spectrum-stepper-button-border-width: var(--spectrum-border-width-100);
+    --spectrum-stepper-border-color-invalid: var(--spectrum-negative-border-color-default);
+    --spectrum-stepper-border-color-focus-invalid: var(--spectrum-negative-border-color-focus);
+    --spectrum-stepper-border-color-focus-hover-invalid: var(--spectrum-negative-border-color-focus-hover);
+    --spectrum-stepper-border-color-keyboard-focus-invalid: var(--spectrum-negative-border-color-key-focus);
+    --spectrum-stepper-border-color-disabled: var(--spectrum-gray-300);
+    --spectrum-stepper-button-border-width-disabled: var(--spectrum-border-width-200);
+    --spectrum-stepper-buttons-background-color-disabled: var(--spectrum-gray-50);
+}
+
+/* sets the missing variables for the width calcs for each size- found in spectrum-number-field.css */
+:host,
+:host([size="m"]) {
+}
+
 :host([size="s"]) {
-    --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-small));
-    --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-75));
 }
 
 :host([size="l"]) {
-    --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-large));
-    --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-200));
 }
 
 :host([size="xl"]) {
-    --spectrum-stepper-button-width: var(--mod-stepper-button-width, var(--spectrum-in-field-button-width-stacked-extra-large));
-    --spectrum-stepper-height: var(--mod-stepper-height, var(--spectrum-component-height-300));
-}
-
-:host {
-    /* TODO: added stepper-button-width multiplied by 2 just to give extra space to the input field. 
-    That "2" is a magic number and should be removed when we are able (possibly after S2 migration). */
-    --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) * 2 + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
-
-    /* resets the inline-size of sp-number-field to the newly defined stepper-width */
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
 :host([hide-stepper]) {
-    --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
 }
 
 /* keeps the textfield 100% of the width of the sp-number-field so there isn't a gap between the containers */
 #textfield {
     inline-size: 100%;
-}
-
-.input {
-    font-variant-numeric: tabular-nums;
 }
 
 :host([readonly]) .buttons {
@@ -67,18 +318,12 @@ governing permissions and limitations under the License.
 }
 
 :host([hide-stepper]:not([quiet])) #textfield input {
-    border: var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)) solid var(--mod-textfield-border-color, var(--spectrum-textfield-border-color));
+    border: var(--spectrum-textfield-border-width) solid var(--spectrum-textfield-border-color);
     border-radius: var(--spectrum-textfield-corner-radius);
 }
 
-:host([quiet]) #textfield .button {
-    --mod-infield-button-border-color: var(--mod-infield-border-color-quiet, transparent);
-    --mod-infield-button-edge-to-fill: 0;
-    --mod-infield-button-border-width: var(--mod-infield-button-border-width-quiet, 0);
-}
-
 :host([focused]:not([disabled])) #textfield:hover {
-    --mod-stepper-buttons-border-color-focus-hover: var(--mod-stepper-border-color-focus-hover, var(--spectrum-stepper-border-color-focus-hover));
+    --spectrum-stepper-buttons-border-color-focus-hover: var(--spectrum-stepper-border-color-focus-hover);
 }
 
 /* visually places the validation icon inside the input field */
@@ -89,5 +334,5 @@ governing permissions and limitations under the License.
 
 /* includes the alert icon size in the input's padding similar to the valid variant */
 :host([invalid]) .input {
-    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-valid, var(--spectrum-textfield-icon-spacing-inline-start-valid)) + var(--mod-textfield-icon-size-valid, var(--spectrum-textfield-icon-size-valid)) + var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
+    padding-inline-end: calc(var(--spectrum-textfield-icon-spacing-inline-start-valid) + var(--spectrum-textfield-icon-size-valid) + var(--spectrum-textfield-icon-spacing-inline-end-valid) - var(--spectrum-textfield-border-width));
 }

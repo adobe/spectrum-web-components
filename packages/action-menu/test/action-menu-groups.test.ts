@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 import { fixture } from '../../../test/testing-helpers.js';
@@ -56,7 +56,8 @@ describe('Action Menu - Groups', () => {
             'sp-menu-item'
         ) as MenuItem;
 
-        expect(firstItem.selected, 'before opening: first item selected?').to.be.false;
+        expect(firstItem.selected, 'before opening: first item selected?').to.be
+            .false;
 
         let opened = oneEvent(el, 'sp-opened');
         el.focus();
@@ -81,7 +82,8 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(firstItem);
 
         expect(el.open, 'first closed: open?').to.be.false;
-        expect(firstItem.selected, 'after select: first item selected?').to.be.true;
+        expect(firstItem.selected, 'after select: first item selected?').to.be
+            .true;
         expect(document.activeElement === el, document.activeElement?.localName)
             .to.be.true;
 
@@ -102,6 +104,7 @@ describe('Action Menu - Groups', () => {
         await elementUpdated(firstItem);
 
         expect(el.open, 'reclosed: open?').to.be.false;
-        expect(firstItem.selected, 'after deselect: first item selected?').to.be.false;
+        expect(firstItem.selected, 'after deselect: first item selected?').to.be
+            .false;
     });
 });

@@ -1,14 +1,14 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
 import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js';
@@ -23,25 +23,6 @@ import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 // setCustomElementsManifest(cem);
 
 export const globalTypes = {
-    system: {
-        title: 'Design context',
-        description: 'The variation of Spectrum to use in the component',
-        defaultValue: 'spectrum',
-        type: 'string',
-        showName: true,
-        toolbar: {
-            items: [
-                {
-                    value: 'spectrum-two',
-                    title: 'Spectrum 2',
-                    right: 'default',
-                },
-                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
-                { value: 'express', title: 'Express' },
-            ],
-            dynamicTitle: true,
-        },
-    },
     color: {
         title: 'Color',
         description: 'Controls the color context of the component',
@@ -147,14 +128,10 @@ export const parameters = {
         prefersReducedMotion: 'no-preference',
         pauseAnimationAtEnd: true,
         modes: {
-            'Context: Spectrum 1': {
+            'Light | LTR': {
                 scale: 'medium',
                 color: 'light',
                 textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
             },
             'Dark | RTL': {
                 color: 'dark',

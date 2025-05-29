@@ -29,8 +29,7 @@
             "development": "./src/Card.dev.js",
             "default": "./src/Card.js"
         },
-        "./src/card-overrides.css.js": "./src/card-overrides.css.js",
-        "./src/card.css.js": "./src/card.css.js",
+        "./src/card.css": "./src/card.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

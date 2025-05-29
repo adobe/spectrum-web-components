@@ -29,8 +29,7 @@
             "development": "./src/Dropzone.dev.js",
             "default": "./src/Dropzone.js"
         },
-        "./src/dropzone-overrides.css.js": "./src/dropzone-overrides.css.js",
-        "./src/dropzone.css.js": "./src/dropzone.css.js",
+        "./src/dropzone.css": "./src/dropzone.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

@@ -37,8 +37,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/radio-overrides.css.js": "./src/radio-overrides.css.js",
-        "./src/radio.css.js": "./src/radio.css.js",
+        "./src/radio.css": "./src/radio.css",
         "./sp-radio.js": {
             "development": "./sp-radio.dev.js",
             "default": "./sp-radio.js"

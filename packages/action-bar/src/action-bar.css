@@ -1,22 +1,137 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-@import url("./spectrum-action-bar.css");
-@import url("./action-bar-overrides.css");
-
+/* Base variables */
 :host {
+    /* layout */
+    --spectrum-action-bar-corner-radius: var(--spectrum-corner-radius-medium-size-extra-large);
+    --spectrum-action-bar-item-counter-line-height: var(--spectrum-line-height-100);
+    --spectrum-action-bar-item-counter-color: var(--spectrum-neutral-content-color-default);
+
+    /* colors - applied to popover */
+    --spectrum-action-bar-popover-background-color: var(--spectrum-background-elevated-color);
+
+    /* spacing of action bar bottom and horizontal outer edge */
+    --spectrum-action-bar-spacing-outer-edge: var(--spectrum-spacing-300);
+
+    /* drop shadow */
+    --spectrum-action-bar-shadow-horizontal: var(--spectrum-drop-shadow-elevated-x);
+    --spectrum-action-bar-shadow-vertical: var(--spectrum-drop-shadow-elevated-y);
+    --spectrum-action-bar-shadow-blur: var(--spectrum-drop-shadow-elevated-blur);
+    --spectrum-action-bar-shadow-color: var(--spectrum-drop-shadow-elevated-color);
+
+    /* *
+     * ActionBar is outer wrapper with nested popover component
+     * within; creates horizontal spacing to edge
+     */
+    padding: 0 var(--spectrum-action-bar-spacing-outer-edge);
+    inset-block-end: 0;
+    z-index: 1;
+
+    /* account for fixed width */
+    box-sizing: border-box;
+
+    /* let clicks in blank space fall through */
+    pointer-events: none;
+
+    /* take up no space and be invisible when not open */
+    block-size: 0;
+    opacity: 0;
     display: block;
+}
+
+/* cjk language support for item counter */
+:host(:lang(ja)),
+:host(:lang(zh)),
+:host(:lang(ko)) {
+    --spectrum-action-bar-item-counter-line-height: var(--spectrum-cjk-line-height-100);
+}
+
+:host([open]) {
+    /* add ActionBar bottom margin to height for correct spacing even when sticky */
+    block-size: calc(var(--spectrum-action-bar-spacing-outer-edge) + var(--spectrum-action-bar-height));
+    opacity: 1;
+}
+
+sp-popover {
+    /* popover is ActionBar height */
+    block-size: var(--spectrum-action-bar-height);
+    min-inline-size: var(--spectrum-action-bar-minimum-width);
+    box-sizing: border-box;
+    inline-size: 100%;
+    margin: auto;
+    padding-inline: var(--spectrum-action-bar-edge-to-content-area);
+    padding-block: var(--spectrum-action-bar-top-to-content-area) var(--spectrum-action-bar-bottom-to-content-area);
+
+    /* be relative so our width can be restricted */
+    position: relative;
+    border-radius: var(--spectrum-action-bar-corner-radius);
+    border-color: var(--spectrum-action-bar-border-color);
+    background-color: var(--spectrum-action-bar-popover-background-color);
+    filter: drop-shadow(var(--spectrum-action-bar-shadow-horizontal) var(--spectrum-action-bar-shadow-vertical) var(--spectrum-action-bar-shadow-blur) var(--spectrum-action-bar-shadow-color));
+
+    /* let clicks do their thing */
+    pointer-events: auto;
+
+    /* inner layout of content items */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* item counter */
+.field-label {
+    --spectrum-fieldlabel-font-size: var(--spectrum-action-bar-counter-font-size);
+    --spectrum-fieldlabel-line-height: var(--spectrum-action-bar-item-counter-line-height);
+
+    color: var(--spectrum-action-bar-item-counter-color);
+    padding-inline-start: var(--spectrum-action-bar-close-button-to-counter);
+}
+
+/* cjk language support */
+:host(:lang(ja)) .field-label,
+:host(:lang(zh)) .field-label,
+:host(:lang(ko)) .field-label {
+    line-height: var(--spectrum-action-bar-item-counter-line-height-cjk);
+}
+
+/* action group */
+.action-group {
+    /* align to end by default */
+    margin-inline-start: auto;
+    padding-inline-start: var(--spectrum-action-bar-label-to-action-group-area);
+}
+
+:host([variant="sticky"]) {
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    position: sticky;
+}
+
+:host([variant="fixed"]) {
+    position: fixed;
 }
 
 :host([flexible]) {
     display: inline-block;
+}
+
+/* flexible width */
+:host([flexible]) sp-popover {
+    inline-size: auto;
+}
+
+@media (forced-colors: active) {
+    sp-popover {
+        border-color: CanvasText;
+    }
 }

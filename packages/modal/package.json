@@ -16,15 +16,14 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/modal.css.js",
-    "module": "./src/modal.css.js",
+    "main": "./src/modal.css",
+    "module": "./src/modal.css",
     "type": "module",
     "exports": {
-        ".": "./src/modal-wrapper.css.js",
+        ".": "./src/modal-wrapper.css",
         "./package.json": "./package.json",
-        "./src/modal-overrides.css.js": "./src/modal-overrides.css.js",
-        "./src/modal-wrapper.css.js": "./src/modal-wrapper.css.js",
-        "./src/modal.css.js": "./src/modal.css.js"
+        "./src/modal-wrapper.css": "./src/modal-wrapper.css",
+        "./src/modal.css": "./src/modal.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

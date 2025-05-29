@@ -45,13 +45,11 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/tab-panel.css.js": "./src/tab-panel.css.js",
-        "./src/tab.css.js": "./src/tab.css.js",
-        "./src/tabs-overflow.css.js": "./src/tabs-overflow.css.js",
-        "./src/tabs-overrides.css.js": "./src/tabs-overrides.css.js",
-        "./src/tabs-sizes-overrides.css.js": "./src/tabs-sizes-overrides.css.js",
-        "./src/tabs-sizes.css.js": "./src/tabs-sizes.css.js",
-        "./src/tabs.css.js": "./src/tabs.css.js",
+        "./src/tab-panel.css": "./src/tab-panel.css",
+        "./src/tab.css": "./src/tab.css",
+        "./src/tabs-overflow.css": "./src/tabs-overflow.css",
+        "./src/tabs-sizes.css": "./src/tabs-sizes.css",
+        "./src/tabs.css": "./src/tabs.css",
         "./sp-tabs.js": {
             "development": "./sp-tabs.dev.js",
             "default": "./sp-tabs.js"
@@ -93,7 +91,7 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/action-button": "1.6.0",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/icon": "1.6.0",

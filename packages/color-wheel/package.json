@@ -29,8 +29,7 @@
             "development": "./src/ColorWheel.dev.js",
             "default": "./src/ColorWheel.js"
         },
-        "./src/color-wheel-overrides.css.js": "./src/color-wheel-overrides.css.js",
-        "./src/color-wheel.css.js": "./src/color-wheel.css.js",
+        "./src/color-wheel.css": "./src/color-wheel.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

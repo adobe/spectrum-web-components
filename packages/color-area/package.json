@@ -29,8 +29,7 @@
             "development": "./src/ColorArea.dev.js",
             "default": "./src/ColorArea.js"
         },
-        "./src/color-area-overrides.css.js": "./src/color-area-overrides.css.js",
-        "./src/color-area.css.js": "./src/color-area.css.js",
+        "./src/color-area.css": "./src/color-area.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

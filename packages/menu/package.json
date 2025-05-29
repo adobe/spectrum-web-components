@@ -41,19 +41,14 @@
             "development": "./src/MenuItem.dev.js",
             "default": "./src/MenuItem.js"
         },
-        "./src/checkmark-overrides.css.js": "./src/checkmark-overrides.css.js",
-        "./src/chevron-overrides.css.js": "./src/chevron-overrides.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/menu-divider-overrides.css.js": "./src/menu-divider-overrides.css.js",
-        "./src/menu-divider.css.js": "./src/menu-divider.css.js",
-        "./src/menu-group.css.js": "./src/menu-group.css.js",
-        "./src/menu-item-overrides.css.js": "./src/menu-item-overrides.css.js",
-        "./src/menu-item.css.js": "./src/menu-item.css.js",
-        "./src/menu-overrides.css.js": "./src/menu-overrides.css.js",
-        "./src/menu.css.js": "./src/menu.css.js",
+        "./src/menu-divider.css": "./src/menu-divider.css",
+        "./src/menu-group.css": "./src/menu-group.css",
+        "./src/menu-item.css": "./src/menu-item.css",
+        "./src/menu.css": "./src/menu.css",
         "./sp-menu.js": {
             "development": "./sp-menu.dev.js",
             "default": "./sp-menu.js"
@@ -95,7 +90,7 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/action-button": "1.6.0",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/divider": "1.6.0",

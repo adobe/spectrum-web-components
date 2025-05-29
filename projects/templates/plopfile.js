@@ -98,11 +98,6 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/src/{{name}}-overrides.css',
-                templateFile: 'plop-templates/component-overrides.css.hbs',
-            },
-            {
-                type: 'add',
                 path: '../../packages/{{name}}/test/{{name}}.test.ts',
                 templateFile: 'plop-templates/test.ts.hbs',
             },

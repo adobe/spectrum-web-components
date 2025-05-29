@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -26,7 +26,7 @@ import {
 import type { Focusable } from '@spectrum-web-components/shared';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css' with { type: 'css' };
 import {
     conditionAttributeWithId,
     conditionAttributeWithoutId,
@@ -36,7 +36,7 @@ import {
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
-import styles from './field-label.css.js';
+import styles from './field-label.css' with { type: 'css' };
 
 type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
 type Labelable = Focusable & {
@@ -154,7 +154,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
                 ${this.required
                     ? html`
                           <sp-icon-asterisk100
-                              class="required-icon spectrum-UIIcon-Asterisk100"
+                              class="required-icon icon-Asterisk100"
                           ></sp-icon-asterisk100>
                       `
                     : nothing}

@@ -45,9 +45,8 @@
             "development": "./src/StyledButton.dev.js",
             "default": "./src/StyledButton.js"
         },
-        "./src/button-base.css.js": "./src/button-base.css.js",
-        "./src/button-overrides.css.js": "./src/button-overrides.css.js",
-        "./src/button.css.js": "./src/button.css.js",
+        "./src/button-base.css": "./src/button-base.css",
+        "./src/button.css": "./src/button.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -103,5 +102,8 @@
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js"
-    ]
+    ],
+    "spectrum-web": {
+        "migrated": true
+    }
 }

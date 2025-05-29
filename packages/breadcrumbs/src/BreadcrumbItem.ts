@@ -1,14 +1,14 @@
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -20,10 +20,10 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css' with { type: 'css' };
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 
-import styles from './breadcrumb-item.css.js';
+import styles from './breadcrumb-item.css' with { type: 'css' };
 
 export interface BreadcrumbSelectDetail {
     value: string;
@@ -110,7 +110,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
             <sp-icon-chevron100
                 id="separator"
                 size="xs"
-                class="spectrum-UIIcon-ChevronRight100"
+                class="icon-ChevronRight100"
             ></sp-icon-chevron100>
         `;
     }

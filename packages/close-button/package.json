@@ -16,14 +16,13 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/close-button.css.js",
-    "module": "./src/close-button.css.js",
+    "main": "./src/close-button.css",
+    "module": "./src/close-button.css",
     "type": "module",
     "exports": {
-        ".": "./src/close-button.css.js",
+        ".": "./src/close-button.css",
         "./package.json": "./package.json",
-        "./src/close-button-overrides.css.js": "./src/close-button-overrides.css.js",
-        "./src/close-button.css.js": "./src/close-button.css.js"
+        "./src/close-button.css": "./src/close-button.css"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

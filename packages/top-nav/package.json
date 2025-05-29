@@ -37,7 +37,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/top-nav-item.css.js": "./src/top-nav-item.css.js",
+        "./src/top-nav-item.css": "./src/top-nav-item.css",
         "./sp-top-nav.js": {
             "development": "./sp-top-nav.dev.js",
             "default": "./sp-top-nav.js"
@@ -71,7 +71,7 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/shared": "1.6.0",
         "@spectrum-web-components/tabs": "1.6.0"

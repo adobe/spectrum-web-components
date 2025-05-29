@@ -37,10 +37,8 @@
             "development": "./src/CoachmarkItem.dev.js",
             "default": "./src/CoachmarkItem.js"
         },
-        "./src/coach-indicator-overrides.css.js": "./src/coach-indicator-overrides.css.js",
-        "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
-        "./src/coachmark-overrides.css.js": "./src/coachmark-overrides.css.js",
-        "./src/coachmark.css.js": "./src/coachmark.css.js",
+        "./src/coach-indicator.css": "./src/coach-indicator.css",
+        "./src/coachmark.css": "./src/coachmark.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

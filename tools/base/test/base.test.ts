@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,11 +22,9 @@ describe('Base', () => {
     });
     it('sets `dir` from `document`', async () => {
         document.dir = 'rtl';
-        const el = await fixture<DirElement>(
-            html`
-                <dir-element></dir-element>
-            `
-        );
+        const el = await fixture<DirElement>(html`
+            <dir-element></dir-element>
+        `);
 
         await elementUpdated(el);
 

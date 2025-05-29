@@ -1,22 +1,42 @@
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+.popover {
+    min-inline-size: var(--spectrum-contextual-help-minimum-width);
+    padding-block: var(--spectrum-spacing-400);
+    padding-inline: var(--spectrum-spacing-400);
+    font-size: var(--spectrum-contextual-help-body-size);
+    color: var(--highcontrast-contextual-help-body-color, var(--spectrum-body-color));
+    max-inline-size: var(--spectrum-contextual-help-popover-maximum-width);
+    position: relative;
+}
 
-@import url("./spectrum-contextual-help.css");
-@import url("./contextual-help-overrides.css");
+.popover .body,
+.popover ::slotted([slot="heading"]) {
+    margin: 0;
+}
 
-:host {
-    display: inline-block;
+.popover ::slotted([slot="heading"]) {
+    font-size: var(--spectrum-contextual-help-title-size);
+    color: var(--highcontrast-contextual-help-heading-color, var(--spectrum-heading-color));
+    margin-block-end: var(--spectrum-contextual-help-content-spacing);
 }
 
 ::slotted([slot="link"]) {
+    margin-block-start: var(--spectrum-spacing-300);
+
     display: block;
+}
+
+:host {
+    display: inline-block;
 }

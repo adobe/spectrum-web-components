@@ -4,4 +4,3 @@ task
 !*.css
 projects/example-project/dist
 tools/styles
-spectrum-*.css

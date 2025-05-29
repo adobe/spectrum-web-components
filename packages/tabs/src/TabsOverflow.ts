@@ -1,14 +1,14 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import {
     CSSResultArray,
     html,
@@ -29,9 +29,9 @@ import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { Tabs } from './Tabs.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import tabSizes from './tabs-sizes.css.js';
-import styles from './tabs-overflow.css.js';
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css' with { type: 'css' };
+import tabSizes from './tabs-sizes.css' with { type: 'css' };
+import styles from './tabs-overflow.css' with { type: 'css' };
 
 interface TabsOverflowState {
     canScrollLeft: boolean;
@@ -166,7 +166,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 >
                     <sp-icon-chevron100
                         slot="icon"
-                        class="spectrum-UIIcon-ChevronLeft300"
+                        class="icon-ChevronLeft300"
                     ></sp-icon-chevron100>
                 </sp-action-button>
                 <sp-action-button
@@ -181,7 +181,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 >
                     <sp-icon-chevron100
                         slot="icon"
-                        class="spectrum-UIIcon-ChevronRight300"
+                        class="icon-ChevronRight300"
                     ></sp-icon-chevron100>
                 </sp-action-button>
                 <slot

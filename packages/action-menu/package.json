@@ -29,7 +29,7 @@
             "development": "./src/ActionMenu.dev.js",
             "default": "./src/ActionMenu.js"
         },
-        "./src/action-menu.css.js": "./src/action-menu.css.js",
+        "./src/action-menu.css": "./src/action-menu.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
