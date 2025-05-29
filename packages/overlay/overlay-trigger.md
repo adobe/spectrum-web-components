@@ -19,7 +19,6 @@ An `<overlay-trigger>` element supports the delivery of temporary overlay conten
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/meter?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/overlay)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/meter?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/overlay)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/bu0sOBIfyW7wnHkXtGzL/src/index.ts)
 
 ```zsh
 yarn add @spectrum-web-components/overlay
@@ -84,8 +83,8 @@ When using the `placement` attribute of an `<overlay-trigger>` (`"top" |"top-sta
 
 `'inline'` type inserts the overlay after the trigger in the tab order. This creates a natural flow where:
 
--   Forward tab: Goes to the next logical element
--   Backward tab (shift): Returns to the trigger
+- Forward tab: Goes to the next logical element
+- Backward tab (shift): Returns to the trigger
 
 ```html
 <overlay-trigger type="inline" placement="bottom">
@@ -105,8 +104,8 @@ When using the `placement` attribute of an `<overlay-trigger>` (`"top" |"top-sta
 
 `'replace'` type inserts the overlay as if it were the trigger itself in the tab order. This means:
 
--   Forward tab: Goes to the next logical element
--   Backward tab (shift): Goes to the element before the trigger
+- Forward tab: Goes to the next logical element
+- Backward tab (shift): Goes to the element before the trigger
 
 ```html
 <overlay-trigger type="replace" placement="bottom">
@@ -184,9 +183,9 @@ The `triggered-by` attribute (`triggeredBy` property) allows you to explicitly d
 
 The `triggered-by` attribute accepts a space-separated string of overlay types:
 
--   `click` - For click-triggered content
--   `hover` - For hover/focus-triggered content
--   `longpress` - For longpress-triggered content
+- `click` - For click-triggered content
+- `hover` - For hover/focus-triggered content
+- `longpress` - For longpress-triggered content
 
 When not specified, the component will automatically detect which content types are present, but this may result in additional rendering cycles. For optimal performance, especially in applications with many overlay triggers, explicitly declaring the content types you plan to use is recommended.
 

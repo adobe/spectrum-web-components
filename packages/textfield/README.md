@@ -6,7 +6,7 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/textfield?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/textfield)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/textfield)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/EcE2Yrwz0MDIGkCzbyvl/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-wb3tywmy)
 
 ```
 yarn add @spectrum-web-components/textfield
@@ -154,11 +154,11 @@ See [help text](../help-text) for more information.
 When inputting URLs, telephone numbers, email addresses, or passwords, specify a `type` to provide
 user affordances like mobile keyboards and obscured characters:
 
--   `url`
--   `tel`
--   `email`
--   `password`
--   `text` (default)
+- `url`
+- `tel`
+- `email`
+- `password`
+- `text` (default)
 
 ```html
 <sp-field-label for="tel-1">Telephone</sp-field-label>
@@ -209,9 +209,9 @@ Every text field should have a label. A field without a label is ambiguous and n
 
 The description in the help text is flexible and encompasses a range of guidance. Sometimes this guidance is about what to input, and sometime it’s about how to input. This includes information such as:
 
--   An overall description of the input field
--   Hints for what kind of information needs to be input
--   Specific formatting examples or requirements
+- An overall description of the input field
+- Hints for what kind of information needs to be input
+- Specific formatting examples or requirements
 
 Learn more about [using help text](https://spectrum.adobe.com/page/text-field/#Use-help-text-to-show-hints,-formatting,-and-requirements).
 

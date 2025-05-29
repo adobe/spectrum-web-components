@@ -6,7 +6,7 @@ The `<sp-search>` element delivers a single input field with a "reset" button as
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/search?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/search)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/search?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/search)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/RF8kOBhUdLovmzyZMpTk/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-xnfnkgvf)
 
 ```
 yarn add @spectrum-web-components/search
@@ -82,7 +82,7 @@ The `submit` event fires when the `<sp-search>` is submitted. This is a non-`com
 
 ### holdValueOnEscape
 
--   Type: `boolean`
--   Default: `false`
+- Type: `boolean`
+- Default: `false`
 
 If `holdValueOnEscape` controls whether the typed value should be held (i.e., not cleared or reset) when the Escape key is pressed. If set to true, pressing the Escape key will not affect the value in the search field.

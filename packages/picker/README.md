@@ -6,7 +6,7 @@ An `<sp-picker>` is an alternative to HTML's `<select>` element. Use [`<sp-menu-
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/picker?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/picker)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/guTpKeAjgecibF150Qbg/src/index.ts)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-oq2r4cet)
 
 ```bash
 yarn add @spectrum-web-components/picker
@@ -600,8 +600,8 @@ On mobile, the menu can be exposed in either a `sp-popover` or `sp-tray`. By def
 
 Usage Guidance:
 
--   Use a tray when a menu’s proximity to its trigger is considered to be less important to the experience, or for showing a volume of content that is too overwhelming for a popover.
--   Use a popover when a menu’s proximity to its trigger is considered to be important to the experience, or for showing a volume of content that is manageable for a popover.
+- Use a tray when a menu’s proximity to its trigger is considered to be less important to the experience, or for showing a volume of content that is too overwhelming for a popover.
+- Use a popover when a menu’s proximity to its trigger is considered to be important to the experience, or for showing a volume of content that is manageable for a popover.
 
 To see this functionality in action, load this page from your mobile device or use Chrome DevTools (or equivalent) and select a mobile device once the Device Toolbar (the phone/tablet icon) is active.
 
@@ -633,9 +633,9 @@ Every picker should have a label. A picker without a label is ambiguous and not 
 
 A picker’s description in the help text can communicate what to select or how to select an option. This includes information such as:
 
--   An overall description of the picker options
--   Hints for what kind of information to choose
--   More context for why a user needs to make a selection
+- An overall description of the picker options
+- Hints for what kind of information to choose
+- More context for why a user needs to make a selection
 
 The help text’s message should not simply restate the same information in the label in order to prompt someone to interact with a picker. Don’t add help text to maintain layout continuity with other inputs that require help text if it isn’t actually relevant or meaningful to a user.
 

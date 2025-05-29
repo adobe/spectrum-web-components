@@ -6,7 +6,6 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dialog)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/MLYDVWpWhNxJZDW3Ywqq/src/index.ts)
 
 ```bash
 yarn add @spectrum-web-components/dialog
@@ -36,17 +35,17 @@ The dialog base manages several behaviors:
 
 Use `DialogBase` when:
 
--   You need to present important information that requires user acknowledgment
--   You're building a modal interface that blocks interaction with the page
--   You need a structured container with features like backdrop/underlay
--   Your content is complex and requires formal layout with headings, content sections, and actions
+- You need to present important information that requires user acknowledgment
+- You're building a modal interface that blocks interaction with the page
+- You need a structured container with features like backdrop/underlay
+- Your content is complex and requires formal layout with headings, content sections, and actions
 
 Use an [`sp-popover`](./popover) when:
 
--   You need a lightweight, contextual container that's positioned relative to a trigger element
--   You want to display simple content like menus, tooltips, or additional options
--   You're building a non-modal interface where users can still interact with the page
--   You need an element with an arrow/tip pointing to the trigger
+- You need a lightweight, contextual container that's positioned relative to a trigger element
+- You want to display simple content like menus, tooltips, or additional options
+- You're building a non-modal interface where users can still interact with the page
+- You need an element with an arrow/tip pointing to the trigger
 
 ```html
 <overlay-trigger type="modal">
@@ -271,17 +270,17 @@ The `heading` slot is of the `sp-dialog` dialog element is used to label the dia
 
 The dialog base component ensures proper focus management by:
 
--   Moving focus into the dialog when opened
--   Trapping tab order within the dialog while open
--   Returning focus to the trigger element when closed
+- Moving focus into the dialog when opened
+- Trapping tab order within the dialog while open
+- Returning focus to the trigger element when closed
 
 The `receives-focus` attribute can be used to control whether the dialog should receive focus when it is opened. Leverage the `type="modal"` and `receives-focus="auto"` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
 The `receives-focus` attribute on `overlay-trigger` has three possible values:
 
--   `auto` (default): Focus will automatically move to the first focusable element in the dialog
--   `true`: Forces focus to move to the overlay content
--   `false`: Prevents focus from moving to the overlay
+- `auto` (default): Focus will automatically move to the first focusable element in the dialog
+- `true`: Forces focus to move to the overlay content
+- `false`: Prevents focus from moving to the overlay
 
 ```html
 <overlay-trigger type="modal" receives-focus="true">
