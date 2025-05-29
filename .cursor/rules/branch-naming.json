@@ -1,0 +1,8 @@
+{
+    "name": "Branch naming format",
+    "description": "Suggests the ideal branch naming format for Spectrum Web Components contributions",
+    "pattern": "^[a-z0-9]+\\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)-[a-z0-9-]+(-swc-[0-9]+)?$",
+    "message": "Consider following the preferred branch naming format: <username>/<type>-<description>[-swc-<issue>]\n\nUsername will be automatically pulled from your git config settings.\n\nGuidelines:\n- Use lowercase letters and numbers only\n- Separate words with dashes (not camelCase)\n- Use conventional commit types:\n  • feat: New feature\n  • fix: Bug fix\n  • docs: Documentation only\n  • style: Code style/formatting\n  • refactor: Code change that neither fixes a bug nor adds a feature\n  • perf: Code change that improves performance\n  • test: Adding missing tests or correcting existing tests\n  • build: Changes that affect the build system or external dependencies\n  • ci: Changes to CI configuration files and scripts\n  • chore: Other changes that don't modify src or test files\n  • revert: Reverts a previous commit\n- Optional issue number format: -swc-XXX\n\nGood examples:\n- johndoe/feat-add-new-button-swc-123\n- janedoe/fix-dropdown-alignment\n- alice/refactor-component-structure\n- bob/perf-optimize-rendering\n\nAvoid:\n- johnDoe/feat-addNewButton (no camelCase)\n- jane/fix-Dropdown-Bug (no uppercase)\n\nThis is a recommended format to maintain consistency, but not required.",
+    "severity": "warning",
+    "scope": "git_branch"
+}
