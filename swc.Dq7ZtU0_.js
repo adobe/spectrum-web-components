@@ -1,2 +1,2 @@
 customElements.whenDefined("sp-tag").then((()=>{document.querySelectorAll("sp-tag[deletable]").forEach((e=>{e.addEventListener("delete",(()=>{spAlert(e,"Tag item deleted.")}))}))}));
-//# sourceMappingURL=swc.93V2mlwy.js.map
+//# sourceMappingURL=swc.CH_oSaQc.js.map
