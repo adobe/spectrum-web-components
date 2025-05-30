@@ -222,6 +222,14 @@ describe('Overlay Trigger - extended', () => {
             `textfield is not focused ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.be.false;
 
+        await sendKeys({
+            press: 'Tab',
+        });
+        expect(
+            document.activeElement === button,
+            `button focused ${getRects([textfield, overlayTrigger, button, popover])}`
+        ).to.be.true;
+
         // Add more reliable focus handling for CI environments
         await sendMouse({
             steps: [
@@ -259,7 +267,7 @@ describe('Overlay Trigger - extended', () => {
         });
         expect(
             document.activeElement === button,
-            `button focused ${getRects([textfield, overlayTrigger, button, popover])}\n${document.body.innerHTML}`
+            `button focused arrowUp ${getRects([textfield, overlayTrigger, button, popover])}\n${document.body.innerHTML}`
         ).to.be.true;
         await sendKeys({
             press: 'Enter',
