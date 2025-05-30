@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -33,7 +33,7 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-circle.js';
 import { TemplateResult } from 'lit-html';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { isWebKit } from '@spectrum-web-components/shared';
@@ -572,7 +572,11 @@ describe('Submenu', () => {
     it('closes all descendant submenus when closing a ancestor menu', async () => {
         const el = await fixture<ActionMenu>(html`
             <sp-action-menu label="Closing ancestors will close submenus">
-                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <!-- was: <sp-icon-show-menu slot="icon"></sp-icon-show-menu> -->
+                <sp-icon-circle
+                    slot="icon"
+                    label="Placeholder for deprecated show menu icons"
+                ></sp-icon-circle>
                 <sp-menu-group role="none" id="group">
                     <span slot="header">New York</span>
                     <sp-menu-item>Bronx</sp-menu-item>
@@ -644,7 +648,11 @@ describe('Submenu', () => {
         beforeEach(async function () {
             this.el = await fixture<ActionMenu>(html`
                 <sp-action-menu id="action-menu" label="Deep submenu tree">
-                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                    <!-- was: <sp-icon-show-menu slot="icon"></sp-icon-show-menu> -->
+                    <sp-icon-circle
+                        slot="icon"
+                        label="Placeholder for deprecated show menu icons"
+                    ></sp-icon-circle>
                     <sp-menu-group role="none">
                         <span slot="header">New York</span>
                         <sp-menu-item id="no-submenu">Bronx</sp-menu-item>

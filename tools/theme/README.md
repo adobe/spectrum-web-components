@@ -18,42 +18,34 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 ```
 
-The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
+The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`light` and `dark`) and both (2) scale options (`medium` and `large`). Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
 
 Below are more ways to import the different scale and color options individually, in case you didn't want to import all of them as we did above. You'll use these statements in combination with the side effectful registration import statement `import '@spectrum-web-components/theme/sp-theme.js'`.
 
-The various Classic themes can be imported en masse, as in the example above:
+The various themes can be imported en masse, as in the example above:
 
-```
+```ts
 import '@spectrum-web-components/theme/src/themes.js';
 ```
 
 The various Spectrum Express themes can also be imported en masse:
 
-```
+```ts
 import '@spectrum-web-components/theme/src/express/themes.js';
 ```
 
 Or you can import the themes and scales individually:
 
-```
-import '@spectrum-web-components/theme/theme-darkest.js';
+```ts
 import '@spectrum-web-components/theme/theme-dark.js';
 import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/scale-large.js';
-import '@spectrum-web-components/theme/express/theme-darkest.js';
-import '@spectrum-web-components/theme/express/theme-dark.js';
-import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/theme-lightest.js';
-import '@spectrum-web-components/theme/express/scale-medium.js';
-import '@spectrum-web-components/theme/express/scale-large.js';
 ```
 
 When looking to leverage the `Theme` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { Theme } from '@spectrum-web-components/theme';
 ```
 
@@ -104,7 +96,6 @@ An `<sp-theme>` element expects a value for each of its `color` and `scale` attr
 
 ```html
 <sp-theme
-    system="spectrum"
     color="light"
     scale="medium"
     style="background-color: var(--spectrum-gray-100)"
@@ -131,7 +122,7 @@ Once you've moved beyond the prototype phase of an application, it is likely tha
  *      scale="large"
  * >
  **/
-import '@spectrum-web-components/theme/theme-darkest.js';
+import '@spectrum-web-components/theme/theme-dark.js';
 import '@spectrum-web-components/theme/scale-large.js';
 
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -144,13 +135,12 @@ import '@spectrum-web-components/theme/sp-theme.js';
  * Power a site using
  *
  * <sp-theme
- *      system="express"
  *      color="light"
  *      scale="medium"
  * >
  **/
-import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/scale-medium.js';
+import '@spectrum-web-components/theme/theme-light.js';
+import '@spectrum-web-components/theme/scale-medium.js';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 ```
@@ -190,7 +180,7 @@ When bundling your application, be sure to consult the documentation of your bun
         margin-top: 2em;
     }
 </style>
-<sp-theme system="express" color="light" scale="medium">
+<sp-theme color="light" scale="medium">
     <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
 
@@ -214,7 +204,7 @@ When bundling your application, be sure to consult the documentation of your bun
         margin-top: 2em;
     }
 </style>
-<sp-theme system="express" color="dark" scale="large">
+<sp-theme color="dark" scale="large">
     <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
 
@@ -240,7 +230,7 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [P
         margin-top: 2em;
     }
 </style>
-<sp-theme color="darkest" scale="large">
+<sp-theme color="dark" scale="large">
     <div id="example">
         <div>
             <sp-slider
@@ -330,75 +320,3 @@ previewing or editing content that will be displayed in a light theme with a rig
 ## Language Context
 
 The `<sp-theme>` element provides a language context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-language-context` DOM event and supplying a `callback(lang: string) => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `lang` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved language in [`<sp-number-field>`](../components/number-field), [`<sp-slider>`](./components/slider), and other elements in one centralized place.
-
-## System Context (private Beta API - subject to changes)
-
-The <sp-theme> element provides a "system" context to its descendants in the DOM. This context indicates the Spectrum design system variant currently in use (e.g., 'spectrum', 'express', or 'spectrum-two').
-
-#### Consuming the System Context in Components
-
-Components can consume the system context by using the `SystemResolutionController`. This controller encapsulates the logic for resolving the system context, allowing it to be integrated into any component in few steps.
-
-#### Steps to Consume the System Context:
-
-1. Import the `SystemResolutionController` and the necessary types:
-
-```ts
-import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from './SystemResolutionController.js';
-import type { SystemVariant } from '@spectrum-web-components/theme';
-```
-
-2. Instantiate the `SystemResolutionController`:
-
-    In your component class, create an instance of SystemResolutionController, passing `this` as the host element.
-
-```ts
-export class MyComponent extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
-
-    // Rest of your component code...
-}
-```
-
-3. Respond to system context changes:
-
-    Override the `update` lifecycle method to detect changes in the system context using the `systemResolverUpdatedSymbol`.
-
-```ts
-protected update(changes: Map<PropertyKey, unknown>): void {
-  super.update(changes);
-  if (changes.has(systemResolverUpdatedSymbol)) {
-    this.handleSystemChange();
-  }
-}
-```
-
-4. Implement the handler for system changes:
-
-    Create a method that will be called whenever the system context changes. Use `this.systemResolver.system` to access the current system variant.
-
-```ts
-private handleSystemChange(): void {
-  const currentSystem: SystemVariant = this.systemResolver.system;
-  // Implement logic based on the current system variant.
-  // For example, update styles, states or re-render parts of the component.
-}
-```
-
-5. Use the system context in other parts of your component logic and/or template:
-
-    You can now use `this.systemResolver.system` anywhere in your component to adjust behavior or rendering based on the system variant.
-
-```ts
-render() {
-  return html`
-    <div>
-      <!-- Use the system context in your rendering logic -->
-      Current system variant: ${this.systemResolver.system}
-    </div>
-  `;
-}
-```

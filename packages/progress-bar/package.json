@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/progress-bar-overrides.css.js": "./src/progress-bar-overrides.css.js",
-        "./src/progress-bar.css.js": "./src/progress-bar.css.js",
+        "./src/progress-bar.css": "./src/progress-bar.css",
         "./sp-progress-bar.js": {
             "development": "./sp-progress-bar.dev.js",
             "default": "./sp-progress-bar.js"

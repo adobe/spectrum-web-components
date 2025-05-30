@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
@@ -29,44 +29,38 @@ import {
 describe('Tag', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Tag>(
-                html`
-                    <sp-tags>
-                        <sp-tag>Tag 1</sp-tag>
-                        <sp-tag invalid>Tag 2</sp-tag>
-                        <sp-tag disabled>Tag 3</sp-tag>
-                        <sp-tag deletable>Tag 4</sp-tag>
-                    </sp-tags>
-                `
-            )
-    );
-    it('loads default tags accessibly', async () => {
-        const el = await fixture<Tag>(
-            html`
+            await fixture<Tag>(html`
                 <sp-tags>
                     <sp-tag>Tag 1</sp-tag>
                     <sp-tag invalid>Tag 2</sp-tag>
                     <sp-tag disabled>Tag 3</sp-tag>
                     <sp-tag deletable>Tag 4</sp-tag>
                 </sp-tags>
-            `
-        );
+            `)
+    );
+    it('loads default tags accessibly', async () => {
+        const el = await fixture<Tag>(html`
+            <sp-tags>
+                <sp-tag>Tag 1</sp-tag>
+                <sp-tag invalid>Tag 2</sp-tag>
+                <sp-tag disabled>Tag 3</sp-tag>
+                <sp-tag deletable>Tag 4</sp-tag>
+            </sp-tags>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('[disabled] manages [aria-disabled]', async () => {
-        const el = await fixture<Tag>(
-            html`
-                <sp-tags>
-                    <sp-tag>Tag 1</sp-tag>
-                    <sp-tag invalid>Tag 2</sp-tag>
-                    <sp-tag disabled>Tag 3</sp-tag>
-                    <sp-tag deletable>Tag 4</sp-tag>
-                </sp-tags>
-            `
-        );
+        const el = await fixture<Tag>(html`
+            <sp-tags>
+                <sp-tag>Tag 1</sp-tag>
+                <sp-tag invalid>Tag 2</sp-tag>
+                <sp-tag disabled>Tag 3</sp-tag>
+                <sp-tag deletable>Tag 4</sp-tag>
+            </sp-tags>
+        `);
         const notDisabled = el.querySelector('sp-tag') as Tag;
         const disabled = el.querySelector('[disabled]') as Tag;
 
@@ -79,11 +73,9 @@ describe('Tag', () => {
     it('dispatches `delete` events on click', async () => {
         const deleteSpy = spy();
         const handleDelete = (): void => deleteSpy();
-        const el = await fixture<Tag>(
-            html`
-                <sp-tag @delete=${handleDelete} deletable>Tag 1</sp-tag>
-            `
-        );
+        const el = await fixture<Tag>(html`
+            <sp-tag @delete=${handleDelete} deletable>Tag 1</sp-tag>
+        `);
 
         await elementUpdated(el);
 
@@ -105,13 +97,9 @@ describe('Tag', () => {
     it('does not dispatch `delete` events when [readonly]', async () => {
         const deleteSpy = spy();
         const handleDelete = (): void => deleteSpy();
-        const el = await fixture<Tag>(
-            html`
-                <sp-tag @delete=${handleDelete} deletable readonly>
-                    Tag 1
-                </sp-tag>
-            `
-        );
+        const el = await fixture<Tag>(html`
+            <sp-tag @delete=${handleDelete} deletable readonly>Tag 1</sp-tag>
+        `);
 
         await elementUpdated(el);
 
@@ -133,11 +121,9 @@ describe('Tag', () => {
         const deleteSpy = spy();
         const handleDelete = (): void => deleteSpy();
         let expectedEventCount = 0;
-        const el = await fixture<Tag>(
-            html`
-                <sp-tag @delete=${handleDelete}>Tag 1</sp-tag>
-            `
-        );
+        const el = await fixture<Tag>(html`
+            <sp-tag @delete=${handleDelete}>Tag 1</sp-tag>
+        `);
         const testKeyboardEvent = async (
             event: KeyboardEvent
         ): Promise<void> => {
@@ -192,11 +178,9 @@ describe('Tag', () => {
             event.preventDefault();
             deleteSpy();
         };
-        const el = await fixture<Tag>(
-            html`
-                <sp-tag deletable @delete=${handleDelete}>Tag</sp-tag>
-            `
-        );
+        const el = await fixture<Tag>(html`
+            <sp-tag deletable @delete=${handleDelete}>Tag</sp-tag>
+        `);
 
         const removeStub = stub(el, 'remove');
 

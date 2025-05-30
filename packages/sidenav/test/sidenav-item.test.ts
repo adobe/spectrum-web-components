@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
@@ -21,16 +21,14 @@ describe('Sidenav Item', () => {
         const onSidenavSelect = (): void => {
             selected = true;
         };
-        const el = await fixture<SideNavItem>(
-            html`
-                <sp-sidenav-item
-                    disabled
-                    value="Section 2"
-                    label="Section 2"
-                    @sidenav-select=${onSidenavSelect}
-                ></sp-sidenav-item>
-            `
-        );
+        const el = await fixture<SideNavItem>(html`
+            <sp-sidenav-item
+                disabled
+                value="Section 2"
+                label="Section 2"
+                @sidenav-select=${onSidenavSelect}
+            ></sp-sidenav-item>
+        `);
 
         await elementUpdated(el);
 
@@ -52,20 +50,18 @@ describe('Sidenav Item', () => {
     });
 
     it('clicking expands a sidenav item with children', async () => {
-        const el = await fixture<SideNavItem>(
-            html`
-                <sp-sidenav-item>
-                    <sp-sidenav-item
-                        value="Section 1"
-                        label="Section 1"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        value="Section 2"
-                        label="Section 2"
-                    ></sp-sidenav-item>
-                </sp-sidenav-item>
-            `
-        );
+        const el = await fixture<SideNavItem>(html`
+            <sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 1"
+                    label="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Section 2"
+                    label="Section 2"
+                ></sp-sidenav-item>
+            </sp-sidenav-item>
+        `);
 
         await elementUpdated(el);
 
@@ -95,23 +91,21 @@ describe('Sidenav Item', () => {
     });
 
     it('populated `aria-current`', async () => {
-        const el = await fixture<SideNavItem>(
-            html`
-                <sp-sidenav value="Section 2">
-                    <sp-sidenav-item
-                        href="https://opensource.adobe.com/spectrum-web-components/"
-                        label="Section 1"
-                        value="Section 1"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item
-                        href=${window.location.href}
-                        label="Section 2"
-                        value="Section 2"
-                        selected
-                    ></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+        const el = await fixture<SideNavItem>(html`
+            <sp-sidenav value="Section 2">
+                <sp-sidenav-item
+                    href="https://opensource.adobe.com/spectrum-web-components/"
+                    label="Section 1"
+                    value="Section 1"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    href=${window.location.href}
+                    label="Section 2"
+                    value="Section 2"
+                    selected
+                ></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 
@@ -132,39 +126,28 @@ describe('Sidenav Item', () => {
     });
 
     it('automatically expand parent items in multilevel mode', async () => {
-        const el = await fixture<SideNavItem>(
-            html`
-                <sp-sidenav variant="multilevel" value="2.3.1">
-                    <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
-                    <sp-sidenav-item value="baz" label="baz">
+        const el = await fixture<SideNavItem>(html`
+            <sp-sidenav variant="multilevel" value="2.3.1">
+                <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
+                <sp-sidenav-item value="baz" label="baz">
+                    <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
+                    <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
+                    <sp-sidenav-item value="2.3" label="2.3">
                         <sp-sidenav-item
-                            value="2.1"
-                            label="2.1"
+                            value="2.3.1"
+                            label="2.3.1"
                         ></sp-sidenav-item>
                         <sp-sidenav-item
-                            value="2.2"
-                            label="2.2"
+                            disabled
+                            value="2.3.2"
+                            label="2.3.2"
                         ></sp-sidenav-item>
-                        <sp-sidenav-item value="2.3" label="2.3">
-                            <sp-sidenav-item
-                                value="2.3.1"
-                                label="2.3.1"
-                            ></sp-sidenav-item>
-                            <sp-sidenav-item
-                                disabled
-                                value="2.3.2"
-                                label="2.3.2"
-                            ></sp-sidenav-item>
-                        </sp-sidenav-item>
                     </sp-sidenav-item>
-                    <sp-sidenav-item
-                        value="test"
-                        label="test"
-                    ></sp-sidenav-item>
-                    <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
-                </sp-sidenav>
-            `
-        );
+                </sp-sidenav-item>
+                <sp-sidenav-item value="test" label="test"></sp-sidenav-item>
+                <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
+            </sp-sidenav>
+        `);
 
         await elementUpdated(el);
 

@@ -37,8 +37,7 @@
             "development": "./src/tooltip-directive.dev.js",
             "default": "./src/tooltip-directive.js"
         },
-        "./src/tooltip-overrides.css.js": "./src/tooltip-overrides.css.js",
-        "./src/tooltip.css.js": "./src/tooltip.css.js",
+        "./src/tooltip.css": "./src/tooltip.css",
         "./sp-tooltip.js": {
             "development": "./sp-tooltip.dev.js",
             "default": "./sp-tooltip.js"

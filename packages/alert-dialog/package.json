@@ -29,8 +29,7 @@
             "development": "./src/AlertDialog.dev.js",
             "default": "./src/AlertDialog.js"
         },
-        "./src/alert-dialog-overrides.css.js": "./src/alert-dialog-overrides.css.js",
-        "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
+        "./src/alert-dialog.css": "./src/alert-dialog.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -64,7 +63,7 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/button": "1.6.0",
         "@spectrum-web-components/button-group": "1.6.0",

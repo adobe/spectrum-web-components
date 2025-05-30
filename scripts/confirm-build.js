@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/**
+/*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -138,13 +138,13 @@ async function main() {
         await verifyBuildArtifacts();
 
         console.log('All build artifacts verified successfully'.green.bold);
-        process.exit(0);
+        return Promise.resolve();
     } catch (error) {
         console.error(
             'Build artifact verification failed:'.red.bold,
             error.message.red
         );
-        process.exit(1);
+        return Promise.reject(log.fail('Build failed', { throwError: true }));
     }
 }
 

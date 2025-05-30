@@ -1,34 +1,30 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-@import '@spectrum-web-components/styles/tokens/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
-@import '@spectrum-web-components/styles/src/spectrum-heading.css';
-@import '@spectrum-web-components/styles/src/spectrum-body.css';
-@import '@spectrum-web-components/styles/src/spectrum-code.css';
-@import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
-@import './inline-alert.css';
-@import './fonts.css';
+@import "@spectrum-web-components/styles/tokens/global-vars.css";
+@import "@spectrum-web-components/styles/tokens/spectrum/global-vars.css";
+@import "@spectrum-web-components/styles/tokens/spectrum/custom-vars.css";
+@import "@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css";
+@import "@spectrum-web-components/styles/src/spectrum-heading.css";
+@import "@spectrum-web-components/styles/src/spectrum-body.css";
+@import "@spectrum-web-components/styles/src/spectrum-code.css";
+@import "@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css";
+@import "./inline-alert.css";
+@import "./fonts.css";
 
 :root,
 :host {
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, "Source Sans Pro", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, "Source Sans Pro", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
 
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
@@ -44,30 +40,22 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-@media screen and (min-width: 961px) {
+@media screen and (width >= 961px) {
     docs-page:not(:defined) {
         position: absolute;
-        left: 0;
-        right: 0;
-        min-height: 100vh;
+        inset-inline: 0;
+        min-block-size: 100vh;
         box-sizing: border-box;
         padding: 92px 0 24px calc(var(--swc-scale-factor) * 192px + 48px);
-        background: linear-gradient(
-            to right,
-            var(--spectrum-gray-75) 0,
-            var(--spectrum-gray-75) calc(var(--swc-scale-factor) * 192px + 48px),
-            transparent calc(var(--swc-scale-factor) * 192px + 48px),
-            transparent
-        );
+        background: linear-gradient(to right, var(--spectrum-gray-75) 0, var(--spectrum-gray-75) calc(var(--swc-scale-factor) * 192px + 48px), transparent calc(var(--swc-scale-factor) * 192px + 48px), transparent);
         overflow: hidden;
     }
 
     docs-page:not(:defined) > * {
         display: block;
-        max-width: 1080px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 calc(var(--swc-scale-factor) * 56px) 0;
+        max-inline-size: 1080px;
+        margin-inline: auto;
+        padding: 0 calc(var(--swc-scale-factor) * 56px);
     }
 
     docs-page:not(:defined) > main {
@@ -76,17 +64,17 @@ body {
 
     docs-page:not(:defined) #logo {
         position: absolute;
-        right: calc(100% - var(--swc-scale-factor) * 192px - 48px);
-        top: 0;
+        inset-inline-end: calc(100% - var(--swc-scale-factor) * 192px - 48px);
+        inset-block-start: 0;
     }
 
     docs-page:not(:defined) sp-sidenav {
         position: absolute;
-        width: calc(var(--swc-scale-factor) * 192px);
-        top: 145px;
-        right: calc(100% - var(--swc-scale-factor) * 192px - 48px);
+        inline-size: calc(var(--swc-scale-factor) * 192px);
+        inset-block-start: 145px;
+        inset-inline-end: calc(100% - var(--swc-scale-factor) * 192px - 48px);
         padding: 0 24px 24px;
-        height: calc(100vh - 143px);
+        block-size: calc(100vh - 143px);
     }
 
     docs-page:not(:defined) sp-tabs {
@@ -94,56 +82,56 @@ body {
     }
 
     sp-sidenav:not(:defined) {
-        width: calc(var(--swc-scale-factor) * 192px);
+        inline-size: calc(var(--swc-scale-factor) * 192px);
     }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     docs-page:not(:defined) {
         display: block;
         padding: 71px calc(var(--swc-scale-factor) * 24px) 24px;
         overflow: hidden;
     }
 
-    docs-page:not(:defined):before {
-        content: '';
+    docs-page:not(:defined)::before {
+        content: "";
         position: absolute;
-        width: 100%;
-        top: 60px;
-        border-bottom: 1px solid var(--spectrum-gray-200);
-        left: 0;
+        inline-size: 100%;
+        inset-block-start: 60px;
+        border-block-end: 1px solid var(--spectrum-gray-200);
+        inset-inline-start: 0;
     }
 
     docs-page:not(:defined) #logo {
         position: absolute;
-        right: 100%;
-        top: 0;
+        inset-inline-end: 100%;
+        inset-block-start: 0;
     }
 
     docs-page:not(:defined) > sp-sidenav {
         position: absolute;
-        top: auto;
-        left: 0;
-        width: 100%;
+        inset-block-start: auto;
+        inset-inline-start: 0;
+        inline-size: 100%;
         box-sizing: border-box;
         column-count: 4;
         padding: 0 24px 24px;
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (width <= 750px) {
     sp-sidenav:not(:defined) {
         column-count: 3;
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (width <= 500px) {
     sp-sidenav:not(:defined) {
         column-count: 2;
     }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (width <= 350px) {
     sp-sidenav:not(:defined) {
         column-count: 1;
     }
@@ -152,33 +140,32 @@ body {
 .visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
-    height: 1px;
+    block-size: 1px;
     overflow: hidden;
     position: absolute;
     white-space: nowrap;
-    width: 1px;
+    inline-size: 1px;
 }
 
 #logo {
     outline: none;
-    margin-bottom: -11px;
-    padding: calc(var(--swc-scale-factor) * 28px)
-        calc(var(--swc-scale-factor) * 24px);
+    margin-block-end: -11px;
+    padding: calc(var(--swc-scale-factor) * 28px) calc(var(--swc-scale-factor) * 24px);
     border-radius: 4px;
     display: flex;
     flex-direction: row;
     color: var(--spectrum-gray-800);
     text-decoration: none;
-    width: calc(var(--swc-scale-factor) * 192px);
+    inline-size: calc(var(--swc-scale-factor) * 192px);
     position: relative;
 }
 
 #logo svg {
-    width: 36px;
-    height: 31px;
+    inline-size: 36px;
+    block-size: 31px;
     display: block;
     margin-inline-end: var(--spectrum-spacing-300);
-    margin-bottom: 12px;
+    margin-block-end: 12px;
     flex-shrink: 0;
     position: relative;
 }
@@ -191,21 +178,14 @@ body {
     font-style: normal;
     letter-spacing: 0;
     margin: -3px 0 0;
-    font-family: var(
-        --spectrum-alias-body-text-font-family,
-        var(--spectrum-font-family)
-    );
+    font-family: var(--spectrum-alias-body-text-font-family, var(--spectrum-font-family));
 }
 
 #logo:focus-visible::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: calc((var(--swc-scale-factor) * 28px) - 4px);
-    right: calc((var(--swc-scale-factor) * 24px) - 4px);
-    bottom: calc((var(--swc-scale-factor) * 28px) - 4px);
-    left: calc((var(--swc-scale-factor) * 24px) - 4px);
-    border: 2px solid
-        var(--spectrum-alias-focus-color, var(--spectrum-blue-400));
+    inset: logical calc((var(--swc-scale-factor) * 28px) - 4px) calc((var(--swc-scale-factor) * 24px) - 4px);
+    border: 2px solid var(--spectrum-alias-focus-color, var(--spectrum-blue-400));
     border-radius: 4px;
 }
 
@@ -216,46 +196,25 @@ docs-page:not(:defined) #title-header {
 docs-page:not(:defined) sp-tabs,
 sp-tabs:not(:defined) {
     display: block;
-    margin-bottom: 2px;
+    margin-block-end: 2px;
 }
 
 sp-tabs:not(:defined) {
-    margin-top: calc(
-        -1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top))
-    );
+    margin-block-start: calc(-1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top)));
 }
 
 sp-tab:not(:defined) {
-    color: var(
-        --highcontrast-heading-font-color,
-        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
-    );
-    font-family: var(
-        --mod-heading-sans-serif-font-family,
-        var(--spectrum-heading-sans-serif-font-family)
-    );
-    font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
-    font-style: var(
-        --mod-heading-sans-serif-font-style,
-        var(--spectrum-heading-sans-serif-font-style)
-    );
-    font-weight: var(
-        --mod-heading-sans-serif-font-weight,
-        var(--spectrum-heading-sans-serif-font-weight)
-    );
-    line-height: var(
-        --mod-heading-line-height,
-        var(--spectrum-heading-line-height)
-    );
-
-    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
-    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
+    color: var(--highcontrast-heading-font-color, var(--spectrum-heading-font-color));
+    font-family: var(--spectrum-heading-sans-serif-font-family);
+    font-size: var(--spectrum-heading-font-size);
+    font-style: var(--spectrum-heading-sans-serif-font-style);
+    font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    line-height: var(--spectrum-heading-line-height);
 }
 
 docs-page sp-button:not(:defined) {
     visibility: hidden;
-    padding: calc(var(--swc-scale-factor) * 10px) 0
-        calc(var(--swc-scale-factor) * 12px);
+    padding: calc(var(--swc-scale-factor) * 10px) 0 calc(var(--swc-scale-factor) * 12px);
     line-height: calc(var(--swc-scale-factor) * 23px);
     border: 2px solid;
     display: inline-block;
@@ -281,182 +240,31 @@ docs-page > sp-sidenav-item {
 }
 
 sp-sidenav > sp-sidenav-item.spectrum-web {
-    margin-top: 80px;
+    margin-block-start: 80px;
     display: block;
 }
 
 sp-sidenav-item:not(:defined) a,
 sp-sidenav-item:not(:defined) span {
-    --spectrum-sidenav-focus-ring-size: var(
-        --spectrum-focus-indicator-thickness
-    );
-    --spectrum-sidenav-focus-ring-gap: var(--spectrum-focus-indicator-gap);
-    --spectrum-sidenav-focus-ring-color: var(--spectrum-focus-indicator-color);
-    --spectrum-sidenav-min-height: var(--spectrum-component-height-100);
-    --spectrum-sidenav-width: 100%;
-    --spectrum-sidenav-min-width: var(--spectrum-side-navigation-minimum-width);
-    --spectrum-sidenav-max-width: var(--spectrum-side-navigation-maximum-width);
-    --spectrum-sidenav-border-radius: var(--spectrum-corner-radius-100);
-    --spectrum-sidenav-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-sidenav-icon-spacing: var(--spectrum-text-to-visual-100);
-    --spectrum-sidenav-inline-padding: var(
-        --spectrum-component-edge-to-text-100
-    );
-    --spectrum-sidenav-gap: var(--spectrum-side-navigation-item-to-item);
-    --spectrum-sidenav-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --spectrum-sidenav-top-to-label: var(--spectrum-component-top-to-text-100);
-    --spectrum-sidenav-bottom-to-label: var(
-        --spectrum-side-navigation-bottom-to-text
-    );
-    --spectrum-sidenav-start-to-content-second-level: var(
-        --spectrum-side-navigation-second-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-third-level: var(
-        --spectrum-side-navigation-third-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-with-icon-second-level: var(
-        --spectrum-side-navigation-with-icon-second-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-with-icon-third-level: var(
-        --spectrum-side-navigation-with-icon-third-level-edge-to-text
-    );
-    --spectrum-sidenav-heading-top-margin: var(
-        --spectrum-side-navigation-item-to-header
-    );
-    --spectrum-sidenav-heading-bottom-margin: var(
-        --spectrum-side-navigation-header-to-item
-    );
-    --spectrum-sidenav-background-disabled: transparent;
-    --spectrum-sidenav-background-default: transparent;
-    --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
-    --spectrum-sidenav-item-background-down: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus: var(--spectrum-gray-200);
-    --spectrum-sidenav-item-background-default-selected: var(
-        --spectrum-gray-200
-    );
-    --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-300);
-    --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-200);
-    --spectrum-sidenav-header-color: var(--spectrum-gray-600);
-    --spectrum-sidenav-content-disabled-color: var(
-        --spectrum-disabled-content-color
-    );
-    --spectrum-sidenav-content-color-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-sidenav-content-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-sidenav-content-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-sidenav-content-color-key-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --spectrum-sidenav-content-color-default-selected: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-sidenav-content-color-hover-selected: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-sidenav-content-color-down-selected: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-sidenav-content-color-key-focus-selected: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --spectrum-sidenav-text-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-sidenav-text-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
-    --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-top-level-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-top-level-font-weight: var(--spectrum-bold-font-weight);
-    --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
-    --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
-    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
-    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
-    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
-
-    padding-top: var(
-        --mod-sidenav-top-to-label,
-        var(--spectrum-sidenav-top-to-label)
-    );
-    background-color: var(
-        --highcontrast-sidenav-background-default,
-        var(
-            --mod-sidenav-background-default,
-            var(--spectrum-sidenav-background-default)
-        )
-    );
-    border-radius: var(
-        --mod-sidenav-border-radius,
-        var(--spectrum-sidenav-border-radius)
-    );
+    padding-block-start: var(--spectrum-sidenav-top-to-label);
+    background-color: var(--highcontrast-sidenav-background-default, var(--spectrum-sidenav-background-default));
+    border-radius: var(--spectrum-sidenav-border-radius);
     box-sizing: border-box;
-    color: var(
-        --highcontrast-sidenav-content-color-default,
-        var(
-            --mod-sidenav-content-color-default,
-            var(--spectrum-sidenav-content-color-default)
-        )
-    );
+    color: var(--highcontrast-sidenav-content-color-default, var(--spectrum-sidenav-content-color-default));
     cursor: pointer;
     display: inline-flex;
-    font-family: var(
-        --mod-sidenav-text-font-family,
-        var(--spectrum-sidenav-text-font-family)
-    );
-    font-size: var(
-        --mod-sidenav-text-font-size,
-        var(--spectrum-sidenav-text-font-size)
-    );
-    font-style: var(
-        --mod-sidenav-text-font-style,
-        var(--spectrum-sidenav-text-font-style)
-    );
-    font-weight: var(
-        --mod-sidenav-text-font-weight,
-        var(--spectrum-sidenav-text-font-weight)
-    );
+    font-family: var(--spectrum-sidenav-text-font-family);
+    font-size: var(--spectrum-sidenav-text-font-size);
+    font-style: var(--spectrum-sidenav-text-font-style);
+    font-weight: var(--spectrum-sidenav-text-font-weight);
     hyphens: auto;
-    inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
-    line-height: var(
-        --mod-sidenav-text-line-height,
-        var(--spectrum-sidenav-text-line-height)
-    );
-    margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
-    max-inline-size: var(
-        --mod-sidenav-max-width,
-        var(--spectrum-sidenav-max-width)
-    );
-    min-block-size: var(
-        --mod-sidenav-min-height,
-        var(--spectrum-sidenav-min-height)
-    );
-    min-inline-size: var(
-        --mod-sidenav-min-width,
-        var(--spectrum-sidenav-min-width)
-    );
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
-    );
-    position: relative;
-    text-decoration: none;
-    transition:
-        background-color var(--spectrum-animation-duration-100) ease-out,
-        color var(--spectrum-animation-duration-100) ease-out;
-    word-break: break-word;
+    inline-size: var(--spectrum-sidenav-width);
+    line-height: var(--spectrum-sidenav-text-line-height);
+    margin-block-end: var(--spectrum-sidenav-gap);
+    max-inline-size: var(--spectrum-sidenav-max-width);
+    min-block-size: var(--spectrum-sidenav-min-height);
+    min-inline-size: var(--spectrum-sidenav-min-width);
+    padding-inline: var(--spectrum-sidenav-inline-padding);
 }
 
 sp-sidenav-item:not(:defined) span,
@@ -466,26 +274,11 @@ sp-sidenav > sp-sidenav-item[multilevel]:not(:defined) > a {
 
 sp-sidenav-item:not(:defined) span,
 sp-sidenav > sp-sidenav-item:not(:defined) > a {
-    padding-left: var(
-        --spectrum-sidenav-item-padding-x,
-        calc(var(--swc-scale-factor) * 12px)
-    );
+    padding-inline-start: var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px));
 }
 
-sp-sidenav-item[expanded]
-    > sp-sidenav-item[expanded]
-    > sp-sidenav-item:not(:defined)
-    > a {
-    padding-left: calc(
-        var(
-                --spectrum-sidenav-multilevel-item-indentation-level2,
-                calc(var(--swc-scale-factor) * 24px)
-            ) +
-            var(
-                --spectrum-sidenav-item-padding-x,
-                calc(var(--swc-scale-factor) * 12px)
-            )
-    );
+sp-sidenav-item[expanded] > sp-sidenav-item[expanded] > sp-sidenav-item:not(:defined) > a {
+    padding-inline-start: calc(var(--spectrum-sidenav-multilevel-item-indentation-level2, calc(var(--swc-scale-factor) * 24px)) + var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px)));
 }
 
 sp-sidenav-item:not([expanded], :defined) > sp-sidenav-item {
@@ -493,48 +286,38 @@ sp-sidenav-item:not([expanded], :defined) > sp-sidenav-item {
 }
 
 sp-sidenav-item:not(:defined) a {
-    padding-left: calc(
-        var(
-                --spectrum-sidenav-multilevel-item-indentation-level1,
-                calc(var(--swc-scale-factor) * 12px)
-            ) +
-            var(
-                --spectrum-sidenav-item-padding-x,
-                calc(var(--swc-scale-factor) * 12px)
-            )
-    );
+    padding-inline-start: calc(var(--spectrum-sidenav-multilevel-item-indentation-level1, calc(var(--swc-scale-factor) * 12px)) + var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px)));
 }
 
 docs-page:not(:defined) .header-anchor {
     display: none;
 }
 
-sp-divider[size='l']:not(:defined) {
+sp-divider[size="l"]:not(:defined) {
     display: block;
-    height: 4px;
+    block-size: 4px;
 }
 
-sp-divider[size='m']:not(:defined) {
+sp-divider[size="m"]:not(:defined) {
     display: block;
-    height: 2px;
+    block-size: 2px;
 }
 
-sp-divider[size='s']:not(:defined) {
+sp-divider[size="s"]:not(:defined) {
     display: block;
-    height: 2px;
+    block-size: 2px;
 }
 
 .hero {
-    margin-bottom: 4em;
+    margin-block-end: 4em;
 }
 
 .hero .spectrum-Heading {
-    margin: calc(var(--swc-scale-factor) * 8px) 0
-        calc(var(--swc-scale-factor) * 16px) 0;
+    margin: calc(var(--swc-scale-factor) * 8px) 0 calc(var(--swc-scale-factor) * 16px);
 }
 
 #hero-buttons {
-    margin-top: 2em;
+    margin-block-start: 2em;
 }
 
 #features {
@@ -550,7 +333,7 @@ sp-divider[size='s']:not(:defined) {
     box-sizing: border-box;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (width <= 1100px) {
     .feature {
         flex: 0 1 calc(50% - 30px);
     }
@@ -560,7 +343,7 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     .feature {
         flex: 0 1 calc(33.33% - 30px);
     }
@@ -570,7 +353,7 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 725px) {
+@media screen and (width <= 725px) {
     .feature {
         flex: 0 1 calc(50% - 30px);
     }
@@ -580,22 +363,22 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (width <= 525px) {
     .feature {
         flex: 0 1 100%;
     }
 }
 
 .example {
-    margin-top: 2em;
+    margin-block-start: 2em;
 }
 
 .spectrum-Heading--sizeS {
-    margin-bottom: 16px;
+    margin-block-end: 16px;
 }
 
 #title-header {
-    margin-bottom: 2rem;
+    margin-block-end: 2rem;
 }
 
 #title-header h1,
@@ -603,7 +386,7 @@ sp-divider[size='s']:not(:defined) {
     margin: calc(var(--swc-scale-factor) * 8px) 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
     #title-header h1,
     .hero h1 {
         font-size: 44px;
@@ -616,7 +399,7 @@ sp-divider[size='s']:not(:defined) {
 }
 
 .spectrum-Article .spectrum-Heading1--display {
-    margin-bottom: 28px;
+    margin-block-end: 28px;
 }
 
 .header-heading {
@@ -633,13 +416,13 @@ sp-divider[size='s']:not(:defined) {
 }
 
 article {
-    margin-bottom: 3em;
+    margin-block-end: 3em;
 }
 
 .table-container > sp-table-body,
 .table-container > sp-table-header {
     overflow: visible;
-    min-width: max-content;
+    min-inline-size: max-content;
 }
 
 .table-container > sp-table-body {
@@ -652,19 +435,19 @@ article {
 }
 
 .table-container > sp-table {
-    max-width: 1080px;
-    width: min-content;
+    max-inline-size: 1080px;
+    inline-size: min-content;
     padding: 0 calc(var(--swc-scale-factor) * 56px);
     box-sizing: border-box;
     align-items: stretch;
-    min-width: 100%;
+    min-inline-size: 100%;
 }
 
 .table-container sp-table-cell,
 .table-container sp-table-head-cell {
     box-sizing: border-box;
     word-break: break-word;
-    min-width: calc(var(--swc-scale-factor) * 100px);
+    min-inline-size: calc(var(--swc-scale-factor) * 100px);
 }
 
 sp-table.attributes sp-table-cell,
@@ -673,7 +456,7 @@ sp-table.attributes sp-table-head-cell {
 }
 
 sp-table .description {
-    min-width: calc(var(--swc-scale-factor) * 128px);
+    min-inline-size: calc(var(--swc-scale-factor) * 128px);
 }
 
 sp-table.attributes .description {
@@ -689,7 +472,7 @@ sp-table.events .description {
     flex: 0 1 40%;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     .table-container {
         overflow: auto;
         margin: 0 -16px;
@@ -700,20 +483,20 @@ sp-table.events .description {
     }
 }
 
-.headerContainer > sp-divider[size='l'] {
-    margin-bottom: calc(var(--swc-scale-factor) * 24px);
+.headerContainer > sp-divider[size="l"] {
+    margin-block-end: calc(var(--swc-scale-factor) * 24px);
 }
 
-.headerContainer:first-child > sp-divider[size='l'] {
-    margin-bottom: calc(var(--swc-scale-factor) * 24px);
+.headerContainer:first-child > sp-divider[size="l"] {
+    margin-block-end: calc(var(--swc-scale-factor) * 24px);
 }
 
-.headerContainer > sp-divider[size='m'] {
-    margin-bottom: calc(var(--swc-scale-factor) * 16px);
+.headerContainer > sp-divider[size="m"] {
+    margin-block-end: calc(var(--swc-scale-factor) * 16px);
 }
 
-.headerContainer > sp-divider[size='s'] {
-    margin-bottom: calc(var(--swc-scale-factor) * 12px);
+.headerContainer > sp-divider[size="s"] {
+    margin-block-end: calc(var(--swc-scale-factor) * 12px);
 }
 
 .headerContainer:has([id]) > .header-anchor {
@@ -742,25 +525,17 @@ sp-link img {
 }
 
 sp-link.focus-visible img {
-    box-shadow: 0 2px 0 0
-        var(
-            --spectrum-fieldbutton-border-color-key-focus,
-            var(--spectrum-alias-border-color-focus)
-        );
+    box-shadow: 0 2px 0 0 var(--spectrum-fieldbutton-border-color-key-focus, var(--spectrum-alias-border-color-focus));
 }
 
 sp-link:hover img {
-    box-shadow: 0 2px 0 0
-        var(
-            --spectrum-fieldbutton-text-color-hover,
-            var(--spectrum-alias-text-color-hover)
-        );
+    box-shadow: 0 2px 0 0 var(--spectrum-fieldbutton-text-color-hover, var(--spectrum-alias-text-color-hover));
 }
 
 img[src^="https://img.shields.io"]
 {
-    height: 28px;
-    min-width: 100px;
+    block-size: 28px;
+    min-inline-size: 100px;
 }
 
 /*! purgecss end ignore */
@@ -768,10 +543,10 @@ img[src^="https://img.shields.io"]
 .markup,
 code-example:not(:defined) {
     position: relative;
-    max-width: 100%;
+    max-inline-size: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0 0 6px 6px;
-    border-top: 1px solid var(--spectrum-gray-100);
+    border-block-start: 1px solid var(--spectrum-gray-100);
     background: var(--spectrum-gray-75);
     overflow: hidden;
     line-height: 1.3em;
@@ -782,11 +557,11 @@ code-example:not(:defined) {
     border-radius: 6px;
     display: block;
     margin: 1rem 0 2rem;
-    min-height: 86px;
+    min-block-size: 86px;
 }
 
-code-example[class^='language']:not(:defined) {
-    min-height: 164px;
+code-example[class^="language"]:not(:defined) {
+    min-block-size: 164px;
 }
 
 code-example:not(:defined) pre {
@@ -796,16 +571,16 @@ code-example:not(:defined) pre {
 code-example {
     --spectrum-dialog-confirm-min-width: 0;
 
-    width: 100%;
+    inline-size: 100%;
     box-sizing: border-box;
 }
 
-docs-page:not(:defined) [aria-labelledby='component-name'] {
+docs-page:not(:defined) [aria-labelledby="component-name"] {
     display: flex;
     flex-direction: column;
 }
 
-docs-page:defined [aria-labelledby='component-name'] {
+docs-page:defined [aria-labelledby="component-name"] {
     display: grid;
     grid-template-columns: 100%;
 }
@@ -814,7 +589,7 @@ docs-page:defined .section {
     grid-area: 2/1/2/1;
     overflow: hidden;
     opacity: 1;
-    height: 100%;
+    block-size: 100%;
     transition:
         opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out;
@@ -822,15 +597,10 @@ docs-page:defined .section {
 
 docs-page:defined .section:not([selected]) {
     opacity: 0;
-    height: 0;
+    block-size: 0;
     display: flex;
     pointer-events: none;
-    transform: translateY(
-        var(
-            --spectrum-dropdown-flyout-menu-offset-y,
-            calc(var(--swc-scale-factor) * 6px)
-        )
-    );
+    transform: translateY(var(--spectrum-dropdown-flyout-menu-offset-y, calc(var(--swc-scale-factor) * 6px)));
     transition:
         opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out,
@@ -838,18 +608,18 @@ docs-page:defined .section:not([selected]) {
 }
 
 docs-page:not(:defined) .section,
-sp-tabs[selected='overview'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='overview']:not(:defined),
-sp-tabs[selected='overview'] sp-tab-panel[value='api'],
-sp-tabs[selected='api'] sp-tab-panel[value='overview'] {
+sp-tabs[selected="overview"] sp-tab[value="api"]:not(:defined),
+sp-tabs[selected="api"] sp-tab[value="overview"]:not(:defined),
+sp-tabs[selected="overview"] sp-tab-panel[value="api"],
+sp-tabs[selected="api"] sp-tab-panel[value="overview"] {
     order: 2;
 }
 
 docs-page:not(:defined) .section[selected],
-sp-tabs[selected='overview'] sp-tab[value='overview']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='overview'] sp-tab-panel[value='overview'],
-sp-tabs[selected='api'] sp-tab-panel[value='api'] {
+sp-tabs[selected="overview"] sp-tab[value="overview"]:not(:defined),
+sp-tabs[selected="api"] sp-tab[value="api"]:not(:defined),
+sp-tabs[selected="overview"] sp-tab-panel[value="overview"],
+sp-tabs[selected="api"] sp-tab-panel[value="api"] {
     order: 1;
 }
 
@@ -863,12 +633,12 @@ sp-tabs::part(tablist) {
 }
 
 .spectrum-Typography sp-tab-panel .spectrum-Body--sizeM:first-child {
-    margin-top: calc(var(--swc-scale-factor) * 24px);
+    margin-block-start: calc(var(--swc-scale-factor) * 24px);
 }
 
 main > sp-tabs > sp-tab:only-of-type {
     visibility: hidden;
-    width: 0;
+    inline-size: 0;
 }
 
 sp-tab-panel {
@@ -888,20 +658,19 @@ sp-tab-panel:not(.section):focus code-example {
     overflow: hidden;
 }
 
-sp-tab-panel:not(.section):focus code-example:after {
-    content: '';
-    width: 100%;
-    height: 100%;
+sp-tab-panel:not(.section):focus code-example::after {
+    content: "";
+    inline-size: 100%;
+    block-size: 100%;
     pointer-events: none;
     position: absolute;
-    top: 0;
-    left: 0;
-    border-left: calc(var(--swc-scale-factor) * 2px) solid
-        var(--spectrum-blue-600);
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    border-inline-start: calc(var(--swc-scale-factor) * 2px) solid var(--spectrum-blue-600);
 }
 
 sp-tab-panel.section {
-    padding-top: 2rem;
+    padding-block-start: 2rem;
 }
 
 .for-github {
@@ -912,11 +681,11 @@ icons-demo {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
     box-sizing: border-box;
-    width: 100%;
+    inline-size: 100%;
     border: 2px solid;
     border-radius: 6px;
     padding: 0 1.5rem 0.75rem;
-    height: 400px;
+    block-size: 400px;
     overflow: hidden auto;
     position: relative;
     gap: calc(var(--swc-scale-factor) * 16px);
@@ -924,8 +693,8 @@ icons-demo {
 
 icons-demo::part(search) {
     position: sticky;
-    top: 0;
-    left: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     margin: 0 -1.5em;
     background: inherit;
     background: var(--spectrum-gray-50);
@@ -940,7 +709,7 @@ icons-demo::part(icon) {
 
 custom-vars-viewer:not(:defined) {
     display: block;
-    height: 494px;
+    block-size: 494px;
 }
 
 docs-page:not(:defined) {
@@ -957,12 +726,12 @@ sp-link {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 16px;
-    border: 1px solid rgb(63, 63, 63);
+    border: 1px solid rgb(63 63 63);
     border-radius: 6px;
 }
 
 .demo-control {
-    width: 100%;
+    inline-size: 100%;
 }
 
 .deprecation-container {
@@ -979,39 +748,37 @@ sp-link {
 
 .demo-preview {
     display: flex;
-    min-height: 200px;
+    min-block-size: 200px;
     align-items: center;
 }
 
 /* Override flex behavior for breadcrumbs so they can properly adjust visible items */
 .demo-preview:has(sp-breadcrumbs) {
+    --demo-container-width: 100%;
     display: block;
     padding: 20px;
-
-    --demo-container-width: 100%;
 }
 
 /* Override flex behavior for breadcrumbs so they can properly adjust visible items */
 .demo-preview:has(sp-breadcrumbs) {
+    --demo-container-width: 100%;
     display: block;
     padding: 20px;
-
-    --demo-container-width: 100%;
 }
 
 .demo-config {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-left: 1px solid rgb(63, 63, 63);
+    border-inline-start: 1px solid rgb(63 63 63);
     padding: 16px;
-    max-height: 215px;
+    max-block-size: 215px;
     overflow: auto;
     justify-content: start;
 }
 
 .control-container {
-    margin-bottom: 1rem;
+    margin-block-end: 1rem;
 }
 
 .demo-config sp-picker:not(:defined) {
@@ -1024,11 +791,11 @@ sp-link {
     flex-wrap: wrap;
     gap: 16px;
     border-radius: 6px;
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 0;
     container-type: inline-size;
 }
 
-.usage-links :is([slot='heading']) {
+.usage-links :is([slot="heading"]) {
     all: unset;
 }
 
@@ -1039,11 +806,11 @@ sp-link {
 
 .component-data sp-icon,
 .component-data sp-icon svg {
-    width: 36px;
-    height: 36px;
+    inline-size: 36px;
+    block-size: 36px;
 }
 
-p:has([alt='See it on NPM!']) {
+p:has([alt="See it on NPM!"]) {
     display: none;
 }
 
@@ -1053,20 +820,21 @@ p:has([alt='See it on NPM!']) {
     }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (width >= 600px) {
     .usage-links {
         flex-direction: row;
     }
 
     .demo-preview {
-        height: auto;
+        block-size: auto;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
     .demo-container {
         grid-template-columns: 1fr;
     }
+
     .demo-config {
         display: none;
     }
@@ -1076,4 +844,31 @@ p:has([alt='See it on NPM!']) {
     .component-data {
         display: none;
     }
+}
+
+.heading {
+    color: var(--spectrum-heading-font-color);
+    font-family: var(--spectrum-heading-sans-serif-font-family);
+    font-size: var(--spectrum-heading-font-size);
+    font-style: var(--spectrum-heading-sans-serif-font-style);
+    font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    line-height: var(--spectrum-heading-line-height);
+}
+
+.sidenav {
+    margin-block-start: var(--spectrum-sidenav-top-to-label);
+    background-color: var(--spectrum-sidenav-background-default);
+    border-radius: var(--spectrum-sidenav-border-radius);
+    color: var(--spectrum-sidenav-content-color-default);
+    font-family: var(--spectrum-sidenav-text-font-family);
+    font-size: var(--spectrum-sidenav-text-font-size);
+    font-style: var(--spectrum-sidenav-text-font-style);
+    font-weight: var(--spectrum-sidenav-text-font-weight);
+    inline-size: var(--spectrum-sidenav-width);
+    line-height: var(--spectrum-sidenav-text-line-height);
+    margin-block-end: var(--spectrum-sidenav-gap);
+    max-inline-size: var(--spectrum-sidenav-max-width);
+    min-block-size: var(--spectrum-sidenav-min-height);
+    min-inline-size: var(--spectrum-sidenav-min-width);
+    padding-inline: var(--spectrum-sidenav-inline-padding);
 }

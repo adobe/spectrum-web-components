@@ -125,8 +125,8 @@ module.exports = defineConfig({
                     'opacity-checkerboard',
                 ].includes(folderName)
             ) {
-                workspace.set('main', `./src/${folderName}.css.js`);
-                workspace.set('module', `./src/${folderName}.css.js`);
+                workspace.set('main', `./src/${folderName}.css`);
+                workspace.set('module', `./src/${folderName}.css`);
             } else {
                 workspace.set('main', './src/index.js');
                 workspace.set('module', './src/index.js');

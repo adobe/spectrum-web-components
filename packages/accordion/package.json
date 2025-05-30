@@ -33,10 +33,8 @@
             "development": "./src/AccordionItem.dev.js",
             "default": "./src/AccordionItem.js"
         },
-        "./src/accordion-item-overrides.css.js": "./src/accordion-item-overrides.css.js",
-        "./src/accordion-item.css.js": "./src/accordion-item.css.js",
-        "./src/accordion-overrides.css.js": "./src/accordion-overrides.css.js",
-        "./src/accordion.css.js": "./src/accordion.css.js",
+        "./src/accordion-item.css": "./src/accordion-item.css",
+        "./src/accordion.css": "./src/accordion.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -85,5 +83,8 @@
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js"
-    ]
+    ],
+    "spectrum-web": {
+        "migrated": true
+    }
 }

@@ -1,14 +1,14 @@
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -19,12 +19,12 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
-import toastStyles from './toast.css.js';
+import toastStyles from './toast.css' with { type: 'css' };
 
 export const toastVariants: ToastVariants[] = [
     'negative',
@@ -161,17 +161,17 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
             case 'negative':
             case 'error': // deprecated
                 return html`
-                    <sp-icon-alert
+                    <sp-icon-alert-triangle
                         label=${iconLabel || 'Error'}
                         class="type"
-                    ></sp-icon-alert>
+                    ></sp-icon-alert-triangle>
                 `;
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert
+                    <sp-icon-alert-triangle
                         label=${iconLabel || 'Warning'}
                         class="type"
-                    ></sp-icon-alert>
+                    ></sp-icon-alert-triangle>
                 `;
             case 'positive':
                 return html`

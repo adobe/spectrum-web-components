@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/thumbnail-overrides.css.js": "./src/thumbnail-overrides.css.js",
-        "./src/thumbnail.css.js": "./src/thumbnail.css.js",
+        "./src/thumbnail.css": "./src/thumbnail.css",
         "./sp-thumbnail.js": {
             "development": "./sp-thumbnail.dev.js",
             "default": "./sp-thumbnail.js"

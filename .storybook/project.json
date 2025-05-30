@@ -1,0 +1,36 @@
+{
+    "name": "storybook",
+    "namedInputs": {
+        "tools": [
+            "{projectRoot}/assets",
+            "{projectRoot}/blocks",
+            "{projectRoot}/decorators",
+            "{projectRoot}/deprecated",
+            "{projectRoot}/guides",
+            "{projectRoot}/loaders",
+            "{projectRoot}/modes",
+            "{projectRoot}/templates",
+            "{projectRoot}/types",
+            "{projectRoot}/*.{js,html}"
+        ]
+    },
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {},
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    },
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": ".storybook/src",
+    "root": ".storybook",
+    "tags": ["storybook"]
+}

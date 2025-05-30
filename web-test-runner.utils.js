@@ -1,14 +1,14 @@
-/*
-Copyright 2025 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import fs from 'fs';
 import path from 'path';
@@ -143,7 +143,7 @@ export const packages = fs
     .concat(tools);
 
 const vrtHTML =
-    ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
+    ({ color, scale, dir, reduceMotion, hcm }) =>
     (testFramework) =>
         `<!doctype html>
     <html dir=${dir}>
@@ -164,7 +164,6 @@ const vrtHTML =
         <body>
         <script>
             window.__swc_hack_knobs__ = {
-                defaultSystemVariant:  "${systemVariant || ''}",
                 defaultColor: "${color || ''}",
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
@@ -177,28 +176,21 @@ const vrtHTML =
     </html>`;
 
 export let vrtGroups = [];
-const systemVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['light', 'dark'];
-const scales = ['medium', 'large'];
-const directions = ['ltr', 'rtl'];
-systemVariants.forEach((systemVariant) => {
-    colors.forEach((color) => {
-        scales.forEach((scale) => {
-            directions.forEach((dir) => {
-                const reduceMotion = true;
-                const testHTML = vrtHTML({
-                    systemVariant,
-                    color,
-                    scale,
-                    dir,
-                    reduceMotion,
-                });
-                vrtGroups.push({
-                    name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
-                    files: '(packages|tools)/*/test/*.test-vrt.js',
-                    testRunnerHtml: testHTML,
-                    browsers: [chromium],
-                });
+['light', 'dark'].forEach((color) => {
+    ['medium', 'large'].forEach((scale) => {
+        ['ltr', 'rtl'].forEach((dir) => {
+            const reduceMotion = true;
+            const testHTML = vrtHTML({
+                color,
+                scale,
+                dir,
+                reduceMotion,
+            });
+            vrtGroups.push({
+                name: `vrt-${color}-${scale}-${dir}`,
+                files: '(packages|tools)/*/test/*.test-vrt.js',
+                testRunnerHtml: testHTML,
+                browsers: [chromium],
             });
         });
     });
@@ -221,7 +213,6 @@ vrtGroups = [
                 name: `vrt-${pkg}-single`,
                 files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
                 testRunnerHtml: vrtHTML({
-                    systemVariant: 'spectrum',
                     color: 'light',
                     scale: 'medium',
                     dir: 'ltr',
@@ -236,7 +227,6 @@ vrtGroups = [
         name: `vrt-hcm`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
-            systemVariant: 'spectrum',
             color: 'dark',
             scale: 'medium',
             dir: 'ltr',

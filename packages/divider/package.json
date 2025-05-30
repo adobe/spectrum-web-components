@@ -29,8 +29,7 @@
             "development": "./src/Divider.dev.js",
             "default": "./src/Divider.js"
         },
-        "./src/divider-overrides.css.js": "./src/divider-overrides.css.js",
-        "./src/divider.css.js": "./src/divider.css.js",
+        "./src/divider.css": "./src/divider.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

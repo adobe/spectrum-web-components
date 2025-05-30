@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/picker-button-overrides.css.js": "./src/picker-button-overrides.css.js",
-        "./src/picker-button.css.js": "./src/picker-button.css.js",
+        "./src/picker-button.css": "./src/picker-button.css",
         "./sp-picker-button.js": {
             "development": "./sp-picker-button.dev.js",
             "default": "./sp-picker-button.js"
