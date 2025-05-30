@@ -218,17 +218,17 @@ describe('Overlay Trigger - extended', () => {
 
         const textfieldRect = textfield.getBoundingClientRect();
         expect(
-            document.activeElement === textfield,
+            document.activeElement,
             `textfield is not focused ${getRects([textfield, overlayTrigger, button, popover])}`
-        ).to.be.false;
+        ).to.not.equal(textfield);
 
         await sendKeys({
             press: 'Tab',
         });
         expect(
-            document.activeElement === button,
+            document.activeElement,
             `button focused ${getRects([textfield, overlayTrigger, button, popover])}`
-        ).to.be.true;
+        ).to.equal(button);
 
         // Add more reliable focus handling for CI environments
         await sendMouse({
@@ -253,9 +253,9 @@ describe('Overlay Trigger - extended', () => {
 
         // Now verify the focus state
         expect(
-            document.activeElement === textfield,
+            document.activeElement,
             `clicking focuses the Textfield ${getRects([textfield, overlayTrigger, button, popover])}`
-        ).to.be.true;
+        ).to.equal(textfield);
 
         expect(popover.placement).to.equal('top');
         const open = oneEvent(overlayTrigger, 'sp-opened');
@@ -266,9 +266,9 @@ describe('Overlay Trigger - extended', () => {
             press: 'ArrowUp',
         });
         expect(
-            document.activeElement === button,
+            document.activeElement,
             `button focused arrowUp ${getRects([textfield, overlayTrigger, button, popover])}\n${document.body.innerHTML}`
-        ).to.be.true;
+        ).to.equal(button);
         await sendKeys({
             press: 'Enter',
         });
@@ -300,9 +300,9 @@ describe('Overlay Trigger - extended', () => {
             `overlayTrigger.open ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.be.undefined;
         expect(
-            document.activeElement === textfield,
+            document.activeElement,
             'closing does not focus the Textfield'
-        ).to.be.false;
+        ).to.not.equal(textfield);
 
         await sendMouse({
             steps: [
@@ -324,9 +324,9 @@ describe('Overlay Trigger - extended', () => {
         );
 
         expect(
-            document.activeElement === textfield,
+            document.activeElement,
             `the Textfield is focused again`
-        ).to.be.true;
+        ).to.equal(textfield);
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
