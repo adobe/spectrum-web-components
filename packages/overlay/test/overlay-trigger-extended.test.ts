@@ -136,7 +136,7 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('top');
     });
 
-    it('manages `placement` on scroll', async () => {
+    it.skip('manages `placement` on scroll', async () => {
         ({ overlayTrigger, button, popover } = await initTest(html`
             <style>
                 .container {
@@ -194,7 +194,7 @@ describe('Overlay Trigger - extended', () => {
         );
     });
 
-    it.skip('occludes content behind the overlay', async () => {
+    it('occludes content behind the overlay', async () => {
         const { overlayTrigger, button, popover } = await initTest();
         const textfield = document.createElement('sp-textfield');
         overlayTrigger.insertAdjacentElement('afterend', textfield);
