@@ -1,0 +1,72 @@
+import { Meta, Title, Story, Description } from '@storybook/blocks';
+import * as DropShadowStories from './drop-shadow.stories.js';
+
+<Meta of={DropShadowStories} />
+
+<Title />
+<Description of={DropShadowStories} />
+
+Drop shadow tokens may be used for box shadows or drop shadows in CSS. Using `box-shadow` is often preferable to using `filter: drop-shadow()`, but in situations where the shadow must be applied to the alpha channel of the content rather than the border box, or if `box-shadow` is already being used for a different purpose, such as a focus outline, `filter: drop-shadow()` may be used. Note that in cases where `filter: drop-shadow()` is used, the shadow may be more blurred than the design spec due to a difference in how the blur parameter is calculated, and an adjustment by half may be needed.
+
+The opacity values in dark shadow colors are 3x the light values.
+
+These single-layer shadows are an interim solution for shadows until complex tokens (additional design data for the Spectrum Tokens system) are available to support multi-layer shadows.
+
+## Emphasized Default
+
+This shadow is used to provide emphasis to containers within a page.
+
+### `box-shadow`
+
+<Story of={DropShadowStories.BoxShadowEmphasizedDefault} />
+``` box-shadow: var(--spectrum-drop-shadow-emphasized-default-x)
+var(--spectrum-drop-shadow-emphasized-default-y)
+var(--spectrum-drop-shadow-emphasized-default-blur)
+var(--spectrum-drop-shadow-emphasized-default-color); ```
+
+### `filter: drop-shadow()`
+
+<Story of={DropShadowStories.DropShadowEmphasizedDefault} />
+``` filter: drop-shadow( var(--spectrum-drop-shadow-emphasized-default-x)
+var(--spectrum-drop-shadow-emphasized-default-y)
+calc(var(--spectrum-drop-shadow-emphasized-default-blur) / 2)
+var(--spectrum-drop-shadow-emphasized-default-color) ); ```
+
+## Emphasized Hover
+
+If the whole container is interactive, such as in a select box, the shadow becomes elevated on hover.
+
+### `box-shadow`
+
+<Story of={DropShadowStories.BoxShadowEmphasizedHover} />
+``` box-shadow: var(--spectrum-drop-shadow-emphasized-hover-x)
+var(--spectrum-drop-shadow-emphasized-hover-y)
+var(--spectrum-drop-shadow-emphasized-hover-blur)
+var(--spectrum-drop-shadow-emphasized-hover-color); ```
+
+### `filter: drop-shadow()`
+
+<Story of={DropShadowStories.DropShadowEmphasizedHover} />
+``` filter: drop-shadow( var(--spectrum-drop-shadow-emphasized-hover-x)
+var(--spectrum-drop-shadow-emphasized-hover-y)
+calc(var(--spectrum-drop-shadow-emphasized-hover-blur) / 2)
+var(--spectrum-drop-shadow-emphasized-hover-color) ); ```
+
+## Elevated
+
+Elevated shadows can be used on containers that appear on top of content, such as menus, coach marks, popovers, and floating bar panels.
+
+### `box-shadow`
+
+<Story of={DropShadowStories.BoxShadowElevated} />
+``` box-shadow: var(--spectrum-drop-shadow-elevated-x)
+var(--spectrum-drop-shadow-elevated-y) var(--spectrum-drop-shadow-elevated-blur)
+var(--spectrum-drop-shadow-elevated-color); ```
+
+### `filter: drop-shadow()`
+
+<Story of={DropShadowStories.DropShadowElevated} />
+``` filter: drop-shadow( var(--spectrum-drop-shadow-elevated-x)
+var(--spectrum-drop-shadow-elevated-y)
+calc(var(--spectrum-drop-shadow-elevated-blur) / 2)
+var(--spectrum-drop-shadow-elevated-color) ); ```

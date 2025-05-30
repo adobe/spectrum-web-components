@@ -1,0 +1,88 @@
+/*!
+Copyright 2024 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* stylelint-disable spectrum-tools/no-unknown-custom-properties */
+
+.spectrum-Foundations-Example-DropShadow-swatch {
+    block-size: 150px;
+    inline-size: 150px;
+    background-color: var(--spectrum-gray-25);
+    border-radius: var(--spectrum-corner-radius-large-default);
+    border: transparent;
+}
+
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch {
+    background-color: var(--spectrum-gray-75); /* matches dark mode design spec rgb(34, 34, 34) */
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-box-shadow {
+    box-shadow: var(--spectrum-drop-shadow-emphasized-default-x) var(--spectrum-drop-shadow-emphasized-default-y) var(--spectrum-drop-shadow-emphasized-default-blur) var(--mod-drop-shadow-emphasized-default-color, var(--spectrum-drop-shadow-emphasized-default-color));
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-drop-shadow {
+    filter: drop-shadow(var(--spectrum-drop-shadow-emphasized-default-x) var(--spectrum-drop-shadow-emphasized-default-y) calc(var(--spectrum-drop-shadow-emphasized-default-blur) / 2) /* adjust blur by half of box-shadow */ var(--mod-drop-shadow-emphasized-default-color, var(--spectrum-drop-shadow-emphasized-default-color)));
+}
+
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-box-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-box-shadow,
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-drop-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--emphasized-default-drop-shadow {
+    /* adjustment because color tokens do not work properly on foundations pages */
+    --mod-drop-shadow-emphasized-default-color: var(--spectrum-drop-shadow-color-100);
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-box-shadow {
+    box-shadow: var(--spectrum-drop-shadow-emphasized-hover-x) var(--spectrum-drop-shadow-emphasized-hover-y) var(--spectrum-drop-shadow-emphasized-hover-blur) var(--mod-drop-shadow-emphasized-hover-color, var(--spectrum-drop-shadow-emphasized-hover-color));
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-drop-shadow {
+    filter: drop-shadow(var(--spectrum-drop-shadow-emphasized-hover-x) var(--spectrum-drop-shadow-emphasized-hover-y) calc(var(--spectrum-drop-shadow-emphasized-hover-blur) / 2) /* adjust blur by half of box-shadow */ var(--mod-drop-shadow-emphasized-hover-color, var(--spectrum-drop-shadow-emphasized-hover-color)));
+}
+
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-drop-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-drop-shadow,
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-box-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--emphasized-hover-box-shadow {
+    /* adjustment because color tokens do not work properly on foundations pages */
+    --mod-drop-shadow-emphasized-hover-color: var(--spectrum-drop-shadow-color-200);
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--elevated-box-shadow {
+    box-shadow: var(--spectrum-drop-shadow-elevated-x) var(--spectrum-drop-shadow-elevated-y) var(--spectrum-drop-shadow-elevated-blur) var(--mod-drop-shadow-elevated-color, var(--spectrum-drop-shadow-elevated-color));
+}
+
+.spectrum-Foundations-Example-DropShadow-swatch--elevated-drop-shadow {
+    filter: drop-shadow(var(--spectrum-drop-shadow-elevated-x) var(--spectrum-drop-shadow-elevated-y) calc(var(--spectrum-drop-shadow-elevated-blur) / 2) /* adjust blur by half of box-shadow */ var(--mod-drop-shadow-elevated-color, var(--spectrum-drop-shadow-elevated-color)));
+}
+
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--elevated-drop-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--elevated-drop-shadow,
+.spectrum--light .spectrum-Foundations-Example-DropShadow-swatch--elevated-box-shadow,
+.spectrum--dark .spectrum-Foundations-Example-DropShadow-swatch--elevated-box-shadow {
+    /* adjustment because color tokens do not work properly on foundations pages */
+    --mod-drop-shadow-elevated-color: var(--spectrum-drop-shadow-color-200);
+}
+
+.spectrum-Foundations-Example-swatch-container {
+    background-color: var(--spectrum-gray-25);
+    block-size: 200px;
+    inline-size: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spectrum-Foundations-Example-variant-container {
+    background-color: var(--spectrum-gray-25);
+    display: flex;
+    flex-direction: row;
+}

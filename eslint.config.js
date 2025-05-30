@@ -133,9 +133,9 @@ export default defineConfig(
         },
     },
 
-    // Script-specific overrides
+    // Script-specific overrides, these are not typescript assets
     {
-        files: ['scripts/*', 'packages/icons-*/bin/*'],
+        files: ['scripts/*.js', 'packages/icons-*/bin/*.js'],
         rules: {
             'no-console': 'off',
         },

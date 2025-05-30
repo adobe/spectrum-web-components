@@ -138,13 +138,13 @@ async function main() {
         await verifyBuildArtifacts();
 
         console.log('All build artifacts verified successfully'.green.bold);
-        process.exit(0);
+        return Promise.resolve();
     } catch (error) {
         console.error(
             'Build artifact verification failed:'.red.bold,
             error.message.red
         );
-        process.exit(1);
+        return Promise.reject(log.fail('Build failed', { throwError: true }));
     }
 }
 

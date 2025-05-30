@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -15,6 +13,8 @@
 import fg from 'fast-glob';
 import { build } from 'esbuild';
 import fs from 'fs';
+import path from 'path';
+import { dirs, log } from './utilities.js';
 
 const relativeImportRegex = RegExp(
     'import([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
@@ -57,6 +57,11 @@ const makeDev = {
     },
 };
 
+/**
+ * Build TypeScript files for a package
+ * @param {string[]} paths - Array of file paths to build
+ * @returns {Promise<void>}
+ */
 export const buildPackage = async (paths) => {
     const devPaths = paths.filter(
         (path) =>
@@ -81,7 +86,9 @@ export const buildPackage = async (paths) => {
         sourcemap: true,
         target: ['es2018'],
     };
+
     if (devPaths.length) {
+        log.write(`Building ${devPaths.length} development files...\n`);
         builds.push(
             build({
                 ...config,
@@ -89,47 +96,73 @@ export const buildPackage = async (paths) => {
                 define: { 'window.__swc.DEBUG': 'true' },
                 outExtension: { '.js': '.dev.js' },
                 plugins: devPlugins,
-            }).catch(() => process.exit(1))
+            })
+                .then(() => log.success('Development build complete'))
+                .catch((error) => {
+                    log.fail(error, { throwError: true });
+                })
         );
     }
+
     const prodConfig = {
         ...config,
         define: { 'window.__swc.DEBUG': 'false' },
         plugins: paths.length === 1 ? [] : prodPlugins,
     };
+
     if (prodPath.length) {
+        log.write(`Building ${prodPath.length} production files...\n`);
         builds.push(
             build({
                 ...prodConfig,
                 entryPoints: prodPath,
                 minify: true,
-            }).catch(() => process.exit(1))
+            })
+                .then(() => log.success('Production build complete'))
+                .catch((error) => {
+                    log.fail(error, { throwError: true });
+                })
         );
     }
+
     // Do not minify tools files, especially stories as it messes up the exports
     // when processed with es-module-lexer.
     if (toolPaths.length) {
+        log.write(`Building ${toolPaths.length} tool files...\n`);
         builds.push(
             build({
                 ...prodConfig,
                 entryPoints: toolPaths,
-            }).catch(() => process.exit(1))
+            })
+                .then(() => log.success('Tools build complete'))
+                .catch((error) => {
+                    log.fail(error, { throwError: true });
+                })
         );
     }
 
     return Promise.all(builds);
 };
 
-export const buildTSFiles = async () => {
+/**
+ * Build all TypeScript files in the project
+ * @param {string[]} [specificFiles] - Optional array of specific files to build
+ * @returns {Promise<void>}
+ */
+export const buildTSFiles = async (specificFiles) => {
+    if (specificFiles && specificFiles.length > 0) {
+        return buildPackage(specificFiles);
+    }
+
     return fg([
-        './packages/**/!(*.d).ts',
-        './tools/**/!(*.d).ts',
-        './test/plugins/**/!(*.d).ts',
-        './projects/story-decorator/**/!(*.d).ts',
-        './projects/vrt-compare/**/!(*.d).ts',
-        './test/lit-helpers.ts',
-        './test/testing-helpers.ts',
-        './test/testing-helpers-a11y.ts',
-        './test/visual/test.ts',
+        path.join(dirs.packages, '**/!(*.d).ts'),
+        path.join(dirs.tools, '**/!(*.d).ts'),
+        path.join(dirs.root, 'test/plugins/**/!(*.d).ts'),
+        path.join(dirs.root, 'projects/story-decorator/**/!(*.d).ts'),
+        path.join(dirs.root, 'projects/vrt-compare/**/!(*.d).ts'),
+        path.join(dirs.root, 'test/lit-helpers.ts'),
+        path.join(dirs.root, 'test/testing-helpers.ts'),
+        path.join(dirs.root, 'test/testing-helpers-a11y.ts'),
+        path.join(dirs.root, 'test/visual/test.ts'),
     ]).then((files) => buildPackage(files));
 };

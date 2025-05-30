@@ -1,0 +1,26 @@
+import { Meta, Canvas, Story, Title, Unstyled } from '@storybook/blocks';
+import * as CornerRoundingStories from './corner-rounding.stories.js';
+import * as CheckboxStories from './checkbox-corner-rounding.stories.js';
+import * as ActionButtonStories from './action-button-corner-rounding.stories.js';
+
+<Meta of={CornerRoundingStories} />
+
+<Title />
+
+## Default values
+
+<Story of={CornerRoundingStories.CornerRounding} />
+
+## Component examples
+
+### Small tokens
+
+Checkbox includes small component size tokens to scale corner rounding.
+
+<Story of={CheckboxStories.CheckboxExamples} />
+
+### Medium tokens
+
+Action button includes medium component size tokens to scale corner rounding.
+
+<Story of={ActionButtonStories.ActionButtonExamples} />

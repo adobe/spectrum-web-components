@@ -1,0 +1,97 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "vrt-quick-link",
+    "root": "projects/vrt-quick-link",
+    "sourceRoot": "projects/vrt-quick-link/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build:ts", "build:css"],
+            "options": {
+                "commands": []
+            },
+            "cache": true
+        },
+        "build:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "tsc --build"
+            },
+            "cache": true,
+            "outputs": ["{workspaceRoot}/dist/{projectRoot}"]
+        },
+        "build:css": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node ../../scripts/css-processing.js"
+            },
+            "cache": true,
+            "outputs": ["{workspaceRoot}/dist/{projectRoot}/styles"]
+        },
+        "build:watch": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "tsc --build --watch",
+                    "node ../../scripts/css-processing.js --watch"
+                ],
+                "parallel": true
+            },
+            "continuous": true
+        },
+        "clean": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "rimraf dist"
+            }
+        },
+        "compare": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo \"No compare configuration set\""
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "prettier --write ."
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "eslint . --ext .ts,.js"
+            }
+        },
+        "report": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo \"No report configuration set\""
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope",
+            "options": {
+                "command": "web-test-runner"
+            },
+            "configurations": {
+                "scope": {
+                    "command": "web-test-runner --group"
+                },
+                "watch": {
+                    "command": "web-test-runner --watch"
+                }
+            }
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"],
+            "options": {
+                "parallel": true
+            }
+        }
+    }
+}

@@ -11,6 +11,7 @@ build-storybook.log
 tach-results.*
 .gitconfig
 .netlify/plugins
+.env
 
 !.cursor
 
@@ -60,7 +61,8 @@ tools/**/*.test-vrt.ts
 !tools/base/src/version.d.ts
 
 # cache directories
-.wireit
+.nx/cache
+.nx/workspace-data
 .eslintcache
 .stylelintcache
 
@@ -111,3 +113,12 @@ chromatic.config.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/version
+
+# Next.js
+.github/instructions/nx.instructions.md
+.next
+out
+
+# vite
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
