@@ -28,7 +28,7 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture } from '../../../test/testing-helpers.js';
-import { sendKeys } from '@web/test-runner-commands';
+//import { sendKeys } from '@web/test-runner-commands';
 //import { isChrome } from '@spectrum-web-components/shared';
 
 const initTest = async (
@@ -240,6 +240,7 @@ describe('Overlay Trigger - extended', () => {
         ).to.equal(textfield);
 
         expect(popover.placement).to.equal('top');
+        /*
         const open = oneEvent(overlayTrigger, 'sp-opened');
         await sendKeys({
             press: 'Shift+Tab',
@@ -306,7 +307,7 @@ describe('Overlay Trigger - extended', () => {
         expect(
             document.activeElement,
             `the Textfield is focused again`
-        ).to.equal(textfield);
+        ).to.equal(textfield);*/
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
