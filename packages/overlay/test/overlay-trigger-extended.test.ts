@@ -83,7 +83,14 @@ const initTest = async (
             ) as OverlayTrigger;
             button = test.querySelector('sp-button') as Button;
             popover = test.querySelector('sp-popover') as Popover;
-            return !!overlayTrigger && !!button && !!popover;
+            return (
+                !!overlayTrigger &&
+                !!button &&
+                !!popover &&
+                overlayTrigger.isConnected &&
+                button.isConnected &&
+                popover.isConnected
+            );
         },
         'overlay-trigger is ready',
         { timeout: 100 }
