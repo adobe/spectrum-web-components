@@ -11,6 +11,7 @@ build-storybook.log
 tach-results.*
 .gitconfig
 .netlify/plugins
+.env
 
 # documentation
 documentation/components/searchIndex.json
