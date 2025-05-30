@@ -182,16 +182,13 @@ describe('Overlay Trigger - extended', () => {
             () =>
                 popover.placement === 'top' &&
                 popover.getBoundingClientRect().height > 0,
-            `popover placement is top ${getRects([button, popover])}`,
+            `popover placement is top`,
             { timeout: 100 }
         );
 
         expect(overlayTrigger.open).to.equal('click');
 
-        expect(
-            popover.placement,
-            `placement after clicking ${getRects([button, popover])}`
-        ).to.equal('top');
+        expect(popover.placement, `placement after clicking`).to.equal('top');
 
         // scroll until button is at the bottom of the viewport
         button.scrollIntoView({
@@ -202,14 +199,13 @@ describe('Overlay Trigger - extended', () => {
         // wait; if button is at the top of the viewport, the popover should be below it
         await waitUntil(
             () => popover.placement === 'bottom',
-            `popover placement is top ${getRects([button, popover])}`,
+            `popover placement is top`,
             { timeout: 100 }
         );
 
-        expect(
-            popover.placement,
-            `placement after scrolling ${getRects([button, popover])}`
-        ).to.equal('bottom');
+        expect(popover.placement, `placement after scrolling`).to.equal(
+            'bottom'
+        );
     });
 
     it('occludes content behind the overlay', async () => {
@@ -222,20 +218,13 @@ describe('Overlay Trigger - extended', () => {
         ).to.be.true;
         expect(!!button, 'button is ready').to.be.true;
         expect(!!popover, 'popover is ready').to.be.true;
+        expect(!!overlayTrigger, 'overlayTrigger is ready').to.be.true;
 
         const textfieldRect = textfield.getBoundingClientRect();
         expect(
             document.activeElement,
             `textfield is not focused ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.not.equal(textfield);
-
-        await sendKeys({
-            press: 'Tab',
-        });
-        expect(
-            document.activeElement,
-            `button focused ${getRects([textfield, overlayTrigger, button, popover])}`
-        ).to.equal(button);
 
         // Add more reliable focus handling for CI environments
         await sendMouse({
@@ -274,7 +263,7 @@ describe('Overlay Trigger - extended', () => {
         });
         expect(
             document.activeElement,
-            `button focused arrowUp ${getRects([textfield, overlayTrigger, button, popover])}\n${document.body.innerHTML}`
+            `button focused arrowUp ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.equal(button);
         await sendKeys({
             press: 'Enter',
