@@ -168,7 +168,6 @@ describe('Overlay Trigger - extended', () => {
 
         //const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        expect(overlayTrigger.open).to.be.true;
         //await open;
 
         // wait until ready; if button is at the bottom of the viewport, the popover should be above it
@@ -179,6 +178,8 @@ describe('Overlay Trigger - extended', () => {
             `popover placement is top ${getRects([button, popover])}`,
             { timeout: 100 }
         );
+
+        expect(overlayTrigger.open).to.equal('click');
 
         expect(
             popover.placement,
@@ -252,6 +253,9 @@ describe('Overlay Trigger - extended', () => {
         const open = oneEvent(overlayTrigger, 'sp-opened');
         await sendKeys({
             press: 'Shift+Tab',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
         });
         expect(
             document.activeElement === button,
