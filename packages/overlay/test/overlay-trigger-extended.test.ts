@@ -83,14 +83,7 @@ const initTest = async (
             ) as OverlayTrigger;
             button = test.querySelector('sp-button') as Button;
             popover = test.querySelector('sp-popover') as Popover;
-            return (
-                !!overlayTrigger &&
-                !!button &&
-                !!popover &&
-                overlayTrigger.isConnected &&
-                button.isConnected &&
-                popover.isConnected
-            );
+            return !!overlayTrigger && !!button && !!popover;
         },
         'overlay-trigger is ready',
         { timeout: 100 }
@@ -163,8 +156,9 @@ describe('Overlay Trigger - extended', () => {
             !!overlayTrigger,
             `overlayTrigger is ready ${getRects([button, popover])}`
         ).to.be.true;
-        expect(!!button, 'button is ready').to.be.true;
-        expect(!!popover, 'popover is ready').to.be.true;
+        expect(!!button.isConnected, 'button is ready').to.be.true;
+        expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
+            .true;
         expect(popover.placement, 'initial placement').to.equal('top');
 
         // scroll until button is at the top of the viewport
@@ -216,9 +210,9 @@ describe('Overlay Trigger - extended', () => {
             !!overlayTrigger,
             `overlayTrigger is ready ${getRects([button, popover])}`
         ).to.be.true;
-        expect(!!button, 'button is ready').to.be.true;
-        expect(!!popover, 'popover is ready').to.be.true;
-        expect(!!overlayTrigger, 'overlayTrigger is ready').to.be.true;
+        expect(!!button.isConnected, 'button is ready').to.be.true;
+        expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
+            .true;
 
         const textfieldRect = textfield.getBoundingClientRect();
         expect(
