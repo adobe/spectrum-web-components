@@ -118,14 +118,6 @@ describe('Overlay Trigger - extended', () => {
     let button!: Button;
     let popover!: Popover;
 
-    afterEach(async () => {
-        if (overlayTrigger && overlayTrigger.open) {
-            const closed = oneEvent(overlayTrigger, 'sp-closed');
-            overlayTrigger.open = undefined;
-            await closed;
-        }
-    });
-
     it.skip('manages `placement` on open', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
 
