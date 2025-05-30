@@ -27,6 +27,9 @@ export default {
         density: undefined,
     },
     argTypes,
+    parameters: {
+        badges: ['migrated'],
+    },
 };
 
 type Properties = {

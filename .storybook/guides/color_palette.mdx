@@ -1,0 +1,116 @@
+import { Meta, Title } from '@storybook/blocks';
+import {
+    ColorPalette,
+    ColorItem,
+    ThemeContainer,
+    Heading,
+    Table,
+    Code,
+    Swatch,
+} from '../blocks';
+import { fetchTokenSet, fetchToken } from '../blocks/utilities.js';
+
+import GradientLight from '../assets/images/gradient-background-light.png';
+import GradientDark from '../assets/images/gradient-background-dark.png';
+import styles from '@spectrum-css/bundle/dist/index.module.css';
+
+<Meta title="Design tokens" />
+<Title>Design tokens</Title>
+
+## Color palette
+
+The Spectrum CSS color palette is a collection of named colors that are used throughout the design system. These colors are defined in the `@spectrum-css/tokens` package and are available as CSS custom properties. To preview the resolved colors in different color contexts, use the global color switcher in the toolbar above.
+
+<ColorPalette>
+    {[
+        'gray',
+        'silver',
+        'brown',
+        'cinnamon',
+        'red',
+        'orange',
+        'yellow',
+        'chartreuse',
+        'celery',
+        'green',
+        'seafoam',
+        'turquoise',
+        'cyan',
+        'blue',
+        'indigo',
+        'purple',
+        'fuchsia',
+        'magenta',
+        'pink',
+    ].map((color) => (
+        <ColorItem color={color} key={color} />
+    ))}
+</ColorPalette>
+
+<br />
+<br />
+
+### Transparent colors
+
+#### Transparent black
+
+<ColorPalette
+    color="light"
+    style={{
+        background: `url(${GradientLight}) no-repeat center center`,
+        backgroundSize: 'cover',
+    }}
+>
+    <ColorItem
+        color="transparent-black"
+        noCheckerboard={true}
+        skipTitle={true}
+    />
+</ColorPalette>
+
+<br />
+
+#### Transparent white
+
+<ColorPalette
+    color="dark"
+    style={{
+        background: `url(${GradientDark}) no-repeat center center`,
+        backgroundSize: 'cover',
+    }}
+>
+    <ColorItem
+        color="transparent-white"
+        noCheckerboard={true}
+        skipTitle={true}
+    />
+</ColorPalette>
+
+## Alias color tokens
+
+<ThemeContainer gap="0" color="light" display="contents">
+    <Table
+        spacious={true}
+        headers={['Property', 'Value']}
+        rows={Object.entries(fetchTokenSet(/-color-\d+$/)).map(
+            ([key, value]) => [
+                <Code>--spectrum-{key}</Code>,
+                <div
+                    style={{ display: 'flex', gap: fetchToken('spacing-100') }}
+                >
+                    <Swatch
+                        title={`--spectrum-${key} / ${value}`}
+                        color={value}
+                        size={'s'}
+                        onClick={() =>
+                            navigator.clipboard.writeText(
+                                `--spectrum-${key.prop}`
+                            )
+                        }
+                    />
+                    <Code>{value}</Code>
+                </div>,
+            ]
+        )}
+    />
+</ThemeContainer>

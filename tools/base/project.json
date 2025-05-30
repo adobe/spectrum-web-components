@@ -1,0 +1,22 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "base",
+    "root": "tools/base",
+    "sourceRoot": "tools/base/src",
+    "projectType": "library",
+    "tags": ["tool"],
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {},
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    }
+}

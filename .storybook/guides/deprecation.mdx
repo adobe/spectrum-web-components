@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Deprecation workflow" />
+
+# Deprecating a component
+
+When a component is deprecated, it is no longer recommended for use. Though the component will be removed from the codebase and will no longer receive feature updates, we will apply bug fixes to the package as necessary. We will also provide a migration path to a recommended alternative.
+
+## Deprecation process
+
+**Deprecation of a component is typically initiated and communicated by the design team.** They will indicate that a component is going to be deprecated and identify reccomended alternatives and proposed language around migrating away from that component's use.
+
+### Pre-deprecation communication
+
+- Before starting a deprecation, connect with the Spectrum Web Components team to align on the timing of the deprecation. Make sure downstream users are aware that the component is being deprecated and have a migration path to the recommended alternative. Give downstream consumers time to express any concerns or blockers.
+- Add a new [Announcement](https://github.com/adobe/spectrum-css/discussions/new?category=announcements) to the Spectrum CSS repository to notify the community of the deprecation. Include the deprecation notice and any additional migration details that would be important for consumers. See the template below for an example of what to include in the announcement. Title should follow this format: `Deprecation notice: <component name>`.
+
+    ```markdown
+    As of Feb 15, 2024, the @spectrum-css/quickactions has been deprecated.
+
+    Please use an Action bar to allow users to perform actions on either a single or multiple items at the same time, instead.
+
+    This component has been removed from the Spectrum CSS monorepo and will no longer receive new features. Bug fixes will be patched on a as-needed basis. If you find a critical bug, please open a bug report.
+
+    Bug fixes will not longer be supported after the project migrates fully to Spectrum 2 (date TBD).
+
+    If you have any questions or concerns about this deprecation, please feel free to contribute to the discussion here or reach out to us directly.
+    ```
+
+### Flagging the component as deprecated
+
+Before removing the component from the codebase, we need to flag the component as deprecated and publish those changes to the package registry. This will allow downstream consumers to see that the component is being deprecated and provide them with the deprecation notice and migration path. It will also provide a foundation for removal of the component from the codebase without breaking local references.
+
+1. Create a new branch for the deprecation. i.e., `git checkout -b deprecate-quickaction`.
+2. Open up any `*.stories.js` files inside the component's folder:
+   a. Edit the title of any exported stories to be prefixed with the `Deprecated` category, i.e., `title: "Quick actions"`.
+   b. Update any local references to point to the package name instead, i.e.,<br/>_Original_:<br/>`import { Template } from "./template.js";`<br/><br/>_Updated to_:<br/>`import { Template } from "@spectrum-css/quickaction/stories/template.js";`.
+   c. In the parameters section, there are 2 important updates to make: - Add `chromatic: { disableSnapshot: true },` to ensure it no longer runs regression tests. - Update the `status` type to `deprecated`:
+    ```json
+      parameters: {
+          chromatic: { disableSnapshot: true },
+          status: { type: "deprecated" }
+      },
+    ```
+3. Add a notice to the documentation page that reads: `**This component is deprecated.**`. This can be done in either the `*.stories.js` file or the `*.mdx` file, if it exists. Add any additional migration notes that were provided by the design team.
+4. Commit these changes and open a pull request to the main branch. i.e., `git commit -m "chore(quickaction): prepare for deprecation"`.
+5. Once the pull request is approved, merge the changes into the main branch and publish the update to the package registry.
+
+At this point you can choose to either immediate move on to the next steps or give a preset amount of time for feedback and concerns to be raised. If you choose to wait, make sure to communicate the timeline to the Spectrum Web Components team and downstream consumers.
+
+### Removal from the monorepo
+
+Once the deprecation notice has been communicated and the above steps completed, we can remove the component from the codebase safely without breaking local references.
+
+1. Create a new folder with the component name in `.storybook/deprecated`, i.e., `.storybook/deprecated/quickaction`.
+2. Copy `*.stories.js` and `*.mdx` into the new folder (directly, not nested inside subfolders).
+3. Delete the package from the `components` directory.
+4. Add the deprecated component's package and last version to the monorepo's root package.json. i.e., `"@spectrum-css/quickaction": "^3.1.1",`.
+5. Reach out to one of the package maintainers to officially deprecate the package in the package registry with the provided deprecation notice from design. Do not try to run the deprecation command unless you know that you have publishing permissions on npm. i.e., `npm deprecate @spectrum-css/quickaction@3.1.1 "This package has been deprecated. Use an action bar to allow users to perform actions on either a single or multiple items at the same time, instead."`.
+
+### Post-deprecation communication
+
+- Update the `#spectrum-css` channel in Slack with the deprecation notice and any additional migration notes.
+- Reach out to the Spectrum Web Components team to confirm completion of the deprecation process.

@@ -74,5 +74,8 @@
     "sideEffects": [
         "./sp-*.js",
         "./**/*.dev.js"
-    ]
+    ],
+    "spectrum-web": {
+        "migrated": true
+    }
 }

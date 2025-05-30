@@ -111,6 +111,9 @@ export default {
             },
         },
     },
+    parameters: {
+        badges: ['migrated'],
+    },
 };
 
 interface Properties {

@@ -34,6 +34,9 @@ export default {
         variant: 'neutral',
     },
     argTypes,
+    parameters: {
+        badges: ['migrated'],
+    },
 };
 
 export const Default = (args: Properties): TemplateResult =>

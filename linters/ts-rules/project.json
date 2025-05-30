@@ -1,0 +1,23 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "ts-rules",
+    "root": "linters/ts-rules",
+    "sourceRoot": "linters/ts-rules/src",
+    "tags": ["plugin"],
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {},
+        "build:watch": {},
+        "clean": {},
+        "compare": {},
+        "format": {},
+        "lint": {},
+        "report": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {}
+    }
+}

@@ -20,6 +20,9 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 export default {
     component: 'sp-action-button',
     title: 'Action Button',
+    parameters: {
+        badges: ['migrated'],
+    },
 };
 
 function renderButtonsSelected(args: Properties): TemplateResult {

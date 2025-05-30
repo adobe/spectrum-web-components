@@ -1,0 +1,44 @@
+import { Meta, Story } from '@storybook/blocks';
+import * as Checkbox from './checkbox-down-state.stories.js';
+import * as Button from './button-down-state.stories.js';
+
+<Meta title="Down state" />
+
+# Down state
+
+Down state is a Spectrum 2 feature that creates the illusion of components being pressed-in when active. This functionality is already included in Spectrum 2 components that require down state in this project. It is implemented with a CSS transform. The implementation depends on the size of the interactable element, as shown in the examples below.
+
+## Examples
+
+### Minimum perspective
+
+For elements that have a width of 24px or less, the minimum perspective token is used to apply the down state. One example of a component that uses this token is the checkbox:
+
+<Story of={Checkbox.CheckboxDownState} />
+
+In this case, we use the minimum perspective token:
+
+```
+transform:
+  perspective(var(--spectrum-component-size-minimum-perspective-down))
+  translateZ(var(--spectrum-component-size-difference-down));
+```
+
+### Calculated perspective
+
+For elements that have a width of greater than 24px, we need to use the component's width and height to apply the down state. One example of a component that uses this logic is the button:
+
+<Story of={Button.ButtonDownState} />
+
+In this case, we use a max formula to calculate the perspective based on component width and height (this helps us account for components that may be very wide):
+
+```
+transform:
+  perspective(max(
+    var(--spectrum-downstate-height),
+    var(--spectrum-downstate-width) * var(--spectrum-component-size-width-ratio-down)
+  ))
+  translateZ(var(--spectrum-component-size-difference-down));
+```
+
+_Note that in this case, users are required to develop an implementation to determine the width and height of the component. Assign these values to the `--spectrum-downstate-width` and `--spectrum-downstate-height` custom properties in a `style` attribute on the HTML element to expose them for use in the CSS._

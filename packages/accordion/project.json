@@ -1,0 +1,13 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "accordion",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {},
+        "test": {
+            "defaultConfiguration": "scope"
+        }
+    }
+}

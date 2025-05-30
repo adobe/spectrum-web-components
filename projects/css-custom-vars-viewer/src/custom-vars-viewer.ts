@@ -10,5 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { CustomVarsViewer } from './CustomVarsViewer.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-window.customElements.define('custom-vars-viewer', CustomVarsViewer);
+defineElement('custom-vars-viewer', CustomVarsViewer);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'custom-vars-viewer': CustomVarsViewer;
+    }
+}

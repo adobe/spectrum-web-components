@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "example-project-rollup",
+  "root": "projects/example-project-rollup",
+  "sourceRoot": "projects/example-project-rollup/src",
+  "projectType": "library",
+  "tags": ["project"],
+  "targets": {
+    "build": {},
+    "build:ts": {},
+    "build:css": {},
+    "build:watch": {},
+    "test": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "scope"
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["lint", "test"]
+    }
+  }
+}

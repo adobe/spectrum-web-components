@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -24,35 +22,37 @@ import 'colors';
 import { buildPackage } from './ts-tools.js';
 import { generateIconWrapper } from './cem-plugin-react-wrapper.js';
 import { getWorkspacePackages } from './cem-tools.js';
+import { dirs, relativePrint, log } from './utilities.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.join(__dirname, '..');
-
-async function main() {
+/**
+ * Build React wrappers for a specific package
+ * @param {object} config
+ * @param {string} config.cwd - Current working directory for the package being built
+ * @returns Promise<void>
+ */
+async function build({ cwd = process.cwd() } = {}) {
     const allPackages = getWorkspacePackages();
-    console.log(
-        `\nGenerating React wrappers for ${allPackages.length} packages...`
+    log.write(
+        `\nGenerating React wrappers for ${allPackages.length} packages...\n`
     );
+
     await Promise.all(
         allPackages.map(async (pkg) => {
             return exec(
-                `cem analyze --config ${path.join(rootDir, 'cem-react-wrapper.config.js')}`,
+                `cem analyze --config ${path.join(dirs.root, 'cem-react-wrapper.config.js')}`,
                 { stdio: 'inherit', cwd: pkg.path }
             )
                 .then(({ stderr }) => {
                     if (stderr) {
-                        console.error(stderr);
+                        log.error(stderr);
                         return;
                     }
 
-                    console.log(
-                        `${'✓'.green}  ${`@swc-react/${pkg.path.split(path.sep).pop()}`.cyan}`
-                    );
+                    log.success(`@swc-react/${pkg.path.split(path.sep).pop()}`);
                 })
                 .catch((error) =>
-                    console.error(
-                        `Error running command in ${pkg.path}:`,
-                        error
+                    log.fail(
+                        `Error running command in ${relativePrint(pkg.path)}: ${error}`
                     )
                 );
         })
@@ -60,31 +60,72 @@ async function main() {
 
     await Promise.all([
         generateIconWrapper('icons-ui').then(() => {
-            console.log(`${'✓'.green}  ${'@swc-react/icons-ui'.cyan}`);
+            log.success('@swc-react/icons-ui');
         }),
         generateIconWrapper('icons-workflow').then(() => {
-            console.log(`${'✓'.green}  ${'@swc-react/icons-workflow'.cyan}`);
+            log.success('@swc-react/icons-workflow');
         }),
     ]);
 
-    console.log(`\n🧹  Formatting generated files...`);
+    log.write(`\n🧹  Formatting generated files...\n`);
     await exec(
-        `yarn eslint --fix --quiet ${path.join(rootDir, 'react/**/*.ts')}`,
-        { stdio: 'inherit', cwd: rootDir }
+        `yarn eslint --fix --quiet ${path.join(dirs.root, 'react/**/*.ts')}`,
+        { stdio: 'inherit', cwd: dirs.root }
     ).then(({ stdout, stderr }) => {
         if (stderr) {
-            console.error(stderr);
+            log.error(stderr);
         }
-        console.log(stdout, `${'✓'.green}  Clean-up complete.`);
+        log.write(stdout);
+        log.success('Clean-up complete.');
     });
 
     const files = await fg(['./react/**/!(*.d).ts']);
-    console.log(`\n🔨  Building ${files.length} assets...`);
+    log.write(`\n🔨  Building ${files.length} assets...\n`);
     return buildPackage(files).then(() => {
-        console.log(` ${'✓'.green}  Success`);
-        console.log(`\n🎉  React build complete!`);
-        process.exit(0);
+        log.success('Success');
+        log.write(`\n🎉  React build complete!\n`);
+        return Promise.resolve();
     });
 }
 
-main();
+/**
+ * The main entry point for this tool; this builds React wrappers for components
+ * @param {object} config
+ * @param {string} [config.cwd=process.cwd()] - Current working directory
+ * @returns Promise<void>
+ */
+async function buildReact({ cwd = process.cwd() } = {}) {
+    const key = `[build] ${'@swc-react'.cyan}`;
+    console.time(key);
+
+    const reports = [];
+    const errors = [];
+
+    await build({ cwd })
+        .then((report) => reports.push(report))
+        .catch((err) => errors.push(err));
+
+    const logs = reports.flat(Infinity).filter(Boolean);
+    const errs = errors.flat(Infinity).filter(Boolean);
+
+    console.log(`\n\n${key} 🔨`);
+    console.log(`${''.padStart(30, '-')}`);
+
+    if (errs && errs.length > 0) {
+        errs.forEach((err) => log.fail(err));
+    } else {
+        if (logs && logs.length > 0) {
+            logs.forEach((msg) => log.write(msg));
+        } else log.write('No assets created.\n'.gray);
+    }
+
+    console.log(`${''.padStart(30, '-')}`);
+    console.timeEnd(key);
+    console.log('');
+
+    if (errs && errs.length > 0)
+        return Promise.reject(log.fail('Build failed', { throwError: true }));
+    else return Promise.resolve();
+}
+
+await buildReact();

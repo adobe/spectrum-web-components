@@ -167,6 +167,9 @@ export default {
         tooltipPlacement: 'bottom',
         static: undefined,
     },
+    parameters: {
+        badges: ['migrated'],
+    },
 };
 
 interface StoryArgs {

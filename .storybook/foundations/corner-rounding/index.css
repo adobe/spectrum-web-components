@@ -1,0 +1,57 @@
+/*!
+ * Copyright 2024 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+.spectrum-Foundations-Example-CornerRounding-table {
+    border-spacing: 1rem 0;
+    margin-inline-start: -1rem;
+}
+
+.spectrum-Foundations-Example-CornerRounding-table th {
+    text-align: start;
+}
+
+.spectrum-Foundations-Example-CornerRounding {
+    inline-size: 3rem;
+    block-size: 3rem;
+    margin: 0.5rem;
+    background-color: var(--spectrum-gray-500);
+}
+
+.spectrum-Foundations-Example-CornerRounding--border {
+    background-color: var(--spectrum-gray-25);
+    border: var(--spectrum-border-width-200) solid var(--spectrum-gray-700);
+}
+
+.spectrum-Foundations-Example-CornerRounding--none {
+    border-radius: var(--spectrum-corner-radius-none);
+}
+
+.spectrum-Foundations-Example-CornerRounding--sizeS {
+    border-radius: var(--spectrum-corner-radius-small-default);
+}
+
+.spectrum-Foundations-Example-CornerRounding--sizeM {
+    border-radius: var(--spectrum-corner-radius-medium-default);
+}
+
+.spectrum-Foundations-Example-CornerRounding--sizeL {
+    border-radius: var(--spectrum-corner-radius-large-default);
+}
+
+.spectrum-Foundations-Example-CornerRounding--sizeXL {
+    border-radius: var(--spectrum-corner-radius-extra-large-default);
+}
+
+.spectrum-Foundations-Example-CornerRounding--full {
+    border-radius: var(--spectrum-corner-radius-full);
+}

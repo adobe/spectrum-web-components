@@ -1,0 +1,499 @@
+import { Meta } from '@storybook/blocks';
+
+import Illustration from '../assets/images/spectrum_illustration_2x.png';
+
+<Meta title="Contributing" />
+
+<img src={Illustration} style={{ marginTop: '-20px', marginBottom: '20px' }} />
+
+# Getting started
+
+Welcome to the development and exploration environment for Spectrum CSS, driven by [Storybook](https://storybook.js.org), a React-driven development environment that allows for in-depth exploration of components as they are being built.
+
+## Table of contents
+
+This guide is intended to get you up to speed on how we work within Storybook in the Spectrum CSS project. It will cover the following topics:
+
+- [Architecture](#architecture)
+- [Writing stories](#writing-stories)
+- [Templates](#templates)
+- [Testing stories](#testing-stories)
+- [Changelog](#changelog)
+
+For more general information about how to contribute to the Spectrum CSS project, take a look at our [contribution guidelines on GitHub](https://github.com/adobe/spectrum-css/blob/main/.github/CONTRIBUTING.md).
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/en/) (v20 or later)
+- [Yarn](https://yarnpkg.com/getting-started/install)
+
+## Component architecture
+
+Each component has the following files:
+
+- `index.css` - The source file for all styles related to the component. This contains all selectors and css properties for the component.
+- `stories/*.stories.js` - The storybook file that defines the component's stories and the available knobs for the component.
+- `stories/template.js` - The template function that generates the component's mark-up based on the provided settings.
+- `stories/*.test.js` - The testing grid for visual regression testing in Chromatic.
+
+Each component outputs the following assets to `dist`:
+
+- `index.css`: This asset includes the CSS for the component and is meant to be loaded in conjunction with the tokens for your desired color context and scales.
+
+## Adding a new component
+
+1. Generate a new component using the `yarn new component` command. The generator will prompt you to answer questions about your component.
+2. Edit the `dependencies` within the `package.json` file to use only the dependencies your component needs. All components rely on `@spectrum-css/tokens`, and most rely on `@spectrum-css/icon`.
+3. Once your folder has been generated, you can run `yarn start` in the root of the project to begin developing.
+4. The `index.css` file is where all of your styles should be added.
+5. Inside the `stories` directory you will find a `template.js` and `*.stories.js` file.
+    - In the `*.stories.js` file, define the available knobs and properties for your component, as well as any standard variations you want to surface in [Storybook](https://storybook.js.org/docs/react/writing-stories/introduction).
+    - Update the `template.js` file with the markup, using [lit-html syntax](https://lit.dev/docs/templates/overview/) to adjust results based on the provided settings from the Storybook knobs.
+
+_Note_: Because we use scoped packages, before it can be published, you must manually publish the new component as public:
+
+```shell
+cd components/newcomponent
+npm publish --access=public
+```
+
+## Storybook architecture
+
+- `assets`: This folder contains static, unprocessed assets for inclusion in the stories.
+- `decorators`: These assets interpret the arguments provided and apply the necessary stylesheet or markup changes to reflect the desired update.
+- `deprecated`: One folder for each deprecated component we are still including in our documentation but that does not live in the repository any longer.
+- `guides`: Manually written documentation for the project.
+- `types`: There are 3 primary assets stored in this folder: shared global properties (such as rootClass, customStyles, id, etc.), global controls (contexts available in the top toolbar), and states (optional shared properties to be imported into a story for consistency). Each file is surfaced to the `types/index.js` file for ease of importing.
+
+**Storybook files:**
+
+- `main.js`
+- `manager.js`
+- `preview.js`
+
+Packages can be loaded using their package name rather than a relative pathing approach, i.e., in a story:
+
+```js
+import { default as IconStories } from '@spectrum-css/icon/stories/icon.stories.js';
+```
+
+or in a template.js file:
+
+```js
+import { Template as Icon } from '@spectrum-css/icon/stories/template.js';
+```
+
+CSS for other components can be loaded in a story using the package name (rather than the directory path), i.e. `@spectrum-css/toast` vs. `../toast/index.css`. The local version of the package is used regardless but the bundler settings will resolve the pathing for you.
+
+For template development, we leverage lit and it's utilities to create dynamic HTML that responds to user configurations provided by the Storybook controls. This allows us to create a single source of truth for the component's mark-up and to ensure that the component is being used as intended.
+
+To import the utilities you need, use the following:
+
+```js
+import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+```
+
+Images can be loaded directly from the `assets/images` directory at the root of the project.
+
+```html
+<img class="spectrum-Asset-image" src="example-ava.png" />
+```
+
+CSS assets will be run through their respective postcss configurations. This means you do not need to load dist assets into a story. It is recommended you load **local development assets** as they will be correctly compiled on the fly. i.e., in your template.js:
+
+```js
+import '../index.css';
+```
+
+We are leaning on Storybook's `@storybook/web-components-vite` framework configuration as our stories rely on lit for dynamic attribute assignment.
+
+### Add-ons
+
+We rely on the following add-ons to power our implementation:
+
+- [@storybook/addon-essentials](https://github.com/storybookjs/storybook/tree/main/addons/essentials): configureJSX, transcludeMarkdown (MDX) specifically turned on
+- [@storybook/addon-a11y](https://github.com/storybookjs/storybook/tree/next/code/addons/a11y)
+- [@whitespace/storybook-addon-html](https://www.npmjs.com/package/@whitespace/storybook-addon-html)
+- [@etchteam/storybook-addon-status](https://storybook.js.org/addons/@etchteam/storybook-addon-status)
+- [@storybook/addon-interactions](https://github.com/storybookjs/storybook/tree/next/code/addons/interactions)
+- [@chromaui/addon-visual-tests](https://www.chromatic.com/docs/visual-testing-addon/)
+- [@storybook/addon-designs](https://storybook.js.org/addons/@storybook/addon-designs/)
+
+## Writing stories
+
+The easiest way to begin writing stories for a new component is to run `yarn new story`. This generator will prompt you to select your component folder name from a pre-populated list. You can search the list by starting to type. Press enter to select. This is not necessary if you used the `yarn new component` command to generate your package as it will have populated the templates for you already.
+
+Inside the component's package folder, you should now see a stories folder containing 2 assets:
+
+- `<foldername>.stories.js`
+- `template.js`
+
+You are welcome to add as many separate `stories.js` files as you like in this directory as they will all be loaded automatically when storybook starts.
+
+To learn about writing stories, start with the [How to write stories](https://storybook.js.org/docs/react/writing-stories/introduction) documentation.
+
+### Metadata
+
+Each story definition should contain a title and description. The component key is required and would normally map to the name of the web component's tag but as we do not output web components, use the root class name for the element without the `spectrum-` prefix.
+
+### argTypes
+
+Arg types define the UI available to the Storybook visitor. Hereforeto called "controls".
+
+You can import state-based argTypes that are commonly used from the `types/states.js`. States available in this file include (but are not limited to):
+
+- `isOpen`
+- `isSelected`
+- `isValid`
+- `isInvalid`
+- `isFocused`
+- `isKeyboardFocused`
+- `isHovered`
+- `isActive`
+- `isLoading`
+- `isDisabled`
+- `isDragged`
+- `isRequired`
+- `isReadOnly`
+- `isChecked`
+
+To import shared types into your story, use the following syntax:
+
+```js
+import {
+    isActive,
+    isDisabled,
+    isFocused,
+    isHovered,
+    isSelected,
+} from '@spectrum-css/preview/types';
+
+export default {
+    argTypes: {
+        isDisabled,
+        isSelected,
+        isHovered,
+        isFocused,
+        isActive,
+    },
+    args: {
+        isDisabled: false,
+        isSelected: false,
+        isHovered: false,
+        isFocused: false,
+        isActive: false,
+    },
+};
+```
+
+Be sure to define a default value for these argTypes in your args section.
+
+#### Categories
+
+- `State`: represents the environment in which the component exists - is it focused? open? sticky? These are more commonly applied by interaction than statically sourced from the DOM. This category can be used to automatically populate visual regression tests when used with the `withStatesWrapper` decorator.
+- `Variant`: these controls represent design variants available for a component; often these will be denoted by classes that include a `--` separator. i.e., `--quiet` or `--multiline`. These can be boolean, select dropdowns, radio buttons, etc. depending on the design rules for their application. This category can be used to automatically populate visual regression tests when used with the `withVariantsWrapper` decorator.
+- `Content`: not specific to the rendering of this component. Text or subcomponents to be rendered inside that region but that is not opinionated. Often this would be represented by a slot in a web component. i.e., labels, content to render inside a dialog or modal.
+- `Advanced`: these are controls that match the requirements of a component category but are not recommended to be used; styles designed for specific edge-cases or inoptimal use. i.e., `staticWhite`.
+
+#### Icon dropdowns
+
+You can load a dropdown list of the available workflow icons by adding the following code to your stories.js page:
+
+```js
+import { default as IconStories } from '@spectrum-css/icon/stories/icon.stories.js';
+```
+
+```js
+argTypes: {
+  iconName: {
+    ...IconStories?.argTypes?.iconName ?? {},
+    if: false,
+  },
+},
+```
+
+_Note:_ In your story, be sure to include the `if: false` override otherwise the control will only show up if you have a `setName` arg and it is equal to `workflow`.
+
+Want to load UI icons instead? Use the following variable import instead:
+
+```js
+argTypes: {
+  iconName: {
+    ...IconStories?.argTypes?.uiIconName ?? {},
+    if: false,
+  },
+},
+```
+
+#### Commonly used argTypes
+
+```js
+image: {
+  name: "Image",
+  type: { name: "string" },
+  table: {
+    type: { summary: "string" },
+    category: "Component",
+  },
+  control: { type: "file", accept: ".svg,.png,.jpg,.jpeg,.webc" },
+},
+```
+
+```js
+isEmphasized: {
+  name: "Emphasized styling",
+  type: { name: "boolean" },
+  table: {
+    type: { summary: "boolean" },
+    category: "Component",
+  },
+  control: "boolean",
+},
+```
+
+```js
+isQuiet: {
+  name: "Quiet styling",
+  type: { name: "boolean" },
+  table: {
+    type: { summary: "boolean" },
+    category: "Component",
+  },
+  control: "boolean",
+},
+```
+
+```js
+isFixed: {
+  name: "Fixed position",
+  type: { name: "boolean" },
+  table: {
+    type: { summary: "boolean" },
+    category: "Advanced",
+  },
+  control: "boolean",
+},
+```
+
+```js
+label: {
+  name: "Label",
+  type: { name: "string" },
+  table: {
+    type: { summary: "string" },
+    category: "Content",
+  },
+  control: { type: "text" },
+},
+```
+
+## Templates
+
+The goal of the template files is to create a definition for this component to enforce and demonstrate the allowed semantics and required classNames and settings to achieve the desired output (based on the user's selected controls).
+
+To this end, be sure to include only the mark-up required and relevant for the named component being presented. Any nested component markup that might be required should be imported and rendered through that component's own template file. i.e.,
+
+```js
+import { Template as Icon } from '@spectrum-css/icon/stories/template.js';
+import { Template as Avatar } from '@spectrum-css/avatar/stories/template.js';
+import { Template as ClearButton } from '@spectrum-css/clearbutton/stories/template.js';
+```
+
+Be sure to rename the import to something other than Template as the main export in your template.js file will have the same name.
+
+Every component will have access to a few empty, global inputs to provide consistency in naming for common requirements. You can find the full list in `.storybook/types/args.js`.
+
+- `rootClass`: this holds the top-level className of the component and should match the value set in the `args` of the stories.js file.
+- `id`: allows users to pass in a custom ID value and should be added to the top-level wrapper of the component. By default, all components set the id using the `getRandomId` function from the `@spectrum-css/preview/decorators` package.
+- `testId`: used to render a `data-testid` value to be used by a testing suite to target specific elements. If not provided, this value defaults to the `id` value.
+- `customClasses` (array): allows passing in additional classes to be applied to the top-level component. This is necessary for nesting templates inside others while allowing the parent to assign context to the child.
+- `customStyles` (object): allows passing in a style map object to provide custom inline CSS at the top-level of a component.
+
+The rest of the variables provided in the Template function's input object will map to the argTypes you defined in your stories.js file.
+
+- [More on component templates](https://storybook.js.org/docs/web-components/writing-stories/introduction#using-args)
+
+To help in making a dynamic mark-up template, you can leverage any of the [directives](https://lit.dev/docs/templates/directives/) available in the `lit` package. Our most commonly used ones are: `html`, `classMap`, `ifDefined`.
+
+All return values for Template functions should be outputting TemplateResults. Said another way, all mark-up needs to be wrapped in the html template literal.
+
+### Full template example
+
+```js
+import { Template as Avatar } from '@spectrum-css/avatar/stories/template.js';
+import { Template as ClearButton } from '@spectrum-css/clearbutton/stories/template.js';
+import { Template as Icon } from '@spectrum-css/icon/stories/template.js';
+import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
+
+import '../index.css';
+
+export const Template = (
+    {
+        rootClass = 'spectrum-Tag',
+        size = 'm',
+        iconName,
+        avatarUrl,
+        label,
+        isSelected = false,
+        isEmphasized = false,
+        isDisabled = false,
+        isInvalid = false,
+        hasClearButton = false,
+        id,
+        customClasses = [],
+        customStyles = {},
+    },
+    context
+) => {
+    return html`
+        <div
+            class=${classMap({
+                [rootClass]: true,
+                [`${rootClass}--size${size?.toUpperCase()}`]:
+                    typeof size !== 'undefined',
+                'is-emphasized': isEmphasized,
+                'is-disabled': isDisabled,
+                'is-invalid': isInvalid,
+                'is-selected': isSelected,
+                ...customClasses.reduce((a, c) => ({ ...a, [c]: true }), {}),
+            })}
+            style=${styleMap(customStyles)}
+            id=${ifDefined(id)}
+            tabindex="0"
+        >
+            ${when(avatarUrl && !iconName, () =>
+                Avatar(
+                    {
+                        image: avatarUrl,
+                        size: '50',
+                    },
+                    context
+                )
+            )}
+            ${when(iconName, () =>
+                Icon(
+                    {
+                        iconName,
+                        customClasses: [`${rootClass}s-itemIcon`],
+                    },
+                    context
+                )
+            )}
+            <span
+                class=${classMap({
+                    [`${rootClass}s-itemLabel`]: true,
+                })}
+            >
+                ${label}
+            </span>
+            ${when(hasClearButton, () =>
+                ClearButton(
+                    {
+                        customClasses: [`${rootClass}-clearButton`],
+                        onclick: (evt) => {
+                            const el = evt.target;
+                            if (!el) return;
+
+                            const wrapper = el.closest(rootClass);
+                            wrapper.parentNode.removeChild(wrapper);
+                        },
+                    },
+                    context
+                )
+            )}
+        </div>
+    `;
+};
+```
+
+## Testing stories
+
+Now that your stories are written, we need to add them to our visual regression suite. We are using [chromatic](https://www.chromatic.com), a tool that is designed to work with Storybook.
+
+To optimize snapshot usage, we organize our stories into groups when rendered inside the Chromatic environment. This testing grid is created by passing settings to the `Variants` utility function from the `@spectrum-css/preview/decorators` package. These definitions should be sourced from a `*.test.js` file in the component's stories directory. See example below:
+
+In the `*.test.js` file:
+
+```js
+import { Variants } from '@spectrum-css/preview/decorators';
+import { Template } from './template.js';
+
+export const AccordionGroup = Variants({
+    Template,
+    testData: [
+        {
+            testHeading: 'Standard',
+        },
+        {
+            testHeading: 'Compact',
+            density: 'compact',
+            collapseAll: true,
+            withStates: false,
+        },
+    ],
+    stateData: [
+        {
+            testHeading: 'Disabled',
+            disableAll: true,
+        },
+    ],
+});
+```
+
+In the `*.stories.js` file:
+
+```js
+import { AccordionGroup } from './accordion.test.js';
+
+export const Default = AccordionGroup.bind({});
+Default.args = {};
+```
+
+Ideally you should have a single story file for each component with multiple variations and states represented in the testing grid that only renders in Chromatic. To preview the groups locally, there is a global toolbar setting with a beaker icon called "Show testing preview" that will activate the Chromatic view.
+
+In the event that you don't want a story to be tested in Chromatic, you can use the `disableSnapshot` parameter:
+
+```js
+Default.parameters = {
+    chromatic: { disableSnapshot: true },
+};
+```
+
+#### Story tags
+
+A story's [tags](https://storybook.js.org/docs/writing-stories/tags#built-in-tags) can be configured for a few different purposes. Through this project's global configuration, all stories include the `autodocs` tag by default, which causes them to appear on the component's "Docs" page. The `dev` tag, which Storybook applies by default, denotes stories that should be included in the Storybook sidebar. The `!` symbol is used to negate the tag.
+
+- If a story should not be shown in the sidebar:
+    ```js
+    Default.tags = ['!dev'];
+    ```
+- If a story should not be shown on the component's "Docs" page:
+    ```js
+    Default.tags = ['!autodocs'];
+    ```
+- For stories that are for visual regression testing only, both tags can be used:
+    ```js
+    Default.tags = ['!autodocs', '!dev'];
+    ```
+
+### Getting started
+
+Check that you have a local `.env` file in your `.storybook` folder with a `CHROMATIC_PROJECT_TOKEN` variable defined. Get this token from the project maintainer. You should not be committing this `.env` file to the repo as it contains sensitive login information.
+
+From the root of the project, there are 2 commands available for you to run:
+
+- `yarn test`: run chromatic as defined in the preview package
+- `yarn test:scope`: leveraging the `--only-story-names <storypath>` flag under the covers.
+    - This command only runs a single story or a subset of stories by their name(s). Use the title from the story file's default export as the story path, followed by the desired story names. For example, if selecting all stories from a single story file with a title of `Example/Button`, this would be `Example/Button/*`. Globs are supported via [picomatch](https://www.npmjs.com/package/picomatch#globbing-features). (_note:_ the `--only-story-names` flag can be specified multiple times.)
+
+You can pass any supported [chromatic flag](https://www.chromatic.com/docs/cli#chromatic-options) to these commands. Note we are not using TurboSnap so commands specific to that tooling will not work in our project.
+
+Runs will generate a JUnit XML file with build results (`chromatic-build-{buildNumber}.xml`). This file should not be committed and is part of the .gitignore rules.
+
+Running without publishing to Chromatic? Add the `--dry-run` flag. Need more information to debug a run? Try the `--diagnostics` flag (writes process context information to `chromatic-diagnostics.json`).

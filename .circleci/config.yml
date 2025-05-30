@@ -141,20 +141,6 @@ commands:
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
-    commitlint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Define environment variable with lastest commit's message
-                  command: |
-                      echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
-                      source $BASH_ENV
-            - run:
-                  name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
-
     test-chromium:
         executor: node
 
@@ -228,7 +214,7 @@ jobs:
                   command: yarn docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp projects/documentation/custom-elements.json .storybook/
             - run:
                   name: Build documentation
                   command: yarn docs:build
@@ -251,7 +237,7 @@ jobs:
                   command: yarn docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp projects/documentation/custom-elements.json .storybook/
             - run:
                   name: Build documentation
                   command: yarn docs:build

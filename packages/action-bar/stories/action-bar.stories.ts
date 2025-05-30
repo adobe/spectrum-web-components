@@ -33,6 +33,7 @@ export default {
             type: 'figma',
             url: 'https://www.figma.com/file/MPtRIVRzPp2VHiEplwXL2X/S-%2F-Manual?node-id=465%3A3127&t=xbooxCWItOFgG2xM-1',
         },
+        badges: ['migrated'],
     },
 };
 
