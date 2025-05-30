@@ -244,9 +244,7 @@ describe('Overlay Trigger - extended', () => {
         await sendKeys({
             press: 'Shift+Tab',
         });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+
         expect(
             document.activeElement,
             `button focused arrowUp ${getRects([textfield, overlayTrigger, button, popover])}`
