@@ -80,11 +80,15 @@ Status lights come in various semantic and non-semantic variants to convey diffe
 <sp-tab-panel value="semantic">
 
 ```html
-<sp-status-light variant="neutral">use for default state</sp-status-light>
+<sp-status-light variant="neutral">
+    use for default state
+</sp-status-light>
 <sp-status-light variant="positive">
     use for success or approval
 </sp-status-light>
-<sp-status-light variant="negative">use for error or rejection</sp-status-light>
+<sp-status-light variant="negative">
+    use for error or rejection
+</sp-status-light>
 <sp-status-light variant="notice">
     use for warning or attention needed
 </sp-status-light>
