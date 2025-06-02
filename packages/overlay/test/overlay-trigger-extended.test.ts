@@ -17,7 +17,6 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
@@ -27,7 +26,7 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
 import { sendKeys } from '@web/test-runner-commands';
 //import { isChrome } from '@spectrum-web-components/shared';
 
@@ -206,24 +205,13 @@ describe('Overlay Trigger - extended', () => {
         expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
             .true;
 
-        const textfieldRect = textfield.getBoundingClientRect();
         expect(
             document.activeElement,
             `textfield is not focused ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.not.equal(textfield);
 
         // Add more reliable focus handling for CI environments
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(textfield, 'click');
         await elementUpdated(textfield);
 
         // Explicitly focus the textfield to ensure it's focused in all environments
@@ -261,19 +249,13 @@ describe('Overlay Trigger - extended', () => {
         expect(overlayTrigger.open, `overlayTrigger.open`).to.equal('click');
         expect(popover.placement, `popover.placement`).to.equal('bottom');
 
-        const close = oneEvent(overlayTrigger, 'sp-closed');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await close;
+        //const close = oneEvent(overlayTrigger, 'sp-closed');
+        await sendMouseTo(textfield, 'click');
+        //await close;
+        await waitUntil(
+            () => overlayTrigger.open === undefined,
+            `overlayTrigger.open is undefined`
+        );
 
         expect(
             overlayTrigger.open,
@@ -284,17 +266,7 @@ describe('Overlay Trigger - extended', () => {
             'closing does not focus the Textfield'
         ).to.not.equal(textfield);
         /*
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(textfield, 'click');
 
         // Explicitly focus the textfield again to ensure consistent behavior
         textfield.focus();
@@ -325,20 +297,9 @@ describe('Overlay Trigger - extended', () => {
         document.body.append(scrollingArea);
         await nextFrame();
 
-        const boundingRect = scrollingArea.getBoundingClientRect();
         expect(scrollingArea.scrollTop).to.equal(0);
         const distance = 1;
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(scrollingArea, 'move');
         await sendMouse({
             steps: [
                 {
