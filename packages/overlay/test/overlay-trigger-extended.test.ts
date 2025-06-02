@@ -254,7 +254,6 @@ describe('Overlay Trigger - extended', () => {
         });
         await open;
 
-        /*
         expect(
             overlayTrigger.type,
             `overlayTrigger.type ${getRects([textfield, overlayTrigger, button, popover])}`
@@ -284,7 +283,7 @@ describe('Overlay Trigger - extended', () => {
             document.activeElement,
             'closing does not focus the Textfield'
         ).to.not.equal(textfield);
-
+        /*
         await sendMouse({
             steps: [
                 {
