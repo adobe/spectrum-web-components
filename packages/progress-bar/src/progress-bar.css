@@ -24,28 +24,20 @@ governing permissions and limitations under the License.
 
 @keyframes indeterminate-loop-ltr {
     0% {
-        /* Magic number: positions the fill fully off the track */
-        left: -25%;
-        transform: translate(calc(var(--mod-progressbar-fill-size-indeterminate, var(--spectrum-progressbar-fill-size-indeterminate)) * -1));
+        transform: translate(-100%);
     }
 
     100% {
-        /* repositions the fill to its original position */
-        left: 0;
-        transform: translate(var(--mod-progressbar-size-default, var(--spectrum-progressbar-size-default)));
+        transform: translate(var(--spectrum-progressbar-size-default));
     }
 }
 
 @keyframes indeterminate-loop-rtl {
     0% {
-        /* Magic number:positions the fill fully off the track */
-        right: -25%;
-        transform: translate(var(--mod-progressbar-size-default, var(--spectrum-progressbar-fill-size-indeterminate)));
+        transform: translate(100%);
     }
 
     100% {
-        /* repositions the fill to its original position */
-        right: 0;
-        transform: translate(calc(var(--mod-progressbar-size-default, var(--spectrum-progressbar-size-default)) * -1));
+        transform: translate(calc(var(--spectrum-progressbar-size-default) * -1));
     }
 }
