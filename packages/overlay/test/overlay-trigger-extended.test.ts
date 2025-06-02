@@ -14,7 +14,7 @@ import {
     expect,
     html,
     nextFrame,
-    oneEvent,
+    //oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -122,15 +122,23 @@ describe('Overlay Trigger - extended', () => {
 
         expect(popover.placement).to.equal('top');
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        await open;
+
+        await waitUntil(
+            () => overlayTrigger.clickOverlayElement.state === 'opened',
+            `overlay is opened`,
+            { timeout: 100 }
+        );
 
         expect(popover.placement).to.equal('bottom');
 
-        const close = oneEvent(overlayTrigger, 'sp-closed');
         overlayTrigger.open = undefined;
-        await close;
+
+        await waitUntil(
+            () => overlayTrigger.clickOverlayElement.state === 'closed',
+            `overlay is closed`,
+            { timeout: 100 }
+        );
 
         expect(popover.placement).to.equal('top');
     });
@@ -218,7 +226,8 @@ describe('Overlay Trigger - extended', () => {
         textfield.focus();
         await waitUntil(
             () => document.activeElement === textfield,
-            `active ${getRects([textfield, overlayTrigger, button, popover])}`
+            `active ${getRects([textfield, overlayTrigger, button, popover])}`,
+            { timeout: 100 }
         );
 
         // Now verify the focus state
@@ -228,7 +237,6 @@ describe('Overlay Trigger - extended', () => {
         ).to.equal(textfield);
 
         expect(popover.placement).to.equal('top');
-        const open = oneEvent(overlayTrigger, 'sp-opened');
         await sendKeys({
             press: 'Shift+Tab',
         });
@@ -240,7 +248,12 @@ describe('Overlay Trigger - extended', () => {
         await sendKeys({
             press: 'Enter',
         });
-        await open;
+
+        await waitUntil(
+            () => overlayTrigger.clickOverlayElement.state === 'opened',
+            `overlay is opened`,
+            { timeout: 100 }
+        );
 
         expect(
             overlayTrigger.type,
@@ -249,23 +262,28 @@ describe('Overlay Trigger - extended', () => {
         expect(overlayTrigger.open, `overlayTrigger.open`).to.equal('click');
         expect(popover.placement, `popover.placement`).to.equal('bottom');
 
-        //const close = oneEvent(overlayTrigger, 'sp-closed');
         await sendMouseTo(textfield, 'click');
-        //await close;
+        expect(
+            document.activeElement,
+            `the Textfield is focused again`
+        ).to.equal(textfield);
+
         await waitUntil(
-            () => overlayTrigger.open === undefined,
-            `overlayTrigger.open is undefined`
+            () => overlayTrigger.clickOverlayElement.state === 'closed',
+            `overlay is closed`,
+            { timeout: 100 }
         );
 
         expect(
             overlayTrigger.open,
             `overlayTrigger.open ${getRects([textfield, overlayTrigger, button, popover])}`
         ).to.be.undefined;
+
         expect(
             document.activeElement,
             'closing does not focus the Textfield'
         ).to.not.equal(textfield);
-        /*
+
         await sendMouseTo(textfield, 'click');
 
         // Explicitly focus the textfield again to ensure consistent behavior
@@ -278,7 +296,7 @@ describe('Overlay Trigger - extended', () => {
         expect(
             document.activeElement,
             `the Textfield is focused again`
-        ).to.equal(textfield);*/
+        ).to.equal(textfield);
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
@@ -317,9 +335,13 @@ describe('Overlay Trigger - extended', () => {
 
         expect(popover.placement).to.equal('top');
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        await open;
+
+        await waitUntil(
+            () => overlayTrigger.clickOverlayElement.state === 'opened',
+            `overlay is opened`,
+            { timeout: 100 }
+        );
 
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');
