@@ -1,1 +1,4 @@
 *  @adobe/swc-maintainers
+*.css @adobe/spectrum-css-maintainers
+.stylelintrc.json @adobe/spectrum-css-maintainers
+.changeset/*.md @adobe/spectrum-css-maintainers
