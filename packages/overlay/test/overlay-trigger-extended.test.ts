@@ -199,7 +199,6 @@ describe('Overlay Trigger - extended', () => {
         const { overlayTrigger, button, popover } = await initTest();
         const textfield = document.createElement('input');
         const overlay = overlayTrigger.clickOverlayElement;
-        overlayTrigger.id = 'trigger' + start;
         overlayTrigger.insertAdjacentElement('afterend', textfield);
         expect(!!button.isConnected, 'button is ready').to.be.true;
         expect(!!popover.isConnected, 'popover is ready').to.be.true;
@@ -239,11 +238,7 @@ describe('Overlay Trigger - extended', () => {
         // click the button
         button.click();
 
-        await overlayOpened(
-            overlayTrigger.clickOverlayElement,
-            300,
-            overlayTrigger.id
-        );
+        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         // click the textfield
         await waitUntil(clickTextfield, `textfield clicked again`, {
@@ -257,11 +252,7 @@ describe('Overlay Trigger - extended', () => {
         ).to.not.equal(textfield);
 
         overlayTrigger.open = undefined;
-        await overlayClosed(
-            overlayTrigger.clickOverlayElement,
-            300,
-            overlayTrigger.id
-        );
+        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         expect(document.activeElement, 'textfield is not focused').to.not.equal(
             textfield
