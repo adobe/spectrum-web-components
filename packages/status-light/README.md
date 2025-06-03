@@ -76,7 +76,7 @@ A status light consists of a colored dot indicator and a text label. The dot's c
 Status lights come in various semantic and non-semantic variants to convey different meanings. The `variant` attribute controls the main variant of the status light, with `neutral` being the default.
 
 <sp-tabs selected="semantic" auto label="Variants">
-<sp-tab value="semantic">Small</sp-tab>
+<sp-tab value="semantic">Semantic</sp-tab>
 <sp-tab-panel value="semantic">
 
 ```html
