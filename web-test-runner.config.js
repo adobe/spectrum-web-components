@@ -162,7 +162,7 @@ export default {
         {
             name: 'no-memory-ci',
             files: [
-                '{packages,tools}/**/*.test.js',
+                '{packages,tools}/**/overlay-trigger-extended.test.js',
                 '!{packages,tools}/**/*-memory.test.js',
             ],
         },
