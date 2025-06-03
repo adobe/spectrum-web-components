@@ -135,6 +135,6 @@ The status light component implements several accessibility features:
 #### Best Practices
 
 - Use semantic variants (`positive`, `negative`, `notice`, `info`, `neutral`) when the status has specific meaning
-- Include clear, descriptive text that explains the status
+- Include a clear, descriptive text label that explains the status
 - Consider the disabled state for statuses that exist but are temporarily unavailable
 - Ensure sufficient color contrast between the status light and its background
