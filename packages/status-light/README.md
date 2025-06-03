@@ -26,7 +26,7 @@ import { StatusLight } from '@spectrum-web-components/status-light';
 
 ### Anatomy
 
-A status light consists of a colored dot indicator and a text label. The dot's color represents the status or category, while the text provides additional context.
+A status light consists of a colored dot indicator and a required text label. The dot's color represents the status or category, while the text provides additional context.
 
 ```html
 <sp-status-light variant="positive">approved</sp-status-light>
