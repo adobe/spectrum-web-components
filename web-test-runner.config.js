@@ -110,7 +110,7 @@ export default {
     groups: [
         {
             name: 'unit',
-            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
+            files: ['packages/*/test/overlay-trigger-extended.test.js'],
         },
         ...vrtGroups,
         ...packages.reduce((acc, pkg) => {

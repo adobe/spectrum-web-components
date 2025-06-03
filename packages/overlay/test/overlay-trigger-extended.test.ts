@@ -219,7 +219,7 @@ describe('Overlay Trigger - extended', () => {
         // sendingMouse was timing out for some reason
         // by wrapping in a waitUntil, can tell whether
         // this step is the one that timed out
-        await waitUntil(clickTextfield, `textfield clicked`, { timeout: 200 });
+        await waitUntil(clickTextfield, `textfield clicked`, { timeout: 100 });
 
         // Now verify the focus state
         expect(document.activeElement, `clicking focuses textfield`).to.equal(
@@ -260,7 +260,7 @@ describe('Overlay Trigger - extended', () => {
 
         // click the textfield
         await waitUntil(clickTextfield, `textfield clicked again`, {
-            timeout: 200,
+            timeout: 100,
         });
 
         // verify the textfield is focused
