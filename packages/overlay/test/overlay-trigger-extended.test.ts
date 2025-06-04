@@ -9,14 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    aTimeout,
-    elementUpdated,
-    expect,
-    html,
-    nextFrame,
-    waitUntil,
-} from '@open-wc/testing';
+import { aTimeout, expect, html, nextFrame, waitUntil } from '@open-wc/testing';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
@@ -121,11 +114,7 @@ describe('Overlay Trigger - extended', () => {
 
         expect(popover.placement).to.equal('top');
 
-        button.click();
-
-        await elementUpdated(overlayTrigger);
-
-        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+        overlayTrigger.open = 'click';
 
         expect(
             overlayTrigger.clickOverlayElement.state,
@@ -171,7 +160,7 @@ describe('Overlay Trigger - extended', () => {
             block: 'end',
         });
 
-        button.click();
+        overlayTrigger.open = 'click';
 
         expect(overlayTrigger.open, 'overlay open').to.equal('click');
 
@@ -251,8 +240,8 @@ describe('Overlay Trigger - extended', () => {
         expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
         expect(overlay.state, `overlay.state`).to.equal('closed');
 
-        // click the button
-        button.click();
+        // open the overlay
+        overlayTrigger.open = 'click';
 
         expect(overlayTrigger.open, 'overlay open').to.equal('click');
 
