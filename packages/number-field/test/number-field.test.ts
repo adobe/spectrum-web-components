@@ -945,15 +945,15 @@ describe('NumberField', () => {
         it('does not select all on click based `focus`', async function () {
             const el = await getElFrom(units({ value: 17 }));
             expect(el.value).to.equal(17);
-            const input = el.shadowRoot?.querySelector(
+            const inputElement = el.shadowRoot?.querySelector(
                 'input'
             ) as HTMLInputElement;
 
             await sendMouseTo(el.focusElement, 'click');
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            const selectionStart = input?.selectionStart;
-            const selectionEnd = input?.selectionEnd;
+            const selectionStart = inputElement?.selectionStart;
+            const selectionEnd = inputElement?.selectionEnd;
             const selectionLength =
                 selectionStart && selectionEnd
                     ? selectionEnd - selectionStart
@@ -964,6 +964,9 @@ describe('NumberField', () => {
         it('selects all on `Tab` based `focus`', async function () {
             const el = await getElFrom(units({ value: 17 }));
             const input = document.createElement('input');
+            const inputElement = el.shadowRoot?.querySelector(
+                'input'
+            ) as HTMLInputElement;
             el.insertAdjacentElement('beforebegin', input);
             input.focus();
             await sendKeys({
@@ -971,8 +974,8 @@ describe('NumberField', () => {
             });
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            const selectionStart = input?.selectionStart;
-            const selectionEnd = input?.selectionEnd;
+            const selectionStart = inputElement?.selectionStart;
+            const selectionEnd = inputElement?.selectionEnd;
             const selectionLength =
                 selectionStart && selectionEnd
                     ? selectionEnd - selectionStart
