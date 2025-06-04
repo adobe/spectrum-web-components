@@ -126,13 +126,13 @@ describe('Overlay Trigger - extended', () => {
 
         button.click();
 
-        await overlayOpened(overlayTrigger.clickOverlayElement);
+        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('bottom');
 
         overlayTrigger.open = undefined;
 
-        await overlayClosed(overlayTrigger.clickOverlayElement);
+        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('top');
     });
