@@ -110,7 +110,7 @@ export default {
     groups: [
         {
             name: 'unit',
-            files: ['packages/*/test/overlay-trigger-extended.test.js'],
+            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
         },
         ...vrtGroups,
         ...packages.reduce((acc, pkg) => {
@@ -162,7 +162,7 @@ export default {
         {
             name: 'no-memory-ci',
             files: [
-                '{packages,tools}/**/overlay-trigger-extended.test.js',
+                '{packages,tools}/**/*.test.js',
                 '!{packages,tools}/**/*-memory.test.js',
             ],
         },
