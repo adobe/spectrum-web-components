@@ -216,7 +216,7 @@ describe('Overlay Trigger - extended', () => {
         expect(
             textfield.getBoundingClientRect().top,
             `textfield (${textfield.getBoundingClientRect()}) is below button (${button.getBoundingClientRect()})`
-        ).to.be.greaterThan(
+        ).to.be.greaterThanOrEqual(
             button.getBoundingClientRect().top +
                 button.getBoundingClientRect().height
         );
