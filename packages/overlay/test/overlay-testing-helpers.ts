@@ -11,10 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import {
-    // expect,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import { Overlay } from '../src/Overlay';
+
 
 // make sure overlay state is about to change, and wait until overlay state changes to 'opened'
 export const overlayOpened = async (
@@ -22,13 +23,9 @@ export const overlayOpened = async (
     timeout: number = 100,
     messagePrefix?: string
 ): Promise<unknown> => {
-    /*expect(
-        overlay.state === 'opening' || overlay.state === 'opened', 
-        `${messagePrefix ? `${messagePrefix}: ` : '' }  overlay is opening or opened (${overlay.state})`
-    ).to.be.true;*/
     return await waitUntil(
-        () => overlay.state === 'opened',
-        `${messagePrefix ? `${messagePrefix}: ` : ''}open timeout (still ${overlay.state})`,
+        () => overlay?.state === 'opened' || (overlay && oneEvent(overlay, 'sp-opened')),
+        `${messagePrefix ? `${messagePrefix}: ` : ''}open timeout (still ${overlay?.state})`,
         { timeout: timeout }
     );
 };
@@ -38,13 +35,9 @@ export const overlayClosed = async (
     timeout: number = 100,
     messagePrefix?: string
 ): Promise<unknown> => {
-    /*expect(
-        overlay.state === 'closing' || overlay.state === 'closed', 
-        `${messagePrefix ? `${messagePrefix}: ` : '' }  overlay is closing or closed (${overlay.state})`
-    ).to.be.true;*/
     return await waitUntil(
-        () => overlay.state === 'closed',
-        `${messagePrefix ? `${messagePrefix}: ` : ''}closed timeout (still ${overlay.state})`,
+        () => overlay?.state === 'closed' || oneEvent(overlay, 'sp-closed'),
+        `${messagePrefix ? `${messagePrefix}: ` : ''}closed timeout (still ${overlay?.state})`,
         { timeout: timeout }
     );
 };
