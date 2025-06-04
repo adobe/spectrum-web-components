@@ -228,7 +228,7 @@ describe('Overlay Trigger - extended', () => {
         // this step is the one that timed out
         await waitUntil(
             () => document.activeElement === textfield,
-            `clicking focuses textfield`,
+            `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
             { timeout: 100 }
         );
 
@@ -281,7 +281,7 @@ describe('Overlay Trigger - extended', () => {
         // and that textfield is no longer occluded
         await waitUntil(
             () => document.activeElement === textfield,
-            `clicking focuses textfield again`,
+            `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
             { timeout: 100 }
         );
     });
