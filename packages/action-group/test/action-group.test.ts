@@ -44,6 +44,8 @@ import {
     arrowUpEvent,
     endEvent,
     homeEvent,
+    sendMouseFrom,
+    sendMouseTo,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
@@ -270,18 +272,8 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
-        const rect = firstButton.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        sendMouseTo(firstButton, 'click');
+
         await elementUpdated(firstButton);
 
         // expect all the elements of the focus group to have a tabIndex of -1 except the first button because it is focused using mouse
@@ -303,14 +295,7 @@ describe('ActionGroup', () => {
         ).to.equal(-1);
 
         // click outside the action-group and it should loose focus and update the tabIndexes
-        sendMouse({
-            steps: [
-                {
-                    position: [0, 0],
-                    type: 'click',
-                },
-            ],
-        });
+        sendMouseFrom(el, 'click');
 
         await elementUpdated(el);
 
@@ -336,22 +321,13 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
-        const actionMenuRect = actionMenu.getBoundingClientRect();
 
-        const opened = oneEvent(el.children[3] as ActionMenu, 'sp-opened');
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        actionMenuRect.left + actionMenuRect.width / 2,
-                        actionMenuRect.top + actionMenuRect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
-        await elementUpdated(el);
-        await opened;
+        sendMouseTo(actionMenu, 'click');
+        await waitUntil(
+            () => actionMenu?.strategy?.overlay?.state === 'opened',
+            `action-menu opened (status ${actionMenu?.strategy?.overlay?.state})`,
+            { timeout: 300 }
+        );
 
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
