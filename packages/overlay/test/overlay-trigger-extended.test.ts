@@ -11,9 +11,10 @@ governing permissions and limitations under the License.
 */
 import {
     //elementUpdated,
+    aTimeout,
     expect,
     html,
-    // nextFrame,
+    nextFrame,
     //oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -25,7 +26,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-// import { sendMouse } from '../../../test/plugins/browser.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
 // import { sendKeys } from '@web/test-runner-commands';
 import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
@@ -269,7 +270,7 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
     });
-    /*
+
     xit('occludes wheel interactions behind the overlay', async () => {
         // currently fails for no reason in Firefox locally, and most browsers in CI.
         ({ overlayTrigger, button, popover } = await initTest());
@@ -297,18 +298,21 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
+
         // wait for scroll to complete
         await waitUntil(
             () => scrollingArea.scrollTop === distance,
-            `scroll went to ${distance}`
+            `scroll went to ${distance}`,
+            { timeout: 200 }
         );
+
         expect(scrollingArea.scrollTop).to.equal(distance);
 
         expect(popover.placement).to.equal('top');
 
         button.click();
 
-        await overlayOpened(overlayTrigger.clickOverlayElement);
+        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');
@@ -321,16 +325,13 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
-        // Awaiting here points out that this always fails in Firefox
-        // and also was failing in WebKit without our knowing.
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+
+        await aTimeout(50);
 
         expect(
             scrollingArea.scrollTop,
             `scrollTop should be ${distance}.`
         ).to.equal(distance);
         scrollingArea.remove();
-    });*/
+    });
 });
