@@ -214,21 +214,15 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
-        // Add more reliable focus handling for CI environments
-        const textRect = textfield.getBoundingClientRect();
-
-        const clickTextfield = async () => {
-            return await sendMouseTo(textRect, 'click');
-        };
+        sendMouseTo(textfield, 'click');
 
         // sendingMouse was timing out for some reason
         // by wrapping in a waitUntil, can tell whether
         // this step is the one that timed out
-        await waitUntil(clickTextfield, `textfield clicked`, { timeout: 100 });
-
-        // Now verify the focus state
-        expect(document.activeElement, `clicking focuses textfield`).to.equal(
-            textfield
+        await waitUntil(
+            () => document.activeElement === textfield,
+            `clicking focuses textfield`,
+            { timeout: 100 }
         );
 
         expect(popover.placement).to.equal('top');
@@ -253,9 +247,11 @@ describe('Overlay Trigger - extended', () => {
         await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         // click the textfield
-        await waitUntil(clickTextfield, `textfield clicked again`, {
-            timeout: 200,
-        });
+        await waitUntil(
+            async () => await sendMouseTo(textfield, 'click'),
+            `textfield clicked again`,
+            { timeout: 200 }
+        );
 
         // verify the textfield is occluded
         expect(
@@ -276,15 +272,12 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
-        // click the textfield
-        await waitUntil(clickTextfield, `textfield clicked again`, {
-            timeout: 100,
-        });
-
         // verify the textfield is focused
         // and that textfield is no longer occluded
-        expect(document.activeElement, `textfield is focused again`).to.equal(
-            textfield
+        await waitUntil(
+            () => document.activeElement === textfield,
+            `clicking focuses textfield again`,
+            { timeout: 100 }
         );
     });
 
