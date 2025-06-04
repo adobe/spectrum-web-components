@@ -83,7 +83,7 @@ describe('ActionMenu, responsive', () => {
                     tray = el.shadowRoot.querySelector('sp-tray') as Tray;
                     return !!tray;
                 },
-                'tray appeared',
+                `tray appeared (el.open: ${el.open})`,
                 { timeout: 300 }
             );
 
@@ -110,7 +110,7 @@ describe('ActionMenu, responsive', () => {
                     ) as Popover;
                     return !!popover && popover.open;
                 },
-                'popover appeared',
+                `popover appeared (el.open: ${el.open})`,
                 { timeout: 300 }
             );
 
@@ -144,7 +144,7 @@ describe('ActionMenu, responsive', () => {
             // Allow viewport update to propagate.
             await nextFrame();
 
-            await sendMouseTo(el.button, 'click');
+            sendMouseTo(el.button, 'click');
 
             // in this test we only need to wait to see if a popover opens
             let popover: Popover | null = null;
@@ -155,7 +155,7 @@ describe('ActionMenu, responsive', () => {
                     ) as Popover;
                     return !!popover && popover.open;
                 },
-                'popover appeared',
+                `popover appeared (el.open: ${el.open})`,
                 { timeout: 300 }
             );
 
@@ -182,7 +182,7 @@ describe('ActionMenu, responsive', () => {
                     ) as Popover;
                     return !!popover && popover.open;
                 },
-                'popover appeared',
+                `popover appeared (el.open: ${el.open})`,
                 { timeout: 300 }
             );
 
