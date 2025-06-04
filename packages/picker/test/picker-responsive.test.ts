@@ -16,7 +16,6 @@ import {
     fixture,
     html,
     nextFrame,
-    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -26,10 +25,9 @@ import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
-// import { sendMouse } from '../../../test/plugins/browser.js';
-// import { isChrome } from '@spectrum-web-components/shared';
 import { sendMouseTo } from '../../../test/testing-helpers.js';
-import { overlayOpened } from '../../overlay/test/overlay-testing-helpers.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
 
 describe('Picker, responsive', () => {
     let el: Picker;
@@ -83,9 +81,17 @@ describe('Picker, responsive', () => {
 
             await sendMouseTo(el.button, 'click');
 
-            await overlayOpened(el.overlayElement, 300);
+            // in this test we only need to wait to see if a popover opens
+            let tray: Tray | null = null;
+            await waitUntil(
+                () => {
+                    tray = el.shadowRoot.querySelector('sp-tray') as Tray;
+                    return !!tray;
+                },
+                'tray appeared',
+                { timeout: 300 }
+            );
 
-            const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');
 
             expect(tray).to.not.be.null;
@@ -98,15 +104,25 @@ describe('Picker, responsive', () => {
             await nextFrame();
             await nextFrame();
 
-            const opened = oneEvent(el, 'sp-opened');
             el.open = true;
-            await opened;
 
-            const popover = el.shadowRoot.querySelector('sp-popover');
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
+            await waitUntil(
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                'popover appeared',
+                { timeout: 300 }
+            );
+
             const tray = el.shadowRoot.querySelector('sp-tray');
 
-            expect(popover).to.not.be.null;
-            expect(tray).to.be.null;
+            expect(popover, 'popover').to.not.be.null;
+            expect(tray, 'tray').to.be.null;
         });
     });
 
@@ -139,24 +155,25 @@ describe('Picker, responsive', () => {
             );
             await elementUpdated(el);
 
-            await sendMouseTo(el.button, 'click');
+            el.open = true;
 
-            // Wait for element to update after click
-            await elementUpdated(el);
-
-            await overlayOpened(el.overlayElement, 300);
-
-            // Wait until the popover is actually in the DOM
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
             await waitUntil(
-                () => el.shadowRoot.querySelector('sp-popover') !== null,
-                'Popover should be present in the DOM'
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                'popover appeared',
+                { timeout: 300 }
             );
 
             const tray = el.shadowRoot.querySelector('sp-tray');
-            const popover = el.shadowRoot.querySelector('sp-popover');
 
-            expect(popover).to.not.be.null;
-            expect(tray).to.be.null;
+            expect(popover, 'popover').to.not.be.null;
+            expect(tray, 'tray').to.be.null;
         });
 
         it('is a Popover in desktop', async () => {
@@ -166,13 +183,24 @@ describe('Picker, responsive', () => {
             await nextFrame();
 
             el.open = true;
-            await overlayOpened(el.overlayElement, 300);
 
-            const popover = el.shadowRoot.querySelector('sp-popover');
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
+            await waitUntil(
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                'popover appeared',
+                { timeout: 300 }
+            );
+
             const tray = el.shadowRoot.querySelector('sp-tray');
 
-            expect(tray).to.be.null;
-            expect(popover).to.not.be.null;
+            expect(tray, 'tray').to.be.null;
+            expect(popover, 'popover').to.not.be.null;
         });
     });
 });
