@@ -252,7 +252,7 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
-        sendMouseTo(textfield, 'click');
+        await sendMouseTo(textfield, 'click');
         expect(clickSpy.callCount, 'textfield clicked again').to.equal(2);
 
         // verify the textfield is focused
