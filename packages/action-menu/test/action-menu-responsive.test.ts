@@ -15,7 +15,6 @@ import {
     expect,
     fixture,
     html,
-    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
@@ -71,8 +70,6 @@ describe('ActionMenu, responsive', () => {
              * See: https://github.com/microsoft/playwright/issues/11781
              **/
             await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
 
             sendMouseTo(el.button, 'click');
 
@@ -95,9 +92,6 @@ describe('ActionMenu, responsive', () => {
 
         it('is a Popover in desktop', async () => {
             await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
             el.open = true;
 
@@ -141,8 +135,6 @@ describe('ActionMenu, responsive', () => {
              * See: https://github.com/microsoft/playwright/issues/11781
              **/
             await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
 
             el.open = true;
 
@@ -167,9 +159,6 @@ describe('ActionMenu, responsive', () => {
 
         it('is a Popover in desktop', async () => {
             await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
             el.open = true;
 
