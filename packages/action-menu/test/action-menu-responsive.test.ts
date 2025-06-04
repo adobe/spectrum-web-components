@@ -21,7 +21,6 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { sendMouseTo } from '../../../test/testing-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
@@ -63,14 +62,6 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-
             sendMouseTo(el.button, 'click');
 
             // in this test we only need to wait to see if a tray opens
@@ -91,7 +82,6 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
 
             el.open = true;
 
@@ -128,14 +118,6 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens
@@ -158,7 +140,6 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
 
             el.open = true;
 
