@@ -94,23 +94,6 @@ const initTest = async (
     };
 };
 
-const getRects = (elements: HTMLElement[]) => {
-    const rects = elements.map((element) => {
-        const rect = element.getBoundingClientRect();
-        return {
-            el: element.tagName,
-            y: Math.round(rect.top),
-            h: Math.round(rect.height),
-            p:
-                element instanceof OverlayTrigger || element instanceof Popover
-                    ? element.placement
-                    : 'N/A',
-            a: element.getAttribute('placement'),
-        };
-    });
-    return `${JSON.stringify(rects)}, scrollY: ${Math.round(window.scrollY)}, innerHeight: ${Math.round(window.innerHeight)}`;
-};
-
 describe('Overlay Trigger - extended', () => {
     let overlayTrigger!: OverlayTrigger;
     let button!: Button;
@@ -151,10 +134,7 @@ describe('Overlay Trigger - extended', () => {
                 }
             </style>
         `));
-        expect(
-            !!overlayTrigger,
-            `overlayTrigger is ready ${getRects([button, popover])}`
-        ).to.be.true;
+        expect(!!overlayTrigger, `overlayTrigger is ready`).to.be.true;
         expect(!!button.isConnected, 'button is ready').to.be.true;
         expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
             .true;
