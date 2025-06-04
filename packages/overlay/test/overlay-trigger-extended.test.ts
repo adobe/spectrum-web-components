@@ -119,7 +119,7 @@ describe('Overlay Trigger - extended', () => {
     let button!: Button;
     let popover!: Popover;
 
-    it.skip('manages `placement` on open', async () => {
+    it('manages `placement` on open', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
 
         expect(popover.placement).to.equal('top');
@@ -137,7 +137,7 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('top');
     });
 
-    it.skip('manages `placement` on scroll', async () => {
+    it('manages `placement` on scroll', async () => {
         ({ overlayTrigger, button, popover } = await initTest(html`
             <style>
                 .container {
