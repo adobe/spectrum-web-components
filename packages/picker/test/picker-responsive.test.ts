@@ -26,8 +26,10 @@ import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { isChrome } from '@spectrum-web-components/shared';
+// import { sendMouse } from '../../../test/plugins/browser.js';
+// import { isChrome } from '@spectrum-web-components/shared';
+import { sendMouseTo } from '../../../test/testing-helpers.js';
+import { overlayOpened } from '../../overlay/test/overlay-testing-helpers.js';
 
 describe('Picker, responsive', () => {
     let el: Picker;
@@ -79,22 +81,9 @@ describe('Picker, responsive', () => {
             // Allow viewport update to propagate.
             await nextFrame();
 
-            const opened = oneEvent(el, 'sp-opened');
+            await sendMouseTo(el.button, 'click');
 
-            const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
-
-            await opened;
+            await overlayOpened(el.overlayElement, 300);
 
             const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');
@@ -128,11 +117,6 @@ describe('Picker, responsive', () => {
         });
 
         it('is a Popover in mobile', async function () {
-            // This test is flaky in chrome on ci so we're skipping it for now
-            if (isChrome()) {
-                return;
-            }
-
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
              */
@@ -155,31 +139,12 @@ describe('Picker, responsive', () => {
             );
             await elementUpdated(el);
 
-            // Setup event listener before clicking
-            const opened = oneEvent(el, 'sp-opened');
-
-            const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await sendMouseTo(el.button, 'click');
 
             // Wait for element to update after click
             await elementUpdated(el);
 
-            // Wait for the opened event with a more explicit error message
-            await opened.catch(() => {
-                throw new Error(
-                    'sp-opened event was not fired within the timeout period'
-                );
-            });
+            await overlayOpened(el.overlayElement, 300);
 
             // Wait until the popover is actually in the DOM
             await waitUntil(
@@ -200,9 +165,8 @@ describe('Picker, responsive', () => {
             await nextFrame();
             await nextFrame();
 
-            const opened = oneEvent(el, 'sp-opened');
             el.open = true;
-            await opened;
+            await overlayOpened(el.overlayElement, 300);
 
             const popover = el.shadowRoot.querySelector('sp-popover');
             const tray = el.shadowRoot.querySelector('sp-tray');
