@@ -10,12 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    //elementUpdated,
     aTimeout,
+    elementUpdated,
     expect,
     html,
     nextFrame,
-    //oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -28,10 +27,7 @@ import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
-// import { sendKeys } from '@web/test-runner-commands';
 import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
-//import { spy } from 'sinon';
-//import { isChrome } from '@spectrum-web-components/shared';
 
 const initTest = async (
     styles = html``
@@ -127,11 +123,25 @@ describe('Overlay Trigger - extended', () => {
 
         button.click();
 
+        await elementUpdated(overlayTrigger);
+
+        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
+
         await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('bottom');
 
         overlayTrigger.open = undefined;
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after closing'
+        ).to.equal('closing');
 
         await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
@@ -161,9 +171,14 @@ describe('Overlay Trigger - extended', () => {
             block: 'end',
         });
 
-        //const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        //await open;
+
+        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
 
         // wait until ready; if button is at the bottom of the viewport, the popover should be above it
         await waitUntil(
@@ -239,6 +254,13 @@ describe('Overlay Trigger - extended', () => {
         // click the button
         button.click();
 
+        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
+
         await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         // click the textfield
@@ -253,6 +275,12 @@ describe('Overlay Trigger - extended', () => {
         ).to.not.equal(textfield);
 
         overlayTrigger.open = undefined;
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after closing'
+        ).to.equal('closing');
+
         await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         expect(document.activeElement, 'textfield is not focused').to.not.equal(
@@ -311,6 +339,13 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('top');
 
         button.click();
+
+        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
 
         await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
