@@ -213,6 +213,14 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
+        expect(
+            textfield.getBoundingClientRect().top,
+            `textfield (${textfield.getBoundingClientRect()}) is below button (${button.getBoundingClientRect()})`
+        ).to.be.greaterThan(
+            button.getBoundingClientRect().top +
+                button.getBoundingClientRect().height
+        );
+
         sendMouseTo(textfield, 'click');
 
         // sendingMouse was timing out for some reason
