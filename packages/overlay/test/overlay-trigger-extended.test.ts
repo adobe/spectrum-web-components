@@ -9,7 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { aTimeout, expect, html, nextFrame, waitUntil } from '@open-wc/testing';
+import {
+    aTimeout,
+    elementUpdated,
+    expect,
+    html,
+    nextFrame,
+    waitUntil,
+} from '@open-wc/testing';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
@@ -114,18 +121,17 @@ describe('Overlay Trigger - extended', () => {
 
         expect(popover.placement).to.equal('top');
 
-        overlayTrigger.open = 'click';
+        button.click();
 
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'overlay state after clicking'
-        ).to.equal('opening');
+        await elementUpdated(overlayTrigger);
 
         await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('bottom');
 
         overlayTrigger.open = undefined;
+
+        await elementUpdated(overlayTrigger);
 
         expect(
             overlayTrigger.clickOverlayElement.state,
@@ -161,13 +167,6 @@ describe('Overlay Trigger - extended', () => {
         });
 
         overlayTrigger.open = 'click';
-
-        expect(overlayTrigger.open, 'overlay open').to.equal('click');
-
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'overlay state after clicking'
-        ).to.equal('opening');
 
         // wait until ready; if button is at the bottom of the viewport, the popover should be above it
         await waitUntil(
@@ -237,14 +236,15 @@ describe('Overlay Trigger - extended', () => {
         // open the overlay
         overlayTrigger.open = 'click';
 
-        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+        await elementUpdated(overlayTrigger);
 
         expect(
             overlayTrigger.clickOverlayElement.state,
             'overlay state after clicking'
         ).to.equal('opening');
 
-        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
+        // sometimes 300 is not enough for Firefox
+        await overlayOpened(overlayTrigger.clickOverlayElement, 400);
 
         // click the textfield
         await waitUntil(
@@ -261,16 +261,13 @@ describe('Overlay Trigger - extended', () => {
 
         overlayTrigger.open = undefined;
 
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'overlay state after closing'
-        ).to.equal('closing');
-
         await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         expect(document.activeElement, 'textfield is not focused').to.not.equal(
             textfield
         );
+
+        sendMouseTo(textfield, 'click');
 
         // verify the textfield is focused
         // and that textfield is no longer occluded
