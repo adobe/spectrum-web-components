@@ -28,6 +28,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
 import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
+import { spy } from 'sinon';
 
 const initTest = async (
     styles = html``
@@ -183,6 +184,9 @@ describe('Overlay Trigger - extended', () => {
         const { overlayTrigger, button, popover } = await initTest();
         const textfield = document.createElement('input');
         const overlay = overlayTrigger.clickOverlayElement;
+        const clickSpy = spy();
+        const handleClick = (): void => clickSpy();
+        textfield.addEventListener('click', handleClick);
         overlayTrigger.insertAdjacentElement('afterend', textfield);
         expect(!!button.isConnected, 'button is ready').to.be.true;
         expect(!!popover.isConnected, 'popover is ready').to.be.true;
@@ -193,15 +197,8 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
-        expect(
-            textfield.getBoundingClientRect().top,
-            `textfield (${textfield.getBoundingClientRect()}) is below button (${button.getBoundingClientRect()})`
-        ).to.be.greaterThanOrEqual(
-            button.getBoundingClientRect().top +
-                button.getBoundingClientRect().height
-        );
-
-        sendMouseTo(textfield, 'click');
+        await sendMouseTo(textfield, 'click');
+        expect(clickSpy.callCount, 'textfield clicked').to.equal(1);
 
         // sendingMouse was timing out for some reason
         // by wrapping in a waitUntil, can tell whether
@@ -238,7 +235,7 @@ describe('Overlay Trigger - extended', () => {
         await waitUntil(
             async () => await sendMouseTo(textfield, 'click'),
             `textfield clicked again`,
-            { timeout: 200 }
+            { timeout: 50 }
         );
 
         // verify the textfield is occluded
@@ -256,6 +253,7 @@ describe('Overlay Trigger - extended', () => {
         );
 
         sendMouseTo(textfield, 'click');
+        expect(clickSpy.callCount, 'textfield clicked again').to.equal(2);
 
         // verify the textfield is focused
         // and that textfield is no longer occluded
