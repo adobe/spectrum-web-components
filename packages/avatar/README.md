@@ -139,4 +139,17 @@ import { Avatar } from '@spectrum-web-components/avatar';
 
 ## Accessibility
 
-The `label` attribute of the `<sp-avatar>` will be passed into the `<img>` element as the `alt` tag for use in defining a textual representation of the image displayed.
+The Avatar component is designed to be accessible by default:
+
+- Always includes an `alt` attribute on the image element
+- When a `label` is provided, it is used as the `alt` text
+- When no `label` is provided, an empty `alt=""` is used to indicate a decorative image
+- Supports keyboard navigation when used with `href` or `tabindex`
+- Maintains WCAG compliance for non-text content
+
+### Best Practices
+
+- Always provide a meaningful `label` when the avatar represents a user or entity
+- Use an empty `label` (or omit it) only when the avatar is purely decorative
+- When using `href`, ensure the destination is relevant and accessible
+- Consider the context when choosing an appropriate `size`
