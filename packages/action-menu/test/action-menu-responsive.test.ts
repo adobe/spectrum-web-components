@@ -144,7 +144,7 @@ describe('ActionMenu, responsive', () => {
             // Allow viewport update to propagate.
             await nextFrame();
 
-            sendMouseTo(el.button, 'click');
+            el.open = true;
 
             // in this test we only need to wait to see if a popover opens
             let popover: Popover | null = null;
