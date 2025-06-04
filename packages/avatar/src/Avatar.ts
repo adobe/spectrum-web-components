@@ -20,7 +20,6 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
@@ -73,11 +72,7 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     protected override render(): TemplateResult {
         const avatar = html`
-            <img
-                class="image"
-                alt=${ifDefined(this.label || undefined)}
-                src=${this.src}
-            />
+            <img class="image" alt=${this.label || ''} src=${this.src} />
         `;
         if (this.href) {
             return this.renderAnchor({
