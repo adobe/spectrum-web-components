@@ -25,7 +25,6 @@ import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { sendMouseTo } from '../../../test/testing-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
 
@@ -79,7 +78,7 @@ describe('Picker, responsive', () => {
             // Allow viewport update to propagate.
             await nextFrame();
 
-            await sendMouseTo(el.button, 'click');
+            el.open = true;
 
             // in this test we only need to wait to see if a popover opens
             let tray: Tray | null = null;
