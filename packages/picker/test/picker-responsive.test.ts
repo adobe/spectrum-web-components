@@ -15,7 +15,6 @@ import {
     expect,
     fixture,
     html,
-    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -75,8 +74,6 @@ describe('Picker, responsive', () => {
              * See: https://github.com/microsoft/playwright/issues/11781
              **/
             await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
 
             el.open = true;
 
@@ -99,9 +96,6 @@ describe('Picker, responsive', () => {
 
         it('is a Popover in desktop', async () => {
             await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
             el.open = true;
 
@@ -177,9 +171,6 @@ describe('Picker, responsive', () => {
 
         it('is a Popover in desktop', async () => {
             await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
             el.open = true;
 
