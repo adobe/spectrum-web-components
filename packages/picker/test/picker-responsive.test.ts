@@ -22,7 +22,6 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sync/sp-picker.js';
-import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
@@ -67,14 +66,6 @@ describe('Picker, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens
@@ -95,8 +86,6 @@ describe('Picker, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens
@@ -133,14 +122,6 @@ describe('Picker, responsive', () => {
             el.bindEvents();
             await elementUpdated(el);
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-
             // Wait until the element is fully updated after viewport change
             await waitUntil(
                 () => el.offsetWidth > 0,
@@ -170,8 +151,6 @@ describe('Picker, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens
