@@ -184,6 +184,8 @@ describe('Overlay Trigger - extended', () => {
         expect(document.activeElement, `textfield is not focused`).to.not.equal(
             textfield
         );
+        expect(overlay.state, `overlay state`).to.equal('closed');
+        expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
 
         await sendMouseTo(textfield, 'click');
 
