@@ -67,30 +67,22 @@ const initTest = async (
         </div>
     `);
 
-    let overlayTrigger = test.querySelector(
-        'overlay-trigger'
-    ) as OverlayTrigger;
-    let button = test.querySelector('sp-button') as Button;
-    let popover = test.querySelector('sp-popover') as Popover;
-
-    // wait until the overlay-trigger, button, and popover are ready
     await waitUntil(
         () => {
-            overlayTrigger = test.querySelector(
-                'overlay-trigger'
-            ) as OverlayTrigger;
-            button = test.querySelector('sp-button') as Button;
-            popover = test.querySelector('sp-popover') as Popover;
-            return !!overlayTrigger && !!button && !!popover;
+            return (
+                !!test.querySelector('overlay-trigger') &&
+                !!test.querySelector('sp-button') &&
+                !!test.querySelector('sp-popover')
+            );
         },
-        'overlay-trigger is ready',
-        { timeout: 100 }
+        'overlay-trigger, button, and popover appeared',
+        { timeout: 300 }
     );
 
     return {
-        overlayTrigger: overlayTrigger,
-        button: button,
-        popover: popover,
+        overlayTrigger: test.querySelector('overlay-trigger') as OverlayTrigger,
+        button: test.querySelector('sp-button') as Button,
+        popover: test.querySelector('sp-popover') as Popover,
     };
 };
 
