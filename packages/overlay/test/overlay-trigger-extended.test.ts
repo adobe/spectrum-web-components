@@ -180,18 +180,16 @@ describe('Overlay Trigger - extended', () => {
         expect(!!popover.isConnected, 'popover is ready').to.be.true;
         expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
             .true;
-
+        expect(!!textfield.isConnected, 'textfield is ready').to.be.true;
         expect(document.activeElement, `textfield is not focused`).to.not.equal(
             textfield
         );
         expect(overlay.state, `overlay state`).to.equal('closed');
         expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
+        expect(popover.open, `popover.open`).to.equal(false);
 
         await sendMouseTo(textfield, 'click');
 
-        // sendingMouse was timing out for some reason
-        // by wrapping in a waitUntil, can tell whether
-        // this step is the one that timed out
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
