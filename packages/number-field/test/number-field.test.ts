@@ -950,28 +950,28 @@ describe('NumberField', () => {
             const inputElement = el.shadowRoot?.querySelector(
                 'input'
             ) as HTMLInputElement;
-            let length: number | null = null;
 
             await sendMouseTo(el.focusElement, 'click');
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
+            let length: number | null = null;
             await waitUntil(
                 () => {
-                    {
+                    if (
+                        inputElement.selectionStart !== null &&
+                        inputElement.selectionEnd !== null
+                    ) {
                         length =
-                            inputElement.selectionStart !== null &&
-                            inputElement.selectionEnd !== null
-                                ? inputElement.selectionEnd -
-                                  inputElement.selectionStart
-                                : null;
-                        return length !== null;
+                            inputElement.selectionEnd -
+                            inputElement.selectionStart;
+                        return true;
                     }
+                    return false;
                 },
                 'selection changed',
                 { timeout: 300 }
             );
-
             expect(length, `selection length)`).to.equal(0);
         });
         it('selects all on `Tab` based `focus`', async function () {
@@ -983,7 +983,6 @@ describe('NumberField', () => {
             const inputElement = el.shadowRoot?.querySelector(
                 'input'
             ) as HTMLInputElement;
-            let length: number | null = null;
 
             await sendKeys({
                 press: 'Tab',
@@ -991,17 +990,19 @@ describe('NumberField', () => {
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
+            let length: number | null = null;
             await waitUntil(
                 () => {
-                    {
+                    if (
+                        inputElement.selectionStart !== null &&
+                        inputElement.selectionEnd !== null
+                    ) {
                         length =
-                            inputElement.selectionStart !== null &&
-                            inputElement.selectionEnd !== null
-                                ? inputElement.selectionEnd -
-                                  inputElement.selectionStart
-                                : null;
-                        return length !== null;
+                            inputElement.selectionEnd -
+                            inputElement.selectionStart;
+                        return true;
                     }
+                    return false;
                 },
                 'selection changed',
                 { timeout: 300 }
