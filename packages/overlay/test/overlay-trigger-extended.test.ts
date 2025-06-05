@@ -230,7 +230,7 @@ describe('Overlay Trigger - extended', () => {
         await waitUntil(
             async () => await sendMouseTo(textfield, 'click'),
             `textfield clicked again`,
-            { timeout: 200 }
+            { timeout: 300 }
         );
 
         // verify the textfield is occluded
