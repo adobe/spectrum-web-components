@@ -388,7 +388,8 @@
         "packages/*",
         "projects/*",
         "tools/*",
-        "react/*"
+        "react/*",
+        "swan"
     ],
     "packageManager": "yarn@4.9.1",
     "license": "Apache-2.0",

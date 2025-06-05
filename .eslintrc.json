@@ -18,12 +18,18 @@
         "sourceType": "module"
     },
     "rules": {
-        "curly": ["error", "all"],
+        "curly": [
+            "error",
+            "all"
+        ],
         "no-debugger": 2,
         "no-console": [
             "error",
             {
-                "allow": ["warn", "error"]
+                "allow": [
+                    "warn",
+                    "error"
+                ]
             }
         ],
         "import/extensions": [
@@ -36,7 +42,12 @@
         "import/prefer-default-export": "off",
         "@spectrum-web-components/prevent-argument-names": [
             "error",
-            ["e", "ev", "evt", "err"]
+            [
+                "e",
+                "ev",
+                "evt",
+                "err"
+            ]
         ],
         "notice/notice": [
             "error",
@@ -75,17 +86,24 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
         "plugin:lit-a11y/recommended",
-        "plugin:require-extensions/recommended"
+        "plugin:require-extensions/recommended",
+        "plugin:storybook/recommended"
     ],
     "overrides": [
         {
-            "files": ["scripts/*"],
+            "files": [
+                "scripts/*"
+            ],
             "rules": {
-                "no-console": ["off"]
+                "no-console": [
+                    "off"
+                ]
             }
         },
         {
-            "files": ["react/**/*.ts"],
+            "files": [
+                "react/**/*.ts"
+            ],
             "rules": {
                 "@typescript-eslint/no-explicit-any": "off"
             }
