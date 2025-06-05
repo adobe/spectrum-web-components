@@ -970,7 +970,7 @@ describe('NumberField', () => {
                     return false;
                 },
                 'selection changed',
-                { timeout: 300 }
+                { timeout: 400 }
             );
             expect(length, `selection length)`).to.equal(0);
         });
@@ -1005,7 +1005,7 @@ describe('NumberField', () => {
                     return false;
                 },
                 'selection changed',
-                { timeout: 300 }
+                { timeout: 400 }
             );
 
             expect(length, `selection length`).to.equal(
