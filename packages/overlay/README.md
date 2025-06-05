@@ -271,10 +271,6 @@ The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which t
 
 -   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
-<sp-tabs selected="type" auto label="Type attribute options">
-<sp-tab value="type">type</sp-tab>
-<sp-tab-panel value="type">
-
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
 <sp-tabs selected="modal" auto label="Type attribute options">
