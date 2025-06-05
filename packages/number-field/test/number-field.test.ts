@@ -17,6 +17,7 @@ import {
     expect,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
@@ -945,43 +946,68 @@ describe('NumberField', () => {
         it('does not select all on click based `focus`', async function () {
             const el = await getElFrom(units({ value: 17 }));
             expect(el.value).to.equal(17);
+
             const inputElement = el.shadowRoot?.querySelector(
                 'input'
             ) as HTMLInputElement;
+            let length: number | null = null;
 
             await sendMouseTo(el.focusElement, 'click');
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            const selectionStart = inputElement?.selectionStart;
-            const selectionEnd = inputElement?.selectionEnd;
-            const selectionLength =
-                selectionStart && selectionEnd
-                    ? selectionEnd - selectionStart
-                    : undefined;
 
-            expect(selectionLength, 'selection length').to.equal(0);
+            await waitUntil(
+                () => {
+                    {
+                        length =
+                            inputElement.selectionStart !== null &&
+                            inputElement.selectionEnd !== null
+                                ? inputElement.selectionEnd -
+                                  inputElement.selectionStart
+                                : null;
+                        return length !== null;
+                    }
+                },
+                'selection changed',
+                { timeout: 300 }
+            );
+
+            expect(length, `selection length)`).to.equal(0);
         });
         it('selects all on `Tab` based `focus`', async function () {
             const el = await getElFrom(units({ value: 17 }));
             const input = document.createElement('input');
+            el.insertAdjacentElement('beforebegin', input);
+            input.focus();
+
             const inputElement = el.shadowRoot?.querySelector(
                 'input'
             ) as HTMLInputElement;
-            el.insertAdjacentElement('beforebegin', input);
-            input.focus();
+            let length: number | null = null;
+
             await sendKeys({
                 press: 'Tab',
             });
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            const selectionStart = inputElement?.selectionStart;
-            const selectionEnd = inputElement?.selectionEnd;
-            const selectionLength =
-                selectionStart && selectionEnd
-                    ? selectionEnd - selectionStart
-                    : undefined;
 
-            expect(selectionLength, 'selection length').to.equal(
+            await waitUntil(
+                () => {
+                    {
+                        length =
+                            inputElement.selectionStart !== null &&
+                            inputElement.selectionEnd !== null
+                                ? inputElement.selectionEnd -
+                                  inputElement.selectionStart
+                                : null;
+                        return length !== null;
+                    }
+                },
+                'selection changed',
+                { timeout: 300 }
+            );
+
+            expect(length, `selection length`).to.equal(
                 el.valueAsString.length
             );
         });
