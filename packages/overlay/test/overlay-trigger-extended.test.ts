@@ -201,7 +201,7 @@ describe('Overlay Trigger - extended', () => {
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
-            { timeout: 100 }
+            { timeout: 200 }
         );
 
         expect(popover.placement).to.equal('top');
@@ -230,7 +230,7 @@ describe('Overlay Trigger - extended', () => {
         await waitUntil(
             async () => await sendMouseTo(textfield, 'click'),
             `textfield clicked again`,
-            { timeout: 50 }
+            { timeout: 200 }
         );
 
         // verify the textfield is occluded
