@@ -175,12 +175,17 @@ describe('Overlay Trigger - extended', () => {
         const textfield = document.createElement('input');
         const overlay = overlayTrigger.clickOverlayElement;
         overlayTrigger.insertAdjacentElement('afterend', textfield);
-        await nextFrame(); // Ensure DOM is updated
-        await elementUpdated(overlayTrigger); // Wait for component updates
-        await elementUpdated(textfield); // Wait for textfield to be ready
         expect(overlay.state, `overlay state`).to.equal('closed');
 
         console.log('Active element before click:', document.activeElement?.tagName);
+        console.log('Rectangles:', {
+            overlay: overlay.getBoundingClientRect(),
+            textfield: textfield.getBoundingClientRect(),
+            button: button.getBoundingClientRect(),
+            popover: popover.getBoundingClientRect(),
+            body: document.body.getBoundingClientRect(),
+            elements: Array.from(document.body.children).map(child=>child.tagName),
+        });
         await sendMouseTo(textfield, 'click');
         console.log('Active element after click:', document.activeElement?.tagName);
         console.log('Textfield properties:', {
