@@ -1,20 +1,20 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 
 import type { Properties } from './template.js';
 export type { Properties };
@@ -132,7 +132,7 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             Click Me
         `,
     });
@@ -150,7 +150,7 @@ export function renderIconButtonSet(properties: Properties): TemplateResult {
     const iconOnly = Object.assign({}, properties, {
         iconOnly: true,
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         `,
     });
     return html`
@@ -177,7 +177,7 @@ export const renderWithIcon = (props: Properties): TemplateResult => {
             ${renderButtonSet({
                 ...props,
                 content: html`
-                    <sp-icon-help slot="icon"></sp-icon-help>
+                    <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
                     Help
                 `,
             })}
@@ -198,7 +198,7 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
         ${renderIconButtonSet({
             ...props,
             content: html`
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             `,
         })}
     `;

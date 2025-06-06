@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -31,11 +31,11 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css' with { type: 'css' };
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 
-import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import menuItemStyles from './menu-item.css' with { type: 'css' };
+import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css' with { type: 'css' };
 import type { Menu } from './Menu.js';
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
@@ -406,7 +406,7 @@ export class MenuItem extends LikeAnchor(
                 </sp-popover>
             </sp-overlay>
             <sp-icon-chevron100
-                class="spectrum-UIIcon-ChevronRight100 chevron icon"
+                class="icon-ChevronRight100 chevron icon"
             ></sp-icon-chevron100>
         `;
     }
@@ -417,8 +417,8 @@ export class MenuItem extends LikeAnchor(
                 ? html`
                       <sp-icon-checkmark100
                           id="selected"
-                          class="spectrum-UIIcon-Checkmark100 
-                            icon 
+                          class="icon-Checkmark100
+                            icon
                             checkmark
                             ${this.hasIcon
                               ? 'checkmark--withAdjacentIcon'

@@ -1,0 +1,184 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "documentation",
+    "root": "projects/documentation",
+    "sourceRoot": "projects/documentation/src",
+    "projectType": "library",
+    "tags": ["project"],
+    "targets": {
+        "build": {
+            "cache": true,
+            "dependsOn": ["^build", "build:ts", "build:move-css", "build:css", "build:search-index"],
+            "options": {
+                "commands": ["rollup -c rollup.config.js"],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "build:ts": {},
+        "build:css": {},
+        "build:eleventy": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "dependsOn": ["copy-docs"],
+            "options": {
+                "commands": ["eleventy --config=.eleventy.js --incremental --quiet"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{projectRoot}/content/**/*",
+                "{projectRoot}/.eleventy.js"
+            ],
+            "outputs": [
+                "{projectRoot}/_site/**/*.html",
+                "{projectRoot}/_site/favicon.ico",
+                "{projectRoot}/_site/favicon.svg",
+                "{projectRoot}/_site/serviceWorker.js",
+                "{projectRoot}/_site/images/**/*",
+                "{projectRoot}/_site/manifest.webmanifest"
+            ]
+        },
+        "build:move-css": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["mkdir -p _site/src/components/ && cp src/components/*.css _site/src/components/"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{projectRoot}/src/components/*.css",
+                "!{projectRoot}/src/components/style.css",
+                "!{projectRoot}/src/components/fonts.css"
+            ],
+            "outputs": [
+                "{projectRoot}/_site/src/components/*.css",
+                "!{projectRoot}/_site/src/components/style.css",
+                "!{projectRoot}/_site/src/components/fonts.css"
+            ]
+        },
+        "build:css": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["node scripts/build-css.js --files=\"src/components/{styles,fonts,medium,large,light,dark}.css\""],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{projectRoot}/src/components/styles.css",
+                "{projectRoot}/src/components/medium.css",
+                "{projectRoot}/src/components/large.css",
+                "{projectRoot}/src/components/light.css",
+                "{projectRoot}/src/components/dark.css",
+                "{projectRoot}/src/components/fonts.css",
+                "{projectRoot}/scripts/build-css.js",
+                "{projectRoot}/_site/**/*.html"
+            ],
+            "outputs": [
+                "{projectRoot}/_site/src/components/styles.css",
+                "{projectRoot}/_site/src/components/medium.css",
+                "{projectRoot}/_site/src/components/large.css",
+                "{projectRoot}/_site/src/components/light.css",
+                "{projectRoot}/_site/src/components/dark.css",
+                "{projectRoot}/_site/src/components/fonts.css"
+            ],
+            "dependsOn": ["build:eleventy"]
+        },
+        "build:production": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["SWC_DIR=spectrum-web-components rollup -c rollup.config.js"],
+                "cwd": "{projectRoot}"
+            },
+            "dependsOn": ["build:ts", "build:move-css", "build:css", "build:search-index:prod"]
+        },
+        "build:search-index": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["node scripts/build-search-index.js"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{workspaceRoot}/packages/*/*.md",
+                "{workspaceRoot}/tools/*/*.md",
+                "{projectRoot}/scripts/build-search-index.js"
+            ],
+            "outputs": [
+                "{projectRoot}/_site/src/searchIndex.json",
+                "{projectRoot}/dist/searchIndex.json",
+                "{projectRoot}/searchIndex.json"
+            ]
+        },
+        "build:search-index:prod": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["SWC_DIR=spectrum-web-components node scripts/build-search-index.js"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{workspaceRoot}/packages/*/*.md",
+                "{workspaceRoot}/tools/*/*.md",
+                "{projectRoot}/scripts/build-search-index.js"
+            ],
+            "outputs": [
+                "{projectRoot}/_site/src/searchIndex.json",
+                "{projectRoot}/dist/searchIndex.json"
+            ]
+        },
+        "build:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["node scripts/build-ts.js"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{projectRoot}/src/**/*.ts",
+                "{projectRoot}/scripts/build-ts.js"
+            ],
+            "outputs": [
+                "{projectRoot}/src/**/*.js",
+                "!{projectRoot}/src/utils/**/*.js"
+            ]
+        },
+        "copy-docs": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["node scripts/copy-component-docs.js"],
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{workspaceRoot}/packages/**/*.md",
+                "{workspaceRoot}/packages/**/*.ts",
+                "{workspaceRoot}/packages/**/args.js",
+                "{workspaceRoot}/packages/**/template.js",
+                "{workspaceRoot}/tools/**/*.md",
+                "{workspaceRoot}/tools/**/*.ts",
+                "{workspaceRoot}/tools/**/args.js",
+                "{workspaceRoot}/tools/**/template.js",
+                "{projectRoot}/scripts/gather-wcd-urls.js",
+                "{projectRoot}/scripts/gather-spectrum-urls.js",
+                "{projectRoot}/scripts/gather-storybook-urls.js",
+                "{projectRoot}/scripts/copy-component-docs.js",
+                "{projectRoot}/scripts/component-template-parts.js"
+            ],
+            "outputs": [
+                "{projectRoot}/content/components/*.md",
+                "{projectRoot}/content/components/*.11tydata.js",
+                "{projectRoot}/content/tools/*.md",
+                "{projectRoot}/content/tools/*.11tydata.js",
+                "{projectRoot}/content/_data/demoURLs.js",
+                "{projectRoot}/content/_data/spectrumURLs.js",
+                "{projectRoot}/content/_data/storybookURLs.js"
+            ],
+            "dependsOn": ["docs:analyze"]
+        },
+        "serve": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["wds --config web-dev-server.config.js"],
+                "cwd": "{projectRoot}"
+            },
+            "service": true,
+            "inputs": [],
+            "dependsOn": ["build:ts", "build:move-css", "build:css", "build:search-index"]
+        }
+    }
+}

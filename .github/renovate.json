@@ -23,16 +23,16 @@
             ]
         },
         {
-            "groupName": "commitlint ecosystem",
-            "matchPackageNames": ["commitlint", "@commitlint/*"]
-        },
-        {
             "groupName": "eleventy ecosystem",
             "matchPackageNames": ["@11ty/*", "eleventy", "eleventy-plugin-*"]
         },
         {
             "groupName": "web and open wc ecosystem",
             "matchPackageNames": ["@open-wc/*", "@web/*"]
+        },
+        {
+            "groupName": "nx ecosystem",
+            "matchPackageNames": ["nx", "@nx/*"]
         },
         {
             "groupName": "postcss ecosystem",

@@ -1,0 +1,24 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "types",
+    "root": "projects/types",
+    "sourceRoot": "projects/types/src",
+    "projectType": "library",
+    "tags": ["project"],
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {
+            "executor": "nx:noop"
+        },
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    }
+}

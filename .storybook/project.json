@@ -1,0 +1,127 @@
+{
+    "name": "storybook",
+    "namedInputs": {
+        "tools": [
+            "{projectRoot}/assets",
+            "{projectRoot}/blocks",
+            "{projectRoot}/decorators",
+            "{projectRoot}/deprecated",
+            "{projectRoot}/guides",
+            "{projectRoot}/loaders",
+            "{projectRoot}/modes",
+            "{projectRoot}/templates",
+            "{projectRoot}/types",
+            "{projectRoot}/*.{js,html}"
+        ]
+    },
+    "targets": {
+        "build": {
+            "configurations": {
+                "ci": {
+                    "commands": [
+                        "cross-env NODE_OPTIONS=\"--no-warnings\" storybook build --config-dir ."
+                    ]
+                },
+                "docs": {
+                    "commands": [
+                        "cross-env NODE_OPTIONS=\"--no-warnings\" storybook build --config-dir . --output-dir ../dist"
+                    ],
+                    "outputs": ["{workspaceRoot}/dist"]
+                }
+            },
+            "dependsOn": [
+                "clean",
+                "^build",
+                { "tag": "component", "target": "build" }
+            ],
+            "executor": "nx:run-commands",
+            "inputs": ["tools", { "externalDependencies": ["storybook"] }],
+            "options": {
+                "commands": [
+                    "cross-env NODE_OPTIONS=\"--no-warnings\" storybook build --config-dir . --output-dir ./storybook-static"
+                ],
+                "cwd": "{projectRoot}"
+            },
+            "outputs": ["{projectRoot}/storybook-static"]
+        },
+        "clean": {
+            "configurations": {
+                "docs": {
+                    "commands": [
+                        "rimraf dist",
+                        "test -d dist && echo \"Error: dist directory could not be removed\" && exit 1 || exit 0"
+                    ],
+                    "cwd": "{workspaceRoot}",
+                    "inputs": [
+                        "{workspaceRoot}/dist",
+                        { "externalDependencies": ["rimraf"] }
+                    ]
+                }
+            },
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/storybook-static",
+                { "externalDependencies": ["rimraf"] }
+            ],
+            "options": {
+                "commands": [
+                    "rimraf storybook-static",
+                    "test -d storybook-static && echo \"Error: storybook-static directory could not be removed\" && exit 1 || exit 0"
+                ],
+                "cwd": "{projectRoot}",
+                "parallel": false
+            }
+        },
+        "test": {
+            "cache": true,
+            "configurations": {
+                "scope": {
+                    "commands": [
+                        "chromatic --build-script-name build --junit-report --only-story-names"
+                    ]
+                }
+            },
+            "executor": "nx:run-commands",
+            "inputs": [
+                "tools",
+                { "externalDependencies": ["chromatic", "storybook"] },
+                { "env": "CHROMATIC_PROJECT_TOKEN" },
+                { "env": "NODE_ENV" }
+            ],
+            "options": {
+                "commands": [
+                    "chromatic --only-changed --build-script-name build --junit-report"
+                ],
+                "cwd": "{projectRoot}"
+            }
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        },
+        "start": {
+            "cache": true,
+            "dependsOn": [
+                { "projects": "tag:component", "target": "build" },
+                "^build"
+            ],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "tools",
+                { "externalDependencies": ["storybook"] },
+                { "env": "WATCH_MODE" }
+            ],
+            "options": {
+                "commands": [
+                    "WATCH_MODE=true storybook dev --port 8080 --config-dir ."
+                ],
+                "cwd": "{projectRoot}"
+            }
+        }
+    },
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": ".storybook",
+    "root": ".storybook",
+    "tags": ["storybook"]
+}

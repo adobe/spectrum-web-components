@@ -41,12 +41,9 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/sidenav-heading-overrides.css.js": "./src/sidenav-heading-overrides.css.js",
-        "./src/sidenav-heading.css.js": "./src/sidenav-heading.css.js",
-        "./src/sidenav-item-overrides.css.js": "./src/sidenav-item-overrides.css.js",
-        "./src/sidenav-item.css.js": "./src/sidenav-item.css.js",
-        "./src/sidenav-overrides.css.js": "./src/sidenav-overrides.css.js",
-        "./src/sidenav.css.js": "./src/sidenav.css.js",
+        "./src/sidenav-heading.css": "./src/sidenav-heading.css",
+        "./src/sidenav-item.css": "./src/sidenav-item.css",
+        "./src/sidenav.css": "./src/sidenav.css",
         "./sp-sidenav.js": {
             "development": "./sp-sidenav.dev.js",
             "default": "./sp-sidenav.js"

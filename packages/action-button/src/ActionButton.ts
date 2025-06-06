@@ -1,14 +1,14 @@
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -20,16 +20,16 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
-import buttonStyles from './action-button.css.js';
-import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
+import buttonStyles from './action-button.css' with { type: 'css' };
+import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css' with { type: 'css' };
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
-    xs: 'spectrum-UIIcon-CornerTriangle75',
-    s: 'spectrum-UIIcon-CornerTriangle75',
-    m: 'spectrum-UIIcon-CornerTriangle100',
-    l: 'spectrum-UIIcon-CornerTriangle200',
-    xl: 'spectrum-UIIcon-CornerTriangle300',
+    xs: 'icon-CornerTriangle75',
+    s: 'icon-CornerTriangle75',
+    m: 'icon-CornerTriangle100',
+    l: 'icon-CornerTriangle200',
+    xl: 'icon-CornerTriangle300',
 };
 
 export const LONGPRESS_DURATION = 300;

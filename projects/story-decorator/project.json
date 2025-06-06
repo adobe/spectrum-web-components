@@ -1,0 +1,26 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "story-decorator",
+    "root": "projects/story-decorator",
+    "sourceRoot": "projects/story-decorator/src",
+    "projectType": "library",
+    "tags": ["project"],
+    "targets": {
+        "build": {
+            "dependsOn": ["build:ts"]
+        },
+        "build:ts": {},
+        "build:css": {
+            "executor": "nx:noop"
+        },
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    }
+}

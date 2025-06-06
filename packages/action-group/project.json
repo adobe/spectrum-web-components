@@ -1,0 +1,22 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "action-group",
+    "root": "packages/action-group",
+    "sourceRoot": "packages/action-group/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "build:ts": {},
+        "build:css": {},
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    }
+}

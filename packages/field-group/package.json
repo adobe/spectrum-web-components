@@ -29,8 +29,7 @@
             "development": "./src/FieldGroup.dev.js",
             "default": "./src/FieldGroup.js"
         },
-        "./src/field-group-overrides.css.js": "./src/field-group-overrides.css.js",
-        "./src/field-group.css.js": "./src/field-group.css.js",
+        "./src/field-group.css": "./src/field-group.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

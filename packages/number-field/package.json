@@ -33,8 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/number-field-overrides.css.js": "./src/number-field-overrides.css.js",
-        "./src/number-field.css.js": "./src/number-field.css.js",
+        "./src/number-field.css": "./src/number-field.css",
         "./sp-number-field.js": {
             "development": "./sp-number-field.dev.js",
             "default": "./sp-number-field.js"
@@ -64,7 +63,7 @@
         "css"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.6.0",
+        "@internationalized/number": "^3.6.2",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/icon": "1.6.0",
         "@spectrum-web-components/icons-ui": "1.6.0",
@@ -74,7 +73,7 @@
         "@spectrum-web-components/textfield": "1.6.0"
     },
     "devDependencies": {
-        "@formatjs/intl-numberformat": "^8.3.5"
+        "@formatjs/intl-numberformat": "^8.15.4"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

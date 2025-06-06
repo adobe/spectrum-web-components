@@ -1,0 +1,41 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "icons-ui",
+    "root": "packages/icons-ui",
+    "sourceRoot": "packages/icons-ui/src",
+    "tags": ["icon"],
+    "targets": {
+        "build": {
+            "dependsOn": ["build:ts", "build:icons"]
+        },
+        "build:icons": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node ./bin/build.js",
+                "cwd": "{projectRoot}"
+            },
+            "inputs": [
+                "{projectRoot}/bin/build.js",
+                "{workspaceRoot}/node_modules/@spectrum-css/ui-icons/dist/medium/**.svg"
+            ],
+            "outputs": [
+                "{projectRoot}/icons/sp-icon-*.ts",
+                "{projectRoot}/src/icons/*.ts",
+                "{projectRoot}/src/elements/Icon*.ts",
+                "{projectRoot}/src/icons.ts"
+            ]
+        },
+        "build:ts": {
+            "dependsOn": ["build:icons"]
+        },
+        "build:watch": {},
+        "test": {
+            "executor": "nx:run-commands",
+            "defaultConfiguration": "scope"
+        },
+        "validate": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["lint", "test"]
+        }
+    }
+}

@@ -37,8 +37,7 @@
             "development": "./src/CheckboxMixin.dev.js",
             "default": "./src/CheckboxMixin.js"
         },
-        "./src/checkbox-overrides.css.js": "./src/checkbox-overrides.css.js",
-        "./src/checkbox.css.js": "./src/checkbox.css.js",
+        "./src/checkbox.css": "./src/checkbox.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"

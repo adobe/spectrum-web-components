@@ -33,7 +33,7 @@
             "development": "./src/GridController.dev.js",
             "default": "./src/GridController.js"
         },
-        "./src/grid.css.js": "./src/grid.css.js",
+        "./src/grid.css": "./src/grid.css",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
@@ -68,8 +68,8 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@lit-labs/virtualizer": "^2.0.12",
+        "@lit-labs/observers": "^2.0.5",
+        "@lit-labs/virtualizer": "^2.1.0",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/reactive-controllers": "1.6.0",
         "lit": "^2.5.0 || ^3.1.3"

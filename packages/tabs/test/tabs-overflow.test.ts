@@ -1,14 +1,14 @@
-/*
-Copyright 2022 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 import {
@@ -22,9 +22,7 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs-overflow.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/theme-light.js';
 
 import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
 import {
@@ -57,7 +55,7 @@ const renderTabsOverflow = async ({
     dir = 'ltr',
 }: OverflowProperties): Promise<HTMLDivElement> => {
     const theme = await fixture<HTMLDivElement>(html`
-        <sp-theme dir=${dir} system="spectrum" scale="medium" color="light">
+        <sp-theme dir=${dir} scale="medium" color="light">
             <div class="container" style="width: 200px; height: 150px;">
                 <sp-tabs-overflow>
                     <sp-tabs size=${size} selected=${selected}>

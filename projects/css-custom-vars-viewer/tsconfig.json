@@ -2,9 +2,16 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "rootDir": "./",
-        "outDir": "dist",
-        "emitDeclarationOnly": false
+        "rootDir": "./"
     },
-    "include": ["**/*.ts"]
+    "include": ["*.ts", "src/*.ts"],
+    "references": [
+        { "path": "../../tools/base" },
+        { "path": "../../packages/field-label" },
+        { "path": "../../packages/picker" },
+        { "path": "../../packages/link" },
+        { "path": "../../packages/menu" },
+        { "path": "../../packages/swatch" },
+        { "path": "../../packages/table" }
+    ]
 }

@@ -41,8 +41,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/slider-overrides.css.js": "./src/slider-overrides.css.js",
-        "./src/slider.css.js": "./src/slider.css.js",
+        "./src/slider.css": "./src/slider.css",
         "./sp-slider.js": {
             "development": "./sp-slider.dev.js",
             "default": "./sp-slider.js"
@@ -80,8 +79,8 @@
         "css"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.6.0",
-        "@lit-labs/observers": "^2.0.2",
+        "@internationalized/number": "^3.6.2",
+        "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/field-label": "1.6.0",
         "@spectrum-web-components/number-field": "1.6.0",

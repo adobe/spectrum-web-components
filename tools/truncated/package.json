@@ -33,7 +33,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/truncated.css.js": "./src/truncated.css.js",
+        "./src/truncated.css": "./src/truncated.css",
         "./sp-truncated": "./sp-truncated.js",
         "./sp-truncated.js": {
             "development": "./sp-truncated.dev.js",

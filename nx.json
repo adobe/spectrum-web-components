@@ -1,0 +1,126 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "cli": {
+        "analytics": false,
+        "packageManager": "yarn",
+        "warnings": {
+            "versionMismatch": true
+        }
+    },
+    "namedInputs": {
+        "eslint": [
+            "{workspaceRoot}/.eslintrc",
+            {
+                "externalDependencies": ["eslint"]
+            }
+        ],
+        "postcss": [
+            "{workspaceRoot}/postcss.config.js",
+            {
+                "externalDependencies": ["postcss"]
+            }
+        ],
+        "prettier": [
+            "{workspaceRoot}/.prettierrc",
+            {
+                "externalDependencies": ["prettier"]
+            }
+        ],
+        "stylelint": [
+            "{workspaceRoot}/.stylelintignore",
+            "{workspaceRoot}/stylelint.config.js",
+            "{workspaceRoot}/plugins/stylelint-*/index.js",
+            {
+                "externalDependencies": ["stylelint"]
+            }
+        ]
+    },
+    "pluginsConfig": {
+        "@nx/js": {
+            "analyzeSourceFiles": false
+        }
+    },
+    "targetDefaults": {
+        "build": {
+            "cache": true,
+            "executor": "nx:noop",
+            "dependsOn": ["^build", "build:css", "build:ts", "build:types"]
+        },
+        "build:css": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.css",
+                "{projectRoot}/**/*.css",
+                "{workspaceRoot}/scripts/build-css.js",
+                "{workspaceRoot}/scripts/css-tools.js",
+                "{workspaceRoot}/scripts/utilities.js",
+                "postcss",
+                "prettier",
+                "stylelint"
+            ],
+            "options": {
+                "commands": ["node ./scripts/build-css.js"]
+            },
+            "outputs": [
+                "{projectRoot}/dist/*.css*",
+                "{projectRoot}/dist/**/*.css*"
+            ]
+        },
+        "build:ts": {
+            "cache": true,
+            "dependsOn": ["build:css"],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.ts",
+                "{projectRoot}/**/*.ts",
+                "!{projectRoot}/*.d.ts",
+                "!{projectRoot}/**/*.d.ts"
+            ],
+            "options": {
+                "commands": ["node ./scripts/build-ts.js"]
+            },
+            "outputs": [
+                "{projectRoot}/**/*.js",
+                "{projectRoot}/**/*.dev.js",
+                "{projectRoot}/**/*.js.map"
+            ]
+        },
+        "build:types": {
+            "cache": true,
+            "dependsOn": ["build:css"],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{workspaceRoot}/tsconfig-all.json",
+                "{projectRoot}/**/*.ts",
+                "{projectRoot}/**/tsconfig.json"
+            ],
+            "options": {
+                "commands": ["tsc --build tsconfig-all.json --pretty"]
+            },
+            "outputs": [
+                "{projectRoot}/**/*.d.ts",
+                "{projectRoot}/**/tsconfig.tsbuildinfo",
+                "!{projectRoot}/**/local.d.ts",
+                "!{projectRoot}/tools/base/src/version.d.ts"
+            ]
+        },
+        "storybook:analyze": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "inputs": ["packages/**/*.ts", "tools/**/*.ts"],
+            "options": {
+                "commands": ["cem analyze --outdir .storybook/"]
+            },
+            "outputs": [".storybook/custom-elements.json"]
+        },
+        "storybook": {
+            "cache": false,
+            "dependsOn": ["build", "storybook:analyze"],
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["storybook dev -p 8080"]
+            }
+        }
+    }
+}
