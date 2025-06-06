@@ -28,7 +28,7 @@ import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import styles from './progress-bar.css.js';
+import styles from './progress-bar.css' with { type: 'css' };
 
 /**
  * @element sp-progress-bar

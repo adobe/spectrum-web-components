@@ -36,7 +36,7 @@ import {
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
-import styles from './field-label.css.js';
+import styles from './field-label.css' with { type: 'css' };
 
 type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
 type Labelable = Focusable & {

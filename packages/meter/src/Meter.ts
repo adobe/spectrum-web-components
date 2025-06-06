@@ -28,7 +28,7 @@ import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import styles from './meter.css.js';
+import styles from './meter.css' with { type: 'css' };
 
 export const meterVariants = ['positive', 'notice', 'negative'];
 
