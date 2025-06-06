@@ -23,26 +23,192 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.5.0](https://github.com/adobe/spectrum-web-components/compare/v1.4.0...v1.5.0) (2025-04-15)
 
-### Bug Fixes
+## Minor Changes
 
--   **sp-tabs**: ensure tabs become enabled when parent disabled attribute is removed (#5323) ([`c7efe314c5`](https://github.com/adobe/spectrum-web-components/commit/c7efe314c5))
--   **sp-color-field**: color handle positioning within scrollable containers (#5322) ([`e19e55f6f1`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1))
--   **sp-menu**: fixes larger margin in menu-item (#5350) ([`86bcd12200`](https://github.com/adobe/spectrum-web-components/commit/86bcd12200))
--   **sp-menu**: menuitem now correctly focus and applies hover styles (#5270) ([`a69accb8b4`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b4))
--   **sp-menu**: captures touchend events on mobile (#5313) ([`4c2f908a92`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92))
--   **overlay**: prevent overlay close on document scroll (#5308) ([`8f8735c9ec`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec))
--   **sp-number-field**: prevent keyboard on mobile devices by setting inpu… (#5284) ([`5a3bc6d24e`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24e))
+**sp-icons-workflow**: Added missing S2 icons
+
+## Patch Changes
+
+**sp-popover**: 📝 #[​3566](https://github.com/adobe/spectrum-css/pull/3566) Thanks [@​aramos-adobe](https://github.com/aramos-adobe)!
+
+Popover overflow bug on Safari
+
+-   `translateZ` has been added to the open popover to prevent clipping of the `filter: drop-shadow` when overflow is applied. `translateZ` or `translate3d` on the open state accelerates the component to the GPU layer maintaining any transformations and animations.
+-   `overflow: visible` applied to CSS `*--withTip` so the tip is still visible if overflow is applied to the component.
+
+**sp-picker**: `PickerBase`(used in `<sp-picker>` and `sp-action-menu>`):
+
+Fixes focus so that it is not set on `<sp-menu-item>` elements when opened via mouse.
+
+A keyboard interaction is the only interaction that should set focus on an `<sp-menu-item>` when the menu is opened. A user with a mouse would expect the focus to stay where the mouse is.
+
+Fixes: #2950
+
+**sp-button**: Updated the deprecation warning to allow `variant` and `static-color` exist on the same component.
+Added `primary` and `secondary` stories to `white` and `black` button directories on storybook.
+Updates documentation site to reflect this as well.
+
+**sp-infield-button**: # Release Note
+
+## Infield Button
+
+### 6.1.2
+
+-   [#3615](https://github.com/adobe/spectrum-css/pull/3615) [`f09c84a`](https://github.com/adobe/spectrum-css/commit/f09c84ae9922d67b6fe237d693afee0fab53fa67) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - ### Infield button fast follows
+    -   Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
+
+### 6.1.1
+
+📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+
+-   S2 Foundations fixes
+    -   Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+        -   This corresponds to the background-color updates picker has for S2.
+    -   Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+    -   Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+
+### 6.1.0
+
+📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+
+Dependency alignment across the project.
+
+-   Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    -   @spectrum-css/icon@9.1.0
+    -   @spectrum-css/tokens@16.0.1
+
+## Number Field
+
+Bump @spectrum-css/stepper to 7.1.3
+
+### 7.1.3
+
+-   [#3621](https://github.com/adobe/spectrum-css/pull/3621) [`3aec28a`](https://github.com/adobe/spectrum-css/commit/3aec28aac60bdf32a585fa8ff38559d80b57ff86) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+
+    -   Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
+
+### 7.1.2
+
+📝 [#3594](https://github.com/adobe/spectrum-css/pull/3594) [`6200a63`](https://github.com/adobe/spectrum-css/commit/6200a63f2c7dc1d2b0481c33b17c86427726c0bd) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+
+-   Updates Stepper's key-focus border color (`-spectrum-stepper-border-color-keyboard-focus`) to `-spectrum-gray-800`.
+
+### 7.1.1
+
+📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
+
+-   S2 Foundations fixes
+    -   Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
+        -   This corresponds to the background-color updates picker has for S2.
+    -   Corrects the border color for the default picker for S2 foundations, using `gray-500` (instead of `gray-800`) to align with other field/form components.
+    -   Refactors the `&.is-keyboardFocused&.is-placeholder` selector to `&.is-keyboardFocused.spectrum-Picker-label.is-placeholder` to avoid unexpectedly targeting the nested placeholder class.
+
+### 7.1.0
+
+📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+
+Dependency alignment across the project.
+
+-   Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    -   @spectrum-css/actionbutton@8.0.0
+    -   @spectrum-css/icon@9.1.0
+    -   @spectrum-css/infieldbutton@7.0.0
+    -   @spectrum-css/textfield@9.0.0
+    -   @spectrum-css/tokens@16.0.1
+
+## Textfield
+
+### 8.1.1
+
+📝 [#3575](https://github.com/adobe/spectrum-css/pull/3575) [`2e17d10`](https://github.com/adobe/spectrum-css/commit/2e17d109ebec3c2745c32a15840af5c636c8dc5d) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+
+-   Updated border color on keyboard focus state for textfield in spectrum-two theme.
+
+### 8.1.0
+
+📝 [#3539](https://github.com/adobe/spectrum-css/pull/3539) [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
+
+-   Updates invalid icon spacing to be vertically centered for S2.
+
+📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+
+-   Dependency alignment across the project.
+
+Set component peerDependencies as optional to reduce console warnings on downstream projects.
+
+-   Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    -   @spectrum-css/helptext@8.0.0
+    -   @spectrum-css/tokens@16.0.1
+
+## Search
+
+### 8.1.2
+
+-   [#3658](https://github.com/adobe/spectrum-css/pull/3658) [`e9fde67`](https://github.com/adobe/spectrum-css/commit/e9fde67bf341798a6ab34f227b2e7a417d1e5da7) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - Change S2 theme border color to gray-800 on keyfocus per design request in order to align with text field.
+
+### 8.1.1
+
+📝 [#3593](https://github.com/adobe/spectrum-css/pull/3593) [`d829abb`](https://github.com/adobe/spectrum-css/commit/d829abb44f1eaa1874090e52caee553d776684e7) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
+
+Updated `--spectrum-search-background-color-disabled` to `--spectrum-gray-25` and `--spectrum-search-border-color-disabled` to `--spectrum-gray-300` for the S2 foundations contexts.
+
+Also defines disabled quiet border and background colors (`--system-search-quiet-background-color-disabled` and `--system-search-quiet-border-color-disabled`) in order to maintain disabled quiet styling.
+
+### 8.1.0
+
+📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
+
+Dependency alignment across the project.
+
+-   Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
+    -   @spectrum-css/clearbutton@8.0.0
+    -   @spectrum-css/icon@9.1.0
+    -   @spectrum-css/textfield@9.0.0
+    -   @spectrum-css/tokens@16.0.1
+
+**sp-close-button**: Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
 # [1.4.0](https://github.com/adobe/spectrum-web-components/compare/v1.3.0...v1.4.0) (2025-03-26)
 
 ### Bug Fixes
 
--   **sp-picker** force popover documentation and API tab listing fix ([#5213](https://github.com/adobe/spectrum-web-components/issues/5213)) ([82212f4](https://github.com/adobe/spectrum-web-components/commit/82212f4b67c0514120652e3923cc87f1378809e7))
--   **sp-menu**: Mouse click, arrow keys, and mouseover should set the focused item ([#5197](https://github.com/adobe/spectrum-web-components/issues/5197)) ([6618422](https://github.com/adobe/spectrum-web-components/commit/6618422848df234e420eed95f4a5a30557e1e46f))
--   **sp-picker**: disable drag and select for mobile picker.([#5187](https://github.com/adobe/spectrum-web-components/issues/5187)) ([2a0422e](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f))
--   **sp-color-field**: respects alpha value in hex form.([#5246](https://github.com/adobe/spectrum-web-components/issues/5246)) ([e247de9](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e90872120fb53a5650f237bdb18111c))
--   **overlay**: respects alpha value in hex form.([#5246](https://github.com/adobe/spectrum-web-components/issues/5246)) ([70f5f6f](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d))
--   **sp-picker**: move tooltip outside of action-menu's button.([#5077](https://github.com/adobe/spectrum-web-components/issues/5077)) ([549ff4a](https://github.com/adobe/spectrum-web-components/commit/549ff4ac360c04fa1bd73c85ca8de4f6b367704d))
+-   **split-view,styles**: use latest CSS ([`fccb0a5c72`](https://github.com/adobe/spectrum-web-components/commit/fccb0a5c72))
+-   **menu**: menuitem focus and hover styles (#5270) ([`a69accb8b4`](https://github.com/adobe/spectrum-web-components/commit/a69accb8b4))
+-   **alert-banner,styles**: style updates from latest release ([`7d091c2702`](https://github.com/adobe/spectrum-web-components/commit/7d091c2702))
+-   **menu**: capture touchend on mobile (#5313) ([`4c2f908a92`](https://github.com/adobe/spectrum-web-components/commit/4c2f908a92))
+-   **sidenav,styles**: remove unneeded system layer ([`fd41b13f8e`](https://github.com/adobe/spectrum-web-components/commit/fd41b13f8e))
+-   **help-text,styles**: remove unneeded system layer ([`be0ae4c899`](https://github.com/adobe/spectrum-web-components/commit/be0ae4c899))
+-   **tags,styles**: remove unneeded system layer ([`03340e94ed`](https://github.com/adobe/spectrum-web-components/commit/03340e94ed))
+-   **color-wheel,styles**: use latest CSS ([`fb62c6a93a`](https://github.com/adobe/spectrum-web-components/commit/fb62c6a93a))
+-   **color-slider,styles**: remove unneeded system layer ([`d48ba7aa4c`](https://github.com/adobe/spectrum-web-components/commit/d48ba7aa4c))
+-   **overlay**: prevent overlay close on document scroll (#5308) ([`8f8735c9ec`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec))
+-   **buttongroup,styles**: use latest CSS ([`a05dceaffd`](https://github.com/adobe/spectrum-web-components/commit/a05dceaffd))
+-   **card,styles**: use latest CSS ([`9eed256391`](https://github.com/adobe/spectrum-web-components/commit/9eed256391))
+-   **tray,styles**: use latest CSS ([`f9f3e6e60e`](https://github.com/adobe/spectrum-web-components/commit/f9f3e6e60e))
+-   **action-bar,styles**: bump to latest release for action-bar ([`b6cd115cda`](https://github.com/adobe/spectrum-web-components/commit/b6cd115cda))
+-   **color-loupe,styles**: use latest CSS ([`4a796cffc1`](https://github.com/adobe/spectrum-web-components/commit/4a796cffc1))
+-   **color-handle,styles**: use latest CSS ([`600d80700f`](https://github.com/adobe/spectrum-web-components/commit/600d80700f))
+-   **breadcrumb,styles**: use latest CSS ([`daeb11f187`](https://github.com/adobe/spectrum-web-components/commit/daeb11f187))
+-   **badge,styles**: bump to latest release ([`95c511ef62`](https://github.com/adobe/spectrum-web-components/commit/95c511ef62))
+-   **avatar,styles**: bump to latest release ([`3899709eb8`](https://github.com/adobe/spectrum-web-components/commit/3899709eb8))
+-   **asset,styles**: bump to latest release ([`f9861fddff`](https://github.com/adobe/spectrum-web-components/commit/f9861fddff))
+-   **alert-dialog,styles**: bump to latest release ([`0c088ae3a2`](https://github.com/adobe/spectrum-web-components/commit/0c088ae3a2))
+-   **number-field**: prevent keyboard on mobile devices by setting inpu… (#5284) ([`5a3bc6d24e`](https://github.com/adobe/spectrum-web-components/commit/5a3bc6d24e))
+-   **tachometer**: update file path pattern for tachometer (#5287) ([`50d20bb8e5`](https://github.com/adobe/spectrum-web-components/commit/50d20bb8e5))
+-   **modal,styles**: remove unneeded system layer ([`5bc73542fa`](https://github.com/adobe/spectrum-web-components/commit/5bc73542fa))
+-   **pre-commit**: update linting commands for to be compatible with POSIX (#5286) ([`24e7e47ab4`](https://github.com/adobe/spectrum-web-components/commit/24e7e47ab4))
+-   **accordion,styles**: remove unneeded system layer ([`165a904bd0`](https://github.com/adobe/spectrum-web-components/commit/165a904bd0))
+-   **field-label,styles**: remove unneeded system layer ([`8931718347`](https://github.com/adobe/spectrum-web-components/commit/8931718347))
+-   **link,styles**: remove unneeded system layer ([`186774daa2`](https://github.com/adobe/spectrum-web-components/commit/186774daa2))
+-   **help-text,styles**: remove unneeded system layer ([`ff56ea2fa5`](https://github.com/adobe/spectrum-web-components/commit/ff56ea2fa5))
+-   **opacity-checkerboard**: bring in styles from latest tag ([`f26b2ccf3b`](https://github.com/adobe/spectrum-web-components/commit/f26b2ccf3b))
+-   **illustrated-message,styles**: remove unneeded system layer ([`f8b4560852`](https://github.com/adobe/spectrum-web-components/commit/f8b4560852))
+-   **picker**: disable drag and select for mobile picker (#5187) ([`2a0422ec1b`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b))
+-   **overlay**: stays open when interacting with elements inside (#5248) ([`70f5f6f3a9`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a9))
+-   **color-field**: respects alpha value in hex form (#5246) ([`e247de9a2e`](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e))
+-   **picker**: move tooltip outside of action menu's button (#5077) ([`549ff4ac36`](https://github.com/adobe/spectrum-web-components/commit/549ff4ac36))
+-   **overlay**: remove pointer events from disabled overlay trigger (#5205) ([`cf8db5e94b`](https://github.com/adobe/spectrum-web-components/commit/cf8db5e94b))
+-   **menu**: focuson mouseover (#5197) ([`6618422848`](https://github.com/adobe/spectrum-web-components/commit/6618422848))
 
 ### Features
 
