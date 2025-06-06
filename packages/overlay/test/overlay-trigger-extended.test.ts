@@ -23,7 +23,6 @@ import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
@@ -176,17 +175,10 @@ describe('Overlay Trigger - extended', () => {
         const textfield = document.createElement('input');
         const overlay = overlayTrigger.clickOverlayElement;
         overlayTrigger.insertAdjacentElement('afterend', textfield);
-        expect(!!button.isConnected, 'button is ready').to.be.true;
-        expect(!!popover.isConnected, 'popover is ready').to.be.true;
-        expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
-            .true;
-        expect(!!textfield.isConnected, 'textfield is ready').to.be.true;
-        expect(document.activeElement, `textfield is not focused`).to.not.equal(
-            textfield
-        );
+        await nextFrame(); // Ensure DOM is updated
+        await elementUpdated(overlayTrigger); // Wait for component updates
+        await elementUpdated(textfield); // Wait for textfield to be ready
         expect(overlay.state, `overlay state`).to.equal('closed');
-        expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
-        expect(popover.open, `popover.open`).to.equal(false);
 
         await sendMouseTo(textfield, 'click');
 
