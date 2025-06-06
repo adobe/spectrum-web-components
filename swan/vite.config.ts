@@ -50,6 +50,10 @@ export default defineConfig(({ mode }) => ({
             outDir: 'dist',
         }),
     ],
+    test: {
+        include: ['src/**/*.test.ts'],
+        exclude: ['src/**/*.e2e.ts'],
+    },
     build: {
         target: 'es2022',
         minify: false,

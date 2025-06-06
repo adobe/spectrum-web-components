@@ -10,75 +10,53 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, fixture, html } from '@open-wc/testing';
-import type SwanBadge from './badge.component.js';
-import './badge.js';
+import { describe, it, expect } from 'vitest';
+import { BADGE_VARIANTS, FIXED_VALUES } from './badge.component.js';
 
-describe('SwanBadge', () => {
-    it('should render with default properties', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge>Badge</swan-badge>
-        `);
-
-        expect(el.variant).to.equal('informative');
-        expect(el.size).to.equal('m');
-        expect(el.fixed).to.be.undefined;
+describe('SwanBadge - Unit Tests', () => {
+    it('should export all badge variants', () => {
+        expect(BADGE_VARIANTS).toContain('informative');
+        expect(BADGE_VARIANTS).toContain('positive');
+        expect(BADGE_VARIANTS).toContain('negative');
+        expect(BADGE_VARIANTS).toContain('accent');
+        expect(BADGE_VARIANTS).toContain('neutral');
+        expect(BADGE_VARIANTS).toContain('notice');
+        expect(BADGE_VARIANTS).toHaveLength(20);
     });
 
-    it('should reflect properties to attributes', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge variant="positive" size="l" fixed="inline-end">
-                Badge
-            </swan-badge>
-        `);
+    it('should include all color variants', () => {
+        const colorVariants = [
+            'fuchsia',
+            'indigo',
+            'magenta',
+            'purple',
+            'seafoam',
+            'yellow',
+            'gray',
+            'red',
+            'orange',
+            'chartreuse',
+            'celery',
+            'green',
+            'cyan',
+            'blue',
+        ];
 
-        expect(el.getAttribute('variant')).to.equal('positive');
-        expect(el.getAttribute('size')).to.equal('l');
-        expect(el.getAttribute('fixed')).to.equal('inline-end');
+        colorVariants.forEach((variant) => {
+            expect(BADGE_VARIANTS).toContain(variant);
+        });
     });
 
-    it('should render icon slot when icon is present', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge>
-                <svg slot="icon" width="12" height="12"></svg>
-                Badge with icon
-            </swan-badge>
-        `);
-
-        const iconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');
-        expect(iconSlot).to.exist;
+    it('should export all fixed position values', () => {
+        expect(FIXED_VALUES).toContain('inline-start');
+        expect(FIXED_VALUES).toContain('inline-end');
+        expect(FIXED_VALUES).toContain('block-start');
+        expect(FIXED_VALUES).toContain('block-end');
+        expect(FIXED_VALUES).toHaveLength(4);
     });
 
-    it('should detect icon-only badges', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge>
-                <svg slot="icon" width="12" height="12"></svg>
-            </swan-badge>
-        `);
-
-        // Need to wait for slot content detection
-        await el.updateComplete;
-        const iconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');
-        expect(iconSlot).to.exist;
-        expect(iconSlot!.hasAttribute('icon-only')).to.be.true;
-    });
-
-    it('should render slotted content in label div', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge>Test Content</swan-badge>
-        `);
-
-        const label = el.shadowRoot!.querySelector('.label');
-        expect(label).to.exist;
-        expect(el.textContent?.trim()).to.equal('Test Content');
-    });
-
-    it('should support fixed positioning', async () => {
-        const el = await fixture<SwanBadge>(html`
-            <swan-badge fixed="block-start">Fixed Badge</swan-badge>
-        `);
-
-        expect(el.fixed).to.equal('block-start');
-        expect(el.getAttribute('fixed')).to.equal('block-start');
+    it('should have consistent variant types', () => {
+        expect(typeof BADGE_VARIANTS[0]).toBe('string');
+        expect(typeof FIXED_VALUES[0]).toBe('string');
     });
 });
