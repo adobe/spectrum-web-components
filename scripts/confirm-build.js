@@ -14,60 +14,70 @@
 
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import glob from 'fast-glob';
 import 'colors';
 
-async function verifyCustomElementsJson() {
-    // Components that don't need their own custom-elements.json manifest
-    const customElementsIgnoreList = new Set([
-        'packages/modal',
-        'packages/iconset',
-        'packages/clear-button',
-        'packages/close-button',
-    ]);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    const packages = glob.sync('packages/*/', { onlyDirectories: true });
-    const checks = packages.map(async (pkg) => {
-        const pkgPath = pkg.replace(/\/$/, '');
-        if (customElementsIgnoreList.has(pkgPath)) {
-            return;
+async function verifyVersionJs() {
+    // If that file is missing, we can't verify the version
+    // (also something is probably broken...)
+    if (!fs.existsSync(path.join(__dirname, '..', 'tools/base/package.json'))) {
+        return Promise.reject(
+            `❌  Failed to find the ${'tools/base/package.json'.cyan} file`
+        );
+    }
+
+    const basePackageJson = await import('../tools/base/package.json', {
+        with: { type: 'json' },
+    }).catch((error) => {
+        if (error.code === 'ERR_MODULE_NOT_FOUND') {
+            return Promise.reject(
+                `❌  Failed to find the ${'tools/base/package.json'.cyan} file`
+            );
         }
-        const customElementsPath = path.join(pkg, 'custom-elements.json');
-        if (!fs.existsSync(customElementsPath)) {
-            throw new Error(`Missing custom-elements.json in ${pkg}`);
-        }
+
+        return Promise.reject(
+            `❌  Failed to load the ${'tools/base/package.json'.cyan} file`
+        );
     });
 
-    return Promise.all(checks);
-}
-
-function verifyVersionJs() {
-    let basePackageJson;
-    try {
-        basePackageJson = JSON.parse(
-            fs.readFileSync('tools/base/package.json', 'utf8')
+    // If that file is missing, we can't verify the version
+    // (also something is probably broken...)
+    if (
+        !fs.existsSync(path.join(__dirname, '..', 'tools/base/src/version.js'))
+    ) {
+        return Promise.reject(
+            `❌  Failed to find the ${'tools/base/src/version.js'.cyan} file`
         );
-    } catch (error) {
-        throw new Error('Failed to read tools/base/package.json');
-    }
-    const versionJsPath = 'tools/base/src/version.js';
-
-    if (!fs.existsSync(versionJsPath)) {
-        throw new Error('version.js file is missing');
     }
 
-    const versionContent = fs.readFileSync(versionJsPath, 'utf8');
-    const versionMatch = versionContent.match(/version = ['"]([^'"]+)['"]/);
+    // Fetching our "source-of-truth" version (managed by genversion tool)
+    const { version } = await import('../tools/base/src/version.js').catch(
+        (error) => {
+            if (error.code === 'ERR_MODULE_NOT_FOUND') {
+                return Promise.reject(
+                    `❌  Failed to find the ${'tools/base/src/version.js'.cyan} file`
+                );
+            }
 
-    if (!versionMatch) {
-        throw new Error('Could not find version in version.js');
+            return Promise.reject(
+                `❌  Failed to load the ${'tools/base/src/version.js'.cyan} file`
+            );
+        }
+    );
+
+    if (!version || typeof version !== 'string') {
+        return Promise.reject(
+            `❌  Invalid or missing version in ${'tools/base/src/version.js'.cyan}`
+        );
     }
 
-    const versionJs = versionMatch[1];
-    if (versionJs !== basePackageJson.version) {
-        throw new Error(
-            `Version mismatch: version.js (${versionJs}) does not match tools/base/package.json (${basePackageJson.version})`
+    if (version !== basePackageJson?.version) {
+        return Promise.reject(
+            `❌  Version mismatch: version.js (${version}) does not match ${'tools/base/package.json'.cyan} (${basePackageJson.version})`
         );
     }
 }
@@ -127,25 +137,45 @@ async function verifyBuildArtifacts() {
 }
 
 async function main() {
-    try {
-        console.log('Verifying custom-elements.json files...'.cyan);
-        await verifyCustomElementsJson();
-
-        console.log('Verifying version.js...'.cyan);
-        verifyVersionJs();
-
-        console.log('Verifying build artifacts...'.cyan);
-        await verifyBuildArtifacts();
-
-        console.log('All build artifacts verified successfully'.green.bold);
-        process.exit(0);
-    } catch (error) {
-        console.error(
-            'Build artifact verification failed:'.red.bold,
-            error.message.red
-        );
-        process.exit(1);
-    }
+    return Promise.all([
+        verifyVersionJs()
+            .catch((error) => {
+                console.error(
+                    'Version.js verification failed:'.red.bold,
+                    error.message
+                );
+                process.exit(1);
+            })
+            .then(() => {
+                console.log('✅  Version.js verified successfully'.green.bold);
+            }),
+        verifyBuildArtifacts()
+            .catch((error) => {
+                console.error(
+                    'Build artifact verification failed:'.red.bold,
+                    error.message.red
+                );
+                process.exit(1);
+            })
+            .then(() => {
+                console.log(
+                    '✅  Build artifacts verified successfully'.green.bold
+                );
+            }),
+    ])
+        .catch((error) => {
+            console.error(
+                'An error occurred during verification:'.red.bold,
+                error.message.red
+            );
+            process.exit(1);
+        })
+        .then(() => {
+            console.log(
+                '✅  All verifications completed successfully'.green.bold
+            );
+            process.exit(0);
+        });
 }
 
 main();

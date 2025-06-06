@@ -15,8 +15,10 @@
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 const processIcon = (srcPath, fd) => {
     // get icon name from filename
@@ -43,47 +45,44 @@ const processIcon = (srcPath, fd) => {
     );
 };
 
-// where is spectrum-css?
-// TODO: use resolve package to find node_modules
-const spectrumIconsPath = path.resolve(
-    path.join(
-        __dirname,
-        '..',
-        'node_modules',
-        '@spectrum-css',
-        'ui-icons',
-        'dist'
-    )
-);
-
-// process the scales
-['medium', 'large'].forEach((scaleKey) => {
-    console.log(`processing scale ${scaleKey}...`);
-
-    const srcPath = path.join(spectrumIconsPath, scaleKey);
-    const outputPath = path.join(
-        __dirname,
-        '..',
-        'packages',
-        'icons',
-        'src',
-        `icons-${scaleKey}.svg.ts`
-    );
-    let outputFd = fs.openSync(outputPath, 'w');
-
-    fs.writeSync(
-        outputFd,
-        'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
-    );
-
-    fs.readdirSync(srcPath).forEach((iconFile) => {
-        const srcIconPath = path.join(srcPath, iconFile);
-        console.log(`\ticon ${iconFile}`);
-        processIcon(srcIconPath, outputFd);
+/**
+ * @returns {Promise<void}
+ */
+async function main() {
+    const spectrumIconsPath = require.resolve('@spectrum-css/ui-icons', {
+        paths: [
+            path.join(__dirname, '..', 'node_modules'),
+            path.join(__dirname, '..', '..', '..', 'node_modules'),
+        ],
     });
 
-    fs.writeSync(outputFd, '</svg>`;');
-    fs.closeSync(outputFd);
-});
+    return Promise.all(
+        ['medium', 'large'].map(async (scale) => {
+            const srcPath = path.join(path.dirname(spectrumIconsPath), scale);
+            const outputPath = path.join(
+                __dirname,
+                '..',
+                'src',
+                `icons-${scale}.svg.ts`
+            );
 
-console.log('complete.');
+            const outputFd = fs.openSync(outputPath, 'w');
+
+            fs.writeSync(
+                outputFd,
+                'import { svg } from \'@spectrum-web-components/base\';\n\nexport default svg`<svg xmlns="http://www.w3.org/2000/svg">'
+            );
+
+            fs.readdirSync(srcPath).forEach((iconFile) => {
+                processIcon(path.join(srcPath, iconFile), outputFd);
+            });
+
+            fs.writeSync(outputFd, '</svg>`;\n');
+            fs.closeSync(outputFd);
+        })
+    ).catch((error) => {
+        console.error('Error processing icons:', error);
+    });
+}
+
+await main();
