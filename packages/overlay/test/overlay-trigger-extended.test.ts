@@ -180,7 +180,15 @@ describe('Overlay Trigger - extended', () => {
         await elementUpdated(textfield); // Wait for textfield to be ready
         expect(overlay.state, `overlay state`).to.equal('closed');
 
+        console.log('Active element before click:', document.activeElement?.tagName);
         await sendMouseTo(textfield, 'click');
+        console.log('Active element after click:', document.activeElement?.tagName);
+        console.log('Textfield properties:', {
+            connected: textfield.isConnected,
+            visible: textfield.offsetParent !== null,
+            disabled: textfield.disabled,
+            tabIndex: textfield.tabIndex,
+        });
 
         await waitUntil(
             () => document.activeElement === textfield,
