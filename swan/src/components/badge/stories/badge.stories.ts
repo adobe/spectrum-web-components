@@ -10,270 +10,131 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { Meta, StoryObj } from '@storybook/web-components';
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 import '../badge.component.js';
 
-type BadgeArgs = {
-    variant: 'neutral' | 'positive' | 'negative' | 'notice' | 'accent';
-    size: 'small' | 'medium' | 'large';
-    pill: boolean;
-    pulse: boolean;
-    content: string;
-};
+// Simple checkmark icon (inline SVG since we don't have the full icon library)
+const CheckmarkIcon = html`
+    <svg
+        slot="icon"
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="currentColor"
+    >
+        <path d="M4.5 7.5L2.5 5.5L1.5 6.5L4.5 9.5L10.5 3.5L9.5 2.5L4.5 7.5Z" />
+    </svg>
+`;
 
-const meta: Meta<BadgeArgs> = {
-    title: 'Components/Badge',
+export default {
+    title: 'Badge',
     component: 'swan-badge',
-    parameters: {
-        docs: {
-            description: {
-                component:
-                    'Badge component for displaying status, counts, or labels.',
-            },
-        },
-    },
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: ['neutral', 'positive', 'negative', 'notice', 'accent'],
-            description: 'The badge variant that determines its color scheme',
-        },
-        size: {
-            control: { type: 'select' },
-            options: ['small', 'medium', 'large'],
-            description: 'The size of the badge',
-        },
-        pill: {
-            control: { type: 'boolean' },
-            description: 'Makes the badge pill-shaped with rounded corners',
-        },
-        pulse: {
-            control: { type: 'boolean' },
-            description: 'Makes the badge pulsate to draw attention',
-        },
-        content: {
-            control: { type: 'text' },
-            description: 'The content displayed inside the badge',
-        },
-    },
-    args: {
-        variant: 'neutral',
-        size: 'medium',
-        pill: false,
-        pulse: false,
-        content: 'Badge',
-    },
 };
 
-export default meta;
-type Story = StoryObj<BadgeArgs>;
-
-// Default story
-export const Default: Story = {
-    render: (args) => html`
-        <swan-badge
-            variant="${args.variant}"
-            size="${args.size}"
-            ?pill="${args.pill}"
-            ?pulse="${args.pulse}"
-        >
-            ${args.content}
-        </swan-badge>
-    `,
+export const Default = (): TemplateResult => {
+    return html`
+        <swan-badge>Badge</swan-badge>
+    `;
 };
 
-// Variants showcase
-export const Variants: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'All available badge variants.',
-            },
-        },
-    },
-    render: () => html`
+export const Icons = (): TemplateResult => {
+    return html`
+        <swan-badge>No icon</swan-badge>
+
+        <swan-badge>${CheckmarkIcon} Icon and label</swan-badge>
+
+        <swan-badge>${CheckmarkIcon}</swan-badge>
+    `;
+};
+
+export const Sizes = (): TemplateResult => {
+    return html`
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <swan-badge size="s">${CheckmarkIcon} Small</swan-badge>
+            <swan-badge size="m">${CheckmarkIcon} Medium</swan-badge>
+            <swan-badge size="l">${CheckmarkIcon} Large</swan-badge>
+            <swan-badge size="xl">${CheckmarkIcon} Extra-large</swan-badge>
+            <swan-badge style="max-width: 180px">
+                ${CheckmarkIcon} This long content automatically wraps, but
+                shows no more than two lines
+            </swan-badge>
+        </div>
+    `;
+};
+
+export const Semantic = (): TemplateResult => {
+    return html`
+        <swan-badge variant="accent">Accent</swan-badge>
+        <swan-badge variant="positive">Positive</swan-badge>
+        <swan-badge variant="informative">Informative</swan-badge>
+        <swan-badge variant="negative">Negative</swan-badge>
+        <swan-badge variant="neutral">Neutral</swan-badge>
+        <swan-badge variant="notice">Notice</swan-badge>
+    `;
+};
+
+export const NonSemantic = (): TemplateResult => {
+    return html`
+        <swan-badge variant="seafoam">Seafoam</swan-badge>
+        <swan-badge variant="indigo">Indigo</swan-badge>
+        <swan-badge variant="purple">Purple</swan-badge>
+        <swan-badge variant="fuchsia">Fuchsia</swan-badge>
+        <swan-badge variant="magenta">Magenta</swan-badge>
+        <swan-badge variant="yellow">Yellow</swan-badge>
+        <swan-badge variant="gray">Gray</swan-badge>
+        <swan-badge variant="red">Red</swan-badge>
+        <swan-badge variant="orange">Orange</swan-badge>
+        <swan-badge variant="chartreuse">Chartreuse</swan-badge>
+        <swan-badge variant="celery">Celery</swan-badge>
+        <swan-badge variant="green">Green</swan-badge>
+        <swan-badge variant="cyan">Cyan</swan-badge>
+        <swan-badge variant="blue">Blue</swan-badge>
+    `;
+};
+
+export const Inline = (): TemplateResult => {
+    return html`
+        Badge is a simple
+        <swan-badge variant="positive" size="s">inline</swan-badge>
+        element that should
+        <swan-badge variant="neutral" size="s">flow</swan-badge>
+        with the rest of the page:
+        <swan-badge variant="negative">Missing</swan-badge>
+        <swan-badge variant="positive">Successful</swan-badge>
+        <swan-badge variant="accent">Accent</swan-badge>
+    `;
+};
+
+export const Fixed = (): TemplateResult => {
+    return html`
         <div
-            style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
+            style="position: relative; width: 400px; height: 200px; background: #eee"
         >
-            <swan-badge variant="neutral">Neutral</swan-badge>
-            <swan-badge variant="positive">Positive</swan-badge>
-            <swan-badge variant="negative">Negative</swan-badge>
-            <swan-badge variant="notice">Notice</swan-badge>
-            <swan-badge variant="accent">Accent</swan-badge>
+            <swan-badge>None</swan-badge>
+            <swan-badge
+                fixed="block-start"
+                style="position: absolute; top: 0; left: 200px;"
+            >
+                block-start
+            </swan-badge>
+            <swan-badge
+                fixed="inline-end"
+                style="position: absolute; right: 0; top: 100px;"
+            >
+                inline-end
+            </swan-badge>
+            <swan-badge
+                fixed="block-end"
+                style="position: absolute; bottom: 0; left: 200px;"
+            >
+                block-end
+            </swan-badge>
+            <swan-badge
+                fixed="inline-start"
+                style="position: absolute; left: 0; top: 100px;"
+            >
+                inline-start
+            </swan-badge>
         </div>
-    `,
-};
-
-// Sizes showcase
-export const Sizes: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'All available badge sizes.',
-            },
-        },
-    },
-    render: () => html`
-        <div
-            style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-        >
-            <swan-badge size="small">Small</swan-badge>
-            <swan-badge size="medium">Medium</swan-badge>
-            <swan-badge size="large">Large</swan-badge>
-        </div>
-    `,
-};
-
-// Pill badges
-export const Pill: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Pill-shaped badges with rounded corners.',
-            },
-        },
-    },
-    render: () => html`
-        <div
-            style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-        >
-            <swan-badge variant="neutral" pill>Neutral</swan-badge>
-            <swan-badge variant="positive" pill>Positive</swan-badge>
-            <swan-badge variant="negative" pill>Negative</swan-badge>
-            <swan-badge variant="notice" pill>Notice</swan-badge>
-            <swan-badge variant="accent" pill>Accent</swan-badge>
-        </div>
-    `,
-};
-
-// Numbers/counts
-export const Numbers: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Badges displaying numbers or counts.',
-            },
-        },
-    },
-    render: () => html`
-        <div
-            style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-        >
-            <swan-badge variant="accent" size="small">1</swan-badge>
-            <swan-badge variant="accent">12</swan-badge>
-            <swan-badge variant="accent" size="large">99+</swan-badge>
-            <swan-badge variant="negative" pill>3</swan-badge>
-            <swan-badge variant="positive" pill>New</swan-badge>
-        </div>
-    `,
-};
-
-// Pulsing badges
-export const Pulse: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Pulsing badges to draw attention.',
-            },
-        },
-    },
-    render: () => html`
-        <div
-            style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-        >
-            <swan-badge variant="accent" pulse>Live</swan-badge>
-            <swan-badge variant="positive" pulse pill>New</swan-badge>
-            <swan-badge variant="notice" pulse>Alert</swan-badge>
-        </div>
-    `,
-};
-
-// Usage examples
-export const UsageExamples: Story = {
-    parameters: {
-        docs: {
-            description: {
-                story: 'Common usage patterns for badges in UI elements.',
-            },
-        },
-    },
-    render: () => html`
-        <div style="display: flex; flex-direction: column; gap: 2rem;">
-            <!-- Status indicators -->
-            <div>
-                <h4 style="margin: 0 0 1rem;">Status Indicators</h4>
-                <div
-                    style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-                >
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Server Status:
-                        <swan-badge variant="positive">Online</swan-badge>
-                    </span>
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Build:
-                        <swan-badge variant="negative">Failed</swan-badge>
-                    </span>
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Deploy:
-                        <swan-badge variant="notice">Pending</swan-badge>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Notification counts -->
-            <div>
-                <h4 style="margin: 0 0 1rem;">Notification Counts</h4>
-                <div
-                    style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;"
-                >
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Messages
-                        <swan-badge variant="accent" size="small" pill>
-                            5
-                        </swan-badge>
-                    </span>
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Notifications
-                        <swan-badge variant="negative" size="small" pill>
-                            12
-                        </swan-badge>
-                    </span>
-                    <span
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        Updates
-                        <swan-badge variant="positive" pulse pill>
-                            New
-                        </swan-badge>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Category tags -->
-            <div>
-                <h4 style="margin: 0 0 1rem;">Category Tags</h4>
-                <div
-                    style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;"
-                >
-                    <swan-badge variant="neutral" pill>
-                        Documentation
-                    </swan-badge>
-                    <swan-badge variant="accent" pill>Feature</swan-badge>
-                    <swan-badge variant="notice" pill>Bug Fix</swan-badge>
-                    <swan-badge variant="positive" pill>Enhancement</swan-badge>
-                </div>
-            </div>
-        </div>
-    `,
+    `;
 };

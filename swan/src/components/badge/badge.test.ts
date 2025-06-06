@@ -20,51 +20,65 @@ describe('SwanBadge', () => {
             <swan-badge>Badge</swan-badge>
         `);
 
-        expect(el.variant).to.equal('neutral');
-        expect(el.size).to.equal('medium');
-        expect(el.pill).to.be.false;
-        expect(el.pulse).to.be.false;
+        expect(el.variant).to.equal('informative');
+        expect(el.size).to.equal('m');
+        expect(el.fixed).to.be.undefined;
     });
 
     it('should reflect properties to attributes', async () => {
         const el = await fixture<SwanBadge>(html`
-            <swan-badge variant="positive" size="large" pill pulse>
+            <swan-badge variant="positive" size="l" fixed="inline-end">
                 Badge
             </swan-badge>
         `);
 
         expect(el.getAttribute('variant')).to.equal('positive');
-        expect(el.getAttribute('size')).to.equal('large');
-        expect(el.hasAttribute('pill')).to.be.true;
-        expect(el.hasAttribute('pulse')).to.be.true;
+        expect(el.getAttribute('size')).to.equal('l');
+        expect(el.getAttribute('fixed')).to.equal('inline-end');
     });
 
-    it('should apply correct CSS classes', async () => {
+    it('should render icon slot when icon is present', async () => {
         const el = await fixture<SwanBadge>(html`
-            <swan-badge variant="negative" size="small" pill>Badge</swan-badge>
+            <swan-badge>
+                <svg slot="icon" width="12" height="12"></svg>
+                Badge with icon
+            </swan-badge>
         `);
 
-        const badge = el.shadowRoot!.querySelector('.badge');
-        expect(badge).to.exist;
-        expect(badge!.classList.contains('badge--negative')).to.be.true;
-        expect(badge!.classList.contains('badge--small')).to.be.true;
-        expect(badge!.classList.contains('badge--pill')).to.be.true;
+        const iconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');
+        expect(iconSlot).to.exist;
     });
 
-    it('should render slotted content', async () => {
+    it('should detect icon-only badges', async () => {
+        const el = await fixture<SwanBadge>(html`
+            <swan-badge>
+                <svg slot="icon" width="12" height="12"></svg>
+            </swan-badge>
+        `);
+
+        // Need to wait for slot content detection
+        await el.updateComplete;
+        const iconSlot = el.shadowRoot!.querySelector('slot[name="icon"]');
+        expect(iconSlot).to.exist;
+        expect(iconSlot!.hasAttribute('icon-only')).to.be.true;
+    });
+
+    it('should render slotted content in label div', async () => {
         const el = await fixture<SwanBadge>(html`
             <swan-badge>Test Content</swan-badge>
         `);
 
+        const label = el.shadowRoot!.querySelector('.label');
+        expect(label).to.exist;
         expect(el.textContent?.trim()).to.equal('Test Content');
     });
 
-    it('should have role="status"', async () => {
+    it('should support fixed positioning', async () => {
         const el = await fixture<SwanBadge>(html`
-            <swan-badge>Badge</swan-badge>
+            <swan-badge fixed="block-start">Fixed Badge</swan-badge>
         `);
-        const badge = el.shadowRoot!.querySelector('.badge');
 
-        expect(badge!.getAttribute('role')).to.equal('status');
+        expect(el.fixed).to.equal('block-start');
+        expect(el.getAttribute('fixed')).to.equal('block-start');
     });
 });

@@ -10,69 +10,143 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { html, LitElement, nothing } from 'lit';
+import {
+    customElement,
+    property,
+    queryAssignedElements,
+} from 'lit/decorators.js';
 import styles from './badge.styles.js';
 
+// Badge variants from 1.x - comprehensive color system
+export const BADGE_VARIANTS = [
+    'accent',
+    'neutral',
+    'informative',
+    'positive',
+    'negative',
+    'notice',
+    'fuchsia',
+    'indigo',
+    'magenta',
+    'purple',
+    'seafoam',
+    'yellow',
+    'gray',
+    'red',
+    'orange',
+    'chartreuse',
+    'celery',
+    'green',
+    'cyan',
+    'blue',
+] as const;
+
+export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
+
+// Fixed positioning values from 1.x
+export const FIXED_VALUES = [
+    'inline-start',
+    'inline-end',
+    'block-start',
+    'block-end',
+] as const;
+
+export type FixedValues = (typeof FIXED_VALUES)[number];
+
 /**
- * @summary Swan Badge component for displaying status, counts, or labels.
- * @since 1.0
+ * @element swan-badge
+ * Adapted from Spectrum Web Components v1.x Badge
  *
- * @slot - The badge's content.
- *
- * @csspart base - The component's base wrapper.
+ * @slot - Text label of the badge
+ * @slot icon - Optional icon that appears to the left of the label
  */
 @customElement('swan-badge')
 export default class SwanBadge extends LitElement {
     static override styles = styles;
 
-    /**
-     * The badge's variant.
-     */
-    @property({ reflect: true }) variant:
-        | 'neutral'
-        | 'positive'
-        | 'negative'
-        | 'notice'
-        | 'accent' = 'neutral';
+    @property({ reflect: true })
+    public get fixed(): FixedValues | undefined {
+        return this._fixed;
+    }
 
-    /**
-     * The badge's size.
-     */
-    @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+    public set fixed(fixed: FixedValues | undefined) {
+        if (fixed === this.fixed) return;
+        const oldValue = this.fixed;
+        this._fixed = fixed;
+        if (fixed) {
+            this.setAttribute('fixed', fixed);
+        } else {
+            this.removeAttribute('fixed');
+        }
+        this.requestUpdate('fixed', oldValue);
+    }
 
-    /**
-     * Makes the badge pill-shaped.
-     */
-    @property({ type: Boolean, reflect: true }) pill = false;
+    private _fixed?: FixedValues;
 
-    /**
-     * Makes the badge pulsate to draw attention.
-     */
-    @property({ type: Boolean, reflect: true }) pulse = false;
+    @property({ type: String, reflect: true })
+    public variant: BadgeVariant = 'informative';
 
-    override render() {
+    // Size support for compatibility (using s,m,l,xl like 1.x)
+    @property({ type: String, reflect: true })
+    public size: 's' | 'm' | 'l' | 'xl' = 'm';
+
+    // Track icon slot content
+    @queryAssignedElements({ slot: 'icon' })
+    private iconElements!: HTMLElement[];
+
+    // Track default slot content to detect if we have text
+    private _slotHasContent = false;
+
+    protected get hasIcon(): boolean {
+        return this.iconElements && this.iconElements.length > 0;
+    }
+
+    protected get slotHasContent(): boolean {
+        return this._slotHasContent;
+    }
+
+    private handleSlotChange(event: Event) {
+        const slot = event.target as HTMLSlotElement;
+        const assignedNodes = slot.assignedNodes();
+
+        // Check if there's meaningful text content
+        this._slotHasContent = assignedNodes.some((node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                return node.textContent?.trim() !== '';
+            }
+            return true; // Element nodes count as content
+        });
+
+        this.requestUpdate();
+    }
+
+    protected override render() {
+        // Development warnings like 1.x
+        if (process.env.NODE_ENV === 'development') {
+            if (!BADGE_VARIANTS.includes(this.variant)) {
+                console.warn(
+                    `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
+                    BADGE_VARIANTS,
+                    'Current variant:',
+                    this.variant
+                );
+            }
+        }
+
         return html`
-            <span
-                part="base"
-                class=${classMap({
-                    badge: true,
-                    'badge--neutral': this.variant === 'neutral',
-                    'badge--positive': this.variant === 'positive',
-                    'badge--negative': this.variant === 'negative',
-                    'badge--notice': this.variant === 'notice',
-                    'badge--accent': this.variant === 'accent',
-                    'badge--small': this.size === 'small',
-                    'badge--medium': this.size === 'medium',
-                    'badge--large': this.size === 'large',
-                    'badge--pill': this.pill,
-                    'badge--pulse': this.pulse,
-                })}
-                role="status"
-            >
-                <slot></slot>
-            </span>
+            ${this.hasIcon
+                ? html`
+                      <slot
+                          name="icon"
+                          ?icon-only=${!this.slotHasContent}
+                          @slotchange=${this.handleSlotChange}
+                      ></slot>
+                  `
+                : nothing}
+            <div class="label">
+                <slot @slotchange=${this.handleSlotChange}></slot>
+            </div>
         `;
     }
 }
