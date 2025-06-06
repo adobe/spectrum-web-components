@@ -14,167 +14,154 @@ import { css } from 'lit';
 
 export default css`
     :host {
-        /* Base host styles - web component approach */
+        /* Base web component styles */
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--spectrum-font-family-base);
-        font-weight: var(--spectrum-font-weight-bold);
-        text-transform: uppercase;
-        letter-spacing: var(--spectrum-letter-spacing-s);
-        border-radius: var(--spectrum-border-radius-s);
+        --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+        --spectrum-font-style: var(--spectrum-default-font-style);
+        --spectrum-font-size: var(--spectrum-font-size-100);
+
+        font-family: var(--spectrum-font-family);
+        font-size: var(--spectrum-font-size);
+        font-style: var(--spectrum-font-style);
+
+        letter-spacing: var(--spectrum-letter-spacing-s, 0.06em);
+
+        /* Layout */
+        border-radius: var(--spectrum-corner-radius-100, 4px);
         border: 1px solid transparent;
         white-space: nowrap;
         cursor: inherit;
         user-select: none;
         vertical-align: top;
-        gap: 4px;
 
         /* Default size - medium */
-        --badge-height: 20px;
-        --badge-padding: 0 8px;
-        --badge-font-size: 11px;
-        --badge-line-height: 1;
-
-        height: var(--badge-height);
-        padding: var(--badge-padding);
-        font-size: var(--badge-font-size);
-        line-height: var(--badge-line-height);
+        min-height: var(--spectrum-component-height-100, 20px);
+        padding: 0 var(--spectrum-component-edge-to-text-100, 8px);
+        font-size: var(--spectrum-font-size-100, 11px);
+        line-height: var(--spectrum-line-height-100, 1.2);
+        gap: var(--spectrum-text-to-visual-100, 4px);
 
         /* Default variant - informative */
-        background-color: var(--spectrum-color-informative);
-        color: var(--spectrum-color-informative-content);
+        background: var(
+            --spectrum-informative-background-color-default,
+            #378ef0
+        );
+        color: var(--spectrum-white, white);
     }
 
-    /* Size variants - using 1.x sizes (s, m, l, xl) */
+    /* Size variants */
     :host([size='s']) {
-        --badge-height: 16px;
-        --badge-padding: 0 6px;
-        --badge-font-size: 10px;
-        --badge-line-height: 1;
-    }
-
-    :host([size='m']) {
-        --badge-height: 20px;
-        --badge-padding: 0 8px;
-        --badge-font-size: 11px;
-        --badge-line-height: 1;
+        min-height: var(--spectrum-component-height-75, 16px);
+        padding: 0 var(--spectrum-component-edge-to-text-75, 6px);
+        font-size: var(--spectrum-font-size-75, 10px);
+        gap: var(--spectrum-text-to-visual-75, 2px);
     }
 
     :host([size='l']) {
-        --badge-height: 24px;
-        --badge-padding: 0 10px;
-        --badge-font-size: 12px;
-        --badge-line-height: 1;
+        min-height: var(--spectrum-component-height-200, 24px);
+        padding: 0 var(--spectrum-component-edge-to-text-200, 10px);
+        font-size: var(--spectrum-font-size-200, 12px);
+        gap: var(--spectrum-text-to-visual-200, 6px);
     }
 
     :host([size='xl']) {
-        --badge-height: 28px;
-        --badge-padding: 0 12px;
-        --badge-font-size: 13px;
-        --badge-line-height: 1;
+        min-height: var(--spectrum-component-height-300, 28px);
+        padding: 0 var(--spectrum-component-edge-to-text-300, 12px);
+        font-size: var(--spectrum-font-size-300, 13px);
+        gap: var(--spectrum-text-to-visual-300, 8px);
     }
 
     /* Semantic variants */
     :host([variant='accent']) {
-        background-color: var(--spectrum-color-accent);
-        color: var(--spectrum-color-accent-content);
+        background: var(--spectrum-accent-background-color-default, #0066cc);
     }
 
     :host([variant='neutral']) {
-        background-color: var(--spectrum-color-neutral);
-        color: var(--spectrum-color-neutral-content);
+        background: var(
+            --spectrum-neutral-subdued-background-color-default,
+            #6b7280
+        );
     }
 
     :host([variant='informative']) {
-        background-color: var(--spectrum-color-informative);
-        color: var(--spectrum-color-informative-content);
+        background: var(
+            --spectrum-informative-background-color-default,
+            #378ef0
+        );
     }
 
     :host([variant='positive']) {
-        background-color: var(--spectrum-color-positive);
-        color: var(--spectrum-color-positive-content);
+        background: var(--spectrum-positive-background-color-default, #16a34a);
     }
 
     :host([variant='negative']) {
-        background-color: var(--spectrum-color-negative);
-        color: var(--spectrum-color-negative-content);
+        background: var(--spectrum-negative-background-color-default, #dc2626);
     }
 
     :host([variant='notice']) {
-        background-color: var(--spectrum-color-notice);
-        color: var(--spectrum-color-notice-content);
+        background: var(--spectrum-notice-background-color-default, #f59e0b);
     }
 
-    /* Non-semantic color variants */
+    /* Non-semantic variants */
     :host([variant='fuchsia']) {
-        background-color: var(--spectrum-color-fuchsia);
-        color: var(--spectrum-color-fuchsia-content);
+        background: var(--spectrum-fuchsia-background-color-default, #d946ef);
     }
 
     :host([variant='indigo']) {
-        background-color: var(--spectrum-color-indigo);
-        color: var(--spectrum-color-indigo-content);
+        background: var(--spectrum-indigo-background-color-default, #6366f1);
     }
 
     :host([variant='magenta']) {
-        background-color: var(--spectrum-color-magenta);
-        color: var(--spectrum-color-magenta-content);
+        background: var(--spectrum-magenta-background-color-default, #ec4899);
     }
 
     :host([variant='purple']) {
-        background-color: var(--spectrum-color-purple);
-        color: var(--spectrum-color-purple-content);
+        background: var(--spectrum-purple-background-color-default, #8b5cf6);
     }
 
     :host([variant='seafoam']) {
-        background-color: var(--spectrum-color-seafoam);
-        color: var(--spectrum-color-seafoam-content);
+        background: var(--spectrum-seafoam-background-color-default, #14b8a6);
     }
 
     :host([variant='yellow']) {
-        background-color: var(--spectrum-color-yellow);
-        color: var(--spectrum-color-yellow-content);
+        background: var(--spectrum-yellow-background-color-default, #eab308);
     }
 
     :host([variant='gray']) {
-        background-color: var(--spectrum-color-gray);
-        color: var(--spectrum-color-gray-content);
+        background: var(--spectrum-gray-background-color-default, #64748b);
     }
 
     :host([variant='red']) {
-        background-color: var(--spectrum-color-red);
-        color: var(--spectrum-color-red-content);
+        background: var(--spectrum-red-background-color-default, #ef4444);
     }
 
     :host([variant='orange']) {
-        background-color: var(--spectrum-color-orange);
-        color: var(--spectrum-color-orange-content);
+        background: var(--spectrum-orange-background-color-default, #f97316);
     }
 
     :host([variant='chartreuse']) {
-        background-color: var(--spectrum-color-chartreuse);
-        color: var(--spectrum-color-chartreuse-content);
+        background: var(
+            --spectrum-chartreuse-background-color-default,
+            #84cc16
+        );
     }
 
     :host([variant='celery']) {
-        background-color: var(--spectrum-color-celery);
-        color: var(--spectrum-color-celery-content);
+        background: var(--spectrum-celery-background-color-default, #22c55e);
     }
 
     :host([variant='green']) {
-        background-color: var(--spectrum-color-green);
-        color: var(--spectrum-color-green-content);
+        background: var(--spectrum-green-background-color-default, #16a34a);
     }
 
     :host([variant='cyan']) {
-        background-color: var(--spectrum-color-cyan);
-        color: var(--spectrum-color-cyan-content);
+        background: var(--spectrum-cyan-background-color-default, #06b6d4);
     }
 
     :host([variant='blue']) {
-        background-color: var(--spectrum-color-blue);
-        color: var(--spectrum-color-blue-content);
+        background: var(--spectrum-blue-background-color-default, #3b82f6);
     }
 
     /* Fixed positioning styles */
@@ -223,23 +210,23 @@ export default css`
 
     /* Size-responsive icon sizing */
     :host([size='s']) slot[name='icon']::slotted(*) {
-        width: 10px;
-        height: 10px;
+        width: var(--spectrum-workflow-icon-size-75, 10px);
+        height: var(--spectrum-workflow-icon-size-75, 10px);
     }
 
     :host([size='m']) slot[name='icon']::slotted(*) {
-        width: 12px;
-        height: 12px;
+        width: var(--spectrum-workflow-icon-size-100, 12px);
+        height: var(--spectrum-workflow-icon-size-100, 12px);
     }
 
     :host([size='l']) slot[name='icon']::slotted(*) {
-        width: 14px;
-        height: 14px;
+        width: var(--spectrum-workflow-icon-size-200, 14px);
+        height: var(--spectrum-workflow-icon-size-200, 14px);
     }
 
     :host([size='xl']) slot[name='icon']::slotted(*) {
-        width: 16px;
-        height: 16px;
+        width: var(--spectrum-workflow-icon-size-300, 16px);
+        height: var(--spectrum-workflow-icon-size-300, 16px);
     }
 
     /* Label container */
@@ -253,18 +240,5 @@ export default css`
     /* Text content in the default slot */
     .label slot {
         display: contents;
-    }
-
-    /* Pulse animation */
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 var(--spectrum-color-accent-alpha-50);
-        }
-        70% {
-            box-shadow: 0 0 0 6px transparent;
-        }
-        100% {
-            box-shadow: 0 0 0 0 transparent;
-        }
     }
 `;

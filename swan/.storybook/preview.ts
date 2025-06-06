@@ -1,5 +1,10 @@
 import type { Preview } from '@storybook/web-components-vite';
 
+// Import global design tokens
+import '../src/tokens/index.css';
+import '../src/tokens/light-vars.css';
+import '../src/tokens/medium-vars.css';
+import '../src/tokens/global-vars.css';
 const preview: Preview = {
     parameters: {
         controls: {
