@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import { ElementPart, Part } from 'lit';
 import { nothing } from 'lit/html.js';
 import { AsyncDirective, directive } from 'lit/async-directive.js';
@@ -42,9 +42,10 @@ class SpreadDirective extends AsyncDirective {
     element!: Element;
     prevData: { [key: string]: unknown } = {};
 
-    render(_spreadData: { [key: string]: unknown }) {
+    render(_: { [key: string]: unknown }) {
         return nothing;
     }
+
     override update(part: Part, [spreadData]: Parameters<this['render']>) {
         if (this.element !== (part as ElementPart).element) {
             this.element = (part as ElementPart).element;
@@ -65,7 +66,8 @@ class SpreadDirective extends AsyncDirective {
             }
             const name = key.slice(1);
             switch (key[0]) {
-                case '@': // event listener
+                case '@': {
+                    // event listener
                     const prevHandler = prevData[key];
                     if (prevHandler) {
                         element.removeEventListener(
@@ -80,18 +82,22 @@ class SpreadDirective extends AsyncDirective {
                         value as EventListenerWithOptions
                     );
                     break;
-                case '.': // property
-                    // @ts-ignore
+                }
+                case '.': {
+                    // property
                     element[name] = value;
                     break;
-                case '?': // boolean attribute
+                }
+                case '?': {
+                    // boolean attribute
                     if (value) {
                         element.setAttribute(name, '');
                     } else {
                         element.removeAttribute(name);
                     }
                     break;
-                default:
+                }
+                default: {
                     // standard attribute
                     if (value != null) {
                         element.setAttribute(key, String(value));
@@ -99,6 +105,7 @@ class SpreadDirective extends AsyncDirective {
                         element.removeAttribute(key);
                     }
                     break;
+                }
             }
         }
     }
@@ -109,7 +116,8 @@ class SpreadDirective extends AsyncDirective {
         for (const key in prevData) {
             if (!data || !(key in data)) {
                 switch (key[0]) {
-                    case '@': // event listener
+                    case '@': {
+                        // event listener
                         const value = prevData[key];
                         element.removeEventListener(
                             key.slice(1),
@@ -117,17 +125,22 @@ class SpreadDirective extends AsyncDirective {
                             value as EventListenerWithOptions
                         );
                         break;
-                    case '.': // property
-                        // @ts-ignore
+                    }
+                    case '.': {
+                        // property
                         element[key.slice(1)] = undefined;
                         break;
-                    case '?': // boolean attribute
+                    }
+                    case '?': {
+                        // boolean attribute
                         element.removeAttribute(key.slice(1));
                         break;
-                    default:
+                    }
+                    default: {
                         // standard attribute
                         element.removeAttribute(key);
                         break;
+                    }
                 }
             }
         }
@@ -201,7 +214,6 @@ class SpreadPropsDirective extends AsyncDirective {
             if (value === prevData[key]) {
                 continue;
             }
-            // @ts-ignore
             element[key] = value;
         }
     }
@@ -211,7 +223,6 @@ class SpreadPropsDirective extends AsyncDirective {
         if (!prevData) return;
         for (const key in prevData) {
             if (!data || !(key in data)) {
-                // @ts-ignore
                 element[key] = undefined;
             }
         }
