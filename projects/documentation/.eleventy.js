@@ -19,7 +19,7 @@ const packageVersion = async function (packageName) {
         packageJSON = await import(
             `../../packages/${packageName}/package.json`,
             {
-                assert: { type: 'json' },
+                with: { type: 'json' },
             }
         ).then((packageDefault) => packageDefault.default);
     } catch (e) {
@@ -27,7 +27,7 @@ const packageVersion = async function (packageName) {
             packageJSON = await import(
                 `../../tools/${packageName}/package.json`,
                 {
-                    assert: { type: 'json' },
+                    with: { type: 'json' },
                 }
             ).then((packageDefault) => packageDefault.default);
         } catch (e) {}
