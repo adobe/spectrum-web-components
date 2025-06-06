@@ -10,8 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, ReactiveElement } from 'lit';
+import { adoptStyles, CSSResultOrNative, LitElement, ReactiveElement } from 'lit';
+import { property } from 'lit/decorators.js';
+import { createContext, provide } from '@lit/context';
 import { version } from '@spectrum-web-components/base/src/version.js';
+
+export { consume, ContextConsumer } from '@lit/context';
+export type SystemThemes = 'spectrum'|'express'|'spectrum-two';
+export type SystemThemeConfig = Map<SystemThemes, CSSResultOrNative | null>;
+
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -23,7 +30,11 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+export const systemContext = createContext<SystemThemes>('system');
+
 export interface SpectrumInterface {
+    systemTheming: SystemThemeConfig;
+    system: SystemThemes;
     shadowRoot: ShadowRoot;
     isLTR: boolean;
     hasVisibleFocusInTree(): boolean;
@@ -165,6 +176,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 }
                 this._dirParent = dirParent as HTMLElement;
             }
+
             super.connectedCallback();
         }
 
@@ -182,11 +194,65 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
     }
+
     return SpectrumMixinElement;
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
+
+    /**
+     * @description This map connects the system with a subset of styles
+     * @memberof SpectrumMixinElement
+     */
+    public get systemTheming(): SystemThemeConfig {
+        return new Map([
+            ['spectrum', null],
+            ['express', null],
+            ['spectrum-two', null],
+        ]);
+    }
+
+    /**
+     * @description The system context of the element. This is used to determine the
+     * styling, markup, and/or API of the element and allows for the element to report on deprecations.
+     * @memberof SpectrumMixinElement
+     */
+    @provide({ context: systemContext })
+    @property({ reflect: true })
+    public system!: SystemThemes = 'spectrum';
+
+    /**
+     * @description Forces the element to update its system context and swap themes if system theming is available.
+     * @param {(SystemThemes|undefined)} system - The optional system context to force the element to update to.
+     * @memberof SpectrumMixinElement
+     */
+    public styleUpdate(system: SystemThemes|undefined = undefined): void {
+        // Default to spectrum base theme
+        if (typeof system !== "undefined") system = 'spectrum';
+        if (system === this.system) return;
+
+        console.log(system);
+
+        // Swap themes if system theming is available
+        let theme: CSSResultOrNative | null;
+        if (this.systemTheming && this.systemTheming.has(system) && this.systemTheming.get(system)) {
+            theme = this.systemTheming.get(system)!;
+            
+            this.updateComplete.then(() => {
+                if (theme !== null && this.shadowRoot) {
+                    adoptStyles(this.shadowRoot, [theme!]);
+                }
+            });
+        }
+    }
+
+    // public override connectedCallback(): void {
+    //     // Initialize the system context
+    //     // this.system = this.style.getPropertyValue('--context') as SystemThemes;
+
+    //     super.connectedCallback();
+    // }
 }
 
 if (window.__swc.DEBUG) {

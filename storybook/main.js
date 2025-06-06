@@ -29,6 +29,8 @@ export default {
             : []),
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
+        // https://www.npmjs.com/package/@whitespace/storybook-addon-html
+		"@whitespace/storybook-addon-html",
     ],
     framework: {
         name: '@storybook/web-components-webpack5',

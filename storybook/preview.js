@@ -142,6 +142,19 @@ export const parameters = {
             title: 'Deprecated',
         },
     },
+	html: {
+        root: '#root-inner',
+		removeComments: true,
+		prettier: {
+			tabWidth: 2,
+			useTabs: false,
+			htmlWhitespaceSensitivity: "ignore",
+		},
+		highlighter: {
+			showLineNumbers: true,
+			wrapLines: false,
+		},
+	},
     chromatic: {
         forcedColors: 'none',
         prefersReducedMotion: 'no-preference',
