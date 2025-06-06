@@ -102,6 +102,11 @@ export class Card extends LikeAnchor(
     @property()
     public subheading = '';
 
+    private startY = 0;
+    private startX = 0;
+    private isScrolling = false;
+    private readonly SCROLL_THRESHOLD = 10; // pixels to move before considering it a scroll
+
     protected get hasCoverPhoto(): boolean {
         return this.getSlotContentPresence('[slot="cover-photo"]');
     }
@@ -186,21 +191,45 @@ export class Card extends LikeAnchor(
         }
     }
 
-    private handlePointerdown(event: Event): void {
+    private handlePointerdown(event: PointerEvent): void {
         const path = event.composedPath();
         const hasAnchor = path.some(
             (el) => (el as HTMLElement).localName === 'a'
         );
         if (hasAnchor) return;
-        const start = +new Date();
+
+        // Store the initial touch position
+        this.startY = event.clientY;
+        this.startX = event.clientX;
+        this.isScrolling = false;
+
+        const handleMove = (moveEvent: PointerEvent): void => {
+            const deltaY = Math.abs(moveEvent.clientY - this.startY);
+            const deltaX = Math.abs(moveEvent.clientX - this.startX);
+
+            // If movement exceeds threshold, consider it a scroll
+            if (
+                deltaY > this.SCROLL_THRESHOLD ||
+                deltaX > this.SCROLL_THRESHOLD
+            ) {
+                this.isScrolling = true;
+                this.removeEventListener('pointermove', handleMove);
+            }
+        };
+
         const handleEnd = (): void => {
-            const end = +new Date();
-            if (end - start < 200) {
+            // Only trigger click if it wasn't a scroll
+            if (!this.isScrolling) {
                 this.click();
             }
+
+            // Clean up event listeners
+            this.removeEventListener('pointermove', handleMove);
             this.removeEventListener('pointerup', handleEnd);
             this.removeEventListener('pointercancel', handleEnd);
         };
+
+        this.addEventListener('pointermove', handleMove);
         this.addEventListener('pointerup', handleEnd);
         this.addEventListener('pointercancel', handleEnd);
     }
