@@ -92,7 +92,7 @@ governing permissions and limitations under the License.
     font-size: var(--mod-tooltip-font-size, var(--spectrum-tooltip-font-size));
     font-weight: var(--mod-tooltip-font-weight, var(--spectrum-tooltip-font-weight));
     line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
-    word-break: break-word;
+    overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     cursor: default;
     -webkit-user-select: none;
