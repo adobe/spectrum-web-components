@@ -11,11 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, LitElement, nothing } from 'lit';
-import {
-    customElement,
-    property,
-    queryAssignedElements,
-} from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 import styles from './badge.styles.js';
 
 // Badge variants from 1.x - comprehensive color system
@@ -61,7 +57,6 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
  */
-@customElement('swan-badge')
 export default class SwanBadge extends LitElement {
     static override styles = styles;
 
@@ -71,7 +66,9 @@ export default class SwanBadge extends LitElement {
     }
 
     public set fixed(fixed: FixedValues | undefined) {
-        if (fixed === this.fixed) return;
+        if (fixed === this.fixed) {
+            return;
+        }
         const oldValue = this.fixed;
         this._fixed = fixed;
         if (fixed) {

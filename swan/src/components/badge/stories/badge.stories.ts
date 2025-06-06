@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from 'lit';
-import '../badge.component.js';
+import '../badge.js';
 
 // Simple checkmark icon (inline SVG since we don't have the full icon library)
 const CheckmarkIcon = html`

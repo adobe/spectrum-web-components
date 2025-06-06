@@ -12,5 +12,15 @@ governing permissions and limitations under the License.
 
 import SwanBadge from './badge.component.js';
 
+// Register the custom element following 1.x pattern
+customElements.define('swan-badge', SwanBadge);
+
+// Provide TypeScript support
+declare global {
+    interface HTMLElementTagNameMap {
+        'swan-badge': SwanBadge;
+    }
+}
+
 export * from './badge.component.js';
 export default SwanBadge;
