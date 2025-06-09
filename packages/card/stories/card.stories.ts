@@ -415,3 +415,93 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
+
+export const ScrollTest = {
+    render: (args: StoryArgs) => html`
+        <style>
+            .scroll-container {
+                height: 400px;
+                overflow-y: auto;
+                padding: 16px;
+                background: var(--spectrum-global-color-gray-100);
+                border: 1px solid var(--spectrum-global-color-gray-300);
+                border-radius: 4px;
+            }
+            .card-wrapper {
+                margin-bottom: 16px;
+            }
+            .scroll-indicator {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+                background: var(--spectrum-global-color-gray-800);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 4px;
+                font-size: 12px;
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+            .scroll-container:hover .scroll-indicator {
+                opacity: 1;
+            }
+        </style>
+        <div class="scroll-container">
+            <div class="scroll-indicator">Scroll to test mobile behavior</div>
+            ${Array.from(
+                { length: 20 },
+                (_, i) => html`
+                    <div class="card-wrapper">
+                        <sp-card
+                            heading="Card ${i + 1}"
+                            subheading="Scroll Test"
+                            ?horizontal=${args.horizontal}
+                            variant=${args.variant}
+                            href=${args.href}
+                        >
+                            <img
+                                slot="preview"
+                                src="https://picsum.photos/532/192?random=${i}"
+                                alt="Card ${i + 1} Preview"
+                            />
+                            <div slot="description">
+                                Try scrolling through these cards on mobile. The
+                                click event should not trigger while scrolling.
+                                ${i % 2 === 0
+                                    ? html`
+                                          <sp-action-menu
+                                              slot="actions"
+                                              placement="bottom-end"
+                                              quiet
+                                          >
+                                              <sp-menu-item>
+                                                  Action 1
+                                              </sp-menu-item>
+                                              <sp-menu-item>
+                                                  Action 2
+                                              </sp-menu-item>
+                                          </sp-action-menu>
+                                      `
+                                    : ''}
+                            </div>
+                            <div slot="footer">
+                                ${i % 3 === 0
+                                    ? html`
+                                          <sp-link href="https://example.com">
+                                              View Details
+                                          </sp-link>
+                                      `
+                                    : 'Footer Content'}
+                            </div>
+                        </sp-card>
+                    </div>
+                `
+            )}
+        </div>
+    `,
+    args: {
+        variant: 'standard',
+        horizontal: false,
+        href: 'https://example.com',
+    },
+};
