@@ -398,7 +398,7 @@ export const Icon${displayName}: ComponentType<Partial<Icon${displayName}Type> |
  */
 export async function generateIconWrapper(iconType) {
     const icons = await fg(
-        resolve(__dirname, '..', `packages/${iconType}/src/elements/**.d.ts`)
+        resolve(__dirname, '..', `tools/${iconType}/src/elements/**.d.ts`)
     );
     for (let icon of icons) {
         const id = basename(icon).split('.')[0].substring('Icon'.length);
@@ -433,7 +433,7 @@ export async function generateIconWrapper(iconType) {
     }
 
     const { name: pkgName, version: pkgVersion } = await readJSON(
-        resolve(__dirname, '..', `packages/${iconType}/package.json`)
+        resolve(__dirname, '..', `tools/${iconType}/package.json`)
     );
 
     await outputFile(

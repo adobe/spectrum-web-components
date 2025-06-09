@@ -35,14 +35,15 @@ export default defineConfig(
         'packages/*/node_modules/**/*',
         'tools/**/*.d.ts',
         'tools/*/node_modules/**/*',
-        'config/*',
         'tools/base/src/version.js',
+        'projects/**/*.d.ts',
+        'projects/*/node_modules/**/*',
+        'config/*',
     ]),
 
     // Base configuration for all files
     {
         plugins: {
-            '@typescript-eslint': tseslint,
             notice,
             'spectrum-web-components': spectrumWebComponents,
             import: _import,
@@ -54,10 +55,6 @@ export default defineConfig(
         languageOptions: {
             ecmaVersion: 2020,
             sourceType: 'module',
-            parser: tseslint.parser,
-            parserOptions: {
-                project: './tsconfig.json',
-            },
         },
         settings: {
             'import/resolver': {
@@ -86,6 +83,14 @@ export default defineConfig(
                 },
             ],
             'import/prefer-default-export': 'off',
+            'import/no-extraneous-dependencies': [
+                'error',
+                {
+                    devDependencies: false,
+                    optionalDependencies: false,
+                    peerDependencies: false,
+                },
+            ],
             'spectrum-web-components/prevent-argument-names': [
                 'error',
                 ['e', 'ev', 'evt', 'err'],
@@ -133,9 +138,35 @@ export default defineConfig(
         },
     },
 
+    // Add typescript to the set of default
+    {
+        files: ['**/*.ts'],
+        languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: {
+                project: './tsconfig.json',
+            },
+        },
+        plugins: {
+            '@typescript-eslint': tseslint,
+            '@typescript-eslint/explicit-function-return-type': [
+                'error',
+                {
+                    allowExpressions: true,
+                },
+            ],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                },
+            ],
+        },
+    },
+
     // Script-specific overrides, these are not typescript assets
     {
-        files: ['scripts/*.js', 'packages/icons-*/bin/*.js'],
+        files: ['scripts/*.js', 'tools/icons-*/bin/*.js'],
         rules: {
             'no-console': 'off',
         },
@@ -147,5 +178,52 @@ export default defineConfig(
         rules: {
             '@typescript-eslint/no-explicit-any': 'off',
         },
-    }
+    },
+    {
+        files: [
+            '*.test.ts',
+            '*.stories.ts',
+            '**/benchmark/*.ts',
+            '**/test/*.ts',
+        ],
+        rules: {
+            '@spectrum-web-components/document-active-element': ['off'],
+            'lit-a11y/no-autofocus': ['off'],
+            'lit-a11y/tabindex-no-positive': ['off'],
+            'import/no-extraneous-dependencies': ['off'],
+        },
+    },
+    {
+        files: ['**/icons/*.ts', '**/src/elements/*.ts'],
+        rules: {
+            'sort-imports': ['off'],
+        },
+    },
+    {
+        files: ['*.stories.ts'],
+        rules: {
+            'no-console': ['off'],
+        },
+    },
+    {
+        files: ['Picker.ts'],
+        rules: {
+            'lit-a11y/click-events-have-key-events': [
+                'error',
+                {
+                    allowList: [
+                        'sp-button',
+                        'sp-action-button',
+                        'sp-checkbox',
+                        'sp-radio',
+                        'sp-switch',
+                        'sp-menu-item',
+                        'sp-clear-button',
+                        'sp-underlay',
+                        'sp-popover',
+                    ],
+                },
+            ],
+        },
+    },
 );

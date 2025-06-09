@@ -1,8 +1,8 @@
 {
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "name": "icons-ui",
-    "root": "packages/icons-ui",
-    "sourceRoot": "packages/icons-ui/src",
+    "name": "icons-workflow",
+    "root": "tools/icons-workflow",
+    "sourceRoot": "tools/icons-workflow/src",
     "tags": ["icon"],
     "targets": {
         "build": {

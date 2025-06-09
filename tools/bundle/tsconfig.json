@@ -98,10 +98,10 @@
             "path": "../../packages/icons"
         },
         {
-            "path": "../../packages/icons-ui"
+            "path": "../icons-ui"
         },
         {
-            "path": "../../packages/icons-workflow"
+            "path": "../icons-workflow"
         },
         {
             "path": "../../packages/iconset"

@@ -79,7 +79,7 @@
         "css"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.6.2",
+        "@internationalized/number": "^3.6.3",
         "@lit-labs/observers": "^2.0.5",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/field-label": "1.6.0",

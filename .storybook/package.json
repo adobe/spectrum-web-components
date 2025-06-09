@@ -44,10 +44,10 @@
         "@spectrum-css/tokens": "16.1.0-next.2"
     },
     "devDependencies": {
-        "@babel/core": "^7.27.3",
-        "@chromatic-com/storybook": "^3.2.6",
+        "@babel/core": "^7.27.4",
+        "@chromatic-com/storybook": "^4.0.0",
         "@etchteam/storybook-addon-status": "^5.0.0",
-        "@geometricpanda/storybook-addon-badges": "^2.0.0",
+        "@geometricpanda/storybook-addon-badges": "^2.0.5",
         "@spectrum-web-components/story-decorator": "^1.6.0",
         "@storybook/addon-a11y": "^8.6.14",
         "@storybook/addon-actions": "^8.6.14",

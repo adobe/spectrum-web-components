@@ -116,10 +116,10 @@
             "path": "packages/icons"
         },
         {
-            "path": "packages/icons-ui"
+            "path": "tools/icons-ui"
         },
         {
-            "path": "packages/icons-workflow"
+            "path": "tools/icons-workflow"
         },
         {
             "path": "packages/iconset"

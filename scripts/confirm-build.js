@@ -73,15 +73,15 @@ function verifyVersionJs() {
 }
 
 async function verifyBuildArtifacts() {
-    const packages = glob.sync('packages/*/', { onlyDirectories: true });
+    const packages = glob.sync('{packages,tools}/*', { onlyDirectories: true });
     const requiredFilesIgnoreList = new Set([
         'packages/clear-button', // extends button
         'packages/close-button', // extends button
         'packages/search-button', // extends button
-        'packages/icons-ui', // extends icon
-        'packages/icons-workflow', // extends icon
         'packages/iconset', // extends icon
         'packages/modal', // extends dialog
+        'tools/icons-ui', // extends icon
+        'tools/icons-workflow', // extends icon
     ]);
 
     // Required files for each package

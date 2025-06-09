@@ -28,8 +28,6 @@ lib
 # build artifacts
 custom-elements.json
 
-!packages/icons-workflow/bin/build.js
-
 packages/*/custom-elements.json
 packages/**/*.js
 packages/**/*.js.map
@@ -122,3 +120,6 @@ out
 # vite
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+
+# cursor
+.cursor/mcp.json

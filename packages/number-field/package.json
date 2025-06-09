@@ -63,7 +63,7 @@
         "css"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.6.2",
+        "@internationalized/number": "^3.6.3",
         "@spectrum-web-components/base": "1.6.0",
         "@spectrum-web-components/icon": "1.6.0",
         "@spectrum-web-components/icons-ui": "1.6.0",

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -15,12 +14,13 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 
 import fg from 'fast-glob';
 import { load } from 'cheerio';
 import Case from 'case';
 import { ESLint } from 'eslint';
+import { log, relativePrint } from '../../../scripts/utilities.js';
+import 'colors';
 
 import nunjucks from 'nunjucks';
 const env = new nunjucks.Environment(undefined, {
@@ -30,14 +30,20 @@ const env = new nunjucks.Environment(undefined, {
     lstripBlocks: true,
 });
 
-const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const iconsDir = path.join(__dirname, '..');
 
 // Initialize ESLint with formatting rules enabled
 const eslint = new ESLint({
     fix: true,
-    cwd: path.join(__dirname, '..', '..', '..')
+    overrideConfigFile: path.join(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'eslint.config.js'
+    ),
+    cache: true,
 });
 
 /**
@@ -48,31 +54,36 @@ const eslint = new ESLint({
  */
 const formatAndWrite = async (filePath, content) => {
     const results = await eslint.lintText(content, { filePath });
-    return fsp.writeFile(filePath, results?.[0]?.output ?? content, { encoding: 'utf-8' });
+    return fsp.writeFile(filePath, results?.[0]?.output ?? content, {
+        encoding: 'utf-8',
+    });
 };
 
 /**
- * Writes to a template
- * @param {string} filename - The filename of the template
+ * Writes a template to a file
+ * @param {string} filename - The name of the template to write
  * @param {string} filepath - The path to the file to write
- * @param {object} data - The data to pass to the template
+ * @param {Object} data - The data to pass to the template
  * @returns {Promise<void>} - A promise that resolves when the file is written
  */
 async function writeToTemplate(filename, filepath, data) {
     const templatePath = path.join(__dirname, 'templates', filename);
     // Check if the template exists
     if (!fs.existsSync(templatePath)) {
-        console.error(`Template ${templatePath} does not exist`);
-        return Promise.reject(new Error(`Template ${templatePath} does not exist`));
+        log.error(`Template ${templatePath.cyan} does not exist.`);
+        return Promise.reject(
+            new Error(`Template ${templatePath.cyan} does not exist`)
+        );
     }
 
     const template = await fsp.readFile(templatePath, 'utf-8');
 
-    // Render the template as a string
+    // Render the template
+    /** @type {import('@types/nunjucks').Environment.render} */
     const content = env.renderString(template, data);
 
     return formatAndWrite(filepath, content);
-};
+}
 
 /**
  * Builds the icons and writes them to the correct directories
@@ -80,10 +91,15 @@ async function writeToTemplate(filename, filepath, data) {
  * @returns {Promise<{imports: string, listings: string}>} - The imports and listings for the icon
  */
 async function buildIcon(filepath) {
-    const svg = await fsp.readFile(filepath, 'utf-8').catch((error) => {
-        console.error(`Error reading icon ${filepath}:`, error);
-        return Promise.reject(error);
-    });
+    const svg = await fsp
+        .readFile(path.join(iconsDir, 'src', 'svg', filepath), 'utf-8')
+        .catch((error) => {
+            log.error(
+                `Error reading icon ${filepath} from ${path.join(iconsDir, 'src', 'svg')}:`,
+                error
+            );
+            return Promise.reject(error);
+        });
 
     const $ = load(svg, { xmlMode: true });
     let id = path
@@ -92,22 +108,24 @@ async function buildIcon(filepath) {
         .replace('_20_N', '')
         .replace('_22x20_N', '');
 
-    [{
-        find: /^Ad[A-Z](.*?)$/,
-        replace: '$1Advert'
-    }, {
-        find: 'github',
-        replace: 'GitHub'
-    }, {
-        find: 'UnLink',
-        replace: 'Unlink'
-    }, {
-        find: 'TextStrikeThrough',
-        replace: 'TextStrikethrough'
-        }, {
-        find: /^3D/,
-        replace: 'ThreeD'
-    }].forEach(({ find, replace }) => {
+    [
+        {
+            find: /^Ad[A-Z](.*?)$/,
+            replace: '$1Advert',
+        },
+        {
+            find: 'github',
+            replace: 'GitHub',
+        },
+        {
+            find: 'UnLink',
+            replace: 'Unlink',
+        },
+        {
+            find: 'TextStrikeThrough',
+            replace: 'TextStrikethrough',
+        },
+    ].forEach(({ find, replace }) => {
         if (id === find) id = replace;
         if (id.search(find) !== -1) {
             id = id.replace(find, replace);
@@ -115,7 +133,12 @@ async function buildIcon(filepath) {
     });
 
     // Skip if the first character is a number
-    if (/^\d/.test(id)) return Promise.reject(new Error(`Icon ${id} has a number as the first character in the name which is not valid.`));
+    if (/^\d/.test(id))
+        return Promise.reject(
+            new Error(
+                `Icon ${id} has a number as the first character in the name which is not valid.`
+            )
+        );
 
     // @todo can we remove this now that icons are being pre-processed?
     $('*').each((_, el) => {
@@ -176,6 +199,9 @@ async function buildIcon(filepath) {
                 id,
                 iconElementName: `sp-icon-${Case.kebab(id)}`,
                 title: Case.capital(id),
+                width: 24,
+                height: 24,
+                svg: parsedSvg,
             }
         ),
         writeToTemplate(
@@ -186,46 +212,52 @@ async function buildIcon(filepath) {
                 id,
                 iconElementName: `sp-icon-${Case.kebab(id)}`,
                 title: Case.capital(id),
+                width: 24,
+                height: 24,
+                svg: parsedSvg,
             }
-        )
+        ),
     ]).then(() => ({
         id,
         exports: `export {${Case.pascal(id)}Icon} from './icons/${id}.js';`,
-        imports: `import '@spectrum-web-components/icons-workflow/icons/sp-icon-${Case.kebab(id)}.js';`,
-        listings: `{ name: '${Case.sentence(id)}', tag: '<sp-icon-${Case.kebab(id)}>', story: (size: IconSize): TemplateResult => html\`<sp-icon-${Case.kebab(id)} size=\$\{size\}></sp-icon-${Case.kebab(id)}>\` }`
+        imports: `import '@spectrum-web-components/icons-ui/icons/sp-icon-${Case.kebab(id)}.js';`,
+        listings: `{ name: '${Case.sentence(id)}', tag: '<sp-icon-${Case.kebab(id)}>', story: (size: string): TemplateResult => html\`<sp-icon-${Case.kebab(id)} size=\$\{size\}></sp-icon-${Case.kebab(id)}>\` }`,
     }));
 }
 
-async function main() {
+async function main({ verbose = false } = {}) {
     // Kick off the directory creation
-    const makeDirs = Promise.all([
-        'src/icons',
-        'src/elements',
-        'icons',
-        'stories',
-    ].map((dirPath) => {
-        if (!fs.existsSync(path.join(iconsDir, dirPath))) {
-            return fsp.mkdir(path.join(iconsDir, dirPath), { recursive: true });
-        }
-        return Promise.resolve();
-    }));
+    const makeDirs = Promise.all(
+        ['src/icons', 'src/elements', 'icons', 'stories'].map((dirPath) => {
+            if (!fs.existsSync(path.join(iconsDir, dirPath))) {
+                return fsp.mkdir(path.join(iconsDir, dirPath), {
+                    recursive: true,
+                });
+            }
+            return Promise.resolve();
+        })
+    );
 
     // Read the icons
-    return fg(`assets/svg/**.svg`, {
-        cwd: path.dirname(require.resolve('@adobe/spectrum-css-workflow-icons', { paths: [iconsDir, path.join(iconsDir, '..', '..')] })),
-        absolute: true,
+    return fg(`*.svg`, {
+        cwd: path.join(iconsDir, 'src/svg'),
     }).then(async (icons) => {
         // Don't start building until the directories are created
-        await makeDirs;
+        await makeDirs.then(() => {
+            if (verbose)
+                log.info(
+                    'All directories have been created if they did not already exist.'
+                );
+        });
 
         // Build the icons
-        return Promise.all(
-            icons.map(buildIcon)
-        ).then(async (results) => {
-            results = results.sort((a, b) => a.id.localeCompare(b.id, 'en', { numeric: true }));
+        return Promise.all(icons.map(buildIcon)).then(async (results) => {
+            results = results.sort((a, b) =>
+                a.id.localeCompare(b.id, 'en', { numeric: true })
+            );
             // Create the exports, imports, and listings
             const exports = [
-                'export { setCustomTemplateLiteralTag } from \'./custom-tag.js\';',
+                "export { setCustomTemplateLiteralTag } from './custom-tag.js';",
                 ...results.map(({ exports }) => exports),
             ];
             const imports = results.map(({ imports }) => imports);
@@ -235,30 +267,54 @@ async function main() {
                 formatAndWrite(
                     path.join(iconsDir, 'src', 'icons.ts'),
                     exports.join('\r\n') + '\r\n'
-                ),
+                ).then(() => {
+                    log.success(
+                        `Successfully wrote exports to ${'src/icons.ts'.cyan}.`
+                    );
+                }),
                 writeToTemplate(
                     'icon-manifest.ts.njk',
                     path.join(iconsDir, 'stories', 'icon-manifest.ts'),
                     {
                         imports: imports.join('\r\n'),
-                        listings: listings.join(',\r\n\t')
+                        listings: listings.join(',\r\n\t'),
                     }
-                ),
+                ).then(() => {
+                    log.success(
+                        `Successfully wrote icon manifest to ${'stories/icon-manifest.ts'.cyan}.`
+                    );
+                }),
             ];
 
             // Process all files with ESLint
             promises.push(
-                fg(['src/icons/**'], {
+                fg(['src/icons/*.ts'], {
                     cwd: iconsDir,
                     absolute: true,
-                    ignore: ['src/icons/*.d.ts']
-                }).then(builtAssets =>
+                    ignore: ['src/icons/*.d.ts'],
+                }).then((builtAssets) =>
                     eslint.lintFiles(builtAssets).then(async (results) => {
                         // Write results to the files
-                        return Promise.all(results.map(({ filePath, output }) => {
-                            if (!output) return Promise.resolve();
-                            return formatAndWrite(filePath, output);
-                        }));
+                        return Promise.all(
+                            results.map(
+                                async ({ filePath, messages, output }) => {
+                                    if (messages.length > 0) {
+                                        messages.forEach(({ message }) => {
+                                            log.info(
+                                                `[${relativePrint(filePath).cyan}] ${message}`
+                                            );
+                                        });
+                                    }
+                                    if (!output) return Promise.resolve();
+
+                                    return formatAndWrite(filePath, output).then(() => {
+                                        log.success(
+                                            `Successfully formatted ${path.basename(filePath, '.svg').orange} to ${relativePrint(filePath).cyan}.`
+                                        );
+                                    });
+                                }
+                            )
+                        );
                     })
                 )
             );

@@ -11,8 +11,8 @@
         { "path": "../menu" },
         { "path": "../button" },
         { "path": "../icon" },
-        { "path": "../icons-ui" },
-        { "path": "../icons-workflow" },
+        { "path": "../../tools/icons-ui" },
+        { "path": "../../tools/icons-workflow" },
         { "path": "../popover" },
         { "path": "../tooltip" },
         { "path": "../field-label" }

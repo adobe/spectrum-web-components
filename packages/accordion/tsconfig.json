@@ -7,7 +7,7 @@
     "include": ["*.ts", "src/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
-        { "path": "../icons-ui" },
+        { "path": "../../tools/icons-ui" },
         { "path": "../../tools/base" },
         { "path": "../../tools/shared" }
     ]

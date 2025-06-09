@@ -80,8 +80,8 @@ export default {
         reportDir: 'coverage',
         exclude: [
             'packages/*/stories/*',
-            'packages/icons-ui/**',
-            'packages/icons-workflow/**',
+            'tools/icons-ui/**',
+            'tools/icons-workflow/**',
             'test/**',
             '**/test/**',
             'tools/*/stories/*',

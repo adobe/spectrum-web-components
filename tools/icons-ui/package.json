@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/icons-workflow",
+    "name": "@spectrum-web-components/icons-ui",
     "version": "1.6.0",
     "publishConfig": {
         "access": "public"
@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/icons-workflow"
+        "directory": "tools/icons-ui"
     },
     "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-ui",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -51,16 +51,16 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "1.6.0",
-        "@spectrum-web-components/icon": "1.6.0"
+        "@spectrum-web-components/icon": "1.6.0",
+        "@spectrum-web-components/iconset": "1.6.0"
     },
     "devDependencies": {
-        "@adobe/spectrum-css-workflow-icons": "^4.1.0",
+        "@types/nunjucks": "^3.2.6",
         "case": "^1.6.3",
         "cheerio": "^1.0.0",
+        "colors": "^1.4.0",
         "fast-glob": "^3.3.3",
-        "fs": "^0.0.1-security",
-        "path": "^0.12.7",
-        "prettier": "^3.5.3"
+        "nunjucks": "^3.2.4"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
