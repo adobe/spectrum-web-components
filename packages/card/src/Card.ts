@@ -186,25 +186,36 @@ export class Card extends LikeAnchor(
         }
     }
 
+    /**
+     * Handles pointer down events on the card element.
+     * Implements a click detection system that distinguishes between clicks and drags
+     * based on duration and movement distance.
+     */
     private handlePointerdown(event: PointerEvent): void {
         const path = event.composedPath();
         const hasAnchor = path.some(
             (el) => (el as HTMLElement).localName === 'a'
         );
         if (hasAnchor) return;
-
+        // Record the time and initial position of the pointerdown event
         const startTime = +new Date();
         const startX = event.clientX;
         const startY = event.clientY;
 
+        // Define the handler for when the pointer interaction ends
         const handleEnd = (endEvent: PointerEvent): void => {
             const endTime = +new Date();
             const endX = endEvent.clientX;
             const endY = endEvent.clientY;
 
+            // Calculate time duration and movement distance of the pointer
             const timeDelta = endTime - startTime;
             const moveX = Math.abs(endX - startX);
             const moveY = Math.abs(endY - startY);
+
+            // Consider the pointer interaction a "click" only if:
+            // - It was short (under 200ms)
+            // - It didn't move significantly (less than 10px in any direction)
             const moved = moveX > 10 || moveY > 10;
 
             if (timeDelta < 200 && !moved) {
