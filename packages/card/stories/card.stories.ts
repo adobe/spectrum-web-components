@@ -20,6 +20,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     component: 'sp-card',
@@ -342,7 +343,7 @@ export const smallQuiet = (args: StoryArgs): TemplateResult => {
     return html`
         <div>
             <sp-card
-                size=${args.size}
+                size=${ifDefined(args.size)}
                 ?horizontal=${args.horizontal}
                 heading="Card Heading"
                 subheading="JPG"
@@ -456,8 +457,7 @@ export const ScrollTest = {
                             heading="Card ${i + 1}"
                             subheading="Scroll Test"
                             ?horizontal=${args.horizontal}
-                            variant=${args.variant}
-                            href=${args.href}
+                            href="https://opensource.adobe.com/spectrum-web-components"
                         >
                             <img
                                 slot="preview"
@@ -499,9 +499,4 @@ export const ScrollTest = {
             )}
         </div>
     `,
-    args: {
-        variant: 'standard',
-        horizontal: false,
-        href: 'https://example.com',
-    },
 };
