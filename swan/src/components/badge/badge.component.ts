@@ -31,7 +31,6 @@ export default class SwanBadge extends BadgeBase {
                 ?icon-only=${!this.slotHasContent}
                 @slotchange=${this.handleSlotChange}
             ></slot>
-
             <div class="label">
                 <slot @slotchange=${this.handleSlotChange}></slot>
             </div>

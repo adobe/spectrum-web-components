@@ -108,7 +108,6 @@ export class BadgeBase extends LitElement {
             }
             return true; // Element nodes count as content
         });
-
         this.requestUpdate();
     }
 

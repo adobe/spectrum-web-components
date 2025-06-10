@@ -47,6 +47,14 @@ export const Icons = (): TemplateResult => {
     `;
 };
 
+export const BadVariant = (): TemplateResult => {
+    return html`
+        <swan-badge variant="i-am-not-a-variant">
+            This variant does not exist, check console
+        </swan-badge>
+    `;
+};
+
 export const Sizes = (): TemplateResult => {
     return html`
         <div style="display: flex; align-items: center; gap: 8px;">
