@@ -26,10 +26,10 @@ export default css`
         font-size: var(--spectrum-font-size);
         font-style: var(--spectrum-font-style);
 
-        letter-spacing: var(--spectrum-letter-spacing-s, 0.06em);
+        letter-spacing: var(--spectrum-letter-spacing-s);
 
         /* Layout */
-        border-radius: var(--spectrum-corner-radius-100, 4px);
+        border-radius: var(--spectrum-corner-radius-100);
         border: 1px solid transparent;
         white-space: nowrap;
         cursor: inherit;
@@ -37,131 +37,119 @@ export default css`
         vertical-align: top;
 
         /* Default size - medium */
-        min-height: var(--spectrum-component-height-100, 20px);
-        padding: 0 var(--spectrum-component-edge-to-text-100, 8px);
-        font-size: var(--spectrum-font-size-100, 11px);
-        line-height: var(--spectrum-line-height-100, 1.2);
-        gap: var(--spectrum-text-to-visual-100, 4px);
+        min-height: var(--spectrum-component-height-100);
+        padding: 0 var(--spectrum-component-edge-to-text-100);
+        font-size: var(--spectrum-font-size-100);
+        line-height: var(--spectrum-line-height-100);
+        gap: var(--spectrum-text-to-visual-100);
 
         /* Default variant - informative */
-        background: var(
-            --spectrum-informative-background-color-default,
-            #378ef0
-        );
+        background: var(--spectrum-informative-background-color-default);
         color: var(--spectrum-white, white);
     }
 
     /* Size variants */
     :host([size='s']) {
-        min-height: var(--spectrum-component-height-75, 16px);
-        padding: 0 var(--spectrum-component-edge-to-text-75, 6px);
-        font-size: var(--spectrum-font-size-75, 10px);
-        gap: var(--spectrum-text-to-visual-75, 2px);
+        min-height: var(--spectrum-component-height-75);
+        padding: 0 var(--spectrum-component-edge-to-text-75);
+        font-size: var(--spectrum-font-size-75);
+        gap: var(--spectrum-text-to-visual-75);
     }
 
     :host([size='l']) {
-        min-height: var(--spectrum-component-height-200, 24px);
-        padding: 0 var(--spectrum-component-edge-to-text-200, 10px);
-        font-size: var(--spectrum-font-size-200, 12px);
-        gap: var(--spectrum-text-to-visual-200, 6px);
+        min-height: var(--spectrum-component-height-200);
+        padding: 0 var(--spectrum-component-edge-to-text-200);
+        font-size: var(--spectrum-font-size-200);
+        gap: var(--spectrum-text-to-visual-200);
     }
 
     :host([size='xl']) {
-        min-height: var(--spectrum-component-height-300, 28px);
-        padding: 0 var(--spectrum-component-edge-to-text-300, 12px);
-        font-size: var(--spectrum-font-size-300, 13px);
-        gap: var(--spectrum-text-to-visual-300, 8px);
+        min-height: var(--spectrum-component-height-300);
+        padding: 0 var(--spectrum-component-edge-to-text-300);
+        font-size: var(--spectrum-font-size-300);
+        gap: var(--spectrum-text-to-visual-300);
     }
 
     /* Semantic variants */
     :host([variant='accent']) {
-        background: var(--spectrum-accent-background-color-default, #0066cc);
+        background: var(--spectrum-accent-background-color-default);
     }
 
     :host([variant='neutral']) {
-        background: var(
-            --spectrum-neutral-subdued-background-color-default,
-            #6b7280
-        );
+        background: var(--spectrum-neutral-subdued-background-color-default);
     }
 
     :host([variant='informative']) {
-        background: var(
-            --spectrum-informative-background-color-default,
-            #378ef0
-        );
+        background: var(--spectrum-informative-background-color-default);
     }
 
     :host([variant='positive']) {
-        background: var(--spectrum-positive-background-color-default, #16a34a);
+        background: var(--spectrum-positive-background-color-default);
     }
 
     :host([variant='negative']) {
-        background: var(--spectrum-negative-background-color-default, #dc2626);
+        background: var(--spectrum-negative-background-color-default);
     }
 
     :host([variant='notice']) {
-        background: var(--spectrum-notice-background-color-default, #f59e0b);
+        background: var(--spectrum-notice-background-color-default);
     }
 
     /* Non-semantic variants */
     :host([variant='fuchsia']) {
-        background: var(--spectrum-fuchsia-background-color-default, #d946ef);
+        background: var(--spectrum-fuchsia-background-color-default);
     }
 
     :host([variant='indigo']) {
-        background: var(--spectrum-indigo-background-color-default, #6366f1);
+        background: var(--spectrum-indigo-background-color-default);
     }
 
     :host([variant='magenta']) {
-        background: var(--spectrum-magenta-background-color-default, #ec4899);
+        background: var(--spectrum-magenta-background-color-default);
     }
 
     :host([variant='purple']) {
-        background: var(--spectrum-purple-background-color-default, #8b5cf6);
+        background: var(--spectrum-purple-background-color-default);
     }
 
     :host([variant='seafoam']) {
-        background: var(--spectrum-seafoam-background-color-default, #14b8a6);
+        background: var(--spectrum-seafoam-background-color-default);
     }
 
     :host([variant='yellow']) {
-        background: var(--spectrum-yellow-background-color-default, #eab308);
+        background: var(--spectrum-yellow-background-color-default);
     }
 
     :host([variant='gray']) {
-        background: var(--spectrum-gray-background-color-default, #64748b);
+        background: var(--spectrum-gray-background-color-default);
     }
 
     :host([variant='red']) {
-        background: var(--spectrum-red-background-color-default, #ef4444);
+        background: var(--spectrum-red-background-color-default);
     }
 
     :host([variant='orange']) {
-        background: var(--spectrum-orange-background-color-default, #f97316);
+        background: var(--spectrum-orange-background-color-default);
     }
 
     :host([variant='chartreuse']) {
-        background: var(
-            --spectrum-chartreuse-background-color-default,
-            #84cc16
-        );
+        background: var(--spectrum-chartreuse-background-color-default);
     }
 
     :host([variant='celery']) {
-        background: var(--spectrum-celery-background-color-default, #22c55e);
+        background: var(--spectrum-celery-background-color-default);
     }
 
     :host([variant='green']) {
-        background: var(--spectrum-green-background-color-default, #16a34a);
+        background: var(--spectrum-green-background-color-default);
     }
 
     :host([variant='cyan']) {
-        background: var(--spectrum-cyan-background-color-default, #06b6d4);
+        background: var(--spectrum-cyan-background-color-default);
     }
 
     :host([variant='blue']) {
-        background: var(--spectrum-blue-background-color-default, #3b82f6);
+        background: var(--spectrum-blue-background-color-default);
     }
 
     /* Fixed positioning styles */
