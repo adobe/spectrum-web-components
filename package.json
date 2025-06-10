@@ -24,7 +24,6 @@
         "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
         "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "changelog:global": "node ./scripts/update-global-changelog.js",
-        "update-version": "node ./tasks/update-version.js",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
         "custom-element-json": "node ./scripts/custom-element-json.js",
         "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
