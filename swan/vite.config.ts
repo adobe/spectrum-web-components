@@ -22,9 +22,9 @@ function generateInputs(mode: string) {
         'components/index': 'src/components/index.ts',
     };
 
-    // Find all component TypeScript files (excluding tests and stories)
+    // Find all component TypeScript files (excluding tests, stories, and e2e)
     const componentFiles = glob.sync('src/components/**/*.ts', {
-        ignore: ['**/*.test.ts', '**/*.stories.ts'],
+        ignore: ['**/*.test.ts', '**/*.stories.ts', '**/*.e2e.ts'],
     });
 
     componentFiles.forEach((filePath) => {
