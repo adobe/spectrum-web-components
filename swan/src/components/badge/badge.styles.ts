@@ -179,10 +179,10 @@ export default css`
 
     /* Icon slot styles */
     slot[name='icon'] {
-        display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        color: var(--spectrum-badge-label-icon-color-primary);
     }
 
     slot[name='icon']::slotted(*) {

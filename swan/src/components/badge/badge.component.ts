@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { BadgeBase } from './badge.base.js';
 import styles from './badge.styles.js';
 
@@ -26,15 +26,12 @@ export default class SwanBadge extends BadgeBase {
 
     protected override render() {
         return html`
-            ${this.hasIcon
-                ? html`
-                      <slot
-                          name="icon"
-                          ?icon-only=${!this.slotHasContent}
-                          @slotchange=${this.handleSlotChange}
-                      ></slot>
-                  `
-                : nothing}
+            <slot
+                name="icon"
+                ?icon-only=${!this.slotHasContent}
+                @slotchange=${this.handleSlotChange}
+            ></slot>
+
             <div class="label">
                 <slot @slotchange=${this.handleSlotChange}></slot>
             </div>
