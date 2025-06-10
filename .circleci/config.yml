@@ -99,29 +99,40 @@ commands:
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy Visual Tests to Azure
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                      echo "Azure deployment hash: $hash"
+                      echo "Deploying visual tests from test/visual directory..."
+
+                      # Install Azure Static Web Apps CLI
+                      npm install -g @azure/static-web-apps-cli
 
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
+                          if swa deploy test/visual --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $hash; then
+                              echo "Azure deployment successful!"
+                              
+                              # Generate the deployment URL using the correct pattern with /review/ path
+                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
+                              echo "Visual Test URL: $(cat vrt_url.txt)"
+                              
+                              # Save URL for the master comment with descriptive name
+                              mkdir -p /tmp/vrt-urls
+                              echo "🎨 **<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>**: $(cat vrt_url.txt)" > /tmp/vrt-urls/<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>.txt
                               exit 0
                           else
                               attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "Azure deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10
                           fi
                       done
 
-                      echo "Deployment failed after $max_attempts attempts."
+                      echo "Azure deployment failed after $max_attempts attempts."
                       exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
@@ -141,6 +152,10 @@ commands:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+            - persist_to_workspace:
+                  root: /tmp
+                  paths:
+                      - vrt-urls/<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>.txt
 
 jobs:
     commitlint:
@@ -305,9 +320,13 @@ jobs:
                           if swa deploy test/visual --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $hash; then
                               echo "Azure deployment successful!"
                               
-                              # Generate the deployment URL using the correct pattern
-                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net" > vrt_url.txt
+                              # Generate the deployment URL using the correct pattern with /review/ path
+                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
+                              
+                              # Save URL for the master comment
+                              mkdir -p /tmp/vrt-urls
+                              echo "🎨 **HCM Visual Tests**: $(cat vrt_url.txt)" > /tmp/vrt-urls/hcm-visual.txt
                               exit 0
                           else
                               attempt=$((attempt + 1))
@@ -336,6 +355,10 @@ jobs:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
+            - persist_to_workspace:
+                  root: /tmp
+                  paths:
+                      - vrt-urls/hcm-visual.txt
 
     visual:
         executor: node
@@ -355,6 +378,56 @@ jobs:
                   regression_color: << parameters.color >>
                   regression_scale: << parameters.scale >>
                   regression_dir: << parameters.dir >>
+
+    create-vrt-comment:
+        executor: node
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: /tmp
+            - run:
+                  name: Create Master Visual Test Comment
+                  command: |
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          echo "Creating master comment for all visual tests..."
+                          
+                          # Start building the comment
+                          echo "## 🎨 Visual Regression Test Results" > comment.md
+                          echo "" >> comment.md
+                          echo "All visual test environments have been deployed to Azure Static Web Apps:" >> comment.md
+                          echo "" >> comment.md
+                          
+                          # Add all URLs from workspace
+                          if [ -d "/tmp/vrt-urls" ]; then
+                              for file in /tmp/vrt-urls/*.txt; do
+                                  if [ -f "$file" ]; then
+                                      cat "$file" >> comment.md
+                                      echo "" >> comment.md
+                                  fi
+                              done
+                          fi
+                          
+                          echo "" >> comment.md
+                          echo "---" >> comment.md
+                          echo "*Deployed from commit: \`<< pipeline.git.revision >>\`*" >> comment.md
+                          
+                          # Get PR number from URL
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          
+                          # Create the comment body (escape for JSON)
+                          COMMENT_BODY=$(cat comment.md | jq -Rs .)
+                          
+                          # Post comment using GitHub API
+                          curl -X POST \
+                            -H "Authorization: token $GITHUB_TOKEN" \
+                            -H "Accept: application/vnd.github.v3+json" \
+                            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments" \
+                            -d "{\"body\":$COMMENT_BODY}"
+                          
+                          echo "Master comment created successfully!"
+                      else
+                          echo "Not a pull request, skipping comment creation."
+                      fi
 
 workflows:
     version: 2
@@ -401,4 +474,17 @@ workflows:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - create-vrt-comment:
+                  requires:
+                      - hcm-visual
+                      - spectrum-light-medium-ltr
+                      - express-light-medium-ltr
+                      - spectrum-two-light-medium-ltr
+                      - spectrum-dark-large-rtl
+                      - express-dark-large-rtl
+                      - spectrum-two-dark-large-rtl
+                  filters:
+                      branches:
+                          # Only run on PRs, not on forked PRs
                           ignore: /pull\/[0-9]+/
