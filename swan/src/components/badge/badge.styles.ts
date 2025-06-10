@@ -29,7 +29,7 @@ export default css`
         letter-spacing: var(--spectrum-letter-spacing-s);
 
         /* Layout */
-        border-radius: var(--spectrum-corner-radius-100);
+        border-radius: var(--spectrum-corner-radius-medium-size-medium);
         border: 1px solid transparent;
         white-space: nowrap;
         cursor: inherit;
@@ -197,24 +197,28 @@ export default css`
     }
 
     /* Size-responsive icon sizing */
-    :host([size='s']) slot[name='icon']::slotted(*) {
-        width: var(--spectrum-workflow-icon-size-75, 10px);
-        height: var(--spectrum-workflow-icon-size-75, 10px);
+    :host([size='s']) ::slotted([slot='icon']) {
+        block-size: var(--spectrum-workflow-icon-size-75);
+        inline-size: var(--spectrum-workflow-icon-size-75);
+        flex: 0 0 var(--spectrum-workflow-icon-size-75);
     }
 
-    :host([size='m']) slot[name='icon']::slotted(*) {
-        width: var(--spectrum-workflow-icon-size-100, 12px);
-        height: var(--spectrum-workflow-icon-size-100, 12px);
+    :host([size='m']) ::slotted([slot='icon']) {
+        block-size: var(--spectrum-workflow-icon-size-100);
+        inline-size: var(--spectrum-workflow-icon-size-100);
+        flex: 0 0 var(--spectrum-workflow-icon-size-100);
     }
 
-    :host([size='l']) slot[name='icon']::slotted(*) {
-        width: var(--spectrum-workflow-icon-size-200, 14px);
-        height: var(--spectrum-workflow-icon-size-200, 14px);
+    :host([size='l']) ::slotted([slot='icon']) {
+        block-size: var(--spectrum-workflow-icon-size-200);
+        inline-size: var(--spectrum-workflow-icon-size-200);
+        flex: 0 0 var(--spectrum-workflow-icon-size-200);
     }
 
-    :host([size='xl']) slot[name='icon']::slotted(*) {
-        width: var(--spectrum-workflow-icon-size-300, 16px);
-        height: var(--spectrum-workflow-icon-size-300, 16px);
+    :host([size='xl']) ::slotted([slot='icon']) {
+        block-size: var(--spectrum-workflow-icon-size-300);
+        inline-size: var(--spectrum-workflow-icon-size-300);
+        flex: 0 0 var(--spectrum-workflow-icon-size-300);
     }
 
     /* Label container */
