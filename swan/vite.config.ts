@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => ({
     plugins: [
         dts({
             include: ['src/**/*'],
-            exclude: ['src/**/*.test.ts', '**/*.stories.ts'],
+            exclude: ['src/**/*.test.ts', 'src/**/*.e2e.ts', '**/*.stories.ts'],
             outDir: 'dist',
         }),
     ],
