@@ -29,6 +29,26 @@ const CheckmarkIcon = html`
 export default {
     title: 'Badge',
     component: 'swan-badge',
+    tags: ['autodocs'],
+    parameters: {
+        docs: {
+            description: {
+                component: `
+Swan Badge component - Adapted from Spectrum Web Components v1.x Badge.
+
+A badge is a small status descriptor for UI elements. A badge consists of a small circle or rounded rectangle, typically containing a number or other characters, that appears in proximity to another object.
+
+## Usage
+
+\`\`\`html
+<swan-badge>Basic Badge</swan-badge>
+<swan-badge variant="positive">Positive Badge</swan-badge>
+<swan-badge size="s">Small Badge</swan-badge>
+\`\`\`
+                `,
+            },
+        },
+    },
 };
 
 export const Default = (): TemplateResult => {
@@ -49,7 +69,7 @@ export const Icons = (): TemplateResult => {
 
 export const BadVariant = (): TemplateResult => {
     return html`
-        <swan-badge variant="i-am-not-a-variant">
+        <swan-badge variant=${'i-am-not-a-variant' as unknown as 'accent'}>
             This variant does not exist, check console
         </swan-badge>
     `;
