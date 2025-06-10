@@ -41,7 +41,9 @@
         }
     },
     "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/sp-*.ts $INIT_CWD/src/[A-Z]*.ts --outdir packages/combobox",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",
@@ -73,6 +75,7 @@
         "@spectrum-web-components/picker-button": "1.6.0",
         "@spectrum-web-components/popover": "1.6.0",
         "@spectrum-web-components/progress-circle": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
         "@spectrum-web-components/textfield": "1.6.0"
     },
     "types": "./src/index.d.ts",

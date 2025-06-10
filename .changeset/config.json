@@ -6,7 +6,12 @@
             "repo": "adobe/spectrum-web-components"
         }
     ],
-    "commit": false,
+    "commit": [
+        "@changesets/cli/commit",
+        {
+            "message": "chore: release new versions #publish"
+        }
+    ],
     "fixed": [["@spectrum-web-components/*"]],
     "linked": [],
     "access": "public",

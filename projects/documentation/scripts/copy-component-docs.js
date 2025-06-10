@@ -22,7 +22,6 @@ import {
     overviewDestinationTemplate,
     overviewPartialTemplate,
 } from './component-template-parts.js';
-import { gatherUrls } from './gather-spectrum-urls.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -291,7 +290,6 @@ export async function processREADME(mdPath) {
 }
 
 async function main() {
-    gatherUrls();
     fs.mkdirSync(componentDestinationPath, { recursive: true });
     fs.mkdirSync(toolDestinationPath, { recursive: true });
     fs.mkdirSync(partialPath, { recursive: true });

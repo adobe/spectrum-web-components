@@ -14,19 +14,27 @@
 
 import path from 'path';
 import fs from 'fs';
-import { bundleAsync } from 'lightningcss';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
+
+import fg from 'fast-glob';
+import { bundleAsync } from 'lightningcss';
+import eslint from 'eslint';
 import { stripIndent } from 'common-tags';
 import 'colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const fsp = fs.promises;
 const require = createRequire(import.meta.url);
 
-const log = {
+export const log = {
     success: (message) => console.log(`${'✓'.green}  ${message}`),
     fail: (message) => console.log(`${'✗'.red}  ${message}`),
 };
+
+const linter = new eslint.ESLint({
+    fix: true,
+});
 
 const getPackagePath = (packageName) => {
     let filepath;
@@ -58,13 +66,6 @@ const wrapCSSResult = (content) => {
     `;
 };
 
-const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
-let header = '';
-if (fs.existsSync(licensePath)) {
-    header = fs.readFileSync(licensePath, 'utf8');
-    header = header.replace('<%= YEAR %>', new Date().getFullYear());
-}
-
 /**
  * Processes a CSS file using lightningcss, minifies it, and outputs a TypeScript module.
  * The output module includes license headers and wraps the CSS in a template literal.
@@ -92,17 +93,22 @@ export const processCSS = async (cssPath) => {
             },
         },
     })
-        .then(({ code }) => {
-            log.success(cssPath.yellow + ' bundled successfully');
+        .then(async ({ code }) => {
+            // Before writing, lint the new ts file
+            const content = wrapCSSResult(code);
+            const lintResult = await linter.lintText(content);
 
-            fs.writeFileSync(
-                `${cssPath}.ts`,
-                header + wrapCSSResult(code),
-                'utf-8'
-            );
+            if (!lintResult?.[0]?.output || lintResult.errorCount > 0) {
+                if (lintResult.errorCount > 0) {
+                    console.error(lintResult.results[0].messages);
+                }
+
+                return Promise.reject(new Error('Linting failed'));
+            }
+
+            return fsp.writeFile(`${cssPath}.ts`, lintResult[0].output);
         })
         .catch((er) => {
-            log.fail(cssPath.yellow + ' failed to bundle');
             console.error(er);
         });
 };
