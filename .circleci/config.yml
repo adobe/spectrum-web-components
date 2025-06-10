@@ -31,11 +31,7 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: |
-                          corepack enable
-                          corepack enable
-                      fi
                       corepack enable
-                      fi
                       yarn --immutable
             - run:
                   name: Build the project
@@ -366,11 +362,6 @@ workflows:
             - test-webkit
             - lint
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
