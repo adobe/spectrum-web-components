@@ -103,7 +103,8 @@ commands:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
+                      # Use branch-only hash for shared environment
+                      hash=$(echo -n $branch | md5sum | cut -c 1-32)
                       echo "Azure deployment hash: $hash"
                       echo "Deploying visual tests from test/visual directory..."
 
@@ -306,7 +307,8 @@ jobs:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
+                      # Use branch-only hash for shared environment
+                      hash=$(echo -n $branch | md5sum | cut -c 1-32)
                       echo "Azure deployment hash: $hash"
                       echo "Deploying visual tests from test/visual directory..."
 
@@ -391,24 +393,34 @@ jobs:
                       if [ -n "$CIRCLE_PULL_REQUEST" ]; then
                           echo "Creating master comment for all visual tests..."
                           
+                          # Get the shared URL (all tests use the same environment)
+                          branch=$(git symbolic-ref --short HEAD)
+                          hash=$(echo -n $branch | md5sum | cut -c 1-32)
+                          SHARED_URL="https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/"
+                          
                           # Start building the comment
                           echo "## 🎨 Visual Regression Test Results" > comment.md
                           echo "" >> comment.md
-                          echo "All visual test environments have been deployed to Azure Static Web Apps:" >> comment.md
+                          echo "All visual test results have been deployed to a shared Azure Static Web Apps environment:" >> comment.md
                           echo "" >> comment.md
+                          echo "**🔗 [View All Visual Test Results](${SHARED_URL})**" >> comment.md
+                          echo "" >> comment.md
+                          echo "### Test Combinations Included:" >> comment.md
                           
-                          # Add all URLs from workspace
+                          # List all test combinations that were run
                           if [ -d "/tmp/vrt-urls" ]; then
                               for file in /tmp/vrt-urls/*.txt; do
                                   if [ -f "$file" ]; then
-                                      cat "$file" >> comment.md
-                                      echo "" >> comment.md
+                                      # Extract just the test name part (before the colon)
+                                      test_name=$(cat "$file" | sed 's/🎨 \*\*\([^*]*\)\*\*:.*/- ✅ \1/')
+                                      echo "$test_name" >> comment.md
                                   fi
                               done
                           fi
                           
                           echo "" >> comment.md
                           echo "---" >> comment.md
+                          echo "*All tests share the same environment. Navigate through different test results using the review interface.*" >> comment.md
                           echo "*Deployed from commit: \`<< pipeline.git.revision >>\`*" >> comment.md
                           
                           # Get PR number from URL
