@@ -42,7 +42,7 @@ jobs:
                   echo "$comments" | jq -c '.[]' | while read -r comment; do
                     body=$(echo "$comment" | jq -r '.body')
                     id=$(echo "$comment" | jq -r '.id')
-                    if [[ "$body" == Azure\ Static\ Web\ Apps:* ]]; then
+                    if [[ "$body" == *"## Branch preview"* ]]; then
                       echo "Deleting comment $id"
                       gh api repos/${{ github.repository }}/issues/comments/$id -X DELETE
                     fi

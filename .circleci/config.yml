@@ -7,12 +7,6 @@ executors:
         resource_class: xlarge
         environment:
             NODE_ENV: development
-    azure:
-        docker:
-            - image: alpine:latest
-        resource_class: xlarge
-        environment:
-            NODE_ENV: development
 parameters:
     # In order to update the VRT baseline images:
     # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
@@ -37,18 +31,10 @@ commands:
             - run:
                   name: Installing Dependencies
                   command: |
-                      # Check if we're in an Azure job
-                      if [[ "$CIRCLE_JOB" == "preview-docs" || "$CIRCLE_JOB" == "beta-docs" || "$CIRCLE_JOB" == "hcm-visual" ]]; then
-                          echo "Skipping corepack in Azure job"
-                          # Check if yarn is already installed
-                          if ! command -v yarn &> /dev/null; then
-                              echo "Installing yarn..."
-                              sudo npm install -g yarn --force
-                          else
-                              echo "Yarn is already installed: $(yarn --version)"
-                          fi
-                      else
                           corepack enable
+                          corepack enable
+                      fi
+                      corepack enable
                       fi
                       yarn --immutable
             - run:
@@ -116,79 +102,31 @@ commands:
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
-                  name: Check Azure CLI
-                  command: |
-                      # Install Azure CLI for Alpine Linux
-                      apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev openssl-dev python3-dev
-                      pip3 install --upgrade pip
-                      pip3 install azure-cli
-                      source $BASH_ENV
-                      az version
-            - run:
                   when: always
-                  name: Deploy to Azure Static Web Apps
+                  name: Publish review site
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash"
+                      echo "Netlify alias hash: $hash"
                       echo "Deploying from test/visual directory..."
 
-                      max_retries=3
-                      retry_count=0
+                      max_attempts=3
+                      attempt=0
 
-                      while [ $retry_count -lt $max_retries ]; do
-                          # Install required tools
-                          apk add --no-cache jq gh
-                          npm install -g @azure/static-web-apps-cli
-                          
-                          if swa deploy \
-                              --app-name my-visual-regression-site \
-                              --resource-group swc-previews \
-                              --app-location test/visual \
-                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
-                              
-                              # Get the deployment URL
-                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
-                              echo "Deployment URL: $url"
-
-                              # Add or update the PR comment if this is a PR
-                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
-                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-                                  COMMENT_MARKER="Visual Regression Test Results (<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>)"
-                                  
-                                  # Use gh CLI instead of direct API calls
-                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
-                                  
-                                  # Search for existing comment
-                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
-                                  
-                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
-                                  
-                                  if [ -n "$COMMENT_ID" ]; then
-                                      # Update existing comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
-                                          --method PATCH \
-                                          -f body="$COMMENT_BODY"
-                                  else
-                                      # Create new comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
-                                          -f body="$COMMENT_BODY"
-                                  fi
-                              fi
-                              
-                              break
+                      while [ $attempt -lt $max_attempts ]; do
+                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
+                              echo "Deployment successful!"
+                              exit 0
                           else
-                              retry_count=$((retry_count + 1))
-                              if [ $retry_count -lt $max_retries ]; then
-                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
-                                  sleep 10
-                              else
-                                  echo "Deployment failed after $max_retries attempts"
-                                  exit 1
-                              fi
+                              attempt=$((attempt + 1))
+                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10  # Adjust delay if needed
                           fi
                       done
+
+                      echo "Deployment failed after $max_attempts attempts."
+                      exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -288,7 +226,7 @@ jobs:
                   command: git diff-files --exit-code
 
     beta-docs:
-        executor: azure
+        executor: node
 
         steps:
             - downstream
@@ -308,208 +246,11 @@ jobs:
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
-                  # Install required tools
-                  apk add --no-cache jq gh
-                  npm install -g @azure/static-web-apps-cli
+                  yarn netlify deploy --alias=beta --cwd projects/documentation
 
-                  if swa deploy \
-                    --app-name my-docs-site \
-                    --resource-group swc-previews \
-                    --app-location projects/documentation/dist \
-                    --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
-                    echo "Deployment successful"
-                  else
-                    echo "Deployment failed"
-                    exit 1
-                  fi
-
-    visual-test:
+    hcm-visual:
         executor: node
-        parameters:
-            system:
-                type: string
-            color:
-                type: string
-            scale:
-                type: string
-            dir:
-                type: string
-        steps:
-            - downstream
-            - restore_cache:
-                  name: Restore Golden Images Cache
-                  keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-                      - v2-golden-images-main-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-                      - v2-golden-images-main-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-            - run:
-                  name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
-            - run:
-                  when: always
-                  name: VRT Run
-                  command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>
-            # store results and artifacts before rearranging things for the new cache.
-            - store_test_results:
-                  path: /root/project/results/
-            - run:
-                  when: on_success
-                  name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-            # prevent removing regression tests without requiring a new golden cache
-            - run:
-                  when: on_success
-                  name: Fail if there are a different number of images...
-                  command: |
-                      echo $(cat count_start.txt)
-                      echo $(cat count_end.txt)
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
-            # build diff review site
-            - run:
-                  when: always
-                  name: Create review site
-                  command: |
-                      branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.system >> << parameters.color >> << parameters.scale >> << parameters.dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
-            # move "updated" screenshot into the baseline directory before making the new cache
-            - run:
-                  when: always
-                  command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-            - save_cache:
-                  when: always
-                  name: Build Golden Images Revision Cache
-                  paths:
-                      - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-{{ epoch }}
-            - save_cache:
-                  name: Build Golden Images Branch Cache
-                  paths:
-                      - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Branch }}-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-{{ epoch }}
-            # Persist data for deployment job
-            - persist_to_workspace:
-                  root: .
-                  paths:
-                      - test/visual
-                      - projects/documentation/content/favicon.ico
-                      - count_start.txt
-                      - count_end.txt
-            # Always succeed so deploy job runs
-            - run:
-                  when: always
-                  name: Ensure job succeeds for deployment
-                  command: exit 0
 
-    visual-deploy:
-        executor: azure
-        parameters:
-            system:
-                type: string
-            color:
-                type: string
-            scale:
-                type: string
-            dir:
-                type: string
-        steps:
-            - checkout
-            - attach_workspace:
-                  at: .
-            - run:
-                  name: Check workspace data
-                  command: |
-                      echo "Checking for test data..."
-                      if [ -d "test/visual" ]; then
-                          echo "✅ Test data found - proceeding with full deployment"
-                          echo "DEPLOY_MODE=full" >> $BASH_ENV
-                      else
-                          echo "⚠️  No test data found - creating minimal deployment"
-                          echo "DEPLOY_MODE=minimal" >> $BASH_ENV
-                          mkdir -p test/visual
-                          echo "<h1>Visual Tests In Progress</h1><p>Test results will be available shortly.</p>" > test/visual/index.html
-                      fi
-            - run:
-                  name: Check Azure CLI
-                  command: |
-                      # Install Azure CLI for Alpine Linux
-                      apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev openssl-dev python3-dev
-                      pip3 install --upgrade pip
-                      pip3 install azure-cli
-                      source $BASH_ENV
-                      az version
-            - run:
-                  when: always
-                  name: Deploy to Azure Static Web Apps
-                  command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >> | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash"
-                      echo "Deploying from test/visual directory..."
-
-                      max_retries=3
-                      retry_count=0
-
-                      while [ $retry_count -lt $max_retries ]; do
-                          # Install required tools
-                          apk add --no-cache jq gh
-                          npm install -g @azure/static-web-apps-cli
-                          
-                          if swa deploy \
-                              --app-name my-visual-regression-site \
-                              --resource-group swc-previews \
-                              --app-location test/visual \
-                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
-                              
-                              # Get the deployment URL
-                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
-                              echo "Deployment URL: $url"
-
-                              # Add or update the PR comment if this is a PR
-                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
-                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-                                  COMMENT_MARKER="Visual Regression Test Results (<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>)"
-                                  
-                                  # Use gh CLI instead of direct API calls
-                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
-                                  
-                                  # Search for existing comment
-                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
-                                  
-                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
-                                  
-                                  if [ -n "$COMMENT_ID" ]; then
-                                      # Update existing comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
-                                          --method PATCH \
-                                          -f body="$COMMENT_BODY"
-                                  else
-                                      # Create new comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
-                                          -f body="$COMMENT_BODY"
-                                  fi
-                              fi
-                              
-                              break
-                          else
-                              retry_count=$((retry_count + 1))
-                              if [ $retry_count -lt $max_retries ]; then
-                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
-                                  sleep 10
-                              else
-                                  echo "Deployment failed after $max_retries attempts"
-                                  exit 1
-                              fi
-                          fi
-                      done
-
-    hcm-visual-test:
-        executor: node
         steps:
             - downstream
             - restore_cache:
@@ -548,6 +289,33 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
+            - run:
+                  when: always
+                  name: Publish review site
+                  command: |
+                      cp projects/documentation/content/favicon.ico test/visual
+                      branch=$(git symbolic-ref --short HEAD)
+                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
+                      echo "Netlify alias hash: $hash"
+                      echo "Deploying from test/visual directory..."
+
+                      max_attempts=3
+                      attempt=0
+
+                      while [ $attempt -lt $max_attempts ]; do
+                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
+                              echo "Deployment successful!"
+                              exit 0
+                          else
+                              attempt=$((attempt + 1))
+                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10  # Adjust delay if needed
+                          fi
+                      done
+
+                      echo "Deployment failed after $max_attempts attempts."
+                      exit 1
+
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -565,113 +333,6 @@ jobs:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
-            # Persist data for deployment job
-            - persist_to_workspace:
-                  root: .
-                  paths:
-                      - test/visual
-                      - projects/documentation/content/favicon.ico
-                      - count_start.txt
-                      - count_end.txt
-            # Always succeed so deploy job runs
-            - run:
-                  when: always
-                  name: Ensure job succeeds for deployment
-                  command: exit 0
-
-    hcm-visual-deploy:
-        executor: azure
-        steps:
-            - checkout
-            - attach_workspace:
-                  at: .
-            - run:
-                  name: Check workspace data
-                  command: |
-                      echo "Checking for HCM test data..."
-                      if [ -d "test/visual" ]; then
-                          echo "✅ Test data found - proceeding with full deployment"
-                          echo "DEPLOY_MODE=full" >> $BASH_ENV
-                      else
-                          echo "⚠️  No test data found - creating minimal deployment"
-                          echo "DEPLOY_MODE=minimal" >> $BASH_ENV
-                          mkdir -p test/visual
-                          echo "<h1>HCM Visual Tests In Progress</h1><p>Test results will be available shortly.</p>" > test/visual/index.html
-                      fi
-            - run:
-                  name: Check Azure CLI
-                  command: |
-                      # Install Azure CLI for Alpine Linux
-                      apk add --no-cache python3 py3-pip gcc musl-dev libffi-dev openssl-dev python3-dev
-                      pip3 install --upgrade pip
-                      pip3 install azure-cli
-                      source $BASH_ENV
-                      az version
-            - run:
-                  when: always
-                  name: Deploy to Azure Static Web Apps
-                  command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash"
-                      echo "Deploying from test/visual directory..."
-
-                      max_retries=3
-                      retry_count=0
-
-                      while [ $retry_count -lt $max_retries ]; do
-                          # Install required tools
-                          apk add --no-cache jq gh
-                          npm install -g @azure/static-web-apps-cli
-                          
-                          if swa deploy \
-                              --app-name my-visual-regression-site \
-                              --resource-group swc-previews \
-                              --app-location test/visual \
-                              --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
-                              
-                              # Get the deployment URL
-                              url="https://${hash}--my-visual-regression-site.azurestaticapps.net"
-                              echo "Deployment URL: $url"
-
-                              # Add or update the PR comment if this is a PR
-                              if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
-                                  PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
-                                  COMMENT_MARKER="Visual Regression Test Results (High Contrast Mode)"
-                                  
-                                  # Use gh CLI instead of direct API calls
-                                  echo "$GITHUB_TOKEN" | gh auth login --with-token
-                                  
-                                  # Search for existing comment
-                                  COMMENT_ID=$(gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments | jq -r ".[] | select(.body | startswith(\"$COMMENT_MARKER\")) | .id")
-                                  
-                                  COMMENT_BODY="$COMMENT_MARKER\n\nView the visual regression test results here: [View Results]($url/review/)"
-                                  
-                                  if [ -n "$COMMENT_ID" ]; then
-                                      # Update existing comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/comments/$COMMENT_ID \
-                                          --method PATCH \
-                                          -f body="$COMMENT_BODY"
-                                  else
-                                      # Create new comment
-                                      gh api repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments \
-                                          -f body="$COMMENT_BODY"
-                                  fi
-                              fi
-                              
-                              break
-                          else
-                              retry_count=$((retry_count + 1))
-                              if [ $retry_count -lt $max_retries ]; then
-                                  echo "Deployment failed, retrying in 10 seconds... (Attempt $retry_count of $max_retries)"
-                                  sleep 10
-                              else
-                                  echo "Deployment failed after $max_retries attempts"
-                                  exit 1
-                              fi
-                          fi
-                      done
 
     visual:
         executor: node
@@ -704,12 +365,12 @@ workflows:
             - test-firefox
             - test-webkit
             - lint
-            - hcm-visual-test:
+            - hcm-visual:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - hcm-visual-deploy:
+            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -719,8 +380,8 @@ workflows:
                       branches:
                           # Beta docs are only published from main
                           only: main
-            - visual-test:
-                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>-test
+            - visual:
+                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
                           system: [spectrum, express, spectrum-two]
@@ -731,32 +392,8 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-deploy:
-                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>-deploy
-                  matrix:
-                      parameters:
-                          system: [spectrum, express, spectrum-two]
-                          color: [light]
-                          scale: [medium]
-                          dir: [ltr]
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-test:
-                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>-test
-                  matrix:
-                      parameters:
-                          system: [spectrum, express, spectrum-two]
-                          color: [dark]
-                          scale: [large]
-                          dir: [rtl]
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-deploy:
-                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>-deploy
+            - visual:
+                  name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
                           system: [spectrum, express, spectrum-two]
