@@ -27,7 +27,7 @@ export default {
             description: 'Size of the primary panel.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',

@@ -15,7 +15,9 @@ export const argTypes = {
         name: 'size',
         type: { name: 'string', required: false },
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'm' },
+            category: 'Attributes',
         },
         control: {
             labels: {
@@ -33,7 +35,8 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -46,7 +49,8 @@ export const argTypes = {
             'Disable this control. It will not receive focus or events.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -57,7 +61,8 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -68,7 +73,8 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -79,7 +85,8 @@ export const argTypes = {
         type: { name: 'boolean', required: false },
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
