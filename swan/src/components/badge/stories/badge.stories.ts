@@ -62,10 +62,10 @@ export const Sizes = (): TemplateResult => {
             <swan-badge size="m">${CheckmarkIcon} Medium</swan-badge>
             <swan-badge size="l">${CheckmarkIcon} Large</swan-badge>
             <swan-badge size="xl">${CheckmarkIcon} Extra-large</swan-badge>
-            <swan-badge style="max-width: 180px">
+            <!-- <swan-badge style="max-width: 180px">
                 ${CheckmarkIcon} This long content automatically wraps, but
                 shows no more than two lines
-            </swan-badge>
+            </swan-badge> -->
         </div>
     `;
 };

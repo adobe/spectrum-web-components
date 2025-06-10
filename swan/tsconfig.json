@@ -8,13 +8,18 @@
         "experimentalDecorators": true,
         "useDefineForClassFields": false,
         "outDir": "./dist",
-        "rootDir": "./src",
         "declaration": true,
         "declarationMap": false,
-        "composite": true
+        "baseUrl": ".",
+        "paths": {
+            "@core/*": [
+                "../core/src/*"
+            ]
+        }
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "../core/src/**/*"
     ],
     "exclude": [
         "dist",

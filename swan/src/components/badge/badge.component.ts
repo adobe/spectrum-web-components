@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html } from 'lit';
-import { BadgeBase } from './badge.base.js';
+import { BadgeBase } from '@core/components/badge/badge.base.js';
 import styles from './badge.styles.js';
 
 /**

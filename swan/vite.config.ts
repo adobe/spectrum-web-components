@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { glob } from 'glob';
+import { resolve } from 'path';
 
 // Function to dynamically generate input entries
 function generateInputs(mode: string) {
@@ -35,7 +36,9 @@ function generateInputs(mode: string) {
 
     // Optional: Log discovered files in development mode
     if (mode === 'development') {
+        // eslint-disable-next-line no-console
         console.log(`📦 Discovered ${componentFiles.length} component files:`);
+        // eslint-disable-next-line no-console
         componentFiles.forEach((file) => console.log(`  - ${file}`));
     }
 
@@ -43,6 +46,11 @@ function generateInputs(mode: string) {
 }
 
 export default defineConfig(({ mode }) => ({
+    resolve: {
+        alias: {
+            '@core': resolve(__dirname, '../core/src'),
+        },
+    },
     plugins: [
         dts({
             include: ['src/**/*'],
