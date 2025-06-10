@@ -84,6 +84,10 @@ export default {
             'packages/icons-workflow/**',
             'test/**',
             '**/test/**',
+            // Exclude e2e test files from coverage
+            '**/*.e2e.js',
+            '**/*.e2e.ts',
+            '**/e2e/**',
             'tools/*/stories/*',
             'tools/styles/**',
             '**/node_modules/**',

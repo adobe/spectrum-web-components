@@ -53,6 +53,20 @@ export default defineConfig(({ mode }) => ({
     test: {
         include: ['src/**/*.test.ts'],
         exclude: ['src/**/*.e2e.ts'],
+        coverage: {
+            provider: 'v8',
+            include: ['src/**/*.ts'],
+            exclude: [
+                'src/**/*.test.ts',
+                'src/**/*.e2e.ts',
+                'src/**/*.stories.ts',
+                'src/**/*.d.ts',
+                'src/**/stories/**',
+                'src/**/__tests__/**',
+                'src/**/__stories__/**',
+            ],
+            reporter: ['text', 'json', 'html'],
+        },
     },
     build: {
         target: 'es2022',
