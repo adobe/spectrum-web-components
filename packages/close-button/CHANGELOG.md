@@ -1,34 +1,41 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -49,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -63,7 +70,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -125,7 +132,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -199,7 +206,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
+- **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
 
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
@@ -225,13 +232,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
+- prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
 
 ### Features
 
--   **close-button:** add Close Button pattern ([8e9e1ad](https://github.com/adobe/spectrum-web-components/commit/8e9e1ad1ac84a989c4052f1368d8d3d8ddc5f60e))
--   **close-button:** use core tokens ([e6a4efe](https://github.com/adobe/spectrum-web-components/commit/e6a4efe3a278ae4586a6274571b9e59638725fb7))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- **close-button:** add Close Button pattern ([8e9e1ad](https://github.com/adobe/spectrum-web-components/commit/8e9e1ad1ac84a989c4052f1368d8d3d8ddc5f60e))
+- **close-button:** use core tokens ([e6a4efe](https://github.com/adobe/spectrum-web-components/commit/e6a4efe3a278ae4586a6274571b9e59638725fb7))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.3.11...@spectrum-web-components/close-button@0.3.12) (2023-04-24)
 
@@ -245,7 +252,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
+- prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
 
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.3.8...@spectrum-web-components/close-button@0.3.9) (2023-02-08)
 
@@ -287,13 +294,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.1.7...@spectrum-web-components/close-button@0.2.0) (2022-08-04)
 
 ### Features
 
--   **close-button:** use core tokens ([e6a4efe](https://github.com/adobe/spectrum-web-components/commit/e6a4efe3a278ae4586a6274571b9e59638725fb7))
+- **close-button:** use core tokens ([e6a4efe](https://github.com/adobe/spectrum-web-components/commit/e6a4efe3a278ae4586a6274571b9e59638725fb7))
 
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.1.6...@spectrum-web-components/close-button@0.1.7) (2022-07-18)
 
@@ -327,4 +334,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **close-button:** add Close Button pattern ([8e9e1ad](https://github.com/adobe/spectrum-web-components/commit/8e9e1ad1ac84a989c4052f1368d8d3d8ddc5f60e))
+- **close-button:** add Close Button pattern ([8e9e1ad](https://github.com/adobe/spectrum-web-components/commit/8e9e1ad1ac84a989c4052f1368d8d3d8ddc5f60e))

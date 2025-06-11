@@ -1,46 +1,56 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/checkbox@1.7.0
+    - @spectrum-web-components/icon@1.7.0
+    - @spectrum-web-components/icons-ui@1.7.0
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5349](https://github.com/adobe/spectrum-web-components/pull/5349) [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/checkbox@1.6.0
-    -   @spectrum-web-components/icon@1.6.0
-    -   @spectrum-web-components/icons-ui@1.6.0
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/checkbox@1.6.0
+    - @spectrum-web-components/icon@1.6.0
+    - @spectrum-web-components/icons-ui@1.6.0
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies [[`a4de4c7`](https://github.com/adobe/spectrum-web-components/commit/a4de4c76c38ae274535fc7df8ab32490a796485a)]:
-    -   @spectrum-web-components/checkbox@1.5.0
-    -   @spectrum-web-components/icon@1.5.0
-    -   @spectrum-web-components/icons-ui@1.5.0
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies [[`a4de4c7`](https://github.com/adobe/spectrum-web-components/commit/a4de4c76c38ae274535fc7df8ab32490a796485a)]:
+    - @spectrum-web-components/checkbox@1.5.0
+    - @spectrum-web-components/icon@1.5.0
+    - @spectrum-web-components/icons-ui@1.5.0
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/checkbox@1.4.0
-    -   @spectrum-web-components/icon@1.4.0
-    -   @spectrum-web-components/icons-ui@1.4.0
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/checkbox@1.4.0
+    - @spectrum-web-components/icon@1.4.0
+    - @spectrum-web-components/icons-ui@1.4.0
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    -   @spectrum-web-components/checkbox@1.3.0
-    -   @spectrum-web-components/icon@1.3.0
-    -   @spectrum-web-components/icons-ui@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    - @spectrum-web-components/checkbox@1.3.0
+    - @spectrum-web-components/icon@1.3.0
+    - @spectrum-web-components/icons-ui@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -61,7 +71,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -111,7 +121,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add keyboard handlers to sp-table-cell-head ([#4473](https://github.com/adobe/spectrum-web-components/issues/4473)) ([794263e](https://github.com/adobe/spectrum-web-components/commit/794263ed93fb498a8f4c9f22a02408c6ebbf5170))
+- add keyboard handlers to sp-table-cell-head ([#4473](https://github.com/adobe/spectrum-web-components/issues/4473)) ([794263e](https://github.com/adobe/spectrum-web-components/commit/794263ed93fb498a8f4c9f22a02408c6ebbf5170))
 
 # [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
 
@@ -137,13 +147,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **table:** Add aria-rowcount to virtualized tables ([#4156](https://github.com/adobe/spectrum-web-components/issues/4156)) ([b4136ab](https://github.com/adobe/spectrum-web-components/commit/b4136abf29bae6c7a5358bb8f4211feb95ca7690))
+- **table:** Add aria-rowcount to virtualized tables ([#4156](https://github.com/adobe/spectrum-web-components/issues/4156)) ([b4136ab](https://github.com/adobe/spectrum-web-components/commit/b4136abf29bae6c7a5358bb8f4211feb95ca7690))
 
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -185,7 +195,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **table:** update row selection aria ([6c8c706](https://github.com/adobe/spectrum-web-components/commit/6c8c70688c1df59b6e7a7a9cbf562b7171e710c1))
+- **table:** update row selection aria ([6c8c706](https://github.com/adobe/spectrum-web-components/commit/6c8c70688c1df59b6e7a7a9cbf562b7171e710c1))
 
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
@@ -203,7 +213,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **table:** migrate to core tokens ([#3441](https://github.com/adobe/spectrum-web-components/issues/3441)) ([b866bab](https://github.com/adobe/spectrum-web-components/commit/b866bab30a56da1474d533221afd3ed536c31871))
+- **table:** migrate to core tokens ([#3441](https://github.com/adobe/spectrum-web-components/issues/3441)) ([b866bab](https://github.com/adobe/spectrum-web-components/commit/b866bab30a56da1474d533221afd3ed536c31871))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -225,7 +235,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **table:** include all dependencies, @lit-labs/observers was missing ([98d0370](https://github.com/adobe/spectrum-web-components/commit/98d03701b05101bae4a9e1f4d554bf0648979884))
+- **table:** include all dependencies, @lit-labs/observers was missing ([98d0370](https://github.com/adobe/spectrum-web-components/commit/98d03701b05101bae4a9e1f4d554bf0648979884))
 
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
@@ -247,19 +257,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add missing "elements.js" export for sp-table component ([ab8e2a7](https://github.com/adobe/spectrum-web-components/commit/ab8e2a7dc54bcccfa5c060d6361091b4cf83e8c1))
--   prevent runaway event listeners by not rendering while disconnected ([aa8e8b2](https://github.com/adobe/spectrum-web-components/commit/aa8e8b25bb29ec386de38f12a76fd1eb15d0bc6a))
--   **table:** add resize controller to TableBody for a11y reasons ([85dd406](https://github.com/adobe/spectrum-web-components/commit/85dd4066328afeacf978acc3fc9acd57436900a1))
--   **table:** allow "change" events from table row content ([97699a0](https://github.com/adobe/spectrum-web-components/commit/97699a05f1845ea627814e012ed880b411855446))
--   **table:** allow tablebody to be resized via flex-grow ([f797202](https://github.com/adobe/spectrum-web-components/commit/f797202501d81ff878b500551b6ca6fbb5022e76))
--   **table:** update element tag in sp table sub components ([4e94d70](https://github.com/adobe/spectrum-web-components/commit/4e94d709b85eec887bf2f39ae4f3057dd67e5868))
--   **table:** update sp-table import in elements.js ([0cfe25a](https://github.com/adobe/spectrum-web-components/commit/0cfe25a971520ae0cf6d57de0fe14430b53b72bb))
--   update timing to support non-virtualized rows ([11ff752](https://github.com/adobe/spectrum-web-components/commit/11ff7523b1f9901b517d7180288cc995ce20c680))
+- add missing "elements.js" export for sp-table component ([ab8e2a7](https://github.com/adobe/spectrum-web-components/commit/ab8e2a7dc54bcccfa5c060d6361091b4cf83e8c1))
+- prevent runaway event listeners by not rendering while disconnected ([aa8e8b2](https://github.com/adobe/spectrum-web-components/commit/aa8e8b25bb29ec386de38f12a76fd1eb15d0bc6a))
+- **table:** add resize controller to TableBody for a11y reasons ([85dd406](https://github.com/adobe/spectrum-web-components/commit/85dd4066328afeacf978acc3fc9acd57436900a1))
+- **table:** allow "change" events from table row content ([97699a0](https://github.com/adobe/spectrum-web-components/commit/97699a05f1845ea627814e012ed880b411855446))
+- **table:** allow tablebody to be resized via flex-grow ([f797202](https://github.com/adobe/spectrum-web-components/commit/f797202501d81ff878b500551b6ca6fbb5022e76))
+- **table:** update element tag in sp table sub components ([4e94d70](https://github.com/adobe/spectrum-web-components/commit/4e94d709b85eec887bf2f39ae4f3057dd67e5868))
+- **table:** update sp-table import in elements.js ([0cfe25a](https://github.com/adobe/spectrum-web-components/commit/0cfe25a971520ae0cf6d57de0fe14430b53b72bb))
+- update timing to support non-virtualized rows ([11ff752](https://github.com/adobe/spectrum-web-components/commit/11ff7523b1f9901b517d7180288cc995ce20c680))
 
 ### Features
 
--   select row when clicking row ([294523c](https://github.com/adobe/spectrum-web-components/commit/294523cd392a423351faf321cd9af1b02e0544e6))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- select row when clicking row ([294523c](https://github.com/adobe/spectrum-web-components/commit/294523cd392a423351faf321cd9af1b02e0544e6))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 
 ## [0.1.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.13...@spectrum-web-components/table@0.1.14) (2023-04-24)
 
@@ -273,7 +283,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **table:** allow "change" events from table row content ([97699a0](https://github.com/adobe/spectrum-web-components/commit/97699a05f1845ea627814e012ed880b411855446))
+- **table:** allow "change" events from table row content ([97699a0](https://github.com/adobe/spectrum-web-components/commit/97699a05f1845ea627814e012ed880b411855446))
 
 ## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.10...@spectrum-web-components/table@0.1.11) (2023-03-08)
 
@@ -287,9 +297,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **table:** allow tablebody to be resized via flex-grow ([f797202](https://github.com/adobe/spectrum-web-components/commit/f797202501d81ff878b500551b6ca6fbb5022e76))
--   **table:** update element tag in sp table sub components ([4e94d70](https://github.com/adobe/spectrum-web-components/commit/4e94d709b85eec887bf2f39ae4f3057dd67e5868))
--   **table:** update sp-table import in elements.js ([0cfe25a](https://github.com/adobe/spectrum-web-components/commit/0cfe25a971520ae0cf6d57de0fe14430b53b72bb))
+- **table:** allow tablebody to be resized via flex-grow ([f797202](https://github.com/adobe/spectrum-web-components/commit/f797202501d81ff878b500551b6ca6fbb5022e76))
+- **table:** update element tag in sp table sub components ([4e94d70](https://github.com/adobe/spectrum-web-components/commit/4e94d709b85eec887bf2f39ae4f3057dd67e5868))
+- **table:** update sp-table import in elements.js ([0cfe25a](https://github.com/adobe/spectrum-web-components/commit/0cfe25a971520ae0cf6d57de0fe14430b53b72bb))
 
 ## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.7...@spectrum-web-components/table@0.1.8) (2023-01-23)
 
@@ -299,7 +309,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add missing "elements.js" export for sp-table component ([ab8e2a7](https://github.com/adobe/spectrum-web-components/commit/ab8e2a7dc54bcccfa5c060d6361091b4cf83e8c1))
+- add missing "elements.js" export for sp-table component ([ab8e2a7](https://github.com/adobe/spectrum-web-components/commit/ab8e2a7dc54bcccfa5c060d6361091b4cf83e8c1))
 
 ## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.5...@spectrum-web-components/table@0.1.6) (2022-12-08)
 
@@ -329,10 +339,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   update timing to support non-virtualized rows ([11ff752](https://github.com/adobe/spectrum-web-components/commit/11ff7523b1f9901b517d7180288cc995ce20c680))
--   **table:** add resize controller to TableBody for a11y reasons ([85dd406](https://github.com/adobe/spectrum-web-components/commit/85dd4066328afeacf978acc3fc9acd57436900a1))
--   prevent runaway event listeners by not rendering while disconnected ([aa8e8b2](https://github.com/adobe/spectrum-web-components/commit/aa8e8b25bb29ec386de38f12a76fd1eb15d0bc6a))
+- update timing to support non-virtualized rows ([11ff752](https://github.com/adobe/spectrum-web-components/commit/11ff7523b1f9901b517d7180288cc995ce20c680))
+- **table:** add resize controller to TableBody for a11y reasons ([85dd406](https://github.com/adobe/spectrum-web-components/commit/85dd4066328afeacf978acc3fc9acd57436900a1))
+- prevent runaway event listeners by not rendering while disconnected ([aa8e8b2](https://github.com/adobe/spectrum-web-components/commit/aa8e8b25bb29ec386de38f12a76fd1eb15d0bc6a))
 
 ### Features
 
--   select row when clicking row ([294523c](https://github.com/adobe/spectrum-web-components/commit/294523cd392a423351faf321cd9af1b02e0544e6))
+- select row when clicking row ([294523c](https://github.com/adobe/spectrum-web-components/commit/294523cd392a423351faf321cd9af1b02e0544e6))

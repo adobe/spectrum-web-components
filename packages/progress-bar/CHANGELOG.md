@@ -1,44 +1,54 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/field-label@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/reactive-controllers@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/field-label@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/reactive-controllers@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/field-label@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/reactive-controllers@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    -   @spectrum-web-components/field-label@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/reactive-controllers@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    - @spectrum-web-components/field-label@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/reactive-controllers@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/field-label@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/reactive-controllers@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/field-label@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/reactive-controllers@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    -   @spectrum-web-components/reactive-controllers@1.3.0
-    -   @spectrum-web-components/field-label@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    - @spectrum-web-components/reactive-controllers@1.3.0
+    - @spectrum-web-components/field-label@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -59,7 +69,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -73,13 +83,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
--   remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
+- remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -109,7 +119,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **progress-bar:** removed duplicate label ([#4494](https://github.com/adobe/spectrum-web-components/issues/4494)) ([39b6622](https://github.com/adobe/spectrum-web-components/commit/39b6622658270400c6e44909096d0c6a9be5a040))
+- **progress-bar:** removed duplicate label ([#4494](https://github.com/adobe/spectrum-web-components/issues/4494)) ([39b6622](https://github.com/adobe/spectrum-web-components/commit/39b6622658270400c6e44909096d0c6a9be5a040))
 
 # [0.44.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.44.0) (2024-07-15)
 
@@ -143,12 +153,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **progress-bar:** remove aria-label only if set by label and label is empty; add tests ([d351451](https://github.com/adobe/spectrum-web-components/commit/d351451bba6be99eeddbf9fe55a29104fd86d809))
--   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+- **progress-bar:** remove aria-label only if set by label and label is empty; add tests ([d351451](https://github.com/adobe/spectrum-web-components/commit/d351451bba6be99eeddbf9fe55a29104fd86d809))
+- **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -198,7 +208,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+- update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
 
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
@@ -208,7 +218,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
+- **meter:** add "variant" (coalescing various boolean attributes) and remove "over-background" attributes ([#3514](https://github.com/adobe/spectrum-web-components/issues/3514)) ([40e5f8a](https://github.com/adobe/spectrum-web-components/commit/40e5f8ae476a590bb3df52d7281f76f5908b8672))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -226,7 +236,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **meter, progress-bar, progress-circle:** use innerText when label is not provided ([#3483](https://github.com/adobe/spectrum-web-components/issues/3483)) ([59358c7](https://github.com/adobe/spectrum-web-components/commit/59358c7ada3283e2fdb08793d4c4160dcfe7aee2))
+- **meter, progress-bar, progress-circle:** use innerText when label is not provided ([#3483](https://github.com/adobe/spectrum-web-components/issues/3483)) ([59358c7](https://github.com/adobe/spectrum-web-components/commit/59358c7ada3283e2fdb08793d4c4160dcfe7aee2))
 
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
@@ -248,25 +258,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **meter,progress-bar:** add i18n to progress delivery ([c7e4020](https://github.com/adobe/spectrum-web-components/commit/c7e4020dc3120f7e6e366bcc89dd523dea3ba821))
+- **meter,progress-bar:** add i18n to progress delivery ([c7e4020](https://github.com/adobe/spectrum-web-components/commit/c7e4020dc3120f7e6e366bcc89dd523dea3ba821))
 
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
--   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   **progress-bar:** replace bar-loader with progress-bar ([182935c](https://github.com/adobe/spectrum-web-components/commit/182935c540013af9e793ccf5654113b7af5d34de))
--   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- **progress-bar:** replace bar-loader with progress-bar ([182935c](https://github.com/adobe/spectrum-web-components/commit/182935c540013af9e793ccf5654113b7af5d34de))
+- **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.9.3...@spectrum-web-components/progress-bar@0.9.4) (2023-04-24)
 
@@ -288,7 +298,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+- **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
 
 ## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.8.6...@spectrum-web-components/progress-bar@0.8.7) (2023-01-23)
 
@@ -322,19 +332,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+- add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
 
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.6.0...@spectrum-web-components/progress-bar@0.7.0) (2022-08-09)
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.5.13...@spectrum-web-components/progress-bar@0.6.0) (2022-08-04)
 
 ### Features
 
--   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+- delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
 
 ## [0.5.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.5.12...@spectrum-web-components/progress-bar@0.5.13) (2022-07-18)
 
@@ -400,7 +410,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.3.8...@spectrum-web-components/progress-bar@0.3.9) (2021-10-12)
 
@@ -442,7 +452,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+- **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
 ## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.2.6...@spectrum-web-components/progress-bar@0.2.7) (2021-05-12)
 
@@ -476,16 +486,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-bar@0.1.0...@spectrum-web-components/progress-bar@0.1.1) (2021-02-11)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 # 0.1.0 (2021-02-02)
 
 ### Features
 
--   **progress-bar:** replace bar-loader with progress-bar ([182935c](https://github.com/adobe/spectrum-web-components/commit/182935c540013af9e793ccf5654113b7af5d34de))
+- **progress-bar:** replace bar-loader with progress-bar ([182935c](https://github.com/adobe/spectrum-web-components/commit/182935c540013af9e793ccf5654113b7af5d34de))

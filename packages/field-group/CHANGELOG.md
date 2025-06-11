@@ -1,36 +1,44 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/help-text@1.7.0
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/help-text@1.6.0
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/help-text@1.6.0
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    -   @spectrum-web-components/help-text@1.5.0
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    - @spectrum-web-components/help-text@1.5.0
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/help-text@1.4.0
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/help-text@1.4.0
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/help-text@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/help-text@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -51,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -129,7 +137,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -167,7 +175,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **field-group:** apply role when none present ([3616199](https://github.com/adobe/spectrum-web-components/commit/36161997825b77b3a31a4090e273c12329be9d8c))
+- **field-group:** apply role when none present ([3616199](https://github.com/adobe/spectrum-web-components/commit/36161997825b77b3a31a4090e273c12329be9d8c))
 
 ## [0.39.4](https://github.com/adobe/spectrum-web-components/compare/v0.39.3...v0.39.4) (2023-11-02)
 
@@ -229,24 +237,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
--   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
+- update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
--   **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))
--   **field-group:** use core tokens ([7433e59](https://github.com/adobe/spectrum-web-components/commit/7433e598634adc74eb8d2d6c7794eaa5a2ec27e7))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+- **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))
+- **field-group:** use core tokens ([7433e59](https://github.com/adobe/spectrum-web-components/commit/7433e598634adc74eb8d2d6c7794eaa5a2ec27e7))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.8.6...@spectrum-web-components/field-group@0.8.7) (2023-04-24)
 
@@ -280,7 +288,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **field-group:** use core tokens ([7433e59](https://github.com/adobe/spectrum-web-components/commit/7433e598634adc74eb8d2d6c7794eaa5a2ec27e7))
+- **field-group:** use core tokens ([7433e59](https://github.com/adobe/spectrum-web-components/commit/7433e598634adc74eb8d2d6c7794eaa5a2ec27e7))
 
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.7.4...@spectrum-web-components/field-group@0.7.5) (2022-11-21)
 
@@ -306,13 +314,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+- add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
 
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.5.12...@spectrum-web-components/field-group@0.6.0) (2022-08-09)
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.5.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.5.11...@spectrum-web-components/field-group@0.5.12) (2022-08-04)
 
@@ -362,7 +370,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+- apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
 
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.4.1...@spectrum-web-components/field-group@0.5.0) (2021-11-08)
 
@@ -376,7 +384,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.3.8...@spectrum-web-components/field-group@0.3.9) (2021-09-20)
 
@@ -410,7 +418,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
+- reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
 
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.3.0...@spectrum-web-components/field-group@0.3.1) (2021-03-05)
 
@@ -420,13 +428,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.2.2...@spectrum-web-components/field-group@0.2.3) (2021-02-11)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.2.1...@spectrum-web-components/field-group@0.2.2) (2021-02-02)
 
@@ -440,26 +448,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
--   **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+- **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))
 
 # 0.1.0 (2021-01-13)
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
--   **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+- **field-group:** update spectrum css input ([b2160a9](https://github.com/adobe/spectrum-web-components/commit/b2160a9c2a3ed95f20979cf3a5836bb9fca48c0c))

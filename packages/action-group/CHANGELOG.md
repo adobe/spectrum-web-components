@@ -1,44 +1,54 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies [[`c1669d2`](https://github.com/adobe/spectrum-web-components/commit/c1669d2dc5e1ceeb84486ce49a428f86a3173caa)]:
+    - @spectrum-web-components/action-button@1.7.0
+    - @spectrum-web-components/icons-workflow@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/reactive-controllers@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093)]:
-    -   @spectrum-web-components/icons-workflow@1.6.0
-    -   @spectrum-web-components/action-button@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/reactive-controllers@1.6.0
+- Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093)]:
+    - @spectrum-web-components/icons-workflow@1.6.0
+    - @spectrum-web-components/action-button@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/reactive-controllers@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
-    -   @spectrum-web-components/action-button@1.5.0
-    -   @spectrum-web-components/icons-workflow@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/reactive-controllers@1.5.0
+- Updated dependencies [[`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8)]:
+    - @spectrum-web-components/action-button@1.5.0
+    - @spectrum-web-components/icons-workflow@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/reactive-controllers@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
-    -   @spectrum-web-components/action-button@1.4.0
-    -   @spectrum-web-components/icons-workflow@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/reactive-controllers@1.4.0
+- Updated dependencies [[`72dbe62`](https://github.com/adobe/spectrum-web-components/commit/72dbe629cddfc57171eaaadf7206df47c19d3c98)]:
+    - @spectrum-web-components/action-button@1.4.0
+    - @spectrum-web-components/icons-workflow@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/reactive-controllers@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    -   @spectrum-web-components/reactive-controllers@1.3.0
-    -   @spectrum-web-components/action-button@1.3.0
-    -   @spectrum-web-components/icons-workflow@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    - @spectrum-web-components/reactive-controllers@1.3.0
+    - @spectrum-web-components/action-button@1.3.0
+    - @spectrum-web-components/icons-workflow@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -47,11 +57,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
+- **action menu:** keyboard accessibility omnibus ([#5031](https://github.com/adobe/spectrum-web-components/issues/5031)) ([ea38ef0](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)), closes [#4623](https://github.com/adobe/spectrum-web-components/issues/4623)
 
 ### Features
 
--   **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
+- **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 
@@ -65,7 +75,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -75,19 +85,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** add null check for slotElement in manageButtons ([#4924](https://github.com/adobe/spectrum-web-components/issues/4924)) ([60db5ab](https://github.com/adobe/spectrum-web-components/commit/60db5ab86155a1fea13452752c8995bf6da26cd5))
+- **action-group:** add null check for slotElement in manageButtons ([#4924](https://github.com/adobe/spectrum-web-components/issues/4924)) ([60db5ab](https://github.com/adobe/spectrum-web-components/commit/60db5ab86155a1fea13452752c8995bf6da26cd5))
 
 # [1.0.0](https://github.com/adobe/spectrum-web-components/compare/v0.49.0...v1.0.0) (2024-10-31)
 
 ### BREAKING CHANGES
 
--   remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
+- remove deprecated 'static' references ([#4818](https://github.com/adobe/spectrum-web-components/issues/4818))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -105,7 +115,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **reactive-controllers:** update focusable element's tab-index to 0 on accepting focus ([#4630](https://github.com/adobe/spectrum-web-components/issues/4630)) ([d359e84](https://github.com/adobe/spectrum-web-components/commit/d359e844fb00ff3a52f7f4346038aa8d5b620025))
+- **reactive-controllers:** update focusable element's tab-index to 0 on accepting focus ([#4630](https://github.com/adobe/spectrum-web-components/issues/4630)) ([d359e84](https://github.com/adobe/spectrum-web-components/commit/d359e844fb00ff3a52f7f4346038aa8d5b620025))
 
 # [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
 
@@ -123,7 +133,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **action-bar:** support for action-menus ([#3780](https://github.com/adobe/spectrum-web-components/issues/3780)) ([4aff599](https://github.com/adobe/spectrum-web-components/commit/4aff5995f6a22eefae0dd8e580d743c27ceb2c2d))
+- **action-bar:** support for action-menus ([#3780](https://github.com/adobe/spectrum-web-components/issues/3780)) ([4aff599](https://github.com/adobe/spectrum-web-components/commit/4aff5995f6a22eefae0dd8e580d743c27ceb2c2d))
 
 # [0.43.0](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.43.0) (2024-06-11)
 
@@ -149,19 +159,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **shared:** ensure the "updateComplete" in Focusable is stable ([885b4a5](https://github.com/adobe/spectrum-web-components/commit/885b4a5e12430910bb0dbacddc865081fe46d9a1))
+- **shared:** ensure the "updateComplete" in Focusable is stable ([885b4a5](https://github.com/adobe/spectrum-web-components/commit/885b4a5e12430910bb0dbacddc865081fe46d9a1))
 
 # [0.42.0](https://github.com/adobe/spectrum-web-components/compare/v0.41.2...v0.42.0) (2024-03-19)
 
 ### Bug Fixes
 
--   **action-group:** manage Action Button selection through multiple slots ([4d02b46](https://github.com/adobe/spectrum-web-components/commit/4d02b469ffee693d23b67e68b1b63ad0b5c5eccc))
--   **button:** prevent pointer interaction of child/slotted content ([2cd5823](https://github.com/adobe/spectrum-web-components/commit/2cd5823649f71ca849df0eb39d01d64034a4af70))
--   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+- **action-group:** manage Action Button selection through multiple slots ([4d02b46](https://github.com/adobe/spectrum-web-components/commit/4d02b469ffee693d23b67e68b1b63ad0b5c5eccc))
+- **button:** prevent pointer interaction of child/slotted content ([2cd5823](https://github.com/adobe/spectrum-web-components/commit/2cd5823649f71ca849df0eb39d01d64034a4af70))
+- **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -215,7 +225,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-button:** allow change events to bubble and pierce shadowdom ([#3614](https://github.com/adobe/spectrum-web-components/issues/3614)) ([3f76e04](https://github.com/adobe/spectrum-web-components/commit/3f76e04fb71ad263e067838050bd550c009b1a69))
+- **action-button:** allow change events to bubble and pierce shadowdom ([#3614](https://github.com/adobe/spectrum-web-components/issues/3614)) ([3f76e04](https://github.com/adobe/spectrum-web-components/commit/3f76e04fb71ad263e067838050bd550c009b1a69))
 
 # [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
@@ -229,25 +239,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+- **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
 
 # [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
 
 ### Bug Fixes
 
--   **action-group:** separate first selection management from later selection management ([783b206](https://github.com/adobe/spectrum-web-components/commit/783b2067be23bf82eb222a361e5c899d89f05005))
+- **action-group:** separate first selection management from later selection management ([783b206](https://github.com/adobe/spectrum-web-components/commit/783b2067be23bf82eb222a361e5c899d89f05005))
 
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
 ### Features
 
--   **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
+- **action-bar:** use core tokens ([4e21edf](https://github.com/adobe/spectrum-web-components/commit/4e21edfa369dcdbba823e3cfc1b35d65f48cab6f))
 
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes
 
--   **action-group:** ensure Action Button clicks are attributed to the right element ([#3292](https://github.com/adobe/spectrum-web-components/issues/3292)) ([ddccab7](https://github.com/adobe/spectrum-web-components/commit/ddccab766498a6da6ca29d9bbe9cebd7924e81e0))
+- **action-group:** ensure Action Button clicks are attributed to the right element ([#3292](https://github.com/adobe/spectrum-web-components/issues/3292)) ([ddccab7](https://github.com/adobe/spectrum-web-components/commit/ddccab766498a6da6ca29d9bbe9cebd7924e81e0))
 
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
@@ -261,7 +271,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** update application/management of "role" on group and buttons ([533873b](https://github.com/adobe/spectrum-web-components/commit/533873be83da30e032fbb89a993f5c4e0c1c8086)), closes [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221)
+- **action-group:** update application/management of "role" on group and buttons ([533873b](https://github.com/adobe/spectrum-web-components/commit/533873be83da30e032fbb89a993f5c4e0c1c8086)), closes [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221) [#3221](https://github.com/adobe/spectrum-web-components/issues/3221)
 
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
@@ -271,47 +281,47 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** add custom focus() method and use sendKeys for correct "Enter" key testing ([638aa35](https://github.com/adobe/spectrum-web-components/commit/638aa3551f359951d926e2b7c9773aafab1402f0))
--   **action-group:** allow direct setting aria-label on first update ([84f7fdd](https://github.com/adobe/spectrum-web-components/commit/84f7fdd17145208055b685b6bdf3a6d2e986f21b))
--   **action-group:** allow for initial button being "disabled" ([a1e3939](https://github.com/adobe/spectrum-web-components/commit/a1e393940daf5d0bb7783511d7b5255e24611033))
--   **action-group:** allow quiet and emphasized attributes to be passed to slotted action buttons ([aadfddb](https://github.com/adobe/spectrum-web-components/commit/aadfddb8e92136e78c577fb70e0f9c2c1ee176b9))
--   **action-group:** pass styles to nested children, too ([12f1be3](https://github.com/adobe/spectrum-web-components/commit/12f1be3cfd932b10e4b9aa18f8a89aeed6a09df4))
--   **action-group:** support ActionButtons that are not direct children ([1d4efd5](https://github.com/adobe/spectrum-web-components/commit/1d4efd58386ebfb940763911cb90878cafcf6938))
--   **action-group:** use the correct role for buttons when not selects ([0aae8ed](https://github.com/adobe/spectrum-web-components/commit/0aae8edcf582858c6dc0168942383ff9116bb319))
--   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
--   ensure that "selected" can be set more than once from the outside ([5f1996c](https://github.com/adobe/spectrum-web-components/commit/5f1996cbb5e371719814c47c236a8fc1e2ef78ad))
--   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
--   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- **action-group:** add custom focus() method and use sendKeys for correct "Enter" key testing ([638aa35](https://github.com/adobe/spectrum-web-components/commit/638aa3551f359951d926e2b7c9773aafab1402f0))
+- **action-group:** allow direct setting aria-label on first update ([84f7fdd](https://github.com/adobe/spectrum-web-components/commit/84f7fdd17145208055b685b6bdf3a6d2e986f21b))
+- **action-group:** allow for initial button being "disabled" ([a1e3939](https://github.com/adobe/spectrum-web-components/commit/a1e393940daf5d0bb7783511d7b5255e24611033))
+- **action-group:** allow quiet and emphasized attributes to be passed to slotted action buttons ([aadfddb](https://github.com/adobe/spectrum-web-components/commit/aadfddb8e92136e78c577fb70e0f9c2c1ee176b9))
+- **action-group:** pass styles to nested children, too ([12f1be3](https://github.com/adobe/spectrum-web-components/commit/12f1be3cfd932b10e4b9aa18f8a89aeed6a09df4))
+- **action-group:** support ActionButtons that are not direct children ([1d4efd5](https://github.com/adobe/spectrum-web-components/commit/1d4efd58386ebfb940763911cb90878cafcf6938))
+- **action-group:** use the correct role for buttons when not selects ([0aae8ed](https://github.com/adobe/spectrum-web-components/commit/0aae8edcf582858c6dc0168942383ff9116bb319))
+- correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+- ensure that "selected" can be set more than once from the outside ([5f1996c](https://github.com/adobe/spectrum-web-components/commit/5f1996cbb5e371719814c47c236a8fc1e2ef78ad))
+- include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
--   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
--   **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
--   **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
--   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
--   modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
--   **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
--   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+- **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+- **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
+- **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+- **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+- **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
+- update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ### Performance Improvements
 
--   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+- reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
 
 ## [0.12.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.12.11...@spectrum-web-components/action-group@0.12.12) (2023-04-24)
 
@@ -365,7 +375,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
+- **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
 
 ## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.11.2...@spectrum-web-components/action-group@0.11.3) (2022-10-10)
 
@@ -383,7 +393,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.10.0...@spectrum-web-components/action-group@0.10.1) (2022-08-04)
 
@@ -393,13 +403,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+- support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
 
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.6...@spectrum-web-components/action-group@0.9.0) (2022-06-29)
 
 ### Features
 
--   **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
+- **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
 
 ## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.5...@spectrum-web-components/action-group@0.8.6) (2022-06-07)
 
@@ -413,7 +423,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   ensure that "selected" can be set more than once from the outside ([5f1996c](https://github.com/adobe/spectrum-web-components/commit/5f1996cbb5e371719814c47c236a8fc1e2ef78ad))
+- ensure that "selected" can be set more than once from the outside ([5f1996c](https://github.com/adobe/spectrum-web-components/commit/5f1996cbb5e371719814c47c236a8fc1e2ef78ad))
 
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.2...@spectrum-web-components/action-group@0.8.3) (2022-04-21)
 
@@ -431,7 +441,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+- leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
 
 ## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.7.1...@spectrum-web-components/action-group@0.7.2) (2022-02-22)
 
@@ -445,7 +455,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
 
 ## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.6.1...@spectrum-web-components/action-group@0.6.2) (2022-01-07)
 
@@ -459,7 +469,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+- update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
 
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.5.0...@spectrum-web-components/action-group@0.5.1) (2021-11-08)
 
@@ -469,23 +479,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
+- **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.4.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.17...@spectrum-web-components/action-group@0.4.18) (2021-10-12)
 
 ### Bug Fixes
 
--   **action-group:** allow quiet and emphasized attributes to be passed to slotted action buttons ([aadfddb](https://github.com/adobe/spectrum-web-components/commit/aadfddb8e92136e78c577fb70e0f9c2c1ee176b9))
+- **action-group:** allow quiet and emphasized attributes to be passed to slotted action buttons ([aadfddb](https://github.com/adobe/spectrum-web-components/commit/aadfddb8e92136e78c577fb70e0f9c2c1ee176b9))
 
 ## [0.4.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.16...@spectrum-web-components/action-group@0.4.17) (2021-10-05)
 
 ### Bug Fixes
 
--   **action-group:** add custom focus() method and use sendKeys for correct "Enter" key testing ([638aa35](https://github.com/adobe/spectrum-web-components/commit/638aa3551f359951d926e2b7c9773aafab1402f0))
+- **action-group:** add custom focus() method and use sendKeys for correct "Enter" key testing ([638aa35](https://github.com/adobe/spectrum-web-components/commit/638aa3551f359951d926e2b7c9773aafab1402f0))
 
 ## [0.4.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.15...@spectrum-web-components/action-group@0.4.16) (2021-09-20)
 
@@ -499,11 +509,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+- correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
 ### Performance Improvements
 
--   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+- reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
 
 ## [0.4.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.12...@spectrum-web-components/action-group@0.4.13) (2021-08-03)
 
@@ -525,14 +535,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** pass styles to nested children, too ([12f1be3](https://github.com/adobe/spectrum-web-components/commit/12f1be3cfd932b10e4b9aa18f8a89aeed6a09df4))
+- **action-group:** pass styles to nested children, too ([12f1be3](https://github.com/adobe/spectrum-web-components/commit/12f1be3cfd932b10e4b9aa18f8a89aeed6a09df4))
 
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.7...@spectrum-web-components/action-group@0.4.8) (2021-05-24)
 
 ### Bug Fixes
 
--   **action-group:** allow direct setting aria-label on first update ([84f7fdd](https://github.com/adobe/spectrum-web-components/commit/84f7fdd17145208055b685b6bdf3a6d2e986f21b))
--   **action-group:** use the correct role for buttons when not selects ([0aae8ed](https://github.com/adobe/spectrum-web-components/commit/0aae8edcf582858c6dc0168942383ff9116bb319))
+- **action-group:** allow direct setting aria-label on first update ([84f7fdd](https://github.com/adobe/spectrum-web-components/commit/84f7fdd17145208055b685b6bdf3a6d2e986f21b))
+- **action-group:** use the correct role for buttons when not selects ([0aae8ed](https://github.com/adobe/spectrum-web-components/commit/0aae8edcf582858c6dc0168942383ff9116bb319))
 
 ## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.6...@spectrum-web-components/action-group@0.4.7) (2021-05-12)
 
@@ -546,7 +556,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** allow for initial button being "disabled" ([a1e3939](https://github.com/adobe/spectrum-web-components/commit/a1e393940daf5d0bb7783511d7b5255e24611033))
+- **action-group:** allow for initial button being "disabled" ([a1e3939](https://github.com/adobe/spectrum-web-components/commit/a1e393940daf5d0bb7783511d7b5255e24611033))
 
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.4.3...@spectrum-web-components/action-group@0.4.4) (2021-03-29)
 
@@ -568,17 +578,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **action-group:** support ActionButtons that are not direct children ([1d4efd5](https://github.com/adobe/spectrum-web-components/commit/1d4efd58386ebfb940763911cb90878cafcf6938))
+- **action-group:** support ActionButtons that are not direct children ([1d4efd5](https://github.com/adobe/spectrum-web-components/commit/1d4efd58386ebfb940763911cb90878cafcf6938))
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.3.2...@spectrum-web-components/action-group@0.3.3) (2021-02-11)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.3.1...@spectrum-web-components/action-group@0.3.2) (2021-02-02)
 
@@ -592,37 +602,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
--   **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
--   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
--   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+- **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
+- **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+- **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.1.4...@spectrum-web-components/action-group@0.2.0) (2021-01-13)
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
--   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
--   **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
--   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
--   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+- **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+- **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+- **action-group:** update spectrum css input ([9840b19](https://github.com/adobe/spectrum-web-components/commit/9840b19576510d417387194846fb3aa6e4228759))
+- **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+- **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
 ## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.1.3...@spectrum-web-components/action-group@0.1.4) (2020-10-12)
 
@@ -632,13 +642,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+- include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
 ## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.1.1...@spectrum-web-components/action-group@0.1.2) (2020-09-25)
 
 ### Bug Fixes
 
--   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+- update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.1.0...@spectrum-web-components/action-group@0.1.1) (2020-09-14)
 
@@ -648,4 +658,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+- **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))

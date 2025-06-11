@@ -1,44 +1,54 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies [[`1126cf2`](https://github.com/adobe/spectrum-web-components/commit/1126cf22c0076c8728b86e9c0bf7f67fdd8fde07), [`a646ae8`](https://github.com/adobe/spectrum-web-components/commit/a646ae8b0e652308d359226740d2cb189e492e45), [`cde976d`](https://github.com/adobe/spectrum-web-components/commit/cde976ddfa71f898e2d0404ecc53150db149a861)]:
+    - @spectrum-web-components/styles@1.7.0
+    - @spectrum-web-components/overlay@1.7.0
+    - @spectrum-web-components/tooltip@1.7.0
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`700489f`](https://github.com/adobe/spectrum-web-components/commit/700489f87e96b895a687431486fb329c7497f2d6), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
-    -   @spectrum-web-components/tooltip@1.6.0
-    -   @spectrum-web-components/styles@1.6.0
-    -   @spectrum-web-components/overlay@1.6.0
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies [[`700489f`](https://github.com/adobe/spectrum-web-components/commit/700489f87e96b895a687431486fb329c7497f2d6), [`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd), [`a9727d2`](https://github.com/adobe/spectrum-web-components/commit/a9727d2975b01f440c09789c9e7e0122063b6f7e), [`53f3769`](https://github.com/adobe/spectrum-web-components/commit/53f3769f07b6e7853a8a4c0dc63b21fe14cf3d4b)]:
+    - @spectrum-web-components/tooltip@1.6.0
+    - @spectrum-web-components/styles@1.6.0
+    - @spectrum-web-components/overlay@1.6.0
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3), [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3)]:
-    -   @spectrum-web-components/styles@1.5.0
-    -   @spectrum-web-components/overlay@1.5.0
-    -   @spectrum-web-components/tooltip@1.5.0
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3), [`daeb11f`](https://github.com/adobe/spectrum-web-components/commit/daeb11f18792cf650518099fd29857139b6380b4), [`8f8735c`](https://github.com/adobe/spectrum-web-components/commit/8f8735c9ec3eac3b6473424c78257cb46ee17f70), [`6c58f50`](https://github.com/adobe/spectrum-web-components/commit/6c58f50f7b1f5489c11e0d3484e3f4a9d576f1c8), [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3)]:
+    - @spectrum-web-components/styles@1.5.0
+    - @spectrum-web-components/overlay@1.5.0
+    - @spectrum-web-components/tooltip@1.5.0
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies [[`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
-    -   @spectrum-web-components/styles@1.4.0
-    -   @spectrum-web-components/overlay@1.4.0
-    -   @spectrum-web-components/tooltip@1.4.0
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies [[`3cca7ea`](https://github.com/adobe/spectrum-web-components/commit/3cca7eacf127c3fd759953db38a2b5a561bfb8dc), [`46cd782`](https://github.com/adobe/spectrum-web-components/commit/46cd7828f65491fc08790e5ba0aec412ee89199d), [`70f5f6f`](https://github.com/adobe/spectrum-web-components/commit/70f5f6f3a97b530fb20f9f5ee049e9a8c124b02d)]:
+    - @spectrum-web-components/styles@1.4.0
+    - @spectrum-web-components/overlay@1.4.0
+    - @spectrum-web-components/tooltip@1.4.0
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
-    -   @spectrum-web-components/overlay@1.3.0
-    -   @spectrum-web-components/tooltip@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/styles@1.3.0
+- Updated dependencies [[`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9)]:
+    - @spectrum-web-components/overlay@1.3.0
+    - @spectrum-web-components/tooltip@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/styles@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -75,7 +85,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -137,8 +147,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **truncated:** add truncated package ([#4163](https://github.com/adobe/spectrum-web-components/issues/4163)) ([4ba0480](https://github.com/adobe/spectrum-web-components/commit/4ba0480e2c471d8bba14eb898963ab0dca2f2d5a))
+- **truncated:** add truncated package ([#4163](https://github.com/adobe/spectrum-web-components/issues/4163)) ([4ba0480](https://github.com/adobe/spectrum-web-components/commit/4ba0480e2c471d8bba14eb898963ab0dca2f2d5a))
 
 ### Reverts
 
--   Revert "Truncated element (#4125)" (#4160) ([da88bbe](https://github.com/adobe/spectrum-web-components/commit/da88bbe416a3ee5a991acdbceec2d698222e5f6a)), closes [#4125](https://github.com/adobe/spectrum-web-components/issues/4125) [#4160](https://github.com/adobe/spectrum-web-components/issues/4160)
+- Revert "Truncated element (#4125)" (#4160) ([da88bbe](https://github.com/adobe/spectrum-web-components/commit/da88bbe416a3ee5a991acdbceec2d698222e5f6a)), closes [#4125](https://github.com/adobe/spectrum-web-components/issues/4125) [#4160](https://github.com/adobe/spectrum-web-components/issues/4160)

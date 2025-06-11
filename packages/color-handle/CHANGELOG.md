@@ -1,42 +1,51 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/color-loupe@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/opacity-checkerboard@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/color-loupe@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/opacity-checkerboard@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/color-loupe@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/opacity-checkerboard@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    -   @spectrum-web-components/color-loupe@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/opacity-checkerboard@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    - @spectrum-web-components/color-loupe@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/opacity-checkerboard@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/color-loupe@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/opacity-checkerboard@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/color-loupe@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/opacity-checkerboard@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/color-loupe@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/opacity-checkerboard@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/color-loupe@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/opacity-checkerboard@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -57,7 +66,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -131,7 +140,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -181,7 +190,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+- update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
 
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
@@ -191,11 +200,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+- **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
 
 ### Features
 
--   **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
+- **color-slider:** migrate to core tokens ([#3507](https://github.com/adobe/spectrum-web-components/issues/3507)) ([96d0d40](https://github.com/adobe/spectrum-web-components/commit/96d0d40419e9f0b2d1ed77528dc062b1e62aeea5))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -229,7 +238,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
+- **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
 
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
@@ -239,28 +248,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
--   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
--   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
--   leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
--   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
--   prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
+- address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+- expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+- include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+- leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
+- manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+- prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **color-handle:** add color-handle pattern ([e3856d8](https://github.com/adobe/spectrum-web-components/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))
--   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
--   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **color-handle:** add color-handle pattern ([e3856d8](https://github.com/adobe/spectrum-web-components/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))
+- **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+- **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.9...@spectrum-web-components/color-handle@0.5.0) (2023-04-24)
 
 ### Features
 
--   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
--   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+- **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+- **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
 
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.8...@spectrum-web-components/color-handle@0.4.9) (2023-04-05)
 
@@ -298,13 +307,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
+- leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
 
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.3.11...@spectrum-web-components/color-handle@0.4.0) (2022-08-09)
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.3.10...@spectrum-web-components/color-handle@0.3.11) (2022-08-04)
 
@@ -362,7 +371,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.9...@spectrum-web-components/color-handle@0.1.10) (2021-10-12)
 
@@ -376,8 +385,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
--   prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
+- manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+- prevent focus outline ([af2b077](https://github.com/adobe/spectrum-web-components/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
 
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.6...@spectrum-web-components/color-handle@0.1.7) (2021-07-22)
 
@@ -387,7 +396,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+- expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
 
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.4...@spectrum-web-components/color-handle@0.1.5) (2021-06-16)
 
@@ -397,7 +406,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+- include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
 
 ## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.1.2...@spectrum-web-components/color-handle@0.1.3) (2021-04-09)
 
@@ -415,8 +424,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+- address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
 
 ### Features
 
--   **color-handle:** add color-handle pattern ([e3856d8](https://github.com/adobe/spectrum-web-components/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))
+- **color-handle:** add color-handle pattern ([e3856d8](https://github.com/adobe/spectrum-web-components/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))

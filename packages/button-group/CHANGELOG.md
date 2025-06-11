@@ -1,38 +1,46 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.7.0
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
-    -   @spectrum-web-components/button@1.6.0
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    - @spectrum-web-components/button@1.6.0
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
-    -   @spectrum-web-components/button@1.5.0
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
+    - @spectrum-web-components/button@1.5.0
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.4.0
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.4.0
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -49,17 +57,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
+- **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
 
 # [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ### Features
 
--   **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
+- **sp-button-group:** sp-button-group react to size updates ([#5037](https://github.com/adobe/spectrum-web-components/issues/5037)) ([63bc618](https://github.com/adobe/spectrum-web-components/commit/63bc618c18e9d8e39155cc7544814564673893a7))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -137,7 +145,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -195,7 +203,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
+- **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -237,24 +245,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
--   **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
--   **button-group:** use core tokens and add t-shirt sizing ([960e972](https://github.com/adobe/spectrum-web-components/commit/960e9726aa9be615a6b971079fa2d7436d898243))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
+- **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
+- **button-group:** use core tokens and add t-shirt sizing ([960e972](https://github.com/adobe/spectrum-web-components/commit/960e9726aa9be615a6b971079fa2d7436d898243))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.10.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.10.10...@spectrum-web-components/button-group@0.10.11) (2023-04-24)
 
@@ -304,13 +312,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **button-group:** use core tokens and add t-shirt sizing ([960e972](https://github.com/adobe/spectrum-web-components/commit/960e9726aa9be615a6b971079fa2d7436d898243))
+- **button-group:** use core tokens and add t-shirt sizing ([960e972](https://github.com/adobe/spectrum-web-components/commit/960e9726aa9be615a6b971079fa2d7436d898243))
 
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.8.12...@spectrum-web-components/button-group@0.9.0) (2022-08-09)
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.8.11...@spectrum-web-components/button-group@0.8.12) (2022-08-04)
 
@@ -372,7 +380,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.6.9...@spectrum-web-components/button-group@0.6.10) (2021-09-20)
 
@@ -418,13 +426,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.5.2...@spectrum-web-components/button-group@0.5.3) (2021-02-11)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.5.1...@spectrum-web-components/button-group@0.5.2) (2021-02-02)
 
@@ -438,25 +446,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
+- **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
 
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.3.4...@spectrum-web-components/button-group@0.4.0) (2021-01-13)
 
 ### Bug Fixes
 
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+- include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
 ### Features
 
--   **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
+- **button-group:** update spectrum css input ([d8b1218](https://github.com/adobe/spectrum-web-components/commit/d8b1218f3993d378115206b125ca3e92ba756203))
 
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.3.3...@spectrum-web-components/button-group@0.3.4) (2020-10-12)
 
@@ -466,13 +474,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+- include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.3.1...@spectrum-web-components/button-group@0.3.2) (2020-09-25)
 
 ### Bug Fixes
 
--   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+- update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.3.0...@spectrum-web-components/button-group@0.3.1) (2020-09-14)
 
@@ -482,7 +490,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+- update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
 ## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.2.3...@spectrum-web-components/button-group@0.2.4) (2020-08-19)
 
@@ -504,10 +512,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+- leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
 # 0.1.0 (2020-06-08)
 
 ### Features
 
--   **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
+- **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))

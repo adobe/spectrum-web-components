@@ -1,38 +1,46 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -53,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -63,13 +71,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
--   remove deprecated badge values ([#4742](https://github.com/adobe/spectrum-web-components/issues/4742))
+- remove deprecated badge values ([#4742](https://github.com/adobe/spectrum-web-components/issues/4742))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -131,11 +139,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **badge:** expand and update variant availability and mod override usage ([#4162](https://github.com/adobe/spectrum-web-components/issues/4162)) ([19e1a49](https://github.com/adobe/spectrum-web-components/commit/19e1a49079f67d5946a6779bd70838b69c726c4a))
+- **badge:** expand and update variant availability and mod override usage ([#4162](https://github.com/adobe/spectrum-web-components/issues/4162)) ([19e1a49](https://github.com/adobe/spectrum-web-components/commit/19e1a49079f67d5946a6779bd70838b69c726c4a))
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -149,7 +157,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+- **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
 
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
@@ -235,15 +243,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   remove outdated CEM listing ([2e110d9](https://github.com/adobe/spectrum-web-components/commit/2e110d9f63522efdf93cefc118d54fef4365e5b2))
+- remove outdated CEM listing ([2e110d9](https://github.com/adobe/spectrum-web-components/commit/2e110d9f63522efdf93cefc118d54fef4365e5b2))
 
 ### Features
 
--   add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
--   **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
--   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
+- **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
+- delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.4.8...@spectrum-web-components/badge@0.4.9) (2023-04-24)
 
@@ -285,7 +293,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
+- **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
 
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.3.0...@spectrum-web-components/badge@0.3.1) (2022-10-17)
 
@@ -295,13 +303,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.1.3...@spectrum-web-components/badge@0.2.0) (2022-08-04)
 
 ### Features
 
--   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+- delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
 
 ## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.1.2...@spectrum-web-components/badge@0.1.3) (2022-07-18)
 
@@ -319,8 +327,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   remove outdated CEM listing ([2e110d9](https://github.com/adobe/spectrum-web-components/commit/2e110d9f63522efdf93cefc118d54fef4365e5b2))
+- remove outdated CEM listing ([2e110d9](https://github.com/adobe/spectrum-web-components/commit/2e110d9f63522efdf93cefc118d54fef4365e5b2))
 
 ### Features
 
--   add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
+- add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
