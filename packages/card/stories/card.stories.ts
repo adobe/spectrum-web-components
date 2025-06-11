@@ -431,7 +431,19 @@ export const ScrollTest = {
                 { length: 20 },
                 (_) => html`
                     <div style="margin: 10px;">
-                        ${horizontalWithHREF({ horizontal: false })}
+                        <sp-card
+                            heading="Card Heading"
+                            subheading="JPG"
+                            ?horizontal=${false}
+                            style="width: 200px;"
+                        >
+                            <img
+                                slot="cover-photo"
+                                src=${portrait}
+                                alt="Demo Graphic"
+                            />
+                            <div slot="footer">Footer</div>
+                        </sp-card>
                     </div>
                 `
             )}
