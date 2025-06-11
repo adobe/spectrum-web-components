@@ -416,9 +416,8 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
         </sp-card>
     `;
 };
-
-export const ScrollTest = {
-    render: () => html`
+export const ScrollTest = (): TemplateResult => {
+    return html`
         <div class="scroll-container">
             <div class="scroll-indicator">
                 <h3>Switch to mobile view to test touch behavior.</h3>
@@ -429,7 +428,7 @@ export const ScrollTest = {
             </div>
             ${Array.from(
                 { length: 20 },
-                (_) => html`
+                () => html`
                     <div style="margin: 10px;">
                         <sp-card
                             heading="Card Heading"
@@ -448,5 +447,5 @@ export const ScrollTest = {
                 `
             )}
         </div>
-    `,
+    `;
 };
