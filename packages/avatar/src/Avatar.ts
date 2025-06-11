@@ -22,6 +22,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import avatarStyles from './avatar.css.js';
 
@@ -46,6 +47,14 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     @property()
     public src = '';
+
+    /**
+     * Whether this avatar is decorative and should be hidden from screen readers.
+     * When true, aria-hidden will be set to true and alt will be empty.
+     * When false and no label is provided, a warning will be logged.
+     */
+    @property({ type: Boolean, reflect: true })
+    public isdecorative = false;
 
     @property({ type: Number, reflect: true })
     public get size(): AvatarSize {
@@ -72,7 +81,12 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     protected override render(): TemplateResult {
         const avatar = html`
-            <img class="image" alt=${this.label || ''} src=${this.src} />
+            <img
+                class="image"
+                alt=${ifDefined(this.isdecorative ? '' : this.label)}
+                aria-hidden=${this.isdecorative ? 'true' : 'false'}
+                src=${this.src}
+            />
         `;
         if (this.href) {
             return this.renderAnchor({
@@ -88,6 +102,17 @@ export class Avatar extends LikeAnchor(Focusable) {
         super.firstUpdated(changes);
         if (!this.hasAttribute('size')) {
             this.setAttribute('size', `${this.size}`);
+        }
+        // Log a warning if neither label nor isdecorative is set
+        if (!this.label && !this.isdecorative) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> is missing a label and is not marked as decorative. Either provide a label or set isdecorative="true" for accessibility.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/avatar/#accessibility',
+                {
+                    type: 'accessibility',
+                }
+            );
         }
     }
 }

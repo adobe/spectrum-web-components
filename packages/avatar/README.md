@@ -139,17 +139,40 @@ import { Avatar } from '@spectrum-web-components/avatar';
 
 ## Accessibility
 
-The Avatar component is designed to be accessible by default:
+The Avatar component is designed to be accessible by default. To ensure proper accessibility:
 
-- Always includes an `alt` attribute on the image element
-- When a `label` is provided, it is used as the `alt` text
-- When no `label` is provided, an empty `alt=""` is used to indicate a decorative image
-- Supports keyboard navigation when used with `href` or `tabindex`
-- Maintains WCAG compliance for non-text content
+1. Provide a `label` attribute when the avatar represents a user or has meaningful content:
+
+```html
+<sp-avatar
+    label="Shantanu Narayen"
+    src="https://picsum.photos/500/500"
+></sp-avatar>
+```
+
+2. Use the `isdecorative` attribute when the avatar is purely decorative and should be hidden from screen readers:
+
+```html
+<sp-avatar isdecorative src="https://picsum.photos/500/500"></sp-avatar>
+```
+
+3. If neither `label` nor `isdecorative` is provided, a warning will be logged to the console to help developers identify accessibility issues.
+
+### Accessibility Features
+
+- When a `label` is provided, it is used as the `alt` text for the image
+- When `isdecorative` is true, the avatar is hidden from screen readers using `aria-hidden="true"`
+- The component maintains focus management for keyboard navigation
+- Color contrast meets WCAG 2.1 Level AA requirements
+
+### Accessibility Best Practices
+
+- Always provide a `label` for avatars that represent users or have meaningful content
+- Use `isdecorative` for purely decorative avatars
+- Avoid using avatars without either a `label` or `isdecorative` attribute
+- Ensure the avatar image has sufficient contrast with its background
+- When using avatars in interactive contexts (e.g., as buttons), ensure they have appropriate ARIA roles and labels
 
 ### Best Practices
 
-- Always provide a meaningful `label` when the avatar represents a user or entity
-- Use an empty `label` (or omit it) only when the avatar is purely decorative
-- When using `href`, ensure the destination is relevant and accessible
-- Consider the context when choosing an appropriate `size`
+- Always provide a meaningful `label`

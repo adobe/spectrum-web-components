@@ -12,6 +12,7 @@ import '@spectrum-web-components/avatar/sp-avatar.js';
 import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { spy } from 'sinon';
 
 describe('Avatar', () => {
     testForLitDevWarnings(
@@ -23,7 +24,7 @@ describe('Avatar', () => {
                 ></sp-avatar>
             `)
     );
-    it('loads accessibly', async () => {
+    it('loads accessibly with label', async () => {
         const el = await fixture<Avatar>(html`
             <sp-avatar
                 label="Shantanu Narayen"
@@ -32,8 +33,62 @@ describe('Avatar', () => {
         `);
 
         await elementUpdated(el);
-
         await expect(el).to.be.accessible();
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('Shantanu Narayen');
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('false');
+    });
+    it('loads accessibly with isdecorative', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                isdecorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        await expect(el).to.be.accessible();
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('true');
+    });
+
+    it('loads with warning when no label is provided', async () => {
+        const consoleSpy = spy(console, 'warn');
+        const el = await fixture<Avatar>(html`
+            <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        expect(consoleSpy.calledOnce).to.be.true;
+        expect(consoleSpy.firstCall.args[0]).to.include(
+            'Avatar is missing a label'
+        );
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+        // Should not be hidden unless explicitly decorative
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('false');
+
+        consoleSpy.restore();
+    });
+
+    it('reflects isdecorative attribute', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                isdecorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('isdecorative')).to.be.true;
+
+        el.isdecorative = false;
+        await elementUpdated(el);
+        expect(el.hasAttribute('isdecorative')).to.be.false;
     });
     it('loads accessibly with [href]', async () => {
         const el = await fixture<Avatar>(html`
