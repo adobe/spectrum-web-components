@@ -103,9 +103,10 @@ commands:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      # Use branch-only hash for shared environment
-                      hash=$(echo -n $branch | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash"
+                      # Use branch + VRT combination for unique environment
+                      combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+                      hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
+                      echo "Azure deployment hash: $hash (for $combination)"
                       echo "Deploying visual tests from test/visual directory..."
 
                       # Install Azure Static Web Apps CLI
@@ -122,9 +123,7 @@ commands:
                               echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
                               
-                              # Save URL for the master comment with descriptive name
-                              mkdir -p /tmp/vrt-urls
-                              echo "🎨 **<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>**: $(cat vrt_url.txt)" > /tmp/vrt-urls/<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>.txt
+                              echo "URL saved: $(cat vrt_url.txt)"
                               exit 0
                           else
                               attempt=$((attempt + 1))
@@ -153,10 +152,6 @@ commands:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
-            - persist_to_workspace:
-                  root: /tmp
-                  paths:
-                      - vrt-urls/<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>.txt
 
 jobs:
     commitlint:
@@ -307,9 +302,10 @@ jobs:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      # Use branch-only hash for shared environment
-                      hash=$(echo -n $branch | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash"
+                      # Use branch + VRT combination for unique environment
+                      combination="hcm"
+                      hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
+                      echo "Azure deployment hash: $hash (for $combination)"
                       echo "Deploying visual tests from test/visual directory..."
 
                       # Install Azure Static Web Apps CLI
@@ -326,9 +322,7 @@ jobs:
                               echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
                               
-                              # Save URL for the master comment
-                              mkdir -p /tmp/vrt-urls
-                              echo "🎨 **HCM Visual Tests**: $(cat vrt_url.txt)" > /tmp/vrt-urls/hcm-visual.txt
+                              echo "URL saved: $(cat vrt_url.txt)"
                               exit 0
                           else
                               attempt=$((attempt + 1))
@@ -357,10 +351,6 @@ jobs:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
-            - persist_to_workspace:
-                  root: /tmp
-                  paths:
-                      - vrt-urls/hcm-visual.txt
 
     visual:
         executor: node
@@ -385,49 +375,47 @@ jobs:
         executor: node
         steps:
             - checkout
-            - attach_workspace:
-                  at: /tmp
             - run:
-                  name: Create Master Visual Test Comment
+                  name: Create Visual Test Comment with Predictable URLs
                   command: |
                       if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                          echo "Creating master comment for all visual tests..."
+                          echo "Creating VRT comment with predictable URLs..."
                           
-                          # Get the shared URL (all tests use the same environment)
+                          # Generate predictable URLs for each VRT combination using branch name
                           branch=$(git symbolic-ref --short HEAD)
-                          hash=$(echo -n $branch | md5sum | cut -c 1-32)
-                          SHARED_URL="https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/"
                           
-                          # Start building the comment
+                          # Function to generate URL for a combination
+                          generate_url() {
+                              local combination=$1
+                              local hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
+                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/"
+                          }
+                          
+                          # Build the comment
                           echo "## 🎨 Visual Regression Test Results" > comment.md
                           echo "" >> comment.md
-                          echo "All visual test results have been deployed to a shared Azure Static Web Apps environment:" >> comment.md
+                          echo "Visual test results will be deployed to Azure Static Web Apps:" >> comment.md
                           echo "" >> comment.md
-                          echo "**🔗 [View All Visual Test Results](${SHARED_URL})**" >> comment.md
-                          echo "" >> comment.md
-                          echo "### Test Combinations Included:" >> comment.md
-                          
-                          # List all test combinations that were run
-                          if [ -d "/tmp/vrt-urls" ]; then
-                              for file in /tmp/vrt-urls/*.txt; do
-                                  if [ -f "$file" ]; then
-                                      # Extract just the test name part (before the colon)
-                                      test_name=$(cat "$file" | sed 's/🎨 \*\*\([^*]*\)\*\*:.*/- ✅ \1/')
-                                      echo "$test_name" >> comment.md
-                                  fi
-                              done
-                          fi
-                          
+                          echo "### Test Combinations:" >> comment.md
+                          echo "- 🎨 **HCM Visual Tests**: [View Results]($(generate_url "hcm"))" >> comment.md
+                          echo "- 🎨 **Spectrum Light Medium LTR**: [View Results]($(generate_url "spectrum-light-medium-ltr"))" >> comment.md
+                          echo "- 🎨 **Express Light Medium LTR**: [View Results]($(generate_url "express-light-medium-ltr"))" >> comment.md
+                          echo "- 🎨 **Spectrum Two Light Medium LTR**: [View Results]($(generate_url "spectrum-two-light-medium-ltr"))" >> comment.md
+                          echo "- 🎨 **Spectrum Dark Large RTL**: [View Results]($(generate_url "spectrum-dark-large-rtl"))" >> comment.md
+                          echo "- 🎨 **Express Dark Large RTL**: [View Results]($(generate_url "express-dark-large-rtl"))" >> comment.md
+                          echo "- 🎨 **Spectrum Two Dark Large RTL**: [View Results]($(generate_url "spectrum-two-dark-large-rtl"))" >> comment.md
                           echo "" >> comment.md
                           echo "---" >> comment.md
-                          echo "*All tests share the same environment. Navigate through different test results using the review interface.*" >> comment.md
+                          echo "*⏳ Results will be available once the VRT jobs complete deployment.*" >> comment.md
+                          echo "*Each test combination has its own environment. Click the specific link for each test result.*" >> comment.md
                           echo "*Deployed from commit: \`<< pipeline.git.revision >>\`*" >> comment.md
                           
                           # Get PR number from URL
                           PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
                           
                           # Create the comment body (escape for JSON)
-                          COMMENT_BODY=$(cat comment.md | jq -Rs .)
+                          # Simple manual JSON escaping since we don't need jq
+                          COMMENT_BODY=$(cat comment.md | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/^/"/' | sed 's/$/"/')
                           
                           # Post comment using GitHub API
                           curl -X POST \
@@ -436,7 +424,7 @@ jobs:
                             "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments" \
                             -d "{\"body\":$COMMENT_BODY}"
                           
-                          echo "Master comment created successfully!"
+                          echo "VRT comment created successfully with all combination URLs"
                       else
                           echo "Not a pull request, skipping comment creation."
                       fi
@@ -488,14 +476,6 @@ workflows:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
             - create-vrt-comment:
-                  requires:
-                      - hcm-visual
-                      - spectrum-light-medium-ltr
-                      - express-light-medium-ltr
-                      - spectrum-two-light-medium-ltr
-                      - spectrum-dark-large-rtl
-                      - express-dark-large-rtl
-                      - spectrum-two-dark-large-rtl
                   filters:
                       branches:
                           # Only run on PRs, not on forked PRs
