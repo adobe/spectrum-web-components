@@ -1,0 +1,90 @@
+name: VRT Comment
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+        branches:
+            - '**'
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    create_vrt_comment:
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-latest
+        name: Create VRT Comment
+        steps:
+            - name: Create VRT Comment with Predictable URLs
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const prNumber = context.payload.pull_request.number;
+                      console.log(`Creating VRT comment for PR #${prNumber}`);
+
+                      // Function to generate URL for a combination using shared environment
+                      function generateUrl(combination) {
+                        return `https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${prNumber}/${combination}/`;
+                      }
+
+                      // Generate URLs for all VRT combinations
+                      const vrtCombinations = [
+                        { name: 'HCM Visual Tests', combination: 'hcm' },
+                        { name: 'Spectrum Light Medium LTR', combination: 'spectrum-light-medium-ltr' },
+                        { name: 'Express Light Medium LTR', combination: 'express-light-medium-ltr' },
+                        { name: 'Spectrum Two Light Medium LTR', combination: 'spectrum-two-light-medium-ltr' },
+                        { name: 'Spectrum Dark Large RTL', combination: 'spectrum-dark-large-rtl' },
+                        { name: 'Express Dark Large RTL', combination: 'express-dark-large-rtl' },
+                        { name: 'Spectrum Two Dark Large RTL', combination: 'spectrum-two-dark-large-rtl' }
+                      ];
+
+                      // Build the comment body
+                      let commentBody = `## 🎨 Visual Regression Test Results
+
+                      Visual test results will be deployed to Azure Static Web Apps:
+
+                      ### Test Combinations:
+                      `;
+
+                      vrtCombinations.forEach(({ name, combination }) => {
+                        const url = generateUrl(combination);
+                        commentBody += `- 🎨 **${name}**: [View Results](${url})\n`;
+                      });
+
+                      commentBody += `
+                      ---
+                      *⏳ Results will be available once the VRT jobs complete deployment.*  
+                      *Each test combination has its own environment. Click the specific link for each test result.*  
+                      *Deployed from commit: \`${context.sha}\`*`;
+
+                      // Check if we already have a VRT comment
+                      const comments = await github.rest.issues.listComments({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number
+                      });
+
+                      const existingComment = comments.data.find(comment => 
+                        comment.body.includes('🎨 Visual Regression Test Results')
+                      );
+
+                      if (existingComment) {
+                        // Update existing comment
+                        await github.rest.issues.updateComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          comment_id: existingComment.id,
+                          body: commentBody
+                        });
+                        console.log('Updated existing VRT comment');
+                      } else {
+                        // Create new comment
+                        await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number,
+                          body: commentBody
+                        });
+                        console.log('Created new VRT comment');
+                      }

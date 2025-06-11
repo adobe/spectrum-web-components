@@ -99,29 +99,52 @@ commands:
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy Visual Tests to Azure
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                      # Get PR number from CircleCI environment
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying for PR #$PR_NUMBER"
+                      else
+                          # Fallback for non-PR builds (e.g., main branch)
+                          PR_NUMBER="main"
+                          echo "Deploying for main branch"
+                      fi
+
+                      # VRT combination for subdirectory
+                      combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+
+                      # Create directory structure for deployment
+                      mkdir -p "deploy-temp/pr-${PR_NUMBER}/${combination}"
+                      cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+                      cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+
+                      echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
+
+                      # Install Azure Static Web Apps CLI
+                      npm install -g @azure/static-web-apps-cli
 
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
+                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              echo "Azure deployment successful!"
+                              
+                              # Generate the deployment URL for the shared environment
+                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
+                              echo "Visual Test URL: $(cat vrt_url.txt)"
+                              
+                              echo "URL saved: $(cat vrt_url.txt)"
                               exit 0
                           else
                               attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "Azure deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10
                           fi
                       done
 
-                      echo "Deployment failed after $max_attempts attempts."
+                      echo "Azure deployment failed after $max_attempts attempts."
                       exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
@@ -221,28 +244,6 @@ jobs:
                   name: Are there changes?
                   command: git diff-files --exit-code
 
-    preview-docs:
-        executor: node
-        steps:
-            - downstream
-            - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
-
     beta-docs:
         executor: node
 
@@ -309,29 +310,52 @@ jobs:
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy Visual Tests to Azure
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                      # Get PR number from CircleCI environment
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying for PR #$PR_NUMBER"
+                      else
+                          # Fallback for non-PR builds (e.g., main branch)
+                          PR_NUMBER="main"
+                          echo "Deploying for main branch"
+                      fi
+
+                      # VRT combination for subdirectory
+                      combination="hcm"
+
+                      # Create directory structure for deployment
+                      mkdir -p "deploy-temp/pr-${PR_NUMBER}/${combination}"
+                      cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+                      cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+
+                      echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
+
+                      # Install Azure Static Web Apps CLI
+                      npm install -g @azure/static-web-apps-cli
 
                       max_attempts=3
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
+                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                              echo "Azure deployment successful!"
+                              
+                              # Generate the deployment URL for the shared environment
+                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
+                              echo "Visual Test URL: $(cat vrt_url.txt)"
+                              
+                              echo "URL saved: $(cat vrt_url.txt)"
                               exit 0
                           else
                               attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "Azure deploy failed, retrying ($attempt/$max_attempts)..."
+                              sleep 10
                           fi
                       done
 
-                      echo "Deployment failed after $max_attempts attempts."
+                      echo "Azure deployment failed after $max_attempts attempts."
                       exit 1
 
             # move "updated" screenshot into the baseline directory before making the new cache
@@ -384,11 +408,6 @@ workflows:
             - test-webkit
             - lint
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
