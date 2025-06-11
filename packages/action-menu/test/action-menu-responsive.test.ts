@@ -15,17 +15,16 @@ import {
     expect,
     fixture,
     html,
-    nextFrame,
-    oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { setViewport } from '@web/test-runner-commands';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { isChrome } from '@spectrum-web-components/shared';
+import { sendMouseTo } from '../../../test/testing-helpers.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
 
 describe('ActionMenu, responsive', () => {
     let el: ActionMenu;
@@ -63,34 +62,19 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
+            sendMouseTo(el.button, 'click');
 
-            const opened = oneEvent(el, 'sp-opened');
+            // in this test we only need to wait to see if a tray opens
+            let tray: Tray | null = null;
+            await waitUntil(
+                () => {
+                    tray = el.shadowRoot.querySelector('sp-tray') as Tray;
+                    return !!tray;
+                },
+                `tray appeared (el.open: ${el.open})`,
+                { timeout: 300 }
+            );
 
-            const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
-
-            await opened;
-
-            const tray = el.shadowRoot.querySelector('sp-tray');
             const popover = el.shadowRoot.querySelector('sp-popover');
 
             expect(tray).to.not.be.null;
@@ -98,16 +82,22 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
-            const opened = oneEvent(el, 'sp-opened');
             el.open = true;
-            await opened;
 
-            const popover = el.shadowRoot.querySelector('sp-popover');
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
+            await waitUntil(
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                `popover appeared (el.open: ${el.open})`,
+                { timeout: 300 }
+            );
+
             const tray = el.shadowRoot.querySelector('sp-tray');
 
             expect(popover).to.not.be.null;
@@ -122,63 +112,50 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in mobile', async () => {
-            // This test is flaky in chrome on ci so we're skipping it for now
-            if (isChrome()) {
-                return;
-            }
-
             /**
              * This is a hack to set the `isMobile` property to true so that we can test the MobileController
              */
             el.isMobile.matches = true;
             el.bindEvents();
 
-            /**
-             * While we can set the view port, but not `(hover: none) and (pointer: coarse)`
-             * which prevents us from testing this at unit time. Hopefully there will be
-             * a future version of Playwright and/or @web/test-runner that does allow this.
-             * See: https://github.com/microsoft/playwright/issues/11781
-             **/
-            await setViewport({ width: 360, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
+            el.open = true;
 
-            const opened = oneEvent(el, 'sp-opened');
-
-            const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
-            await elementUpdated(el);
-
-            await opened;
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
+            await waitUntil(
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                `popover appeared (el.open: ${el.open})`,
+                { timeout: 300 }
+            );
 
             const tray = el.shadowRoot.querySelector('sp-tray');
-            const popover = el.shadowRoot.querySelector('sp-popover');
 
             expect(tray).to.be.null;
             expect(popover).to.not.be.null;
         });
 
         it('is a Popover in desktop', async () => {
-            await setViewport({ width: 701, height: 640 });
-            // Allow viewport update to propagate.
-            await nextFrame();
-            await nextFrame();
 
-            const opened = oneEvent(el, 'sp-opened');
             el.open = true;
-            await opened;
 
-            const popover = el.shadowRoot.querySelector('sp-popover');
+            // in this test we only need to wait to see if a popover opens
+            let popover: Popover | null = null;
+            await waitUntil(
+                () => {
+                    popover = el.shadowRoot.querySelector(
+                        'sp-popover'
+                    ) as Popover;
+                    return !!popover && popover.open;
+                },
+                `popover appeared (el.open: ${el.open})`,
+                { timeout: 300 }
+            );
+
             const tray = el.shadowRoot.querySelector('sp-tray');
 
             expect(popover).to.not.be.null;

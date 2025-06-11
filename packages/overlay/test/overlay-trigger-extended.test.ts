@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,26 +10,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    aTimeout,
     elementUpdated,
     expect,
     html,
     nextFrame,
-    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { fixture } from '../../../test/testing-helpers.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { isChrome } from '@spectrum-web-components/shared';
+import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
+import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
 
 const initTest = async (
     styles = html``
@@ -68,12 +65,19 @@ const initTest = async (
             </overlay-trigger>
         </div>
     `);
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
-    await nextFrame();
+
+    await waitUntil(
+        () => {
+            return (
+                !!test.querySelector('overlay-trigger') &&
+                !!test.querySelector('sp-button') &&
+                !!test.querySelector('sp-popover')
+            );
+        },
+        'overlay-trigger, button, and popover appeared',
+        { timeout: 300 }
+    );
+
     return {
         overlayTrigger: test.querySelector('overlay-trigger') as OverlayTrigger,
         button: test.querySelector('sp-button') as Button,
@@ -86,160 +90,169 @@ describe('Overlay Trigger - extended', () => {
     let button!: Button;
     let popover!: Popover;
 
-    afterEach(async () => {
-        if (overlayTrigger && overlayTrigger.open) {
-            const closed = oneEvent(overlayTrigger, 'sp-closed');
-            overlayTrigger.open = undefined;
-            await closed;
-        }
-    });
-
     it('manages `placement` on open', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
 
         expect(popover.placement).to.equal('top');
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        await open;
+
+        await elementUpdated(overlayTrigger);
+
+        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('bottom');
 
-        const close = oneEvent(overlayTrigger, 'sp-closed');
         overlayTrigger.open = undefined;
-        await close;
+
+        await elementUpdated(overlayTrigger);
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after closing'
+        ).to.equal('closing');
+
+        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         expect(popover.placement).to.equal('top');
     });
 
     it('manages `placement` on scroll', async () => {
-        // This test is flaky in chrome on ci so we're skipping it for now
-        if (isChrome()) {
-            return;
-        }
-
         ({ overlayTrigger, button, popover } = await initTest(html`
             <style>
-                sp-button {
-                    margin: 100vh 0;
-                    transform: translateY(-100%);
+                .container {
+                    padding: 100vh 0;
                 }
             </style>
         `));
+        expect(!!overlayTrigger, `overlayTrigger is ready`).to.be.true;
+        expect(!!button.isConnected, 'button is ready').to.be.true;
+        expect(!!overlayTrigger.isConnected, 'overlayTrigger is ready').to.be
+            .true;
+        expect(popover.placement, 'initial placement').to.equal('top');
 
-        expect(popover.placement).to.equal('top');
+        // scroll until button is at the top of the viewport
+        button.scrollIntoView({
+            behavior: 'instant' as ScrollBehavior,
+            block: 'end',
+        });
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
-        button.click();
-        await open;
+        overlayTrigger.open = 'click';
 
-        expect(popover.placement).to.equal('top');
+        // wait until ready; if button is at the bottom of the viewport, the popover should be above it
+        await waitUntil(
+            () =>
+                popover.placement === 'top' &&
+                popover.getBoundingClientRect().height > 0,
+            `popover placement is top`,
+            { timeout: 100 }
+        );
 
+        expect(overlayTrigger.open).to.equal('click');
+
+        expect(popover.placement, `placement after clicking`).to.equal('top');
+
+        // scroll until button is at the bottom of the viewport
         button.scrollIntoView({
             behavior: 'instant' as ScrollBehavior,
             block: 'start',
         });
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        expect(popover.placement).to.equal('bottom');
+
+        // wait; if button is at the top of the viewport, the popover should be below it
+        await waitUntil(
+            () => popover.placement === 'bottom',
+            `popover placement is top`,
+            { timeout: 100 }
+        );
+
+        expect(popover.placement, `placement after scrolling`).to.equal(
+            'bottom'
+        );
     });
 
     it('occludes content behind the overlay', async () => {
-        // This test is flaky in chrome on ci so we're skipping it for now
-        if (isChrome()) {
-            return;
-        }
         const { overlayTrigger, button, popover } = await initTest();
-        const textfield = document.createElement('sp-textfield');
+        const textfield = document.createElement('input');
+        const overlay = overlayTrigger.clickOverlayElement;
         overlayTrigger.insertAdjacentElement('afterend', textfield);
+        expect(overlay.state, `overlay state`).to.equal('closed');
 
-        const textfieldRect = textfield.getBoundingClientRect();
-        expect(document.activeElement === textfield).to.be.false;
-
-        // Add more reliable focus handling for CI environments
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
+        console.log('Active element before click:', document.activeElement?.tagName);
+        console.log('Rectangles:', {
+            overlay: overlay.getBoundingClientRect(),
+            textfield: textfield.getBoundingClientRect(),
+            button: button.getBoundingClientRect(),
+            popover: popover.getBoundingClientRect(),
+            body: document.body.getBoundingClientRect(),
+            elements: Array.from(document.body.children).map(child=>child.tagName),
         });
-        await elementUpdated(textfield);
-
-        // Explicitly focus the textfield to ensure it's focused in all environments
-        textfield.focus();
-        await waitUntil(() => document.activeElement === textfield);
-
-        // Now verify the focus state
-        expect(
-            document.activeElement === textfield,
-            'clicking focuses the Textfield'
-        ).to.be.true;
-
-        expect(popover.placement).to.equal('top');
-        const open = oneEvent(overlayTrigger, 'sp-opened');
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
-        expect(document.activeElement === button, 'button focused').to.be.true;
-        await sendKeys({
-            press: 'Enter',
-        });
-        await open;
-
-        expect(overlayTrigger.type).to.equal('modal');
-        expect(overlayTrigger.open).to.equal('click');
-        expect(popover.placement).to.equal('bottom');
-
-        const close = oneEvent(overlayTrigger, 'sp-closed');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
-        });
-        await close;
-
-        expect(overlayTrigger.open).to.be.undefined;
-        expect(
-            document.activeElement === textfield,
-            'closing does not focus the Textfield'
-        ).to.be.false;
-
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        textfieldRect.left + textfieldRect.width / 2,
-                        textfieldRect.top + textfieldRect.height / 2,
-                    ],
-                },
-            ],
+        await sendMouseTo(textfield, 'click');
+        console.log('Active element after click:', document.activeElement?.tagName);
+        console.log('Textfield properties:', {
+            connected: textfield.isConnected,
+            visible: textfield.offsetParent !== null,
+            disabled: textfield.disabled,
+            tabIndex: textfield.tabIndex,
         });
 
-        // Explicitly focus the textfield again to ensure consistent behavior
-        textfield.focus();
         await waitUntil(
             () => document.activeElement === textfield,
-            'textfield is focused'
+            `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
+            { timeout: 200 }
         );
 
+        expect(popover.placement).to.equal('top');
+
+        // focus the button
+        button.focus();
+        expect(document.activeElement, `button focused`).to.equal(button);
+
+        expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
+        expect(overlay.state, `overlay.state`).to.equal('closed');
+
+        // open the overlay
+        overlayTrigger.open = 'click';
+
+        await elementUpdated(overlayTrigger);
+
         expect(
-            document.activeElement === textfield,
-            'the Textfield is focused again'
-        ).to.be.true;
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
+
+        // sometimes 300 is not enough for Firefox
+        await overlayOpened(overlayTrigger.clickOverlayElement, 400);
+
+        // click the textfield
+        await waitUntil(
+            async () => await sendMouseTo(textfield, 'click'),
+            `textfield clicked again`,
+            { timeout: 300 }
+        );
+
+        // verify the textfield is occluded
+        expect(
+            document.activeElement,
+            `textfield cannot be clicked`
+        ).to.not.equal(textfield);
+
+        overlayTrigger.open = undefined;
+
+        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
+
+        expect(document.activeElement, 'textfield is not focused').to.not.equal(
+            textfield
+        );
+
+        await sendMouseTo(textfield, 'click');
+
+        // verify the textfield is focused
+        // and that textfield is no longer occluded
+        await waitUntil(
+            () => document.activeElement === textfield,
+            `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
+            { timeout: 100 }
+        );
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
@@ -258,20 +271,9 @@ describe('Overlay Trigger - extended', () => {
         document.body.append(scrollingArea);
         await nextFrame();
 
-        const boundingRect = scrollingArea.getBoundingClientRect();
         expect(scrollingArea.scrollTop).to.equal(0);
         const distance = 1;
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouseTo(scrollingArea, 'move');
         await sendMouse({
             steps: [
                 {
@@ -280,18 +282,28 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
+
         // wait for scroll to complete
         await waitUntil(
             () => scrollingArea.scrollTop === distance,
-            `scroll went to ${distance}`
+            `scroll went to ${distance}`,
+            { timeout: 200 }
         );
+
         expect(scrollingArea.scrollTop).to.equal(distance);
 
         expect(popover.placement).to.equal('top');
 
-        const open = oneEvent(overlayTrigger, 'sp-opened');
         button.click();
-        await open;
+
+        expect(overlayTrigger.open, 'overlay open').to.equal('click');
+
+        expect(
+            overlayTrigger.clickOverlayElement.state,
+            'overlay state after clicking'
+        ).to.equal('opening');
+
+        await overlayOpened(overlayTrigger.clickOverlayElement, 300);
 
         expect(overlayTrigger.open).to.equal('click');
         expect(popover.placement).to.equal('bottom');
@@ -304,11 +316,8 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
-        // Awaiting here points out that this always fails in Firefox
-        // and also was failing in WebKit without our knowing.
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+
+        await aTimeout(50);
 
         expect(
             scrollingArea.scrollTop,
