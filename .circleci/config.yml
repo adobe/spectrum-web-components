@@ -101,13 +101,25 @@ commands:
                   when: always
                   name: Deploy Visual Tests to Azure
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      # Use branch + VRT combination for unique environment
+                      # Get PR number from CircleCI environment
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying for PR #$PR_NUMBER"
+                      else
+                          # Fallback for non-PR builds (e.g., main branch)
+                          PR_NUMBER="main"
+                          echo "Deploying for main branch"
+                      fi
+
+                      # VRT combination for subdirectory
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
-                      hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash (for $combination)"
-                      echo "Deploying visual tests from test/visual directory..."
+
+                      # Create directory structure for deployment
+                      mkdir -p "deploy-temp/pr-${PR_NUMBER}/${combination}"
+                      cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+                      cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+
+                      echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
 
                       # Install Azure Static Web Apps CLI
                       npm install -g @azure/static-web-apps-cli
@@ -116,11 +128,11 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if swa deploy test/visual --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $hash; then
+                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
                               echo "Azure deployment successful!"
                               
-                              # Generate the deployment URL using the correct pattern with /review/ path
-                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
+                              # Generate the deployment URL for the shared environment
+                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
                               
                               echo "URL saved: $(cat vrt_url.txt)"
@@ -300,13 +312,25 @@ jobs:
                   when: always
                   name: Deploy Visual Tests to Azure
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      # Use branch + VRT combination for unique environment
+                      # Get PR number from CircleCI environment
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying for PR #$PR_NUMBER"
+                      else
+                          # Fallback for non-PR builds (e.g., main branch)
+                          PR_NUMBER="main"
+                          echo "Deploying for main branch"
+                      fi
+
+                      # VRT combination for subdirectory
                       combination="hcm"
-                      hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
-                      echo "Azure deployment hash: $hash (for $combination)"
-                      echo "Deploying visual tests from test/visual directory..."
+
+                      # Create directory structure for deployment
+                      mkdir -p "deploy-temp/pr-${PR_NUMBER}/${combination}"
+                      cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+                      cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
+
+                      echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
 
                       # Install Azure Static Web Apps CLI
                       npm install -g @azure/static-web-apps-cli
@@ -315,11 +339,11 @@ jobs:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if swa deploy test/visual --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $hash; then
+                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
                               echo "Azure deployment successful!"
                               
-                              # Generate the deployment URL using the correct pattern with /review/ path
-                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/" > vrt_url.txt
+                              # Generate the deployment URL for the shared environment
+                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
                               
                               echo "URL saved: $(cat vrt_url.txt)"
@@ -371,64 +395,6 @@ jobs:
                   regression_scale: << parameters.scale >>
                   regression_dir: << parameters.dir >>
 
-    create-vrt-comment:
-        executor: node
-        steps:
-            - checkout
-            - run:
-                  name: Create Visual Test Comment with Predictable URLs
-                  command: |
-                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                          echo "Creating VRT comment with predictable URLs..."
-                          
-                          # Generate predictable URLs for each VRT combination using branch name
-                          branch=$(git symbolic-ref --short HEAD)
-                          
-                          # Function to generate URL for a combination
-                          generate_url() {
-                              local combination=$1
-                              local hash=$(echo -n "${branch}-${combination}" | md5sum | cut -c 1-32)
-                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net/review/"
-                          }
-                          
-                          # Build the comment
-                          echo "## 🎨 Visual Regression Test Results" > comment.md
-                          echo "" >> comment.md
-                          echo "Visual test results will be deployed to Azure Static Web Apps:" >> comment.md
-                          echo "" >> comment.md
-                          echo "### Test Combinations:" >> comment.md
-                          echo "- 🎨 **HCM Visual Tests**: [View Results]($(generate_url "hcm"))" >> comment.md
-                          echo "- 🎨 **Spectrum Light Medium LTR**: [View Results]($(generate_url "spectrum-light-medium-ltr"))" >> comment.md
-                          echo "- 🎨 **Express Light Medium LTR**: [View Results]($(generate_url "express-light-medium-ltr"))" >> comment.md
-                          echo "- 🎨 **Spectrum Two Light Medium LTR**: [View Results]($(generate_url "spectrum-two-light-medium-ltr"))" >> comment.md
-                          echo "- 🎨 **Spectrum Dark Large RTL**: [View Results]($(generate_url "spectrum-dark-large-rtl"))" >> comment.md
-                          echo "- 🎨 **Express Dark Large RTL**: [View Results]($(generate_url "express-dark-large-rtl"))" >> comment.md
-                          echo "- 🎨 **Spectrum Two Dark Large RTL**: [View Results]($(generate_url "spectrum-two-dark-large-rtl"))" >> comment.md
-                          echo "" >> comment.md
-                          echo "---" >> comment.md
-                          echo "*⏳ Results will be available once the VRT jobs complete deployment.*" >> comment.md
-                          echo "*Each test combination has its own environment. Click the specific link for each test result.*" >> comment.md
-                          echo "*Deployed from commit: \`<< pipeline.git.revision >>\`*" >> comment.md
-                          
-                          # Get PR number from URL
-                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
-                          
-                          # Create the comment body (escape for JSON)
-                          # Simple manual JSON escaping since we don't need jq
-                          COMMENT_BODY=$(cat comment.md | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/^/"/' | sed 's/$/"/')
-                          
-                          # Post comment using GitHub API
-                          curl -X POST \
-                            -H "Authorization: token $GITHUB_TOKEN" \
-                            -H "Accept: application/vnd.github.v3+json" \
-                            "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/issues/$PR_NUMBER/comments" \
-                            -d "{\"body\":$COMMENT_BODY}"
-                          
-                          echo "VRT comment created successfully with all combination URLs"
-                      else
-                          echo "Not a pull request, skipping comment creation."
-                      fi
-
 workflows:
     version: 2
     commitlint:
@@ -474,9 +440,4 @@ workflows:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - create-vrt-comment:
-                  filters:
-                      branches:
-                          # Only run on PRs, not on forked PRs
                           ignore: /pull\/[0-9]+/
