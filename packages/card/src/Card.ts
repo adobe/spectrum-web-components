@@ -198,13 +198,13 @@ export class Card extends LikeAnchor(
         );
         if (hasAnchor) return;
         // Record the time and initial position of the pointerdown event
-        const startTime = +new Date();
+        const startTime = event.timeStamp;
         const startX = event.clientX;
         const startY = event.clientY;
 
         // Define the handler for when the pointer interaction ends
         const handleEnd = (endEvent: PointerEvent): void => {
-            const endTime = +new Date();
+            const endTime = event.timeStamp;
             const endX = endEvent.clientX;
             const endY = endEvent.clientY;
 
