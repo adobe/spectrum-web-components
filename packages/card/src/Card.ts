@@ -204,7 +204,7 @@ export class Card extends LikeAnchor(
 
         // Define the handler for when the pointer interaction ends
         const handleEnd = (endEvent: PointerEvent): void => {
-            const endTime = event.timeStamp;
+            const endTime = endEvent.timeStamp;
             const endX = endEvent.clientX;
             const endY = endEvent.clientY;
 
