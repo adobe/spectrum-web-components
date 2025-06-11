@@ -32,7 +32,8 @@ import { sendMouse } from './plugins/browser.js';
 export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right' | 'middle'
+    button?: 'left' | 'right' | 'middle',
+    debug?: boolean
 ): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement
@@ -42,7 +43,7 @@ export async function sendMouseTo(
     const y = rect.top + rect.height / 2;
     const options = button ? { button: button } : {};
 
-    return await sendMouse({
+    await sendMouse({
         steps: [
             {
                 options: options,
@@ -51,6 +52,11 @@ export async function sendMouseTo(
             },
         ],
     });
+
+    return expect(
+        document.elementFromPoint(x, y), 
+        'mouse is on element'
+    ).to.equal(elementOrRect as HTMLElement);
 }
 
 /**
@@ -69,7 +75,7 @@ export async function sendMouseFrom(
     const y = rect.top + rect.height * 2;
     const options = button ? { button: button } : {};
 
-    return await sendMouse({
+    await sendMouse({
         steps: [
             {
                 options: options,
@@ -78,6 +84,11 @@ export async function sendMouseFrom(
             },
         ],
     });
+
+    return expect(
+        document.elementFromPoint(x, y), 
+        'mouse is not on element'
+    ).to.not.equal(elementOrRect as HTMLElement);
 }
 
 export async function testForLitDevWarnings(
