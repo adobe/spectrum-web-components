@@ -33,7 +33,6 @@ export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
     type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
     button?: 'left' | 'right' | 'middle',
-    debug?: boolean
 ): Promise<unknown> {
     const rect =
         elementOrRect instanceof HTMLElement
@@ -54,7 +53,7 @@ export async function sendMouseTo(
     });
 
     return expect(
-        document.elementFromPoint(x, y), 
+        document.elementFromPoint(x, y),
         'mouse is on element'
     ).to.equal(elementOrRect as HTMLElement);
 }
@@ -86,7 +85,7 @@ export async function sendMouseFrom(
     });
 
     return expect(
-        document.elementFromPoint(x, y), 
+        document.elementFromPoint(x, y),
         'mouse is not on element'
     ).to.not.equal(elementOrRect as HTMLElement);
 }
