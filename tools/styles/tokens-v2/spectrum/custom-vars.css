@@ -31,7 +31,7 @@
     --spectrum-code-font-family-stack: "Source Code Pro", Monaco, monospace;
 
     --spectrum-cjk-font-family-stack: adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
-    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
+    --spectrum-cjk-font: var(--spectrum-cjk-font-family-stack);
 
     /* static white / black background color for docs containers */
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
