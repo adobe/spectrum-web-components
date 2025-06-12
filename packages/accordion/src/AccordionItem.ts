@@ -29,7 +29,7 @@ const chevronIcon: Record<string, () => TemplateResult> = {
     s: () => html`
         <span class="iconContainer">
             <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight75"
+                class="indicator icon-ChevronRight75"
                 slot="icon"
             ></sp-icon-chevron100>
         </span>
@@ -37,7 +37,7 @@ const chevronIcon: Record<string, () => TemplateResult> = {
     m: () => html`
         <span class="iconContainer">
             <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight100"
+                class="indicator icon-ChevronRight100"
                 slot="icon"
             ></sp-icon-chevron100>
         </span>
@@ -45,7 +45,7 @@ const chevronIcon: Record<string, () => TemplateResult> = {
     l: () => html`
         <span class="iconContainer">
             <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight200"
+                class="indicator icon-ChevronRight200"
                 slot="icon"
             ></sp-icon-chevron100>
         </span>
@@ -53,7 +53,7 @@ const chevronIcon: Record<string, () => TemplateResult> = {
     xl: () => html`
         <span class="iconContainer">
             <sp-icon-chevron100
-                class="indicator spectrum-UIIcon-ChevronRight300"
+                class="indicator icon-ChevronRight300"
                 slot="icon"
             ></sp-icon-chevron100>
         </span>

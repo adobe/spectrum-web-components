@@ -29,7 +29,6 @@
             "development": "./src/ContextualHelp.dev.js",
             "default": "./src/ContextualHelp.js"
         },
-        "./src/contextual-help-overrides.css.js": "./src/contextual-help-overrides.css.js",
         "./src/contextual-help.css.js": "./src/contextual-help.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

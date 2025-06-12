@@ -30,25 +30,25 @@ const crossIcon: Record<string, () => TemplateResult> = {
     s: () => html`
         <sp-icon-cross200
             slot="icon"
-            class="icon spectrum-UIIcon-Cross200"
+            class="icon icon-Cross200"
         ></sp-icon-cross200>
     `,
     m: () => html`
         <sp-icon-cross300
             slot="icon"
-            class="icon spectrum-UIIcon-Cross300"
+            class="icon icon-Cross300"
         ></sp-icon-cross300>
     `,
     l: () => html`
         <sp-icon-cross400
             slot="icon"
-            class="icon spectrum-UIIcon-Cross400"
+            class="icon icon-Cross400"
         ></sp-icon-cross400>
     `,
     xl: () => html`
         <sp-icon-cross500
             slot="icon"
-            class="icon spectrum-UIIcon-Cross500"
+            class="icon icon-Cross500"
         ></sp-icon-cross500>
     `,
 };

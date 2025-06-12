@@ -37,9 +37,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/tag-overrides.css.js": "./src/tag-overrides.css.js",
         "./src/tag.css.js": "./src/tag.css.js",
-        "./src/tags-overrides.css.js": "./src/tags-overrides.css.js",
         "./src/tags.css.js": "./src/tags.css.js",
         "./sp-tags.js": {
             "development": "./sp-tags.dev.js",

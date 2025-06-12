@@ -166,7 +166,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 >
                     <sp-icon-chevron100
                         slot="icon"
-                        class="spectrum-UIIcon-ChevronLeft300"
+                        class="icon-ChevronLeft300"
                     ></sp-icon-chevron100>
                 </sp-action-button>
                 <sp-action-button
@@ -181,7 +181,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 >
                     <sp-icon-chevron100
                         slot="icon"
-                        class="spectrum-UIIcon-ChevronRight300"
+                        class="icon-ChevronRight300"
                     ></sp-icon-chevron100>
                 </sp-action-button>
                 <slot

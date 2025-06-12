@@ -10,9 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@import "./spectrum-theme-dark.css";
-
 :host,
 :root {
-    color-scheme: dark;
+    --spectrum-treeview-item-background-color-quiet-selected: color-mix(in sRGB, var(--spectrum-gray-900) 7%, transparent);
+    --spectrum-treeview-item-background-color-selected: color-mix(in sRGB, var(--spectrum-blue-800) 15%, transparent);
 }

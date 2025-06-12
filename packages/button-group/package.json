@@ -29,7 +29,6 @@
             "development": "./src/ButtonGroup.dev.js",
             "default": "./src/ButtonGroup.js"
         },
-        "./src/button-group-overrides.css.js": "./src/button-group-overrides.css.js",
         "./src/button-group.css.js": "./src/button-group.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

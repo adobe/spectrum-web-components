@@ -46,7 +46,6 @@
             "default": "./src/StyledButton.js"
         },
         "./src/button-base.css.js": "./src/button-base.css.js",
-        "./src/button-overrides.css.js": "./src/button-overrides.css.js",
         "./src/button.css.js": "./src/button.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

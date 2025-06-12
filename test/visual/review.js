@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import fs from 'fs';
 import fg from 'fast-glob';
 import { PNG } from 'pngjs';
@@ -26,36 +26,24 @@ const getHash = (context) => {
     return md5.digest('hex');
 };
 
-const vrts = [];
-const themes = ['Spectrum', 'Express', 'Spectrum-two'];
-const scales = ['Medium', 'Large'];
-const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
-const directions = ['LTR', 'RTL'];
-vrts.push([
-    `High Contrast Mode | Medium | LTR`,
-    `https://${getHash(`${branch}-hcm`)}--spectrum-wc.netlify.app/review/`,
-]);
-themes.map((theme) =>
-    colors.map((color) => {
-        if (
-            theme === 'Spectrum-two' &&
-            (color === 'Lightest' || color === 'Darkest')
-        ) {
-            return;
-        }
-        scales.map((scale) =>
-            directions.map((direction) => {
-                const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                vrts.push([
-                    `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${getHash(
-                        context
-                    )}--spectrum-wc.netlify.app/review/`,
-                ]);
-            })
-        );
-    })
-);
+const vrts = [
+    [
+        `High Contrast Mode | Medium | LTR`,
+        `https://${getHash(`${branch}-hcm`)}--spectrum-wc.netlify.app/review/`,
+    ],
+];
+
+['Light', 'Dark'].map((color) => {
+    ['Medium', 'Large'].map((scale) =>
+        ['LTR', 'RTL'].map((direction) => {
+            const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+            vrts.push([
+                `${color} | ${scale} | ${direction}`,
+                `https://${getHash(context)}--spectrum-wc.netlify.app/review/`,
+            ]);
+        })
+    );
+});
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');

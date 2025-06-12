@@ -26,10 +26,10 @@ import styles from './picker-button.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 const chevronClass = {
-    s: 'spectrum-UIIcon-ChevronDown75',
-    m: 'spectrum-UIIcon-ChevronDown100',
-    l: 'spectrum-UIIcon-ChevronDown200',
-    xl: 'spectrum-UIIcon-ChevronDown300',
+    s: 'icon-ChevronDown75',
+    m: 'icon-ChevronDown100',
+    l: 'icon-ChevronDown200',
+    xl: 'icon-ChevronDown300',
 };
 
 /**

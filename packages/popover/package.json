@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/popover-overrides.css.js": "./src/popover-overrides.css.js",
         "./src/popover.css.js": "./src/popover.css.js",
         "./sp-popover.js": {
             "development": "./sp-popover.dev.js",

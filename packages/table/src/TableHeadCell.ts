@@ -126,7 +126,7 @@ export class TableHeadCell extends SpectrumElement {
             ${visiblySorted
                 ? html`
                       <sp-icon-arrow100
-                          class="sortedIcon spectrum-UIIcon-ArrowDown100"
+                          class="sortedIcon icon-ArrowDown100"
                       ></sp-icon-arrow100>
                   `
                 : nothing}

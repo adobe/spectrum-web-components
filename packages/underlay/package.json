@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/underlay-overrides.css.js": "./src/underlay-overrides.css.js",
         "./src/underlay.css.js": "./src/underlay.css.js",
         "./sp-underlay.js": {
             "development": "./sp-underlay.dev.js",

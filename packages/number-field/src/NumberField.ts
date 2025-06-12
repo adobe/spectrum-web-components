@@ -74,22 +74,22 @@ export const remapMultiByteCharacters: Record<string, string> = {
 const chevronIcon: Record<string, (dir: 'Down' | 'Up') => TemplateResult> = {
     s: (dir) => html`
         <sp-icon-chevron50
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}50"
+            class="stepper-icon icon-Chevron${dir}50"
         ></sp-icon-chevron50>
     `,
     m: (dir) => html`
         <sp-icon-chevron75
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}75"
+            class="stepper-icon icon-Chevron${dir}75"
         ></sp-icon-chevron75>
     `,
     l: (dir) => html`
         <sp-icon-chevron100
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}100"
+            class="stepper-icon icon-Chevron${dir}100"
         ></sp-icon-chevron100>
     `,
     xl: (dir) => html`
         <sp-icon-chevron200
-            class="stepper-icon spectrum-UIIcon-Chevron${dir}200"
+            class="stepper-icon icon-Chevron${dir}200"
         ></sp-icon-chevron200>
     `,
 };

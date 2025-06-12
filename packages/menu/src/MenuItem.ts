@@ -406,7 +406,7 @@ export class MenuItem extends LikeAnchor(
                 </sp-popover>
             </sp-overlay>
             <sp-icon-chevron100
-                class="spectrum-UIIcon-ChevronRight100 chevron icon"
+                class="icon-ChevronRight100 chevron icon"
             ></sp-icon-chevron100>
         `;
     }
@@ -417,8 +417,8 @@ export class MenuItem extends LikeAnchor(
                 ? html`
                       <sp-icon-checkmark100
                           id="selected"
-                          class="spectrum-UIIcon-Checkmark100 
-                            icon 
+                          class="icon-Checkmark100
+                            icon
                             checkmark
                             ${this.hasIcon
                               ? 'checkmark--withAdjacentIcon'
