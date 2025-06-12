@@ -120,6 +120,11 @@ export class Combobox extends Textfield {
 
     private tooltipEl?: Tooltip;
 
+    private resizeObserver: ResizeObserver | undefined;
+
+    @state()
+    private fieldWidth = 0;
+
     public override focus(): void {
         this.focusElement.focus();
     }
@@ -459,7 +464,6 @@ export class Combobox extends Textfield {
     }
 
     protected override render(): TemplateResult {
-        const width = (this.input || this).offsetWidth;
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
@@ -510,7 +514,7 @@ export class Combobox extends Textfield {
                         this.itemValue
                             ? [this.itemValue]
                             : []}
-                        style="min-width: ${width}px;"
+                        style="min-width: ${this.fieldWidth}px;"
                         size=${this.size}
                     >
                         ${this.overlayOpen
@@ -572,6 +576,13 @@ export class Combobox extends Textfield {
                 this.focused = false;
             }
         });
+        this.resizeObserver = new ResizeObserver(
+            (entries: ResizeObserverEntry[]) => {
+                this.fieldWidth = entries[0].borderBoxSize[0].inlineSize;
+            }
+        );
+
+        this.resizeObserver.observe(this);
     }
 
     private _returnItems = (): void => {
@@ -650,6 +661,7 @@ export class Combobox extends Textfield {
     public override disconnectedCallback(): void {
         this.itemObserver.disconnect();
         this.open = false;
+        this.resizeObserver?.unobserve(this);
         super.disconnectedCallback();
     }
 
