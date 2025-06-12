@@ -1,36 +1,44 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/opacity-checkerboard@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/opacity-checkerboard@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/opacity-checkerboard@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/opacity-checkerboard@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/opacity-checkerboard@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/opacity-checkerboard@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/opacity-checkerboard@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/opacity-checkerboard@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/opacity-checkerboard@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -47,13 +55,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
+- **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
 
 # [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
 
 ### Features
 
--   **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
+- **thumbnail:** bump thumbnail to use foundations release ([7490324](https://github.com/adobe/spectrum-web-components/commit/74903245d8dd8e3d39653a7f5296fa91e4562877))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -63,7 +71,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
--   remove thumbnail deprecated sizes ([#4760](https://github.com/adobe/spectrum-web-components/issues/4760))
+- remove thumbnail deprecated sizes ([#4760](https://github.com/adobe/spectrum-web-components/issues/4760))
 
 # [0.49.0](https://github.com/adobe/spectrum-web-components/compare/v0.48.1...v0.49.0) (2024-10-15)
 
@@ -129,7 +137,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -187,7 +195,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+- **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -221,7 +229,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **thumbnail:** use core tokens ([e298035](https://github.com/adobe/spectrum-web-components/commit/e2980354e04ab375bdaa8a6fc31141abc31dc802))
+- **thumbnail:** use core tokens ([e298035](https://github.com/adobe/spectrum-web-components/commit/e2980354e04ab375bdaa8a6fc31141abc31dc802))
 
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
@@ -231,17 +239,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
--   use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
+- add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+- use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
--   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+- **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
 
 ## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.6.8...@spectrum-web-components/thumbnail@0.6.9) (2023-04-24)
 
@@ -283,7 +291,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.5.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.5.6...@spectrum-web-components/thumbnail@0.5.7) (2022-08-04)
 
@@ -317,7 +325,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
+- leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
 
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.3...@spectrum-web-components/thumbnail@0.4.4) (2022-02-22)
 
@@ -331,13 +339,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
+- use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
 
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.0...@spectrum-web-components/thumbnail@0.4.1) (2021-12-13)
 
 ### Bug Fixes
 
--   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+- add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
 
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.3.1...@spectrum-web-components/thumbnail@0.4.0) (2021-11-08)
 
@@ -351,7 +359,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.4...@spectrum-web-components/thumbnail@0.2.5) (2021-10-12)
 
@@ -377,7 +385,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+- **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.4...@spectrum-web-components/thumbnail@0.1.5) (2021-05-12)
 
@@ -403,4 +411,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+- **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))

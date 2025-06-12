@@ -6,11 +6,7 @@
     },
     "overrides": [
         {
-            "files": [
-                "!packages/**/src/spectrum-*.css",
-                "!tools/**/src/spectrum-*.css",
-                "!tools/styles/**/*.css"
-            ],
+            "files": ["**/*.css"],
             "extends": ["stylelint-config-standard"],
             "rules": {
                 "header/header": ["config/license.js", {}],

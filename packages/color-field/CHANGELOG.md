@@ -1,48 +1,57 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies [[`cde976d`](https://github.com/adobe/spectrum-web-components/commit/cde976ddfa71f898e2d0404ecc53150db149a861)]:
+    - @spectrum-web-components/textfield@1.7.0
+    - @spectrum-web-components/color-handle@1.7.0
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd)]:
-    -   @spectrum-web-components/textfield@1.6.0
-    -   @spectrum-web-components/color-handle@1.6.0
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies [[`9e15a66`](https://github.com/adobe/spectrum-web-components/commit/9e15a66a281745004add414ff977d4a71186aedd)]:
+    - @spectrum-web-components/textfield@1.6.0
+    - @spectrum-web-components/color-handle@1.6.0
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Minor Changes
 
--   [#5322](https://github.com/adobe/spectrum-web-components/pull/5322) [`e19e55f`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1fe860d45814462905384ab83444fcf) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Fix Color Handle Positioning in Scrollable Containers
+- [#5322](https://github.com/adobe/spectrum-web-components/pull/5322) [`e19e55f`](https://github.com/adobe/spectrum-web-components/commit/e19e55f6f1fe860d45814462905384ab83444fcf) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Fix Color Handle Positioning in Scrollable Containers
 
 ### Patch Changes
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    -   @spectrum-web-components/color-handle@1.5.0
-    -   @spectrum-web-components/textfield@1.5.0
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    - @spectrum-web-components/color-handle@1.5.0
+    - @spectrum-web-components/textfield@1.5.0
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Minor Changes
 
--   [#5246](https://github.com/adobe/spectrum-web-components/pull/5246) [`e247de9`](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e90872120fb53a5650f237bdb18111c) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Alpha values for hex color formats wil be represented using hex instead of decimal
+- [#5246](https://github.com/adobe/spectrum-web-components/pull/5246) [`e247de9`](https://github.com/adobe/spectrum-web-components/commit/e247de9a2e90872120fb53a5650f237bdb18111c) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Alpha values for hex color formats wil be represented using hex instead of decimal
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/color-handle@1.4.0
-    -   @spectrum-web-components/textfield@1.4.0
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/color-handle@1.4.0
+    - @spectrum-web-components/textfield@1.4.0
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/color-handle@1.3.0
-    -   @spectrum-web-components/textfield@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/color-handle@1.3.0
+    - @spectrum-web-components/textfield@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -51,7 +60,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
+- **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 
@@ -141,10 +150,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-field:** added missing dependencies ([#4141](https://github.com/adobe/spectrum-web-components/issues/4141)) ([b3bb23a](https://github.com/adobe/spectrum-web-components/commit/b3bb23a68958e728b2133dc5e5d309b8975f6da9))
+- **color-field:** added missing dependencies ([#4141](https://github.com/adobe/spectrum-web-components/issues/4141)) ([b3bb23a](https://github.com/adobe/spectrum-web-components/commit/b3bb23a68958e728b2133dc5e5d309b8975f6da9))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
 ### Bug Fixes
 
--   **color-field:** add color-field package ([#3870](https://github.com/adobe/spectrum-web-components/issues/3870)) ([5081634](https://github.com/adobe/spectrum-web-components/commit/508163476cbe47a4450b2448fcd47ecd237c8085))
+- **color-field:** add color-field package ([#3870](https://github.com/adobe/spectrum-web-components/issues/3870)) ([5081634](https://github.com/adobe/spectrum-web-components/commit/508163476cbe47a4450b2448fcd47ecd237c8085))

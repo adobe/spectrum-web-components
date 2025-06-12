@@ -1,34 +1,41 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -49,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -123,7 +130,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -189,7 +196,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
+- **picker,action-group,split-button:** leverage Overlay v2 ([170a223](https://github.com/adobe/spectrum-web-components/commit/170a223d74870ed3eda452285943716f8cbf4b7c))
 
 # [0.36.0](https://github.com/adobe/spectrum-web-components/compare/v0.35.0...v0.36.0) (2023-08-18)
 
@@ -223,23 +230,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
--   **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
--   **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
--   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+- address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
+- **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
+- **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
--   **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
--   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
+- **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
+- **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.7.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.7.9...@spectrum-web-components/modal@0.7.10) (2023-04-24)
 
@@ -285,7 +292,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.6.9...@spectrum-web-components/modal@0.6.10) (2022-08-04)
 
@@ -327,13 +334,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
+- **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
 
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.5.2...@spectrum-web-components/modal@0.6.0) (2022-02-02)
 
 ### Features
 
--   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+- **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
 
 ## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.5.1...@spectrum-web-components/modal@0.5.2) (2022-01-26)
 
@@ -355,7 +362,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.3.7...@spectrum-web-components/modal@0.3.8) (2021-09-20)
 
@@ -393,42 +400,42 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
+- **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/adobe/spectrum-web-components/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.2.0...@spectrum-web-components/modal@0.2.1) (2021-02-11)
 
 ### Bug Fixes
 
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 # 0.2.0 (2021-01-21)
 
 ### Bug Fixes
 
--   address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
--   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+- address a11y issues raised by updating our dependencies ([4f06477](https://github.com/adobe/spectrum-web-components/commit/4f0647782eea7fdd85560e1bcb2f8b892f30bc33))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
 
 ### Features
 
--   **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
--   **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
+- **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
+- **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
 
 # 0.1.0 (2021-01-13)
 
 ### Bug Fixes
 
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
--   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+- stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+- update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+- update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
 
 ### Features
 
--   **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
--   **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
+- **modal:** add modal CSS only pattern ([44c7655](https://github.com/adobe/spectrum-web-components/commit/44c765582baba6f751602f7b37a083dd5234e4df))
+- **modal:** update spectrum css input ([bbcfc2a](https://github.com/adobe/spectrum-web-components/commit/bbcfc2a35a42fc3b81d3de17f216e4c872d3ac07))
