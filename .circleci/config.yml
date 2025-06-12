@@ -143,20 +143,6 @@ commands:
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
-    commitlint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Define environment variable with lastest commit's message
-                  command: |
-                      echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
-                      source $BASH_ENV
-            - run:
-                  name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
-
     test-chromium:
         executor: node
 
@@ -208,18 +194,6 @@ jobs:
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-
-    lint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Lint
-                  command: yarn lint
-            - run:
-                  name: Are there changes?
-                  command: git diff-files --exit-code
 
     preview-docs:
         executor: node
@@ -372,17 +346,12 @@ jobs:
                   regression_dir: << parameters.dir >>
 
 workflows:
-    version: 2
-    commitlint:
-        jobs:
-            - commitlint
     build:
         jobs:
             - test-chromium
             - test-chromium-memory
             - test-firefox
             - test-webkit
-            - lint
             - hcm-visual:
                   filters:
                       branches:
