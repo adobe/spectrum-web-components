@@ -10,15 +10,52 @@
  * governing permissions and limitations under the License.
  */
 
-import path from 'path';
-import { merge } from 'webpack-merge';
+import fs from 'node:fs';
+import path from 'node:path';
+import fg from 'fast-glob';
+import react from '@vitejs/plugin-react-swc';
 
-/** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
+// Get a list of all the folders in the components directory
+const packages = fg
+    .sync(
+        [
+            'packages/*/package.json',
+            'tools/*/package.json',
+            'projects/*/package.json',
+        ],
+        {
+            cwd: path.resolve(__dirname, '..'),
+            absolute: true,
+        }
+    )
+    .map((pkgPath) => {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+        return {
+            name: pkg.name,
+            replacement: path.dirname(pkgPath),
+        };
+    });
+
+/** @type { import('@storybook/web-components-vite').StorybookConfig } */
 module.exports = {
+    rootDir: '../',
+    staticDirs: ['./assets', './assets/images'],
     stories: [
-        'packages/*/stories/*.stories.js',
-        'tools/*/stories/*.stories.js',
-        'projects/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Tools',
+        },
+        {
+            directory: '../projects',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Projects',
+        },
     ],
     addons: [
         '@storybook/addon-links',
@@ -32,19 +69,46 @@ module.exports = {
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
     ],
-    framework: {
-        name: '@storybook/web-components-webpack5',
-        options: {
-            // builder: '@web/storybook-builder',
-            fsCache: true,
-            lazyCompilation: true,
-        },
+    framework: '@storybook/web-components-vite',
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+        builder: '@storybook/builder-vite',
     },
-    async webpackFinal(config) {
-        return merge(config, {
+    async viteFinal(config, { configType }) {
+        const { mergeConfig } = await import('vite');
+
+        return mergeConfig(config, {
+            // Add dependencies to pre-optimization
+            optimizeDeps: {
+                include: [
+                    '@whitespace/storybook-addon-html',
+                    '@storybook/blocks',
+                    '@storybook/theming',
+                    '@storybook/components',
+                ],
+            },
+            plugins: [react({ tsDecorators: true })],
+            babel: {
+                plugins: [
+                    ['@babel/plugin-proposal-decorators', { legacy: true }],
+                ],
+            },
+            build: {
+                sourcemap: configType === 'DEVELOPMENT',
+                manifest: true,
+                minify: configType === 'PRODUCTION',
+            },
+            css: {
+                devSourcemap: configType === 'DEVELOPMENT',
+            },
             resolve: {
-                conditionNames: ['development', 'browser'],
-                modules: ['node_modules', 'packages', 'projects', 'tools'],
+                alias: [
+                    ...packages.map(({ name, folder }) => ({
+                        find: name,
+                        replacement: folder,
+                    })),
+                ],
             },
         });
     },

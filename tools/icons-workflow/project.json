@@ -9,6 +9,7 @@
             "dependsOn": ["build:ts", "build:icons"]
         },
         "build:icons": {
+            "cache": true,
             "executor": "nx:run-commands",
             "options": {
                 "command": "node ./bin/build.js",
