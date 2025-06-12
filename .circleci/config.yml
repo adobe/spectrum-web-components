@@ -119,6 +119,22 @@ commands:
                       cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
                       cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
 
+                      # create a root index.html for the shared environment
+                      cat > deploy-temp/index.html \<< 'EOF'
+                      <!DOCTYPE html>
+                      <html>
+                      <head>
+                          <title>VRT Results</title>
+                          <meta charset="utf-8">    
+                      </head>
+                      <body>
+                          <h1>Visual Regression Test Results</h1>
+                          <p>Navigate to your specific PR and test combination:</p>
+                          <p>URL format: <code>/pr-{PR_NUMBER}/{COMBINATION}/</code></p>
+                      </body>
+                      </html>
+                      EOF
+
                       echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
 
                       # Install Azure Static Web Apps CLI

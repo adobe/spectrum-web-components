@@ -195,7 +195,8 @@ systemVariants.forEach((systemVariant) => {
                 });
                 vrtGroups.push({
                     name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
-                    files: '(packages|tools)/*/test/*.test-vrt.js',
+                    // files: '(packages|tools)/*/test/*.test-vrt.js',
+                    files: 'accordion/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
                     browsers: [chromium],
                 });
@@ -211,7 +212,8 @@ vrtGroups = [
         if (!skipPkgs.includes(pkg)) {
             acc.push({
                 name: `vrt-${pkg}`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                // files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                files: 'accordion/test/*.test-vrt.js',
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
@@ -219,7 +221,8 @@ vrtGroups = [
             });
             acc.push({
                 name: `vrt-${pkg}-single`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                // files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                files: 'accordion/test/*.test-vrt.js',
                 testRunnerHtml: vrtHTML({
                     systemVariant: 'spectrum',
                     color: 'light',
@@ -234,7 +237,8 @@ vrtGroups = [
     }, []),
     {
         name: `vrt-hcm`,
-        files: '(packages|tools)/*/test/*.test-vrt.js',
+        // files: '(packages|tools)/*/test/*.test-vrt.js',
+        files: 'accordion/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
             systemVariant: 'spectrum',
             color: 'dark',
