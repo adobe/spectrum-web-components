@@ -1,13 +1,110 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/* base Help Text Styles */
+/* Base variables */
+:host {
+    --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
 
-@import url("./spectrum-help-text.css");
+    color: var(--highcontrast-helptext-content-color-default, var(--spectrum-helptext-content-color-default));
+    font-size: var(--spectrum-helptext-font-size);
+    min-block-size: var(--spectrum-helptext-min-height);
+    display: flex;
+}
+
+/* size Variants */
+:host([size="s"]) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-75);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
+    --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-small);
+    --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
+    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-75);
+    --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
+}
+
+:host {
+}
+
+:host([size="l"]) {
+}
+
+:host([size="xl"]) {
+}
+
+/* variants */
+:host([variant="neutral"]) {
+}
+
+:host([variant="negative"]) {
+}
+
+/* disabled State */
+:host([disabled]) {
+}
+
+/* language-specific Styles */
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    line-height: var(--spectrum-cjk-line-height-100);
+}
+
+/* icon Styles */
+.icon {
+    block-size: var(--spectrum-helptext-icon-size);
+    inline-size: var(--spectrum-helptext-icon-size);
+    flex-shrink: 0;
+    margin-inline-end: var(--spectrum-helptext-text-to-visual);
+    padding-block-start: var(--spectrum-helptext-top-to-workflow-icon);
+    padding-block-end: var(--spectrum-helptext-bottom-to-workflow-icon);
+}
+
+/* text Styles */
+.text {
+    line-height: var(--spectrum-line-height-100);
+    padding-block-start: var(--spectrum-helptext-top-to-text);
+    padding-block-end: var(--spectrum-helptext-bottom-to-text);
+}
+
+/* variant-specific Colors */
+:host([variant="neutral"]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--spectrum-helptext-content-color-default));
+}
+
+:host([variant="neutral"]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default));
+}
+
+:host([variant="negative"]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--spectrum-helptext-content-color-default));
+}
+
+:host([variant="negative"]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default));
+}
+
+:host([disabled]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--spectrum-helptext-content-color-default));
+}
+
+:host([disabled]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default));
+}
+
+:host,
+.text,
+.icon {
+    forced-color-adjust: none;
+}

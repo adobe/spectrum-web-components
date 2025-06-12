@@ -41,18 +41,13 @@
             "development": "./src/MenuItem.dev.js",
             "default": "./src/MenuItem.js"
         },
-        "./src/checkmark-overrides.css.js": "./src/checkmark-overrides.css.js",
-        "./src/chevron-overrides.css.js": "./src/chevron-overrides.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/menu-divider-overrides.css.js": "./src/menu-divider-overrides.css.js",
         "./src/menu-divider.css.js": "./src/menu-divider.css.js",
         "./src/menu-group.css.js": "./src/menu-group.css.js",
-        "./src/menu-item-overrides.css.js": "./src/menu-item-overrides.css.js",
         "./src/menu-item.css.js": "./src/menu-item.css.js",
-        "./src/menu-overrides.css.js": "./src/menu-overrides.css.js",
         "./src/menu.css.js": "./src/menu.css.js",
         "./sp-menu.js": {
             "development": "./sp-menu.dev.js",

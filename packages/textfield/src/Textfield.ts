@@ -31,7 +31,7 @@ import {
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -275,7 +275,10 @@ export class TextfieldBase extends ManageHelpText(
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
-                <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
+                <sp-icon-alert-triangle
+                    id="invalid"
+                    class="icon"
+                ></sp-icon-alert-triangle>
             `;
         } else if (this.valid) {
             return html`

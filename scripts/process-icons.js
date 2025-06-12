@@ -15,6 +15,7 @@
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import 'colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -58,7 +59,7 @@ const spectrumIconsPath = path.resolve(
 
 // process the scales
 ['medium', 'large'].forEach((scaleKey) => {
-    console.log(`processing scale ${scaleKey}...`);
+    console.log(`\nProcessing scale ${scaleKey.cyan}`);
 
     const srcPath = path.join(spectrumIconsPath, scaleKey);
     const outputPath = path.join(
@@ -78,7 +79,7 @@ const spectrumIconsPath = path.resolve(
 
     fs.readdirSync(srcPath).forEach((iconFile) => {
         const srcIconPath = path.join(srcPath, iconFile);
-        console.log(`\ticon ${iconFile}`);
+        console.log(` - ${path.basename(iconFile, '.svg').green}`);
         processIcon(srcIconPath, outputFd);
     });
 

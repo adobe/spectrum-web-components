@@ -14,9 +14,19 @@ import { merge } from 'webpack-merge';
 
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
+    rootDir: '../',
+    staticDirs: ['./assets'],
     stories: [
-        '../packages/*/stories/*.stories.js',
-        '../tools/*/stories/*.stories.js',
+        {
+            directory: '../packages',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Packages',
+        },
+        {
+            directory: '../tools',
+            files: '*/stories/*.stories.js',
+            titlePrefix: 'Tools',
+        },
     ],
     addons: [
         '@storybook/addon-links',
@@ -38,6 +48,10 @@ export default {
             lazyCompilation: true,
         },
     },
+    core: {
+        disableTelemetry: true,
+        disableWhatsNewNotifications: true,
+    },
     async webpackFinal(config) {
         return merge(config, {
             resolve: {
@@ -51,7 +65,7 @@ export default {
             ? {
                   'design-system': {
                       title: 'Spectrum CSS',
-                      url: 'https://opensource.adobe.com/spectrum-css/preview/',
+                      url: 'https://pr-2352--spectrum-css.netlify.app/',
                       expanded: false, // Optional, true by default
                   },
               }
