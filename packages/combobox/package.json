@@ -73,6 +73,7 @@
         "@spectrum-web-components/picker-button": "1.6.0",
         "@spectrum-web-components/popover": "1.6.0",
         "@spectrum-web-components/progress-circle": "1.6.0",
+        "@spectrum-web-components/reactive-controllers": "1.6.0",
         "@spectrum-web-components/textfield": "1.6.0"
     },
     "types": "./src/index.d.ts",
