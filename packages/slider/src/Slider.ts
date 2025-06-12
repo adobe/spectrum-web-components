@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -17,6 +17,7 @@ import {
     PropertyValues,
     SizedMixin,
     TemplateResult,
+    type StyleInfo,
 } from '@spectrum-web-components/base';
 import {
     property,
@@ -31,7 +32,6 @@ import {
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';

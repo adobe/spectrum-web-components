@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 ::slotted(*) {
     width: 100%;
@@ -26,7 +26,7 @@ aside {
     background-color: var(--spectrum-gray-75);
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     aside {
         position: fixed;
         top: 0;
@@ -71,7 +71,7 @@ aside {
 
 .navigation {
     width: calc(var(--swc-scale-factor) * 240px - 48px);
-    padding: 0 24px 24px 24px;
+    padding: 0 24px 24px;
     flex: 1;
     flex-grow: 1;
     overflow: auto;
@@ -101,9 +101,7 @@ docs-spectrum-logo {
 
 docs-search {
     width: calc(var(--swc-scale-factor) * 192px);
-    padding: 0 calc(var(--swc-scale-factor) * 24px)
-        calc(var(--swc-scale-factor) * 24px)
-        calc(var(--swc-scale-factor) * 24px);
+    padding: 0 calc(var(--swc-scale-factor) * 24px) calc(var(--swc-scale-factor) * 24px);
 }
 
 sp-sidenav {
