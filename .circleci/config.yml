@@ -118,17 +118,26 @@ commands:
                       # VRT combination for subdirectory
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
-                      # Create directory structure for workspace persistence
-                      mkdir -p "workspace-deploy/pr-${PR_NUMBER}/${combination}"
-                      cp -r test/visual/* "workspace-deploy/pr-${PR_NUMBER}/${combination}/"
-                      cp projects/documentation/content/favicon.ico "workspace-deploy/pr-${PR_NUMBER}/${combination}/"
+                      # Debug: Show what's in test/visual before copying
+                      echo "=== Contents of test/visual before copying ==="
+                      ls -la test/visual/ || echo "test/visual directory not found"
+
+                      # Create directory structure in shared workspace
+                      mkdir -p "shared-vrt-results/pr-${PR_NUMBER}/${combination}"
+                      cp -r test/visual/* "shared-vrt-results/pr-${PR_NUMBER}/${combination}/" || echo "Failed to copy test/visual contents"
+                      cp projects/documentation/content/favicon.ico "shared-vrt-results/pr-${PR_NUMBER}/${combination}/" || echo "Failed to copy favicon"
+
+                      # Debug: Show what we're persisting
+                      echo "=== Contents being persisted to shared workspace ==="
+                      find shared-vrt-results -type f | head -20
+                      echo "Total files in shared-vrt-results: $(find shared-vrt-results -type f | wc -l)"
 
                       echo "Results prepared for combination: ${combination}"
             - persist_to_workspace:
                   when: always
                   root: .
                   paths:
-                      - workspace-deploy/
+                      - shared-vrt-results/
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -378,6 +387,24 @@ jobs:
                   at: .
             - run:
                   when: always
+                  name: Debug Shared Workspace Contents
+                  command: |
+                      echo "=== Current working directory ==="
+                      pwd
+
+                      echo "=== Contents of current directory ==="
+                      ls -la
+
+                      echo "=== Looking for shared-vrt-results directory ==="
+                      ls -la shared-vrt-results/ 2>/dev/null || echo "shared-vrt-results directory not found"
+
+                      echo "=== All files in shared VRT results ==="
+                      find . -path "*/shared-vrt-results/*" -type f | head -20
+
+                      echo "=== Total files found ==="
+                      find . -path "*/shared-vrt-results/*" -type f | wc -l
+            - run:
+                  when: always
                   name: Deploy All Visual Test Results to Azure
                   command: |
                       # Get PR number from CircleCI environment
@@ -390,15 +417,19 @@ jobs:
                           echo "Deploying all results for main branch"
                       fi
 
-                      # Check if we have any results to deploy
-                      if [ ! -d "workspace-deploy" ]; then
-                          echo "No visual test results found in workspace. Skipping deployment."
+                      # Check if we have any shared VRT results to deploy
+                      if [ ! -d "shared-vrt-results" ]; then
+                          echo "No shared visual test results found in workspace. Skipping deployment."
+                          echo "Available directories:"
+                          ls -la
                           exit 0
                       fi
 
+                      echo "Found shared VRT results directory"
+
                       # Create final deployment structure
                       mkdir -p "deploy-temp"
-                      cp -r workspace-deploy/* deploy-temp/
+                      cp -r shared-vrt-results/* deploy-temp/ || echo "Failed to copy shared VRT results"
 
                       # Create a root index.html for the shared environment
                       cat > deploy-temp/index.html \<< 'EOF'
