@@ -232,7 +232,7 @@ export class Coachmark extends Popover {
             >
                 <sp-icon-chevron200
                     size="s"
-                    class="spectrum-UIIcon-ChevronLeft75"
+                    class="icon-ChevronLeft75"
                     slot="icon"
                 ></sp-icon-chevron200>
             </sp-button>

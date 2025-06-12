@@ -18,8 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import styles from './alert-banner.css.js';
 
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
@@ -109,7 +109,10 @@ export class AlertBanner extends SpectrumElement {
                 `;
             case 'negative':
                 return html`
-                    <sp-icon-alert label="Error" class="type"></sp-icon-alert>
+                    <sp-icon-alert-triangle
+                        label="Error"
+                        class="type"
+                    ></sp-icon-alert-triangle>
                 `;
             default:
                 return html``;

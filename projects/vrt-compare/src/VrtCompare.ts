@@ -25,7 +25,7 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/split-view/sp-split-view.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-out.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js';
@@ -84,7 +84,10 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
 
     protected get error() {
         return html`
-            <sp-icon-alert class="icon" size="xl"></sp-icon-alert>
+            <sp-icon-alert-triangle
+                class="icon"
+                size="xl"
+            ></sp-icon-alert-triangle>
             <p class="spectrum-Body spectrum-Body--sizeXL">
                 Please be sure to supply some combination of actual, baseline,
                 and diff screenshots for review.

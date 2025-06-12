@@ -110,7 +110,7 @@ export class BreadcrumbItem extends LikeAnchor(Focusable) {
             <sp-icon-chevron100
                 id="separator"
                 size="xs"
-                class="spectrum-UIIcon-ChevronRight100"
+                class="icon-ChevronRight100"
             ></sp-icon-chevron100>
         `;
     }

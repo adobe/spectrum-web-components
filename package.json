@@ -342,8 +342,7 @@
             "files": [
                 "packages/icons-ui/bin/build.js",
                 "packages/icons-ui/packages.json",
-                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
-                "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
+                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg"
             ],
             "output": [
                 "packages/icons-ui/**/*.ts",

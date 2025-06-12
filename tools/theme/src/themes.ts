@@ -10,9 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../theme-light.js';
-import '../theme-lightest.js';
+import '../core.js';
 import '../theme-dark.js';
-import '../theme-darkest.js';
-import '../scale-medium.js';
 import '../scale-large.js';

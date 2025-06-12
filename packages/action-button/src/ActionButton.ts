@@ -25,11 +25,11 @@ import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-ico
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
-    xs: 'spectrum-UIIcon-CornerTriangle75',
-    s: 'spectrum-UIIcon-CornerTriangle75',
-    m: 'spectrum-UIIcon-CornerTriangle100',
-    l: 'spectrum-UIIcon-CornerTriangle200',
-    xl: 'spectrum-UIIcon-CornerTriangle300',
+    xs: 'icon-CornerTriangle75',
+    s: 'icon-CornerTriangle75',
+    m: 'icon-CornerTriangle100',
+    l: 'icon-CornerTriangle200',
+    xl: 'icon-CornerTriangle300',
 };
 
 export const LONGPRESS_DURATION = 300;

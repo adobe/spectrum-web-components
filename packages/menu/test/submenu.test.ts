@@ -34,7 +34,7 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { TemplateResult } from 'lit-html';
+import { TemplateResult } from '@spectrum-web-components/base';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 

@@ -33,9 +33,7 @@
             "development": "./src/AccordionItem.dev.js",
             "default": "./src/AccordionItem.js"
         },
-        "./src/accordion-item-overrides.css.js": "./src/accordion-item-overrides.css.js",
         "./src/accordion-item.css.js": "./src/accordion-item.css.js",
-        "./src/accordion-overrides.css.js": "./src/accordion-overrides.css.js",
         "./src/accordion.css.js": "./src/accordion.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

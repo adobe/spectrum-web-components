@@ -39,25 +39,25 @@ const dashIcon: Record<string, () => TemplateResult> = {
     xs: () => html`
         <sp-icon-dash75
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash75"
+            class="mixedValueIcon icon-Dash75"
         ></sp-icon-dash75>
     `,
     s: () => html`
         <sp-icon-dash100
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash100"
+            class="mixedValueIcon icon-Dash100"
         ></sp-icon-dash100>
     `,
     m: () => html`
         <sp-icon-dash200
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash200"
+            class="mixedValueIcon icon-Dash200"
         ></sp-icon-dash200>
     `,
     l: () => html`
         <sp-icon-dash300
             slot="icon"
-            class="mixedValueIcon spectrum-UIIcon-Dash300"
+            class="mixedValueIcon icon-Dash300"
         ></sp-icon-dash300>
     `,
 };

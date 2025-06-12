@@ -53,7 +53,7 @@ import '../../../projects/story-decorator/src/types.js';
 
 import { Button } from '@spectrum-web-components/button';
 import { Popover } from '@spectrum-web-components/popover';
-import { render } from 'lit-html';
+import { render } from '@spectrum-web-components/base';
 import './overlay-story-components.js';
 import { PopoverContent } from './overlay-story-components.js';
 
@@ -641,13 +641,11 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
-            system=${window.__swc_hack_knobs__.defaultSystemVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
-                system=${window.__swc_hack_knobs__.defaultSystemVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >

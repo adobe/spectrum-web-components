@@ -29,7 +29,6 @@
             "development": "./src/ColorLoupe.dev.js",
             "default": "./src/ColorLoupe.js"
         },
-        "./src/color-loupe-overrides.css.js": "./src/color-loupe-overrides.css.js",
         "./src/color-loupe.css.js": "./src/color-loupe.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

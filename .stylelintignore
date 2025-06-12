@@ -1,7 +1,11 @@
+# Node modules
 node_modules
-task
+
+# Build artifacts
+dist
+
+# Ignore all files
 *.*
+
+# Except CSS files
 !*.css
-projects/example-project/dist
-tools/styles
-spectrum-*.css
