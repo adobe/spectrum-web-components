@@ -144,11 +144,11 @@ commands:
                       attempt=0
 
                       while [ $attempt -lt $max_attempts ]; do
-                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $PR_NUMBER; then
                               echo "Azure deployment successful!"
                               
                               # Generate the deployment URL for the shared environment
-                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
+                              echo "https://salmon-bush-011a7510f-${PR_NUMBER}.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
                               
                               echo "URL saved: $(cat vrt_url.txt)"
@@ -328,41 +328,22 @@ jobs:
                   when: always
                   name: Deploy Visual Tests to Azure
                   command: |
-                      # Get PR number from CircleCI environment
-                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
-                          echo "Deploying for PR #$PR_NUMBER"
-                      else
-                          # Fallback for non-PR builds (e.g., main branch)
-                          PR_NUMBER="main"
-                          echo "Deploying for main branch"
-                      fi
-
-                      # VRT combination for subdirectory
-                      combination="hcm"
-
-                      # Create directory structure for deployment
-                      mkdir -p "deploy-temp/pr-${PR_NUMBER}/${combination}"
-                      cp -r test/visual/* "deploy-temp/pr-${PR_NUMBER}/${combination}/"
-                      cp projects/documentation/content/favicon.ico "deploy-temp/pr-${PR_NUMBER}/${combination}/"
-
-                      echo "Deploying pr-${PR_NUMBER}/${combination}/ to shared environment"
-
+                      cp projects/documentation/content/favicon.ico test/visual
+                      branch=$(git symbolic-ref --short HEAD)
+                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
+                      echo "Azure deployment hash: $hash"
+                      echo "Deploying visual tests from test/visual directory..."
                       # Install Azure Static Web Apps CLI
                       npm install -g @azure/static-web-apps-cli
-
                       max_attempts=3
                       attempt=0
-
                       while [ $attempt -lt $max_attempts ]; do
-                          if swa deploy deploy-temp --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN; then
+                          if swa deploy test/visual --deployment-token $SWA_CLI_DEPLOYMENT_TOKEN --env $hash; then
                               echo "Azure deployment successful!"
                               
-                              # Generate the deployment URL for the shared environment
-                              echo "https://brave-plant-02f0c200f.eastus2.6.azurestaticapps.net/pr-${PR_NUMBER}/${combination}/" > vrt_url.txt
+                              # Generate the deployment URL using the correct pattern
+                              echo "https://brave-plant-02f0c200f-${hash}.eastus2.6.azurestaticapps.net" > vrt_url.txt
                               echo "Visual Test URL: $(cat vrt_url.txt)"
-                              
-                              echo "URL saved: $(cat vrt_url.txt)"
                               exit 0
                           else
                               attempt=$((attempt + 1))
@@ -370,7 +351,6 @@ jobs:
                               sleep 10
                           fi
                       done
-
                       echo "Azure deployment failed after $max_attempts attempts."
                       exit 1
 
