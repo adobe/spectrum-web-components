@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import styles from './table-body.css.js';
+import styles from './table-body.css' with { type: 'css' };
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 /**
