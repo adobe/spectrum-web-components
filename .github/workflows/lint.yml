@@ -46,6 +46,9 @@ jobs:
             pull-requests: read
 
         steps:
+            - name: Check out code
+              uses: actions/checkout@v4
+
             - name: Get changed files
               id: changed-files
               uses: step-security/changed-files@v46
