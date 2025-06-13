@@ -120,7 +120,7 @@ export class Combobox extends Textfield {
 
     private tooltipEl?: Tooltip;
 
-    private resizeObserver: ResizeObserver | undefined;
+    private resizeObserver?: ResizeObserver;
 
     @state()
     private fieldWidth = 0;
@@ -661,7 +661,8 @@ export class Combobox extends Textfield {
     public override disconnectedCallback(): void {
         this.itemObserver.disconnect();
         this.open = false;
-        this.resizeObserver?.unobserve(this);
+        this.resizeObserver?.disconnect();
+        this.resizeObserver = undefined;
         super.disconnectedCallback();
     }
 
