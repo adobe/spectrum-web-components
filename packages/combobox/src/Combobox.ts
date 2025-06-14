@@ -120,7 +120,7 @@ export class Combobox extends Textfield {
 
     private tooltipEl?: Tooltip;
 
-    private resizeObserver?: ResizeObserver;
+    private resizeObserver?: ResizeObserver | undefined;
 
     @state()
     private fieldWidth = 0;
