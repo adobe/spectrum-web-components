@@ -12,57 +12,104 @@ import '@spectrum-web-components/avatar/sp-avatar.js';
 import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { spy } from 'sinon';
 
 describe('Avatar', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Avatar>(
-                html`
-                    <sp-avatar
-                        label="Shantanu Narayen"
-                        src="https://picsum.photos/500/500"
-                    ></sp-avatar>
-                `
-            )
-    );
-    it('loads accessibly', async () => {
-        const el = await fixture<Avatar>(
-            html`
+            await fixture<Avatar>(html`
                 <sp-avatar
                     label="Shantanu Narayen"
                     src="https://picsum.photos/500/500"
                 ></sp-avatar>
-            `
-        );
+            `)
+    );
+    it('loads accessibly with label', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                label="Shantanu Narayen"
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
 
         await elementUpdated(el);
-
         await expect(el).to.be.accessible();
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('Shantanu Narayen');
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('false');
+    });
+    it('loads accessibly with isdecorative', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                isdecorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        await expect(el).to.be.accessible();
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('true');
+    });
+
+    it('loads with warning when no label is provided', async () => {
+        const consoleSpy = spy(console, 'warn');
+        const el = await fixture<Avatar>(html`
+            <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        expect(consoleSpy.calledOnce).to.be.true;
+        expect(consoleSpy.firstCall.args[0]).to.include(
+            'Avatar is missing a label'
+        );
+
+        const imageEl = el.shadowRoot?.querySelector('img') as HTMLImageElement;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+        // Should not be hidden unless explicitly decorative
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('false');
+
+        consoleSpy.restore();
+    });
+
+    it('reflects isdecorative attribute', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                isdecorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('isdecorative')).to.be.true;
+
+        el.isdecorative = false;
+        await elementUpdated(el);
+        expect(el.hasAttribute('isdecorative')).to.be.false;
     });
     it('loads accessibly with [href]', async () => {
-        const el = await fixture<Avatar>(
-            html`
-                <sp-avatar
-                    label="Shantanu Narayen"
-                    src="https://picsum.photos/500/500"
-                    href="https://adobe.com"
-                ></sp-avatar>
-            `
-        );
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                label="Shantanu Narayen"
+                src="https://picsum.photos/500/500"
+                href="https://adobe.com"
+            ></sp-avatar>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('validates `size`', async () => {
-        const el = await fixture<Avatar>(
-            html`
-                <sp-avatar
-                    label="Shantanu Narayen"
-                    src="https://picsum.photos/500/500"
-                ></sp-avatar>
-            `
-        );
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                label="Shantanu Narayen"
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
 
         await elementUpdated(el);
 
@@ -81,14 +128,12 @@ describe('Avatar', () => {
         expect(el.size).to.equal(600);
     });
     it('loads with everything set', async () => {
-        const el = await fixture<Avatar>(
-            html`
-                <sp-avatar
-                    label="Shantanu Narayen"
-                    src="https://picsum.photos/500/500"
-                ></sp-avatar>
-            `
-        );
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                label="Shantanu Narayen"
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -99,30 +144,27 @@ describe('Avatar', () => {
         expect(imageEl.getAttribute('alt')).to.equal('Shantanu Narayen');
     });
     it('loads with no label', async () => {
-        const el = await fixture<Avatar>(
-            html`
-                <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
-            `
-        );
+        const el = await fixture<Avatar>(html`
+            <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         const imageEl = el.shadowRoot
             ? (el.shadowRoot.querySelector('img') as HTMLImageElement)
             : (el.querySelector('img') as HTMLImageElement);
-        expect(imageEl.hasAttribute('alt')).to.be.false;
+        expect(imageEl.hasAttribute('alt')).to.be.true;
+        expect(imageEl.getAttribute('alt')).to.equal('');
     });
     it('can receive a `tabindex` without an `href`', async () => {
         try {
-            const el = await fixture<Avatar>(
-                html`
-                    <sp-avatar
-                        label="Shantanu Narayen"
-                        src="https://picsum.photos/500/500"
-                        tabindex="0"
-                    ></sp-avatar>
-                `
-            );
+            const el = await fixture<Avatar>(html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://picsum.photos/500/500"
+                    tabindex="0"
+                ></sp-avatar>
+            `);
             await elementUpdated(el);
             const focusEl = el.focusElement;
             expect(focusEl).to.exist;

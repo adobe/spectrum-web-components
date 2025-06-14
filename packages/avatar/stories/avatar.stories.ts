@@ -22,11 +22,13 @@ export default {
         disabled: { control: 'boolean' },
         label: { control: 'text' },
         src: { control: 'text' },
+        isdecorative: { control: 'boolean' },
     },
     args: {
         disabled: false,
         label: 'Place dog',
         src: avatar,
+        isdecorative: false,
     },
 };
 
@@ -35,6 +37,7 @@ interface StoryArgs {
     label?: string;
     src?: string;
     size?: AvatarSize;
+    isdecorative?: boolean;
 }
 
 const Template = ({
@@ -85,3 +88,12 @@ export const size700 = (args: StoryArgs = {}): TemplateResult =>
 export const linked = (args: StoryArgs = {}): TemplateResult => Link(args);
 export const disabled = (args: StoryArgs = {}): TemplateResult => Link(args);
 disabled.args = { disabled: true };
+
+export const decorative = (args: StoryArgs = {}): TemplateResult => html`
+    <sp-avatar
+        ?isdecorative=${true}
+        src=${args.src || avatar}
+        size=${args.size || 100}
+    ></sp-avatar>
+`;
+decorative.args = { isdecorative: true };
