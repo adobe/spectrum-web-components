@@ -18,7 +18,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: c5b517432c05e1eeac576ad651233cef83957ce9
+        default: c128578f6599fde71774dae5f1ebe047423aed95
     wireit_cache_name:
         type: string
         default: wireit
@@ -158,20 +158,6 @@ commands:
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
-    commitlint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Define environment variable with lastest commit's message
-                  command: |
-                      echo 'export COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")' >> $BASH_ENV
-                      source $BASH_ENV
-            - run:
-                  name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | yarn commitlint --config commitlint.config.cjs
-
     test-chromium:
         executor: node
 
@@ -485,17 +471,12 @@ jobs:
                       exit 1
 
 workflows:
-    version: 2
-    commitlint:
-        jobs:
-            - commitlint
     build:
         jobs:
             - test-chromium
             - test-chromium-memory
             - test-firefox
             - test-webkit
-            - lint
             - hcm-visual:
                   filters:
                       branches:

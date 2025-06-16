@@ -20,6 +20,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/link/sp-link.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     component: 'sp-card',
@@ -342,7 +343,7 @@ export const smallQuiet = (args: StoryArgs): TemplateResult => {
     return html`
         <div>
             <sp-card
-                size=${args.size}
+                size=${ifDefined(args.size)}
                 ?horizontal=${args.horizontal}
                 heading="Card Heading"
                 subheading="JPG"
@@ -413,5 +414,38 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
             </sp-action-menu>
         </sp-card>
+    `;
+};
+export const ScrollTest = (): TemplateResult => {
+    return html`
+        <div class="scroll-container">
+            <div class="scroll-indicator">
+                <h3>Switch to mobile view to test touch behavior.</h3>
+                <p>
+                    In mobile view, verify that touch events work correctly and
+                    scrolling doesn't trigger unwanted clicks.
+                </p>
+            </div>
+            ${Array.from(
+                { length: 20 },
+                () => html`
+                    <div style="margin: 10px;">
+                        <sp-card
+                            heading="Card Heading"
+                            subheading="JPG"
+                            ?horizontal=${false}
+                            style="width: 200px;"
+                        >
+                            <img
+                                slot="cover-photo"
+                                src=${portrait}
+                                alt="Demo Graphic"
+                            />
+                            <div slot="footer">Footer</div>
+                        </sp-card>
+                    </div>
+                `
+            )}
+        </div>
     `;
 };

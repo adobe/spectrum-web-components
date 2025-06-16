@@ -1,54 +1,65 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.7.0
+    - @spectrum-web-components/icon@1.7.0
+    - @spectrum-web-components/icons-ui@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
-    -   @spectrum-web-components/button@1.6.0
-    -   @spectrum-web-components/icon@1.6.0
-    -   @spectrum-web-components/icons-ui@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies [[`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    - @spectrum-web-components/button@1.6.0
+    - @spectrum-web-components/icon@1.6.0
+    - @spectrum-web-components/icons-ui@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the picker button component from version 6.0.0-s2-foundations.16 to 6.1.2. The update should bring the background colors for the picker button in line with S2-foundations design specs:
+- [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the picker button component from version 6.0.0-s2-foundations.16 to 6.1.2. The update should bring the background colors for the picker button in line with S2-foundations design specs:
 
     default state: `gray-50` to `gray-100`
     hover state: `gray-100` to `gray-200`
     key-focus state: `gray-100` to `gray-200`
 
--   Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
-    -   @spectrum-web-components/button@1.5.0
-    -   @spectrum-web-components/icon@1.5.0
-    -   @spectrum-web-components/icons-ui@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies [[`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
+    - @spectrum-web-components/button@1.5.0
+    - @spectrum-web-components/icon@1.5.0
+    - @spectrum-web-components/icons-ui@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.4.0
-    -   @spectrum-web-components/icon@1.4.0
-    -   @spectrum-web-components/icons-ui@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.4.0
+    - @spectrum-web-components/icon@1.4.0
+    - @spectrum-web-components/icons-ui@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.3.0
-    -   @spectrum-web-components/icon@1.3.0
-    -   @spectrum-web-components/icons-ui@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.3.0
+    - @spectrum-web-components/icon@1.3.0
+    - @spectrum-web-components/icons-ui@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -69,7 +80,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -131,7 +142,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **picker-button:** update quiet styles ([#4383](https://github.com/adobe/spectrum-web-components/issues/4383)) ([42bf291](https://github.com/adobe/spectrum-web-components/commit/42bf291f9301c139c960cfc7ffb69ece08d945f3))
+- **picker-button:** update quiet styles ([#4383](https://github.com/adobe/spectrum-web-components/issues/4383)) ([42bf291](https://github.com/adobe/spectrum-web-components/commit/42bf291f9301c139c960cfc7ffb69ece08d945f3))
 
 ## [0.42.3](https://github.com/adobe/spectrum-web-components/compare/v0.42.2...v0.42.3) (2024-05-01)
 
@@ -149,7 +160,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -163,13 +174,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
+- **icon:** use core tokens ([a11ef6b](https://github.com/adobe/spectrum-web-components/commit/a11ef6b45141769b4c73a7c79322e780a8a1fa6e))
 
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
 ### Bug Fixes
 
--   **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
+- **combobox:** add combobox pattern ([#3894](https://github.com/adobe/spectrum-web-components/issues/3894)) ([47d7d71](https://github.com/adobe/spectrum-web-components/commit/47d7d71bc9e17b67452d45b9495c970dac15ff89)), closes [#3887](https://github.com/adobe/spectrum-web-components/issues/3887)
 
 ## [0.40.4](https://github.com/adobe/spectrum-web-components/compare/v0.40.3...v0.40.4) (2024-01-29)
 
@@ -203,7 +214,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
+- update deps graph, update link docs ([#3709](https://github.com/adobe/spectrum-web-components/issues/3709)) ([2deb284](https://github.com/adobe/spectrum-web-components/commit/2deb2847e6ad458c3cbaec02732fffde133e0c54))
 
 ## [0.39.1](https://github.com/adobe/spectrum-web-components/compare/v0.39.0...v0.39.1) (2023-10-06)
 
@@ -225,11 +236,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **picker-button:** include missing dependency on @spectrum-web-components/button ([#3515](https://github.com/adobe/spectrum-web-components/issues/3515)) ([ed44c2b](https://github.com/adobe/spectrum-web-components/commit/ed44c2bd5c729d8a563d9bd25e5d61f58ba1d074))
+- **picker-button:** include missing dependency on @spectrum-web-components/button ([#3515](https://github.com/adobe/spectrum-web-components/issues/3515)) ([ed44c2b](https://github.com/adobe/spectrum-web-components/commit/ed44c2bd5c729d8a563d9bd25e5d61f58ba1d074))
 
 ### Features
 
--   **picker-button:** migrate to core tokens ([b39219c](https://github.com/adobe/spectrum-web-components/commit/b39219cd92f8f17420eadc74a655e0f1d074cae3))
+- **picker-button:** migrate to core tokens ([b39219c](https://github.com/adobe/spectrum-web-components/commit/b39219cd92f8f17420eadc74a655e0f1d074cae3))
 
 # [0.35.0](https://github.com/adobe/spectrum-web-components/compare/v0.34.0...v0.35.0) (2023-07-31)
 
@@ -259,8 +270,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 
 ## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker-button@0.1.10...@spectrum-web-components/picker-button@0.1.11) (2023-04-24)
 
@@ -310,4 +321,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))
+- add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))

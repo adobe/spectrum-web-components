@@ -1,50 +1,61 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/modal@1.7.0
+    - @spectrum-web-components/underlay@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/reactive-controllers@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/modal@1.6.0
-    -   @spectrum-web-components/underlay@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/reactive-controllers@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/modal@1.6.0
+    - @spectrum-web-components/underlay@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/reactive-controllers@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
-    -   @spectrum-web-components/modal@1.5.0
-    -   @spectrum-web-components/underlay@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/reactive-controllers@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0)]:
+    - @spectrum-web-components/modal@1.5.0
+    - @spectrum-web-components/underlay@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/reactive-controllers@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/modal@1.4.0
-    -   @spectrum-web-components/underlay@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/reactive-controllers@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/modal@1.4.0
+    - @spectrum-web-components/underlay@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/reactive-controllers@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    -   @spectrum-web-components/reactive-controllers@1.3.0
-    -   @spectrum-web-components/modal@1.3.0
-    -   @spectrum-web-components/underlay@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    - @spectrum-web-components/reactive-controllers@1.3.0
+    - @spectrum-web-components/modal@1.3.0
+    - @spectrum-web-components/underlay@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -65,7 +76,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -103,7 +114,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tray:** removed nonNull operator and initialized resolveTransitionPromise with dummy func ([#4658](https://github.com/adobe/spectrum-web-components/issues/4658)) ([1a8a479](https://github.com/adobe/spectrum-web-components/commit/1a8a4794c8601decd204db19302a296ed75c4deb))
+- **tray:** removed nonNull operator and initialized resolveTransitionPromise with dummy func ([#4658](https://github.com/adobe/spectrum-web-components/issues/4658)) ([1a8a479](https://github.com/adobe/spectrum-web-components/commit/1a8a4794c8601decd204db19302a296ed75c4deb))
 
 # [0.46.0](https://github.com/adobe/spectrum-web-components/compare/v0.45.0...v0.46.0) (2024-08-08)
 
@@ -113,7 +124,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
+- **tray** sp-tray now doesn't automatically retract when opened with fewer items in the iOS simulator ([4572] (https://github.com/adobe/spectrum-web-components/issues/4572)) ([56366ce] (https://github.com/adobe/spectrum-web-components/commit/56366ce2750bb4bb5c6e3fa5fe7d809434497adb))
 
 **Note:** Version bump only for package @spectrum-web-components/tray
 
@@ -149,7 +160,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -163,7 +174,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tray:** only allow "click" events when they "pointerdown"ed on the Underlay ([#4020](https://github.com/adobe/spectrum-web-components/issues/4020)) ([4f9aa4a](https://github.com/adobe/spectrum-web-components/commit/4f9aa4aac837fc56ab1876aa693bd9d82f0ba26f))
+- **tray:** only allow "click" events when they "pointerdown"ed on the Underlay ([#4020](https://github.com/adobe/spectrum-web-components/issues/4020)) ([4f9aa4a](https://github.com/adobe/spectrum-web-components/commit/4f9aa4aac837fc56ab1876aa693bd9d82f0ba26f))
 
 ## [0.40.5](https://github.com/adobe/spectrum-web-components/compare/v0.40.4...v0.40.5) (2024-02-05)
 
@@ -213,7 +224,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **picker:** ensure the Menu opens in a Tray on mobile ([6be2bed](https://github.com/adobe/spectrum-web-components/commit/6be2bed36b364c5abcd1210db9c95ebc883125ec))
+- **picker:** ensure the Menu opens in a Tray on mobile ([6be2bed](https://github.com/adobe/spectrum-web-components/commit/6be2bed36b364c5abcd1210db9c95ebc883125ec))
 
 # [0.37.0](https://github.com/adobe/spectrum-web-components/compare/v0.36.0...v0.37.0) (2023-08-18)
 
@@ -251,21 +262,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
--   correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
--   **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
--   leverage "dvh" rather than measured screen height ([84b9df0](https://github.com/adobe/spectrum-web-components/commit/84b9df0d101d9870a1b0c20eb34ba33fcdd0fbe1))
--   **tray:** add tray pattern ([0915fa5](https://github.com/adobe/spectrum-web-components/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
--   **tray:** include correct dependency listing ([51cb231](https://github.com/adobe/spectrum-web-components/commit/51cb2315ebd44ec299d2562d9c5fad31ce361083))
+- centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+- correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
+- **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
+- leverage "dvh" rather than measured screen height ([84b9df0](https://github.com/adobe/spectrum-web-components/commit/84b9df0d101d9870a1b0c20eb34ba33fcdd0fbe1))
+- **tray:** add tray pattern ([0915fa5](https://github.com/adobe/spectrum-web-components/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
+- **tray:** include correct dependency listing ([51cb231](https://github.com/adobe/spectrum-web-components/commit/51cb2315ebd44ec299d2562d9c5fad31ce361083))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   **tray:** use spectrum tokens ([cdd78b2](https://github.com/adobe/spectrum-web-components/commit/cdd78b28d464a2ff2fb7701fc6fed780a4f557c9))
--   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- **tray:** use spectrum tokens ([cdd78b2](https://github.com/adobe/spectrum-web-components/commit/cdd78b28d464a2ff2fb7701fc6fed780a4f557c9))
+- update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
 
 ## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.5.2...@spectrum-web-components/tray@0.5.3) (2023-04-24)
 
@@ -283,7 +294,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **tray:** use spectrum tokens ([cdd78b2](https://github.com/adobe/spectrum-web-components/commit/cdd78b28d464a2ff2fb7701fc6fed780a4f557c9))
+- **tray:** use spectrum tokens ([cdd78b2](https://github.com/adobe/spectrum-web-components/commit/cdd78b28d464a2ff2fb7701fc6fed780a4f557c9))
 
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.8...@spectrum-web-components/tray@0.4.9) (2023-01-23)
 
@@ -297,7 +308,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   leverage "dvh" rather than measured screen height ([84b9df0](https://github.com/adobe/spectrum-web-components/commit/84b9df0d101d9870a1b0c20eb34ba33fcdd0fbe1))
+- leverage "dvh" rather than measured screen height ([84b9df0](https://github.com/adobe/spectrum-web-components/commit/84b9df0d101d9870a1b0c20eb34ba33fcdd0fbe1))
 
 ## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.5...@spectrum-web-components/tray@0.4.6) (2022-11-21)
 
@@ -315,7 +326,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
+- correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
 
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.1...@spectrum-web-components/tray@0.4.2) (2022-10-10)
 
@@ -329,7 +340,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.3.11...@spectrum-web-components/tray@0.3.12) (2022-08-04)
 
@@ -379,13 +390,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tray:** include correct dependency listing ([51cb231](https://github.com/adobe/spectrum-web-components/commit/51cb2315ebd44ec299d2562d9c5fad31ce361083))
+- **tray:** include correct dependency listing ([51cb231](https://github.com/adobe/spectrum-web-components/commit/51cb2315ebd44ec299d2562d9c5fad31ce361083))
 
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.2.3...@spectrum-web-components/tray@0.3.0) (2022-02-02)
 
 ### Features
 
--   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+- **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
 
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.2.2...@spectrum-web-components/tray@0.2.3) (2022-01-26)
 
@@ -403,7 +414,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+- update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.1.0...@spectrum-web-components/tray@0.1.1) (2021-11-08)
 
@@ -413,11 +424,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+- centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.0.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.0.6...@spectrum-web-components/tray@0.0.7) (2021-09-20)
 
@@ -431,7 +442,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
+- **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
 
 ## [0.0.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.0.3...@spectrum-web-components/tray@0.0.4) (2021-07-22)
 
@@ -445,4 +456,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **tray:** add tray pattern ([0915fa5](https://github.com/adobe/spectrum-web-components/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
+- **tray:** add tray pattern ([0915fa5](https://github.com/adobe/spectrum-web-components/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))

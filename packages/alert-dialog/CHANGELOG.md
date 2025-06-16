@@ -1,54 +1,66 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.7.0
+    - @spectrum-web-components/button-group@1.7.0
+    - @spectrum-web-components/divider@1.7.0
+    - @spectrum-web-components/icons-workflow@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
-    -   @spectrum-web-components/icons-workflow@1.6.0
-    -   @spectrum-web-components/button@1.6.0
-    -   @spectrum-web-components/button-group@1.6.0
-    -   @spectrum-web-components/divider@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies [[`f6cebbd`](https://github.com/adobe/spectrum-web-components/commit/f6cebbd90008a2abb1232c355ae06e8566086093), [`00eb0a8`](https://github.com/adobe/spectrum-web-components/commit/00eb0a889583dff9d964341d9c1c27048be3d19e)]:
+    - @spectrum-web-components/icons-workflow@1.6.0
+    - @spectrum-web-components/button@1.6.0
+    - @spectrum-web-components/button-group@1.6.0
+    - @spectrum-web-components/divider@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
-    -   @spectrum-web-components/button-group@1.5.0
-    -   @spectrum-web-components/divider@1.5.0
-    -   @spectrum-web-components/button@1.5.0
-    -   @spectrum-web-components/icons-workflow@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies [[`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0), [`4e06533`](https://github.com/adobe/spectrum-web-components/commit/4e065332e0236757fc3a050e53747ce82ac40ed5)]:
+    - @spectrum-web-components/button-group@1.5.0
+    - @spectrum-web-components/divider@1.5.0
+    - @spectrum-web-components/button@1.5.0
+    - @spectrum-web-components/icons-workflow@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.4.0
-    -   @spectrum-web-components/button-group@1.4.0
-    -   @spectrum-web-components/divider@1.4.0
-    -   @spectrum-web-components/icons-workflow@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.4.0
+    - @spectrum-web-components/button-group@1.4.0
+    - @spectrum-web-components/divider@1.4.0
+    - @spectrum-web-components/icons-workflow@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/button@1.3.0
-    -   @spectrum-web-components/button-group@1.3.0
-    -   @spectrum-web-components/divider@1.3.0
-    -   @spectrum-web-components/icons-workflow@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/button@1.3.0
+    - @spectrum-web-components/button-group@1.3.0
+    - @spectrum-web-components/divider@1.3.0
+    - @spectrum-web-components/icons-workflow@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -69,7 +81,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -147,7 +159,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -201,10 +213,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **alert-dialog:** use resize observer in place of page resize event for content measurement work ([b963813](https://github.com/adobe/spectrum-web-components/commit/b963813156489370f0b0fa4390cb0df0891070c9))
+- **alert-dialog:** use resize observer in place of page resize event for content measurement work ([b963813](https://github.com/adobe/spectrum-web-components/commit/b963813156489370f0b0fa4390cb0df0891070c9))
 
 # [0.39.0](https://github.com/adobe/spectrum-web-components/compare/v0.38.0...v0.39.0) (2023-09-25)
 
 ### Bug Fixes
 
--   **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
+- **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
