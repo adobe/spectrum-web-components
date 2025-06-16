@@ -115,9 +115,8 @@ commands:
                           echo "Deploying VRT for main branch"
                       fi
 
-                      # Create PR hash similar to GitHub workflow
-                      COMMIT_HASH=$(echo $CIRCLE_SHA1 | cut -c1-7)
-                      PR_HASH="pr-${PR_NUMBER}-${COMMIT_HASH}"
+                      # Create PR hash using just PR number for overwriting deployments
+                      PR_HASH="pr-${PR_NUMBER}"
 
                       # VRT combination for subdirectory
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
@@ -307,9 +306,8 @@ jobs:
                           echo "Deploying HCM VRT for main branch"
                       fi
 
-                      # Create PR hash similar to GitHub workflow
-                      COMMIT_HASH=$(echo $CIRCLE_SHA1 | cut -c1-7)
-                      PR_HASH="pr-${PR_NUMBER}-${COMMIT_HASH}"
+                      # Create PR hash using just PR number for overwriting deployments
+                      PR_HASH="pr-${PR_NUMBER}"
 
                       # Prepare files for deployment
                       cp projects/documentation/content/favicon.ico test/visual/

@@ -36,8 +36,8 @@ jobs:
             - name: Generate PR hash
               id: pr_hash
               run: |
-                  # Create a short hash from PR number and commit SHA for uniqueness
-                  pr_hash="pr-${{ github.event.pull_request.number }}-$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)"
+                  # Use just PR number so each commit overwrites the previous deployment
+                  pr_hash="pr-${{ github.event.pull_request.number }}"
                   echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
                   echo "Generated PR hash: ${pr_hash}"
 
@@ -124,7 +124,7 @@ jobs:
               id: pr_hash
               run: |
                   # Create the same hash as in the deploy job
-                  pr_hash="pr-${{ github.event.pull_request.number }}-$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)"
+                  pr_hash="pr-${{ github.event.pull_request.number }}"
                   echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
 
             - name: Install AzCopy

@@ -11,9 +11,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-export const buildPreviewURLComment = (prNumber, commitHash) => {
-    // Create PR hash similar to GitHub workflow and CircleCI
-    const prHash = `pr-${prNumber}-${commitHash.substring(0, 7)}`;
+export const buildPreviewURLComment = (prNumber) => {
+    // Use just PR number so each commit overwrites the previous deployment
+    const prHash = `pr-${prNumber}`;
 
     // Azure Blob Storage base URL
     const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
@@ -104,4 +104,4 @@ If the changes are unexpected, you can investigate the cause of the differences 
 };
 
 // Example usage - in actual use, these would come from GitHub context
-console.log(buildPreviewURLComment('5450', 'a1b2c3d4e5f6789'));
+console.log(buildPreviewURLComment('5450'));

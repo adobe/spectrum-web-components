@@ -29,8 +29,8 @@ jobs:
             - name: Generate PR hash
               id: pr_hash
               run: |
-                  # Create PR hash similar to other workflows
-                  pr_hash="pr-${{ github.event.pull_request.number }}-$(echo ${{ github.event.pull_request.head.sha }} | cut -c1-7)"
+                  # Use just PR number so URLs remain consistent across commits
+                  pr_hash="pr-${{ github.event.pull_request.number }}"
                   echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
                   echo "Generated PR hash: ${pr_hash}"
 
@@ -46,9 +46,8 @@ jobs:
                       const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
 
                       const prNumber = context.payload.pull_request.number;
-                      const commitHash = context.payload.pull_request.head.sha;
 
-                      const body = buildPreviewURLComment(prNumber, commitHash);
+                      const body = buildPreviewURLComment(prNumber);
                       commentOrUpdate(github, context, '## 📚 Branch Preview', body);
 
     playwright-smoke-tests:
