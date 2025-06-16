@@ -108,17 +108,20 @@ jobs:
                   AZURE_STORAGE_SAS_TOKEN: ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
+                  # Clean the SAS token (remove any whitespace/newlines)
+                  CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
+
                   # Upload documentation
                   echo "Uploading documentation to ${PR_HASH}/docs/"
                   azcopy copy "projects/documentation/dist/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/?${AZURE_STORAGE_SAS_TOKEN}" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/?${CLEAN_SAS_TOKEN}" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Upload Storybook
                   echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
                   azcopy copy "storybook-static/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/?${AZURE_STORAGE_SAS_TOKEN}" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/?${CLEAN_SAS_TOKEN}" \
                     --recursive \
                     --from-to LocalBlob
 
