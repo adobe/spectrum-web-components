@@ -112,13 +112,15 @@ jobs:
                   echo "Uploading documentation to ${PR_HASH}/docs/"
                   azcopy copy "projects/documentation/dist/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/?${AZURE_STORAGE_SAS_TOKEN}" \
-                    --recursive
+                    --recursive \
+                    --from-to LocalBlob
 
                   # Upload Storybook
                   echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
                   azcopy copy "storybook-static/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/?${AZURE_STORAGE_SAS_TOKEN}" \
-                    --recursive
+                    --recursive \
+                    --from-to LocalBlob
 
                   # Set output URLs
                   docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/"
