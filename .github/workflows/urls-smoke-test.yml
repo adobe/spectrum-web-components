@@ -1,16 +1,53 @@
 name: Review URLs and Smoke Tests
 
 on:
-    workflow_run:
-        workflows: ['Preview Documentation (Azure)']
-        types:
-            - completed
+    pull_request:
+        types: [opened, synchronize, reopened]
 
 jobs:
+    comment-previews:
+        name: Create preview URLs and comment
+
+        # The job will only run if the pull request is from the same repository.
+        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
+        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        outputs:
+            doc_url: ${{ steps.extract_doc_url.outputs.DOC_URL }}
+        steps:
+            - name: Checkout main
+              uses: actions/checkout@v4
+              with:
+                  ref: main
+
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Extract branch name
+              shell: bash
+              run: echo "BRANCH=$(npx slugify-cli ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}})" >> $GITHUB_OUTPUT
+              id: extract_branch
+
+            - name: Extract doc preview url
+              run: echo "DOC_URL=https://${{ steps.extract_branch.outputs.BRANCH }}--spectrum-wc.netlify.app/" >> $GITHUB_OUTPUT
+              id: extract_doc_url
+
+            - name: Post Previews Comment
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { buildPreviewURLComment, getDocPreviewURL } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
+                      const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
+                      commentOrUpdate(github, context, '## Branch preview', body);
+
     playwright-smoke-tests:
         timeout-minutes: 60
         runs-on: ubuntu-latest
-        if: github.event.workflow_run.conclusion == 'success'
+        needs: comment-previews
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
@@ -21,65 +58,10 @@ jobs:
             - name: Install Playwright Browsers
               run: yarn playwright install --with-deps
 
-            - name: Get Azure deployment URL
-              id: get_url
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      // Get the workflow run that triggered this
-                      const workflowRun = context.payload.workflow_run;
-
-                      // Get the jobs for that workflow run
-                      const jobs = await github.rest.actions.listJobsForWorkflowRun({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          run_id: workflowRun.id
-                      });
-
-                      // Find the build_and_deploy_job
-                      const deployJob = jobs.data.jobs.find(job => job.name === 'Build and Deploy Job');
-
-                      if (!deployJob) {
-                          throw new Error('Could not find Build and Deploy Job');
-                      }
-
-                      // Get the workflow run details to access outputs
-                      const workflowRunDetails = await github.rest.actions.getWorkflowRun({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          run_id: workflowRun.id
-                      });
-
-                      // For now, we'll extract the URL from the PR comments as a fallback
-                      // since workflow outputs aren't easily accessible across workflows
-                      const prNumber = workflowRun.pull_requests[0]?.number;
-                      if (prNumber) {
-                          const comments = await github.rest.issues.listComments({
-                              owner: context.repo.owner,
-                              repo: context.repo.repo,
-                              issue_number: prNumber
-                          });
-                          
-                          const deploymentComment = comments.data.find(comment => 
-                              comment.body.includes('## Branch preview')
-                          );
-                          
-                          if (deploymentComment) {
-                              // Extract URL from the comment
-                              const urlMatch = deploymentComment.body.match(/\[Documentation Site\]\((https:\/\/[^)]+)\)/);
-                              if (urlMatch) {
-                                  core.setOutput('doc_url', urlMatch[1]);
-                                  return;
-                              }
-                          }
-                      }
-
-                      throw new Error('Could not extract deployment URL');
-
             - name: Run Playwright tests
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
-                  DOC_PREVIEW_URL: ${{ steps.get_url.outputs.doc_url }}
+                  DOC_PREVIEW_URL: ${{ needs.comment-previews.outputs.doc_url }}
                   NODE_ENV: CI
 
             - name: Upload Playwright Report
