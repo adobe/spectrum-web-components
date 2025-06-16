@@ -109,6 +109,9 @@
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@sindresorhus/slugify": "^2.2.1",
+        "@spectrum-tools/stylelint-no-missing-var": "^2.0.2",
+        "@spectrum-tools/stylelint-no-unknown-custom-properties": "^2.0.3",
+        "@spectrum-tools/stylelint-no-unused-custom-properties": "^2.0.5",
         "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
         "@storybook/addon-a11y": "^8.6.12",
         "@storybook/addon-designs": "^8.2.1",
@@ -197,6 +200,8 @@
         "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0",
         "stylelint-header": "^3.0.0",
+        "stylelint-order": "^7.0.0",
+        "stylelint-use-logical": "^2.1.2",
         "tachometer": "^0.7.1",
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
@@ -343,8 +348,7 @@
             "files": [
                 "packages/icons-ui/bin/build.js",
                 "packages/icons-ui/packages.json",
-                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
-                "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
+                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg"
             ],
             "output": [
                 "packages/icons-ui/**/*.ts",

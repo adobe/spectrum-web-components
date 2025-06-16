@@ -9,6 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+
 import {
     CSSResultArray,
     html,
@@ -84,6 +85,9 @@ export class Swatch extends SizedMixin(Focusable, {
 
     @property({ type: Boolean, reflect: true, attribute: 'mixed-value' })
     public mixedValue = false;
+
+    @property({ type: Boolean, reflect: true })
+    public add = false;
 
     @property({ type: Boolean, reflect: true })
     public nothing = false;

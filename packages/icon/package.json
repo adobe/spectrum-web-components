@@ -33,21 +33,12 @@
             "development": "./src/IconBase.dev.js",
             "default": "./src/IconBase.js"
         },
-        "./src/icon-arrow-overrides.css.js": "./src/icon-arrow-overrides.css.js",
-        "./src/icon-asterisk-overrides.css.js": "./src/icon-asterisk-overrides.css.js",
-        "./src/icon-checkmark-overrides.css.js": "./src/icon-checkmark-overrides.css.js",
-        "./src/icon-chevron-overrides.css.js": "./src/icon-chevron-overrides.css.js",
-        "./src/icon-corner-triangle-overrides.css.js": "./src/icon-corner-triangle-overrides.css.js",
-        "./src/icon-cross-overrides.css.js": "./src/icon-cross-overrides.css.js",
-        "./src/icon-dash-overrides.css.js": "./src/icon-dash-overrides.css.js",
-        "./src/icon-overrides.css.js": "./src/icon-overrides.css.js",
-        "./src/icon-single-gripper-overrides.css.js": "./src/icon-single-gripper-overrides.css.js",
-        "./src/icon-triple-gripper-overrides.css.js": "./src/icon-triple-gripper-overrides.css.js",
         "./src/icon.css.js": "./src/icon.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/spectrum-icon-add.css.js": "./src/spectrum-icon-add.css.js",
         "./src/spectrum-icon-arrow.css.js": "./src/spectrum-icon-arrow.css.js",
         "./src/spectrum-icon-asterisk.css.js": "./src/spectrum-icon-asterisk.css.js",
         "./src/spectrum-icon-checkmark.css.js": "./src/spectrum-icon-checkmark.css.js",
@@ -55,9 +46,9 @@
         "./src/spectrum-icon-corner-triangle.css.js": "./src/spectrum-icon-corner-triangle.css.js",
         "./src/spectrum-icon-cross.css.js": "./src/spectrum-icon-cross.css.js",
         "./src/spectrum-icon-dash.css.js": "./src/spectrum-icon-dash.css.js",
-        "./src/spectrum-icon-double-gripper.css.js": "./src/spectrum-icon-double-gripper.css.js",
-        "./src/spectrum-icon-single-gripper.css.js": "./src/spectrum-icon-single-gripper.css.js",
-        "./src/spectrum-icon-triple-gripper.css.js": "./src/spectrum-icon-triple-gripper.css.js",
+        "./src/spectrum-icon-drag-handle.css.js": "./src/spectrum-icon-drag-handle.css.js",
+        "./src/spectrum-icon-gripper.css.js": "./src/spectrum-icon-gripper.css.js",
+        "./src/spectrum-icon-link-out.css.js": "./src/spectrum-icon-link-out.css.js",
         "./sp-icon.js": {
             "development": "./sp-icon.dev.js",
             "default": "./sp-icon.js"

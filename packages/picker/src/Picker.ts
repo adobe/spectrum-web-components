@@ -38,7 +38,7 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import type {
     Menu,
@@ -494,9 +494,9 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                       `}
                 ${this.invalid && !this.pending
                     ? html`
-                          <sp-icon-alert
+                          <sp-icon-alert-triangle
                               class="validation-icon"
-                          ></sp-icon-alert>
+                          ></sp-icon-alert-triangle>
                       `
                     : nothing}
                 ${this.pendingStateController.renderPendingState()}

@@ -29,7 +29,6 @@
             "development": "./src/Divider.dev.js",
             "default": "./src/Divider.js"
         },
-        "./src/divider-overrides.css.js": "./src/divider-overrides.css.js",
         "./src/divider.css.js": "./src/divider.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -64,7 +63,8 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.7.0"
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/styles": "1.7.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

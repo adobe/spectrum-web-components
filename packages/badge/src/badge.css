@@ -1,63 +1,246 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/* Component structure:
+ * sp-badge provides a visual indicator for status, labels, or counts.
+ * Features:
+ * - Size variants: xs, s, m (default), l, xl, xxl
+ * - Semantic variants: neutral (default), accent, informative, negative, positive, notice
+ * - Color variants: gray, red, orange, yellow, chartreuse, celery, green, seafoam, cyan, blue, indigo, purple, fuchsia, magenta
+ * - Fixed position options: inline-start, inline-end, block-start, block-end
+ * - Icon support: start
+ * - CJK language support
+ * - High contrast mode support
+ */
 
-@import url("./spectrum-badge.css");
-
-/* center align icons and text */
-
+/* Base styles */
 :host {
+    /* Typography */
+    --spectrum-badge-font-size: var(--spectrum-font-size-100);
+    --spectrum-badge-line-height: var(--spectrum-line-height-100);
+    --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
+
+    /* Layout */
+    --spectrum-badge-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-badge-height: var(--spectrum-component-height-100);
+    --spectrum-badge-label-spacing-vertical-top: var(--spectrum-component-top-to-text-100);
+    --spectrum-badge-label-spacing-vertical-bottom: var(--spectrum-component-bottom-to-text-100);
+    --spectrum-badge-label-spacing-horizontal: var(--spectrum-component-edge-to-text-100);
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-100);
+    --spectrum-badge-icon-spacing-horizontal: var(--spectrum-component-edge-to-visual-100);
+    --spectrum-badge-icon-spacing-vertical-top: var(--spectrum-component-top-to-workflow-icon-100);
+    --spectrum-badge-icon-only-spacing-horizontal: var(--spectrum-component-edge-to-visual-only-100);
+
+    /* Colors */
+    --spectrum-badge-label-icon-color: var(--spectrum-white);
+    --spectrum-badge-background-color-default: var(--spectrum-neutral-subdued-background-color-default);
+    --spectrum-badge-background-color-accent: var(--spectrum-accent-background-color-default);
+    --spectrum-badge-background-color-informative: var(--spectrum-informative-background-color-default);
+    --spectrum-badge-background-color-negative: var(--spectrum-negative-background-color-default);
+    --spectrum-badge-background-color-positive: var(--spectrum-positive-background-color-default);
+    --spectrum-badge-background-color-notice: var(--spectrum-notice-background-color-default);
+    --spectrum-badge-background-color-gray: var(--spectrum-gray-background-color-default);
+    --spectrum-badge-background-color-red: var(--spectrum-red-background-color-default);
+    --spectrum-badge-background-color-orange: var(--spectrum-orange-background-color-default);
+    --spectrum-badge-background-color-yellow: var(--spectrum-yellow-background-color-default);
+    --spectrum-badge-background-color-chartreuse: var(--spectrum-chartreuse-background-color-default);
+    --spectrum-badge-background-color-celery: var(--spectrum-celery-background-color-default);
+    --spectrum-badge-background-color-green: var(--spectrum-green-background-color-default);
+    --spectrum-badge-background-color-seafoam: var(--spectrum-seafoam-background-color-default);
+    --spectrum-badge-background-color-cyan: var(--spectrum-cyan-background-color-default);
+    --spectrum-badge-background-color-blue: var(--spectrum-blue-background-color-default);
+    --spectrum-badge-background-color-indigo: var(--spectrum-indigo-background-color-default);
+    --spectrum-badge-background-color-purple: var(--spectrum-purple-background-color-default);
+    --spectrum-badge-background-color-fuchsia: var(--spectrum-fuchsia-background-color-default);
+    --spectrum-badge-background-color-magenta: var(--spectrum-magenta-background-color-default);
+
+    /* Base styles */
+    min-block-size: var(--spectrum-badge-height);
+    inline-size: auto;
+    vertical-align: middle;
+    cursor: default;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    border-radius: var(--spectrum-badge-corner-radius);
+    color: var(--spectrum-badge-label-icon-color);
+    border: 1px solid transparent;
+    display: inline-flex;
+    position: relative;
     align-items: center;
 }
 
-/* cascade badge's size to its icon */
-
+/* Size variants */
 :host([size="xs"]) {
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
 }
 
-:host([size="s"]) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
+/* Semantic variants */
+:host,
+:host([variant="neutral"]) {
+    background: var(--spectrum-badge-background-color-default);
 }
 
-:host([size="m"]) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
+:host([variant="accent"]) {
+    background: var(--spectrum-badge-background-color-accent);
 }
 
-:host([size="l"]) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
+:host([variant="informative"]) {
+    background: var(--spectrum-badge-background-color-informative);
 }
 
-:host([size="xl"]) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
+:host([variant="negative"]) {
+    background: var(--spectrum-badge-background-color-negative);
 }
 
-:host([size="xxl"]) {
-    --spectrum-icon-size: var(--spectrum-workflow-icon-size-400);
+:host([variant="positive"]) {
+    background: var(--spectrum-badge-background-color-positive);
 }
 
-/* don't shrink icons and ensure they're separated from labels */
-
-::slotted([slot="icon"]) {
-    flex-shrink: 0;
+:host([variant="notice"]) {
+    background: var(--spectrum-badge-background-color-notice);
 }
 
-/* limit badge size to two lines */
+/* Color variants */
+:host([variant="gray"]) {
+    background: var(--spectrum-badge-background-color-gray);
+}
+
+:host([variant="red"]) {
+    background: var(--spectrum-badge-background-color-red);
+}
+
+:host([variant="orange"]) {
+    background: var(--spectrum-badge-background-color-orange);
+}
+
+:host([variant="yellow"]) {
+    background: var(--spectrum-badge-background-color-yellow);
+}
+
+:host([variant="chartreuse"]) {
+    background: var(--spectrum-badge-background-color-chartreuse);
+}
+
+:host([variant="celery"]) {
+    background: var(--spectrum-badge-background-color-celery);
+}
+
+:host([variant="green"]) {
+    background: var(--spectrum-badge-background-color-green);
+}
+
+:host([variant="seafoam"]) {
+    background: var(--spectrum-badge-background-color-seafoam);
+}
+
+:host([variant="cyan"]) {
+    background: var(--spectrum-badge-background-color-cyan);
+}
+
+:host([variant="blue"]) {
+    background: var(--spectrum-badge-background-color-blue);
+}
+
+:host([variant="indigo"]) {
+    background: var(--spectrum-badge-background-color-indigo);
+}
+
+:host([variant="purple"]) {
+    background: var(--spectrum-badge-background-color-purple);
+}
+
+:host([variant="fuchsia"]) {
+    background: var(--spectrum-badge-background-color-fuchsia);
+}
+
+:host([variant="magenta"]) {
+    background: var(--spectrum-badge-background-color-magenta);
+}
+
+/* Fixed position variants */
+:host([fixed="inline-start"]) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+}
+
+:host([fixed="inline-end"]) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+:host([fixed="block-start"]) {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+}
+
+:host([fixed="block-end"]) {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+}
+
+/* Label styles */
+.label {
+    font-size: var(--spectrum-badge-font-size);
+    line-height: var(--spectrum-badge-line-height);
+    color: var(--spectrum-badge-label-icon-color);
+    padding-block-start: var(--spectrum-badge-label-spacing-vertical-top);
+    padding-block-end: var(--spectrum-badge-label-spacing-vertical-bottom);
+    padding-inline-start: var(--spectrum-badge-label-spacing-horizontal);
+    padding-inline-end: var(--spectrum-badge-label-spacing-horizontal);
+}
+
+/* CJK language support */
+.label:lang(ja),
+.label:lang(ko),
+.label:lang(zh) {
+    line-height: var(--spectrum-badge-line-height-cjk);
+}
 
 .label slot {
     display: block;
-    max-height: calc(var(--spectrum-badge-line-height) * var(--spectrum-badge-font-size) * 2);
+    max-block-size: calc(var(--spectrum-badge-line-height) * var(--spectrum-badge-font-size) * 2);
     overflow: hidden;
+}
+
+/* Icon styles */
+::slotted([slot="icon"]) {
+    block-size: var(--spectrum-badge-workflow-icon-size);
+    inline-size: var(--spectrum-badge-workflow-icon-size);
+    flex: 0 0 var(--spectrum-badge-workflow-icon-size);
+    color: var(--spectrum-badge-label-icon-color);
+    padding-block-start: var(--spectrum-badge-icon-spacing-vertical-top);
+    padding-block-end: var(--spectrum-badge-icon-spacing-vertical-top);
+    padding-inline-start: var(--spectrum-badge-icon-spacing-horizontal);
+    padding-inline-end: var(--spectrum-badge-icon-text-spacing);
+}
+
+[icon-only]::slotted(*) {
+    padding-inline-end: var(--spectrum-badge-icon-only-spacing-horizontal);
+}
+
+[name="icon"] + .label {
+    padding-inline-start: 0;
 }
 
 [icon-only] + .label {
     display: none;
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-badge-border-color: CanvasText;
+        border-color: var(--highcontrast-badge-border-color);
+        forced-color-adjust: none;
+    }
 }

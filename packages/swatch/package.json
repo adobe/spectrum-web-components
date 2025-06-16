@@ -37,9 +37,7 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/swatch-group-overrides.css.js": "./src/swatch-group-overrides.css.js",
         "./src/swatch-group.css.js": "./src/swatch-group.css.js",
-        "./src/swatch-overrides.css.js": "./src/swatch-overrides.css.js",
         "./src/swatch.css.js": "./src/swatch.css.js",
         "./sp-swatch.js": {
             "development": "./sp-swatch.dev.js",

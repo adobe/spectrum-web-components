@@ -102,7 +102,9 @@ export class AlertDialog extends FocusVisiblePolyfillMixin(SpectrumElement) {
             case 'warning':
             case 'error':
                 return html`
-                    <sp-icon-alert class="icon"></sp-icon-alert>
+                    <sp-icon-alert-triangle
+                        class="icon"
+                    ></sp-icon-alert-triangle>
                 `;
 
             default:
