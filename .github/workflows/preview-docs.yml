@@ -41,23 +41,6 @@ jobs:
                   echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
                   echo "Generated PR hash: ${pr_hash}"
 
-            - name: Clean up comments from previous Azure deploys
-              if: github.event_name == 'pull_request'
-              shell: bash
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  pr=${{ github.event.pull_request.number }}
-                  comments=$(gh api repos/${{ github.repository }}/issues/$pr/comments)
-                  echo "$comments" | jq -c '.[]' | while read -r comment; do
-                    body=$(echo "$comment" | jq -r '.body')
-                    id=$(echo "$comment" | jq -r '.id')
-                    if [[ "$body" == *"## Branch preview"* ]]; then
-                      echo "Deleting comment $id"
-                      gh api repos/${{ github.repository }}/issues/comments/$id -X DELETE
-                    fi
-                  done
-
             ## --- YARN CACHE --- ##
             - name: Check for cached dependencies
               continue-on-error: true
@@ -131,55 +114,6 @@ jobs:
                   echo "docs_url=${docs_url}" >> $GITHUB_OUTPUT
                   echo "storybook_url=${storybook_url}" >> $GITHUB_OUTPUT
                   echo "Deployed to: ${docs_url}"
-
-            - name: Create custom deployment comment
-              if: github.event_name == 'pull_request'
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      const prHash = '${{ steps.pr_hash.outputs.hash }}';
-                      const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
-                      const docsUrl = `${baseUrl}/${prHash}/docs/`;
-                      const storybookUrl = `${baseUrl}/${prHash}/docs/storybook/`;
-
-                      const body = `## 📚 Branch Preview
-
-                      - [Documentation Site](${docsUrl})
-                      - [Storybook](${storybookUrl})
-
-                      *Deployed to Azure Blob Storage: \`${prHash}/docs/\`*`;
-
-                      // Get all comments on the PR
-                      const comments = await github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number
-                      });
-
-                      // Look for our existing comment
-                      const existingComment = comments.data.find(comment => 
-                        comment.body.includes('📚 Branch Preview')
-                      );
-
-                      if (existingComment) {
-                        // Update existing comment
-                        await github.rest.issues.updateComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          comment_id: existingComment.id,
-                          body: body
-                        });
-                        console.log('Updated existing docs preview comment');
-                      } else {
-                        // Create new comment if none exists
-                        await github.rest.issues.createComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          issue_number: context.issue.number,
-                          body: body
-                        });
-                        console.log('Created new docs preview comment');
-                      }
 
     close_pull_request_job:
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
