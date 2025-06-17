@@ -16,6 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             doc_url: ${{ steps.extract_doc_url.outputs.DOC_URL }}
+            swc_dir: ${{ steps.pr_hash.outputs.hash }}
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
@@ -91,6 +92,7 @@ jobs:
               run: yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
                   DOC_PREVIEW_URL: ${{ needs.wait-for-deployment.outputs.doc_url }}
+                  SWC_DIR: ${{ needs.wait-for-deployment.outputs.swc_dir }}
                   NODE_ENV: CI
 
             - name: Upload Playwright Report
