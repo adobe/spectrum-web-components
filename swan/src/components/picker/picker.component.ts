@@ -23,6 +23,13 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
  * @slot icon - Optional icon that appears to the left of the label
  */
 export default class SwanPicker extends PickerBase {
+    protected get renderInsideContent(): TemplateResult {
+        return html`
+            <div class="inside-content">
+                <slot name="description"></slot>
+            </div>
+        `;
+    }
     static override styles = styles;
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
@@ -51,7 +58,7 @@ export default class SwanPicker extends PickerBase {
                 }}
                 ?disabled=${this.disabled}
             >
-                ${this.buttonContent}
+                ${this.renderInsideContent()} ${this.buttonContent}
             </button>
             <slot
                 aria-hidden="true"

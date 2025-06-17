@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import { ComboboxBase } from '@core/components/combobox/combobox.base.js';
 import styles from './combobox.styles.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
@@ -25,7 +25,109 @@ import { repeat } from 'lit-html/directives/repeat.js';
  */
 export default class SwanCombobox extends ComboboxBase {
     //   static override styles = styles;
+    protected renderAppliedLabel(): TemplateResult {
+        /**
+         * appliedLabel corresponds to `<label for="...">`, which is overriden
+         * if user adds the `label` attribute manually to `<sp-combobox>`.
+         **/
+        const appliedLabel = this.label || this.appliedLabel;
 
+        return html`
+            ${this.pending
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="pending-label"
+                      >
+                          ${this.pendingLabel}
+                      </span>
+                  `
+                : nothing}
+            ${this.value
+                ? html`
+                      <span
+                          aria-hidden="true"
+                          class="visually-hidden"
+                          id="applied-label"
+                      >
+                          ${appliedLabel}
+                      </span>
+                      <slot name="label" id="label">
+                          <span class="visually-hidden" aria-hidden="true">
+                              ${this.value}
+                          </span>
+                      </slot>
+                  `
+                : html`
+                      <span hidden id="applied-label">${appliedLabel}</span>
+                  `}
+        `;
+    }
+
+    protected renderLoader(): TemplateResult {
+        import(
+            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+        );
+        return html`
+            <sp-progress-circle
+                size="s"
+                indeterminate
+                aria-hidden="true"
+                class="progress-circle"
+            ></sp-progress-circle>
+        `;
+    }
+
+    protected override renderField(): TemplateResult {
+        return html`
+            ${this.renderStateIcons()}
+            <input
+                aria-activedescendant=${ifDefined(
+                    this.activeDescendant
+                        ? `${this.activeDescendant.value}`
+                        : undefined
+                )}
+                aria-autocomplete=${ifDefined(
+                    this.autocomplete as 'list' | 'none'
+                )}
+                aria-controls=${ifDefined(
+                    this.open ? 'listbox-menu' : undefined
+                )}
+                aria-describedby="${this.helpTextId} tooltip"
+                aria-expanded="${this.open ? 'true' : 'false'}"
+                aria-label=${ifDefined(this.label || this.appliedLabel)}
+                aria-labelledby="pending-label applied-label label"
+                aria-invalid=${ifDefined(this.invalid || undefined)}
+                autocomplete="off"
+                @click=${this.toggleOpen}
+                @keydown=${this.handleComboboxKeydown}
+                id="input"
+                class="input"
+                role="combobox"
+                type="text"
+                .value=${live(this.displayValue)}
+                tabindex="0"
+                @sp-closed=${this.handleClosed}
+                @sp-opened=${this.handleOpened}
+                maxlength=${ifDefined(
+                    this.maxlength > -1 ? this.maxlength : undefined
+                )}
+                minlength=${ifDefined(
+                    this.minlength > -1 ? this.minlength : undefined
+                )}
+                pattern=${ifDefined(this.pattern)}
+                @change=${this.handleChange}
+                @input=${this.handleInput}
+                @focus=${this.onFocus}
+                @blur=${this.onBlur}
+                ?disabled=${this.disabled}
+                ?required=${this.required}
+                ?readonly=${this.readonly}
+            />
+            ${this.pendingStateController.renderPendingState()}
+        `;
+    }
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
 
