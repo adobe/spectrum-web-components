@@ -1,0 +1,32 @@
+name: Trigger CircleCI on PR
+
+on:
+    pull_request:
+        types: [opened] # Only when PR is first opened, not on every push
+
+jobs:
+    trigger-circleci:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger CircleCI Pipeline
+              env:
+                  CIRCLECI_TOKEN: ${{ secrets.CIRCLECI_TOKEN }}
+                  CIRCLE_BRANCH: ${{ github.head_ref }}
+                  PR_NUMBER: ${{ github.event.number }}
+              run: |
+                  echo "Triggering CircleCI for PR #${PR_NUMBER} on branch: ${CIRCLE_BRANCH}"
+
+                  response=$(curl -s -X POST \
+                    -H "Circle-Token: ${CIRCLECI_TOKEN}" \
+                    -H 'Content-Type: application/json' \
+                    -H 'Accept: application/json' \
+                    -d "{\"branch\":\"${CIRCLE_BRANCH}\"}" \
+                    https://circleci.com/api/v2/project/github/${{ github.repository }}/pipeline)
+
+                  pipeline_number=$(echo $response | grep -o '"number":[0-9]*' | head -1 | cut -d':' -f2)
+                  if [ -n "$pipeline_number" ]; then
+                    echo "Successfully triggered CircleCI pipeline #${pipeline_number}"
+                  else
+                    echo "Failed to trigger CircleCI pipeline"
+                    echo "Response: $response"
+                  fi
