@@ -585,11 +585,7 @@ export class Combobox extends Textfield {
         }
     }
 
-    protected override updated(
-        changed: PropertyValues<
-            this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
-        >
-    ): void {
+    protected override updated(changed: PropertyValues<this>): void {
         if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
@@ -599,9 +595,9 @@ export class Combobox extends Textfield {
         if (changed.has('pending') && this.pending) {
             this.open = false;
         }
-        if (changed.has('activeDescendant')) {
+        if (changed.has('activeDescendant' as keyof Combobox)) {
             const previouslyActiveDescendant = changed.get(
-                'activeDescendant'
+                'activeDescendant' as keyof Combobox
             ) as unknown as MenuItem;
             if (previouslyActiveDescendant) {
                 previouslyActiveDescendant.focused = false;
@@ -614,7 +610,10 @@ export class Combobox extends Textfield {
                 (this.activeDescendant as MenuItem).focused = true;
             }
         }
-        if (changed.has('options') || changed.has('optionEls')) {
+        if (
+            changed.has('options') ||
+            changed.has('optionEls' as keyof Combobox)
+        ) {
             // if all options are disabled, set combobox to disabled
             if (this.options?.every((option) => option.disabled)) {
                 this.disabled = true;

@@ -898,7 +898,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  */
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles];
+        //return [pickerStyles, chevronStyles];
+        return [chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {

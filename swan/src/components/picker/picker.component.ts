@@ -58,7 +58,7 @@ export default class SwanPicker extends PickerBase {
                 }}
                 ?disabled=${this.disabled}
             >
-                ${this.renderInsideContent()} ${this.buttonContent}
+                ${this.renderInsideContent} ${this.buttonContent}
             </button>
             <slot
                 aria-hidden="true"

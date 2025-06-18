@@ -12,9 +12,10 @@ governing permissions and limitations under the License.
 
 import { html, nothing, TemplateResult } from 'lit';
 import { ComboboxBase } from '@core/components/combobox/combobox.base.js';
-import styles from './combobox.styles.js';
+//import styles from './combobox.styles.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { repeat } from 'lit-html/directives/repeat.js';
+import { live } from 'lit-html/directives/live.js';
 
 /**
  * @element swan-badge
