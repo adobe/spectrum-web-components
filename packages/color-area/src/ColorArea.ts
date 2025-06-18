@@ -65,7 +65,7 @@ export class ColorArea extends SpectrumElement {
     @property({ type: String, attribute: 'label-y' })
     public labelY = 'luminosity';
 
-    @query('.handle')
+    @query('.handle', true)
     private handle!: ColorHandle;
 
     private languageResolver = new LanguageResolutionController(this);
@@ -126,28 +126,26 @@ export class ColorArea extends SpectrumElement {
     @property({ attribute: false })
     private activeAxis = 'x';
 
+    private _x = 1;
+
     @property({ type: Number })
     public get x(): number {
         return this.colorController.color.hsv.s / 100;
     }
 
     public set x(x: number) {
-        if (x === this.x) {
+        const oldValue = this._x;
+        // Restrict x to the nearest step
+        const newValue = Math.round(x / this.step) * this.step;
+        if (newValue === oldValue) {
             return;
         }
-        const oldValue = this.x;
-        if (this.inputX) {
-            // Use the native `input[type='range']` control to validate this value after `firstUpdate`
-            this.inputX.value = x.toString();
-            this.colorController.color.set(
-                's',
-                this.inputX.valueAsNumber * 100
-            );
-        } else {
-            this.colorController.color.set('s', x * 100);
-        }
+        this._x = newValue;
+        this.colorController.color.set('s', newValue * 100);
         this.requestUpdate('x', oldValue);
     }
+
+    private _y = 1;
 
     @property({ type: Number })
     public get y(): number {
@@ -155,28 +153,24 @@ export class ColorArea extends SpectrumElement {
     }
 
     public set y(y: number) {
-        if (y === this.y) {
+        const oldValue = this._y;
+        // Restrict y to the nearest step
+        const newValue = Math.round(y / this.step) * this.step;
+        if (newValue === oldValue) {
             return;
         }
-        const oldValue = this.y;
-        if (this.inputY) {
-            // Use the native `input[type='range']` control to validate this value after `firstUpdate`
-            this.inputY.value = y.toString();
-            this.colorController.color.set(
-                'v',
-                this.inputY.valueAsNumber * 100
-            );
-        }
+        this._y = newValue;
+        this.colorController.color.set('v', newValue * 100);
         this.requestUpdate('y', oldValue);
     }
 
     @property({ type: Number })
     public step = 0.01;
 
-    @query('[name="x"]')
+    @query('[name="x"]', true)
     public inputX!: HTMLInputElement;
 
-    @query('[name="y"]')
+    @query('[name="y"]', true)
     public inputY!: HTMLInputElement;
 
     private altered = 0;
@@ -562,18 +556,6 @@ export class ColorArea extends SpectrumElement {
      */
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
-        if (this.x !== this.inputX.valueAsNumber) {
-            this.colorController.color.set(
-                's',
-                this.inputX.valueAsNumber * 100
-            );
-        }
-        if (this.y !== this.inputY.valueAsNumber) {
-            this.colorController.color.set(
-                'v',
-                (1 - this.inputY.valueAsNumber) * 100
-            );
-        }
         if (changed.has('focused') && this.focused) {
             // Lazily bind the `input[type="range"]` elements in shadow roots
             // so that browsers with certain settings (Webkit) aren't allowed
