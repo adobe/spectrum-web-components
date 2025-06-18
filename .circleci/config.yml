@@ -109,6 +109,25 @@ commands:
                       if [ -n "$CIRCLE_PULL_REQUEST" ]; then
                           PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
                           echo "Deploying VRT for PR #$PR_NUMBER"
+                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                          PR_NUMBER="$CIRCLE_PR_NUMBER"
+                          echo "Deploying VRT for PR #$PR_NUMBER"
+                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                          echo "Deploying VRT for forked PR #$PR_NUMBER"
+                      elif [ -n "$GITHUB_TOKEN" ]; then
+                          # GitHub API fallback
+                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                              -H "Accept: application/vnd.github+json" \
+                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                          
+                          if [ -n "$PR_NUMBER" ]; then
+                              echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                          else
+                              PR_NUMBER="main"
+                              echo "Deploying VRT for main branch"
+                          fi
                       else
                           # Fallback for non-PR builds (e.g., main branch)
                           PR_NUMBER="main"
@@ -312,6 +331,25 @@ jobs:
                       if [ -n "$CIRCLE_PULL_REQUEST" ]; then
                           PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
                           echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                          PR_NUMBER="$CIRCLE_PR_NUMBER"
+                          echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                          echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                      elif [ -n "$GITHUB_TOKEN" ]; then
+                          # GitHub API fallback
+                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                              -H "Accept: application/vnd.github+json" \
+                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                          
+                          if [ -n "$PR_NUMBER" ]; then
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                          else
+                              PR_NUMBER="main"
+                              echo "Deploying HCM VRT for main branch"
+                          fi
                       else
                           # Fallback for non-PR builds (e.g., main branch)
                           PR_NUMBER="main"
