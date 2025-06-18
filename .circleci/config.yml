@@ -326,8 +326,7 @@ jobs:
 
                       # Check if AZURE_STORAGE_SAS_TOKEN is set
                       if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                          echo "ERROR: AZURE_STORAGE_SAS_TOKEN environment variable is not set"
-                          echo "This token is required for Azure Blob Storage deployment"
+                          echo "Missing Azure Storage SAS Token"
                           exit 1
                       fi
 
