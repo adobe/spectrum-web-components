@@ -281,11 +281,48 @@ jobs:
             - run:
                   name: Build Storybook
                   command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
+            - run:
+                  name: Install AzCopy
+                  command: |
+                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+                      tar -xf azcopy.tar.gz --strip-components=1
+                      chmod +x azcopy
+                      export PATH=$PATH:$(pwd)
+                      azcopy --version
+            - run:
+                  name: Deploy Beta Documentation to Azure Blob Storage
+                  command: |
+                      # Check if AZURE_STORAGE_SAS_TOKEN is set
+                      if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
+                          echo "Missing Azure Storage SAS Token"
+                          exit 1
+                      fi
+
+                      # Disable debug mode to prevent token leakage
+                      set +x
+
+                      # Clean the SAS token (remove any whitespace/newlines)
+                      CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
+
+                      # Upload documentation to beta path
+                      echo "Uploading documentation to beta/docs/"
+                      azcopy copy "projects/documentation/dist/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/?${CLEAN_SAS_TOKEN}" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Upload Storybook to beta path
+                      echo "Uploading Storybook to beta/docs/storybook/"
+                      azcopy copy "storybook-static/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/?${CLEAN_SAS_TOKEN}" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URLs
+                      DOCS_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/"
+                      STORYBOOK_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/storybook/"
+                      echo "Beta Documentation URL: $DOCS_URL"
+                      echo "Beta Storybook URL: $STORYBOOK_URL"
 
     hcm-visual:
         executor: node
