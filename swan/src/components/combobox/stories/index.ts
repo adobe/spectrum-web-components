@@ -15,7 +15,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { Combobox, ComboboxOption } from '@spectrum-web-components/combobox';
-import '@spectrum-web-components/combobox/sp-combobox.js';
+import '../combobox.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../utils/test-utils.js';
 
@@ -50,14 +50,14 @@ const handleInput =
 export const ComboboxMarkup = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="combobox">Where do you live?</sp-field-label>
-        <sp-combobox
+        <swan-combobox
             id="combobox"
             .options=${countries}
             .value=${args.value || ''}
             @change=${handleChange(args)}
             @input=${handleInput(args)}
             ${spreadProps(args)}
-        ></sp-combobox>
+        ></swan-combobox>
     `;
 };
 
