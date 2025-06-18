@@ -14,11 +14,9 @@ import {
     CSSResultArray,
     html,
     nothing,
-    PropertyValues,
-    type SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ComboboxBase } from '@core/components/combobox/combobox.base.ts';
+import { ComboboxBase } from './combobox.base.js';
 import {
     ifDefined,
     live,
@@ -30,25 +28,13 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
+import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './combobox.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import { MenuItem } from '@spectrum-web-components/menu';
 
-export type ComboboxOption = {
-    value: string;
-    itemText: string;
-    disabled?: boolean;
-};
-
-/**
- * @element sp-combobox
- * @slot - Supply Menu Item elements to the default slot in order to populate the available options
- * @slot tooltip - Tooltip to to be applied to the the Picker Button
- */
 export class Combobox extends ComboboxBase {
     public static override get styles(): CSSResultArray {
-        return [...super.styles, styles, chevronStyles];
+        return [...super.styles, chevronStyles, styles];
     }
 
     protected renderAppliedLabel(): TemplateResult {
@@ -154,12 +140,8 @@ export class Combobox extends ComboboxBase {
             ${this.pendingStateController.renderPendingState()}
         `;
     }
-
     protected override render(): TemplateResult {
         const width = (this.input || this).offsetWidth;
-        if (this.tooltipEl) {
-            this.tooltipEl.disabled = this.open;
-        }
 
         return html`
             ${super.render()}
@@ -252,102 +234,4 @@ export class Combobox extends ComboboxBase {
             ></slot>
         `;
     }
-
-    applyFocusElementLabel = (value?: string): void => {
-        this.appliedLabel = value;
-    };
-
-    protected override firstUpdated(
-        changed: PropertyValues<this & { optionEls: MenuItem[] }>
-    ): void {
-        super.firstUpdated(changed);
-        this.addEventListener('focusout', (event: FocusEvent) => {
-            const isMenuItem =
-                event.relatedTarget &&
-                this.contains(event.relatedTarget as Node);
-            if (event.target === this && !isMenuItem) {
-                this.focused = false;
-            }
-        });
-    }
-
-    private _returnItems = (): void => {
-        return;
-    };
-
-    protected async manageListOverlay(): Promise<void> {
-        if (this.open) {
-            this.focused = true;
-            this.focus();
-        }
-    }
-
-    protected override updated(changed: PropertyValues<this>): void {
-        if (changed.has('open') && !this.pending) {
-            this.manageListOverlay();
-        }
-        if (!this.focused && this.open) {
-            this.open = false;
-        }
-        if (changed.has('pending') && this.pending) {
-            this.open = false;
-        }
-        if (changed.has('activeDescendant' as keyof Combobox)) {
-            const previouslyActiveDescendant = changed.get(
-                'activeDescendant' as keyof Combobox
-            ) as unknown as MenuItem;
-            if (previouslyActiveDescendant) {
-                previouslyActiveDescendant.focused = false;
-            }
-            if (
-                this.activeDescendant &&
-                typeof (this.activeDescendant as MenuItem).focused !==
-                    'undefined'
-            ) {
-                (this.activeDescendant as MenuItem).focused = true;
-            }
-        }
-        if (
-            changed.has('options') ||
-            changed.has('optionEls' as keyof Combobox)
-        ) {
-            // if all options are disabled, set combobox to disabled
-            if (this.options?.every((option) => option.disabled)) {
-                this.disabled = true;
-            }
-
-            this.availableOptions = this.options || this.optionEls;
-        }
-    }
-
-    protected override async getUpdateComplete(): Promise<boolean> {
-        const complete = await super.getUpdateComplete();
-        const list = this.shadowRoot.querySelector(
-            '#listbox'
-        ) as HTMLUListElement;
-        if (list) {
-            const descendants = [...list.children] as SpectrumElement[];
-            await Promise.all(
-                descendants.map((descendant) => descendant.updateComplete)
-            );
-        }
-        return complete;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        if (!this.itemObserver) {
-            this.itemObserver = new MutationObserver(
-                this.setOptionsFromSlottedItems.bind(this)
-            );
-        }
-    }
-
-    public override disconnectedCallback(): void {
-        this.itemObserver.disconnect();
-        this.open = false;
-        super.disconnectedCallback();
-    }
-
-    private itemObserver!: MutationObserver;
 }
