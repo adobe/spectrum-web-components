@@ -19,6 +19,9 @@
         "skipLibCheck": true,
         "strict": true,
         "sourceMap": true,
+        "paths": {
+            "@core/*": ["../core/src/*"]
+        },
         "target": "es2018",
         "types": ["mocha", "chai", "sinon", "node", "swc"],
         "resolveJsonModule": true

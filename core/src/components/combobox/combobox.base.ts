@@ -12,21 +12,14 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    html,
-    nothing,
     PropertyValues,
     type SpectrumElement,
-    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import {
-    ifDefined,
-    live,
-} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -219,7 +212,9 @@ export class ComboboxBase extends Textfield {
                 (this.availableOptions.length + nextActiveIndex + 1) %
                 this.availableOptions.length;
             // Break if we've checked all options to avoid infinite loop
-            if (nextActiveIndex === activeIndex) break;
+            if (nextActiveIndex === activeIndex) {
+                break;
+            }
         } while (this.availableOptions[nextActiveIndex].disabled);
 
         if (!this.availableOptions[nextActiveIndex].disabled) {
@@ -243,7 +238,9 @@ export class ComboboxBase extends Textfield {
                 (this.availableOptions.length + previousActiveIndex - 1) %
                 this.availableOptions.length;
             // Break if we've checked all options to avoid infinite loop
-            if (previousActiveIndex === activeIndex) break;
+            if (previousActiveIndex === activeIndex) {
+                break;
+            }
         } while (this.availableOptions[previousActiveIndex].disabled);
 
         if (!this.availableOptions[previousActiveIndex].disabled) {

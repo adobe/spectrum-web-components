@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { merge } from 'webpack-merge';
-
+import path from 'path';
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
     stories: [
@@ -43,6 +43,9 @@ export default {
             resolve: {
                 conditionNames: ['development', 'browser'],
                 modules: ['node_modules', 'packages', 'projects', 'tools'],
+                alias: {
+                    '@core': path.resolve(__dirname, '../core/src'),
+                },
             },
         });
     },

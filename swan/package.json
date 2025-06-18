@@ -67,6 +67,9 @@
         "design-system",
         "ui-components"
     ],
+    "workspaces": [
+        "components/*"
+    ],
     "author": "Adobe",
     "license": "Apache-2.0",
     "repository": {
