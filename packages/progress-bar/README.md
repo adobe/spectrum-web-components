@@ -151,7 +151,7 @@ A progress bar can be either determinate or indeterminate as signified by `[inde
 The above `sp-progress-bar` also leverages the `aria-label` attribute in place of the `label` attribute in ensure that the element is labelled correctly without that label appearing visibly in the UI.
 
 </sp-tab-panel>
-<sp-tab value="side-label">Side Label</sp-tab>
+<sp-tab value="side-label">Side label</sp-tab>
 <sp-tab-panel value="side-label">
 
 A progress bar can be delivered with its labeling displayed above its visual indicator or to either side. Use the boolean `[side-label]` attribute to define where this content should appear.
