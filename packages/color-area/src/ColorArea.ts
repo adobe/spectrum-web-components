@@ -556,6 +556,18 @@ export class ColorArea extends SpectrumElement {
      */
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
+        if (this.x !== this.inputX.valueAsNumber) {
+            this.colorController.color.set(
+                's',
+                this.inputX.valueAsNumber * 100
+            );
+        }
+        if (this.y !== this.inputY.valueAsNumber) {
+            this.colorController.color.set(
+                'v',
+                (1 - this.inputY.valueAsNumber) * 100
+            );
+        }
         if (changed.has('focused') && this.focused) {
             // Lazily bind the `input[type="range"]` elements in shadow roots
             // so that browsers with certain settings (Webkit) aren't allowed
