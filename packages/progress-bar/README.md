@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-progress-bar>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc. By default, progress bars have a blue fill that shows the progress.
 
@@ -23,6 +23,13 @@ When looking to leverage the `ProgressBar` base class as a type and/or for exten
 ```ts
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 ```
+
+### Anatomy
+
+- **Label:** Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress.
+- **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track.
+
+Labels are set using the `label` slot and values are set using the `progress` slot.
 
 ## Sizes
 
@@ -93,16 +100,13 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </sp-tab-panel>
 </sp-tabs>
 
-### Anatomy
+### Options
 
-- **Label:** Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress.
-- **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track.
+#### Variants
 
-Labels are set using the `label` slot and values are set using the `progress` slot.
-
-### Variants
-
-#### Over background
+<sp-tabs selected="over-background" auto label="Variants">
+<sp-tab value="over-background">Over Background</sp-tab>
+<sp-tab-panel value="over-background">
 
 When a progress bar needs to be placed on top of a colored background, use the over background progres bar as signified by `[over-background]`. This progress bar uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
 
@@ -118,7 +122,9 @@ When a progress bar needs to be placed on top of a colored background, use the o
 </div>
 ```
 
-#### Indeterminate
+</sp-tab-panel>
+<sp-tab value="indeterminate">Indeterminate</sp-tab>
+<sp-tab-panel value="indeterminate">
 
 A progress bar can be either determinate or indeterminate as signified by `[indeterminate]`. By default, loaders are determinate. Use a determinate loader when progress can be calculated against a specific goal (e.g., downloading a file of a known size). Use an indeterminate loader when progress is happening but the time or effort to completion can’t be determined (e.g., attempting to reconnect to a server).
 
@@ -135,7 +141,9 @@ A progress bar can be either determinate or indeterminate as signified by `[inde
 
 The above `sp-progress-bar` also leverages the `aria-label` attribute in place of the `label` attribute in ensure that the element is labelled correctly without that label appearing visibly in the UI.
 
-#### Side Label
+</sp-tab-panel>
+<sp-tab value="side-label">Side Label</sp-tab>
+<sp-tab-panel value="side-label">
 
 A progress bar can be delivered with its labeling displayed above its visual indicator or to either side. Use the boolean `[side-label]` attribute to define where this content should appear.
 
@@ -143,13 +151,12 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 <div
     style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar
-        side-label
-        indeterminate
-        label="Label Beside"
-    ></sp-progress-bar>
+    <sp-progress-bar side-label label="Label Beside"></sp-progress-bar>
 </div>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Accessibility
 
