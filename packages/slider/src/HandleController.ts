@@ -121,15 +121,15 @@ export class HandleController {
         if (!elements) return;
 
         const { input } = elements;
-        if (input.valueAsNumber === handle.value) {
-            if (handle.dragging) {
-                handle.dispatchInputEvent();
-            }
-        } else {
-            input.valueAsNumber = handle.value;
-            this.requestUpdate();
-        }
+
+        input.valueAsNumber = handle.value;
+        this.requestUpdate();
+        // reset to potentially clamped value
         handle.value = input.valueAsNumber;
+
+        if (handle.dragging) {
+            handle.dispatchInputEvent();
+        }
     }
 
     public handleHasChanged(handle: SliderHandle): void {
