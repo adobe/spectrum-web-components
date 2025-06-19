@@ -1,3 +1,12 @@
+<sp-alert-banner open variant="info">
+    <div class="spectrum-InLineAlert-header">
+        <span>Deprecated</span>
+    </div>
+    <div class="spectrum-InLineAlert-content">
+        The <code>over-background</code> attribute has been deprecated and will be removed in a future release. Use <code>static-color="white"</code> instead.
+    </div>
+</sp-alert-banner>
+
 ## Overview
 
 An `<sp-progress-bar>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc. By default, progress bars have a blue fill that shows the progress.
@@ -104,20 +113,20 @@ Labels are set using the `label` slot and values are set using the `progress` sl
 
 #### Variants
 
-<sp-tabs selected="over-background" auto label="Variants">
-<sp-tab value="over-background">Over Background</sp-tab>
-<sp-tab-panel value="over-background">
+<sp-tabs selected="static-white" auto label="Variants">
+<sp-tab value="static-white">Static white</sp-tab>
+<sp-tab-panel value="static-white">
 
-When a progress bar needs to be placed on top of a colored background, use the over background progres bar as signified by `[over-background]`. This progress bar uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
+When a progress bar needs to be placed on top of a colored background, use the static white progress bar as signified by `[static-color="white"]`. This progress bar uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
 
 ```html
 <div
-    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-transparent-black-400);"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-seafoam-900);"
 >
     <sp-progress-bar
         label="Loaded a large amount"
         progress="77"
-        over-background
+        static-color="white"
     ></sp-progress-bar>
 </div>
 ```
@@ -151,7 +160,11 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 <div
     style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around;"
 >
-    <sp-progress-bar side-label label="Label Beside"></sp-progress-bar>
+    <sp-progress-bar
+        side-label
+        label="Label Beside"
+        progress="23"
+    ></sp-progress-bar>
 </div>
 ```
 
