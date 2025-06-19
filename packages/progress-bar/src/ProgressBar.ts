@@ -146,6 +146,15 @@ export class ProgressBar extends SizedMixin(
         }
 
         if (window.__swc.DEBUG) {
+            if (change.has('over-background')) {
+                window.__swc.warn(
+                    this,
+                    `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
+                    { level: 'deprecation' }
+                );
+            }
+
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
