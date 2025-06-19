@@ -115,6 +115,7 @@
             }
         ],
         "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off",
         "lit-a11y/click-events-have-key-events": [
             "error",
             {
@@ -153,5 +154,41 @@
                 "ignoreMemberSort": false
             }
         ]
-    }
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "plugin:lit-a11y/recommended",
+        "plugin:require-extensions/recommended"
+    ],
+    "overrides": [
+        {
+            "files": ["scripts/*"],
+            "rules": {
+                "no-console": ["off"]
+            }
+        },
+        {
+            "files": [
+                "packages/*/src/*.ts",
+                "tools/*/src/*.ts",
+                "projects/*/src/*.ts"
+            ],
+            "rules": {
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": true
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["react/**/*.ts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "off"
+            }
+        }
+    ]
 }
