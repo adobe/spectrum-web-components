@@ -17,7 +17,7 @@ Starting from version 1.0.0, Spectrum Web Components follows semantic versioning
 
 To provide early access to upcoming releases, we maintain a beta tag that points to the next minor version. The beta tag will always correspond to the next minor version incremented from the latest stable release. For example, if the latest tagged release is `1.2.1`, the beta tag will be `1.3.0-beta.0`.
 
-You can find the respective `beta` version of the documentation website under the following link: https://beta--spectrum-wc.netlify.app/
+You can find the respective `beta` version of the documentation website under the following link: https://swcpreviews.z13.web.core.windows.net/beta/docs/
 
 You can install the beta version of a specific Spectrum Web Components package by using the`@beta` tag with your package manager. For example, to install the beta version of the `@spectrum-web-components/button` package, run:
 
@@ -33,18 +33,18 @@ We encourage consumers to report any issues they encounter. Your feedback is val
 
 Our public API consists of:
 
--   Component APIs (properties, attributes, slots, events, functions)
--   TypeScript definitions
--   File import paths
+- Component APIs (properties, attributes, slots, events, functions)
+- TypeScript definitions
+- File import paths
 
 ## Browser Support
 
 We support the latest 2 major versions of these browsers for desktop:
 
--   Google Chrome
--   Mozilla Firefox
--   Microsoft Edge
--   Apple Safari for macOS
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+- Apple Safari for macOS
 
 We do not support Microsoft Internet Explorer.
 

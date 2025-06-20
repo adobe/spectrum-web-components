@@ -26,15 +26,48 @@ const getHash = (context) => {
     return md5.digest('hex');
 };
 
+const getAzureUrl = (combination) => {
+    const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
+
+    // For main branch beta deployment
+    if (branch === 'main') {
+        return `${baseUrl}/beta/docs/`;
+    }
+
+    // Extract PR number using the same logic as CircleCI
+    let prNumber = null;
+
+    // Check environment variables (same as CircleCI)
+    if (process.env.CIRCLE_PULL_REQUEST) {
+        const match = process.env.CIRCLE_PULL_REQUEST.match(/\/pull\/(\d+)/);
+        if (match) {
+            prNumber = match[1];
+        }
+    } else if (process.env.CIRCLE_PR_NUMBER) {
+        prNumber = process.env.CIRCLE_PR_NUMBER;
+    } else if (branch.match(/^pull\/(\d+)$/)) {
+        // Forked PR branch pattern
+        const match = branch.match(/^pull\/(\d+)$/);
+        if (match) {
+            prNumber = match[1];
+        }
+    }
+
+    // For PR deployments
+    if (prNumber) {
+        return `${baseUrl}/pr-${prNumber}/${combination}/`;
+    }
+
+    // Default fallback for non-PR branches
+    return `${baseUrl}/${slugify(branch)}/${combination}/`;
+};
+
 const vrts = [];
 const themes = ['Spectrum', 'Express', 'Spectrum-two'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
-vrts.push([
-    `High Contrast Mode | Medium | LTR`,
-    `https://${getHash(`${branch}-hcm`)}--spectrum-wc.netlify.app/review/`,
-]);
+vrts.push([`High Contrast Mode | Medium | LTR`, `${getAzureUrl('hcm')}`]);
 themes.map((theme) =>
     colors.map((color) => {
         if (
@@ -45,12 +78,10 @@ themes.map((theme) =>
         }
         scales.map((scale) =>
             directions.map((direction) => {
-                const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                const combination = `${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
                 vrts.push([
                     `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${getHash(
-                        context
-                    )}--spectrum-wc.netlify.app/review/`,
+                    `${getAzureUrl(combination)}`,
                 ]);
             })
         );
@@ -178,7 +209,7 @@ async function main() {
     const data = JSON.stringify({
         meta: {
             branch,
-            preview: `https://${slugify(branch)}--spectrum-wc.netlify.app`,
+            preview: getAzureUrl('docs'),
             commit,
             system,
             vrts,
