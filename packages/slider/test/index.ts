@@ -110,24 +110,22 @@ export const testEditableSlider = (type: string): void => {
         it('dispatches `input` of the animation frame', async () => {
             const inputSpy = spy();
             const changeSpy = spy();
-            const el = await fixture<Slider>(
-                html`
-                    <sp-slider
-                        editable
-                        hide-stepper
-                        min="1"
-                        max="100"
-                        step="1"
-                        label="Slider label"
-                        @input=${(event: Event & { target: Slider }) => {
-                            inputSpy(event.target.value);
-                        }}
-                        @change=${(event: Event & { target: Slider }) => {
-                            changeSpy(event.target.value);
-                        }}
-                    ></sp-slider>
-                `
-            );
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
             await elementUpdated(el);
             expect(el.value).to.equal(50.5);
 
@@ -363,6 +361,84 @@ export const testEditableSlider = (type: string): void => {
             expect(el.shadowRoot.activeElement).to.equal(
                 el.handleController.inputForHandle(el)
             );
+        });
+
+        // regression test for https://github.com/adobe/spectrum-web-components/issues/5522
+        it('dispatches `input` on track interaction after handle interaction', async () => {
+            const inputSpy = spy();
+            const changeSpy = spy();
+
+            const el = await fixture<Slider>(html`
+                <sp-slider
+                    editable
+                    hide-stepper
+                    min="1"
+                    max="100"
+                    step="1"
+                    label="Slider label"
+                    @input=${(event: Event & { target: Slider }) => {
+                        inputSpy(event.target.value);
+                    }}
+                    @change=${(event: Event & { target: Slider }) => {
+                        changeSpy(event.target.value);
+                    }}
+                ></sp-slider>
+            `);
+            await elementUpdated(el);
+            expect(el.value).to.equal(50.5);
+
+            expect(inputSpy.callCount, 'start clean').to.equal(0);
+            expect(changeSpy.callCount, 'start clean').to.equal(0);
+
+            const handle = el.shadowRoot.querySelector(
+                '.handle'
+            ) as HTMLDivElement;
+
+            const rect = handle.getBoundingClientRect();
+
+            // click handle once
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                    { type: 'up' },
+                ],
+            });
+
+            await elementUpdated(el);
+
+            expect(changeSpy.callCount, 'one change').to.equal(1);
+            expect(inputSpy.callCount, 'no input').to.equal(0);
+
+            // move to and click track once
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [
+                            rect.left - rect.width,
+                            rect.top + rect.height / 2,
+                        ],
+                    },
+                    {
+                        type: 'down',
+                    },
+                    { type: 'up' },
+                ],
+            });
+
+            await elementUpdated(el);
+
+            expect(changeSpy.callCount, 'one additional change').to.equal(2);
+            expect(inputSpy.callCount, 'one input').to.equal(1);
         });
     });
 };
