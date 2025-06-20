@@ -146,7 +146,7 @@ export class ProgressBar extends SizedMixin(
         }
 
         if (window.__swc.DEBUG) {
-            if (change.has('over-background')) {
+            if (changes.has('over-background')) {
                 window.__swc.warn(
                     this,
                     `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
