@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/meter-overrides.css.js": "./src/meter-overrides.css.js",
         "./src/meter.css.js": "./src/meter.css.js",
         "./src/progress-bar-overrides.css.js": "./src/progress-bar-overrides.css.js",
         "./sp-meter.js": {
