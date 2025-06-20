@@ -51,7 +51,8 @@ export default {
             description: 'Whether the menu is open or not.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -60,7 +61,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',

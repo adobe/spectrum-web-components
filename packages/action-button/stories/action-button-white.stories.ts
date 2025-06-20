@@ -10,14 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground } from '../../button/stories/index.js';
 import type { Properties } from './index.js';
 import { renderButtons } from './index.js';
 
 export default {
     component: 'sp-action-button',
     title: 'Action Button/Static White',
-    decorators: [makeOverBackground()],
+    decorators: [],
 };
 
 const staticColor = 'white';

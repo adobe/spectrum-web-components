@@ -32,6 +32,7 @@ export default {
                     summary: '"vertical" | "vertical-right" | "horizontal"',
                 },
                 defaultValue: { summary: 'horizontal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
@@ -45,6 +46,7 @@ export default {
             table: {
                 type: { summary: '"s" | "m" | "l" | "xl"' },
                 defaultValue: { summary: 'm' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
