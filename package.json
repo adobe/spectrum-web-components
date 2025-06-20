@@ -104,7 +104,7 @@
         "@netlify/build": "^29.17.3",
         "@open-wc/dev-server-hmr": "^0.2.0",
         "@open-wc/testing": "^4.0.0",
-        "@playwright/test": "^1.44.0",
+        "@playwright/test": "^1.52.0",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
@@ -218,6 +218,9 @@
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
+    },
+    "resolutions": {
+        "playwright": "^1.52.0"
     },
     "wireit": {
         "build": {
