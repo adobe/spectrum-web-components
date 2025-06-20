@@ -11,6 +11,12 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-divider-background-color: var(--spectrum-gray-200);
+    --spectrum-divider-background-color-static-white: var(--spectrum-transparent-white-200);
+    --spectrum-divider-background-color-static-black: var(--spectrum-transparent-black-200);
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-divider-background-color: CanvasText;

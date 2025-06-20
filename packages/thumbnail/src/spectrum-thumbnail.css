@@ -11,6 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-thumbnail-border-radius: 2px;
+}
+
 :host,
 :host([size="500"]) {
     --spectrum-thumbnail-sized-size: var(--spectrum-thumbnail-size-500);
