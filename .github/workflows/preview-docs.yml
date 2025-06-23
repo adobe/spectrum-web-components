@@ -10,6 +10,12 @@ permissions:
     contents: read
     pull-requests: write
 
+env:
+    AZCOPY_AUTO_LOGIN_TYPE: SPN
+    AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
 jobs:
     build_and_deploy_job:
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -77,43 +83,25 @@ jobs:
               run: yarn storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
-            - name: Install AzCopy
-              run: |
-                  # Download and install AzCopy
-                  wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-                  tar -xf azcopy.tar.gz --strip-components=1
-                  sudo mv azcopy /usr/local/bin/
-                  azcopy --version
+            - name: Setup AzCopy
+              uses: ./.github/actions/setup-azcopy
 
             - name: Deploy to Azure Blob Storage
               id: deploy
               env:
-                  AZURE_STORAGE_SAS_TOKEN: ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
-                  # Check if AZURE_STORAGE_SAS_TOKEN is set
-                  if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                      echo "Missing Azure Storage SAS Token"
-                      exit 1
-                  fi
-
-                  # Disable debug mode to prevent token leakage
-                  set +x
-
-                  # Clean the SAS token (remove any whitespace/newlines)
-                  CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
-
                   # Upload documentation
                   echo "Uploading documentation to ${PR_HASH}/docs/"
                   azcopy copy "projects/documentation/dist/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/?${CLEAN_SAS_TOKEN}" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Upload Storybook
                   echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
                   azcopy copy "storybook-static/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/?${CLEAN_SAS_TOKEN}" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/" \
                     --recursive \
                     --from-to LocalBlob
 
@@ -136,27 +124,14 @@ jobs:
                   pr_hash="pr-${{ github.event.pull_request.number }}"
                   echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
 
-            - name: Install AzCopy
-              run: |
-                  wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-                  tar -xf azcopy.tar.gz --strip-components=1
-                  sudo mv azcopy /usr/local/bin/
+            - name: Setup AzCopy
+              uses: ./.github/actions/setup-azcopy
 
             - name: Clean up PR deployment
               env:
-                  AZURE_STORAGE_SAS_TOKEN: ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
-                  # Check if AZURE_STORAGE_SAS_TOKEN is set
-                  if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                      echo "Missing Azure Storage SAS Token"
-                      exit 1
-                  fi
-
-                  # Disable debug mode to prevent token leakage
-                  set +x
-
                   echo "Cleaning up deployment: ${PR_HASH}/"
-                  azcopy remove "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/?${AZURE_STORAGE_SAS_TOKEN}" \
+                  azcopy remove "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/" \
                     --recursive || echo "Cleanup completed (some files may not exist)"
                   echo "Cleanup completed for PR deployment: ${PR_HASH}/"
