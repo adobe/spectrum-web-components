@@ -44,12 +44,11 @@ commands:
                       source $BASH_ENV
                       azcopy --version
 
-                      # Set up Azure authentication
-                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
-                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
-                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
-                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
-                      source $BASH_ENV
+                      # print environment variables
+                      echo "AZCOPY_AUTO_LOGIN_TYPE: $AZCOPY_AUTO_LOGIN_TYPE"
+                      echo "AZCOPY_SPA_APPLICATION_ID: $AZCOPY_SPA_APPLICATION_ID"
+                      echo "AZCOPY_SPA_CLIENT_SECRET: $AZCOPY_SPA_CLIENT_SECRET"
+                      echo "AZCOPY_TENANT_ID: $AZCOPY_TENANT_ID"
     downstream:
         steps:
             - checkout
