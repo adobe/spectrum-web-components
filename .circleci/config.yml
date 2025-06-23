@@ -43,12 +43,6 @@ commands:
                       echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
                       source $BASH_ENV
                       azcopy --version
-
-                      # print environment variables
-                      echo "AZCOPY_AUTO_LOGIN_TYPE: $AZCOPY_AUTO_LOGIN_TYPE"
-                      echo "AZCOPY_SPA_APPLICATION_ID: $AZCOPY_SPA_APPLICATION_ID"
-                      echo "AZCOPY_SPA_CLIENT_SECRET: $AZCOPY_SPA_CLIENT_SECRET"
-                      echo "AZCOPY_TENANT_ID: $AZCOPY_TENANT_ID"
     downstream:
         steps:
             - checkout
