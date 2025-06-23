@@ -102,6 +102,3 @@ If the changes are unexpected, you can investigate the cause of the differences 
 `;
     return comment;
 };
-
-// Example usage - in actual use, these would come from GitHub context
-console.log(buildPreviewURLComment('5450'));

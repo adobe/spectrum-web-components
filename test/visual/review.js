@@ -68,16 +68,16 @@ const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
 vrts.push([`High Contrast Mode | Medium | LTR`, `${getAzureUrl('hcm')}`]);
-themes.map((theme) =>
-    colors.map((color) => {
+themes.forEach((theme) =>
+    colors.forEach((color) => {
         if (
             theme === 'Spectrum-two' &&
             (color === 'Lightest' || color === 'Darkest')
         ) {
             return;
         }
-        scales.map((scale) =>
-            directions.map((direction) => {
+        scales.forEach((scale) =>
+            directions.forEach((direction) => {
                 const combination = `${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
                 vrts.push([
                     `${theme} | ${color} | ${scale} | ${direction}`,

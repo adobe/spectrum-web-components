@@ -28,11 +28,11 @@ jobs:
               id: pr_hash
               run: |
                   pr_hash="pr-${{ github.event.pull_request.number }}"
-                  echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
+                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
                   echo "Generated PR hash: ${pr_hash}"
 
             - name: Extract doc preview url
-              run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/" >> $GITHUB_OUTPUT
+              run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/" >> "$GITHUB_OUTPUT"
               id: extract_doc_url
 
             - name: Post Previews Comment

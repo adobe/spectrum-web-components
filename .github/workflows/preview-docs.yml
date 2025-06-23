@@ -44,7 +44,7 @@ jobs:
               run: |
                   # Use just PR number so each commit overwrites the previous deployment
                   pr_hash="pr-${{ github.event.pull_request.number }}"
-                  echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
+                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
                   echo "Generated PR hash: ${pr_hash}"
 
             ## --- YARN CACHE --- ##
@@ -108,8 +108,8 @@ jobs:
                   # Set output URLs
                   docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/"
                   storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/storybook/"
-                  echo "docs_url=${docs_url}" >> $GITHUB_OUTPUT
-                  echo "storybook_url=${storybook_url}" >> $GITHUB_OUTPUT
+                  echo "docs_url=${docs_url}" >> "$GITHUB_OUTPUT"
+                  echo "storybook_url=${storybook_url}" >> "$GITHUB_OUTPUT"
                   echo "Deployed to: ${docs_url}"
 
     close_pull_request_job:
@@ -122,7 +122,7 @@ jobs:
               run: |
                   # Create the same hash as in the deploy job
                   pr_hash="pr-${{ github.event.pull_request.number }}"
-                  echo "hash=${pr_hash}" >> $GITHUB_OUTPUT
+                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
 
             - name: Setup AzCopy
               uses: ./.github/actions/setup-azcopy
