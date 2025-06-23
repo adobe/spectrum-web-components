@@ -50,7 +50,7 @@ jobs:
                   path: |
                       .cache/yarn
                       node_modules
-                  key: ubuntu-latest-node20-${{ hashFiles('yarn.lock') }}
+                  key: ubuntu-latest-node20-${{ hashFiles('yarn.lock', 'package.json') }}
 
             ## --- INSTALL & BUILD --- ##
             - name: Install dependencies
