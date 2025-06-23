@@ -105,6 +105,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     private shouldProxyClick(event?: MouseEvent): boolean {
         let handled = false;
 
+        // If this is a link (has href), let the browser handle it naturally
+        if (this.href && this.href.length > 0) {
+            return false; // Don't interfere with browser's link handling
+        }
+
         // Don't proxy clicks with modifier keys (Command/Meta, Ctrl, Shift, Alt)
         if (
             event &&
