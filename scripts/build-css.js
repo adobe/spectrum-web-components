@@ -12,28 +12,28 @@
  * governing permissions and limitations under the License.
  */
 
+import path from 'path';
 import fg from 'fast-glob';
 import 'colors';
 
-import { processCSS } from './css-tools.js';
+import { log, processCSS } from './css-tools.js';
 
-async function buildCSS() {
-    const promises = [];
-    for (const cssPath of await fg([
-        './packages/*/src/**/*.css',
-        './tools/*/src/*.css',
-        './tools/*/src/**/*.css',
-    ])) {
-        promises.push(
-            processCSS(cssPath)
-                .then(() => console.log(`Processed ${cssPath.yellow}`))
-                .catch((error) =>
-                    console.error(`Error processing ${cssPath}`, error)
-                )
-        );
-    }
-
-    return Promise.all(promises);
+async function main({ cwd = process.env.INIT_CWD ?? process.cwd() } = {}) {
+    return fg(['src/**/*.css', 'src/*.css'], { cwd }).then((cssPaths) =>
+        Promise.all(
+            cssPaths.map((cssPath) =>
+                processCSS(path.join(cwd, cssPath))
+                    .then(() => console.log(cssPath.yellow + ' bundled'))
+                    .catch((error) => {
+                        log.fail(`Failed to process ${cssPath.yellow}`);
+                        console.error(error);
+                    })
+            )
+        ).catch((error) => {
+            log.fail('Failed to process CSS files');
+            console.error(error);
+        })
+    );
 }
 
-await buildCSS();
+main();

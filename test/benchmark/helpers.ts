@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import '@spectrum-web-components/theme/scale-large.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/theme-lightest.js';
 import { html, LitElement, render, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/scale-large.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
 
 declare global {
     interface Window {
@@ -158,12 +158,18 @@ export const measureFixtureCreation = async (
             const results = await Promise.all(
                 updates.map((el) => (el as LitElement).updateComplete)
             );
-            updates = results.reduce((acc, result, index) => {
-                if (!result) {
-                    acc.push(updates[index]);
-                }
-                return acc;
-            }, [] as Element[]);
+            updates = results.reduce(
+                (acc, result, index) => {
+                    if (!result) {
+                        acc.push(
+                            updates[index] as Element &
+                                Record<'updateComplete', unknown>
+                        );
+                    }
+                    return acc;
+                },
+                [] as (Element & Record<'updateComplete', unknown>)[]
+            );
         }
     }
 

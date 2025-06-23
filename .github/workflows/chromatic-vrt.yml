@@ -36,7 +36,7 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+              run: yarn docs:cem
 
             - name: Move CEM to Storybook directory
               run: cp projects/documentation/custom-elements.json storybook/
@@ -51,7 +51,7 @@ jobs:
                   exitOnceUploaded: true
                   onlyChanged: true
                   traceChanged: true
-                  untraced: '.github/actions/*/package.json'
+                  untraced: 'projects/*/package.json'
                   diagnostics: true
                   # Lets VRT pass without running so as not to waste snapshots
                   skip: ${{ inputs.skip }}

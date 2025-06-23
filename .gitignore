@@ -26,7 +26,10 @@ lib
 # build artifacts
 custom-elements.json
 
+!packages/icons/bin/build.js
+!packages/icons-ui/bin/build.js
 !packages/icons-workflow/bin/build.js
+
 !packages/icons-workflow/src/DefaultIcon.ts
 
 packages/*/src/**/*.css.js

@@ -467,7 +467,7 @@ export const menuWithValueSlots = (): TemplateResult => {
 headersAndIcons.storyName = 'Dynamic MenuItems';
 
 export const dynamicRemoval = (): TemplateResult => {
-    const removeItem = async function (event: FocusEvent) {
+    const removeItem = async function (event: FocusEvent): Promise<void> {
         await (event.target as MenuItem)?.updateComplete;
         (event.target as MenuItem)?.remove();
     };

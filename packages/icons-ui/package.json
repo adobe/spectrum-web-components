@@ -26,7 +26,9 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "node ./bin/build.js"
+        "build": "node ./bin/build.js",
+        "analyze": "yarn analyze:components --globs $INIT_CWD/icons/sp-*.ts $INIT_CWD/src/elements/[A-Z]*.ts --outdir packages/icons-ui",
+        "build:css": "yarn build:components:css"
     },
     "files": [
         "**/*.d.ts",
@@ -57,11 +59,9 @@
     "devDependencies": {
         "@spectrum-css/ui-icons": "^1.1.2",
         "@spectrum-css/ui-icons-s2": "npm:@spectrum-css/ui-icons@2.0.0-s2-foundations.10",
-        "case": "^1.6.1",
-        "cheerio": "^1.0.0-rc.2",
+        "case": "^1.6.3",
+        "cheerio": "^1.0.0",
         "fast-glob": "^3.3.3",
-        "fs": "^0.0.1-security",
-        "path": "^0.12.7",
         "prettier": "^3.5.3"
     },
     "types": "./src/index.d.ts",
