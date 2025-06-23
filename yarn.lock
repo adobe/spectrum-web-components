@@ -5121,8 +5121,8 @@ __metadata:
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3A.":
   version: 1.7.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=a12e58&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
-  checksum: 10c0/7c7a9400572bafb6d66de93d20eab2ec619002c926e5de3486977c8ce21f9d99e94d2a73a6b85e61cb7f961f82401b4b9737c5c2fe39b97da056f62d53fc1c46
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=f13400&locator=%40adobe%2Fspectrum-web-components%40workspace%3A."
+  checksum: 10c0/d16e7bb0cf3f2e5c587cde198b10e236ad5f8f7b6306413c2542994a74ddca28f449303d2c84a3e88fa6740ef90025415ebe182e821c6193cc91dd083fa36a43
   languageName: node
   linkType: hard
 
