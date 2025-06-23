@@ -17,7 +17,8 @@ export const argTypes = {
         description: 'Whether the Action Bar is open and visible.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -29,7 +30,8 @@ export const argTypes = {
         description: 'Whether the Action Bar is emphasized for the viewer.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -41,7 +43,8 @@ export const argTypes = {
         description: 'Whether to display tools in the action bar.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: true },
+            defaultValue: { summary: 'true' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',

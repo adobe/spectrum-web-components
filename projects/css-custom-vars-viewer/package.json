@@ -53,7 +53,7 @@
         "@storybook/addon-a11y": "^8.6.12",
         "@storybook/addon-essentials": "^8.6.12",
         "@storybook/addon-links": "^8.6.12",
-        "@storybook/web-components": "^7.5.0",
+        "@storybook/web-components": "^8.6.12",
         "@typescript-eslint/eslint-plugin": "^7.0.2",
         "@typescript-eslint/parser": "^7.0.2",
         "@web/dev-server": "^0.4.6",

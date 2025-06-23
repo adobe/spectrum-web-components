@@ -39,7 +39,8 @@ export default {
                 'Disable this control. It will not receive focus or events.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -52,7 +53,8 @@ export default {
                 'Whether the value of the Number Field can be determined for display.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -65,7 +67,8 @@ export default {
                 'When this control is read only, you will not be able to input an updated value.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -78,7 +81,8 @@ export default {
                 'An altered delivery with no background and only a bottom border.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -90,7 +94,8 @@ export default {
             description: 'Whether to remove the stepper UI from the control.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',
@@ -102,7 +107,7 @@ export default {
             description: 'Value to apply to the control.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -115,7 +120,7 @@ export default {
                 'Amount to change the value by when using the stepper or arrow key interactions.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -129,6 +134,7 @@ export default {
             table: {
                 type: { summary: 'number' },
                 defaultValue: { summary: 10 },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -140,6 +146,7 @@ export default {
             description: 'Placeholder to apply to the control.',
             table: {
                 type: { summary: 'string' },
+                category: 'Attributes',
             },
             control: {
                 type: 'text',
@@ -151,7 +158,7 @@ export default {
             description: 'The minimum value the control can be set to.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',
@@ -163,7 +170,7 @@ export default {
             description: 'The maximum value the control can be set to.',
             table: {
                 type: { summary: 'number' },
-                defaultValue: { summary: undefined },
+                category: 'Attributes',
             },
             control: {
                 type: 'number',

@@ -48,6 +48,24 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
         }
         if (color) {
             window.__swc_hack_knobs__.defaultColor = color;
+            if (document.body.matches(':has(#storybook-docs:not([hidden]))')) {
+                const docContainers = document.querySelectorAll(
+                    '.docs-story'
+                ) as NodeListOf<HTMLElement>;
+                if (docContainers?.length) {
+                    docContainers.forEach((el) => {
+                        el.style.setProperty(
+                            'color-scheme',
+                            color?.replace('est', '')
+                        );
+                    });
+                }
+            } else {
+                document.body.style.setProperty(
+                    'color-scheme',
+                    color?.replace('est', '')
+                );
+            }
         }
         if (scale) {
             window.__swc_hack_knobs__.defaultScale = scale;

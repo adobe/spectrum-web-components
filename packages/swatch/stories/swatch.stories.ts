@@ -41,7 +41,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The border to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -53,7 +55,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The rounding to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',
@@ -65,7 +69,9 @@ export default {
             type: { name: 'string', required: false },
             description: 'The shape to apply to the Swatch children.',
             table: {
-                defaultValue: { summary: '' },
+                type: { summary: 'string' },
+                defaultValue: { summary: 'normal' },
+                category: 'Attributes',
             },
             control: {
                 type: 'inline-radio',

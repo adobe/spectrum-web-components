@@ -204,7 +204,7 @@ jobs:
                   command: yarn docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp projects/documentation/custom-elements.json .storybook/
             - run:
                   name: Build documentation
                   command: yarn docs:build
@@ -227,7 +227,7 @@ jobs:
                   command: yarn docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp projects/documentation/custom-elements.json .storybook/
             - run:
                   name: Build documentation
                   command: yarn docs:build
