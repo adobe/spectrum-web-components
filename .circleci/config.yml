@@ -11,6 +11,10 @@ executors:
         resource_class: xlarge
         environment:
             NODE_ENV: development
+            AZCOPY_AUTO_LOGIN_TYPE: SPN
+            AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
+            AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
+            AZCOPY_TENANT_ID: $AZURE_TENANT_ID
 parameters:
     # In order to update the VRT baseline images:
     # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
@@ -23,6 +27,29 @@ parameters:
         type: string
         default: wireit
 commands:
+    install-azcopy:
+        description: 'Install AzCopy and set up authentication'
+        steps:
+            - run:
+                  name: Install AzCopy
+                  command: |
+                      # Create a bin directory in the home folder
+                      mkdir -p ~/bin
+                      cd ~/bin
+                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+                      tar -xf azcopy.tar.gz --strip-components=1
+                      chmod +x azcopy
+                      # Add to PATH
+                      echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
+                      source $BASH_ENV
+                      azcopy --version
+
+                      # Set up Azure authentication
+                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
+                      source $BASH_ENV
     downstream:
         steps:
             - checkout
@@ -101,6 +128,7 @@ commands:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
                   name: Deploy VRT Results to Azure Blob Storage
@@ -149,30 +177,10 @@ commands:
                       # Prepare files for deployment
                       cp projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
 
-                      # Check if AZURE_STORAGE_SAS_TOKEN is set
-                      if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                          echo "ERROR: AZURE_STORAGE_SAS_TOKEN environment variable is not set"
-                          echo "This token is required for Azure Blob Storage deployment"
-                          exit 1
-                      fi
-
-                      # Disable debug mode to prevent token leakage
-                      set +x
-
-                      # Clean the SAS token (remove any whitespace/newlines)
-                      CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
-
-                      # Install AzCopy
-                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-                      tar -xf azcopy.tar.gz --strip-components=1
-                      chmod +x azcopy
-                      export PATH=$PATH:$(pwd)
-                      azcopy --version
-
                       # Upload VRT results to Azure Blob Storage
                       echo "Uploading VRT results to ${PR_HASH}/${combination}/"
                       azcopy copy "test/visual/*" \
-                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/?${CLEAN_SAS_TOKEN}" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
                         --recursive \
                         --from-to LocalBlob
 
@@ -281,40 +289,21 @@ jobs:
             - run:
                   name: Build Storybook
                   command: yarn storybook:build
-            - run:
-                  name: Install AzCopy
-                  command: |
-                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-                      tar -xf azcopy.tar.gz --strip-components=1
-                      chmod +x azcopy
-                      export PATH=$PATH:$(pwd)
-                      azcopy --version
+            - install-azcopy
             - run:
                   name: Deploy Beta Documentation to Azure Blob Storage
                   command: |
-                      # Check if AZURE_STORAGE_SAS_TOKEN is set
-                      if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                          echo "Missing Azure Storage SAS Token"
-                          exit 1
-                      fi
-
-                      # Disable debug mode to prevent token leakage
-                      set +x
-
-                      # Clean the SAS token (remove any whitespace/newlines)
-                      CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
-
                       # Upload documentation to beta path
                       echo "Uploading documentation to beta/docs/"
                       azcopy copy "projects/documentation/dist/*" \
-                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/?${CLEAN_SAS_TOKEN}" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
                         --recursive \
                         --from-to LocalBlob
 
                       # Upload Storybook to beta path
                       echo "Uploading Storybook to beta/docs/storybook/"
                       azcopy copy "storybook-static/*" \
-                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/?${CLEAN_SAS_TOKEN}" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
                         --recursive \
                         --from-to LocalBlob
 
@@ -365,6 +354,7 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
                   name: Deploy Visual Tests to Azure Blob Storage
@@ -411,29 +401,10 @@ jobs:
                       # Prepare files for deployment
                       cp projects/documentation/content/favicon.ico test/visual/
 
-                      # Check if AZURE_STORAGE_SAS_TOKEN is set
-                      if [ -z "${AZURE_STORAGE_SAS_TOKEN}" ]; then
-                          echo "Missing Azure Storage SAS Token"
-                          exit 1
-                      fi
-
-                      # Disable debug mode to prevent token leakage
-                      set +x
-
-                      # Clean the SAS token (remove any whitespace/newlines)
-                      CLEAN_SAS_TOKEN=$(echo "${AZURE_STORAGE_SAS_TOKEN}" | tr -d '\n\r\t ')
-
-                      # Install AzCopy
-                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
-                      tar -xf azcopy.tar.gz --strip-components=1
-                      chmod +x azcopy
-                      export PATH=$PATH:$(pwd)
-                      azcopy --version
-
                       # Upload HCM VRT results to Azure Blob Storage
                       echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
                       azcopy copy "test/visual/*" \
-                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/?${CLEAN_SAS_TOKEN}" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
                         --recursive \
                         --from-to LocalBlob
 
