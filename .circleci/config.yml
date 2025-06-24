@@ -31,6 +31,7 @@ commands:
         description: 'Install AzCopy and set up authentication'
         steps:
             - run:
+                  when: always
                   name: Install AzCopy
                   command: |
                       # Create a bin directory in the home folder
