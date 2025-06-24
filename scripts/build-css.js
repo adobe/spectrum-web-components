@@ -19,11 +19,45 @@ import { processCSS } from './css-tools.js';
 
 async function buildCSS() {
     const promises = [];
-    for (const cssPath of await fg([
-        './packages/*/src/**/*.css',
-        './tools/*/src/*.css',
-        './tools/*/src/**/*.css',
-    ])) {
+
+    // Check if we're running for a specific package via Nx
+    const projectName = process.env.NX_PROJECT_NAME;
+    const projectRoot = process.env.NX_PROJECT_ROOT;
+
+    console.log('projectName', projectName);
+    console.log('projectRoot', projectRoot);
+
+    let cssPaths;
+
+    if (projectName && projectRoot) {
+        // Run for a single package
+        console.log(`Building CSS for package: ${projectName.yellow}`);
+
+        // Determine if this is a package or tool based on the project root
+        if (projectRoot.includes('/packages/')) {
+            cssPaths = await fg([`${projectRoot}/src/**/*.css`]);
+        } else if (projectRoot.includes('/tools/')) {
+            cssPaths = await fg([
+                `${projectRoot}/src/*.css`,
+                `${projectRoot}/src/**/*.css`,
+            ]);
+        } else {
+            console.log(
+                `Unknown project type for ${projectName}, skipping CSS build`
+            );
+            return;
+        }
+    } else {
+        // Run for all packages (original behavior)
+        console.log('Building CSS for all packages...');
+        cssPaths = await fg([
+            './packages/*/src/**/*.css',
+            './tools/*/src/*.css',
+            './tools/*/src/**/*.css',
+        ]);
+    }
+
+    for (const cssPath of cssPaths) {
         promises.push(
             processCSS(cssPath)
                 .then(() => console.log(`Processed ${cssPath.yellow}`))
