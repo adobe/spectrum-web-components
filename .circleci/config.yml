@@ -39,17 +39,14 @@ commands:
                       wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
                       tar -xf azcopy.tar.gz --strip-components=1
                       chmod +x azcopy
-                      # Add to PATH
+                      # Add to PATH and set environment variables
                       echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
-                      source $BASH_ENV
-                      azcopy --version
-
-                      # Add the environment variables to the bash environment
                       echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
                       echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
                       echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
                       echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
                       source $BASH_ENV
+                      azcopy --version
     downstream:
         steps:
             - checkout
