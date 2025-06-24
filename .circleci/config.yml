@@ -15,7 +15,6 @@ executors:
             AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
             AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
             AZCOPY_TENANT_ID: $AZURE_TENANT_ID
-            TEST_VAR: $TEST_VAR
 parameters:
     # In order to update the VRT baseline images:
     # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
@@ -45,8 +44,12 @@ commands:
                       source $BASH_ENV
                       azcopy --version
 
-                      # print environment variables
-                      echo ${TEST_VAR}
+                      # Add the environment variables to the bash environment
+                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
+                      source $BASH_ENV
     downstream:
         steps:
             - checkout
@@ -87,7 +90,6 @@ commands:
             regression_dir:
                 type: string
         steps:
-            - install-azcopy
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
