@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-progress-bar>` shows the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. It can represent determinate or indeterminate progress.
+An `<sp-progress-bar>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc. By default, progress bars have a blue fill that shows the progress.
 
 ### Usage
 
@@ -8,19 +8,19 @@ An `<sp-progress-bar>` shows the progression of a system operation such as downl
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/progress-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/progress-bar)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-evntgrmn)
 
-```
+```zsh
 yarn add @spectrum-web-components/progress-bar
 ```
 
 Import the side effectful registration of `<sp-progress-bar>` via:
 
-```
+```ts
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 ```
 
 When looking to leverage the `ProgressBar` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 ```
 
@@ -93,9 +93,16 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
+### Anatomy
 
-### Over background
+- **Label:** Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress.
+- **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track.
+
+Labels are set using the `label` slot and values are set using the `progress` slot.
+
+### Variants
+
+#### Over background
 
 When a progress bar needs to be placed on top of a colored background, use the over background progres bar as signified by `[over-background]`. This progress bar uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
 
@@ -111,7 +118,7 @@ When a progress bar needs to be placed on top of a colored background, use the o
 </div>
 ```
 
-### Indeterminate
+#### Indeterminate
 
 A progress bar can be either determinate or indeterminate as signified by `[indeterminate]`. By default, loaders are determinate. Use a determinate loader when progress can be calculated against a specific goal (e.g., downloading a file of a known size). Use an indeterminate loader when progress is happening but the time or effort to completion can’t be determined (e.g., attempting to reconnect to a server).
 
@@ -128,7 +135,7 @@ A progress bar can be either determinate or indeterminate as signified by `[inde
 
 The above `sp-progress-bar` also leverages the `aria-label` attribute in place of the `label` attribute in ensure that the element is labelled correctly without that label appearing visibly in the UI.
 
-### Side Label
+#### Side Label
 
 A progress bar can be delivered with its labeling displayed above its visual indicator or to either side. Use the boolean `[side-label]` attribute to define where this content should appear.
 
@@ -144,6 +151,6 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 </div>
 ```
 
-## Accessibility
+### Accessibility
 
 An `sp-progress-bar` element will register itself as a `role="progressbar"` element in the accessibility tree. Any value applied to the `label` attribute will be used both to visibly label the element and to set the `aria-label` attribute on the host. In cases where a visible label is not desired, be sure to include an `aria-label` attribute manually to ensure that the `sp-progress-bar` correctly fulfills its responsibilities to visitors of you site of all abilities.
