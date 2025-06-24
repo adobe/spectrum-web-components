@@ -1,12 +1,3 @@
-<sp-alert-banner open variant="info">
-    <div class="spectrum-InLineAlert-header">
-        <span>Deprecated</span>
-    </div>
-    <div class="spectrum-InLineAlert-content">
-        The <code>over-background</code> attribute has been deprecated and will be removed in a future release. Use <code>static-color="white"</code> instead.
-    </div>
-</sp-alert-banner>
-
 ## Overview
 
 An `<sp-progress-bar>` is used to visually show the progression of a system operation such as downloading, uploading, processing, etc. By default, progress bars have a blue fill that shows the progress.
