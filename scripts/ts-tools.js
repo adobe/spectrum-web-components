@@ -12,23 +12,8 @@
  * governing permissions and limitations under the License.
  */
 
-import fg from 'fast-glob';
 import { build } from 'esbuild';
 import fs from 'fs';
-
-const relativeImportRegex = RegExp(
-    'import([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
-    'g'
-);
-const relativeDynamicImportRegex = RegExp(
-    // eslint-disable-next-line prettier/prettier
-    'import[(]["|\'](?![a-zA-Z@])(..+)(?!.css).js["|\'][)]',
-    'g'
-);
-const relativeExportRegex = RegExp(
-    'export([^;]+)["|\'](?![a-zA-Z@])(..+)(?<!.css).js["|\'];',
-    'g'
-);
 
 const makeDev = {
     name: 'make-dev',
@@ -37,16 +22,16 @@ const makeDev = {
         build.onLoad({ filter: /\.ts$/ }, async (args) => {
             const js = await fs.promises.readFile(args.path, 'utf8');
             const relativeImportsProcessed = js.replace(
-                relativeImportRegex,
+                /import([^;]+)["|'](?![a-zA-Z@])(..+)(?<!.css).js["|'];/g,
                 "import$1'$2.dev.js'"
             );
             const relativeDynamicImportsProcessed =
                 relativeImportsProcessed.replace(
-                    relativeDynamicImportRegex,
+                    /import[(]["|'](?![a-zA-Z@])(..+)(?!.css).js["|'][)]/g,
                     "import('$1.dev.js')"
                 );
             const contents = relativeDynamicImportsProcessed.replace(
-                relativeExportRegex,
+                /export([^;]+)["|'](?![a-zA-Z@])(..+)(?<!.css).js["|'];/g,
                 "export$1'$2.dev.js'"
             );
             return {
@@ -118,18 +103,4 @@ export const buildPackage = async (paths) => {
     }
 
     return Promise.all(builds);
-};
-
-export const buildTSFiles = async () => {
-    return fg([
-        './packages/**/!(*.d).ts',
-        './tools/**/!(*.d).ts',
-        './test/plugins/**/!(*.d).ts',
-        './projects/story-decorator/**/!(*.d).ts',
-        './projects/vrt-compare/**/!(*.d).ts',
-        './test/lit-helpers.ts',
-        './test/testing-helpers.ts',
-        './test/testing-helpers-a11y.ts',
-        './test/visual/test.ts',
-    ]).then((files) => buildPackage(files));
 };

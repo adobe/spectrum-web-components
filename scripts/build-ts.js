@@ -12,6 +12,44 @@
  * governing permissions and limitations under the License.
  */
 
-import { buildTSFiles } from './ts-tools.js';
+import { buildPackage } from './ts-tools.js';
+import fg from 'fast-glob';
 
-await buildTSFiles();
+// Check if we're running for a specific package via Nx
+const projectName = process.env.NX_PROJECT_NAME;
+const projectRoot = process.env.NX_PROJECT_ROOT;
+
+let files;
+
+if (projectName && projectRoot) {
+    // Run for a single package
+    console.log(`Building TypeScript for package: ${projectName.yellow}`);
+
+    // Determine if this is a package or tool based on the project root
+    if (projectRoot.includes('/packages/')) {
+        files = await fg([`${projectRoot}/**/!(*.d).ts`]);
+    } else if (projectRoot.includes('/tools/')) {
+        files = await fg([`${projectRoot}/**/!(*.d).ts`]);
+    } else {
+        console.log(
+            `Unknown project type for ${projectName}, skipping TypeScript build`
+        );
+        return;
+    }
+} else {
+    // Run for all packages (original behavior)
+    console.log('Building TypeScript for all packages...');
+    files = await fg([
+        './packages/**/!(*.d).ts',
+        './tools/**/!(*.d).ts',
+        './test/plugins/**/!(*.d).ts',
+        './projects/story-decorator/**/!(*.d).ts',
+        './projects/vrt-compare/**/!(*.d).ts',
+        './test/lit-helpers.ts',
+        './test/testing-helpers.ts',
+        './test/testing-helpers-a11y.ts',
+        './test/visual/test.ts',
+    ]);
+}
+
+return buildPackage(files);

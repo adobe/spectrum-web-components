@@ -1,0 +1,12 @@
+{
+    "name": "base",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "tools/base/src",
+    "projectType": "library",
+    "tags": ["tool"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}
