@@ -14,9 +14,10 @@
 
 import path from 'path';
 import fs from 'fs';
-import { bundleAsync } from 'lightningcss';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
+
+import { bundleAsync } from 'lightningcss';
 import { stripIndent } from 'common-tags';
 import 'colors';
 
@@ -70,10 +71,15 @@ if (fs.existsSync(licensePath)) {
  * The output module includes license headers and wraps the CSS in a template literal.
  *
  * @param {string} cssPath - Path to the CSS file to process
+ * @param {Object} options - Options object
+ * @param {boolean} options.verbose - Whether to log verbose output
+ * @param {string} options.cwd - The current working directory
  * @returns {Promise<void>} A promise that resolves when processing is complete
- *
  */
-export const processCSS = async (cssPath) => {
+export const processCSS = async (
+    cssPath,
+    { verbose = false, cwd = path.join(__dirname, '..') } = {}
+) => {
     return bundleAsync({
         filename: cssPath,
         minify: true,
@@ -93,7 +99,9 @@ export const processCSS = async (cssPath) => {
         },
     })
         .then(({ code }) => {
-            log.success(cssPath.yellow + ' bundled successfully');
+            if (verbose) {
+                log.success(path.relative(cwd, cssPath).yellow + ' bundled');
+            }
 
             fs.writeFileSync(
                 `${cssPath}.ts`,
