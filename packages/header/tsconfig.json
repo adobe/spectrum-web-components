@@ -1,0 +1,19 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts", "src/**/*.ts", "stories/**/*.ts", "test/**/*.ts"],
+    "exclude": [],
+    "references": [
+        { "path": "../base" },
+        { "path": "../action-button" },
+        { "path": "../textfield" },
+        { "path": "../help-text" },
+        { "path": "../icons-ui" },
+        { "path": "../icons-workflow" },
+        { "path": "../reactive-controllers" },
+        { "path": "../shared" }
+    ]
+}
