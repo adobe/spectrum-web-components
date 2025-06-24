@@ -139,7 +139,7 @@ describe('Header', () => {
                 return [{ message: 'Title cannot be empty', type: 'empty' }];
             if (title.length > 50)
                 return [{ message: 'Title too long', type: 'length' }];
-            return [];
+            return null;
         };
 
         await elementUpdated(el);
@@ -153,17 +153,32 @@ describe('Header', () => {
 
         // Test empty title validation
         const titleInput = el.shadowRoot?.querySelector(
-            '.title-input input'
-        ) as HTMLInputElement;
+            '.title-input'
+        ) as HTMLElement;
         expect(titleInput).to.not.be.null;
 
-        titleInput.value = '';
-        titleInput.dispatchEvent(new Event('input'));
+        // Find the actual input element within the sp-textfield
+        const input = titleInput.shadowRoot?.querySelector(
+            'input'
+        ) as HTMLInputElement;
+        expect(input).to.not.be.null;
+
+        // Set empty value and trigger input event
+        input.value = '';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        await elementUpdated(el);
+
+        // Trigger save which will run validation
+        const saveButton = el.shadowRoot?.querySelector(
+            '.save-button'
+        ) as HTMLElement;
+        saveButton.click();
         await elementUpdated(el);
 
         const errorElement = el.shadowRoot?.querySelector(
             '.validation-errors sp-help-text'
         );
+        expect(errorElement).to.not.be.null;
         expect(errorElement?.textContent?.trim()).to.include(
             'Title cannot be empty'
         );
