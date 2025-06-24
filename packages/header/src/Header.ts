@@ -15,7 +15,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -52,9 +51,7 @@ export type HeaderValidationCallback = (
  * @fires sp-header-edit-save - Dispatched when edit is saved (L2 only)
  * @fires sp-header-edit-cancel - Dispatched when edit is cancelled (L2 only)
  */
-export class Header extends SizedMixin(SpectrumElement, {
-    noDefaultSize: true,
-}) {
+export class Header extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -169,14 +166,6 @@ export class Header extends SizedMixin(SpectrumElement, {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
-
-        if (changed.has('size')) {
-            this.actionElements.forEach((element) => {
-                if (element.tagName.startsWith('SP-')) {
-                    element.setAttribute('size', this.size);
-                }
-            });
-        }
     }
 
     private handleBackClick(): void {
@@ -312,7 +301,6 @@ export class Header extends SizedMixin(SpectrumElement, {
         return html`
             <sp-action-button
                 class="back-button"
-                size=${this.size}
                 quiet
                 ?disabled=${this.disableBack}
                 @click=${this.handleBackClick}

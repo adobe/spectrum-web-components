@@ -140,7 +140,7 @@ describe('Header', () => {
             if (title.length > 50)
                 return [{ message: 'Title too long', type: 'length' }];
             return null;
-        };
+        }; 
 
         await elementUpdated(el);
 

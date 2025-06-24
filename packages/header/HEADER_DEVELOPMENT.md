@@ -63,7 +63,6 @@ This header is designed for scalability and composability. All slots and EndActi
 - [ ] Implement title and subtitle slots
 - [ ] Add start and end action slots
 - [ ] Create proper slot management
-- [ ] Add size variants support
 
 ### 📋 Phase 4: L1 Storybook (1d)
 
@@ -138,7 +137,6 @@ This header is designed for scalability and composability. All slots and EndActi
 
 ### Technical Decisions Needed:
 
-- Should the component extend `SizedMixin` like Accordion? – not sure. Wh
 - How should the edit title state be managed (internal state vs external control)?
 - Should status slots support custom divider styling?
 - How to handle responsive behavior at different breakpoints?

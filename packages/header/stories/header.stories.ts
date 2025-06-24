@@ -28,11 +28,7 @@ export default {
             description:
                 'Header variant - L1 for top-level pages, L2 for sub-pages',
         },
-        size: {
-            control: { type: 'radio' },
-            options: ['s', 'm', 'l', 'xl'],
-            description: 'Size of the header',
-        },
+
         title: {
             control: { type: 'text' },
             description: 'Main title text',
@@ -63,7 +59,6 @@ interface Story<T> {
 
 interface HeaderArgs {
     variant: 'l1' | 'l2';
-    size: 's' | 'm' | 'l' | 'xl';
     title: string;
     subtitle: string;
     editableTitle: boolean;
@@ -77,7 +72,6 @@ interface HeaderArgs {
 
 const HeaderTemplate = ({
     variant = 'l1',
-    size = 'm',
     title = 'Page Title',
     subtitle = 'Subtitle description',
     editableTitle = false,
@@ -115,7 +109,6 @@ const HeaderTemplate = ({
     return html`
         <sp-header
             variant=${variant}
-            size=${size}
             title=${title}
             subtitle=${ifDefined(variant === 'l1' ? subtitle : undefined)}
             ?editable-title=${editableTitle}
@@ -196,24 +189,3 @@ L2EditableHeader.args = {
     showEndActions: false,
     showStatus: true,
 };
-
-export const HeaderSizes: Story<HeaderArgs> = () => html`
-    <div style="display: flex; flex-direction: column; gap: 2rem;">
-        <div>
-            <h3>Small (s)</h3>
-            ${HeaderTemplate({ size: 's', title: 'Small Header' })}
-        </div>
-        <div>
-            <h3>Medium (m) - Default</h3>
-            ${HeaderTemplate({ size: 'm', title: 'Medium Header' })}
-        </div>
-        <div>
-            <h3>Large (l)</h3>
-            ${HeaderTemplate({ size: 'l', title: 'Large Header' })}
-        </div>
-        <div>
-            <h3>Extra Large (xl)</h3>
-            ${HeaderTemplate({ size: 'xl', title: 'Extra Large Header' })}
-        </div>
-    </div>
-`;
