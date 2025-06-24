@@ -1,40 +1,16 @@
 {
-    "name": "button",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/button/src",
+    "name": "button",
     "projectType": "library",
+    "sourceRoot": "packages/button/src",
     "tags": ["component"],
     "targets": {
         "build": {},
-        "lint": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": [
-                    "stylelint --cache --allow-empty-input packages/button/**/*.css",
-                    "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts",
-                    "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.js"
-                ],
-                "parallel": true
-            }
-        },
-        "lint:css": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "stylelint --cache --allow-empty-input packages/button/**/*.css"
-            }
-        },
-        "lint:ts": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts"
-            }
-        },
-        "lint:js": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.js"
-            }
-        },
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
         "format": {
             "executor": "nx:run-commands",
             "options": {
@@ -57,16 +33,6 @@
                 "parallel": true
             }
         },
-        "format:ts": {
-            "executor": "nx:run-commands",
-            "options": {
-                "commands": [
-                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts",
-                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write packages/button/**/*.ts"
-                ],
-                "parallel": true
-            }
-        },
         "format:js": {
             "executor": "nx:run-commands",
             "options": {
@@ -82,6 +48,47 @@
             "options": {
                 "command": "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write packages/button/**/*.{md,json}"
             }
-        }
+        },
+        "format:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write packages/button/**/*.ts"
+                ],
+                "parallel": true
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "stylelint --cache --allow-empty-input packages/button/**/*.css",
+                    "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts",
+                    "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.js"
+                ],
+                "parallel": true
+            }
+        },
+        "lint:css": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "stylelint --cache --allow-empty-input packages/button/**/*.css"
+            }
+        },
+        "lint:js": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.js"
+            }
+        },
+        "lint:lit": {},
+        "lint:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern --quiet packages/button/**/*.ts"
+            }
+        },
+        "setup": {}
     }
 }

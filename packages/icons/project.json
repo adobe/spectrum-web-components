@@ -1,11 +1,25 @@
 {
-    "name": "icons",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/icons/src",
+    "name": "icons",
     "projectType": "library",
+    "sourceRoot": "packages/icons/src",
     "tags": ["icon"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
+        "lint": {},
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
         "setup": {
             "executor": "nx:run-commands",
             "options": {
@@ -13,8 +27,6 @@
                 "cwd": "{projectRoot}"
             },
             "outputs": ["{projectRoot}/**/*.svg.ts"]
-        },
-        "lint": {},
-        "format": {}
+        }
     }
 }

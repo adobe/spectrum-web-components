@@ -1,12 +1,25 @@
 {
-    "name": "opacity-checkerboard",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "tools/opacity-checkerboard/src",
+    "name": "opacity-checkerboard",
     "projectType": "library",
+    "sourceRoot": "tools/opacity-checkerboard/src",
     "tags": ["tool"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
         "lint": {},
-        "format": {}
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {}
     }
 }

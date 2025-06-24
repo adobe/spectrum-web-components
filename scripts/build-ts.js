@@ -12,44 +12,79 @@
  * governing permissions and limitations under the License.
  */
 
-import { buildPackage } from './ts-tools.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import fg from 'fast-glob';
+import 'colors';
 
-// Check if we're running for a specific package via Nx
-const projectName = process.env.NX_PROJECT_NAME;
-const projectRoot = process.env.NX_PROJECT_ROOT;
+import { buildPackage } from './ts-tools.js';
 
-let files;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDir = path.join(__dirname, '..');
+const taskName = 'build:ts';
 
-if (projectName && projectRoot) {
-    // Run for a single package
-    console.log(`Building TypeScript for package: ${projectName.yellow}`);
+async function buildTS({
+    verbose = process.env.NX_VERBOSE_LOGGING === 'true',
+} = {}) {
+    // Check if we're running for a specific package via Nx
+    const projectName = process.env.NX_TASK_TARGET_PROJECT;
 
-    // Determine if this is a package or tool based on the project root
-    if (projectRoot.includes('/packages/')) {
-        files = await fg([`${projectRoot}/**/!(*.d).ts`]);
-    } else if (projectRoot.includes('/tools/')) {
-        files = await fg([`${projectRoot}/**/!(*.d).ts`]);
-    } else {
-        console.log(
-            `Unknown project type for ${projectName}, skipping TypeScript build`
+    if (!projectName) {
+        return Promise.reject(
+            new Error(
+                `[${taskName}] Could not determine project name from NX_TASK_TARGET_PROJECT`
+            )
         );
-        return;
     }
-} else {
-    // Run for all packages (original behavior)
-    console.log('Building TypeScript for all packages...');
-    files = await fg([
-        './packages/**/!(*.d).ts',
-        './tools/**/!(*.d).ts',
-        './test/plugins/**/!(*.d).ts',
-        './projects/story-decorator/**/!(*.d).ts',
-        './projects/vrt-compare/**/!(*.d).ts',
-        './test/lit-helpers.ts',
-        './test/testing-helpers.ts',
-        './test/testing-helpers-a11y.ts',
-        './test/visual/test.ts',
-    ]);
+
+    // Run for a single package
+    const key = `[${taskName}] ${`@spectrum-web-components/${projectName}`.cyan}`;
+    console.time(key);
+
+    let cwd;
+
+    const files = (
+        await Promise.all(
+            ['packages', 'tools'].map(async (dir) => {
+                if (fs.existsSync(path.join(rootDir, dir, projectName))) {
+                    cwd = path.join(rootDir, dir, projectName);
+                    return await fg([`**/!(*.d).ts`], {
+                        cwd: path.join(rootDir, dir, projectName),
+                        absolute: true,
+                    });
+                }
+            })
+        )
+    )
+        .flat()
+        .filter(Boolean);
+
+    if (!files) {
+        return Promise.reject(
+            new Error(
+                `[${taskName}] No assets found for ${projectName}, skipping.`
+            )
+        );
+    }
+
+    if (verbose) {
+        console.log(`\n\n${key} 🔨`);
+        console.log(`${' '.padStart(30, '-')}`);
+    }
+    return buildPackage(files, { verbose, cwd })
+        .then(() => {
+            if (verbose) {
+                console.log(`${' '.padStart(30, '-')}`);
+                console.timeEnd(key);
+                console.log('');
+            }
+        })
+        .catch((error) => {
+            console.error(`[${taskName}] Error processing`, error);
+            process.exit(1);
+        });
 }
 
-return buildPackage(files);
+await buildTS();

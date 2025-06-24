@@ -1,48 +1,42 @@
 {
     "name": "@spectrum-web-components/picker-button",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "Web component implementation of a Spectrum design PickerButton",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/picker-button",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/picker-button"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/picker-button",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-picker-button.js": {
+            "default": "./sp-picker-button.js",
+            "development": "./sp-picker-button.dev.js"
+        },
         "./src/PickerButton.js": {
-            "development": "./src/PickerButton.dev.js",
-            "default": "./src/PickerButton.js"
+            "default": "./src/PickerButton.js",
+            "development": "./src/PickerButton.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./src/picker-button-overrides.css.js": "./src/picker-button-overrides.css.js",
-        "./src/picker-button.css.js": "./src/picker-button.css.js",
-        "./sp-picker-button.js": {
-            "development": "./sp-picker-button.dev.js",
-            "default": "./sp-picker-button.js"
-        }
+        "./src/picker-button.css.js": "./src/picker-button.css.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -51,6 +45,21 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/button": "1.7.0",
+        "@spectrum-web-components/icon": "1.7.0",
+        "@spectrum-web-components/icons-ui": "1.7.0",
+        "@spectrum-web-components/shared": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -63,17 +72,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/button": "1.7.0",
-        "@spectrum-web-components/icon": "1.7.0",
-        "@spectrum-web-components/icons-ui": "1.7.0",
-        "@spectrum-web-components/shared": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

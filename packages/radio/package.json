@@ -1,56 +1,50 @@
 {
     "name": "@spectrum-web-components/radio",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/radio",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/radio"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/radio",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-radio-group.js": {
+            "default": "./sp-radio-group.js",
+            "development": "./sp-radio-group.dev.js"
+        },
+        "./sp-radio.js": {
+            "default": "./sp-radio.js",
+            "development": "./sp-radio.dev.js"
+        },
         "./src/Radio.js": {
-            "development": "./src/Radio.dev.js",
-            "default": "./src/Radio.js"
+            "default": "./src/Radio.js",
+            "development": "./src/Radio.dev.js"
         },
         "./src/RadioGroup.js": {
-            "development": "./src/RadioGroup.dev.js",
-            "default": "./src/RadioGroup.js"
+            "default": "./src/RadioGroup.js",
+            "development": "./src/RadioGroup.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./src/radio-overrides.css.js": "./src/radio-overrides.css.js",
-        "./src/radio.css.js": "./src/radio.css.js",
-        "./sp-radio.js": {
-            "development": "./sp-radio.dev.js",
-            "default": "./sp-radio.js"
-        },
-        "./sp-radio-group.js": {
-            "development": "./sp-radio-group.dev.js",
-            "default": "./sp-radio-group.js"
-        }
+        "./src/radio.css.js": "./src/radio.css.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -59,6 +53,21 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/field-group": "1.7.0",
+        "@spectrum-web-components/help-text": "1.7.0",
+        "@spectrum-web-components/reactive-controllers": "1.7.0",
+        "@spectrum-web-components/shared": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -71,17 +80,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/field-group": "1.7.0",
-        "@spectrum-web-components/help-text": "1.7.0",
-        "@spectrum-web-components/reactive-controllers": "1.7.0",
-        "@spectrum-web-components/shared": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

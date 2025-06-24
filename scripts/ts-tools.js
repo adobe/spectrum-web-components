@@ -12,8 +12,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { build } from 'esbuild';
 import fs from 'fs';
+import { build } from 'esbuild';
 
 const makeDev = {
     name: 'make-dev',
@@ -42,7 +42,7 @@ const makeDev = {
     },
 };
 
-export const buildPackage = async (paths) => {
+export const buildPackage = async (paths, { verbose = false } = {}) => {
     const devPaths = paths.filter(
         (path) =>
             path.search('/test/') === -1 &&
@@ -65,6 +65,7 @@ export const buildPackage = async (paths) => {
         outbase: '.',
         sourcemap: true,
         target: ['es2018'],
+        logLevel: verbose ? 'info' : 'error',
     };
     if (devPaths.length) {
         builds.push(
@@ -74,7 +75,7 @@ export const buildPackage = async (paths) => {
                 define: { 'window.__swc.DEBUG': 'true' },
                 outExtension: { '.js': '.dev.js' },
                 plugins: devPlugins,
-            }).catch(() => process.exit(1))
+            })
         );
     }
     const prodConfig = {
@@ -88,7 +89,7 @@ export const buildPackage = async (paths) => {
                 ...prodConfig,
                 entryPoints: prodPath,
                 minify: true,
-            }).catch(() => process.exit(1))
+            })
         );
     }
     // Do not minify tools files, especially stories as it messes up the exports
@@ -98,7 +99,7 @@ export const buildPackage = async (paths) => {
             build({
                 ...prodConfig,
                 entryPoints: toolPaths,
-            }).catch(() => process.exit(1))
+            })
         );
     }
 

@@ -1,12 +1,25 @@
 {
-    "name": "split-view",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/split-view/src",
+    "name": "split-view",
     "projectType": "library",
+    "sourceRoot": "packages/split-view/src",
     "tags": ["component"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
         "lint": {},
-        "format": {}
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {}
     }
 }

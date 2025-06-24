@@ -1,12 +1,25 @@
 {
-    "name": "progress-circle",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/progress-circle/src",
+    "name": "progress-circle",
     "projectType": "library",
+    "sourceRoot": "packages/progress-circle/src",
     "tags": ["component"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
         "lint": {},
-        "format": {}
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {}
     }
 }

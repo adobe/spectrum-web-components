@@ -1,12 +1,25 @@
 {
-    "name": "top-nav",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/top-nav/src",
+    "name": "top-nav",
     "projectType": "library",
+    "sourceRoot": "packages/top-nav/src",
     "tags": ["component"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
         "lint": {},
-        "format": {}
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {}
     }
 }

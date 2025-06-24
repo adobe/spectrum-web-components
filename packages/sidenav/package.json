@@ -1,68 +1,62 @@
 {
     "name": "@spectrum-web-components/sidenav",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/sidenav",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/sidenav"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/sidenav",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-sidenav-heading.js": {
+            "default": "./sp-sidenav-heading.js",
+            "development": "./sp-sidenav-heading.dev.js"
+        },
+        "./sp-sidenav-item.js": {
+            "default": "./sp-sidenav-item.js",
+            "development": "./sp-sidenav-item.dev.js"
+        },
+        "./sp-sidenav.js": {
+            "default": "./sp-sidenav.js",
+            "development": "./sp-sidenav.dev.js"
+        },
         "./src/Sidenav.js": {
-            "development": "./src/Sidenav.dev.js",
-            "default": "./src/Sidenav.js"
+            "default": "./src/Sidenav.js",
+            "development": "./src/Sidenav.dev.js"
         },
         "./src/SidenavHeading.js": {
-            "development": "./src/SidenavHeading.dev.js",
-            "default": "./src/SidenavHeading.js"
+            "default": "./src/SidenavHeading.js",
+            "development": "./src/SidenavHeading.dev.js"
         },
         "./src/SidenavItem.js": {
-            "development": "./src/SidenavItem.dev.js",
-            "default": "./src/SidenavItem.js"
+            "default": "./src/SidenavItem.js",
+            "development": "./src/SidenavItem.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./src/sidenav-heading-overrides.css.js": "./src/sidenav-heading-overrides.css.js",
         "./src/sidenav-heading.css.js": "./src/sidenav-heading.css.js",
         "./src/sidenav-item-overrides.css.js": "./src/sidenav-item-overrides.css.js",
         "./src/sidenav-item.css.js": "./src/sidenav-item.css.js",
         "./src/sidenav-overrides.css.js": "./src/sidenav-overrides.css.js",
-        "./src/sidenav.css.js": "./src/sidenav.css.js",
-        "./sp-sidenav.js": {
-            "development": "./sp-sidenav.dev.js",
-            "default": "./sp-sidenav.js"
-        },
-        "./sp-sidenav-heading.js": {
-            "development": "./sp-sidenav-heading.dev.js",
-            "default": "./sp-sidenav-heading.js"
-        },
-        "./sp-sidenav-item.js": {
-            "development": "./sp-sidenav-item.dev.js",
-            "default": "./sp-sidenav-item.js"
-        }
+        "./src/sidenav.css.js": "./src/sidenav.css.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -71,6 +65,19 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/reactive-controllers": "1.7.0",
+        "@spectrum-web-components/shared": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -83,15 +90,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/reactive-controllers": "1.7.0",
-        "@spectrum-web-components/shared": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

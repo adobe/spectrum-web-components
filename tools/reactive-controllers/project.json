@@ -1,12 +1,25 @@
 {
-    "name": "reactive-controllers",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "tools/reactive-controllers/src",
+    "name": "reactive-controllers",
     "projectType": "library",
+    "sourceRoot": "tools/reactive-controllers/src",
     "tags": ["tool"],
     "targets": {
         "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
         "lint": {},
-        "format": {}
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {}
     }
 }

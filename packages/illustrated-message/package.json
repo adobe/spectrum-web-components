@@ -1,48 +1,42 @@
 {
     "name": "@spectrum-web-components/illustrated-message",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/illustrated-message",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/illustrated-message"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/illustrated-message",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-illustrated-message.js": {
+            "default": "./sp-illustrated-message.js",
+            "development": "./sp-illustrated-message.dev.js"
+        },
         "./src/IllustratedMessage.js": {
-            "development": "./src/IllustratedMessage.dev.js",
-            "default": "./src/IllustratedMessage.js"
+            "default": "./src/IllustratedMessage.js",
+            "development": "./src/IllustratedMessage.dev.js"
         },
         "./src/illustrated-message.css.js": "./src/illustrated-message.css.js",
         "./src/illustratedmessage-overrides.css.js": "./src/illustratedmessage-overrides.css.js",
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./sp-illustrated-message.js": {
-            "development": "./sp-illustrated-message.dev.js",
-            "default": "./sp-illustrated-message.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -51,6 +45,18 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/styles": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -63,14 +69,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/styles": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

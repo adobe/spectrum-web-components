@@ -1,49 +1,60 @@
 {
     "name": "@spectrum-web-components/tabs",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/tabs",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/tabs"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/tabs",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-tab-panel.js": {
+            "default": "./sp-tab-panel.js",
+            "development": "./sp-tab-panel.dev.js"
+        },
+        "./sp-tab.js": {
+            "default": "./sp-tab.js",
+            "development": "./sp-tab.dev.js"
+        },
+        "./sp-tabs-overflow.js": {
+            "default": "./sp-tabs-overflow.js",
+            "development": "./sp-tabs-overflow.dev.js"
+        },
+        "./sp-tabs.js": {
+            "default": "./sp-tabs.js",
+            "development": "./sp-tabs.dev.js"
+        },
         "./src/Tab.js": {
-            "development": "./src/Tab.dev.js",
-            "default": "./src/Tab.js"
+            "default": "./src/Tab.js",
+            "development": "./src/Tab.dev.js"
         },
         "./src/TabPanel.js": {
-            "development": "./src/TabPanel.dev.js",
-            "default": "./src/TabPanel.js"
+            "default": "./src/TabPanel.js",
+            "development": "./src/TabPanel.dev.js"
         },
         "./src/Tabs.js": {
-            "development": "./src/Tabs.dev.js",
-            "default": "./src/Tabs.js"
+            "default": "./src/Tabs.js",
+            "development": "./src/Tabs.dev.js"
         },
         "./src/TabsOverflow.js": {
-            "development": "./src/TabsOverflow.dev.js",
-            "default": "./src/TabsOverflow.js"
+            "default": "./src/TabsOverflow.js",
+            "development": "./src/TabsOverflow.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./src/tab-panel.css.js": "./src/tab-panel.css.js",
         "./src/tab.css.js": "./src/tab.css.js",
@@ -51,27 +62,10 @@
         "./src/tabs-overrides.css.js": "./src/tabs-overrides.css.js",
         "./src/tabs-sizes-overrides.css.js": "./src/tabs-sizes-overrides.css.js",
         "./src/tabs-sizes.css.js": "./src/tabs-sizes.css.js",
-        "./src/tabs.css.js": "./src/tabs.css.js",
-        "./sp-tabs.js": {
-            "development": "./sp-tabs.dev.js",
-            "default": "./sp-tabs.js"
-        },
-        "./sp-tab.js": {
-            "development": "./sp-tab.dev.js",
-            "default": "./sp-tab.js"
-        },
-        "./sp-tab-panel.js": {
-            "development": "./sp-tab-panel.dev.js",
-            "default": "./sp-tab-panel.js"
-        },
-        "./sp-tabs-overflow.js": {
-            "development": "./sp-tabs-overflow.dev.js",
-            "default": "./sp-tabs-overflow.js"
-        }
+        "./src/tabs.css.js": "./src/tabs.css.js"
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -80,6 +74,23 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/action-button": "1.7.0",
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/icon": "1.7.0",
+        "@spectrum-web-components/icons-ui": "1.7.0",
+        "@spectrum-web-components/reactive-controllers": "1.7.0",
+        "@spectrum-web-components/shared": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -92,19 +103,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/action-button": "1.7.0",
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/icon": "1.7.0",
-        "@spectrum-web-components/icons-ui": "1.7.0",
-        "@spectrum-web-components/reactive-controllers": "1.7.0",
-        "@spectrum-web-components/shared": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

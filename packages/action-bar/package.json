@@ -1,48 +1,42 @@
 {
     "name": "@spectrum-web-components/action-bar",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-bar",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/action-bar"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-bar",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
+        "./sp-action-bar.js": {
+            "default": "./sp-action-bar.js",
+            "development": "./sp-action-bar.dev.js"
+        },
         "./src/ActionBar.js": {
-            "development": "./src/ActionBar.dev.js",
-            "default": "./src/ActionBar.js"
+            "default": "./src/ActionBar.js",
+            "development": "./src/ActionBar.dev.js"
         },
         "./src/action-bar-overrides.css.js": "./src/action-bar-overrides.css.js",
         "./src/action-bar.css.js": "./src/action-bar.css.js",
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./sp-action-bar.js": {
-            "development": "./sp-action-bar.dev.js",
-            "default": "./sp-action-bar.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -51,6 +45,21 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/action-group": "1.7.0",
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/button": "1.7.0",
+        "@spectrum-web-components/field-label": "1.7.0",
+        "@spectrum-web-components/popover": "1.7.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -63,17 +72,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/action-group": "1.7.0",
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/button": "1.7.0",
-        "@spectrum-web-components/field-label": "1.7.0",
-        "@spectrum-web-components/popover": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./sp-*.js",
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }
