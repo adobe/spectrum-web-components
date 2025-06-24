@@ -1,0 +1,12 @@
+{
+    "name": "styles",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "tools/styles/src",
+    "projectType": "library",
+    "tags": ["tool"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

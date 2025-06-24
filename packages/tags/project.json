@@ -1,0 +1,12 @@
+{
+    "name": "tags",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/tags/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "alert-banner",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/alert-banner/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

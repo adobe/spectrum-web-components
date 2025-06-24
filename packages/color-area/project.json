@@ -1,0 +1,12 @@
+{
+    "name": "color-area",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/color-area/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

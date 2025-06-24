@@ -1,0 +1,12 @@
+{
+    "name": "avatar",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/avatar/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

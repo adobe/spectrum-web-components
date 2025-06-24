@@ -1,0 +1,12 @@
+{
+    "name": "alert-dialog",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/alert-dialog/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "lint": {},
+        "format": {}
+    }
+}

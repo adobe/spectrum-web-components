@@ -1,0 +1,158 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "cli": {
+        "analytics": false,
+        "packageManager": "yarn",
+        "warnings": {
+            "versionMismatch": true
+        }
+    },
+    "targetDefaults": {
+        "build": {
+            "cache": true,
+            "dependsOn": ["^build", "setup", "build:ts", "build:types"],
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'Successfully built {projectName}'"
+            }
+        },
+        "build:css": {
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/**/*.css",
+                "{workspaceRoot}/scripts/build-css.js",
+                "{workspaceRoot}/scripts/css-tools.js"
+            ],
+            "options": {
+                "command": "node ./scripts/build-css.js"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.css.ts",
+                "{projectRoot}/**/*.css.ts"
+            ]
+        },
+        "build:ts": {
+            "dependsOn": ["setup"],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/**/*.ts",
+                "!{projectRoot}/**/*.d.ts",
+                "{workspaceRoot}/scripts/build-ts.js"
+            ],
+            "options": {
+                "command": "node ./scripts/build-ts.js"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.js",
+                "{projectRoot}/**/*.js.map",
+                "!{projectRoot}/bin/*.js"
+            ]
+        },
+        "build:types": {
+            "dependsOn": ["setup"],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{workspaceRoot}/tsconfig-all.json",
+                "{projectRoot}/**/*.ts",
+                "{projectRoot}/**/tsconfig.json"
+            ],
+            "options": {
+                "command": "tsc --build tsconfig-all.json --pretty"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.d.ts",
+                "{projectRoot}/**/tsconfig.tsbuildinfo",
+                "!{projectRoot}/**/local.d.ts",
+                "!{projectRoot}/src/version.d.ts"
+            ]
+        },
+        "clean": {
+            "dependsOn": ["clean:ts"],
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'Successfully cleaned {projectName}'"
+            }
+        },
+        "clean:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "rimraf {projectRoot}/tsconfig.tsbuildinfo"
+            }
+        },
+        "format": {
+            "dependsOn": ["format:css", "format:ts", "format:js"],
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'Successfully formatted {projectName}'"
+            }
+        },
+        "format:css": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "stylelint --fix --cache --allow-empty-input {projectRoot}/*.css {projectRoot}/**/*.css",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/*.css {projectRoot}/**/*.css"
+                ],
+                "parallel": false
+            }
+        },
+        "format:js": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet {projectRoot}/**/*.js",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/**/*.js"
+                ],
+                "parallel": false
+            }
+        },
+        "format:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet {projectRoot}/**/*.ts",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/**/*.ts"
+                ],
+                "parallel": false
+            }
+        },
+        "lint": {
+            "dependsOn": ["lint:css", "lint:ts", "lint:js", "lint:lit"],
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'Successfully linted {projectName}'"
+            }
+        },
+        "lint:css": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "stylelint --cache --allow-empty-input {projectRoot}/*.css {projectRoot}/**/*.css || exit 0"
+            }
+        },
+        "lint:js": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern {projectRoot}/**/*.ts || exit 0"
+            }
+        },
+        "lint:lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "lit-analyzer"
+            }
+        },
+        "lint:ts": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern {projectRoot}/**/*.ts || exit 0"
+            }
+        },
+        "setup": {
+            "dependsOn": ["build:css"],
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'Successfully setup {projectName}'"
+            }
+        }
+    }
+}
