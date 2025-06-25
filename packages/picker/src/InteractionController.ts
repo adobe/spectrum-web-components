@@ -156,6 +156,12 @@ export class InteractionController implements ReactiveController {
     public handlePointerdown(_event: PointerEvent): void {}
 
     public handleButtonFocus(event: FocusEvent): void {
+        // Set focused to true when button receives focus (including from clicks)
+        // But only if the picker is not pending, to maintain existing behavior
+        if (!this.host.pending && !this.host.focused) {
+            this.host.focused = true;
+        }
+
         // When focus comes from a pointer event, and the related target is the Menu,
         // we don't want to reopen the Menu.
         if (
