@@ -122,14 +122,21 @@ L2 headers support editable titles with built-in validation:
 
 ## Slots
 
-| Slot Name        | Description                  | Variants |
-| ---------------- | ---------------------------- | -------- |
-| `title`          | Main title content           | L1, L2   |
-| `subtitle`       | Subtitle content             | L1 only  |
-| `start-actions`  | Action buttons at the start  | L1, L2   |
-| `end-actions`    | Action buttons at the end    | L1, L2   |
-| `middle-actions` | Action buttons in the middle | L2 only  |
-| `status`         | Status indicators and badges | L2 only  |
+| Slot Name        | Description                  | L1 Support | L2 Support |
+| ---------------- | ---------------------------- | ---------- | ---------- |
+| `title`          | Main title content           | ✅         | ✅         |
+| `subtitle`       | Subtitle content             | ✅         | ❌         |
+| `start-actions`  | Action buttons at the start  | ✅         | ✅         |
+| `middle-actions` | Action buttons in the middle | ❌         | ✅         |
+| `end-actions`    | Action buttons at the end    | ✅         | ✅         |
+| `status`         | Status indicators and badges | ❌         | ✅         |
+
+### Action Slot Limitations
+
+- **L1 Header**: Maximum **2 action slots** (start-actions, end-actions)
+- **L2 Header**: Maximum **3 action slots** (start-actions, middle-actions, end-actions)
+- Each slot can contain multiple action buttons
+- Visual dividers between action slots are available for L2 headers only
 
 ## Events
 
@@ -142,16 +149,18 @@ L2 headers support editable titles with built-in validation:
 
 ## Properties
 
-| Property          | Attribute        | Type                        | Default | Description                           |
-| ----------------- | ---------------- | --------------------------- | ------- | ------------------------------------- |
-| `variant`         | `variant`        | `'l1' \| 'l2'`              | `'l1'`  | Header variant                        |
-| `title`           | `title`          | `string`                    | `''`    | Main title text                       |
-| `subtitle`        | `subtitle`       | `string`                    | `''`    | Subtitle text (L1 only)               |
-| `editableTitle`   | `editable-title` | `boolean`                   | `false` | Whether title can be edited (L2 only) |
-| `showBack`        | `show-back`      | `boolean`                   | `false` | Show back button (L2 only)            |
-| `disableBack`     | `disable-back`   | `boolean`                   | `false` | Disable back button                   |
-| `size`            | `size`           | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'`   | Size of the header                    |
-| `titleValidation` | -                | `HeaderValidationCallback`  | -       | Custom validation function            |
+| Property             | Attribute              | Type                        | Default | Description                             |
+| -------------------- | ---------------------- | --------------------------- | ------- | --------------------------------------- |
+| `variant`            | `variant`              | `'l1' \| 'l2'`              | `'l1'`  | Header variant                          |
+| `title`              | `title`                | `string`                    | `''`    | Main title text                         |
+| `subtitle`           | `subtitle`             | `string`                    | `''`    | Subtitle text (L1 only)                 |
+| `editableTitle`      | `editable-title`       | `boolean`                   | `false` | Whether title can be edited (L2 only)   |
+| `showBack`           | `show-back`            | `boolean`                   | `false` | Show back button (L2 only)              |
+| `disableBack`        | `disable-back`         | `boolean`                   | `false` | Disable back button                     |
+| `showActionDividers` | `show-action-dividers` | `boolean`                   | `false` | Show dividers between action slots (L2) |
+| `actionDividerSize`  | `action-divider-size`  | `'s' \| 'm' \| 'l'`         | `'s'`   | Size of action dividers                 |
+| `size`               | `size`                 | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'`   | Size of the header                      |
+| `titleValidation`    | -                      | `HeaderValidationCallback`  | -       | Custom validation function              |
 
 ## Accessibility
 

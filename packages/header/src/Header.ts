@@ -33,6 +33,7 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
@@ -55,16 +56,21 @@ export type HeaderValidationCallback = (
  *
  * @slot title - The main title content
  * @slot subtitle - The subtitle content (L1 only)
- * @slot start-actions - Action buttons at the start of the header
- * @slot end-actions - Action buttons at the end of the header
+ * @slot start-actions - Action buttons at the start of the header (L1: ✅, L2: ✅)
+ * @slot middle-actions - Middle action buttons (L1: ❌, L2: ✅ only)
+ * @slot end-actions - Action buttons at the end of the header (L1: ✅, L2: ✅)
  * @slot status - Status indicators and badges (L2 only)
- * @slot middle-actions - Middle action buttons (L2 only)
  *
  * @fires sp-header-back - Dispatched when back button is clicked (L2 only)
  * @fires sp-header-edit-start - Dispatched when edit mode is started (L2 only)
  * @fires sp-header-edit-save - Dispatched when edit is saved (L2 only)
  * @fires sp-header-edit-cancel - Dispatched when edit is cancelled (L2 only)
  * @fires sp-header-title-renamed - Dispatched when title is successfully renamed (L2 only)
+ *
+ * ## Action Slot Limitations:
+ * - **L1 Header**: Maximum 2 action slots (start-actions, end-actions)
+ * - **L2 Header**: Maximum 3 action slots (start-actions, middle-actions, end-actions)
+ * - **Dividers**: Only available for L2 headers with `show-action-dividers` property
  */
 export class Header extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -167,6 +173,18 @@ export class Header extends SpectrumElement {
     @state()
     private showToast = false;
 
+    /**
+     * Whether to show dividers between action slots
+     */
+    @property({ type: Boolean, attribute: 'show-action-dividers' })
+    public showActionDividers = false;
+
+    /**
+     * Size of the action dividers
+     */
+    @property({ type: String, attribute: 'action-divider-size' })
+    public actionDividerSize: 's' | 'm' | 'l' = 's';
+
     @query('#title-input')
     private titleInput?: HTMLInputElement;
 
@@ -188,6 +206,22 @@ export class Header extends SpectrumElement {
             ...(this.middleActionNodes || []),
             ...(this.endActionNodes || []),
         ].filter((node: HTMLElement) => node.nodeType === Node.ELEMENT_NODE);
+    }
+
+    private get hasStartActions(): boolean {
+        return this.startActionNodes && this.startActionNodes.length > 0;
+    }
+
+    private get hasMiddleActions(): boolean {
+        return this.middleActionNodes && this.middleActionNodes.length > 0;
+    }
+
+    private get hasEndActions(): boolean {
+        return this.endActionNodes && this.endActionNodes.length > 0;
+    }
+
+    private get shouldShowDividers(): boolean {
+        return this.showActionDividers && this.variant === 'l2';
     }
 
     focusGroupController = new FocusGroupController<HTMLElement>(this, {
@@ -511,22 +545,20 @@ export class Header extends SpectrumElement {
         `;
 
         return html`
-            <div class="title-container">
-                ${this.variant === 'l1'
-                    ? html`
-                          <h1 class="title">${titleContent}</h1>
-                      `
-                    : html`
-                          <h2 class="title">${titleContent}</h2>
-                      `}
-                ${this.variant === 'l1' && this.subtitle
-                    ? html`
-                          <p class="subtitle">
-                              <slot name="subtitle">${this.subtitle}</slot>
-                          </p>
-                      `
-                    : nothing}
-            </div>
+            ${this.variant === 'l1'
+                ? html`
+                      <h1 class="title">${titleContent}</h1>
+                  `
+                : html`
+                      <h2 class="title">${titleContent}</h2>
+                  `}
+            ${this.variant === 'l1' && this.subtitle
+                ? html`
+                      <p class="subtitle">
+                          <slot name="subtitle">${this.subtitle}</slot>
+                      </p>
+                  `
+                : nothing}
         `;
     }
 
@@ -615,24 +647,114 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    private renderActionDivider(): TemplateResult | typeof nothing {
+        if (!this.shouldShowDividers) {
+            return nothing;
+        }
+
+        return html`
+            <sp-divider
+                class="action-divider"
+                size=${this.actionDividerSize}
+                vertical
+                style="align-self: stretch; height: auto;"
+            ></sp-divider>
+        `;
+    }
+
+    private renderStartActions(): TemplateResult | typeof nothing {
+        if (!this.hasStartActions) {
+            return nothing;
+        }
+
+        return html`
+            <div class="actions-start" role="group" aria-label="Start actions">
+                <slot name="start-actions"></slot>
+            </div>
+        `;
+    }
+
+    private renderMiddleActions(): TemplateResult | typeof nothing {
+        if (this.variant !== 'l2' || !this.hasMiddleActions) {
+            return nothing;
+        }
+
+        return html`
+            <div class="actions-middle" role="group" aria-label="Middle actions">
+                <slot name="middle-actions"></slot>
+            </div>
+        `;
+    }
+
+    private renderEndActions(): TemplateResult | typeof nothing {
+        if (!this.hasEndActions) {
+            return nothing;
+        }
+
+        return html`
+            <div class="actions-end" role="group" aria-label="End actions">
+                <slot name="end-actions"></slot>
+            </div>
+        `;
+    }
+
+    private renderActionSlots(): TemplateResult | typeof nothing {
+        const hasAnyActions = this.hasStartActions || this.hasMiddleActions || this.hasEndActions;
+        
+        if (!hasAnyActions) {
+            return nothing;
+        }
+
+        const parts: (TemplateResult | typeof nothing)[] = [];
+
+        // Add start actions
+        if (this.hasStartActions) {
+            const startActions = this.renderStartActions();
+            if (startActions !== nothing) {
+                parts.push(startActions);
+            }
+        }
+
+        // Add divider and middle actions for L2
+        if (this.variant === 'l2' && this.hasMiddleActions) {
+            if (parts.length > 0 && this.shouldShowDividers) {
+                const divider = this.renderActionDivider();
+                if (divider !== nothing) {
+                    parts.push(divider);
+                }
+            }
+            const middleActions = this.renderMiddleActions();
+            if (middleActions !== nothing) {
+                parts.push(middleActions);
+            }
+        }
+
+        // Add divider and end actions
+        if (this.hasEndActions) {
+            if (parts.length > 0 && this.shouldShowDividers) {
+                const divider = this.renderActionDivider();
+                if (divider !== nothing) {
+                    parts.push(divider);
+                }
+            }
+            const endActions = this.renderEndActions();
+            if (endActions !== nothing) {
+                parts.push(endActions);
+            }
+        }
+
+        return html`${parts.filter(part => part !== nothing)}`;
+    }
+
     protected override render(): TemplateResult {
         return html`
-            <header class="header ${this.variant}">
+            <header class="header ${this.variant}" role="banner">
                 <div class="main-row">
-                    ${this.renderBackButton()} ${this.renderTitle()}
-                    <div class="actions-start">
-                        <slot name="start-actions"></slot>
+                    ${this.renderBackButton()}
+                    <div class="title-container">
+                        ${this.renderTitle()}
                     </div>
-                    ${this.variant === 'l2'
-                        ? html`
-                              <div class="actions-middle">
-                                  <slot name="middle-actions"></slot>
-                              </div>
-                          `
-                        : nothing}
-                    <div class="actions-end">
-                        <slot name="end-actions"></slot>
-                    </div>
+                    ${this.renderActionSlots()}
                 </div>
                 ${this.renderStatusRow()}
             </header>

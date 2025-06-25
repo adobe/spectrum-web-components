@@ -209,6 +209,35 @@
     margin-inline-start: auto;
 }
 
+/* Action dividers */
+.action-divider {
+    flex-shrink: 0;
+    margin-inline: var(--spectrum-spacing-100);
+    opacity: 0.8;
+}
+
+/* Improved action spacing when dividers are used */
+:host([show-action-dividers]) .actions-start,
+:host([show-action-dividers]) .actions-middle {
+    margin-inline-end: 0;
+}
+
+/* Action slot semantic grouping improvements */
+.actions-start[role="group"],
+.actions-middle[role="group"],
+.actions-end[role="group"] {
+    /* Accessible grouping - no visual changes needed */
+}
+
+/* Enhanced focus management for action groups */
+.actions-start:focus-within,
+.actions-middle:focus-within,
+.actions-end:focus-within {
+    /* Focus ring shows around the entire group when focused */
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+    border-radius: var(--spectrum-corner-radius-75);
+}
 /* Status row (L2 only) - matches Figma spacing */
 .status-row {
     display: flex;
