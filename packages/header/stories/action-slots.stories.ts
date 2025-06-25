@@ -171,7 +171,6 @@ export const ActionSlotsWithDividers = (): TemplateResult => {
                 title="Content Management System"
                 show-back
                 show-action-dividers
-                action-divider-size="m"
                 @sp-header-back=${() => console.log('Back clicked')}
             >
                 <sp-action-button
@@ -210,7 +209,6 @@ export const ActionSlotsWithDividers = (): TemplateResult => {
                 title="Project Collaboration Hub"
                 show-back
                 show-action-dividers
-                action-divider-size="l"
                 @sp-header-back=${() => console.log('Back clicked')}
             >
                 <sp-action-button
@@ -327,7 +325,6 @@ export const ComplexActionGroups = (): TemplateResult => {
                 title="Q1 2025 Marketing Campaign"
                 show-back
                 show-action-dividers
-                action-divider-size="m"
                 editable-title
                 @sp-header-back=${() => console.log('Back clicked')}
             >
@@ -396,186 +393,6 @@ export const ComplexActionGroups = (): TemplateResult => {
     `;
 };
 
-export const DividerComparison = (): TemplateResult => {
-    const handleAction = (action: string) => () =>
-        console.log(`${action} clicked`);
-
-    return html`
-        <div style="margin: 20px;">
-            <h3>Action Divider Comparison</h3>
-
-            <h4>Without Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="Standard Layout"
-                show-back
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Edit')}
-                >
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Delete')}
-                >
-                    <sp-icon-delete slot="icon"></sp-icon-delete>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
-
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save
-                </sp-button>
-            </sp-header>
-
-            <h4>With Small Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="With Small Dividers"
-                show-back
-                show-action-dividers
-                action-divider-size="s"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Edit')}
-                >
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Delete')}
-                >
-                    <sp-icon-delete slot="icon"></sp-icon-delete>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
-
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save
-                </sp-button>
-            </sp-header>
-
-            <h4>With Medium Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="With Medium Dividers"
-                show-back
-                show-action-dividers
-                action-divider-size="m"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Edit')}
-                >
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Delete')}
-                >
-                    <sp-icon-delete slot="icon"></sp-icon-delete>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
-
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save
-                </sp-button>
-            </sp-header>
-
-            <h4>With Large Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="With Large Dividers"
-                show-back
-                show-action-dividers
-                action-divider-size="l"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Edit')}
-                >
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Delete')}
-                >
-                    <sp-icon-delete slot="icon"></sp-icon-delete>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
-
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save
-                </sp-button>
-            </sp-header>
-        </div>
-    `;
-};
 
 export const AccessibilityFeatures = (): TemplateResult => {
     const handleAction = (action: string) => () =>
@@ -867,67 +684,309 @@ export const SlotLimitations = (): TemplateResult => {
 
     return html`
         <div style="margin: 20px;">
-            <h3>Action Slot Limitations by Variant</h3>
+            <h3>Action Slot Limitations</h3>
+            <p>
+                <strong>L1 Header:</strong> Maximum 2 action slots (start,
+                end)<br />
+                <strong>L2 Header:</strong> Maximum 3 action slots (start,
+                middle, end)<br />
+                <strong>Dividers:</strong> Only available for L2 headers with
+                <code>show-action-dividers</code> property
+            </p>
 
-            <h4>L1 Header - Maximum 2 Slots (start-actions, end-actions)</h4>
+            <h4>L1 - Attempting Middle Actions (Invalid)</h4>
             <sp-header
                 variant="l1"
-                title="L1 With Two Action Slots"
-                subtitle="Start and end actions only"
+                title="Invalid L1 Configuration"
+                subtitle="Middle actions are not supported in L1"
             >
-                <!-- Start Actions Slot -->
-                <sp-action-button
+                <sp-button
                     slot="start-actions"
-                    quiet
-                    @click=${handleAction('Settings')}
+                    @click=${handleAction('Start')}
                 >
-                    <sp-icon-settings slot="icon"></sp-icon-settings>
-                    Settings
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Share')}
-                >
-                    <sp-icon-share slot="icon"></sp-icon-share>
-                    Share
-                </sp-action-button>
-
-                <!-- End Actions Slot -->
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
+                    Start
                 </sp-button>
+
+                <!-- This should NOT render in L1 -->
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Middle')}
+                >
+                    Middle (Hidden)
+                </sp-button>
+
                 <sp-button
                     slot="end-actions"
                     variant="accent"
-                    @click=${handleAction('Publish')}
+                    @click=${handleAction('End')}
                 >
-                    Publish
+                    End
                 </sp-button>
-
-                <!-- IMPORTANT: middle-actions slot is NOT available for L1 -->
-                <!-- This would be ignored: <sp-button slot="middle-actions">Won't Show</sp-button> -->
             </sp-header>
 
-            <h4>
-                L2 Header - Maximum 3 Slots (start-actions, middle-actions,
-                end-actions)
-            </h4>
+            <h4>L2 - All Valid Slots</h4>
             <sp-header
                 variant="l2"
-                title="L2 With Three Action Slots"
+                title="Valid L2 Configuration"
                 show-back
                 show-action-dividers
                 @sp-header-back=${() => console.log('Back clicked')}
             >
-                <!-- Start Actions Slot -->
+                <sp-button
+                    slot="start-actions"
+                    @click=${handleAction('Start')}
+                >
+                    Start
+                </sp-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Middle')}
+                >
+                    Middle
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    variant="accent"
+                    @click=${handleAction('End')}
+                >
+                    End
+                </sp-button>
+            </sp-header>
+
+            <h4>Empty Slots Handling</h4>
+            <sp-header
+                variant="l2"
+                title="Empty Slots Test"
+                show-back
+                show-action-dividers
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <!-- Only middle actions provided -->
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Lonely Middle')}
+                >
+                    Only Middle
+                </sp-button>
+            </sp-header>
+        </div>
+    `;
+};
+
+export const OverflowBasicDemo = (): TemplateResult => {
+    const handleAction = (action: string) => () =>
+        console.log(`${action} clicked`);
+
+    return html`
+        <div style="margin: 20px;">
+            <h3>Phase 9 - Overflow Handling Demo</h3>
+            <p>
+                Resize the window to see actions move to the overflow menu when
+                space is limited.
+            </p>
+
+            <h4>Basic Overflow Behavior</h4>
+            <sp-header
+                variant="l2"
+                title="Project Management Dashboard"
+                show-back
+                enable-overflow
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    data-priority="low"
+                    @click=${handleAction('Settings')}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                </sp-action-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Export')}
+                >
+                    Export
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Import')}
+                >
+                    Import
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="high"
+                    @click=${handleAction('Clone')}
+                >
+                    Clone Project
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    data-priority="critical"
+                    variant="accent"
+                    @click=${handleAction('Save')}
+                >
+                    Save Changes
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    data-priority="high"
+                    @click=${handleAction('Publish')}
+                >
+                    Publish
+                </sp-button>
+            </sp-header>
+
+            <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 6px;">
+                <h5>Action Priorities in This Example:</h5>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>Critical:</strong> Save Changes (always visible)</li>
+                    <li><strong>High:</strong> Clone Project, Publish</li>
+                    <li><strong>Medium:</strong> Export, Import</li>
+                    <li><strong>Low:</strong> Settings (first to overflow)</li>
+                </ul>
+            </div>
+        </div>
+    `;
+};
+
+export const OverflowWithConstraints = (): TemplateResult => {
+    const handleAction = (action: string) => () =>
+        console.log(`${action} clicked`);
+
+    return html`
+        <div style="margin: 20px;">
+            <h3>Overflow with Constraints</h3>
+
+            <h4>Maximum 3 Visible Actions</h4>
+            <sp-header
+                variant="l2"
+                title="Content Editor"
+                show-back
+                enable-overflow
+                max-visible-actions="3"
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <sp-button
+                    slot="start-actions"
+                    data-priority="critical"
+                    @click=${handleAction('Undo')}
+                >
+                    Undo
+                </sp-button>
+                <sp-button
+                    slot="start-actions"
+                    data-priority="critical"
+                    @click=${handleAction('Redo')}
+                >
+                    Redo
+                </sp-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="high"
+                    @click=${handleAction('Bold')}
+                >
+                    Bold
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="high"
+                    @click=${handleAction('Italic')}
+                >
+                    Italic
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Format')}
+                >
+                    Format
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    data-priority="critical"
+                    variant="accent"
+                    @click=${handleAction('Save')}
+                >
+                    Save
+                </sp-button>
+            </sp-header>
+
+            <h4>Low Overflow Threshold (Aggressive)</h4>
+            <sp-header
+                variant="l2"
+                title="Aggressive Overflow Example"
+                show-back
+                enable-overflow
+                overflow-threshold="200"
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <sp-button
+                    slot="start-actions"
+                    data-priority="critical"
+                    @click=${handleAction('Critical 1')}
+                >
+                    Critical Action
+                </sp-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="high"
+                    @click=${handleAction('High 1')}
+                >
+                    High Priority
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Medium 1')}
+                >
+                    Medium Priority
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    data-priority="low"
+                    @click=${handleAction('Low 1')}
+                >
+                    Low Priority
+                </sp-button>
+            </sp-header>
+        </div>
+    `;
+};
+
+export const OverflowMixedContent = (): TemplateResult => {
+    const handleAction = (action: string) => () =>
+        console.log(`${action} clicked`);
+
+    return html`
+        <div style="margin: 20px;">
+            <h3>Overflow with Mixed Content Types</h3>
+
+            <h4>Buttons, Action Buttons, and Icon Actions</h4>
+            <sp-header
+                variant="l2"
+                title="Mixed Content Dashboard"
+                show-back
+                enable-overflow
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <!-- Icon-only actions (typically low priority) -->
                 <sp-action-button
                     slot="start-actions"
                     quiet
                     @click=${handleAction('Edit')}
                 >
                     <sp-icon-edit slot="icon"></sp-icon-edit>
-                    Edit
                 </sp-action-button>
                 <sp-action-button
                     slot="start-actions"
@@ -935,59 +994,42 @@ export const SlotLimitations = (): TemplateResult => {
                     @click=${handleAction('Delete')}
                 >
                     <sp-icon-delete slot="icon"></sp-icon-delete>
-                    Delete
+                </sp-action-button>
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    @click=${handleAction('Duplicate')}
+                >
+                    <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
                 </sp-action-button>
 
-                <!-- Middle Actions Slot (L2 ONLY) -->
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
+                <!-- Text buttons (medium priority) -->
                 <sp-button
                     slot="middle-actions"
                     @click=${handleAction('Preview')}
                 >
                     Preview
                 </sp-button>
-
-                <!-- End Actions Slot -->
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Export')}
+                >
                     Export
                 </sp-button>
                 <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save Changes
-                </sp-button>
-            </sp-header>
-
-            <h4>L1 Attempted with Middle Actions (Won't Render)</h4>
-            <sp-header
-                variant="l1"
-                title="L1 Ignores Middle Actions"
-                subtitle="Middle actions are ignored in L1 variant"
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Settings')}
-                >
-                    <sp-icon-settings slot="icon"></sp-icon-settings>
-                    Settings
-                </sp-action-button>
-
-                <!-- This middle-actions slot will NOT render in L1 -->
-                <sp-button
                     slot="middle-actions"
-                    @click=${handleAction('Ignored')}
+                    @click=${handleAction('Share')}
                 >
-                    This Won't Show
+                    Share
                 </sp-button>
 
+                <!-- Primary actions (high priority) -->
+                <sp-button
+                    slot="end-actions"
+                    @click=${handleAction('Save Draft')}
+                >
+                    Save Draft
+                </sp-button>
                 <sp-button
                     slot="end-actions"
                     variant="accent"
@@ -997,62 +1039,335 @@ export const SlotLimitations = (): TemplateResult => {
                 </sp-button>
             </sp-header>
 
-            <div
-                style="background: #f0f8ff; padding: 16px; border-radius: 8px; margin-top: 16px;"
+            <div style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 6px;">
+                <h5>Automatic Priority Detection:</h5>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>Icon-only actions:</strong> Low priority (overflow first)</li>
+                    <li><strong>Text buttons:</strong> Medium priority</li>
+                    <li><strong>Accent buttons:</strong> High priority</li>
+                    <li><strong>"Publish" text:</strong> Critical priority (always visible)</li>
+                </ul>
+            </div>
+        </div>
+    `;
+};
+
+export const OverflowDisabledComparison = (): TemplateResult => {
+    const handleAction = (action: string) => () =>
+        console.log(`${action} clicked`);
+
+    return html`
+        <div style="margin: 20px;">
+            <h3>Overflow Disabled vs Enabled Comparison</h3>
+
+            <h4>Overflow Disabled (Default Legacy Behavior)</h4>
+            <sp-header
+                variant="l2"
+                title="Legacy Behavior - No Overflow"
+                show-back
+                enable-overflow="false"
+                @sp-header-back=${() => console.log('Back clicked')}
             >
-                <h4 style="margin-top: 0;">📋 Action Slot Constraints</h4>
-                <ul>
-                    <li>
-                        <strong>L1 Header:</strong>
-                        Maximum 2 action slots
-                        <ul>
-                            <li>
-                                ✅
-                                <code>start-actions</code>
-                                - Left-aligned actions
-                            </li>
-                            <li>
-                                ❌
-                                <code>middle-actions</code>
-                                - Not available in L1
-                            </li>
-                            <li>
-                                ✅
-                                <code>end-actions</code>
-                                - Right-aligned actions
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>L2 Header:</strong>
-                        Maximum 3 action slots
-                        <ul>
-                            <li>
-                                ✅
-                                <code>start-actions</code>
-                                - Left-aligned actions
-                            </li>
-                            <li>
-                                ✅
-                                <code>middle-actions</code>
-                                - Center actions (L2 only)
-                            </li>
-                            <li>
-                                ✅
-                                <code>end-actions</code>
-                                - Right-aligned actions
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <strong>Dividers:</strong>
-                        Only available for L2 headers with
-                        <code>show-action-dividers</code>
-                    </li>
-                    <li>
-                        <strong>Multiple Actions:</strong>
-                        Each slot can contain multiple buttons
-                    </li>
+                <sp-button
+                    slot="start-actions"
+                    @click=${handleAction('Action 1')}
+                >
+                    Action 1
+                </sp-button>
+                <sp-button
+                    slot="start-actions"
+                    @click=${handleAction('Action 2')}
+                >
+                    Action 2
+                </sp-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 3')}
+                >
+                    Action 3
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 4')}
+                >
+                    Action 4
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 5')}
+                >
+                    Action 5
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    @click=${handleAction('Action 6')}
+                >
+                    Action 6
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    variant="accent"
+                    @click=${handleAction('Action 7')}
+                >
+                    Action 7
+                </sp-button>
+            </sp-header>
+
+            <h4>Overflow Enabled (Smart Responsive Behavior)</h4>
+            <sp-header
+                variant="l2"
+                title="Smart Overflow Management"
+                show-back
+                enable-overflow
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <sp-button
+                    slot="start-actions"
+                    @click=${handleAction('Action 1')}
+                >
+                    Action 1
+                </sp-button>
+                <sp-button
+                    slot="start-actions"
+                    @click=${handleAction('Action 2')}
+                >
+                    Action 2
+                </sp-button>
+
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 3')}
+                >
+                    Action 3
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 4')}
+                >
+                    Action 4
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    @click=${handleAction('Action 5')}
+                >
+                    Action 5
+                </sp-button>
+
+                <sp-button
+                    slot="end-actions"
+                    @click=${handleAction('Action 6')}
+                >
+                    Action 6
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    variant="accent"
+                    @click=${handleAction('Action 7')}
+                >
+                    Action 7
+                </sp-button>
+            </sp-header>
+
+            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 6px;">
+                <h5>💡 Try resizing your browser window to see the difference!</h5>
+                <p>
+                    The first header will overflow its container and potentially break the layout.
+                    The second header will intelligently move actions to an overflow menu.
+                </p>
+            </div>
+        </div>
+    `;
+};
+
+export const OverflowAdvancedScenarios = (): TemplateResult => {
+    const handleAction = (action: string) => () =>
+        console.log(`${action} clicked`);
+
+    return html`
+        <div style="margin: 20px;">
+            <h3>Advanced Overflow Scenarios</h3>
+
+            <h4>Real-World Example: Document Editor</h4>
+            <sp-header
+                variant="l2"
+                title="Annual Report 2024.docx"
+                show-back
+                enable-overflow
+                editable-title
+                @sp-header-back=${() => console.log('Back clicked')}
+                @sp-header-title-renamed=${(event: CustomEvent) =>
+                    console.log('Document renamed:', event.detail)}
+            >
+                <!-- File operations -->
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    data-priority="medium"
+                    @click=${handleAction('Open File')}
+                >
+                    <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                </sp-action-button>
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    data-priority="low"
+                    @click=${handleAction('Settings')}
+                >
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                </sp-action-button>
+
+                <!-- Formatting tools -->
+                <sp-button
+                    slot="middle-actions"
+                    size="s"
+                    data-priority="medium"
+                    @click=${handleAction('Bold')}
+                >
+                    B
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    size="s"
+                    data-priority="medium"
+                    @click=${handleAction('Italic')}
+                >
+                    I
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    size="s"
+                    data-priority="low"
+                    @click=${handleAction('Underline')}
+                >
+                    U
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="low"
+                    @click=${handleAction('Insert Table')}
+                >
+                    Table
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="low"
+                    @click=${handleAction('Insert Image')}
+                >
+                    Image
+                </sp-button>
+
+                <!-- Save operations -->
+                <sp-button
+                    slot="end-actions"
+                    data-priority="high"
+                    @click=${handleAction('Save')}
+                >
+                    Save
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Export PDF')}
+                >
+                    Export PDF
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    variant="accent"
+                    data-priority="critical"
+                    @click=${handleAction('Share')}
+                >
+                    Share
+                </sp-button>
+            </sp-header>
+
+            <h4>E-commerce Admin: Product Management</h4>
+            <sp-header
+                variant="l2"
+                title="Product: Wireless Headphones Pro"
+                show-back
+                enable-overflow
+                max-visible-actions="4"
+                @sp-header-back=${() => console.log('Back clicked')}
+            >
+                <!-- Product actions -->
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    data-priority="medium"
+                    @click=${handleAction('View Product')}
+                >
+                    <sp-icon-view slot="icon"></sp-icon-view>
+                </sp-action-button>
+                <sp-action-button
+                    slot="start-actions"
+                    quiet
+                    data-priority="low"
+                    @click=${handleAction('Duplicate')}
+                >
+                    <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
+                </sp-action-button>
+
+                <!-- Inventory management -->
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="high"
+                    @click=${handleAction('Update Stock')}
+                >
+                    Update Stock
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Set Sale Price')}
+                >
+                    Set Sale
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="medium"
+                    @click=${handleAction('Manage Variants')}
+                >
+                    Variants
+                </sp-button>
+                <sp-button
+                    slot="middle-actions"
+                    data-priority="low"
+                    @click=${handleAction('View Analytics')}
+                >
+                    Analytics
+                </sp-button>
+
+                <!-- Publishing -->
+                <sp-button
+                    slot="end-actions"
+                    data-priority="high"
+                    @click=${handleAction('Save Draft')}
+                >
+                    Save Draft
+                </sp-button>
+                <sp-button
+                    slot="end-actions"
+                    variant="accent"
+                    data-priority="critical"
+                    @click=${handleAction('Publish')}
+                >
+                    Publish
+                </sp-button>
+            </sp-header>
+
+            <div style="margin-top: 20px; padding: 15px; background: #d4edda; border-radius: 6px;">
+                <h5>✅ Phase 9 Features Demonstrated:</h5>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>✅ ResizeObserver-based responsive behavior</li>
+                    <li>✅ Priority-based action management</li>
+                    <li>✅ Overflow menu with action delegation</li>
+                    <li>✅ Configurable overflow thresholds</li>
+                    <li>✅ Maximum visible actions limits</li>
+                    <li>✅ Smart action width estimation</li>
+                    <li>✅ Seamless integration with existing features</li>
                 </ul>
             </div>
         </div>

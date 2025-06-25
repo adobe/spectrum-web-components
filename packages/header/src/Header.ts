@@ -39,6 +39,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 
 import styles from './header.css.js';
 
@@ -50,6 +55,9 @@ export type HeaderValidationError = {
 export type HeaderValidationCallback = (
     value: string
 ) => HeaderValidationError[] | null;
+
+export type HeaderOverflowBehavior = 'hide' | 'menu' | 'scroll';
+export type HeaderActionPriority = 'low' | 'medium' | 'high' | 'critical';
 
 /**
  * @element sp-header
@@ -174,16 +182,69 @@ export class Header extends SpectrumElement {
     private showToast = false;
 
     /**
-     * Size of the action dividers
+     * Track overflow state
      */
-    @property({ type: String, attribute: 'action-divider-size' })
-    public actionDividerSize: 's' | 'm' | 'l' = 's';
+    @state()
+    private isOverflowing = false;
+
+    /**
+     * Actions currently in overflow menu, grouped by slot
+     */
+    @state()
+    private overflowActions: {
+        startActions: HTMLElement[];
+        middleActions: HTMLElement[];
+        endActions: HTMLElement[];
+    } = {
+        startActions: [],
+        middleActions: [],
+        endActions: [],
+    };
+
+    /**
+     * Actions currently visible
+     */
+    @state()
+    private visibleActions: HTMLElement[] = [];
+
+    /**
+     * Available width for actions
+     */
+    @state()
+    private availableWidth = 0;
+
+    /**
+     * How to handle overflow of action slots
+     */
+    @property({ type: String, attribute: 'overflow-behavior' })
+    public overflowBehavior: HeaderOverflowBehavior = 'menu';
+
+    /**
+     * Enable responsive overflow handling
+     */
+    @property({ type: Boolean, attribute: 'enable-overflow' })
+    public enableOverflow = true;
+
+    /**
+     * Minimum space (px) required before triggering overflow
+     */
+    @property({ type: Number, attribute: 'overflow-threshold' })
+    public overflowThreshold = 120;
+
+    /**
+     * Maximum actions to show before overflow (0 = no limit)
+     */
+    @property({ type: Number, attribute: 'max-visible-actions' })
+    public maxVisibleActions = 0;
 
     @query('#title-input')
     private titleInput?: HTMLInputElement;
 
     @query('.title-text')
     private titleTextElement?: HTMLElement;
+
+    @query('.main-row')
+    private mainRowElement?: HTMLElement;
 
     @queryAssignedElements({ slot: 'start-actions', flatten: true })
     private startActionNodes!: HTMLElement[];
@@ -219,6 +280,12 @@ export class Header extends SpectrumElement {
         elements: () => this.actionElements,
         isFocusableElement: (el: HTMLElement) => !el.hasAttribute('disabled'),
     });
+
+    private resizeObserver?: ResizeObserver;
+    private actionPriorityMap = new WeakMap<
+        HTMLElement,
+        HeaderActionPriority
+    >();
 
     public override focus(): void {
         if (this.editMode) {
@@ -447,11 +514,242 @@ export class Header extends SpectrumElement {
     public override connectedCallback(): void {
         super.connectedCallback();
         document.addEventListener('click', this.handleOutsideClick);
+
+        if (this.enableOverflow) {
+            this.setupResizeObserver();
+        }
     }
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
         document.removeEventListener('click', this.handleOutsideClick);
+
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect();
+        }
+    }
+
+    private setupResizeObserver(): void {
+        if (!this.resizeObserver) {
+            this.resizeObserver = new ResizeObserver(() => {
+                this.updateComplete.then(() => {
+                    this.handleResize();
+                });
+            });
+        }
+
+        this.updateComplete.then(() => {
+            if (this.mainRowElement) {
+                this.resizeObserver!.observe(this.mainRowElement);
+            }
+        });
+    }
+
+    private handleResize(): void {
+        if (!this.enableOverflow || !this.mainRowElement) return;
+
+        this.calculateAvailableSpace();
+        this.manageActionOverflow();
+    }
+
+    private calculateAvailableSpace(): void {
+        if (!this.mainRowElement) return;
+
+        const containerWidth = this.mainRowElement.offsetWidth;
+        const backButtonWidth =
+            this.querySelector('.back-button')?.getBoundingClientRect().width ||
+            0;
+        const titleWidth =
+            this.querySelector('.title-container')?.getBoundingClientRect()
+                .width || 0;
+        const gap = 12; // CSS gap value in pixels
+
+        this.availableWidth =
+            containerWidth -
+            backButtonWidth -
+            titleWidth -
+            gap * 3 -
+            this.overflowThreshold;
+    }
+
+    private manageActionOverflow(): void {
+        if (!this.enableOverflow) return;
+
+        const allActions = [...this.actionElements];
+        if (allActions.length === 0) return;
+
+        // Sort actions by priority (critical first, low last)
+        const sortedActions = this.sortActionsByPriority(allActions);
+
+        let currentWidth = 0;
+        const visible: HTMLElement[] = [];
+        const overflow = {
+            startActions: [] as HTMLElement[],
+            middleActions: [] as HTMLElement[],
+            endActions: [] as HTMLElement[],
+        };
+
+        for (const action of sortedActions) {
+            const actionWidth = this.getActionWidth(action);
+
+            if (
+                this.maxVisibleActions > 0 &&
+                visible.length >= this.maxVisibleActions
+            ) {
+                this.addActionToOverflowGroup(action, overflow);
+                continue;
+            }
+
+            if (currentWidth + actionWidth <= this.availableWidth) {
+                visible.push(action);
+                currentWidth += actionWidth;
+            } else {
+                this.addActionToOverflowGroup(action, overflow);
+            }
+        }
+
+        // Always show overflow menu if there are overflow actions
+        const totalOverflowActions =
+            overflow.startActions.length +
+            overflow.middleActions.length +
+            overflow.endActions.length;
+        const needsOverflowMenu = totalOverflowActions > 0;
+        if (needsOverflowMenu) {
+            const overflowMenuWidth = 40; // Estimated width of overflow menu button
+            if (
+                currentWidth + overflowMenuWidth > this.availableWidth &&
+                visible.length > 0
+            ) {
+                // Move the last visible action to overflow to make room for the menu
+                const lastVisible = visible.pop()!;
+                this.addActionToOverflowGroup(lastVisible, overflow);
+            }
+        }
+
+        this.visibleActions = visible;
+        this.overflowActions = overflow;
+        this.isOverflowing = needsOverflowMenu;
+
+        this.updateActionVisibility();
+    }
+
+    private sortActionsByPriority(actions: HTMLElement[]): HTMLElement[] {
+        return actions.sort((a, b) => {
+            const priorityA = this.getActionPriority(a);
+            const priorityB = this.getActionPriority(b);
+
+            const priorityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+            return priorityOrder[priorityA] - priorityOrder[priorityB];
+        });
+    }
+
+    private getActionPriority(action: HTMLElement): HeaderActionPriority {
+        // Check for explicit priority attribute
+        const priority = action.getAttribute(
+            'data-priority'
+        ) as HeaderActionPriority;
+        if (
+            priority &&
+            ['low', 'medium', 'high', 'critical'].includes(priority)
+        ) {
+            return priority;
+        }
+
+        // Check cached priority
+        if (this.actionPriorityMap.has(action)) {
+            return this.actionPriorityMap.get(action)!;
+        }
+
+        // Determine priority based on action characteristics
+        let inferredPriority: HeaderActionPriority = 'medium';
+
+        // Primary/accent buttons are typically high priority
+        if (
+            action.getAttribute('variant') === 'accent' ||
+            action.hasAttribute('variant')
+        ) {
+            inferredPriority = 'high';
+        }
+
+        // Buttons with "save", "publish", "submit" text are critical
+        const text = action.textContent?.toLowerCase() || '';
+        if (
+            text.includes('save') ||
+            text.includes('publish') ||
+            text.includes('submit')
+        ) {
+            inferredPriority = 'critical';
+        }
+
+        // Icon-only actions are typically lower priority
+        if (action.hasAttribute('quiet') && !action.textContent?.trim()) {
+            inferredPriority = 'low';
+        }
+
+        this.actionPriorityMap.set(action, inferredPriority);
+        return inferredPriority;
+    }
+
+    private getActionWidth(action: HTMLElement): number {
+        // If action is currently visible, get its actual width
+        if (action.offsetWidth > 0) {
+            return action.offsetWidth + 8; // Add gap
+        }
+
+        // Estimate width based on content
+        const text = action.textContent?.trim() || '';
+        const hasIcon = action.querySelector('[slot="icon"]') !== null;
+
+        let estimatedWidth = 32; // Base button padding
+
+        if (hasIcon) {
+            estimatedWidth += 20; // Icon width
+        }
+
+        if (text) {
+            estimatedWidth += text.length * 8; // Rough character width
+        }
+
+        return Math.min(estimatedWidth, 200); // Cap at reasonable maximum
+    }
+
+    private addActionToOverflowGroup(
+        action: HTMLElement,
+        overflow: {
+            startActions: HTMLElement[];
+            middleActions: HTMLElement[];
+            endActions: HTMLElement[];
+        }
+    ): void {
+        // Determine which slot this action belongs to
+        if (this.startActionNodes.includes(action)) {
+            overflow.startActions.push(action);
+        } else if (this.middleActionNodes.includes(action)) {
+            overflow.middleActions.push(action);
+        } else if (this.endActionNodes.includes(action)) {
+            overflow.endActions.push(action);
+        }
+    }
+
+    private updateActionVisibility(): void {
+        // Hide all actions first
+        this.actionElements.forEach((action) => {
+            action.style.display = 'none';
+        });
+
+        // Show visible actions
+        this.visibleActions.forEach((action) => {
+            action.style.display = '';
+        });
+    }
+
+    private handleOverflowMenuAction(action: HTMLElement): void {
+        // Clone the action's click behavior
+        const clickEvent = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+        });
+        action.dispatchEvent(clickEvent);
     }
 
     private renderBackButton(): TemplateResult | typeof nothing {
@@ -641,7 +939,7 @@ export class Header extends SpectrumElement {
         return html`
             <sp-divider
                 class="action-divider"
-                size=${this.actionDividerSize}
+                size="s"
                 vertical
                 style="align-self: stretch; height: auto;"
             ></sp-divider>
@@ -694,6 +992,106 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    private renderOverflowMenu(): TemplateResult | typeof nothing {
+        const totalActions =
+            this.overflowActions.startActions.length +
+            this.overflowActions.middleActions.length +
+            this.overflowActions.endActions.length;
+
+        if (!this.isOverflowing || totalActions === 0) {
+            return nothing;
+        }
+
+        const renderActionGroup = (actions: HTMLElement[]) => {
+            return actions
+                .map((action) => {
+                    const textContent = action.textContent?.trim();
+                    const ariaLabel = action.getAttribute('aria-label');
+                    const text = textContent || ariaLabel;
+
+                    if (!text) {
+                        console.error(
+                            'sp-header: Action element missing accessible label',
+                            {
+                                element: action,
+                                tagName: action.tagName,
+                                className: action.className,
+                                id: action.id,
+                                attributes: Array.from(action.attributes).map(
+                                    (attr) => `${attr.name}="${attr.value}"`
+                                ),
+                                innerHTML: action.innerHTML,
+                                message:
+                                    'Action should have either text content or aria-label attribute for accessibility',
+                            }
+                        );
+                        return nothing;
+                    }
+
+                    const isDisabled = action.hasAttribute('disabled');
+
+                    return html`
+                        <sp-menu-item
+                            ?disabled=${isDisabled}
+                            @click=${() =>
+                                this.handleOverflowMenuAction(action)}
+                        >
+                            ${text}
+                        </sp-menu-item>
+                    `;
+                })
+                .filter((item) => item !== nothing) as TemplateResult[];
+        };
+
+        const menuItems: TemplateResult[] = [];
+
+        // Add start actions
+        if (this.overflowActions.startActions.length > 0) {
+            menuItems.push(
+                ...renderActionGroup(this.overflowActions.startActions)
+            );
+        }
+
+        // Add divider and middle actions (L2 only)
+        if (
+            this.variant === 'l2' &&
+            this.overflowActions.middleActions.length > 0
+        ) {
+            if (menuItems.length > 0) {
+                menuItems.push(html`
+                    <sp-menu-divider></sp-menu-divider>
+                `);
+            }
+            menuItems.push(
+                ...renderActionGroup(this.overflowActions.middleActions)
+            );
+        }
+
+        // Add divider and end actions
+        if (this.overflowActions.endActions.length > 0) {
+            if (menuItems.length > 0) {
+                menuItems.push(html`
+                    <sp-menu-divider></sp-menu-divider>
+                `);
+            }
+            menuItems.push(
+                ...renderActionGroup(this.overflowActions.endActions)
+            );
+        }
+
+        return html`
+            <sp-action-menu
+                class="overflow-menu"
+                placement="bottom-end"
+                quiet
+                label="More actions"
+            >
+                <sp-icon-more slot="icon"></sp-icon-more>
+                ${menuItems}
+            </sp-action-menu>
+        `;
+    }
+
     private renderActionSlots(): TemplateResult | typeof nothing {
         const parts: TemplateResult[] = [];
 
@@ -740,9 +1138,21 @@ export class Header extends SpectrumElement {
             `);
         }
 
+        // Add overflow menu if needed
+        const overflowMenu = this.renderOverflowMenu();
+        if (overflowMenu !== nothing) {
+            if (parts.length > 0) {
+                const divider = this.renderActionDivider();
+                if (divider !== nothing) {
+                    parts.push(divider);
+                }
+            }
+            parts.push(overflowMenu);
+        }
+
         return parts.length > 0
             ? html`
-                  ${parts}
+                  <div class="actions-container">${parts}</div>
               `
             : nothing;
     }

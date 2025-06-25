@@ -263,6 +263,59 @@
     z-index: 1000;
 }
 
+/* Actions container for overflow management */
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-100);
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* Overflow menu styling */
+.overflow-menu {
+    flex-shrink: 0;
+}
+
+/* Actions that are hidden due to overflow */
+.actions-container ::slotted([data-overflow-hidden]) {
+    display: none !important;
+}
+
+/* Responsive overflow behavior */
+:host([enable-overflow]) .actions-container {
+    /* Enable smooth transitions for overflow changes */
+    transition: all var(--spectrum-animation-duration-200) ease-in-out;
+}
+
+/* Priority-based action styling */
+.actions-container ::slotted([data-priority="critical"]) {
+    /* Critical actions should be more prominent */
+    font-weight: var(--spectrum-bold-font-weight);
+}
+
+.actions-container ::slotted([data-priority="low"]) {
+    /* Low priority actions can be less prominent */
+    opacity: 0.8;
+}
+
+/* Overflow menu indicator */
+.overflow-menu::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: var(--spectrum-spacing-75);
+    height: var(--spectrum-spacing-75);
+    background-color: var(--spectrum-accent-color-900);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity var(--spectrum-animation-duration-100) ease-in-out;
+}
+
+.overflow-menu[data-has-overflow]::after {
+    opacity: 1;
+}
 /* Size variants */
 :host([size="s"]) .header {
     padding: var(--spectrum-spacing-200) var(--spectrum-spacing-300);
@@ -338,6 +391,11 @@
         max-width: 300px;
         min-width: 150px;
     }
+/* More aggressive overflow on mobile */
+:host([enable-overflow]) .actions-container {
+    /* Reduce threshold for mobile */
+    --mobile-overflow-threshold: 80px;
+}
 }
 
 /* Stack actions vertically on very small screens */
@@ -355,4 +413,10 @@
             }
         }
     }
+/* Very aggressive overflow on small screens */
+:host([enable-overflow]) .actions-container {
+    /* Show maximum 2 actions on very small screens */
+    max-width: 120px;
+    overflow: hidden;
+}
 }

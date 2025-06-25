@@ -149,17 +149,16 @@ L2 headers support editable titles with built-in validation:
 
 ## Properties
 
-| Property            | Attribute             | Type                        | Default | Description                           |
-| ------------------- | --------------------- | --------------------------- | ------- | ------------------------------------- |
-| `variant`           | `variant`             | `'l1' \| 'l2'`              | `'l1'`  | Header variant                        |
-| `title`             | `title`               | `string`                    | `''`    | Main title text                       |
-| `subtitle`          | `subtitle`            | `string`                    | `''`    | Subtitle text (L1 only)               |
-| `editableTitle`     | `editable-title`      | `boolean`                   | `false` | Whether title can be edited (L2 only) |
-| `showBack`          | `show-back`           | `boolean`                   | `false` | Show back button (L2 only)            |
-| `disableBack`       | `disable-back`        | `boolean`                   | `false` | Disable back button                   |
-| `actionDividerSize` | `action-divider-size` | `'s' \| 'm' \| 'l'`         | `'s'`   | Size of action dividers               |
-| `size`              | `size`                | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'`   | Size of the header                    |
-| `titleValidation`   | -                     | `HeaderValidationCallback`  | -       | Custom validation function            |
+| Property          | Attribute        | Type                        | Default | Description                           |
+| ----------------- | ---------------- | --------------------------- | ------- | ------------------------------------- |
+| `variant`         | `variant`        | `'l1' \| 'l2'`              | `'l1'`  | Header variant                        |
+| `title`           | `title`          | `string`                    | `''`    | Main title text                       |
+| `subtitle`        | `subtitle`       | `string`                    | `''`    | Subtitle text (L1 only)               |
+| `editableTitle`   | `editable-title` | `boolean`                   | `false` | Whether title can be edited (L2 only) |
+| `showBack`        | `show-back`      | `boolean`                   | `false` | Show back button (L2 only)            |
+| `disableBack`     | `disable-back`   | `boolean`                   | `false` | Disable back button                   |
+| `size`            | `size`           | `'s' \| 'm' \| 'l' \| 'xl'` | `'m'`   | Size of the header                    |
+| `titleValidation` | -                | `HeaderValidationCallback`  | -       | Custom validation function            |
 
 ## Accessibility
 
