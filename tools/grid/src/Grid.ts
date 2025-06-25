@@ -70,8 +70,8 @@ export class Grid extends LitVirtualizer {
         padding: () => this.padding || this.gap,
     });
 
-    private lastTargetForChange: HTMLElement | undefined;
-    private animationFrameId: number | undefined;
+    private lastTargetForChange?: HTMLElement;
+    private animationFrameId?: number;
 
     protected handleChange(event: Event): void {
         const target = event.target as HTMLElement;
