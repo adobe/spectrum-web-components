@@ -16,6 +16,9 @@ import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 
 export default {
     title: 'Header/Figma Examples',
@@ -60,7 +63,7 @@ export const FigmaL1Examples = (): TemplateResult => html`
                 <sp-button slot="end-actions">Label</sp-button>
                 <sp-button slot="end-actions">Label</sp-button>
                 <sp-button slot="end-actions">Label</sp-button>
-                <sp-button slot="end-actions">Label</sp-button>
+                <sp-button slot="end-actions" variant="accent">Label</sp-button>
             </sp-header>
         </div>
     </div>
@@ -133,7 +136,9 @@ export const FigmaL2Examples = (): TemplateResult => {
                     <sp-button slot="end-actions">Label</sp-button>
                     <sp-button slot="end-actions">Label</sp-button>
                     <sp-button slot="end-actions">Label</sp-button>
-                    <sp-button slot="end-actions">Label</sp-button>
+                    <sp-button slot="end-actions" variant="accent">
+                        Label
+                    </sp-button>
                     <sp-badge slot="status" variant="neutral">Label</sp-badge>
                     <sp-badge slot="status" variant="neutral">Label</sp-badge>
                     <sp-badge slot="status" variant="neutral">Label</sp-badge>
@@ -153,11 +158,13 @@ export const FigmaL2Examples = (): TemplateResult => {
                     editable-title
                     @sp-header-edit-save=${handleEditSave}
                 >
-                    <sp-button slot="end-actions">Publish</sp-button>
                     <sp-button slot="end-actions">Export</sp-button>
                     <sp-action-button slot="end-actions" quiet>
                         <sp-icon-more slot="icon"></sp-icon-more>
                     </sp-action-button>
+                    <sp-button slot="end-actions" variant="accent">
+                        Publish
+                    </sp-button>
                 </sp-header>
             </div>
 

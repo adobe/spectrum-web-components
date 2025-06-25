@@ -13,14 +13,12 @@
 /* Base header styles */
 :host {
     display: block;
-    width: 100%;
     box-sizing: border-box;
 }
 
 .header {
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: var(--spectrum-spacing-400) var(--spectrum-spacing-500);
     border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
     background-color: var(--spectrum-background-layer-2-color);
@@ -49,19 +47,18 @@
 
 .title {
     margin: 0;
-    font-family: var(--spectrum-sans-serif-font-family);
-    font-weight: var(--spectrum-bold-font-weight);
-    color: var(--spectrum-neutral-content-color-default);
+    font-family: var(--spectrum-heading-sans-serif-font-family);
+    color: var(--spectrum-heading-color);
     display: flex;
     align-items: center;
     gap: var(--spectrum-spacing-100);
+    line-height: var(--spectrum-line-height-100);
 }
 
 /* L1 specific styles - larger, more prominent */
 :host([variant="l1"]) .title {
-    font-size: var(--spectrum-font-size-500);
-    line-height: var(--spectrum-line-height-100);
-    font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    font-size: var(--spectrum-font-size-700);
+    font-weight: var(--spectrum-extra-bold-font-weight);
 }
 
 :host([variant="l1"]) .subtitle {
@@ -74,8 +71,9 @@
 /* L2 specific styles - smaller than L1 */
 :host([variant="l2"]) .title {
     font-size: var(--spectrum-font-size-300);
-    line-height: var(--spectrum-line-height-100);
-    font-weight: var(--spectrum-heading-sans-serif-font-weight);
+    font-weight: var(--spectrum-bold-font-weight);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Edit button */

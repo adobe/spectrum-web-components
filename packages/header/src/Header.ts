@@ -25,6 +25,14 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
+
 import styles from './header.css.js';
 
 export type HeaderVariant = 'l1' | 'l2';
@@ -306,53 +314,7 @@ export class Header extends SpectrumElement {
                 @click=${this.handleBackClick}
                 aria-label="Go back"
             >
-                <sp-icon>
-                    <svg
-                        width="33"
-                        height="33"
-                        viewBox="0 0 33 33"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <g clip-path="url(#clip0_17117_68305)">
-                            <mask
-                                id="mask0_17117_68305"
-                                style="mask-type:alpha"
-                                maskUnits="userSpaceOnUse"
-                                x="6"
-                                y="6"
-                                width="21"
-                                height="21"
-                            >
-                                <path
-                                    d="M18.7375 22.955C18.5413 22.955 18.344 22.8778 18.1975 22.7245L12.7102 17.0214C12.4299 16.7313 12.4299 16.2724 12.7102 15.9823L18.2102 10.2655C18.4973 9.96669 18.9729 9.9579 19.2698 10.245C19.5686 10.5321 19.5784 11.0067 19.2903 11.3046L14.2913 16.5019L19.2776 21.6854C19.5657 21.9833 19.5559 22.4579 19.2571 22.745C19.1126 22.8856 18.925 22.955 18.7375 22.955Z"
-                                    fill="#292929"
-                                />
-                            </mask>
-                            <g mask="url(#mask0_17117_68305)">
-                                <rect
-                                    x="6.5"
-                                    y="6.5"
-                                    width="20"
-                                    height="20"
-                                    fill="#292929"
-                                />
-                            </g>
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_17117_68305">
-                                <rect
-                                    x="0.5"
-                                    y="0.5"
-                                    width="32"
-                                    height="32"
-                                    rx="8"
-                                    fill="white"
-                                />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </sp-icon>
+                <sp-icon-chevron-left slot="icon"></sp-icon-chevron-left>
             </sp-action-button>
         `;
     }
