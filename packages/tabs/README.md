@@ -8,13 +8,13 @@ The `<sp-tabs>` displays a list of `<sp-tab>` element children as `role="tablist
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tabs)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-3smxuwr2)
 
-```
+```zsh
 yarn add @spectrum-web-components/tabs
 ```
 
 Import the side effectful registration of `<sp-tabs>`, `<sp-tab>` or `<sp-tab-panel>` via:
 
-```
+```ts
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -22,15 +22,54 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 
 When looking to leverage the `Tabs`, `Tab`, or `TabPanel` base class as a type and/or for extension purposes, do so via:
 
-```
-import {
-    Tabs,
-    Tab,
-    TabPanel
-} from '@spectrum-web-components/tabs';
+```ts
+import { Tabs, Tab, TabPanel } from '@spectrum-web-components/tabs';
 ```
 
-## Sizes
+### Anatomy
+
+- **Tabs:** The container component (`<sp-tabs>`) that manages the tab list and handles selection logic.
+- **Tab item:** An individual tab (`<sp-tab>`) that users can select to view different content panels.
+- **Tab view:** The content panel (`<sp-tab-panel>`) associated with a tab, shown when its corresponding tab is selected.
+- **Divider:** A visual separator between tab items, used in some variants for clarity.
+- **Selection indicator:** A visual highlight (such as an underline or bar) that shows which tab is currently selected.
+
+## Options
+
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Property</sp-table-head-cell>
+        <sp-table-head-cell>Values</sp-table-head-cell>
+        <sp-table-head-cell>Default value</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>label</sp-table-cell>
+            <sp-table-cell>text / nothing</sp-table-cell>
+            <sp-table-cell>–</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>icon</sp-table-cell>
+            <sp-table-cell>icon / nothing</sp-table-cell>
+            <sp-table-cell>nothing</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>is selected</sp-table-cell>
+            <sp-table-cell>yes / no</sp-table-cell>
+            <sp-table-cell>no</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>is disabled</sp-table-cell>
+            <sp-table-cell>yes / no</sp-table-cell>
+            <sp-table-cell>no</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+<br/>
+
+### Variants
+
+### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -103,7 +142,7 @@ import {
 </sp-tab-panel>
 </sp-tabs>
 
-## Horizontal Tabs
+### Horizontal Tabs
 
 An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
 
@@ -207,7 +246,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 </sp-tab-panel>
 </sp-tabs>
 
-## Vertical Tabs
+### Vertical Tabs
 
 An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
 
@@ -314,3 +353,5 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 ## Accessibility
 
 When an `<sp-tabs>` has a `selected` value, the `<sp-tab>` child of that `value` will be given `[tabindex="0"]` and will receive initial focus when tabbing into the `<sp-tabs>` element. When no `selected` value is present, the first `<sp-tab>` child will be treated in this way. When focus is currently within the `<sp-tabs>` element, the left and right arrows will move that focus back and forth through the available `<sp-tab>` children.
+
+Tab items should have a label for accessibility. If a label isn’t present, it must include an icon and becomes an icon-only tab item. Icons should only be used in a tab item when absolutely necessary: when adding essential value and having a strong association with the label. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
