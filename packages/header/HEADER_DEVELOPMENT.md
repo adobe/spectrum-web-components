@@ -58,25 +58,25 @@ This header is designed for scalability and composability. All slots and EndActi
 - [x] Add L1/L2 variant support
 - [x] Create basic CSS structure following Spectrum patterns
 
-### 📋 Phase 3: L1 Implementation (3d)
+### ✅ Phase 3: L1 Implementation (3d) - COMPLETED
 
-- [ ] Implement title and subtitle slots
-- [ ] Add start and end action slots
-- [ ] Create proper slot management
+- [x] Implement title and subtitle slots
+- [x] Add start and end action slots
+- [x] Create proper slot management
 
-### 📋 Phase 4: L1 Storybook (1d)
+### ✅ Phase 4: L1 Storybook (1d) - COMPLETED
 
-- [ ] Create initial storybook stories
-- [ ] Document L1 usage examples
-- [ ] Add interactive controls
+- [x] Create initial storybook stories
+- [x] Document L1 usage examples
+- [x] Add interactive controls
 
-### 📋 Phase 5: L2 Basic Implementation (3d)
+### ✅ Phase 5: L2 Basic Implementation (3d) - COMPLETED
 
-- [ ] Add back button functionality
-- [ ] Implement title display
-- [ ] Create second row with status slots
-- [ ] Add dividers between status elements
-- [ ] Implement Start, Middle, End regions
+- [x] Add back button functionality
+- [x] Implement title display
+- [x] Create second row with status slots
+- [x] Add dividers between status elements (Note: Per Figma analysis, status items use spacing only, no visual dividers)
+- [x] Implement Start, Middle, End regions
 
 ### 📋 Phase 6: L2 Edit Title Flow (8d)
 
@@ -204,18 +204,95 @@ This header is designed for scalability and composability. All slots and EndActi
 #### Technical Decisions Needed:
 
 - **S2 Theme Support**: Should this work with spectrum-two themes? YES
-- **Responsive Breakpoints**: At what screen sizes should behavior change? it should be dynamic. as many buttons as possible should be shown. 
+- **Responsive Breakpoints**: At what screen sizes should behavior change? it should be dynamic. as many buttons as possible should be shown.
 - **Status Slot Dividers**: Should divider styling be customizable? no
-- **Edit Mode UX**: Should there be a maximum title length enforced? no, use available space. 
+- **Edit Mode UX**: Should there be a maximum title length enforced? no, use available space.
 
-### 🚀 **READY FOR: Phase 3 - L1 Implementation**
+### ✅ **COMPLETED: Phase 3 - L1 Implementation & Phase 4 - L1 Storybook**
+
+### ✅ **COMPLETED: Phase 5 - L2 Basic Implementation**
+
+**Phase 5 Achievements:**
+
+- ✅ **Back Button Functionality**: Complete implementation with proper event handling
+    - `renderBackButton()` method renders chevron-left icon button
+    - `handleBackClick()` method fires `sp-header-back` event
+    - `show-back` and `disable-back` properties control button state
+    - Proper accessibility with aria-label and disabled state support
+- ✅ **Title Display**: L2-specific title rendering
+    - Smaller font-size-300 for L2 vs L1's font-size-700
+    - Proper h2 heading vs L1's h1 heading
+    - Text overflow handling with ellipsis
+    - Edit button integration for editable titles
+- ✅ **Second Row with Status Slots**: Complete status row implementation
+    - `renderStatusRow()` method renders second row for L2 only
+    - `status` slot accepts badges, text, and custom content
+    - Proper spacing and alignment below main row
+    - Conditional rendering - only shows for L2 variant
+- ✅ **Status Elements Spacing**: Figma-compliant spacing implementation
+    - CSS spacing using margin-inline-end between status items
+    - No visual dividers (per Figma analysis)
+    - Proper gap management for multiple status indicators
+    - Flexible content support (badges, text, icons)
+- ✅ **Start, Middle, End Regions**: Complete three-region layout
+    - `start-actions` slot: Left-aligned actions
+    - `middle-actions` slot: Center actions (L2 only)
+    - `end-actions` slot: Right-aligned actions
+    - Proper flexbox layout with appropriate spacing
+    - `FocusGroupController` manages keyboard navigation across all regions
+
+**Phase 5 Deliverables:**
+
+- ✅ **L2 Comprehensive Stories**: `l2-comprehensive.stories.ts` with 9 usage examples
+- ✅ **L2 Test Suite**: `test-l2-implementation.html` with 5 comprehensive test cases
+- ✅ **Event System**: Complete event handling for back button and edit functionality
+- ✅ **Figma Compliance**: All L2 features match design specifications exactly
+
+**Phase 3 Achievements:**
+
+- ✅ **Title Slot Implementation**: Full slot support with fallback to property values
+    - `<slot name="title">${this.title}</slot>` - Supports rich HTML content
+    - Property fallback: Falls back to `title` property when slot is empty
+    - Flexible usage: Can mix slotted and property-based content
+- ✅ **Subtitle Slot Implementation**: L1-specific subtitle support
+    - `<slot name="subtitle">${this.subtitle}</slot>` - Rich content support
+    - L1 only: Properly hidden in L2 variant
+    - Property fallback: Uses `subtitle` property as fallback
+- ✅ **Action Slots Implementation**: Complete slot management system
+    - `start-actions` slot: Left-aligned action buttons
+    - `end-actions` slot: Right-aligned action buttons
+    - Multiple actions: Supports multiple buttons per slot
+    - Proper spacing: CSS handles gap management
+- ✅ **Slot Management**: Advanced focus and interaction control
+    - `@queryAssignedNodes` decorators for slot detection
+    - `FocusGroupController` for keyboard navigation
+    - `actionElements` getter for focus management
+    - Proper tab order and accessibility
+
+**Phase 4 Achievements:**
+
+- ✅ **Comprehensive Storybook Stories**: `l1-comprehensive.stories.ts`
+
+    - 9 different L1 usage scenarios
+    - Property vs slot-based examples
+    - Interactive demos with event handling
+    - Long content and responsive testing
+    - Mixed usage patterns documented
+
+- ✅ **Interactive Test Suite**: `test-l1-implementation.html`
+    - 5 comprehensive test cases
+    - Browser-based testing with console output
+    - Focus management verification
+    - Real-world usage examples
+
+### 🚀 **READY FOR: Phase 5 - L2 Basic Implementation**
 
 ### 🎯 **NEXT STEPS:**
 
-1. **Test Component**: Create comprehensive test suite for L1/L2 functionality
-2. **Review Storybook**: Check the Figma examples in Storybook
-3. **Begin Phase 3**: Focus on L1 implementation refinement and slot management
-4. **Action Slot Testing**: Verify slot functionality and responsive behavior
+1. **Test L1 Implementation**: Open `test-l1-implementation.html` in browser
+2. **Review L1 Storybook**: Check the comprehensive L1 examples in Storybook
+3. **Begin Phase 5**: Start L2 basic implementation (back button, title display, status slots)
+4. **Focus on L2 Features**: Second row implementation and Start/Middle/End regions
 
 ### ✅ **DELIVERABLES COMPLETED:**
 
@@ -227,15 +304,29 @@ This header is designed for scalability and composability. All slots and EndActi
 - ✅ **Component Dependencies**: All required dependencies properly imported
 - ✅ **Icon Integration**: Proper Spectrum workflow icons implementation
 - ✅ **Build Process**: TypeScript compilation successful
+- ✅ **L1 Slot Implementation**: Complete title, subtitle, and action slots
+- ✅ **Slot Management**: Focus control and keyboard navigation
+- ✅ **Comprehensive L1 Stories**: 9 different usage scenarios
+- ✅ **Interactive Test Suite**: Browser-based testing framework
 
-### 🚀 **READY TO:**
+### 🚀 **READY FOR: Phase 6 - L2 Edit Title Flow**
 
-- Build and test the component locally
-- Review the Figma examples in Storybook
-- Begin refinement based on your feedback
-- Move forward with remaining development phases
+The next phase focuses on advanced L2 edit title functionality:
+
+- **Custom textfield with custom border and spacing**
+- **Edit mode toggle implementation**
+- **Edit and save buttons**
+- **Edit state management**
+- **Edit flow UX**
+
+### 🎯 **NEXT STEPS:**
+
+1. **Test L2 Implementation**: Open `test-l2-implementation.html` in browser
+2. **Review L2 Storybook**: Check the comprehensive L2 examples in Storybook
+3. **Begin Phase 6**: Start L2 edit title flow implementation
+4. **Focus on Edit UX**: Advanced edit mode functionality and validation
 
 ---
 
 _Last Updated: [Current Date]_
-_Status: Phase 2A Complete - Ready for Implementation & Testing_
+_Status: Phase 5 Complete - L2 Basic Implementation Complete - Ready for Phase 6 (L2 Edit Title Flow)_
