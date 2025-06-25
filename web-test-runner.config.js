@@ -35,6 +35,7 @@ import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
 
+/** @type {import('@web/test-runner').TestRunnerConfig} */
 export default {
     plugins: [
         commonjs({
@@ -159,6 +160,7 @@ export default {
         },
         {
             name: 'unit-ci',
+            files: ['packages/*/test/*.test.js'],
         },
         {
             name: 'no-memory-ci',

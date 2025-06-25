@@ -1,0 +1,57 @@
+name: Tests
+on:
+    workflow_dispatch:
+    workflow_call:
+
+jobs:
+    tests:
+        # Note: Coverages are not supported for WebKit and Firefox, only Chromium
+        name: ${{ matrix.browser }} (${{ matrix.group }})
+        runs-on: macos-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                group: [no-memory-ci, memory-ci]
+                browser: [chromium]
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+              with:
+                  with-playwright: true
+                  browser: ${{ matrix.browser }}
+
+            - name: Run unit tests with coverage
+              if: ${{ matrix.group == 'no-memory-ci' }}
+              run: yarn web-test-runner --config web-test-runner.config.ci-${{ matrix.browser }}.js --group ${{ matrix.group }} --coverage
+
+            - name: Run unit tests without coverage
+              if: ${{ matrix.group != 'no-memory-ci' }}
+              run: yarn web-test-runner --config web-test-runner.config.ci-${{ matrix.browser }}.js --group ${{ matrix.group }}
+
+            - name: Upload coverage to Coveralls
+              if: ${{ matrix.group == 'no-memory-ci' && !cancelled() }}
+              uses: coverallsapp/github-action@v2
+              with:
+                  flag-name: run-${{ matrix.browser }}-${{ matrix.group }}
+                  parallel: true
+
+            - uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: test-results-${{ matrix.browser }}-${{ matrix.group }}
+                  path: results
+
+    coverage-results:
+        name: Coverage results
+        needs: [tests]
+        if: ${{ always() }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Coveralls finished
+              uses: coverallsapp/github-action@v2
+              with:
+                  parallel-finished: true
+                  carryforward: 'run-chromium-no-memory-ci,run-chromium-memory-ci'

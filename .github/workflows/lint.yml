@@ -64,8 +64,8 @@ jobs:
                         - '!**/*.d.ts'
 
     # --- Lint pre-compiled assets for consistency --- #
-    lint:
-        name: Lint
+    eslint:
+        name: Eslint
         runs-on: ubuntu-latest
         needs: [changed_files]
         timeout-minutes: 5
@@ -73,34 +73,11 @@ jobs:
             # install but don't build - we're linting pre-compiled assets
             - name: Check out code
               uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-
-            - name: Use Node LTS version
-              uses: actions/setup-node@v4
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
               with:
                   node-version: 20
-                  cache: yarn
-
-            - name: Enable Corepack
-              run: corepack enable
-
-            ## --- YARN CACHE --- ##
-            - name: Check for cached dependencies
-              continue-on-error: true
-              id: cache-dependencies
-              uses: actions/cache@v4
-              with:
-                  path: |
-                      .cache/yarn
-                      node_modules
-                  key: ubuntu-latest-node20-${{ hashFiles('yarn.lock') }}
-
-            ## --- INSTALL --- ##
-            # If statement isn't needed here b/c yarn will leverage the cache if it exists
-            - name: Install dependencies
-              shell: bash
-              run: yarn install --immutable
+                  skip-build: true
 
             - name: Lint styles
               if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
