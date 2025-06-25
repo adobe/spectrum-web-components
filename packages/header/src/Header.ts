@@ -22,7 +22,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
-    queryAssignedNodes,
+    queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
@@ -174,12 +174,6 @@ export class Header extends SpectrumElement {
     private showToast = false;
 
     /**
-     * Whether to show dividers between action slots
-     */
-    @property({ type: Boolean, attribute: 'show-action-dividers' })
-    public showActionDividers = false;
-
-    /**
      * Size of the action dividers
      */
     @property({ type: String, attribute: 'action-divider-size' })
@@ -191,21 +185,21 @@ export class Header extends SpectrumElement {
     @query('.title-text')
     private titleTextElement?: HTMLElement;
 
-    @queryAssignedNodes({ slot: 'start-actions' })
-    private startActionNodes!: NodeListOf<HTMLElement>;
+    @queryAssignedElements({ slot: 'start-actions', flatten: true })
+    private startActionNodes!: HTMLElement[];
 
-    @queryAssignedNodes({ slot: 'end-actions' })
-    private endActionNodes!: NodeListOf<HTMLElement>;
+    @queryAssignedElements({ slot: 'end-actions', flatten: true })
+    private endActionNodes!: HTMLElement[];
 
-    @queryAssignedNodes({ slot: 'middle-actions' })
-    private middleActionNodes!: NodeListOf<HTMLElement>;
+    @queryAssignedElements({ slot: 'middle-actions', flatten: true })
+    private middleActionNodes!: HTMLElement[];
 
     private get actionElements(): HTMLElement[] {
         return [
             ...(this.startActionNodes || []),
             ...(this.middleActionNodes || []),
             ...(this.endActionNodes || []),
-        ].filter((node: HTMLElement) => node.nodeType === Node.ELEMENT_NODE);
+        ];
     }
 
     private get hasStartActions(): boolean {
@@ -218,10 +212,6 @@ export class Header extends SpectrumElement {
 
     private get hasEndActions(): boolean {
         return this.endActionNodes && this.endActionNodes.length > 0;
-    }
-
-    private get shouldShowDividers(): boolean {
-        return this.showActionDividers && this.variant === 'l2';
     }
 
     focusGroupController = new FocusGroupController<HTMLElement>(this, {
@@ -648,10 +638,6 @@ export class Header extends SpectrumElement {
     }
 
     private renderActionDivider(): TemplateResult | typeof nothing {
-        if (!this.shouldShowDividers) {
-            return nothing;
-        }
-
         return html`
             <sp-divider
                 class="action-divider"
@@ -662,62 +648,66 @@ export class Header extends SpectrumElement {
         `;
     }
 
-    private renderStartActions(): TemplateResult | typeof nothing {
-        if (!this.hasStartActions) {
-            return nothing;
-        }
+    private handleSlotChange(): void {
+        // Force a re-render when slot content changes
+        this.requestUpdate();
+    }
 
+    private renderStartActions(): TemplateResult | typeof nothing {
         return html`
             <div class="actions-start" role="group" aria-label="Start actions">
-                <slot name="start-actions"></slot>
+                <slot
+                    name="start-actions"
+                    @slotchange=${this.handleSlotChange}
+                ></slot>
             </div>
         `;
     }
 
     private renderMiddleActions(): TemplateResult | typeof nothing {
-        if (this.variant !== 'l2' || !this.hasMiddleActions) {
+        if (this.variant !== 'l2') {
             return nothing;
         }
 
         return html`
-            <div class="actions-middle" role="group" aria-label="Middle actions">
-                <slot name="middle-actions"></slot>
+            <div
+                class="actions-middle"
+                role="group"
+                aria-label="Middle actions"
+            >
+                <slot
+                    name="middle-actions"
+                    @slotchange=${this.handleSlotChange}
+                ></slot>
             </div>
         `;
     }
 
     private renderEndActions(): TemplateResult | typeof nothing {
-        if (!this.hasEndActions) {
-            return nothing;
-        }
-
         return html`
             <div class="actions-end" role="group" aria-label="End actions">
-                <slot name="end-actions"></slot>
+                <slot
+                    name="end-actions"
+                    @slotchange=${this.handleSlotChange}
+                ></slot>
             </div>
         `;
     }
 
     private renderActionSlots(): TemplateResult | typeof nothing {
-        const hasAnyActions = this.hasStartActions || this.hasMiddleActions || this.hasEndActions;
-        
-        if (!hasAnyActions) {
-            return nothing;
-        }
+        const parts: TemplateResult[] = [];
 
-        const parts: (TemplateResult | typeof nothing)[] = [];
-
-        // Add start actions
-        if (this.hasStartActions) {
-            const startActions = this.renderStartActions();
-            if (startActions !== nothing) {
-                parts.push(startActions);
-            }
+        // Always render start actions (hidden by CSS if empty)
+        const startActions = this.renderStartActions();
+        if (startActions !== nothing) {
+            parts.push(html`
+                <div ?hidden=${!this.hasStartActions}>${startActions}</div>
+            `);
         }
 
         // Add divider and middle actions for L2
-        if (this.variant === 'l2' && this.hasMiddleActions) {
-            if (parts.length > 0 && this.shouldShowDividers) {
+        if (this.variant === 'l2') {
+            if (this.hasStartActions && this.hasMiddleActions) {
                 const divider = this.renderActionDivider();
                 if (divider !== nothing) {
                     parts.push(divider);
@@ -725,25 +715,36 @@ export class Header extends SpectrumElement {
             }
             const middleActions = this.renderMiddleActions();
             if (middleActions !== nothing) {
-                parts.push(middleActions);
+                parts.push(html`
+                    <div ?hidden=${!this.hasMiddleActions}>
+                        ${middleActions}
+                    </div>
+                `);
             }
         }
 
         // Add divider and end actions
-        if (this.hasEndActions) {
-            if (parts.length > 0 && this.shouldShowDividers) {
-                const divider = this.renderActionDivider();
-                if (divider !== nothing) {
-                    parts.push(divider);
-                }
-            }
-            const endActions = this.renderEndActions();
-            if (endActions !== nothing) {
-                parts.push(endActions);
+        if (
+            (this.hasStartActions || this.hasMiddleActions) &&
+            this.hasEndActions
+        ) {
+            const divider = this.renderActionDivider();
+            if (divider !== nothing) {
+                parts.push(divider);
             }
         }
+        const endActions = this.renderEndActions();
+        if (endActions !== nothing) {
+            parts.push(html`
+                <div ?hidden=${!this.hasEndActions}>${endActions}</div>
+            `);
+        }
 
-        return html`${parts.filter(part => part !== nothing)}`;
+        return parts.length > 0
+            ? html`
+                  ${parts}
+              `
+            : nothing;
     }
 
     protected override render(): TemplateResult {
@@ -751,9 +752,7 @@ export class Header extends SpectrumElement {
             <header class="header ${this.variant}" role="banner">
                 <div class="main-row">
                     ${this.renderBackButton()}
-                    <div class="title-container">
-                        ${this.renderTitle()}
-                    </div>
+                    <div class="title-container">${this.renderTitle()}</div>
                     ${this.renderActionSlots()}
                 </div>
                 ${this.renderStatusRow()}
