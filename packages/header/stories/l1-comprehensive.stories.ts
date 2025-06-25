@@ -60,12 +60,8 @@ This demonstrates the completed Phase 3 implementation featuring:
     },
 };
 
-interface L1Story {
-    (): TemplateResult;
-}
-
 // Test 1: Basic L1 with properties
-export const BasicL1Properties: L1Story = (): TemplateResult => html`
+export const BasicL1Properties = (): TemplateResult => html`
     <sp-header
         variant="l1"
         title="Dashboard Overview"
@@ -87,7 +83,7 @@ BasicL1Properties.parameters = {
 };
 
 // Test 2: L1 with slotted content
-export const L1WithSlottedContent: L1Story = (): TemplateResult => html`
+export const L1WithSlottedContent = (): TemplateResult => html`
     <sp-header variant="l1">
         <span slot="title">
             <strong>Project</strong>
@@ -118,7 +114,7 @@ L1WithSlottedContent.parameters = {
 };
 
 // Test 3: Multiple action slots
-export const L1MultipleActions: L1Story = (): TemplateResult => html`
+export const L1MultipleActions = (): TemplateResult => html`
     <sp-header
         variant="l1"
         title="Analytics Dashboard"
@@ -156,7 +152,7 @@ L1MultipleActions.parameters = {
 };
 
 // Test 4: Minimal L1
-export const L1Minimal: L1Story = (): TemplateResult => html`
+export const L1Minimal = (): TemplateResult => html`
     <sp-header variant="l1" title="Simple Page Title"></sp-header>
 `;
 L1Minimal.parameters = {
@@ -168,7 +164,7 @@ L1Minimal.parameters = {
 };
 
 // Test 5: L1 with only subtitle slot
-export const L1OnlySubtitleSlot: L1Story = (): TemplateResult => html`
+export const L1OnlySubtitleSlot = (): TemplateResult => html`
     <sp-header variant="l1" title="Standard Title">
         <div slot="subtitle">
             <em>Rich subtitle content</em>
@@ -187,7 +183,7 @@ L1OnlySubtitleSlot.parameters = {
 };
 
 // Test 6: L1 with only title slot
-export const L1OnlyTitleSlot: L1Story = (): TemplateResult => html`
+export const L1OnlyTitleSlot = (): TemplateResult => html`
     <sp-header variant="l1" subtitle="Standard subtitle text">
         <div slot="title">
             <sp-badge variant="accent">Featured</sp-badge>
@@ -207,7 +203,7 @@ L1OnlyTitleSlot.parameters = {
 };
 
 // Test 7: Start actions only
-export const L1StartActionsOnly: L1Story = (): TemplateResult => html`
+export const L1StartActionsOnly = (): TemplateResult => html`
     <sp-header
         variant="l1"
         title="Left-aligned Actions"
@@ -232,7 +228,7 @@ L1StartActionsOnly.parameters = {
 };
 
 // Test 8: Long content
-export const L1LongContent: L1Story = (): TemplateResult => html`
+export const L1LongContent = (): TemplateResult => html`
     <sp-header
         variant="l1"
         title="Very Long Title That Demonstrates Text Overflow Behavior and Responsive Design Considerations"
@@ -267,7 +263,7 @@ L1LongContent.parameters = {
 };
 
 // Interactive demo
-export const L1InteractiveDemo: L1Story = (): TemplateResult => {
+export const L1InteractiveDemo = (): TemplateResult => {
     const handleActionClick = (action: string) => {
         console.log(`${action} clicked`);
         alert(`${action} action triggered!`);

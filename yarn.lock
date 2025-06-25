@@ -6509,8 +6509,8 @@ __metadata:
     "@spectrum-web-components/textfield": "npm:1.7.0"
     "@spectrum-web-components/theme": "npm:1.7.0"
     "@spectrum-web-components/thumbnail": "npm:1.7.0"
-    "@spectrum-web-components/toast": "npm:1.7.0"
-    "@spectrum-web-components/tooltip": "npm:1.7.0"
+    "@spectrum-web-components/toast": "npm:^1.7.0"
+    "@spectrum-web-components/tooltip": "npm:^1.7.0"
     "@spectrum-web-components/top-nav": "npm:1.7.0"
     "@spectrum-web-components/tray": "npm:1.7.0"
     "@spectrum-web-components/truncated": "npm:1.7.0"
@@ -6712,7 +6712,7 @@ __metadata:
     "@spectrum-web-components/swatch": "npm:1.7.0"
     "@spectrum-web-components/table": "npm:1.7.0"
     "@spectrum-web-components/theme": "npm:1.7.0"
-    "@spectrum-web-components/toast": "npm:1.7.0"
+    "@spectrum-web-components/toast": "npm:^1.7.0"
     "@storybook/addon-a11y": "npm:^8.6.12"
     "@storybook/addon-essentials": "npm:^8.6.12"
     "@storybook/addon-links": "npm:^8.6.12"
@@ -6821,9 +6821,12 @@ __metadata:
     "@spectrum-web-components/help-text": "npm:1.7.0"
     "@spectrum-web-components/icons-ui": "npm:1.7.0"
     "@spectrum-web-components/icons-workflow": "npm:1.7.0"
+    "@spectrum-web-components/overlay": "npm:1.7.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.7.0"
     "@spectrum-web-components/shared": "npm:1.7.0"
     "@spectrum-web-components/textfield": "npm:1.7.0"
+    "@spectrum-web-components/toast": "npm:^1.7.0"
+    "@spectrum-web-components/tooltip": "npm:^1.7.0"
   languageName: unknown
   linkType: soft
 
@@ -7028,7 +7031,7 @@ __metadata:
     "@spectrum-web-components/progress-circle": "npm:1.7.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.7.0"
     "@spectrum-web-components/shared": "npm:1.7.0"
-    "@spectrum-web-components/tooltip": "npm:1.7.0"
+    "@spectrum-web-components/tooltip": "npm:^1.7.0"
     "@spectrum-web-components/tray": "npm:1.7.0"
   languageName: unknown
   linkType: soft
@@ -7266,7 +7269,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/toast@npm:1.7.0, @spectrum-web-components/toast@workspace:packages/toast":
+"@spectrum-web-components/toast@npm:^1.7.0, @spectrum-web-components/toast@workspace:packages/toast":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/toast@workspace:packages/toast"
   dependencies:
@@ -7278,7 +7281,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tooltip@npm:1.7.0, @spectrum-web-components/tooltip@workspace:packages/tooltip":
+"@spectrum-web-components/tooltip@npm:^1.7.0, @spectrum-web-components/tooltip@workspace:packages/tooltip":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tooltip@workspace:packages/tooltip"
   dependencies:
@@ -7319,7 +7322,7 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/overlay": "npm:1.7.0"
     "@spectrum-web-components/styles": "npm:1.7.0"
-    "@spectrum-web-components/tooltip": "npm:1.7.0"
+    "@spectrum-web-components/tooltip": "npm:^1.7.0"
   languageName: unknown
   linkType: soft
 

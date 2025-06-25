@@ -55,6 +55,32 @@
     line-height: var(--spectrum-line-height-100);
 }
 
+/* Title text styling */
+.title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+.title-text.clickable {
+    cursor: pointer;
+    padding: var(--spectrum-spacing-75);
+    margin: calc(var(--spectrum-spacing-75) * -1);
+    border-radius: var(--spectrum-corner-radius-75);
+    transition: background-color var(--spectrum-animation-duration-100) ease-in-out;
+}
+
+.title-text.clickable:hover {
+    background-color: var(--spectrum-gray-200);
+}
+
+.title-text.clickable:focus {
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+}
+
 /* L1 specific styles - larger, more prominent */
 :host([variant="l1"]) .title {
     font-size: var(--spectrum-font-size-700);
@@ -64,7 +90,6 @@
 :host([variant="l1"]) .subtitle {
     margin: var(--spectrum-spacing-75) 0 0 0;
     font-size: var(--spectrum-font-size-100);
-    color: var(--spectrum-neutral-content-color-subdued);
     line-height: var(--spectrum-line-height-100);
 }
 
@@ -72,46 +97,96 @@
 :host([variant="l2"]) .title {
     font-size: var(--spectrum-font-size-300);
     font-weight: var(--spectrum-bold-font-weight);
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Edit button */
-.edit-button {
-    opacity: 0;
-    transition: opacity var(--spectrum-animation-duration-100) ease-in-out;
-}
-
-.title-container:hover .edit-button,
-.edit-button:focus-visible {
-    opacity: 1;
+/* Always show edit button when edit feature is enabled */
+:host([variant="l2"][editable-title]) .edit-button {
+    display: unset;
 }
 
 /* Title editing */
 .title-edit-container {
     display: flex;
-    flex-direction: column;
-    gap: var(--spectrum-spacing-100);
+    align-items: center;
+    flex-direction: row;
+    gap: var(--spectrum-spacing-200);
     flex-grow: 1;
+    min-width: 0;
+    position: relative;
 }
 
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.input-wrapper.error .title-input {
+    border-color: var(--spectrum-red-700);
+}
 .title-input {
     font-size: var(--spectrum-font-size-300);
     font-weight: var(--spectrum-bold-font-weight);
+    max-width: 400px;
+    min-width: 200px;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+/* Error icon positioning */
+.error-icon {
+    position: absolute;
+    right: var(--spectrum-spacing-100);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--spectrum-red-700);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Horizontal scroll for long text in edit mode */
+.title-input input {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-right: var(--spectrum-spacing-400);
+    /* Make room for error icon */
+}
+
+.input-wrapper.error .title-input input {
+    padding-right: var(--spectrum-spacing-500);
+    /* Extra space for error icon */
+}
+
+/* Focus states for edit mode */
+.title-input:focus-within {
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
 }
 
 .edit-actions {
     display: flex;
     gap: var(--spectrum-spacing-100);
     align-items: center;
+    flex-shrink: 0;
 }
 
 .validation-errors {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spectrum-spacing-50);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: var(--spectrum-spacing-75);
+    z-index: 1;
 }
 
+.error-message {
+    color: var(--spectrum-red-700);
+    font-size: var(--spectrum-font-size-75);
+    line-height: var(--spectrum-line-height-100);
+    margin-bottom: var(--spectrum-spacing-50);
+}
 /* Action slots */
 .actions-start,
 .actions-middle,
@@ -149,6 +224,14 @@
 
 .status-row ::slotted(*:last-child) {
     margin-inline-end: 0;
+}
+
+/* Success toast positioning */
+.success-toast {
+    position: fixed;
+    top: var(--spectrum-spacing-400);
+    right: var(--spectrum-spacing-400);
+    z-index: 1000;
 }
 
 /* Size variants */
@@ -200,28 +283,47 @@
     font-size: var(--spectrum-font-size-500);
 }
 
-/* Focus management */
+/* Edit mode specific styles */
 :host([edit-mode]) .header {
-    background-color: var(--spectrum-background-layer-1-color);
-    border-color: var(--spectrum-accent-color-900);
+    /* Add visual indication of edit mode if needed */
 }
 
-/* Responsive behavior */
+/* Responsive design */
 @media (max-width: 768px) {
     .main-row {
-        flex-wrap: wrap;
+        gap: var(--spectrum-spacing-200);
     }
 
     .actions-start,
     .actions-middle,
     .actions-end {
-        order: 2;
-        flex-basis: 100%;
-        justify-content: center;
-        margin-block-start: var(--spectrum-spacing-100);
+        gap: var(--spectrum-spacing-75);
     }
 
     .actions-end {
-        margin-inline-start: 0;
+        margin-inline-start: var(--spectrum-spacing-200);
+    }
+
+    /* Smaller edit field on mobile */
+    .title-input {
+        max-width: 300px;
+        min-width: 150px;
+    }
+}
+
+/* Stack actions vertically on very small screens */
+@media (max-width: 480px) {
+    .title-edit-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spectrum-spacing-100);
+
+        .edit-actions {
+            justify-content: center;
+
+            .title-input {
+                max-width: none;
+            }
+        }
     }
 }

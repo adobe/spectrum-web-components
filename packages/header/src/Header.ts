@@ -18,8 +18,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
+    query,
     queryAssignedNodes,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
@@ -28,10 +30,14 @@ import { FocusGroupController } from '@spectrum-web-components/reactive-controll
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/toast/sp-toast.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import styles from './header.css.js';
 
@@ -58,6 +64,7 @@ export type HeaderValidationCallback = (
  * @fires sp-header-edit-start - Dispatched when edit mode is started (L2 only)
  * @fires sp-header-edit-save - Dispatched when edit is saved (L2 only)
  * @fires sp-header-edit-cancel - Dispatched when edit is cancelled (L2 only)
+ * @fires sp-header-title-renamed - Dispatched when title is successfully renamed (L2 only)
  */
 export class Header extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -113,6 +120,24 @@ export class Header extends SpectrumElement {
     public disableBack = false;
 
     /**
+     * Whether to show success toast after title rename
+     */
+    @property({ type: Boolean, attribute: 'show-success-toast' })
+    public showSuccessToast = true;
+
+    /**
+     * Custom success toast message
+     */
+    @property({ type: String, attribute: 'success-toast-message' })
+    public successToastMessage = 'Title has been renamed';
+
+    /**
+     * Maximum character limit for title editing (defaults to no limit)
+     */
+    @property({ type: Number, attribute: 'max-title-length' })
+    public maxTitleLength?: number;
+
+    /**
      * Internal edit state
      */
     @state()
@@ -129,6 +154,24 @@ export class Header extends SpectrumElement {
      */
     @state()
     private saving = false;
+
+    /**
+     * Whether title is truncated and should show tooltip
+     */
+    @state()
+    private titleTruncated = false;
+
+    /**
+     * Whether to show success toast
+     */
+    @state()
+    private showToast = false;
+
+    @query('#title-input')
+    private titleInput?: HTMLInputElement;
+
+    @query('.title-text')
+    private titleTextElement?: HTMLElement;
 
     @queryAssignedNodes({ slot: 'start-actions' })
     private startActionNodes!: NodeListOf<HTMLElement>;
@@ -155,10 +198,7 @@ export class Header extends SpectrumElement {
 
     public override focus(): void {
         if (this.editMode) {
-            const editInput = this.shadowRoot?.querySelector(
-                '#title-input'
-            ) as HTMLInputElement;
-            editInput?.focus();
+            this.titleInput?.focus();
         } else {
             this.focusGroupController.focus();
         }
@@ -174,6 +214,22 @@ export class Header extends SpectrumElement {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
+
+        // Check if title is truncated after render
+        this.updateComplete.then(() => {
+            this.checkTitleTruncation();
+        });
+    }
+
+    private checkTitleTruncation(): void {
+        if (this.titleTextElement && this.variant === 'l2' && !this.editMode) {
+            const isOverflowing =
+                this.titleTextElement.scrollWidth >
+                this.titleTextElement.clientWidth;
+            this.titleTruncated = isOverflowing;
+        } else {
+            this.titleTruncated = false;
+        }
     }
 
     private handleBackClick(): void {
@@ -204,11 +260,22 @@ export class Header extends SpectrumElement {
 
         // Focus the input after it's rendered
         this.updateComplete.then(() => {
-            const input = this.shadowRoot?.querySelector(
-                '#title-input'
-            ) as HTMLInputElement;
-            input?.focus();
+            this.titleInput?.focus();
+            this.titleInput?.select();
         });
+    }
+
+    private handleTitleClick(): void {
+        if (this.variant === 'l2' && this.editableTitle && !this.editMode) {
+            this.handleEditStart();
+        }
+    }
+
+    private handleTitleKeyPress(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.handleTitleClick();
+        }
     }
 
     private handleEditCancel(): void {
@@ -235,6 +302,14 @@ export class Header extends SpectrumElement {
             });
         }
 
+        // Character limit validation
+        if (this.maxTitleLength && value.length > this.maxTitleLength) {
+            errors.push({
+                type: 'length',
+                message: 'Max character limit reached.',
+            });
+        }
+
         // Custom validation
         if (this.titleValidation) {
             const customErrors = this.titleValidation(value);
@@ -257,6 +332,7 @@ export class Header extends SpectrumElement {
         }
 
         this.saving = true;
+        const oldTitle = this.title;
 
         try {
             const saveEvent = new CustomEvent('sp-header-edit-save', {
@@ -275,6 +351,27 @@ export class Header extends SpectrumElement {
                 this.title = this.editValue;
                 this.editMode = false;
                 this.validationErrors = [];
+
+                // Dispatch renamed event for external listeners
+                this.dispatchEvent(
+                    new CustomEvent('sp-header-title-renamed', {
+                        bubbles: true,
+                        composed: true,
+                        detail: {
+                            newTitle: this.title,
+                            oldTitle: oldTitle,
+                        },
+                    })
+                );
+
+                // Show success toast if enabled
+                if (this.showSuccessToast) {
+                    this.showToast = true;
+                    // Auto-hide toast after 6 seconds
+                    setTimeout(() => {
+                        this.showToast = false;
+                    }, 6000);
+                }
             }
         } finally {
             this.saving = false;
@@ -285,8 +382,14 @@ export class Header extends SpectrumElement {
         const input = event.target as HTMLInputElement;
         this.editValue = input.value;
 
-        // Clear validation errors on input
-        if (this.validationErrors.length > 0) {
+        // Real-time validation - show errors as user types
+        if (
+            this.maxTitleLength &&
+            this.editValue.length > this.maxTitleLength
+        ) {
+            this.validationErrors = this.validateTitle(this.editValue);
+        } else {
+            // Clear validation errors if under limit
             this.validationErrors = [];
         }
     }
@@ -299,6 +402,32 @@ export class Header extends SpectrumElement {
             event.preventDefault();
             this.handleEditCancel();
         }
+    }
+
+    private handleOutsideClick = (event: Event): void => {
+        if (this.editMode) {
+            const composedPath = event.composedPath();
+            const clickedInsideHeader = composedPath.some(
+                (element) => element === this
+            );
+            if (!clickedInsideHeader) {
+                this.handleEditCancel();
+            }
+        }
+    };
+
+    private handleToastClose(): void {
+        this.showToast = false;
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+        document.addEventListener('click', this.handleOutsideClick);
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        document.removeEventListener('click', this.handleOutsideClick);
     }
 
     private renderBackButton(): TemplateResult | typeof nothing {
@@ -343,8 +472,41 @@ export class Header extends SpectrumElement {
                   `
                 : nothing;
 
+        const titleText = html`
+            <span
+                class="title-text ${this.variant === 'l2' && this.editableTitle
+                    ? 'clickable'
+                    : ''}"
+                @click=${this.handleTitleClick}
+                @keydown=${this.variant === 'l2' && this.editableTitle
+                    ? this.handleTitleKeyPress
+                    : undefined}
+                tabindex=${ifDefined(
+                    this.variant === 'l2' && this.editableTitle
+                        ? '0'
+                        : undefined
+                )}
+                role=${ifDefined(
+                    this.variant === 'l2' && this.editableTitle
+                        ? 'button'
+                        : undefined
+                )}
+                aria-label=${ifDefined(
+                    this.variant === 'l2' && this.editableTitle
+                        ? 'Click to edit title'
+                        : undefined
+                )}
+            >
+                <slot name="title">${this.title}</slot>
+            </span>
+        `;
+
         const titleContent = html`
-            <slot name="title">${this.title}</slot>
+            ${this.titleTruncated && this.variant === 'l2'
+                ? html`
+                      ${titleText}
+                  `
+                : titleText}
             ${editButton}
         `;
 
@@ -373,36 +535,37 @@ export class Header extends SpectrumElement {
 
         return html`
             <div class="title-edit-container">
-                <sp-textfield
-                    id="title-input"
-                    class="title-input ${hasErrors ? 'invalid' : ''}"
-                    .value=${this.editValue}
-                    @input=${this.handleTitleInput}
-                    @keydown=${this.handleTitleKeydown}
-                    ?invalid=${hasErrors}
-                    placeholder="Enter title..."
-                ></sp-textfield>
+                <div class="input-wrapper ${hasErrors ? 'error' : ''}">
+                    <sp-textfield
+                        id="title-input"
+                        class="title-input ${hasErrors ? 'invalid' : ''}"
+                        .value=${this.editValue}
+                        @input=${this.handleTitleInput}
+                        @keydown=${this.handleTitleKeydown}
+                        ?invalid=${hasErrors}
+                        placeholder="Enter title..."
+                        aria-label="Edit page title"
+                    ></sp-textfield>
+                    ${hasErrors
+                        ? html`
+                              <sp-icon-alert
+                                  class="error-icon"
+                                  aria-hidden="true"
+                              ></sp-icon-alert>
+                          `
+                        : nothing}
+                </div>
                 <div class="edit-actions">
                     <sp-action-button
                         class="save-button"
                         size="s"
-                        variant="accent"
+                        quiet
                         @click=${this.handleEditSave}
                         ?disabled=${this.saving}
                         ?pending=${this.saving}
+                        aria-label="Save title changes"
                     >
                         <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-                        Save
-                    </sp-action-button>
-                    <sp-action-button
-                        class="cancel-button"
-                        size="s"
-                        quiet
-                        @click=${this.handleEditCancel}
-                        ?disabled=${this.saving}
-                    >
-                        <sp-icon-close slot="icon"></sp-icon-close>
-                        Cancel
                     </sp-action-button>
                 </div>
                 ${hasErrors
@@ -410,9 +573,9 @@ export class Header extends SpectrumElement {
                           <div class="validation-errors">
                               ${this.validationErrors.map(
                                   (error) => html`
-                                      <sp-help-text variant="negative">
+                                      <div class="error-message">
                                           ${error.message}
-                                      </sp-help-text>
+                                      </div>
                                   `
                               )}
                           </div>
@@ -431,6 +594,24 @@ export class Header extends SpectrumElement {
             <div class="status-row">
                 <slot name="status"></slot>
             </div>
+        `;
+    }
+
+    private renderSuccessToast(): TemplateResult | typeof nothing {
+        if (!this.showToast) {
+            return nothing;
+        }
+
+        return html`
+            <sp-toast
+                class="success-toast"
+                variant="positive"
+                ?open=${this.showToast}
+                timeout="6000"
+                @close=${this.handleToastClose}
+            >
+                ${this.successToastMessage}
+            </sp-toast>
         `;
     }
 
@@ -455,6 +636,7 @@ export class Header extends SpectrumElement {
                 </div>
                 ${this.renderStatusRow()}
             </header>
+            ${this.renderSuccessToast()}
         `;
     }
 }
