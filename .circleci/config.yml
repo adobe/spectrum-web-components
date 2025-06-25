@@ -1,12 +1,20 @@
 version: 2.1
 
 executors:
+    default:
+        docker:
+            - image: cimg/base:stable
+        resource_class: medium
     node:
         docker:
             - image: mcr.microsoft.com/playwright:v1.44.0
         resource_class: xlarge
         environment:
             NODE_ENV: development
+            AZCOPY_AUTO_LOGIN_TYPE: SPN
+            AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
+            AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
+            AZCOPY_TENANT_ID: $AZURE_TENANT_ID
 parameters:
     # In order to update the VRT baseline images:
     # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
@@ -19,6 +27,27 @@ parameters:
         type: string
         default: wireit
 commands:
+    install-azcopy:
+        description: 'Install AzCopy and set up authentication'
+        steps:
+            - run:
+                  when: always
+                  name: Install AzCopy
+                  command: |
+                      # Create a bin directory in the home folder
+                      mkdir -p ~/bin
+                      cd ~/bin
+                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+                      tar -xf azcopy.tar.gz --strip-components=1
+                      chmod +x azcopy
+                      # Add to PATH and set environment variables
+                      echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
+                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
+                      source $BASH_ENV
+                      azcopy --version
     downstream:
         steps:
             - checkout
@@ -97,32 +126,66 @@ commands:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy VRT Results to Azure Blob Storage
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
-
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                      # Get PR number from CircleCI environment
+                      PR_NUMBER=""
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying VRT for PR #$PR_NUMBER"
+                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                          PR_NUMBER="$CIRCLE_PR_NUMBER"
+                          echo "Deploying VRT for PR #$PR_NUMBER"
+                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                          echo "Deploying VRT for forked PR #$PR_NUMBER"
+                      elif [ -n "$GITHUB_TOKEN" ]; then
+                          # GitHub API fallback
+                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                              -H "Accept: application/vnd.github+json" \
+                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                          
+                          if [ -n "$PR_NUMBER" ]; then
+                              echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "⏭️  No PR found - skipping VRT deployment"
+                              exit 0
                           fi
-                      done
+                      else
+                          echo "⏭️  No PR detected - skipping VRT deployment"
+                          exit 0
+                      fi
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                      # Only proceed if we have a valid PR number
+                      if [ -z "$PR_NUMBER" ]; then
+                          echo "⏭️  No PR number available - skipping VRT deployment"
+                          exit 0
+                      fi
+
+                      # Create PR hash using just PR number for overwriting deployments
+                      PR_HASH="pr-${PR_NUMBER}"
+
+                      # VRT combination for subdirectory
+                      combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+
+                      # Prepare files for deployment
+                      cp projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
+
+                      # Upload VRT results to Azure Blob Storage
+                      echo "Uploading VRT results to ${PR_HASH}/${combination}/"
+                      azcopy copy "test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/${combination}/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "VRT URL for ${combination}: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -195,27 +258,17 @@ jobs:
             - store_test_results:
                   path: /root/project/results/
 
-    preview-docs:
+    lint:
         executor: node
+
         steps:
             - downstream
             - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  name: Lint
+                  command: yarn lint
             - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
+                  name: Are there changes?
+                  command: git diff-files --exit-code
 
     beta-docs:
         executor: node
@@ -234,11 +287,29 @@ jobs:
             - run:
                   name: Build Storybook
                   command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
+            - install-azcopy
+            - run:
+                  name: Deploy Beta Documentation to Azure Blob Storage
+                  command: |
+                      # Upload documentation to beta path
+                      echo "Uploading documentation to beta/docs/"
+                      azcopy copy "projects/documentation/dist/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Upload Storybook to beta path
+                      echo "Uploading Storybook to beta/docs/storybook/"
+                      azcopy copy "storybook-static/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URLs
+                      DOCS_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/"
+                      STORYBOOK_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/storybook/"
+                      echo "Beta Documentation URL: $DOCS_URL"
+                      echo "Beta Storybook URL: $STORYBOOK_URL"
 
     hcm-visual:
         executor: node
@@ -281,32 +352,64 @@ jobs:
                       branch=$(git symbolic-ref --short HEAD)
                       node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy Visual Tests to Azure Blob Storage
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
-
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                      # Get PR number from CircleCI environment
+                      set +x
+                      PR_NUMBER=""
+                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                          echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                          PR_NUMBER="$CIRCLE_PR_NUMBER"
+                          echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                          echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                      elif [ -n "$GITHUB_TOKEN" ]; then
+                          # GitHub API fallback
+                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                              -H "Accept: application/vnd.github+json" \
+                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                          
+                          if [ -n "$PR_NUMBER" ]; then
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "⏭️  No PR found - skipping HCM VRT deployment"
+                              exit 0
                           fi
-                      done
+                      else
+                          echo "⏭️  No PR detected - skipping HCM VRT deployment"
+                          exit 0
+                      fi
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                      # Only proceed if we have a valid PR number
+                      if [ -z "$PR_NUMBER" ]; then
+                          echo "⏭️  No PR number available - skipping HCM VRT deployment"
+                          exit 0
+                      fi
+
+                      # Create PR hash using just PR number for overwriting deployments
+                      PR_HASH="pr-${PR_NUMBER}"
+
+                      # Prepare files for deployment
+                      cp projects/documentation/content/favicon.ico test/visual/
+
+                      # Upload HCM VRT results to Azure Blob Storage
+                      echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
+                      azcopy copy "test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/hcm/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "HCM Visual Test URL: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
@@ -353,11 +456,6 @@ workflows:
             - test-firefox
             - test-webkit
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
