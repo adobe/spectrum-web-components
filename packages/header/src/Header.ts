@@ -220,12 +220,6 @@ export class Header extends SpectrumElement {
     public overflowBehavior: HeaderOverflowBehavior = 'menu';
 
     /**
-     * Enable responsive overflow handling
-     */
-    @property({ type: Boolean, attribute: 'enable-overflow' })
-    public enableOverflow = true;
-
-    /**
      * Minimum space (px) required before triggering overflow
      */
     @property({ type: Number, attribute: 'overflow-threshold' })
@@ -275,6 +269,24 @@ export class Header extends SpectrumElement {
         return this.endActionNodes && this.endActionNodes.length > 0;
     }
 
+    private get hasVisibleStartActions(): boolean {
+        return this.visibleActions.some((action) =>
+            this.startActionNodes.includes(action)
+        );
+    }
+
+    private get hasVisibleMiddleActions(): boolean {
+        return this.visibleActions.some((action) =>
+            this.middleActionNodes.includes(action)
+        );
+    }
+
+    private get hasVisibleEndActions(): boolean {
+        return this.visibleActions.some((action) =>
+            this.endActionNodes.includes(action)
+        );
+    }
+
     focusGroupController = new FocusGroupController<HTMLElement>(this, {
         direction: 'horizontal',
         elements: () => this.actionElements,
@@ -282,10 +294,6 @@ export class Header extends SpectrumElement {
     });
 
     private resizeObserver?: ResizeObserver;
-    private actionPriorityMap = new WeakMap<
-        HTMLElement,
-        HeaderActionPriority
-    >();
 
     public override focus(): void {
         if (this.editMode) {
@@ -515,9 +523,7 @@ export class Header extends SpectrumElement {
         super.connectedCallback();
         document.addEventListener('click', this.handleOutsideClick);
 
-        if (this.enableOverflow) {
-            this.setupResizeObserver();
-        }
+        this.setupResizeObserver();
     }
 
     public override disconnectedCallback(): void {
@@ -546,7 +552,7 @@ export class Header extends SpectrumElement {
     }
 
     private handleResize(): void {
-        if (!this.enableOverflow || !this.mainRowElement) return;
+        if (!this.mainRowElement) return;
 
         this.calculateAvailableSpace();
         this.manageActionOverflow();
@@ -573,39 +579,48 @@ export class Header extends SpectrumElement {
     }
 
     private manageActionOverflow(): void {
-        if (!this.enableOverflow) return;
+        // Get actions in visual order (left to right)
+        const actionsInOrder = [
+            ...this.startActionNodes,
+            ...this.middleActionNodes,
+            ...this.endActionNodes,
+        ];
 
-        const allActions = [...this.actionElements];
-        if (allActions.length === 0) return;
+        if (actionsInOrder.length === 0) return;
 
-        // Sort actions by priority (critical first, low last)
-        const sortedActions = this.sortActionsByPriority(allActions);
-
-        let currentWidth = 0;
-        const visible: HTMLElement[] = [];
+        // Start with all actions as visible
+        const visible = [...actionsInOrder];
         const overflow = {
             startActions: [] as HTMLElement[],
             middleActions: [] as HTMLElement[],
             endActions: [] as HTMLElement[],
         };
 
-        for (const action of sortedActions) {
-            const actionWidth = this.getActionWidth(action);
+        // Calculate total width needed
+        let totalWidth = visible.reduce(
+            (width, action) => width + this.getActionWidth(action),
+            0
+        );
 
-            if (
-                this.maxVisibleActions > 0 &&
-                visible.length >= this.maxVisibleActions
-            ) {
-                this.addActionToOverflowGroup(action, overflow);
-                continue;
-            }
+        // Remove leftmost actions until we fit within available space
+        while (totalWidth > this.availableWidth && visible.length > 0) {
+            const leftmostAction = visible.shift()!;
+            this.addActionToOverflowGroup(leftmostAction, overflow);
+            totalWidth -= this.getActionWidth(leftmostAction);
+        }
 
-            if (currentWidth + actionWidth <= this.availableWidth) {
-                visible.push(action);
-                currentWidth += actionWidth;
-            } else {
-                this.addActionToOverflowGroup(action, overflow);
-            }
+        // Apply max visible actions limit
+        if (
+            this.maxVisibleActions > 0 &&
+            visible.length > this.maxVisibleActions
+        ) {
+            const actionsToOverflow = visible.splice(
+                0,
+                visible.length - this.maxVisibleActions
+            );
+            actionsToOverflow.forEach((action) =>
+                this.addActionToOverflowGroup(action, overflow)
+            );
         }
 
         // Always show overflow menu if there are overflow actions
@@ -616,13 +631,17 @@ export class Header extends SpectrumElement {
         const needsOverflowMenu = totalOverflowActions > 0;
         if (needsOverflowMenu) {
             const overflowMenuWidth = 40; // Estimated width of overflow menu button
+            const currentWidth = visible.reduce(
+                (width, action) => width + this.getActionWidth(action),
+                0
+            );
             if (
                 currentWidth + overflowMenuWidth > this.availableWidth &&
                 visible.length > 0
             ) {
-                // Move the last visible action to overflow to make room for the menu
-                const lastVisible = visible.pop()!;
-                this.addActionToOverflowGroup(lastVisible, overflow);
+                // Move the leftmost visible action to overflow to make room for the menu
+                const leftmostVisible = visible.shift()!;
+                this.addActionToOverflowGroup(leftmostVisible, overflow);
             }
         }
 
@@ -631,63 +650,6 @@ export class Header extends SpectrumElement {
         this.isOverflowing = needsOverflowMenu;
 
         this.updateActionVisibility();
-    }
-
-    private sortActionsByPriority(actions: HTMLElement[]): HTMLElement[] {
-        return actions.sort((a, b) => {
-            const priorityA = this.getActionPriority(a);
-            const priorityB = this.getActionPriority(b);
-
-            const priorityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
-            return priorityOrder[priorityA] - priorityOrder[priorityB];
-        });
-    }
-
-    private getActionPriority(action: HTMLElement): HeaderActionPriority {
-        // Check for explicit priority attribute
-        const priority = action.getAttribute(
-            'data-priority'
-        ) as HeaderActionPriority;
-        if (
-            priority &&
-            ['low', 'medium', 'high', 'critical'].includes(priority)
-        ) {
-            return priority;
-        }
-
-        // Check cached priority
-        if (this.actionPriorityMap.has(action)) {
-            return this.actionPriorityMap.get(action)!;
-        }
-
-        // Determine priority based on action characteristics
-        let inferredPriority: HeaderActionPriority = 'medium';
-
-        // Primary/accent buttons are typically high priority
-        if (
-            action.getAttribute('variant') === 'accent' ||
-            action.hasAttribute('variant')
-        ) {
-            inferredPriority = 'high';
-        }
-
-        // Buttons with "save", "publish", "submit" text are critical
-        const text = action.textContent?.toLowerCase() || '';
-        if (
-            text.includes('save') ||
-            text.includes('publish') ||
-            text.includes('submit')
-        ) {
-            inferredPriority = 'critical';
-        }
-
-        // Icon-only actions are typically lower priority
-        if (action.hasAttribute('quiet') && !action.textContent?.trim()) {
-            inferredPriority = 'low';
-        }
-
-        this.actionPriorityMap.set(action, inferredPriority);
-        return inferredPriority;
     }
 
     private getActionWidth(action: HTMLElement): number {
@@ -1043,41 +1005,39 @@ export class Header extends SpectrumElement {
                 .filter((item) => item !== nothing) as TemplateResult[];
         };
 
-        const menuItems: TemplateResult[] = [];
-
-        // Add start actions
-        if (this.overflowActions.startActions.length > 0) {
-            menuItems.push(
-                ...renderActionGroup(this.overflowActions.startActions)
-            );
-        }
-
-        // Add divider and middle actions (L2 only)
-        if (
+        // Collect all non-empty sections (in reverse order - rightmost first)
+        const allSections = [
+            this.overflowActions.endActions.length > 0
+                ? renderActionGroup(
+                      [...this.overflowActions.endActions].reverse()
+                  )
+                : [],
             this.variant === 'l2' &&
             this.overflowActions.middleActions.length > 0
-        ) {
-            if (menuItems.length > 0) {
-                menuItems.push(html`
-                    <sp-menu-divider></sp-menu-divider>
-                `);
-            }
-            menuItems.push(
-                ...renderActionGroup(this.overflowActions.middleActions)
-            );
-        }
+                ? renderActionGroup(
+                      [...this.overflowActions.middleActions].reverse()
+                  )
+                : [],
+            this.overflowActions.startActions.length > 0
+                ? renderActionGroup(
+                      [...this.overflowActions.startActions].reverse()
+                  )
+                : [],
+        ].filter((section) => section.length > 0);
 
-        // Add divider and end actions
-        if (this.overflowActions.endActions.length > 0) {
-            if (menuItems.length > 0) {
-                menuItems.push(html`
-                    <sp-menu-divider></sp-menu-divider>
-                `);
-            }
-            menuItems.push(
-                ...renderActionGroup(this.overflowActions.endActions)
-            );
-        }
+        // Join sections with dividers between them
+        const menuItems = allSections
+            .map((section, index) =>
+                index === 0
+                    ? section
+                    : [
+                          html`
+                              <sp-menu-divider></sp-menu-divider>
+                          `,
+                          ...section,
+                      ]
+            )
+            .flat();
 
         return html`
             <sp-action-menu
@@ -1105,7 +1065,8 @@ export class Header extends SpectrumElement {
 
         // Add divider and middle actions for L2
         if (this.variant === 'l2') {
-            if (this.hasStartActions && this.hasMiddleActions) {
+            // Only show divider if both start and middle actions are visible
+            if (this.hasVisibleStartActions && this.hasVisibleMiddleActions) {
                 const divider = this.renderActionDivider();
                 if (divider !== nothing) {
                     parts.push(divider);
@@ -1122,14 +1083,12 @@ export class Header extends SpectrumElement {
         }
 
         // Add divider and end actions
+        // Only show divider if there are visible actions before end actions
         if (
-            (this.hasStartActions || this.hasMiddleActions) &&
-            this.hasEndActions
+            (this.hasVisibleStartActions || this.hasVisibleMiddleActions) &&
+            this.hasVisibleEndActions
         ) {
-            const divider = this.renderActionDivider();
-            if (divider !== nothing) {
-                parts.push(divider);
-            }
+            parts.push(this.renderActionDivider() as TemplateResult);
         }
         const endActions = this.renderEndActions();
         if (endActions !== nothing) {
@@ -1141,13 +1100,18 @@ export class Header extends SpectrumElement {
         // Add overflow menu if needed
         const overflowMenu = this.renderOverflowMenu();
         if (overflowMenu !== nothing) {
-            if (parts.length > 0) {
+            // Only add divider after overflow menu if there are visible actions
+            if (
+                this.hasVisibleStartActions ||
+                this.hasVisibleMiddleActions ||
+                this.hasVisibleEndActions
+            ) {
                 const divider = this.renderActionDivider();
                 if (divider !== nothing) {
-                    parts.push(divider);
+                    parts.unshift(divider);
                 }
             }
-            parts.push(overflowMenu);
+            parts.unshift(overflowMenu);
         }
 
         return parts.length > 0
