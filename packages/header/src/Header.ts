@@ -80,7 +80,6 @@ export const VALID_HEADER_VARIANTS = ['l1', 'l2'] as const;
  * ## Action Slot Limitations:
  * - **L1 Header**: Maximum 2 action slots (start-actions, end-actions)
  * - **L2 Header**: Maximum 3 action slots (start-actions, middle-actions, end-actions)
- * - **Dividers**: Only available for L2 headers with `show-action-dividers` property
  */
 
 export class Header extends FocusVisiblePolyfillMixin(SpectrumElement) {

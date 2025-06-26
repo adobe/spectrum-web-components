@@ -20,20 +20,44 @@ import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-bookmark.js';
 
 export default {
     title: 'Header',
     component: 'sp-header',
+    parameters: {
+        docs: {
+            description: {
+                component: `
+# Header Component
+
+A composable page header component for Spectrum Web Components, designed for scalability and flexibility.
+
+## Variants
+
+- **L1 Header**: Top-level pages with title, subtitle, and action slots
+- **L2 Header**: Sub-pages with back button, editable title, status indicators, and action regions
+
+## Key Features
+
+- ✅ L1/L2 variants with appropriate layouts
+- ✅ Editable titles with validation and error handling  
+- ✅ Flexible action slot system (start, middle, end)
+- ✅ Status indicators and spacing
+- ✅ Full accessibility support (WCAG 2.1 AA)
+- ✅ Responsive behavior and overflow handling
+- ✅ Keyboard navigation and focus management
+                `,
+            },
+        },
+    },
     argTypes: {
         variant: {
             control: { type: 'radio' },
             options: ['l1', 'l2'],
-            description:
-                'Header variant - L1 for top-level pages, L2 for sub-pages',
+            description: 'Header variant - L1 for top-level pages, L2 for sub-pages',
         },
-
         title: {
             control: { type: 'text' },
             description: 'Main title text',
@@ -88,10 +112,8 @@ const HeaderTemplate = ({
     showStatus = false,
 }: Partial<HeaderArgs>): TemplateResult => {
     const handleBack = () => console.log('Back button clicked');
-    const handleEditStart = (event: CustomEvent) =>
-        console.log('Edit started:', event.detail);
-    const handleEditSave = (event: CustomEvent) =>
-        console.log('Edit saved:', event.detail);
+    const handleEditStart = (event: CustomEvent) => console.log('Edit started:', event.detail);
+    const handleEditSave = (event: CustomEvent) => console.log('Edit saved:', event.detail);
     const handleEditCancel = () => console.log('Edit cancelled');
 
     const titleValidation = (value: string) => {
@@ -163,33 +185,144 @@ const HeaderTemplate = ({
     `;
 };
 
-export const L1Header: Story<HeaderArgs> = HeaderTemplate.bind({});
-L1Header.args = {
+// Primary Stories
+export const L1Basic: Story<HeaderArgs> = HeaderTemplate.bind({});
+L1Basic.args = {
     variant: 'l1',
-    title: 'Create',
-    subtitle:
-        'This report analyzes underperforming creative assets to uncover areas of improvement and growth opportunities. It highlights key metrics',
+    title: 'Dashboard',
+    subtitle: 'Analytics and insights for your campaigns',
     showStartActions: false,
     showEndActions: true,
 };
 
-export const L2Header: Story<HeaderArgs> = HeaderTemplate.bind({});
-L2Header.args = {
+export const L1WithActions: Story<HeaderArgs> = HeaderTemplate.bind({});
+L1WithActions.args = {
+    variant: 'l1',
+    title: 'Create Campaign',
+    subtitle: 'Build and launch your next marketing campaign',
+    showStartActions: true,
+    showEndActions: true,
+};
+
+export const L2Basic: Story<HeaderArgs> = HeaderTemplate.bind({});
+L2Basic.args = {
     variant: 'l2',
-    title: 'New Meta Ads activation',
+    title: 'Campaign Settings',
     showBack: true,
     showStartActions: false,
     showEndActions: true,
-    showMiddleActions: false,
-    showStatus: false,
 };
 
-export const L2EditableHeader: Story<HeaderArgs> = HeaderTemplate.bind({});
-L2EditableHeader.args = {
+export const L2WithStatus: Story<HeaderArgs> = HeaderTemplate.bind({});
+L2WithStatus.args = {
     variant: 'l2',
-    title: 'Q1 2025 Kayak Adventures - Meta Campaign',
+    title: 'Q1 2025 Meta Campaign',
+    showBack: true,
+    showEndActions: true,
+    showStatus: true,
+};
+
+export const L2EditableTitle: Story<HeaderArgs> = HeaderTemplate.bind({});
+L2EditableTitle.args = {
+    variant: 'l2',
+    title: 'Editable Campaign Name',
     editableTitle: true,
     showBack: true,
     showEndActions: false,
     showStatus: true,
 };
+
+export const L2AllRegions: Story<HeaderArgs> = HeaderTemplate.bind({});
+L2AllRegions.args = {
+    variant: 'l2',
+    title: 'Advanced Campaign',
+    showBack: true,
+    showStartActions: true,
+    showMiddleActions: true,
+    showEndActions: true,
+    showStatus: true,
+};
+
+// Rich Content Examples
+export const L1WithRichContent = (): TemplateResult => html`
+    <sp-header variant="l1">
+        <span slot="title">
+            <strong>Project</strong> <em>Portfolio</em>
+            <sp-status-light variant="positive">New</sp-status-light>
+        </span>
+        <span slot="subtitle">
+            Advanced analytics dashboard with <strong>real-time collaboration</strong>
+        </span>
+        <sp-action-button slot="start-actions" quiet>
+            <sp-icon-bookmark slot="icon"></sp-icon-bookmark>
+            Bookmark
+        </sp-action-button>
+        <sp-button slot="end-actions" variant="accent">Export</sp-button>
+    </sp-header>
+`;
+
+export const L2MultipleActions = (): TemplateResult => {
+    const handleAction = (action: string) => () => console.log(`${action} clicked`);
+
+    return html`
+        <sp-header
+            variant="l2"
+            title="Content Editor"
+            show-back
+            @sp-header-back=${() => console.log('Back clicked')}
+        >
+            <sp-action-button slot="start-actions" quiet @click=${handleAction('Edit')}>
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+            </sp-action-button>
+            <sp-action-button slot="start-actions" quiet @click=${handleAction('Settings')}>
+                <sp-icon-settings slot="icon"></sp-icon-settings>
+            </sp-action-button>
+
+            <sp-button slot="middle-actions" @click=${handleAction('Preview')}>
+                Preview
+            </sp-button>
+
+            <sp-action-button slot="end-actions" quiet @click=${handleAction('More')}>
+                <sp-icon-more slot="icon"></sp-icon-more>
+            </sp-action-button>
+            <sp-button slot="end-actions" @click=${handleAction('Save')}>
+                Save Draft
+            </sp-button>
+            <sp-button slot="end-actions" variant="accent" @click=${handleAction('Publish')}>
+                Publish
+            </sp-button>
+
+            <sp-status-light slot="status" variant="notice">Draft</sp-status-light>
+            <span slot="status">Last saved: 2 minutes ago</span>
+        </sp-header>
+    `;
+};
+
+export const MinimalExamples = (): TemplateResult => html`
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+        <div>
+            <h4>Minimal L1 - Title Only</h4>
+            <sp-header variant="l1" title="Simple Dashboard"></sp-header>
+        </div>
+        
+        <div>
+            <h4>Minimal L2 - Back + Title</h4>
+            <sp-header 
+                variant="l2" 
+                title="Settings Page" 
+                show-back
+                @sp-header-back=${() => console.log('Back clicked')}
+            ></sp-header>
+        </div>
+        
+        <div>
+            <h4>L2 with Disabled Back</h4>
+            <sp-header 
+                variant="l2" 
+                title="Loading..." 
+                show-back
+                disable-back
+            ></sp-header>
+        </div>
+    </div>
+`;

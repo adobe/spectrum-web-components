@@ -230,8 +230,8 @@
 }
 
 /* Improved action spacing when dividers are used */
-:host([show-action-dividers]) .actions-start,
-:host([show-action-dividers]) .actions-middle {
+:host .actions-start,
+:host .actions-middle {
     margin-inline-end: 0;
 }
 
