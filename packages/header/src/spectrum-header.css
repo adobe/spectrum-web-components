@@ -70,6 +70,9 @@
     margin: calc(var(--spectrum-spacing-75) * -1);
     border-radius: var(--spectrum-corner-radius-75);
     transition: background-color var(--spectrum-animation-duration-100) ease-in-out;
+    /* Make title text snug so edit button appears directly next to text */
+    flex-grow: 0;
+    flex-shrink: 1;
 }
 
 .title-text.clickable:hover {
@@ -301,7 +304,7 @@
 
 /* Overflow menu indicator */
 .overflow-menu::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -2px;
     right: -2px;
@@ -391,11 +394,11 @@
         max-width: 300px;
         min-width: 150px;
     }
-/* More aggressive overflow on mobile */
-:host([enable-overflow]) .actions-container {
-    /* Reduce threshold for mobile */
-    --mobile-overflow-threshold: 80px;
-}
+    /* More aggressive overflow on mobile */
+    :host([enable-overflow]) .actions-container {
+        /* Reduce threshold for mobile */
+        --mobile-overflow-threshold: 80px;
+    }
 }
 
 /* Stack actions vertically on very small screens */
@@ -413,10 +416,10 @@
             }
         }
     }
-/* Very aggressive overflow on small screens */
-:host([enable-overflow]) .actions-container {
-    /* Show maximum 2 actions on very small screens */
-    max-width: 120px;
-    overflow: hidden;
-}
+    /* Very aggressive overflow on small screens */
+    :host([enable-overflow]) .actions-container {
+        /* Show maximum 2 actions on very small screens */
+        max-width: 120px;
+        overflow: hidden;
+    }
 }
