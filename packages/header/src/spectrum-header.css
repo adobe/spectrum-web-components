@@ -19,11 +19,21 @@
 .header {
     display: flex;
     flex-direction: column;
-    padding: var(--spectrum-spacing-400) var(--spectrum-spacing-500);
     border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
     background-color: var(--spectrum-background-layer-2-color);
+    border-top-left-radius: var(--spectrum-spacing-300);
+    border-top-right-radius: var(--spectrum-spacing-300);
 }
 
+/* L1 variant padding */
+:host([variant="l1"]) .header {
+    padding: var(--spectrum-spacing-400) var(--spectrum-spacing-600);
+}
+
+/* L2 variant padding */
+:host([variant="l2"]) .header {
+    padding: var(--spectrum-spacing-100) var(--spectrum-spacing-300);
+}
 /* Main row layout - matches Figma structure */
 .main-row {
     display: flex;
@@ -35,7 +45,7 @@
 /* Back button */
 .back-button {
     flex-shrink: 0;
-    margin-inline-end: var(--spectrum-spacing-100);
+    margin-inline-end: var(--spectrum-spacing-300);
 }
 
 /* Title container */
@@ -51,7 +61,7 @@
     color: var(--spectrum-heading-color);
     display: flex;
     align-items: center;
-    gap: var(--spectrum-spacing-100);
+    gap: var(--spectrum-spacing-200);
     line-height: var(--spectrum-line-height-100);
 }
 
@@ -112,7 +122,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: var(--spectrum-spacing-200);
+    gap: var(--spectrum-spacing-300);
     flex-grow: 1;
     min-width: 0;
     position: relative;
@@ -170,7 +180,7 @@
 
 .edit-actions {
     display: flex;
-    gap: var(--spectrum-spacing-100);
+    gap: var(--spectrum-spacing-200);
     align-items: center;
     flex-shrink: 0;
 }
@@ -196,7 +206,7 @@
 .actions-end {
     display: flex;
     align-items: center;
-    gap: var(--spectrum-spacing-100);
+    gap: var(--spectrum-spacing-200);
 }
 
 .actions-start {
@@ -251,7 +261,7 @@
 
 /* Status items with spacing only (no dividers per Figma) */
 .status-row ::slotted(*) {
-    margin-inline-end: var(--spectrum-spacing-200);
+    margin-inline-end: var(--spectrum-spacing-300);
 }
 
 .status-row ::slotted(*:last-child) {
@@ -270,7 +280,7 @@
 .actions-container {
     display: flex;
     align-items: center;
-    gap: var(--spectrum-spacing-100);
+    gap: var(--spectrum-spacing-300);
     flex-shrink: 0;
     min-width: 0;
 }
@@ -382,11 +392,11 @@
     .actions-start,
     .actions-middle,
     .actions-end {
-        gap: var(--spectrum-spacing-75);
+        gap: var(--spectrum-spacing-100);
     }
 
     .actions-end {
-        margin-inline-start: var(--spectrum-spacing-200);
+        margin-inline-start: var(--spectrum-spacing-300);
     }
 
     /* Smaller edit field on mobile */
@@ -406,7 +416,7 @@
     .title-edit-container {
         flex-direction: column;
         align-items: stretch;
-        gap: var(--spectrum-spacing-100);
+        gap: var(--spectrum-spacing-200);
 
         .edit-actions {
             justify-content: center;
