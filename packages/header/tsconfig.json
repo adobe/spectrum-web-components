@@ -7,13 +7,19 @@
     "include": ["*.ts", "src/**/*.ts", "stories/**/*.ts", "test/**/*.ts"],
     "exclude": [],
     "references": [
-        { "path": "../base" },
+        { "path": "../../tools/base" },
         { "path": "../action-button" },
-        { "path": "../textfield" },
+        { "path": "../action-menu" },
+        { "path": "../divider" },
         { "path": "../help-text" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
-        { "path": "../reactive-controllers" },
-        { "path": "../shared" }
+        { "path": "../menu" },
+        { "path": "../overlay" },
+        { "path": "../../tools/reactive-controllers" },
+        { "path": "../../tools/shared" },
+        { "path": "../textfield" },
+        { "path": "../toast" },
+        { "path": "../tooltip" }
     ]
 }

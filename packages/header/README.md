@@ -1,3 +1,8 @@
+<!-- TODO: Check if this README structure matches other established packages -->
+<!-- TODO: Verify all required documentation sections are included -->
+<!-- TODO: Consider adding more examples like button package has extensive story examples -->
+<!-- TODO: Ensure API documentation is complete and matches the actual component interface -->
+
 # Header
 
 ## Description
@@ -209,8 +214,161 @@ The header component follows Spectrum accessibility guidelines:
 - ✅ Basic structure and L1/L2 variants
 - ✅ Editable title functionality
 - ✅ Action slots and status indicators
+- ✅ FocusVisiblePolyfillMixin integration
+- ✅ Variant validation with dev mode warnings
+- ✅ Property validation (maxTitleLength)
+- ✅ Basic error handling for DOM operations
 - ⏳ Overflow handling (in progress)
 - ⏳ Comprehensive testing suite
 - ⏳ Accessibility improvements
 
 For the latest development progress, see [HEADER_DEVELOPMENT.md](./HEADER_DEVELOPMENT.md).
+
+## 🚧 Open Design Decisions & Required Input
+
+The following features and improvements need design decisions and user input before implementation:
+
+### 🎨 **Component Architecture Decisions**
+
+#### 1. **Size Variants**
+
+Should the Header component support size variants like Button does (`s`, `m`, `l`, `xl`)?
+
+- **Current**: No size variants implemented
+- **Option A**: Add size variants with different paddings and font sizes
+- **Option B**: Keep header size consistent across the system
+- **Decision needed**: Product/Design team input required
+
+#### 2. **Static Color Variants**
+
+Should headers support static color variants for different background contexts?
+
+- **Current**: No static color support
+- **Option A**: Add `static-color="white"` and `static-color="black"` like Button
+- **Option B**: Handle theming through CSS custom properties only
+- **Decision needed**: Design system requirements
+
+#### 3. **Pending State Management**
+
+Should headers support async operation states like Button's PendingStateController?
+
+- **Current**: Basic saving state for title editing only
+- **Option A**: Add comprehensive pending state for all async operations
+- **Option B**: Keep minimal state management
+- **Use cases**: Title saving, back navigation, action button operations
+- **Decision needed**: UX requirements for loading states
+
+### ⚡ **Performance & UX Optimizations**
+
+#### 4. **Debouncing Configuration**
+
+Which operations should be debounced and with what timing?
+
+- **Validation**: Real-time title validation (suggested: 300ms)
+- **Resize operations**: Action overflow calculations (suggested: 100ms)
+- **Slot changes**: Re-render triggers (suggested: 50ms)
+- **Decision needed**: Performance requirements and user experience preferences
+
+#### 5. **Animation Support**
+
+What animations should be supported for state transitions?
+
+- **Action overflow**: Slide/fade animations when actions move to overflow
+- **Edit mode**: Smooth transitions between static and editable title
+- **Toast notifications**: Entry/exit animations
+- **Validation errors**: Error state animations
+- **Decision needed**: Animation library choice and performance budget
+
+#### 6. **Configuration Options**
+
+Which layout parameters should be configurable?
+
+- **Gap values**: Spacing between header elements (current: 12px hardcoded)
+- **Overflow behavior**: When to start moving actions to overflow menu
+- **Overflow menu width**: Reserved space for overflow button (current: 40px)
+- **Decision needed**: Design flexibility vs. consistency requirements
+
+### 🎭 **Toast & Notification Systems**
+
+#### 7. **Toast Types & Positioning**
+
+Should headers support different toast notification types?
+
+- **Current**: Success toast only for title rename
+- **Proposed types**: `success`, `error`, `warning`, `info`
+- **Positioning**: Fixed position vs. header-relative
+- **Stacking**: Multiple toast management
+- **Auto-dismiss timing**: Configurable timeouts
+- **Decision needed**: Notification system architecture
+
+### 🧪 **Testing Strategy Decisions**
+
+#### 8. **Visual Regression Testing Scope**
+
+Which visual scenarios should be covered by VRT?
+
+- **All size variants** (if implemented)
+- **All color variants** (if implemented)
+- **Overflow states** at different viewport sizes
+- **Edit mode transitions**
+- **Error states** and validation displays
+- **Decision needed**: Testing infrastructure and maintenance budget
+
+#### 9. **Accessibility Testing Depth**
+
+What level of accessibility testing is required?
+
+- **Screen reader compatibility**: Full narrative flow testing
+- **Keyboard navigation**: Complex interaction sequences
+- **High contrast mode**: All state combinations
+- **Motion preferences**: Animation respect testing
+- **Decision needed**: Accessibility compliance level (WCAG AA vs AAA)
+
+### 📱 **Responsive Behavior**
+
+#### 10. **Mobile/Touch Optimizations**
+
+How should headers behave on mobile devices?
+
+- **Touch targets**: Minimum sizes for action buttons
+- **Swipe gestures**: Back navigation support
+- **Viewport handling**: Responsive typography and spacing
+- **Orientation changes**: Layout adaptations
+- **Decision needed**: Mobile-first design requirements
+
+### 🔧 **Developer Experience**
+
+#### 11. **Helper Functions & Utilities**
+
+What developer utilities should be provided?
+
+- **Validation helpers**: Pre-built validation functions
+- **Event helpers**: Simplified event handling patterns
+- **Layout utilities**: Responsive layout calculation helpers
+- **Testing utilities**: Component testing helpers
+- **Decision needed**: DX priorities and maintenance scope
+
+### 📋 **Implementation Priority**
+
+Please review these decisions and provide input on:
+
+1. **High Priority** (affects core functionality):
+
+    - Size variants (#1)
+    - Pending state management (#3)
+    - Toast types (#7)
+
+2. **Medium Priority** (affects user experience):
+
+    - Animation support (#5)
+    - Debouncing configuration (#4)
+    - Mobile optimizations (#10)
+
+3. **Low Priority** (nice to have):
+    - Static color variants (#2)
+    - Configuration options (#6)
+    - Helper functions (#11)
+
+---
+
+_Once decisions are made on these items, implementation can proceed with the remaining TODO items in the codebase._

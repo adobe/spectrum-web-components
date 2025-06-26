@@ -14,6 +14,21 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/header/sp-header.js';
 import { Header } from '@spectrum-web-components/header';
 
+// TODO: Add testForLitDevWarnings() like Button tests do to ensure dev mode warnings work correctly
+// TODO: Add comprehensive accessibility tests using a11ySnapshot like Button tests
+// TODO: Add keyboard navigation tests using sendKeys
+// TODO: Add mouse interaction tests using sendMouse
+// TODO: Add tests for all event dispatching (sp-header-back, sp-header-edit-start, etc.)
+// TODO: Add tests for FocusGroupController functionality
+// TODO: Add tests for ResizeObserver and action overflow management
+// TODO: Add tests for all property combinations and edge cases
+// TODO: Add tests for validation error handling
+// TODO: Add tests for toast functionality
+// TODO: Add tests for disabled states and accessibility
+// TODO: Add tests for all slot combinations and variations
+// TODO: Add performance and memory leak tests like Button has (button-memory.test.ts)
+// TODO: Consider adding VRT (Visual Regression Testing) tests to match other packages
+
 describe('Header', () => {
     it('loads default header', async () => {
         const el = await fixture<Header>(html`

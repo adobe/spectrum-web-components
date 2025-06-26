@@ -26,6 +26,9 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+
+// TODO: Consider adding SizedMixin if the header needs size variants (Button uses it)
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
@@ -56,13 +59,12 @@ export type HeaderValidationCallback = (
     value: string
 ) => HeaderValidationError[] | null;
 
-export type HeaderOverflowBehavior = 'hide' | 'menu' | 'scroll';
-export type HeaderActionPriority = 'low' | 'medium' | 'high' | 'critical';
+export const VALID_HEADER_VARIANTS = ['l1', 'l2'] as const;
 
 /**
  * @element sp-header
  *
- * @slot title - The main title content
+ * @slot title - The main title content  
  * @slot subtitle - The subtitle content (L1 only)
  * @slot start-actions - Action buttons at the start of the header (L1: ✅, L2: ✅)
  * @slot middle-actions - Middle action buttons (L1: ❌, L2: ✅ only)
@@ -80,7 +82,8 @@ export type HeaderActionPriority = 'low' | 'medium' | 'high' | 'critical';
  * - **L2 Header**: Maximum 3 action slots (start-actions, middle-actions, end-actions)
  * - **Dividers**: Only available for L2 headers with `show-action-dividers` property
  */
-export class Header extends SpectrumElement {
+
+export class Header extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -89,7 +92,31 @@ export class Header extends SpectrumElement {
      * The variant of the header - L1 for top-level pages, L2 for sub-pages
      */
     @property({ type: String, reflect: true })
-    public variant: HeaderVariant = 'l1';
+    public get variant(): HeaderVariant {
+        return this._variant;
+    }
+    public set variant(variant: HeaderVariant) {
+        if (variant === this.variant) return;
+
+        this.requestUpdate('variant', this.variant);
+        
+        if (!VALID_HEADER_VARIANTS.includes(variant as typeof VALID_HEADER_VARIANTS[number])) {
+            this._variant = 'l1';
+            if (window.__swc?.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "${variant}" value of the "variant" attribute on <${this.localName}> is not valid. Valid values are: ${VALID_HEADER_VARIANTS.join(', ')}. Defaulting to "l1".`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/header/',
+                    { level: 'default' }
+                );
+            }
+        } else {
+            this._variant = variant;
+        }
+        
+        this.setAttribute('variant', this.variant);
+    }
+    private _variant: HeaderVariant = 'l1';
 
     /**
      * Whether the title can be edited (L2 only)
@@ -149,22 +176,40 @@ export class Header extends SpectrumElement {
      * Maximum character limit for title editing (defaults to no limit)
      */
     @property({ type: Number, attribute: 'max-title-length' })
-    public maxTitleLength?: number;
+    public get maxTitleLength(): number | undefined {
+        return this._maxTitleLength;
+    }
+    public set maxTitleLength(value: number | undefined) {
+        if (value !== undefined && (value < 0 || !Number.isInteger(value))) {
+            if (window.__swc?.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "max-title-length" attribute on <${this.localName}> must be a positive integer. Received: ${value}`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/header/',
+                    { level: 'default' }
+                );
+            }
+            return;
+        }
+        this._maxTitleLength = value;
+    }
+    private _maxTitleLength?: number;
+
 
     /**
-     * Internal edit state
+     * Internal edit state for title editing
      */
     @state()
     private editValue = '';
 
     /**
-     * Current validation errors
+     * Current validation errors for title editing
      */
     @state()
     private validationErrors: HeaderValidationError[] = [];
 
     /**
-     * Track if we're in the middle of saving
+     * Track if we're in the middle of saving a title edit
      */
     @state()
     private saving = false;
@@ -176,19 +221,19 @@ export class Header extends SpectrumElement {
     private titleTruncated = false;
 
     /**
-     * Whether to show success toast
+     * Whether to show success toast notification
      */
     @state()
     private showToast = false;
 
     /**
-     * Track overflow state
+     * Track action overflow state for responsive design
      */
     @state()
     private isOverflowing = false;
 
     /**
-     * Actions currently in overflow menu, grouped by slot
+     * Actions currently in overflow menu, grouped by slot type
      */
     @state()
     private overflowActions: {
@@ -202,34 +247,16 @@ export class Header extends SpectrumElement {
     };
 
     /**
-     * Actions currently visible
+     * Actions currently visible (not in overflow)
      */
     @state()
     private visibleActions: HTMLElement[] = [];
 
     /**
-     * Available width for actions
+     * Available width for action buttons
      */
     @state()
     private availableWidth = 0;
-
-    /**
-     * How to handle overflow of action slots
-     */
-    @property({ type: String, attribute: 'overflow-behavior' })
-    public overflowBehavior: HeaderOverflowBehavior = 'menu';
-
-    /**
-     * Minimum space (px) required before triggering overflow
-     */
-    @property({ type: Number, attribute: 'overflow-threshold' })
-    public overflowThreshold = 120;
-
-    /**
-     * Maximum actions to show before overflow (0 = no limit)
-     */
-    @property({ type: Number, attribute: 'max-visible-actions' })
-    public maxVisibleActions = 0;
 
     @query('#title-input')
     private titleInput?: HTMLInputElement;
@@ -248,6 +275,9 @@ export class Header extends SpectrumElement {
 
     @queryAssignedElements({ slot: 'middle-actions', flatten: true })
     private middleActionNodes!: HTMLElement[];
+
+    // TODO: Add error handling for null/undefined query results like Button does
+    // TODO: Consider adding query validation in getter methods
 
     private get actionElements(): HTMLElement[] {
         return [
@@ -287,19 +317,78 @@ export class Header extends SpectrumElement {
         );
     }
 
-    focusGroupController = new FocusGroupController<HTMLElement>(this, {
+    private focusGroupController = new FocusGroupController<HTMLElement>(this, {
         direction: 'horizontal',
         elements: () => this.actionElements,
         isFocusableElement: (el: HTMLElement) => !el.hasAttribute('disabled'),
     });
 
+    // TODO: Add error handling for FocusGroupController initialization
+
     private resizeObserver?: ResizeObserver;
 
+    // TODO: Consider adding pending state management like Button's PendingStateController
+    // TODO: Add proper cleanup for all observers and controllers
+
+    /**
+     * Enhanced focus management that handles different states and contexts
+     */
     public override focus(): void {
-        if (this.editMode) {
-            this.titleInput?.focus();
-        } else {
-            this.focusGroupController.focus();
+        try {
+            if (this.editMode) {
+                // In edit mode, focus the title input
+                this.titleInput?.focus();
+            } else if (this.showBack && this.variant === 'l2') {
+                // If back button is available, focus it first
+                const backButton = this.shadowRoot?.querySelector('.back-button') as HTMLElement;
+                backButton?.focus();
+            } else if (this.editableTitle && this.variant === 'l2') {
+                // If title is editable, focus the title text
+                const titleText = this.shadowRoot?.querySelector('.title-text') as HTMLElement;
+                titleText?.focus();
+            } else {
+                // Otherwise, focus the first available action
+                this.focusGroupController.focus();
+            }
+        } catch (error) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header focus operation failed:', error);
+            }
+        }
+    }
+
+    /**
+     * Manages tabindex attributes for proper tab order
+     */
+    private updateTabOrder(): void {
+        try {
+            // Ensure proper tab order: back button -> title (if editable) -> actions
+            const backButton = this.shadowRoot?.querySelector('.back-button') as HTMLElement;
+            const titleText = this.shadowRoot?.querySelector('.title-text') as HTMLElement;
+            const editButton = this.shadowRoot?.querySelector('.edit-button') as HTMLElement;
+
+            if (backButton) {
+                backButton.setAttribute('tabindex', '0');
+            }
+
+            if (titleText && this.editableTitle && this.variant === 'l2') {
+                titleText.setAttribute('tabindex', '0');
+            }
+
+            if (editButton) {
+                editButton.setAttribute('tabindex', '0');
+            }
+
+            // Ensure action elements maintain proper tab order
+            this.actionElements.forEach((element) => {
+                if (!element.hasAttribute('disabled')) {
+                    element.setAttribute('tabindex', '0');
+                }
+            });
+        } catch (error) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header tab order update failed:', error);
+            }
         }
     }
 
@@ -311,22 +400,38 @@ export class Header extends SpectrumElement {
         }
     }
 
+    // TODO: Add more comprehensive property change handling like Button does
+    // TODO: Consider adding validation when properties change
+
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
 
-        // Check if title is truncated after render
-        this.updateComplete.then(() => {
+        if (changed.has('title') || changed.has('editMode')) {
             this.checkTitleTruncation();
-        });
+        }
+
+        if (changed.has('variant') || changed.has('editableTitle') || changed.has('showBack')) {
+            this.updateTabOrder();
+        }
     }
 
+    // TODO: Add more sophisticated change detection and handling
+    // TODO: Consider adding error handling for post-update operations
+
     private checkTitleTruncation(): void {
-        if (this.titleTextElement && this.variant === 'l2' && !this.editMode) {
-            const isOverflowing =
-                this.titleTextElement.scrollWidth >
-                this.titleTextElement.clientWidth;
-            this.titleTruncated = isOverflowing;
-        } else {
+        try {
+            if (this.titleTextElement && this.variant === 'l2' && !this.editMode) {
+                const isOverflowing =
+                    this.titleTextElement.scrollWidth >
+                    this.titleTextElement.clientWidth;
+                this.titleTruncated = isOverflowing;
+            } else {
+                this.titleTruncated = false;
+            }
+        } catch (error) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header title truncation check failed:', error);
+            }
             this.titleTruncated = false;
         }
     }
@@ -341,6 +446,9 @@ export class Header extends SpectrumElement {
             })
         );
     }
+
+    // TODO: Add event detail for consistency with other events
+    // TODO: Consider adding preventDefault handling like Button does
 
     private handleEditStart(): void {
         if (!this.editableTitle || this.variant !== 'l2') return;
@@ -364,6 +472,9 @@ export class Header extends SpectrumElement {
         });
     }
 
+    // TODO: Add error handling for async operations
+    // TODO: Consider adding validation before entering edit mode
+
     private handleTitleClick(): void {
         if (this.variant === 'l2' && this.editableTitle && !this.editMode) {
             this.handleEditStart();
@@ -377,6 +488,9 @@ export class Header extends SpectrumElement {
         }
     }
 
+    // TODO: Add more comprehensive keyboard handling like Button does
+    // TODO: Consider adding Escape key handling for consistency
+
     private handleEditCancel(): void {
         this.editMode = false;
         this.editValue = this.title;
@@ -389,6 +503,9 @@ export class Header extends SpectrumElement {
             })
         );
     }
+
+    // TODO: Add event detail for consistency
+    // TODO: Consider adding confirmation for unsaved changes
 
     private validateTitle(value: string): HeaderValidationError[] {
         const errors: HeaderValidationError[] = [];
@@ -419,6 +536,10 @@ export class Header extends SpectrumElement {
 
         return errors;
     }
+
+    // TODO: Add more sophisticated validation patterns like Button has
+    // TODO: Consider adding async validation support
+    // TODO: Add error message internationalization support
 
     private async handleEditSave(): Promise<void> {
         if (this.saving) return;
@@ -477,9 +598,20 @@ export class Header extends SpectrumElement {
         }
     }
 
+    // TODO: Add more sophisticated error handling like Button's click() method
+    // TODO: Consider adding retry logic for failed saves
+    // TODO: Add proper loading state management like Button's PendingStateController
+
     private handleTitleInput(event: Event): void {
-        const input = event.target as HTMLInputElement;
-        this.editValue = input.value;
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header title input event target is not an HTMLInputElement');
+            }
+            return;
+        }
+        
+        this.editValue = target.value;
 
         // Real-time validation - show errors as user types
         if (
@@ -493,6 +625,8 @@ export class Header extends SpectrumElement {
         }
     }
 
+    // TODO: Consider debouncing validation for performance
+
     private handleTitleKeydown(event: KeyboardEvent): void {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -502,6 +636,9 @@ export class Header extends SpectrumElement {
             this.handleEditCancel();
         }
     }
+
+    // TODO: Add more comprehensive keyboard shortcuts like Button does
+    // TODO: Consider adding Tab key handling for focus management
 
     private handleOutsideClick = (event: Event): void => {
         if (this.editMode) {
@@ -515,25 +652,44 @@ export class Header extends SpectrumElement {
         }
     };
 
+    // TODO: Add error handling for composedPath operations
+    // TODO: Consider making this method more robust like Button's event handlers
+
     private handleToastClose(): void {
         this.showToast = false;
     }
 
+    // TODO: Add event handling consistency with other methods
+    // TODO: Consider adding animation completion handling
+
     public override connectedCallback(): void {
         super.connectedCallback();
-        document.addEventListener('click', this.handleOutsideClick);
-
-        this.setupResizeObserver();
+        try {
+            document.addEventListener('click', this.handleOutsideClick);
+            this.setupResizeObserver();
+        } catch (error) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header connection setup failed:', error);
+            }
+        }
     }
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
-        document.removeEventListener('click', this.handleOutsideClick);
-
-        if (this.resizeObserver) {
-            this.resizeObserver.disconnect();
+        try {
+            document.removeEventListener('click', this.handleOutsideClick);
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+            }
+        } catch (error) {
+            if (window.__swc?.DEBUG) {
+                console.warn('Header disconnection cleanup failed:', error);
+            }
         }
     }
+
+    // TODO: Ensure all controllers and observers are properly cleaned up
+    // TODO: Add cleanup for focusGroupController if needed
 
     private setupResizeObserver(): void {
         if (!this.resizeObserver) {
@@ -551,12 +707,19 @@ export class Header extends SpectrumElement {
         });
     }
 
+    // TODO: Add error handling for ResizeObserver creation and observation
+    // TODO: Consider adding debouncing for resize operations
+    // TODO: Add validation for mainRowElement existence
+
     private handleResize(): void {
         if (!this.mainRowElement) return;
 
         this.calculateAvailableSpace();
         this.manageActionOverflow();
     }
+
+    // TODO: Add error handling for resize operations
+    // TODO: Consider adding performance optimizations
 
     private calculateAvailableSpace(): void {
         if (!this.mainRowElement) return;
@@ -575,8 +738,12 @@ export class Header extends SpectrumElement {
             backButtonWidth -
             titleWidth -
             gap * 3 -
-            this.overflowThreshold;
+            120;
     }
+
+    // TODO: Add error handling for DOM measurements
+    // TODO: Consider making gap value configurable or reading from CSS
+    // TODO: Add validation for calculation results
 
     private manageActionOverflow(): void {
         // Get actions in visual order (left to right)
@@ -609,20 +776,6 @@ export class Header extends SpectrumElement {
             totalWidth -= this.getActionWidth(leftmostAction);
         }
 
-        // Apply max visible actions limit
-        if (
-            this.maxVisibleActions > 0 &&
-            visible.length > this.maxVisibleActions
-        ) {
-            const actionsToOverflow = visible.splice(
-                0,
-                visible.length - this.maxVisibleActions
-            );
-            actionsToOverflow.forEach((action) =>
-                this.addActionToOverflowGroup(action, overflow)
-            );
-        }
-
         // Always show overflow menu if there are overflow actions
         const totalOverflowActions =
             overflow.startActions.length +
@@ -652,6 +805,11 @@ export class Header extends SpectrumElement {
         this.updateActionVisibility();
     }
 
+    // TODO: Add error handling for overflow calculations
+    // TODO: Consider more sophisticated overflow algorithms
+    // TODO: Add configuration options for overflow behavior
+    // TODO: Consider performance optimizations for large action sets
+
     private getActionWidth(action: HTMLElement): number {
         // If action is currently visible, get its actual width
         if (action.offsetWidth > 0) {
@@ -675,6 +833,10 @@ export class Header extends SpectrumElement {
         return Math.min(estimatedWidth, 200); // Cap at reasonable maximum
     }
 
+    // TODO: Add more sophisticated width calculation
+    // TODO: Consider caching width calculations for performance
+    // TODO: Add error handling for DOM property access
+
     private addActionToOverflowGroup(
         action: HTMLElement,
         overflow: {
@@ -693,6 +855,9 @@ export class Header extends SpectrumElement {
         }
     }
 
+    // TODO: Add error handling for slot determination
+    // TODO: Consider more efficient slot detection methods
+
     private updateActionVisibility(): void {
         // Hide all actions first
         this.actionElements.forEach((action) => {
@@ -705,6 +870,10 @@ export class Header extends SpectrumElement {
         });
     }
 
+    // TODO: Add error handling for style manipulation
+    // TODO: Consider using CSS classes instead of inline styles for better performance
+    // TODO: Add animation support for visibility changes
+
     private handleOverflowMenuAction(action: HTMLElement): void {
         // Clone the action's click behavior
         const clickEvent = new MouseEvent('click', {
@@ -713,6 +882,10 @@ export class Header extends SpectrumElement {
         });
         action.dispatchEvent(clickEvent);
     }
+
+    // TODO: Add error handling for event dispatching
+    // TODO: Consider more sophisticated event cloning
+    // TODO: Add support for other interaction events (keyboard, etc.)
 
     private renderBackButton(): TemplateResult | typeof nothing {
         if (this.variant !== 'l2' || !this.showBack) {
@@ -732,6 +905,8 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    // TODO: Add more comprehensive accessibility attributes
+
     private renderTitle(): TemplateResult {
         if (this.variant === 'l2' && this.editableTitle && this.editMode) {
             return this.renderEditableTitle();
@@ -739,6 +914,9 @@ export class Header extends SpectrumElement {
 
         return this.renderStaticTitle();
     }
+
+    // TODO: Add error handling for render conditions
+    // TODO: Consider adding loading states like Button does
 
     private renderStaticTitle(): TemplateResult {
         const editButton =
@@ -812,14 +990,22 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    // TODO: Add more comprehensive accessibility attributes
+    // TODO: Consider tooltip support for truncated titles like Button does
+    // TODO: Add error handling for rendering conditions
+    // TODO: Consider adding ARIA live regions for dynamic content
+
     private renderEditableTitle(): TemplateResult {
         const hasErrors = this.validationErrors.length > 0;
+        const errorMessage = hasErrors ? this.validationErrors[0].message : '';
+        const titleInputId = 'title-input';
+        const errorId = hasErrors ? `${titleInputId}-error` : undefined;
 
         return html`
-            <div class="title-edit-container">
+            <div class="title-edit-container" role="group" aria-label="Title editing">
                 <div class="input-wrapper ${hasErrors ? 'error' : ''}">
                     <sp-textfield
-                        id="title-input"
+                        id="${titleInputId}"
                         class="title-input ${hasErrors ? 'invalid' : ''}"
                         .value=${this.editValue}
                         @input=${this.handleTitleInput}
@@ -827,6 +1013,8 @@ export class Header extends SpectrumElement {
                         ?invalid=${hasErrors}
                         placeholder="Enter title..."
                         aria-label="Edit page title"
+                        aria-describedby=${ifDefined(errorId)}
+                        aria-invalid=${hasErrors ? 'true' : 'false'}
                     ></sp-textfield>
                     ${hasErrors
                         ? html`
@@ -837,7 +1025,7 @@ export class Header extends SpectrumElement {
                           `
                         : nothing}
                 </div>
-                <div class="edit-actions">
+                <div class="edit-actions" role="group" aria-label="Edit actions">
                     <sp-action-button
                         class="save-button"
                         size="s"
@@ -846,20 +1034,26 @@ export class Header extends SpectrumElement {
                         ?disabled=${this.saving}
                         ?pending=${this.saving}
                         aria-label="Save title changes"
+                        aria-describedby=${ifDefined(errorId)}
                     >
                         <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+                    </sp-action-button>
+                    <sp-action-button
+                        class="cancel-button"
+                        size="s"
+                        quiet
+                        @click=${this.handleEditCancel}
+                        aria-label="Cancel title editing"
+                    >
+                        <sp-icon-close slot="icon"></sp-icon-close>
                     </sp-action-button>
                 </div>
                 ${hasErrors
                     ? html`
-                          <div class="validation-errors">
-                              ${this.validationErrors.map(
-                                  (error) => html`
-                                      <div class="error-message">
-                                          ${error.message}
-                                      </div>
-                                  `
-                              )}
+                          <div class="validation-errors" id=${ifDefined(errorId)} role="alert" aria-live="polite">
+                              <sp-help-text variant="negative" class="error-message">
+                                  ${errorMessage}
+                              </sp-help-text>
                           </div>
                       `
                     : nothing}
@@ -867,17 +1061,25 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    // TODO: Add more comprehensive error handling and validation display
+    // TODO: Consider adding character count display like other inputs
+    // TODO: Add support for multiple error messages display
+    // TODO: Consider adding loading state management like Button's PendingStateController
+
     private renderStatusRow(): TemplateResult | typeof nothing {
         if (this.variant !== 'l2') {
             return nothing;
         }
 
         return html`
-            <div class="status-row">
+            <div class="status-row" role="group" aria-label="Status indicators">
                 <slot name="status"></slot>
             </div>
         `;
     }
+
+    // TODO: Add validation for status slot content
+    // TODO: Consider adding default status indicators
 
     private renderSuccessToast(): TemplateResult | typeof nothing {
         if (!this.showToast) {
@@ -897,6 +1099,10 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    // TODO: Add more toast customization options like Button does
+    // TODO: Consider adding different toast types (error, warning, etc.)
+    // TODO: Add proper toast positioning and stacking management
+
     private renderActionDivider(): TemplateResult | typeof nothing {
         return html`
             <sp-divider
@@ -908,10 +1114,17 @@ export class Header extends SpectrumElement {
         `;
     }
 
+    // TODO: Consider using CSS classes instead of inline styles
+    // TODO: Add configuration options for divider appearance
+
     private handleSlotChange(): void {
         // Force a re-render when slot content changes
         this.requestUpdate();
     }
+
+    // TODO: Add more sophisticated slot change handling
+    // TODO: Consider debouncing slot change events for performance
+    // TODO: Add validation for slot content like Button does
 
     private renderStartActions(): TemplateResult | typeof nothing {
         return html`
@@ -953,6 +1166,10 @@ export class Header extends SpectrumElement {
             </div>
         `;
     }
+
+    // TODO: Add validation for action slot content
+    // TODO: Consider adding maximum action limits like documented
+    // TODO: Add error handling for slot rendering
 
     private renderOverflowMenu(): TemplateResult | typeof nothing {
         const totalActions =
@@ -1045,12 +1262,20 @@ export class Header extends SpectrumElement {
                 placement="bottom-end"
                 quiet
                 label="More actions"
+                aria-label="Additional actions menu"
+                aria-haspopup="true"
+                aria-expanded="false"
             >
                 <sp-icon-more slot="icon"></sp-icon-more>
                 ${menuItems}
             </sp-action-menu>
         `;
     }
+
+    // TODO: Add error handling for overflow menu rendering
+    // TODO: Consider more sophisticated error reporting than console.error
+    // TODO: Add support for icons in overflow menu items
+    // TODO: Consider adding keyboard navigation support for overflow menu
 
     private renderActionSlots(): TemplateResult | typeof nothing {
         const parts: TemplateResult[] = [];
@@ -1121,12 +1346,18 @@ export class Header extends SpectrumElement {
             : nothing;
     }
 
+    // TODO: Add error handling for action slot rendering
+    // TODO: Consider more sophisticated action organization
+    // TODO: Add validation for action slot limits as documented
+
     protected override render(): TemplateResult {
         return html`
-            <header class="header ${this.variant}" role="banner">
-                <div class="main-row">
+            <header class="header ${this.variant}" role="banner" aria-label="Page header">
+                <div class="main-row" role="group" aria-label="Header content">
                     ${this.renderBackButton()}
-                    <div class="title-container">${this.renderTitle()}</div>
+                    <div class="title-container" role="heading" aria-level="${this.variant === 'l1' ? '1' : '2'}">
+                        ${this.renderTitle()}
+                    </div>
                     ${this.renderActionSlots()}
                 </div>
                 ${this.renderStatusRow()}
@@ -1134,4 +1365,13 @@ export class Header extends SpectrumElement {
             ${this.renderSuccessToast()}
         `;
     }
+
+    // TODO: Add more comprehensive accessibility structure
+    // TODO: Consider adding loading states like Button does  
+    // TODO: Add error boundaries for render operations
+    // TODO: Consider adding dev mode warnings for invalid configurations like Button does
 }
+
+// TODO: Consider adding custom element registration like other packages do
+// TODO: Add proper TypeScript module augmentation if needed
+// TODO: Consider adding helper functions or utilities like Button package has

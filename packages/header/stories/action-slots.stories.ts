@@ -856,114 +856,6 @@ export const OverflowBasicDemo = (): TemplateResult => {
     `;
 };
 
-export const OverflowWithConstraints = (): TemplateResult => {
-    const handleAction = (action: string) => () =>
-        console.log(`${action} clicked`);
-
-    return html`
-        <div style="margin: 20px;">
-            <h3>Overflow with Constraints</h3>
-
-            <h4>Maximum 3 Visible Actions</h4>
-            <sp-header
-                variant="l2"
-                title="Content Editor"
-                show-back
-                enable-overflow
-                max-visible-actions="3"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-button
-                    slot="start-actions"
-                    data-priority="critical"
-                    @click=${handleAction('Undo')}
-                >
-                    Undo
-                </sp-button>
-                <sp-button
-                    slot="start-actions"
-                    data-priority="critical"
-                    @click=${handleAction('Redo')}
-                >
-                    Redo
-                </sp-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    data-priority="high"
-                    @click=${handleAction('Bold')}
-                >
-                    Bold
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    data-priority="high"
-                    @click=${handleAction('Italic')}
-                >
-                    Italic
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    data-priority="medium"
-                    @click=${handleAction('Format')}
-                >
-                    Format
-                </sp-button>
-
-                <sp-button
-                    slot="end-actions"
-                    data-priority="critical"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save
-                </sp-button>
-            </sp-header>
-
-            <h4>Low Overflow Threshold (Aggressive)</h4>
-            <sp-header
-                variant="l2"
-                title="Aggressive Overflow Example"
-                show-back
-                enable-overflow
-                overflow-threshold="200"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-button
-                    slot="start-actions"
-                    data-priority="critical"
-                    @click=${handleAction('Critical 1')}
-                >
-                    Critical Action
-                </sp-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    data-priority="high"
-                    @click=${handleAction('High 1')}
-                >
-                    High Priority
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    data-priority="medium"
-                    @click=${handleAction('Medium 1')}
-                >
-                    Medium Priority
-                </sp-button>
-
-                <sp-button
-                    slot="end-actions"
-                    data-priority="low"
-                    @click=${handleAction('Low 1')}
-                >
-                    Low Priority
-                </sp-button>
-            </sp-header>
-        </div>
-    `;
-};
-
 export const OverflowMixedContent = (): TemplateResult => {
     const handleAction = (action: string) => () =>
         console.log(`${action} clicked`);
@@ -985,6 +877,7 @@ export const OverflowMixedContent = (): TemplateResult => {
                     slot="start-actions"
                     quiet
                     @click=${handleAction('Edit')}
+                    aria-label="Edit item"
                 >
                     <sp-icon-edit slot="icon"></sp-icon-edit>
                 </sp-action-button>
@@ -992,6 +885,7 @@ export const OverflowMixedContent = (): TemplateResult => {
                     slot="start-actions"
                     quiet
                     @click=${handleAction('Delete')}
+                    aria-label="Delete item"
                 >
                     <sp-icon-delete slot="icon"></sp-icon-delete>
                 </sp-action-button>
@@ -999,6 +893,7 @@ export const OverflowMixedContent = (): TemplateResult => {
                     slot="start-actions"
                     quiet
                     @click=${handleAction('Duplicate')}
+                    aria-label="Duplicate item"
                 >
                     <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
                 </sp-action-button>
@@ -1052,134 +947,6 @@ export const OverflowMixedContent = (): TemplateResult => {
     `;
 };
 
-export const OverflowDisabledComparison = (): TemplateResult => {
-    const handleAction = (action: string) => () =>
-        console.log(`${action} clicked`);
-
-    return html`
-        <div style="margin: 20px;">
-            <h3>Overflow Disabled vs Enabled Comparison</h3>
-
-            <h4>Overflow Disabled (Default Legacy Behavior)</h4>
-            <sp-header
-                variant="l2"
-                title="Legacy Behavior - No Overflow"
-                show-back
-                enable-overflow="false"
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-button
-                    slot="start-actions"
-                    @click=${handleAction('Action 1')}
-                >
-                    Action 1
-                </sp-button>
-                <sp-button
-                    slot="start-actions"
-                    @click=${handleAction('Action 2')}
-                >
-                    Action 2
-                </sp-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 3')}
-                >
-                    Action 3
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 4')}
-                >
-                    Action 4
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 5')}
-                >
-                    Action 5
-                </sp-button>
-
-                <sp-button
-                    slot="end-actions"
-                    @click=${handleAction('Action 6')}
-                >
-                    Action 6
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Action 7')}
-                >
-                    Action 7
-                </sp-button>
-            </sp-header>
-
-            <h4>Overflow Enabled (Smart Responsive Behavior)</h4>
-            <sp-header
-                variant="l2"
-                title="Smart Overflow Management"
-                show-back
-                enable-overflow
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-button
-                    slot="start-actions"
-                    @click=${handleAction('Action 1')}
-                >
-                    Action 1
-                </sp-button>
-                <sp-button
-                    slot="start-actions"
-                    @click=${handleAction('Action 2')}
-                >
-                    Action 2
-                </sp-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 3')}
-                >
-                    Action 3
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 4')}
-                >
-                    Action 4
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Action 5')}
-                >
-                    Action 5
-                </sp-button>
-
-                <sp-button
-                    slot="end-actions"
-                    @click=${handleAction('Action 6')}
-                >
-                    Action 6
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Action 7')}
-                >
-                    Action 7
-                </sp-button>
-            </sp-header>
-
-            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 6px;">
-                <h5>💡 Try resizing your browser window to see the difference!</h5>
-                <p>
-                    The first header will overflow its container and potentially break the layout.
-                    The second header will intelligently move actions to an overflow menu.
-                </p>
-            </div>
-        </div>
-    `;
-};
 
 export const OverflowAdvancedScenarios = (): TemplateResult => {
     const handleAction = (action: string) => () =>
