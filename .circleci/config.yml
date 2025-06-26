@@ -7,7 +7,7 @@ executors:
         resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.53.1
+            - image: mcr.microsoft.com/playwright:v1.53.0
         resource_class: xlarge
         environment:
             NODE_ENV: development
@@ -62,6 +62,9 @@ commands:
                   command: |
                       corepack enable
                       yarn --immutable
+            - run:
+                  name: Install Playwright Browsers
+                  command: npx playwright install --with-deps
             - run:
                   name: Build the project
                   command: yarn build
