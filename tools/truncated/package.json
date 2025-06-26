@@ -67,7 +67,7 @@
         "@spectrum-web-components/base": "1.7.0",
         "@spectrum-web-components/overlay": "1.7.0",
         "@spectrum-web-components/styles": "1.7.0",
-        "@spectrum-web-components/tooltip": "1.7.0"
+        "@spectrum-web-components/tooltip": "^1.7.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
