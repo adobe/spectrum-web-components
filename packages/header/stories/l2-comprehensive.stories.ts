@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
@@ -135,7 +135,7 @@ export const L2WithStatusRow = (): TemplateResult => {
                 show-back
                 @sp-header-back=${handleBack}
             >
-                <sp-badge slot="status" variant="positive">Published</sp-badge>
+                <sp-status-light slot="status" variant="positive">Published</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"
@@ -148,7 +148,7 @@ export const L2WithStatusRow = (): TemplateResult => {
                 >
                     95% complete
                 </span>
-                <sp-badge slot="status" variant="notice">Draft</sp-badge>
+                <sp-status-light slot="status" variant="notice">Draft</sp-status-light>
 
                 <sp-button slot="end-actions">Preview</sp-button>
                 <sp-button slot="end-actions" variant="accent">
@@ -290,7 +290,7 @@ export const L2ComplexExample = (): TemplateResult => {
                 </sp-action-button>
 
                 <!-- Status Row -->
-                <sp-badge slot="status" variant="positive">Active</sp-badge>
+                <sp-status-light slot="status" variant="positive">Active</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"
@@ -303,9 +303,9 @@ export const L2ComplexExample = (): TemplateResult => {
                 >
                     Budget: $50K remaining
                 </span>
-                <sp-badge slot="status" variant="notice">
+                <sp-status-light slot="status" variant="notice">
                     Optimization needed
-                </sp-badge>
+                </sp-status-light>
 
                 <!-- End Actions -->
                 <sp-action-button
@@ -368,7 +368,7 @@ export const L2SlottedTitleContent = (): TemplateResult => {
                     </em>
                 </span>
 
-                <sp-badge slot="status" variant="positive">Live</sp-badge>
+                <sp-status-light slot="status" variant="positive">Live</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"

@@ -16,7 +16,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
@@ -143,9 +143,6 @@ const HeaderTemplate = ({
                 : ''}
             ${showEndActions
                 ? html`
-                      <sp-action-button slot="end-actions" quiet>
-                          <sp-icon-more slot="icon"></sp-icon-more>
-                      </sp-action-button>
                       <sp-button slot="end-actions" variant="accent">
                           Publish
                       </sp-button>
@@ -153,10 +150,12 @@ const HeaderTemplate = ({
                 : ''}
             ${showStatus && variant === 'l2'
                 ? html`
-                      <sp-badge slot="status" variant="positive">
+                      <sp-status-light slot="status" variant="positive">
                           Published
-                      </sp-badge>
-                      <sp-badge slot="status" variant="neutral">Draft</sp-badge>
+                      </sp-status-light>
+                      <sp-status-light slot="status" variant="neutral">
+                          Draft
+                      </sp-status-light>
                       <span slot="status">Last saved: 2 minutes ago</span>
                   `
                 : ''}

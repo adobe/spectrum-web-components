@@ -16,7 +16,7 @@ import { HeaderValidationError } from '@spectrum-web-components/header';
 import '@spectrum-web-components/header/sp-header.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
@@ -213,7 +213,7 @@ export const L2EditableAccessibilityDemo = (): TemplateResult => {
                 @sp-header-back=${handleBack}
                 @sp-header-title-renamed=${handleTitleSave}
             >
-                <sp-badge slot="status" variant="positive">Published</sp-badge>
+                <sp-status-light slot="status" variant="positive">Published</sp-status-light>
                 <span slot="status">Last modified: 5 minutes ago</span>
 
                 <sp-action-button
@@ -300,7 +300,7 @@ export const KeyboardNavigationTest = (): TemplateResult => {
                 editable-title
                 show-back
             >
-                <sp-badge slot="status" variant="notice">Testing</sp-badge>
+                <sp-status-light slot="status" variant="notice">Testing</sp-status-light>
 
                 <sp-action-button
                     slot="start-actions"
@@ -425,7 +425,7 @@ export const ScreenReaderTest = (): TemplateResult => {
                 @sp-header-edit-cancel=${() =>
                     simulateScreenReader('Edit mode: Title editing cancelled')}
             >
-                <sp-badge slot="status" variant="positive">Active</sp-badge>
+                <sp-status-light slot="status" variant="positive">Active</sp-status-light>
                 <span slot="status">Updated recently</span>
 
                 <sp-action-button
@@ -505,10 +505,10 @@ export const VisualAccessibilityTest = (): TemplateResult => {
                 editable-title
                 show-back
             >
-                <sp-badge slot="status" variant="positive">Accessible</sp-badge>
-                <sp-badge slot="status" variant="notice">
+                <sp-status-light slot="status" variant="positive">Accessible</sp-status-light>
+                <sp-status-light slot="status" variant="notice">
                     High Contrast
-                </sp-badge>
+                </sp-status-light>
 
                 <sp-action-button
                     slot="start-actions"
@@ -639,7 +639,7 @@ export const AccessibilityAudit = (): TemplateResult => {
                 title="Accessibility Audit Complete"
                 show-back
             >
-                <sp-badge slot="status" variant="positive">Passed</sp-badge>
+                <sp-status-light slot="status" variant="positive">Passed</sp-status-light>
                 <span slot="status">WCAG 2.1 AA Compliant</span>
 
                 <sp-button

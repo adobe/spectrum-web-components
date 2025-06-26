@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
@@ -88,7 +88,7 @@ export const L1WithSlottedContent = (): TemplateResult => html`
         <span slot="title">
             <strong>Project</strong>
             <em>Portfolio</em>
-            <sp-badge variant="positive">New</sp-badge>
+                            <sp-status-light variant="positive">New</sp-status-light>
         </span>
         <span slot="subtitle">
             Comprehensive project management dashboard featuring
@@ -169,7 +169,7 @@ export const L1OnlySubtitleSlot = (): TemplateResult => html`
         <div slot="subtitle">
             <em>Rich subtitle content</em>
             with
-            <sp-badge variant="neutral">Status</sp-badge>
+                            <sp-status-light variant="neutral">Status</sp-status-light>
             and additional formatting
         </div>
     </sp-header>
@@ -186,7 +186,7 @@ L1OnlySubtitleSlot.parameters = {
 export const L1OnlyTitleSlot = (): TemplateResult => html`
     <sp-header variant="l1" subtitle="Standard subtitle text">
         <div slot="title">
-            <sp-badge variant="accent">Featured</sp-badge>
+                            <sp-status-light variant="info">Featured</sp-status-light>
             <strong>Rich Title Content</strong>
         </div>
         <sp-action-button slot="end-actions" variant="accent">
@@ -273,7 +273,7 @@ export const L1InteractiveDemo = (): TemplateResult => {
         <sp-header variant="l1">
             <span slot="title">
                 Interactive Demo
-                <sp-badge variant="positive">Live</sp-badge>
+                <sp-status-light variant="positive">Live</sp-status-light>
             </span>
             <span slot="subtitle">
                 Click actions to test slot functionality and event handling

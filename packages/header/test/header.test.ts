@@ -126,7 +126,7 @@ describe('Header', () => {
         const el = await fixture<Header>(html`
             <sp-header title="Test Title">
                 <sp-button slot="end-actions">Action Button</sp-button>
-                <sp-badge slot="status">Status Badge</sp-badge>
+                <sp-status-light slot="status">Status Badge</sp-status-light>
             </sp-header>
         `);
 

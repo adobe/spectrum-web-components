@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
@@ -104,9 +104,9 @@ export const FigmaL2Examples = (): TemplateResult => {
                     title="Q1 2025 Kayak Adventures - Meta Campaign"
                     show-back
                 >
-                    <sp-badge slot="status" variant="positive">
+                    <sp-status-light slot="status" variant="positive">
                         Published
-                    </sp-badge>
+                    </sp-status-light>
                     <span
                         slot="status"
                         style="color: var(--spectrum-neutral-content-color-subdued);"
@@ -139,11 +139,11 @@ export const FigmaL2Examples = (): TemplateResult => {
                     <sp-button slot="end-actions" variant="accent">
                         Label
                     </sp-button>
-                    <sp-badge slot="status" variant="neutral">Label</sp-badge>
-                    <sp-badge slot="status" variant="neutral">Label</sp-badge>
-                    <sp-badge slot="status" variant="neutral">Label</sp-badge>
-                    <sp-badge slot="status" variant="neutral">Label</sp-badge>
-                    <sp-badge slot="status" variant="neutral">Label</sp-badge>
+                                    <sp-status-light slot="status" variant="neutral">Label</sp-status-light>
+                <sp-status-light slot="status" variant="neutral">Label</sp-status-light>
+                <sp-status-light slot="status" variant="neutral">Label</sp-status-light>
+                <sp-status-light slot="status" variant="neutral">Label</sp-status-light>
+                <sp-status-light slot="status" variant="neutral">Label</sp-status-light>
                 </sp-header>
             </div>
 

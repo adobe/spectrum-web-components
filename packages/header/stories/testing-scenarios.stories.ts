@@ -13,7 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/header/sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
@@ -195,7 +195,7 @@ export const L2EditWorkflowTest = (): TemplateResult => {
                     'Title Successfully Renamed'
                 )}
             >
-                <sp-badge slot="status" variant="positive">Active</sp-badge>
+                <sp-status-light slot="status" variant="positive">Active</sp-status-light>
                 <span slot="status">Last modified: 2 hours ago</span>
                 <sp-action-button slot="middle-actions" quiet>
                     <sp-icon-star slot="icon"></sp-icon-star>
@@ -277,7 +277,7 @@ export const ResponsiveDesignTest = (): TemplateResult => html`
                     editable-title
                     show-back
                 >
-                    <sp-badge slot="status" variant="info">Tablet</sp-badge>
+                    <sp-status-light slot="status" variant="info">Tablet</sp-status-light>
                     <sp-action-button slot="middle-actions" quiet>
                         Middle
                     </sp-action-button>
@@ -300,7 +300,7 @@ export const ResponsiveDesignTest = (): TemplateResult => html`
                     editable-title
                     show-back
                 >
-                    <sp-badge slot="status" variant="notice">Mobile</sp-badge>
+                    <sp-status-light slot="status" variant="notice">Mobile</sp-status-light>
                     <sp-button slot="end-actions" variant="accent">
                         Action
                     </sp-button>
@@ -343,7 +343,7 @@ export const AccessibilityTest = (): TemplateResult => html`
                 editable-title
                 show-back
             >
-                <sp-badge slot="status" variant="positive">A11y</sp-badge>
+                <sp-status-light slot="status" variant="positive">A11y</sp-status-light>
                 <sp-action-button
                     slot="start-actions"
                     quiet
@@ -461,7 +461,7 @@ export const PerformanceTest = (): TemplateResult => {
                 @sp-header-edit-save=${measurePerformance('Edit Save')}
                 @sp-header-edit-cancel=${measurePerformance('Edit Cancel')}
             >
-                <sp-badge slot="status" variant="info">Performance</sp-badge>
+                <sp-status-light slot="status" variant="info">Performance</sp-status-light>
                 <sp-action-button
                     slot="start-actions"
                     quiet
@@ -592,7 +592,7 @@ export const EdgeCasesTest = (): TemplateResult => html`
                 editable-title
                 show-back
             >
-                <sp-badge slot="status" variant="info">Unicode ✅</sp-badge>
+                <sp-status-light slot="status" variant="info">Unicode ✅</sp-status-light>
             </sp-header>
         </div>
 
@@ -604,7 +604,7 @@ export const EdgeCasesTest = (): TemplateResult => html`
                 editable-title
                 show-back
             >
-                <sp-badge slot="status" variant="notice">Changing</sp-badge>
+                <sp-status-light slot="status" variant="notice">Changing</sp-status-light>
             </sp-header>
         </div>
     </div>
@@ -630,7 +630,7 @@ export const IntegrationTest = (): TemplateResult => {
             newHeader.setAttribute('title', `Dynamic Header ${headerCount}`);
             newHeader.setAttribute('editable-title', '');
             newHeader.innerHTML = `
-                <sp-badge slot="status" variant="info">Dynamic ${headerCount}</sp-badge>
+                <sp-status-light slot="status" variant="info">Dynamic ${headerCount}</sp-status-light>
                 <sp-action-button slot="end-actions">Action ${headerCount}</sp-action-button>
             `;
             container.appendChild(newHeader);
@@ -729,13 +729,13 @@ export const RealWorldScenarios = (): TemplateResult => {
                             ?editable-title=${scenario.editable}
                             ?show-back=${scenario.variant === 'l2'}
                         >
-                            <sp-badge slot="status" variant=${scenario.status}>
+                            <sp-status-light slot="status" variant=${scenario.status}>
                                 ${scenario.status === 'positive'
                                     ? 'Active'
                                     : scenario.status === 'info'
                                       ? 'Draft'
                                       : 'Needs Review'}
-                            </sp-badge>
+                            </sp-status-light>
                             ${scenario.actions.map(
                                 (action) => html`
                                     <sp-action-button slot="end-actions" quiet>

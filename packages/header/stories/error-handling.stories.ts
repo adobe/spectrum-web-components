@@ -13,7 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/header/sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { HeaderValidationError } from '../src/Header.js';
 
@@ -73,7 +73,7 @@ export const CharacterLimitValidation = (): TemplateResult => html`
             show-back
             max-title-length="50"
         >
-            <sp-badge slot="status" variant="notice">Draft</sp-badge>
+                            <sp-status-light slot="status" variant="notice">Draft</sp-status-light>
             <sp-action-button slot="end-actions">Save</sp-action-button>
         </sp-header>
     </div>
@@ -140,7 +140,7 @@ export const CustomValidationRules = (): TemplateResult => {
                 show-back
                 .titleValidation=${customValidation}
             >
-                <sp-badge slot="status" variant="info">Testing</sp-badge>
+                <sp-status-light slot="status" variant="info">Testing</sp-status-light>
                 <sp-action-button slot="end-actions">Validate</sp-action-button>
             </sp-header>
         </div>
@@ -196,7 +196,7 @@ export const ServerSideValidation = (): TemplateResult => {
                 show-back
                 @sp-header-edit-save=${handleEditSave}
             >
-                <sp-badge slot="status" variant="warning">Pending</sp-badge>
+                <sp-status-light slot="status" variant="notice">Pending</sp-status-light>
                 <sp-action-button slot="end-actions">Submit</sp-action-button>
             </sp-header>
         </div>
@@ -279,7 +279,7 @@ export const MultipleErrorTypes = (): TemplateResult => {
                 show-back
                 .titleValidation=${complexValidation}
             >
-                <sp-badge slot="status" variant="negative">Invalid</sp-badge>
+                <sp-status-light slot="status" variant="negative">Invalid</sp-status-light>
                 <sp-action-button slot="end-actions">
                     Fix Errors
                 </sp-action-button>
@@ -342,7 +342,7 @@ export const RealTimeVsSaveValidation = (): TemplateResult => {
                 .titleValidation=${realTimeValidation}
                 @sp-header-edit-save=${handleSaveValidation}
             >
-                <sp-badge slot="status" variant="info">Testing</sp-badge>
+                <sp-status-light slot="status" variant="info">Testing</sp-status-light>
                 <sp-action-button slot="end-actions">Save</sp-action-button>
             </sp-header>
         </div>
@@ -393,7 +393,7 @@ export const AccessibilityTest = (): TemplateResult => {
                 show-back
                 .titleValidation=${validation}
             >
-                <sp-badge slot="status" variant="positive">Accessible</sp-badge>
+                <sp-status-light slot="status" variant="positive">Accessible</sp-status-light>
                 <sp-action-button slot="end-actions">
                     Test A11y
                 </sp-action-button>
@@ -466,7 +466,7 @@ export const EdgeCases = (): TemplateResult => {
                 show-back
                 .titleValidation=${edgeCaseValidation}
             >
-                <sp-badge slot="status" variant="notice">Edge Testing</sp-badge>
+                <sp-status-light slot="status" variant="notice">Edge Testing</sp-status-light>
                 <sp-action-button slot="end-actions">
                     Test Edge
                 </sp-action-button>
@@ -541,7 +541,7 @@ export const PerformanceTest = (): TemplateResult => {
                 show-back
                 .titleValidation=${performanceValidation}
             >
-                <sp-badge slot="status" variant="info">Performance</sp-badge>
+                <sp-status-light slot="status" variant="info">Performance</sp-status-light>
                 <sp-action-button slot="end-actions">
                     Benchmark
                 </sp-action-button>
@@ -616,9 +616,9 @@ export const ComprehensiveDemo = (): TemplateResult => {
                 @sp-header-edit-cancel=${handleAllEvents('Edit Cancelled')}
                 @sp-header-title-renamed=${handleAllEvents('Title Renamed')}
             >
-                <sp-badge slot="status" variant="positive">
+                <sp-status-light slot="status" variant="positive">
                     All Features
-                </sp-badge>
+                </sp-status-light>
                 <sp-action-button slot="middle-actions" quiet>
                     Test
                 </sp-action-button>

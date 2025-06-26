@@ -13,7 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/header/sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
 import { HeaderValidationError } from '../src/Header.js';
@@ -36,7 +36,7 @@ export const ClickToEdit = (): TemplateResult => html`
         editable-title
         show-back
     >
-        <sp-badge slot="status" variant="positive">Published</sp-badge>
+                        <sp-status-light slot="status" variant="positive">Published</sp-status-light>
         <sp-action-button slot="end-actions" variant="accent">
             Publish
         </sp-action-button>
@@ -50,7 +50,7 @@ export const EditButtonWithTooltip = (): TemplateResult => html`
         editable-title
         show-back
     >
-        <sp-badge slot="status" variant="neutral">Draft</sp-badge>
+                    <sp-status-light slot="status" variant="neutral">Draft</sp-status-light>
         <sp-action-button slot="end-actions">Save</sp-action-button>
     </sp-header>
 `;
@@ -63,7 +63,7 @@ export const LongTitleTruncation = (): TemplateResult => html`
             editable-title
             show-back
         >
-            <sp-badge slot="status" variant="info">In Review</sp-badge>
+            <sp-status-light slot="status" variant="info">In Review</sp-status-light>
             <sp-action-button slot="end-actions">Review</sp-action-button>
         </sp-header>
     </div>
@@ -76,7 +76,7 @@ export const MaxWidthEditField = (): TemplateResult => html`
         editable-title
         show-back
     >
-        <sp-badge slot="status">Ready</sp-badge>
+                    <sp-status-light slot="status">Ready</sp-status-light>
     </sp-header>
 `;
 
@@ -87,7 +87,7 @@ export const HorizontalScrollInEdit = (): TemplateResult => html`
         editable-title
         show-back
     >
-        <sp-badge slot="status" variant="positive">Active</sp-badge>
+                    <sp-status-light slot="status" variant="positive">Active</sp-status-light>
     </sp-header>
 `;
 
@@ -120,7 +120,7 @@ export const CustomValidation = (): TemplateResult => {
             show-back
             .titleValidation=${validateTitle}
         >
-            <sp-badge slot="status" variant="negative">Needs Review</sp-badge>
+            <sp-status-light slot="status" variant="negative">Needs Review</sp-status-light>
         </sp-header>
     `;
 };
@@ -133,7 +133,7 @@ export const CustomToastMessage = (): TemplateResult => html`
         show-back
         success-toast-message="Page title updated successfully!"
     >
-        <sp-badge slot="status">Custom</sp-badge>
+                    <sp-status-light slot="status">Custom</sp-status-light>
     </sp-header>
 `;
 
@@ -145,7 +145,7 @@ export const DisableToast = (): TemplateResult => html`
         show-back
         show-success-toast="false"
     >
-        <sp-badge slot="status">Silent</sp-badge>
+                    <sp-status-light slot="status">Silent</sp-status-light>
     </sp-header>
 `;
 
@@ -160,7 +160,7 @@ export const ResponsiveEditMode = (): TemplateResult => html`
             editable-title
             show-back
         >
-            <sp-badge slot="status">Responsive</sp-badge>
+            <sp-status-light slot="status">Responsive</sp-status-light>
             <sp-action-button slot="end-actions">Save</sp-action-button>
             <sp-action-button slot="end-actions">Cancel</sp-action-button>
         </sp-header>
@@ -208,7 +208,7 @@ export const AllFeaturesDemo = (): TemplateResult => {
                 @sp-header-edit-cancel=${handleEditCancel}
                 @sp-header-title-renamed=${handleTitleRenamed}
             >
-                <sp-badge slot="status" variant="positive">Published</sp-badge>
+                <sp-status-light slot="status" variant="positive">Published</sp-status-light>
                 <span slot="status">Last updated: 3 hours ago</span>
                 <sp-action-button slot="middle-actions" quiet>
                     <sp-icon-star slot="icon"></sp-icon-star>
@@ -246,7 +246,7 @@ export const AccessibilityTest = (): TemplateResult => html`
             editable-title
             show-back
         >
-            <sp-badge slot="status">A11y Test</sp-badge>
+            <sp-status-light slot="status">A11y Test</sp-status-light>
         </sp-header>
     </div>
 `;

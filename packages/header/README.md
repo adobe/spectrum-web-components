@@ -57,7 +57,9 @@ L2 headers are for sub-pages and include navigation elements like back buttons, 
         Favorite
     </sp-action-button>
     <sp-button slot="end-actions" variant="accent">Save Changes</sp-button>
-    <sp-badge slot="status" variant="positive">Published</sp-badge>
+    <sp-status-light slot="status" variant="positive">
+        Published
+    </sp-status-light>
     <span slot="status">Last saved: 2 minutes ago</span>
 </sp-header>
 ```
@@ -202,7 +204,9 @@ The header component follows Spectrum accessibility guidelines:
     <sp-button slot="end-actions" variant="accent">Save</sp-button>
     <sp-button slot="end-actions">Cancel</sp-button>
 
-    <sp-badge slot="status" variant="notice">Pending Review</sp-badge>
+    <sp-status-light slot="status" variant="notice">
+        Pending Review
+    </sp-status-light>
     <span slot="status">Modified 5 minutes ago</span>
 </sp-header>
 ```

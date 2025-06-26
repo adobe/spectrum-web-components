@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-header.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
@@ -105,142 +105,6 @@ export const BasicActionSlots = (): TemplateResult => {
     `;
 };
 
-export const ActionSlotsWithDividers = (): TemplateResult => {
-    const handleAction = (action: string) => () =>
-        console.log(`${action} clicked`);
-
-    return html`
-        <div style="margin: 20px;">
-            <h3>Action Slots with Dividers - L2 Only</h3>
-
-            <h4>Small Dividers (default)</h4>
-            <sp-header
-                variant="l2"
-                title="Advanced Campaign Settings"
-                show-back
-                show-action-dividers
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Edit')}
-                >
-                    <sp-icon-edit slot="icon"></sp-icon-edit>
-                </sp-action-button>
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Duplicate')}
-                >
-                    <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Clone')}
-                >
-                    Clone
-                </sp-button>
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Export')}
-                >
-                    Export
-                </sp-button>
-
-                <sp-action-button
-                    slot="end-actions"
-                    quiet
-                    @click=${handleAction('More')}
-                >
-                    <sp-icon-more slot="icon"></sp-icon-more>
-                </sp-action-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Save')}
-                >
-                    Save All
-                </sp-button>
-            </sp-header>
-
-            <h4>Medium Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="Content Management System"
-                show-back
-                show-action-dividers
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Settings')}
-                >
-                    <sp-icon-settings slot="icon"></sp-icon-settings>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Upload')}
-                >
-                    Upload
-                </sp-button>
-
-                <sp-button
-                    slot="end-actions"
-                    @click=${handleAction('Save Draft')}
-                >
-                    Save Draft
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Publish')}
-                >
-                    Publish
-                </sp-button>
-            </sp-header>
-
-            <h4>Large Dividers</h4>
-            <sp-header
-                variant="l2"
-                title="Project Collaboration Hub"
-                show-back
-                show-action-dividers
-                @sp-header-back=${() => console.log('Back clicked')}
-            >
-                <sp-action-button
-                    slot="start-actions"
-                    quiet
-                    @click=${handleAction('Share')}
-                >
-                    <sp-icon-share slot="icon"></sp-icon-share>
-                </sp-action-button>
-
-                <sp-button
-                    slot="middle-actions"
-                    @click=${handleAction('Invite')}
-                >
-                    Invite Users
-                </sp-button>
-
-                <sp-button slot="end-actions" @click=${handleAction('Export')}>
-                    Export
-                </sp-button>
-                <sp-button
-                    slot="end-actions"
-                    variant="accent"
-                    @click=${handleAction('Launch')}
-                >
-                    Launch Project
-                </sp-button>
-            </sp-header>
-        </div>
-    `;
-};
-
 export const ComplexActionGroups = (): TemplateResult => {
     const handleAction = (action: string) => () =>
         console.log(`${action} clicked`);
@@ -310,7 +174,7 @@ export const ComplexActionGroups = (): TemplateResult => {
                     Publish
                 </sp-button>
 
-                <sp-badge slot="status" variant="notice">Draft</sp-badge>
+                <sp-status-light slot="status" variant="notice">Draft</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"
@@ -375,7 +239,7 @@ export const ComplexActionGroups = (): TemplateResult => {
                     Launch Campaign
                 </sp-button>
 
-                <sp-badge slot="status" variant="positive">Active</sp-badge>
+                <sp-status-light slot="status" variant="positive">Active</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"
@@ -534,7 +398,7 @@ export const ResponsiveBehavior = (): TemplateResult => {
                     Launch Campaign
                 </sp-button>
 
-                <sp-badge slot="status" variant="positive">Active</sp-badge>
+                <sp-status-light slot="status" variant="positive">Active</sp-status-light>
                 <span
                     slot="status"
                     style="color: var(--spectrum-neutral-content-color-subdued);"

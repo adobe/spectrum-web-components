@@ -14,7 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/header/sp-header.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 import { Header } from '@spectrum-web-components/header';
 
 describe('Header Accessibility', () => {
@@ -97,7 +97,7 @@ describe('Header Accessibility', () => {
         it('has proper status row accessibility', async () => {
             const el = await fixture<Header>(html`
                 <sp-header variant="l2" title="Test Title">
-                    <sp-badge slot="status">Active</sp-badge>
+                    <sp-status-light slot="status">Active</sp-status-light>
                 </sp-header>
             `);
 
@@ -571,9 +571,9 @@ describe('Header Accessibility', () => {
         it('has proper semantic structure for screen readers', async () => {
             const el = await fixture<Header>(html`
                 <sp-header variant="l2" title="Page Title" show-back>
-                    <sp-badge slot="status" variant="positive">
-                        Published
-                    </sp-badge>
+                                    <sp-status-light slot="status" variant="positive">
+                    Published
+                </sp-status-light>
                     <span slot="status">Last updated: 5 minutes ago</span>
                     <sp-button slot="end-actions">Save</sp-button>
                 </sp-header>
