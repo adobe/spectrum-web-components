@@ -159,8 +159,7 @@
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-extra-large);
 }
 
-:host:dir(rtl),
-:host([dir="rtl"]) {
+:host:dir(rtl) {
     --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 

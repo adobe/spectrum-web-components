@@ -34,7 +34,7 @@
     height: 100%;
 }
 
-:host([dir="rtl"]) .gradient {
+.gradient:dir(rtl) {
     transform: scaleX(-1);
 }
 

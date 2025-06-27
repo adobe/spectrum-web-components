@@ -13,19 +13,16 @@
 @import url("./spectrum-button-base.css");
 
 :host {
-    display: inline-flex;
-    vertical-align: top;
-
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
-}
 
-:host([dir]) {
     /* spectrum-button.css uses "-webkit-appearance: button" to workaround an
-     * iOS and Safari issue. However, it results in incorrect styling
-     * when applied in :host
-     */
+    * iOS and Safari issue. However, it results in incorrect styling
+    * when applied in :host
+    */
     -webkit-appearance: none; /* stylelint-disable-line */
+    display: inline-flex;
+    vertical-align: top;
 }
 
 :host([disabled]) {
