@@ -10,6 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
+:host {
+    --spectrum-colorwheel-border-color: var(--spectrum-transparent-black-300);
+}
+
 @media (forced-colors: active) {
     :host {
         --highcontrast-colorwheel-border-color-disabled: GrayText;

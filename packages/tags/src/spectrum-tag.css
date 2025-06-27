@@ -11,6 +11,37 @@
  */
 
 :host {
+    --spectrum-tag-background-color: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-hover: var(--spectrum-gray-50);
+    --spectrum-tag-background-color-active: var(--spectrum-gray-100);
+    --spectrum-tag-background-color-focus: var(--spectrum-gray-50);
+    --spectrum-tag-size-small-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-medium-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-size-large-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-tag-border-color: var(--spectrum-gray-700);
+    --spectrum-tag-border-color-hover: var(--spectrum-gray-800);
+    --spectrum-tag-border-color-active: var(--spectrum-gray-900);
+    --spectrum-tag-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-tag-content-color: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-tag-content-color-hover: var(--spectrum-neutral-subdued-content-color-hover);
+    --spectrum-tag-content-color-active: var(--spectrum-neutral-subdued-content-color-down);
+    --spectrum-tag-content-color-focus: var(--spectrum-neutral-subdued-content-color-key-focus);
+    --spectrum-tag-content-color-selected: var(--spectrum-gray-25);
+    --spectrum-tag-border-color-selected: var(--spectrum-neutral-subdued-background-color-default);
+    --spectrum-tag-border-color-selected-hover: var(--spectrum-neutral-subdued-background-color-hover);
+    --spectrum-tag-border-color-selected-active: var(--spectrum-neutral-subdued-background-color-down);
+    --spectrum-tag-border-color-selected-focus: var(--spectrum-neutral-subdued-background-color-key-focus);
+    --spectrum-tag-border-color-disabled: transparent;
+    --spectrum-tag-background-color-disabled: var(--spectrum-disabled-background-color);
+    --spectrum-tag-size-small-spacing-inline-start: var(--spectrum-component-edge-to-visual-75);
+    --spectrum-tag-size-small-label-spacing-inline-end: var(--spectrum-component-edge-to-text-75);
+    --spectrum-tag-size-small-clear-button-spacing-inline-end: var(--spectrum-component-edge-to-visual-75);
+    --spectrum-tag-size-medium-spacing-inline-start: var(--spectrum-component-edge-to-visual-100);
+    --spectrum-tag-size-medium-label-spacing-inline-end: var(--spectrum-component-edge-to-text-100);
+    --spectrum-tag-size-medium-clear-button-spacing-inline-end: var(--spectrum-component-edge-to-visual-100);
+    --spectrum-tag-size-large-spacing-inline-start: var(--spectrum-component-edge-to-visual-200);
+    --spectrum-tag-size-large-label-spacing-inline-end: var(--spectrum-component-edge-to-text-200);
+    --spectrum-tag-size-large-clear-button-spacing-inline-end: var(--spectrum-component-edge-to-visual-200);
     --spectrum-avatar-opacity-disabled: 0.3;
     --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-tag-border-width: var(--spectrum-border-width-100);

@@ -10,7 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
+#textfield,
+:host([size="m"]) #textfield {
+    --spectrum-search-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-search-edge-to-visual: var(--spectrum-component-edge-to-visual-100);
+}
+
 #textfield {
+    --spectrum-search-border-color-default: var(--spectrum-gray-500);
+    --spectrum-search-border-color-hover: var(--spectrum-gray-600);
+    --spectrum-search-border-color-focus: var(--spectrum-gray-800);
+    --spectrum-search-border-color-focus-hover: var(--spectrum-gray-900);
+    --spectrum-search-border-color-key-focus: var(--spectrum-gray-800);
+    --spectrum-search-background-color: var(--spectrum-gray-25);
+    --spectrum-search-background-color-disabled: var(--spectrum-gray-25);
+    --spectrum-search-border-color-disabled: var(--spectrum-gray-300);
     --spectrum-search-inline-size: var(--spectrum-field-width);
     --spectrum-search-block-size: var(--spectrum-component-height-100);
     --spectrum-search-button-inline-size: var(--spectrum-search-block-size);

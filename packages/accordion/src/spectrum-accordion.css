@@ -11,6 +11,9 @@
  */
 
 :host {
+    --spectrum-accordion-divider-color: var(--spectrum-gray-200);
+    --spectrum-accordion-item-content-disabled-color: var(--spectrum-disabled-content-color);
+    --spectrum-accordion-item-content-color: var(--spectrum-body-color);
     --spectrum-accordion-item-height: var(--spectrum-component-height-200);
     --spectrum-accordion-item-width: var(--spectrum-accordion-minimum-width);
     --spectrum-accordion-disclosure-indicator-height: var(--spectrum-component-height-100);

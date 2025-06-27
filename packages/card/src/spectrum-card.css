@@ -11,6 +11,11 @@
  */
 
 :host {
+    --spectrum-card-border-color: var(--spectrum-gray-100);
+    --spectrum-card-border-color-hover: var(--spectrum-gray-200);
+    --spectrum-card-divider-color: var(--spectrum-gray-200);
+    --spectrum-card-preview-background-color: var(--spectrum-gray-100);
+    --spectrum-card-preview-background-color-hover: var(--spectrum-gray-200);
     --spectrum-card-background-color: var(--mod-card-background-color, var(--spectrum-background-layer-2-color));
     --spectrum-card-body-spacing: var(--mod-card-body-spacing, var(--spectrum-spacing-400));
     --spectrum-card-body-padding-block-start: var(--mod-card-body-padding-block-start, var(--spectrum-spacing-300));
