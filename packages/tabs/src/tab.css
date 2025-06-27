@@ -61,7 +61,7 @@
     height: auto;
 }
 
-:host([dir][vertical]) slot[name="icon"] + #item-label {
+:host([vertical]) slot[name="icon"] + #item-label {
     margin-inline-start: 0;
     margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
 }

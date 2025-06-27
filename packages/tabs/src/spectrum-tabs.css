@@ -56,13 +56,11 @@
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical-right, left);
 }
 
-:host([direction^="vertical"]) #list:dir(rtl),
-:host([dir="rtl"][direction^="vertical"]) #list {
+:host([direction^="vertical"]) #list:dir(rtl) {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical, left);
 }
 
-:host([direction^="vertical-right"]) #list:dir(rtl),
-:host([dir="rtl"][direction^="vertical-right"]) #list {
+:host([direction^="vertical-right"]) #list:dir(rtl) {
     --mod-tabs-list-background-direction: var(--mod-tabs-list-background-direction-vertical, right);
 }
 

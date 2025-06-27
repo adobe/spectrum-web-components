@@ -18,7 +18,7 @@
     transform-origin: left;
 }
 
-:host([dir="rtl"]) .fill {
+.fill:dir(rtl) {
     transform-origin: right;
 }
 

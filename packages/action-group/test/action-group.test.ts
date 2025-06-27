@@ -1491,7 +1491,7 @@ describe('ActionGroup', () => {
         `);
         await acceptKeyboardInput(el);
     });
-    it('accepts keybord input when [dir="ltr"]', async () => {
+    it('accepts keybord input when in left-to-right direction', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group
                 label="Selects Single Group"

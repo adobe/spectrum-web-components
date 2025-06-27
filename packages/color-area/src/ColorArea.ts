@@ -245,10 +245,10 @@ export class ColorArea extends SpectrumElement {
                     deltaY = step * -1;
                     break;
                 case 'ArrowLeft':
-                    deltaX = this.step * (this.isLTR ? -1 : 1);
+                    deltaX = this.step * (this.dir === 'ltr' ? -1 : 1);
                     break;
                 case 'ArrowRight':
-                    deltaX = this.step * (this.isLTR ? 1 : -1);
+                    deltaX = this.step * (this.dir === 'ltr' ? 1 : -1);
                     break;
                 case 'PageUp':
                     deltaY = step * 10;
@@ -257,10 +257,10 @@ export class ColorArea extends SpectrumElement {
                     deltaY = step * -10;
                     break;
                 case 'Home':
-                    deltaX = step * (this.isLTR ? -10 : 10);
+                    deltaX = step * (this.dir === 'ltr' ? -10 : 10);
                     break;
                 case 'End':
-                    deltaX = step * (this.isLTR ? 10 : -10);
+                    deltaX = step * (this.dir === 'ltr' ? 10 : -10);
                     break;
                 /* c8 ignore next 2 */
                 default:
@@ -404,7 +404,7 @@ export class ColorArea extends SpectrumElement {
             Math.min(1, (offsetY - minOffsetY) / height)
         );
 
-        return [this.isLTR ? percentX : 1 - percentX, 1 - percentY];
+        return [this.dir === 'ltr' ? percentX : 1 - percentX, 1 - percentY];
     }
 
     private handleAreaPointerdown(event: PointerEvent): void {
@@ -465,7 +465,7 @@ export class ColorArea extends SpectrumElement {
                 color=${this.colorController.getHslString()}
                 ?disabled=${this.disabled}
                 style=${`transform: translate(${
-                    (this.isLTR ? this.x : 1 - this.x) * width
+                    (this.dir === 'ltr' ? this.x : 1 - this.x) * width
                 }px, ${height - this.y * height}px);`}
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],

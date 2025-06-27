@@ -25,13 +25,10 @@
 
 .action-button {
     flex-grow: 0;
-}
-
-:host([dir="ltr"]) .action-button {
     margin-left: auto;
 }
 
-:host([dir="rtl"]) .action-button {
+.action-button:dir(rtl) {
     margin-right: auto;
 }
 

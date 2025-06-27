@@ -27,7 +27,7 @@
     grid-template-columns: auto 1fr;
 }
 
-:host([dir="rtl"]) #selection-indicator {
+#selection-indicator:dir(rtl) {
     left: 0;
     right: auto;
 }
@@ -66,11 +66,11 @@
     transition: none;
 }
 
-:host([dir][direction="horizontal"]) #list.scroll {
+:host([direction="horizontal"]) #list.scroll {
     scrollbar-width: none;
     overflow: auto hidden;
 }
 
-:host([dir][direction="horizontal"]) #list.scroll::-webkit-scrollbar {
+:host([direction="horizontal"]) #list.scroll::-webkit-scrollbar {
     display: none;
 }

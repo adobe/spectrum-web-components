@@ -502,9 +502,10 @@ export class HandleController {
         const offset = event.clientX;
         const size = rect.width;
 
-        const directionalOffset = this.host.isLTR
-            ? offset - minOffset
-            : size - (offset - minOffset);
+        const directionalOffset =
+            this.host.dir === 'ltr'
+                ? offset - minOffset
+                : size - (offset - minOffset);
         const normalized = directionalOffset / size;
 
         return model.normalization.fromNormalized(
@@ -526,7 +527,7 @@ export class HandleController {
             'handle-highlight': model.highlight,
         };
         const style = {
-            [this.host.isLTR ? 'left' : 'right']: `${
+            [this.host.dir === 'ltr' ? 'left' : 'right']: `${
                 model.normalizedValue * 100
             }%`,
             'z-index': zIndex.toString(),

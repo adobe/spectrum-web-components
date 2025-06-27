@@ -736,7 +736,7 @@ export const Gradient = (args: StoryArgs = {}): TemplateResult => {
                     green 100%
                 );
             }
-            sp-slider[dir='rtl'] {
+            sp-slider:dir(rtl) {
                 --mod-slider-track-color: linear-gradient(
                     to left,
                     red,

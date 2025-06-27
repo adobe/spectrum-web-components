@@ -51,8 +51,7 @@
     position: relative;
 }
 
-:host:dir(rtl),
-:host([dir="rtl"]) {
+:host:dir(rtl) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -299,8 +298,7 @@
     transform: translate(-50%, -50%);
 }
 
-:host:dir(rtl) .handle:before,
-:host([dir="rtl"]) .handle:before {
+.handle:dir(rtl):before {
     transform: translate(50%, -50%);
 }
 

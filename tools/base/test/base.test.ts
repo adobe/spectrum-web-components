@@ -21,19 +21,17 @@ describe('Base', () => {
     after(() => {
         document.dir = '';
     });
-    it('sets `dir` from `document`', async () => {
+    it('component understands `dir` from `document`', async () => {
         document.dir = 'rtl';
-        const el = await fixture<DirElement>(
-            html`
-                <dir-element></dir-element>
-            `
-        );
+        const el = await fixture<DirElement>(html`
+            <dir-element></dir-element>
+        `);
 
         await elementUpdated(el);
 
         expect(el.dir).to.equal('rtl');
-        expect(el.isLTR).to.be.false;
     });
+
     it('has a static VERSION property', () => {
         expect(DirElement.VERSION).to.equal(version);
     });
