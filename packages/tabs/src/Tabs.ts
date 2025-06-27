@@ -59,7 +59,7 @@ export const ScaledIndicator = {
             :host([direction='vertical']) #selection-indicator {
                 height: ${this.baseSize}px;
             }
-            :host([dir][direction='horizontal']) #selection-indicator {
+            :host([direction='horizontal']) #selection-indicator {
                 width: ${this.baseSize}px;
             }
         `;

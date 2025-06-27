@@ -420,7 +420,7 @@ export class StoryDecorator extends SpectrumElement {
                 ?checked=${this.reduceMotion}
                 @change=${this.updateTheme}
             >
-                Reduce Motion
+                Reduce motion
             </sp-switch>
         `;
     }
