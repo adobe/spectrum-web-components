@@ -7,7 +7,7 @@ executors:
         resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.44.0
+            - image: mcr.microsoft.com/playwright:v1.52.0
         resource_class: xlarge
         environment:
             NODE_ENV: development
@@ -51,12 +51,12 @@ commands:
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -191,7 +191,7 @@ commands:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
+                      [[ -f test/visual/screenshots-baseline ]] && rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
             - save_cache:
                   when: always
@@ -415,7 +415,7 @@ jobs:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
+                      [[ -f test/visual/screenshots-baseline ]] && rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
             - save_cache:
                   when: always
