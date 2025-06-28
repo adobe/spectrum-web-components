@@ -22,6 +22,9 @@ import linkStyles from './link.css.js';
 
 /**
  * @element sp-link
+ *
+ * Updated to follow IBM's approach for better Safari keyboard navigation compatibility.
+ * Uses shadow DOM with delegatesFocus and explicit tabindex on the anchor element.
  */
 export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
@@ -48,6 +51,17 @@ export class Link extends LikeAnchor(Focusable) {
     }
 
     protected override render(): TemplateResult {
-        return this.renderAnchor({ id: 'anchor' });
+        return this.renderAnchor({
+            id: 'anchor',
+            tabindex: 0,
+        });
     }
+    /**
+     * Static property to configure shadow root options
+     * This enables delegatesFocus for Safari compatibility
+     */
+    static override shadowRootOptions = {
+        mode: 'open' as const,
+        delegatesFocus: true,
+    };
 }
