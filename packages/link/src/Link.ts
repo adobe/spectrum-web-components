@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, TemplateResult } from '@spectrum-web-components/base';
+import {
+    CSSResultArray,
+    LitElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import {
     property,
     query,
@@ -23,8 +27,6 @@ import linkStyles from './link.css.js';
 /**
  * @element sp-link
  *
- * Updated to follow IBM's approach for better Safari keyboard navigation compatibility.
- * Uses shadow DOM with delegatesFocus and explicit tabindex on the anchor element.
  */
 export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
@@ -61,7 +63,7 @@ export class Link extends LikeAnchor(Focusable) {
      * This enables delegatesFocus for Safari compatibility
      */
     static override shadowRootOptions = {
-        mode: 'open' as const,
+        ...LitElement.shadowRootOptions,
         delegatesFocus: true,
     };
 }
