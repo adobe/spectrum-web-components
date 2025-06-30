@@ -281,6 +281,9 @@ jobs:
                   name: Move CEM to Storybook directory
                   command: cp projects/documentation/custom-elements.json storybook/
             - run:
+                  name: Build documentation with path prefix
+                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
+            - run:
                   name: Build documentation
                   command: yarn docs:build
             - run:
