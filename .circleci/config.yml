@@ -139,13 +139,13 @@ commands:
                           # Get PR number from CircleCI environment
                           PR_NUMBER=""
                           if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                              PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                              PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
                               echo "Deploying VRT for PR #$PR_NUMBER"
                           elif [ -n "$CIRCLE_PR_NUMBER" ]; then
                               PR_NUMBER="$CIRCLE_PR_NUMBER"
                               echo "Deploying VRT for PR #$PR_NUMBER"
                           elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
-                              PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
                               echo "Deploying VRT for forked PR #$PR_NUMBER"
                           elif [ -n "$GITHUB_TOKEN" ]; then
                               # GitHub API fallback
@@ -360,7 +360,7 @@ jobs:
                   name: Deploy Visual Tests to Azure Blob Storage
                   command: |
                       # Set deployment path based on branch
-                      if [ "$CIRCLE_BRANCH" = "ttomar/vrts-main"" ]; then
+                      if [ "$CIRCLE_BRANCH" = "ttomar/vrts-main" ]; then
                           PR_HASH="main"
                           echo "Deploying HCM VRT for main branch to main path"
                       else
@@ -373,7 +373,7 @@ jobs:
                               PR_NUMBER="$CIRCLE_PR_NUMBER"
                               echo "Deploying HCM VRT for PR #$PR_NUMBER"
                           elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
-                              PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
                               echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
                           elif [ -n "$GITHUB_TOKEN" ]; then
                               # GitHub API fallback
