@@ -1,36 +1,44 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/reactive-controllers@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/reactive-controllers@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/reactive-controllers@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/reactive-controllers@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/reactive-controllers@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/reactive-controllers@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/reactive-controllers@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    -   @spectrum-web-components/reactive-controllers@1.3.0
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    - @spectrum-web-components/reactive-controllers@1.3.0
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -51,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add an optional chromatic vrt action ([7d2f840](https://github.com/adobe/spectrum-web-components/commit/7d2f8401cb05c5e23872424f132a1a8edd95b666))
+- add an optional chromatic vrt action ([7d2f840](https://github.com/adobe/spectrum-web-components/commit/7d2f8401cb05c5e23872424f132a1a8edd95b666))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -85,7 +93,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **reactive-controllers:** update focusable element's tab-index to 0 on accepting focus ([#4630](https://github.com/adobe/spectrum-web-components/issues/4630)) ([d359e84](https://github.com/adobe/spectrum-web-components/commit/d359e844fb00ff3a52f7f4346038aa8d5b620025))
+- **reactive-controllers:** update focusable element's tab-index to 0 on accepting focus ([#4630](https://github.com/adobe/spectrum-web-components/issues/4630)) ([d359e84](https://github.com/adobe/spectrum-web-components/commit/d359e844fb00ff3a52f7f4346038aa8d5b620025))
 
 # [0.47.0](https://github.com/adobe/spectrum-web-components/compare/v0.46.0...v0.47.0) (2024-08-20)
 
@@ -171,14 +179,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
--   **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
+- **overlay:** calculate more transforms ([6538a45](https://github.com/adobe/spectrum-web-components/commit/6538a45a036f60c4efce4c3ed3d1d6f2782a188e))
+- **overlay:** place longpress helper content in a more accessible, less layout affecting location ([dd12c23](https://github.com/adobe/spectrum-web-components/commit/dd12c2346142a107ee9c7824410dff5ae660e574))
 
 ## [0.39.3](https://github.com/adobe/spectrum-web-components/compare/v0.39.2...v0.39.3) (2023-10-18)
 
 ### Bug Fixes
 
--   **grid:** plug a mememory leak from the render process ([4414bd9](https://github.com/adobe/spectrum-web-components/commit/4414bd960d7695b98b283c90f7233b3ce047401a))
+- **grid:** plug a mememory leak from the render process ([4414bd9](https://github.com/adobe/spectrum-web-components/commit/4414bd960d7695b98b283c90f7233b3ce047401a))
 
 ## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
 
@@ -208,7 +216,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **grid:** added lit dependency ([#3489](https://github.com/adobe/spectrum-web-components/issues/3489)) ([fb5f166](https://github.com/adobe/spectrum-web-components/commit/fb5f1664022a457620f5be097a47fa6381d4f8aa))
+- **grid:** added lit dependency ([#3489](https://github.com/adobe/spectrum-web-components/issues/3489)) ([fb5f166](https://github.com/adobe/spectrum-web-components/commit/fb5f1664022a457620f5be097a47fa6381d4f8aa))
 
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
@@ -234,15 +242,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add Grid pattern ([341f493](https://github.com/adobe/spectrum-web-components/commit/341f4932087487be47bde355d1b0894886ed44ad))
--   add support for "padding" attribute ([e43078f](https://github.com/adobe/spectrum-web-components/commit/e43078f0e14a909fb5e38428222a05d8c4754288))
--   avoid registering lit-virtualizer globally ([281071f](https://github.com/adobe/spectrum-web-components/commit/281071fc551b189afa0ef9ef21e542c27661d567))
--   import LitVirtualizer from @lit-labs/virtualizer@0.7.0-pre.3 ([9886ce4](https://github.com/adobe/spectrum-web-components/commit/9886ce4a6fd612bae33feffea26f8dbe8af9d690))
--   prevent Grid clicks from throwing focus unexpectedly ([872e9fd](https://github.com/adobe/spectrum-web-components/commit/872e9fd6c83cbd223430c9c9f7706fe359932038))
+- add Grid pattern ([341f493](https://github.com/adobe/spectrum-web-components/commit/341f4932087487be47bde355d1b0894886ed44ad))
+- add support for "padding" attribute ([e43078f](https://github.com/adobe/spectrum-web-components/commit/e43078f0e14a909fb5e38428222a05d8c4754288))
+- avoid registering lit-virtualizer globally ([281071f](https://github.com/adobe/spectrum-web-components/commit/281071fc551b189afa0ef9ef21e542c27661d567))
+- import LitVirtualizer from @lit-labs/virtualizer@0.7.0-pre.3 ([9886ce4](https://github.com/adobe/spectrum-web-components/commit/9886ce4a6fd612bae33feffea26f8dbe8af9d690))
+- prevent Grid clicks from throwing focus unexpectedly ([872e9fd](https://github.com/adobe/spectrum-web-components/commit/872e9fd6c83cbd223430c9c9f7706fe359932038))
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.1.7...@spectrum-web-components/grid@0.1.8) (2023-04-05)
 
@@ -272,19 +280,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add support for "padding" attribute ([e43078f](https://github.com/adobe/spectrum-web-components/commit/e43078f0e14a909fb5e38428222a05d8c4754288))
+- add support for "padding" attribute ([e43078f](https://github.com/adobe/spectrum-web-components/commit/e43078f0e14a909fb5e38428222a05d8c4754288))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.1.0...@spectrum-web-components/grid@0.1.1) (2022-08-24)
 
 ### Bug Fixes
 
--   prevent Grid clicks from throwing focus unexpectedly ([872e9fd](https://github.com/adobe/spectrum-web-components/commit/872e9fd6c83cbd223430c9c9f7706fe359932038))
+- prevent Grid clicks from throwing focus unexpectedly ([872e9fd](https://github.com/adobe/spectrum-web-components/commit/872e9fd6c83cbd223430c9c9f7706fe359932038))
 
 # [0.1.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.9...@spectrum-web-components/grid@0.1.0) (2022-08-09)
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.0.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.8...@spectrum-web-components/grid@0.0.9) (2022-08-04)
 
@@ -310,8 +318,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   avoid registering lit-virtualizer globally ([281071f](https://github.com/adobe/spectrum-web-components/commit/281071fc551b189afa0ef9ef21e542c27661d567))
--   import LitVirtualizer from @lit-labs/virtualizer@0.7.0-pre.3 ([9886ce4](https://github.com/adobe/spectrum-web-components/commit/9886ce4a6fd612bae33feffea26f8dbe8af9d690))
+- avoid registering lit-virtualizer globally ([281071f](https://github.com/adobe/spectrum-web-components/commit/281071fc551b189afa0ef9ef21e542c27661d567))
+- import LitVirtualizer from @lit-labs/virtualizer@0.7.0-pre.3 ([9886ce4](https://github.com/adobe/spectrum-web-components/commit/9886ce4a6fd612bae33feffea26f8dbe8af9d690))
 
 ## [0.0.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.2...@spectrum-web-components/grid@0.0.3) (2022-03-08)
 
@@ -321,4 +329,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   add Grid pattern ([341f493](https://github.com/adobe/spectrum-web-components/commit/341f4932087487be47bde355d1b0894886ed44ad))
+- add Grid pattern ([341f493](https://github.com/adobe/spectrum-web-components/commit/341f4932087487be47bde355d1b0894886ed44ad))

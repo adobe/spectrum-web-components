@@ -1,38 +1,46 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/opacity-checkerboard@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/opacity-checkerboard@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/opacity-checkerboard@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/opacity-checkerboard@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/opacity-checkerboard@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/opacity-checkerboard@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/opacity-checkerboard@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/opacity-checkerboard@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/opacity-checkerboard@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -53,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -127,7 +135,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -185,8 +193,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
--   opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
+- **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+- opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -208,7 +216,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-loupe:** hide svg from screen readers ([#3318](https://github.com/adobe/spectrum-web-components/issues/3318)) ([01e75b7](https://github.com/adobe/spectrum-web-components/commit/01e75b7f0dbf1096976c290ad360534847781fee))
+- **color-loupe:** hide svg from screen readers ([#3318](https://github.com/adobe/spectrum-web-components/issues/3318)) ([01e75b7](https://github.com/adobe/spectrum-web-components/commit/01e75b7f0dbf1096976c290ad360534847781fee))
 
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
@@ -222,7 +230,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
+- **color-handle,color-loupe:** accept updated CSS token names ([8c28f6d](https://github.com/adobe/spectrum-web-components/commit/8c28f6d002973bf7398f134ca4e73be8fee967dd))
 
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
@@ -232,21 +240,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+- address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/adobe/spectrum-web-components/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))
--   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/adobe/spectrum-web-components/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))
+- **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.8...@spectrum-web-components/color-loupe@0.5.0) (2023-04-24)
 
 ### Features
 
--   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+- **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
 
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.7...@spectrum-web-components/color-loupe@0.4.8) (2023-04-05)
 
@@ -284,7 +292,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.3.10...@spectrum-web-components/color-loupe@0.3.11) (2022-08-04)
 
@@ -342,7 +350,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.6...@spectrum-web-components/color-loupe@0.1.7) (2021-09-20)
 
@@ -376,8 +384,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+- address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
 
 ### Features
 
--   **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/adobe/spectrum-web-components/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))
+- **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/adobe/spectrum-web-components/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))

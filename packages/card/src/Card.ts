@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     CSSResultArray,
@@ -192,21 +192,46 @@ export class Card extends LikeAnchor(
         }
     }
 
-    private handlePointerdown(event: Event): void {
+    /**
+     * Handles pointer down events on the card element.
+     * Implements a click detection system that distinguishes between clicks and drags
+     * based on duration and movement distance.
+     */
+    private handlePointerdown(event: PointerEvent): void {
         const path = event.composedPath();
         const hasAnchor = path.some(
             (el) => (el as HTMLElement).localName === 'a'
         );
         if (hasAnchor) return;
-        const start = +new Date();
-        const handleEnd = (): void => {
-            const end = +new Date();
-            if (end - start < 200) {
+        // Record the time and initial position of the pointerdown event
+        const startTime = event.timeStamp;
+        const startX = event.clientX;
+        const startY = event.clientY;
+
+        // Define the handler for when the pointer interaction ends
+        const handleEnd = (endEvent: PointerEvent): void => {
+            const endTime = endEvent.timeStamp;
+            const endX = endEvent.clientX;
+            const endY = endEvent.clientY;
+
+            // Calculate time duration and movement distance of the pointer
+            const timeDelta = endTime - startTime;
+            const moveX = Math.abs(endX - startX);
+            const moveY = Math.abs(endY - startY);
+
+            // Consider the pointer interaction a "click" only if:
+            // - It was short (under 200ms)
+            // - It didn't move significantly (less than 10px in any direction)
+            const moved = moveX > 10 || moveY > 10;
+
+            if (timeDelta < 200 && !moved) {
                 this.click();
             }
+
             this.removeEventListener('pointerup', handleEnd);
             this.removeEventListener('pointercancel', handleEnd);
         };
+
         this.addEventListener('pointerup', handleEnd);
         this.addEventListener('pointercancel', handleEnd);
     }

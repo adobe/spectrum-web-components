@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { html } from '@spectrum-web-components/base';
 import {
@@ -17,6 +17,7 @@ import {
     expect,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
@@ -49,9 +50,9 @@ import { createLanguageContext } from '../../../tools/reactive-controllers/test/
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
+    sendMouseTo,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-import { isMac } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -943,84 +944,72 @@ describe('NumberField', () => {
             expect(el.value).to.equal(17);
         });
         it('does not select all on click based `focus`', async function () {
-            this.retries(0);
-            const modifier = isMac() ? 'Meta' : 'Control';
             const el = await getElFrom(units({ value: 17 }));
             expect(el.value).to.equal(17);
-            const rect = el.focusElement.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            rect.left + rect.width / 8,
-                            rect.top + rect.height / 2,
-                        ],
-                    },
-                ],
-            });
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
+
+            const inputElement = el.shadowRoot?.querySelector(
+                'input'
+            ) as HTMLInputElement;
+
+            await sendMouseTo(el.focusElement, 'click');
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            await sendKeys({
-                press: `${modifier}+KeyC`,
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            await sendKeys({
-                press: 'ArrowRight',
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            await sendKeys({
-                press: `${modifier}+KeyV`,
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            expect(el.value, 'copy/paste changed the value').to.equal(17);
+
+            let length: number | null = null;
+            await waitUntil(
+                () => {
+                    if (
+                        inputElement.selectionStart !== null &&
+                        inputElement.selectionEnd !== null
+                    ) {
+                        length =
+                            inputElement.selectionEnd -
+                            inputElement.selectionStart;
+                        return true;
+                    }
+                    return false;
+                },
+                'selection changed',
+                { timeout: 400 }
+            );
+            expect(length, `selection length)`).to.equal(0);
         });
         it('selects all on `Tab` based `focus`', async function () {
-            this.retries(0);
-            const modifier = isMac() ? 'Meta' : 'Control';
             const el = await getElFrom(units({ value: 17 }));
             const input = document.createElement('input');
             el.insertAdjacentElement('beforebegin', input);
             input.focus();
+
+            const inputElement = el.shadowRoot?.querySelector(
+                'input'
+            ) as HTMLInputElement;
+
             await sendKeys({
                 press: 'Tab',
             });
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
             await elementUpdated(el);
             expect(el.focused).to.be.true;
-            await sendKeys({
-                press: `${modifier}+KeyC`,
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            await sendKeys({
-                press: 'ArrowRight',
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            await sendKeys({
-                press: `${modifier}+KeyV`,
-            });
-            await nextFrame();
-            await nextFrame();
-            await elementUpdated(el);
-            expect(el.value, 'copy/paste did not change the value').to.equal(
-                1717
+
+            let length: number | null = null;
+            await waitUntil(
+                () => {
+                    if (
+                        inputElement.selectionStart !== null &&
+                        inputElement.selectionEnd !== null
+                    ) {
+                        length =
+                            inputElement.selectionEnd -
+                            inputElement.selectionStart;
+                        return true;
+                    }
+                    return false;
+                },
+                'selection changed',
+                { timeout: 400 }
+            );
+
+            expect(length, `selection length`).to.equal(
+                el.valueAsString.length
             );
         });
         it('manages units not supported by the browser', async () => {

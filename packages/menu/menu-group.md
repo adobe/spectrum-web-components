@@ -6,7 +6,6 @@ An `<sp-menu-group>` will gather a collection of [`<sp-menu-item>`](../menu-item
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/menu?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/menu)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/menu)
-[![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/FikFeTXNsYhxAVmCz2f4/src/index.ts)
 
 ```
 yarn add @spectrum-web-components/menu
@@ -65,9 +64,9 @@ An `<sp-menu-group>` can be used to organize `<sp-menu-item>` elements in an `<s
 
 The `<sp-menu-group>` element can be instructed to maintain a selection via the `selects` attribute. Depending on the chosen algorithm, the `<sp-menu-group>` element will hold a `value` property and manage the `selected` state of its `<sp-menu-item>` descendants.
 
--   When `selects` is set to `single`, the `<sp-menu-group>` element will maintain one selected item after an initial selection is made.
--   When `selects` is set to `multiple`, the `<sp-menu-group>` element will maintain zero or more selected items.
--   When `selects` is set to `inherit`, the `<sp-menu-group>` element will allow its `<sp-menu-item>` children to participate in the selection of its nearest `<sp-menu>` ancestor.
+- When `selects` is set to `single`, the `<sp-menu-group>` element will maintain one selected item after an initial selection is made.
+- When `selects` is set to `multiple`, the `<sp-menu-group>` element will maintain zero or more selected items.
+- When `selects` is set to `inherit`, the `<sp-menu-group>` element will allow its `<sp-menu-item>` children to participate in the selection of its nearest `<sp-menu>` ancestor.
 
 <sp-tabs selected="selects-single" auto label="Selects attribute">
 <sp-tab value="selects-single">Single</sp-tab>

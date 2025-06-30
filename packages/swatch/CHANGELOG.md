@@ -1,52 +1,64 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.7.0
+    - @spectrum-web-components/icons-ui@1.7.0
+    - @spectrum-web-components/base@1.7.0
+    - @spectrum-web-components/opacity-checkerboard@1.7.0
+    - @spectrum-web-components/reactive-controllers@1.7.0
+    - @spectrum-web-components/shared@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/icon@1.6.0
-    -   @spectrum-web-components/icons-ui@1.6.0
-    -   @spectrum-web-components/base@1.6.0
-    -   @spectrum-web-components/opacity-checkerboard@1.6.0
-    -   @spectrum-web-components/reactive-controllers@1.6.0
-    -   @spectrum-web-components/shared@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.6.0
+    - @spectrum-web-components/icons-ui@1.6.0
+    - @spectrum-web-components/base@1.6.0
+    - @spectrum-web-components/opacity-checkerboard@1.6.0
+    - @spectrum-web-components/reactive-controllers@1.6.0
+    - @spectrum-web-components/shared@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/icon@1.5.0
-    -   @spectrum-web-components/icons-ui@1.5.0
-    -   @spectrum-web-components/base@1.5.0
-    -   @spectrum-web-components/opacity-checkerboard@1.5.0
-    -   @spectrum-web-components/reactive-controllers@1.5.0
-    -   @spectrum-web-components/shared@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.5.0
+    - @spectrum-web-components/icons-ui@1.5.0
+    - @spectrum-web-components/base@1.5.0
+    - @spectrum-web-components/opacity-checkerboard@1.5.0
+    - @spectrum-web-components/reactive-controllers@1.5.0
+    - @spectrum-web-components/shared@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/icon@1.4.0
-    -   @spectrum-web-components/icons-ui@1.4.0
-    -   @spectrum-web-components/base@1.4.0
-    -   @spectrum-web-components/opacity-checkerboard@1.4.0
-    -   @spectrum-web-components/reactive-controllers@1.4.0
-    -   @spectrum-web-components/shared@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.4.0
+    - @spectrum-web-components/icons-ui@1.4.0
+    - @spectrum-web-components/base@1.4.0
+    - @spectrum-web-components/opacity-checkerboard@1.4.0
+    - @spectrum-web-components/reactive-controllers@1.4.0
+    - @spectrum-web-components/shared@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
-    -   @spectrum-web-components/reactive-controllers@1.3.0
-    -   @spectrum-web-components/icon@1.3.0
-    -   @spectrum-web-components/icons-ui@1.3.0
-    -   @spectrum-web-components/base@1.3.0
-    -   @spectrum-web-components/opacity-checkerboard@1.3.0
-    -   @spectrum-web-components/shared@1.3.0
+- Updated dependencies [[`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f)]:
+    - @spectrum-web-components/reactive-controllers@1.3.0
+    - @spectrum-web-components/icon@1.3.0
+    - @spectrum-web-components/icons-ui@1.3.0
+    - @spectrum-web-components/base@1.3.0
+    - @spectrum-web-components/opacity-checkerboard@1.3.0
+    - @spectrum-web-components/shared@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -55,7 +67,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
+- **reactive-controllers:** Migrate to Colorjs from Tinycolor ([#4713](https://github.com/adobe/spectrum-web-components/issues/4713)) ([9d740f0](https://github.com/adobe/spectrum-web-components/commit/9d740f0c830aa44273097181e761e9a92d3df4be))
 
 ## [1.1.2](https://github.com/adobe/spectrum-web-components/compare/v1.1.1...v1.1.2) (2025-02-12)
 
@@ -69,7 +81,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.3](https://github.com/adobe/spectrum-web-components/compare/v1.0.1...v1.0.3) (2024-12-09)
 
@@ -121,7 +133,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
+- **swatch:** sync aria-label with changes in label, color, and mixed state ([#4519](https://github.com/adobe/spectrum-web-components/issues/4519)) ([50aef31](https://github.com/adobe/spectrum-web-components/commit/50aef31ab049fecb3567cd5df9613b1d9bffb593))
 
 ## [0.42.5](https://github.com/adobe/spectrum-web-components/compare/v0.42.4...v0.42.5) (2024-05-24)
 
@@ -147,12 +159,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
--   **swatch:** allow Swatch Group to manage selection through multiple slots ([f333379](https://github.com/adobe/spectrum-web-components/commit/f3333795070c009523c4af750480ae288e17091f))
+- **styles, theme:** surface exports that omit Spectrum Vars proactively ([#4142](https://github.com/adobe/spectrum-web-components/issues/4142)) ([5b524c1](https://github.com/adobe/spectrum-web-components/commit/5b524c1d54a64225cb3b2f71b92f581695985519))
+- **swatch:** allow Swatch Group to manage selection through multiple slots ([f333379](https://github.com/adobe/spectrum-web-components/commit/f3333795070c009523c4af750480ae288e17091f))
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -210,8 +222,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
--   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+- **alert-dialog:** add Alert Dialog package ([#3501](https://github.com/adobe/spectrum-web-components/issues/3501)) ([1062847](https://github.com/adobe/spectrum-web-components/commit/10628476d39ef45c23efa8b6ac53d4a2e334a92f))
+- **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -229,14 +241,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **swatch:** clear previously selected children when updating `selected` ([ce1bd36](https://github.com/adobe/spectrum-web-components/commit/ce1bd360dcb1ae0afdf694f4eeabbf735d1b6c74))
--   **swatch:** warn when mixed-value used with selects !== 'multiple' ([#3460](https://github.com/adobe/spectrum-web-components/issues/3460)) ([89c288e](https://github.com/adobe/spectrum-web-components/commit/89c288ef12e8d879f6e3c12a1e0ea94828797b50))
+- **swatch:** clear previously selected children when updating `selected` ([ce1bd36](https://github.com/adobe/spectrum-web-components/commit/ce1bd360dcb1ae0afdf694f4eeabbf735d1b6c74))
+- **swatch:** warn when mixed-value used with selects !== 'multiple' ([#3460](https://github.com/adobe/spectrum-web-components/issues/3460)) ([89c288e](https://github.com/adobe/spectrum-web-components/commit/89c288ef12e8d879f6e3c12a1e0ea94828797b50))
 
 # [0.34.0](https://github.com/adobe/spectrum-web-components/compare/v0.33.2...v0.34.0) (2023-07-11)
 
 ### Bug Fixes
 
--   **swatch:** mixed-value state must be conveyed to screen readers using ARIA ([#3330](https://github.com/adobe/spectrum-web-components/issues/3330)) ([7711264](https://github.com/adobe/spectrum-web-components/commit/7711264850f54794fc2fcc343a81c5ff1f64c907))
+- **swatch:** mixed-value state must be conveyed to screen readers using ARIA ([#3330](https://github.com/adobe/spectrum-web-components/issues/3330)) ([7711264](https://github.com/adobe/spectrum-web-components/commit/7711264850f54794fc2fcc343a81c5ff1f64c907))
 
 ## [0.33.2](https://github.com/adobe/spectrum-web-components/compare/v0.33.1...v0.33.2) (2023-06-14)
 
@@ -254,28 +266,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **shared:** allow "disabled" first to return to "tabindex=0" in "focusable" ([160bc59](https://github.com/adobe/spectrum-web-components/commit/160bc594f516bfadb754d47ce102a02cbde12fcd))
+- **shared:** allow "disabled" first to return to "tabindex=0" in "focusable" ([160bc59](https://github.com/adobe/spectrum-web-components/commit/160bc594f516bfadb754d47ce102a02cbde12fcd))
 
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes
 
--   include all dependencies ([c80d244](https://github.com/adobe/spectrum-web-components/commit/c80d24483b440c634ebc0add27f35ae84c4d6260))
--   support non-flat "color" application ([efc0159](https://github.com/adobe/spectrum-web-components/commit/efc0159d9be10cdfd497a630a2eb4195cd612927))
--   **swatch:** normalize repeat selection of same item in "selects=single" ([ee0fb0c](https://github.com/adobe/spectrum-web-components/commit/ee0fb0c60cda72f4a7896444f27ffab06c49986d))
+- include all dependencies ([c80d244](https://github.com/adobe/spectrum-web-components/commit/c80d24483b440c634ebc0add27f35ae84c4d6260))
+- support non-flat "color" application ([efc0159](https://github.com/adobe/spectrum-web-components/commit/efc0159d9be10cdfd497a630a2eb4195cd612927))
+- **swatch:** normalize repeat selection of same item in "selects=single" ([ee0fb0c](https://github.com/adobe/spectrum-web-components/commit/ee0fb0c60cda72f4a7896444f27ffab06c49986d))
 
 ### Features
 
--   add swatch pattern ([0cdc04b](https://github.com/adobe/spectrum-web-components/commit/0cdc04b1506ab0c9f675fea6e72020bb8957065f))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   **swatch:** use core tokens ([821aebe](https://github.com/adobe/spectrum-web-components/commit/821aebe15e3e8f5720b7e357f0a2661b39dd46d3))
+- add swatch pattern ([0cdc04b](https://github.com/adobe/spectrum-web-components/commit/0cdc04b1506ab0c9f675fea6e72020bb8957065f))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- **swatch:** use core tokens ([821aebe](https://github.com/adobe/spectrum-web-components/commit/821aebe15e3e8f5720b7e357f0a2661b39dd46d3))
 
 ## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.3.9...@spectrum-web-components/swatch@0.3.10) (2023-04-24)
 
 ### Bug Fixes
 
--   support non-flat "color" application ([efc0159](https://github.com/adobe/spectrum-web-components/commit/efc0159d9be10cdfd497a630a2eb4195cd612927))
+- support non-flat "color" application ([efc0159](https://github.com/adobe/spectrum-web-components/commit/efc0159d9be10cdfd497a630a2eb4195cd612927))
 
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.3.8...@spectrum-web-components/swatch@0.3.9) (2023-04-05)
 
@@ -297,7 +309,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **swatch:** normalize repeat selection of same item in "selects=single" ([ee0fb0c](https://github.com/adobe/spectrum-web-components/commit/ee0fb0c60cda72f4a7896444f27ffab06c49986d))
+- **swatch:** normalize repeat selection of same item in "selects=single" ([ee0fb0c](https://github.com/adobe/spectrum-web-components/commit/ee0fb0c60cda72f4a7896444f27ffab06c49986d))
 
 ## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.3.3...@spectrum-web-components/swatch@0.3.4) (2023-01-09)
 
@@ -319,7 +331,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **swatch:** use core tokens ([821aebe](https://github.com/adobe/spectrum-web-components/commit/821aebe15e3e8f5720b7e357f0a2661b39dd46d3))
+- **swatch:** use core tokens ([821aebe](https://github.com/adobe/spectrum-web-components/commit/821aebe15e3e8f5720b7e357f0a2661b39dd46d3))
 
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.2.1...@spectrum-web-components/swatch@0.2.2) (2022-10-17)
 
@@ -333,7 +345,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.1.2...@spectrum-web-components/swatch@0.1.3) (2022-08-04)
 
@@ -343,7 +355,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   include all dependencies ([c80d244](https://github.com/adobe/spectrum-web-components/commit/c80d24483b440c634ebc0add27f35ae84c4d6260))
+- include all dependencies ([c80d244](https://github.com/adobe/spectrum-web-components/commit/c80d24483b440c634ebc0add27f35ae84c4d6260))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.1.0...@spectrum-web-components/swatch@0.1.1) (2022-07-18)
 
@@ -353,4 +365,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add swatch pattern ([0cdc04b](https://github.com/adobe/spectrum-web-components/commit/0cdc04b1506ab0c9f675fea6e72020bb8957065f))
+- add swatch pattern ([0cdc04b](https://github.com/adobe/spectrum-web-components/commit/0cdc04b1506ab0c9f675fea6e72020bb8957065f))

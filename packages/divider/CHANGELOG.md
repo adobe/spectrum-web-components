@@ -1,34 +1,41 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
+- [#5271](https://github.com/adobe/spectrum-web-components/pull/5271) [`165a904`](https://github.com/adobe/spectrum-web-components/commit/165a904bd01fddea922fe87b181bbf41281f81f0) Thanks [@renovate](https://github.com/apps/renovate)! - Remove unnecessary system theme references to reduce complexity for components that don't need the additional mapping layer.
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -49,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -63,7 +70,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
+- add `static-color` to replace `static` ([#4808](https://github.com/adobe/spectrum-web-components/issues/4808)) ([43cf086](https://github.com/adobe/spectrum-web-components/commit/43cf0865d902346568c755650f53410c7788f2a1))
 
 ## [0.48.1](https://github.com/adobe/spectrum-web-components/compare/v0.48.0...v0.48.1) (2024-10-01)
 
@@ -125,7 +132,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -223,18 +230,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
--   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
+- expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
--   **divider:** create sp-divider from sp-rule ([ec26d81](https://github.com/adobe/spectrum-web-components/commit/ec26d81bf92742a42913b8cb7f87beaba035743a))
--   **divider:** use core tokens ([e30c969](https://github.com/adobe/spectrum-web-components/commit/e30c969c8688ca37b5b750cd8333844d383927fb))
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
--   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- **divider:** create sp-divider from sp-rule ([ec26d81](https://github.com/adobe/spectrum-web-components/commit/ec26d81bf92742a42913b8cb7f87beaba035743a))
+- **divider:** use core tokens ([e30c969](https://github.com/adobe/spectrum-web-components/commit/e30c969c8688ca37b5b750cd8333844d383927fb))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.6.8...@spectrum-web-components/divider@0.6.9) (2023-04-24)
 
@@ -276,7 +283,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **divider:** use core tokens ([e30c969](https://github.com/adobe/spectrum-web-components/commit/e30c969c8688ca37b5b750cd8333844d383927fb))
+- **divider:** use core tokens ([e30c969](https://github.com/adobe/spectrum-web-components/commit/e30c969c8688ca37b5b750cd8333844d383927fb))
 
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.5.0...@spectrum-web-components/divider@0.5.1) (2022-08-24)
 
@@ -286,7 +293,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+- include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 
 ## [0.4.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.4.11...@spectrum-web-components/divider@0.4.12) (2022-08-04)
 
@@ -348,7 +355,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 
 ## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.7...@spectrum-web-components/divider@0.2.8) (2021-09-20)
 
@@ -374,7 +381,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
+- **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
 
 ## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.1...@spectrum-web-components/divider@0.2.2) (2021-03-22)
 
@@ -388,17 +395,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+- use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.1.0...@spectrum-web-components/divider@0.1.1) (2021-02-11)
 
 ### Bug Fixes
 
--   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+- expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+- update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 # 0.1.0 (2021-02-02)
 
 ### Features
 
--   **divider:** create sp-divider from sp-rule ([ec26d81](https://github.com/adobe/spectrum-web-components/commit/ec26d81bf92742a42913b8cb7f87beaba035743a))
+- **divider:** create sp-divider from sp-rule ([ec26d81](https://github.com/adobe/spectrum-web-components/commit/ec26d81bf92742a42913b8cb7f87beaba035743a))

@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import '@spectrum-web-components/card/sp-card.js';
 import { Card } from '@spectrum-web-components/card';
@@ -17,6 +17,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { setViewport } from '@web/test-runner-commands';
 
 import {
     Default,
@@ -33,22 +34,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('card', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Card>(
-                html`
-                    <sp-card heading="Card Heading" subheading="JPG">
-                        <img
-                            slot="preview"
-                            src="https://picsum.photos/532/192"
-                            alt="Slotted Preview"
-                        />
-                        <div slot="footer">Footer</div>
-                    </sp-card>
-                `
-            )
-    );
-    it('loads', async () => {
-        const el = await fixture<Card>(
-            html`
+            await fixture<Card>(html`
                 <sp-card heading="Card Heading" subheading="JPG">
                     <img
                         slot="preview"
@@ -57,31 +43,36 @@ describe('card', () => {
                     />
                     <div slot="footer">Footer</div>
                 </sp-card>
-            `
-        );
+            `)
+    );
+    it('loads', async () => {
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" subheading="JPG">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="footer">Footer</div>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads - [quiet]', async () => {
-        const el = await fixture<Card>(
-            html`
-                <sp-card
-                    variant="quiet"
-                    heading="Card Heading"
-                    subheading="JPG"
-                >
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/532/192"
-                        alt="Slotted Preview"
-                    />
-                    <div slot="description">10/15/18</div>
-                    <div slot="footer">Footer</div>
-                </sp-card>
-            `
-        );
+        const el = await fixture<Card>(html`
+            <sp-card variant="quiet" heading="Card Heading" subheading="JPG">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="description">10/15/18</div>
+                <div slot="footer">Footer</div>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
@@ -89,63 +80,55 @@ describe('card', () => {
     });
 
     it('loads - [quiet][small]', async () => {
-        const el = await fixture<Card>(
-            html`
-                <sp-card
-                    size="s"
-                    heading="Card Heading"
-                    subheading="JPG"
-                    variant="quiet"
-                    style="width: 115px;"
+        const el = await fixture<Card>(html`
+            <sp-card
+                size="s"
+                heading="Card Heading"
+                subheading="JPG"
+                variant="quiet"
+                style="width: 115px;"
+            >
+                <img
+                    src="https://picsum.photos/300/400"
+                    alt="Demo Graphic"
+                    slot="preview"
+                />
+                <div slot="footer">Footer</div>
+                <sp-action-menu
+                    slot="actions"
+                    placement="bottom-end"
+                    label="More Actions"
+                    quiet
                 >
-                    <img
-                        src="https://picsum.photos/300/400"
-                        alt="Demo Graphic"
-                        slot="preview"
-                    />
-                    <div slot="footer">Footer</div>
-                    <sp-action-menu
-                        slot="actions"
-                        placement="bottom-end"
-                        label="More Actions"
-                        quiet
-                    >
-                        <sp-menu>
-                            <sp-menu-item>Deselect</sp-menu-item>
-                            <sp-menu-item>Select Inverse</sp-menu-item>
-                            <sp-menu-item>Feather...</sp-menu-item>
-                            <sp-menu-item>Select and Mask...</sp-menu-item>
-                            <sp-menu-divider></sp-menu-divider>
-                            <sp-menu-item>Save Selection</sp-menu-item>
-                            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-                        </sp-menu>
-                    </sp-action-menu>
-                </sp-card>
-            `
-        );
+                    <sp-menu>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                        <sp-menu-item>Select Inverse</sp-menu-item>
+                        <sp-menu-item>Feather...</sp-menu-item>
+                        <sp-menu-item>Select and Mask...</sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item>Save Selection</sp-menu-item>
+                        <sp-menu-item disabled>Make Work Path</sp-menu-item>
+                    </sp-menu>
+                </sp-action-menu>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads - [gallery]', async () => {
-        const el = await fixture<Card>(
-            html`
-                <sp-card
-                    variant="gallery"
-                    heading="Card Heading"
-                    subheading="JPG"
-                >
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/532/192"
-                        alt="Slotted Preview"
-                    />
-                    <div slot="description">10/15/18</div>
-                    <div slot="footer">Footer</div>
-                </sp-card>
-            `
-        );
+        const el = await fixture<Card>(html`
+            <sp-card variant="gallery" heading="Card Heading" subheading="JPG">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="description">10/15/18</div>
+                <div slot="footer">Footer</div>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
@@ -367,18 +350,16 @@ describe('card', () => {
     });
     it('displays the `heading` attribute as `.title`', async () => {
         const testHeading = 'This is a test heading';
-        const el = await fixture<Card>(
-            html`
-                <sp-card heading=${testHeading} subheading="JPG">
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/532/192"
-                        alt="Slotted Preview"
-                    />
-                    <div slot="footer">Footer</div>
-                </sp-card>
-            `
-        );
+        const el = await fixture<Card>(html`
+            <sp-card heading=${testHeading} subheading="JPG">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="footer">Footer</div>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
@@ -393,19 +374,17 @@ describe('card', () => {
     });
     it('displays the slotted content as `.title`', async () => {
         const testHeading = 'This is a test heading';
-        const el = await fixture<Card>(
-            html`
-                <sp-card subheading="JPG">
-                    <h1 slot="heading">${testHeading}</h1>
-                    <img
-                        slot="preview"
-                        src="https://picsum.photos/532/192"
-                        alt="Slotted Preview"
-                    />
-                    <div slot="footer">Footer</div>
-                </sp-card>
-            `
-        );
+        const el = await fixture<Card>(html`
+            <sp-card subheading="JPG">
+                <h1 slot="heading">${testHeading}</h1>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="footer">Footer</div>
+            </sp-card>
+        `);
 
         await elementUpdated(el);
 
@@ -424,5 +403,113 @@ describe('card', () => {
             testHeading,
             'the slotted content renders in the element'
         );
+    });
+    it('does not trigger click when scrolling on mobile', async () => {
+        // Set mobile viewport
+        await setViewport({ width: 375, height: 667 }); // iPhone 8 dimensions
+
+        const clickSpy = spy();
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" href="https://example.com">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+                <div slot="description">Scroll test description</div>
+            </sp-card>
+        `);
+        // Prevent default navigation
+        el.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            const composedTarget = event.composedPath()[0] as HTMLElement;
+            if (composedTarget.id !== 'like-anchor') return;
+            clickSpy();
+        });
+        await elementUpdated(el);
+
+        const boundingRect = el.getBoundingClientRect();
+        const startX = boundingRect.x + boundingRect.width / 2;
+        const startY = boundingRect.y + boundingRect.height / 2;
+
+        // Simulate touch start with mobile-like coordinates
+        el.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: startX,
+                clientY: startY,
+                pointerId: 1,
+                pointerType: 'touch',
+                pressure: 0.5, // Add pressure for touch simulation
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        // Simulate scroll movement with mobile-like velocity
+        el.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: startX,
+                clientY: startY + 50, // Move 50px down to simulate scroll
+                pointerId: 1,
+                pointerType: 'touch',
+                pressure: 0.5,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        // Simulate touch end
+        el.dispatchEvent(
+            new PointerEvent('pointerup', {
+                clientX: startX,
+                clientY: startY + 50,
+                pointerId: 1,
+                pointerType: 'touch',
+                pressure: 0,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        // Verify that no click was triggered during scroll
+        expect(clickSpy.called).to.be.false;
+
+        // Now verify that a normal click works
+        el.dispatchEvent(
+            new PointerEvent('pointerdown', {
+                clientX: startX,
+                clientY: startY,
+                pointerId: 1,
+                pointerType: 'touch',
+                pressure: 0.5,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        el.dispatchEvent(
+            new PointerEvent('pointerup', {
+                clientX: startX,
+                clientY: startY,
+                pointerId: 1,
+                pointerType: 'touch',
+                pressure: 0,
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(clickSpy.called).to.be.true;
+        expect(clickSpy.calledOnce).to.be.true;
     });
 });

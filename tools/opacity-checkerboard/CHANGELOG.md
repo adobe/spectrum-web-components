@@ -1,32 +1,39 @@
 # Change Log
 
+## 1.7.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.7.0
+
 ## 1.6.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.6.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.6.0
 
 ## 1.5.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.5.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.5.0
 
 ## 1.4.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.4.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.4.0
 
 ## 1.3.0
 
 ### Patch Changes
 
--   Updated dependencies []:
-    -   @spectrum-web-components/base@1.3.0
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.3.0
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -43,17 +50,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
+- **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
 
 # [1.1.0](https://github.com/adobe/spectrum-web-components/compare/v1.0.3...v1.1.0) (2025-01-29)
 
 ### Bug Fixes
 
--   lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
+- lock prerelease versions for Spectrum CSS ([#5014](https://github.com/adobe/spectrum-web-components/issues/5014)) ([8aa7734](https://github.com/adobe/spectrum-web-components/commit/8aa77342f169b75ecbd1c07a2a1050860b182822))
 
 ### Features
 
--   **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
+- **opacity-checkerboard:** bump CSS version ([#5040](https://github.com/adobe/spectrum-web-components/issues/5040)) ([e3bf6d3](https://github.com/adobe/spectrum-web-components/commit/e3bf6d3c20c8dab6674ad8b1793082372901d155))
 
 ## [1.0.1](https://github.com/adobe/spectrum-web-components/compare/v1.0.0...v1.0.1) (2024-11-11)
 
@@ -127,7 +134,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
+- **asset:** use core tokens ([99e76f4](https://github.com/adobe/spectrum-web-components/commit/99e76f4d32e990960b7fa2f0613ed4144adc4f6e))
 
 ## [0.41.2](https://github.com/adobe/spectrum-web-components/compare/v0.41.1...v0.41.2) (2024-03-05)
 
@@ -173,7 +180,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   update deps graph, fix imports ([f633005](https://github.com/adobe/spectrum-web-components/commit/f633005e26bff640615f157b54830bfb0677d682))
+- update deps graph, fix imports ([f633005](https://github.com/adobe/spectrum-web-components/commit/f633005e26bff640615f157b54830bfb0677d682))
 
 ## [0.39.2](https://github.com/adobe/spectrum-web-components/compare/v0.39.1...v0.39.2) (2023-10-13)
 
@@ -187,8 +194,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
--   opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
+- **color-handle,color-loupe,swatch,thumbnail:** use the Opacity Checkerboard package ([47e1fc4](https://github.com/adobe/spectrum-web-components/commit/47e1fc4c86f736f2fa27cb6644320577717f827e))
+- opacity checkerboard inclusion order ([#3651](https://github.com/adobe/spectrum-web-components/issues/3651)) ([4f417dc](https://github.com/adobe/spectrum-web-components/commit/4f417dc046d7d80d3c32e6286c71ee0311cf8a98))
 
 # [0.38.0](https://github.com/adobe/spectrum-web-components/compare/v0.37.0...v0.38.0) (2023-09-05)
 
@@ -202,4 +209,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **opacity-checkerboard:** add component ([#3416](https://github.com/adobe/spectrum-web-components/issues/3416)) ([90202f9](https://github.com/adobe/spectrum-web-components/commit/90202f9b3e11d6ac4bd85c24e814d9300314bf5a))
+- **opacity-checkerboard:** add component ([#3416](https://github.com/adobe/spectrum-web-components/issues/3416)) ([90202f9](https://github.com/adobe/spectrum-web-components/commit/90202f9b3e11d6ac4bd85c24e814d9300314bf5a))
