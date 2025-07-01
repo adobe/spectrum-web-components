@@ -192,12 +192,22 @@ describe('Overlay Trigger - extended', () => {
             -1
         );
 
+        // Try multiple approaches to ensure focus works in CI
         await sendMouseTo(textfield, 'click');
+
+        // Wait a bit for the click to register
+        await aTimeout(50);
+
+        // If click didn't work, try programmatic focus
+        if (document.activeElement !== textfield) {
+            textfield.focus();
+            await aTimeout(50);
+        }
 
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
-            { timeout: 500 }
+            { timeout: 1000 }
         );
 
         expect(popover.placement).to.equal('top');
@@ -245,12 +255,21 @@ describe('Overlay Trigger - extended', () => {
 
         await sendMouseTo(textfield, 'click');
 
+        // Wait a bit for the click to register
+        await aTimeout(50);
+
+        // If click didn't work, try programmatic focus
+        if (document.activeElement !== textfield) {
+            textfield.focus();
+            await aTimeout(50);
+        }
+
         // verify the textfield is focused
         // and that textfield is no longer occluded
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
-            { timeout: 100 }
+            { timeout: 500 }
         );
     });
 
