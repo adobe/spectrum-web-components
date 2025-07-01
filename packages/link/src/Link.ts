@@ -12,7 +12,7 @@
 
 import {
     CSSResultArray,
-    LitElement,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -63,7 +63,7 @@ export class Link extends LikeAnchor(Focusable) {
      * This enables delegatesFocus for Safari compatibility
      */
     static override shadowRootOptions = {
-        ...LitElement.shadowRootOptions,
+        ...SpectrumElement.shadowRootOptions,
         delegatesFocus: true,
     };
 }
