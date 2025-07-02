@@ -195,13 +195,9 @@ describe('Overlay Trigger - extended', () => {
         // Try multiple approaches to ensure focus works in CI
         await sendMouseTo(textfield, 'click');
 
-        // Wait a bit for the click to register
-        await aTimeout(50);
-
         // If click didn't work, try programmatic focus
         if (document.activeElement !== textfield) {
-            textfield.focus();
-            await aTimeout(50);
+            await textfield.focus();
         }
 
         await waitUntil(
@@ -255,13 +251,9 @@ describe('Overlay Trigger - extended', () => {
 
         await sendMouseTo(textfield, 'click');
 
-        // Wait a bit for the click to register
-        await aTimeout(50);
-
         // If click didn't work, try programmatic focus
         if (document.activeElement !== textfield) {
-            textfield.focus();
-            await aTimeout(50);
+            await textfield.focus();
         }
 
         // verify the textfield is focused
