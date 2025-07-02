@@ -251,13 +251,8 @@ describe('Overlay Trigger - extended', () => {
 
         await sendMouseTo(textfield, 'click');
 
-        // If click didn't work, try programmatic focus
-        if (document.activeElement !== textfield) {
-            await textfield.focus();
-        }
+        // verify the textfield is focused and actually clickable
 
-        // verify the textfield is focused
-        // and that textfield is no longer occluded
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
