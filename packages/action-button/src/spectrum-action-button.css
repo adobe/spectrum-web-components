@@ -10,7 +10,95 @@
  * governing permissions and limitations under the License.
  */
 
+:host([static-color="white"][quiet]) {
+    --spectrum-actionbutton-background-color-default: transparent;
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-transparent-white-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-transparent-white-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-transparent-white-200);
+    --spectrum-actionbutton-background-color-disabled: transparent;
+}
+
+:host([static-color="white"]) {
+    --spectrum-actionbutton-border-color-default: transparent;
+    --spectrum-actionbutton-border-color-hover: transparent;
+    --spectrum-actionbutton-border-color-down: transparent;
+    --spectrum-actionbutton-border-color-focus: transparent;
+    --spectrum-actionbutton-border-color-disabled: transparent;
+    --spectrum-actionbutton-background-color-disabled: var(--spectrum-disabled-static-white-background-color);
+    --spectrum-actionbutton-background-color-selected-disabled: var(--spectrum-disabled-static-white-background-color);
+    --spectrum-actionbutton-background-color-default: var(--spectrum-transparent-white-100);
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-transparent-white-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-transparent-white-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-transparent-white-200);
+}
+
+:host([static-color="black"][quiet]) {
+    --spectrum-actionbutton-background-color-default: transparent;
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-transparent-black-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-transparent-black-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-transparent-black-200);
+    --spectrum-actionbutton-background-color-disabled: transparent;
+}
+
+:host([static-color="black"]) {
+    --spectrum-actionbutton-border-color-default: transparent;
+    --spectrum-actionbutton-border-color-hover: transparent;
+    --spectrum-actionbutton-border-color-down: transparent;
+    --spectrum-actionbutton-border-color-focus: transparent;
+    --spectrum-actionbutton-border-color-disabled: transparent;
+    --spectrum-actionbutton-background-color-disabled: var(--spectrum-disabled-static-black-background-color);
+    --spectrum-actionbutton-background-color-selected-disabled: var(--spectrum-disabled-static-black-background-color);
+    --spectrum-actionbutton-background-color-default: var(--spectrum-transparent-black-100);
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-transparent-black-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-transparent-black-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-transparent-black-200);
+}
+
+:host([quiet]) {
+    --spectrum-actionbutton-background-color-default: transparent;
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-disabled: transparent;
+    --spectrum-actionbutton-background-color-selected-disabled: var(--spectrum-disabled-background-color);
+}
+
+:host([size="xl"]) {
+    --spectrum-actionbutton-border-radius-default: var(--spectrum-corner-radius-medium-size-extra-large);
+}
+
+:host([size="l"]) {
+    --spectrum-actionbutton-border-radius-default: var(--spectrum-corner-radius-medium-size-large);
+}
+
+:host([size="s"]) {
+    --spectrum-actionbutton-border-radius-default: var(--spectrum-corner-radius-medium-size-small);
+}
+
+:host([size="xs"]) {
+    --spectrum-actionbutton-border-radius-default: var(--spectrum-corner-radius-medium-size-extra-small);
+}
+
 :host {
+    --spectrum-actionbutton-border-radius-default: var(--spectrum-corner-radius-medium-size-medium);
+}
+
+:host {
+    --spectrum-actionbutton-background-color-default: var(--spectrum-gray-100);
+    --spectrum-actionbutton-background-color-hover: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-down: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-focus: var(--spectrum-gray-200);
+    --spectrum-actionbutton-background-color-disabled: var(--spectrum-disabled-background-color);
+    --spectrum-actionbutton-background-color-selected: var(--spectrum-neutral-background-color-selected-default);
+    --spectrum-actionbutton-background-color-selected-hover: var(--spectrum-neutral-background-color-selected-hover);
+    --spectrum-actionbutton-background-color-selected-down: var(--spectrum-neutral-background-color-selected-down);
+    --spectrum-actionbutton-background-color-selected-focus: var(--spectrum-neutral-background-color-selected-key-focus);
+    --spectrum-actionbutton-border-color-default: transparent;
+    --spectrum-actionbutton-border-color-hover: transparent;
+    --spectrum-actionbutton-border-color-down: transparent;
+    --spectrum-actionbutton-border-color-focus: transparent;
+    --spectrum-actionbutton-border-color-disabled: transparent;
+    --spectrum-actionbutton-content-color-selected: var(--spectrum-gray-50);
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;

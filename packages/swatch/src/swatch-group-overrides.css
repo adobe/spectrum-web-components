@@ -9,9 +9,3 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-:host {
-    --spectrum-swatchgroup-spacing-compact: var(--system-swatch-group-spacing-compact);
-    --spectrum-swatchgroup-spacing-regular: var(--system-swatch-group-spacing-regular);
-    --spectrum-swatchgroup-spacing-spacious: var(--system-swatch-group-spacing-spacious);
-}

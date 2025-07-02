@@ -10,7 +10,33 @@
  * governing permissions and limitations under the License.
  */
 
+:host([size="l"]),
+:host([size="xl"]) {
+    --spectrum-slider-handle-border-radius: calc(var(--spectrum-corner-radius-500) * 4);
+}
+
+:host,
+:host([size="s"]) {
+    --spectrum-slider-handle-border-radius: var(--spectrum-corner-radius-500);
+}
+
 :host {
+    --spectrum-slider-track-color: var(--spectrum-gray-200);
+    --spectrum-slider-track-fill-color: var(--spectrum-gray-700);
+    --spectrum-slider-ramp-track-color: var(--spectrum-gray-400);
+    --spectrum-slider-ramp-track-color-disabled: var(--spectrum-gray-100);
+    --spectrum-slider-handle-background-color: transparent;
+    --spectrum-slider-handle-background-color-disabled: transparent;
+    --spectrum-slider-ramp-handle-background-color: var(--spectrum-gray-75);
+    --spectrum-slider-ticks-handle-background-color: var(--spectrum-gray-75);
+    --spectrum-slider-handle-border-color: var(--spectrum-gray-700);
+    --spectrum-slider-handle-disabled-background-color: var(--spectrum-gray-75);
+    --spectrum-slider-tick-mark-color: var(--spectrum-gray-200);
+    --spectrum-slider-handle-border-color-hover: var(--spectrum-gray-800);
+    --spectrum-slider-handle-border-color-down: var(--spectrum-gray-800);
+    --spectrum-slider-handle-border-color-key-focus: var(--spectrum-gray-800);
+    --spectrum-slider-handle-focus-ring-color-key-focus: var(--spectrum-focus-indicator-color);
+    --spectrum-slider-track-corner-radius: 2px;
     --spectrum-slider-font-size: var(--spectrum-font-size-75);
     --spectrum-slider-handle-size: var(--spectrum-slider-handle-size-medium);
     --spectrum-slider-control-height: var(--spectrum-component-height-100);
