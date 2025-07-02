@@ -13,6 +13,8 @@ import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
+import '@spectrum-web-components/toast/sp-toast.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/vrt-compare/vrt-compare.js';
 import { html, nothing, render } from 'lit-html';
 
@@ -63,6 +65,51 @@ function buildNavigation(tests, metadata) {
                 <sp-sidenav-item
                     label=${metadata.commit}
                     style="user-select: all"
+                    onclick=${async () => {
+                        const notice = document.getElementById('notice');
+                        const overlay =
+                            document.getElementById('notice-overlay');
+
+                        const open = ({
+                            variant = 'positive',
+                            message = 'Copied to clipboard.',
+                        } = {}) => {
+                            if (overlay && notice) {
+                                notice.open = true;
+                                notice.variant = variant;
+                                notice.textContent = message;
+                                overlay.open = true;
+                                return;
+                            }
+
+                            // eslint-disable-next-line no-console
+                            console.log(message);
+                        };
+
+                        // Check if the Clipboard API is available
+                        if (!navigator.clipboard) {
+                            open({
+                                variant: 'negative',
+                                message: 'Clipboard API not supported.',
+                            });
+
+                            return;
+                        }
+
+                        return navigator.clipboard
+                            .writeText(metadata.commit)
+                            .then(() =>
+                                open({
+                                    message: 'Copied to clipboard.',
+                                })
+                            )
+                            .catch(() =>
+                                open({
+                                    variant: 'negative',
+                                    message: 'Failed to copy to clipboard.',
+                                })
+                            );
+                    }}
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
             ${resultTypes.map((resultType) => {
@@ -179,6 +226,18 @@ async function run() {
     decorator.color = system[1];
     decorator.scale = system[2];
     buildNavigation(data.tests, data.meta);
+
+    // Add the toast element to the DOM for notifications
+    render(
+        html`
+            <sp-overlay id="notice-overlay">
+                <sp-toast variant="positive" id="notice" open>
+                    Copied to clipboard.
+                </sp-toast>
+            </sp-overlay>
+        `,
+        decorator
+    );
 }
 
 run();
