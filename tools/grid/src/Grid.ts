@@ -70,8 +70,25 @@ export class Grid extends LitVirtualizer {
         padding: () => this.padding || this.gap,
     });
 
+    private lastTargetForChange?: HTMLElement;
+    private animationFrameId?: number;
+
     protected handleChange(event: Event): void {
         const target = event.target as HTMLElement;
+
+        // This prevents the event from being fired multiple times
+        // when the change event originates from the same item.
+        // For example, the capture event phase used by grid
+        // captures change events from both the checkbox in
+        // the shadowDom for the card and the card itself.
+        if (this.lastTargetForChange === target) {
+            return;
+        }
+        this.lastTargetForChange = target;
+        this.animationFrameId = requestAnimationFrame(() => {
+            this.lastTargetForChange = undefined;
+        });
+
         const value = this.items[
             parseFloat(target.getAttribute('key') || '')
         ] as Record<string, unknown>;
@@ -166,6 +183,11 @@ export class Grid extends LitVirtualizer {
             capture: true,
         });
         this.__gridPart?.setConnected(false);
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = undefined;
+            this.lastTargetForChange = undefined;
+        }
         super.disconnectedCallback();
     }
 }

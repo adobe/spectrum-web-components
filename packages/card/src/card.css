@@ -96,3 +96,70 @@ sp-popover {
 :host:after {
     pointer-events: none;
 }
+
+:host([variant='quiet']:focus) #preview:after {
+    border: var(
+            --mod-card-focus-indicator-width,
+            var(--spectrum-card-focus-indicator-width)
+        )
+        solid
+        var(
+            --mod-card-focus-indicator-color,
+            var(--spectrum-card-focus-indicator-color)
+        );
+}
+
+:host([variant='quiet'][selected]:focus) #preview {
+    border-width: var(
+        --mod-card-focus-indicator-width,
+        var(--spectrum-card-focus-indicator-width)
+    );
+}
+
+/* This ensures that the checkbox is tabbable when the card toggles but is not itself focusable */
+:host([toggles]:not([tabindex])) .checkbox-toggle {
+    visibility: visible;
+}
+
+.checkbox-toggle .checkbox {
+    --mod-checkbox-text-to-control: 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.wrapper {
+    display: contents;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* With prefers-reduced-motion: reduce,
+    we should not animate the checkbox fade in
+    when the card receives focus, but still retain
+    the transition-delay before hiding the checkbox on blur,
+    which will ensure that tabbing from the card or action menu
+    will focus the checkbox before it has a chance to hide.
+    */
+    .checkbox-toggle {
+        transition-duration: 0s, 0s, 0s;
+        transition-delay: 0s, 0s, 0.13s;
+    }
+
+    :host([focused]) .actions,
+    :host([focused]) .checkbox-toggle,
+    :host([selected]) .actions,
+    :host([selected]) .checkbox-toggle,
+    :host(:focus) .actions,
+    :host(:focus) .checkbox-toggle {
+        transition-delay: 0s, 0s, 0s;
+    }
+}

@@ -17,7 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil
+    waitUntil,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
@@ -43,7 +43,8 @@ import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
-    setViewport } from '@web/test-runner-commands';
+    setViewport,
+} from '@web/test-runner-commands';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { isWebKit } from '@spectrum-web-components/shared';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
@@ -107,6 +108,120 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
+
+        describe('accessibility warnings', () => {
+            let warnSpy: sinon.SinonSpy;
+
+            let originalWarn: typeof window.__swc.warn;
+
+            beforeEach(() => {
+                // Create __swc if it doesn't exist
+                window.__swc = window.__swc || { warn: () => {} };
+                // Store original warn function
+                originalWarn = window.__swc.warn;
+                // Create spy
+                warnSpy = spy();
+                window.__swc.warn = warnSpy;
+            });
+
+            afterEach(() => {
+                // Restore original warn function
+                window.__swc.warn = originalWarn;
+            });
+
+            it('warns when no accessible label is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <sp-action-menu>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+                await nextFrame();
+                await nextFrame();
+
+                expect(warnSpy.called).to.be.true;
+                expect(warnSpy.firstCall.args[0]).to.equal(el);
+                expect(warnSpy.firstCall.args[1]).to.equal(
+                    '<sp-action-menu> needs one of the following to be accessible:'
+                );
+                expect(warnSpy.firstCall.args[2]).to.equal(
+                    'https://opensource.adobe.com/spectrum-web-components/components/action-menu/#accessibility'
+                );
+                expect(warnSpy.firstCall.args[3]).to.deep.equal({
+                    type: 'accessibility',
+                    issues: [
+                        'an <sp-field-label> element with a `for` attribute referencing the `id` of the `<sp-action-menu>`, or',
+                        'value supplied to the "label" attribute, which will be displayed visually as placeholder text',
+                        'text content supplied in a <span> with slot="label", or, text content supplied in a <span> with slot="label-only"',
+                        'which will also be displayed visually as placeholder text.',
+                    ],
+                });
+            });
+
+            it('does not warn when label attribute is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <sp-action-menu label="More Actions">
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+
+                expect(warnSpy.called).to.be.false;
+            });
+
+            it('does not warn when label slot is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <sp-action-menu>
+                        <span slot="label">More Actions</span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+
+                expect(warnSpy.called).to.be.false;
+            });
+
+            it('does not warn when label-only slot is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <sp-action-menu>
+                        <span slot="label-only">More Actions</span>
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+
+                expect(warnSpy.called).to.be.false;
+            });
+
+            it('does not warn when aria-label is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <sp-action-menu aria-label="More Actions">
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+
+                expect(warnSpy.called).to.be.false;
+            });
+
+            it('does not warn when aria-labelledby is provided', async () => {
+                const el = await fixture<ActionMenu>(html`
+                    <div id="label-el">More Actions</div>
+                    <sp-action-menu aria-labelledby="label-el">
+                        <sp-menu-item>Deselect</sp-menu-item>
+                    </sp-action-menu>
+                `);
+
+                await elementUpdated(el);
+
+                expect(warnSpy.called).to.be.false;
+            });
+        });
         it('loads - [slot="label"]', async () => {
             const el = await fixture<ActionMenu>(html`
                 <sp-action-menu>
@@ -147,10 +262,9 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await expect(el).to.be.accessible();
         });
-        it('has menuitems in accessibility tree', async() => {
+        it('has menuitems in accessibility tree', async () => {
             const el = await fixture<ActionMenu>(html`
-                <sp-action-menu
-                    label="More Actions">
+                <sp-action-menu label="More Actions">
                     <sp-menu-item>Deselect</sp-menu-item>
                     <sp-menu-item disabled>Make Work Path</sp-menu-item>
                 </sp-action-menu>
@@ -161,15 +275,31 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await opened;
             await nextFrame();
 
-
-            type NamedNode = { name: string, role: string, disabled: boolean };
-            const snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            type NamedNode = { name: string; role: string; disabled: boolean };
+            const snapshot = (await a11ySnapshot(
+                {}
+            )) as unknown as NamedNode & {
                 children: NamedNode[];
             };
-            const button = findAccessibilityNode<NamedNode>(snapshot, (node) => node.name === 'More Actions');
-            const menu = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menu');
-            const deselect = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Deselect');
-            const workPath = findAccessibilityNode<NamedNode>(snapshot, (node) => node.role === 'menuitem' && node.name === 'Make Work Path' && node.disabled);
+            const button = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'More Actions'
+            );
+            const menu = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.role === 'menu'
+            );
+            const deselect = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.role === 'menuitem' && node.name === 'Deselect'
+            );
+            const workPath = findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) =>
+                    node.role === 'menuitem' &&
+                    node.name === 'Make Work Path' &&
+                    node.disabled
+            );
             expect(button, 'button').to.not.be.null;
             expect(menu, 'menu').to.not.be.null;
             expect(deselect, 'first menuitem').to.not.be.null;
@@ -526,14 +656,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
-            await sendKeys({ press: 'Escape'});
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await sendKeys({ press: 'Escape' });
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('returns focus on select', async () => {
@@ -545,14 +674,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({ press: 'Enter'})
+            await sendKeys({ press: 'Enter' });
             await opened;
 
             thirdItem.click();
-            await waitUntil(
-                () => document.activeElement === el,
-                'focused', { timeout: 300 }
-            );
+            await waitUntil(() => document.activeElement === el, 'focused', {
+                timeout: 300,
+            });
             expect(el.open).to.be.false;
         });
         it('has attribute aria-describedby', async () => {

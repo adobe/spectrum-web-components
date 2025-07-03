@@ -25,7 +25,7 @@ import {
     href,
     StoryArgs,
 } from '../stories/card.stories.js';
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import { Checkbox } from '@spectrum-web-components/checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -511,5 +511,173 @@ describe('card', () => {
 
         expect(clickSpy.called).to.be.true;
         expect(clickSpy.calledOnce).to.be.true;
+    });
+
+    it('sets aria-label attribute when label property is provided', async () => {
+        const testLabel = 'Test Card Label';
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${testLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal(testLabel);
+    });
+
+    it('removes aria-label attribute when label property is not provided', async () => {
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('updates aria-label attribute when label property changes', async () => {
+        const initialLabel = 'Initial Label';
+        const updatedLabel = 'Updated Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Update the label property
+        el.label = updatedLabel;
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal(updatedLabel);
+    });
+
+    it('removes aria-label attribute when label property is set to empty string', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Set label to empty string
+        el.label = '';
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('removes aria-label attribute when label property is set to undefined', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Set label to undefined
+        el.label = undefined;
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('removes aria-label attribute when label property is cleared', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Remove the label attribute to trigger the else branch
+        el.removeAttribute('label');
+        el.label = undefined;
+        await elementUpdated(el);
+
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should be removed when label is cleared'
+        ).to.be.false;
+    });
+
+    it('does not set aria-label during firstUpdated when label is not provided', async () => {
+        // Create element without a label to test firstUpdated else branch
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        // The element should not have an aria-label attribute after firstUpdated
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should not be set during firstUpdated when no label is provided'
+        ).to.be.false;
+    });
+
+    it('removes aria-label during firstUpdated when label is explicitly set to empty string', async () => {
+        // Create element with an empty label to test firstUpdated else branch
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label="">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        // The element should not have an aria-label attribute after firstUpdated
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should be removed during firstUpdated when label is empty string'
+        ).to.be.false;
     });
 });

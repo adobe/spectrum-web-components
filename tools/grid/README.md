@@ -29,7 +29,9 @@ import { Grid } from '@spectrum-web-components/grid';
 
 ## Example
 
-```html-live
+To interact with a fully accessible grid example, reference our [Grid Storybook](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/grid/) documentation.
+
+```html-no-demo
 <sp-grid
     id="grid-demo"
     style="
@@ -60,6 +62,12 @@ import { Grid } from '@spectrum-web-components/grid';
             width: 200,
             height: 300,
         };
+        grid.role = 'grid';
+        grid.ariaLabel = 'Select images';
+        grid.ariaMultiSelectable = 'true';
+        grid.ariaRowCount = `${grid.items.length}`;
+        grid.ariaColCount = 1;
+        grid.selectedItems = [];
 
         grid.renderItem = (
             item,
@@ -76,8 +84,19 @@ import { Grid } from '@spectrum-web-components/grid';
             card.subheading = 'JPG Photo'
             card.style = 'contain: strict; padding: 1px;'
             card.value = `card-${index}`
-            card.selected = selected;
+            card.selected = grid.selectedItems.includes(card.value);
             card.key = index;
+            card.role = 'row';
+            card.label = `Card Heading ${index}`;
+            card.ariaSelected = grid.selectedItems.includes(card.value);
+            card.ariaRowIndex = `${index + 1}`;
+            card.addEventListener('change', () => {
+                if(grid.selectedItems.includes(card.value)) {
+                    grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
+                } else {
+                    grid.selectedItems.push(card.value);
+                }
+            });
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
@@ -96,7 +115,8 @@ import { Grid } from '@spectrum-web-components/grid';
 </script>
 ```
 
-<script type="module">
+<!-- @todo make the example work for a keyboard Tracking in 5582-->
+<!-- <script type="module">
     const initItems = (count) => {
         const total = count;
         const items = [];
@@ -118,6 +138,12 @@ import { Grid } from '@spectrum-web-components/grid';
             width: 200,
             height: 300,
         };
+        grid.role = 'grid';
+        grid.ariaLabel = 'Select images';
+        grid.ariaMultiSelectable = 'true';
+        grid.ariaRowCount = `${grid.items.length}`;
+        grid.ariaColCount = 1;
+        grid.selectedItems = [];
 
         grid.renderItem = (
             item,
@@ -134,8 +160,19 @@ import { Grid } from '@spectrum-web-components/grid';
             card.subheading = 'JPG Photo'
             card.style = 'contain: strict; padding: 1px;'
             card.value = `card-${index}`
-            card.selected = selected;
+            card.selected = grid.selectedItems.includes(card.value);
             card.key = index;
+            card.role = 'row';
+            card.label = `Card Heading ${index}`;
+            card.ariaSelected = grid.selectedItems.includes(card.value);
+            card.ariaRowIndex = `${index + 1}`;
+            card.addEventListener('change', () => {
+                if(grid.selectedItems.includes(card.value)) {
+                    grid.selectedItems = grid.selectedItems.filter(item => item !== card.value);
+                } else {
+                    grid.selectedItems.push(card.value);
+                }
+            });
             img.alt = '';
             img.slot = 'preview';
             img.src = `https://picsum.photos/id/${index}/200/300`;
@@ -151,4 +188,4 @@ import { Grid } from '@spectrum-web-components/grid';
     customElements.whenDefined('sp-grid').then(() => {
         initGrid();
     });
-</script>
+</script> -->

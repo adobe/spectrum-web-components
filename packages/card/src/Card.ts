@@ -76,6 +76,9 @@ export class Card extends LikeAnchor(
     set selected(selected: boolean) {
         if (selected === this.selected) return;
         this._selected = selected;
+        if (this.role === 'row' && this.toggles) {
+            this.setAttribute('aria-selected', String(this.selected));
+        }
         this.requestUpdate('selected', !this._selected);
     }
 
@@ -93,6 +96,9 @@ export class Card extends LikeAnchor(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    /**
+     * Indicates whether the card can be toggled between selected and unselected states.
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
@@ -291,77 +297,105 @@ export class Card extends LikeAnchor(
     }
 
     protected override render(): TemplateResult {
+        /* When rendering the card within a grid,
+        where the card has role="row", the row have an
+        immediate descendant of role="gridcell", otherwise
+        the role for the content wrapper can remain undefined. */
+        const roleForWrapper = this.role === 'row' ? 'gridcell' : undefined;
         return html`
-            ${this.renderImage()}
-            <div class="body">
-                <div class="header">
-                    ${this.renderHeading}
-                    ${this.variant === 'gallery'
-                        ? this.renderSubtitleAndDescription
-                        : nothing}
-                    ${this.variant !== 'quiet' || this.size !== 's'
+            <div class="wrapper" role=${ifDefined(roleForWrapper)}>
+                ${this.renderImage()}
+                <div class="body">
+                    <div class="header">
+                        ${this.renderHeading}
+                        ${this.variant === 'gallery'
+                            ? this.renderSubtitleAndDescription
+                            : nothing}
+                        ${this.variant !== 'quiet' || this.size !== 's'
+                            ? html`
+                                  <div
+                                      class="action-button"
+                                      @pointerdown=${this.stopPropagationOnHref}
+                                  >
+                                      <slot name="actions"></slot>
+                                  </div>
+                              `
+                            : nothing}
+                    </div>
+                    ${this.variant !== 'gallery'
                         ? html`
-                              <div
-                                  class="action-button"
-                                  @pointerdown=${this.stopPropagationOnHref}
-                              >
-                                  <slot name="actions"></slot>
+                              <div class="content">
+                                  ${this.renderSubtitleAndDescription}
                               </div>
                           `
                         : nothing}
                 </div>
-                ${this.variant !== 'gallery'
+                ${this.href
+                    ? this.renderAnchor({
+                          id: 'like-anchor',
+                          labelledby: 'heading',
+                      })
+                    : nothing}
+                ${this.variant === 'standard'
                     ? html`
-                          <div class="content">
-                              ${this.renderSubtitleAndDescription}
+                          <slot name="footer"></slot>
+                      `
+                    : nothing}
+                ${this.toggles
+                    ? html`
+                          <sp-popover
+                              class="checkbox-toggle"
+                              @pointerdown=${this.stopPropagationOnHref}
+                          >
+                              <sp-checkbox
+                                  class="checkbox"
+                                  @change=${this.handleSelectedChange}
+                                  .checked=${this.selected}
+                              >
+                                  <span class="sr-only">
+                                      ${this.label || this.heading}
+                                  </span>
+                              </sp-checkbox>
+                          </sp-popover>
+                      `
+                    : nothing}
+                ${this.variant === 'quiet' && this.size === 's'
+                    ? html`
+                          <div
+                              class="spectrum-QuickActions actions"
+                              @pointerdown=${this.stopPropagationOnHref}
+                          >
+                              <slot name="actions"></slot>
                           </div>
                       `
                     : nothing}
             </div>
-            ${this.href
-                ? this.renderAnchor({
-                      id: 'like-anchor',
-                      labelledby: 'heading',
-                  })
-                : nothing}
-            ${this.variant === 'standard'
-                ? html`
-                      <slot name="footer"></slot>
-                  `
-                : nothing}
-            ${this.toggles
-                ? html`
-                      <sp-popover
-                          class="checkbox-toggle"
-                          @pointerdown=${this.stopPropagationOnHref}
-                      >
-                          <sp-checkbox
-                              class="checkbox"
-                              @change=${this.handleSelectedChange}
-                              ?checked=${this.selected}
-                              tabindex="-1"
-                          ></sp-checkbox>
-                      </sp-popover>
-                  `
-                : nothing}
-            ${this.variant === 'quiet' && this.size === 's'
-                ? html`
-                      <div
-                          class="spectrum-QuickActions actions"
-                          @pointerdown=${this.stopPropagationOnHref}
-                      >
-                          <slot name="actions"></slot>
-                      </div>
-                  `
-                : nothing}
         `;
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('focusin', this.handleFocusin);
         this.shadowRoot.addEventListener('focusin', this.handleFocusin);
         this.addEventListener('focusout', this.handleFocusout);
+    }
+
+    protected override update(changes: PropertyValues): void {
+        super.update(changes);
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
     }
 }
