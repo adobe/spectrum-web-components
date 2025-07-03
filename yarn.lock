@@ -5181,6 +5181,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/iconset": "npm:1.7.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.7.0"
   languageName: unknown
   linkType: soft
 
