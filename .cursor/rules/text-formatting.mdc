@@ -1,0 +1,46 @@
+---
+description: Text formatting and capitalization rules for documentation and tickets
+globs: **/*.md, **/*.txt,**/*.mdx
+alwaysApply: true
+---
+
+# Text formatting conventions
+
+## Capitalization rules
+
+- Use sentence case for all headings and section titles (capitalize first word only)
+  - Correct: "Getting started with components"
+  - Incorrect: "Getting Started With Components"
+- Exceptions: Proper nouns, acronyms, and technical terms should maintain their standard capitalization (e.g., JavaScript, CSS, HTML, GitHub)
+- Never use all caps except for:
+  - Established acronyms (e.g., API, HTML, CSS)
+  - Severity levels (e.g., SEV1, SEV2)
+
+## Markdown formatting
+
+- Use backticks (`) for:
+  - Code snippets
+  - File names
+  - Component names
+  - Technical terms
+- Use bold (**) for:
+  - Section headers in structured content
+  - Important terms on first use
+  - UI element names
+- Use italics (*) sparingly, only for:
+  - Term definitions
+  - Emphasis in technical explanations
+
+## Lists and bullets
+
+- Start each bullet point with a capital letter
+- End each bullet point consistently (either all with periods or all without)
+- Use parallel structure in lists (all items should be same grammatical form)
+
+## Technical writing style
+
+- Use present tense
+- Use active voice
+- Be concise and direct
+- Avoid jargon unless technically necessary
+- Define abbreviations on first use
