@@ -132,7 +132,7 @@ commands:
                   name: Deploy VRT Results to Azure Blob Storage
                   command: |
                       # Set deployment path based on branch
-                      if [ "$CIRCLE_BRANCH" = "ttomar/vrts-main" ]; then
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
                           PR_HASH="main"
                           echo "Deploying VRT for main branch to main path"
                       else
@@ -360,7 +360,7 @@ jobs:
                   name: Deploy Visual Tests to Azure Blob Storage
                   command: |
                       # Set deployment path based on branch
-                      if [ "$CIRCLE_BRANCH" = "ttomar/vrts-main" ]; then
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
                           PR_HASH="main"
                           echo "Deploying HCM VRT for main branch to main path"
                       else
