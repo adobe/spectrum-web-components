@@ -346,8 +346,9 @@ describe('Button', () => {
             `);
 
             await elementUpdated(el);
-            expect(el.hasAttribute('aria-disabled'), 'initially not').to.be
-                .false;
+
+            expect(el.getAttribute('aria-disabled')).to.equal('false');
+            expect(el.disabled).to.be.false;
 
             el.disabled = true;
             await elementUpdated(el);
