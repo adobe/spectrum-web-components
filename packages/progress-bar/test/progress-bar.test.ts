@@ -169,7 +169,6 @@ describe('ProgressBar', () => {
 
             await elementUpdated(el);
 
-            expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
                 (spyCall.args.at(0) as string).includes('accessible'),
@@ -249,6 +248,49 @@ describe('ProgressBar', () => {
 
             expect(el.hasAttribute('aria-label')).to.be.true;
             expect(el.getAttribute('aria-label')).to.equal('Loading');
+        });
+        it('warns in devMode for deprecated usage of over-background', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar
+                    over-background
+                    label="Loading"
+                ></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('deprecated'),
+                'confirm deprecated variant warning'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'over-background').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-bar',
+                    type: 'api',
+                    level: 'deprecation',
+                },
+            });
+        });
+        it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+            const el = await fixture<ProgressBar>(html`
+                <sp-progress-bar progress="50"></sp-progress-bar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-progress-bar',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
         });
     });
 });
