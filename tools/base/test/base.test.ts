@@ -29,7 +29,8 @@ describe('Base', () => {
 
         await elementUpdated(el);
 
-        expect(el.dir).to.equal('rtl');
+        const dir = getComputedStyle(el).direction;
+        expect(dir).to.equal('rtl');
     });
 
     it('has a static VERSION property', () => {

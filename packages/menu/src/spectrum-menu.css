@@ -96,7 +96,7 @@
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-medium);
     --spectrum-menu-item-collapsible-no-icon-submenu-item-padding-x-start: calc(var(--spectrum-menu-item-label-inline-edge-to-content) + var(--spectrum-menu-item-checkmark-width) + var(--spectrum-menu-item-label-text-to-visual) + var(--spectrum-menu-item-focus-indicator-width));
     --spectrum-menu-item-focus-indicator-color-default: var(--highcontrast-menu-item-focus-indicator-color, var(--mod-menu-item-focus-indicator-color, var(--spectrum-menu-item-focus-indicator-color)));
-    --spectrum-menu-item-focus-indicator-border-width: calc(var(--spectrum-menu-item-focus-indicator-width) * var(--spectrum-menu-item-focus-indicator-direction-scalar, 1));
+    --spectrum-menu-item-focus-indicator-border-width: var(--spectrum-menu-item-focus-indicator-width);
 }
 
 :host([size="s"]) {
@@ -159,8 +159,8 @@
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-extra-large);
 }
 
-:host:dir(rtl) {
-    --spectrum-menu-item-focus-indicator-direction-scalar: -1;
+:host(:dir(rtl)) {
+    --spectrum-menu-item-focus-indicator-border-width: calc(var(--spectrum-menu-item-focus-indicator-width) * -1);
 }
 
 :host {

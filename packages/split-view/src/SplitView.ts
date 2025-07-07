@@ -312,7 +312,8 @@ export class SplitView extends SpectrumElement {
             return;
         }
         let direction = 0;
-        const isLTRorVertical = this.dir === 'ltr' || this.vertical;
+        const isLTRorVertical =
+            getComputedStyle(this).direction === 'ltr' || this.vertical;
         switch (event.key) {
             case 'Home':
                 event.preventDefault();

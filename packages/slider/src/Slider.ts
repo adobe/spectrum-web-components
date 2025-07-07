@@ -26,12 +26,12 @@ import {
     classMap,
     ifDefined,
     repeat,
+    type StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
@@ -92,8 +92,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property()
     public type = '';
 
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
+    public override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) return;
+        this.setAttribute('dir', dir);
+    }
 
     @property({ type: String })
     public set variant(variant: string) {
@@ -300,9 +302,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private renderRamp(): TemplateResult {
+    private renderRamp(): TemplateResult | typeof nothing {
         if (this.variant !== 'ramp') {
-            return html``;
+            return nothing;
         }
         return html`
             <div id="ramp">
@@ -320,9 +322,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private renderTicks(): TemplateResult {
+    private renderTicks(): TemplateResult | typeof nothing {
         if (this.variant !== 'tick') {
-            return html``;
+            return nothing;
         }
         const tickStep = this.tickStep || this.step;
         const tickCount =
@@ -356,9 +358,12 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         `;
     }
 
-    private renderTrackSegment(start: number, end: number): TemplateResult {
+    private renderTrackSegment(
+        start: number,
+        end: number
+    ): TemplateResult | typeof nothing {
         if (this.variant === 'ramp') {
-            return html``;
+            return nothing;
         }
         return html`
             <div
@@ -409,9 +414,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return styles;
     }
 
-    private renderFillOffset(): TemplateResult {
+    private renderFillOffset(): TemplateResult | typeof nothing {
         if (this._cachedValue === undefined || this.centerPoint === undefined) {
-            return html``;
+            return nothing;
         }
         return html`
             <div
@@ -423,9 +428,9 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
             ></div>
         `;
     }
-    private renderHandle(): TemplateResult {
+    private renderHandle(): TemplateResult | typeof nothing {
         if (this.variant === 'tick') {
-            return html``;
+            return nothing;
         }
         return html`
             ${this.handleController.render()}

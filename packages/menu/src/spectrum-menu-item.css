@@ -15,9 +15,6 @@
     color: var(--highcontrast-menu-item-color-default, var(--mod-menu-item-label-icon-color-default, var(--spectrum-menu-item-label-icon-color-default)));
     grid-area: iconArea;
     align-self: start;
-}
-
-::slotted([slot="icon"]) {
     margin-inline-end: var(--mod-menu-item-label-text-to-visual, var(--spectrum-menu-item-label-text-to-visual));
 }
 
@@ -167,16 +164,11 @@
     fill: var(--highcontrast-menu-item-color-disabled, var(--mod-menu-item-label-icon-color-disabled, var(--spectrum-menu-item-label-icon-color-disabled)));
 }
 
-:host([focused]) .spectrum-Menu-back,
 :host([focused]) {
     box-shadow: var(--spectrum-menu-item-focus-indicator-shadow) var(--spectrum-menu-item-focus-indicator-border-width) 0 0 0 var(--spectrum-menu-item-focus-indicator-color-default);
     outline: var(--spectrum-menu-item-focus-indicator-width) var(--spectrum-menu-item-focus-indicator-outline-style) var(--spectrum-menu-item-focus-indicator-color-default);
     outline-offset: var(--spectrum-menu-item-focus-indicator-offset);
     border-radius: var(--spectrum-menu-item-corner-radius);
-}
-
-.spectrum-Menu-itemSelection {
-    grid-area: selectedArea;
 }
 
 #label {

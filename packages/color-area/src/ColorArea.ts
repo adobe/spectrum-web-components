@@ -50,9 +50,6 @@ export class ColorArea extends SpectrumElement {
         return [styles];
     }
 
-    @property({ type: String, reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 

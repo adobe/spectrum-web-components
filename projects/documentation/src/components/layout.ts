@@ -58,6 +58,7 @@ const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
 const SCALE_FALLBACK = matchMedia(IS_MOBILE).matches ? 'large' : 'medium';
 const SYSTEM_FALLBACK = 'spectrum';
+const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
     window.localStorage
         ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_FALLBACK
@@ -77,8 +78,8 @@ const DEFAULT_SYSTEM = (
 ) as SystemVariant;
 const DEFAULT_DIR = (
     window.localStorage
-        ? (localStorage.getItem(SWC_THEME_DIR_KEY) ?? 'ltr')
-        : 'ltr'
+        ? (localStorage.getItem(SWC_THEME_DIR_KEY) ?? DIR_FALLBACK)
+        : DIR_FALLBACK
 ) as HTMLElement['dir'];
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
@@ -184,6 +185,18 @@ export class LayoutElement extends LitElement {
 
     @property({ attribute: false })
     public system: SystemVariant = DEFAULT_SYSTEM;
+
+    override get dir(): CSSStyleDeclaration['direction'] {
+        return (getComputedStyle(this).direction ??
+            DEFAULT_DIR) as CSSStyleDeclaration['direction'];
+    }
+
+    override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) {
+            return;
+        }
+        this.setAttribute('dir', dir);
+    }
 
     private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
 

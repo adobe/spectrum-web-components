@@ -39,7 +39,7 @@ import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable
 import { isWebKit } from '@spectrum-web-components/shared';
 
 type SelectsWithKeyboardTest = {
-    dir: 'ltr' | 'rtl' | 'auto';
+    dir: CSSStyleDeclaration['direction'];
     openKey: 'ArrowRight' | 'ArrowLeft';
     closeKey: 'ArrowRight' | 'ArrowLeft';
 };

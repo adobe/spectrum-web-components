@@ -72,7 +72,7 @@ export const ScaledIndicator = {
  */
 export function calculateScrollTargetForRightSide(
     index: number,
-    direction: 'rtl' | 'ltr',
+    direction: CSSStyleDeclaration['direction'],
     tabs: Tab[],
     container: HTMLDivElement
 ): number {
@@ -88,7 +88,7 @@ export function calculateScrollTargetForRightSide(
  */
 export function calculateScrollTargetForLeftSide(
     index: number,
-    direction: 'rtl' | 'ltr',
+    direction: CSSStyleDeclaration['direction'],
     tabs: Tab[],
     container: HTMLDivElement
 ): number {
@@ -129,8 +129,10 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
+    public override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) return;
+        this.setAttribute('dir', dir);
+    }
 
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
@@ -256,7 +258,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
 
         const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
         const dirLimit = scrollWidth - clientWidth - Math.abs(scrollLeft);
-
         const limitDelta =
             this.dir === 'ltr'
                 ? this.limitDeltaToInterval(-scrollLeft, dirLimit)

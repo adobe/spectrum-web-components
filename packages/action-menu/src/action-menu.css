@@ -38,8 +38,8 @@
     max-width: none;
 }
 
-::slotted([slot="icon"]),
-.icon {
+::slotted([slot="icon"]:dir(ltr)),
+.icon:dir(ltr) {
     margin-left: calc(-1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) - var(--spectrum-actionbutton-padding-left-adjusted)));
 }
 

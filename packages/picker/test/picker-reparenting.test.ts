@@ -64,23 +64,20 @@ const fixtureElements = async (): Promise<{
 };
 
 describe('Reparented Picker', () => {
-    it('maintains a `dir` attribute', async () => {
+    it('maintains a consistent direction', async () => {
         const { picker, before, after } = await fixtureElements();
 
-        expect(picker.dir).to.equal('ltr');
-        expect(picker.getAttribute('dir')).to.equal('ltr');
+        expect(getComputedStyle(picker).direction).to.equal('ltr');
 
         after.append(picker);
         await nextFrame();
 
-        expect(picker.dir).to.equal('ltr');
-        expect(picker.getAttribute('dir')).to.equal('ltr');
+        expect(getComputedStyle(picker).direction).to.equal('ltr');
 
         before.append(picker);
         await nextFrame();
 
-        expect(picker.dir).to.equal('ltr');
-        expect(picker.getAttribute('dir')).to.equal('ltr');
+        expect(getComputedStyle(picker).direction).to.equal('ltr');
     });
     it('maintains `value`', async () => {
         const { picker, before, after } = await fixtureElements();
