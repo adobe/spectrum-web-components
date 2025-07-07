@@ -23,6 +23,7 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import buttonStyles from './button-base.css.js';
 
 /**
@@ -49,10 +50,31 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     public type: 'button' | 'submit' | 'reset' = 'button';
 
     /**
+     * The reason why the button is disabled. When set, this will override
+     * the native disabled attribute and use aria-disabled instead, keeping
+     * the button focusable for better accessibility.
+     */
+    @property({ type: String, attribute: 'disabled-reason' })
+    public disabledReason?: string;
+
+    /**
+     * Whether the button is disabled. This can be either through
+     * the native disabled attribute or through disabledReason.
+     */
+    public get isDisabled(): boolean {
+        return this.disabled || !!this.disabledReason;
+    }
+
+    @property({ type: Boolean, reflect: true })
+    public override disabled = false;
+
+    /**
      * HTML anchor element that component clicks by proxy
      */
     @query('.anchor')
     private anchorElement!: HTMLAnchorElement;
+
+    private tooltipId = `tooltip-${Math.random().toString(36).substring(2)}`;
 
     public override get focusElement(): HTMLElement {
         return this;
@@ -76,6 +98,9 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         return content;
     }
 
+    @property({ type: Boolean, reflect: true })
+    public pending = false;
+
     constructor() {
         super();
         this.proxyFocus = this.proxyFocus.bind(this);
@@ -86,7 +111,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     private handleClickCapture(event: Event): void | boolean {
-        if (this.disabled) {
+        if (this.isDisabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
             event.stopPropagation();
@@ -154,9 +179,24 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     protected override render(): TemplateResult {
-        return this.href && this.href.length > 0
-            ? this.renderAnchor()
-            : this.renderButton();
+        return html`
+            ${this.disabledReason
+                ? html`
+                      <sp-tooltip
+                          self-managed
+                          id=${this.tooltipId}
+                          placement="top"
+                          variant="info"
+                          offset="6"
+                      >
+                          ${this.disabledReason}
+                      </sp-tooltip>
+                  `
+                : ''}
+            ${this.href && this.href.length > 0
+                ? this.renderAnchor()
+                : this.renderButton()}
+        `;
     }
 
     protected handleKeydown(event: KeyboardEvent): void {
@@ -260,6 +300,12 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             // Set up focus delegation
             this.anchorElement.addEventListener('focus', this.proxyFocus);
         }
+
+        if (changed.has('pending')) {
+            // Update ARIA attributes for loading state
+            this.setAttribute('aria-busy', this.pending ? 'true' : 'false');
+        }
+
     }
     protected override update(changes: PropertyValues): void {
         super.update(changes);

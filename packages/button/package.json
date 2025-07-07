@@ -96,7 +96,8 @@
         "@spectrum-web-components/icons-ui": "1.7.0",
         "@spectrum-web-components/progress-circle": "1.7.0",
         "@spectrum-web-components/reactive-controllers": "1.7.0",
-        "@spectrum-web-components/shared": "1.7.0"
+        "@spectrum-web-components/shared": "1.7.0",
+        "@spectrum-web-components/tooltip": "1.7.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

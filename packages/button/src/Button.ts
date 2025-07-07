@@ -37,8 +37,9 @@ export const VALID_VARIANTS = [
     'negative',
     'white',
     'black',
-];
-export const VALID_STATIC_COLORS = ['white', 'black'];
+] as const;
+
+export const VALID_STATIC_COLORS = ['white', 'black'] as const;
 
 export type ButtonTreatments = 'fill' | 'outline';
 
@@ -56,9 +57,8 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
 
-    // Use this property to set the button into a pending state
-    @property({ type: Boolean, reflect: true, attribute: true })
-    public pending = false;
+    @property({ type: Boolean, reflect: true })
+    public override pending = false;
 
     public pendingStateController: PendingStateController<this>;
 
@@ -72,7 +72,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     }
 
     public override click(): void {
-        if (this.pending) {
+        if (this.pending || this.disabled) {
             return;
         }
         super.click();
@@ -191,8 +191,28 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+
+        // Set role="button" by default
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'button');
+        }
+
         if (this.pending) {
             this.pendingStateController.hostUpdated();
+        }
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+
+        // Update aria-disabled when disabled changes
+        if (changes.has('disabled')) {
+            this.setAttribute('aria-disabled', this.disabled.toString());
+        }
+
+        // Update aria-busy when pending changes
+        if (changes.has('pending')) {
+            this.setAttribute('aria-busy', this.pending.toString());
         }
     }
 

@@ -346,7 +346,6 @@ describe('Button', () => {
             `);
 
             await elementUpdated(el);
-
             expect(el.hasAttribute('aria-disabled'), 'initially not').to.be
                 .false;
 
