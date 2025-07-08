@@ -51,8 +51,28 @@ export class ProgressBar extends SizedMixin(
 
     private languageResolver = new LanguageResolutionController(this);
 
-    @property({ type: Boolean, reflect: true, attribute: 'over-background' })
-    public overBackground = false;
+    @property({ type: Boolean, attribute: 'over-background' })
+    public get overBackground(): string {
+        return this._overBackground ? 'over-background' : '';
+    }
+    public set overBackground(overBackground: boolean) {
+        if (overBackground === true) {
+            this.removeAttribute('over-background');
+            this.staticColor = 'white';
+
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
+                    {
+                        level: 'deprecation',
+                    }
+                );
+            }
+        }
+    }
+    private _overBackground: boolean = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
     public sideLabel = false;
@@ -146,15 +166,6 @@ export class ProgressBar extends SizedMixin(
         }
 
         if (window.__swc.DEBUG) {
-            if (changes.has('over-background')) {
-                window.__swc.warn(
-                    this,
-                    `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
-                    { level: 'deprecation' }
-                );
-            }
-
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&

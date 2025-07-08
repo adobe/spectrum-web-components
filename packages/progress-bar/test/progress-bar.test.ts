@@ -252,18 +252,24 @@ describe('ProgressBar', () => {
         it('warns in devMode for deprecated usage of over-background', async () => {
             const el = await fixture<ProgressBar>(html`
                 <sp-progress-bar
+                    progress="50"
                     over-background
                     label="Loading"
                 ></sp-progress-bar>
             `);
 
             await elementUpdated(el);
+            expect(
+                consoleWarnStub.called,
+                'confirm deprecated over-background warning'
+            ).to.be.true;
+
             const spyCall = consoleWarnStub.getCall(0);
             expect(
                 (spyCall.args.at(0) as string).includes('deprecated'),
-                'confirm deprecated variant warning'
+                'confirm deprecated over-background warning'
             ).to.be.true;
-            expect(spyCall.args.at(-1), 'over-background').to.deep.equal({
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {
                     localName: 'sp-progress-bar',
                     type: 'api',
