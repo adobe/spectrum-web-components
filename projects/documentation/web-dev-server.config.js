@@ -18,7 +18,7 @@ const alias = fromRollup(rollupAlias);
 const json = fromRollup(rollupJson);
 
 export default {
-    open: true,
+    open: false,
     watch: true,
     nodeResolve: {
         exportConditions: ['browser', 'development'],
