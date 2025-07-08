@@ -96,6 +96,7 @@
         },
         "javascript": {
             "formatOnSave": true,
+            "defaultFormatter": "eslint",
             "organizeImportsOnSave": true,
             "addMissingImports": "prompt",
             "moduleResolution": "auto",
