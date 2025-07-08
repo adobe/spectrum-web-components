@@ -1,58 +1,89 @@
-## Description
+## Overview
 
-The `<sp-accordion-item>` element represents a single item in an `<sp-accordion>` parent element. Its `label` attribute and default slot content make up the "headline" and "body" of the toggleable content item.
+The `<sp-accordion-item>` element represents a single item in an [`<sp-accordion>`](./accordion) parent element. Its `label` attribute and default slot content make up the "headline" and "body" of the toggleable content item.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/accordion?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/accordion)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/accordion)
 
-```
+```bash
 yarn add @spectrum-web-components/accordion
 ```
 
 Import the side effectful registration of `<sp-accordion-item>` via:
 
-```
+```javascript
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 ```
 
 When looking to leverage the `AccordionItem` base class as a type and/or for extension purposes, do so via:
 
-```
+```javascript
 import { AccordionItem } from '@spectrum-web-components/accordion';
 ```
 
-## Example
+### Anatomy
+
+The accordion item consists of two key parts:
+
+- A header button with a label and chevron icon
+- Content that is revealed when the item is expanded
 
 ```html
 <sp-accordion>
-    <sp-accordion-item label="Heading 1">
-        <div>The content can be toggled visible.</div>
+    <sp-accordion-item label="Accordion Item">
+        <div>Accordion item content can be toggled visible.</div>
     </sp-accordion-item>
 </sp-accordion>
 ```
 
-### Opened
+### States
+
+#### Opened
+
+An accordion item can be opened by default using the `open` attribute:
 
 ```html
 <sp-accordion allow-multiple>
-    <sp-accordion-item open label="Heading 2">
-        <div>This content is visible by default.</div>
+    <sp-accordion-item open label="Opened Accordion Item">
+        <div>This accordion item content is visible by default.</div>
     </sp-accordion-item>
 </sp-accordion>
 ```
 
-### Disabled
+#### Disabled
+
+Individual accordion items can be disabled using the `disabled` attribute. Disabled items cannot be expanded or collapsed:
 
 ```html
 <sp-accordion allow-multiple>
-    <sp-accordion-item disabled label="Heading 2">
+    <sp-accordion-item disabled label="Disabled Accordion Item">
         <div>You can not toggle this content visible.</div>
     </sp-accordion-item>
 </sp-accordion>
 ```
 
-## Events
+### Behaviors
 
-An `<sp-accordion-item>` element will dispatch `sp-accordion-item-toggle` events when it is opened or closed. By default, these events are dispatched to allow the parent `<sp-accordion>` to manage which of its item children can shot their children at any one time, consumers can also listen for this event and leverage `event.target.open` to ascertain the current state of the item dispatching item.
+#### Events
+
+An `<sp-accordion-item>` element will dispatch `sp-accordion-item-toggle` events when it is opened or closed. By default, these events are dispatched to allow the parent `<sp-accordion>` to manage which of its item children can show their children at any one time. Consumers can also listen for this event and leverage `event.target.open` to ascertain the current state of the item dispatching the event.
+
+### Accessibility
+
+The accordion component provides proper ARIA attributes and keyboard navigation:
+
+- Each accordion item header has `aria-expanded` to indicate its current state
+- The header button has `aria-controls` pointing to the content region
+- The content region has `role="region"` and `aria-labelledby` pointing to the header
+- Disabled items have `aria-disabled="true"` applied
+- The accordion supports keyboard navigation with <kbd>Enter</kbd>/<kbd>Space</kbd> for activation
+
+#### Include descriptive labels
+
+Each accordion item should have a clear, descriptive label that indicates what content will be revealed when expanded.
+
+#### Use appropriate content
+
+Accordion content should be related to the header label and provide additional information or functionality that users can access when needed.
