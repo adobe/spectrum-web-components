@@ -265,7 +265,6 @@ __metadata:
     debounce: "npm:^2.0.0"
     deepmerge: "npm:^4.2.2"
     esbuild: "npm:^0.21.0"
-    eslint: "npm:^8.23.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-formatter-pretty: "npm:^5.0.0"
     eslint-plugin-import: "npm:^2.26.0"
@@ -294,6 +293,7 @@ __metadata:
     next: "npm:^14.2.26"
     node-fetch: "npm:^3.1.0"
     npm-run-all2: "npm:^8.0.1"
+    oxlint: "npm:^1.6.0"
     patch-package: "npm:^8.0.0"
     pinst: "npm:^3.0.0"
     prettier: "npm:^3.5.3"
@@ -4138,6 +4138,62 @@ __metadata:
     "@types/sinon-chai": "npm:^3.2.3"
     chai-a11y-axe: "npm:^1.5.0"
   checksum: 10c0/b0933f268fb411a3d7b2df2bc2bed8707b50a22e065827a5ad68dffabfc505cccbb617a26f9063f6759fe4de67ff5a28984e12dccea408d26725fcd72a6ca12a
+  languageName: node
+  linkType: hard
+
+"@oxlint/darwin-arm64@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/darwin-arm64@npm:1.6.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@oxlint/darwin-x64@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/darwin-x64@npm:1.6.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@oxlint/linux-arm64-gnu@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/linux-arm64-gnu@npm:1.6.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@oxlint/linux-arm64-musl@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/linux-arm64-musl@npm:1.6.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@oxlint/linux-x64-gnu@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/linux-x64-gnu@npm:1.6.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@oxlint/linux-x64-musl@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/linux-x64-musl@npm:1.6.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@oxlint/win32-arm64@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/win32-arm64@npm:1.6.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@oxlint/win32-x64@npm:1.6.0":
+  version: 1.6.0
+  resolution: "@oxlint/win32-x64@npm:1.6.0"
+  conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
@@ -21311,6 +21367,42 @@ __metadata:
   version: 0.5.0
   resolution: "outdent@npm:0.5.0"
   checksum: 10c0/e216a4498889ba1babae06af84cdc4091f7cac86da49d22d0163b3be202a5f52efcd2bcd3dfca60a361eb3a27b4299f185c5655061b6b402552d7fcd1d040cff
+  languageName: node
+  linkType: hard
+
+"oxlint@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "oxlint@npm:1.6.0"
+  dependencies:
+    "@oxlint/darwin-arm64": "npm:1.6.0"
+    "@oxlint/darwin-x64": "npm:1.6.0"
+    "@oxlint/linux-arm64-gnu": "npm:1.6.0"
+    "@oxlint/linux-arm64-musl": "npm:1.6.0"
+    "@oxlint/linux-x64-gnu": "npm:1.6.0"
+    "@oxlint/linux-x64-musl": "npm:1.6.0"
+    "@oxlint/win32-arm64": "npm:1.6.0"
+    "@oxlint/win32-x64": "npm:1.6.0"
+  dependenciesMeta:
+    "@oxlint/darwin-arm64":
+      optional: true
+    "@oxlint/darwin-x64":
+      optional: true
+    "@oxlint/linux-arm64-gnu":
+      optional: true
+    "@oxlint/linux-arm64-musl":
+      optional: true
+    "@oxlint/linux-x64-gnu":
+      optional: true
+    "@oxlint/linux-x64-musl":
+      optional: true
+    "@oxlint/win32-arm64":
+      optional: true
+    "@oxlint/win32-x64":
+      optional: true
+  bin:
+    oxc_language_server: bin/oxc_language_server
+    oxlint: bin/oxlint
+  checksum: 10c0/a3a7ade49bf2a05c2d9e7ca848ee355dbebd66a18c946037ae81f458b4c853b1fe2a3917b7d93e46ec73406ebaf3e33a9dfa3e1665dc14276fe6f8ea84aad30a
   languageName: node
   linkType: hard
 

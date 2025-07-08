@@ -1,0 +1,32 @@
+{
+    "$schema": "https://oxc-project.github.io/schemas/oxlint.json",
+    "files": {
+        "ignore": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/coverage/**",
+            "**/*.d.ts"
+        ],
+        "include": [
+            "packages/**/*.{js,ts,tsx}",
+            "tools/**/*.{js,ts,tsx}",
+            "projects/**/*.{js,ts,tsx}"
+        ]
+    },
+    "rules": {
+        "correctness": "error",
+        "no-constant-condition": "error",
+        "no-debugger": "error",
+        "no-dupe-keys": "error",
+        "no-duplicate-case": "error",
+        "no-empty": "error",
+        "no-irregular-whitespace": "error",
+        "no-prototype-builtins": "error",
+        "no-sparse-arrays": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "suspicious": "error",
+        "use-isnan": "error",
+        "valid-typeof": "error"
+    }
+}

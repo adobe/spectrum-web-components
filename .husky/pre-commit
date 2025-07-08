@@ -1,1 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run Oxlint first for fast feedback
+yarn oxlint
+
+# Then run lint-staged for other checks (prettier, etc)
 yarn lint-staged --allow-empty

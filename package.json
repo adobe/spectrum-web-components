@@ -1,7 +1,7 @@
 {
-    "private": true,
     "name": "@adobe/spectrum-web-components",
     "version": "0.0.9",
+    "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -27,9 +27,9 @@
         "build:ts:watch": "wireit",
         "build:types": "wireit",
         "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
-        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "changelog:global": "node ./scripts/update-global-changelog.js",
+        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
+        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
         "create-git-tag": "node --no-warnings ./scripts/create-git-tag.js",
         "custom-element-json": "node ./scripts/custom-element-json.js",
@@ -44,7 +44,8 @@
         "icons": "wireit",
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
-        "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
+        "lint": "oxlint && git status --porcelain && git add . && lint-staged --allow-empty",
+        "lint:fix": "oxlint --fix",
         "new-package": "yarn workspace swc-templates plop",
         "postinstall": "husky || true && patch-package",
         "postpack": "pinst --enable",
@@ -152,7 +153,6 @@
         "debounce": "^2.0.0",
         "deepmerge": "^4.2.2",
         "esbuild": "^0.21.0",
-        "eslint": "^8.23.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-formatter-pretty": "^5.0.0",
         "eslint-plugin-import": "^2.26.0",
@@ -181,6 +181,7 @@
         "next": "^14.2.26",
         "node-fetch": "^3.1.0",
         "npm-run-all2": "^8.0.1",
+        "oxlint": "^1.6.0",
         "patch-package": "^8.0.0",
         "pinst": "^3.0.0",
         "prettier": "^3.5.3",
@@ -411,5 +412,11 @@
             ]
         }
     },
-    "packageManager": "yarn@4.9.1"
+    "packageManager": "yarn@4.9.1",
+    "lint-staged": {
+        "*.{js,ts,tsx}": [
+            "oxlint --fix",
+            "prettier --write"
+        ]
+    }
 }
