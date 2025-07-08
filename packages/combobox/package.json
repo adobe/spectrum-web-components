@@ -29,7 +29,6 @@
             "development": "./src/Combobox.dev.js",
             "default": "./src/Combobox.js"
         },
-        "./src/combobox-overrides.css.js": "./src/combobox-overrides.css.js",
         "./src/combobox.css.js": "./src/combobox.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

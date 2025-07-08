@@ -33,8 +33,8 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { TemplateResult } from 'lit-html';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-circle.js';
+import { TemplateResult } from '@spectrum-web-components/base';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
 import { isWebKit } from '@spectrum-web-components/shared';
 
@@ -572,7 +572,7 @@ describe('Submenu', () => {
     it('closes all descendant submenus when closing a ancestor menu', async () => {
         const el = await fixture<ActionMenu>(html`
             <sp-action-menu label="Closing ancestors will close submenus">
-                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-icon-circle slot="icon"></sp-icon-circle>
                 <sp-menu-group role="none" id="group">
                     <span slot="header">New York</span>
                     <sp-menu-item>Bronx</sp-menu-item>
@@ -644,7 +644,7 @@ describe('Submenu', () => {
         beforeEach(async function () {
             this.el = await fixture<ActionMenu>(html`
                 <sp-action-menu id="action-menu" label="Deep submenu tree">
-                    <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                    <sp-icon-circle slot="icon"></sp-icon-circle>
                     <sp-menu-group role="none">
                         <span slot="header">New York</span>
                         <sp-menu-item id="no-submenu">Bronx</sp-menu-item>

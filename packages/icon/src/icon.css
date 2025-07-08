@@ -10,29 +10,66 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-icon.css");
+/* Base variables */
+:host {
+    /* layout */
+    --spectrum-icon-inline-size: var(--spectrum-icon-size);
+    --spectrum-icon-block-size: var(--spectrum-icon-size);
 
+    /* colors */
+    color: inherit;
+
+    /* base styles */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    inline-size: var(--spectrum-icon-inline-size);
+    block-size: var(--spectrum-icon-block-size);
+    overflow: hidden;
+}
+
+:host([size="xs"]) {
+	--spectrum-icon-size: var(--spectrum-workflow-icon-size-50);
+}
+
+:host([size="s"]) {
+	--spectrum-icon-size: var(--spectrum-workflow-icon-size-75);
+}
+
+:host([size="l"]) {
+	--spectrum-icon-size: var(--spectrum-workflow-icon-size-200);
+}
+
+:host([size="xl"]) {
+	--spectrum-icon-size: var(--spectrum-workflow-icon-size-300);
+}
+
+/* Container styles */
 #container {
-    height: 100%;
+    block-size: 100%;
+}
+
+/* content Styles */
+img,
+svg,
+::slotted(*) {
+    block-size: 100%;
+    inline-size: 100%;
+    vertical-align: top;
+    color: inherit;
 }
 
 img,
 svg,
 ::slotted(*) {
-    height: 100%;
-    width: 100%;
-    vertical-align: top;
-    color: inherit;
+    forced-color-adjust: auto;
 }
 
-@media (forced-colors: active) {
-    img,
-    svg,
-    ::slotted(*) {
-        forced-color-adjust: auto;
-    }
-}
-
-:host(:not(:root)) {
-    overflow: hidden;
+/* SVG styles */
+svg {
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
 }

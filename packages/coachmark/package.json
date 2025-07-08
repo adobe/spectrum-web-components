@@ -37,9 +37,7 @@
             "development": "./src/CoachmarkItem.dev.js",
             "default": "./src/CoachmarkItem.js"
         },
-        "./src/coach-indicator-overrides.css.js": "./src/coach-indicator-overrides.css.js",
         "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
-        "./src/coachmark-overrides.css.js": "./src/coachmark-overrides.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -77,13 +75,25 @@
         "component",
         "css"
     ],
-    "dependencies": {
+    "peerDependencies": {
+        "@spectrum-web-components/asset": ">=1",
+        "@spectrum-web-components/base": ">=1",
+        "@spectrum-web-components/button": ">=1",
+        "@spectrum-web-components/button-group": ">=1",
+        "@spectrum-web-components/icon": ">=1",
+        "@spectrum-web-components/icons-ui": ">=1",
+        "@spectrum-web-components/popover": ">=1",
+        "@spectrum-web-components/reactive-controllers": ">=1",
+        "@spectrum-web-components/shared": ">=1"
+    },
+    "devDependencies": {
         "@spectrum-web-components/asset": "1.7.0",
         "@spectrum-web-components/base": "1.7.0",
         "@spectrum-web-components/button": "1.7.0",
         "@spectrum-web-components/button-group": "1.7.0",
         "@spectrum-web-components/icon": "1.7.0",
         "@spectrum-web-components/icons-ui": "1.7.0",
+        "@spectrum-web-components/popover": "1.7.0",
         "@spectrum-web-components/reactive-controllers": "1.7.0",
         "@spectrum-web-components/shared": "1.7.0"
     },

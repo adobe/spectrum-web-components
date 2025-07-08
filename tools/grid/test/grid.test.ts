@@ -21,8 +21,7 @@ import { html } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
 
 import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/theme-light.js';
+import '@spectrum-web-components/theme/core.js';
 import '@spectrum-web-components/grid/sp-grid.js';
 import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';

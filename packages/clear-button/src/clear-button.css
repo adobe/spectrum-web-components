@@ -10,9 +10,155 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-clear-button.css");
-@import url("./clear-button-overrides.css");
+:host {
+	--spectrum-clear-button-height: var(--spectrum-component-height-100);
+	--spectrum-clear-button-width: var(--spectrum-component-height-100);
+	--spectrum-clear-button-padding: var(--spectrum-in-field-button-edge-to-fill);
+	--spectrum-clear-button-icon-color: var(--spectrum-neutral-content-color-default);
+	--spectrum-clear-button-icon-color-hover: var(--spectrum-neutral-content-color-hover);
+	--spectrum-clear-button-icon-color-down: var(--spectrum-neutral-content-color-down);
+	--spectrum-clear-button-icon-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
+	--spectrum-clear-button-background-color: transparent;
+	--spectrum-clear-button-background-color-hover: transparent;
+	--spectrum-clear-button-background-color-down: transparent;
+	--spectrum-clear-button-background-color-key-focus: transparent;
+}
+
+:host([size="s"]) {
+	--spectrum-clear-button-height: var(--spectrum-component-height-75);
+	--spectrum-clear-button-width: var(--spectrum-component-height-75);
+}
+
+:host([size="l"]) {
+	--spectrum-clear-button-height: var(--spectrum-component-height-200);
+	--spectrum-clear-button-width: var(--spectrum-component-height-200);
+}
+
+:host([size="xl"]) {
+	--spectrum-clear-button-height: var(--spectrum-component-height-300);
+	--spectrum-clear-button-width: var(--spectrum-component-height-300);
+}
+
+:host([quiet]) {
+	--spectrum-clear-button-background-color: transparent;
+	--spectrum-clear-button-background-color-hover: transparent;
+	--spectrum-clear-button-background-color-down: transparent;
+	--spectrum-clear-button-background-color-key-focus: transparent;
+}
+
+:host([static-color="white"]) {
+	--spectrum-clear-button-background-color-hover: var(--spectrum-transparent-white-400);
+	--spectrum-clear-button-background-color-down: var(--spectrum-transparent-white-500);
+	--spectrum-clear-button-background-color-key-focus: var(--spectrum-transparent-white-400);
+	--spectrum-clear-button-icon-color: var(--spectrum-white);
+	--spectrum-clear-button-icon-color-hover: var(--spectrum-white);
+	--spectrum-clear-button-icon-color-down: var(--spectrum-white);
+	--spectrum-clear-button-icon-color-key-focus: var(--spectrum-white);
+	--spectrum-clear-button-icon-color-disabled: var(--spectrum-disabled-static-white-content-color);
+	--spectrum-clear-button-background-color: transparent;
+}
+
+:host([disabled]),
+:host(:disabled) {
+	--spectrum-clear-button-icon-color: var(--mod-clear-button-icon-color-disabled, var(--spectrum-disabled-content-color));
+	--spectrum-clear-button-icon-color-hover: var(--spectrum-disabled-content-color);
+	--spectrum-clear-button-icon-color-down: var(--spectrum-disabled-content-color);
+	--spectrum-clear-button-background-color: var(--mod-clear-button-background-color-disabled, transparent);
+}
 
 :host {
     box-sizing: border-box;
+	block-size: var(--mod-clear-button-height, var(--spectrum-clear-button-height));
+	inline-size: var(--mod-clear-button-width, var(--spectrum-clear-button-width));
+	border-radius: 100%;
+	background-color: var(--mod-clear-button-background-color, transparent);
+	margin: 0;
+	padding: var(--mod-clear-button-padding, var(--spectrum-clear-button-padding));
+	border: none;
+	color: var(--mod-clear-button-icon-color, var(--spectrum-clear-button-icon-color));
+}
+
+:host(:not([disabled])),
+:host(:not(:disabled)) {
+	cursor: pointer;
+}
+
+:host(:not([disabled]):hover),
+:host(:not(:disabled):hover) {
+	color: var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover));
+}
+
+:host(:not([disabled]):hover) .fill,
+:host(:not(:disabled):hover) .fill {
+	background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
+}
+
+.icon {
+	margin-block: 0;
+	margin-inline: auto;
+	color: inherit;
+}
+
+.fill {
+	background-color: var(--mod-clear-button-background-color, var(--spectrum-clear-button-background-color));
+	inline-size: 100%;
+	block-size: 100%;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media (hover: hover) {
+	:host(:not([disabled]):hover),
+	:host(:not(:disabled):hover) {
+		color: var(--mod-clear-button-icon-color-hover, var(--spectrum-clear-button-icon-color-hover));
+	}
+
+	:host(:not([disabled]):hover) .fill,
+	:host(:not(:disabled):hover) .fill {
+		background-color: var(--mod-clear-button-background-color-hover, var(--spectrum-clear-button-background-color-hover));
+	}
+}
+
+:host(:not([disabled]):active),
+:host(:not(:disabled):active) {
+	color: var(--mod-clear-button-icon-color-down, var(--spectrum-clear-button-icon-color-down));
+}
+
+:host(:not([disabled]):active) .fill,
+:host(:not(:disabled):active) .fill {
+	background-color: var(--mod-clear-button-background-color-down, var(--spectrum-clear-button-background-color-down));
+}
+
+:host(:not([disabled]):focus-visible),
+:host(:not([disabled]):focus-within),
+:host(:not(:disabled):focus-visible),
+:host(:not(:disabled):focus-within) {
+	color: var(--mod-clear-button-icon-color-key-focus, var(--spectrum-clear-button-icon-color-key-focus));
+}
+
+:host(:not([disabled]):focus-visible) .fill,
+:host(:not([disabled]):focus-within) .fill,
+:host(:not(:disabled):focus-visible) .fill,
+:host(:not(:disabled):focus-within) .fill {
+	background-color: var(--mod-clear-button-background-color-key-focus, var(--spectrum-clear-button-background-color-key-focus));
+}
+
+:host([static-color="white"]:focus-visible) {
+	outline: none;
+}
+
+@media (forced-colors: active) {
+	:host(:not([disabled]):hover),
+	:host(:not(:disabled):hover) {
+		color: Highlight;
+	}
+}
+
+@media (forced-colors: active) and (hover: hover) {
+	:host(:not([disabled]):hover),
+	:host(:not(:disabled):hover) {
+		color: Highlight;
+	}
 }

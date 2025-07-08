@@ -10,4 +10,62 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-tabs-sizes.css");
+:host([size="s"]) #list {
+    --spectrum-tabs-item-height: var(--spectrum-tab-item-height-small);
+    --spectrum-tabs-item-horizontal-spacing: var(--spectrum-tab-item-to-tab-item-horizontal-small);
+    --spectrum-tabs-item-vertical-spacing: var(--spectrum-tab-item-to-tab-item-vertical-small);
+    --spectrum-tabs-start-to-edge: var(--spectrum-tab-item-start-to-edge-small);
+    --spectrum-tabs-top-to-text: var(--spectrum-tab-item-top-to-text-small);
+    --spectrum-tabs-bottom-to-text: var(--spectrum-tab-item-bottom-to-text-small);
+    --spectrum-tabs-icon-size: var(--spectrum-workflow-icon-size-50);
+    --spectrum-tabs-icon-to-text: var(--spectrum-text-to-visual-75);
+    --spectrum-tabs-top-to-icon: var(--spectrum-tab-item-top-to-workflow-icon-small);
+    --spectrum-tabs-focus-indicator-gap: var(--spectrum-tab-item-focus-indicator-gap-small);
+    --spectrum-tabs-font-size: var(--spectrum-font-size-75);
+}
+
+:host([size="l"]) #list {
+}
+
+:host([size="xl"]) #list {
+}
+
+:host([size="s"][compact]) {
+}
+
+:host([size="l"][compact]) {
+}
+
+:host([size="xl"][compact]) {
+}
+
+/* base variables */
+/* Base variables */
+:host {
+    /* layout */
+    --spectrum-tabs-height: var(--spectrum-component-height-100);
+    --spectrum-tabs-compact-height: var(--spectrum-component-height-75);
+    --spectrum-tabs-quiet-height: var(--spectrum-component-height-100);
+    --spectrum-tabs-quiet-compact-height: var(--spectrum-component-height-75);
+
+    /* typography */
+    --spectrum-tabs-compact-font-size: var(--spectrum-font-size-75);
+
+    /* spacing */
+    --spectrum-tabs-spacing-edge-to-text: var(--spectrum-component-edge-to-text-100);
+    --spectrum-tabs-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
+    --spectrum-tabs-spacing-icon-to-icon: var(--spectrum-spacing-100);
+    --spectrum-tabs-spacing-edge-to-icon: var(--spectrum-component-edge-to-visual-100);
+    --spectrum-tabs-spacing-edge-to-text-quiet: var(--spectrum-component-edge-to-text-100);
+    --spectrum-tabs-spacing-text-to-icon-quiet: var(--spectrum-text-to-visual-100);
+    --spectrum-tabs-spacing-icon-to-icon-quiet: var(--spectrum-spacing-100);
+    --spectrum-tabs-spacing-edge-to-icon-quiet: var(--spectrum-component-edge-to-visual-100);
+    --spectrum-tabs-spacing-compact-edge-to-text: var(--spectrum-component-edge-to-text-75);
+    --spectrum-tabs-spacing-compact-text-to-icon: var(--spectrum-text-to-visual-75);
+    --spectrum-tabs-spacing-compact-icon-to-icon: var(--spectrum-spacing-75);
+    --spectrum-tabs-spacing-compact-edge-to-icon: var(--spectrum-component-edge-to-visual-75);
+    --spectrum-tabs-spacing-compact-edge-to-text-quiet: var(--spectrum-component-edge-to-text-75);
+    --spectrum-tabs-spacing-compact-text-to-icon-quiet: var(--spectrum-text-to-visual-75);
+    --spectrum-tabs-spacing-compact-icon-to-icon-quiet: var(--spectrum-spacing-75);
+    --spectrum-tabs-spacing-compact-edge-to-icon-quiet: var(--spectrum-component-edge-to-visual-75);
+}

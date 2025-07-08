@@ -10,11 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement, render, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import {
+    html,
+    LitElement,
+    render,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import {
+    customElement,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/core.js';
 import '@spectrum-web-components/theme/scale-large.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
 
 declare global {
     interface Window {
@@ -145,7 +153,7 @@ export const measureFixtureCreation = async (
     const templates = new Array<TemplateResult>(opts.numRenders).fill(template);
     const renderContainer = document.createElement('sp-theme');
     renderContainer.scale = 'large';
-    renderContainer.color = 'lightest';
+    renderContainer.color = 'light';
 
     document.body.appendChild(renderContainer);
     const start = window.tachometerStart === 'page' ? 0 : performance.now();
@@ -158,6 +166,7 @@ export const measureFixtureCreation = async (
             const results = await Promise.all(
                 updates.map((el) => (el as LitElement).updateComplete)
             );
+
             updates = results.reduce((acc, result, index) => {
                 if (!result) {
                     acc.push(updates[index]);

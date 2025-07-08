@@ -18,8 +18,8 @@ import {
 } from '@spectrum-web-components/base';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-outline.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-outline.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
@@ -152,14 +152,14 @@ export class ContextualHelp extends SpectrumElement {
             >
                 ${this.variant === 'help'
                     ? html`
-                          <sp-icon-help-outline
+                          <sp-icon-help-circle
                               slot="icon"
-                          ></sp-icon-help-outline>
+                          ></sp-icon-help-circle>
                       `
                     : html`
-                          <sp-icon-info-outline
+                          <sp-icon-info-circle
                               slot="icon"
-                          ></sp-icon-info-outline>
+                          ></sp-icon-info-circle>
                       `}
             </sp-action-button>
             <sp-overlay

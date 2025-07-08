@@ -10,18 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-table-body.css");
-
+/* Base variables */
 :host {
     display: block;
     flex-grow: 1;
     overflow: auto;
+    border: none;
 
-    /* When made scrollable through non table element display properties, the
+    /* when made scrollable through non table element display properties, the
        body needs an additional border around it. */
-    border-radius: var(--mod-table-border-radius, var(--spectrum-table-border-radius));
-    border-inline: var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
-    border-block: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-border-color, var(--mod-table-border-color, var(--spectrum-table-border-color)));
+    border-radius: var(--spectrum-table-border-radius);
+    border-inline: var(--spectrum-table-outer-border-inline-width) solid var(--highcontrast-table-border-color, var(--spectrum-table-border-color));
+    border-block: var(--spectrum-table-border-width) solid var(--highcontrast-table-border-color, var(--spectrum-table-border-color));
+}
+
+:host([drop-target]) {
+    --spectrum-table-border-color: transparent;
+
+    outline-width: var(--spectrum-table-focus-indicator-thickness);
+    outline-style: solid;
+    outline-color: var(--highcontrast-table-focus-indicator-color, var(--spectrum-table-drop-zone-outline-color));
 }
 
 :host(:not([tabindex])) {

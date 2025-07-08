@@ -14,4 +14,4 @@ import { Theme } from './src/Theme.js';
 
 import coreStyles from './src/theme.css.js';
 
-Theme.registerThemeFragment('spectrum', 'system', coreStyles);
+Theme.registerThemeFragment('core', 'core', coreStyles);

@@ -10,13 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-tags.css");
-
+/* Base variables */
 :host {
-    --mod-clear-button-width: fit-content;
+    --spectrum-tag-group-item-margin-block: var(--spectrum-spacing-75);
+    --spectrum-tag-group-item-margin-inline: var(--spectrum-spacing-75);
+    --spectrum-clear-button-width: fit-content;
 
-    display: inline-flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
     list-style: none;
+    display: inline-flex;
+}
+
+::slotted(*) {
+    margin-block: var(--spectrum-tag-group-item-margin-block);
+    margin-inline: var(--spectrum-tag-group-item-margin-inline);
 }

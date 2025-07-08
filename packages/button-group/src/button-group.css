@@ -10,13 +10,36 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-button-group.css");
-@import url("./button-group-overrides.css");
+/* Base variables */
+:host {
+    --spectrum-buttongroup-spacing: var(--spectrum-spacing-300);
 
+    display: flex;
+    flex-direction: row;
+    gap: var(--spectrum-buttongroup-spacing);
+    justify-content: var(--spectrum-buttongroup-justify-content, normal);
+    flex-wrap: wrap;
+}
+
+:host([size="s"]) {
+    --spectrum-buttongroup-spacing: var(--spectrum-spacing-200);
+}
+
+:host([vertical]) {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+::slotted(*) {
+    flex-shrink: 0;
+}
+
+/* vertical action button styles */
 :host([vertical]) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-flex-grow: 1;
 }
 
+/* rTL support */
 :host([dir="ltr"][vertical]) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-text-align: left;
 }
