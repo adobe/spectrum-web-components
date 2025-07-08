@@ -22,7 +22,6 @@
     "exports": {
         ".": "./src/modal-wrapper.css.js",
         "./package.json": "./package.json",
-        "./src/modal-overrides.css.js": "./src/modal-overrides.css.js",
         "./src/modal-wrapper.css.js": "./src/modal-wrapper.css.js",
         "./src/modal.css.js": "./src/modal.css.js"
     },

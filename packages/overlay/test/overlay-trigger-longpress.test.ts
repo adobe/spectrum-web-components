@@ -22,7 +22,7 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import type { Popover } from '@spectrum-web-components/popover';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -290,7 +290,7 @@ describe('Overlay Trigger - Longpress', () => {
                     @sp-closed=${() => closedSpy()}
                 >
                     <sp-action-button slot="trigger" hold-affordance>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="longpress-content" tip></sp-popover>
                 </overlay-trigger>
@@ -323,13 +323,13 @@ describe('Overlay Trigger - Longpress', () => {
                         style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-spacing-200)) / 2);"
                     >
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                     </sp-action-group>
                 </sp-popover>
@@ -400,13 +400,13 @@ describe('Overlay Trigger - Longpress', () => {
                         style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-spacing-200)) / 2);"
                     >
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-action-button>
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                     </sp-action-group>
                 </sp-popover>
@@ -469,7 +469,7 @@ describe('Overlay Trigger - Longpress', () => {
                             style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-spacing-200)) / 2);"
                         >
                             <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                         </sp-action-group>
                     </sp-popover>
@@ -485,7 +485,7 @@ describe('Overlay Trigger - Longpress', () => {
                             style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-spacing-200)) / 2);"
                         >
                             <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                         </sp-action-group>
                     </sp-popover>
@@ -522,13 +522,13 @@ describe('Overlay Trigger - Longpress', () => {
                             style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-spacing-200)) / 2);"
                         >
                             <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                             <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                             <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                         </sp-action-group>
                     </sp-popover>

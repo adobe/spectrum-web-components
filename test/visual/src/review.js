@@ -14,7 +14,7 @@ import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/vrt-compare/vrt-compare.js';
-import { html, nothing, render } from 'lit-html';
+import { html, nothing, render } from '@spectrum-web-components/base';
 
 const review = document.querySelector('vrt-compare');
 const resultTypes = ['new', 'updated', 'removed', 'passed'];

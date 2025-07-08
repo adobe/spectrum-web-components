@@ -21,9 +21,7 @@
         "import/no-extraneous-dependencies": [
             "error",
             {
-                "devDependencies": false,
-                "optionalDependencies": false,
-                "peerDependencies": false
+                "devDependencies": false
             }
         ],
         "no-debugger": 2,
@@ -87,6 +85,7 @@
             "files": [
                 "*.test.ts",
                 "*.stories.ts",
+                "**/stories/*.ts",
                 "**/benchmark/*.ts",
                 "**/test/*.ts"
             ],

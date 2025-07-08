@@ -351,7 +351,7 @@ export async function fixture<T extends Element>(
     dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
-        <sp-theme system="spectrum" scale="medium" color="light">
+        <sp-theme scale="medium" color="light">
             ${story}
             <style>
                 sp-theme {

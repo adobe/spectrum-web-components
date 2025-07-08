@@ -47,13 +47,13 @@ describe('AlertBanner', () => {
         await elementUpdated(el);
 
         expect(el.getAttribute('variant')).to.equal('info');
-        expect(el.shadowRoot.querySelector('sp-icon-info')).to.exist;
+        expect(el.shadowRoot.querySelector('sp-icon-info-circle')).to.exist;
 
         el.variant = 'negative';
         await elementUpdated(el);
 
         expect(el.getAttribute('variant')).to.equal('negative');
-        expect(el.shadowRoot.querySelector('sp-icon-alert')).to.exist;
+        expect(el.shadowRoot.querySelector('sp-icon-alert-triangle')).to.exist;
     });
     it('removes variant attribute when given invalid variant', async () => {
         const el = await fixture<AlertBanner>(html`

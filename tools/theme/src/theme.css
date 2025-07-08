@@ -11,33 +11,40 @@
  */
 
 @import url("@spectrum-web-components/styles/core-global.css");
-@import url("@spectrum-web-components/styles/tokens/global-vars.css");
-@import url("@spectrum-web-components/styles/tokens/spectrum/global-vars.css");
-@import url("@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css");
-@import url("@spectrum-web-components/styles/typography.css");
+@import url("@spectrum-web-components/styles/src/spectrum-typography.css");
 
 :host {
     display: block;
+    font-family: var(--spectrum-sans-font-family-stack);
+    font-size: var(--spectrum-font-size-100);
+    font-style: var(--spectrum-default-font-style);
+}
 
-    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-font-style: var(--spectrum-default-font-style);
-    --spectrum-font-size: var(--spectrum-font-size-100);
+:host(:lang(ar)) {
+    font-family: var(--spectrum-font-family-ar);
+}
 
-    font-family: var(--spectrum-font-family);
-    font-size: var(--spectrum-font-size);
-    font-style: var(--spectrum-font-style);
-
-    &:lang(ar) {
-        font-family: var(--spectrum-font-family-ar);
-    }
-
-    &:lang(he) {
-        font-family: var(--spectrum-font-family-he);
-    }
+:host(:lang(he)) {
+    font-family: var(--spectrum-font-family-he);
 }
 
 #scale,
 #theme {
-    width: 100%;
-    height: 100%;
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+/* default behavior is to honor the color-scheme preference of the user */
+:host(:not([color])) {
+    color-scheme: light dark;
+}
+
+/* @deprecated: customers should use the color-scheme style instead */
+:host([color="light"]) {
+    color-scheme: light;
+}
+
+/* @deprecated: customers should use the color-scheme style instead */
+:host([color="dark"]) {
+    color-scheme: dark;
 }

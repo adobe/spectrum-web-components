@@ -31,21 +31,11 @@ export const themeStyles = html`
  **/
 export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
     const {
-        globals: {
-            system,
-            color,
-            scale,
-            textDirection,
-            reduceMotion,
-            lang,
-        } = {},
+        globals: { color, scale, textDirection, reduceMotion, lang } = {},
     } = context;
 
     useEffect(() => {
         // Update window.__swc_hack_knobs__ values with current context globals
-        if (system) {
-            window.__swc_hack_knobs__.defaultSystemVariant = system;
-        }
         if (color) {
             window.__swc_hack_knobs__.defaultColor = color;
         }
@@ -64,10 +54,9 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
         if (lang) {
             window.__swc_hack_knobs__.defaultLocale = lang;
         }
-    }, [system, color, scale, textDirection, reduceMotion, lang]);
+    }, [color, scale, textDirection, reduceMotion, lang]);
 
-    const hasAnySetting =
-        system || color || scale || textDirection || reduceMotion;
+    const hasAnySetting = color || scale || textDirection || reduceMotion;
 
     return html`
         <style>
@@ -86,7 +75,6 @@ export const swcThemeDecorator = (story: StoryFn, context: StoryContext) => {
         </style>
         <sp-story-decorator
             role="main"
-            system=${system}
             color=${color}
             scale=${scale}
             lang=${lang}

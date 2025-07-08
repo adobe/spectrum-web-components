@@ -10,17 +10,49 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-field-group.css");
-@import url("./field-group-overrides.css");
+/* Base variables */
+:host {
+    /* layout */
+    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
+    --spectrum-fieldgroup-readonly-delimiter: ",";
+}
 
+/* base styles */
+.group {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+/* layout variants */
+:host([vertical]) .group {
+    flex-direction: column;
+}
+
+:host([horizontal]) .group {
+    flex-direction: row;
+}
+
+/* rTL support */
 :host([horizontal][dir="rtl"]) slot:not([name])::slotted(*:not(:last-child)),
 :host([dir="rtl"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
     margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }
 
 :host([horizontal][dir="ltr"]) slot:not([name])::slotted(*:not(:last-child)),
 :host([dir="ltr"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
     margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
+}
+
+:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
+    margin-inline-end: var(--spectrum-fieldgroup-margin);
+}
+
+/* help text positioning */
+:host([horizontal]) .group .spectrum-HelpText {
+    flex-basis: 100%;
+}
+
+.group {
+    forced-color-adjust: none;
+    border-color: var(--highcontrast-fieldgroup-border-color);
 }

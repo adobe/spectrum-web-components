@@ -63,30 +63,21 @@ const getAzureUrl = (combination) => {
 };
 
 const vrts = [];
-const themes = ['Spectrum', 'Express', 'Spectrum-two'];
 const scales = ['Medium', 'Large'];
-const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+const colors = ['Light', 'Dark'];
 const directions = ['LTR', 'RTL'];
 vrts.push([`High Contrast Mode | Medium | LTR`, `${getAzureUrl('hcm')}`]);
-themes.forEach((theme) =>
-    colors.forEach((color) => {
-        if (
-            theme === 'Spectrum-two' &&
-            (color === 'Lightest' || color === 'Darkest')
-        ) {
-            return;
-        }
-        scales.forEach((scale) =>
-            directions.forEach((direction) => {
-                const combination = `${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                vrts.push([
-                    `${theme} | ${color} | ${scale} | ${direction}`,
-                    `${getAzureUrl(combination)}`,
-                ]);
-            })
-        );
-    })
-);
+colors.forEach((color) => {
+    scales.forEach((scale) =>
+        directions.forEach((direction) => {
+            const combination = `${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+            vrts.push([
+                `${color} | ${scale} | ${direction}`,
+                `${getAzureUrl(combination)}`,
+            ]);
+        })
+    );
+}));
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');

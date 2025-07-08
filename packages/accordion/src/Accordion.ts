@@ -31,6 +31,9 @@ import styles from './accordion.css.js';
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
+ * @prop {boolean} allowMultiple - Allows multiple accordion items to be opened at the same time
+ * @prop {'compact' | 'spacious'} density - Sets the spacing between the content to borders of an accordion item
+ * @prop {'s' | 'm' | 'l' | 'xl'} size - Sets the size of the accordion item
  */
 export class Accordion extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,

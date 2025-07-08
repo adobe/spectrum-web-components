@@ -10,4 +10,28 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-modal-wrapper.css");
+/* Base variables */
+:host {
+    /* animation */
+    --spectrum-modal-wrapper-animation-duration: var(--spectrum-animation-duration-100);
+
+    /* layout */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: visibility 0s linear var(--spectrum-modal-wrapper-animation-duration);
+}
+
+/* states */
+:host([open]) {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: visibility 0s linear;
+}

@@ -14,6 +14,7 @@ import {
     html,
     SpectrumElement,
     TemplateResult,
+    CSSResultArray,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -24,6 +25,7 @@ import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { SwatchGroup } from '@spectrum-web-components/swatch';
 import { TableItem } from '@spectrum-web-components/table';
+import colorTokens from './color-palette.json' with { type: 'json' };
 import {
     blueValues,
     celeryValues,
@@ -43,29 +45,33 @@ import {
 import './sp-css-table.js';
 
 export interface Item extends TableItem {
-    customVar: string;
-    sets: {
-        light: string;
-        dark: string;
-        darkest: string;
-        wireframe: string;
-    };
+    prop?: string;
+    light?: string;
+    dark?: string;
 }
 
+/**
+ * @element custom-vars-viewer
+ */
 export class CustomVarsViewer extends SpectrumElement {
-    static override styles = css`
-        :host {
-            display: block;
-            padding: var(--spectrum-spacing-200);
-        }
-        .picker-container {
-            padding-bottom: var(--spectrum-component-edge-to-visual-only-75);
-        }
-        sp-swatch-group {
-            padding: var(--spectrum-spacing-200);
-        }
-    `;
+    public override static get styles(): CSSResultArray {
+        return [
+            css`
+            :host {
+                display: block;
+                padding: var(--spectrum-spacing-200);
+            }
+            .picker-container {
+                padding-bottom: var(--spectrum-component-edge-to-visual-only-75);
+            }
+            sp-swatch-group {
+                padding: var(--spectrum-spacing-200);
+            }
+            `,
+        ];
+    }
 
+    /* @todo inherit this from the theme */
     @property({ type: String })
     public themeColor = 'light';
 
@@ -100,17 +106,18 @@ export class CustomVarsViewer extends SpectrumElement {
 
     protected handleSwatchSelect = (event: Event): void => {
         const swatchGroup = event.target as SwatchGroup;
-        const colorSelection = swatchGroup.selected;
+        const colorSelection: string[] = swatchGroup.selected;
         const newSelections: Item[] = [];
 
-        // I'd like to apologise for the following programming nightmare:
+        // If there are not selected items returned by the swatch group, use our
+        // default local values instead
         if (colorSelection.length === 0) {
             this.colors = this._colors;
         } else {
             colorSelection.forEach((selection) => {
                 const selectedColors = [
                     ...this._colors.filter(
-                        (color) => color.customVar.search(selection) > -1
+                        (color) => color.prop.search(selection) > -1
                     ),
                 ];
                 newSelections.unshift(...selectedColors);
@@ -138,7 +145,6 @@ export class CustomVarsViewer extends SpectrumElement {
                 >
                     <sp-menu-item value="light">Light</sp-menu-item>
                     <sp-menu-item value="dark">Dark</sp-menu-item>
-                    <sp-menu-item value="darkest">Darkest</sp-menu-item>
                     <sp-menu-item value="wireframe">Wireframe</sp-menu-item>
                 </sp-picker>
             </div>

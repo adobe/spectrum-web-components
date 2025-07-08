@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 import { IconsetAddedDetail } from '@spectrum-web-components/iconset';
 import {
     css,
@@ -32,12 +33,6 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 import iconsList from './iconsList.json' assert { type: 'json' };
-
-import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/SystemContextResolution.js';
-
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
     _delayedReady!: Promise<void>;
@@ -148,15 +143,7 @@ export class IconsDemo extends SpectrumElement {
         this.filteredIcons = filteredIcons;
     }
 
-    private systemResolver = new SystemResolutionController(this);
-
     protected override update(changes: PropertyValues): void {
-        if (changes.has(systemResolverUpdatedSymbol)) {
-            this.spectrumVersion =
-                this.systemResolver.system === 'spectrum-two' ? 2 : 1;
-            this.filterIconsBySpectrumVersion();
-        }
-
         if (changes.has('icons')) {
             this.filterIconsBySpectrumVersion();
         }

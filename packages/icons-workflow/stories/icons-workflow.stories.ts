@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import '@spectrum-web-components/icon/sp-icon.js';
-import '../../iconset/stories/icons-demo.js';
+import '../../../packages/iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { until } from '@spectrum-web-components/base/src/directives.js';
 
@@ -76,7 +76,7 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
 };
 
 export const Icons = ({ color, size }: Properties): TemplateResult => {
-    const content = import('../').then((icons) => {
+    const content = import('../src/index.js').then((icons) => {
         const iconTemplates: {
             template: () => TemplateResult;
             name: string;

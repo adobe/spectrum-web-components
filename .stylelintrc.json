@@ -1,8 +1,123 @@
 {
-    "plugins": ["stylelint-header"],
+    "plugins": [
+        "stylelint-header",
+        "stylelint-order",
+        "stylelint-use-logical",
+        "@spectrum-tools/stylelint-no-missing-var",
+        "@spectrum-tools/stylelint-no-unused-custom-properties",
+        "@spectrum-tools/stylelint-no-unknown-custom-properties"
+    ],
     "extends": [],
     "rules": {
-        "header/header": ["config/license.js", {}]
+        "header/header": ["config/license.js", {}],
+        "custom-property-empty-line-before": null,
+        "declaration-block-no-redundant-longhand-properties": null,
+        "declaration-empty-line-before": null,
+        "import-notation": null,
+        "no-descending-specificity": null,
+        "no-duplicate-selectors": null,
+        "number-max-precision": null,
+        "alpha-value-notation": [
+            "percentage",
+            { "exceptProperties": ["opacity"] }
+        ],
+        "at-rule-empty-line-before": [
+            "always",
+            {
+                "except": ["blockless-after-blockless", "first-nested"],
+                "ignore": ["after-comment", "first-nested"],
+                "ignoreAtRules": ["extend"]
+            }
+        ],
+        "at-rule-no-unknown": [
+            true,
+            {
+                "ignoreAtRules": ["extend", "each", "include", "mixin"]
+            }
+        ],
+        "block-no-empty": [
+            true,
+            {
+                "ignore": ["comments"]
+            }
+        ],
+        "color-function-notation": [
+            "modern",
+            { "ignore": ["with-var-inside"] }
+        ],
+        "comment-empty-line-before": [
+            "always",
+            {
+                "except": ["first-nested"],
+                "ignore": ["after-comment", "stylelint-commands"],
+                "ignoreComments": [
+                    "^\\s*@passthroughs?",
+                    "^\\s*@deprecated?",
+                    "^\\s*@todo?"
+                ]
+            }
+        ],
+        "custom-property-pattern": [
+            "^(spectrum|mod|highcontrast|system|_)",
+            {}
+        ],
+        "declaration-block-no-duplicate-custom-properties": true,
+        "declaration-property-value-no-unknown": [
+            true,
+            {
+                "ignoreProperties": {
+                    "/.+/": ["CanvasText", "preserve-parent-color"]
+                }
+            }
+        ],
+        "declaration-block-no-shorthand-property-overrides": true,
+        "function-no-unknown": [
+            true,
+            {
+                "severity": "warning"
+            }
+        ],
+        "max-nesting-depth": [3, { "severity": "warning" }],
+        "property-no-unknown": [
+            true,
+            {
+                "checkPrefixed": true
+            }
+        ],
+        "rule-empty-line-before": [
+            "always",
+            {
+                "except": ["first-nested"],
+                "ignore": ["after-comment"]
+            }
+        ],
+        "selector-attribute-quotes": "always",
+        "selector-class-pattern": [
+            "^(spectrum)[A-Za-z0-9-]*",
+            {
+                "resolveNestedSelectors": true
+            }
+        ],
+        "selector-not-notation": "complex",
+        "value-keyword-case": [
+            "lower",
+            {
+                "camelCaseSvgKeywords": true,
+                "ignoreKeywords": ["Transparent", "Text"]
+            }
+        ],
+        "value-no-vendor-prefix": [
+            true,
+            {
+                "disableFix": true,
+                "severity": "warning"
+            }
+        ],
+        "csstools/use-logical": true,
+        "order/order": ["custom-properties", "declarations"],
+        "spectrum-tools/no-missing-var": true,
+        "spectrum-tools/no-unused-custom-properties": null,
+        "spectrum-tools/no-unknown-custom-properties": null
     },
     "overrides": [
         {
@@ -24,6 +139,33 @@
                 "selector-class-pattern": null,
                 "no-descending-specificity": null,
                 "declaration-block-no-redundant-longhand-properties": null
+            }
+        },
+        {
+            "files": ["packages/*/src/*.css", "tools/*/src/*.css"],
+            "extends": ["stylelint-config-standard"],
+            "rules": {
+                "spectrum-tools/no-unknown-custom-properties": [
+                    true,
+                    {
+                        "ignoreList": [
+                            "^--mod-",
+                            "^--system-",
+                            "^--spectrum-picked-color$"
+                        ],
+                        "skipDependencies": false,
+                        "disableFix": true,
+                        "severity": "warning"
+                    }
+                ],
+                "spectrum-tools/no-unused-custom-properties": [
+                    true,
+                    {
+                        "ignoreList": ["^--mod-"],
+                        "disableFix": true,
+                        "severity": "warning"
+                    }
+                ]
             }
         }
     ]

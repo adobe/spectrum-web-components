@@ -24,7 +24,7 @@ import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
 import { areIconsPresent, isOverlayOpen } from '../../overlay/stories/index.js';

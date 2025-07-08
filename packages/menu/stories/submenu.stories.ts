@@ -19,7 +19,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import { Overlay, VirtualTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-circle.js';
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 
@@ -164,7 +164,7 @@ export const submenu = (): TemplateResult => {
             @change=${handleRootChange}
             @sp-opened=${clearValues}
         >
-            <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+            <sp-icon-circle slot="icon"></sp-icon-circle>
             <sp-menu-group
                 @change=${() => console.log('group change')}
                 role="none"

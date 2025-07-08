@@ -10,25 +10,338 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-swatch.css");
-@import url("./swatch-overrides.css");
+:host {
+    --spectrum-swatch-icon-border-color: var(--mod-swatch-icon-border-color, rgb(0 0 0 / var(--spectrum-swatch-disabled-icon-border-opacity)));
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-medium));
+    --spectrum-swatch-border-radius: var(--mod-swatch-border-radius, var(--spectrum-corner-radius-100));
+    --spectrum-swatch-border-thickness: var(--mod-swatch-border-thickness, var(--spectrum-border-width-100));
+    --spectrum-swatch-border-thickness-selected: var(--mod-swatch-border-thickness-selected, var(--spectrum-border-width-200));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-75));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-medium));
+    --spectrum-swatch-border-color-selected: var(--highcontrast-swatch-border-color-selected, var(--mod-swatch-border-color-selected, var(--spectrum-gray-1000)));
+    --spectrum-swatch-inner-border-color-selected: var(--highcontrast-swatch-background-color-selected, var(--mod-swatch-inner-border-color-selected, var(--spectrum-gray-25)));
+    --spectrum-swatch-disabled-icon-color: var(--highcontrast-swatch-disabled-icon-color, var(--mod-swatch-disabled-icon-color, var(--spectrum-white)));
+    --spectrum-swatch-icon-color: var(--highcontrast-swatch-icon-color, var(--mod-swatch-icon-color, var(--spectrum-neutral-content-color-default)));
+    --spectrum-swatch-slash-icon-color: var(--highcontrast-swatch-fill-foreground-color, var(--mod-swatch-slash-icon-color, var(--spectrum-negative-visual-color)));
+    --spectrum-mixed-button-background: var(--spectrum-gray-25);
+    --spectrum-add-button-background: var(--spectrum-gray-100);
+    --spectrum-add-button-background-hover: var(--spectrum-gray-200);
+    --spectrum-add-button-background-down: var(--spectrum-gray-200);
+    --spectrum-add-button-background-keyboard-focus: var(--spectrum-gray-200);
+    --spectrum-swatch-border: rgb(from var(--mod-swatch-border-color, var(--spectrum-swatch-border-color)) r g b / var(--mod-swatch-border-opacity, var(--spectrum-swatch-border-opacity)));
+    --spectrum-swatch-focus-indicator-color: var(--highcontrast-swatch-focus-indicator-color, var(--mod-swatch-focus-indicator-color, var(--spectrum-focus-indicator-color)));
+    --spectrum-swatch-focus-indicator-thickness: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-focus-indicator-thickness));
+    --spectrum-swatch-focus-indicator-gap: var(--mod-swatch-focus-indicator-gap, var(--spectrum-focus-indicator-gap));
+}
 
-/**
- * Begin work around for https://github.com/adobe/spectrum-css/issues/1460
- */
+:host([add]) {
+    --spectrum-swatch-border: var(--spectrum-add-button-background);
+}
+
+:host([add][hover]) {
+    --spectrum-swatch-border: var(--spectrum-add-button-background-hover);
+}
+
+:host([add][active]),
+:host([add]:active) {
+    --spectrum-swatch-border: var(--spectrum-add-button-background-down);
+}
+
+:host([size="xs"]) {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-extra-small));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-50));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-extra-small));
+}
+
+:host([size="s"]) {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-small));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-75));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-small));
+}
+
+:host([size="l"]) {
+    --spectrum-swatch-size: var(--mod-swatch-size, var(--spectrum-swatch-size-large));
+    --spectrum-swatch-disabled-icon-size: var(--mod-swatch-disabled-icon-size, var(--spectrum-workflow-icon-size-200));
+    --spectrum-swatch-slash-thickness: var(--mod-swatch-slash-thickness, var(--spectrum-swatch-slash-thickness-large));
+}
+
+:host {
+    inline-size: var(--spectrum-swatch-size);
+    block-size: var(--spectrum-swatch-size);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    outline-width: 0;
+    outline-style: solid;
+    outline-color: transparent;
+    user-select: none;
+    user-select: none;
+}
+
+:host .disabledIcon {
+    inline-size: var(--spectrum-swatch-disabled-icon-size);
+    block-size: var(--spectrum-swatch-disabled-icon-size);
+}
+
+:host,
+:host:before {
+    border-radius: var(--spectrum-swatch-border-radius);
+}
+
+:host([mixed-value]) {
+    --spectrum-picked-color: var(--mod-mixed-button-background, var(--spectrum-mixed-button-background));
+}
+
+:host([add]) {
+    --spectrum-picked-color: var(--mod-add-button-background, var(--spectrum-add-button-background));
+}
+
+:host([add]) .fill {
+    background: var(--spectrum-picked-color);
+}
+
+:host([add][hover]) {
+    --spectrum-picked-color: var(--mod-add-button-background-hover, var(--spectrum-add-button-background-hover));
+}
+
+:host([add][active]),
+:host([add]:active) {
+    --spectrum-picked-color: var(--mod-add-button-background-down, var(--spectrum-add-button-background-down));
+}
+
+:host([add][active]),
+:host([add][hover]),
+:host([add]:active) {
+    cursor: pointer;
+}
+
+@media (hover: hover) {
+    :host([add][hover]),
+    :host([add]:hover) {
+        --spectrum-swatch-border: var(--spectrum-add-button-background-hover);
+        --spectrum-picked-color: var(--mod-add-button-background-hover, var(--spectrum-add-button-background-hover));
+        cursor: pointer;
+    }
+}
+
+:host([add][focus-visible]),
+:host([add][keyboard-focused]),
+:host([add]:focus-visible) {
+    --spectrum-picked-color: var(--mod-add-button-background-keyboard-focus, var(--spectrum-add-button-background-keyboard-focus));
+}
+
+:host([add]) #icon {
+    color: var(--spectrum-swatch-icon-color);
+    display: block;
+}
+
+:host([focus-visible]),
+:host([keyboard-focused]),
+:host(:focus-visible) {
+    outline-width: var(--mod-swatch-focus-indicator-thickness, var(--spectrum-swatch-focus-indicator-thickness));
+    outline-color: var(--mod-swatch-focus-indicator-color, var(--spectrum-swatch-focus-indicator-color));
+    outline-offset: var(--mod-swatch-focus-indicator-gap, var(--spectrum-swatch-focus-indicator-gap));
+
+    transition: outline-color var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
+}
+
+:host([selected]) {
+    background: var(--spectrum-swatch-inner-border-color-selected);
+}
+
+:host([selected]) .fill {
+    clip-path: polygon(
+        calc(var(--spectrum-swatch-border-thickness-selected) * 2) calc(var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2) calc(var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2) calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2),
+        calc(var(--spectrum-swatch-border-thickness-selected) * 2) calc(100% - var(--spectrum-swatch-border-thickness-selected) * 2)
+    );
+    border-radius: 0;
+}
+
+:host([selected]) .fill:before {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+:host([selected]):before {
+    opacity: 1;
+}
+
+:host([image]) .fill:before {
+    background: transparent;
+}
+
+:host([mixed-value]) .fill {
+    background: var(--spectrum-picked-color, transparent);
+}
+
+:host([mixed-value]) #icon {
+    color: var(--spectrum-swatch-icon-color);
+    display: block;
+}
+
+:host(:not([mixed-value]), :not([add])) .fill {
+    background: var(--spectrum-picked-color, transparent);
+    background-image: none;
+}
+
+:host(:not([mixed-value]), :not([add])) .fill:after {
+    inline-size: var(--spectrum-swatch-slash-thickness);
+    content: "";
+    position: absolute;
+    transform: rotate(45deg);
+    block-size: 200%;
+    background: var(--spectrum-swatch-slash-icon-color);
+}
+
+:host(:not([mixed-value]), :not([add])) .fill:after {
+    transform: rotate(65deg);
+    block-size: 215%;
+}
+
+:host([disabled]) .disabledIcon {
+    display: block;
+}
+
+:host:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border-width: var(--spectrum-swatch-border-thickness-selected);
+    border-style: solid;
+    border-color: var(--spectrum-swatch-border-color-selected);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.fill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    inline-size: 100%;
+    block-size: 100%;
+    box-sizing: border-box;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.fill,
+.fill:before {
+    border-radius: var(--mod-swatch-border-radius, var(--spectrum-swatch-border-radius));
+}
 
 .fill:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     background: var(--spectrum-picked-color, transparent);
+    box-shadow: inset 0 0 0 var(--mod-swatch-border-thickness, var(--spectrum-swatch-border-thickness)) var(--highcontrast-swatch-border-color, var(--mod-swatch-border, var(--spectrum-swatch-border)));
 }
 
-:host([border="none"]) .fill:before {
-    background: var(--spectrum-picked-color, transparent);
+#icon {
+    display: none;
+    pointer-events: none;
+    color: var(--spectrum-picked-color, transparent);
 }
 
-:host .is-image .fill:before {
-    background: #0000;
+.disabledIcon {
+    position: relative;
+    z-index: 1;
+
+    display: none;
+    pointer-events: none;
+
+    color: var(--spectrum-swatch-disabled-icon-color);
+    stroke: var(--spectrum-swatch-disabled-icon-color);
 }
 
-/**
- * End workaround for https://github.com/adobe/spectrum-css/issues/1460
- */
+.disabledIcon path:first-child {
+    fill: var(--spectrum-swatch-disabled-icon-color);
+}
+
+.disabledIcon path:last-child {
+    fill: var(--spectrum-swatch-icon-border-color);
+}
+
+:host([shape="rectangle"]) {
+    inline-size: calc(var(--spectrum-swatch-size) * var(--spectrum-swatch-rectangle-width-multiplier));
+}
+
+:host([rounding="none"]) {
+    border-radius: var(--spectrum-corner-radius-none);
+}
+
+:host([rounding="full"]:not([shape="rectangle"])) {
+    border-radius: var(--mod-corner-radius-full, var(--spectrum-corner-radius-full));
+}
+
+:host([rounding="full"]:not([shape="rectangle"])) .fill {
+    clip-path: circle(calc(50% - var(--spectrum-swatch-border-thickness-selected) * 2) at 50% 50%);
+}
+
+::slotted([name="image"]) {
+    object-fit: contain;
+
+    inline-size: 100%;
+    block-size: 100%;
+
+    transition:
+        width var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out,
+        height var(--mod-animation-duration-100, var(--spectrum-animation-duration-100)) ease-in-out;
+}
+
+@media (forced-colors: active) {
+    :host {
+        --mod-mixed-button-background: ButtonFace;
+
+        --mod-add-button-background: ButtonFace;
+        --mod-add-button-background-hover: ButtonText;
+        --mod-add-button-background-down: ButtonText;
+
+        --highcontrast-swatch-disabled-icon-color: GrayText;
+        --highcontrast-swatch-focus-indicator-color: ButtonText;
+        --highcontrast-swatch-background-color-selected: ButtonFace;
+        --highcontrast-swatch-border-color-selected: Highlight;
+        --highcontrast-swatch-border-color: ButtonText;
+        --highcontrast-swatch-fill-foreground-color: ButtonText;
+    }
+
+    .fill {
+        forced-color-adjust: none;
+    }
+
+    :host([add][active]),
+    :host([add][hover]),
+    :host([add]:active),
+    :host([mixed-value]) {
+        --highcontrast-swatch-icon-color: ButtonFace;
+    }
+
+    @media (hover: hover) {
+        :host([add][hover]),
+        :host([add]:hover) {
+            --highcontrast-swatch-icon-color: ButtonFace;
+        }
+    }
+
+    :host([add][focus-visible]),
+    :host([add][keyboard-focused]),
+    :host([add]:focus-visible) {
+        --highcontrast-swatch-icon-color: ButtonFace;
+    }
+
+    :host([disabled]) {
+        --highcontrast-swatch-border-color: GrayText;
+    }
+}

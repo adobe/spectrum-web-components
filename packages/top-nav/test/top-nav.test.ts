@@ -19,16 +19,16 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('TopNav', () => {
-    testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
+    testForLitDevWarnings(async () => await fixture<TopNav>(Default() as any));
     it('loads default top-nav accessibly', async () => {
-        const el = await fixture<TopNav>(Default());
+        const el = await fixture<TopNav>(Default() as any);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('accepts and removes `label` accessibly', async () => {
-        const el = await fixture<TopNav>(Default());
+        const el = await fixture<TopNav>(Default() as any);
 
         await elementUpdated(el);
 
@@ -41,14 +41,14 @@ describe('TopNav', () => {
         await expect(el).to.be.accessible();
     });
     it('loads with a selected item accessible', async () => {
-        const el = await fixture<TopNav>(Selected());
+        const el = await fixture<TopNav>(Selected() as any);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('updates indicator size when Nav Item content changes', async () => {
-        const el = await fixture<TopNav>(Selected());
+        const el = await fixture<TopNav>(Selected() as any);
 
         await elementUpdated(el);
 
@@ -77,7 +77,7 @@ describe('TopNav', () => {
         ).to.be.greaterThan(widthEnd);
     });
     it('can have an item removed', async () => {
-        const el = await fixture<TopNav>(Selected());
+        const el = await fixture<TopNav>(Selected() as any);
         const item = el.querySelector('.selected') as TopNavItem;
 
         await elementUpdated(el);
@@ -95,7 +95,7 @@ describe('TopNav', () => {
 describe('TopNavItem', () => {
     it('passes click to `<a>`', async () => {
         const clickSpy = spy();
-        const test = await fixture<TopNav>(Selected());
+        const test = await fixture<TopNav>(Selected() as any);
         const el = test.querySelector(
             'sp-top-nav-item:nth-of-type(4)'
         ) as TopNavItem;
@@ -114,7 +114,7 @@ describe('TopNavItem', () => {
     });
     it('`<a>` accepts click across full item area', async () => {
         const clickSpy = spy();
-        const test = await fixture<TopNav>(Selected());
+        const test = await fixture<TopNav>(Selected() as any);
         const el = test.querySelector(
             'sp-top-nav-item:nth-of-type(4)'
         ) as TopNavItem;

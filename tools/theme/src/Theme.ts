@@ -23,13 +23,10 @@ import {
     SCALE_VALUES,
     SettableFragmentTypes,
     ShadowRootWithAdoptedStyleSheets,
-    SYSTEM_VARIANT_VALUES,
-    SystemContextCallback,
-    SystemVariant,
     ThemeFragmentMap,
     ThemeKindProvider,
 } from './theme-interfaces.js';
-export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
+export type { ProvideLang, ThemeFragmentMap, Color, Scale };
 /**
  * @element sp-theme
  * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
@@ -38,13 +35,13 @@ export type { ProvideLang, ThemeFragmentMap, Color, Scale, SystemVariant };
  */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
-    private static defaultFragments: Set<FragmentName> = new Set(['spectrum']);
+    private static defaultFragments: Set<FragmentName> = new Set([]);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
     static VERSION = version;
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'lang', 'dir', 'system'];
+        return ['color', 'scale', 'lang', 'dir'];
     }
 
     _dir: 'ltr' | 'rtl' | '' = '';
@@ -84,9 +81,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
-        } else if (attrName === 'system') {
-            this.system = value as SystemVariant;
-            this._provideSystemContext();
         } else if (attrName === 'dir') {
             this.dir = value as 'ltr' | 'rtl' | '';
         }
@@ -97,46 +91,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
-    private _system: SystemVariant | '' = 'spectrum';
-    /**
-     * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
-     *
-     * A value is requried.
-     * @type {"spectrum" | "express" }
-     * @attr
-     */
-    get system(): SystemVariant | '' {
-        const systemFragments = Theme.themeFragmentsByKind.get('system');
-        const { name } =
-            (systemFragments && systemFragments.get('default')) || {};
-        return this._system || (name as SystemVariant) || '';
-    }
-
-    set system(newValue: SystemVariant | '') {
-        if (newValue === this._system) return;
-        const system =
-            !!newValue && SYSTEM_VARIANT_VALUES.includes(newValue)
-                ? newValue
-                : this.system;
-        if (system !== this._system) {
-            this._system = system;
-            this.requestUpdate();
-        }
-        if (system) {
-            this.setAttribute('system', system);
-            /* c8 ignore next 3 */
-        } else {
-            this.removeAttribute('system');
-        }
-    }
-
     private _color: Color | '' = '';
 
     /**
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
      * A value is requried.
-     * @type {"lightest" | "light" | "dark" | "darkest" | ""}
+     * @type {"light" | "dark" | ""}
      * @attr
      */
     get color(): Color | '' {
@@ -206,13 +167,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             name: FragmentName,
             kind?: FragmentType
         ): CSSResultGroup | undefined => {
-            const currentStyles =
-                kind && kind !== 'system' && this.system !== 'spectrum'
-                    ? fragments.get(`${name}-${this.system}`)
-                    : fragments.get(name);
-            // system="spectrum" is available by default and doesn't need to be applied.
-            const isAppliedFragment =
-                name === 'spectrum' || !kind || this.hasAttribute(kind);
+            const currentStyles = fragments.get(name);
+            const isAppliedFragment = !kind || this.hasAttribute(kind);
             if (currentStyles && isAppliedFragment) {
                 return currentStyles.styles;
             }
@@ -236,13 +192,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }, [] as CSSResultGroup[]);
         const themeFragmentsByKind = Theme.themeFragmentsByKind;
 
-        checkForIssues(
-            this,
-            this.system,
-            this.color,
-            this.scale,
-            themeFragmentsByKind
-        );
+        checkForIssues(this, this.color, this.scale, themeFragmentsByKind);
 
         return [...styles];
     }
@@ -265,46 +215,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             'sp-language-context',
             this._handleContextPresence as EventListener
         );
-        this.addEventListener(
-            'sp-system-context',
-            this._handleSystemContext as EventListener
-        );
 
         this.updateComplete = this.__createDeferredPromise();
-    }
-
-    private _systemContextConsumers = new Map<
-        HTMLElement,
-        [SystemContextCallback, () => void]
-    >();
-
-    private _handleSystemContext(
-        event: CustomEvent<{ callback: SystemContextCallback }>
-    ): void {
-        event.stopPropagation();
-
-        const target = event.composedPath()[0] as HTMLElement;
-
-        // Avoid duplicate registrations
-        if (this._systemContextConsumers.has(target)) {
-            return;
-        }
-
-        // Create an unsubscribe function
-        const unsubscribe: () => void = () =>
-            this._systemContextConsumers.delete(target);
-
-        // Store the callback and unsubscribe function
-        this._systemContextConsumers.set(target, [
-            event.detail.callback,
-            unsubscribe,
-        ]);
-
-        // Provide the context data
-        const [callback] = this._systemContextConsumers.get(target) || [];
-        if (callback) {
-            callback(this.system, unsubscribe);
-        }
     }
 
     public updateComplete!: Promise<boolean>;
@@ -405,12 +317,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         );
     }
 
-    private _provideSystemContext(): void {
-        this._systemContextConsumers.forEach(([callback, unsubscribe]) =>
-            callback(this.system, unsubscribe)
-        );
-    }
-
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
@@ -437,7 +343,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
 function checkForIssues(
     instance: Theme,
-    system: SystemVariant | '',
     color: Color | '',
     scale: Scale | '',
     themeFragmentsByKind: ThemeFragmentMap
@@ -445,12 +350,10 @@ function checkForIssues(
     if (window.__swc.DEBUG) {
         const issues: string[] = [];
         const checkForAttribute = (
-            name: 'system' | 'color' | 'scale',
+            name: 'color' | 'scale',
             resolvedValue: string,
             actualValue: string | null
         ): void => {
-            const systemModifier =
-                system && system !== 'spectrum' ? `-${system}` : '';
             if (!resolvedValue) {
                 issues.push(
                     `You have not explicitly set the "${name}" attribute and there is no default value on which to fallback.`
@@ -459,26 +362,13 @@ function checkForIssues(
                 issues.push(
                     `You have not explicitly set the "${name}" attribute, the default value ("${resolvedValue}") is being used as a fallback.`
                 );
-            } else if (
-                !themeFragmentsByKind
-                    .get(name)
-                    ?.get(
-                        resolvedValue +
-                            (name === 'system' ? '' : systemModifier)
-                    )
-            ) {
+            } else if (!themeFragmentsByKind.get(name)?.get(resolvedValue)) {
                 issues.push(
-                    `You have set "${name}='${resolvedValue}'" but the associated system fragment has not been loaded.`
+                    `You have set "${name}='${resolvedValue}'" but the associated fragment has not been loaded.`
                 );
             }
         };
 
-        if (['lightest', 'darkest'].includes(color || '')) {
-            issues.push(
-                `DEPRECATION NOTICE: Color "lightest" and "darkest" are deprecated. For more information, see: https://opensource.adobe.com/spectrum-web-components/tools/theme/`
-            );
-        }
-        checkForAttribute('system', system, instance.getAttribute('system'));
         checkForAttribute('color', color, instance.getAttribute('color'));
         checkForAttribute('scale', scale, instance.getAttribute('scale'));
 

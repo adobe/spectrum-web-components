@@ -10,23 +10,29 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Template } from './template.js';
+import { argTypes } from './args.js';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-
-import { Template } from './template.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 
 export default {
     title: 'Action Bar',
     component: 'sp-action-bar',
+    args: {
+        open: true,
+        emphasized: false,
+        tools: true,
+        content: '2 selected',
+        hasActionMenu: false,
+    },
+    argTypes,
     parameters: {
         // Getting the Figma link: https://help.figma.com/hc/en-us/articles/360045003494-Storybook-and-Figma
         design: {
@@ -36,69 +42,85 @@ export default {
     },
 };
 
-export const Default = (): TemplateResult =>
-    Template({
-        open: true,
-    });
+export const Default = Template.bind({});
 
-export const emphasized = (): TemplateResult => {
-    return html`
-        <sp-action-bar open emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+// ********* VRT ONLY ********* //
+export const WithForcedColors = Template.bind({});
+WithForcedColors.args = Default.args;
+WithForcedColors.tags = ['!autodocs', '!dev'];
+WithForcedColors.parameters = {
+    chromatic: {
+        forcedColors: 'active',
+        modes: {
+            'Light | LTR': {
+                disable: true,
+            },
+            'Dark | RTL': {
+                disable: true,
+            },
+        },
+    },
 };
 
-export const fixed = (): TemplateResult => {
-    return html`
-        <style>
-            [variant='fixed'] {
-                bottom: 2.5em;
-                inset-inline-end: 1em;
-            }
-        </style>
-        <sp-action-bar open variant="fixed">
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+// ********* DOCS ONLY ********* //
+
+/**
+ * The emphasized variant provides additional visual weight to the action bar.
+ */
+export const Emphasized = Template.bind({});
+Emphasized.tags = ['!dev'];
+Emphasized.args = {
+    emphasized: true,
+};
+Emphasized.parameters = {
+    chromatic: { disableSnapshot: true },
 };
 
-export const flexible = (): TemplateResult => {
-    return html`
-        <sp-action-bar open flexible emphasized>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-        </sp-action-bar>
-    `;
+/**
+ * The fixed variant positions the action bar at a fixed location on the screen.
+ */
+export const Fixed = Template.bind({});
+Fixed.tags = ['!dev'];
+Fixed.args = {
+    variant: 'fixed',
+};
+Fixed.parameters = {
+    chromatic: { disableSnapshot: true },
 };
 
-export const hasActionMenuAsChild = (): TemplateResult => {
-    return html`
-        <sp-action-bar open>
-            2 selected
-            <sp-action-button slot="buttons" label="Edit">
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-            <sp-action-menu label="More Actions" slot="buttons">
-                <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
-                <sp-menu-item>
-                    Select some items
-                    <sp-menu slot="submenu" selects="multiple">
-                        <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected>B</sp-menu-item>
-                        <sp-menu-item>C</sp-menu-item>
-                    </sp-menu>
-                </sp-menu-item>
-            </sp-action-menu>
-        </sp-action-bar>
-    `;
+/**
+ * The flexible variant allows the action bar to adapt to different screen sizes.
+ */
+export const Flexible = Template.bind({});
+Flexible.tags = ['!dev'];
+Flexible.args = {
+    variant: 'flexible',
+    emphasized: true,
+};
+Flexible.parameters = {
+    chromatic: { disableSnapshot: true },
+};
+
+/**
+ * Action bars can include action menus for additional functionality.
+ */
+export const WithActionMenu = Template.bind({});
+WithActionMenu.tags = ['!dev'];
+WithActionMenu.args = {
+    hasActionMenu: true,
+};
+WithActionMenu.parameters = {
+    chromatic: { disableSnapshot: true },
+};
+
+/**
+ * Action bars can be displayed without tools for simpler use cases.
+ */
+export const WithoutTools = Template.bind({});
+WithoutTools.tags = ['!dev'];
+WithoutTools.args = {
+    tools: false,
+};
+WithoutTools.parameters = {
+    chromatic: { disableSnapshot: true },
 };

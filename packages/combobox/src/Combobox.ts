@@ -24,6 +24,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
+    classMap,
     ifDefined,
     live,
     repeat,
@@ -437,7 +438,10 @@ export class Combobox extends Textfield {
                 @click=${this.toggleOpen}
                 @keydown=${this.handleComboboxKeydown}
                 id="input"
-                class="input"
+                class=${classMap({
+                    input: true,
+                    'is-keyboardFocused': this.focused,
+                })}
                 role="combobox"
                 type="text"
                 .value=${live(this.displayValue)}
@@ -469,23 +473,28 @@ export class Combobox extends Textfield {
         }
 
         return html`
-            ${super.render()}
-            <sp-picker-button
-                aria-controls="listbox-menu"
-                aria-describedby="${this.helpTextId} tooltip"
-                aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label"
-                @click=${this.toggleOpen}
-                tabindex="-1"
-                class="button ${this.focused
-                    ? 'focus-visible is-keyboardFocused'
-                    : ''}"
-                ?disabled=${this.disabled}
-                ?focused=${this.focused}
-                ?quiet=${this.quiet}
-                size=${this.size}
-            ></sp-picker-button>
+            <div class="content">
+                ${super.render()}
+                <sp-picker-button
+                    aria-controls="listbox-menu"
+                    aria-describedby="${this.helpTextId} tooltip"
+                    aria-expanded=${this.open ? 'true' : 'false'}
+                    aria-label=${ifDefined(this.label || this.appliedLabel)}
+                    aria-labelledby="applied-label label"
+                    @click=${this.toggleOpen}
+                    tabindex="-1"
+                    class=${classMap({
+                        button: true,
+                        'focus-visible': this.focused,
+                        'is-keyboardFocused': this.focused,
+                        'is-invalid': this.invalid,
+                    })}
+                    ?disabled=${this.disabled}
+                    ?focused=${this.focused}
+                    ?quiet=${this.quiet}
+                    size=${this.size}
+                ></sp-picker-button>
+            </div>
             <sp-overlay
                 ?open=${this.open}
                 .triggerElement=${this.input}

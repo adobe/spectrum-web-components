@@ -20,7 +20,6 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
 import switchStyles from './switch.css.js';
-import legacyStyles from './switch-legacy.css.js';
 
 /**
  * @element sp-switch
@@ -33,7 +32,7 @@ export class Switch extends SizedMixin(CheckboxBase) {
         /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
-            return [switchStyles, legacyStyles];
+            return [switchStyles];
         }
         return [switchStyles];
     }

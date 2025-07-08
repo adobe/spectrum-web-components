@@ -10,5 +10,52 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-asset.css");
-@import url("./asset-overrides.css");
+/* Base variables */
+:host {
+    --spectrum-asset-folder-background: var(--highcontrast-asset-icon-background-color, var(--spectrum-asset-folder-background-color, var(--spectrum-gray-200)));
+    --spectrum-asset-file-background: var(--highcontrast-asset-icon-background-color, var(--spectrum-asset-file-background-color, var(--spectrum-gray-25)));
+    --spectrum-asset-folder-outline: var(--spectrum-asset-icon-outline-color, var(--spectrum-gray-500));
+    --spectrum-asset-file-outline: var(--spectrum-asset-icon-outline-color, var(--spectrum-gray-500));
+
+    /* layout */
+    --spectrum-asset-icon-min-width: 48px;
+    --spectrum-asset-icon-max-width: 80px;
+    --spectrum-asset-icon-margin: 20px;
+
+    /* base styles */
+    inline-size: 100%;
+    block-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+::slotted(*) {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    object-fit: contain;
+    transition: opacity var(--spectrum-animation-duration-100);
+}
+
+.file,
+.folder {
+    inline-size: max(var(--spectrum-asset-icon-min-width, 48px), min(100%, var(--spectrum-asset-icon-max-width, 80px)));
+    block-size: 100%;
+    margin: var(--spectrum-asset-icon-margin, 20px);
+}
+
+.folderBackground {
+    fill: var(--spectrum-asset-folder-background);
+}
+
+.fileBackground {
+    fill: var(--spectrum-asset-file-background);
+}
+
+.folderOutline {
+    fill: var(--spectrum-asset-folder-outline);
+}
+
+.fileOutline {
+    fill: var(--spectrum-asset-file-outline);
+}

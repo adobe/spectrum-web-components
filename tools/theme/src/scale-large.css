@@ -11,11 +11,3 @@
  */
 
 @import url("@spectrum-web-components/styles/scale-large.css");
-@import url("@spectrum-web-components/styles/tokens/large-vars.css");
-@import url("@spectrum-web-components/styles/tokens/spectrum/large-vars.css");
-
-:root,
-:host {
-    --spectrum-global-alias-appframe-border-size: 1px;
-    --swc-scale-factor: 1.25;
-}

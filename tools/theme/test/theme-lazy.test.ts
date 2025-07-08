@@ -13,12 +13,7 @@
 import '@spectrum-web-components/theme/sp-theme.js';
 import { Theme, ThemeFragmentMap } from '@spectrum-web-components/theme';
 import coreStyles from '@spectrum-web-components/theme/src/theme.css.js';
-import lightStyles from '@spectrum-web-components/theme/src/theme-light.css.js';
-import lightestStyles from '@spectrum-web-components/theme/src/theme-lightest.css.js';
-import darkStyles from '@spectrum-web-components/theme/src/theme-dark.css.js';
-import darkestStyles from '@spectrum-web-components/theme/src/theme-darkest.css.js';
 import largeStyles from '@spectrum-web-components/theme/src/scale-large.css.js';
-import mediumStyles from '@spectrum-web-components/theme/src/scale-medium.css.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 type TestableThemeConstructor = {
@@ -31,16 +26,10 @@ describe('Themes - lazy', () => {
         (
             Theme as unknown as TestableThemeConstructor
         ).themeFragmentsByKind.clear();
-        // Core is registered by default in `theme.ts`
-        Theme.registerThemeFragment('spectrum', 'system', coreStyles);
     });
     after(() => {
-        Theme.registerThemeFragment('light', 'color', lightStyles);
-        Theme.registerThemeFragment('lightest', 'color', lightestStyles);
-        Theme.registerThemeFragment('dark', 'color', darkStyles);
-        Theme.registerThemeFragment('darkest', 'color', darkestStyles);
+        Theme.registerThemeFragment('core', 'core', coreStyles);
         Theme.registerThemeFragment('large', 'scale', largeStyles);
-        Theme.registerThemeFragment('medium', 'scale', mediumStyles);
     });
     it('loads w/ no themes and none set', async () => {
         const el = await fixture<Theme>(html`
@@ -66,8 +55,7 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        Theme.registerThemeFragment('light', 'color', lightStyles);
-        Theme.registerThemeFragment('medium', 'scale', mediumStyles);
+        Theme.registerThemeFragment('core', 'core', coreStyles);
 
         await elementUpdated(el);
 
@@ -98,13 +86,12 @@ describe('Themes - lazy', () => {
     });
     it('loads w/ not enough themes', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="lightest" scale="large"></sp-theme>
+            <sp-theme color="light" scale="large"></sp-theme>
         `);
 
         await elementUpdated(el);
 
-        Theme.registerThemeFragment('light', 'color', lightStyles);
-        Theme.registerThemeFragment('medium', 'scale', mediumStyles);
+        Theme.registerThemeFragment('core', 'core', coreStyles);
 
         await elementUpdated(el);
 
@@ -118,13 +105,12 @@ describe('Themes - lazy', () => {
     });
     it('loads w/ lazy themes', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="lightest" scale="large"></sp-theme>
+            <sp-theme color="light" scale="large"></sp-theme>
         `);
 
         await elementUpdated(el);
 
-        Theme.registerThemeFragment('light', 'color', lightStyles);
-        Theme.registerThemeFragment('medium', 'scale', mediumStyles);
+        Theme.registerThemeFragment('core', 'core', coreStyles);
 
         await elementUpdated(el);
 
@@ -136,8 +122,7 @@ describe('Themes - lazy', () => {
             ).to.equal(1);
         }
 
-        Theme.registerThemeFragment('lightest', 'color', lightestStyles);
-        Theme.registerThemeFragment('large', 'scale', largeStyles);
+        Theme.registerThemeFragment('core', 'core', coreStyles);
 
         await elementUpdated(el);
 

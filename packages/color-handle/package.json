@@ -29,7 +29,6 @@
             "development": "./src/ColorHandle.dev.js",
             "default": "./src/ColorHandle.js"
         },
-        "./src/color-handle-overrides.css.js": "./src/color-handle-overrides.css.js",
         "./src/color-handle.css.js": "./src/color-handle.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

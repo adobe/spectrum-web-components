@@ -21,10 +21,10 @@ type TestableThemeConstructor = {
     themeFragmentsByKind: ThemeFragmentMap;
 };
 
-describe('Systems', () => {
+describe('Contexts', () => {
     it('loads - light', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme system="spectrum" color="light"></sp-theme>
+            <sp-theme color="light"></sp-theme>
         `);
 
         await elementUpdated(el);
@@ -34,7 +34,7 @@ describe('Systems', () => {
     });
     it('loads - dark', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme color="dark"></sp-theme>
+            <sp-theme style="color-scheme: dark;"></sp-theme>
         `);
 
         await elementUpdated(el);
@@ -54,7 +54,7 @@ describe('Systems', () => {
     });
     it('adds an instance only once', async () => {
         const el = await fixture<Theme>(html`
-            <sp-theme system="express"></sp-theme>
+            <sp-theme></sp-theme>
         `);
 
         await elementUpdated(el);
@@ -69,19 +69,6 @@ describe('Systems', () => {
         document.body.append(el);
         expect(testableTheme.instances.has(el), 'third').to.be.true;
         expect(testableTheme.instances.size).to.equal(1);
-    });
-});
-
-describe('Lightest', () => {
-    it('loads', async () => {
-        const el = await fixture<Theme>(html`
-            <sp-theme color="lightest"></sp-theme>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el).to.exist;
-        expect(el).shadowDom.to.exist;
     });
 });
 
@@ -198,34 +185,5 @@ describe('Setting attributes', () => {
                 [...el.shadowRoot.querySelectorAll('style')].length
             ).to.equal(3);
         }
-    });
-
-    it('loads and handles system attribute', async () => {
-        const el = await fixture<Theme>(html`
-            <sp-theme system="spectrum"></sp-theme>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el).to.not.be.undefined;
-        expect(el.hasAttribute('system')).to.be.true;
-        expect(el.getAttribute('system')).to.equal('spectrum');
-
-        el.setAttribute('system', 'invalid');
-        await elementUpdated(el);
-        expect(el.getAttribute('system')).to.equal('spectrum'); // Should fallback to 'spectrum'
-
-        el.setAttribute('system', 'express');
-        await elementUpdated(el);
-        expect(el.getAttribute('system')).to.equal('express');
-
-        // Removing attribute should persist the last valid value
-        el.removeAttribute('system');
-        await elementUpdated(el);
-        expect(el.getAttribute('system')).to.equal('express');
-
-        el.system = 'spectrum';
-        await elementUpdated(el);
-        expect(el.getAttribute('system')).to.equal('spectrum');
     });
 });

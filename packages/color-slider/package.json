@@ -29,7 +29,6 @@
             "development": "./src/ColorSlider.dev.js",
             "default": "./src/ColorSlider.js"
         },
-        "./src/color-slider-overrides.css.js": "./src/color-slider-overrides.css.js",
         "./src/color-slider.css.js": "./src/color-slider.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

@@ -48,23 +48,25 @@ export class PickerButton extends SizedMixin(
     @property({ reflect: true })
     position: 'left' | 'right' = 'right';
 
+    @property({ type: Boolean, reflect: true })
+    rounded = false;
+
     protected get hasText(): boolean {
         return this.slotContentIsPresent;
     }
 
     protected override render(): TemplateResult {
-        const rootClasses = {
-            root: true,
-            uiicononly: !this.hasText,
-            textuiicon: this.hasText,
-        };
         return html`
-            <div class=${classMap(rootClasses)}>
-                <div class="spectrum-PickerButton-fill">
-                    <span
-                        class="spectrum-PickerButton-label is-placeholder"
-                        ?hidden=${!this.hasText}
-                    >
+            <div
+                class=${classMap({
+                    root: true,
+                    uiicononly: !this.hasText,
+                    textuiicon: this.hasText,
+                    rounded: this.rounded,
+                })}
+            >
+                <div class="fill">
+                    <span class="label is-placeholder" ?hidden=${!this.hasText}>
                         <slot name="label"></slot>
                     </span>
                     <slot name="icon">

@@ -10,14 +10,69 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-divider.css");
-@import url("./divider-overrides.css");
+:host {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
+}
+
+:host([size="s"]) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
+}
+
+:host([size="l"]) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
+    --spectrum-divider-background-color: var(--spectrum-gray-800);
+}
+
+:host([static-color="white"]) {
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-static-white);
+}
+
+:host([static-color="white"][size="s"]) {
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-static-white);
+}
+
+:host([static-color="white"][size="l"]) {
+    --spectrum-divider-background-color: var(--spectrum-transparent-white-800);
+}
+
+:host([static-color="black"]) {
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-static-black);
+}
+
+:host([static-color="black"][size="s"]) {
+    --spectrum-divider-background-color: var(--spectrum-divider-background-color-static-black);
+}
+
+:host([static-color="black"][size="l"]) {
+    --spectrum-divider-background-color: var(--spectrum-transparent-black-800);
+}
 
 :host {
     display: block;
+    block-size: var(--spectrum-divider-thickness);
+    inline-size: 100%;
+    border: none;
+    border-width: var(--spectrum-divider-thickness);
+    border-radius: var(--spectrum-divider-thickness);
+    background-color: var(--spectrum-divider-background-color);
+    overflow: visible;
+}
+
+:host([vertical]) {
+    inline-size: var(--spectrum-divider-thickness);
+    block-size: 100%;
+    block-size: var(--spectrum-divider-vertical-height, 100%);
+    margin-block: var(--spectrum-divider-vertical-margin);
+    align-self: var(--spectrum-divider-vertical-align);
 }
 
 hr {
     border: none;
     margin: 0;
+}
+
+@media (forced-colors: active) {
+    :host {
+        background-color: CanvasText;
+    }
 }
