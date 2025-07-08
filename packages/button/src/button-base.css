@@ -10,18 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-button-base.css");
-
+/* Base variables */
 :host {
-    display: inline-flex;
-    vertical-align: top;
-
     --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-icon-size: var(--spectrum-workflow-icon-size-100);
+    display: inline-flex;
+    vertical-align: top;
 }
 
 :host([dir]) {
-    /* spectrum-button.css uses "-webkit-appearance: button" to workaround an
+    /* button.css uses "-webkit-appearance: button" to workaround an
      * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host
      */
@@ -53,8 +51,8 @@
 
 slot[name="icon"]::slotted(svg),
 slot[name="icon"]::slotted(img) {
-    fill: currentcolor;
-    stroke: currentcolor;
+    fill: currentColor;
+    stroke: currentColor;
     block-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
     inline-size: var(--spectrum-icon-size, var(--spectrum-workflow-icon-size-100));
 }

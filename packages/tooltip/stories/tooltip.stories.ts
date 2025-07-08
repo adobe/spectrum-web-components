@@ -12,9 +12,9 @@
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -42,13 +42,13 @@ const iconOptions: {
 } = {
     '': () => html``,
     negative: () => html`
-        <sp-icon-alert slot="icon"></sp-icon-alert>
+        <sp-icon-alert-triangle slot="icon"></<sp-icon-alert-triangle></sp-icon-alert-triangle>
     `,
     positive: () => html`
         <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
     `,
     info: () => html`
-        <sp-icon-info slot="icon"></sp-icon-info>
+        <sp-icon-info-circle slot="icon"></sp-icon-info-circle>
     `,
 };
 

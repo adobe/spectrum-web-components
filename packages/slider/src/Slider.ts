@@ -31,7 +31,7 @@ import {
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
+import { type StyleInfo } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';

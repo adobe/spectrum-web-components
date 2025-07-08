@@ -23,7 +23,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
@@ -65,7 +65,7 @@ describe('Overlay Trigger - Hover', () => {
                     @sp-closed=${() => closedSpy()}
                 >
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>
@@ -95,7 +95,7 @@ describe('Overlay Trigger - Hover', () => {
                 (() => html`
                     <overlay-trigger placement="right-start">
                         <sp-action-button slot="trigger">
-                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                         </sp-action-button>
                         <sp-tooltip slot="hover-content" tip>
                             Magnify
@@ -205,7 +205,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>
@@ -238,7 +238,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                     <sp-popover slot="longpress-content" tip></sp-popover>
@@ -275,7 +275,7 @@ describe('Overlay Trigger - Hover', () => {
             (() => html`
                 <overlay-trigger placement="right-start" type="modal">
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="hover-content" tip></sp-popover>
                 </overlay-trigger>

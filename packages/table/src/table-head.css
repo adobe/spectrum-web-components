@@ -10,8 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-table-head.css");
-
+/* Base variables */
 :host {
-    display: flex;
+    display: table-header-group;
+
+    /* display: flex; */
+}
+
+:host([scrollable]) {
+    z-index: 1;
+    position: sticky;
+    inset-block-start: 0;
 }

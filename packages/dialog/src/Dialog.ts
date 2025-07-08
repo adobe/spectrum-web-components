@@ -25,7 +25,7 @@ import {
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
 import { AlertDialog } from '@spectrum-web-components/alert-dialog/src/AlertDialog.js';
@@ -140,7 +140,9 @@ export class Dialog extends ObserveSlotPresence(AlertDialog, [
                 ${this.renderHero()} ${this.renderHeading()}
                 ${this.error
                     ? html`
-                          <sp-icon-alert class="type-icon"></sp-icon-alert>
+                          <sp-icon-alert-triangle
+                              class="type-icon"
+                          ></sp-icon-alert-triangle>
                       `
                     : nothing}
                 ${this.noDivider

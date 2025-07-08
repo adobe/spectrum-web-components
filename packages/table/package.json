@@ -58,16 +58,10 @@
             "default": "./src/index.js"
         },
         "./src/table-body.css.js": "./src/table-body.css.js",
-        "./src/table-cell-overrides.css.js": "./src/table-cell-overrides.css.js",
         "./src/table-cell.css.js": "./src/table-cell.css.js",
-        "./src/table-checkbox-cell-overrides.css.js": "./src/table-checkbox-cell-overrides.css.js",
         "./src/table-checkbox-cell.css.js": "./src/table-checkbox-cell.css.js",
-        "./src/table-head-cell-overrides.css.js": "./src/table-head-cell-overrides.css.js",
         "./src/table-head-cell.css.js": "./src/table-head-cell.css.js",
-        "./src/table-head-overrides.css.js": "./src/table-head-overrides.css.js",
         "./src/table-head.css.js": "./src/table-head.css.js",
-        "./src/table-overrides.css.js": "./src/table-overrides.css.js",
-        "./src/table-row-overrides.css.js": "./src/table-row-overrides.css.js",
         "./src/table-row.css.js": "./src/table-row.css.js",
         "./src/table.css.js": "./src/table.css.js",
         "./elements.js": {

@@ -29,7 +29,6 @@
             "development": "./src/AlertDialog.dev.js",
             "default": "./src/AlertDialog.js"
         },
-        "./src/alert-dialog-overrides.css.js": "./src/alert-dialog-overrides.css.js",
         "./src/alert-dialog.css.js": "./src/alert-dialog.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

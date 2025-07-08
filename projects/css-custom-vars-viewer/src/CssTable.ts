@@ -12,9 +12,11 @@
 import {
     css,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
+    CSSResultArray,
 } from '@spectrum-web-components/base';
 import {
     property,
@@ -24,38 +26,42 @@ import type {
     SortedEventDetails,
     TableItem,
 } from '@spectrum-web-components/table';
+import '@spectrum-web-components/swatch';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/table/elements.js';
 
 export interface Item extends TableItem {
-    customVar: string;
-    sets: {
-        light: string;
-        dark: string;
-        darkest: string;
-        wireframe: string;
-    };
+    prop: string;
+    light?: string;
+    dark?: string;
 }
 
+/**
+ * @element sp-css-table
+ */
 export class CssTable extends SpectrumElement {
-    static override styles = css`
-        .table-head {
-            align-items: center;
-        }
-        sp-toast {
-            position: fixed;
-            z-index: 300;
-            bottom: var(--spectrum-spacing-400);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        sp-table {
-            height: calc(var(--spectrum-spacing-1000) * 5);
-        }
-        sp-swatch {
-            pointer-events: none;
-        }
-    `;
+    public override static get styles(): CSSResultArray {
+        return [
+            css`
+            .table-head {
+                align-items: center;
+            }
+            sp-toast {
+                position: fixed;
+                z-index: 300;
+                bottom: var(--spectrum-spacing-400);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            sp-table {
+                height: calc(var(--spectrum-spacing-1000) * 5);
+            }
+            sp-swatch {
+                pointer-events: none;
+            }
+        `,
+        ];
+    }
 
     @state()
     copyTimeout?: number;
@@ -64,7 +70,7 @@ export class CssTable extends SpectrumElement {
     copiedText = '';
 
     @property({ type: String, attribute: 'color-theme' })
-    colorTheme: 'light' | 'dark' | 'darkest' | 'wireframe' = 'light';
+    colorTheme: 'light' | 'dark' = 'light';
 
     @property({ type: Array })
     public items: Item[] = [];
@@ -77,22 +83,27 @@ export class CssTable extends SpectrumElement {
             console.log('unable to access clipboard');
         }
         this.copiedText = text;
-        clearTimeout(this.copyTimeout);
+        if (this.copyTimeout) {
+            clearTimeout(this.copyTimeout);
+        }
+
         this.copyTimeout = setTimeout(() => {
             this.copyTimeout = undefined;
         }, 4000) as unknown as number;
     }
 
     private compareItems =
-        (sortKey: 'customVar', sortDirection: 'asc' | 'desc') =>
+        (sortKey: 'prop', sortDirection: 'asc' | 'desc') =>
         (
             a: {
-                customVar: string;
-                sets: object;
+                prop: string;
+                light: string;
+                dark: string;
             },
             b: {
-                customVar: string;
-                sets: object;
+                prop: string;
+                light: string;
+                dark: string;
             }
         ): number => {
             const doSortKey = sortKey;
@@ -105,34 +116,37 @@ export class CssTable extends SpectrumElement {
         };
 
     public renderItem = (item: Item): TemplateResult => {
-        const splitVarName = item.customVar.substring(11);
+        const splitVarName = item.prop.substring(11);
         const splitColourName = splitVarName.split('-').join(' ');
         const colourName =
             splitColourName.charAt(0).toUpperCase() +
             splitColourName.substring(1);
 
         if (!this.colorTheme) {
-            return html``;
+            return nothing;
         }
         return html`
             <sp-table-cell>
                 <sp-swatch
-                    color=${String(item.sets[this.colorTheme])}
+                    color=${String(item[this.colorTheme])}
                     size="s"
                 ></sp-swatch>
             </sp-table-cell>
             <sp-table-cell>${colourName}</sp-table-cell>
             <sp-table-cell>
-                <sp-link quiet @click=${() => this.copyText(item.customVar)}>
-                    ${item.customVar}
+                <sp-link quiet @click=${() => this.copyText(item.prop)}>
+                    ${item.prop}
                 </sp-link>
             </sp-table-cell>
             <sp-table-cell>
                 <sp-link
                     quiet
-                    @click=${() => this.copyText(item.sets[this.colorTheme])}
+                    @click=${() => {
+                        if (!this.colorTheme || !item?.[this.colorTheme]) return;
+                        this.copyText(item[this.colorTheme]);
+                    }}
                 >
-                    ${item.sets[this.colorTheme]}
+                    ${item[this.colorTheme]}
                 </sp-link>
             </sp-table-cell>
         `;
@@ -142,14 +156,14 @@ export class CssTable extends SpectrumElement {
         return html`
             <sp-table
                 size="m"
-                scroller="true"
+                ?scroller=${true}
                 .items=${this.items}
                 .renderItem=${this.renderItem}
                 @sorted=${(event: CustomEvent<SortedEventDetails>): void => {
                     const { sortKey, sortDirection } = event.detail;
                     const items = [...this.items];
                     items.sort(
-                        this.compareItems(sortKey as 'customVar', sortDirection)
+                        this.compareItems(sortKey as 'prop', sortDirection)
                     );
                     this.items = items;
                 }}
@@ -158,7 +172,7 @@ export class CssTable extends SpectrumElement {
                     <sp-table-head-cell>Preview</sp-table-head-cell>
                     <sp-table-head-cell
                         sortable
-                        sort-key="customVar"
+                        sort-key="prop"
                         sort-direction="asc"
                     >
                         Colour name

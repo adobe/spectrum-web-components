@@ -18,8 +18,8 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-list.js';
 
 export default {
     title: 'Action Group/Sizes',

@@ -1,8 +1,9 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2024 Adobe. All rights reserved.
+ *
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
  *
  * Unless required by applicable law or agreed to in writing, software distributed under
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
@@ -10,33 +11,490 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-switch.css");
-@import url("./switch-overrides.css");
+:host {
+    --spectrum-switch-label-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-switch-label-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-switch-label-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-switch-label-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-switch-label-color-disabled: var(--spectrum-disabled-content-color);
+
+    --spectrum-switch-border-width: var(--spectrum-border-width-200);
+
+    --spectrum-switch-border-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-switch-border-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-switch-border-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-switch-border-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-switch-border-color-disabled: var(--spectrum-disabled-content-color);
+
+    --spectrum-switch-border-color-selected-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-switch-border-color-selected-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-switch-border-color-selected-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-switch-border-color-selected-focus: var(--spectrum-neutral-content-color-key-focus);
+
+    --spectrum-switch-background-color: var(--spectrum-gray-25);
+    --spectrum-switch-background-color-disabled: var(--spectrum-gray-25);
+
+    --spectrum-switch-background-color-selected-default: var(--spectrum-neutral-background-color-default);
+    --spectrum-switch-background-color-selected-hover: var(--spectrum-neutral-background-color-hover);
+    --spectrum-switch-background-color-selected-down: var(--spectrum-neutral-background-color-down);
+    --spectrum-switch-background-color-selected-focus: var(--spectrum-neutral-background-color-key-focus);
+    --spectrum-switch-background-color-selected-disabled: var(--spectrum-disabled-content-color);
+
+    --spectrum-switch-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-switch-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-switch-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+
+    --spectrum-switch-handle-background-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-switch-handle-background-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-switch-handle-background-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-switch-handle-background-color-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-switch-handle-background-color-disabled: var(--spectrum-disabled-content-color);
+
+    --spectrum-switch-handle-background-color-selected: var(--spectrum-gray-25);
+    --spectrum-switch-handle-background-color-selected-disabled: var(--spectrum-gray-25);
+
+    --spectrum-switch-handle-size: var(--spectrum-switch-handle-size-medium);
+    --spectrum-switch-handle-selected-size: var(--spectrum-switch-handle-selected-size-medium);
+
+    --spectrum-switch-animation-duration-switch: var(--spectrum-animation-duration-100);
+    --spectrum-switch-animation-duration-label: var(--spectrum-animation-duration-200);
+    --spectrum-switch-min-height: var(--spectrum-component-height-100);
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-medium);
+    --spectrum-switch-control-height: var(--spectrum-switch-control-height-medium);
+    --spectrum-switch-control-label-spacing: var(--spectrum-text-to-control-100);
+    --spectrum-switch-spacing-top-to-control: var(--spectrum-switch-top-to-control-medium);
+    --spectrum-switch-spacing-top-to-label: var(--spectrum-component-top-to-text-100);
+    --spectrum-switch-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-100);
+
+    --spectrum-switch-font-size: var(--spectrum-font-size-100);
+    --spectrum-switch-line-height: var(--spectrum-line-height-100);
+    --spectrum-switch-cjk-line-height: var(--spectrum-cjk-line-height-100);
+
+    --spectrum-switch-border-radius: var(--spectrum-corner-radius-full);
+}
 
 :host([disabled]) {
-    pointer-events: none;
+    --spectrum-switch-label-color-default: var(--spectrum-disabled-content-color);
 }
 
-/* the handle's border in the down/active state remains the same if a user moves their cursor 
-while still activating/pressing the switch. Read-only switches should not have this behavior. */
-:host(:hover:active) #input + #switch:before,
-:host([emphasized]:hover:active) #input + #switch:before {
-    border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
+:host([emphasized]) {
+    --spectrum-switch-background-color-selected-default: var(--spectrum-accent-background-color-default);
+    --spectrum-switch-background-color-selected-hover: var(--spectrum-accent-background-color-hover);
+    --spectrum-switch-background-color-selected-down: var(--spectrum-accent-background-color-down);
+    --spectrum-switch-background-color-selected-focus: var(--spectrum-accent-background-color-key-focus);
+
+    --spectrum-switch-border-color-selected-default: var(--spectrum-accent-background-color-default);
+    --spectrum-switch-border-color-selected-hover: var(--spectrum-accent-background-color-hover);
+    --spectrum-switch-border-color-selected-down: var(--spectrum-accent-background-color-down);
+    --spectrum-switch-border-color-selected-focus: var(--spectrum-accent-background-color-key-focus);
 }
 
-:host(:active[checked]) #input:enabled + #switch:before {
-    border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+:host([size="s"]) {
+    --spectrum-switch-min-height: var(--spectrum-component-height-75);
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-small);
+    --spectrum-switch-control-height: var(--spectrum-switch-control-height-small);
+    --spectrum-switch-control-label-spacing: var(--spectrum-text-to-control-75);
+    --spectrum-switch-spacing-top-to-control: var(--spectrum-switch-top-to-control-small);
+    --spectrum-switch-spacing-top-to-label: var(--spectrum-component-top-to-text-75);
+    --spectrum-switch-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-75);
+
+    --spectrum-switch-handle-size: var(--spectrum-switch-handle-size-small);
+    --spectrum-switch-handle-selected-size: var(--spectrum-switch-handle-selected-size-small);
+
+    --spectrum-switch-font-size: var(--spectrum-font-size-75);
 }
 
-:host(:active[checked]) #input:enabled + #switch {
+:host([size="l"]) {
+    --spectrum-switch-min-height: var(--spectrum-component-height-200);
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-large);
+    --spectrum-switch-control-height: var(--spectrum-switch-control-height-large);
+    --spectrum-switch-control-label-spacing: var(--spectrum-text-to-control-200);
+    --spectrum-switch-spacing-top-to-control: var(--spectrum-switch-top-to-control-large);
+    --spectrum-switch-spacing-top-to-label: var(--spectrum-component-top-to-text-200);
+    --spectrum-switch-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-200);
+
+    --spectrum-switch-handle-size: var(--spectrum-switch-handle-size-large);
+    --spectrum-switch-handle-selected-size: var(--spectrum-switch-handle-selected-size-large);
+
+    --spectrum-switch-font-size: var(--spectrum-font-size-200);
+}
+
+:host([size="xl"]) {
+    --spectrum-switch-min-height: var(--spectrum-component-height-300);
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-extra-large);
+    --spectrum-switch-control-height: var(--spectrum-switch-control-height-extra-large);
+    --spectrum-switch-control-label-spacing: var(--spectrum-text-to-control-300);
+    --spectrum-switch-spacing-top-to-control: var(--spectrum-switch-top-to-control-extra-large);
+    --spectrum-switch-spacing-top-to-label: var(--spectrum-component-top-to-text-300);
+    --spectrum-switch-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-300);
+
+    --spectrum-switch-handle-size: var(--spectrum-switch-handle-size-extra-large);
+    --spectrum-switch-handle-selected-size: var(--spectrum-switch-handle-selected-size-extra-large);
+
+    --spectrum-switch-font-size: var(--spectrum-font-size-300);
+}
+
+:host {
+    display: inline-flex;
+    align-items: flex-start;
+    position: relative;
+    min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
+    max-inline-size: 100%;
+    vertical-align: top;
+}
+
+input {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+
+    position: absolute;
+    inline-size: 100%;
+    block-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+    z-index: 1;
+
+    cursor: pointer;
+}
+
+:host([disabled]) input,
+input:disabled,
+input[disabled] {
+    cursor: default;
+}
+
+#label {
+    color: var(--highcontrast-switch-label-color-default, var(--mod-switch-label-color-default, var(--spectrum-switch-label-color-default)));
+    margin-inline: var(--mod-switch-control-label-spacing, var(--spectrum-switch-control-label-spacing));
+    margin-block-start: var(--mod-switch-spacing-top-to-label, var(--spectrum-switch-spacing-top-to-label));
+    margin-block-end: var(--mod-switch-spacing-bottom-to-label, var(--spectrum-switch-spacing-bottom-to-label));
+    font-size: var(--mod-switch-font-size, var(--spectrum-switch-font-size));
+    line-height: var(--mod-switch-line-height, var(--spectrum-switch-line-height));
+    transition: color var(--spectrum-switch-animation-duration-label) ease-in-out;
+}
+
+#label:lang(ja),
+#label:lang(ko),
+#label:lang(zh) {
+    line-height: var(--mod-switch-cjk-line-height, var(--spectrum-switch-cjk-line-height));
+}
+
+:host([hover]) #switch ~ #label {
+    color: var(--highcontrast-switch-label-color-hover, var(--mod-switch-label-color-hover, var(--spectrum-switch-label-color-hover)));
+}
+
+:host([active]) #switch ~ #label,
+:host(:active) #switch ~ #label {
+    color: var(--highcontrast-switch-label-color-down, var(--mod-switch-label-color-down, var(--spectrum-switch-label-color-down)));
+}
+
+:host([focus-visible]) input ~ #label,
+input:focus-visible ~ #label {
+    color: var(--highcontrast-switch-label-color-focus, var(--mod-switch-label-color-focus, var(--spectrum-switch-label-color-focus)));
+}
+
+#switch {
+    display: inline-block;
+    box-sizing: border-box;
+
+    position: relative;
+
+    inline-size: var(--mod-switch-control-width, var(--spectrum-switch-control-width));
+    margin-block: calc(var(--mod-switch-height, var(--spectrum-switch-min-height)) - var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-spacing-top-to-control, var(--spectrum-switch-spacing-top-to-control)));
+    margin-inline: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    vertical-align: middle;
+
+    transition:
+        background var(--mod-switch-animation-duration-switch, var(--spectrum-switch-animation-duration-switch)) ease-in-out,
+        border var(--mod-switch-animation-duration-switch, var(--spectrum-switch-animation-duration-switch)) ease-in-out;
+
+    block-size: var(--mod-switch-control-height, var(--spectrum-switch-control-height));
+
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+
+    background-color: var(--highcontrast-switch-background-color, var(--mod-switch-background-color, var(--spectrum-switch-background-color)));
+    border-radius: var(--mod-switch-border-radius, var(--spectrum-switch-border-radius));
+    border-width: var(--mod-switch-border-width, var(--spectrum-switch-border-width));
+    border-color: var(--highcontrast-switch-border-color-default, var(--mod-switch-border-color-default, var(--spectrum-switch-border-color-default)));
+    border-style: solid;
+}
+
+:host([hover]) #switch {
+    border-color: var(--highcontrast-switch-border-color-hover, var(--mod-switch-border-color-hover, var(--spectrum-switch-border-color-hover)));
+}
+
+:host([active]) #switch,
+:host(:active) #switch {
+    border-color: var(--highcontrast-switch-border-color-down, var(--mod-switch-border-color-down, var(--spectrum-switch-border-color-down)));
+}
+
+:host([focus-visible]) input ~ #switch,
+input:focus-visible ~ #switch {
+    border-color: var(--highcontrast-switch-border-color-focus, var(--mod-switch-border-color-focus, var(--spectrum-switch-border-color-focus)));
+}
+
+input:checked ~ #switch {
+    background-color: var(--highcontrast-switch-background-color-selected-default, var(--mod-switch-background-color-selected-default, var(--spectrum-switch-background-color-selected-default)));
+    border-color: var(--highcontrast-switch-border-color-selected-default, var(--mod-switch-border-color-selected-default, var(--spectrum-switch-border-color-selected-default)));
+}
+
+:host([hover]) input:checked ~ #switch {
+    background-color: var(--highcontrast-switch-background-color-selected-hover, var(--mod-switch-background-color-selected-hover, var(--spectrum-switch-background-color-selected-hover)));
+    border-color: var(--highcontrast-switch-border-color-selected-hover, var(--mod-switch-border-color-selected-hover, var(--spectrum-switch-border-color-selected-hover)));
+}
+
+:host([active]) input:checked ~ #switch,
+:host(:active) input:checked ~ #switch {
     background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
+    border-color: var(--highcontrast-switch-border-color-selected-down, var(--mod-switch-border-color-selected-down, var(--spectrum-switch-border-color-selected-down)));
 }
 
-/* Ensure read-only switches don't show interaction styles */
-:host([readonly]) #input + #switch:before {
-    border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default))) !important;
+:host([focus-visible]) input:checked ~ #switch,
+input:checked:focus-visible ~ #switch {
+    background-color: var(--highcontrast-switch-background-color-selected-focus, var(--mod-switch-background-color-selected-focus, var(--spectrum-switch-background-color-selected-focus)));
+    border-color: var(--highcontrast-switch-border-color-selected-focus, var(--mod-switch-border-color-selected-focus, var(--spectrum-switch-border-color-selected-focus)));
 }
 
-:host([readonly][checked]) #input + #switch:before {
-    border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default))) !important;
+#switch:before {
+    display: block;
+    position: absolute;
+    content: "";
+    box-sizing: border-box;
+
+    transition:
+        background var(--spectrum-switch-animation-duration-switch) ease-in-out,
+        border var(--spectrum-switch-animation-duration-switch) ease-in-out,
+        transform var(--spectrum-switch-animation-duration-switch) ease-in-out,
+        box-shadow var(--spectrum-switch-animation-duration-switch) ease-in-out;
+
+    inline-size: var(--mod-switch-handle-size, var(--spectrum-switch-handle-size));
+    block-size: var(--mod-switch-handle-size, var(--spectrum-switch-handle-size));
+
+    inset-block-start: calc((var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-handle-size, var(--spectrum-switch-handle-size))) * 0.25);
+    inset-inline-start: calc((var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-handle-size, var(--spectrum-switch-handle-size))) * 0.25);
+
+    background-color: var(--highcontrast-switch-handle-background-color-default, var(--mod-switch-handle-background-color-default, var(--spectrum-switch-handle-background-color-default)));
+    border-radius: var(--mod-switch-border-radius, var(--spectrum-switch-border-radius));
+}
+
+:host([hover]) #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-hover, var(--mod-switch-handle-background-color-hover, var(--spectrum-switch-handle-background-color-hover)));
+}
+
+:host([active]) #switch:before,
+:host(:active) #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-down, var(--mod-switch-handle-background-color-down, var(--spectrum-switch-handle-background-color-down)));
+}
+
+:host([focus-visible]) input ~ #switch:before,
+input:focus-visible ~ #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-focus, var(--mod-switch-handle-background-color-focus, var(--spectrum-switch-handle-background-color-focus)));
+}
+
+input:checked ~ #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-selected, var(--mod-switch-handle-background-color-selected, var(--spectrum-switch-handle-background-color-selected)));
+
+    inline-size: var(--mod-switch-handle-selected-size, var(--spectrum-switch-handle-selected-size));
+    block-size: var(--mod-switch-handle-selected-size, var(--spectrum-switch-handle-selected-size));
+
+    inset-block-start: calc((var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-border-width, var(--spectrum-switch-border-width)) - var(--mod-switch-handle-selected-size, var(--spectrum-switch-handle-selected-size))) * 0.25);
+    inset-inline-start: calc((var(--mod-switch-control-height, var(--spectrum-switch-control-height)) - var(--mod-switch-border-width, var(--spectrum-switch-border-width)) - var(--mod-switch-handle-selected-size, var(--spectrum-switch-handle-selected-size))) * 0.25);
+
+    transform: translateX(calc(100% + var(--mod-switch-border-width, var(--spectrum-switch-border-width)) * 0.25));
+}
+
+input:checked ~ #switch:before:dir(rtl),
+[dir="rtl"] input:checked ~ #switch:before {
+    transform: translateX(calc(-100% + var(--mod-switch-border-width, var(--spectrum-switch-border-width)) * 0.25 * -1));
+}
+
+:host([hover]) input:checked ~ #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-selected, var(--mod-switch-handle-background-color-selected, var(--spectrum-switch-handle-background-color-selected)));
+}
+
+:host([active]) input:checked ~ #switch:before,
+:host(:active) input:checked ~ #switch:before {
+    background-color: var(--spectrum-switch-handle-background-color-selected, var(--mod-switch-handle-background-color-selected, var(--spectrum-switch-handle-background-color-selected)));
+}
+
+:host([active]) input:not(:disabled) ~ #switch:before,
+:host(:active) input:not(:disabled) ~ #switch:before {
+    transform: perspective(var(--spectrum-component-size-minimum-perspective-down)) translateZ(var(--spectrum-component-size-difference-down));
+}
+
+:host([active]) input:not(:disabled):checked ~ #switch:before,
+:host(:active) input:not(:disabled):checked ~ #switch:before {
+    transform: translateX(calc(100% + var(--mod-switch-border-width, var(--spectrum-switch-border-width)) * 0.25)) perspective(var(--spectrum-component-size-minimum-perspective-down)) translateZ(var(--spectrum-component-size-difference-down));
+}
+
+:host([active]) input:not(:disabled):checked ~ #switch:before:dir(rtl),
+:host(:active) input:not(:disabled):checked ~ #switch:before:dir(rtl),
+[dir="rtl"] :host([active]) input:not(:disabled):checked ~ #switch:before,
+[dir="rtl"] :host(:active) input:not(:disabled):checked ~ #switch:before {
+    transform: translateX(calc(-100% + var(--mod-switch-border-width, var(--spectrum-switch-border-width)) * 0.25 * -1)) perspective(var(--spectrum-component-size-minimum-perspective-down)) translateZ(var(--spectrum-component-size-difference-down));
+}
+
+#switch:after {
+    border-radius: var(--mod-switch-border-radius, var(--spectrum-switch-border-radius));
+    content: "";
+    display: block;
+    position: absolute;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    inset-block-start: 0;
+    margin: 0;
+
+    transition:
+        opacity var(--spectrum-switch-animation-duration-switch) ease-out,
+        outline-offset var(--spectrum-switch-animation-duration-switch) ease-out,
+        border var(--spectrum-switch-animation-duration-switch) ease-in-out;
+}
+
+input:focus-visible ~ #switch:after,
+input:focus-visible ~ #switch:after {
+    outline: var(--mod-switch-focus-indicator-thickness, var(--spectrum-switch-focus-indicator-thickness)) solid var(--highcontrast-switch-focus-indicator-color, var(--mod-switch-focus-indicator-color, var(--spectrum-switch-focus-indicator-color)));
+    outline-offset: calc(var(--mod-switch-focus-indicator-gap, var(--spectrum-switch-focus-indicator-gap)) + var(--mod-switch-focus-indicator-thickness, var(--spectrum-switch-focus-indicator-thickness)));
+}
+
+:host([disabled]) #switch,
+:host([disabled]) input:disabled ~ #switch,
+:host([disabled]) input[disabled] ~ #switch,
+:host([hover]) :host([disabled]) #switch,
+:host([hover]) :host([disabled]) input:disabled ~ #switch,
+:host([hover]) :host([disabled]) input[disabled] ~ #switch {
+    background-color: var(--highcontrast-switch-background-color-disabled, var(--mod-switch-background-color-disabled, var(--spectrum-switch-background-color-disabled)));
+    border-color: var(--highcontrast-switch-border-color-disabled, var(--mod-switch-border-color-disabled, var(--spectrum-switch-border-color-disabled)));
+}
+
+:host([disabled]) input:disabled ~ #switch:before,
+:host([disabled]) input[disabled] ~ #switch:before,
+:host([hover]) :host([disabled]) input:disabled ~ #switch:before,
+:host([hover]) :host([disabled]) input[disabled] ~ #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-disabled, var(--mod-switch-handle-background-color-disabled, var(--spectrum-switch-handle-background-color-disabled)));
+}
+
+:host([disabled]) input:disabled:checked ~ #switch,
+:host([disabled]) input[disabled]:checked ~ #switch,
+:host([hover]) :host([disabled]) input:disabled:checked ~ #switch,
+:host([hover]) :host([disabled]) input[disabled]:checked ~ #switch {
+    background-color: var(--highcontrast-switch-background-color-selected-disabled, var(--mod-switch-background-color-selected-disabled, var(--spectrum-switch-background-color-selected-disabled)));
+}
+
+:host([disabled]) input:disabled:checked ~ #switch:before,
+:host([disabled]) input[disabled]:checked ~ #switch:before,
+:host([hover]) :host([disabled]) input:disabled:checked ~ #switch:before,
+:host([hover]) :host([disabled]) input[disabled]:checked ~ #switch:before {
+    background-color: var(--highcontrast-switch-handle-background-color-selected-disabled, var(--mod-switch-handle-background-color-selected-disabled, var(--spectrum-switch-handle-background-color-selected-disabled)));
+}
+
+:host([disabled]) input:disabled ~ #label,
+:host([disabled]) input[disabled] ~ #label,
+:host([hover]) :host([disabled]) input:disabled ~ #label,
+:host([hover]) :host([disabled]) input[disabled] ~ #label {
+    color: var(--highcontrast-switch-label-color-disabled, var(--mod-switch-label-color-disabled, var(--spectrum-switch-label-color-disabled)));
+}
+
+@media (hover: hover) {
+    :host([hover]) #switch ~ #label {
+        color: var(--highcontrast-switch-label-color-hover, var(--mod-switch-label-color-hover, var(--spectrum-switch-label-color-hover)));
+    }
+
+    :host([hover]) #switch {
+        border-color: var(--highcontrast-switch-border-color-hover, var(--mod-switch-border-color-hover, var(--spectrum-switch-border-color-hover)));
+    }
+
+    :host([hover]) input:checked ~ #switch {
+        background-color: var(--highcontrast-switch-background-color-selected-hover, var(--mod-switch-background-color-selected-hover, var(--spectrum-switch-background-color-selected-hover)));
+        border-color: var(--highcontrast-switch-border-color-selected-hover, var(--mod-switch-border-color-selected-hover, var(--spectrum-switch-border-color-selected-hover)));
+    }
+
+    :host([hover]) #switch:before {
+        background-color: var(--highcontrast-switch-handle-background-color-hover, var(--mod-switch-handle-background-color-hover, var(--spectrum-switch-handle-background-color-hover)));
+    }
+
+    :host([hover]) input:checked ~ #switch:before {
+        background-color: var(--highcontrast-switch-handle-background-color-selected, var(--mod-switch-handle-background-color-selected, var(--spectrum-switch-handle-background-color-selected)));
+    }
+
+    :host([hover]) :host([disabled]) #switch {
+        background-color: var(--highcontrast-switch-background-color-disabled, var(--mod-switch-background-color-disabled, var(--spectrum-switch-background-color-disabled)));
+        border-color: var(--highcontrast-switch-border-color-disabled, var(--mod-switch-border-color-disabled, var(--spectrum-switch-border-color-disabled)));
+    }
+
+    :host([hover]) :host([disabled]) input:disabled ~ #switch,
+    :host([hover]) :host([disabled]) input[disabled] ~ #switch,
+    :host([hover]) :host([disabled]) input[disabled] ~ #switch {
+        background-color: var(--highcontrast-switch-background-color-disabled, var(--mod-switch-background-color-disabled, var(--spectrum-switch-background-color-disabled)));
+        border-color: var(--highcontrast-switch-border-color-disabled, var(--mod-switch-border-color-disabled, var(--spectrum-switch-border-color-disabled)));
+    }
+
+    :host([hover]) :host([disabled]) input:disabled ~ #switch:before,
+    :host([hover]) :host([disabled]) input[disabled] ~ #switch:before {
+        background-color: var(--highcontrast-switch-handle-background-color-disabled, var(--mod-switch-handle-background-color-disabled, var(--spectrum-switch-handle-background-color-disabled)));
+    }
+
+    :host([hover]) :host([disabled]) input:disabled:checked ~ #switch,
+    :host([hover]) :host([disabled]) input[disabled]:checked ~ #switch {
+        background-color: var(--highcontrast-switch-background-color-selected-disabled, var(--mod-switch-background-color-selected-disabled, var(--spectrum-switch-background-color-selected-disabled)));
+    }
+
+    :host([hover]) :host([disabled]) input:disabled:checked ~ #switch:before,
+    :host([hover]) :host([disabled]) input[disabled]:checked ~ #switch:before {
+        background-color: var(--highcontrast-switch-handle-background-color-selected-disabled, var(--mod-switch-handle-background-color-selected-disabled, var(--spectrum-switch-handle-background-color-selected-disabled)));
+    }
+
+    :host([hover]) :host([disabled]) input:disabled ~ #label,
+    :host([hover]) :host([disabled]) input[disabled] ~ #label {
+        color: var(--highcontrast-switch-label-color-disabled, var(--mod-switch-label-color-disabled, var(--spectrum-switch-label-color-disabled)));
+    }
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-switch-label-color-default: ButtonText;
+        --highcontrast-switch-label-color-hover: ButtonText;
+        --highcontrast-switch-label-color-down: ButtonText;
+        --highcontrast-switch-label-color-focus: ButtonText;
+        --highcontrast-switch-label-color-disabled: GrayText;
+
+        --highcontrast-switch-background-color: transparent;
+
+        --highcontrast-switch-border-color-default: ButtonText;
+        --highcontrast-switch-border-color-hover: Highlight;
+        --highcontrast-switch-border-color-down: ButtonText;
+        --highcontrast-switch-border-color-focus: ButtonText;
+        --highcontrast-switch-border-color-disabled: GrayText;
+
+        --highcontrast-switch-border-color-selected-default: Highlight;
+        --highcontrast-switch-border-color-selected-hover: Highlight;
+        --highcontrast-switch-border-color-selected-down: Highlight;
+        --highcontrast-switch-border-color-selected-focus: Highlight;
+
+        --highcontrast-switch-handle-background-color-default: ButtonText;
+        --highcontrast-switch-handle-background-color-hover: Highlight;
+        --highcontrast-switch-handle-background-color-down: ButtonText;
+        --highcontrast-switch-handle-background-color-focus: ButtonText;
+        --highcontrast-switch-handle-background-color-disabled: GrayText;
+
+        --highcontrast-switch-handle-background-color-selected: HighlightText;
+        --highcontrast-switch-handle-background-color-selected-disabled: ButtonFace;
+
+        --highcontrast-switch-background-color-disabled: ButtonFace;
+
+        --highcontrast-switch-background-color-selected-default: Highlight;
+        --highcontrast-switch-background-color-selected-hover: Highlight;
+        --highcontrast-switch-background-color-selected-down: Highlight;
+        --highcontrast-switch-background-color-selected-focus: Highlight;
+        --highcontrast-switch-background-color-selected-disabled: GrayText;
+
+        --highcontrast-switch-focus-indicator-color: ButtonText;
+        forced-color-adjust: none;
+    }
 }

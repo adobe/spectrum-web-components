@@ -10,13 +10,216 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-picker-button.css");
-@import url("./picker-button-overrides.css");
+/* base variables */
+.root {
+    /* layout */
+    --spectrum-picker-button-width: var(--spectrum-picker-button-width);
+    --spectrum-picker-button-min-width: var(--spectrum-picker-button-min-width);
+    --spectrum-picker-button-height: var(--spectrum-picker-button-height);
+    --spectrum-picker-button-gap: var(--spectrum-picker-button-gap);
+    --spectrum-picker-button-padding: var(--spectrum-picker-button-padding);
+    --spectrum-picker-button-fill-padding: var(--spectrum-picker-button-fill-padding);
+    --spectrum-picker-button-border-width: var(--spectrum-picker-button-border-width);
+    --spectrum-picker-button-border-radius: var(--spectrum-picker-button-border-radius);
+    --spectrum-picker-button-border-radius-sided: var(--spectrum-picker-button-border-radius-sided);
+    --spectrum-picker-button-border-radius-rounded: var(--spectrum-picker-button-border-radius-rounded);
+    --spectrum-picker-button-border-radius-rounded-sided: var(--spectrum-picker-button-border-radius-rounded-sided);
 
-:host {
+    /* typography */
+    --spectrum-picker-button-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-picker-button-font-weight: var(--spectrum-body-font-weight);
+    --spectrum-picker-button-font-style: var(--spectrum-body-sans-serif-font-style);
+    --spectrum-picker-button-font-size: var(--spectrum-picker-button-font-size);
+    --spectrum-picker-button-line-height: var(--spectrum-line-height-100);
+    --spectrum-picker-button-label-padding: var(--spectrum-picker-button-label-padding);
+
+    /* colors */
+    --spectrum-picker-button-background-color: var(--spectrum-picker-button-background-color);
+    --spectrum-picker-button-border-color: var(--spectrum-picker-button-border-color);
+    --spectrum-picker-button-font-color: var(--spectrum-picker-button-font-color);
+    --spectrum-picker-button-icon-color: var(--spectrum-picker-button-icon-color);
+
+    /* animation */
+    --spectrum-picker-button-animation-duration: var(--spectrum-animation-duration-100);
+
+    /* base styles */
     display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-inline-size: var(--spectrum-picker-button-min-width);
+    inline-size: var(--spectrum-picker-button-width);
+    block-size: var(--spectrum-picker-button-height);
+    padding: var(--spectrum-picker-button-padding);
+    gap: var(--spectrum-picker-button-gap);
+    background-color: var(--spectrum-picker-button-background-color);
+    border-color: var(--spectrum-picker-button-border-color);
+    border-width: var(--spectrum-picker-button-border-width);
+    border-style: solid;
+    border-radius: var(--spectrum-picker-button-border-radius);
+    color: var(--spectrum-picker-button-font-color);
+    font-family: var(--spectrum-picker-button-font-family);
+    font-style: var(--spectrum-picker-button-font-style);
+    font-weight: var(--spectrum-picker-button-font-weight);
+    font-size: var(--spectrum-picker-button-font-size);
+    line-height: var(--spectrum-picker-button-line-height);
+    cursor: pointer;
+    outline: none;
+    overflow: visible;
+    text-overflow: ellipsis;
+    transition:
+        background-color var(--spectrum-picker-button-animation-duration) ease-out,
+        border-color var(--spectrum-picker-button-animation-duration) ease-out,
+        color var(--spectrum-picker-button-animation-duration) ease-out;
 }
 
-.root {
+/* icon */
+.icon {
+    color: var(--spectrum-picker-button-icon-color);
+}
+
+/* label */
+.label {
+    flex: 1;
+    text-align: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-block: var(--spectrum-picker-button-label-padding);
+}
+
+/* sided variant */
+:host([sided]) {
+    border-start-start-radius: var(--spectrum-picker-button-border-radius-sided);
+    border-end-start-radius: var(--spectrum-picker-button-border-radius-sided);
+}
+
+/* icon-only variant */
+.root.uiicononly {
+    inline-size: var(--spectrum-picker-button-height);
+}
+
+/* label styles */
+.spectrum-PickerButton-label {
+    color: var(--spectrum-picker-button-font-color);
+    white-space: nowrap;
+    font-family: var(--spectrum-picker-button-font-family);
+    font-style: var(--spectrum-picker-button-font-style);
+    font-weight: var(--spectrum-picker-button-font-weight);
+    font-size: var(--spectrum-picker-button-font-size);
+    flex: auto;
+    padding-block-start: var(--spectrum-picker-button-label-padding);
+    padding-block-end: var(--spectrum-picker-button-label-padding);
+    overflow: hidden;
+}
+
+.uiicononly .spectrum-PickerButton-label {
+    display: none;
+}
+
+/* fill container styles */
+.spectrum-PickerButton-fill {
+    box-sizing: border-box;
+    block-size: 100%;
+    inline-size: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spectrum-picker-button-gap);
+    background-color: var(--spectrum-picker-button-background-color);
+    border-color: var(--spectrum-picker-button-border-color);
+    border-width: var(--spectrum-picker-button-border-width);
+    padding: calc(var(--spectrum-picker-button-fill-padding) - var(--spectrum-picker-button-padding) - var(--spectrum-picker-button-border-width));
+    transition: border-color var(--spectrum-picker-button-animation-duration) ease-in-out;
+    border-style: solid;
+    border-start-start-radius: var(--spectrum-picker-button-border-radius);
+    border-start-end-radius: var(--spectrum-picker-button-border-radius);
+    border-end-end-radius: var(--spectrum-picker-button-border-radius);
+    border-end-start-radius: var(--spectrum-picker-button-border-radius);
     display: flex;
+}
+
+/* icon styles */
+.spectrum-PickerButton-icon {
+    color: var(--spectrum-picker-button-icon-color);
+    flex-shrink: 0;
+}
+
+/* size variants */
+:host([size="s"]) .root {
+}
+
+:host([size="l"]) .root {
+}
+
+:host([size="xl"]) .root {
+}
+
+/* position variants */
+:host([position="right"]) .spectrum-PickerButton-fill {
+    border-start-start-radius: var(--spectrum-picker-button-border-radius-sided);
+    border-end-start-radius: var(--spectrum-picker-button-border-radius-sided);
+}
+
+:host([position="right"][rounded]) .spectrum-PickerButton-fill {
+    border-start-start-radius: var(--spectrum-picker-button-border-radius-rounded-sided);
+    border-end-start-radius: var(--spectrum-picker-button-border-radius-rounded-sided);
+}
+
+:host([position="left"]) .spectrum-PickerButton-fill {
+    border-start-end-radius: var(--spectrum-picker-button-border-radius-sided);
+    border-end-end-radius: var(--spectrum-picker-button-border-radius-sided);
+}
+
+:host([position="left"][rounded]) .spectrum-PickerButton-fill {
+    border-start-end-radius: var(--spectrum-picker-button-border-radius-rounded-sided);
+    border-end-end-radius: var(--spectrum-picker-button-border-radius-rounded-sided);
+}
+
+/* rounded variant */
+:host([rounded]) .spectrum-PickerButton-fill {
+    border-start-start-radius: var(--spectrum-picker-button-border-radius-rounded);
+    border-start-end-radius: var(--spectrum-picker-button-border-radius-rounded);
+    border-end-end-radius: var(--spectrum-picker-button-border-radius-rounded);
+    border-end-start-radius: var(--spectrum-picker-button-border-radius-rounded);
+}
+
+/* quiet variant */
+:host([quiet]) .root {
+    --spectrum-picker-button-background-color-hover: transparent;
+    --spectrum-picker-button-background-color-down: transparent;
+    --spectrum-picker-button-background-color-key-focus: transparent;
+}
+
+:host([open]) .root,
+:host(:is(:active, [active])) .root {
+}
+
+:host([focused]) .root,
+.root.is-keyboardFocused,
+.root:focus,
+.root:focus-visible {
+}
+
+/* disabled state */
+:host([disabled]) .root {
+    --spectrum-picker-button-font-color-hover: var(--spectrum-disabled-content-color);
+    --spectrum-picker-button-font-color-down: var(--spectrum-disabled-content-color);
+    --spectrum-picker-button-icon-color-hover: var(--spectrum-disabled-content-color);
+    --spectrum-picker-button-icon-color-down: var(--spectrum-disabled-content-color);
+}
+
+/* variants */
+.uiicononly .spectrum-PickerButton-fill {
+    padding: 0;
+}
+
+.textuiicon .spectrum-PickerButton-fill {
+    inline-size: auto;
+}
+
+:host([disabled]) {
+    --highcontrast-picker-button-border-color: GrayText;
+    --highcontrast-picker-button-background-color: Canvas;
+    --highcontrast-picker-button-text-color: GrayText;
 }

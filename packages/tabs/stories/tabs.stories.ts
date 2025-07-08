@@ -13,7 +13,7 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -367,7 +367,7 @@ export const Icons = ({
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" ?vertical=${verticalTab}>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -395,7 +395,7 @@ export const IconsWithSlottedLabel = ({
             </sp-tab>
             <sp-tab value="4" ?vertical=${verticalTab}>
                 Tab 4
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -419,7 +419,7 @@ export const IconsOnly = ({
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab aria-label="Tab 4" value="4" ?vertical=${verticalTab}>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -444,7 +444,7 @@ export const iconsIi = (args: Properties): TemplateResult => {
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4" vertical>
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>
@@ -473,7 +473,7 @@ export const iconsIii = (args: Properties): TemplateResult => {
                 <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
             </sp-tab>
             <sp-tab label="Tab 4" value="4">
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             </sp-tab>
             ${panels()}
         </sp-tabs>

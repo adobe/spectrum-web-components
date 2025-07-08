@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/status-light-overrides.css.js": "./src/status-light-overrides.css.js",
         "./src/status-light.css.js": "./src/status-light.css.js",
         "./sp-status-light.js": {
             "development": "./sp-status-light.dev.js",

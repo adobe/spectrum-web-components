@@ -23,7 +23,6 @@ _Note_ that your component name should be provided in kebab case and should rela
         - src
             - index.ts
             - spectrum-[new-component-name].css
-            - [new-component-name]-overrides.css
             - [new-component-name].css
             - [NewComponentName].ts
         - stories

@@ -14,51 +14,51 @@ export const argTypes = {
     open: {
         name: 'open',
         type: { name: 'boolean', required: false },
-        description: 'Whether the second accordion item is open.',
+        description: 'True if the second accordion item is open.',
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: false },
         },
-        control: {
-            type: 'boolean',
-        },
+        control: 'boolean',
     },
     allowMultiple: {
-        name: 'allowMultiple',
+        name: 'Allow multiple',
         type: { name: 'boolean', required: false },
         description:
-            'Whether multipel Accordion Items can be open at the same time.',
+            'True if multiple accordion items can be open at the same time.',
         table: {
             type: { summary: 'boolean' },
             defaultValue: { summary: false },
         },
-        control: {
-            type: 'boolean',
-        },
+        control: 'boolean',
     },
     density: {
-        name: 'density',
-        type: { name: 'string', required: false },
+        name: 'Density',
+        type: { name: 'string', required: true },
         description: 'The density at which to display accordion items.',
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'default' },
         },
+        options: ['compact', 'default', 'spacious'],
         control: {
             labels: {
                 compact: 'Compact',
+                undefined: 'Default',
                 spacious: 'Spacious',
-                default: 'Default',
             },
             type: 'select',
         },
     },
     size: {
-        name: 'size',
-        type: { name: 'string', required: false },
+        name: 'Size',
+        type: { name: 'string', required: true },
         description: 'The size at which to display accordion items.',
         table: {
+            type: { summary: 'string' },
             defaultValue: { summary: 'm' },
         },
+        options: ['s', 'm', 'l', 'xl'],
         control: {
             labels: {
                 s: 'Small',

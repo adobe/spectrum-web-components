@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './';
 import { argTypes } from './args.js';
 
@@ -27,35 +26,31 @@ export default {
         density: undefined,
     },
     argTypes,
+    parameters: {
+        testData: [
+            {
+                testHeading: "Standard",
+            },
+            {
+                testHeading: "Compact",
+                density: "compact",
+                withStates: false,
+                withSizes: true,
+            },
+            {
+                testHeading: "Spacious",
+                density: "spacious",
+                withStates: false,
+                withSizes: true,
+            },
+        ],
+        stateData: [
+            {
+                testHeading: 'Disabled',
+                disabled: true,
+            },
+        ],
+    },
 };
 
-type Properties = {
-    allowMultiple?: boolean;
-    disabled?: boolean;
-    open?: boolean;
-    density?: 'compact' | 'spacious' | undefined;
-    size?: 's' | 'm' | 'l' | 'xl';
-};
-
-export const Default = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-
-export const Open = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-Open.args = {
-    open: true,
-    allowMultiple: false,
-    disabled: false,
-};
-
-export const AllowMultiple = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-AllowMultiple.args = {
-    allowMultiple: true,
-};
-
-export const Disabled = (args?: Properties): TemplateResult =>
-    AccordionMarkup(args);
-Disabled.args = {
-    disabled: true,
-};
+export const Default = AccordionMarkup.bind({});

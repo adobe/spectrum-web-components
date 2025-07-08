@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/textfield-overrides.css.js": "./src/textfield-overrides.css.js",
         "./src/textfield.css.js": "./src/textfield.css.js",
         "./sp-textfield.js": {
             "development": "./sp-textfield.dev.js",

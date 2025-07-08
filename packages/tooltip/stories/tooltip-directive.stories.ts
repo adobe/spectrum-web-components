@@ -11,9 +11,9 @@
  */
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';

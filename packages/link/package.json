@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/link-overrides.css.js": "./src/link-overrides.css.js",
         "./src/link.css.js": "./src/link.css.js",
         "./sp-link.js": {
             "development": "./sp-link.dev.js",

@@ -23,7 +23,7 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
 import {
     OverlayTrigger,
     TriggerInteractionsV1,
@@ -46,7 +46,7 @@ describe('Overlay Trigger - Click', () => {
                     @sp-closed=${() => closedSpy()}
                 >
                     <sp-action-button slot="trigger">
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                        <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                     </sp-action-button>
                     <sp-popover slot="click-content" tip></sp-popover>
                 </overlay-trigger>
@@ -95,7 +95,7 @@ describe('Overlay Trigger - Click', () => {
                                 slot="trigger"
                                 style="margin: 50vh 0 100vh;"
                             >
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                                <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                             </sp-action-button>
                             <sp-popover slot="click-content" tip>
                                 Content
@@ -145,7 +145,7 @@ describe('Overlay Trigger - Click', () => {
                 @sp-closed=${() => closedSpy()}
             >
                 <sp-action-button slot="trigger">
-                    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    <sp-icon-zoom-in slot="icon"></sp-icon-zoom-in>
                 </sp-action-button>
                 <sp-popover slot="click-content" tip></sp-popover>
             </overlay-trigger>

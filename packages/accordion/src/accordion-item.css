@@ -10,18 +10,185 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-accordion-item.css");
+/* Component structure:
+ * The accordion-item represents a single collapsible section within an accordion.
+ * Features:
+ * - Interactive header with disclosure indicator
+ * - Collapsible content area
+ * - States: default, hover, active, focus, disabled
+ * - RTL support
+ * - Divider customization
+ * - High contrast mode support
+ */
 
+/* Base item structure */
 :host {
+    --spectrum-accordion-item-min-block-size: max(var(--spectrum-accordion-item-height), calc(var(--spectrum-accordion-item-header-top-to-text-space) + var(--spectrum-accordion-item-header-bottom-to-text-space) + var(--spectrum-accordion-item-header-font-size) * var(--spectrum-accordion-item-header-line-height)));
+
+    z-index: inherit;
+    position: relative;
+    margin: 0;
+    min-block-size: var(--spectrum-accordion-item-height);
+    min-inline-size: var(--spectrum-accordion-item-width);
+    border-block-end: 1px solid transparent;
+    border-color: var(--spectrum-accordion-divider-color);
+    border-width: var(--spectrum-divider-thickness-small);
+}
+
+:host(:first-child) {
+    border-block-start: 1px solid transparent;
+    border-color: var(--spectrum-accordion-divider-color);
+    border-width: var(--spectrum-divider-thickness-small);
+}
+
+/* Header structure */
+#heading {
+    margin: 0;
+    position: relative;
+    box-sizing: border-box;
+}
+
+#header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding-block: var(--spectrum-accordion-item-header-top-to-text-space) var(--spectrum-accordion-item-header-bottom-to-text-space);
+    padding-inline-start: calc(var(--spectrum-accordion-disclosure-indicator-to-text-space) + var(--spectrum-accordion-disclosure-indicator-height));
+    padding-inline-end: var(--spectrum-accordion-edge-to-text-space);
+    min-block-size: var(--spectrum-accordion-item-min-block-size);
+    line-height: var(--spectrum-accordion-item-header-line-height);
+    text-overflow: ellipsis;
+    cursor: pointer;
+    font-size: var(--spectrum-accordion-item-header-font-size);
+    font-weight: var(--spectrum-accordion-item-header-font-weight);
+    font-style: var(--spectrum-accordion-item-header-font-style);
+    font-family: var(--spectrum-accordion-item-header-font);
+    appearance: none;
+    border: 0;
+    text-align: start;
+    inline-size: 100%;
+    color: var(--spectrum-accordion-item-header-color-default);
+    background-color: var(--spectrum-accordion-background-color-default);
+}
+
+/* Disclosure indicator */
+.iconContainer {
+    padding-inline-start: var(--spectrum-accordion-edge-to-disclosure-indicator-space);
+    inline-size: var(--spectrum-accordion-disclosure-indicator-height);
+    block-size: var(--spectrum-accordion-disclosure-indicator-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--spectrum-accordion-item-header-color-default);
+    position: absolute;
+    inset-block-start: max(0px, calc((var(--spectrum-accordion-item-min-block-size) - var(--spectrum-accordion-disclosure-indicator-height)) / 2));
+}
+
+/* Content area */
+#content {
+    padding-block: var(--spectrum-accordion-item-content-area-top-to-content) var(--spectrum-accordion-item-content-area-bottom-to-content);
+    padding-inline: var(--spectrum-accordion-component-edge-to-text) var(--spectrum-accordion-component-edge-to-text);
+    display: none;
+    color: var(--spectrum-accordion-item-content-color);
+    font-weight: var(--spectrum-accordion-item-content-font-weight);
+    font-style: var(--spectrum-accordion-item-content-font-style);
+    font-size: var(--spectrum-accordion-item-content-font-size);
+    font-family: var(--spectrum-accordion-item-content-font);
+    line-height: var(--spectrum-accordion-item-content-line-height);
+}
+
+/* Interactive states */
+#header:focus {
+    outline: none;
+}
+
+#header:hover {
+    background-color: var(--spectrum-accordion-background-color-hover);
+    color: var(--spectrum-accordion-item-header-color-hover);
+}
+
+#header:hover + .iconContainer {
+    color: var(--spectrum-accordion-item-header-color-hover);
+}
+
+#header:focus-visible {
+    border-radius: var(--spectrum-accordion-corner-radius);
+    outline: var(--spectrum-accordion-focus-indicator-thickness) solid var(--spectrum-accordion-focus-indicator-color);
+    background-color: var(--spectrum-accordion-background-color-key-focus);
+    color: var(--spectrum-accordion-item-header-color-key-focus);
+    outline-offset: calc(var(--spectrum-accordion-focus-indicator-gap) * -1);
+}
+
+#header:active {
+    background-color: var(--spectrum-accordion-background-color-down);
+    color: var(--spectrum-accordion-item-header-color-down);
+}
+
+/* Open state */
+:host([open]) #header:hover {
+    background-color: var(--spectrum-accordion-background-color-hover);
+}
+
+:host([open]) #heading > .iconContainer > .icon {
+    transform: var(--spectrum-logical-rotation,) rotate(90deg);
+}
+
+:host([open]) #content {
     display: block;
 }
 
-#heading {
-    /* .spectrum-Accordion-itemHeading */
-    height: auto;
-    position: relative;
+/* Disabled state */
+:host([disabled]) #header,
+:host([disabled]) #header:focus-visible,
+:host([disabled]) #header:hover {
+    color: var(--spectrum-accordion-item-header-disabled-color);
+    background-color: initial;
+    cursor: default;
 }
 
-:host([disabled]) #heading .indicator {
-    color: var(--mod-accordion-item-header-disabled-color, var(--spectrum-accordion-item-header-disabled-color));
+:host([disabled]) #header + .iconContainer {
+    color: var(--spectrum-accordion-item-header-disabled-color);
+}
+
+:host([disabled]) #content {
+    color: var(--spectrum-accordion-item-content-disabled-color);
+}
+
+/* RTL Support */
+:host(:dir(rtl)) .iconContainer,
+:host([dir="rtl"]) .iconContainer {
+    transform: scaleX(-1);
+}
+
+/* Media queries */
+@media (hover: hover) {
+    #header:hover {
+        background-color: var(--spectrum-accordion-background-color-hover);
+    }
+
+    #header:hover,
+    #header:hover + .iconContainer {
+        color: var(--spectrum-accordion-item-header-color-hover);
+    }
+
+    :host([open]) #header:hover {
+        background-color: var(--spectrum-accordion-background-color-hover);
+    }
+
+    :host([disabled]) #header:hover {
+        color: var(--spectrum-accordion-item-header-disabled-color);
+        background-color: initial;
+    }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+    #header:after {
+        forced-color-adjust: none;
+        content: "";
+        position: absolute;
+        inset-inline-start: 0;
+    }
 }

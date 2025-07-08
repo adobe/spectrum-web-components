@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-.spectrum {
-    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
-    font-family: var(--spectrum-alias-body-text-font-family, var(--spectrum-global-font-family-base)); /* .spectrum */
+:root {
+	font-family: var(--spectrum-sans-font-family-stack);
+	font-size: var(--spectrum-font-size-100);
+	font-style: var(--spectrum-default-font-style);
 
-    font-size: var(--spectrum-alias-font-size-default, var(--spectrum-global-dimension-font-size-100)); /* .spectrum,
-   * .spectrum-Body */
+	color: var(--spectrum-neutral-content-color-default);
+	background-color: var(--spectrum-background-base-color);
 }

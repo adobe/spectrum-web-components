@@ -19,8 +19,8 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert-triangle.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
@@ -153,25 +153,25 @@ export class Toast extends FocusVisiblePolyfillMixin(SpectrumElement) {
         switch (variant) {
             case 'info':
                 return html`
-                    <sp-icon-info
+                    <sp-icon-info-circle
                         label=${iconLabel || 'Information'}
                         class="type"
-                    ></sp-icon-info>
+                    ></sp-icon-info-circle>
                 `;
             case 'negative':
             case 'error': // deprecated
                 return html`
-                    <sp-icon-alert
+                    <sp-icon-alert-triangle
                         label=${iconLabel || 'Error'}
                         class="type"
-                    ></sp-icon-alert>
+                    ></sp-icon-alert-triangle>
                 `;
             case 'warning': // deprecated
                 return html`
-                    <sp-icon-alert
+                    <sp-icon-alert-triangle
                         label=${iconLabel || 'Warning'}
                         class="type"
-                    ></sp-icon-alert>
+                    ></sp-icon-alert-triangle>
                 `;
             case 'positive':
                 return html`

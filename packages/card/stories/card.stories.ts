@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/card/sp-card.js';
 import { landscape, portrait } from './images';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -329,10 +329,10 @@ export const Horizontal = (args: StoryArgs): TemplateResult => {
             heading="Card Heading"
             subheading="JPG"
         >
-            <sp-icon-file-txt
+            <sp-icon-file-text
                 slot="preview"
                 style="width: 36px; height: 36px;"
-            ></sp-icon-file-txt>
+            ></sp-icon-file-text>
         </sp-card>
     `;
 };
@@ -350,10 +350,10 @@ export const horizontalWithHREF = (args: StoryArgs): TemplateResult => {
             href="https://opensource.adobe.com/spectrum-web-components"
             target="_blank"
         >
-            <sp-icon-file-txt
+            <sp-icon-file-text
                 slot="preview"
                 style="width: 36px; height: 36px;"
-            ></sp-icon-file-txt>
+            ></sp-icon-file-text>
         </sp-card>
     `;
 };
