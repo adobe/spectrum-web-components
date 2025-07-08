@@ -348,7 +348,7 @@ The accordion component provides proper ARIA attributes and keyboard navigation:
 - The header button has `aria-controls` pointing to the content region
 - The content region has `role="region"` and `aria-labelledby` pointing to the header
 - Disabled items have `aria-disabled="true"` applied
-- The accordion supports keyboard navigation with arrow keys and Enter/Space for activation
+- The accordion supports keyboard navigation with arrow keys and <kbd>Enter</kbd>/<kbd>Space</kbd> for activation
 
 #### Include descriptive labels
 
