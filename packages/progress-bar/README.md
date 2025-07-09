@@ -26,12 +26,21 @@ import { ProgressBar } from '@spectrum-web-components/progress-bar';
 
 ### Anatomy
 
+Progress bars have the following parts:
+
 - **Label:** Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress.
-- **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track.
+- **Value label:** Progress bars can have a value label that gives detailed information about the progress. This value label works alongside the label and should not be displayed if the label itself is not displayed. The value label is always placed above the track. Use the `progress` attribute to set the value label.
 
-Labels are set using the `label` slot and values are set using the `progress` slot.
+```html
+<sp-progress-bar
+        label="Generating images..."
+        progress="58"
+    ></sp-progress-bar>
+```
 
-## Sizes
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -100,7 +109,6 @@ Labels are set using the `label` slot and values are set using the `progress` sl
 </sp-tab-panel>
 </sp-tabs>
 
-### Options
 
 #### Variants
 
@@ -164,4 +172,10 @@ A progress bar can be delivered with its labeling displayed above its visual ind
 
 ### Accessibility
 
-An `sp-progress-bar` element will register itself as a `role="progressbar"` element in the accessibility tree. Any value applied to the `label` attribute will be used both to visibly label the element and to set the `aria-label` attribute on the host. In cases where a visible label is not desired, be sure to include an `aria-label` attribute manually to ensure that the `sp-progress-bar` correctly fulfills its responsibilities to visitors of you site of all abilities.
+An `sp-progress-bar` element will register itself as a `role="progressbar"` element in the accessibility tree. Any value applied to the `label` attribute will be used both to visibly label the element and to set the `aria-label` attribute on the host.
+
+#### Include a label
+
+Progress bars should have a label that gives context about the operation being performed. Use an ellipsis at the end of the label text to communicate that the process is in progress. 
+
+ In rare cases where a visible label is not desired, context is sufficient and an accessibility expert has reviewed the design, be sure to include an `aria-label` attribute or an `aria-labelledby` attribute to manually to ensure that the `sp-progress-bar` correctly fulfills its responsibilities to visitors of your site of all abilities.
