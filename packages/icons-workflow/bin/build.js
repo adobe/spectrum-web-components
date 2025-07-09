@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-/**
+/*!
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -11,373 +11,313 @@
  * governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
+import fs from 'node:fs';
+import fsp from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+
 import fg from 'fast-glob';
-import path from 'path';
 import { load } from 'cheerio';
-import prettier from 'prettier';
 import Case from 'case';
-import { fileURLToPath } from 'url';
+import nunjucks from 'nunjucks';
+import 'colors';
 
-import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
-
+const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const iconsDir = path.join(__dirname, '..');
+const rootDir = path.join(__dirname, '..', '..', '..');
 
-const rootDir = path.join(__dirname, '../../../');
+/**
+ * A simple logger utility to write messages to the console
+ * @type {object} log
+ * @property {(string) => void} log.error
+ * @property {(string) => void} log.write
+ * @property {(string) => void} log.success
+ * @property {(string) => void} log.info
+ */
+const log = {
+	error: (error) => process.stderr.write(`${'❌'.red}  ${error}\n\n`),
+    write: (msg) => process.stdout.write(msg),
+    success: (msg) => process.stdout.write(`${'✓'.green}  ${msg}\n`),
+    info: (msg) => process.stdout.write(`${'ℹ️'.blue}  ${msg}\n`),
+};
 
-const disclaimer = `
-/*
-Copyright 2024 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/** @type {(string) => string} */
+const relativePrint = (filename, { cwd = rootDir } = {}) =>
+    path.relative(cwd, filename);
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/`;
+const env = new nunjucks.Environment(undefined, {
+    autoescape: false,
+    throwOnUndefined: true,
+    trimBlocks: true,
+    lstripBlocks: true,
+});
 
-const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
-const S2IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
-const keepColors = '';
+/**
+ * Formats the content and writes it to the file path
+ * @param {string} filePath - The path to the file to write
+ * @param {string} content - The content to format
+ * @returns {Promise<void>} - A promise that resolves when the file is written
+ */
+const formatAndWrite = async (filePath, content) => {
+    return fsp.writeFile(filePath, content, { encoding: 'utf-8' });
+};
 
-const ensureDirectoryExists = (dirPath) => {
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath);
+/**
+ * Writes to a template
+ * @param {string} filename - The filename of the template
+ * @param {string} filepath - The path to the file to write
+ * @param {object} data - The data to pass to the template
+ * @returns {Promise<void>} - A promise that resolves when the file is written
+ */
+async function writeToTemplate(filename, filepath, data) {
+    const templatePath = path.join(__dirname, 'templates', filename);
+    // Check if the template exists
+    if (!fs.existsSync(templatePath)) {
+        console.error(`Template ${templatePath} does not exist`);
+        return Promise.reject(
+            new Error(`Template ${templatePath} does not exist`)
+        );
     }
-};
 
-const directories = [
-    `${rootDir}packages/icons-workflow/src`,
-    `${rootDir}packages/icons-workflow/src/icons`,
-    `${rootDir}packages/icons-workflow/src/icons-s2`,
-    `${rootDir}packages/icons-workflow/src/elements`,
-    `${rootDir}packages/icons-workflow/icons`,
-];
+    const template = await fsp.readFile(templatePath, 'utf-8');
 
-directories.forEach(ensureDirectoryExists);
+    // Render the template as a string
+    const content = env.renderString(template, data);
 
-fs.writeFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-    disclaimer,
-    'utf-8'
-);
-fs.writeFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons-s2.ts'),
-    disclaimer,
-    'utf-8'
-);
-const manifestPath = path.join(
-    rootDir,
-    'packages',
-    'icons-workflow',
-    'stories',
-    'icon-manifest.ts'
-);
-fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
-let manifestImports = `import {
-    html,
-    TemplateResult
-} from '@spectrum-web-components/base';\r\n`;
-let manifestListings = `\r\nexport const iconManifest = [\r\n`;
+    return formatAndWrite(filepath, content);
+}
 
-const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
+/**
+ * Builds the icons and writes them to the correct directories
+ * @param {string} filepath - The filepath to the icon to build
+ * @returns {Promise<{imports: string, listings: string}>} - The imports and listings for the icon
+ */
+async function buildIcon(filepath) {
+    const svg = await fsp.readFile(filepath, 'utf-8').catch((error) => {
+        console.error(`Error reading icon ${filepath}:`, error);
+        return Promise.reject(error);
+    });
 
-// Temporary replacements for a few icon names that have different names in the new S2 icon set
-const replacements = {
-    UnLink: 'Unlink',
-    TextStrikeThrough: 'TextStrikethrough',
-    ChevronDownSize300: 'ChevronDown',
-    CheckmarkSize300: 'Checkmark',
-};
-
-// A function that process the raw svg name and returns the component name
-export const getComponentName = (i) => {
+    const $ = load(svg, { xmlMode: true });
     let id = path
-        .basename(i, '.svg')
-        .replace(/^(S2_Icon_|S_)/, '')
-        .replace(/(_20_N|_22x20_N|_18_N@2x)$/, '');
-    if (i.startsWith('Ad')) {
-        id = i.replace(/^Ad/, '') + 'Advert';
-    }
-    return Case.pascal(replacements[id] || id);
-};
+        .basename(filepath, '.svg')
+        .replace('S2_Icon_', '')
+        .replace('_20_N', '')
+        .replace('_22x20_N', '');
 
-async function buildIcons(icons, tag, iconsNameList) {
-    icons.forEach((i) => {
-        const svg = fs.readFileSync(i, 'utf-8');
-        let id = path
-            .basename(i, '.svg')
-            .replace('S2_Icon_', '')
-            .replace('_20_N', '')
-            .replace('_22x20_N', '');
-        if (id.search(/^Ad[A-Z]/) !== -1) {
-            id = id.replace(/^Ad/, '');
-            id += 'Advert';
+    [
+        {
+            find: /^Ad[A-Z](.*?)$/,
+            replace: '$1Advert',
+        },
+        {
+            find: 'github',
+            replace: 'GitHub',
+        },
+        {
+            find: 'UnLink',
+            replace: 'Unlink',
+        },
+        {
+            find: 'TextStrikeThrough',
+            replace: 'TextStrikethrough',
+        },
+        {
+            find: /^3D/,
+            replace: 'ThreeD',
+        },
+    ].forEach(({ find, replace }) => {
+        if (id === find) id = replace;
+        if (id.search(find) !== -1) {
+            id = id.replace(find, replace);
         }
+    });
 
-        // use replacements for icons that have different names in the icon set and update the id
-        id = replacements[id] || id;
-
-        const ComponentName = Case.pascal(id);
-
-        const $ = load(svg, {
-            xmlMode: true,
-        });
-        const title = Case.capital(id);
-        const fileName = `${id}.ts`;
-        const location = path.join(
-            rootDir,
-            'packages/icons-workflow/src',
-            tag,
-            fileName
-        );
-
-        if (!Number.isNaN(Number(ComponentName[0]))) {
-            return;
-        }
-
-        $('*').each((index, el) => {
-            if (el.name === 'svg') {
-                $(el).attr('aria-hidden', '...');
-                $(el).attr('role', 'img');
-                if (keepColors !== 'keep') {
-                    $(el).attr('fill', 'currentColor');
-                }
-                $(el).attr('aria-label', '...');
-                $(el).removeAttr('id');
-                $(el).attr('width', '...');
-                $(el).attr('height', '...');
-            }
-            if (el.name === 'defs') {
-                $(el).remove();
-            }
-            Object.keys(el.attribs).forEach((x) => {
-                if (x === 'class') {
-                    $(el).removeAttr(x);
-                }
-                if (keepColors !== 'keep' && x === 'stroke') {
-                    $(el).attr(x, 'currentColor');
-                }
-                if (keepColors !== 'keep' && x === 'fill') {
-                    $(el).attr(x, 'currentColor');
-                }
-            });
-        });
-
-        const iconLiteral = `
-        ${disclaimer}
-    
-        import {tag as html, TemplateResult} from '../custom-tag.js';
-    
-        export {setCustomTemplateLiteralTag} from '../custom-tag.js';
-        export const ${ComponentName}Icon = ({
-        width = 24,
-        height = 24,
-        hidden = false,
-        title = '${title}',
-        } = {},): string | TemplateResult => {
-        return html\`${$('svg')
-            .toString()
-            .replace(
-                'aria-hidden="..."',
-                "aria-hidden=${hidden ? 'true' : 'false'}"
+    // Skip if the first character is a number
+    if (/^\d/.test(id))
+        return Promise.reject(
+            new Error(
+                `Icon ${id} has a number as the first character in the name which is not valid.`
             )
-            .replace('width="..."', 'width="${width}"')
-            .replace('height="..."', 'height="${height}"')
-            .replace('aria-label="..."', 'aria-label="${title}"')}\`;
-        }
-    `;
-
-        prettier
-            .format(iconLiteral, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
-            })
-            .then((icon) => {
-                fs.writeFileSync(location, icon, 'utf-8');
-            });
-
-        const exportString = `export {${ComponentName}Icon} from './${tag}/${id}.js';\r\n`;
-        fs.appendFileSync(
-            path.join(
-                rootDir,
-                'packages',
-                'icons-workflow',
-                'src',
-                tag + '.ts'
-            ),
-            exportString,
-            'utf-8'
         );
 
-        const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
-
-        const currenVersionIconImport = `import { ${ComponentName}Icon as CurrentIcon } from '../${tag}/${id}.js';\r\n`;
-
-        // check if the icon is present in the other version
-        let otherVersionIconImport = defaultIconImport;
-
-        const alternateTag = tag === 'icons' ? 'icons-s2' : 'icons';
-        // if there is a mapping icon found from the above iconset update otherVersionIconImport
-        if (systemsIconMapping[ComponentName]) {
-            otherVersionIconImport = `import { ${systemsIconMapping[ComponentName]}Icon as AlternateIcon } from '../${alternateTag}/${systemsIconMapping[ComponentName]}.js';\r\n`;
-        } else if (iconsNameList.includes(ComponentName)) {
-            // if there is a no mapping icon found reset to DefaultIcon
-            otherVersionIconImport = `import { ${ComponentName}Icon as AlternateIcon } from '../${alternateTag}/${id}.js';\r\n`;
+    // @todo can we remove this now that icons are being pre-processed?
+    $('*').each((_, el) => {
+        if (el.name === 'svg') {
+            $(el).attr('aria-hidden', '...');
+            $(el).attr('role', 'img');
+            $(el).attr('fill', 'currentColor');
+            $(el).attr('aria-label', '...');
+            $(el).removeAttr('id');
+            $(el).attr('width', '...');
+            $(el).attr('height', '...');
         }
-
-        const spectrumVersion = tag === 'icons' ? 1 : 2;
-
-        const iconElement = `
-        ${disclaimer}
-        
-        import {
-            html,
-            TemplateResult
-        } from '@spectrum-web-components/base';
-        import {
-            IconBase
-        } from '@spectrum-web-components/icon';
-        import {
-            setCustomTemplateLiteralTag
-        } from '../custom-tag.js';
-        
-        ${currenVersionIconImport}
-        ${otherVersionIconImport}
-        
-        /**
-         * @element ${iconElementName}
-         */
-        export class Icon${ComponentName} extends IconBase {
-            protected override render(): TemplateResult {
-                setCustomTemplateLiteralTag(html);
-    
-                if(this.spectrumVersion === ${spectrumVersion}){
-                    return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-                }
-                return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-    
+        if (el.name === 'defs') {
+            $(el).remove();
+        }
+        Object.keys(el.attribs).forEach((x) => {
+            if (x === 'class') {
+                $(el).removeAttr(x);
             }
-        }
-        `;
-
-        prettier
-            .format(iconElement, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
-            })
-            .then((iconElementFile) => {
-                fs.writeFileSync(
-                    path.join(
-                        rootDir,
-                        'packages',
-                        'icons-workflow',
-                        'src',
-                        'elements',
-                        `Icon${id}.ts`
-                    ),
-                    iconElementFile,
-                    'utf-8'
-                );
-            });
-
-        const iconRegistration = `
-        ${disclaimer}
-    
-        import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
-        import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-    
-        defineElement('${iconElementName}', Icon${ComponentName});
-    
-        declare global {
-            interface HTMLElementTagNameMap {
-                '${iconElementName}': Icon${ComponentName};
+            if (x === 'stroke') {
+                $(el).attr(x, 'currentColor');
             }
-        }
-        `;
+            if (x === 'fill') {
+                $(el).attr(x, 'currentColor');
+            }
+        });
+    });
 
-        prettier
-            .format(iconRegistration, {
-                printWidth: 100,
-                tabWidth: 2,
-                useTabs: false,
-                semi: true,
-                singleQuote: true,
-                trailingComma: 'all',
-                bracketSpacing: true,
-                jsxBracketSameLine: false,
-                arrowParens: 'avoid',
-                parser: 'typescript',
+    const parsedSvg = $('svg')
+        .toString()
+        .replace(
+            'aria-hidden="..."',
+            `aria-hidden='\${hidden ? 'true' : 'false'}'`
+        )
+        .replace('width="..."', `width="\${width}"`)
+        .replace('height="..."', `height="\${height}"`)
+        .replace('aria-label="..."', `aria-label="\${title}"`);
+
+    return Promise.all([
+        writeToTemplate(
+            'id.ts.njk',
+            path.join(iconsDir, 'src', 'icons', `${id}.ts`),
+            {
+                ComponentName: Case.pascal(id),
+                id,
+                iconElementName: `sp-icon-${Case.kebab(id)}`,
+                title: Case.capital(id),
+                width: 24,
+                height: 24,
+                svg: parsedSvg,
+            }
+        ),
+        writeToTemplate(
+            'IconID.ts.njk',
+            path.join(iconsDir, 'src', 'elements', `Icon${id}.ts`),
+            {
+                ComponentName: Case.pascal(id),
+                id,
+                iconElementName: `sp-icon-${Case.kebab(id)}`,
+                title: Case.capital(id),
+            }
+        ),
+        writeToTemplate(
+            'ElementName.ts.njk',
+            path.join(iconsDir, 'icons', `sp-icon-${Case.kebab(id)}.ts`),
+            {
+                ComponentName: Case.pascal(id),
+                id,
+                iconElementName: `sp-icon-${Case.kebab(id)}`,
+                title: Case.capital(id),
+            }
+        ),
+    ]).then(() => ({
+        id,
+        exports: `export {${Case.pascal(id)}Icon} from './icons/${id}.js';`,
+        imports: `import '@spectrum-web-components/icons-workflow/icons/sp-icon-${Case.kebab(id)}.js';`,
+        listings: `{ name: '${Case.sentence(id)}', tag: '<sp-icon-${Case.kebab(id)}>', story: (size: IconSize): TemplateResult => html\`<sp-icon-${Case.kebab(id)} size=\$\{size\}></sp-icon-${Case.kebab(id)}>\` }`,
+    }));
+}
+
+async function main({ verbose = false } = {}) {
+    // Kick off the directory creation
+    const makeDirs = Promise.all(
+        ['src/icons', 'src/elements', 'icons', 'stories'].map((dirPath) => {
+            if (!fs.existsSync(path.join(iconsDir, dirPath))) {
+                return fsp.mkdir(path.join(iconsDir, dirPath), {
+                    recursive: true,
+                });
+            }
+            return Promise.resolve();
+        })
+    );
+
+    // Read the icons
+    return fg(`assets/svg/**.svg`, {
+        cwd: path.dirname(
+            require.resolve('@adobe/spectrum-css-workflow-icons', {
+                paths: [iconsDir, path.join(iconsDir, '..', '..')],
             })
-            .then((iconRegistrationFile) => {
-                fs.writeFileSync(
-                    path.join(
-                        rootDir,
-                        'packages',
-                        'icons-workflow',
-                        'icons',
-                        `${iconElementName}.ts`
-                    ),
-                    iconRegistrationFile,
-                    'utf-8'
+        ),
+        absolute: true,
+    }).then(async (icons) => {
+        // Don't start building until the directories are created
+        await makeDirs.then(() => {
+            if (verbose)
+                log.info(
+                    'All directories have been created if they did not already exist.'
                 );
-            });
+        });
 
-        const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
-        const metadata = `{name: '${Case.sentence(
-            ComponentName
-        )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
-        manifestImports += importStatement;
-        manifestListings += metadata;
+        // Build the icons
+        return Promise.all(icons.map(buildIcon)).then(async (results) => {
+            results = results.sort((a, b) =>
+                a.id.localeCompare(b.id, 'en', { numeric: true })
+            );
+            // Create the exports, imports, and listings
+            const exports = [
+                "export { setCustomTemplateLiteralTag } from './custom-tag.js';",
+                ...results.map(({ exports }) => exports),
+            ];
+            const imports = results.map(({ imports }) => imports);
+            const listings = results.map(({ listings }) => listings);
+
+            const promises = [
+                formatAndWrite(
+                    path.join(iconsDir, 'src', 'icons.ts'),
+                    exports.join('\r\n') + '\r\n'
+                ).then(() => {
+                    log.success(
+                        `Successfully wrote exports to ${'src/icons.ts'.cyan}.`
+                    );
+                }),
+                writeToTemplate(
+                    'icon-manifest.ts.njk',
+                    path.join(iconsDir, 'stories', 'icon-manifest.ts'),
+                    {
+                        imports: imports.join('\r\n'),
+                        listings: listings.join(',\r\n\t'),
+                    }
+                ).then(() => {
+                    log.success(
+                        `Successfully wrote icon manifest to ${'stories/icon-manifest.ts'.cyan}.`
+                    );
+                }),
+            ];
+
+            // Process all files with ESLint
+            promises.push(
+                fg(['src/icons/**'], {
+                    cwd: iconsDir,
+                    absolute: true,
+                    ignore: ['src/icons/*.d.ts'],
+                }).then((builtAssets) => {
+                        // Write results to the files
+                        return Promise.all(
+                            builtAssets.map(
+                                async (filePath) => {
+                                    const output = await fsp.readFile(filePath, 'utf-8');
+                                    if (!output) return Promise.resolve();
+                                    return formatAndWrite(
+                                        filePath,
+                                        output
+                                    ).then(() => {
+                                        log.success(
+                                            `${path.basename(filePath, '.ts').green} to ${relativePrint(filePath).cyan}.`
+                                        );
+                                    });
+                                }
+                            )
+                        );
+                    })
+            );
+
+            return Promise.all(promises);
+        });
     });
 }
 
-const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
-).sort();
-
-const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
-).sort();
-
-const iconsV1NameList = iconsV1.map((i) => {
-    return getComponentName(i);
-});
-const iconsV2NameList = iconsV2.map((i) => {
-    return getComponentName(i);
-});
-
-await buildIcons(iconsV1, 'icons', iconsV2NameList);
-await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
-
-const exportString = `\r\nexport { setCustomTemplateLiteralTag } from './custom-tag.js';\r\n`;
-fs.appendFileSync(
-    path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
-    exportString,
-    'utf-8'
-);
-
-fs.appendFileSync(
-    manifestPath,
-    `${manifestImports}${manifestListings}];\r\n`,
-    'utf-8'
-);
+main({ verbose: true });

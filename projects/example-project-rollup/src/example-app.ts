@@ -12,8 +12,7 @@
 
 // import our stylesheets
 import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/scale-medium.js';
+import '@spectrum-web-components/theme/core.js';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button.js';

@@ -17,7 +17,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
+import {
+    classMap,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import coachmarkStyles from './coachmark.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
@@ -88,6 +91,12 @@ export class Coachmark extends Popover {
     @property({ type: String, attribute: 'secondary-cta' })
     secondaryCTA?: string;
 
+    @property({ type: Boolean, attribute: 'fixed-height', reflect: true })
+    public fixedHeight = false;
+
+    @property({ type: Boolean })
+    public isMobile = false;
+
     // render video and images
     private renderMedia(): TemplateResult {
         const isImage = this.mediaType === MediaType.IMAGE;
@@ -98,7 +107,12 @@ export class Coachmark extends Popover {
         }
         return html`
             <sp-asset id="cover-photo">
-                <div class="image-wrapper">
+                <div
+                    class=${classMap({
+                        'image-wrapper': true,
+                        'fixed-height': this.fixedHeight,
+                    })}
+                >
                     <img
                         class="image"
                         loading="lazy"
@@ -284,7 +298,12 @@ export class Coachmark extends Popover {
     // render action menu
     protected renderActionMenu = (): TemplateResult => {
         return html`
-            <div class="action-menu">
+            <div
+                class=${classMap({
+                    'action-menu': true,
+                    mobile: this.isMobile,
+                })}
+            >
                 <slot name="actions"></slot>
             </div>
         `;

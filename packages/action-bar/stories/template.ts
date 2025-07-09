@@ -11,26 +11,34 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 
-export interface Properties {
-    emphasized?: boolean;
-    open?: boolean;
-    tools?: boolean;
-}
+import type { Properties } from './args.js';
 
 export const Template = ({
-    emphasized,
-    open,
+    emphasized = false,
+    open = true,
     tools = true,
-}: Properties): TemplateResult => {
+    variant,
+    content = '2 selected',
+    hasActionMenu = false,
+}: Properties = {}): TemplateResult => {
     return html`
-        <sp-action-bar ?open=${open} ?emphasized=${emphasized}>
-            2 selected
+        <sp-action-bar
+            ?open=${open}
+            ?emphasized=${emphasized}
+            variant=${ifDefined(variant)}
+        >
+            ${content}
             ${tools
                 ? html`
                       <sp-action-button slot="buttons" label="Edit">
@@ -39,6 +47,22 @@ export const Template = ({
                       <sp-action-button slot="buttons" label="Share">
                           <sp-icon-share slot="icon"></sp-icon-share>
                       </sp-action-button>
+                  `
+                : html``}
+            ${hasActionMenu
+                ? html`
+                      <sp-action-menu label="More Actions" slot="buttons">
+                          <sp-menu-item>One</sp-menu-item>
+                          <sp-menu-item>Two</sp-menu-item>
+                          <sp-menu-item>
+                              Select some items
+                              <sp-menu slot="submenu" selects="multiple">
+                                  <sp-menu-item>A</sp-menu-item>
+                                  <sp-menu-item selected>B</sp-menu-item>
+                                  <sp-menu-item>C</sp-menu-item>
+                              </sp-menu>
+                          </sp-menu-item>
+                      </sp-action-menu>
                   `
                 : html``}
         </sp-action-bar>

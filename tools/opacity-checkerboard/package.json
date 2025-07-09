@@ -22,9 +22,7 @@
     "exports": {
         ".": "./src/opacity-checkerboard.css.js",
         "./package.json": "./package.json",
-        "./src/is-opacity-checkerboard-overrides.css.js": "./src/is-opacity-checkerboard-overrides.css.js",
         "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
-        "./src/opacity-checkerboard-overrides.css.js": "./src/opacity-checkerboard-overrides.css.js",
         "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
     },
     "scripts": {

@@ -10,13 +10,33 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-contextual-help.css");
-@import url("./contextual-help-overrides.css");
+.popover {
+    min-inline-size: var(--spectrum-contextual-help-minimum-width);
+    padding-block: var(--spectrum-spacing-400);
+    padding-inline: var(--spectrum-spacing-400);
+    font-size: var(--spectrum-contextual-help-body-size);
+    color: var(--highcontrast-contextual-help-body-color, var(--spectrum-body-color));
+    max-inline-size: var(--spectrum-contextual-help-popover-maximum-width);
+    position: relative;
+}
 
-:host {
-    display: inline-block;
+.popover .body,
+.popover ::slotted([slot="heading"]) {
+    margin: 0;
+}
+
+.popover ::slotted([slot="heading"]) {
+    font-size: var(--spectrum-contextual-help-title-size);
+    color: var(--highcontrast-contextual-help-heading-color, var(--spectrum-heading-color));
+    margin-block-end: var(--spectrum-contextual-help-content-spacing);
 }
 
 ::slotted([slot="link"]) {
+    margin-block-start: var(--spectrum-spacing-300);
+
     display: block;
+}
+
+:host {
+    display: inline-block;
 }

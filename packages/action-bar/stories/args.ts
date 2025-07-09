@@ -10,6 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
+export type Properties = {
+    emphasized?: boolean;
+    open?: boolean;
+    tools?: boolean;
+    variant?: 'default' | 'fixed' | 'flexible';
+    content?: string;
+    hasActionMenu?: boolean;
+};
+
 export const argTypes = {
     open: {
         name: 'open',
@@ -19,9 +28,7 @@ export const argTypes = {
             type: { summary: 'boolean' },
             defaultValue: { summary: true },
         },
-        control: {
-            type: 'boolean',
-        },
+        control: 'boolean',
     },
     emphasized: {
         name: 'emphasized',
@@ -31,9 +38,7 @@ export const argTypes = {
             type: { summary: 'boolean' },
             defaultValue: { summary: false },
         },
-        control: {
-            type: 'boolean',
-        },
+        control: 'boolean',
     },
     tools: {
         name: 'tools',
@@ -43,8 +48,44 @@ export const argTypes = {
             type: { summary: 'boolean' },
             defaultValue: { summary: true },
         },
-        control: {
-            type: 'boolean',
+        control: 'boolean',
+    },
+    variant: {
+        name: 'variant',
+        type: { name: 'string', required: false },
+        description: 'The variant of the action bar.',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'default' },
         },
+        options: ['default', 'fixed', 'flexible'],
+        control: {
+            labels: {
+                default: 'Default',
+                fixed: 'Fixed',
+                flexible: 'Flexible',
+            },
+            type: 'select',
+        },
+    },
+    content: {
+        name: 'content',
+        type: { name: 'string', required: false },
+        description: 'The content text displayed in the action bar.',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: '2 selected' },
+        },
+        control: 'text',
+    },
+    hasActionMenu: {
+        name: 'hasActionMenu',
+        type: { name: 'boolean', required: false },
+        description: 'Whether to include an action menu in the action bar.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: 'boolean',
     },
 };

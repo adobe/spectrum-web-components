@@ -33,7 +33,6 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/progress-circle-overrides.css.js": "./src/progress-circle-overrides.css.js",
         "./src/progress-circle.css.js": "./src/progress-circle.css.js",
         "./sp-progress-circle.js": {
             "development": "./sp-progress-circle.dev.js",

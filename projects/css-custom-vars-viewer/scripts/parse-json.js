@@ -9,73 +9,72 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const spectrumColours = [
-    'gray',
-    'blue',
-    'red',
-    'orange',
-    'yellow',
-    'chartreuse',
-    'celery',
-    'green',
-    'seafoam',
-    'cyan',
-    'indigo',
-    'purple',
-    'fuchsia',
-    'magenta',
-];
+const fsp = fs.promises;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const srcPath = path.resolve(__dirname, '../src/color-palette.json');
-const contents = fs.readFileSync(srcPath, { encoding: 'utf8' });
-const outputPath = path.resolve(__dirname, '../src/parsed-data.ts');
 
-const varsJSON = JSON.parse(contents);
-let colorArray = [];
-let exportString = '';
+async function main() {
+    const srcPath = path.resolve(__dirname, '../src/color-palette.json');
+    const contents = fs.readFileSync(srcPath, { encoding: 'utf8' });
+    const outputPath = path.resolve(__dirname, '../src/parsed-data.ts');
 
-spectrumColours.forEach((colour) => {
-    for (const [key, info] of Object.entries(varsJSON)) {
-        const colourSubstring = key.search(colour);
+    const varsJSON = JSON.parse(contents);
+    let colorArray = [];
+    let exportString = '';
 
-        if (colourSubstring !== -1) {
-            const infoValues = info.value;
-            if (infoValues !== undefined) {
-                // eslint-disable-next-line no-console
-                console.log('invalid format!');
-            } else {
-                colorArray.push({
-                    customVar: `--spectrum-${key}`,
-                    sets: {
-                        light: info.sets.light.value,
-                        dark: info.sets.dark.value,
-                        darkest: info.sets.darkest.value,
-                        wireframe: info.sets.wireframe.value,
-                    },
-                });
-            }
+    [
+        'gray',
+        'blue',
+        'red',
+        'orange',
+        'yellow',
+        'chartreuse',
+        'celery',
+        'green',
+        'seafoam',
+        'cyan',
+        'indigo',
+        'purple',
+        'fuchsia',
+        'magenta',
+        'silver',
+        'brown',
+        'cinnamon',
+        'turquoise',
+        'pink'
+    ].forEach((colour) => {
+        for (const [key, info] of Object.entries(varsJSON)) {
+            const colourSubstring = key.search(colour);
+            if (colourSubstring === -1) continue;
+
+            colorArray.push({
+                prop: info.prop,
+                light: info?.light?.value ?? info.value,
+                dark: info?.dark?.value ?? info.value,
+            });
         }
-    }
-    exportString = exportString.concat(
-        ...`export const ${colour}Values: Item[] = ${JSON.stringify(
-            colorArray,
-            undefined,
-            '  '
-        )};\n`
-    );
-    colorArray = [];
-});
-fs.writeFileSync(
-    outputPath,
-    `/* eslint-disable notice/notice */\n/* eslint-disable prettier/prettier */
-    import { Item } from './CssTable.js';
+
+        exportString = exportString.concat(
+            ...`export const ${colour}Values: Item[] = ${JSON.stringify(
+                colorArray,
+                undefined,
+                '  '
+            )};\n`
+        );
+        colorArray = [];
+    });
+
+    return fsp.writeFile(
+        outputPath,
+        `import { Item } from './CssTable.js';
 
     ${exportString}`,
-    {
-        encoding: 'utf8',
-    }
-);
+        { encoding: 'utf8' }
+    );
+}
+
+main();

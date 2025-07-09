@@ -10,18 +10,94 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-color-handle.css");
-
+/* Base variables */
 :host {
+    /* variables */
+    --spectrum-colorhandle-outer-border-color: rgb(var(--spectrum-black-rgb) / var(--spectrum-color-handle-outer-border-opacity));
+    --spectrum-colorhandle-outer-border-width: var(--spectrum-color-handle-outer-border-width);
+    --spectrum-colorhandle-inner-border-color: rgb(var(--spectrum-black-rgb) / var(--spectrum-color-handle-inner-border-opacity));
+    --spectrum-opacity-checkerboard-position: 50%;
+
+    /* layout */
+    z-index: 1;
+    box-sizing: border-box;
+    inline-size: var(--spectrum-color-handle-size);
+    block-size: var(--spectrum-color-handle-size);
+    margin-inline: calc(var(--spectrum-color-handle-size) / 2 * -1);
+    margin-block: calc(var(--spectrum-color-handle-size) / 2 * -1);
+
+    /* borders */
+    border-width: var(--spectrum-color-handle-border-width);
+    border-color: var(--spectrum-white);
+    border-style: solid;
+    border-radius: 100%;
+
+    /* effects */
+    box-shadow: 0 0 0 var(--spectrum-colorhandle-outer-border-width) var(--spectrum-colorhandle-outer-border-color);
+
+    /* interaction */
     touch-action: none;
+    position: absolute;
+    display: block;
+
+    /* animation */
     transition:
-        inline-size var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing)),
-        block-size var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing)),
-        border-width var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing)),
-        margin-inline var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing)),
-        margin-block var(--mod-colorhandle-animation-duration, var(--spectrum-colorhandle-animation-duration)) var(--mod-colorhandle-animation-easing, var(--spectrum-colorhandle-animation-easing));
+        inline-size var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),
+        block-size var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),
+        border-width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),
+        margin-inline var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),
+        margin-block var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),
+        all var(--spectrum-animation-duration-100) ease-in-out;
 }
 
+/* focus states */
 :host(:focus) {
     outline: none;
+}
+
+:host([focused]),
+:host(:focus-visible) {
+    inline-size: var(--spectrum-color-handle-size-key-focus);
+    block-size: var(--spectrum-color-handle-size-key-focus);
+    margin-inline: calc(var(--spectrum-color-handle-size) * -1);
+    margin-block: calc(var(--spectrum-color-handle-size) * -1);
+    outline: none;
+}
+
+/* hit area */
+:host:after {
+    content: "";
+    inset-inline: calc(50% - var(--spectrum-color-control-track-width) / 2);
+    inset-block: calc(50% - var(--spectrum-color-control-track-width) / 2);
+    inline-size: var(--spectrum-color-control-track-width);
+    block-size: var(--spectrum-color-control-track-width);
+    border-radius: var(--spectrum-colorhandle-hitarea-border-radius, 100%);
+    display: block;
+    position: absolute;
+}
+
+/* inner color display */
+.inner {
+    inline-size: 100%;
+    block-size: 100%;
+    box-shadow: inset 0 0 0 var(--spectrum-color-handle-inner-border-width) var(--spectrum-colorhandle-inner-border-color);
+    background-color: var(--spectrum-picked-color);
+    border-radius: 100%;
+}
+
+/* disabled state */
+:host([disabled]) {
+    pointer-events: none;
+    border-color: var(--highcontrast-colorhandle-border-color-disabled, var(--spectrum-disabled-content-color));
+    background: var(--highcontrast-colorhandle-fill-color-disabled, var(--spectrum-disabled-background-color));
+    box-shadow: none;
+}
+
+:host([disabled]) .inner {
+    display: none;
+}
+
+:host([disabled]) {
+    --highcontrast-colorhandle-border-color-disabled: GrayText;
+    --highcontrast-colorhandle-fill-color-disabled: Canvas;
 }

@@ -1,24 +1,25 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- */
-import { ElementPart, Part } from 'lit';
-import { nothing } from 'lit/html.js';
-import { AsyncDirective, directive } from 'lit/async-directive.js';
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+import type { ElementPart, Part } from '@spectrum-web-components/base';
+import { nothing } from '@spectrum-web-components/base';
+import { AsyncDirective, directive } from '@spectrum-web-components/base/src/directives.js';
 
 type EventListenerWithOptions = EventListenerOrEventListenerObject &
     Partial<AddEventListenerOptions>;
 
 /**
  * Usage:
- *    import { html, render } from 'lit-html';
+ *    import { html, render } from '@spectrum-web-components/base';
  *    import { spread } from '@open-wc/lit-helpers';
  *
  *    render(
@@ -56,7 +57,9 @@ class SpreadDirective extends AsyncDirective {
     }
 
     apply(data: { [key: string]: unknown }) {
-        if (!data) return;
+        if (!data) {
+            return;
+        }
         const { prevData, element } = this;
         for (const key in data) {
             const value = data[key];
@@ -105,7 +108,9 @@ class SpreadDirective extends AsyncDirective {
 
     groom(data: { [key: string]: unknown }) {
         const { prevData, element } = this;
-        if (!prevData) return;
+        if (!prevData) {
+            return;
+        }
         for (const key in prevData) {
             if (!data || !(key in data)) {
                 switch (key[0]) {
@@ -147,7 +152,9 @@ class SpreadDirective extends AsyncDirective {
     override disconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
-            if (key[0] !== '@') continue;
+            if (key[0] !== '@') {
+                continue;
+            }
             // event listener
             const value = prevData[key];
             element.removeEventListener(
@@ -161,7 +168,9 @@ class SpreadDirective extends AsyncDirective {
     override reconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
-            if (key[0] !== '@') continue;
+            if (key[0] !== '@') {
+                continue;
+            }
             // event listener
             const value = prevData[key];
             element.addEventListener(
@@ -194,7 +203,9 @@ class SpreadPropsDirective extends AsyncDirective {
     }
 
     apply(data: { [key: string]: unknown }) {
-        if (!data) return;
+        if (!data) {
+            return;
+        }
         const { prevData, element } = this;
         for (const key in data) {
             const value = data[key];
@@ -208,7 +219,9 @@ class SpreadPropsDirective extends AsyncDirective {
 
     groom(data: { [key: string]: unknown }) {
         const { prevData, element } = this;
-        if (!prevData) return;
+        if (!prevData) {
+            return;
+        }
         for (const key in prevData) {
             if (!data || !(key in data)) {
                 // @ts-ignore

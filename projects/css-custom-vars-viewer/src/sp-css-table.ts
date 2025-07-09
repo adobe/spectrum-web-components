@@ -10,5 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { CssTable } from './CssTable.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-window.customElements.define('sp-css-table', CssTable);
+defineElement('sp-css-table', CssTable);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-css-table': CssTable;
+    }
+}

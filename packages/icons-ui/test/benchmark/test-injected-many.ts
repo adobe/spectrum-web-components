@@ -11,14 +11,13 @@
  */
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import { Arrow75Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow75.js';
+import { Add50Icon } from '@spectrum-web-components/icons-ui/src/icons/Add50.js';
+import { Add75Icon } from '@spectrum-web-components/icons-ui/src/icons/Add75.js';
+import { Add100Icon } from '@spectrum-web-components/icons-ui/src/icons/Add100.js';
+import { Add200Icon } from '@spectrum-web-components/icons-ui/src/icons/Add200.js';
+import { Add300Icon } from '@spectrum-web-components/icons-ui/src/icons/Add300.js';
 import { Arrow100Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow100.js';
-import { Arrow200Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow200.js';
-import { Arrow300Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow300.js';
 import { Arrow400Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow400.js';
-import { Arrow500Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow500.js';
-import { Arrow600Icon } from '@spectrum-web-components/icons-ui/src/icons/Arrow600.js';
-import { Asterisk75Icon } from '@spectrum-web-components/icons-ui/src/icons/Asterisk75.js';
 import { Asterisk100Icon } from '@spectrum-web-components/icons-ui/src/icons/Asterisk100.js';
 import { Asterisk200Icon } from '@spectrum-web-components/icons-ui/src/icons/Asterisk200.js';
 import { Asterisk300Icon } from '@spectrum-web-components/icons-ui/src/icons/Asterisk300.js';
@@ -28,15 +27,12 @@ import { Checkmark100Icon } from '@spectrum-web-components/icons-ui/src/icons/Ch
 import { Checkmark200Icon } from '@spectrum-web-components/icons-ui/src/icons/Checkmark200.js';
 import { Checkmark300Icon } from '@spectrum-web-components/icons-ui/src/icons/Checkmark300.js';
 import { Checkmark400Icon } from '@spectrum-web-components/icons-ui/src/icons/Checkmark400.js';
-import { Checkmark500Icon } from '@spectrum-web-components/icons-ui/src/icons/Checkmark500.js';
-import { Checkmark600Icon } from '@spectrum-web-components/icons-ui/src/icons/Checkmark600.js';
+import { Chevron50Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron50.js';
 import { Chevron75Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron75.js';
 import { Chevron100Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron100.js';
 import { Chevron200Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron200.js';
 import { Chevron300Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron300.js';
 import { Chevron400Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron400.js';
-import { Chevron500Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron500.js';
-import { Chevron600Icon } from '@spectrum-web-components/icons-ui/src/icons/Chevron600.js';
 import { CornerTriangle75Icon } from '@spectrum-web-components/icons-ui/src/icons/CornerTriangle75.js';
 import { CornerTriangle100Icon } from '@spectrum-web-components/icons-ui/src/icons/CornerTriangle100.js';
 import { CornerTriangle200Icon } from '@spectrum-web-components/icons-ui/src/icons/CornerTriangle200.js';
@@ -53,12 +49,15 @@ import { Dash75Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash75.j
 import { Dash100Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash100.js';
 import { Dash200Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash200.js';
 import { Dash300Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash300.js';
-import { Dash400Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash400.js';
-import { Dash500Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash500.js';
-import { Dash600Icon } from '@spectrum-web-components/icons-ui/src/icons/Dash600.js';
-import { DoubleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/DoubleGripper.js';
-import { SingleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/SingleGripper.js';
-import { TripleGripperIcon } from '@spectrum-web-components/icons-ui/src/icons/TripleGripper.js';
+import { DragHandle75Icon } from '@spectrum-web-components/icons-ui/src/icons/DragHandle75.js';
+import { DragHandle100Icon } from '@spectrum-web-components/icons-ui/src/icons/DragHandle100.js';
+import { DragHandle200Icon } from '@spectrum-web-components/icons-ui/src/icons/DragHandle200.js';
+import { DragHandle300Icon } from '@spectrum-web-components/icons-ui/src/icons/DragHandle300.js';
+import { Gripper100Icon } from '@spectrum-web-components/icons-ui/src/icons/Gripper100.js';
+import { LinkOut100Icon } from '@spectrum-web-components/icons-ui/src/icons/LinkOut100.js';
+import { LinkOut200Icon } from '@spectrum-web-components/icons-ui/src/icons/LinkOut200.js';
+import { LinkOut300Icon } from '@spectrum-web-components/icons-ui/src/icons/LinkOut300.js';
+import { LinkOut400Icon } from '@spectrum-web-components/icons-ui/src/icons/LinkOut400.js';
 import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-ui/src/custom-tag.js';
 import { html } from '@spectrum-web-components/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
@@ -66,14 +65,13 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 setCustomTemplateLiteralTag(html);
 
 measureFixtureCreation(html`
-    <sp-icon>${Arrow75Icon()}</sp-icon>
+    <sp-icon>${Add50Icon()}</sp-icon>
+    <sp-icon>${Add75Icon()}</sp-icon>
+    <sp-icon>${Add100Icon()}</sp-icon>
+    <sp-icon>${Add200Icon()}</sp-icon>
+    <sp-icon>${Add300Icon()}</sp-icon>
     <sp-icon>${Arrow100Icon()}</sp-icon>
-    <sp-icon>${Arrow200Icon()}</sp-icon>
-    <sp-icon>${Arrow300Icon()}</sp-icon>
     <sp-icon>${Arrow400Icon()}</sp-icon>
-    <sp-icon>${Arrow500Icon()}</sp-icon>
-    <sp-icon>${Arrow600Icon()}</sp-icon>
-    <sp-icon>${Asterisk75Icon()}</sp-icon>
     <sp-icon>${Asterisk100Icon()}</sp-icon>
     <sp-icon>${Asterisk200Icon()}</sp-icon>
     <sp-icon>${Asterisk300Icon()}</sp-icon>
@@ -83,15 +81,12 @@ measureFixtureCreation(html`
     <sp-icon>${Checkmark200Icon()}</sp-icon>
     <sp-icon>${Checkmark300Icon()}</sp-icon>
     <sp-icon>${Checkmark400Icon()}</sp-icon>
-    <sp-icon>${Checkmark500Icon()}</sp-icon>
-    <sp-icon>${Checkmark600Icon()}</sp-icon>
+    <sp-icon>${Chevron50Icon()}</sp-icon>
     <sp-icon>${Chevron75Icon()}</sp-icon>
     <sp-icon>${Chevron100Icon()}</sp-icon>
     <sp-icon>${Chevron200Icon()}</sp-icon>
     <sp-icon>${Chevron300Icon()}</sp-icon>
     <sp-icon>${Chevron400Icon()}</sp-icon>
-    <sp-icon>${Chevron500Icon()}</sp-icon>
-    <sp-icon>${Chevron600Icon()}</sp-icon>
     <sp-icon>${CornerTriangle75Icon()}</sp-icon>
     <sp-icon>${CornerTriangle100Icon()}</sp-icon>
     <sp-icon>${CornerTriangle200Icon()}</sp-icon>
@@ -108,10 +103,13 @@ measureFixtureCreation(html`
     <sp-icon>${Dash100Icon()}</sp-icon>
     <sp-icon>${Dash200Icon()}</sp-icon>
     <sp-icon>${Dash300Icon()}</sp-icon>
-    <sp-icon>${Dash400Icon()}</sp-icon>
-    <sp-icon>${Dash500Icon()}</sp-icon>
-    <sp-icon>${Dash600Icon()}</sp-icon>
-    <sp-icon>${DoubleGripperIcon()}</sp-icon>
-    <sp-icon>${SingleGripperIcon()}</sp-icon>
-    <sp-icon>${TripleGripperIcon()}</sp-icon>
+    <sp-icon>${DragHandle75Icon()}</sp-icon>
+    <sp-icon>${DragHandle100Icon()}</sp-icon>
+    <sp-icon>${DragHandle200Icon()}</sp-icon>
+    <sp-icon>${DragHandle300Icon()}</sp-icon>
+    <sp-icon>${Gripper100Icon()}</sp-icon>
+    <sp-icon>${LinkOut100Icon()}</sp-icon>
+    <sp-icon>${LinkOut200Icon()}</sp-icon>
+    <sp-icon>${LinkOut300Icon()}</sp-icon>
+    <sp-icon>${LinkOut400Icon()}</sp-icon>
 `);

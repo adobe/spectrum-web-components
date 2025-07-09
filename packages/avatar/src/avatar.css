@@ -10,8 +10,96 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-avatar.css");
-@import url("./avatar-overrides.css");
+/* Base variables */
+:host {
+    /* layout */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
+    --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
+
+    /* focus Indicator */
+    --spectrum-avatar-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-avatar-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-avatar-focus-indicator-color: var(--spectrum-focus-indicator-color);
+
+    /* states */
+    --spectrum-avatar-color-opacity: 1;
+    --spectrum-avatar-color-opacity-disabled: var(--spectrum-avatar-opacity-disabled);
+}
+
+/* size variants */
+:host([size="50"]) {
+}
+
+:host([size="75"]) {
+}
+
+:host([size="100"]) {
+}
+
+:host([size="200"]) {
+}
+
+:host([size="300"]) {
+}
+
+:host([size="400"]) {
+}
+
+:host([size="500"]) {
+}
+
+:host([size="600"]) {
+}
+
+:host([size="700"]) {
+}
+
+/* base styles */
+:host {
+    inline-size: var(--spectrum-avatar-inline-size);
+    block-size: var(--spectrum-avatar-block-size);
+    border-radius: var(--spectrum-avatar-border-radius);
+    -webkit-user-drag: none;
+    user-select: none;
+    opacity: var(--spectrum-avatar-color-opacity);
+    border-width: 0;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    overflow: visible;
+}
+
+/* states */
+:host([disabled]) {
+    opacity: var(--spectrum-avatar-color-opacity-disabled);
+}
+
+/* focus styles */
+:host(:not([disabled])) .is-focused:after,
+:host(:not([disabled])) .link:focus-visible:after {
+    pointer-events: none;
+    content: "";
+    inline-size: calc(var(--spectrum-avatar-inline-size) + var(--spectrum-avatar-focus-indicator-gap) * 2);
+    block-size: calc(var(--spectrum-avatar-inline-size) + var(--spectrum-avatar-focus-indicator-gap) * 2);
+    border-style: solid;
+    border-width: var(--spectrum-avatar-focus-indicator-thickness);
+    border-color: var(--highcontrast-avatar-focus-indicator-color, var(--spectrum-avatar-focus-indicator-color));
+    border-radius: var(--spectrum-avatar-border-radius);
+    position: absolute;
+    inset-block-start: calc((var(--spectrum-avatar-focus-indicator-gap) + var(--spectrum-avatar-focus-indicator-thickness)) * -1);
+    inset-inline-start: calc((var(--spectrum-avatar-focus-indicator-gap) + var(--spectrum-avatar-focus-indicator-thickness)) * -1);
+}
+
+.link {
+    outline: 0;
+}
+
+.image {
+    inline-size: var(--spectrum-avatar-inline-size);
+    block-size: var(--spectrum-avatar-block-size);
+    border-radius: var(--spectrum-avatar-border-radius);
+}
 
 img {
     vertical-align: top;

@@ -29,7 +29,6 @@
             "development": "./src/Avatar.dev.js",
             "default": "./src/Avatar.js"
         },
-        "./src/avatar-overrides.css.js": "./src/avatar-overrides.css.js",
         "./src/avatar.css.js": "./src/avatar.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

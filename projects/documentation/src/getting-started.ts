@@ -10,5 +10,5 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/theme/theme-lightest.js';
-import '@spectrum-web-components/theme/scale-medium.js';
+/* Medium & light contexts are shipped with the core theme fragment as defaults */
+import '@spectrum-web-components/theme/core.js';

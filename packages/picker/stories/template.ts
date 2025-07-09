@@ -21,7 +21,7 @@ import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export interface StoryArgs {
     disabled?: boolean;

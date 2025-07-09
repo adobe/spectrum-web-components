@@ -15,6 +15,7 @@ import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js
 // import { setCustomElementsManifest } from '@storybook/web-components';
 import DocumentationTemplate from './DocumentationTemplate.mdx';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+import { withTestingGridWrapper } from './decorators/testing-grid.js';
 
 // const cem = await import('./custom-elements.json', {
 //     assert: { type: 'json' },
@@ -22,26 +23,12 @@ import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
 // setCustomElementsManifest(cem);
 
+// Import the custom base styles
+import './assets/base.css';
+
+export const title = 'Spectrum Web Components';
+
 export const globalTypes = {
-    system: {
-        title: 'Design context',
-        description: 'The variation of Spectrum to use in the component',
-        defaultValue: 'spectrum',
-        type: 'string',
-        showName: true,
-        toolbar: {
-            items: [
-                {
-                    value: 'spectrum-two',
-                    title: 'Spectrum 2',
-                    right: 'default',
-                },
-                { value: 'spectrum', title: 'Spectrum 1', right: 'legacy' },
-                { value: 'express', title: 'Express' },
-            ],
-            dynamicTitle: true,
-        },
-    },
     color: {
         title: 'Color',
         description: 'Controls the color context of the component',
@@ -113,23 +100,46 @@ export const globalTypes = {
             dynamicTitle: true,
         },
     },
+    testingGrid: {
+        title: 'Testing grid',
+        description: 'See how the story will look to VRT',
+        defaultValue: false,
+        toolbar: {
+            icon: 'beaker',
+            items: [
+                { value: true, title: 'Show testing grid' },
+                { value: false, title: 'Default' },
+            ],
+        },
+    },
 };
 
 export const parameters = {
+    layout: 'fullscreen',
     docs: {
+        defaultName: 'Docs',
         template: DocumentationTemplate,
     },
     controls: {
         expanded: true,
+        hideNoControlsWarning: true,
+        sort: 'requiredFirst',
         matchers: {
             color: /(backgroundColor|color)$/i,
             date: /Date$/,
         },
     },
-    layout: 'fullscreen',
     options: {
         storySort: {
             method: 'alphabetical-by-kind',
+            order: [
+                'Packages',
+                ['*', ['Docs', 'Default', '*']],
+                'Tools',
+                ['*', ['Docs', 'Default', '*']],
+                '*',
+            ],
+            includeNames: true,
         },
     },
     badgesConfig: {
@@ -140,6 +150,15 @@ export const parameters = {
                 color: '#ea3829',
             },
             title: 'Deprecated',
+            description: 'Deprecated; will be removed in next major version.',
+        },
+        migrated: {
+            styles: {
+                backgroundColor: 'rgb(84, 36, 219)',
+                color: '#fff',
+            },
+            title: 'Migrated',
+            description: 'Migrated to Spectrum 2.',
         },
     },
     chromatic: {
@@ -147,14 +166,9 @@ export const parameters = {
         prefersReducedMotion: 'no-preference',
         pauseAnimationAtEnd: true,
         modes: {
-            'Context: Spectrum 1': {
-                scale: 'medium',
+            'Light | LTR': {
                 color: 'light',
                 textDirection: 'ltr',
-                context: 'spectrum1',
-            },
-            'Context: Express': {
-                context: 'express',
             },
             'Dark | RTL': {
                 color: 'dark',
@@ -164,6 +178,6 @@ export const parameters = {
     },
 };
 
-export const decorators = [swcThemeDecorator];
+export const decorators = [withTestingGridWrapper, swcThemeDecorator];
 
-export const tags = ['autodocs'];
+export const tags = ['autodocs', 'dev'];

@@ -1,4 +1,4 @@
-# logging / private config
+# Logging / private config
 yarn-error.log
 build-storybook.log
 .DS_STORE
@@ -12,72 +12,74 @@ tach-results.*
 .gitconfig
 .env
 
-# documentation
+# Include the cursor guides in the repo
+!.cursor
+
+# Ignore the local-specific cursor config
+.cursor/mcp.json
+
+# Documentation
 documentation/components/searchIndex.json
 documentation/api-docs
 documentation/dist
 searchIndex.json
 
-# dependency folders
+# Dependency folders
 coverage
 lib
 
-# build artifacts
+# Build artifacts
 custom-elements.json
+packages/*/custom-elements.json
+tools/*/custom-elements.json
+react
 
+# Not included in the repo
 !packages/icons-workflow/bin/build.js
 !packages/icons-workflow/src/DefaultIcon.ts
 
+# Generated assets
 packages/*/src/**/*.css.js
-packages/*/custom-elements.json
 packages/**/*.js
 packages/**/*.js.map
 packages/**/*.d.ts
 packages/**/*.test-vrt.ts
-!packages/**/*/spectrum-config.js
-!packages/**/*/spectrum-config.v1.js
-!packages/*/test/global.d.ts
-!packages/*/global.d.ts
-!packages/*/local.d.ts
-
-react
-
+packages/**/*.css.ts
+projects/**/*.css.ts
 projects/**/*.js
 projects/**/*.js.map
 projects/**/*.d.ts
-!projects/*/global.d.ts
-
+tools/**/*.css.ts
 tools/*/src/**/*.css.js
-tools/*/custom-elements.json
 tools/**/*.js
 tools/**/*.js.map
 tools/**/*.d.ts
 tools/**/*.test-vrt.ts
-!tools/**/*/spectrum-config.js
+
+# Include manual typescript declarations
+!packages/*/test/global.d.ts
+!packages/*/global.d.ts
+!packages/*/local.d.ts
+!projects/*/global.d.ts
 !tools/*/test/global.d.ts
 !tools/*/global.d.ts
 !tools/*/local.d.ts
-!tools/base/src/version.js
 !tools/base/src/version.d.ts
+!test/global.d.ts
 
-# cache directories
+# Keep the version file
+!tools/base/src/version.js
+
+# Cache directories
 .wireit
 .eslintcache
 .stylelintcache
 
+# Generated reporting outputes
 stats.html
-
-# typescript assets
-!test/global.d.ts
 *.tsbuildinfo
 
-# built css assets
-packages/**/*.css.ts
-projects/**/*.css.ts
-tools/**/*.css.ts
-styles/**/*.css.ts
-
-# test assets
+# Test assets
 TESTS.xml
 test-results.xml
 test/benchmark/cli.cjs
@@ -89,22 +91,24 @@ test/visual/src/data.json
 test/**/*.js
 test/**/*.js.map
 test/**/*.d.ts
-!test/visual/**/*.js
 test/visual/test.js
 test-results
+
+# Keep the visual files in history
+!test/visual/**/*.js
 
 # npm assets
 node_modules
 npm-debug.log
 package-lock.json
 
-# Chromatic
+# Chromatic logging outputs
 chromatic.log
 chromatic-build-*.xml
 chromatic-diagnostics*.json
 chromatic.config.json
 
-# yarn
+# Build tooling assets
 .pnp.*
 .yarn/*
 !.yarn/patches

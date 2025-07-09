@@ -10,30 +10,171 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-color-wheel.css");
-@import url("./color-wheel-overrides.css");
-
+/* Base variables */
 :host {
+    /* layout */
+    --spectrum-colorwheel-width: var(--spectrum-color-wheel-width);
+    --spectrum-colorwheel-height: var(--spectrum-color-wheel-width);
+    --spectrum-colorwheel-border-width: var(--spectrum-border-width-100);
+    --spectrum-colorwheel-track-width: var(--spectrum-color-control-track-width);
+    --spectrum-colorwheel-min-width: var(--spectrum-color-wheel-minimum-width);
+    --spectrum-colorwheel-colorarea-container-size: var(--spectrum-colorwheel-colorarea-container-size);
+    --spectrum-colorwheel-colorarea-margin: var(--spectrum-color-wheel-color-area-margin);
+    --spectrum-colorwheel-border-color: var(--spectrum-transparent-black-300);
+    --spectrum-colorwheel-path-borders: var(--spectrum-colorwheel-path-borders);
+    --spectrum-colorwheel-path: var(--spectrum-colorwheel-path);
+    --spectrum-colorwheel-fill-color-disabled: var(--spectrum-disabled-background-color);
+
+    /* base styles */
+    min-inline-size: var(--spectrum-color-wheel-minimum-width);
+    inline-size: var(--spectrum-colorwheel-width);
+    block-size: var(--spectrum-colorwheel-height);
+    user-select: none;
+    cursor: default;
+    display: inline-block;
+    position: relative;
     touch-action: none;
 }
 
+/* focus states */
 :host(:focus) {
     outline: none;
 }
 
+:host([focused]) {
+    z-index: 1;
+}
+
+/* disabled state */
+:host([disabled]) {
+    pointer-events: none;
+}
+
+/* dragged state */
+:host([dragged]) {
+    z-index: 1;
+}
+
+/* inner container */
+.inner {
+    inline-size: var(--spectrum-colorwheel-colorarea-container-size);
+    block-size: var(--spectrum-colorwheel-colorarea-container-size);
+    margin: auto;
+    display: flex;
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+}
+
+/* color area container */
+.colorarea-container {
+    block-size: auto;
+    inline-size: 100%;
+    margin: var(--spectrum-color-wheel-color-area-margin);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+/* slider */
+.slider {
+    opacity: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    z-index: 0;
+    pointer-events: none;
+    margin: 0;
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+}
+
+/* handle */
+.handle {
+    transform: translate(calc(var(--spectrum-colorwheel-width) / 2 - var(--spectrum-colorwheel-track-width) / 2));
+    inset-block-start: 50%;
+    inset-inline: 50%;
+}
+
+/* border */
+.border {
+    background-color: var(--spectrum-colorwheel-border-color);
+    inline-size: var(--spectrum-colorwheel-width);
+    block-size: var(--spectrum-colorwheel-height);
+    clip-path: path(evenodd, var(--spectrum-colorwheel-path-borders));
+    position: relative;
+}
+
+:host([disabled]) .border {
+    background-color: var(--highcontrast-colorwheel-border-color-disabled, var(--spectrum-colorwheel-fill-color-disabled));
+}
+
+/* color wheel */
+.wheel {
+    inset-block: var(--spectrum-colorwheel-border-width);
+    inset-inline: var(--spectrum-colorwheel-border-width);
+    clip-path: path(evenodd, var(--spectrum-colorwheel-path));
+    background: conic-gradient(from 90deg, red, #ff8000, #ff0, #80ff00, #0f0, #00ff80, #0ff, #0080ff, #00f, #8000ff, #f0f, #ff0080, red);
+    position: absolute;
+}
+
+:host([disabled]) .wheel {
+    pointer-events: none;
+    background: var(--highcontrast-colorwheel-fill-color-disabled, var(--spectrum-colorwheel-fill-color-disabled));
+}
+
+/* gradient slot */
 ::slotted([slot="gradient"]) {
-    border-color: var(--mod-colorwheel-border-color, var(--spectrum-colorwheel-border-color));
+    border-color: var(--spectrum-colorwheel-border-color);
     border-radius: 100%;
     border-style: solid;
     border-width: var(--_border-width);
     box-sizing: border-box;
-    block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
+    block-size: var(--spectrum-colorwheel-height);
     position: relative;
-    inline-size: var(--mod-colorwheel-width, var(--spectrum-colorwheel-width));
+    inline-size: var(--spectrum-colorwheel-width);
     z-index: 0;
 }
 
+/* rTL support */
 :host([dir="rtl"]) .wheel,
 :host([dir="rtl"]) ::slotted([slot="gradient"]) {
     transform: scaleX(-1);
+}
+
+#colorarea-container {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    inline-size: var(--spectrum-colorwheel-colorarea-container-size);
+    block-size: var(--spectrum-colorwheel-colorarea-container-size);
+}
+
+#colorarea {
+    margin: var(--spectrum-color-wheel-color-area-margin);
+}
+
+#wheel {
+    position: relative;
+    display: inline-block;
+    block-size: var(--spectrum-colorwheel-height);
+    inline-size: var(--spectrum-colorwheel-width);
+}
+
+#border {
+    position: absolute;
+    inset: 0;
+    background-color: var(--spectrum-colorwheel-border-color);
+    clip-path: path(evenodd, var(--spectrum-colorwheel-path-borders));
+}
+
+#gradient {
+    position: absolute;
+    inset: 0;
+    clip-path: path(evenodd, var(--spectrum-colorwheel-path));
+}
+
+:host([disabled]) {
+    border-color: var(--spectrum-colorwheel-border-color);
 }

@@ -23,56 +23,26 @@ export const buildPreviewURLComment = (prNumber) => {
 
     const previewCombinations = [
         {
-            system: 'Spectrum',
             color: 'Light',
             scale: 'Medium',
             direction: 'LTR',
-            urlPath: 'spectrum-light-medium-ltr',
+            urlPath: 'light-medium-ltr',
         },
         {
-            system: 'Spectrum',
             color: 'Dark',
             scale: 'Large',
             direction: 'RTL',
-            urlPath: 'spectrum-dark-large-rtl',
-        },
-        {
-            system: 'Express',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-            urlPath: 'express-light-medium-ltr',
-        },
-        {
-            system: 'Express',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-            urlPath: 'express-dark-large-rtl',
-        },
-        {
-            system: 'Spectrum-two',
-            color: 'Light',
-            scale: 'Medium',
-            direction: 'LTR',
-            urlPath: 'spectrum-two-light-medium-ltr',
-        },
-        {
-            system: 'Spectrum-two',
-            color: 'Dark',
-            scale: 'Large',
-            direction: 'RTL',
-            urlPath: 'spectrum-two-dark-large-rtl',
+            urlPath: 'dark-large-rtl',
         },
     ];
 
     // Generate preview links for each combination
     previewCombinations.forEach(
-        ({ system, color, scale, direction, urlPath }) => {
+        ({ color, scale, direction, urlPath }) => {
             const vrtUrl = `${baseUrl}/${prHash}/${urlPath}/review/`;
 
             previewLinks.push(`
-- [${system} | ${color} | ${scale} | ${direction}](${vrtUrl})`);
+- [${color} | ${scale} | ${direction}](${vrtUrl})`);
         }
     );
 
@@ -98,7 +68,7 @@ ${previewLinks.join('')}
 
 *Deployed to Azure Blob Storage: \`${prHash}\`*
 
-If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file. 
+If the changes are expected, update the <code>current_golden_images_cache</code> hash in the circleci config to accept the new images. Instructions are included in that file.
 If the changes are unexpected, you can investigate the cause of the differences and update the code accordingly.
 `;
     return comment;

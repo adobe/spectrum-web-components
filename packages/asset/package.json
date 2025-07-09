@@ -29,7 +29,6 @@
             "development": "./src/Asset.dev.js",
             "default": "./src/Asset.js"
         },
-        "./src/asset-overrides.css.js": "./src/asset-overrides.css.js",
         "./src/asset.css.js": "./src/asset.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",

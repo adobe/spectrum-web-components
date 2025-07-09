@@ -14,7 +14,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-help-circle.js';
 
 import type { Properties } from './template.js';
 export type { Properties };
@@ -93,12 +93,16 @@ export const makeOverBackground =
     (story: () => TemplateResult): TemplateResult => {
         const color =
             staticColor === 'black'
-                ? 'var(--spectrum-docs-static-black-background-color)'
-                : 'var(--spectrum-docs-static-white-background-color)';
+                ? 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))'
+                : 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))';
         return html`
+            <style>
+                :root {
+                    background-color: ${color};
+                }
+            </style>
             <div
                 style="
-                    background-color: ${color};
                     padding: calc(var(--swc-scale-factor) * 14px) calc(var(--swc-scale-factor) * 20px);
                     display: inline-block;
                 "
@@ -132,7 +136,7 @@ export function renderButtonSet(properties: Properties): TemplateResult {
     const disabled = Object.assign({}, properties, { disabled: true });
     const icon = Object.assign({}, properties, {
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             Click Me
         `,
     });
@@ -150,7 +154,7 @@ export function renderIconButtonSet(properties: Properties): TemplateResult {
     const iconOnly = Object.assign({}, properties, {
         iconOnly: true,
         content: html`
-            <sp-icon-help slot="icon"></sp-icon-help>
+            <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
         `,
     });
     return html`
@@ -177,7 +181,7 @@ export const renderWithIcon = (props: Properties): TemplateResult => {
             ${renderButtonSet({
                 ...props,
                 content: html`
-                    <sp-icon-help slot="icon"></sp-icon-help>
+                    <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
                     Help
                 `,
             })}
@@ -198,7 +202,7 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
         ${renderIconButtonSet({
             ...props,
             content: html`
-                <sp-icon-help slot="icon"></sp-icon-help>
+                <sp-icon-help-circle slot="icon"></sp-icon-help-circle>
             `,
         })}
     `;

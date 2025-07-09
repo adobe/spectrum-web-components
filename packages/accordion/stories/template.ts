@@ -10,6 +10,73 @@
  * governing permissions and limitations under the License.
  */
 
-import { AccordionMarkup } from './';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
-export const Template = AccordionMarkup;
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/link/sp-link.js';
+
+import type { Properties } from './args.js';
+
+export const Template = ({
+    content = [
+        {
+            label: 'Heading 1',
+            content: html`
+                <p>Item 1</p>
+            `,
+        },
+        {
+            label: 'Heading 2',
+            content: html`
+                <p>
+                    This is content that has a
+                    <sp-link
+                        href="http://opensource.adobe.com/spectrum-web-components"
+                        target="_blank"
+                    >
+                        link back to Spectrum Web Components
+                    </sp-link>
+                    so that it is easy to test that "Space" and "Enter"
+                    interactions on focusable content does NOT toggle the
+                    Accordion Item.
+                </p>
+            `,
+        },
+        {
+            label: 'Heading 3',
+            content: html`
+                <p>Item 3</p>
+            `,
+        },
+    ],
+    allowMultiple = false,
+    disabled = false,
+    open = false,
+    size = 'm',
+    density,
+    // isHovered = false,
+    // isActive = false,
+    // isFocused = false,
+}: Properties = {}): TemplateResult => {
+    return html`
+        <sp-accordion
+            ?allow-multiple=${allowMultiple}
+            density=${ifDefined(density)}
+            size=${size}
+        >
+            ${content.map(
+                (item, idx) => html`
+                    <sp-accordion-item
+                        label=${item.label}
+                        ?disabled=${idx === 2 && disabled}
+                        ?open=${idx === 1 && open}
+                    >
+                        ${item.content}
+                    </sp-accordion-item>
+                `
+            )}
+        </sp-accordion>
+    `;
+};
