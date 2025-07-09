@@ -1,6 +1,6 @@
 ## Overview
 
-The `<sp-accordion-item>` element represents a single item in an [`<sp-accordion>`](../accordion) parent element. Its `label` attribute and default slot content make up the "headline" and "body" of the toggleable content item.
+The `<sp-accordion-item>` element represents a single item in an [`<sp-accordion>`](../accordion/) parent element. Its `label` attribute and default slot content make up the "headline" and "body" of the toggleable content item.
 
 ### Usage
 
