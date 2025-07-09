@@ -68,7 +68,7 @@ Individual accordion items can be disabled using the `disabled` attribute. Disab
 
 #### Events
 
-An `<sp-accordion-item>` element will dispatch `sp-accordion-item-toggle` events when it is opened or closed. By default, these events are dispatched to allow the parent `<sp-accordion>` to manage which of its item children can show their children at any one time. Consumers can also listen for this event and leverage `event.target.open` to ascertain the current state of the item dispatching the event.
+An `<sp-accordion-item>` element will dispatch `sp-accordion-item-toggle` events when it is opened or closed. By default, these events are dispatched to allow the parent `<sp-accordion>` to manage which of its item children are expanded at any given time. Consumers can also listen for this event and check `event.target.open` to determine whether the item is currently expanded.
 
 ### Accessibility
 
