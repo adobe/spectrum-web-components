@@ -30,44 +30,28 @@ import { Tabs, Tab, TabPanel } from '@spectrum-web-components/tabs';
 
 ### Anatomy
 
+Tabs are created from the following parts:
+
 - **Tabs:** The container component (`<sp-tabs>`) that manages the tab list and handles selection logic.
 - **Tab item:** An individual tab (`<sp-tab>`) that users can select to view different content panels.
 - **Tab view:** The content panel (`<sp-tab-panel>`) associated with a tab, shown when its corresponding tab is selected.
 - **Divider:** A visual separator between tab items, used in some variants for clarity.
 - **Selection indicator:** A visual highlight (such as an underline or bar) that shows which tab is currently selected.
 
-### Options
+```html
+<sp-tabs selected="1" size="m">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
 
-<sp-table>
-    <sp-table-head>
-        <sp-table-head-cell>Property</sp-table-head-cell>
-        <sp-table-head-cell>Values</sp-table-head-cell>
-        <sp-table-head-cell>Default value</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>label</sp-table-cell>
-            <sp-table-cell>text / nothing</sp-table-cell>
-            <sp-table-cell>–</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>icon</sp-table-cell>
-            <sp-table-cell>icon / nothing</sp-table-cell>
-            <sp-table-cell>nothing</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>is selected</sp-table-cell>
-            <sp-table-cell>yes / no</sp-table-cell>
-            <sp-table-cell>no</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>is disabled</sp-table-cell>
-            <sp-table-cell>yes / no</sp-table-cell>
-            <sp-table-cell>no</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
-</sp-table>
-<br/>
+### Options
 
 #### Sizes
 
@@ -144,7 +128,7 @@ import { Tabs, Tab, TabPanel } from '@spectrum-web-components/tabs';
 
 #### Variants
 
-An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
+An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, and `quiet`, or with content like icons, etc.
 
 <sp-tabs selected="compact" auto label="Horizontal Tabs variants">
 <sp-tab value="compact">Compact</sp-tab>
@@ -348,6 +332,22 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 </sp-tab-panel>
 </sp-tabs>
 
+### States
+
+When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+
+```html demo
+<sp-tabs selected="2" disabled>
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
+</sp-tabs>
+```
 ### Accessibility
 
 When an `<sp-tabs>` has a `selected` value, the `<sp-tab>` child of that `value` will be given `[tabindex="0"]` and will receive initial focus when tabbing into the `<sp-tabs>` element. When no `selected` value is present, the first `<sp-tab>` child will be treated in this way. When focus is currently within the `<sp-tabs>` element, the left and right arrows will move that focus back and forth through the available `<sp-tab>` children.
