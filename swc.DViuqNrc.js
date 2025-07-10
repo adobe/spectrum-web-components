@@ -16,4 +16,4 @@ import{t}from"./swc.CJygKO7k.js";const i=({width:i=24,height:e=24,hidden:r=!1,ti
             ></path>
         </svg>
     `;export{i as D};
-//# sourceMappingURL=swc.CarYtUEN.js.map
+//# sourceMappingURL=swc.BodussoP.js.map

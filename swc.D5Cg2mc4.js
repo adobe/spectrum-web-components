@@ -3,4 +3,4 @@ import{i as s}from"./swc.Cl2X6-fK.js";import{r as e}from"./swc.DyUZL4_b.js";impo
 `;var l=Object.defineProperty,a=(s,e,t,o)=>{for(var i,r=void 0,c=s.length-1;c>=0;c--)(i=s[c])&&(r=i(e,t,r)||r);return r&&l(e,t,r),r};class u extends t{constructor(){super(...arguments),this.unsubscribeSystemContext=null,this.spectrumVersion=1,this.label="",this.systemResolver=new c(this)}static get styles(){return[n]}connectedCallback(){super.connectedCallback()}disconnectedCallback(){super.disconnectedCallback(),this.unsubscribeSystemContext&&(this.unsubscribeSystemContext(),this.unsubscribeSystemContext=null)}update(s){s.has("label")&&(this.label?this.removeAttribute("aria-hidden"):this.setAttribute("aria-hidden","true")),s.has(r)&&(this.spectrumVersion="spectrum-two"===this.systemResolver.system?2:1),super.update(s)}render(){return o`
             <slot></slot>
         `}}a([e()],u.prototype,"spectrumVersion"),a([i({reflect:!0})],u.prototype,"label"),a([i({reflect:!0})],u.prototype,"size");export{u as I,c as S,r as s};
-//# sourceMappingURL=swc.BPzGZXO2.js.map
+//# sourceMappingURL=swc.BJ5W611r.js.map

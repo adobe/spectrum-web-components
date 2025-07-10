@@ -1,0 +1,6 @@
+import{t}from"./swc.DlnUeYpN.js";import{x as o}from"./swc.BkWj9Vim.js";import{o as r}from"./swc.BeOzoba5.js";const i=function(i,s){return t((()=>(import("./swc.B5cLusi5.js"),o`
+                <sp-tooltip variant=${r(null==s?void 0:s.variant)}>
+                    ${i()}
+                </sp-tooltip>
+            `)),{...s,triggerInteraction:"hover",overlayOptions:{type:"hint",...null==s?void 0:s.overlayOptions}})};export{i as t};
+//# sourceMappingURL=swc.R_etZ3Mt.js.map

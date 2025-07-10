@@ -25,4 +25,4 @@ import{t as s,s as e}from"./swc.BkNr85_9.js";import{I as t}from"./swc.D5Cg2mc4.j
       d="m5.238 4 2.456-2.457A.875.875 0 1 0 6.456.306L4 2.763 1.543.306A.875.875 0 0 0 .306 1.544L2.763 4 .306 6.457a.875.875 0 1 0 1.238 1.237L4 5.237l2.456 2.457a.875.875 0 1 0 1.238-1.237z"
     />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.CBE7GLPN.js.map
+//# sourceMappingURL=swc.BLM176bU.js.map

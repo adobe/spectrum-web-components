@@ -76,4 +76,4 @@ import{t as r,s as t}from"./swc.CJygKO7k.js";import{I as h}from"./swc.D5Cg2mc4.j
     <rect height="2" rx=".5" ry=".5" width="2" x="28" y="22" />
     <path d="M10 12H3a1 1 0 0 0-1 1v20a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1v-7H11a1 1 0 0 1-1-1Z" />
   </svg>`)({hidden:!this.label,title:this.label})}});
-//# sourceMappingURL=swc.CjvVTSvN.js.map
+//# sourceMappingURL=swc.DoEvHUd8.js.map
