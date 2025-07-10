@@ -146,18 +146,6 @@ export class ProgressBar extends SizedMixin(
     }
 
     protected override updated(changes: PropertyValues): void {
-        if (this._overBackground === true) {
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `BananasThe "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
-                    {
-                        level: 'deprecation',
-                    }
-                );
-            }
-        }
         super.updated(changes);
         if (changes.has('indeterminate')) {
             if (this.indeterminate) {
