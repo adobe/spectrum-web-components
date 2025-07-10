@@ -129,6 +129,12 @@
                     }
                 ]
             }
+        },
+        {
+            "files": ["*.json, *.md"],
+            "rules": {
+                "notice/notice": "off"
+            }
         }
     ]
 }
