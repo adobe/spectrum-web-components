@@ -24,17 +24,6 @@ export const label = (): TemplateResult => {
         <sp-progress-bar label="Loading" progress="50"></sp-progress-bar>
     `;
 };
-export const overBackground = (): TemplateResult => {
-    return makeOverBackground('white')(
-        () => html`
-            <sp-progress-bar
-                label="Loading"
-                progress="50"
-                over-background
-            ></sp-progress-bar>
-        `
-    );
-};
 
 export const indeterminate = (): TemplateResult => {
     return html`
