@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `<sp-tabs>` displays a list of `<sp-tab>` element children as `role="tablist"`. An `<sp-tab>` element is associated with a sibling `<sp-tab-panel>` element via their `value` attribute. When an `<sp-tab>` element is `selected`, the associated `<sp-tab-panel>` will also be selected, showing that panel and hiding the others.
 
@@ -348,6 +348,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
     <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
 </sp-tabs>
 ```
+
 ### Accessibility
 
 When an `<sp-tabs>` has a `selected` value, the `<sp-tab>` child of that `value` will be given `[tabindex="0"]` and will receive initial focus when tabbing into the `<sp-tabs>` element. When no `selected` value is present, the first `<sp-tab>` child will be treated in this way. When focus is currently within the `<sp-tabs>` element, the left and right arrows will move that focus back and forth through the available `<sp-tab>` children.
