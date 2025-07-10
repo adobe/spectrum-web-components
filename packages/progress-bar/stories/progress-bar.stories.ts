@@ -84,6 +84,14 @@ export const staticWhite = (): TemplateResult => {
         `
     );
 };
+export const overBackground = (): TemplateResult => {
+    return makeOverBackground('white')(
+        () => html`
+            <p>Remove before merging</p>
+            <sp-progress-bar progress="50" over-background></sp-progress-bar>
+        `
+    );
+};
 
 export const staticWhiteLabel = (): TemplateResult => {
     return makeOverBackground('white')(

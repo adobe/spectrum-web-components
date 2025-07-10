@@ -24,10 +24,10 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
 
 /**
@@ -56,22 +56,27 @@ export class ProgressBar extends SizedMixin(
         return this._overBackground;
     }
     public set overBackground(overBackground: boolean) {
-        if (overBackground === true) {
-            this.removeAttribute('over-background');
-            this.staticColor = 'white';
+        const oldValue = this._overBackground;
+        const oldStaticColor = this.staticColor;
 
-            if (window.__swc.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
-                    {
-                        level: 'deprecation',
-                    }
-                );
-            }
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
+                {
+                    level: 'deprecation',
+                }
+            );
         }
+        this._overBackground = overBackground;
+        this.staticColor = 'white';
+        this.removeAttribute('over-background');
+
+        this.requestUpdate('overBackground', oldValue);
+        this.requestUpdate('staticColor', oldStaticColor);
     }
+
     private _overBackground: boolean = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
@@ -141,6 +146,18 @@ export class ProgressBar extends SizedMixin(
     }
 
     protected override updated(changes: PropertyValues): void {
+        if (this._overBackground === true) {
+            if (window.__swc.DEBUG) {
+                window.__swc.warn(
+                    this,
+                    `BananasThe "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#variants',
+                    {
+                        level: 'deprecation',
+                    }
+                );
+            }
+        }
         super.updated(changes);
         if (changes.has('indeterminate')) {
             if (this.indeterminate) {
