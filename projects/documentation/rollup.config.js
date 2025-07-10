@@ -91,8 +91,11 @@ export default async () => {
                         modulepreloads[importPath] =
                             `<link rel="modulepreload" href="${importPath}">`;
                         for (const importPath of Object.values(chunk.imports)) {
+                            const prefixedPath = process.env.SWC_DIR
+                                ? `/${process.env.SWC_DIR}/${importPath}`
+                                : `/${importPath}`;
                             modulepreloads[importPath] =
-                                `<link rel="modulepreload" href="/${importPath}">`;
+                                `<link rel="modulepreload" href="${prefixedPath}">`;
                         }
                         // Leverage when/if `importance` lands.
                         // modulepreloads.push(
@@ -102,13 +105,19 @@ export default async () => {
                         //     )
                         // );
                     });
+                    const fontPrefix = process.env.SWC_DIR
+                        ? `/${process.env.SWC_DIR}`
+                        : '';
                     modulepreloads['font1'] =
-                        `<link rel="preload" href="/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
+                        `<link rel="preload" href="${fontPrefix}/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
                     modulepreloads['font2'] =
-                        `<link rel="preload" href="/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
+                        `<link rel="preload" href="${fontPrefix}/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
+                    const cssPreloadHref = process.env.SWC_DIR
+                        ? `/${process.env.SWC_DIR}/styles.css`
+                        : '/styles.css';
                     return html.replace(
-                        '<link rel="preload" href="/styles.css" as="style">',
-                        `<link rel="preload" href="/styles.css" as="style">${[
+                        `<link rel="preload" href="${cssPreloadHref}" as="style">`,
+                        `<link rel="preload" href="${cssPreloadHref}" as="style">${[
                             ...Object.values(modulepreloads),
                         ].join('')}`
                     );
