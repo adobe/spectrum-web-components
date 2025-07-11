@@ -128,7 +128,7 @@ Tabs are created from the following parts:
 
 #### Variants
 
-An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, and `quiet`, or with content like icons, etc.
+An `<sp-tabs>` element will display horizontally by default. It can be modified with attributes like `compact`, and `quiet`, or with content like icons, etc.
 
 <sp-tabs selected="compact" auto label="Horizontal Tabs variants">
 <sp-tab value="compact">Compact</sp-tab>
@@ -146,25 +146,6 @@ Compact tabs should never be used without the quiet variation. Please use Quiet 
     <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
     <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
     <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
-</sp-tabs>
-```
-
-</sp-tab-panel>
-<sp-tab value="disabled">Disabled</sp-tab>
-<sp-tab-panel value="disabled">
-
-When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
-
-```html demo
-<sp-tabs selected="2" disabled>
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
 </sp-tabs>
 ```
 
@@ -252,25 +233,6 @@ Compact tabs should never be used without the quiet variation. Please use Quiet 
 ```
 
 </sp-tab-panel>
-<sp-tab value="disabled">Disabled</sp-tab>
-<sp-tab-panel value="disabled">
-
-When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
-
-```html demo
-<sp-tabs selected="2" disabled direction="vertical">
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
-</sp-tabs>
-```
-
-</sp-tab-panel>
 <sp-tab value="icons">Icons</sp-tab>
 <sp-tab-panel value="icons">
 
@@ -334,7 +296,7 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 
 ### States
 
-When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+When an `<sp-tabs>` element is given the `disabled` attribute, its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
 
 ```html demo
 <sp-tabs selected="2" disabled>
