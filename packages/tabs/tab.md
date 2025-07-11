@@ -7,7 +7,7 @@ An `<sp-tab>` element surfaces a `label` attribute to serve as its default text 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tabs?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tabs)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tabs)
 
-```zsh
+```bash
 yarn add @spectrum-web-components/tabs
 ```
 
@@ -35,15 +35,21 @@ The `<sp-tab>` element consists of a label and an optional icon.
 
 ### Options
 
-#### Without a label
+#### Icon only
+
+For tabs that have an icon and no visible label, the icon should have a `label`. Icons should not be used just as decoration. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
 
 ```html
 <sp-tab value="complete">
-    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    <sp-icon-checkmark
+        slot="icon"
+        label="Checking your work"
+        aria-label="Tab w/ checkmark"
+    ></sp-icon-checkmark>
 </sp-tab>
 ```
 
-#### Without an icon
+#### Label only
 
 ```html
 <sp-tab value="label" label="Label"></sp-tab>
@@ -53,7 +59,7 @@ The `<sp-tab>` element consists of a label and an optional icon.
 
 In order to activate the `<sp-tab>` element's interactive states, it must be used within an `<sp-tabs>` element.
 
-#### Selected State
+#### Selected state
 
 The tab is currently active and its associated panel is visible.
 
@@ -63,22 +69,21 @@ The tab is currently active and its associated panel is visible.
 </sp-tabs>
 ```
 
-#### Focused State
+#### Focused state
 
-The tab has keyboard focus. **Only selected tabs can receive focus** - this is managed automatically by the component.
+The tab has keyboard focus. All tabs can receive focus through keyboard navigation, except when the tab is `disabled`.
 
 ```html
 <sp-tabs selected="2">
     <sp-tab label="Tab 1" value="1"></sp-tab>
     <sp-tab label="Tab 2" value="2"></sp-tab>
-    <!-- This tab can receive focus -->
     <sp-tab label="Tab 3" value="3"></sp-tab>
 </sp-tabs>
 ```
 
-#### Disabled State
+#### Disabled state
 
-When an `<sp-tab>` element is given the `disabled` attribute it will prevent visitor from selecting that tab and its contents. The ability to select other tabs and their content will go unimpeaded.
+When an `<sp-tab>` element is given the `disabled` attribute, it will prevent visitor from selecting that tab and its contents. The ability to select other tabs and their content will go unimpeaded.
 
 ```html
 <sp-tabs selected="2">
@@ -101,12 +106,6 @@ When an `<sp-tab>` element is given the `disabled` attribute it will prevent vis
 - Only one tab can be selected at a time within a tab group
 - Disabled tabs cannot be selected
 
-#### Keyboard Navigation
-
-- `Tab`: Move focus to the next focusable element
-- `Arrow Keys`: Navigate between tabs in the group
-- `Enter` or `Space`: Select the focused tab
-
 #### Events
 
 - `click`: Fired when the tab is clicked
@@ -114,9 +113,15 @@ When an `<sp-tab>` element is given the `disabled` attribute it will prevent vis
 
 ### Accessibility
 
-#### Best Practices
+#### Best practices
 
-- Always provide meaningful text content via `label` attribute or text content
+- Always provide meaningful text content via `label` attribute or text content. In rare cases where an icon provides enough content, use the icon's `label` attribute.
 - Use descriptive `value` attributes that clearly identify the tab's purpose
 - Ensure tab labels are concise but descriptive
 - When using icons, provide appropriate `aria-label` attributes
+
+#### Keyboard navigation
+
+- `Tab`: Move focus to the next focusable element
+- `Arrow keys`: Navigate between tabs in the group and move the focus indicator
+- `Enter` or `Space`: Select the focused tab
