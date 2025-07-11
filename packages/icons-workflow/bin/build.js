@@ -19,7 +19,7 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
-import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
+import systemsIconMapping from './icons-mapping.json' with { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -169,9 +169,9 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconLiteral = `
         ${disclaimer}
-    
+
         import {tag as html, TemplateResult} from '../custom-tag.js';
-    
+
         export {setCustomTemplateLiteralTag} from '../custom-tag.js';
         export const ${ComponentName}Icon = ({
         width = 24,
@@ -241,7 +241,7 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconElement = `
         ${disclaimer}
-        
+
         import {
             html,
             TemplateResult
@@ -252,22 +252,22 @@ async function buildIcons(icons, tag, iconsNameList) {
         import {
             setCustomTemplateLiteralTag
         } from '../custom-tag.js';
-        
+
         ${currenVersionIconImport}
         ${otherVersionIconImport}
-        
+
         /**
          * @element ${iconElementName}
          */
         export class Icon${ComponentName} extends IconBase {
             protected override render(): TemplateResult {
                 setCustomTemplateLiteralTag(html);
-    
+
                 if(this.spectrumVersion === ${spectrumVersion}){
                     return CurrentIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
                 }
                 return AlternateIcon({ hidden: !this.label, title: this.label }) as TemplateResult;
-    
+
             }
         }
         `;
@@ -302,12 +302,12 @@ async function buildIcons(icons, tag, iconsNameList) {
 
         const iconRegistration = `
         ${disclaimer}
-    
+
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
         import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
-    
+
         defineElement('${iconElementName}', Icon${ComponentName});
-    
+
         declare global {
             interface HTMLElementTagNameMap {
                 '${iconElementName}': Icon${ComponentName};
