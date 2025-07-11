@@ -1,0 +1,435 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Base header styles */
+:host {
+    display: block;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    border-bottom: var(--spectrum-border-width-100) solid var(--spectrum-gray-300);
+    background-color: var(--spectrum-background-layer-2-color);
+    border-top-left-radius: var(--spectrum-spacing-300);
+    border-top-right-radius: var(--spectrum-spacing-300);
+}
+
+/* L1 variant padding */
+:host([variant="l1"]) .header {
+    padding: var(--spectrum-spacing-400) var(--spectrum-spacing-600);
+}
+
+/* L2 variant padding */
+:host([variant="l2"]) .header {
+    padding: var(--spectrum-spacing-100) var(--spectrum-spacing-300);
+}
+/* Main row layout - matches Figma structure */
+.main-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-300);
+    min-height: var(--spectrum-component-height-100);
+}
+
+/* Back button */
+.back-button {
+    flex-shrink: 0;
+    margin-inline-end: var(--spectrum-spacing-300);
+}
+
+/* Title container */
+.title-container {
+    flex-grow: 1;
+    min-width: 0;
+    /* Allow text truncation */
+}
+
+.title {
+    margin: 0;
+    font-family: var(--spectrum-heading-sans-serif-font-family);
+    color: var(--spectrum-heading-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-200);
+    line-height: var(--spectrum-line-height-100);
+}
+
+/* Title text styling */
+.title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+.title-text.clickable {
+    cursor: pointer;
+    padding: var(--spectrum-spacing-75);
+    margin: calc(var(--spectrum-spacing-75) * -1);
+    border-radius: var(--spectrum-corner-radius-75);
+    transition: background-color var(--spectrum-animation-duration-100) ease-in-out;
+    /* Make title text snug so edit button appears directly next to text */
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+
+.title-text.clickable:hover {
+    background-color: var(--spectrum-gray-200);
+}
+
+.title-text.clickable:focus {
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+}
+
+/* L1 specific styles - larger, more prominent */
+:host([variant="l1"]) .title {
+    font-size: var(--spectrum-font-size-700);
+    font-weight: var(--spectrum-extra-bold-font-weight);
+}
+
+:host([variant="l1"]) .subtitle {
+    margin: var(--spectrum-spacing-75) 0 0 0;
+    font-size: var(--spectrum-font-size-100);
+    line-height: var(--spectrum-line-height-100);
+}
+
+/* L2 specific styles - smaller than L1 */
+:host([variant="l2"]) .title {
+    font-size: var(--spectrum-font-size-300);
+    font-weight: var(--spectrum-bold-font-weight);
+}
+
+/* Always show edit button when edit feature is enabled */
+:host([variant="l2"][editable-title]) .edit-button {
+    display: unset;
+}
+
+/* Title editing */
+.title-edit-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--spectrum-spacing-300);
+    flex-grow: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.input-wrapper.error .title-input {
+    border-color: var(--spectrum-red-700);
+}
+.title-input {
+    font-size: var(--spectrum-font-size-300);
+    font-weight: var(--spectrum-bold-font-weight);
+    max-width: 400px;
+    min-width: 200px;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+/* Error icon positioning */
+.error-icon {
+    position: absolute;
+    right: var(--spectrum-spacing-100);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--spectrum-red-700);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Horizontal scroll for long text in edit mode */
+.title-input input {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-right: var(--spectrum-spacing-400);
+    /* Make room for error icon */
+}
+
+.input-wrapper.error .title-input input {
+    padding-right: var(--spectrum-spacing-500);
+    /* Extra space for error icon */
+}
+
+/* Focus states for edit mode */
+.title-input:focus-within {
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+}
+
+.edit-actions {
+    display: flex;
+    gap: var(--spectrum-spacing-200);
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.validation-errors {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: var(--spectrum-spacing-75);
+    z-index: 1;
+}
+
+.error-message {
+    color: var(--spectrum-red-700);
+    font-size: var(--spectrum-font-size-75);
+    line-height: var(--spectrum-line-height-100);
+    margin-bottom: var(--spectrum-spacing-50);
+}
+/* Action slots */
+.actions-start,
+.actions-middle,
+.actions-end {
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-200);
+}
+
+.actions-start {
+    flex-shrink: 0;
+}
+
+.actions-middle {
+    flex-shrink: 0;
+}
+
+.actions-end {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+}
+
+/* Action dividers */
+.action-divider {
+    flex-shrink: 0;
+    margin-inline: var(--spectrum-spacing-100);
+    opacity: 0.8;
+}
+
+/* Improved action spacing when dividers are used */
+:host .actions-start,
+:host .actions-middle {
+    margin-inline-end: 0;
+}
+
+/* Action slot semantic grouping improvements */
+.actions-start[role="group"],
+.actions-middle[role="group"],
+.actions-end[role="group"] {
+    /* Accessible grouping - no visual changes needed */
+}
+
+/* Enhanced focus management for action groups */
+.actions-start:focus-within,
+.actions-middle:focus-within,
+.actions-end:focus-within {
+    /* Focus ring shows around the entire group when focused */
+    outline: var(--spectrum-focus-indicator-thickness) solid var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+    border-radius: var(--spectrum-corner-radius-75);
+}
+/* Status row (L2 only) - matches Figma spacing */
+.status-row {
+    display: flex;
+    align-items: center;
+    margin-block-start: var(--spectrum-spacing-300);
+    min-height: var(--spectrum-component-height-75);
+}
+
+/* Status items with spacing only (no dividers per Figma) */
+.status-row ::slotted(*) {
+    margin-inline-end: var(--spectrum-spacing-300);
+}
+
+.status-row ::slotted(*:last-child) {
+    margin-inline-end: 0;
+}
+
+/* Success toast positioning */
+.success-toast {
+    position: fixed;
+    top: var(--spectrum-spacing-400);
+    right: var(--spectrum-spacing-400);
+    z-index: 1000;
+}
+
+/* Actions container for overflow management */
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-300);
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* Overflow menu styling */
+.overflow-menu {
+    flex-shrink: 0;
+}
+
+/* Actions that are hidden due to overflow */
+.actions-container ::slotted([data-overflow-hidden]) {
+    display: none !important;
+}
+
+/* Responsive overflow behavior */
+:host([enable-overflow]) .actions-container {
+    /* Enable smooth transitions for overflow changes */
+    transition: all var(--spectrum-animation-duration-200) ease-in-out;
+}
+
+/* Priority-based action styling */
+.actions-container ::slotted([data-priority="critical"]) {
+    /* Critical actions should be more prominent */
+    font-weight: var(--spectrum-bold-font-weight);
+}
+
+.actions-container ::slotted([data-priority="low"]) {
+    /* Low priority actions can be less prominent */
+    opacity: 0.8;
+}
+
+/* Overflow menu indicator */
+.overflow-menu::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: var(--spectrum-spacing-75);
+    height: var(--spectrum-spacing-75);
+    background-color: var(--spectrum-accent-color-900);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity var(--spectrum-animation-duration-100) ease-in-out;
+}
+
+.overflow-menu[data-has-overflow]::after {
+    opacity: 1;
+}
+/* Size variants */
+:host([size="s"]) .header {
+    padding: var(--spectrum-spacing-200) var(--spectrum-spacing-300);
+}
+
+:host([size="s"]) .main-row {
+    min-height: var(--spectrum-component-height-75);
+}
+
+:host([size="s"]) :host([variant="l1"]) .title {
+    font-size: var(--spectrum-font-size-300);
+}
+
+:host([size="s"]) :host([variant="l2"]) .title {
+    font-size: var(--spectrum-font-size-200);
+}
+
+:host([size="l"]) .header {
+    padding: var(--spectrum-spacing-400) var(--spectrum-spacing-500);
+}
+
+:host([size="l"]) .main-row {
+    min-height: var(--spectrum-component-height-200);
+}
+
+:host([size="l"]) :host([variant="l1"]) .title {
+    font-size: var(--spectrum-font-size-500);
+}
+
+:host([size="l"]) :host([variant="l2"]) .title {
+    font-size: var(--spectrum-font-size-400);
+}
+
+:host([size="xl"]) .header {
+    padding: var(--spectrum-spacing-500) var(--spectrum-spacing-600);
+}
+
+:host([size="xl"]) .main-row {
+    min-height: var(--spectrum-component-height-300);
+}
+
+:host([size="xl"]) :host([variant="l1"]) .title {
+    font-size: var(--spectrum-font-size-600);
+}
+
+:host([size="xl"]) :host([variant="l2"]) .title {
+    font-size: var(--spectrum-font-size-500);
+}
+
+/* Edit mode specific styles */
+:host([edit-mode]) .header {
+    /* Add visual indication of edit mode if needed */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-row {
+        gap: var(--spectrum-spacing-200);
+    }
+
+    .actions-start,
+    .actions-middle,
+    .actions-end {
+        gap: var(--spectrum-spacing-100);
+    }
+
+    .actions-end {
+        margin-inline-start: var(--spectrum-spacing-300);
+    }
+
+    /* Smaller edit field on mobile */
+    .title-input {
+        max-width: 300px;
+        min-width: 150px;
+    }
+    /* More aggressive overflow on mobile */
+    :host([enable-overflow]) .actions-container {
+        /* Reduce threshold for mobile */
+        --mobile-overflow-threshold: 80px;
+    }
+}
+
+/* Stack actions vertically on very small screens */
+@media (max-width: 480px) {
+    .title-edit-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spectrum-spacing-200);
+
+        .edit-actions {
+            justify-content: center;
+
+            .title-input {
+                max-width: none;
+            }
+        }
+    }
+    /* Very aggressive overflow on small screens */
+    :host([enable-overflow]) .actions-container {
+        /* Show maximum 2 actions on very small screens */
+        max-width: 120px;
+        overflow: hidden;
+    }
+}
