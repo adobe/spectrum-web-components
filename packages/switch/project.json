@@ -1,0 +1,25 @@
+{
+    "name": "switch",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/switch/src",
+    "projectType": "library",
+    "tags": ["component"],
+    "targets": {
+        "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "lint": {},
+        "lint:css": {},
+        "lint:js": {},
+        "lint:ts": {},
+        "lint:lit": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
+        "setup": {}
+    }
+}
