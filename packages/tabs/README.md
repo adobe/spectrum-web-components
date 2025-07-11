@@ -211,7 +211,7 @@ Compact tabs should never be used without the quiet variation. Please use Quiet 
 </sp-tab-panel>
 </sp-tabs>
 
-An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
+An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc. Vertical tabs should be used when horizontal space is more generous and when the list of sections is greater than can be presented to the user in a horizontal format. Vertical tabs are enabled by setting the `direction` attribute to `vertical` on `sp-tabs`.
 
 <sp-tabs selected="compact" auto label="Horizontal Tabs variants">
 <sp-tab value="compact">Compact</sp-tab>
