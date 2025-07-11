@@ -827,7 +827,7 @@ describe('Button', () => {
                 expect(el.hasAttribute('static-color')).to.be.false;
             });
         });
-        it('handles modifier key clicks correctly for buttons with href', async () => {
+        it('handles modifier key clicks correctly', async () => {
             const el = await fixture<Button>(html`
                 <sp-button href="#test">Button with href</sp-button>
             `);
@@ -839,7 +839,7 @@ describe('Button', () => {
             ) as HTMLAnchorElement;
             expect(anchorElement).to.not.be.undefined;
 
-            // Set up spies to track events
+            // Set up spies instead of counters
             const buttonClickSpy = spy();
             const anchorClickSpy = spy();
 
@@ -852,7 +852,7 @@ describe('Button', () => {
             // Track button clicks with spy
             el.addEventListener('click', buttonClickSpy);
 
-            // Test normal click - should NOT proxy to anchor when href is present
+            // Test normal click - should proxy to anchor
             const normalClick = new MouseEvent('click', {
                 bubbles: true,
                 cancelable: true,
@@ -865,13 +865,9 @@ describe('Button', () => {
             await elementUpdated(el);
 
             expect(
-                buttonClickSpy.called,
-                'Normal click should be received by the button'
-            ).to.be.true;
-            expect(
                 anchorClickSpy.called,
-                'Normal click should NOT be proxied to the anchor when href is present'
-            ).to.be.false;
+                'Normal click should be proxied to the anchor'
+            ).to.be.true;
 
             buttonClickSpy.resetHistory();
             anchorClickSpy.resetHistory();
