@@ -28,37 +28,77 @@ custom-elements.json
 !packages/icons-workflow/bin/build.js
 !packages/icons-workflow/src/DefaultIcon.ts
 
-packages/*/src/**/*.css.js
-packages/*/custom-elements.json
-packages/**/*.js
-packages/**/*.js.map
-packages/**/*.d.ts
-packages/**/*.test-vrt.ts
-!packages/**/*/spectrum-config.js
-!packages/**/*/spectrum-config.v1.js
-!packages/*/test/global.d.ts
-!packages/*/global.d.ts
-!packages/*/local.d.ts
+# Legacy packages
+legacy/packages/*/src/**/*.css.js
+legacy/packages/*/custom-elements.json
+legacy/packages/**/*.js
+legacy/packages/**/*.js.map
+legacy/packages/**/*.d.ts
+legacy/packages/**/*.test-vrt.ts
+!legacy/packages/**/*/spectrum-config.js
+!legacy/packages/**/*/spectrum-config.v1.js
+!legacy/packages/*/test/global.d.ts
+!legacy/packages/*/global.d.ts
+!legacy/packages/*/local.d.ts
+
+# Legacy projects
+legacy/projects/**/*.js
+legacy/projects/**/*.js.map
+legacy/projects/**/*.d.ts
+!legacy/projects/*/global.d.ts
+
+# Legacy tools
+legacy/tools/*/src/**/*.css.js
+legacy/tools/*/custom-elements.json
+legacy/tools/**/*.js
+legacy/tools/**/*.js.map
+legacy/tools/**/*.d.ts
+legacy/tools/**/*.test-vrt.ts
+!legacy/tools/**/*/spectrum-config.js
+!legacy/tools/*/test/global.d.ts
+!legacy/tools/*/global.d.ts
+!legacy/tools/*/local.d.ts
+!legacy/tools/base/src/version.js
+!legacy/tools/base/src/version.d.ts
+
+# Next packages
+next/packages/*/src/**/*.css.js
+next/packages/*/custom-elements.json
+next/packages/**/*.js
+next/packages/**/*.js.map
+next/packages/**/*.d.ts
+next/packages/**/*.test-vrt.ts
+!next/packages/**/*/spectrum-config.js
+!next/packages/**/*/spectrum-config.v1.js
+!next/packages/*/test/global.d.ts
+!next/packages/*/global.d.ts
+!next/packages/*/local.d.ts
+
+# Next projects
+next/projects/**/*.js
+next/projects/**/*.js.map
+next/projects/**/*.d.ts
+!next/projects/*/global.d.ts
+
+# Next tools
+next/tools/*/src/**/*.css.js
+next/tools/*/custom-elements.json
+next/tools/**/*.js
+next/tools/**/*.js.map
+next/tools/**/*.d.ts
+next/tools/**/*.test-vrt.ts
+!next/tools/**/*/spectrum-config.js
+!next/tools/*/test/global.d.ts
+!next/tools/*/global.d.ts
+!next/tools/*/local.d.ts
+
+# Shared
+shared/**/*.js
+shared/**/*.js.map
+shared/**/*.d.ts
+shared/**/*.test-vrt.ts
 
 react
-
-projects/**/*.js
-projects/**/*.js.map
-projects/**/*.d.ts
-!projects/*/global.d.ts
-
-tools/*/src/**/*.css.js
-tools/*/custom-elements.json
-tools/**/*.js
-tools/**/*.js.map
-tools/**/*.d.ts
-tools/**/*.test-vrt.ts
-!tools/**/*/spectrum-config.js
-!tools/*/test/global.d.ts
-!tools/*/global.d.ts
-!tools/*/local.d.ts
-!tools/base/src/version.js
-!tools/base/src/version.d.ts
 
 # cache directories
 .wireit
@@ -72,9 +112,13 @@ stats.html
 *.tsbuildinfo
 
 # built css assets
-packages/**/*.css.ts
-projects/**/*.css.ts
-tools/**/*.css.ts
+legacy/packages/**/*.css.ts
+legacy/projects/**/*.css.ts
+legacy/tools/**/*.css.ts
+next/packages/**/*.css.ts
+next/projects/**/*.css.ts
+next/tools/**/*.css.ts
+shared/**/*.css.ts
 styles/**/*.css.ts
 
 # test assets

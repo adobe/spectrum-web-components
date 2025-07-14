@@ -8,7 +8,8 @@
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git"
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "legacy"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -45,6 +46,7 @@
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
         "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
+        "commitlint": "commitlint --edit",
         "new-package": "yarn workspace swc-templates plop",
         "postinstall": "husky || true && patch-package",
         "postpack": "pinst --enable",
