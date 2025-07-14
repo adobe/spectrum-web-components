@@ -31,12 +31,84 @@ The color area consists of several key parts:
 - A two-dimensional color selection area with visual gradients
 - A draggable handle that indicates the current color position
 - Accessible labels for the X and Y axes
+- Optional custom gradient slot for advanced styling
 
 ```html
 <sp-color-area></sp-color-area>
 ```
 
+#### Custom Gradient
+
+You can provide a custom gradient to replace the default color area appearance using the `gradient` slot:
+
+```html
+<sp-color-area>
+    <div slot="gradient" class="textured-gradient"></div>
+</sp-color-area>
+
+<style>
+    .textured-gradient {
+        width: 100%;
+        height: 100%;
+        background: 
+        /* Subtle texture overlay */
+            radial-gradient(
+                circle at 20% 80%,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 90%
+            ),
+            radial-gradient(
+                circle at 80% 20%,
+                rgba(0, 0, 0, 0.1) 0%,
+                transparent 50%
+            ),
+            /* Standard HSV gradients */
+                linear-gradient(to bottom, transparent 0%, black 100%),
+            linear-gradient(to right, white 0%, transparent 100%),
+            hsl(180, 100%, 50%);
+    }
+</style>
+```
+
 ### Options
+
+#### Properties
+
+The color area supports several properties for configuration:
+
+##### Hue
+
+Control the base hue of the color area (0-360 degrees):
+
+```html
+<sp-color-area hue="240"></sp-color-area>
+```
+
+##### Color Values
+
+Set and get color values using various formats:
+
+```html
+<sp-color-area color="rgb(255, 0, 0)"></sp-color-area>
+<sp-color-area color="#ff0000"></sp-color-area>
+<sp-color-area color="hsl(0, 100%, 50%)"></sp-color-area>
+```
+
+##### Step Size
+
+Customize the precision of keyboard navigation (default: 0.01):
+
+```html
+<sp-color-area step="0.05"></sp-color-area>
+```
+
+##### Direction
+
+The color area supports both left-to-right and right-to-left layouts:
+
+```html
+<sp-color-area dir="rtl"></sp-color-area>
+```
 
 #### Custom Sizing
 
@@ -60,6 +132,15 @@ An `<sp-color-area>` in a disabled state shows that an input exists, but is not 
 <sp-color-area disabled></sp-color-area>
 ```
 
+#### Focused
+
+The color area manages its focused state automatically, but you can also check the focused state programmatically:
+
+```javascript
+const colorArea = document.querySelector('sp-color-area');
+console.log(colorArea.focused); // true or false
+```
+
 ### Behaviors
 
 #### Color Formatting
@@ -73,6 +154,22 @@ The current color formats supported are as follows:
 - HSL, HSLA
 - RGB, RGBA
 - Named color strings (see [full list](https://developer.mozilla.org/en-US/docs/Web/CSS/named-color))
+
+#### Pointer Interactions
+
+The color area supports both mouse and touch interactions:
+
+- **Click**: Jump to a specific color position
+- **Drag**: Continuously adjust color while dragging
+- **Touch**: Full touch support for mobile devices
+
+```html
+<sp-color-area @pointerdown="${(event)" =""></sp-color-area>
+```
+
+#### Focus Management
+
+The color area automatically manages focus between its internal X and Y axis controls:
 
 ### Accessibility
 
@@ -92,12 +189,68 @@ Specify `label-x` and `label-y` attributes to override these defaults.
 
 #### Keyboard Navigation
 
-The color area supports keyboard interaction for precise color selection:
+The color area supports comprehensive keyboard interaction for precise color selection:
 
-- Use arrow keys to adjust the color position
-- Hold <kbd>Shift</kbd> while using arrow keys for fine adjustments
-- The component maintains focus management for accessibility
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Key</sp-table-head-cell>
+        <sp-table-head-cell>Action</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><kbd>Arrow Keys</kbd></sp-table-cell>
+            <sp-table-cell>Move the color selection by one step</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Shift + Arrow Keys</kbd></sp-table-cell>
+            <sp-table-cell>Move the color selection by a larger step (5x)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Page Up</kbd>/<kbd>Page Down</kbd></sp-table-cell>
+            <sp-table-cell>Move vertically by a large step (10x)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Home</kbd>/<kbd>End</kbd></sp-table-cell>
+            <sp-table-cell>Move horizontally by a large step (10x)</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+
+#### ARIA Attributes
+
+The component provides comprehensive ARIA support with different behavior for mobile and desktop:
+
+- **Role**: Uses native `input[type="range"]` elements with implicit "slider" roles for 2D color selection
+- **Role Description**: Announces as "2d slider" on desktop devices (omitted on mobile for better touch screen reader experience)
+- **Labels**:
+    - Mobile: Simple axis labels (e.g., "saturation", "luminosity")
+    - Desktop: Combined labels (e.g., "saturation Color Picker", "luminosity Color Picker")
+- **Orientation**: Explicitly set as "horizontal" for X-axis and "vertical" for Y-axis
+- **Value Text**: Internationalized percentage values
+    - Mobile: Single axis value (e.g., "45%")
+    - Desktop: Comprehensive context including both axes (e.g., "45%, saturation, 78%, luminosity")
+- **Fieldset**: Contains both sliders with appropriate labeling for mobile screen readers
+- **Presentation**: Wrapper divs marked with `role="presentation"` to avoid navigation confusion
 
 #### Screen Reader Support
 
-The component provides meaningful labels and descriptions for assistive technologies, ensuring users can understand the current color selection and how to interact with the control.
+The component provides comprehensive screen reader support through:
+
+- **Internationalized Values**: Percentage values are formatted according to the user's locale using `Intl.NumberFormat`
+- **Context-Aware Announcements**: Different announcement patterns for focus changes vs. value changes
+- **Focused State Management**: Special handling to prevent focus traps and ensure proper screen reader navigation
+- **Shadow DOM Optimization**: Dynamically creates shadow roots when focused to prevent duplicate tab stops in certain browsers
+- **Keyboard Focus Tracking**: Maintains the active axis (X or Y) to ensure consistent focus when navigating with a screen reader
+- **Value Change Context**: When values change, announces only the changed value; when focused, announces both axes for context
+
+#### Mobile Accessibility
+
+The component implements specific optimizations for mobile devices (Android and iOS):
+
+- **Platform Detection**: Uses `isAndroid()` and `isIOS()` to apply platform-specific behaviors
+- **Simplified ARIA**: Provides more concise labels and values on mobile to improve screen reader experience
+- **Touch Pointer Events**: Special handling for touch interactions vs. mouse interactions
+- **Mobile Focus States**: Different focus handling for touch vs. mouse input
+- **Fieldset Labeling**: Adds an explicit `aria-label="Color Picker"` to the fieldset only on mobile
+- **Omitted Role Description**: Removes the "2d slider" role description on mobile for better compatibility with mobile screen readers
+- **Simplified Value Text**: Announces only the current axis value without additional context to reduce verbosity on mobile
