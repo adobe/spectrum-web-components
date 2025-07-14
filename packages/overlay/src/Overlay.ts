@@ -431,7 +431,7 @@ export class Overlay extends ComputedOverlayBase {
 
         switch (this.type) {
             case 'modal':
-                return 'auto';
+                return 'manual';
             case 'page':
                 return 'manual';
             case 'hint':
