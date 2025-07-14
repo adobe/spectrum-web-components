@@ -214,18 +214,6 @@ describe('Overlay Trigger - extended', () => {
                 />
             </div>
         `);
-        // // Set up the overlay trigger, button, and popover for the test
-        // const { overlayTrigger, button, popover } = await initTest();
-
-        // // Create a textfield that will be placed behind the overlay
-        // const textfield = document.createElement('input');
-        // textfield.type = 'text';
-        // textfield.tabIndex = 0;
-        // textfield.style.position = 'relative';
-        // textfield.style.zIndex = '1';
-
-        // Insert the textfield into the DOM after the overlay trigger
-        // overlayTrigger.insertAdjacentElement('afterend', textfield);
 
         // Get a reference to the textfield element
         const textfield = el.querySelector('#textfield') as HTMLInputElement;
