@@ -1,0 +1,2 @@
+"use strict";export class BeforetoggleClosedEvent extends Event{constructor(){super("beforetoggle",{bubbles:!1,composed:!1});this.currentState="open";this.newState="closed"}}export class BeforetoggleOpenEvent extends Event{constructor(){super("beforetoggle",{bubbles:!1,composed:!1});this.currentState="closed";this.newState="open"}}export class OverlayStateEvent extends Event{constructor(r,l,{publish:o,interaction:s,reason:n}){super(r,{bubbles:o,composed:o});this.overlay=l;this.detail={interaction:s,reason:n}}}
+//# sourceMappingURL=events.js.map

@@ -1,0 +1,10 @@
+"use strict";var b=Object.defineProperty;var n=Object.getOwnPropertyDescriptor;var r=(o,l,e,i)=>{for(var t=i>1?void 0:i?n(l,e):l,a=o.length-1,d;a>=0;a--)(d=o[a])&&(t=(i?d(l,e,t):d(t))||t);return i&&t&&b(l,e,t),t};import{html as p,nothing as u,SpectrumElement as c}from"@spectrum-web-components/base";import{property as s}from"@spectrum-web-components/base/src/decorators.js";import{FocusVisiblePolyfillMixin as h}from"@spectrum-web-components/shared/src/focus-visible.js";import{ObserveSlotPresence as m}from"@spectrum-web-components/shared/src/observe-slot-presence.js";import{ObserveSlotText as f}from"@spectrum-web-components/shared/src/observe-slot-text.js";import{randomID as y}from"@spectrum-web-components/shared/src/random-id.js";import v from"./tab.css.js";export class Tab extends h(f(m(c,'[slot="icon"]'),"")){constructor(){super(...arguments);this.disabled=!1;this.label="";this.selected=!1;this.vertical=!1;this.value=""}static get styles(){return[v]}get hasIcon(){return this.slotContentIsPresent}get hasLabel(){return!!this.label||this.slotHasContent}render(){return p`
+            ${this.hasIcon?p`
+                      <slot name="icon"></slot>
+                  `:u}
+            <label id="item-label" ?hidden=${!this.hasLabel}>
+                ${this.slotHasContent?u:this.label}
+                <slot>${this.label}</slot>
+            </label>
+        `}firstUpdated(e){super.firstUpdated(e),this.setAttribute("role","tab"),this.hasAttribute("id")||(this.id=`sp-tab-${y()}`)}updated(e){super.updated(e),e.has("selected")&&(this.setAttribute("aria-selected",this.selected?"true":"false"),this.setAttribute("tabindex",this.selected?"0":"-1")),e.has("disabled")&&(this.disabled?this.setAttribute("aria-disabled","true"):this.removeAttribute("aria-disabled"))}}r([s({type:Boolean,reflect:!0})],Tab.prototype,"disabled",2),r([s({reflect:!0})],Tab.prototype,"label",2),r([s({type:Boolean,reflect:!0})],Tab.prototype,"selected",2),r([s({type:Boolean,reflect:!0})],Tab.prototype,"vertical",2),r([s({type:String,reflect:!0})],Tab.prototype,"value",2);
+//# sourceMappingURL=Tab.js.map

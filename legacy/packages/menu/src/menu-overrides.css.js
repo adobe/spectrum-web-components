@@ -1,0 +1,4 @@
+"use strict";import{css as e}from"@spectrum-web-components/base";const m=e`
+    :host{--spectrum-menu-item-background-color-hover:var(--system-menu-item-background-color-hover);--spectrum-menu-item-background-color-down:var(--system-menu-item-background-color-down);--spectrum-menu-item-background-color-key-focus:var(--system-menu-item-background-color-key-focus);--spectrum-menu-item-corner-radius:var(--system-menu-item-corner-radius);--spectrum-menu-item-focus-indicator-shadow:var(--system-menu-item-focus-indicator-shadow);--spectrum-menu-item-focus-indicator-offset:var(--system-menu-item-focus-indicator-offset);--spectrum-menu-item-spacing-multiplier:var(--system-menu-item-spacing-multiplier);--spectrum-menu-item-focus-indicator-outline-style:var(--system-menu-item-focus-indicator-outline-style)}
+`;export default m;
+//# sourceMappingURL=menu-overrides.css.js.map

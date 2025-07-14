@@ -1,0 +1,44 @@
+import { PropertyValues, SpectrumElement, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/split-view/sp-split-view.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-out.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js';
+import '@spectrum-web-components/action-bar/sp-action-bar.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import '../onion-skinner.js';
+declare const VrtCompare_base: typeof SpectrumElement & {
+    new (...args: any[]): import("@spectrum-web-components/shared").SlotPresenceObservingInterface;
+    prototype: import("@spectrum-web-components/shared").SlotPresenceObservingInterface;
+};
+export declare class VrtCompare extends VrtCompare_base {
+    view: string;
+    zoom: number;
+    imagesLoaded: boolean;
+    private get hasActual();
+    private get hasBaseline();
+    private get hasDiff();
+    private get canCompare();
+    private handleChange;
+    private handleZoomIn;
+    private handleZoomClear;
+    private handleZoomOut;
+    protected get error(): TemplateResult<1>;
+    protected get actual(): TemplateResult<1>;
+    protected get baseline(): TemplateResult<1>;
+    protected get diff(): TemplateResult<1>;
+    protected get scrubber(): TemplateResult<1>;
+    protected get sidebyside(): TemplateResult<1>;
+    protected get onion(): TemplateResult<1>;
+    protected get renderView(): TemplateResult<1>;
+    private get viewFallback();
+    _loadingImages: boolean;
+    prepImages(event: Event): Promise<void>;
+    protected shouldUpdate(): boolean;
+    protected render(): TemplateResult;
+    protected updated(changes: PropertyValues): void;
+    static styles: (import("@spectrum-web-components/base").CSSResult | import("@spectrum-web-components/base").CSSResult[])[];
+}
+export {};

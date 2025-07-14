@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["random-id.ts"],
+  "sourcesContent": ["/*\nCopyright 2024 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\n// This gnarly-looking implementation returns the equivalent of crypto.randomUUID().slice(0, 8).\n// It uses getRandomValues() in order to be compatible with HTTP contexts.\nexport function randomID(): string {\n    return Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) =>\n        `0${(b & 0xff).toString(16)}`.slice(-2)\n    ).join('');\n}\n"],
+  "mappings": ";AAcO,gBAAS,WAAmB;AAC/B,SAAO,MAAM;AAAA,IAAK,OAAO,gBAAgB,IAAI,WAAW,CAAC,CAAC;AAAA,IAAG,CAAC,MAC1D,KAAK,IAAI,KAAM,SAAS,EAAE,CAAC,GAAG,MAAM,EAAE;AAAA,EAC1C,EAAE,KAAK,EAAE;AACb;",
+  "names": []
+}

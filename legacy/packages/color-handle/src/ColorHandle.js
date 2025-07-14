@@ -1,0 +1,8 @@
+"use strict";var d=Object.defineProperty;var a=Object.getOwnPropertyDescriptor;var o=(s,r,e,i)=>{for(var t=i>1?void 0:i?a(r,e):r,n=s.length-1,l;n>=0;n--)(l=s[n])&&(t=(i?l(r,e,t):l(t))||t);return i&&t&&d(r,e,t),t};import{html as u,SpectrumElement as c}from"@spectrum-web-components/base";import{property as p}from"@spectrum-web-components/base/src/decorators.js";import"@spectrum-web-components/color-loupe/sp-color-loupe.js";import h from"@spectrum-web-components/opacity-checkerboard/src/is-opacity-checkerboard.css.js";import f from"./color-handle.css.js";export class ColorHandle extends c{constructor(){super(...arguments);this.disabled=!1;this.focused=!1;this.open=!1;this.color="rgba(255, 0, 0, 0.5)"}static get styles(){return[h,f]}handlePointerdown(e){e.pointerType==="touch"&&(this.open=!0),this.setPointerCapture(e.pointerId)}handlePointerup(e){this.open=!1,this.releasePointerCapture(e.pointerId)}render(){return u`
+            <div class="inner" style="background-color: ${this.color}"></div>
+            <sp-color-loupe
+                color=${this.color}
+                ?open=${this.open&&!this.disabled}
+            ></sp-color-loupe>
+        `}firstUpdated(e){super.firstUpdated(e),this.addEventListener("pointerdown",this.handlePointerdown),this.addEventListener("pointerup",this.handlePointerup),this.addEventListener("pointercancel",this.handlePointerup)}}o([p({type:Boolean,reflect:!0})],ColorHandle.prototype,"disabled",2),o([p({type:Boolean,reflect:!0})],ColorHandle.prototype,"focused",2),o([p({type:Boolean,reflect:!0})],ColorHandle.prototype,"open",2),o([p({type:String})],ColorHandle.prototype,"color",2);
+//# sourceMappingURL=ColorHandle.js.map

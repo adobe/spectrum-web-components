@@ -19,12 +19,17 @@ export default {
         'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
-    '{packages,tools}/*/src/**/!(*.css).ts': ['yarn lit-analyzer'],
+    'legacy/{packages,tools}/*/src/**/!(*.css).ts': [
+        'yarn workspace legacy lit-analyzer',
+    ],
+    'next/{packages,tools}/*/src/**/!(*.css).ts': [
+        'yarn workspace next lit-analyzer',
+    ],
     'package.json': () => [
-        'genversion --es6 --semi tools/base/src/version.js',
+        'genversion --es6 --semi legacy/tools/base/src/version.js',
         'yarn constraints --fix',
         'yarn install --refresh-lockfile',
-        'git add tools/base/src/version.js yarn.lock',
+        'git add legacy/tools/base/src/version.js yarn.lock',
     ],
     '!(*.css|*.ts)': [
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',

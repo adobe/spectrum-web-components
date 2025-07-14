@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["sidenav-item-overrides.css.ts"],
+  "sourcesContent": ["/*\nCopyright 2025 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\nimport { css } from '@spectrum-web-components/base';\nconst styles = css`\n    #list{--spectrum-sidenav-background-hover:var(--system-side-nav-background-hover);--spectrum-sidenav-item-background-down:var(--system-side-nav-item-background-down);--spectrum-sidenav-background-key-focus:var(--system-side-nav-background-key-focus);--spectrum-sidenav-item-background-default-selected:var(--system-side-nav-item-background-default-selected);--spectrum-sidenav-background-hover-selected:var(--system-side-nav-background-hover-selected);--spectrum-sidenav-item-background-down-selected:var(--system-side-nav-item-background-down-selected);--spectrum-sidenav-background-key-focus-selected:var(--system-side-nav-background-key-focus-selected)}\n`;\nexport default styles;"],
+  "mappings": "aAWA,OAAS,OAAAA,MAAW,gCACpB,MAAMC,EAASD;AAAA;AAAA,EAGf,eAAeC",
+  "names": ["css", "styles"]
+}

@@ -1,0 +1,15 @@
+import { Item } from './CssTable.js';
+export declare const grayValues: Item[];
+export declare const blueValues: Item[];
+export declare const redValues: Item[];
+export declare const orangeValues: Item[];
+export declare const yellowValues: Item[];
+export declare const chartreuseValues: Item[];
+export declare const celeryValues: Item[];
+export declare const greenValues: Item[];
+export declare const seafoamValues: Item[];
+export declare const cyanValues: Item[];
+export declare const indigoValues: Item[];
+export declare const purpleValues: Item[];
+export declare const fuchsiaValues: Item[];
+export declare const magentaValues: Item[];

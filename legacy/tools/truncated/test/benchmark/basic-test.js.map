@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["basic-test.ts"],
+  "sourcesContent": ["/*\nCopyright 2024 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\nimport '@spectrum-web-components/truncated/sp-truncated.js';\nimport { html } from '@spectrum-web-components/base';\nimport { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';\n\nmeasureFixtureCreation(html`\n    <p style=\"width: 200px\">\n        <sp-truncated>\n            This is a very long text that will overflow into a tooltip with the\n            help of sp-truncated.\n        </sp-truncated>\n    </p>\n`);\n"],
+  "mappings": ";AAWA,OAAO;AACP,SAAS,YAAY;AACrB,SAAS,8BAA8B;AAEvC,uBAAuB;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,CAOtB;",
+  "names": []
+}

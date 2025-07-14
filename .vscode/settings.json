@@ -1,14 +1,58 @@
 {
     "files.exclude": {
-        "**/*.css.ts": { "when": "$(basename)" },
-        "packages/**/*.js.map": true,
-        "packages/**/*.js": { "when": "$(basename).ts" },
-        "packages/**/*.dev.js": { "when": "$(basename).js" },
-        "packages/**/*.d.ts": { "when": "$(basename).ts" },
-        "tools/**/*.js.map": true,
-        "tools/**/*.js": { "when": "$(basename).ts" },
-        "tools/**/*.dev.js": { "when": "$(basename).js" },
-        "tools/**/*.d.ts": { "when": "$(basename).ts" },
+        "**/*.css.ts": {
+            "when": "$(basename)"
+        },
+        "legacy/packages/**/*.js.map": true,
+        "legacy/packages/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "legacy/packages/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "legacy/packages/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
+        "legacy/tools/**/*.js.map": true,
+        "legacy/tools/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "legacy/tools/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "legacy/tools/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
+        "next/packages/**/*.js.map": true,
+        "next/packages/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "next/packages/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "next/packages/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
+        "next/tools/**/*.js.map": true,
+        "next/tools/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "next/tools/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "next/tools/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
+        "shared/**/*.js.map": true,
+        "shared/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "shared/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "shared/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
         "**/*.test-vrt.ts": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["get-label-from-slot.ts"],
+  "sourcesContent": ["/*\nCopyright 2022 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\nexport const getLabelFromSlot = (\n    label: string,\n    slotEl: HTMLSlotElement\n): string | null => {\n    if (label) return null;\n    const textContent = slotEl\n        .assignedNodes()\n        .reduce((accumulator: string, node: Node) => {\n            if (node.textContent) {\n                return accumulator + node.textContent;\n            } else {\n                return accumulator;\n            }\n        }, '');\n    if (textContent) {\n        return textContent.trim();\n    } else {\n        return null;\n    }\n};\n"],
+  "mappings": "aAYO,aAAM,iBAAmB,CAC5BA,EACAC,IACgB,CAChB,GAAID,EAAO,OAAO,KAClB,MAAME,EAAcD,EACf,cAAc,EACd,OAAO,CAACE,EAAqBC,IACtBA,EAAK,YACED,EAAcC,EAAK,YAEnBD,EAEZ,EAAE,EACT,OAAID,EACOA,EAAY,KAAK,EAEjB,IAEf",
+  "names": ["label", "slotEl", "textContent", "accumulator", "node"]
+}

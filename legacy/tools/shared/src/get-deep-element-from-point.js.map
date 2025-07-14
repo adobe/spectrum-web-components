@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["get-deep-element-from-point.ts"],
+  "sourcesContent": ["/*\nCopyright 2022 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\nexport const getDeepElementFromPoint = (\n    x: number,\n    y: number\n): Element | null => {\n    let target = document.elementFromPoint(x, y);\n    while (target?.shadowRoot) {\n        const innerTarget = (\n            target.shadowRoot as unknown as {\n                elementFromPoint: (x: number, y: number) => Element | null;\n            }\n        ).elementFromPoint(x, y);\n        if (!innerTarget || innerTarget === target) {\n            break;\n        }\n        target = innerTarget;\n    }\n    return target;\n};\n"],
+  "mappings": "aAYO,aAAM,wBAA0B,CACnCA,EACAC,IACiB,CACjB,IAAIC,EAAS,SAAS,iBAAiBF,EAAGC,CAAC,EAC3C,KAAOC,GAAA,MAAAA,EAAQ,YAAY,CACvB,MAAMC,EACFD,EAAO,WAGT,iBAAiBF,EAAGC,CAAC,EACvB,GAAI,CAACE,GAAeA,IAAgBD,EAChC,MAEJA,EAASC,CACb,CACA,OAAOD,CACX",
+  "names": ["x", "y", "target", "innerTarget"]
+}

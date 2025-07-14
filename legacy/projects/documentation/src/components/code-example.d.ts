@@ -1,0 +1,30 @@
+import { CSSResultArray, LitElement, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+declare const CodeExample_base: typeof LitElement;
+export declare class CodeExample extends CodeExample_base {
+    private markup?;
+    private demo?;
+    codeTheme: 'dark' | 'light';
+    preprocessed: boolean;
+    noDemo: boolean;
+    private prismjsLoaded;
+    static get styles(): CSSResultArray;
+    private get codeSlot();
+    get highlightedHTML(): string;
+    get liveHTML(): string;
+    get language(): 'markup' | 'javascript';
+    get showDemo(): boolean;
+    private get highlightedCode();
+    private liveHTMLTransferred;
+    private get renderedCode();
+    protected shouldUpdate(): boolean;
+    protected render(): TemplateResult;
+    private copyToClipboard;
+    private shouldManageTabOrderForScrolling;
+    protected updated(): void;
+    private trackTheme;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+}
+export {};

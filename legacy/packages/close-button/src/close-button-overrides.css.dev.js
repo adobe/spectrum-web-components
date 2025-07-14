@@ -1,0 +1,7 @@
+"use strict";
+import { css } from "@spectrum-web-components/base";
+const styles = css`
+    :host{--spectrum-closebutton-background-color-default:var(--system-close-button-background-color-default);--spectrum-closebutton-background-color-hover:var(--system-close-button-background-color-hover);--spectrum-closebutton-background-color-down:var(--system-close-button-background-color-down);--spectrum-closebutton-background-color-focus:var(--system-close-button-background-color-focus)}:host([static-color=white]){--spectrum-closebutton-static-background-color-hover:var(--system-close-button-static-white-static-background-color-hover);--spectrum-closebutton-static-background-color-down:var(--system-close-button-static-white-static-background-color-down);--spectrum-closebutton-static-background-color-focus:var(--system-close-button-static-white-static-background-color-focus)}:host([static-color=black]){--spectrum-closebutton-static-background-color-hover:var(--system-close-button-static-black-static-background-color-hover);--spectrum-closebutton-static-background-color-down:var(--system-close-button-static-black-static-background-color-down);--spectrum-closebutton-static-background-color-focus:var(--system-close-button-static-black-static-background-color-focus)}
+`;
+export default styles;
+//# sourceMappingURL=close-button-overrides.css.dev.js.map

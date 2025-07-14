@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["elements.ts"],
+  "sourcesContent": ["/*\nCopyright 2022 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\nimport './sp-table-body.js';\nimport './sp-table-cell.js';\nimport './sp-table-checkbox-cell.js';\nimport './sp-table-head-cell.js';\nimport './sp-table-head.js';\nimport './sp-table-row.js';\nimport './sp-table.js';\n"],
+  "mappings": "aAYA,MAAO,qBACP,MAAO,qBACP,MAAO,8BACP,MAAO,0BACP,MAAO,qBACP,MAAO,oBACP,MAAO",
+  "names": []
+}

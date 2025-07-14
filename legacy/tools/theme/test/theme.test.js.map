@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["theme.test.ts"],
+  "sourcesContent": ["/*\nCopyright 2020 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\nimport { Theme } from '@spectrum-web-components/theme';\nimport { expect } from '@open-wc/testing';\nimport { version } from '@spectrum-web-components/base/src/version.js';\n\nclass DirElement extends Theme {}\n\ncustomElements.define('dir-element', DirElement);\n\ndescribe('Theme', () => {\n    it('has a static VERSION property', () => {\n        expect(DirElement.VERSION).to.equal(version);\n    });\n});\n"],
+  "mappings": ";AAUA,SAAS,aAAa;AACtB,SAAS,cAAc;AACvB,SAAS,eAAe;AAExB,MAAM,mBAAmB,MAAM;AAAC;AAEhC,eAAe,OAAO,eAAe,UAAU;AAE/C,SAAS,SAAS,MAAM;AACpB,KAAG,iCAAiC,MAAM;AACtC,WAAO,WAAW,OAAO,EAAE,GAAG,MAAM,OAAO;AAAA,EAC/C,CAAC;AACL,CAAC;",
+  "names": []
+}

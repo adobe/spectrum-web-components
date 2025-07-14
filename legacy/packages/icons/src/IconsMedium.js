@@ -1,0 +1,2 @@
+"use strict";import{IconsetSVG as o}from"@spectrum-web-components/iconset/src/iconset-svg.js";import t from"./icons-medium.svg.js";export class IconsMedium extends o{constructor(){super(),this.name="ui"}firstUpdated(){super.firstUpdated()}renderDefaultContent(){return t}getSVGIconName(e){return`spectrum-icon-${e}`}getSanitizedIconName(e){return e.replace("spectrum-icon-","")}}
+//# sourceMappingURL=IconsMedium.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["popover.test-vrt.ts"],
+  "sourcesContent": ["/*\nCopyright 2020 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\nimport * as stories from '../stories/popover.stories.js';\nimport { regressVisuals } from '../../../test/visual/test.js';\nimport type { TestsType } from '../../../test/visual/test.js';\n\nregressVisuals('PopoverStories', stories as unknown as TestsType);\n"],
+  "mappings": ";AAYA,YAAY,aAAa;AACzB,SAAS,sBAAsB;AAG/B,eAAe,kBAAkB,OAA+B;",
+  "names": []
+}

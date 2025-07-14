@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["overlay-events.ts"],
+  "sourcesContent": ["/*\nCopyright 2022 Adobe. All rights reserved.\nThis file is licensed to you under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License. You may obtain a copy\nof the License at http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under\nthe License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS\nOF ANY KIND, either express or implied. See the License for the specific language\ngoverning permissions and limitations under the License.\n*/\n\nexport class OverlayCloseEvent extends Event {\n    root?: HTMLElement;\n    constructor({ root }: { root?: HTMLElement }) {\n        super('sp-overlay-close', { bubbles: true, composed: true });\n        this.root = root;\n    }\n}\n\ndeclare global {\n    interface GlobalEventHandlersEventMap {\n        'sp-overlay-close': CustomEvent<OverlayCloseEvent>;\n    }\n}\n"],
+  "mappings": "aAYO,aAAM,0BAA0B,KAAM,CAEzC,YAAY,CAAE,KAAAA,CAAK,EAA2B,CAC1C,MAAM,mBAAoB,CAAE,QAAS,GAAM,SAAU,EAAK,CAAC,EAC3D,KAAK,KAAOA,CAChB,CACJ",
+  "names": ["root"]
+}
