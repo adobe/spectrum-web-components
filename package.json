@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build:all": "yarn legacy:build && yarn next:build",
-        "commitlint": "commitlint --config commitlint.config.cjs --edit",
+        "commitlint": "commitlint --edit",
         "install:all": "yarn install",
         "legacy:build": "yarn workspace legacy build",
         "legacy:storybook": "yarn workspace legacy storybook",

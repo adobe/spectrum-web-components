@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/radio"
+        "directory": "legacy/packages/radio"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/radio",

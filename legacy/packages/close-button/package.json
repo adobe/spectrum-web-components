@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/close-button"
+        "directory": "legacy/packages/close-button"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/close-button",

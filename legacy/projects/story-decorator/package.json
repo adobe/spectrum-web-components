@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/story-decorator"
+        "directory": "legacy/projects/story-decorator"
     },
     "author": "Adobe",
     "bugs": {

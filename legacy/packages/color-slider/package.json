@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/color-slider"
+        "directory": "legacy/packages/color-slider"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/color-slider",

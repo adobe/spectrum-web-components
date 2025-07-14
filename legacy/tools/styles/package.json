@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "tools/styles"
+        "directory": "legacy/tools/styles"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/styles",
