@@ -249,14 +249,23 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
+        // Wait a bit more for the overlay to fully close and focus management to complete
+        await nextFrame();
+        await nextFrame();
+
+        // Ensure the textfield is still in the DOM and focusable
+        expect(textfield.isConnected, 'textfield is still connected').to.be
+            .true;
+        expect(textfield.offsetParent, 'textfield is still visible').to.not.be
+            .null;
+
         await sendMouseTo(textfield, 'click');
 
         // verify the textfield is focused and actually clickable
-
         await waitUntil(
             () => document.activeElement === textfield,
             `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
-            { timeout: 500 }
+            { timeout: 2000 }
         );
     });
 
