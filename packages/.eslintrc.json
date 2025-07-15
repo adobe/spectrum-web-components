@@ -130,6 +130,69 @@
                     }
                 ]
             }
+        },
+        {
+            "extends": ["plugin:jsonc/recommended-with-jsonc"],
+            "files": ["*.json"],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
+                "jsonc/sort-keys": [
+                    "warn",
+                    {
+                        "hasProperties": ["type"],
+                        "order": [
+                            "$schema",
+                            "name",
+                            "version",
+                            "private",
+                            "description",
+                            "license",
+                            "author",
+                            "maintainers",
+                            "contributors",
+                            "homepage",
+                            "repository",
+                            "bugs",
+                            "type",
+                            "exports",
+                            "main",
+                            "module",
+                            "browser",
+                            "man",
+                            "preferGlobal",
+                            "bin",
+                            "files",
+                            "directories",
+                            "scripts",
+                            "config",
+                            "sideEffects",
+                            "types",
+                            "typings",
+                            "workspaces",
+                            "resolutions",
+                            "dependencies",
+                            "bundleDependencies",
+                            "bundledDependencies",
+                            "peerDependencies",
+                            "peerDependenciesMeta",
+                            "optionalDependencies",
+                            "devDependencies",
+                            "keywords",
+                            "engines",
+                            "engineStrict",
+                            "os",
+                            "cpu",
+                            "publishConfig"
+                        ],
+                        "pathPattern": ".*" // Hits the all properties
+                    },
+                    {
+                        "order": { "type": "asc" },
+                        "pathPattern": ".*"
+                    }
+                ],
+                "notice/notice": "off"
+            }
         }
     ]
 }
