@@ -131,43 +131,42 @@ commands:
                   when: always
                   name: Deploy VRT Results to Azure Blob Storage
                   command: |
-                      # Get PR number from CircleCI environment
-                      PR_NUMBER=""
-                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
-                          echo "Deploying VRT for PR #$PR_NUMBER"
-                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
-                          PR_NUMBER="$CIRCLE_PR_NUMBER"
-                          echo "Deploying VRT for PR #$PR_NUMBER"
-                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
-                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
-                          echo "Deploying VRT for forked PR #$PR_NUMBER"
-                      elif [ -n "$GITHUB_TOKEN" ]; then
-                          # GitHub API fallback
-                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-                              -H "Accept: application/vnd.github+json" \
-                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
-                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                          
-                          if [ -n "$PR_NUMBER" ]; then
-                              echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                      # Set deployment path based on branch
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          PR_HASH="main"
+                          echo "Deploying VRT for main branch to main path"
+                      else
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                              
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping VRT deployment"
+                                  exit 0
+                              fi
                           else
-                              echo "⏭️  No PR found - skipping VRT deployment"
+                              echo "⏭️  No PR detected - skipping VRT deployment"
                               exit 0
                           fi
-                      else
-                          echo "⏭️  No PR detected - skipping VRT deployment"
-                          exit 0
-                      fi
 
-                      # Only proceed if we have a valid PR number
-                      if [ -z "$PR_NUMBER" ]; then
-                          echo "⏭️  No PR number available - skipping VRT deployment"
-                          exit 0
+                          PR_HASH="pr-${PR_NUMBER}"
                       fi
-
-                      # Create PR hash using just PR number for overwriting deployments
-                      PR_HASH="pr-${PR_NUMBER}"
 
                       # VRT combination for subdirectory
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
@@ -282,6 +281,9 @@ jobs:
                   name: Move CEM to Storybook directory
                   command: cp projects/documentation/custom-elements.json storybook/
             - run:
+                  name: Build documentation with path prefix
+                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
+            - run:
                   name: Build documentation
                   command: yarn docs:build
             - run:
@@ -357,44 +359,42 @@ jobs:
                   when: always
                   name: Deploy Visual Tests to Azure Blob Storage
                   command: |
-                      # Get PR number from CircleCI environment
-                      set +x
-                      PR_NUMBER=""
-                      if [ -n "$CIRCLE_PULL_REQUEST" ]; then
-                          PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
-                          echo "Deploying HCM VRT for PR #$PR_NUMBER"
-                      elif [ -n "$CIRCLE_PR_NUMBER" ]; then
-                          PR_NUMBER="$CIRCLE_PR_NUMBER"
-                          echo "Deploying HCM VRT for PR #$PR_NUMBER"
-                      elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
-                          PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/pull\///')
-                          echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
-                      elif [ -n "$GITHUB_TOKEN" ]; then
-                          # GitHub API fallback
-                          PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-                              -H "Accept: application/vnd.github+json" \
-                              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
-                              | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                          
-                          if [ -n "$PR_NUMBER" ]; then
-                              echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                      # Set deployment path based on branch
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          PR_HASH="main"
+                          echo "Deploying HCM VRT for main branch to main path"
+                      else
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                              
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping HCM VRT deployment"
+                                  exit 0
+                              fi
                           else
-                              echo "⏭️  No PR found - skipping HCM VRT deployment"
+                              echo "⏭️  No PR detected - skipping HCM VRT deployment"
                               exit 0
                           fi
-                      else
-                          echo "⏭️  No PR detected - skipping HCM VRT deployment"
-                          exit 0
-                      fi
 
-                      # Only proceed if we have a valid PR number
-                      if [ -z "$PR_NUMBER" ]; then
-                          echo "⏭️  No PR number available - skipping HCM VRT deployment"
-                          exit 0
+                          PR_HASH="pr-${PR_NUMBER}"
                       fi
-
-                      # Create PR hash using just PR number for overwriting deployments
-                      PR_HASH="pr-${PR_NUMBER}"
 
                       # Prepare files for deployment
                       cp projects/documentation/content/favicon.ico test/visual/
