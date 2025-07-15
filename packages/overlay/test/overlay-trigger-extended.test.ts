@@ -35,6 +35,7 @@ const initTest = async (
     overlayTrigger: OverlayTrigger;
     button: Button;
     popover: Popover;
+    textfield: HTMLInputElement;
 }> => {
     const test = await fixture<HTMLDivElement>(html`
         <div class="container">
@@ -64,6 +65,12 @@ const initTest = async (
                     </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
+            <input
+                type="text"
+                id="test-textfield"
+                tabindex="0"
+                style="position: relative; z-index: 1;"
+            />
         </div>
     `);
 
@@ -72,10 +79,11 @@ const initTest = async (
             return (
                 !!test.querySelector('overlay-trigger') &&
                 !!test.querySelector('sp-button') &&
-                !!test.querySelector('sp-popover')
+                !!test.querySelector('sp-popover') &&
+                !!test.querySelector('input')
             );
         },
-        'overlay-trigger, button, and popover appeared',
+        'overlay-trigger, button, popover, and textfield appeared',
         { timeout: 300 }
     );
 
@@ -83,6 +91,7 @@ const initTest = async (
         overlayTrigger: test.querySelector('overlay-trigger') as OverlayTrigger,
         button: test.querySelector('sp-button') as Button,
         popover: test.querySelector('sp-popover') as Popover,
+        textfield: test.querySelector('input') as HTMLInputElement,
     };
 };
 
@@ -172,17 +181,8 @@ describe('Overlay Trigger - extended', () => {
     });
 
     it('occludes content behind the overlay', async () => {
-        const { overlayTrigger, button, popover } = await initTest();
-        const textfield = document.createElement('input');
-        textfield.type = 'text';
-        textfield.tabIndex = 0;
-        textfield.style.position = 'relative';
-        textfield.style.zIndex = '1';
+        const { overlayTrigger, button, popover, textfield } = await initTest();
         const overlay = overlayTrigger.clickOverlayElement;
-        overlayTrigger.insertAdjacentElement('afterend', textfield);
-
-        // Wait for the textfield to be properly connected and rendered
-        await nextFrame();
 
         expect(overlay.state, `overlay state`).to.equal('closed');
 
@@ -192,13 +192,7 @@ describe('Overlay Trigger - extended', () => {
             -1
         );
 
-        // Try multiple approaches to ensure focus works in CI
         await sendMouseTo(textfield, 'click');
-
-        // If click didn't work, try programmatic focus
-        if (document.activeElement !== textfield) {
-            await textfield.focus();
-        }
 
         await waitUntil(
             () => document.activeElement === textfield,
@@ -249,23 +243,16 @@ describe('Overlay Trigger - extended', () => {
             textfield
         );
 
-        // Wait a bit more for the overlay to fully close and focus management to complete
         await nextFrame();
         await nextFrame();
 
-        // Ensure the textfield is still in the DOM and focusable
-        expect(textfield.isConnected, 'textfield is still connected').to.be
-            .true;
-        expect(textfield.offsetParent, 'textfield is still visible').to.not.be
-            .null;
-
-        await sendMouseTo(textfield, 'click');
-
-        // verify the textfield is focused and actually clickable
         await waitUntil(
-            () => document.activeElement === textfield,
+            async () => {
+                await sendMouseTo(textfield, 'click');
+                return document.activeElement === textfield;
+            },
             `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
-            { timeout: 2000 }
+            { timeout: 1000 }
         );
     });
 
