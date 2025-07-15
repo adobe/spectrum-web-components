@@ -13,13 +13,13 @@ yarn add @spectrum-web-components/tabs
 
 Import the side effectful registration of `<sp-tab>` via:
 
-```ts
+```js
 import '@spectrum-web-components/tabs/sp-tab.js';
 ```
 
 When looking to leverage the `Tab` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import { Tab } from '@spectrum-web-components/tabs';
 ```
 
@@ -41,7 +41,10 @@ For tabs that have an icon and no visible label, the icon should have an `aria-l
 
 ```html
 <sp-tab value="complete" aria-label="Tab with checkmark">
-    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    <sp-icon-checkmark
+        slot="icon"
+        label="Checking your work"
+    ></sp-icon-checkmark>
 </sp-tab>
 ```
 
@@ -50,6 +53,8 @@ For tabs that have an icon and no visible label, the icon should have an `aria-l
 ```html
 <sp-tab value="label" label="Label"></sp-tab>
 ```
+
+The `label` attribute provides the visible text content and accessible name for screen readers. The `value` attribute links the tab to its corresponding `sp-tab-panel` via matching values.
 
 ### States
 
@@ -111,7 +116,7 @@ When an `<sp-tab>` element is given the `disabled` attribute, it will prevent vi
 
 #### Best practices
 
-- Always provide meaningful text content via `label` attribute or text content. In rare cases where an icon provides enough content, use the icon's `label` attribute.
+- Always provide meaningful text content via `label` attribute or slot content. In rare cases where an icon provides enough content, use the icon's `label` attribute.
 - Use descriptive `value` attributes that clearly identify the tab's purpose
 - Ensure tab labels are concise but descriptive
 - When using icons, provide appropriate `aria-label` attributes
