@@ -36,6 +36,11 @@ export class LanguageResolutionController implements ReactiveController {
     }
 
     private resolveLanguage(): void {
+        try {
+            Intl.DateTimeFormat.supportedLocalesOf([this.language]);
+        } catch {
+            this.language = 'en-US';
+        }
         const queryThemeEvent = new CustomEvent<ProvideLang>(
             'sp-language-context',
             {
