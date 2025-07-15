@@ -86,21 +86,65 @@ Control the base hue of the color area (0-360 degrees):
 
 ##### Color Values
 
-Set and get color values using various formats:
+The color area supports a wide variety of color formats for setting and getting color values:
 
 ```html
-<sp-color-area color="rgb(255, 0, 0)"></sp-color-area>
+<!-- Hex formats (3, 4, 6, or 8 digits) -->
+<sp-color-area color="#f00"></sp-color-area>
+<sp-color-area color="#f00f"></sp-color-area>
 <sp-color-area color="#ff0000"></sp-color-area>
+<sp-color-area color="#ff0000ff"></sp-color-area>
+
+<!-- RGB/RGBA formats -->
+<sp-color-area color="rgb(255, 0, 0)"></sp-color-area>
+<sp-color-area color="rgba(255, 0, 0, 0.5)"></sp-color-area>
+<sp-color-area color="rgb(100%, 0%, 0%)"></sp-color-area>
+<sp-color-area color="rgb 255 0 0"></sp-color-area>
+
+<!-- HSL/HSLA formats -->
 <sp-color-area color="hsl(0, 100%, 50%)"></sp-color-area>
+<sp-color-area color="hsla(0, 100%, 50%, 0.5)"></sp-color-area>
+<sp-color-area color="hsl 0 100% 50%"></sp-color-area>
+
+<!-- HSV/HSVA formats -->
+<sp-color-area color="hsv(0, 100%, 100%)"></sp-color-area>
+<sp-color-area color="hsva(0, 100%, 100%, 0.5)"></sp-color-area>
+<sp-color-area color="hsv 0 100% 100%"></sp-color-area>
+
+<!-- Named colors -->
+<sp-color-area color="red"></sp-color-area>
+<sp-color-area color="rebeccapurple"></sp-color-area>
 ```
+
+When using the color elements, the `color` property will maintain the format you provided. For example, if you supply a color in `rgb()` format, `el.color` will return the color in `rgb()` format as well.
 
 ##### Step Size
 
-Customize the precision of keyboard navigation (default: 0.01):
+The `step` attribute controls the granularity of color selection when using keyboard navigation. It defines the increment size (between 0 and 1) for each movement when using arrow keys or other keyboard controls.
 
 ```html
+<!-- Default step size is 0.01 (1% increments) -->
+<sp-color-area></sp-color-area>
+
+<!-- Larger step size for coarser adjustments (5% increments) -->
 <sp-color-area step="0.05"></sp-color-area>
+
+<!-- Smaller step size for finer precision (0.5% increments) -->
+<sp-color-area step="0.005"></sp-color-area>
 ```
+
+The step size affects:
+
+- Regular arrow key movements (moves by 1× step)
+- Shift+arrow key combinations (moves by 5× step)
+- Page Up/Down keys (moves by 10× step vertically)
+- Home/End keys (moves by 10× step horizontally)
+
+A smaller step value provides more precise control but requires more key presses to move across the color area, while a larger step value allows for faster movement at the cost of precision. Choose a step size appropriate for your use case:
+
+- **Fine-tuning**: Use smaller values (0.001-0.01) for detailed color work
+- **General use**: The default (0.01) works well for most scenarios
+- **Quick selection**: Larger values (0.05-0.1) for faster navigation
 
 ##### Direction
 
