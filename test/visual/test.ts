@@ -29,7 +29,7 @@ import { StoryDecorator } from '@spectrum-web-components/story-decorator';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
-import { visualDiff } from '@web/test-runner-visual-regression/browser/commands';
+import { visualDiff } from '@web/test-runner-visual-regression';
 import { render } from 'lit';
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
