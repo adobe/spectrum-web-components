@@ -18,6 +18,8 @@ import '@spectrum-web-components/button/sp-button.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 
 export default {
     component: 'sp-popover',
@@ -178,6 +180,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                         open=${ifDefined(
                             openPlacement === placement ? 'click' : undefined
                         )}
+                        type="modal"
                     >
                         <sp-button
                             label="${placement}-start test"
@@ -187,6 +190,11 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                         </sp-button>
                         <sp-popover tip slot="click-content">
                             <sp-dialog style="--mod-dialog-min-inline-size: 0;">
+                                <sp-picker>
+                                    <sp-menu-item>Item 1</sp-menu-item>
+                                    <sp-menu-item>Item 2</sp-menu-item>
+                                    <sp-menu-item>Item 3</sp-menu-item>
+                                </sp-picker>
                                 <h2 slot="heading">
                                     Popover ${placement}-start
                                 </h2>
