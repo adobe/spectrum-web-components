@@ -307,11 +307,7 @@ describe('Overlay Trigger - extended', () => {
         );
 
         // Verify that the textfield can now be focused (no longer occluded)
-        await waitUntil(
-            () => document.activeElement === textfield,
-            `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
-            { timeout: 500 }
-        );
+        expect(document.activeElement, `textfield focused`).to.equal(textfield);
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
