@@ -293,7 +293,7 @@ describe('Overlay Trigger - extended', () => {
         overlayTrigger.open = undefined;
 
         // Wait for the overlay to be fully closed
-        overlayClosed(overlayTrigger.clickOverlayElement, 300);
+        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         // Confirm the textfield is still not focused after closing the overlay
         expect(document.activeElement, 'textfield is not focused').to.not.equal(
