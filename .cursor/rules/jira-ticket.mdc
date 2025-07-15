@@ -1,10 +1,29 @@
 ---
-description: Guidelines for drafting and formatting Jira tickets
-globs: **/*.md, **/*.txt
+description:  Guidelines for drafting and formatting Jira tickets
 alwaysApply: false
 ---
-
 # Jira ticket guidelines
+
+When prompted to create a Jira ticket, output the following:
+
+- Title
+- Labels
+- Severity
+- Description
+
+Output results in the chat window in a way that can be copied and pasted into Jira.
+
+## Jira syntax formatting rules
+
+Use these syntax rules when writing Jira tickets:
+
+- `h2.` through `h6.` - Headings (use `h2.` for main, `h3.` for secondary, etc. - avoid `h1.` in descriptions)
+- `{*}{*}` - Bold text
+- `{code}{code}` - Inline code
+- `{code:language}{code}` - Language-specific code blocks
+- `[text|url]` - Links
+- ` - ` - Bullet points
+- `#` - Numbered list items
 
 ## Title format
 
@@ -14,71 +33,78 @@ alwaysApply: false
 
 ## Description structure
 
-All tickets must include acceptance criteria.
+- Present title, labels, and severity before description content
+- Include links to GitHub pull requests or RFCs when applicable (prompt if not provided)
+- All tickets must include acceptance criteria
+- Provide enough context so anyone can understand the objective
+- Use prefixes in titles: [Bug], [Fix], [Docs], [Refactor], [Research], [S2], [Test]
 
-- Include a link to any GitHub pull requests or RFCs, if they exists. Prompt for the link if it's not provided.
-- When writing the description, include as much information as you can so that the objective of the ticket is clear. Anyone should be able to pick up the issue without needing a kickoff session.
+Examples:
 
-If it's applicable, please try to include a prefix in your JIRA ticket title the way we would in Commitlint to make it easy to identify the type of task.
+- [Bug(component)]:
+- [bug]:
+- [Fix(component)]:
+- [fix]:
+- [Docs(component)]:
+- [docs]:
+- [Documentation]:
+- [Refactor(component)]:
+- [Research(component)]:
+- [discovery]:
+- [RFC(component)]:
+- [S2 Foundations]:
+- [S2]:
+- [Test(component)]:
 
-(component) is optional, especially if the ticket involves multiple components, and the exact syntax may vary. Do I need to use brackets or parentheses? What about capitalization? Don't worry about it. It's not like these will go into the commit history.
-
-Some prefix ideas and potential variations (besides brackets bc Confluence doesn't like them, apparently):
-
-Bug(component): / bug: / Fix(component): / fix:
-Docs(component): / docs: / Documentation:
-Feat(component): / feat:
-Refactor(component):
-Research(component): / discovery: / RFC(component):
-S2 Foundations: / S2:
-Test(component):
-
-More specific templates:
+## More specific templates
 
 ### General Jira ticket template
 
-**Acceptance criteria**
+```
+h2. Acceptance criteria
 (how we ensure that the work is complete)
 
-**Overview**
+h2. Overview
 (plain language explaining the ticket)
 
-**Technical notes/resources**
+h2. Technical notes/resources
 (any technical notes/links/etc)
 
-**QA**
+h2. QA
 (steps someone will use to be sure that the work fulfills the ticket's request and that everything's working properly)
 
-**Design specs**
+h2. Design specs
 (are there any design specs/files/mock-ups we can include here? Any other design notes?)
+```
 
 ### Bug reporting template
 
-**Link to original issue**
-(Add a link to the original issue in GitHub if applicable)
+```
+{*}Link to original issue:{*} (Add a link to the original issue in GitHub if applicable)
 
-**Expected behavior**
+h2. Expected behavior
 (Description of what the user would expect to happen)
 
-**Actual behavior**
+h2. Actual behavior
 (The actual behavior observed by the user)
 
-**Screenshots**
+h2. Screenshots
 (Screenshots of the problem if applicable)
 
-**How can we reproduce the issue?**
+h2. How can we reproduce the issue?
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll to '....'
-4. Check console
-5. See error
+# Go to '...'
+# Click on '....'
+# Scroll to '....'
+# Check console
+# See error
 
-**Sample code or abstract reproduction which illustrates the problem**
+h2. Sample code or abstract reproduction which illustrates the problem
 (are there any design specs/files/mock-ups we can include here? Any other design notes?)
 
-**Severity**
-(The severity of the issue according to the [documentation](mdc:https:/github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification))
+h2. Severity
+(The severity of the issue according to the [documentation|https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification])
+```
 
 ### RFC or feature ticket template
 
@@ -86,32 +112,34 @@ This ticket template is for tracking work for RFCs, new features, new components
 
 Items with an asterisk are optional depending on the context.
 
-**Link to original issue**
+```
+h2. Link to original issue
 (Add a link to the original issue in GitHub if applicable)
 
-**Overview**
+h2. Overview
 (The problem you're looking to explore solutions for or do research on)
 
-**Acceptance Criteria**
+h2. Acceptance criteria
 (What is the desired outcome of this RFC or research process? What would make this ticket "done"? What follow-up work would be required? Refer to the RFC guide for examples.)
 
-**Estimated internal impact\***
+h2. Estimated internal impact
 (If implemented, what impact would this work have on other APIs, other components, the project structure, or team initiatives? Refer to the impact diagram for details.)
 
-**Estimated external impact\***
+h2. Estimated external impact
 (If implemented, what impact would this work have on consumers or downstream/upstream dependencies?)
 
-**Anticipated reviewing audience\***
+h2. Anticipated reviewing audience
 (Who would you like to provide feedback on your RFC/research? Your immediate team, your partners, or a wider consumer audience? What are their roles?)
 
-**Proposed solutions\***
+h2. Proposed solutions
 (Pseudocode or short description that outlines what the solution might look like. You may not have any solutions yet.)
 
-**Supplementary documentation\***
+h2. Supplementary documentation
 (Has this feature or component been implemented in existing design specs or in another project? Share those here to paint a bigger picture of the end result. For architectural changes, have you seen this done in other libraries? Are there any tools you're looking at trying out to solve your problem?)
 
-**Additional Context**
+h2. Additional context
 (Add any other context, drafts, etc. if you have them)
+```
 
 ## Severity classification
 
@@ -136,14 +164,7 @@ Items with an asterisk are optional depending on the context.
 - Include edge cases and error scenarios
 - Consider accessibility requirements
 
-## Comments and updates
-
-- Keep comments focused and constructive
-- Update ticket status promptly
-- Document important decisions or changes
-- Use @mentions for specific team member attention
-
-## Tagging guidelines
+## Labels
 
 Use the following labels to categorize tickets appropriately:
 
@@ -167,8 +188,6 @@ Use the following labels to categorize tickets appropriately:
 - `testing`: Test implementation or testing infrastructure work
 - `triage`: New tickets requiring team assessment and prioritization
 - `VoiceOver`: VoiceOver screen reader specific issues
-
-Note: Labels should be applied at ticket creation and updated as needed throughout the ticket lifecycle.
 
 ## Issue type
 

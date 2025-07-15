@@ -18,13 +18,13 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { Popover } from '@spectrum-web-components/popover';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
 import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
@@ -172,92 +172,142 @@ describe('Overlay Trigger - extended', () => {
     });
 
     it('occludes content behind the overlay', async () => {
-        const { overlayTrigger, button, popover } = await initTest();
-        const textfield = document.createElement('input');
-        textfield.type = 'text';
-        textfield.tabIndex = 0;
-        textfield.style.position = 'relative';
-        textfield.style.zIndex = '1';
+        const el = await fixture<HTMLDivElement>(html`
+            <div class="container">
+                <style>
+                    .container {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                    }
+                </style>
+                <overlay-trigger
+                    type="modal"
+                    id="trigger"
+                    placement="top"
+                    triggered-by="click"
+                >
+                    <sp-button
+                        id="outer-button"
+                        variant="primary"
+                        slot="trigger"
+                    >
+                        Show Popover
+                    </sp-button>
+                    <sp-popover
+                        id="outer-popover"
+                        slot="click-content"
+                        tip
+                        tabindex="0"
+                        placement="bottom"
+                    >
+                        <sp-dialog no-divider>
+                            This is the overlay content.
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <input
+                    type="text"
+                    id="textfield"
+                    style="position: relative; z-index: 1;"
+                />
+            </div>
+        `);
+
+        // Get a reference to the textfield element
+        const textfield = el.querySelector('#textfield') as HTMLInputElement;
+
+        // Get a reference to the overlay trigger
+        const overlayTrigger = el.querySelector(
+            'overlay-trigger'
+        ) as OverlayTrigger;
+
+        // Get a reference to the button element
+        const button = el.querySelector('sp-button') as Button;
+
+        // Get a reference to the popover element
+        const popover = el.querySelector('sp-popover') as Popover;
+
+        // Wait for the textfield to be connected and rendered
+        await elementUpdated(el);
+
+        // Get a reference to the overlay element that will be opened
         const overlay = overlayTrigger.clickOverlayElement;
-        overlayTrigger.insertAdjacentElement('afterend', textfield);
 
-        // Wait for the textfield to be properly connected and rendered
-        await nextFrame();
-
+        // Verify the overlay is initially closed
         expect(overlay.state, `overlay state`).to.equal('closed');
 
-        // Ensure textfield is visible and focusable
+        // Ensure the textfield is visible and can be focused
         expect(textfield.offsetParent, 'textfield is visible').to.not.be.null;
-        expect(textfield.tabIndex, 'textfield is focusable').to.be.greaterThan(
-            -1
-        );
+        expect(textfield.tabIndex, 'textfield is focusable').to.be.equal(0);
 
-        // Try multiple approaches to ensure focus works in CI
-        await sendMouseTo(textfield, 'click');
-
-        // If click didn't work, try programmatic focus
-        if (document.activeElement !== textfield) {
-            await textfield.focus();
-        }
-
+        // Focus the textfield by clicking it (simulates user interaction)
         await waitUntil(
-            () => document.activeElement === textfield,
-            `clicking focuses textfield (active element is ${document.activeElement?.tagName})`,
-            { timeout: 1000 }
+            async () => await sendMouseTo(textfield, 'click'),
+            `Trying to click textfield`
         );
 
-        expect(popover.placement).to.equal('top');
+        expect(document.activeElement, `textfield focused`).to.equal(textfield);
 
-        // focus the button
+        // Confirm the popover is positioned above the button
+        expect(popover.placement).to.equal('bottom');
+
+        // Focus the button to prepare for opening the overlay
         button.focus();
+        await elementUpdated(button);
         expect(document.activeElement, `button focused`).to.equal(button);
 
+        // Confirm the overlay is still closed and not triggered
         expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
         expect(overlay.state, `overlay.state`).to.equal('closed');
 
-        // open the overlay
+        // Open the overlay by setting the open property
         overlayTrigger.open = 'click';
 
+        // Wait for the overlay trigger to update
         await elementUpdated(overlayTrigger);
 
+        // Confirm the overlay is in the process of opening
         expect(
             overlayTrigger.clickOverlayElement.state,
             'overlay state after clicking'
         ).to.equal('opening');
 
-        // sometimes 300 is not enough for Firefox
+        // Wait for the overlay to be fully opened (allow extra time for Firefox)
         await overlayOpened(overlayTrigger.clickOverlayElement, 400);
 
-        // click the textfield
+        // Attempt to click the textfield while the overlay is open
         await waitUntil(
             async () => await sendMouseTo(textfield, 'click'),
-            `textfield clicked again`,
-            { timeout: 300 }
+            `textfield clicked again`
         );
 
-        // verify the textfield is occluded
+        // Verify that the textfield cannot be focused (is occluded by the overlay)
         expect(
             document.activeElement,
             `textfield cannot be clicked`
         ).to.not.equal(textfield);
 
+        // Close the overlay
         overlayTrigger.open = undefined;
 
+        // Wait for the overlay to be fully closed
         await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
+        // Confirm the textfield is still not focused after closing the overlay
         expect(document.activeElement, 'textfield is not focused').to.not.equal(
             textfield
         );
 
-        await sendMouseTo(textfield, 'click');
-
-        // verify the textfield is focused and actually clickable
-
+        // Try clicking the textfield again after the overlay is closed
         await waitUntil(
-            () => document.activeElement === textfield,
-            `clicking focuses textfield again (active element is ${document.activeElement?.tagName})`,
-            { timeout: 500 }
+            async () => await sendMouseTo(textfield, 'click'),
+            `textfield clicked again`
         );
+
+        // Verify that the textfield can now be focused (no longer occluded)
+        expect(document.activeElement, `textfield focused`).to.equal(textfield);
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {
