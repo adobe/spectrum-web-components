@@ -25,11 +25,21 @@ import { Tab } from '@spectrum-web-components/tabs';
 
 ### Anatomy
 
-The `<sp-tab>` element consists of a label and an optional icon.
+The `<sp-tab>` element consists of the following:
+
+- a label, so that users know which tab panels content will be shown
+- an optional icon
+- a value that programmatically associates the tab with its corresponding tab panel
+
 
 ```html
-<sp-tab label="Label">
-    <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+<sp-tabs>
+    <sp-tab label="Tab cola" value="tab-cola">
+        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    </sp-tab>
+    <sp-tab-panel value="tab-cola">
+        Tab (or TaB) was a diet cola soft drink from The Coca-Cola Company, introduced in 1963. It is no longer produced.
+    </sp-tab-panel>
 </sp-tab>
 ```
 
@@ -40,18 +50,37 @@ The `<sp-tab>` element consists of a label and an optional icon.
 For tabs that have an icon and no visible label, the icon should have an `aria-label`. Icons should not be used just as decoration. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
 
 ```html
-<sp-tab value="complete" aria-label="Tab with checkmark">
-    <sp-icon-checkmark
-        slot="icon"
-        label="Checking your work"
-    ></sp-icon-checkmark>
-</sp-tab>
+    <sp-tabs>
+        <sp-tab value="complete">
+            <sp-icon-checkmark
+                slot="icon"
+                label="Checking your work"
+            ></sp-icon-checkmark>
+        </sp-tab>
+       <sp-tab-panel value="complete">
+           A screenreader will read this tab as "Checking your work"
+       </sp-tab-panel>
+    <sp-tabs>
 ```
 
 #### Label only
 
+The label can be provided via the `label` attribute or the default slot:
+
 ```html
-<sp-tab value="label" label="Label"></sp-tab>
+<sp-tabs>
+    <sp-tab label="Tab using an attribute" value="attribute">
+    </sp-tab>
+    <sp-tab-panel value="attribute">
+        This tab uses the `label` attribute to label the tab.
+    </sp-tab-panel>
+    <sp-tab value="slot">
+        Tab using slot
+    </sp-tab>
+    <sp-tab-panel value="slot">
+        This tab uses the default slot to label the tab.
+    </sp-tab-panel>
+</sp-tab>
 ```
 
 The `label` attribute provides the visible text content and accessible name for screen readers. The `value` attribute links the tab to its corresponding `sp-tab-panel` via matching values.
@@ -67,6 +96,7 @@ The tab is currently active and its associated panel is visible.
 ```html
 <sp-tabs>
     <sp-tab selected="label" label="Label" value="1"></sp-tab>
+    <sp-tab-panel value="1">This tab is selected.</sp-tab-panel>
 </sp-tabs>
 ```
 
