@@ -19,8 +19,7 @@ export const languageResolverUpdatedSymbol = Symbol(
 
 export class LanguageResolutionController implements ReactiveController {
     private host: ReactiveElement;
-    language: Intl.LocalesArgument =
-        document.documentElement.lang || navigator.language || 'en-US';
+    language = document.documentElement.lang || navigator.language || 'en-US';
     private unsubscribe?: () => void;
 
     constructor(host: ReactiveElement) {
@@ -39,12 +38,9 @@ export class LanguageResolutionController implements ReactiveController {
     private resolveLanguage(): void {
         try {
             // Fix for invalid locale tags like en-US@posix
-            if (
-                typeof this.language === 'string' &&
-                this.language.includes('@posix')
-            ) {
-                this.language = this.language.replace('@posix', '');
-            }
+            // if (this.language.includes('@posix')) {
+            //     this.language = this.language.replace('@posix', '');
+            // }
             Intl.DateTimeFormat.supportedLocalesOf([this.language as string]);
         } catch {
             this.language = 'en-US';
