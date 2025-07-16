@@ -68,7 +68,6 @@ governing permissions and limitations under the License.
 :host {
     box-sizing: border-box;
     min-inline-size: var(--mod-card-minimum-width, var(--spectrum-card-minimum-width));
-    block-size: 100%;
     border: var(--spectrum-card-border-width) solid transparent;
     border-radius: var(--spectrum-card-corner-radius);
     border-color: var(--mod-card-border-color, var(--spectrum-card-border-color));
