@@ -33,6 +33,11 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 import { render } from 'lit';
 import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
+// Type declaration to fix the export issue in @web/test-runner-visual-regression@0.10.0
+declare module '@web/test-runner-visual-regression' {
+    export function visualDiff(element: Node, name: string): Promise<void>;
+}
+
 // Suppress ResizeObserver errors which can occur during testing
 ignoreResizeObserverLoopError(before, after);
 
