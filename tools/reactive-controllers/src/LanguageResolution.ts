@@ -37,6 +37,10 @@ export class LanguageResolutionController implements ReactiveController {
 
     private resolveLanguage(): void {
         try {
+            // Fix for invalid locale tags like en-US@posix
+            if (this.language.includes('@posix')) {
+                this.language = this.language.replace('@posix', '');
+            }
             Intl.DateTimeFormat.supportedLocalesOf([this.language]);
         } catch {
             this.language = 'en-US';
