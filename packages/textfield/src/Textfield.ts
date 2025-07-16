@@ -76,7 +76,7 @@ export class TextfieldBase extends ManageHelpText(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('.input:not(#sizer)')
+    @query('input, input.input:not(#sizer), textarea.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     /**
