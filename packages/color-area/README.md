@@ -136,9 +136,9 @@ The `step` attribute controls the granularity of color selection when using keyb
 The step size affects:
 
 - Regular arrow key movements (moves by 1× step)
-- Shift+arrow key combinations (moves by 5× step)
-- Page Up/Down keys (moves by 10× step vertically)
-- Home/End keys (moves by 10× step horizontally)
+- <kbd>Shift</kbd>+arrow key combinations (moves by 5× step)
+- <kbd>Page Up</kbd>/<kbd>Page Down</kbd> keys (moves by 10× step vertically)
+- <kbd>Home</kbd>/<kbd>End keys</kbd>  (moves by 10× step horizontally)
 
 A smaller step value provides more precise control but requires more key presses to move across the color area, while a larger step value allows for faster movement at the cost of precision. Choose a step size appropriate for your use case:
 
