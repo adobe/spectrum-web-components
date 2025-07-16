@@ -7,7 +7,7 @@ executors:
         resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.53.0-noble
+            - image: mcr.microsoft.com/playwright:v1.53.1-noble
         resource_class: xlarge
         environment:
             NODE_ENV: development
