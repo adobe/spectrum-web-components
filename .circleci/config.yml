@@ -237,9 +237,7 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group no-memory-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -251,9 +249,7 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group no-memory-ci
             - store_test_results:
                   path: /root/project/results/
 
