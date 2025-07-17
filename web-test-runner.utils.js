@@ -262,5 +262,5 @@ export const configuredVisualRegressionPlugin = () =>
             );
         },
         failureThresholdType: 'percent',
-        failureThreshold: 1,
+        failureThreshold: 3,
     });

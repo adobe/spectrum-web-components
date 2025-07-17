@@ -512,7 +512,7 @@ describe('Overlay - type="modal", v1', () => {
         before(async () => {
             render(
                 html`
-                    <sp-theme color="light" scale="large">
+                    <sp-theme color="light" scale="large" system="spectrum">
                         ${virtualElementV1({
                             ...virtualElementV1.args,
                             offset: 6,

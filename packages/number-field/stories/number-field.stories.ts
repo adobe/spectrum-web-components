@@ -17,6 +17,7 @@ import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
+import '../../../tools/theme/sp-theme';
 
 export default {
     title: 'Number Field',
@@ -256,15 +257,17 @@ decimals.args = {
 };
 
 export const germanDecimals = (args: StoryArgs): TemplateResult => {
-    let currentDir = 'ltr';
+    let currentDir: 'ltr' | 'rtl' | '' = 'ltr';
+    let currentSystem: 'spectrum' | 'spectrum-two' | 'express' = 'spectrum-two';
     if (window.__swc_hack_knobs__) {
         currentDir = window.__swc_hack_knobs__.defaultDirection;
+        currentSystem = window.__swc_hack_knobs__.defaultSystemVariant;
     }
     return html`
         <sp-field-label for="decimals">
             Enter a number with visible decimals
         </sp-field-label>
-        <sp-theme lang="de" dir="${currentDir}">
+        <sp-theme lang="de" dir="${currentDir}" system=${currentSystem}>
             <sp-number-field
                 id="decimals"
                 ...=${spreadProps(args)}
