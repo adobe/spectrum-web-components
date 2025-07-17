@@ -15,38 +15,76 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { HelpTextManager } from '../src/HelpTextManager.js';
 
 describe('HelpText', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<HelpText>(
-                html`
-                    <sp-help-text>This is help text.</sp-help-text>
-                `
-            )
+            await fixture<HelpText>(html`
+                <sp-help-text>This is help text.</sp-help-text>
+            `)
     );
     it('loads default help-text accessibly', async () => {
-        const el = await fixture<HelpText>(
-            html`
-                <sp-help-text>This is help text.</sp-help-text>
-            `
-        );
+        const el = await fixture<HelpText>(html`
+            <sp-help-text>This is help text.</sp-help-text>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads negative/icon help-text accessibly', async () => {
-        const el = await fixture<HelpText>(
-            html`
-                <sp-help-text variant="negative" icon>
-                    This is negative help text.
-                </sp-help-text>
-            `
-        );
+        const el = await fixture<HelpText>(html`
+            <sp-help-text variant="negative" icon>
+                This is negative help text.
+            </sp-help-text>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+
+    describe('HelpTextManager', () => {
+        let manager: HelpTextManager;
+        let host: HTMLElement;
+
+        beforeEach(() => {
+            host = document.createElement('div');
+            document.body.appendChild(host);
+            manager = new HelpTextManager(host, { mode: 'external' });
+        });
+
+        afterEach(() => {
+            if (host.parentNode) {
+                host.parentNode.removeChild(host);
+            }
+        });
+
+        it('creates manager with correct id format', () => {
+            expect(manager.id).to.match(/^sp-help-text-/);
+        });
+
+        it('renders template with correct structure', () => {
+            const template = manager.render();
+            expect(template).to.be.instanceOf(Object);
+        });
+
+        it('renders negative template when negative is true', () => {
+            const template = manager.render(true);
+            expect(template).to.be.instanceOf(Object);
+        });
+
+        it('has correct mode setting', () => {
+            const externalManager = new HelpTextManager(host, {
+                mode: 'external',
+            });
+            const internalManager = new HelpTextManager(host, {
+                mode: 'internal',
+            });
+
+            expect(externalManager).to.be.instanceOf(HelpTextManager);
+            expect(internalManager).to.be.instanceOf(HelpTextManager);
+        });
     });
 });
