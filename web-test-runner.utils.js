@@ -22,6 +22,7 @@ export const chromium = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
 });
 
@@ -62,6 +63,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
@@ -85,6 +87,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
@@ -92,7 +95,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
