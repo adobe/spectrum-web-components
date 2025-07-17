@@ -235,8 +235,7 @@ export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
         update: process.argv.includes('--update-visual-baseline'),
         diffOptions: {
-            // temporarily increase the threshold to 0.1 default so we can see the major diffs in the CI
-            threshold: 0.1,
+            threshold: 0,
         },
         baseDir: 'test/visual',
         buildCache: true,
@@ -262,4 +261,6 @@ export const configuredVisualRegressionPlugin = () =>
                 ...nameParts
             );
         },
+        failureThresholdType: 'percent',
+        failureThreshold: 1,
     });
