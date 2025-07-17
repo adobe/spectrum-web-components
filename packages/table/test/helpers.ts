@@ -17,7 +17,6 @@ import { fixture, html } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import type { Table, TableBody } from '@spectrum-web-components/table';
 import type { Theme } from '@spectrum-web-components/theme';
-import '../../../tools/theme/sp-theme';
 
 export async function styledFixture<T extends Element>(
     story: TemplateResult
