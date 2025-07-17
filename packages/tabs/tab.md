@@ -1,6 +1,6 @@
 ## Overview
 
-An `<sp-tab>` element surfaces a `label` attribute to serve as its default text content when none is available in the DOM. An icon may be assigned to the element via the `icon` slot; e.g. `<sp-tab><svg slot="icon" aria-label="Tab w/ Icon">...</svg></sp-tab>`. Associate an `<sp-tab>` element with the `<sp-tab-panel>` that represents its content with the `value` attribute.
+An `<sp-tab>` element surfaces a `label` attribute to serve as its default text content when none is available in the DOM. An icon may be assigned to the element via the `icon` slot; e.g. `<sp-tab><svg slot="icon" label="Tab with icon">...</svg></sp-tab>`. Associate an `<sp-tab>` element with the `<sp-tab-panel>` that represents its content with the `value` attribute.
 
 ### Usage
 
@@ -31,7 +31,6 @@ The `<sp-tab>` element consists of the following:
 - an optional icon
 - a value that programmatically associates the tab with its corresponding tab panel
 
-
 ```html
 <sp-tabs>
     <sp-tab label="Tab cola" value="tab-cola">
@@ -47,20 +46,21 @@ The `<sp-tab>` element consists of the following:
 
 #### Icon only
 
-For tabs that have an icon and no visible label, the icon should have an `aria-label`. Icons should not be used just as decoration. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
+For tabs that have an icon and no visible label, the icon should have a `label` attribute in order to set the `aria-label` of the icon. Icons should not be used just as decoration. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
 
 ```html
-    <sp-tabs>
-        <sp-tab value="complete">
-            <sp-icon-checkmark
-                slot="icon"
-                label="Checking your work"
-            ></sp-icon-checkmark>
-        </sp-tab>
-       <sp-tab-panel value="complete">
-           A screenreader will read this tab as "Checking your work"
-       </sp-tab-panel>
-    <sp-tabs>
+<sp-tabs>
+    <sp-tab value="complete">
+        <sp-icon-checkmark
+            slot="icon"
+            label="Checking your work"
+        ></sp-icon-checkmark>
+    </sp-tab>
+    <sp-tab-panel value="complete">
+        A screenreader will read this tab as "Checking your work"
+    </sp-tab-panel>
+    <sp-tabs></sp-tabs>
+</sp-tabs>
 ```
 
 #### Label only
@@ -104,17 +104,9 @@ The tab is currently active and its associated panel is visible.
 
 The tab has keyboard focus. All tabs can receive focus through keyboard navigation, except when the tab is `disabled`.
 
-```html
-<sp-tabs selected="2">
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-</sp-tabs>
-```
-
 #### Disabled state
 
-When an `<sp-tab>` element is given the `disabled` attribute, it will prevent visitor from selecting that tab and its contents. The ability to select other tabs and their content will go unimpeaded.
+When an `<sp-tab>` element is given the `disabled` attribute, it will prevent visitors from selecting that tab and its contents. The ability to select other tabs and their content will remain unrestricted.
 
 ```html
 <sp-tabs selected="2">
@@ -146,10 +138,10 @@ When an `<sp-tab>` element is given the `disabled` attribute, it will prevent vi
 
 #### Best practices
 
-- Always provide meaningful text content via `label` attribute or slot content. In rare cases where an icon provides enough content, use the icon's `label` attribute.
-- Use descriptive `value` attributes that clearly identify the tab's purpose
-- Ensure tab labels are concise but descriptive
-- When using icons, provide appropriate `aria-label` attributes
+- Always provide meaningful text content via `label` attribute or slot content. In rare cases where an icon alone provides enough meaning, use the icon's `label` attribute.
+- Use descriptive `value` attributes that clearly identify the tab's purpose.
+- Ensure tab labels are concise but descriptive.
+- When using icons, provide an appropriate `label` attribute on the icon.
 
 #### Keyboard navigation
 
