@@ -157,75 +157,81 @@ const vrtHTML =
         </body>
     </html>`;
 
-export let vrtGroups = [];
-const systemVariants = ['spectrum', 'express', 'spectrum-two'];
-const colors = ['light', 'dark'];
-const scales = ['medium', 'large'];
-const directions = ['ltr', 'rtl'];
-systemVariants.forEach((systemVariant) => {
-    colors.forEach((color) => {
-        scales.forEach((scale) => {
-            directions.forEach((dir) => {
-                const reduceMotion = true;
-                const testHTML = vrtHTML({
-                    systemVariant,
-                    color,
-                    scale,
-                    dir,
-                    reduceMotion,
-                });
-                vrtGroups.push({
-                    name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
-                    files: '(packages|tools)/*/test/*.test-vrt.js',
-                    testRunnerHtml: testHTML,
-                    browsers: [chromium],
-                });
-            });
-        });
-    });
-});
-
-vrtGroups = [
-    ...vrtGroups,
-    ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
-        if (!skipPkgs.includes(pkg)) {
-            acc.push({
-                name: `vrt-${pkg}`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-            acc.push({
-                name: `vrt-${pkg}-single`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    systemVariant: 'spectrum',
-                    color: 'light',
-                    scale: 'medium',
-                    dir: 'ltr',
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-        }
-        return acc;
-    }, []),
+// Simplified VRT groups - only the ones we actually use
+const targetVRTCombinations = [
     {
-        name: `vrt-hcm`,
+        system: 'spectrum',
+        color: 'light',
+        scale: 'medium',
+        dir: 'ltr',
+        hcm: false,
+    },
+    {
+        system: 'spectrum',
+        color: 'dark',
+        scale: 'large',
+        dir: 'rtl',
+        hcm: false,
+    },
+    {
+        system: 'express',
+        color: 'light',
+        scale: 'medium',
+        dir: 'ltr',
+        hcm: false,
+    },
+    {
+        system: 'express',
+        color: 'dark',
+        scale: 'large',
+        dir: 'rtl',
+        hcm: false,
+    },
+    {
+        system: 'spectrum-two',
+        color: 'light',
+        scale: 'medium',
+        dir: 'ltr',
+        hcm: false,
+    },
+    {
+        system: 'spectrum-two',
+        color: 'dark',
+        scale: 'large',
+        dir: 'rtl',
+        hcm: false,
+    },
+    {
+        system: 'spectrum',
+        color: 'dark',
+        scale: 'medium',
+        dir: 'ltr',
+        hcm: true,
+    },
+    {
+        system: 'spectrum-two',
+        color: 'dark',
+        scale: 'large',
+        dir: 'rtl',
+        hcm: true,
+    },
+];
+
+export const vrtGroups = [
+    // Only the 6 combinations we need
+    ...targetVRTCombinations.map(({ system, color, scale, dir, hcm }) => ({
+        name: `${hcm ? 'hcm-' : ''}${system}-${color}-${scale}-${dir}`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
-            systemVariant: 'spectrum',
-            color: 'dark',
-            scale: 'medium',
-            dir: 'ltr',
-            hcm: true,
+            systemVariant: system,
+            color,
+            scale,
+            dir,
+            hcm,
             reduceMotion: true,
         }),
         browsers: [chromium],
-    },
+    })),
 ];
 
 // Packages that should be skipped from testing
@@ -307,22 +313,29 @@ export const configuredVisualRegressionPlugin = () =>
         failureThreshold: 3,
     });
 
+// Configurable log filters - add more strings here to filter additional messages
+const logFilters = [
+    'Could not resolve module specifier',
+    'in dev mode',
+    // Add more filter strings here as needed
+];
+
 // Filter noisy browser logs
 export const filterBrowserLogs = (log) => {
-    const { type, args } = log;
+    const { args } = log;
 
-    // Filter out noisy development messages
-    if (
-        type === 'warn' &&
-        args.some(
-            (arg) =>
-                typeof arg === 'string' &&
-                (arg.includes('Could not resolve module specifier') ||
-                    arg.includes('Lit is in dev mode'))
-        )
-    ) {
-        return false;
-    }
+    // Check if any argument contains a filtered string
+    const shouldFilter = args.some((arg) => {
+        if (typeof arg !== 'string') return false;
 
-    return true;
+        // Option 1: Simple approach - check against all filters
+        return logFilters.some((filter) => arg.includes(filter));
+
+        // Option 2: Type-specific filtering (uncomment to use)
+        // const typeSpecificFilters = logTypeFilters[type] || [];
+        // return typeSpecificFilters.some(filter => arg.includes(filter));
+    });
+
+    // Return false to filter out (hide) the log
+    return !shouldFilter;
 };

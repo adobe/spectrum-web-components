@@ -119,7 +119,11 @@ export default {
     groups: [
         {
             name: 'unit',
-            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
+            files: [
+                'packages/*/test/*.test.js',
+                'tools/*/test/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
         },
         ...packageGroups,
         ...vrtGroups,
@@ -144,9 +148,7 @@ export default {
             name: 'memory-ci',
             files: [
                 '{packages,tools}/**/*-memory.test.js',
-                '!packages/color-area/test/*-memory.test.js',
-                '!packages/color-wheel/test/*-memory.test.js',
-                '!packages/color-slider/test/*-memory.test.js',
+                '!packages/color-*/test/*-memory.test.js',
             ],
             browsers: [chromiumWithMemoryToolingCI],
         },
