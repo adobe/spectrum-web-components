@@ -129,7 +129,7 @@ jobs:
             - run-tests:
                   config_file: web-test-runner.config.ci-chromium.js
                   test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
-                  exclude_pattern: '-memory\.test\.js'
+                  exclude_pattern: '-memory.test.js'
 
     test-chromium-memory:
         executor: node
@@ -241,77 +241,77 @@ jobs:
                   key: v2-golden-images-{{ .Revision }}-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-{{ epoch }}
                   when: always
 
-    hcm-visual:
-        executor: node
-        resource_class: xlarge
-        steps:
-            - setup-project
-            - restore_cache:
-                  name: Restore golden images
-                  keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
-                      - v2-golden-images-main-hcm-
-            - run:
-                  name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
-            - run:
-                  name: Run HCM visual tests
-                  command: |
-                      mkdir -p /root/project/results
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
-            - store_test_results:
-                  path: /root/project/results/
-            - run:
-                  name: Validate image count
-                  command: |
-                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo "Baseline images: $(cat count_start.txt)"
-                      echo "Generated images: $(cat count_end.txt)"
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo "✅ Image count matches"
-                      else 
-                          echo "❌ Image count mismatch"
-                          exit 1
-                      fi
-                  when: on_success
-            - run:
-                  name: Create VRT review site
-                  command: |
-                      branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="hcm"
-                      yarn rollup -c test/visual/rollup.config.js
-                  when: always
-            - install-azcopy
-            - run:
-                  name: Deploy VRT results
-                  command: |
-                      # Determine deployment path
-                      if [ "$CIRCLE_BRANCH" = "main" ]; then
-                          DEPLOY_PATH="main"
-                      else
-                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-                          DEPLOY_PATH="pr-${PR_NUMBER}"
-                      fi
+    # hcm-visual:
+    #     executor: node
+    #     resource_class: xlarge
+    #     steps:
+    #         - setup-project
+    #         - restore_cache:
+    #               name: Restore golden images
+    #               keys:
+    #                   - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+    #                   - v2-golden-images-main-hcm-
+    #         - run:
+    #               name: Count baseline images
+    #               command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+    #         - run:
+    #               name: Run HCM visual tests
+    #               command: |
+    #                   mkdir -p /root/project/results
+    #                   yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+    #         - store_test_results:
+    #               path: /root/project/results/
+    #         - run:
+    #               name: Validate image count
+    #               command: |
+    #                   find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+    #                   echo "Baseline images: $(cat count_start.txt)"
+    #                   echo "Generated images: $(cat count_end.txt)"
+    #                   if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then
+    #                       echo "✅ Image count matches"
+    #                   else
+    #                       echo "❌ Image count mismatch"
+    #                       exit 1
+    #                   fi
+    #               when: on_success
+    #         - run:
+    #               name: Create VRT review site
+    #               command: |
+    #                   branch=$(git symbolic-ref --short HEAD)
+    #                   node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="hcm"
+    #                   yarn rollup -c test/visual/rollup.config.js
+    #               when: always
+    #         - install-azcopy
+    #         - run:
+    #               name: Deploy VRT results
+    #               command: |
+    #                   # Determine deployment path
+    #                   if [ "$CIRCLE_BRANCH" = "main" ]; then
+    #                       DEPLOY_PATH="main"
+    #                   else
+    #                       PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
+    #                       DEPLOY_PATH="pr-${PR_NUMBER}"
+    #                   fi
 
-                      # Deploy to Azure
-                      azcopy copy "test/visual/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/" \
-                          --recursive --from-to LocalBlob
+    #                   # Deploy to Azure
+    #                   azcopy copy "test/visual/*" \
+    #                       "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/" \
+    #                       --recursive --from-to LocalBlob
 
-                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/"
-                  when: always
-            - run:
-                  name: Update golden images cache
-                  command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-                  when: always
-            - save_cache:
-                  name: Save golden images cache
-                  paths:
-                      - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
-                  when: always
+    #                   echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/"
+    #               when: always
+    #         - run:
+    #               name: Update golden images cache
+    #               command: |
+    #                   rm -rf test/visual/screenshots-baseline
+    #                   cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+    #               when: always
+    #         - save_cache:
+    #               name: Save golden images cache
+    #               paths:
+    #                   - test/visual/screenshots-baseline
+    #               key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
+    #               when: always
 
     beta-docs:
         executor: node

@@ -265,20 +265,6 @@ export const allGroups = [...packageGroups, ...vrtGroups, ...vrtPackageGroups];
 export const testGroups = packageGroups;
 export const visualGroups = [...vrtGroups, ...vrtPackageGroups];
 
-// Validate VRT configuration
-const validateVRTConfig = (config) => {
-    const requiredFields = ['systemVariant', 'color', 'scale', 'dir'];
-    const missing = requiredFields.filter((field) => !config[field]);
-
-    if (missing.length > 0) {
-        throw new Error(
-            `Missing required VRT config fields: ${missing.join(', ')}`
-        );
-    }
-
-    return config;
-};
-
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
         update: process.argv.includes('--update-visual-baseline'),
@@ -326,7 +312,9 @@ export const filterBrowserLogs = (log) => {
 
     // Check if any argument contains a filtered string
     const shouldFilter = args.some((arg) => {
-        if (typeof arg !== 'string') return false;
+        if (typeof arg !== 'string') {
+            return false;
+        }
 
         // Option 1: Simple approach - check against all filters
         return logFilters.some((filter) => arg.includes(filter));
