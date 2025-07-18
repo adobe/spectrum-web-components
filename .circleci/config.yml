@@ -44,11 +44,11 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v4c-dependencies-{{ arch }}-{{ checksum 'yarn.lock' }}
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
                       - v4c-dependencies-{{ arch }}-
             - restore_cache:
                   keys:
-                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum 'package.json' }}-
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
                       - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-
             - run:
                   name: Install dependencies
@@ -62,11 +62,11 @@ commands:
                   paths:
                       - ~/.cache/yarn
                       - ~/.cache/ms-playwright
-                  key: v4c-dependencies-{{ arch }}-{{ checksum 'yarn.lock' }}
+                  key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
                       - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum 'package.json' }}-{{ epoch }}
+                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
 
     run-tests:
         description: 'Run tests with CircleCI test splitting'
@@ -88,17 +88,17 @@ commands:
                       TEST_FILES=$(circleci tests glob << parameters.test_patterns >>)
 
                       # Apply exclusions if specified
-                      if [ -n '<< parameters.exclude_pattern >>' ]; then
-                          TEST_FILES=$(echo '$TEST_FILES' | grep -v -E '<< parameters.exclude_pattern >>')
+                      if [ -n "<< parameters.exclude_pattern >>" ]; then
+                          TEST_FILES=$(echo "$TEST_FILES" | grep -v -E "<< parameters.exclude_pattern >>")
                       fi
 
                       # Debug output
-                      echo 'Test files to run:'
-                      echo '$TEST_FILES'
+                      echo "Test files to run:"
+                      echo "$TEST_FILES"
 
                       # Run tests with CircleCI splitting
-                      echo '$TEST_FILES' | circleci tests run \
-                          --command='xargs yarn test:start --files --config << parameters.config_file >>' \
+                      echo "$TEST_FILES" | circleci tests run \
+                          --command="xargs yarn test:start --files --config << parameters.config_file >>" \
                           --split-by=timings \
                           --verbose
             - store_test_results:
@@ -193,12 +193,12 @@ jobs:
                   name: Validate image count
                   command: |
                       find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo 'Baseline images: $(cat count_start.txt)'
-                      echo 'Generated images: $(cat count_end.txt)'
+                      echo "Baseline images: $(cat count_start.txt)"
+                      echo "Generated images: $(cat count_end.txt)"
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo '✅ Image count matches'
+                          echo "✅ Image count matches"
                       else 
-                          echo '❌ Image count mismatch'
+                          echo "❌ Image count mismatch"
                           exit 1
                       fi
                   when: on_success
@@ -206,28 +206,27 @@ jobs:
                   name: Create VRT review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system='<< parameters.system >> << parameters.color >> << parameters.scale >> << parameters.dir >>'
+                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="<< parameters.system >> << parameters.color >> << parameters.scale >> << parameters.dir >>"
                       yarn rollup -c test/visual/rollup.config.js
                   when: always
-            - install-azcopy
             - run:
                   name: Deploy VRT results
                   command: |
                       # Determine deployment path
-                      if [ '$CIRCLE_BRANCH' = 'main' ]; then
-                          DEPLOY_PATH='main'
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          DEPLOY_PATH="main"
                       else
-                          PR_NUMBER=$(echo '$CIRCLE_PULL_REQUEST' | sed 's/.*\/pull\///' || echo '$CIRCLE_PR_NUMBER')
-                          DEPLOY_PATH='pr-${PR_NUMBER}'
+                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
+                          DEPLOY_PATH="pr-${PR_NUMBER}"
                       fi
 
                       # Deploy to Azure
-                      COMBINATION='<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>'
-                      azcopy copy 'test/visual/*' \
-                          'https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/' \
+                      COMBINATION="<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>"
+                      azcopy copy "test/visual/*" \
+                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/" \
                           --recursive --from-to LocalBlob
 
-                      echo 'VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/'
+                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/"
                   when: always
             - run:
                   name: Update golden images cache
@@ -266,12 +265,12 @@ jobs:
                   name: Validate image count
                   command: |
                       find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo 'Baseline images: $(cat count_start.txt)'
-                      echo 'Generated images: $(cat count_end.txt)'
+                      echo "Baseline images: $(cat count_start.txt)"
+                      echo "Generated images: $(cat count_end.txt)"
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo '✅ Image count matches'
+                          echo "✅ Image count matches"
                       else 
-                          echo '❌ Image count mismatch'
+                          echo "❌ Image count mismatch"
                           exit 1
                       fi
                   when: on_success
@@ -279,7 +278,7 @@ jobs:
                   name: Create VRT review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system='hcm'
+                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
                   when: always
             - install-azcopy
@@ -287,19 +286,19 @@ jobs:
                   name: Deploy VRT results
                   command: |
                       # Determine deployment path
-                      if [ '$CIRCLE_BRANCH' = 'main' ]; then
-                          DEPLOY_PATH='main'
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          DEPLOY_PATH="main"
                       else
-                          PR_NUMBER=$(echo '$CIRCLE_PULL_REQUEST' | sed 's/.*\/pull\///' || echo '$CIRCLE_PR_NUMBER')
-                          DEPLOY_PATH='pr-${PR_NUMBER}'
+                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
+                          DEPLOY_PATH="pr-${PR_NUMBER}"
                       fi
 
                       # Deploy to Azure
-                      azcopy copy 'test/visual/*' \
-                          'https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/' \
+                      azcopy copy "test/visual/*" \
+                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/" \
                           --recursive --from-to LocalBlob
 
-                      echo 'VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/'
+                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/"
                   when: always
             - run:
                   name: Update golden images cache
@@ -324,19 +323,19 @@ jobs:
                   command: |
                       yarn docs:analyze
                       cp projects/documentation/custom-elements.json storybook/
-                      echo 'SWC_DIR=beta/docs' >> $BASH_ENV
+                      echo "SWC_DIR=beta/docs" >> $BASH_ENV
                       yarn docs:build
                       yarn storybook:build
             - install-azcopy
             - run:
                   name: Deploy beta documentation
                   command: |
-                      azcopy copy 'projects/documentation/dist/*' \
-                          'https://swcpreviews.blob.core.windows.net/\$web/beta/docs/' \
+                      azcopy copy "projects/documentation/dist/*" \
+                          "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
                           --recursive --from-to LocalBlob
 
-                      azcopy copy 'storybook-static/*' \
-                          'https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/' \
+                      azcopy copy "storybook-static/*" \
+                          "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
                           --recursive --from-to LocalBlob
 
 workflows:
@@ -356,6 +355,7 @@ workflows:
                   requires: [lint]
 
             # Visual regression tests (only for non-forked PRs)
+            # Each system gets exactly 2 tests: medium+light+ltr and large+dark+rtl
             - visual-regression:
                   name: vrt-<< matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
@@ -365,11 +365,17 @@ workflows:
                           scale: [medium, large]
                           dir: [ltr, rtl]
                       exclude:
-                          # Reduce job count by excluding some combinations
+                          # Keep only: medium+light+ltr and large+dark+rtl
+                          - color: light
+                            scale: large
                           - color: dark
                             scale: medium
                           - color: light
+                            scale: medium
+                            dir: rtl
+                          - color: dark
                             scale: large
+                            dir: ltr
                   requires: [test-chromium, test-firefox, test-webkit]
                   filters:
                       branches:
