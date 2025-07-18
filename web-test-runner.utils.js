@@ -16,23 +16,21 @@ import path from 'path';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 
+// Base browser context config
+const baseContext = {
+    ignoreHTTPSErrors: true,
+    permissions: ['clipboard-read', 'clipboard-write'],
+    locale: 'en-US',
+};
+
 export const chromium = playwrightLauncher({
     product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-            locale: 'en-US',
-        }),
+    createBrowserContext: ({ browser }) => browser.newContext(baseContext),
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
+    createBrowserContext: ({ browser }) => browser.newContext(baseContext),
     launchOptions: {
         headless: false,
         args: [
@@ -44,7 +42,6 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
-            '--lang=en-US',
         ],
     },
 });
@@ -52,11 +49,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
 export const chromiumWithMemoryToolingCI = playwrightLauncher({
     product: 'chromium',
     concurrency: 2,
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
+    createBrowserContext: ({ browser }) => browser.newContext(baseContext),
     launchOptions: {
         headless: false,
         args: [
@@ -68,7 +61,6 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
-            '--lang=en-US',
         ],
     },
 });
@@ -76,13 +68,9 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
+        args: ['--enable-experimental-web-platform-features'],
     },
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
+    createBrowserContext: ({ browser }) => browser.newContext(baseContext),
 });
 
 export const firefox = playwrightLauncher({
@@ -117,14 +105,23 @@ export const webkit = playwrightLauncher({
         }),
 });
 
-const tools = fs
-    .readdirSync('tools')
-    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
+// Cache package discovery
+let _packages = null;
+export const getPackages = () => {
+    if (_packages === null) {
+        const tools = fs
+            .readdirSync('tools')
+            .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
 
-export const packages = fs
-    .readdirSync('packages')
-    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
-    .concat(tools);
+        _packages = fs
+            .readdirSync('packages')
+            .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
+            .concat(tools);
+    }
+    return _packages;
+};
+
+export const packages = getPackages();
 
 const vrtHTML =
     ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
@@ -231,6 +228,51 @@ vrtGroups = [
     },
 ];
 
+// Packages that should be skipped from testing
+const skipPkgs = ['bundle', 'icons-ui', 'icons-workflow', 'modal', 'styles'];
+
+// Create per-package groups for easier testing
+export const packageGroups = getPackages()
+    .filter((pkg) => !skipPkgs.includes(pkg))
+    .map((pkg) => ({
+        name: pkg, // Use same naming as main config
+        files: `{packages,tools}/${pkg}/test/*.test.js`, // Use same pattern as main config
+    }));
+
+export const vrtPackageGroups = getPackages()
+    .filter((pkg) => !['bundle', 'modal'].includes(pkg)) // VRT has different skip list
+    .map((pkg) => ({
+        name: `vrt-${pkg}`,
+        files: `{packages,tools}/${pkg}/test/*.test-vrt.js`,
+        testRunnerHtml: vrtHTML({
+            systemVariant: 'spectrum',
+            color: 'light',
+            scale: 'medium',
+            dir: 'ltr',
+            reduceMotion: true,
+        }),
+        browsers: [chromium],
+    }));
+
+export const allGroups = [...packageGroups, ...vrtGroups, ...vrtPackageGroups];
+
+export const testGroups = packageGroups;
+export const visualGroups = [...vrtGroups, ...vrtPackageGroups];
+
+// Validate VRT configuration
+const validateVRTConfig = (config) => {
+    const requiredFields = ['systemVariant', 'color', 'scale', 'dir'];
+    const missing = requiredFields.filter((field) => !config[field]);
+
+    if (missing.length > 0) {
+        throw new Error(
+            `Missing required VRT config fields: ${missing.join(', ')}`
+        );
+    }
+
+    return config;
+};
+
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
         update: process.argv.includes('--update-visual-baseline'),
@@ -264,3 +306,23 @@ export const configuredVisualRegressionPlugin = () =>
         failureThresholdType: 'percent',
         failureThreshold: 3,
     });
+
+// Filter noisy browser logs
+export const filterBrowserLogs = (log) => {
+    const { type, args } = log;
+
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('Lit is in dev mode'))
+        )
+    ) {
+        return false;
+    }
+
+    return true;
+};

@@ -10,27 +10,41 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.js';
 import { defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
+import { filterBrowserLogs } from './web-test-runner.utils.js';
 
-standard.reporters = [
-    // Use the default reporter for console logging in the test job.
-    defaultReporter(),
-    // Use junit reporter for aggregate test success/timing results across jobs.
-    junitReporter({
-        outputPath: './results/test-results.xml', // default `'./test-results.xml'`
-        reportLogs: true, // default `false`
-    }),
-];
+export default {
+    // Remove hardcoded files and groups - respect --files argument
+    files: [],
 
-standard.middleware = standard.middleware || [];
-standard.middleware.push(async (ctx, next) => {
-    await next();
-    // permanently cache ALL of the things!
-    ctx.set('Cache-Control', 'public, max-age=604800, immutable');
-});
+    nodeResolve: {
+        exportConditions: ['browser', 'development'],
+    },
 
-standard.testFramework.config.retries = 2;
+    preserveSymlinks: true,
 
-export default standard;
+    reporters: [
+        defaultReporter(),
+        junitReporter({
+            outputPath: './results/test-results.xml',
+            reportLogs: true,
+        }),
+    ],
+
+    middleware: [
+        async (ctx, next) => {
+            await next();
+            ctx.set('Cache-Control', 'public, max-age=604800, immutable');
+        },
+    ],
+
+    testFramework: {
+        config: {
+            retries: 2,
+        },
+    },
+
+    // Use centralized log filtering
+    filterBrowserLogs,
+};
