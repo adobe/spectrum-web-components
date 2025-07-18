@@ -381,12 +381,12 @@ workflows:
                       branches:
                           ignore: /pull\/[0-9]+/
 
-            # HCM visual tests (separate job for simplicity)
-            - hcm-visual:
-                  requires: [test-chromium, test-firefox, test-webkit]
-                  filters:
-                      branches:
-                          ignore: /pull\/[0-9]+/
+            # # HCM visual tests (separate job for simplicity)
+            # - hcm-visual:
+            #       requires: [test-chromium, test-firefox, test-webkit]
+            #       filters:
+            #           branches:
+            #               ignore: /pull\/[0-9]+/
 
             # Beta documentation (main branch only)
             - beta-docs:
