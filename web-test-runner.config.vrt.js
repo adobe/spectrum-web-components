@@ -10,8 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.ci.js';
+import { defaultReporter } from '@web/test-runner';
+import { junitReporter } from '@web/test-runner-junit-reporter';
+import standard from './web-test-runner.config.js';
 
+// Add CI-specific settings that VRT needs
+standard.reporters = [
+    defaultReporter(),
+    junitReporter({
+        outputPath: './results/test-results.xml',
+        reportLogs: true,
+    }),
+];
+
+standard.middleware = standard.middleware || [];
+standard.middleware.push(async (ctx, next) => {
+    await next();
+    ctx.set('Cache-Control', 'public, max-age=604800, immutable');
+});
+
+// VRT-specific settings
 standard.concurrency = 4;
 standard.testsFinishTimeout = 200000;
 standard.testFramework.config.timeout = 100000;

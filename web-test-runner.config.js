@@ -10,26 +10,27 @@
  * governing permissions and limitations under the License.
  */
 
+import rollupCommonjs from '@rollup/plugin-commonjs';
+import rollupJson from '@rollup/plugin-json';
+import { fromRollup } from '@web/dev-server-rollup';
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
     setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithMemoryTooling,
     chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
+    filterBrowserLogs,
     firefox,
-    packages,
+    packageGroups,
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
-import { fromRollup } from '@web/dev-server-rollup';
-import rollupJson from '@rollup/plugin-json';
-import rollupCommonjs from '@rollup/plugin-commonjs';
-import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
@@ -66,15 +67,23 @@ export default {
         },
         setViewportPlugin(),
     ],
-    mimeTypes: {
-        '**/*.json': 'js',
-    },
-    nodeResolve: {
-        exportConditions: ['browser', 'development'],
-    },
+
+    // Configuration
+    mimeTypes: { '**/*.json': 'js' },
+    nodeResolve: { exportConditions: ['browser', 'development'] },
     http2: true,
     protocol: 'https:',
     testsFinishTimeout: 60000,
+
+    // Test framework
+    testFramework: {
+        config: {
+            timeout: 5000,
+            retries: 1,
+        },
+    },
+
+    // Coverage configuration
     coverageConfig: {
         report: true,
         reportDir: 'coverage',
@@ -101,34 +110,23 @@ export default {
             lines: 98.5,
         },
     },
-    testFramework: {
-        config: {
-            timeout: 5000,
-            retries: 1,
-        },
-    },
+
+    // Default configuration
+    group: 'unit',
+    browsers: [firefox, chromiumWithMemoryTooling, webkit],
+
+    // Test groups
     groups: [
         {
             name: 'unit',
-            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
+            files: [
+                'packages/*/test/*.test.js',
+                'tools/*/test/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
         },
+        ...packageGroups,
         ...vrtGroups,
-        ...packages.reduce((acc, pkg) => {
-            const skipPkgs = [
-                'bundle',
-                'icons-ui',
-                'icons-workflow',
-                'modal',
-                'styles',
-            ];
-            if (!skipPkgs.includes(pkg)) {
-                acc.push({
-                    name: pkg,
-                    files: `{packages,tools}/${pkg}/test/*.test.js`,
-                });
-            }
-            return acc;
-        }, []),
         {
             name: 'overlay-api',
             files: [
@@ -150,14 +148,9 @@ export default {
             name: 'memory-ci',
             files: [
                 '{packages,tools}/**/*-memory.test.js',
-                '!packages/color-area/test/*-memory.test.js',
-                '!packages/color-wheel/test/*-memory.test.js',
-                '!packages/color-slider/test/*-memory.test.js',
+                '!packages/color-*/test/*-memory.test.js',
             ],
             browsers: [chromiumWithMemoryToolingCI],
-        },
-        {
-            name: 'unit-ci',
         },
         {
             name: 'no-memory-ci',
@@ -167,6 +160,7 @@ export default {
             ],
         },
     ],
-    group: 'unit',
-    browsers: [firefox, chromiumWithMemoryTooling, webkit],
+
+    // Use centralized log filtering
+    filterBrowserLogs,
 };
