@@ -25,6 +25,7 @@ import { landscape } from './images.js';
 import { isOverlayOpen } from '../../overlay/stories/index.js';
 import '../../overlay/stories/index.js';
 import type { DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/popover/sp-popover.js';
 
 export default {
     title: 'Dialog Wrapper',
@@ -394,6 +395,16 @@ export const longHeading = (
                 footer="Content for footer"
                 size="m"
             >
+                <overlay-trigger open="click" type="modal">
+                    <sp-button slot="trigger">Click for popover</sp-button>
+                    <sp-popover tip slot="click-content">
+                        <sp-dialog style="--mod-dialog-min-inline-size: 0;">
+                            <h2 slot="heading">Popover</h2>
+                            This popover is on th-start of its button.
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+                <sp-button>Button with Tooltip</sp-button>
                 Content of the dialog
             </sp-dialog-wrapper>
             <sp-button slot="trigger" variant="primary">
