@@ -107,6 +107,84 @@ commands:
                   path: /root/project/results/
                   destination: test-results
 
+    run-vrt:
+        description: 'Run visual regression tests for a specific VRT group'
+        parameters:
+            vrt_group:
+                type: string
+            cache_suffix:
+                type: string
+                default: ''
+        steps:
+            - restore_cache:
+                  name: Restore golden images
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.cache_suffix >>-
+                      - v2-golden-images-main-<< parameters.cache_suffix >>-
+            - run:
+                  name: Count baseline images
+                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+            - run:
+                  name: Run VRT for << parameters.vrt_group >>
+                  command: |
+                      mkdir -p /root/project/results
+                      echo "Running VRT group: << parameters.vrt_group >>"
+                      yarn test:ci --config web-test-runner.config.vrt.js --group << parameters.vrt_group >>
+            - store_test_results:
+                  path: /root/project/results/
+            - run:
+                  name: Validate image count
+                  command: |
+                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                      echo "Baseline images: $(cat count_start.txt)"
+                      echo "Generated images: $(cat count_end.txt)"
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
+                          echo "✅ Image count matches"
+                      else 
+                          echo "❌ Image count mismatch"
+                          exit 1
+                      fi
+                  when: on_success
+            - run:
+                  name: Create VRT review site
+                  command: |
+                      branch=$(git symbolic-ref --short HEAD)
+                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="<< parameters.vrt_group >>"
+                      yarn rollup -c test/visual/rollup.config.js
+                  when: always
+            - install-azcopy
+            - run:
+                  name: Deploy VRT results
+                  command: |
+                      # Determine deployment path
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          DEPLOY_PATH="main"
+                      else
+                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
+                          DEPLOY_PATH="pr-${PR_NUMBER}"
+                      fi
+
+                      # Use VRT group name as combination identifier
+                      COMBINATION="<< parameters.vrt_group >>"
+                      azcopy copy "test/visual/*" \
+                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/" \
+                          --recursive --from-to LocalBlob
+
+                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/"
+                  when: always
+            - run:
+                  name: Update golden images cache
+                  command: |
+                      rm -rf test/visual/screenshots-baseline
+                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                  when: always
+            - save_cache:
+                  name: Save golden images cache
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.cache_suffix >>-{{ epoch }}
+                  when: always
+
 jobs:
     lint:
         executor: node
@@ -129,7 +207,7 @@ jobs:
             - run-tests:
                   config_file: web-test-runner.config.ci-chromium.js
                   test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
-                  exclude_pattern: '-memory.test.js'
+                  exclude_pattern: 'memory\.test\.js'
 
     test-chromium-memory:
         executor: node
@@ -140,7 +218,7 @@ jobs:
             - run-tests:
                   config_file: web-test-runner.config.ci-chromium.js
                   test_patterns: 'packages/**/*-memory.test.js tools/**/*-memory.test.js'
-                  exclude_pattern: 'packages/(color-area|color-wheel|color-slider)/'
+                  exclude_pattern: 'color-area|color-wheel|color-slider'
 
     test-firefox:
         executor: node
@@ -151,7 +229,7 @@ jobs:
             - run-tests:
                   config_file: web-test-runner.config.ci-firefox.js
                   test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
-                  exclude_pattern: '-memory\.test\.js'
+                  exclude_pattern: 'memory\.test\.js'
 
     test-webkit:
         executor: node
@@ -162,156 +240,71 @@ jobs:
             - run-tests:
                   config_file: web-test-runner.config.ci-webkit.js
                   test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
-                  exclude_pattern: '-memory\.test\.js'
+                  exclude_pattern: 'memory\.test\.js'
 
-    visual-regression:
+    # VRT Jobs - each corresponds to a vrtGroup
+    vrt-spectrum-light-medium-ltr:
         executor: node
         resource_class: xlarge
-        parameters:
-            system: { type: string }
-            color: { type: string }
-            scale: { type: string }
-            dir: { type: string }
         steps:
             - setup-project
-            - restore_cache:
-                  name: Restore golden images
-                  keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-                      - v2-golden-images-main-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-            - run:
-                  name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
-            - run:
-                  name: Run visual regression tests
-                  command: |
-                      mkdir -p /root/project/results
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>
-            - store_test_results:
-                  path: /root/project/results/
-            - run:
-                  name: Validate image count
-                  command: |
-                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo "Baseline images: $(cat count_start.txt)"
-                      echo "Generated images: $(cat count_end.txt)"
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo "✅ Image count matches"
-                      else 
-                          echo "❌ Image count mismatch"
-                          exit 1
-                      fi
-                  when: on_success
-            - run:
-                  name: Create VRT review site
-                  command: |
-                      branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="<< parameters.system >> << parameters.color >> << parameters.scale >> << parameters.dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
-                  when: always
-            - run:
-                  name: Deploy VRT results
-                  command: |
-                      # Determine deployment path
-                      if [ "$CIRCLE_BRANCH" = "main" ]; then
-                          DEPLOY_PATH="main"
-                      else
-                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-                          DEPLOY_PATH="pr-${PR_NUMBER}"
-                      fi
+            - run-vrt:
+                  vrt_group: vrt-spectrum-light-medium-ltr
+                  cache_suffix: spectrum-light-medium-ltr
 
-                      # Deploy to Azure
-                      COMBINATION="<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>"
-                      azcopy copy "test/visual/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/" \
-                          --recursive --from-to LocalBlob
+    vrt-spectrum-dark-large-rtl:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-spectrum-dark-large-rtl
+                  cache_suffix: spectrum-dark-large-rtl
 
-                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/"
-                  when: always
-            - run:
-                  name: Update golden images cache
-                  command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-                  when: always
-            - save_cache:
-                  name: Save golden images cache
-                  paths:
-                      - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-{{ epoch }}
-                  when: always
+    vrt-express-light-medium-ltr:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-express-light-medium-ltr
+                  cache_suffix: express-light-medium-ltr
 
-    # hcm-visual:
-    #     executor: node
-    #     resource_class: xlarge
-    #     steps:
-    #         - setup-project
-    #         - restore_cache:
-    #               name: Restore golden images
-    #               keys:
-    #                   - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
-    #                   - v2-golden-images-main-hcm-
-    #         - run:
-    #               name: Count baseline images
-    #               command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
-    #         - run:
-    #               name: Run HCM visual tests
-    #               command: |
-    #                   mkdir -p /root/project/results
-    #                   yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
-    #         - store_test_results:
-    #               path: /root/project/results/
-    #         - run:
-    #               name: Validate image count
-    #               command: |
-    #                   find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-    #                   echo "Baseline images: $(cat count_start.txt)"
-    #                   echo "Generated images: $(cat count_end.txt)"
-    #                   if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then
-    #                       echo "✅ Image count matches"
-    #                   else
-    #                       echo "❌ Image count mismatch"
-    #                       exit 1
-    #                   fi
-    #               when: on_success
-    #         - run:
-    #               name: Create VRT review site
-    #               command: |
-    #                   branch=$(git symbolic-ref --short HEAD)
-    #                   node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="hcm"
-    #                   yarn rollup -c test/visual/rollup.config.js
-    #               when: always
-    #         - install-azcopy
-    #         - run:
-    #               name: Deploy VRT results
-    #               command: |
-    #                   # Determine deployment path
-    #                   if [ "$CIRCLE_BRANCH" = "main" ]; then
-    #                       DEPLOY_PATH="main"
-    #                   else
-    #                       PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-    #                       DEPLOY_PATH="pr-${PR_NUMBER}"
-    #                   fi
+    vrt-express-dark-large-rtl:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-express-dark-large-rtl
+                  cache_suffix: express-dark-large-rtl
 
-    #                   # Deploy to Azure
-    #                   azcopy copy "test/visual/*" \
-    #                       "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/" \
-    #                       --recursive --from-to LocalBlob
+    vrt-spectrum-two-light-medium-ltr:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-spectrum-two-light-medium-ltr
+                  cache_suffix: spectrum-two-light-medium-ltr
 
-    #                   echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/"
-    #               when: always
-    #         - run:
-    #               name: Update golden images cache
-    #               command: |
-    #                   rm -rf test/visual/screenshots-baseline
-    #                   cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-    #               when: always
-    #         - save_cache:
-    #               name: Save golden images cache
-    #               paths:
-    #                   - test/visual/screenshots-baseline
-    #               key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
-    #               when: always
+    vrt-spectrum-two-dark-large-rtl:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-spectrum-two-dark-large-rtl
+                  cache_suffix: spectrum-two-dark-large-rtl
+
+    vrt-hcm:
+        executor: node
+        resource_class: xlarge
+        steps:
+            - setup-project
+            - run-vrt:
+                  vrt_group: vrt-hcm
+                  cache_suffix: hcm
 
     beta-docs:
         executor: node
@@ -354,39 +347,42 @@ workflows:
             - test-webkit:
                   requires: [lint]
 
-            # Visual regression tests (only for non-forked PRs)
-            # Each system gets exactly 2 tests: medium+light+ltr and large+dark+rtl
-            - visual-regression:
-                  name: vrt-<< matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
-                  matrix:
-                      parameters:
-                          system: [spectrum, express, spectrum-two]
-                          color: [light, dark]
-                          scale: [medium, large]
-                          dir: [ltr, rtl]
-                      exclude:
-                          # Keep only: medium+light+ltr and large+dark+rtl
-                          - color: light
-                            scale: large
-                          - color: dark
-                            scale: medium
-                          - color: light
-                            scale: medium
-                            dir: rtl
-                          - color: dark
-                            scale: large
-                            dir: ltr
+            # VRT jobs that match the actual vrtGroups
+            - vrt-spectrum-light-medium-ltr:
                   requires: [test-chromium, test-firefox, test-webkit]
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
-
-            # # HCM visual tests (separate job for simplicity)
-            # - hcm-visual:
-            #       requires: [test-chromium, test-firefox, test-webkit]
-            #       filters:
-            #           branches:
-            #               ignore: /pull\/[0-9]+/
+            - vrt-spectrum-dark-large-rtl:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - vrt-express-light-medium-ltr:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - vrt-express-dark-large-rtl:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - vrt-spectrum-two-light-medium-ltr:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - vrt-spectrum-two-dark-large-rtl:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - vrt-hcm:
+                  requires: [test-chromium, test-firefox, test-webkit]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
 
             # Beta documentation (main branch only)
             - beta-docs:

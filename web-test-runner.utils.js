@@ -157,81 +157,44 @@ const vrtHTML =
         </body>
     </html>`;
 
-// Simplified VRT groups - only the ones we actually use
+// Replace the entire VRT group generation with this simplified approach
 const targetVRTCombinations = [
-    {
-        system: 'spectrum',
-        color: 'light',
-        scale: 'medium',
-        dir: 'ltr',
-        hcm: false,
-    },
-    {
-        system: 'spectrum',
-        color: 'dark',
-        scale: 'large',
-        dir: 'rtl',
-        hcm: false,
-    },
-    {
-        system: 'express',
-        color: 'light',
-        scale: 'medium',
-        dir: 'ltr',
-        hcm: false,
-    },
-    {
-        system: 'express',
-        color: 'dark',
-        scale: 'large',
-        dir: 'rtl',
-        hcm: false,
-    },
-    {
-        system: 'spectrum-two',
-        color: 'light',
-        scale: 'medium',
-        dir: 'ltr',
-        hcm: false,
-    },
-    {
-        system: 'spectrum-two',
-        color: 'dark',
-        scale: 'large',
-        dir: 'rtl',
-        hcm: false,
-    },
-    {
-        system: 'spectrum',
-        color: 'dark',
-        scale: 'medium',
-        dir: 'ltr',
-        hcm: true,
-    },
-    {
-        system: 'spectrum-two',
-        color: 'dark',
-        scale: 'large',
-        dir: 'rtl',
-        hcm: true,
-    },
+    { system: 'spectrum', color: 'light', scale: 'medium', dir: 'ltr' },
+    { system: 'spectrum', color: 'dark', scale: 'large', dir: 'rtl' },
+    { system: 'express', color: 'light', scale: 'medium', dir: 'ltr' },
+    { system: 'express', color: 'dark', scale: 'large', dir: 'rtl' },
+    { system: 'spectrum-two', color: 'light', scale: 'medium', dir: 'ltr' },
+    { system: 'spectrum-two', color: 'dark', scale: 'large', dir: 'rtl' },
 ];
 
 export const vrtGroups = [
-    // Only the 6 combinations we need
-    ...targetVRTCombinations.map(({ system, color, scale, dir, hcm }) => ({
-        name: `${hcm ? 'hcm-' : ''}${system}-${color}-${scale}-${dir}`,
+    // Generate the 6 specific VRT combinations we need
+    ...targetVRTCombinations.map(({ system, color, scale, dir }) => ({
+        name: `vrt-${system}-${color}-${scale}-${dir}`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
             systemVariant: system,
             color,
             scale,
             dir,
-            hcm,
             reduceMotion: true,
         }),
         browsers: [chromium],
     })),
+    // HCM group
+    {
+        name: 'vrt-hcm',
+        files: '(packages|tools)/*/test/*.test-vrt.js',
+        testRunnerHtml: vrtHTML({
+            systemVariant: 'spectrum',
+            color: 'dark',
+            scale: 'medium',
+            dir: 'ltr',
+            hcm: true,
+            reduceMotion: true,
+        }),
+        browsers: [chromium],
+    },
 ];
 
 // Packages that should be skipped from testing
