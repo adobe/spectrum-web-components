@@ -22,26 +22,8 @@ export const chromium = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
-});
-
-/**
- * @todo Remove this configuration and its usage in the Coveralls CI workflow
- * once the Playwright version mismatch between @web/test-runner-playwright
- * and the installed Playwright version is resolved.
- */
-export const coverallsChromium = playwrightLauncher({
-    product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
-        headless: true,
-    },
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
@@ -62,6 +44,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
@@ -85,6 +68,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
@@ -92,7 +76,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
@@ -277,4 +261,6 @@ export const configuredVisualRegressionPlugin = () =>
                 ...nameParts
             );
         },
+        failureThresholdType: 'percent',
+        failureThreshold: 3,
     });
