@@ -141,7 +141,7 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 
 ```html
 <sp-field-label for="color-none" autocomplete="none">Color</sp-field-label>
-<sp-combobox id="color-none" disabled>
+<sp-combobox id="color-none">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -156,7 +156,7 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-field-label for="color-list" autocomplete="list">Color</sp-field-label>
-<sp-combobox id="color-list" disabled>
+<sp-combobox id="color-list">
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
