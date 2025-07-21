@@ -70,6 +70,19 @@ export default {
         exportConditions: ['browser', 'development'],
     },
 
+    // Ensure proper test isolation
+    testFramework: {
+        config: {
+            retries: 2,
+            // Add timeout to allow cleanup
+            timeout: 10000,
+        },
+    },
+
+    // Add test isolation
+    testsFinishTimeout: 60000,
+
+    // Ensure each test starts fresh
     preserveSymlinks: true,
 
     reporters: [
@@ -86,12 +99,6 @@ export default {
             ctx.set('Cache-Control', 'public, max-age=604800, immutable');
         },
     ],
-
-    testFramework: {
-        config: {
-            retries: 2,
-        },
-    },
 
     // Use centralized log filtering
     filterBrowserLogs,

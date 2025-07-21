@@ -14,18 +14,24 @@ interface CustomElementConstructor {
     new (...params: unknown[]): HTMLElement;
 }
 
-export function defineElement(
+export const defineElement = (
     name: string,
     constructor: CustomElementConstructor
-): void {
-    if (window.__swc && window.__swc.DEBUG) {
-        if (customElements.get(name)) {
+): void => {
+    // Check if element is already defined
+    if (customElements.get(name)) {
+        // Show debug warning using existing SWC pattern
+        if (window.__swc && window.__swc.DEBUG) {
             window.__swc.warn(
                 undefined,
                 `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
                 'https://opensource.adobe.com/spectrum-web-components/registry-conflicts'
             );
         }
+        // Skip redefinition to prevent errors
+        return;
     }
+
+    // Element not defined yet, safe to define
     customElements.define(name, constructor);
-}
+};
