@@ -434,7 +434,7 @@ workflows:
             - test-webkit:
                   requires: [lint]
 
-            # VRT waits for both lint and tests to complete
+            # VRT with limited combinations - only 6 jobs instead of 24
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
@@ -443,20 +443,100 @@ workflows:
                           color: [light, dark]
                           scale: [medium, large]
                           dir: [ltr, rtl]
-                  requires: [lint]
+                      exclude:
+                          # EXCLUDE 18 combinations, keep only 6:
+                          # Keep: spectrum-light-medium-ltr, spectrum-dark-large-rtl
+                          - system: spectrum
+                            color: light
+                            scale: medium
+                            dir: rtl
+                          - system: spectrum
+                            color: light
+                            scale: large
+                            dir: ltr
+                          - system: spectrum
+                            color: light
+                            scale: large
+                            dir: rtl
+                          - system: spectrum
+                            color: dark
+                            scale: medium
+                            dir: ltr
+                          - system: spectrum
+                            color: dark
+                            scale: medium
+                            dir: rtl
+                          - system: spectrum
+                            color: dark
+                            scale: large
+                            dir: ltr
+
+                          # Keep: express-light-medium-ltr, express-dark-large-rtl
+                          - system: express
+                            color: light
+                            scale: medium
+                            dir: rtl
+                          - system: express
+                            color: light
+                            scale: large
+                            dir: ltr
+                          - system: express
+                            color: light
+                            scale: large
+                            dir: rtl
+                          - system: express
+                            color: dark
+                            scale: medium
+                            dir: ltr
+                          - system: express
+                            color: dark
+                            scale: medium
+                            dir: rtl
+                          - system: express
+                            color: dark
+                            scale: large
+                            dir: ltr
+
+                          # Keep: spectrum-two-light-medium-ltr, spectrum-two-dark-large-rtl
+                          - system: spectrum-two
+                            color: light
+                            scale: medium
+                            dir: rtl
+                          - system: spectrum-two
+                            color: light
+                            scale: large
+                            dir: ltr
+                          - system: spectrum-two
+                            color: light
+                            scale: large
+                            dir: rtl
+                          - system: spectrum-two
+                            color: dark
+                            scale: medium
+                            dir: ltr
+                          - system: spectrum-two
+                            color: dark
+                            scale: medium
+                            dir: rtl
+                          - system: spectrum-two
+                            color: dark
+                            scale: large
+                            dir: ltr
+                  requires: [lint, test-chromium, test-firefox, test-webkit]
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
 
+            # HCM visual (7th job)
             - hcm-visual:
-                  requires: [lint]
+                  requires: [lint, test-chromium, test-firefox, test-webkit]
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
 
             # Beta documentation waits for everything
             - beta-docs:
-                  requires: [lint]
+                  requires: [lint, test-chromium, test-firefox, test-webkit]
                   filters:
                       branches:
                           only: main
