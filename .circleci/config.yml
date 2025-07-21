@@ -421,14 +421,20 @@ jobs:
 workflows:
     build-and-test:
         jobs:
-            # Keep parallel execution improvement (remove lint dependency)
+            # Lint runs first
             - lint
-            - test-chromium
-            - test-chromium-memory
-            - test-firefox
-            - test-webkit
 
-            # Revert to original VRT matrix structure
+            # All tests wait for lint to complete
+            - test-chromium:
+                  requires: [lint]
+            - test-chromium-memory:
+                  requires: [lint]
+            - test-firefox:
+                  requires: [lint]
+            - test-webkit:
+                  requires: [lint]
+
+            # VRT waits for both lint and tests to complete
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
@@ -437,21 +443,20 @@ workflows:
                           color: [light, dark]
                           scale: [medium, large]
                           dir: [ltr, rtl]
-                  requires: [test-chromium, test-firefox, test-webkit]
+                  requires: [lint]
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
 
-            # Keep original HCM job
             - hcm-visual:
-                  requires: [test-chromium, test-firefox, test-webkit]
+                  requires: [lint]
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
 
-            # Beta documentation (main branch only)
+            # Beta documentation waits for everything
             - beta-docs:
-                  requires: [test-chromium, test-firefox, test-webkit]
+                  requires: [lint]
                   filters:
                       branches:
                           only: main
