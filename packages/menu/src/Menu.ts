@@ -72,6 +72,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
+    // Add touch tracking properties for iPad scroll handling
+    private touchStartY = 0;
+    private touchStartTime = 0;
+    private isScrolling = false;
+    private scrollThreshold = 10; // pixels
+    private scrollTimeThreshold = 300; // milliseconds
+
     /**
      * label of the menu
      */
@@ -400,6 +407,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
+
+        // Add touch event listeners for iPad scroll detection
+        this.addEventListener('touchstart', this.handleTouchStart, {
+            passive: true,
+        });
+        this.addEventListener('touchmove', this.handleTouchMove, {
+            passive: true,
+        });
+        this.addEventListener('touchend', this.handleTouchEnd, {
+            passive: true,
+        });
     }
 
     /**
@@ -443,6 +461,38 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    // Add touch event handlers for iPad scroll detection
+    private handleTouchStart(event: TouchEvent): void {
+        if (event.touches.length === 1) {
+            this.touchStartY = event.touches[0].clientY;
+            this.touchStartTime = Date.now();
+            this.isScrolling = false;
+        }
+    }
+
+    private handleTouchMove(event: TouchEvent): void {
+        if (event.touches.length === 1) {
+            const currentY = event.touches[0].clientY;
+            const deltaY = Math.abs(currentY - this.touchStartY);
+            const deltaTime = Date.now() - this.touchStartTime;
+
+            // If we've moved enough vertically and it's been a short time, we're scrolling
+            if (
+                deltaY > this.scrollThreshold &&
+                deltaTime < this.scrollTimeThreshold
+            ) {
+                this.isScrolling = true;
+            }
+        }
+    }
+
+    private handleTouchEnd(): void {
+        // Reset scrolling state after a short delay
+        setTimeout(() => {
+            this.isScrolling = false;
+        }, 100);
+    }
+
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
@@ -475,6 +525,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
+            return;
+        }
+
+        // Prevent selection if we're currently scrolling (iPad fix)
+        if (this.isScrolling) {
             return;
         }
 
@@ -925,6 +980,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     public override disconnectedCallback(): void {
+        // Clean up touch event listeners to prevent memory leaks
+        this.removeEventListener(
+            'touchstart',
+            this.handleTouchStart.bind(this)
+        );
+        this.removeEventListener('touchmove', this.handleTouchMove.bind(this));
+        this.removeEventListener('touchend', this.handleTouchEnd.bind(this));
+
         this.cachedChildItems = undefined;
         this.selectedItems = [];
         this.selectedItemsMap.clear();
