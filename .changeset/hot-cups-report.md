@@ -1,5 +1,4 @@
 ---
-'@spectrum-web-components/button': minor
 '@spectrum-web-components/clear-button': minor
 '@spectrum-web-components/styles': patch
 ---
