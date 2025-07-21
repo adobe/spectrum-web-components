@@ -36,7 +36,12 @@ commands:
                       tar -xf azcopy.tar.gz --strip-components=1
                       chmod +x azcopy
                       echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
+                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
                       source $BASH_ENV
+                      azcopy --version
 
     setup-project:
         description: 'Setup project dependencies and build'
@@ -66,7 +71,48 @@ commands:
             - save_cache:
                   paths:
                       - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                  key: v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+
+    # Simplified golden images cache strategy
+    restore-golden-images:
+        description: 'Restore golden images baseline'
+        parameters:
+            regression_system: { type: string }
+            regression_color: { type: string }
+            regression_scale: { type: string }
+            regression_dir: { type: string }
+        steps:
+            - restore_cache:
+                  name: Restore golden images
+                  keys:
+                      # Try exact match first
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      # Then try without system variant (more flexible)
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      # Then try main branch
+                      - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      # Finally try main branch without system
+                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+
+    save-golden-images:
+        description: 'Save golden images baseline'
+        parameters:
+            regression_system: { type: string }
+            regression_color: { type: string }
+            regression_scale: { type: string }
+            regression_dir: { type: string }
+        steps:
+            - save_cache:
+                  when: always
+                  name: Save golden images for this commit
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+            - save_cache:
+                  name: Save golden images for this branch
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
     run-tests:
         description: 'Run tests with CircleCI test splitting'
@@ -87,9 +133,17 @@ commands:
                       # Get test files using proper space-separated patterns
                       TEST_FILES=$(circleci tests glob << parameters.test_patterns >>)
 
-                      # Apply exclusions if specified
-                      if [ -n "<< parameters.exclude_pattern >>" ]; then
-                          TEST_FILES=$(echo "$TEST_FILES" | grep -v -E "<< parameters.exclude_pattern >>")
+                      # Apply exclusions if specified and not empty
+                      EXCLUDE_PATTERN="<< parameters.exclude_pattern >>"
+                      if [ -n "$EXCLUDE_PATTERN" ] && [ "$EXCLUDE_PATTERN" != "" ]; then
+                          echo "Applying exclude pattern: $EXCLUDE_PATTERN"
+                          TEST_FILES=$(echo "$TEST_FILES" | grep -v -E "$EXCLUDE_PATTERN")
+                      fi
+
+                      # Check if we have any test files left
+                      if [ -z "$TEST_FILES" ]; then
+                          echo "No test files found after filtering"
+                          exit 1
                       fi
 
                       # Debug output
@@ -107,83 +161,129 @@ commands:
                   path: /root/project/results/
                   destination: test-results
 
-    run-vrt:
-        description: 'Run visual regression tests for a specific VRT group'
+    # RESTORE ORIGINAL run-regressions command
+    run-regressions:
         parameters:
-            vrt_group:
+            regression_system:
                 type: string
-            cache_suffix:
+            regression_color:
                 type: string
-                default: ''
+            regression_scale:
+                type: string
+            regression_dir:
+                type: string
         steps:
             - restore_cache:
-                  name: Restore golden images
+                  name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.cache_suffix >>-
-                      - v2-golden-images-main-<< parameters.cache_suffix >>-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
-                  name: Run VRT for << parameters.vrt_group >>
+                  when: always
+                  name: VRT Run
                   command: |
-                      mkdir -p /root/project/results
-                      echo "Running VRT group: << parameters.vrt_group >>"
-                      yarn test:ci --config web-test-runner.config.vrt.js --group << parameters.vrt_group >>
+                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             - store_test_results:
                   path: /root/project/results/
             - run:
-                  name: Validate image count
-                  command: |
-                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo "Baseline images: $(cat count_start.txt)"
-                      echo "Generated images: $(cat count_end.txt)"
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo "✅ Image count matches"
-                      else 
-                          echo "❌ Image count mismatch"
-                          exit 1
-                      fi
                   when: on_success
+                  name: Count current images
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             - run:
-                  name: Create VRT review site
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+            - run:
+                  when: always
+                  name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="<< parameters.vrt_group >>"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
-                  when: always
             - install-azcopy
             - run:
-                  name: Deploy VRT results
+                  when: always
+                  name: Deploy VRT Results to Azure Blob Storage
                   command: |
-                      # Determine deployment path
+                      # Set deployment path based on branch
                       if [ "$CIRCLE_BRANCH" = "main" ]; then
-                          DEPLOY_PATH="main"
+                          PR_HASH="main"
+                          echo "Deploying VRT for main branch to main path"
                       else
-                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-                          DEPLOY_PATH="pr-${PR_NUMBER}"
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                              
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping VRT deployment"
+                                  exit 0
+                              fi
+                          else
+                              echo "⏭️  No PR detected - skipping VRT deployment"
+                              exit 0
+                          fi
+
+                          PR_HASH="pr-${PR_NUMBER}"
                       fi
 
-                      # Use VRT group name as combination identifier
-                      COMBINATION="<< parameters.vrt_group >>"
-                      azcopy copy "test/visual/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/" \
-                          --recursive --from-to LocalBlob
+                      # VRT combination for subdirectory
+                      combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
-                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/"
-                  when: always
+                      # Prepare files for deployment
+                      cp projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
+
+                      # Upload VRT results to Azure Blob Storage
+                      echo "Uploading VRT results to ${PR_HASH}/${combination}/"
+                      azcopy copy "test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/${combination}/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "VRT URL for ${combination}: $VRT_URL"
+
             - run:
-                  name: Update golden images cache
+                  when: always
                   command: |
                       rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-                  when: always
             - save_cache:
-                  name: Save golden images cache
+                  when: always
+                  name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.cache_suffix >>-{{ epoch }}
-                  when: always
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+            - save_cache:
+                  name: Build Golden Images Branch Cache
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     lint:
@@ -192,10 +292,10 @@ jobs:
         steps:
             - setup-project
             - run:
-                  name: Lint code
+                  name: Lint
                   command: yarn lint
             - run:
-                  name: Check for changes
+                  name: Are there changes?
                   command: git diff-files --exit-code
 
     test-chromium:
@@ -242,92 +342,59 @@ jobs:
                   test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
                   exclude_pattern: 'memory\.test\.js'
 
-    # ADD THESE MISSING JOB DEFINITIONS:
-    visual:
+    # RESTORE ORIGINAL beta-docs job
+    beta-docs:
         executor: node
-        resource_class: xlarge
-        parameters:
-            system: { type: string }
-            color: { type: string }
-            scale: { type: string }
-            dir: { type: string }
+        resource_class: medium
         steps:
             - setup-project
-            - restore_cache:
-                  name: Restore golden images
-                  keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
-                      - v2-golden-images-main-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-
             - run:
-                  name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  name: Generate Custom Elements Manifest
+                  command: yarn docs:analyze
             - run:
-                  name: Run visual regression tests
-                  command: |
-                      mkdir -p /root/project/results
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>
-            - store_test_results:
-                  path: /root/project/results/
+                  name: Move CEM to Storybook directory
+                  command: cp projects/documentation/custom-elements.json storybook/
             - run:
-                  name: Validate image count
-                  command: |
-                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo "Baseline images: $(cat count_start.txt)"
-                      echo "Generated images: $(cat count_end.txt)"
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo "✅ Image count matches"
-                      else 
-                          echo "❌ Image count mismatch"
-                          exit 1
-                      fi
-                  when: on_success
+                  name: Build documentation with path prefix
+                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
             - run:
-                  name: Create VRT review site
-                  command: |
-                      branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="<< parameters.system >> << parameters.color >> << parameters.scale >> << parameters.dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
-                  when: always
+                  name: Build documentation
+                  command: yarn docs:build
+            - run:
+                  name: Build Storybook
+                  command: yarn storybook:build
             - install-azcopy
             - run:
-                  name: Deploy VRT results
+                  name: Deploy Beta Documentation to Azure Blob Storage
                   command: |
-                      # Determine deployment path
-                      if [ "$CIRCLE_BRANCH" = "main" ]; then
-                          DEPLOY_PATH="main"
-                      else
-                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-                          DEPLOY_PATH="pr-${PR_NUMBER}"
-                      fi
+                      # Upload documentation to beta path
+                      echo "Uploading documentation to beta/docs/"
+                      azcopy copy "projects/documentation/dist/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
+                        --recursive \
+                        --from-to LocalBlob
 
-                      # Deploy to Azure
-                      COMBINATION="<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>"
-                      azcopy copy "test/visual/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/${COMBINATION}/" \
-                          --recursive --from-to LocalBlob
+                      # Upload Storybook to beta path
+                      echo "Uploading Storybook to beta/docs/storybook/"
+                      azcopy copy "storybook-static/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
+                        --recursive \
+                        --from-to LocalBlob
 
-                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/${COMBINATION}/"
-                  when: always
-            - run:
-                  name: Update golden images cache
-                  command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-                  when: always
-            - save_cache:
-                  name: Save golden images cache
-                  paths:
-                      - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.system >>-<< parameters.color >>-<< parameters.scale >>-<< parameters.dir >>-{{ epoch }}
-                  when: always
+                      # Generate the deployment URLs
+                      DOCS_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/"
+                      STORYBOOK_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/storybook/"
+                      echo "Beta Documentation URL: $DOCS_URL"
+                      echo "Beta Storybook URL: $STORYBOOK_URL"
 
+    # RESTORE ORIGINAL hcm-visual job
     hcm-visual:
         executor: node
         resource_class: xlarge
         steps:
             - setup-project
             - restore_cache:
-                  name: Restore golden images
+                  name: Restore Golden Images Cache
                   keys:
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
@@ -335,96 +402,129 @@ jobs:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
-                  name: Run HCM visual tests
+                  when: always
+                  name: VRT Run
                   command: |
-                      mkdir -p /root/project/results
                       yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             - store_test_results:
                   path: /root/project/results/
             - run:
-                  name: Validate image count
-                  command: |
-                      find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
-                      echo "Baseline images: $(cat count_start.txt)"
-                      echo "Generated images: $(cat count_end.txt)"
-                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then 
-                          echo "✅ Image count matches"
-                      else 
-                          echo "❌ Image count mismatch"
-                          exit 1
-                      fi
                   when: on_success
+                  name: Count current images
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             - run:
-                  name: Create VRT review site
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+            - run:
+                  when: always
+                  name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch="$branch" --commit="<< pipeline.git.revision >>" --system="hcm"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
                       yarn rollup -c test/visual/rollup.config.js
-                  when: always
             - install-azcopy
             - run:
-                  name: Deploy VRT results
+                  when: always
+                  name: Deploy Visual Tests to Azure Blob Storage
                   command: |
-                      # Determine deployment path
+                      # Set deployment path based on branch
                       if [ "$CIRCLE_BRANCH" = "main" ]; then
-                          DEPLOY_PATH="main"
+                          PR_HASH="main"
+                          echo "Deploying HCM VRT for main branch to main path"
                       else
-                          PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///' || echo "$CIRCLE_PR_NUMBER")
-                          DEPLOY_PATH="pr-${PR_NUMBER}"
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
+                              
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping HCM VRT deployment"
+                                  exit 0
+                              fi
+                          else
+                              echo "⏭️  No PR detected - skipping HCM VRT deployment"
+                              exit 0
+                          fi
+
+                          PR_HASH="pr-${PR_NUMBER}"
                       fi
 
-                      # Deploy to Azure
-                      azcopy copy "test/visual/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/${DEPLOY_PATH}/hcm/" \
-                          --recursive --from-to LocalBlob
+                      # Prepare files for deployment
+                      cp projects/documentation/content/favicon.ico test/visual/
 
-                      echo "VRT URL: https://swcpreviews.z13.web.core.windows.net/${DEPLOY_PATH}/hcm/"
-                  when: always
+                      # Upload HCM VRT results to Azure Blob Storage
+                      echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
+                      azcopy copy "test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/hcm/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "HCM Visual Test URL: $VRT_URL"
+
             - run:
-                  name: Update golden images cache
+                  when: always
                   command: |
                       rm -rf test/visual/screenshots-baseline
                       cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
-                  when: always
             - save_cache:
-                  name: Save golden images cache
+                  when: always
+                  name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
-                  when: always
+            - save_cache:
+                  name: Build Golden Images Branch Cache
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
 
-    beta-docs:
+    # RESTORE ORIGINAL visual job using run-regressions
+    visual:
         executor: node
-        resource_class: medium
+        resource_class: xlarge
+        parameters:
+            system:
+                type: string
+            color:
+                type: string
+            scale:
+                type: string
+            dir:
+                type: string
         steps:
             - setup-project
-            - run:
-                  name: Build documentation
-                  command: |
-                      yarn docs:analyze
-                      cp projects/documentation/custom-elements.json storybook/
-                      echo "SWC_DIR=beta/docs" >> $BASH_ENV
-                      yarn docs:build
-                      yarn storybook:build
-            - install-azcopy
-            - run:
-                  name: Deploy beta documentation
-                  command: |
-                      azcopy copy "projects/documentation/dist/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
-                          --recursive --from-to LocalBlob
-
-                      azcopy copy "storybook-static/*" \
-                          "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
-                          --recursive --from-to LocalBlob
+            - run-regressions:
+                  regression_system: << parameters.system >>
+                  regression_color: << parameters.color >>
+                  regression_scale: << parameters.scale >>
+                  regression_dir: << parameters.dir >>
 
 workflows:
-    build-and-test:
+    build:
         jobs:
-            # Lint runs first
             - lint
-
-            # All tests wait for lint to complete
             - test-chromium:
                   requires: [lint]
             - test-chromium-memory:
@@ -433,8 +533,16 @@ workflows:
                   requires: [lint]
             - test-webkit:
                   requires: [lint]
-
-            # VRT with limited combinations - only 6 jobs instead of 24
+            - hcm-visual:
+                  requires: [lint]
+                  filters:
+                      branches:
+                          ignore: /pull\/[0-9]+/
+            - beta-docs:
+                  requires: [lint]
+                  filters:
+                      branches:
+                          only: main
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
@@ -444,8 +552,7 @@ workflows:
                           scale: [medium, large]
                           dir: [ltr, rtl]
                       exclude:
-                          # EXCLUDE 18 combinations, keep only 6:
-                          # Keep: spectrum-light-medium-ltr, spectrum-dark-large-rtl
+                          # Keep only 6 combinations out of 24
                           - system: spectrum
                             color: light
                             scale: medium
@@ -470,8 +577,6 @@ workflows:
                             color: dark
                             scale: large
                             dir: ltr
-
-                          # Keep: express-light-medium-ltr, express-dark-large-rtl
                           - system: express
                             color: light
                             scale: medium
@@ -496,8 +601,6 @@ workflows:
                             color: dark
                             scale: large
                             dir: ltr
-
-                          # Keep: spectrum-two-light-medium-ltr, spectrum-two-dark-large-rtl
                           - system: spectrum-two
                             color: light
                             scale: medium
@@ -526,17 +629,3 @@ workflows:
                   filters:
                       branches:
                           ignore: /pull\/[0-9]+/
-
-            # HCM visual (7th job)
-            - hcm-visual:
-                  requires: [lint]
-                  filters:
-                      branches:
-                          ignore: /pull\/[0-9]+/
-
-            # Beta documentation waits for everything
-            - beta-docs:
-                  requires: [lint]
-                  filters:
-                      branches:
-                          only: main
