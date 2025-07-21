@@ -8,7 +8,6 @@ executors:
     node:
         docker:
             - image: mcr.microsoft.com/playwright:v1.53.1-noble
-        resource_class: xlarge
         environment:
             NODE_ENV: development
             AZCOPY_AUTO_LOGIN_TYPE: SPN
@@ -48,22 +47,24 @@ commands:
                       echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
                       source $BASH_ENV
                       azcopy --version
-    downstream:
+    setup-project:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v4c-dependencies-{{ arch }}-
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-
             - run:
-                  name: Installing Dependencies
+                  name: Installing dependencies
                   command: |
                       corepack enable
                       yarn --immutable
             - run:
-                  name: Build the project
+                  name: Build project
                   command: yarn build
 
             - save_cache:
@@ -74,9 +75,52 @@ commands:
             - save_cache:
                   paths:
                       - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                  key: v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
+
+    run-tests:
+        description: 'Run tests with CircleCI test splitting'
+        parameters:
+            config_file:
+                type: string
+            test_patterns:
+                type: string
+            exclude_pattern:
+                type: string
+                default: ''
+        steps:
+            - run:
+                  name: Run tests
+                  command: |
+                      mkdir -p /root/project/results
+                      # Get test files using proper space-separated patterns
+                      TEST_FILES=$(circleci tests glob << parameters.test_patterns >>)
+                      # Apply exclusions if specified and not empty
+                      EXCLUDE_PATTERN="<< parameters.exclude_pattern >>"
+                      if [ -n "$EXCLUDE_PATTERN" ] && [ "$EXCLUDE_PATTERN" != "" ]; then
+                          echo "Applying exclude pattern: $EXCLUDE_PATTERN"
+                          TEST_FILES=$(echo "$TEST_FILES" | grep -v -E "$EXCLUDE_PATTERN")
+                      fi
+                      # Check if we have any test files left
+                      if [ -z "$TEST_FILES" ]; then
+                          echo "No test files found after filtering"
+                          exit 1
+                      fi
+                      # Debug output
+                      echo "Test files to run:"
+                      echo "$TEST_FILES"
+                      # Run tests with CircleCI splitting
+                      echo "$TEST_FILES" | circleci tests run \
+                          --command="xargs yarn test:start --files --config << parameters.config_file >>" \
+                          --split-by=timings \
+                          --verbose
+            - store_test_results:
+                  path: /root/project/results/
+            - store_artifacts:
+                  path: /root/project/results/
+                  destination: test-results
+
     run-regressions:
         parameters:
             regression_system:
@@ -205,79 +249,72 @@ commands:
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
-    test-chromium:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run unit tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group no-memory-ci
-            - store_test_results:
-                  path: /root/project/results/
-
-    test-chromium-memory:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run memory tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group memory-ci
-            - store_test_results:
-                  path: /root/project/results/
-
-    test-firefox:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group no-memory-ci
-            - store_test_results:
-                  path: /root/project/results/
-
-    test-webkit:
-        executor: node
-        parallelism: 5
-
-        steps:
-            - downstream
-            - run:
-                  name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group no-memory-ci
-            - store_test_results:
-                  path: /root/project/results/
-
     lint:
         executor: node
-
+        resource_class: medium
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Lint
                   command: yarn lint
             - run:
-                  name: Are there changes?
+                  name: Check for changes
                   command: git diff-files --exit-code
+
+    test-chromium:
+        executor: node
+        parallelism: 5
+        resource_class: large
+
+        steps:
+            - setup-project
+            - run-tests:
+                  config_file: web-test-runner.config.ci-chromium.js
+                  test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
+                  exclude_pattern: 'memory\.test\.js'
+
+    test-chromium-memory:
+        executor: node
+        parallelism: 5
+        resource_class: xlarge
+
+        steps:
+            - setup-project
+            - run-tests:
+                  config_file: web-test-runner.config.ci-chromium.js
+                  test_patterns: 'packages/**/*-memory.test.js tools/**/*-memory.test.js'
+                  exclude_pattern: 'color-area|color-wheel|color-slider|color-loupe|color-handle'
+
+    test-firefox:
+        executor: node
+        parallelism: 5
+        resource_class: large
+
+        steps:
+            - setup-project
+            - run-tests:
+                  config_file: web-test-runner.config.ci-firefox.js
+                  test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
+                  exclude_pattern: 'memory\.test\.js'
+
+    test-webkit:
+        executor: node
+        parallelism: 5
+        resource_class: large
+
+        steps:
+            - setup-project
+            - run-tests:
+                  config_file: web-test-runner.config.ci-webkit.js
+                  test_patterns: 'packages/*/test/*.test.js tools/*/test/*.test.js'
+                  exclude_pattern: 'memory\.test\.js'
 
     beta-docs:
         executor: node
+        resource_class: medium
 
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Generate Custom Elements Manifest
                   command: yarn docs:analyze
@@ -319,9 +356,10 @@ jobs:
 
     hcm-visual:
         executor: node
+        resource_class: xlarge
 
         steps:
-            - downstream
+            - setup-project
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
@@ -435,6 +473,7 @@ jobs:
 
     visual:
         executor: node
+        resource_class: xlarge
         parameters:
             system:
                 type: string
@@ -445,7 +484,7 @@ jobs:
             dir:
                 type: string
         steps:
-            - downstream
+            - setup-project
             - run-regressions:
                   regression_system: << parameters.system >>
                   regression_color: << parameters.color >>
@@ -455,11 +494,17 @@ jobs:
 workflows:
     build:
         jobs:
-            - test-chromium
-            - test-chromium-memory
-            - test-firefox
-            - test-webkit
+            - lint
+            - test-chromium:
+                  requires: [lint]
+            - test-chromium-memory:
+                  requires: [lint]
+            - test-firefox:
+                  requires: [lint]
+            - test-webkit:
+                  requires: [lint]
             - hcm-visual:
+                  requires: [lint]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -470,6 +515,7 @@ workflows:
                           # Beta docs are only published from main
                           only: main
             - visual:
+                  requires: [lint]
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
@@ -482,6 +528,7 @@ workflows:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
             - visual:
+                  requires: [lint]
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:

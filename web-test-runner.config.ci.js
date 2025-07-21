@@ -10,27 +10,96 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.js';
+import rollupCommonjs from '@rollup/plugin-commonjs';
+import rollupJson from '@rollup/plugin-json';
+import { fromRollup } from '@web/dev-server-rollup';
 import { defaultReporter } from '@web/test-runner';
+import {
+    a11ySnapshotPlugin,
+    sendKeysPlugin,
+    setViewportPlugin,
+} from '@web/test-runner-commands/plugins';
 import { junitReporter } from '@web/test-runner-junit-reporter';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
+import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
+import { filterBrowserLogs } from './web-test-runner.utils.js';
 
-standard.reporters = [
-    // Use the default reporter for console logging in the test job.
-    defaultReporter(),
-    // Use junit reporter for aggregate test success/timing results across jobs.
-    junitReporter({
-        outputPath: './results/test-results.xml', // default `'./test-results.xml'`
-        reportLogs: true, // default `false`
-    }),
-];
+const commonjs = fromRollup(rollupCommonjs);
+const json = fromRollup(rollupJson);
 
-standard.middleware = standard.middleware || [];
-standard.middleware.push(async (ctx, next) => {
-    await next();
-    // permanently cache ALL of the things!
-    ctx.set('Cache-Control', 'public, max-age=604800, immutable');
-});
+export default {
+    // Remove hardcoded files and groups - respect --files argument
+    files: [],
 
-standard.testFramework.config.retries = 2;
+    // Include ALL the plugins from main config
+    plugins: [
+        commonjs({
+            requireReturnsDefault: 'preferred',
+            include: ['**/node_modules/@formatjs/intl-numberformat/**/*.js'],
+        }),
+        sendKeysPlugin(),
+        sendMousePlugin(),
+        grantPermissionsPlugin(),
+        a11ySnapshotPlugin(), // ← Add this
+        json({}),
+        {
+            name: 'plugin-js-buffer-to-string',
+            transform(context) {
+                if (
+                    context.response.is('js') &&
+                    Buffer.isBuffer(context.body)
+                ) {
+                    context.body = context.body.toString();
+                }
+            },
+        },
+        {
+            name: 'measureUserAgentSpecificMemory-plugin',
+            transform(context) {
+                context.set('Cross-Origin-Opener-Policy', 'same-origin');
+                context.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            },
+        },
+        setViewportPlugin(), // ← Add this
+    ],
 
-export default standard;
+    // MIME types
+    mimeTypes: { '**/*.json': 'js' },
+
+    nodeResolve: {
+        exportConditions: ['browser', 'development'],
+    },
+
+    // Ensure proper test isolation
+    testFramework: {
+        config: {
+            retries: 2,
+            // Add timeout to allow cleanup
+            timeout: 10000,
+        },
+    },
+
+    // Add test isolation
+    testsFinishTimeout: 60000,
+
+    // Ensure each test starts fresh
+    preserveSymlinks: true,
+
+    reporters: [
+        defaultReporter(),
+        junitReporter({
+            outputPath: './results/test-results.xml',
+            reportLogs: true,
+        }),
+    ],
+
+    middleware: [
+        async (ctx, next) => {
+            await next();
+            ctx.set('Cache-Control', 'public, max-age=604800, immutable');
+        },
+    ],
+
+    // Use centralized log filtering
+    filterBrowserLogs,
+};
