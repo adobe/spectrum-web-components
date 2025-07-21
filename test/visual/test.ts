@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -137,7 +138,6 @@ async function ensureComponentStable(root: Element): Promise<void> {
  *
  * @param tests - Collection of stories to test
  * @param name - Name of the component being tested
- * @param systemVariant - Design system variant (spectrum, express, spectrum-two)
  * @param color - Theme color (lightest, light, dark, darkest)
  * @param scale - Component scale (medium, large)
  * @param dir - Text direction (ltr, rtl)
@@ -145,7 +145,6 @@ async function ensureComponentStable(root: Element): Promise<void> {
 export const test = (
     tests: TestsType,
     name: string,
-    systemVariant: string,
     color: Color,
     scale: Scale,
     dir: 'ltr' | 'rtl'
@@ -153,17 +152,6 @@ export const test = (
     Object.keys(tests).map((story) => {
         if (story !== 'default' && !tests[story].swc_vrt?.skip) {
             it(story, async () => {
-                // Apply system variant before creating fixture
-                const rootElement = document.documentElement;
-                // Remove any existing system variant classes
-                rootElement.classList.remove(
-                    'spectrum',
-                    'express',
-                    'spectrum-two'
-                );
-                // Add the specified system variant class
-                rootElement.classList.add(systemVariant);
-
                 // Create and setup the test fixture
                 let test = await fixture<StoryDecorator>(wrap());
                 await elementUpdated(test);
@@ -215,8 +203,8 @@ export const test = (
                 // Ensure component is fully rendered and stable before screenshot
                 await ensureComponentStable(test);
 
-                // Format the test name with all parameters for unique identification
-                const testName = `${systemVariant} - ${color} - ${scale} - ${dir} - ${name} - ${story}`;
+                // ORIGINAL FORMAT: Format the test name with all parameters for unique identification
+                const testName = `${color} - ${scale} - ${dir} - ${name} - ${story}`;
 
                 // Implementation of retry logic for flaky visual tests
                 const allowedRetries = 4;
@@ -292,27 +280,12 @@ export const test = (
  */
 export const regressVisuals = async (name: string, stories: TestsType) => {
     describe(`${name} Visual Regressions`, () => {
-        const knobs = window.__swc_hack_knobs__;
-
-        // Extract knobs and validate they are proper values (not empty strings)
-        const systemVariant =
-            knobs?.defaultSystemVariant &&
-            knobs.defaultSystemVariant.trim() !== ''
-                ? knobs.defaultSystemVariant
-                : null;
-        const color =
-            knobs?.defaultColor && knobs.defaultColor.trim() !== ''
-                ? (knobs.defaultColor as Color)
-                : null;
-        const scale =
-            knobs?.defaultScale && knobs.defaultScale.trim() !== ''
-                ? (knobs.defaultScale as Scale)
-                : null;
-        const dir =
-            knobs?.defaultDirection && knobs.defaultDirection.trim() !== ''
-                ? (knobs.defaultDirection as 'ltr' | 'rtl')
-                : null;
-        const hcm = knobs?.hcm || false;
+        const {
+            defaultColor: color,
+            defaultScale: scale,
+            defaultDirection: dir,
+            hcm,
+        } = window.__swc_hack_knobs__;
 
         before(async () => {
             // Run any preload functions defined in the stories
@@ -327,19 +300,6 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
                     colorScheme: 'dark',
                 });
             }
-
-            // Apply system variant if specified
-            if (systemVariant) {
-                const rootElement = document.documentElement;
-                // Remove any existing system variant classes
-                rootElement.classList.remove(
-                    'spectrum',
-                    'express',
-                    'spectrum-two'
-                );
-                // Add the specified system variant class
-                rootElement.classList.add(systemVariant);
-            }
         });
 
         after(async () => {
@@ -349,16 +309,6 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
                     forcedColors: 'none',
                     colorScheme: 'no-preference',
                 });
-            }
-
-            // Clean up system variant classes
-            if (systemVariant) {
-                const rootElement = document.documentElement;
-                rootElement.classList.remove(
-                    'spectrum',
-                    'express',
-                    'spectrum-two'
-                );
             }
         });
 
@@ -370,30 +320,20 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
             overlays.map((overlay) => overlay.remove());
         });
 
-        // Check if valid knobs are provided - test only that specific combination
-        if (systemVariant && color && scale && dir) {
-            test(stories, name, systemVariant, color, scale, dir);
+        // If specific theme parameters provided, only test that combination
+        if (color && scale && dir) {
+            test(stories, name, color, scale, dir);
         } else {
-            // Fallback: test all combinations (this should rarely happen now)
-            const systemVariants = ['spectrum', 'express', 'spectrum-two'];
+            // Otherwise test all combinations
             const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
             const scales: Scale[] = ['medium', 'large'];
             const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
 
-            // Generate tests for every combination of system variant, color, scale and direction
-            systemVariants.forEach((testSystemVariant) => {
-                colors.forEach((testColor: Color) => {
-                    scales.forEach((testScale: Scale) => {
-                        directions.forEach((testDir) => {
-                            test(
-                                stories,
-                                name,
-                                testSystemVariant,
-                                testColor,
-                                testScale,
-                                testDir
-                            );
-                        });
+            // Generate tests for every combination of color, scale and direction
+            colors.forEach((color: Color) => {
+                scales.forEach((scale: Scale) => {
+                    directions.forEach((dir) => {
+                        test(stories, name, color, scale, dir);
                     });
                 });
             });

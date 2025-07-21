@@ -27,7 +27,7 @@ import {
     configuredVisualRegressionPlugin,
     filterBrowserLogs,
     firefox,
-    packageGroups,
+    packages,
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
@@ -125,8 +125,24 @@ export default {
                 '!{packages,tools}/**/*-memory.test.js',
             ],
         },
-        ...packageGroups,
         ...vrtGroups,
+        // Add back the original per-package groups that were inline
+        ...packages.reduce((acc, pkg) => {
+            const skipPkgs = [
+                'bundle',
+                'icons-ui',
+                'icons-workflow',
+                'modal',
+                'styles',
+            ];
+            if (!skipPkgs.includes(pkg)) {
+                acc.push({
+                    name: pkg,
+                    files: `{packages,tools}/${pkg}/test/*.test.js`,
+                });
+            }
+            return acc;
+        }, []),
         {
             name: 'overlay-api',
             files: [

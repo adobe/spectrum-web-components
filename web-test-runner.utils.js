@@ -121,7 +121,14 @@ export const getPackages = () => {
     return _packages;
 };
 
-export const packages = getPackages();
+const tools = fs
+    .readdirSync('tools')
+    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
+
+export const packages = fs
+    .readdirSync('packages')
+    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
+    .concat(tools);
 
 const vrtHTML =
     ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
@@ -157,31 +164,64 @@ const vrtHTML =
         </body>
     </html>`;
 
-// Replace the entire VRT group generation with this simplified approach
-const targetVRTCombinations = [
-    { system: 'spectrum', color: 'light', scale: 'medium', dir: 'ltr' },
-    { system: 'spectrum', color: 'dark', scale: 'large', dir: 'rtl' },
-    { system: 'express', color: 'light', scale: 'medium', dir: 'ltr' },
-    { system: 'express', color: 'dark', scale: 'large', dir: 'rtl' },
-    { system: 'spectrum-two', color: 'light', scale: 'medium', dir: 'ltr' },
-    { system: 'spectrum-two', color: 'dark', scale: 'large', dir: 'rtl' },
-];
+// Keep the original VRT group generation - all 24 combinations
+export let vrtGroups = [];
+const systemVariants = ['spectrum', 'express', 'spectrum-two'];
+const colors = ['light', 'dark'];
+const scales = ['medium', 'large'];
+const directions = ['ltr', 'rtl'];
+systemVariants.forEach((systemVariant) => {
+    colors.forEach((color) => {
+        scales.forEach((scale) => {
+            directions.forEach((dir) => {
+                const reduceMotion = true;
+                const testHTML = vrtHTML({
+                    systemVariant,
+                    color,
+                    scale,
+                    dir,
+                    reduceMotion,
+                });
+                vrtGroups.push({
+                    name: `vrt-${systemVariant}-${color}-${scale}-${dir}`,
+                    files: '(packages|tools)/*/test/*.test-vrt.js',
+                    testRunnerHtml: testHTML,
+                    browsers: [chromium],
+                });
+            });
+        });
+    });
+});
 
-export const vrtGroups = [
-    // Generate the 6 specific VRT combinations we need
-    ...targetVRTCombinations.map(({ system, color, scale, dir }) => ({
-        name: `vrt-${system}-${color}-${scale}-${dir}`,
-        files: '(packages|tools)/*/test/*.test-vrt.js',
-        testRunnerHtml: vrtHTML({
-            systemVariant: system,
-            color,
-            scale,
-            dir,
-            reduceMotion: true,
-        }),
-        browsers: [chromium],
-    })),
-    // HCM group
+// Add the package-specific VRT groups
+vrtGroups = [
+    ...vrtGroups,
+    ...packages.reduce((acc, pkg) => {
+        const skipPkgs = ['bundle', 'modal'];
+        if (!skipPkgs.includes(pkg)) {
+            acc.push({
+                name: `vrt-${pkg}`,
+                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                testRunnerHtml: vrtHTML({
+                    reduceMotion: true,
+                }),
+                browsers: [chromium],
+            });
+            acc.push({
+                name: `vrt-${pkg}-single`,
+                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                testRunnerHtml: vrtHTML({
+                    systemVariant: 'spectrum',
+                    color: 'light',
+                    scale: 'medium',
+                    dir: 'ltr',
+                    reduceMotion: true,
+                }),
+                browsers: [chromium],
+            });
+        }
+        return acc;
+    }, []),
     {
         name: 'vrt-hcm',
         files: '(packages|tools)/*/test/*.test-vrt.js',
@@ -196,37 +236,6 @@ export const vrtGroups = [
         browsers: [chromium],
     },
 ];
-
-// Packages that should be skipped from testing
-const skipPkgs = ['bundle', 'icons-ui', 'icons-workflow', 'modal', 'styles'];
-
-// Create per-package groups for easier testing
-export const packageGroups = getPackages()
-    .filter((pkg) => !skipPkgs.includes(pkg))
-    .map((pkg) => ({
-        name: pkg, // Use same naming as main config
-        files: `{packages,tools}/${pkg}/test/*.test.js`, // Use same pattern as main config
-    }));
-
-export const vrtPackageGroups = getPackages()
-    .filter((pkg) => !['bundle', 'modal'].includes(pkg)) // VRT has different skip list
-    .map((pkg) => ({
-        name: `vrt-${pkg}`,
-        files: `{packages,tools}/${pkg}/test/*.test-vrt.js`,
-        testRunnerHtml: vrtHTML({
-            systemVariant: 'spectrum',
-            color: 'light',
-            scale: 'medium',
-            dir: 'ltr',
-            reduceMotion: true,
-        }),
-        browsers: [chromium],
-    }));
-
-export const allGroups = [...packageGroups, ...vrtGroups, ...vrtPackageGroups];
-
-export const testGroups = packageGroups;
-export const visualGroups = [...vrtGroups, ...vrtPackageGroups];
 
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
@@ -262,31 +271,21 @@ export const configuredVisualRegressionPlugin = () =>
         failureThreshold: 3,
     });
 
-// Configurable log filters - add more strings here to filter additional messages
-const logFilters = [
-    'Could not resolve module specifier',
-    'in dev mode',
-    // Add more filter strings here as needed
-];
-
-// Filter noisy browser logs
 export const filterBrowserLogs = (log) => {
-    const { args } = log;
+    const { type, args } = log;
 
-    // Check if any argument contains a filtered string
-    const shouldFilter = args.some((arg) => {
-        if (typeof arg !== 'string') {
-            return false;
-        }
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('in dev mode'))
+        )
+    ) {
+        return false;
+    }
 
-        // Option 1: Simple approach - check against all filters
-        return logFilters.some((filter) => arg.includes(filter));
-
-        // Option 2: Type-specific filtering (uncomment to use)
-        // const typeSpecificFilters = logTypeFilters[type] || [];
-        // return typeSpecificFilters.some(filter => arg.includes(filter));
-    });
-
-    // Return false to filter out (hide) the log
-    return !shouldFilter;
+    return true;
 };
