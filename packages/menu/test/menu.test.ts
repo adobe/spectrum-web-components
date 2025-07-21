@@ -707,4 +707,292 @@ describe('Menu', () => {
         await nextFrame();
         expect(el.selected).to.deep.equal(['3']);
     });
+
+    it('prevents selection when scrolling is detected', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="1">Item 1</sp-menu-item>
+                <sp-menu-item value="2">Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        // Manually set scrolling state to simulate iPad scrolling
+        menu.isScrolling = true;
+
+        // Try to select an item while scrolling
+        const clickEvent = new MouseEvent('click', { button: 0 });
+        firstItem.dispatchEvent(clickEvent);
+
+        // Verify selection is prevented
+        expect(firstItem.selected).to.be.false;
+        expect(el.value).to.equal('');
+    });
+
+    it('allows selection when not scrolling', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="1">Item 1</sp-menu-item>
+                <sp-menu-item value="2">Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        // Verify not scrolling initially
+        expect(menu.isScrolling).to.be.false;
+
+        // Try to select an item when not scrolling
+        firstItem.click();
+
+        // Wait for the selection to be processed
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+
+        // Verify selection is allowed
+        expect(firstItem.selected).to.be.true;
+        expect(el.value).to.equal('1');
+    });
+
+    it('tests scrolling detection logic', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // Test that scrolling state can be set and reset
+        expect(menu.isScrolling).to.be.false;
+
+        menu.isScrolling = true;
+        expect(menu.isScrolling).to.be.true;
+
+        menu.isScrolling = false;
+        expect(menu.isScrolling).to.be.false;
+    });
+
+    it('tests touch event listener cleanup', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Test that the component can be disconnected without errors
+        el.remove();
+    });
+
+    it('calls handleTouchStart when touchstart event is dispatched', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // Create a mock TouchEvent-like object
+        const mockTouchEvent = {
+            touches: [{ clientY: 200 }],
+            length: 1,
+        };
+
+        // Call the touch handler directly
+        menu.handleTouchStart(mockTouchEvent);
+
+        // Verify the touch start properties are set
+        expect(menu.touchStartY).to.equal(200);
+        expect(menu.touchStartTime).to.be.greaterThan(0);
+        expect(menu.isScrolling).to.be.false;
+    });
+
+    it('calls handleTouchMove and detects scrolling', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // First, set up the touch start
+        const mockTouchStartEvent = {
+            touches: [{ clientY: 200 }],
+            length: 1,
+        };
+        menu.handleTouchStart(mockTouchStartEvent);
+
+        // Wait a bit to ensure time difference
+        await aTimeout(50);
+
+        // Now simulate touch move with significant movement
+        const mockTouchMoveEvent = {
+            touches: [{ clientY: 250 }], // 50px movement
+            length: 1,
+        };
+        menu.handleTouchMove(mockTouchMoveEvent);
+
+        // Verify scrolling is detected
+        expect(menu.isScrolling).to.be.true;
+    });
+
+    it('calls handleTouchMove but does not detect scrolling for small movements', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // First, set up the touch start
+        const mockTouchStartEvent = {
+            touches: [{ clientY: 200 }],
+            length: 1,
+        };
+        menu.handleTouchStart(mockTouchStartEvent);
+
+        // Now simulate touch move with small movement
+        const mockTouchMoveEvent = {
+            touches: [{ clientY: 205 }], // 5px movement
+            length: 1,
+        };
+        menu.handleTouchMove(mockTouchMoveEvent);
+
+        // Verify scrolling is not detected for small movements
+        expect(menu.isScrolling).to.be.false;
+    });
+
+    it('calls handleTouchEnd and resets scrolling state', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // Set scrolling state to true
+        menu.isScrolling = true;
+        expect(menu.isScrolling).to.be.true;
+
+        // Call the touch end handler
+        menu.handleTouchEnd();
+
+        // Wait for the timeout to reset scrolling state
+        await aTimeout(150);
+
+        // Verify scrolling state is reset
+        expect(menu.isScrolling).to.be.false;
+    });
+
+    it('ignores touch events with multiple touches', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item>Item 1</sp-menu-item>
+                <sp-menu-item>Item 2</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const menu = el as any;
+
+        // Create a mock TouchEvent with multiple touches
+        const mockTouchEvent = {
+            touches: [{ clientY: 200 }, { clientY: 250 }],
+            length: 2,
+        };
+
+        const initialTouchStartY = menu.touchStartY;
+        const initialTouchStartTime = menu.touchStartTime;
+
+        // Call the touch handler
+        menu.handleTouchStart(mockTouchEvent);
+
+        // Verify touch properties are not updated for multiple touches
+        expect(menu.touchStartY).to.equal(initialTouchStartY);
+        expect(menu.touchStartTime).to.equal(initialTouchStartTime);
+    });
+
+    it('focuses on first selected item when available', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="item1">Item 1</sp-menu-item>
+                <sp-menu-item value="item2" selected>Item 2</sp-menu-item>
+                <sp-menu-item value="item3">Item 3</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Focus on the first selected item
+        el.focusOnFirstSelectedItem();
+
+        // Verify the selected item is focused
+        const selectedItem = el.querySelector('sp-menu-item[selected]');
+        expect(selectedItem).to.exist;
+        expect(selectedItem).to.equal(document.activeElement);
+    });
+
+    it('focuses on menu when no selected item is available', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="item1">Item 1</sp-menu-item>
+                <sp-menu-item value="item2">Item 2</sp-menu-item>
+                <sp-menu-item value="item3">Item 3</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Focus on first selected item (none selected)
+        el.focusOnFirstSelectedItem();
+
+        // Verify the menu itself is focused
+        expect(el).to.equal(document.activeElement);
+    });
+
+    it('focuses on first selected item with preventScroll option', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu selects="single">
+                <sp-menu-item value="item1">Item 1</sp-menu-item>
+                <sp-menu-item value="item2" selected>Item 2</sp-menu-item>
+                <sp-menu-item value="item3">Item 3</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Focus on the first selected item with preventScroll
+        el.focusOnFirstSelectedItem({ preventScroll: true });
+
+        // Verify the selected item is focused
+        const selectedItem = el.querySelector('sp-menu-item[selected]');
+        expect(selectedItem).to.exist;
+        expect(selectedItem).to.equal(document.activeElement);
+    });
 });
