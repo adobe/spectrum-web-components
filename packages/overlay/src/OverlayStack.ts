@@ -156,8 +156,8 @@ class OverlayStack {
             event.preventDefault();
             return;
         }
-        if (last?.type === 'manual') {
-            // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
+        if (last?.type === 'manual' || last?.type === 'modal') {
+            // Manual and modal overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
             this.closeOverlay(last);
             return;
         }
