@@ -1,11 +1,17 @@
 ---
 '@spectrum-web-components/clear-button': minor
+'@spectrum-web-components/button': minor
 '@spectrum-web-components/styles': patch
 ---
 
-Clear button styles have been updated to the latest Spectrum CSS version of the clear button.
+Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
 
-As the updated styles now offer additional styling options, we have added the following API to the clear button:
+This update spans the following additional packages:
+
+- @spectrum-web-components/button
+- @spectrum-web-components/styles
+
+As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
 
 - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
 - `disabled` - when set to true, the button will be rendered as a disabled button.
