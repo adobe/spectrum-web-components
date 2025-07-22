@@ -112,8 +112,8 @@ commands:
                       echo "$TEST_FILES"
                       # Run tests with CircleCI splitting
                       echo "$TEST_FILES" | circleci tests run \
-                          --command="xargs yarn test:start --files --config << parameters.config_file >>" \
-                          --split-by=timings \
+                          --command="xargs yarn test:start --files $TEST_FILES --config << parameters.config_file >>" \
+                          --split-by=name \
                           --verbose
             - store_test_results:
                   path: /root/project/results/
