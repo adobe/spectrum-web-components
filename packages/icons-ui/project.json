@@ -1,0 +1,32 @@
+{
+    "name": "icons-ui",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/icons-ui/src",
+    "projectType": "library",
+    "tags": ["icon"],
+    "targets": {
+        "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "lint": {},
+        "lint:css": {},
+        "lint:js": {},
+        "lint:ts": {},
+        "lint:lit": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
+        "setup": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node ./bin/build.js",
+                "cwd": "{projectRoot}"
+            },
+            "outputs": ["{projectRoot}/**/*.svg.ts"]
+        }
+    }
+}
