@@ -50,14 +50,14 @@ commands:
     setup-project:
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-                      - v4c-dependencies-{{ arch }}-
-            - restore_cache:
-                  keys:
-                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
-                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-
+            # - restore_cache:
+            #       keys:
+            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            #           - v4c-dependencies-{{ arch }}-
+            # - restore_cache:
+            #       keys:
+            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-
             - run:
                   name: Installing dependencies
                   command: |
@@ -263,7 +263,7 @@ jobs:
 
     test-chromium:
         executor: node
-        resource_class: large
+        resource_class: xlarge
 
         steps:
             - setup-project
@@ -285,7 +285,7 @@ jobs:
 
     test-firefox:
         executor: node
-        resource_class: large
+        resource_class: xlarge
 
         steps:
             - setup-project
@@ -296,7 +296,7 @@ jobs:
 
     test-webkit:
         executor: node
-        resource_class: large
+        resource_class: xlarge
 
         steps:
             - setup-project
@@ -307,7 +307,7 @@ jobs:
 
     beta-docs:
         executor: node
-        resource_class: medium
+        resource_class: large
 
         steps:
             - setup-project
@@ -492,15 +492,10 @@ workflows:
         jobs:
             - lint
             - test-chromium:
-                  requires: [lint]
             - test-chromium-memory:
-                  requires: [lint]
             - test-firefox:
-                  requires: [lint]
             - test-webkit:
-                  requires: [lint]
             - hcm-visual:
-                  requires: [lint]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
@@ -511,7 +506,6 @@ workflows:
                           # Beta docs are only published from main
                           only: main
             - visual:
-                  requires: [lint]
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
@@ -524,7 +518,6 @@ workflows:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
             - visual:
-                  requires: [lint]
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
