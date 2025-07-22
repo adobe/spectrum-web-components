@@ -542,6 +542,9 @@ export class Overlay extends ComputedOverlayBase {
             const focusTrap = await import('focus-trap');
             this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
                 initialFocus: focusEl || undefined,
+                allowOutsideClick: (event) => {
+                    return !event.isTrusted;
+                },
                 tabbableOptions: {
                     getShadowRoot: true,
                 },
