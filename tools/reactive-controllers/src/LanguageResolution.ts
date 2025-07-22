@@ -19,7 +19,20 @@ export const languageResolverUpdatedSymbol = Symbol(
 
 export class LanguageResolutionController implements ReactiveController {
     private host: ReactiveElement;
-    language = document.documentElement.lang || navigator.language;
+    get language(): string {
+        return document.documentElement.lang || navigator.language;
+    }
+    set language(value: string) {
+        // Replace all _ with - in the language string
+        value = value.replace(/_/g, '-');
+        // Set the document language
+        if (this.language === value) {
+            return;
+        }
+
+        document.documentElement.lang = value;
+        this.host.requestUpdate(languageResolverUpdatedSymbol, value);
+    }
     private unsubscribe?: () => void;
 
     constructor(host: ReactiveElement) {
