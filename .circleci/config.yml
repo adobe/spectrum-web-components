@@ -465,6 +465,7 @@ workflows:
             - test-chromium-memory
             - test-firefox
             - test-webkit
+            - test-chromium-splitting
             - hcm-visual:
                   filters:
                       branches:
