@@ -207,7 +207,6 @@ commands:
 jobs:
     test-chromium:
         executor: node
-        parallelism: 5
 
         steps:
             - downstream
@@ -221,7 +220,6 @@ jobs:
 
     test-chromium-memory:
         executor: node
-        parallelism: 5
 
         steps:
             - downstream
@@ -235,7 +233,6 @@ jobs:
 
     test-firefox:
         executor: node
-        parallelism: 5
 
         steps:
             - downstream
@@ -249,7 +246,6 @@ jobs:
 
     test-webkit:
         executor: node
-        parallelism: 5
 
         steps:
             - downstream
