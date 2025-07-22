@@ -22,16 +22,15 @@ import {
 import { junitReporter } from '@web/test-runner-junit-reporter';
 import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
+import mainConfig from './web-test-runner.config.js';
 import { filterBrowserLogs } from './web-test-runner.utils.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
 
 export default {
-    // Remove hardcoded files and groups - respect --files argument
     files: [],
 
-    // Include ALL the plugins from main config
     plugins: [
         commonjs({
             requireReturnsDefault: 'preferred',
@@ -40,7 +39,7 @@ export default {
         sendKeysPlugin(),
         sendMousePlugin(),
         grantPermissionsPlugin(),
-        a11ySnapshotPlugin(), // ← Add this
+        a11ySnapshotPlugin(),
         json({}),
         {
             name: 'plugin-js-buffer-to-string',
@@ -60,7 +59,7 @@ export default {
                 context.set('Cross-Origin-Embedder-Policy', 'credentialless');
             },
         },
-        setViewportPlugin(), // ← Add this
+        setViewportPlugin(),
     ],
 
     // MIME types
@@ -70,20 +69,18 @@ export default {
         exportConditions: ['browser', 'development'],
     },
 
-    // Ensure proper test isolation
+    // CI-specific test framework config
     testFramework: {
         config: {
-            retries: 2,
-            // Add timeout to allow cleanup
             timeout: 10000,
+            retries: 0,
         },
     },
 
-    // Add test isolation
     testsFinishTimeout: 60000,
 
-    // Ensure each test starts fresh
-    preserveSymlinks: true,
+    // Dynamically inherit groups from main config
+    groups: mainConfig.groups,
 
     reporters: [
         defaultReporter(),

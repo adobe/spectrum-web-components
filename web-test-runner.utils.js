@@ -16,20 +16,86 @@ import path from 'path';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 
-// Base browser context config
+// Base browser context config with enhanced isolation
 const baseContext = {
     ignoreHTTPSErrors: true,
     permissions: ['clipboard-read', 'clipboard-write'],
     locale: 'en-US',
+    // Enhanced isolation settings
+    serviceWorkers: 'block', // Prevent service worker conflicts
+    colorScheme: 'no-preference', // Reset color scheme
+    reducedMotion: 'no-preference', // Reset motion preferences
+};
+
+// CI-specific browser context with maximum isolation
+const ciContext = {
+    ...baseContext,
+    // Additional CI isolation
+    bypassCSP: false, // Ensure consistent CSP handling
+    timezoneId: 'UTC', // Consistent timezone
 };
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) => browser.newContext(baseContext),
+});
+
+// Enhanced CI-specific browser launchers
+export const chromiumCI = playwrightLauncher({
+    product: 'chromium',
+    concurrency: 1,
+    createBrowserContext: ({ browser }) => browser.newContext(ciContext),
+    launchOptions: {
+        args: [
+            '--disable-features=TranslateUI',
+            '--disable-background-networking',
+            '--disable-background-timer-throttling',
+            '--disable-renderer-backgrounding',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-ipc-flooding-protection',
+            '--no-first-run',
+            '--no-default-browser-check',
+            '--disable-default-apps',
+        ],
+    },
+});
+
+export const firefoxCI = playwrightLauncher({
+    product: 'firefox',
+    concurrency: 1,
+    createBrowserContext: ({ browser }) => browser.newContext(ciContext),
+    launchOptions: {
+        firefoxUserPrefs: {
+            'toolkit.telemetry.reportingpolicy.firstRun': false,
+            'browser.shell.checkDefaultBrowser': false,
+            'browser.bookmarks.restore_default_bookmarks': false,
+            'dom.disable_open_during_load': false,
+            'dom.max_script_run_time': 0,
+            'dom.min_background_timeout_value': 10,
+            'extensions.autoDisableScopes': 0,
+            'extensions.enabledScopes': 15,
+            'dom.events.asyncClipboard.readText': true,
+            'dom.events.testing.asyncClipboard': true,
+            // Additional isolation preferences
+            'privacy.clearOnShutdown.cache': true,
+            'privacy.clearOnShutdown.cookies': true,
+            'privacy.clearOnShutdown.downloads': true,
+            'privacy.clearOnShutdown.formdata': true,
+            'privacy.clearOnShutdown.history': true,
+        },
+    },
+});
+
+export const webkitCI = playwrightLauncher({
+    product: 'webkit',
+    concurrency: 1,
+    createBrowserContext: ({ browser }) => browser.newContext(ciContext),
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
+    concurrency: 4,
     createBrowserContext: ({ browser }) => browser.newContext(baseContext),
     launchOptions: {
         headless: false,
@@ -48,7 +114,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
 
 export const chromiumWithMemoryToolingCI = playwrightLauncher({
     product: 'chromium',
-    concurrency: 2,
+    concurrency: 4,
     createBrowserContext: ({ browser }) => browser.newContext(baseContext),
     launchOptions: {
         headless: false,
@@ -67,6 +133,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
+    concurrency: 4,
     createBrowserContext: ({ browser }) => browser.newContext(baseContext),
     launchOptions: {
         args: ['--enable-experimental-web-platform-features'],
@@ -98,7 +165,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
-    concurrency: 4,
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -263,7 +330,8 @@ export const filterBrowserLogs = (log) => {
             (arg) =>
                 typeof arg === 'string' &&
                 (arg.includes('Could not resolve module specifier') ||
-                    arg.includes('in dev mode'))
+                    arg.includes('in dev mode') ||
+                    arg.includes('slottable-requests'))
         )
     ) {
         return false;
