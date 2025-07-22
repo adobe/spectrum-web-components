@@ -33,6 +33,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
@@ -634,6 +635,120 @@ export const deepChildTooltip = (): TemplateResult => html`
         </sp-popover>
     </overlay-trigger>
 `;
+export const debug = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal" id="trigger" placement="top">
+            <sp-button
+                variant="primary"
+                slot="trigger"
+                style="position:absolute;bottom:50px"
+            >
+                Button popover
+            </sp-button>
+            <sp-popover slot="click-content" direction="bottom" tip>
+                <sp-dialog underlay no-divider class="options-popover-content">
+                    <sp-picker
+                        label="Select a Country with a very long label, too long in fact"
+                        value="item-2"
+                        id="picker-value"
+                    >
+                        <sp-menu-item value="item-1">Deselect</sp-menu-item>
+                        <sp-menu-item value="item-2">
+                            Select inverse
+                        </sp-menu-item>
+                        <sp-menu-item value="item-3">Feather...</sp-menu-item>
+                        <sp-menu-item value="item-4">
+                            Select and mask...
+                        </sp-menu-item>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-item value="item-5">
+                            Save selection
+                        </sp-menu-item>
+                        <sp-menu-item disabled value="item-6">
+                            Make work path
+                        </sp-menu-item>
+                    </sp-picker>
+                </sp-dialog>
+            </sp-popover>
+            <sp-tooltip slot="hover-content" placement="right">
+                I'm a tooltip in a different direction
+            </sp-tooltip>
+        </overlay-trigger>
+        <overlay-trigger placement="bottom" type="modal">
+            <sp-action-button slot="trigger">Open menu</sp-action-button>
+            <sp-popover style="padding: 20px" slot="click-content">
+                <sp-menu>
+                    <sp-menu-item>Item 1</sp-menu-item>
+                    <sp-menu-item>Item 2</sp-menu-item>
+                </sp-menu>
+                <sp-action-menu size="m">
+                    <span slot="label">More Actions</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-action-menu>
+            </sp-popover>
+        </overlay-trigger>
+        <div class="container"></div>
+        <sp-button variant="primary" @click=${openModalOverlay}>
+            Modal overlay
+        </sp-button>
+    `;
+};
+
+// Helper functions for the overlay functionality
+const getModalOverlayContent = (): HTMLElement => {
+    const fragment = document.createDocumentFragment();
+    render(
+        html`
+            <sp-popover style="padding: 20px">
+                Modal overlay content
+                <sp-button @click=${(event: Event) => openAutoOverlay(event)}>
+                    Auto overlay
+                </sp-button>
+            </sp-popover>
+        `,
+        fragment
+    );
+    return fragment.children[0] as HTMLElement;
+};
+
+const getAutoOverlayContent = (): HTMLElement => {
+    const fragment = document.createDocumentFragment();
+    render(
+        html`
+            <sp-popover>Auto overlay</sp-popover>
+        `,
+        fragment
+    );
+    return fragment.children[0] as HTMLElement;
+};
+
+const openModalOverlay = async (event: Event) => {
+    const trigger = event.target as HTMLElement;
+    const overlay = await Overlay.open(getModalOverlayContent(), {
+        trigger,
+        type: 'modal',
+        placement: 'bottom',
+    });
+    const container = document.querySelector('.container');
+    container?.insertAdjacentElement('afterend', overlay);
+};
+
+const openAutoOverlay = async (event: Event) => {
+    const trigger = event.target as HTMLElement;
+    const overlay = await Overlay.open(getAutoOverlayContent(), {
+        trigger,
+        type: 'auto',
+        placement: 'bottom',
+    });
+    const container = document.querySelector('.container');
+    container?.insertAdjacentElement('afterend', overlay);
+};
 
 export const deepNesting = (): TemplateResult => {
     const color = window.__swc_hack_knobs__.defaultColor;
