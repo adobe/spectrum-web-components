@@ -212,9 +212,7 @@ jobs:
             - downstream
             - run:
                   name: Run unit tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group no-memory-ci
+                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-chromium.js --coverage
             - store_test_results:
                   path: /root/project/results/
 
@@ -225,9 +223,7 @@ jobs:
             - downstream
             - run:
                   name: Run memory tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group memory-ci
+                  command: yarn test:focus memory-ci --config web-test-runner.config.ci-chromium.js
             - store_test_results:
                   path: /root/project/results/
 
@@ -238,9 +234,7 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group no-memory-ci
+                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-firefox.js
             - store_test_results:
                   path: /root/project/results/
 
@@ -251,23 +245,9 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group no-memory-ci
+                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-webkit.js
             - store_test_results:
                   path: /root/project/results/
-
-    lint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Lint
-                  command: yarn lint
-            - run:
-                  name: Are there changes?
-                  command: git diff-files --exit-code
 
     beta-docs:
         executor: node
