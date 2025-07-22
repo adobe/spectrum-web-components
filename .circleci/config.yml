@@ -48,7 +48,7 @@ commands:
                       echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
                       source $BASH_ENV
                       azcopy --version
-    downstream:
+    setup-project:
         steps:
             - checkout
             # - restore_cache:
@@ -203,14 +203,35 @@ commands:
                   paths:
                       - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+    run-tests:
+        parameters:
+            config_file:
+                type: string
+        steps:
+            - setup-project
+            - run:
+                  name: Run tests
+                  command: |
+                      mkdir -p /root/project/results
+                      TESTFILES=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v -E "memory\.test\.js")
+                      echo "$TESTFILES" | circleci tests run --command="xargs yarn test:start --files $TESTFILES --config << parameters.config_file >>" --split-by=timings --verbose
+            - store_test_results:
+                  path: /root/project/results/
 
 jobs:
-    test-chromium:
+    test-chromium-splitting:
         executor: node
-        parallelism: 5
 
         steps:
-            - downstream
+            - setup-project
+            - run-tests:
+                  config_file: web-test-runner.config.ci-chromium.js
+
+    test-chromium:
+        executor: node
+
+        steps:
+            - setup-project
             - run:
                   name: Run unit tests
                   command: |
@@ -221,10 +242,9 @@ jobs:
 
     test-chromium-memory:
         executor: node
-        parallelism: 5
 
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Run memory tests
                   command: |
@@ -235,10 +255,9 @@ jobs:
 
     test-firefox:
         executor: node
-        parallelism: 5
 
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Run tests
                   command: |
@@ -249,10 +268,9 @@ jobs:
 
     test-webkit:
         executor: node
-        parallelism: 5
 
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Run tests
                   command: |
@@ -261,23 +279,11 @@ jobs:
             - store_test_results:
                   path: /root/project/results/
 
-    lint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Lint
-                  command: yarn lint
-            - run:
-                  name: Are there changes?
-                  command: git diff-files --exit-code
-
     beta-docs:
         executor: node
 
         steps:
-            - downstream
+            - setup-project
             - run:
                   name: Generate Custom Elements Manifest
                   command: yarn docs:analyze
@@ -321,7 +327,7 @@ jobs:
         executor: node
 
         steps:
-            - downstream
+            - setup-project
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
@@ -445,7 +451,7 @@ jobs:
             dir:
                 type: string
         steps:
-            - downstream
+            - setup-project
             - run-regressions:
                   regression_system: << parameters.system >>
                   regression_color: << parameters.color >>

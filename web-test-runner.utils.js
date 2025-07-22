@@ -18,6 +18,7 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
