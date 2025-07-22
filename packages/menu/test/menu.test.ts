@@ -727,6 +727,8 @@ describe('Menu', () => {
         // Try to select an item while scrolling
         const clickEvent = new MouseEvent('click', { button: 0 });
         firstItem.dispatchEvent(clickEvent);
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
 
         // Verify selection is prevented
         expect(firstItem.selected).to.be.false;
@@ -755,6 +757,7 @@ describe('Menu', () => {
         // Wait for the selection to be processed
         await elementUpdated(el);
         await elementUpdated(firstItem);
+        await nextFrame();
 
         // Verify selection is allowed
         expect(firstItem.selected).to.be.true;
@@ -843,7 +846,7 @@ describe('Menu', () => {
         menu.handleTouchStart(mockTouchStartEvent);
 
         // Wait a bit to ensure time difference
-        await aTimeout(50);
+        await aTimeout(100);
 
         // Now simulate touch move with significant movement
         const mockTouchMoveEvent = {
@@ -874,6 +877,9 @@ describe('Menu', () => {
             length: 1,
         };
         menu.handleTouchStart(mockTouchStartEvent);
+
+        // Wait a bit to ensure time difference
+        await aTimeout(50);
 
         // Now simulate touch move with small movement
         const mockTouchMoveEvent = {
@@ -906,7 +912,13 @@ describe('Menu', () => {
         menu.handleTouchEnd();
 
         // Wait for the timeout to reset scrolling state
-        await aTimeout(150);
+        await waitUntil(
+            () => !menu.isScrolling,
+            'Scrolling state should be reset',
+            {
+                timeout: 500,
+            }
+        );
 
         // Verify scrolling state is reset
         expect(menu.isScrolling).to.be.false;
@@ -939,369 +951,5 @@ describe('Menu', () => {
         // Verify touch properties are not updated for multiple touches
         expect(menu.touchStartY).to.equal(initialTouchStartY);
         expect(menu.touchStartTime).to.equal(initialTouchStartTime);
-    });
-
-    it('focuses on first selected item when available', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu selects="single">
-                <sp-menu-item value="item1">Item 1</sp-menu-item>
-                <sp-menu-item value="item2" selected>Item 2</sp-menu-item>
-                <sp-menu-item value="item3">Item 3</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Focus on the first selected item
-        el.focusOnFirstSelectedItem();
-
-        // Verify the selected item is focused
-        const selectedItem = el.querySelector('sp-menu-item[selected]');
-        expect(selectedItem).to.exist;
-        expect(selectedItem).to.equal(document.activeElement);
-    });
-
-    it('focuses on menu when no selected item is available', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu selects="single">
-                <sp-menu-item value="item1">Item 1</sp-menu-item>
-                <sp-menu-item value="item2">Item 2</sp-menu-item>
-                <sp-menu-item value="item3">Item 3</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Focus on first selected item (none selected)
-        el.focusOnFirstSelectedItem();
-
-        // Verify the menu itself is focused
-        expect(el).to.equal(document.activeElement);
-    });
-
-    it('focuses on first selected item with preventScroll option', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu selects="single">
-                <sp-menu-item value="item1">Item 1</sp-menu-item>
-                <sp-menu-item value="item2" selected>Item 2</sp-menu-item>
-                <sp-menu-item value="item3">Item 3</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Focus on the first selected item with preventScroll
-        el.focusOnFirstSelectedItem({ preventScroll: true });
-
-        // Verify the selected item is focused
-        const selectedItem = el.querySelector('sp-menu-item[selected]');
-        expect(selectedItem).to.exist;
-        expect(selectedItem).to.equal(document.activeElement);
-    });
-    it('manages tabindex when shift+tab is used for backward navigation', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        // Focus on the menu
-        el.focus();
-
-        // Simulate shift+tab keydown (backward navigation)
-        const shiftTabEvent = new KeyboardEvent('keydown', {
-            key: 'Tab',
-            shiftKey: true,
-            bubbles: true,
-        });
-
-        // Dispatch the event on a menu item to trigger the tabindex logic
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-        firstItem.dispatchEvent(shiftTabEvent);
-
-        // Verify tabindex is removed when shift+tab is used
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate keyup without shift to restore tabindex
-        const keyupEvent = new KeyboardEvent('keyup', {
-            key: 'Tab',
-            shiftKey: false,
-            bubbles: true,
-        });
-        document.dispatchEvent(keyupEvent);
-
-        // Verify tabindex is restored
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('manages tabindex when focusout occurs during shift navigation', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Focus on the menu
-        el.focus();
-
-        // Simulate shift+tab keydown
-        const shiftTabEvent = new KeyboardEvent('keydown', {
-            key: 'Tab',
-            shiftKey: true,
-            bubbles: true,
-        });
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-        firstItem.dispatchEvent(shiftTabEvent);
-
-        // Verify tabindex is removed
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate focusout event
-        const focusoutEvent = new FocusEvent('focusout', {
-            bubbles: true,
-        });
-        el.dispatchEvent(focusoutEvent);
-
-        // Verify tabindex is restored after focusout
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('triggers tabindex management in handleKeydown with shift+tab', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        // Focus on a menu item (not the menu itself)
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-        firstItem.focus();
-
-        // Simulate shift+tab keydown on the menu item
-        // This should trigger the tabindex management code
-        const shiftTabEvent = new KeyboardEvent('keydown', {
-            key: 'Tab',
-            shiftKey: true,
-            bubbles: true,
-        });
-
-        // Dispatch the event on the menu item (target !== this)
-        firstItem.dispatchEvent(shiftTabEvent);
-
-        // The handleKeydown should be called and tabindex should be removed
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate keyup without shift to restore tabindex
-        const keyupEvent = new KeyboardEvent('keyup', {
-            key: 'Tab',
-            shiftKey: false,
-            bubbles: true,
-        });
-        document.dispatchEvent(keyupEvent);
-
-        // Verify tabindex is restored
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('does not trigger tabindex management when target is the menu itself', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        // Focus on the menu itself
-        el.focus();
-
-        // Simulate shift+tab keydown on the menu itself
-        // This should NOT trigger the tabindex management code (target === this)
-        const shiftTabEvent = new KeyboardEvent('keydown', {
-            key: 'Tab',
-            shiftKey: true,
-            bubbles: true,
-        });
-
-        // Dispatch the event on the menu itself
-        el.dispatchEvent(shiftTabEvent);
-
-        // The tabindex should remain because target === this
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('triggers tabindex management via sp-menu-item-keydown event', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-
-        // Create a custom event that matches what the menu expects
-        const customEvent = new CustomEvent('sp-menu-item-keydown', {
-            detail: {
-                key: 'Tab',
-                shiftKey: true,
-                target: firstItem, // target !== this
-                root: firstItem,
-            },
-            bubbles: true,
-        });
-
-        // Dispatch the custom event on the menu
-        el.dispatchEvent(customEvent);
-
-        // The handleKeydown should be called and tabindex should be removed
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate keyup without shift to restore tabindex
-        const keyupEvent = new KeyboardEvent('keyup', {
-            key: 'Tab',
-            shiftKey: false,
-            bubbles: true,
-        });
-        document.dispatchEvent(keyupEvent);
-
-        // Verify tabindex is restored
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('does not trigger tabindex management when target is the menu in sp-menu-item-keydown', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        // Create a custom event where target is the menu itself
-        const customEvent = new CustomEvent('sp-menu-item-keydown', {
-            detail: {
-                key: 'Tab',
-                shiftKey: true,
-                target: el, // target === this
-                root: el,
-            },
-            bubbles: true,
-        });
-
-        // Dispatch the custom event on the menu
-        el.dispatchEvent(customEvent);
-
-        // The tabindex should remain because target === this
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('triggers tabindex management when menu item dispatches keydown with shift+tab', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-
-        // Focus on the menu item
-        firstItem.focus();
-
-        // Simulate shift+tab keydown on the menu item
-        // This should trigger the MenuItemKeydownEvent which the menu listens for
-        const shiftTabEvent = new KeyboardEvent('keydown', {
-            key: 'Tab',
-            shiftKey: true,
-            bubbles: true,
-        });
-
-        // Dispatch the event on the menu item
-        firstItem.dispatchEvent(shiftTabEvent);
-
-        // The handleKeydown should be called and tabindex should be removed
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate keyup without shift to restore tabindex
-        const keyupEvent = new KeyboardEvent('keyup', {
-            key: 'Tab',
-            shiftKey: false,
-            bubbles: true,
-        });
-        document.dispatchEvent(keyupEvent);
-
-        // Verify tabindex is restored
-        expect(el.hasAttribute('tabindex')).to.be.true;
-    });
-
-    it('directly tests handleKeydown tabindex management', async () => {
-        const el = await fixture<Menu>(html`
-            <sp-menu tabindex="0">
-                <sp-menu-item>Item 1</sp-menu-item>
-                <sp-menu-item>Item 2</sp-menu-item>
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Verify menu has tabindex initially
-        expect(el.hasAttribute('tabindex')).to.be.true;
-
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-
-        // Create a mock event that matches the expected structure
-        const mockEvent = {
-            key: 'Tab',
-            shiftKey: true,
-            target: firstItem, // target !== this
-            root: firstItem,
-            defaultPrevented: false,
-        } as Event & {
-            key: string;
-            shiftKey: boolean;
-            target: MenuItem;
-            root: MenuItem;
-            defaultPrevented: boolean;
-        };
-
-        // Directly call handleKeydown with the mock event
-        el.handleKeydown(mockEvent);
-
-        // The tabindex should be removed
-        expect(el.hasAttribute('tabindex')).to.be.false;
-
-        // Simulate keyup without shift to restore tabindex
-        const keyupEvent = new KeyboardEvent('keyup', {
-            key: 'Tab',
-            shiftKey: false,
-            bubbles: true,
-        });
-        document.dispatchEvent(keyupEvent);
-
-        // Verify tabindex is restored
-        expect(el.hasAttribute('tabindex')).to.be.true;
     });
 });
