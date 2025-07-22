@@ -491,10 +491,10 @@ workflows:
     build:
         jobs:
             - lint
-            - test-chromium:
-            - test-chromium-memory:
-            - test-firefox:
-            - test-webkit:
+            - test-chromium
+            - test-chromium-memory
+            - test-firefox
+            - test-webkit
             - hcm-visual:
                   filters:
                       branches:
