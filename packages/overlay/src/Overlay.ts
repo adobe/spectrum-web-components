@@ -1146,7 +1146,7 @@ export class Overlay extends ComputedOverlayBase {
      */
     public override render(): TemplateResult {
         return html`
-            ${this.type === 'modal'
+            ${this.type === 'modal' || this.type === 'page'
                 ? html`
                       <sp-underlay
                           ?open=${this.open}
