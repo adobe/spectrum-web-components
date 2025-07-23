@@ -16,6 +16,7 @@ import {
     expect,
     html,
     nextFrame,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
@@ -243,10 +244,11 @@ describe('Overlay Trigger - extended', () => {
         expect(textfield.tabIndex, 'textfield is focusable').to.be.equal(0);
 
         // Focus the textfield by clicking it (simulates user interaction)
-        await waitUntil(
-            async () => await sendMouseTo(textfield, 'click'),
-            `Trying to click textfield`
-        );
+        await waitUntil(async () => {
+            const textfieldClick = oneEvent(textfield, 'click');
+            await sendMouseTo(textfield, 'click');
+            return await textfieldClick;
+        }, `Trying to click textfield`);
 
         expect(document.activeElement, `textfield focused`).to.equal(textfield);
 
@@ -254,8 +256,11 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
 
         // Focus the button to prepare for opening the overlay
-        button.focus();
-        await elementUpdated(button);
+        await waitUntil(async () => {
+            const buttonFocus = oneEvent(button, 'focus');
+            button.focus();
+            return await buttonFocus;
+        }, `Trying to focus button`);
         expect(document.activeElement, `button focused`).to.equal(button);
 
         // Confirm the overlay is still closed and not triggered
@@ -278,10 +283,11 @@ describe('Overlay Trigger - extended', () => {
         await overlayOpened(overlayTrigger.clickOverlayElement, 400);
 
         // Attempt to click the textfield while the overlay is open
-        await waitUntil(
-            async () => await sendMouseTo(textfield, 'click'),
-            `textfield clicked again`
-        );
+        await waitUntil(async () => {
+            const textfieldClick = oneEvent(textfield, 'click');
+            await sendMouseTo(textfield, 'click');
+            return await textfieldClick;
+        }, `textfield clicked again`);
 
         // Verify that the textfield cannot be focused (is occluded by the overlay)
         expect(
@@ -301,10 +307,11 @@ describe('Overlay Trigger - extended', () => {
         );
 
         // Try clicking the textfield again after the overlay is closed
-        await waitUntil(
-            async () => await sendMouseTo(textfield, 'click'),
-            `textfield clicked again`
-        );
+        await waitUntil(async () => {
+            const textfieldClick = oneEvent(textfield, 'click');
+            await sendMouseTo(textfield, 'click');
+            return await textfieldClick;
+        }, `textfield clicked again`);
 
         // Verify that the textfield can now be focused (no longer occluded)
         expect(document.activeElement, `textfield focused`).to.equal(textfield);

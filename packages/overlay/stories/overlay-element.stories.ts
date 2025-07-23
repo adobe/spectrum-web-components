@@ -390,6 +390,43 @@ withSlider.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+export const blocksClickBehind = (): TemplateResult => html`
+    <div class="container">
+        <style>
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        </style>
+        <overlay-trigger
+            type="modal"
+            id="trigger"
+            placement="top"
+            triggered-by="click"
+        >
+            <sp-button id="outer-button" variant="primary" slot="trigger">
+                Show Popover
+            </sp-button>
+            <sp-popover
+                id="outer-popover"
+                slot="click-content"
+                tip
+                tabindex="0"
+                placement="bottom"
+            >
+                <sp-dialog no-divider>This is the overlay content.</sp-dialog>
+            </sp-popover>
+        </overlay-trigger>
+        <input
+            type="text"
+            id="textfield"
+            style="position: relative; z-index: 1;"
+        />
+    </div>
+`;
 
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
