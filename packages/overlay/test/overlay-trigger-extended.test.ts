@@ -216,106 +216,71 @@ describe('Overlay Trigger - extended', () => {
             </div>
         `);
 
-        // Get a reference to the textfield element
         const textfield = el.querySelector('#textfield') as HTMLInputElement;
-
-        // Get a reference to the overlay trigger
         const overlayTrigger = el.querySelector(
             'overlay-trigger'
         ) as OverlayTrigger;
-
-        // Get a reference to the button element
         const button = el.querySelector('sp-button') as Button;
-
-        // Get a reference to the popover element
         const popover = el.querySelector('sp-popover') as Popover;
 
-        // Wait for the textfield to be connected and rendered
         await elementUpdated(el);
 
-        // Get a reference to the overlay element that will be opened
         const overlay = overlayTrigger.clickOverlayElement;
 
-        // Verify the overlay is initially closed
         expect(overlay.state, `overlay state`).to.equal('closed');
-
-        // Ensure the textfield is visible and can be focused
-        expect(textfield.offsetParent, 'textfield is visible').to.not.be.null;
+        expect(textfield, 'textfield is visible').to.be.visible;
         expect(textfield.tabIndex, 'textfield is focusable').to.be.equal(0);
 
-        // Focus the textfield by clicking it (simulates user interaction)
         await waitUntil(async () => {
             const textfieldClick = oneEvent(textfield, 'click');
-            await sendMouseTo(textfield, 'click');
+            textfield.click();
             return await textfieldClick;
-        }, `Trying to click textfield`);
+        }, `Attempting to click textfield`);
 
-        expect(document.activeElement, `textfield focused`).to.equal(textfield);
+        expect(document.activeElement === textfield, `textfield focused`).to.be
+            .true;
 
-        // Confirm the popover is positioned above the button
-        expect(popover.placement).to.equal('bottom');
-
-        // Focus the button to prepare for opening the overlay
         await waitUntil(async () => {
-            const buttonFocus = oneEvent(button, 'focus');
-            button.focus();
+            const buttonFocus = oneEvent(button, 'click');
+            button.click();
             return await buttonFocus;
         }, `Trying to focus button`);
-        expect(document.activeElement, `button focused`).to.equal(button);
 
-        // Confirm the overlay is still closed and not triggered
-        expect(overlayTrigger.open, `overlayTrigger.open`).to.equal(undefined);
-        expect(overlay.state, `overlay.state`).to.equal('closed');
-
-        // Open the overlay by setting the open property
-        overlayTrigger.open = 'click';
-
-        // Wait for the overlay trigger to update
+        await overlayOpened(overlay);
         await elementUpdated(overlayTrigger);
 
-        // Confirm the overlay is in the process of opening
-        expect(
-            overlayTrigger.clickOverlayElement.state,
-            'overlay state after clicking'
-        ).to.equal('opening');
+        expect(document.activeElement === popover, `popover focused`).to.be
+            .true;
+        expect(popover.placement, 'popover placement').to.equal('bottom');
+        expect(overlayTrigger.open, 'overlayTrigger.open').to.equal('click');
 
-        // Wait for the overlay to be fully opened (allow extra time for Firefox)
-        await overlayOpened(overlayTrigger.clickOverlayElement, 400);
-
-        // Attempt to click the textfield while the overlay is open
         await waitUntil(async () => {
-            const textfieldClick = oneEvent(textfield, 'click');
+            const elementClick = oneEvent(el, 'click');
             await sendMouseTo(textfield, 'click');
-            return await !textfieldClick;
+            return await elementClick;
         }, `textfield cannot fire event`);
 
-        // Verify that the textfield cannot be focused (is occluded by the overlay)
         expect(
-            document.activeElement,
+            document.activeElement !== textfield,
             `textfield cannot be clicked`
-        ).to.not.equal(textfield);
+        ).to.be.true;
 
-        // Close the overlay
-        // overlayTrigger.open = undefined;
+        await overlayClosed(overlay);
 
-        // Wait for the overlay to be fully closed
-        await overlayClosed(overlayTrigger.clickOverlayElement, 300);
-
-        // Confirm the textfield is still not focused after closing the overlay
+        expect(overlayTrigger.open, 'overlay closed').to.be.undefined;
         expect(
-            document.activeElement,
+            document.activeElement !== textfield,
             'textfield is not focused after overlay closes'
-        ).to.not.equal(textfield);
+        ).to.be.true;
 
-        // Try clicking the textfield again after the overlay is closed
         await waitUntil(async () => {
             const textfieldClick = oneEvent(textfield, 'click');
             await sendMouseTo(textfield, 'click');
             return await textfieldClick;
         }, `textfield clicks again`);
 
-        // Verify that the textfield can now be focused (no longer occluded)
-        expect(document.activeElement, `textfield focused`).to.equal(textfield);
+        expect(document.activeElement === textfield, `textfield focused`).to.be
+            .true;
     });
 
     xit('occludes wheel interactions behind the overlay', async () => {

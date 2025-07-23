@@ -10,21 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    oneEvent,
-    waitUntil,
-} from '@open-wc/testing';
+import { oneEvent, waitUntil } from '@open-wc/testing';
 import { Overlay } from '../src/Overlay';
-
 
 // make sure overlay state is about to change, and wait until overlay state changes to 'opened'
 export const overlayOpened = async (
     overlay: Overlay,
-    timeout: number = 100,
+    timeout: number = 400, // 400ms to allow for Firefox to open the overlay
     messagePrefix?: string
 ): Promise<unknown> => {
     return await waitUntil(
-        () => overlay?.state === 'opened' || (overlay && oneEvent(overlay, 'sp-opened')),
+        () =>
+            overlay?.state === 'opened' ||
+            (overlay && oneEvent(overlay, 'sp-opened')),
         `${messagePrefix ? `${messagePrefix}: ` : ''}open timeout (still ${overlay?.state})`,
         { timeout: timeout }
     );
