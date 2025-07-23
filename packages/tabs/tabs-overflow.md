@@ -58,4 +58,6 @@ To use the `<sp-tabs-overflow>` component, simply wrap it around the `<sp-tabs>`
 
 ### Accessibility
 
-The `<sp-tabs-overflow>` component is not focusable via Keyboard Tab Navigation. The Tabs Overflow buttons only help visually scroll down the list of Tabs. Keyboard users can navigate through all elements inside the Tabs list using arrow keys, and Keyboard users will always initially focus on the very first Tab element, no matter how visually scrolled the Tab group might be. Therefore, the `<sp-tabs-overflow>` component is not useful for Keyboard Tab Navigation, so it is removed as to not be a hinderance.
+The `<sp-tabs-overflow>` component is not focusable via Keyboard Tab Navigation. The Tabs Overflow buttons only help visually scroll down the list of Tabs. Keyboard users can navigate through all elements inside the Tabs list using arrow keys, and Keyboard users will always initially focus on the very first Tab element, no matter how visually scrolled the Tab group might be. Therefore, the `<sp-tabs-overflow>` component is not useful for Keyboard Tab Navigation, so it is removed as to not be a hindrance.
+
+When the `<sp-tabs-overflow>` component is used, the `aria-label` attribute is set to `Scroll to previous tabs` and `Scroll to next tabs` for the previous and next buttons, respectively.
