@@ -55,6 +55,7 @@ import {
 
 import styles from './overlay.css.js';
 import { FocusTrap } from 'focus-trap';
+import '@spectrum-web-components/underlay/sp-underlay.js';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
@@ -1145,6 +1146,17 @@ export class Overlay extends ComputedOverlayBase {
      */
     public override render(): TemplateResult {
         return html`
+            ${this.type === 'modal'
+                ? html`
+                      <sp-underlay
+                          ?open=${this.open}
+                          @close=${() => {
+                              this.open = false;
+                          }}
+                          style="--spectrum-underlay-background-color: transparent"
+                      ></sp-underlay>
+                  `
+                : ''}
             ${this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
