@@ -697,6 +697,14 @@ export const debug = (): TemplateResult => {
         <sp-button variant="primary" @click=${openModalOverlay}>
             Modal overlay
         </sp-button>
+        <overlay-trigger placement="bottom">
+            <sp-action-button slot="trigger">Open menu</sp-action-button>
+            <sp-popover style="padding: 20px" slot="click-content">
+                <sp-slider editable max="20" min="0" value="5" step="1">
+                    Max 20
+                </sp-slider>
+            </sp-popover>
+        </overlay-trigger>
     `;
 };
 
@@ -1180,30 +1188,6 @@ export const modalManaged = (): TemplateResult => {
             </sp-dialog-wrapper>
         </overlay-trigger>
         ${extraText}
-    `;
-};
-
-export const modalWithinNonModal = (): TemplateResult => {
-    return html`
-        <overlay-trigger type="inline">
-            <sp-button variant="primary" slot="trigger">
-                Open inline overlay
-            </sp-button>
-            <sp-popover slot="click-content">
-                <sp-dialog size="s" no-divider>
-                    <overlay-trigger type="modal">
-                        <sp-button variant="primary" slot="trigger">
-                            Open modal overlay
-                        </sp-button>
-                        <sp-popover slot="click-content">
-                            <sp-dialog size="s" no-divider>
-                                Modal overlay
-                            </sp-dialog>
-                        </sp-popover>
-                    </overlay-trigger>
-                </sp-dialog>
-            </sp-popover>
-        </overlay-trigger>
     `;
 };
 

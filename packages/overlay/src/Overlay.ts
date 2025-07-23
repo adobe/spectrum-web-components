@@ -420,9 +420,9 @@ export class Overlay extends ComputedOverlayBase {
      * Determines the value for the popover attribute based on the overlay type.
      *
      * @private
-     * @returns {'auto' | 'manual' | undefined} The popover value or undefined if not applicable.
+     * @returns {'auto' | 'manual' | 'hint' | undefined} The popover value or undefined if not applicable.
      */
-    private get popoverValue(): 'auto' | 'manual' | undefined {
+    private get popoverValue(): 'auto' | 'manual' | 'hint' | undefined {
         const hasPopoverAttribute = 'popover' in this;
 
         if (!hasPopoverAttribute) {
@@ -433,8 +433,6 @@ export class Overlay extends ComputedOverlayBase {
             case 'modal':
                 return 'manual';
             case 'page':
-                return 'manual';
-            case 'hint':
                 return 'manual';
             default:
                 return this.type;
