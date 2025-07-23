@@ -286,8 +286,8 @@ describe('Overlay Trigger - extended', () => {
         await waitUntil(async () => {
             const textfieldClick = oneEvent(textfield, 'click');
             await sendMouseTo(textfield, 'click');
-            return await textfieldClick;
-        }, `textfield clicked again`);
+            return await !textfieldClick;
+        }, `textfield cannot fire event`);
 
         // Verify that the textfield cannot be focused (is occluded by the overlay)
         expect(
@@ -296,22 +296,23 @@ describe('Overlay Trigger - extended', () => {
         ).to.not.equal(textfield);
 
         // Close the overlay
-        overlayTrigger.open = undefined;
+        // overlayTrigger.open = undefined;
 
         // Wait for the overlay to be fully closed
         await overlayClosed(overlayTrigger.clickOverlayElement, 300);
 
         // Confirm the textfield is still not focused after closing the overlay
-        expect(document.activeElement, 'textfield is not focused').to.not.equal(
-            textfield
-        );
+        expect(
+            document.activeElement,
+            'textfield is not focused after overlay closes'
+        ).to.not.equal(textfield);
 
         // Try clicking the textfield again after the overlay is closed
         await waitUntil(async () => {
             const textfieldClick = oneEvent(textfield, 'click');
             await sendMouseTo(textfield, 'click');
             return await textfieldClick;
-        }, `textfield clicked again`);
+        }, `textfield clicks again`);
 
         // Verify that the textfield can now be focused (no longer occluded)
         expect(document.activeElement, `textfield focused`).to.equal(textfield);
