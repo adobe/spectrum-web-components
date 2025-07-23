@@ -674,7 +674,11 @@ export const debug = (): TemplateResult => {
                 I'm a tooltip in a different direction
             </sp-tooltip>
         </overlay-trigger>
-        <overlay-trigger placement="bottom" type="modal">
+        <overlay-trigger
+            .receivesFocus=${'false'}
+            placement="bottom"
+            type="modal"
+        >
             <sp-action-button slot="trigger">Open menu</sp-action-button>
             <sp-popover style="padding: 20px" slot="click-content">
                 <sp-menu>

@@ -555,7 +555,10 @@ export class Overlay extends ComputedOverlayBase {
                 escapeDeactivates: false,
             });
 
-            if (this.type === 'modal' || this.type === 'page') {
+            if (
+                (this.type === 'modal' || this.type === 'page') &&
+                this.receivesFocus !== 'false'
+            ) {
                 this._focusTrap.activate();
             }
         }
