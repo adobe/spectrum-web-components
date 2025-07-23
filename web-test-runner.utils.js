@@ -18,7 +18,7 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
-    concurrency: 1,
+    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -112,7 +112,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
-    concurrency: 1,
+    concurrency: 2,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -266,3 +266,23 @@ export const configuredVisualRegressionPlugin = () =>
         failureThresholdType: 'percent',
         failureThreshold: 3,
     });
+
+export const filterBrowserLogs = (log) => {
+    const { type, args } = log;
+
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('in dev mode') ||
+                    arg.includes('slottable-request'))
+        )
+    ) {
+        return false;
+    }
+
+    return true;
+};

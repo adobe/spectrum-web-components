@@ -74,11 +74,11 @@ describe('ProgressBar', () => {
 
     it('renders nothing when both content and label is absent', async () => {
         const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar label="myLabel" indeterminate></sp-progress-bar>
+            <sp-progress-bar></sp-progress-bar>
         `);
-        el.removeAttribute('label');
-        el.shadowRoot.textContent = '';
-        expect(el.getAttribute('label')).to.equal(null);
+        // el.removeAttribute('label');
+        // el.shadowRoot.textContent = '';
+        expect(el.getAttribute('label')).to.equal('');
         expect(el.shadowRoot.textContent?.trim()).to.equal('');
     });
 
