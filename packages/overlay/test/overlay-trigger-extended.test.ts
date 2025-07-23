@@ -237,6 +237,8 @@ describe('Overlay Trigger - extended', () => {
             return await textfieldClick;
         }, `Attempting to click textfield`);
 
+        // eslint-disable-next-line no-console
+        console.log('document.activeElement', document.activeElement);
         expect(document.activeElement === textfield, `textfield focused`).to.be
             .true;
 
