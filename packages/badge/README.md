@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 `<sp-badge>` elements display a small amount of color-categorized metadata. They're ideal for getting a user's attention.
 
@@ -7,23 +7,48 @@
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/badge?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/badge)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/badge?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/badge)
 
-```
+```bash
 yarn add @spectrum-web-components/badge
 ```
 
 Import the side effectful registration of `<sp-badge>` via:
 
-```
+```ts
 import '@spectrum-web-components/badge/sp-badge.js';
 ```
 
 When looking to leverage the `Badge` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { Badge } from '@spectrum-web-components/badge';
 ```
 
-## Sizes
+### Anatomy
+
+A badge is made up of the following parts:
+
+- **Icon**: an `<sp-icon-*>` element can be used to display an icon within the badge.
+- **Label**: text can be displayed within the badge by using the default slot.
+
+Badges can contain either a label, an icon, or both.
+
+```html demo
+<sp-badge size="s">Label only</sp-badge>
+<sp-badge size="s">
+    <sp-icon-checkmark-circle
+        label="Icon-only badge"
+        slot="icon"
+    ></sp-icon-checkmark-circle>
+</sp-badge>
+<sp-badge size="s">
+    <sp-icon-settings slot="icon"></sp-icon-settings>
+    Icon and label
+</sp-badge>
+```
+
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -32,6 +57,12 @@ import { Badge } from '@spectrum-web-components/badge';
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="s">Label</sp-badge>
+    <sp-badge size="s">
+        <sp-icon-checkmark-circle
+            label="Icon-only badge"
+            slot="icon"
+        ></sp-icon-checkmark-circle>
+    </sp-badge>
     <sp-badge size="s">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
         Icon and label
@@ -47,6 +78,12 @@ import { Badge } from '@spectrum-web-components/badge';
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="m">Label</sp-badge>
     <sp-badge size="m">
+        <sp-icon-checkmark-circle
+            label="Icon-only badge"
+            slot="icon"
+        ></sp-icon-checkmark-circle>
+    </sp-badge>
+    <sp-badge size="m">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
         Icon and label
     </sp-badge>
@@ -60,6 +97,12 @@ import { Badge } from '@spectrum-web-components/badge';
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="l">Label</sp-badge>
+    <sp-badge size="l">
+        <sp-icon-checkmark-circle
+            label="Icon-only badge"
+            slot="icon"
+        ></sp-icon-checkmark-circle>
+    </sp-badge>
     <sp-badge size="l">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
         Icon and label
@@ -75,6 +118,12 @@ import { Badge } from '@spectrum-web-components/badge';
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="xl">Label</sp-badge>
     <sp-badge size="xl">
+        <sp-icon-checkmark-circle
+            label="Icon-only badge"
+            slot="icon"
+        ></sp-icon-checkmark-circle>
+    </sp-badge>
+    <sp-badge size="xl">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
         Icon and label
     </sp-badge>
@@ -84,15 +133,22 @@ import { Badge } from '@spectrum-web-components/badge';
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
+#### Variants
 
 The `<sp-badge>` can be customized with either semantic or non-semantic variants.
 
-### Semantic
+##### Semantic
+
+When badges have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
+
+- **Positive**: approved, complete, success, new, purchased, licensed
+- **Informative**: active, in use, live, published
+- **Negative**: error, alert, rejected, failed
+- **Neutral**: archived, deleted, paused, draft, not started, ended
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
-    <sp-badge variant="accent">Informative</sp-badge>
+    <sp-badge variant="accent">Accent</sp-badge>
     <sp-badge variant="neutral">Neutral</sp-badge>
     <sp-badge variant="informative">Informative</sp-badge>
     <sp-badge variant="positive">Positive</sp-badge>
@@ -101,9 +157,9 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 </div>
 ```
 
-### Non-Semantic
+##### Non-Semantic
 
-Non-semantic badge colors are no longer supported directly by Spectrum and Spectrum Web Components. You can mimic their delivery via the following CSS Custom Properties. These values for the `variant` attribute/property have not been marked as deprecated, but will no longer achieve the results you may have relied on in the past.
+When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
 
 ```html demo
 <div style="display: flex; gap: var(--spectrum-spacing-75); flex-wrap:wrap;">
@@ -124,9 +180,9 @@ Non-semantic badge colors are no longer supported directly by Spectrum and Spect
 </div>
 ```
 
-## Fixed
+##### Fixed positioning
 
-When you'd like to have the `<sp-badge>` display as if "fixed" to the edge of a UI, the `fixed` attribute/property can be leveraged to alter the border rounding based on the position you would like to achieve:
+`<sp-badge>` can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
 
 ```html
 <div
@@ -158,4 +214,41 @@ When you'd like to have the `<sp-badge>` display as if "fixed" to the edge of a 
         inline-start
     </sp-badge>
 </div>
+```
+
+### Behaviors
+
+Badges are not interactive by default.
+
+When a badge's label is too long for the available horizontal space, it wraps to form another line. Text wrapping can be enforced when a `max-inline-size` is applied to the badge. If there is no room for a second line of text, the badge should truncate and include a tooltip to expose the full text upon hover.
+
+```html demo
+<sp-badge style="max-inline-size: 350px;">
+    Wikipedia is the best thing ever. Anyone in the world can write anything
+    they want about any subject so you know you are getting the best possible
+    information.
+</sp-badge>
+```
+
+### Accessibility
+
+#### Always include a label
+
+Badges should always have a label for accessibility and clear comprehension. When the label is not defined, a badge becomes icon-only. An icon-only badge is best for very small spaces, and it should include a tooltip on hover to provide more context for the icon's meaning.
+
+Remember that a tooltip does not replace an accessible label.
+
+```html demo
+<overlay-trigger>
+    <sp-badge size="m" slot="trigger">
+        <sp-icon-checkmark-circle
+            label="Labels are important"
+            slot="icon"
+        ></sp-icon-checkmark-circle>
+    </sp-badge>
+    <sp-tooltip placement="top" slot="hover-content">
+        <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
+        Labels are important
+    </sp-tooltip>
+</overlay-trigger>
 ```
