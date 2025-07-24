@@ -1148,13 +1148,15 @@ export class Overlay extends ComputedOverlayBase {
         return html`
             ${this.type === 'modal' || this.type === 'page'
                 ? html`
-                      <sp-underlay
-                          ?open=${this.open}
-                          @close=${() => {
-                              this.open = false;
-                          }}
-                          style="--spectrum-underlay-background-color: transparent"
-                      ></sp-underlay>
+                      <popover>
+                          <sp-underlay
+                              ?open=${this.open}
+                              @close=${() => {
+                                  this.open = false;
+                              }}
+                              style="--spectrum-underlay-background-color: transparent"
+                          ></sp-underlay>
+                      </popover>
                   `
                 : ''}
             ${this.renderPopover()}

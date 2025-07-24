@@ -737,7 +737,7 @@ export const debug = (): TemplateResult => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
 
-        <overlay-trigger type="modal">
+        <overlay-trigger type="auto">
             <sp-button variant="primary" slot="trigger">Button</sp-button>
             <sp-popover slot="click-content" placement="bottom" tip>
                 Popover content
@@ -770,7 +770,11 @@ export const debug = (): TemplateResult => {
             </sp-popover>
         </overlay-trigger>
         <div class="container"></div>
-        <sp-button variant="primary" @click=${openModalOverlay}>
+        <sp-button
+            style="z-index: 1000"
+            variant="primary"
+            @click=${openModalOverlay}
+        >
             Modal overlay
         </sp-button>
         <overlay-trigger placement="bottom">
