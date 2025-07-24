@@ -14,5 +14,6 @@ import { firefox } from './web-test-runner.utils.js';
 import standard from './web-test-runner.config.ci.js';
 
 standard.browsers = [firefox];
+standard.concurrency = 1;
 
 export default standard;
