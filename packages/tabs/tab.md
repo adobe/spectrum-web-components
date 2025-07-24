@@ -46,30 +46,18 @@ The `<sp-tab>` element consists of the following:
 
 #### Icon only
 
-For tabs that have an icon and no visible label, the icon should have a `label` attribute in order to set the `aria-label` of the icon. Icons should not be used just as decoration. If the tab item does not have a visible label, it must still have a tooltip to disclose the label.
+For tabs that have an icon and no visible label, the icon should have a `label` attribute in order to set the `aria-label` of the icon. Icons should not be used just as decoration.
 
 ```html
 <sp-tabs>
-<sp-tooltip slot="icon">
-    <sp-tab value="comments">
-        <sp-icon-comment
-            slot="icon"
-            label="Viewing your comments"
-             ></sp-icon-checkmark>
-             Comments
-     </sp-tab>
-</sp-tooltip>
-<sp-tab value="check">
-    <sp-icon-checkmark
+    <sp-tab value="complete">
+        <sp-icon-checkmark
             slot="icon"
             label="Checking your work"
         ></sp-icon-checkmark>
-</sp-tab>
-    <sp-tab-panel value="comments">
-        A screenreader will read this tab as "Viewing your comments"
-       </sp-tab-panel?
-    <sp-tab-panel value="check">
-        A screenreader will read this tab as "Checking your work
+    </sp-tab>
+    <sp-tab-panel value="complete">
+        A screenreader will read this tab as "Checking your work"
     </sp-tab-panel>
 </sp-tabs>
 ```
