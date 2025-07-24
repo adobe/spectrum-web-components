@@ -24,9 +24,9 @@ When looking to leverage the `Divider` base class as a type and/or for extension
 import { Divider } from '@spectrum-web-components/divider';
 ```
 
-## Options
+### Options
 
-### Horizontal
+#### Horizontal
 
 By default, dividers are horizontal and should be used for separating content vertically.
 
@@ -71,7 +71,7 @@ By default, dividers are horizontal and should be used for separating content ve
 </sp-tab-panel>
 </sp-tabs>
 
-### Vertical
+#### Vertical
 
 Vertical dividers are used to separate content horizontally.
 
@@ -140,7 +140,7 @@ When a vertical Divider is used inside of a flex container, use `align-self: str
 </sp-tab-panel>
 </sp-tabs>
 
-### Static color
+#### Static color
 
 Use the static color option when a divider needs to be placed on top of a color background or visual. Static color dividers are available in black or white regardless of color theme.
 
@@ -183,14 +183,14 @@ Use the static color option when a divider needs to be placed on top of a color 
 </sp-tab-panel>
 </sp-tabs>
 
-## Accessibility
+### Accessibility
 
 The `<sp-divider>` element implements the following accessibility features:
 
 - **ARIA Role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
 - **Orientation Support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
 
-### Best practices
+#### Best practices
 
 - Dividers (medium or large) can be used in combination with header text to create a section or page title. In such cases, place the divider below the header.
 - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds.
