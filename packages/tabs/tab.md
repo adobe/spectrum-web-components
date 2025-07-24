@@ -50,16 +50,22 @@ For tabs that have an icon and no visible label, the icon should have a `label` 
 
 ```html
 <sp-tabs>
-    <sp-tab value="complete">
+    <sp-tab value="comments">
+        <sp-tooltip slot="icon">
+            <sp-icon-comment
+                slot="icon"
+                label="Viewing your comments"
+             ></sp-icon-checkmark>
+             Comments
+        </sp-tooltip>
         <sp-icon-checkmark
             slot="icon"
             label="Checking your work"
         ></sp-icon-checkmark>
     </sp-tab>
-    <sp-tab-panel value="complete">
-        A screenreader will read this tab as "Checking your work"
+    <sp-tab-panel value="comments">
+        A screenreader will read this tab as "Viewing your comments"
     </sp-tab-panel>
-    <sp-tabs></sp-tabs>
 </sp-tabs>
 ```
 
