@@ -245,10 +245,6 @@ describe('Overlay Trigger - extended', () => {
         // Focus the textfield by clicking it (simulates user interaction)
         await sendMouseTo(textfield, 'click');
 
-        if (document.activeElement !== textfield) {
-            textfield.focus();
-        }
-
         await waitUntil(
             () => document.activeElement === textfield,
             `textfield focused`,
@@ -309,11 +305,6 @@ describe('Overlay Trigger - extended', () => {
 
         // Try clicking the textfield again after the overlay is closed
         await sendMouseTo(textfield, 'click');
-
-        // If click didn't focus, focus directly (common in test environments)
-        if (document.activeElement !== textfield) {
-            textfield.focus();
-        }
 
         await waitUntil(
             () => document.activeElement === textfield,
