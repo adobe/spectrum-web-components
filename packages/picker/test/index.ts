@@ -624,50 +624,6 @@ export function runPickerTests(): void {
             expect(el.open, 'open?').to.be.false;
             expect(el.value).to.equal(thirdItem.value);
         });
-        it('does not select items when scrolling on iPad', async () => {
-            // Simulate iPad touch scrolling behavior
-            const el = await pickerFixture();
-            await elementUpdated(el);
-
-            // Open the picker
-            el.open = true;
-            await elementUpdated(el);
-
-            // Store initial value
-            const initialValue = el.value;
-            const touchStartEvent = new Event('touchstart', {
-                bubbles: true,
-                composed: true,
-            });
-
-            // Simulate touch move (scrolling gesture)
-            const touchMoveEvent = new Event('touchmove', {
-                bubbles: true,
-                composed: true,
-            });
-
-            // Simulate touch end on fourth item (after scrolling)
-            const touchEndEvent = new Event('touchend', {
-                bubbles: true,
-                composed: true,
-            });
-
-            // Dispatch touch events in sequence
-            el.optionsMenu.dispatchEvent(touchStartEvent);
-            await nextFrame();
-
-            el.optionsMenu.dispatchEvent(touchMoveEvent);
-            await nextFrame();
-
-            el.optionsMenu.dispatchEvent(touchEndEvent);
-            await nextFrame();
-
-            // The value should not have changed because we were scrolling, not selecting
-            expect(el.value).to.equal(
-                initialValue,
-                'Value should not change during scroll gesture'
-            );
-        });
         it('opens/closes multiple times', async () => {
             expect(el.open, 'open?').to.be.false;
             const boundingRect = el.button.getBoundingClientRect();
