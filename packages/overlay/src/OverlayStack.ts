@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -26,6 +27,10 @@ class OverlayStack {
     private root: HTMLElement = document.body;
 
     stack: Overlay[] = [];
+
+    private originalBodyOverflow = '';
+
+    private bodyScrollBlocked = false;
 
     constructor() {
         this.bindEvents();
@@ -79,6 +84,25 @@ class OverlayStack {
             this.stack.splice(overlayIndex, 1);
         }
         overlay.open = false;
+
+        this.manageBodyScroll();
+    }
+
+    /**
+     * Manage body scroll blocking based on modal/page overlays
+     */
+    private manageBodyScroll(): void {
+        const shouldBlock = this.stack.some(
+            (overlay) => overlay.type === 'modal' || overlay.type === 'page'
+        );
+        if (shouldBlock && !this.bodyScrollBlocked) {
+            this.originalBodyOverflow = document.body.style.overflow || '';
+            document.body.style.overflow = 'hidden';
+            this.bodyScrollBlocked = true;
+        } else if (!shouldBlock && this.bodyScrollBlocked) {
+            document.body.style.overflow = this.originalBodyOverflow;
+            this.bodyScrollBlocked = false;
+        }
     }
 
     /**
@@ -151,14 +175,14 @@ class OverlayStack {
 
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
+        if (event.defaultPrevented) return; // Don't handle if already handled
         if (!this.stack.length) return;
         const last = this.stack[this.stack.length - 1];
         if (last?.type === 'page') {
             event.preventDefault();
             return;
         }
-        if (last?.type === 'manual') {
-            // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
+        if (last?.type === 'manual' || last?.type === 'modal') {
             this.closeOverlay(last);
             return;
         }
@@ -213,11 +237,29 @@ class OverlayStack {
                     const path = event.composedPath();
                     this.stack.forEach((overlayEl) => {
                         const inPath = path.find((el) => el === overlayEl);
+
+                        // Check if the trigger element is inside this overlay
+                        const triggerInOverlay =
+                            overlay.triggerElement &&
+                            overlay.triggerElement instanceof HTMLElement &&
+                            overlayEl.contains &&
+                            overlayEl.contains(overlay.triggerElement);
+                        console.log(
+                            'overlayEl.type:',
+                            overlayEl.type,
+                            'triggerInOverlay:',
+                            triggerInOverlay,
+                            'inPath:',
+                            !!inPath
+                        );
+
                         if (
                             !inPath &&
+                            !triggerInOverlay &&
                             overlayEl.type !== 'manual' &&
                             overlayEl.type !== 'modal'
                         ) {
+                            console.log('Closing overlay:', overlayEl);
                             this.closeOverlay(overlayEl);
                         }
                     });
@@ -248,6 +290,7 @@ class OverlayStack {
             overlay.addEventListener('beforetoggle', this.handleBeforetoggle, {
                 once: true,
             });
+            this.manageBodyScroll();
         });
     }
 
