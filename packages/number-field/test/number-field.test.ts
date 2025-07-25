@@ -828,6 +828,7 @@ describe('NumberField', () => {
             ],
         });
         await oneEvent(el, 'input');
+        await elementUpdated(el);
         let value = 50 + inputSpy.callCount;
         expect(el.formattedValue).to.equal(String(value));
         expect(el.valueAsString).to.equal(String(value));
@@ -841,6 +842,7 @@ describe('NumberField', () => {
                 },
             ],
         });
+        await elementUpdated(el);
         value = value - inputSpy.callCount;
         expect(el.formattedValue).to.equal(String(value));
         expect(el.valueAsString).to.equal(String(value));
@@ -854,12 +856,14 @@ describe('NumberField', () => {
                 },
             ],
         });
+        await elementUpdated(el);
         value = value - inputSpy.callCount;
         expect(el.formattedValue).to.equal(String(value));
         expect(el.valueAsString).to.equal(String(value));
         expect(el.value).to.equal(value);
         inputSpy.resetHistory();
         await oneEvent(el, 'input');
+        await elementUpdated(el);
         value = value - inputSpy.callCount;
         expect(el.formattedValue).to.equal(String(value));
         expect(el.valueAsString).to.equal(String(value));
@@ -872,6 +876,7 @@ describe('NumberField', () => {
                 },
             ],
         });
+        await elementUpdated(el);
         let framesToWait = FRAMES_PER_CHANGE;
         while (framesToWait) {
             // input is only processed onces per FRAMES_PER_CHANGE number of frames
