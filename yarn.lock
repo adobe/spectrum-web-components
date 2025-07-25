@@ -3745,11 +3745,11 @@ __metadata:
   linkType: hard
 
 "@lit/react@npm:^1.0.4":
-  version: 1.0.6
-  resolution: "@lit/react@npm:1.0.6"
+  version: 1.0.8
+  resolution: "@lit/react@npm:1.0.8"
   peerDependencies:
-    "@types/react": 17 || 18
-  checksum: 10c0/9d80548dbf9fde8dad1ed82a0dd570428d98700db39ebd7e2b86552bb53bd8e371047332db5a1498ca80fff08d245f5b077397e885a6cca352301ee94ba707c6
+    "@types/react": 17 || 18 || 19
+  checksum: 10c0/18bf3eb6584fa989e0ad40988b349a4401da1cecd5bf1c6edfc1c5caed80037852a4ebe5685b04941e5b28ccf93e740676dae32773d7ae44b1479b96538392b1
   languageName: node
   linkType: hard
 
