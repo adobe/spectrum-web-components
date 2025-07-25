@@ -36,7 +36,14 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
-const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
+const textfieldTypes = [
+    'text',
+    'url',
+    'tel',
+    'email',
+    'password',
+    'number',
+] as const;
 export type TextfieldType = (typeof textfieldTypes)[number];
 
 /**
