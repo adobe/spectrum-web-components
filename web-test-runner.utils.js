@@ -18,34 +18,18 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
-});
-
-/**
- * @todo Remove this configuration and its usage in the Coveralls CI workflow
- * once the Playwright version mismatch between @web/test-runner-playwright
- * and the installed Playwright version is resolved.
- */
-export const coverallsChromium = playwrightLauncher({
-    product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
-        headless: true,
-    },
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -62,13 +46,14 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
 
 export const chromiumWithMemoryToolingCI = playwrightLauncher({
     product: 'chromium',
-    concurrency: 2,
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -85,6 +70,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
+            '--lang=en-US',
         ],
     },
 });
@@ -92,7 +78,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
@@ -126,7 +112,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
-    concurrency: 4,
+    concurrency: 2,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -277,4 +263,26 @@ export const configuredVisualRegressionPlugin = () =>
                 ...nameParts
             );
         },
+        failureThresholdType: 'percent',
+        failureThreshold: 3,
     });
+
+export const filterBrowserLogs = (log) => {
+    const { type, args } = log;
+
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('in dev mode') ||
+                    arg.includes('slottable-request'))
+        )
+    ) {
+        return false;
+    }
+
+    return true;
+};

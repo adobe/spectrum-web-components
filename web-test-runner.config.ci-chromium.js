@@ -14,5 +14,6 @@ import { chromium } from './web-test-runner.utils.js';
 import standard from './web-test-runner.config.ci.js';
 
 standard.browsers = [chromium];
+standard.concurrency = 1;
 
 export default standard;
