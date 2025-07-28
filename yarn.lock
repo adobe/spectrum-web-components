@@ -23058,9 +23058,9 @@ __metadata:
   linkType: hard
 
 "posthtml-attrs-parser@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "posthtml-attrs-parser@npm:1.1.0"
-  checksum: 10c0/7bab93ac1931188d10a69c450c350959b80b1e7bb147ed9bb31964f4d2222dd750467a7039ae0528776adc268352ec04a56935cec148767e727f9dc167c4205b
+  version: 1.1.2
+  resolution: "posthtml-attrs-parser@npm:1.1.2"
+  checksum: 10c0/2aac87de69e6514771982cf8d84c4e146608dd7684b07dc1244650945a8cdedcbf4d169420993ee82fa3e5130b1fb7cbf4f80597b25e7fd926089f99f6000f08
   languageName: node
   linkType: hard
 
