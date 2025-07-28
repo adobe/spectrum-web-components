@@ -4,8 +4,6 @@ class OverlayStack {
   constructor() {
     this.root = document.body;
     this.stack = [];
-    this.originalBodyOverflow = "";
-    this.bodyScrollBlocked = false;
     this.handleScroll = (event) => {
       if (event.target !== document && event.target !== document.documentElement && event.target !== document.body) {
         return;
@@ -77,14 +75,13 @@ class OverlayStack {
     };
     this.handleKeydown = (event) => {
       if (event.code !== "Escape") return;
-      if (event.defaultPrevented) return;
       if (!this.stack.length) return;
       const last = this.stack[this.stack.length - 1];
       if ((last == null ? void 0 : last.type) === "page") {
         event.preventDefault();
         return;
       }
-      if ((last == null ? void 0 : last.type) === "manual" || (last == null ? void 0 : last.type) === "modal") {
+      if ((last == null ? void 0 : last.type) === "manual") {
         this.closeOverlay(last);
         return;
       }
@@ -111,23 +108,6 @@ class OverlayStack {
       this.stack.splice(overlayIndex, 1);
     }
     overlay.open = false;
-    this.manageBodyScroll();
-  }
-  /**
-   * Manage body scroll blocking based on modal/page overlays
-   */
-  manageBodyScroll() {
-    const shouldBlock = this.stack.some(
-      (overlay) => overlay.type === "modal" || overlay.type === "page"
-    );
-    if (shouldBlock && !this.bodyScrollBlocked) {
-      this.originalBodyOverflow = document.body.style.overflow || "";
-      document.body.style.overflow = "hidden";
-      this.bodyScrollBlocked = true;
-    } else if (!shouldBlock && this.bodyScrollBlocked) {
-      document.body.style.overflow = this.originalBodyOverflow;
-      this.bodyScrollBlocked = false;
-    }
   }
   /**
    * Get an array of Overlays that all share the same trigger element.
@@ -169,17 +149,7 @@ class OverlayStack {
           const path = event.composedPath();
           this.stack.forEach((overlayEl) => {
             const inPath = path.find((el) => el === overlayEl);
-            const triggerInOverlay = overlay.triggerElement && overlay.triggerElement instanceof HTMLElement && overlayEl.contains && overlayEl.contains(overlay.triggerElement);
-            console.log(
-              "overlayEl.type:",
-              overlayEl.type,
-              "triggerInOverlay:",
-              triggerInOverlay,
-              "inPath:",
-              !!inPath
-            );
-            if (!inPath && !triggerInOverlay && overlayEl.type !== "manual" && overlayEl.type !== "modal") {
-              console.log("Closing overlay:", overlayEl);
+            if (!inPath && overlayEl.type !== "manual" && overlayEl.type !== "modal") {
               this.closeOverlay(overlayEl);
             }
           });
@@ -206,7 +176,6 @@ class OverlayStack {
       overlay.addEventListener("beforetoggle", this.handleBeforetoggle, {
         once: true
       });
-      this.manageBodyScroll();
     });
   }
   remove(overlay) {

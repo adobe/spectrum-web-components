@@ -40,7 +40,6 @@ import {
   SlottableRequestEvent
 } from "./slottable-request-event.dev.js";
 import styles from "./overlay.css.js";
-import "@spectrum-web-components/underlay/sp-underlay.js";
 const browserSupportsPopover = "showPopover" in document.createElement("div");
 let ComputedOverlayBase = OverlayPopover(AbstractOverlay);
 if (!browserSupportsPopover) {
@@ -207,7 +206,7 @@ const _Overlay = class _Overlay extends ComputedOverlayBase {
    * Determines the value for the popover attribute based on the overlay type.
    *
    * @private
-   * @returns {'auto' | 'manual' | 'hint' | undefined} The popover value or undefined if not applicable.
+   * @returns {'auto' | 'manual' | undefined} The popover value or undefined if not applicable.
    */
   get popoverValue() {
     const hasPopoverAttribute = "popover" in this;
@@ -216,8 +215,10 @@ const _Overlay = class _Overlay extends ComputedOverlayBase {
     }
     switch (this.type) {
       case "modal":
-        return "manual";
+        return "auto";
       case "page":
+        return "manual";
+      case "hint":
         return "manual";
       default:
         return this.type;
@@ -287,16 +288,13 @@ const _Overlay = class _Overlay extends ComputedOverlayBase {
       return;
     }
     const focusEl = await this.makeTransition(targetOpenState);
-    console.log(this.dialogEl.querySelector("sp-close-button"));
     if (this.open !== targetOpenState) {
       return;
     }
     if (targetOpenState) {
       const focusTrap = await import("focus-trap");
       this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-        allowOutsideClick: (event) => {
-          return !event.isTrusted;
-        },
+        initialFocus: focusEl || void 0,
         tabbableOptions: {
           getShadowRoot: true
         },
@@ -307,7 +305,7 @@ const _Overlay = class _Overlay extends ComputedOverlayBase {
         // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
         escapeDeactivates: false
       });
-      if ((this.type === "modal" || this.type === "page") && this.receivesFocus !== "false") {
+      if (this.type === "modal" || this.type === "page") {
         this._focusTrap.activate();
       }
     }
@@ -715,17 +713,6 @@ const _Overlay = class _Overlay extends ComputedOverlayBase {
    */
   render() {
     return html`
-            ${this.type === "modal" || this.type === "page" ? html`
-                      <popover>
-                          <sp-underlay
-                              ?open=${this.open}
-                              @close=${() => {
-      this.open = false;
-    }}
-                              style="--spectrum-underlay-background-color: transparent"
-                          ></sp-underlay>
-                      </popover>
-                  ` : ""}
             ${this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
