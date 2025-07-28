@@ -131,8 +131,7 @@ The color wheel supports a wide variety of color formats for setting and getting
         </sp-table-row>
     </sp-table-body>
 </sp-table>
-
----
+</br>
 
 #### Step Size
 
