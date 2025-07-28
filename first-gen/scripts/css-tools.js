@@ -34,7 +34,7 @@ const getPackagePath = (packageName) => {
     // Escape hatch for local packages: @spectrum-web-components
     if (packageName.startsWith('@spectrum-web-components')) {
         return path.resolve(
-            path.join(__dirname, '..', 'node_modules', packageName)
+            path.join(__dirname, '..', '..', 'node_modules', packageName)
         );
     }
 

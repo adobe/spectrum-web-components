@@ -25,7 +25,7 @@ const rootDir = path.join(__dirname, '../../../');
 
 const disclaimer = `
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -82,6 +82,7 @@ let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 const defaultIconImport = `import { DefaultIcon as AlternateIcon } from '../DefaultIcon.js';\r\n`;
 
 async function buildIcons(icons, tag, iconsNameList) {
+    console.log('Building icons for', { icons, tag, iconsNameList });
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
         let id = path
@@ -329,11 +330,11 @@ async function buildIcons(icons, tag, iconsNameList) {
 }
 
 const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
+    await fg(`${rootDir}/../node_modules/${S1IConsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
+    await fg(`${rootDir}/../node_modules/${S2IConsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
