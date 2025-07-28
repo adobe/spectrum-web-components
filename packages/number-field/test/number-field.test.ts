@@ -836,21 +836,8 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
-
             // Click the step-up button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: buttonUpPosition,
-                    },
-                ],
-            });
+            await sendMouseTo(buttonUp, 'click);
 
             await elementUpdated(el);
 
@@ -868,21 +855,8 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition: [number, number] = [
-                buttonDownRect.x + buttonDownRect.width / 2,
-                buttonDownRect.y + buttonDownRect.height / 2,
-            ];
-
             // Click the step-down button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: buttonDownPosition,
-                    },
-                ],
-            });
+            await sendMouseTo(buttonDown, 'click);
 
             await elementUpdated(el);
 
