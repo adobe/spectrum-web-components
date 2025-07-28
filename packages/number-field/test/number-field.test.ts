@@ -55,7 +55,10 @@ import {
 } from '../../../test/testing-helpers.js';
 
 // Helper function to set up input and change spies
-function setupEventSpies(element: NumberField) {
+function setupEventSpies(element: NumberField): {
+    inputSpy: SinonSpy;
+    changeSpy: SinonSpy;
+} {
     const inputSpy = spy();
     const changeSpy = spy();
     element.addEventListener('input', () => inputSpy());
