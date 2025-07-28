@@ -185,7 +185,8 @@ slot[name="longpress-describedby-descriptor"] {
         transition-behavior: allow-discrete;
     }
 
-    .dialog:popover-open {
+    .dialog:popover-open,
+    .dialog:modal {
         display: flex;
     }
 }

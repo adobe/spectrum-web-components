@@ -18,6 +18,7 @@ import {
     InteractionController,
     InteractionTypes,
     lastInteractionType,
+    SAFARI_FOCUS_RING_CLASS,
 } from './InteractionController.js';
 
 const HOVER_DELAY = 300;
@@ -36,6 +37,7 @@ export class HoverController extends InteractionController {
     handleKeyup(event: KeyboardEvent): void {
         if (event.code === 'Tab' || event.code === 'Escape') {
             this.open = true;
+            this.removeSafariFocusRingClass();
         }
     }
 
@@ -48,14 +50,17 @@ export class HoverController extends InteractionController {
             isWebKit() &&
             this.target[lastInteractionType] === InteractionTypes.click
         ) {
+            this.target.classList.add(SAFARI_FOCUS_RING_CLASS);
             return;
         }
 
         this.open = true;
         this.focusedin = true;
+        this.removeSafariFocusRingClass();
     }
 
     handleTargetFocusout(): void {
+        this.removeSafariFocusRingClass();
         this.focusedin = false;
         if (this.pointerentered) return;
         this.open = false;
@@ -198,5 +203,13 @@ export class HoverController extends InteractionController {
             () => this.handleHostPointerleave(),
             { signal }
         );
+    }
+
+    private removeSafariFocusRingClass(): void {
+        if (
+            isWebKit() &&
+            this.target.classList.contains(SAFARI_FOCUS_RING_CLASS)
+        )
+            this.target.classList.remove(SAFARI_FOCUS_RING_CLASS);
     }
 }

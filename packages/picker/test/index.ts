@@ -1182,42 +1182,22 @@ export function runPickerTests(): void {
                 input1.remove();
                 input2.remove();
             });
-            it('tabs forward through the element', async function () {
-                // Increase timeout for this test to avoid timeout failures in webkit
-                this.timeout(10000);
-
+            it('tabs forward through the element', async () => {
                 let focused: Promise<CustomEvent<FocusEvent>>;
-
-                // start at input1
-                input1.focus();
-                await nextFrame();
-                expect(document.activeElement === input1, 'focuses input 1').to
-                    .true;
-                // tab to the picker
-                focused = oneEvent(el, 'focus');
-                await sendKeys({ press: 'Tab' });
-
-                // Increase timeout for focus event to prevent flakiness
-                try {
-                    await Promise.race([
-                        focused,
-                        new Promise((_, reject) =>
-                            setTimeout(
-                                () =>
-                                    reject(new Error('Focus event timed out')),
-                                5000
-                            )
-                        ),
-                    ]);
-                } catch (error) {
-                    console.error('Focus event timed out:', error);
-                    el.focus();
+                if (!isSafari) {
+                    // start at input1
+                    input1.focus();
                     await nextFrame();
-                    expect(
-                        document.activeElement === el,
-                        'element focused manually after timeout'
-                    ).to.be.true;
+                    expect(document.activeElement === input1, 'focuses input 1')
+                        .to.true;
+                    // tab to the picker
+                    focused = oneEvent(el, 'focus');
+                    await sendKeys({ press: 'Tab' });
+                } else {
+                    focused = oneEvent(el, 'focus');
+                    el.focus();
                 }
+                await focused;
 
                 expect(el.focused, 'focused').to.be.true;
                 expect(el.open, 'closed').to.be.false;

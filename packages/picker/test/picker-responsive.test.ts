@@ -120,7 +120,6 @@ describe('Picker, responsive', () => {
              */
             el.isMobile.matches = true;
             el.bindEvents();
-            await elementUpdated(el);
 
             // Wait until the element is fully updated after viewport change
             await waitUntil(

@@ -22,8 +22,6 @@ import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/popover/sp-popover.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
@@ -790,28 +788,5 @@ export const BackgroundClickTest = (): TemplateResult => {
     `;
 };
 BackgroundClickTest.swc_vrt = {
-    skip: true,
-};
-
-export const PickerInModal = (): TemplateResult => {
-    return html`
-        <sp-button id="trigger">Overlay Trigger</sp-button>
-        <sp-overlay trigger="trigger@click" placement="bottom">
-            <sp-popover>
-                <sp-picker
-                    label="What would you like to do?"
-                    value="item-2"
-                    id="picker-icons"
-                    style="margin: 20px"
-                >
-                    <sp-menu-item>Save</sp-menu-item>
-                    <sp-menu-item>Finish</sp-menu-item>
-                    <sp-menu-item>Review</sp-menu-item>
-                </sp-picker>
-            </sp-popover>
-        </sp-overlay>
-    `;
-};
-PickerInModal.swc_vrt = {
     skip: true,
 };

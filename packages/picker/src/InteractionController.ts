@@ -131,10 +131,7 @@ export class InteractionController implements ReactiveController {
                     }
                 );
             });
-            this.overlay.type =
-                this.host.isMobile.matches && !this.host.forcePopover
-                    ? 'modal'
-                    : 'auto';
+            this.overlay.type = this.host.isMobile.matches ? 'modal' : 'auto';
             this.overlay.triggerElement = this.host as HTMLElement;
             this.overlay.placement =
                 this.host.isMobile.matches && !this.host.forcePopover

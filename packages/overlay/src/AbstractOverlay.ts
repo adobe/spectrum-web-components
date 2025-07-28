@@ -162,6 +162,10 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     /* c8 ignore next 3 */
+    protected async manageDialogOpen(): Promise<void> {
+        return;
+    }
+    /* c8 ignore next 3 */
     protected async managePopoverOpen(): Promise<void> {
         return;
     }
@@ -240,6 +244,7 @@ export class AbstractOverlay extends SpectrumElement {
         content?: HTMLElement,
         optionsV1?: OverlayOptionsV1
     ): Promise<Overlay | (() => void)> {
+        /* eslint-disable */
         await import('@spectrum-web-components/overlay/sp-overlay.js');
         const v2 = arguments.length === 2;
         const overlayContent = content || triggerOrContent;

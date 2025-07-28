@@ -20,6 +20,7 @@ export enum InteractionTypes {
 }
 
 export const lastInteractionType = Symbol('lastInteractionType');
+export const SAFARI_FOCUS_RING_CLASS = 'remove-focus-ring-safari-hack';
 
 export type ControllerOptions = {
     overlay?: AbstractOverlay;
@@ -74,6 +75,7 @@ export class InteractionController implements ReactiveController {
                 this.overlay.open = true;
                 this.target[lastInteractionType] = this.type;
             });
+        /* eslint-disable */
         import('@spectrum-web-components/overlay/sp-overlay.js');
     }
 

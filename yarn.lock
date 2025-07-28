@@ -6960,7 +6960,6 @@ __metadata:
     "@spectrum-web-components/reactive-controllers": "npm:1.7.0"
     "@spectrum-web-components/shared": "npm:1.7.0"
     "@spectrum-web-components/theme": "npm:1.7.0"
-    focus-trap: "npm:^7.6.4"
   languageName: unknown
   linkType: soft
 
@@ -17936,15 +17935,6 @@ __metadata:
   version: 1.1.0
   resolution: "fn.name@npm:1.1.0"
   checksum: 10c0/8ad62aa2d4f0b2a76d09dba36cfec61c540c13a0fd72e5d94164e430f987a7ce6a743112bbeb14877c810ef500d1f73d7f56e76d029d2e3413f20d79e3460a9a
-  languageName: node
-  linkType: hard
-
-"focus-trap@npm:^7.6.4":
-  version: 7.6.4
-  resolution: "focus-trap@npm:7.6.4"
-  dependencies:
-    tabbable: "npm:^6.2.0"
-  checksum: 10c0/ed810d47fd904a5e0269e822d98e634c6cbdd7222046c712ef299bdd26a422db754e3cec04e6517065b12be4b47f65c21f6244e0c07a308b1060985463d518cb
   languageName: node
   linkType: hard
 
@@ -31566,13 +31556,6 @@ __metadata:
   version: 6.13.0
   resolution: "systemjs@npm:6.13.0"
   checksum: 10c0/c05fac4ff634eb88ccbc2a336f8f88b88bfb18824f2dabccb887a5406e74f81aaab807f33dfa7c919d8f53a76b15803b956d26c82272bc0fabeb438d9a1258e5
-  languageName: node
-  linkType: hard
-
-"tabbable@npm:^6.2.0":
-  version: 6.2.0
-  resolution: "tabbable@npm:6.2.0"
-  checksum: 10c0/ced8b38f05f2de62cd46836d77c2646c42b8c9713f5bd265daf0e78ff5ac73d3ba48a7ca45f348bafeef29b23da7187c72250742d37627883ef89cbd7fa76898
   languageName: node
   linkType: hard
 
