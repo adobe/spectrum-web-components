@@ -48,6 +48,8 @@ Badges can contain either a label, an icon, or both.
 
 ### Options
 
+It is not recommended to make badges interactive. Consider using a different component if you need interactivity, such as buttons, tags, or links.
+
 #### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
@@ -135,7 +137,19 @@ Badges can contain either a label, an icon, or both.
 
 #### Variants
 
-The `<sp-badge>` can be customized with either semantic or non-semantic variants.
+The `<sp-badge>` can be customized with either semantic or non-semantic variants. Badges are intended as display elements (like status lights), so avoid using badges for critical actions.
+
+**Do ✅**
+
+- Use badges for status indication
+- Use visible labels most often
+- Use icon-only badges with `aria-label`
+- Use badges for supplemental information
+
+**Don't ❌**
+
+- Use badges for critical actions
+- Overwhelm a user with too much critical information
 
 ##### Semantic
 
@@ -223,18 +237,25 @@ Badges are not interactive by default.
 When a badge's label is too long for the available horizontal space, it wraps to form another line. Text wrapping can be enforced when a `max-inline-size` is applied to the badge. If there is no room for a second line of text, the badge should truncate and include a tooltip to expose the full text upon hover.
 
 ```html demo
-<sp-badge style="max-inline-size: 350px;">
-    Wikipedia is the best thing ever. Anyone in the world can write anything
-    they want about any subject so you know you are getting the best possible
-    information.
-</sp-badge>
+<overlay-trigger>
+    <sp-badge style="max-inline-size: 350px;" slot="trigger">
+        Wikipedia is the best thing ever. Anyone in the world can write anything
+        they want about any subject so you know you are getting the best
+        possible information.
+    </sp-badge>
+    <sp-tooltip slot="hover-content">
+        Wikipedia is the best thing ever. Anyone in the world can write anything
+        they want about any subject so you know you are getting the best
+        possible information.
+    </sp-tooltip>
+</overlay-trigger>
 ```
 
 ### Accessibility
 
 #### Always include a label
 
-Badges should always have a label for accessibility and clear comprehension. When the label is not defined, a badge becomes icon-only. An icon-only badge is best for very small spaces, and it should include a tooltip on hover to provide more context for the icon's meaning.
+Badges should always have a label for accessibility and clear comprehension. When the label is not defined, a badge becomes icon-only. If a visible label isn't specified, an `aria-label` must be provided to the icon for accessibility. An icon-only badge is best for very small spaces, and it should include a tooltip on hover to provide more context for the icon's meaning.
 
 Remember that a tooltip does not replace an accessible label.
 
@@ -252,3 +273,8 @@ Remember that a tooltip does not replace an accessible label.
     </sp-tooltip>
 </overlay-trigger>
 ```
+
+#### Keyboard interactions
+
+- <kbd>Tab</kbd>: Places focus on the badge if it is interactive.
+- <kbd>Space</kbd> or <kbd>Enter</kbd>: Filters results by the selected badge or performs the action associated with the badge.
