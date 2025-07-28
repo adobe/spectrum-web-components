@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
@@ -22,6 +22,8 @@ import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
@@ -788,5 +790,28 @@ export const BackgroundClickTest = (): TemplateResult => {
     `;
 };
 BackgroundClickTest.swc_vrt = {
+    skip: true,
+};
+
+export const PickerInModal = (): TemplateResult => {
+    return html`
+        <sp-button id="trigger">Overlay Trigger</sp-button>
+        <sp-overlay trigger="trigger@click" placement="bottom">
+            <sp-popover>
+                <sp-picker
+                    label="What would you like to do?"
+                    value="item-2"
+                    id="picker-icons"
+                    style="margin: 20px"
+                >
+                    <sp-menu-item>Save</sp-menu-item>
+                    <sp-menu-item>Finish</sp-menu-item>
+                    <sp-menu-item>Review</sp-menu-item>
+                </sp-picker>
+            </sp-popover>
+        </sp-overlay>
+    `;
+};
+PickerInModal.swc_vrt = {
     skip: true,
 };
