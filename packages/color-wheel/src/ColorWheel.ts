@@ -63,8 +63,6 @@ export class ColorWheel extends Focusable {
     @property({ type: Number })
     public step = 1;
 
-    private _baseStep = 1;
-
     private languageResolver = new LanguageResolutionController(this);
 
     private colorController = new ColorController(this, { manageAs: 'hsv' });
@@ -93,10 +91,7 @@ export class ColorWheel extends Focusable {
 
     private set altered(altered: number) {
         this._altered = altered;
-    }
-
-    private get effectiveStep(): number {
-        return Math.max(this._baseStep, this.altered * this._baseStep * 10);
+        this.step = Math.max(1, this.altered * 10);
     }
 
     private _altered = 0;
@@ -117,16 +112,16 @@ export class ColorWheel extends Focusable {
         let delta = 0;
         switch (key) {
             case 'ArrowUp':
-                delta = this.effectiveStep;
+                delta = this.step;
                 break;
             case 'ArrowDown':
-                delta = -this.effectiveStep;
+                delta = -this.step;
                 break;
             case 'ArrowLeft':
-                delta = this.effectiveStep * (this.isLTR ? -1 : 1);
+                delta = this.step * (this.isLTR ? -1 : 1);
                 break;
             case 'ArrowRight':
-                delta = this.effectiveStep * (this.isLTR ? 1 : -1);
+                delta = this.step * (this.isLTR ? 1 : -1);
                 break;
             default:
                 return;
@@ -397,12 +392,6 @@ export class ColorWheel extends Focusable {
         this.boundingClientRect = this.getBoundingClientRect();
         this.addEventListener('focus', this.handleFocus);
         this.addEventListener('blur', this.handleBlur);
-    }
-
-    protected override willUpdate(changed: PropertyValues<this>): void {
-        if (changed.has('step')) {
-            this._baseStep = this.step;
-        }
     }
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
