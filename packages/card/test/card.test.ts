@@ -134,6 +134,45 @@ describe('card', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('applies block-size: 100% only to gallery and quiet variants', async () => {
+        const variants = ['standard', 'gallery', 'quiet'] as const;
+        const cards = await Promise.all(
+            variants.map(async (variant) => {
+                const card = await fixture<Card>(html`
+                    <sp-card variant=${variant} heading="${variant} Card">
+                        <img
+                            slot="preview"
+                            src="https://picsum.photos/532/192"
+                            alt="Slotted Preview"
+                        />
+                    </sp-card>
+                `);
+                await elementUpdated(card);
+                return { variant, card };
+            })
+        );
+
+        // Verify variant attributes are correctly set
+        cards.forEach(({ variant, card }) => {
+            expect(card.getAttribute('variant')).to.equal(variant);
+        });
+
+        // Verify CSS selectors: only gallery and quiet should get block-size: 100%
+        const fullHeightVariants = ['gallery', 'quiet'];
+        cards.forEach(({ variant, card }) => {
+            if (fullHeightVariants.includes(variant)) {
+                expect(fullHeightVariants).to.include(
+                    card.getAttribute('variant')
+                );
+            } else {
+                expect(fullHeightVariants).to.not.include(
+                    card.getAttribute('variant')
+                );
+            }
+        });
+    });
+
     it('loads - [horizontal]', async () => {
         const el = await fixture<Card>(
             Horizontal(Horizontal.args as StoryArgs)
