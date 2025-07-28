@@ -15,6 +15,7 @@ import {
     aTimeout,
     elementUpdated,
     expect,
+    fixtureCleanup,
     nextFrame,
     oneEvent,
     waitUntil,
@@ -41,6 +42,7 @@ import {
 import {
     a11ySnapshot,
     findAccessibilityNode,
+    resetMouse,
     sendKeys,
     setUserAgent,
 } from '@web/test-runner-commands';
@@ -805,21 +807,28 @@ describe('NumberField', () => {
     });
 
     describe('Stepper UI interactions', () => {
+        let el: NumberField;
         let inputSpy: SinonSpy;
         let changeSpy: SinonSpy;
+
+        beforeEach(async () => {
+            el = await getElFrom(Default({ value: 50 }));
+            const spies = setupEventSpies(el);
+            inputSpy = spies.inputSpy;
+            changeSpy = spies.changeSpy;
+        });
 
         afterEach(() => {
             // Reset spies after each test to ensure isolation
             inputSpy?.resetHistory();
             changeSpy?.resetHistory();
+
+            // Clean up fixtures to prevent test pollution
+            fixtureCleanup();
+            resetMouse();
         });
 
         it('increments value with stepper UI click', async () => {
-            const el = await getElFrom(Default({ value: 50 }));
-            const spies = setupEventSpies(el);
-            inputSpy = spies.inputSpy;
-            changeSpy = spies.changeSpy;
-
             // Initial state
             expect(el.value).to.equal(50);
 
@@ -852,11 +861,6 @@ describe('NumberField', () => {
         });
 
         it('decrements value with stepper UI click', async () => {
-            const el = await getElFrom(Default({ value: 50 }));
-            const spies = setupEventSpies(el);
-            inputSpy = spies.inputSpy;
-            changeSpy = spies.changeSpy;
-
             // Initial state
             expect(el.value).to.equal(50);
 
@@ -889,10 +893,6 @@ describe('NumberField', () => {
         });
 
         it('continuously increments when holding down step-up button', async () => {
-            const el = await getElFrom(Default({ value: 50 }));
-            const spies = setupEventSpies(el);
-            inputSpy = spies.inputSpy;
-
             // Initial state
             expect(el.value).to.equal(50);
 
@@ -956,10 +956,6 @@ describe('NumberField', () => {
         });
 
         it('changes from increment to decrement when dragging between buttons', async () => {
-            const el = await getElFrom(Default({ value: 50 }));
-            const spies = setupEventSpies(el);
-            inputSpy = spies.inputSpy;
-
             // Get button positions
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
@@ -1037,6 +1033,15 @@ describe('NumberField', () => {
                     },
                 ],
             });
+            // Verify no further increments after release
+            const finalValue = el.value;
+            // We intentionally use a timeout here to verify the ABSENCE of events.
+            // After releasing the mouse, we need to ensure no more increments occur.
+            // Event-based synchronization (oneEvent) can't be used because we're
+            // testing that NO events should fire. This timeout gives enough time
+            // for any erroneous delayed increments to occur if the bug exists.
+            await aTimeout(100);
+            expect(el.value).to.equal(finalValue);
         });
     }); // End of Stepper UI interactions describe block
 
