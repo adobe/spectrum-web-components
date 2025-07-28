@@ -1,0 +1,4 @@
+"use strict";var d=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var o=(l,r,t,i)=>{for(var e=i>1?void 0:i?p(r,t):r,a=l.length-1,s;a>=0;a--)(s=l[a])&&(e=(i?s(r,t,e):s(e))||e);return i&&e&&d(r,t,e),e};import{html as n,SizedMixin as m,SpectrumElement as c}from"@spectrum-web-components/base";import{property as u}from"@spectrum-web-components/base/src/decorators.js";import f from"./status-light.css.js";export class StatusLight extends m(c,{noDefaultSize:!0}){constructor(){super(...arguments);this.disabled=!1;this.variant="info"}static get styles(){return[f]}render(){return n`
+            <slot></slot>
+        `}updated(t){super.updated(t),t.has("disabled")&&(this.disabled?this.setAttribute("aria-disabled","true"):this.removeAttribute("aria-disabled"))}}o([u({type:Boolean,reflect:!0})],StatusLight.prototype,"disabled",2),o([u({reflect:!0})],StatusLight.prototype,"variant",2);
+//# sourceMappingURL=StatusLight.js.map

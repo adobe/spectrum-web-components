@@ -1,0 +1,32 @@
+"use strict";
+export var Locales = /* @__PURE__ */ ((Locales2) => {
+  Locales2["bn-IN"] = "Bengali (India)";
+  Locales2["cy-GB"] = "Welsh (United Kingdom)";
+  Locales2["da-DK"] = "Danish (Denmark)";
+  Locales2["de-DE"] = "German (Germany)";
+  Locales2["el-GR"] = "Greek (Greece)";
+  Locales2["en-US"] = "English (United States)";
+  Locales2["es-ES"] = "Spanish (Spain)";
+  Locales2["fi-FI"] = "Finnish (Finland)";
+  Locales2["fil-PH"] = "Filipino (Philippines)";
+  Locales2["fr-FR"] = "French (France)";
+  Locales2["hi-IN"] = "Hindi (India)";
+  Locales2["id-ID"] = "Indonesian (Indonesia)";
+  Locales2["it-IT"] = "Italian (Italy)";
+  Locales2["ja-JP"] = "Japanese (Japan)";
+  Locales2["ko-KR"] = "Korean (South Korea)";
+  Locales2["ms-MY"] = "Malay (Malaysia)";
+  Locales2["nb-NO"] = "Norwegian (Bokm\xE5l, Norway)";
+  Locales2["nl-NL"] = "Dutch (Netherlands)";
+  Locales2["pl-PL"] = "Polish (Poland)";
+  Locales2["pt-BR"] = "Portuguese (Brazil)";
+  Locales2["ro-RO"] = "Romanian (Romania)";
+  Locales2["sv-SE"] = "Swedish (Sweden)";
+  Locales2["ta-IN"] = "Tamil (India)";
+  Locales2["th-TH"] = "Thai (Thailand)";
+  Locales2["tr-TR"] = "Turkish (Turkey)";
+  Locales2["zh-Hans-CN"] = "Chinese (Simplified, China)";
+  Locales2["zh-Hant-TW"] = "Chinese (Traditional, Taiwan)";
+  return Locales2;
+})(Locales || {});
+//# sourceMappingURL=locales.dev.js.map

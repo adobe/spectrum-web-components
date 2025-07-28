@@ -1,0 +1,2 @@
+"use strict";import{SizedMixin as r,SpectrumElement as t}from"@spectrum-web-components/base";import i from"./menu-divider.css.js";import s from"@spectrum-web-components/divider/src/divider.css.js";export class MenuDivider extends r(t,{validSizes:["s","m","l"]}){static get styles(){return[s,i]}firstUpdated(e){super.firstUpdated(e),this.setAttribute("role","separator")}}
+//# sourceMappingURL=MenuDivider.js.map

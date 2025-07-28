@@ -1,0 +1,16 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { css } from '@spectrum-web-components/base';
+const styles = css`
+    :host{border-radius:var(--mod-table-border-radius,var(--spectrum-table-border-radius));border:none;display:table-row-group;position:relative}:host([drop-target]){--mod-table-border-color:transparent;outline-width:var(--mod-table-focus-indicator-thickness,var(--spectrum-table-focus-indicator-thickness));outline-style:solid;outline-color:var(--highcontrast-table-focus-indicator-color,var(--mod-table-drop-zone-outline-color,var(--spectrum-table-drop-zone-outline-color)))}:host{border-radius:var(--mod-table-border-radius,var(--spectrum-table-border-radius));border-inline:var(--mod-table-outer-border-inline-width,var(--spectrum-table-outer-border-inline-width))solid var(--highcontrast-table-border-color,var(--mod-table-border-color,var(--spectrum-table-border-color)));border-block:var(--mod-table-border-width,var(--spectrum-table-border-width))solid var(--highcontrast-table-border-color,var(--mod-table-border-color,var(--spectrum-table-border-color)));flex-grow:1;display:block;overflow:auto}:host(:not([tabindex])){overflow:visible}
+`;
+export default styles;

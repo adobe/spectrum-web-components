@@ -1,0 +1,9 @@
+"use strict";
+import "./sp-table-body.dev.js";
+import "./sp-table-cell.dev.js";
+import "./sp-table-checkbox-cell.dev.js";
+import "./sp-table-head-cell.dev.js";
+import "./sp-table-head.dev.js";
+import "./sp-table-row.dev.js";
+import "./sp-table.dev.js";
+//# sourceMappingURL=elements.dev.js.map

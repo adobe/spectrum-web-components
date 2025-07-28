@@ -1,0 +1,16 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { css } from '@spectrum-web-components/base';
+const styles = css`
+    :host{justify-content:flex-start;align-items:flex-start;gap:var(--mod-swatchgroup-spacing-regular,var(--spectrum-swatchgroup-spacing-regular));flex-flow:wrap;display:inline-flex}:host([density=compact]){gap:var(--mod-swatchgroup-spacing-compact,var(--spectrum-swatchgroup-spacing-compact))}:host([density=spacious]){gap:var(--mod-swatchgroup-spacing-spacious,var(--spectrum-swatchgroup-spacing-spacious))}:host{--spectrum-swatchgroup-spacing-compact:var(--system-swatch-group-spacing-compact);--spectrum-swatchgroup-spacing-regular:var(--system-swatch-group-spacing-regular);--spectrum-swatchgroup-spacing-spacious:var(--system-swatch-group-spacing-spacious)}
+`;
+export default styles;

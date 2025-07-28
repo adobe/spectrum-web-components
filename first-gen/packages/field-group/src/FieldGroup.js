@@ -1,0 +1,7 @@
+"use strict";var d=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var l=(o,r,e,a)=>{for(var t=a>1?void 0:a?u(r,e):r,s=o.length-1,p;s>=0;s--)(p=o[s])&&(t=(a?p(r,e,t):p(t))||t);return a&&t&&d(r,e,t),t};import{html as n,SpectrumElement as c}from"@spectrum-web-components/base";import{property as i}from"@spectrum-web-components/base/src/decorators.js";import{ManageHelpText as h}from"@spectrum-web-components/help-text/src/manage-help-text.js";import b from"./field-group.css.js";export class FieldGroup extends h(c,{mode:"external"}){constructor(){super(...arguments);this.horizontal=!1;this.invalid=!1;this.label="";this.vertical=!1}static get styles(){return[b]}handleSlotchange(){}render(){return n`
+            <div class="group" role="presentation">
+                <slot @slotchange=${this.handleSlotchange}></slot>
+            </div>
+            ${this.renderHelpText(this.invalid)}
+        `}firstUpdated(e){super.firstUpdated(e),this.hasAttribute("role")||this.setAttribute("role","group")}updated(e){super.updated(e),e.has("label")&&(this.label?this.setAttribute("aria-label",this.label):this.removeAttribute("aria-label"))}}l([i({type:Boolean,reflect:!0})],FieldGroup.prototype,"horizontal",2),l([i({type:Boolean,reflect:!0})],FieldGroup.prototype,"invalid",2),l([i()],FieldGroup.prototype,"label",2),l([i({type:Boolean,reflect:!0})],FieldGroup.prototype,"vertical",2);
+//# sourceMappingURL=FieldGroup.js.map

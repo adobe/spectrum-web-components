@@ -1,0 +1,7 @@
+"use strict";
+import { css } from "@spectrum-web-components/base";
+const styles = css`
+    .group{flex-flow:column wrap;display:flex}.spectrum-FieldGroup--toplabel{flex-direction:column}.spectrum-FieldGroup--sidelabel{flex-direction:row}.group{flex-flow:column wrap;display:flex}:host([vertical]) .group{flex-direction:column}:host([horizontal]) .group{flex-direction:row}:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)){margin-inline-end:var(--spectrum-fieldgroup-margin)}:host([horizontal]) .group .spectrum-HelpText{flex-basis:100%}:host{--spectrum-fieldgroup-margin:var(--system-field-group-margin);--spectrum-fieldgroup-readonly-delimiter:var(--system-field-group-readonly-delimiter)}:host([horizontal][dir=rtl]) slot:not([name])::slotted(:not(:last-child)),:host([dir=rtl]:not([vertical])) slot:not([name])::slotted(:not(:last-child)){margin:0 0 0 var(--spectrum-fieldgroup-margin)}:host([horizontal][dir=ltr]) slot:not([name])::slotted(:not(:last-child)),:host([dir=ltr]:not([vertical])) slot:not([name])::slotted(:not(:last-child)){margin:0 var(--spectrum-fieldgroup-margin)0 0}
+`;
+export default styles;
+//# sourceMappingURL=field-group.css.dev.js.map

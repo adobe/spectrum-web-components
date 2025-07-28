@@ -1,0 +1,7 @@
+"use strict";var n=Object.defineProperty;var o=Object.getOwnPropertyDescriptor;var l=(i,d,e,t)=>{for(var r=t>1?void 0:t?o(d,e):d,s=i.length-1,a;s>=0;s--)(a=i[s])&&(r=(t?a(d,e,r):a(r))||r);return t&&r&&n(d,e,r),r};import{html as h}from"@spectrum-web-components/base";import{queryAssignedNodes as m,state as p}from"@spectrum-web-components/base/src/decorators.js";import{randomID as u}from"@spectrum-web-components/shared/src/random-id.js";import{Menu as b}from"./Menu.js";import"@spectrum-web-components/menu/sp-menu.js";import f from"./menu-group.css.js";export class MenuGroup extends b{constructor(){super(...arguments);this.headerId=""}static get styles(){return[...super.styles,f]}get ownRole(){return"group"}get controlsRovingTabindex(){return!1}updateLabel(){const e=this.headerElements.length?this.headerElements[0]:void 0;if(e!==this.headerElement)if(this.headerElement&&this.headerElement.id===this.headerId&&this.headerElement.removeAttribute("id"),e){this.headerId=this.headerId||`sp-menu-group-label-${u()}`;const t=e.id||this.headerId;e.id||(e.id=t),this.setAttribute("aria-labelledby",t)}else this.removeAttribute("aria-labelledby");this.headerElement=e}render(){return h`
+            <span class="header" ?hidden=${!this.headerElement}>
+                <slot name="header" @slotchange=${this.updateLabel}></slot>
+            </span>
+            ${this.renderMenuItemSlot()}
+        `}}l([m({slot:"header",flatten:!0})],MenuGroup.prototype,"headerElements",2),l([p()],MenuGroup.prototype,"headerElement",2);
+//# sourceMappingURL=MenuGroup.js.map

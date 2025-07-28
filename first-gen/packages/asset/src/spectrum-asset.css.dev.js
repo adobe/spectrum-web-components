@@ -1,0 +1,7 @@
+"use strict";
+import { css } from "@spectrum-web-components/base";
+const styles = css`
+    :host{--spectrum-asset-folder-background:var(--highcontrast-asset-icon-background-color,var(--mod-asset-folder-background-color,var(--spectrum-asset-folder-background-color)));--spectrum-asset-file-background:var(--highcontrast-asset-icon-background-color,var(--mod-asset-file-background-color,var(--spectrum-asset-file-background-color)));--spectrum-asset-folder-outline:var(--mod-asset-icon-outline-color,var(--spectrum-asset-icon-outline-color));--spectrum-asset-file-outline:var(--mod-asset-icon-outline-color,var(--spectrum-asset-icon-outline-color));inline-size:100%;block-size:100%;justify-content:center;align-items:center;display:flex}::slotted(*){max-inline-size:100%;max-block-size:100%;object-fit:contain;transition:opacity var(--spectrum-animation-duration-100)}.file,.folder{inline-size:max(48px,min(100%,80px));inline-size:max(var(--mod-asset-icon-min-width,48px),min(100%,var(--mod-asset-icon-max-width,80px)));block-size:100%;margin:20px;margin:var(--mod-asset-icon-margin,20px)}.folderBackground{fill:var(--spectrum-asset-folder-background)}.fileBackground{fill:var(--spectrum-asset-file-background)}.folderOutline{fill:var(--spectrum-asset-folder-outline)}.fileOutline{fill:var(--spectrum-asset-file-outline)}@media (forced-colors:active){:host{--highcontrast-asset-icon-background-color:currentColor}}
+`;
+export default styles;
+//# sourceMappingURL=spectrum-asset.css.dev.js.map

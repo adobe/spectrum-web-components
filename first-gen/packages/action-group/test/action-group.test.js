@@ -1,0 +1,1268 @@
+"use strict";
+import {
+  aTimeout,
+  elementUpdated,
+  expect,
+  fixture,
+  html,
+  nextFrame,
+  oneEvent,
+  waitUntil
+} from "@open-wc/testing";
+import "@spectrum-web-components/action-button/sp-action-button.js";
+import "@spectrum-web-components/action-menu/sp-action-menu.js";
+import "@spectrum-web-components/menu/sp-menu.js";
+import "@spectrum-web-components/menu/sp-menu-item.js";
+import "@spectrum-web-components/picker/sp-picker.js";
+import {
+  LitElement
+} from "@spectrum-web-components/base";
+import "@spectrum-web-components/overlay/overlay-trigger.js";
+import "@spectrum-web-components/tooltip/sp-tooltip.js";
+import {
+  arrowDownEvent,
+  arrowLeftEvent,
+  arrowRightEvent,
+  arrowUpEvent,
+  endEvent,
+  homeEvent,
+  sendMouseFrom,
+  sendMouseTo,
+  testForLitDevWarnings
+} from "../../../test/testing-helpers";
+import { sendKeys } from "@web/test-runner-commands";
+import "@spectrum-web-components/action-group/sp-action-group.js";
+import { controlled } from "../stories/action-group-tooltip.stories.js";
+import { spy } from "sinon";
+import { sendMouse } from "../../../test/plugins/browser.js";
+import { HasActionMenuAsChild } from "../stories/action-group.stories.js";
+import "../stories/action-group.stories.js";
+import sinon from "sinon";
+import { isWebKit } from "@spectrum-web-components/shared";
+class QuietActionGroup extends LitElement {
+  render() {
+    return html`
+            <sp-action-group quiet>
+                <slot name="first"></slot>
+                <slot name="second"></slot>
+            </sp-action-group>
+        `;
+  }
+}
+customElements.define("quiet-action-group", QuietActionGroup);
+class EmphasizedActionGroup extends LitElement {
+  render() {
+    return html`
+            <sp-action-group emphasized>
+                <slot name="first"></slot>
+                <slot name="second"></slot>
+            </sp-action-group>
+        `;
+  }
+}
+customElements.define("emphasized-action-group", EmphasizedActionGroup);
+async function singleSelectedActionGroup(selected) {
+  const el = await fixture(html`
+        <sp-action-group
+            label="Selects User-Chosen Buttons"
+            selects="single"
+            .selected=${selected}
+        >
+            <sp-action-button value="first" class="first">
+                First
+            </sp-action-button>
+            <sp-action-button value="second" class="second">
+                <div slot="icon" style="width: 10px; height: 10px;"></div>
+                Second
+            </sp-action-button>
+        </sp-action-group>
+    `);
+  return el;
+}
+async function multipleSelectedActionGroup(selected) {
+  const el = await fixture(html`
+        <sp-action-group
+            label="Selects User-Chosen Buttons"
+            selects="multiple"
+            .selected=${selected}
+        >
+            <sp-action-button value="first" class="first">
+                First
+            </sp-action-button>
+            <sp-action-button value="second" class="second">
+                Second
+            </sp-action-button>
+        </sp-action-group>
+    `);
+  return el;
+}
+describe("ActionGroup", () => {
+  it("does not throw an error if slotElement is null", async () => {
+    const el = await fixture(html`
+            <sp-action-group>
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+    const slotElementStub = sinon.stub(el, "slotElement").get(() => null);
+    await elementUpdated(el);
+    while (el.firstChild) {
+      el.removeChild(el.firstChild);
+    }
+    await elementUpdated(el);
+    expect(el.children.length).to.equal(0);
+    slotElementStub.restore();
+  });
+  it("loads empty action-group accessibly", async () => {
+    const el = await fixture(html`
+            <sp-action-group></sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
+  it("loads action-group with action-menu accessibly", async () => {
+    const el = await fixture(
+      HasActionMenuAsChild({ label: "Action Group" })
+    );
+    await elementUpdated(el);
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
+    await nextFrame();
+    await expect(el).to.be.accessible();
+  });
+  it("action-group with action-menu manages tabIndex correctly while using keyboard", async () => {
+    var _a, _b, _c, _d, _e;
+    const el = await fixture(
+      HasActionMenuAsChild({ label: "Action Group" })
+    );
+    await elementUpdated(el);
+    await waitUntil(() => el.children.length === 4);
+    await sendKeys({ press: "Tab" });
+    await elementUpdated(el);
+    expect(
+      (_a = document.activeElement) == null ? void 0 : _a.id,
+      "should be focused on the first button"
+    ).to.equal("first");
+    expect(
+      (_b = el.children[0]) == null ? void 0 : _b.tabIndex,
+      "should be focused on the first button"
+    ).to.equal(0);
+    expect(
+      (_c = el.children[1]) == null ? void 0 : _c.tabIndex,
+      "should not be focused on the second button"
+    ).to.equal(-1);
+    expect(
+      (_d = el.children[2]) == null ? void 0 : _d.tabIndex,
+      "should not be focused on the third button"
+    ).to.equal(-1);
+    expect(
+      (_e = el.children[3]) == null ? void 0 : _e.tabIndex,
+      "should not be focused on the fourth button"
+    ).to.equal(-1);
+    await sendKeys({ press: "ArrowRight" });
+    await sendKeys({ press: "ArrowRight" });
+    await sendKeys({ press: "ArrowRight" });
+    await elementUpdated(el);
+    expect(el.children[3]).to.equal(document.activeElement);
+    await sendKeys({ press: "Enter" });
+    let opened = oneEvent(el.children[3], "sp-opened");
+    await elementUpdated(el.children[3]);
+    await opened;
+    const firstMenuItem = el.querySelector("#first-menu-item");
+    const fourthMenuItem = el.querySelector("#fourth-menu-item");
+    expect(firstMenuItem).to.equal(document.activeElement);
+    await sendKeys({ press: "ArrowDown" });
+    await sendKeys({ press: "ArrowDown" });
+    await sendKeys({ press: "ArrowDown" });
+    opened = oneEvent(fourthMenuItem, "sp-opened");
+    await sendKeys({ press: "Enter" });
+    await opened;
+    const secondSubMenuItem = el.querySelector(
+      "#second-sub-menu-item"
+    );
+    expect(secondSubMenuItem).to.equal(document.activeElement);
+    await sendKeys({ press: "Enter" });
+    const closed = oneEvent(el.children[3], "sp-closed");
+    await elementUpdated(el.children[3]);
+    await closed;
+    expect(el.children[3]).to.equal(document.activeElement);
+  });
+  it.skip("action-group with action-menu manages tabIndex correctly while using mouse", async () => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+    const el = await fixture(
+      HasActionMenuAsChild({ label: "Action Group" })
+    );
+    await elementUpdated(el);
+    await aTimeout(100);
+    const firstButton = el.querySelector("#first");
+    sendMouseTo(firstButton, "click");
+    await elementUpdated(firstButton);
+    expect(
+      (_a = el.children[0]) == null ? void 0 : _a.tabIndex,
+      "mouse1: should be focused on the first button"
+    ).to.equal(0);
+    expect(
+      (_b = el.children[1]) == null ? void 0 : _b.tabIndex,
+      "mouse1: should not be focused on the second button"
+    ).to.equal(-1);
+    expect(
+      (_c = el.children[2]) == null ? void 0 : _c.tabIndex,
+      "mouse1: should not be focused on the third button"
+    ).to.equal(-1);
+    expect(
+      (_d = el.children[3]) == null ? void 0 : _d.tabIndex,
+      "mouse1: should not be focused on the fourth button"
+    ).to.equal(-1);
+    sendMouseFrom(el, "click");
+    await elementUpdated(el);
+    expect(
+      (_e = el.children[0]) == null ? void 0 : _e.tabIndex,
+      "mouse2: should be focused on the first button"
+    ).to.equal(0);
+    expect(
+      (_f = el.children[1]) == null ? void 0 : _f.tabIndex,
+      "mouse2: should not be focused on the second button"
+    ).to.equal(-1);
+    expect(
+      (_g = el.children[2]) == null ? void 0 : _g.tabIndex,
+      "mouse2: should not be focused on the third button"
+    ).to.equal(-1);
+    expect(
+      (_h = el.children[3]) == null ? void 0 : _h.tabIndex,
+      "mouse2: should not be focused on the fourth button"
+    ).to.equal(-1);
+    await elementUpdated(el);
+    const actionMenu = el.querySelector("#action-menu");
+    sendMouseTo(actionMenu, "click");
+    await waitUntil(
+      () => {
+        var _a2, _b2;
+        return ((_b2 = (_a2 = actionMenu == null ? void 0 : actionMenu.strategy) == null ? void 0 : _a2.overlay) == null ? void 0 : _b2.state) === "opened";
+      },
+      `action-menu opened (status ${(_j = (_i = actionMenu == null ? void 0 : actionMenu.strategy) == null ? void 0 : _i.overlay) == null ? void 0 : _j.state})`,
+      { timeout: 300 }
+    );
+    expect(actionMenu).to.equal(document.activeElement);
+    const closed = oneEvent(el.children[3], "sp-closed");
+    if (isWebKit()) {
+      actionMenu.optionsMenu.focus();
+    } else {
+      await sendKeys({ press: "ArrowDown" });
+    }
+    expect(actionMenu.children[0]).to.equal(document.activeElement);
+    await sendKeys({ press: "Enter" });
+    await elementUpdated(el);
+    await closed;
+    expect(
+      (_k = el.children[0]) == null ? void 0 : _k.tabIndex,
+      "final: should NOT be focused on the first button"
+    ).to.equal(-1);
+    expect(
+      (_l = el.children[1]) == null ? void 0 : _l.tabIndex,
+      "final: should not be focused on the second button"
+    ).to.equal(-1);
+    expect(
+      (_m = el.children[2]) == null ? void 0 : _m.tabIndex,
+      "final: should not be focused on the third button"
+    ).to.equal(-1);
+    expect(
+      (_n = el.children[3]) == null ? void 0 : _n.tabIndex,
+      "final: should be be focused on the fourth button"
+    ).to.equal(0);
+  });
+  testForLitDevWarnings(
+    async () => await fixture(html`
+                <sp-action-group aria-label="Default Group">
+                    <sp-action-button>First</sp-action-button>
+                    <sp-action-button>Second</sp-action-button>
+                    <sp-action-button>Third</sp-action-button>
+                </sp-action-group>
+            `)
+  );
+  it("loads default action-group accessibly", async () => {
+    const el = await fixture(html`
+            <sp-action-group aria-label="Default Group">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+    expect(el.getAttribute("aria-label")).to.equal("Default Group");
+    expect(el.getAttribute("role")).to.equal("toolbar");
+    expect(el.children[0].getAttribute("role")).to.equal("button");
+  });
+  it("applies `static-color` attribute to its children", async () => {
+    const el = await fixture(html`
+            <sp-action-group static-color="white">
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.staticColor).to.equal("white");
+    expect(secondButton.staticColor).to.equal("white");
+    el.staticColor = void 0;
+    await elementUpdated(el);
+    expect(firstButton.staticColor).to.be.undefined;
+    expect(secondButton.staticColor).to.be.undefined;
+  });
+  it('manages "label"', async () => {
+    const testLabel = "Testable action group";
+    const el = await fixture(html`
+            <sp-action-group label=${testLabel}>
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+    expect(el.getAttribute("aria-label")).to.equal(testLabel);
+    el.label = "";
+    await elementUpdated(el);
+    expect(el.hasAttribute("aria-label")).to.be.false;
+  });
+  it("applies `quiet` attribute to its children", async () => {
+    const el = await fixture(html`
+            <sp-action-group quiet>
+                <sp-action-button id="first">First</sp-action-button>
+                <sp-action-button id="second">Second</sp-action-button>
+            </sp-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.hasAttribute("quiet")).to.be.true;
+    expect(firstButton.quiet).to.be.true;
+    expect(secondButton.hasAttribute("quiet")).to.be.true;
+    expect(secondButton.quiet).to.be.true;
+  });
+  it("applies `quiet` attribute to its slotted children", async () => {
+    const el = await fixture(html`
+            <quiet-action-group>
+                <sp-action-button slot="first" id="first">
+                    First
+                </sp-action-button>
+                <sp-action-button slot="second" id="second">
+                    Second
+                </sp-action-button>
+            </quiet-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.hasAttribute("quiet")).to.be.true;
+    expect(firstButton.quiet).to.be.true;
+    expect(secondButton.hasAttribute("quiet")).to.be.true;
+    expect(secondButton.quiet).to.be.true;
+  });
+  it("applies `emphasized` attribute to its slotted children", async () => {
+    const el = await fixture(html`
+            <emphasized-action-group>
+                <sp-action-button slot="first" id="first">
+                    First
+                </sp-action-button>
+                <sp-action-button slot="second" id="second">
+                    Second
+                </sp-action-button>
+            </emphasized-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.hasAttribute("emphasized")).to.be.true;
+    expect(firstButton.emphasized).to.be.true;
+    expect(secondButton.hasAttribute("emphasized")).to.be.true;
+    expect(secondButton.emphasized).to.be.true;
+  });
+  it("applies `quiet` attribute to slotted children with overlays", async () => {
+    const el = await fixture(html`
+            <quiet-action-group>
+                <overlay-trigger slot="first">
+                    <sp-action-button slot="trigger" id="first">
+                        First
+                    </sp-action-button>
+                </overlay-trigger>
+                <overlay-trigger slot="second">
+                    <sp-action-button slot="trigger" id="second">
+                        Second
+                    </sp-action-button>
+                </overlay-trigger>
+            </quiet-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.hasAttribute("quiet")).to.be.true;
+    expect(firstButton.quiet).to.be.true;
+    expect(secondButton.hasAttribute("quiet")).to.be.true;
+    expect(secondButton.quiet).to.be.true;
+  });
+  it("applies `emphasized` attribute to slotted children with overlays", async () => {
+    const el = await fixture(html`
+            <emphasized-action-group>
+                <overlay-trigger slot="first">
+                    <sp-action-button slot="trigger" id="first">
+                        First
+                    </sp-action-button>
+                </overlay-trigger>
+                <overlay-trigger slot="second">
+                    <sp-action-button slot="trigger" id="second">
+                        Second
+                    </sp-action-button>
+                </overlay-trigger>
+            </emphasized-action-group>
+        `);
+    const firstButton = el.querySelector("#first");
+    const secondButton = el.querySelector("#second");
+    await elementUpdated(el);
+    expect(firstButton.hasAttribute("emphasized")).to.be.true;
+    expect(firstButton.emphasized).to.be.true;
+    expect(secondButton.hasAttribute("emphasized")).to.be.true;
+    expect(secondButton.emphasized).to.be.true;
+  });
+  it('loads [selects="single"] action-group accessibly', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+    expect(el.getAttribute("aria-label")).to.equal("Selects Single Group");
+    expect(el.getAttribute("role")).to.equal("radiogroup");
+    expect(el.children[0].getAttribute("role")).to.equal("radio");
+  });
+  it('loads [selects="single"] action-group w/ selection accessibly', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
+  it('loads [selects="multiple"] action-group accessibly', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+    expect(el.getAttribute("aria-label")).to.equal(
+      "Selects Multiple Group"
+    );
+    expect(el.getAttribute("role")).to.equal("toolbar");
+    expect(el.children[0].getAttribute("role")).to.equal("checkbox");
+  });
+  it('loads [selects="multiple"] action-group w/ selection accessibly', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await expect(el).to.be.accessible();
+  });
+  it('sets tab stop when [selects="single"] and the initial button is [disabled]', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button disabled>First</sp-action-button>
+                <sp-action-button class="second">Second</sp-action-button>
+                <sp-action-button>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    const secondButton = el.querySelector(".second");
+    await elementUpdated(el);
+    expect(secondButton.hasAttribute("tabindex"));
+    expect(secondButton.getAttribute("tabindex")).to.equal("0");
+  });
+  it('surfaces [selects="single"] selection', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.selected, '"Third" selected').to.deep.equal(["Third"]);
+  });
+  it('manages [selects="single"] selection through multiple slots', async () => {
+    const test = await fixture(html`
+            <div>
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </div>
+        `);
+    const firstItem = test.querySelector(
+      "sp-action-button"
+    );
+    const thirdItem = test.querySelector(
+      "sp-action-button[selected]"
+    );
+    const shadowRoot = test.attachShadow({ mode: "open" });
+    shadowRoot.innerHTML = `
+            <sp-action-group label="Selects Single Group" selects="single">
+                <slot></slot>
+            </sp-action-group>
+        `;
+    const el = shadowRoot.querySelector("sp-action-group");
+    await elementUpdated(el);
+    expect(el.selected, '"Third" selected').to.deep.equal(["Third"]);
+    expect(firstItem.selected).to.be.false;
+    expect(thirdItem.selected).to.be.true;
+    firstItem.click();
+    await elementUpdated(el);
+    expect(el.selected, '"First" selected').to.deep.equal(["First"]);
+    expect(firstItem.selected).to.be.true;
+    expect(thirdItem.selected).to.be.false;
+  });
+  it('surfaces [selects="multiple"] selection', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button selected>Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.selected, '"Second" and "Third" selected').to.deep.equal([
+      "Second",
+      "Third"
+    ]);
+  });
+  it("does not select without [selects]", async () => {
+    const el = await fixture(html`
+            <sp-action-group label="No Selects Group">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+  });
+  it('selects via `click` while [selects="single"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button value="first">First</sp-action-button>
+                <sp-action-button value="second" selected>
+                    Second
+                </sp-action-button>
+                <sp-action-button value="third" class="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected.includes("second"));
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child selected").to.be.true;
+    await waitUntil(
+      () => el.selected.length === 1 && el.selected.includes("third"),
+      "Updates value of `selected`"
+    );
+  });
+  it('selects via `click` while  [selects="multiple"] selection', async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Multiple Group" selects="multiple">
+                <sp-action-button selected class="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second">Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    const firstElement = el.querySelector(".first");
+    const secondElement = el.querySelector(".second");
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected.includes("First"));
+    firstElement.click();
+    secondElement.click();
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(secondElement.selected, "second child selected").to.be.true;
+    expect(thirdElement.selected, "third child selected").to.be.true;
+    await waitUntil(
+      () => el.selected.length === 2 && el.selected.includes("Second") && el.selected.includes("Third"),
+      "Updates value of `selected`"
+    );
+  });
+  it("consumes descendant `change` events when `[selects]`", async () => {
+    const changeSpy = spy();
+    const el = await fixture(html`
+            <sp-action-group
+                @change=${() => changeSpy()}
+                label="Selects Single Group"
+                selects="single"
+            >
+                <sp-action-button toggles value="first">First</sp-action-button>
+                <sp-action-button toggles value="second" selected>
+                    Second
+                </sp-action-button>
+                <sp-action-button toggles value="third" class="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected.includes("second"));
+    expect(changeSpy.callCount).to.equal(0);
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child selected").to.be.true;
+    expect(changeSpy.callCount).to.equal(1);
+    await waitUntil(
+      () => el.selected.length === 1 && el.selected.includes("third"),
+      "Updates value of `selected`"
+    );
+  });
+  it("does not respond to clicks on itself", async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(0);
+    el.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(0);
+  });
+  it("selection can be prevented", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                @change=${(event) => {
+      event.preventDefault();
+    }}
+            >
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(0);
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child not selected").to.be.false;
+    expect(el.selected.length).to.equal(0);
+  });
+  it('selects user-passed value while [selects="single"]', async () => {
+    const el = await singleSelectedActionGroup(["first"]);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button not selected").to.be.false;
+    secondButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+  });
+  it('selects can be updated while [selects="single"]', async () => {
+    const el = await singleSelectedActionGroup(["first"]);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button not selected").to.be.false;
+    el.selected = ["second"];
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+  });
+  it("does not allow interaction with child content to interrupt the selection mechanism", async () => {
+    const el = await singleSelectedActionGroup([]);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(0);
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    const icon = secondButton.querySelector("[slot=icon]");
+    expect(firstButton.selected, "first button selected").to.be.false;
+    expect(secondButton.selected, "second button not selected").to.be.false;
+    secondButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected).to.deep.equal(["second"]);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    firstButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected).to.deep.equal(["first"]);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button not selected").to.be.false;
+    const rect = icon.getBoundingClientRect();
+    await sendMouse({
+      steps: [
+        {
+          type: "click",
+          position: [
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2
+          ]
+        }
+      ]
+    });
+    icon.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected).to.deep.equal(["second"]);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+  });
+  it('selects user-passed value while [selects="multiple"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${["first", "second"]}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await Promise.all(el.buttons.map((button) => elementUpdated(button)));
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    const thirdButton = el.querySelector(".third");
+    expect(el.selected.length).to.equal(2);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button not selected").to.be.false;
+    thirdButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(3);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button selected").to.be.true;
+    firstButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(2);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button selected").to.be.true;
+  });
+  it('selects can be updated while [selects="multiple"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${["first", "second"]}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    await Promise.all(el.buttons.map((button) => elementUpdated(button)));
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    const thirdButton = el.querySelector(".third");
+    expect(el.selected.length).to.equal(2);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button not selected").to.be.false;
+    el.selected = ["first", "second", "third"];
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(3);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button selected").to.be.true;
+    el.selected = ["second", "third"];
+    await elementUpdated(el);
+    expect(el.selected.length, JSON.stringify(el.selected)).to.equal(2);
+    expect(firstButton.selected, "first button not selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(thirdButton.selected, "third button selected").to.be.true;
+  });
+  it('selects multiple user-passed values while [selects="single"], but then proceeds with radio-button style functionality', async () => {
+    const el = await singleSelectedActionGroup(["first", "second"]);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(2);
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.true;
+    secondButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstButton.selected, "first button selected").to.be.false;
+    expect(secondButton.selected, "second button selected").to.be.true;
+  });
+  it("Clicking button event should bubble up from inner label to outer button element", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${["first", "second"]}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(2);
+    const firstButtonEl = el.querySelector(".first");
+    const firstSpanEl = firstButtonEl.shadowRoot.querySelector(
+      "#label"
+    );
+    const secondButtonEl = el.querySelector(".second");
+    expect(firstButtonEl.selected, "first button selected").to.be.true;
+    expect(secondButtonEl.selected, "second button selected").to.be.true;
+    firstSpanEl.click();
+    await elementUpdated(el);
+    expect(firstButtonEl.selected, "first button selected").to.be.false;
+    expect(secondButtonEl.selected, "second button selected").to.be.true;
+    firstButtonEl.click();
+    await elementUpdated(el);
+    expect(firstButtonEl.selected, "first button selected").to.be.true;
+    expect(secondButtonEl.selected, "second button selected").to.be.true;
+  });
+  it('only selects user-passed buttons if present in action-group while [selects="multiple"]', async () => {
+    const el = await multipleSelectedActionGroup(["second", "fourth"]);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    const secondButton = el.querySelector(".second");
+    expect(secondButton.selected, "second button selected").to.be.true;
+    const firstButton = el.querySelector(".first");
+    expect(firstButton.selected, "first button selected").to.be.false;
+  });
+  it("selects user-passed values with no .selects value, but does not allow interaction afterwards", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects User-Chosen Buttons"
+                .selected=${["first"]}
+            >
+                <sp-action-button value="first" class="first">
+                    First
+                </sp-action-button>
+                <sp-action-button value="second" class="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    const firstButton = el.querySelector(".first");
+    const secondButton = el.querySelector(".second");
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.false;
+    secondButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(secondButton.selected, "second button selected").to.be.false;
+  });
+  it("selects multiple buttons if .selected is passed in, but does not allow further interaction afterwards", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects User-Chosen Buttons"
+                .selected=${["first", "second"]}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.getAttribute("role")).to.equal("toolbar");
+    expect(el.selected.length).to.equal(2);
+    const firstButton = el.querySelector(".first");
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(firstButton.hasAttribute("aria-checked")).to.be.false;
+    expect(
+      firstButton.getAttribute("aria-pressed"),
+      "first button aria-pressed"
+    ).to.eq("true");
+    expect(firstButton.getAttribute("role"), "first button role").to.eq(
+      "button"
+    );
+    const secondButton = el.querySelector(".second");
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(secondButton.hasAttribute("aria-checked")).to.be.false;
+    expect(
+      secondButton.getAttribute("aria-pressed"),
+      "second button aria-pressed"
+    ).to.eq("true");
+    expect(secondButton.getAttribute("role"), "first button role").to.eq(
+      "button"
+    );
+    firstButton.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(2);
+    expect(firstButton.selected, "first button selected").to.be.true;
+    expect(firstButton.hasAttribute("aria-checked")).to.be.false;
+    expect(
+      firstButton.getAttribute("aria-pressed"),
+      "first button aria-pressed"
+    ).to.eq("true");
+    expect(firstButton.getAttribute("role"), "first button role").to.eq(
+      "button"
+    );
+    expect(secondButton.selected, "second button selected").to.be.true;
+    expect(secondButton.hasAttribute("aria-checked")).to.be.false;
+    expect(
+      secondButton.getAttribute("aria-pressed"),
+      "second button aria-pressed"
+    ).to.eq("true");
+    expect(secondButton.getAttribute("role"), "first button role").to.eq(
+      "button"
+    );
+  });
+  it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Multiple Group"
+                selects="multiple"
+                .selected=${["first", "second"]}
+                @change=${(event) => {
+      event.preventDefault();
+    }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+                <sp-action-button class="third " value="third">
+                    Third
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    const firstElement = el.querySelector(".first");
+    const secondElement = el.querySelector(".second");
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(2);
+    expect(firstElement.selected, "first child selected").to.be.true;
+    expect(secondElement.selected, "second child selected").to.be.true;
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child not selected").to.be.false;
+    expect(el.selected.length).to.equal(2);
+    secondElement.click();
+    await elementUpdated(el);
+    expect(secondElement.selected, "second element still selected").to.be.true;
+  });
+  it('will not change .selected state if event is prevented while [selects="single"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                .selected=${["first"]}
+                @change=${(event) => {
+      event.preventDefault();
+    }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    const firstElement = el.querySelector(".first");
+    const secondElement = el.querySelector(".second");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstElement.selected, "first child selected").to.be.true;
+    secondElement.click();
+    await elementUpdated(el);
+    expect(secondElement.selected, "second child not selected").to.be.false;
+    expect(el.selected.length).to.equal(1);
+    firstElement.click();
+    await elementUpdated(el);
+    expect(firstElement.selected, "first element still selected").to.be.true;
+  });
+  it("will not change .selected state if event is prevented while selects is undefined", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Single Group"
+                .selected=${["first"]}
+                @change=${(event) => {
+      event.preventDefault();
+    }}
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    const firstElement = el.querySelector(".first");
+    const secondElement = el.querySelector(".second");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstElement.selected, "first child selected").to.be.true;
+    secondElement.click();
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(firstElement.selected, "first child selected").to.be.true;
+    expect(secondElement.selected, "second child not selected").to.be.false;
+  });
+  it("manages a `size` attribute", async () => {
+    const el = await fixture(html`
+            <sp-action-group size="xl">
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
+    const button = el.querySelector("sp-action-button");
+    await elementUpdated(el);
+    expect(el.size).to.equal("xl");
+    expect(button.size).to.equal("xl");
+    expect(el.getAttribute("size")).to.equal("xl");
+    expect(button.getAttribute("size")).to.equal("xl");
+    el.removeAttribute("size");
+    await elementUpdated(el);
+    expect(el.size).to.equal("m");
+    expect(el.hasAttribute("size")).to.be.false;
+    expect(button.size).to.equal("m");
+    expect(button.getAttribute("size")).to.equal("m");
+  });
+  it("does not apply a default `size` attribute", async () => {
+    const el = await fixture(html`
+            <sp-action-group>
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
+    const button = el.querySelector("sp-action-button");
+    await elementUpdated(el);
+    expect(el.size).to.equal("m");
+    expect(button.size).to.equal("m");
+    expect(el.hasAttribute("size")).to.be.false;
+    expect(button.hasAttribute("size")).to.be.false;
+  });
+  it("will accept selected as a JSON string", async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                selected='["first"]'
+            >
+                <sp-action-button class="first" value="first">
+                    First
+                </sp-action-button>
+                <sp-action-button class="second" value="second">
+                    Second
+                </sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    const firstElement = el.querySelector(".first");
+    const secondElement = el.querySelector(".second");
+    expect(el.selected.length).to.equal(1);
+    expect(firstElement.selected, "first child selected").to.be.true;
+    expect(secondElement.selected, "second child selected").to.be.false;
+  });
+  it("accepts role attribute override", async () => {
+    const el = await fixture(html`
+            <sp-action-group role="group">
+                <sp-action-button>Button</sp-action-button>
+            </sp-action-group>
+        `);
+    await elementUpdated(el);
+    expect(el.getAttribute("role")).to.equal("group");
+    el.setAttribute("selects", "single");
+    await elementUpdated(el);
+    expect(el.getAttribute("role")).to.equal("radiogroup");
+    el.setAttribute("selects", "multiple");
+    await elementUpdated(el);
+    expect(el.getAttribute("role")).to.equal("toolbar");
+    el.removeAttribute("role");
+    el.removeAttribute("selects");
+    await elementUpdated(el);
+    expect(el.getAttribute("role")).to.equal("toolbar");
+  });
+  const acceptKeyboardInput = async (el) => {
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Second");
+    thirdElement.focus();
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child selected").to.be.true;
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Third");
+    el.dispatchEvent(arrowRightEvent());
+    await sendKeys({ press: "Enter" });
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("First");
+    el.dispatchEvent(arrowLeftEvent());
+    el.dispatchEvent(arrowUpEvent());
+    await sendKeys({ press: "Enter" });
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Second");
+    el.dispatchEvent(endEvent());
+    await sendKeys({ press: "Enter" });
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Third");
+    await sendKeys({ press: "Enter" });
+    el.dispatchEvent(homeEvent());
+    await sendKeys({ press: "Enter" });
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("First");
+    el.dispatchEvent(arrowDownEvent());
+    await sendKeys({ press: "Enter" });
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Second");
+  };
+  it("accepts keybord input", async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button selected>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    await acceptKeyboardInput(el);
+  });
+  it("accepts keybord input with tooltip", async () => {
+    const el = await fixture(html`
+            <sp-action-group label="Selects Single Group" selects="single">
+                <overlay-trigger>
+                    <sp-action-button slot="trigger">First</sp-action-button>
+                    <sp-tooltip slot="hover-content">
+                        Definitely the first one.
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-action-button slot="trigger" selected>
+                        Second
+                    </sp-action-button>
+                    <sp-tooltip slot="hover-content">
+                        Not the first, not the last.
+                    </sp-tooltip>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-action-button slot="trigger" class="third">
+                        Third
+                    </sp-action-button>
+                    <sp-tooltip slot="hover-content">Select me.</sp-tooltip>
+                </overlay-trigger>
+            </sp-action-group>
+        `);
+    await acceptKeyboardInput(el);
+  });
+  it('accepts keybord input when [dir="ltr"]', async () => {
+    const el = await fixture(html`
+            <sp-action-group
+                label="Selects Single Group"
+                selects="single"
+                dir="ltr"
+            >
+                <sp-action-button>First</sp-action-button>
+                <sp-action-button disabled>Second</sp-action-button>
+                <sp-action-button class="third">Third</sp-action-button>
+            </sp-action-group>
+        `);
+    const thirdElement = el.querySelector(".third");
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(0);
+    thirdElement.focus();
+    thirdElement.click();
+    await elementUpdated(el);
+    expect(thirdElement.selected, "third child selected").to.be.true;
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Third");
+    el.dispatchEvent(arrowRightEvent());
+    await sendKeys({ press: "Enter" });
+    await elementUpdated(el);
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("First");
+    el.dispatchEvent(arrowUpEvent());
+    await sendKeys({ press: "Enter" });
+    expect(el.selected.length).to.equal(1);
+    expect(el.selected[0]).to.equal("Third");
+  });
+  it("processes `selects` correctly when mutations occur (because Overlays/Tooltips)", async () => {
+    const test = await fixture(controlled());
+    const actionButtons = [
+      ...test.shadowRoot.querySelectorAll("sp-action-button")
+    ];
+    expect(actionButtons[0].selected).to.be.true;
+    expect(actionButtons[1].selected).to.be.false;
+    expect(actionButtons[2].selected).to.be.false;
+    const changeSpy = spy();
+    test.addEventListener("change", () => changeSpy());
+    const rect = actionButtons[1].getBoundingClientRect();
+    sendMouse({
+      steps: [
+        {
+          position: [
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2
+          ],
+          type: "click"
+        }
+      ]
+    });
+    await aTimeout(500);
+    expect(actionButtons[0].selected).to.be.false;
+    expect(actionButtons[1].selected).to.be.true;
+    expect(actionButtons[2].selected).to.be.false;
+  });
+});
+//# sourceMappingURL=action-group.test.js.map
