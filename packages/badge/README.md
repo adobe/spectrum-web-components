@@ -278,3 +278,7 @@ Remember that a tooltip does not replace an accessible label.
 
 - <kbd>Tab</kbd>: Places focus on the badge if it is interactive.
 - <kbd>Space</kbd> or <kbd>Enter</kbd>: Filters results by the selected badge or performs the action associated with the badge.
+
+#### Don't override semantic colors
+
+The badges's variants provide semantic meaning through both color and ARIA attributes, ensuring that information is not conveyed through color alone.
