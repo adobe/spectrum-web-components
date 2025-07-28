@@ -44,7 +44,7 @@ import {
     sendKeys,
     setUserAgent,
 } from '@web/test-runner-commands';
-import { spy } from 'sinon';
+import { SinonSpy, spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -53,6 +53,15 @@ import {
     sendMouseTo,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+
+// Helper function to set up input and change spies
+function setupEventSpies(element: NumberField) {
+    const inputSpy = spy();
+    const changeSpy = spy();
+    element.addEventListener('input', () => inputSpy());
+    element.addEventListener('change', () => changeSpy());
+    return { inputSpy, changeSpy };
+}
 
 describe('NumberField', () => {
     before(async () => {
@@ -791,212 +800,243 @@ describe('NumberField', () => {
             ).to.equal(0);
         });
     });
-    it('increments value with stepper UI click', async () => {
-        const el = await getElFrom(Default({ value: 50 }));
-        const inputSpy = spy();
-        const changeSpy = spy();
-        el.addEventListener('input', () => inputSpy());
-        el.addEventListener('change', () => changeSpy());
 
-        // Initial state
-        expect(el.value).to.equal(50);
+    describe('Stepper UI interactions', () => {
+        let inputSpy: SinonSpy;
+        let changeSpy: SinonSpy;
 
-        // Get step-up button position
-        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
-        const buttonUpRect = buttonUp.getBoundingClientRect();
-        const buttonUpPosition: [number, number] = [
-            buttonUpRect.x + buttonUpRect.width / 2,
-            buttonUpRect.y + buttonUpRect.height / 2,
-        ];
-
-        // Click the step-up button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: buttonUpPosition,
-                },
-            ],
+        afterEach(() => {
+            // Reset spies after each test to ensure isolation
+            inputSpy?.resetHistory();
+            changeSpy?.resetHistory();
         });
 
-        await elementUpdated(el);
+        it('increments value with stepper UI click', async () => {
+            const el = await getElFrom(Default({ value: 50 }));
+            const spies = setupEventSpies(el);
+            inputSpy = spies.inputSpy;
+            changeSpy = spies.changeSpy;
 
-        // Verify single increment
-        expect(el.value).to.equal(51);
-        expect(inputSpy.callCount).to.equal(1);
-        expect(changeSpy.callCount).to.equal(1);
-    });
+            // Initial state
+            expect(el.value).to.equal(50);
 
-    it('decrements value with stepper UI click', async () => {
-        const el = await getElFrom(Default({ value: 50 }));
-        const inputSpy = spy();
-        const changeSpy = spy();
-        el.addEventListener('input', () => inputSpy());
-        el.addEventListener('change', () => changeSpy());
+            // Get step-up button position
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
 
-        // Initial state
-        expect(el.value).to.equal(50);
+            // Click the step-up button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonUpPosition,
+                    },
+                ],
+            });
 
-        // Get step-down button position
-        const buttonDown = el.shadowRoot.querySelector(
-            '.step-down'
-        ) as HTMLElement;
-        const buttonDownRect = buttonDown.getBoundingClientRect();
-        const buttonDownPosition: [number, number] = [
-            buttonDownRect.x + buttonDownRect.width / 2,
-            buttonDownRect.y + buttonDownRect.height / 2,
-        ];
+            await elementUpdated(el);
 
-        // Click the step-down button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: buttonDownPosition,
-                },
-            ],
+            // Verify single increment
+            expect(el.value).to.equal(51);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(1);
         });
 
-        await elementUpdated(el);
+        it('decrements value with stepper UI click', async () => {
+            const el = await getElFrom(Default({ value: 50 }));
+            const spies = setupEventSpies(el);
+            inputSpy = spies.inputSpy;
+            changeSpy = spies.changeSpy;
 
-        // Verify single decrement
-        expect(el.value).to.equal(49);
-        expect(inputSpy.callCount).to.equal(1);
-        expect(changeSpy.callCount).to.equal(1);
-    });
+            // Initial state
+            expect(el.value).to.equal(50);
 
-    it('continuously increments when holding down step-up button', async () => {
-        const el = await getElFrom(Default({ value: 50 }));
-        const inputSpy = spy();
-        el.addEventListener('input', () => inputSpy());
+            // Get step-down button position
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
 
-        // Initial state
-        expect(el.value).to.equal(50);
+            // Click the step-down button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
 
-        // Get step-up button position
-        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
-        const buttonUpRect = buttonUp.getBoundingClientRect();
-        const buttonUpPosition: [number, number] = [
-            buttonUpRect.x + buttonUpRect.width / 2,
-            buttonUpRect.y + buttonUpRect.height / 2,
-        ];
+            await elementUpdated(el);
 
-        // Press and hold the step-up button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: buttonUpPosition,
-                },
-                {
-                    type: 'down',
-                },
-            ],
+            // Verify single decrement
+            expect(el.value).to.equal(49);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(1);
         });
 
-        // Wait for first increment
-        await oneEvent(el, 'input');
-        await elementUpdated(el);
-        expect(el.value).to.be.at.least(51);
-        const firstIncrementValue = el.value;
+        it('continuously increments when holding down step-up button', async () => {
+            const el = await getElFrom(Default({ value: 50 }));
+            const spies = setupEventSpies(el);
+            inputSpy = spies.inputSpy;
 
-        // Wait for continuous increments (at least one more)
-        await oneEvent(el, 'input');
-        await elementUpdated(el);
-        expect(el.value).to.be.greaterThan(firstIncrementValue);
+            // Initial state
+            expect(el.value).to.equal(50);
 
-        // Release the button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
+            // Get step-up button position
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+
+            // Press and hold the step-up button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonUpPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
+
+            // Wait for first increment
+            await oneEvent(el, 'input');
+            await elementUpdated(el);
+            // Note: We use range assertions (to.be.at.least) instead of exact equality here because
+            // continuous increment timing is non-deterministic and depends on system performance,
+            // browser event loop, and test environment. We're verifying the behavior works,
+            // not the exact count of increments.
+            expect(el.value).to.be.at.least(51);
+            const firstIncrementValue = el.value;
+
+            // Wait for continuous increments (at least one more)
+            await oneEvent(el, 'input');
+            await elementUpdated(el);
+            // Verify that holding the button causes multiple increments, not just one
+            expect(el.value).to.be.greaterThan(firstIncrementValue);
+
+            // Release the button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+
+            // Verify no further increments after release
+            const finalValue = el.value;
+            // We intentionally use a timeout here to verify the ABSENCE of events.
+            // After releasing the mouse, we need to ensure no more increments occur.
+            // Event-based synchronization (oneEvent) can't be used because we're
+            // testing that NO events should fire. This timeout gives enough time
+            // for any erroneous delayed increments to occur if the bug exists.
+            await aTimeout(100);
+            expect(el.value).to.equal(finalValue);
         });
 
-        // Verify no further increments after release
-        const finalValue = el.value;
-        await aTimeout(100);
-        expect(el.value).to.equal(finalValue);
-    });
+        it('changes from increment to decrement when dragging between buttons', async () => {
+            const el = await getElFrom(Default({ value: 50 }));
+            const spies = setupEventSpies(el);
+            inputSpy = spies.inputSpy;
 
-    it('changes from increment to decrement when dragging between buttons', async () => {
-        const el = await getElFrom(Default({ value: 50 }));
-        const inputSpy = spy();
-        el.addEventListener('input', () => inputSpy());
+            // Get button positions
+            const buttonUp = el.shadowRoot.querySelector(
+                '.step-up'
+            ) as HTMLElement;
+            const buttonUpRect = buttonUp.getBoundingClientRect();
+            const buttonUpPosition: [number, number] = [
+                buttonUpRect.x + buttonUpRect.width / 2,
+                buttonUpRect.y + buttonUpRect.height / 2,
+            ];
+            const buttonDown = el.shadowRoot.querySelector(
+                '.step-down'
+            ) as HTMLElement;
+            const buttonDownRect = buttonDown.getBoundingClientRect();
+            const buttonDownPosition: [number, number] = [
+                buttonDownRect.x + buttonDownRect.width / 2,
+                buttonDownRect.y + buttonDownRect.height / 2,
+            ];
 
-        // Get button positions
-        const buttonUp = el.shadowRoot.querySelector('.step-up') as HTMLElement;
-        const buttonUpRect = buttonUp.getBoundingClientRect();
-        const buttonUpPosition: [number, number] = [
-            buttonUpRect.x + buttonUpRect.width / 2,
-            buttonUpRect.y + buttonUpRect.height / 2,
-        ];
-        const buttonDown = el.shadowRoot.querySelector(
-            '.step-down'
-        ) as HTMLElement;
-        const buttonDownRect = buttonDown.getBoundingClientRect();
-        const buttonDownPosition: [number, number] = [
-            buttonDownRect.x + buttonDownRect.width / 2,
-            buttonDownRect.y + buttonDownRect.height / 2,
-        ];
+            // Press and hold the step-up button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonUpPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                ],
+            });
 
-        // Press and hold the step-up button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: buttonUpPosition,
-                },
-                {
-                    type: 'down',
-                },
-            ],
+            // Wait for increment to start
+            await oneEvent(el, 'input');
+            await elementUpdated(el);
+            // Using range assertions because press-and-hold timing is non-deterministic
+            expect(el.value).to.be.at.least(51);
+
+            // Wait for another increment
+            await oneEvent(el, 'input');
+            await elementUpdated(el);
+            const valueBeforeSwitch = el.value;
+            // Ensure we've had multiple increments before testing direction change
+            expect(valueBeforeSwitch).to.be.at.least(52);
+
+            // Move to step-down button while still holding
+            inputSpy.resetHistory();
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: buttonDownPosition,
+                    },
+                ],
+            });
+
+            // Wait for the direction to change
+            let framesToWait = FRAMES_PER_CHANGE * 2;
+            while (framesToWait) {
+                framesToWait -= 1;
+                await nextFrame();
+            }
+            await elementUpdated(el);
+
+            // Value should have decreased from the peak
+            // Using lessThan because we can't predict exact decrement count during drag transition
+            expect(el.value).to.be.lessThan(valueBeforeSwitch);
+            // At least one decrement should have occurred after moving to step-down button
+            expect(inputSpy.callCount).to.be.at.least(1);
+
+            // Release the button
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
         });
+    }); // End of Stepper UI interactions describe block
 
-        // Wait for increment to start
-        await oneEvent(el, 'input');
-        await elementUpdated(el);
-        expect(el.value).to.be.at.least(51);
-
-        // Wait for another increment
-        await oneEvent(el, 'input');
-        await elementUpdated(el);
-        const valueBeforeSwitch = el.value;
-        expect(valueBeforeSwitch).to.be.at.least(52);
-
-        // Move to step-down button while still holding
-        inputSpy.resetHistory();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: buttonDownPosition,
-                },
-            ],
-        });
-
-        // Wait for the direction to change
-        let framesToWait = FRAMES_PER_CHANGE * 2;
-        while (framesToWait) {
-            framesToWait -= 1;
-            await nextFrame();
-        }
-        await elementUpdated(el);
-
-        // Value should have decreased from the peak
-        expect(el.value).to.be.lessThan(valueBeforeSwitch);
-        expect(inputSpy.callCount).to.be.at.least(1);
-
-        // Release the button
-        await sendMouse({
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
-        });
-    });
     it('surfaces `valueAsNumber`', async () => {
         const el = await getElFrom(Default({}));
         el.value = 1000;
