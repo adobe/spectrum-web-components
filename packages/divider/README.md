@@ -2,6 +2,8 @@
 
 `sp-divider` brings clarity to a layout by grouping and dividing content that exists in close proximity. It can also be used to establish rhythm and hierarchy.
 
+[View the design documentation for this component.](https://spectrum.adobe.com/page/divider/)
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/divider?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/divider)
@@ -26,9 +28,7 @@ import { Divider } from '@spectrum-web-components/divider';
 
 ### Options
 
-#### Horizontal
-
-By default, dividers are horizontal and should be used for separating content vertically.
+Horizontal dividers are used to separate content stacked vertically.
 
 <sp-tabs selected="m" auto label="Horizontal Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -75,7 +75,7 @@ By default, dividers are horizontal and should be used for separating content ve
 
 Vertical dividers are used to separate content horizontally.
 
-When a vertical Divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the Divider.
+When a vertical divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the divider.
 
 <sp-tabs selected="m" auto label="Vertical Size Attribute Options">
 <sp-tab value="s">Small</sp-tab>
@@ -187,12 +187,12 @@ Use the static color option when a divider needs to be placed on top of a color 
 
 The `<sp-divider>` element implements the following accessibility features:
 
-- **ARIA Role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
-- **Orientation Support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
+- **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
+- **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
 
 #### Best practices
 
-- Dividers (medium or large) can be used in combination with header text to create a section or page title. In such cases, place the divider below the header.
+- Medium or large dividers can be used with header text to visually create a section or page title. Place the divider below the header for best results.
 - Ensure sufficient color contrast when using `static-color` variants on colored backgrounds.
 - Use dividers to create meaningful visual separation, not just decorative lines.
-- Use dividers sparingly because they lose their value when overused.
+- Use dividers sparingly; excessive use can diminish their visual impact.
