@@ -28,37 +28,46 @@ custom-elements.json
 !packages/icons-workflow/bin/build.js
 !packages/icons-workflow/src/DefaultIcon.ts
 
-packages/*/src/**/*.css.js
-packages/*/custom-elements.json
-packages/**/*.js
-packages/**/*.js.map
-packages/**/*.d.ts
-packages/**/*.test-vrt.ts
-!packages/**/*/spectrum-config.js
-!packages/**/*/spectrum-config.v1.js
-!packages/*/test/global.d.ts
-!packages/*/global.d.ts
-!packages/*/local.d.ts
+first-gen/packages/*/src/**/*.css.js
+first-gen/packages/*/src/**/*.css.js.map
+first-gen/packages/*/custom-elements.json
+first-gen/packages/**/*.js
+first-gen/packages/**/*.js.map
+first-gen/packages/**/*.dev.js
+first-gen/packages/**/*.dev.js.map
+first-gen/packages/**/*.d.ts
+first-gen/packages/**/*.test-vrt.ts
+!first-gen/packages/**/*/spectrum-config.js
+!first-gen/packages/**/*/spectrum-config.v1.js
+!first-gen/packages/*/test/global.d.ts
+!first-gen/packages/*/global.d.ts
+!first-gen/packages/*/local.d.ts
 
 react
+first-gen/react
 
-projects/**/*.js
-projects/**/*.js.map
-projects/**/*.d.ts
-!projects/*/global.d.ts
+first-gen/projects/**/*.js
+first-gen/projects/**/*.js.map
+first-gen/projects/**/*.dev.js
+first-gen/projects/**/*.dev.js.map
+first-gen/projects/**/*.d.ts
+!first-gen/projects/*/global.d.ts
 
-tools/*/src/**/*.css.js
-tools/*/custom-elements.json
-tools/**/*.js
-tools/**/*.js.map
-tools/**/*.d.ts
-tools/**/*.test-vrt.ts
-!tools/**/*/spectrum-config.js
-!tools/*/test/global.d.ts
-!tools/*/global.d.ts
-!tools/*/local.d.ts
-!tools/base/src/version.js
-!tools/base/src/version.d.ts
+first-gen/tools/*/src/**/*.css.js
+first-gen/tools/*/src/**/*.css.js.map
+first-gen/tools/*/custom-elements.json
+first-gen/tools/**/*.js
+first-gen/tools/**/*.js.map
+first-gen/tools/**/*.dev.js
+first-gen/tools/**/*.dev.js.map
+first-gen/tools/**/*.d.ts
+first-gen/tools/**/*.test-vrt.ts
+!first-gen/tools/**/*/spectrum-config.js
+!first-gen/tools/*/test/global.d.ts
+!first-gen/tools/*/global.d.ts
+!first-gen/tools/*/local.d.ts
+!first-gen/tools/base/src/version.js
+!first-gen/tools/base/src/version.d.ts
 
 # cache directories
 .wireit
@@ -72,25 +81,25 @@ stats.html
 *.tsbuildinfo
 
 # built css assets
-packages/**/*.css.ts
-projects/**/*.css.ts
-tools/**/*.css.ts
-styles/**/*.css.ts
+first-gen/packages/**/*.css.ts
+first-gen/projects/**/*.css.ts
+first-gen/tools/**/*.css.ts
+first-gen/styles/**/*.css.ts
 
 # test assets
 TESTS.xml
 test-results.xml
-test/benchmark/cli.cjs
-test/visual/review/
-test/visual/screenshots-baseline/
-test/visual/screenshots-actual/
-test/visual/screenshots-current/
-test/visual/src/data.json
-test/**/*.js
-test/**/*.js.map
-test/**/*.d.ts
-!test/visual/**/*.js
-test/visual/test.js
+first-gen/test/benchmark/cli.cjs
+first-gen/test/visual/review/
+first-gen/test/visual/screenshots-baseline/
+first-gen/test/visual/screenshots-actual/
+first-gen/test/visual/screenshots-current/
+first-gen/test/visual/src/data.json
+first-gen/test/**/*.js
+first-gen/test/**/*.js.map
+first-gen/test/**/*.d.ts
+!first-gen/test/visual/**/*.js
+first-gen/test/visual/test.js
 test-results
 
 # npm assets
