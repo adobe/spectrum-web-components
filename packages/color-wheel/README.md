@@ -65,30 +65,79 @@ Control the hue value directly (0-360 degrees):
 
 ##### Color Values
 
-Set and get color values using various formats:
+The color wheel supports a wide variety of color formats for setting and getting color values:
 
 ```html
-<!-- Hex formats -->
-<sp-color-wheel color="#ff0000"></sp-color-wheel>
+<!-- Hex3 format (3-digit) -->
 <sp-color-wheel color="#f00"></sp-color-wheel>
+<sp-color-wheel color="#0a5"></sp-color-wheel>
+
+<!-- Hex4 format (3-digit + alpha) -->
+<sp-color-wheel color="#f00f"></sp-color-wheel>
+<sp-color-wheel color="#0a58"></sp-color-wheel>
+
+<!-- Hex6 format (6-digit) -->
+<sp-color-wheel color="#ff0000"></sp-color-wheel>
+<sp-color-wheel color="#00aa55"></sp-color-wheel>
+
+<!-- Hex8 format (6-digit + alpha) -->
+<sp-color-wheel color="#ff0000ff"></sp-color-wheel>
+<sp-color-wheel color="#00aa5580"></sp-color-wheel>
 
 <!-- RGB format -->
 <sp-color-wheel color="rgb(255, 0, 0)"></sp-color-wheel>
+<sp-color-wheel color="rgb(0, 170, 85)"></sp-color-wheel>
+
+<!-- RGBA format -->
+<sp-color-wheel color="rgba(255, 0, 0, 1)"></sp-color-wheel>
+<sp-color-wheel color="rgba(0, 170, 85, 0.5)"></sp-color-wheel>
 
 <!-- HSL format -->
 <sp-color-wheel color="hsl(0, 100%, 50%)"></sp-color-wheel>
+<sp-color-wheel color="hsl(150, 100%, 33%)"></sp-color-wheel>
 
-<!-- Named colors -->
+<!-- HSLA format -->
+<sp-color-wheel color="hsla(0, 100%, 50%, 1)"></sp-color-wheel>
+<sp-color-wheel color="hsla(150, 100%, 33%, 0.5)"></sp-color-wheel>
+
+<!-- HSV format -->
+<sp-color-wheel color="hsv(0, 100%, 100%)"></sp-color-wheel>
+<sp-color-wheel color="hsv(150, 100%, 67%)"></sp-color-wheel>
+
+<!-- HSVA format -->
+<sp-color-wheel color="hsva(0, 100%, 100%, 1)"></sp-color-wheel>
+<sp-color-wheel color="hsva(150, 100%, 67%, 0.5)"></sp-color-wheel>
+
+<!-- Named color strings -->
 <sp-color-wheel color="red"></sp-color-wheel>
+<sp-color-wheel color="rebeccapurple"></sp-color-wheel>
+<sp-color-wheel color="darkseagreen"></sp-color-wheel>
+<sp-color-wheel color="cornflowerblue"></sp-color-wheel>
 ```
 
 ##### Step Size
 
-Customize the precision of keyboard navigation (default: 1):
+The `step` attribute controls the increment of hue adjustment when using keyboard navigation. It defines how many degrees the hue changes with each arrow key press:
 
 ```html
+<!-- Fine control: 1 degree per key press (default) -->
+<sp-color-wheel step="1"></sp-color-wheel>
+
+<!-- Medium control: 10 degrees per key press -->
 <sp-color-wheel step="10"></sp-color-wheel>
+
+<!-- Coarse control: 45 degrees per key press (8 stops around the wheel) -->
+<sp-color-wheel step="45"></sp-color-wheel>
 ```
+
+The step size affects keyboard navigation:
+
+- Regular arrow keys move by the step value
+- <kbd>Shift</kbd> + arrow keys move by 10× the step value
+- Choose your step size based on your use case:
+    - **step="1"**: Precise color selection, best for professional design tools
+    - **step="10"**: Balanced control, good for general use
+    - **step="45"**: Quick selection between major hues, ideal for simple color pickers
 
 ##### Label
 
