@@ -199,6 +199,7 @@ The color wheel manages its focused state automatically, providing visual feedba
 
 ```html
 <sp-color-wheel focused></sp-color-wheel>
+```
 
 ## Behaviors
 
