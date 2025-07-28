@@ -1,14 +1,14 @@
-/**
- * Copyright 2025 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- */
+/* eslint-disable import/no-extraneous-dependencies */
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
 
 import type { Picker } from '@spectrum-web-components/picker';
 
@@ -31,7 +31,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
-import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
+import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
@@ -2211,11 +2211,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.el);
         });
-        it.skip('displays the same icon as the selected menu item', async function () {
-            // TODO: skipping this test because it's flaky in Firefox in CI. Will review in the migration to Spectrum 2.
-            if (isFirefox()) {
-                return;
-            }
+        it('displays the same icon as the selected menu item', async function () {
             // Delay long enough for the picker to display the selected item.
             // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
             await nextFrame();
