@@ -197,10 +197,8 @@ A color wheel in a disabled state shows that an input exists, but is not availab
 
 The color wheel manages its focused state automatically, providing visual feedback during keyboard navigation:
 
-```javascript
-const colorWheel = document.querySelector('sp-color-wheel');
-console.log(colorWheel.focused); // true or false
-```
+```html
+<sp-color-wheel focused></sp-color-wheel>
 
 ## Behaviors
 
