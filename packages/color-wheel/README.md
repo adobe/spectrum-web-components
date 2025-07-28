@@ -39,15 +39,17 @@ The color wheel consists of several key parts:
 
 ## Custom Gradient
 
-You can provide a custom gradient to replace the default color wheel appearance using the `gradient` slot:
+**⚠️ Deprecated Feature**
 
-```html
-<sp-color-wheel>
-    <div slot="gradient" class="custom-gradient">
-        <!-- Custom SVG or gradient implementation -->
-    </div>
-</sp-color-wheel>
-```
+The custom gradient functionality has been deprecated and is no longer supported. While the `gradient` slot may still be present in the component's code, it is broken and will not work as intended.
+
+If you previously relied on custom gradients for the color wheel, you should:
+
+- Use the default color wheel appearance
+- Consider alternative approaches for custom styling
+- Remove any existing custom gradient implementations
+
+**Note**: Even if you find the `gradient` slot in the component's source code, this feature is non-functional and should not be used in new implementations.
 
 ## Options
 
