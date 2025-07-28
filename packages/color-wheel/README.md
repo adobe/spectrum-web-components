@@ -132,6 +132,8 @@ The color wheel supports a wide variety of color formats for setting and getting
     </sp-table-body>
 </sp-table>
 
+---
+
 #### Step Size
 
 The `step` attribute controls the increment of hue adjustment when using keyboard navigation. It defines how many degrees the hue changes with each arrow key press:
