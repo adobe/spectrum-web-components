@@ -837,7 +837,7 @@ describe('NumberField', () => {
                 '.step-up'
             ) as HTMLElement;
             // Click the step-up button
-            await sendMouseTo(buttonUp, 'click);
+            await sendMouseTo(buttonUp, 'click');
 
             await elementUpdated(el);
 
@@ -856,7 +856,7 @@ describe('NumberField', () => {
                 '.step-down'
             ) as HTMLElement;
             // Click the step-down button
-            await sendMouseTo(buttonDown, 'click);
+            await sendMouseTo(buttonDown, 'click');
 
             await elementUpdated(el);
 
@@ -985,7 +985,7 @@ describe('NumberField', () => {
                 ],
             });
 
-            // Wait for the direction to change
+            // input is only processed onces per FRAMES_PER_CHANGE number of frames so wait for the direction to change
             let framesToWait = FRAMES_PER_CHANGE * 2;
             while (framesToWait) {
                 framesToWait -= 1;
