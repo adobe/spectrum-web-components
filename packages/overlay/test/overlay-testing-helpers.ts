@@ -10,12 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    oneEvent,
-    waitUntil,
-} from '@open-wc/testing';
+import { oneEvent, waitUntil } from '@open-wc/testing';
 import { Overlay } from '../src/Overlay';
-
 
 // make sure overlay state is about to change, and wait until overlay state changes to 'opened'
 export const overlayOpened = async (
@@ -23,11 +19,18 @@ export const overlayOpened = async (
     timeout: number = 100,
     messagePrefix?: string
 ): Promise<unknown> => {
-    return await waitUntil(
-        () => overlay?.state === 'opened' || (overlay && oneEvent(overlay, 'sp-opened')),
-        `${messagePrefix ? `${messagePrefix}: ` : ''}open timeout (still ${overlay?.state})`,
-        { timeout: timeout }
-    );
+    if (overlay?.state === 'opened') {
+        return Promise.resolve();
+    }
+
+    return await Promise.race([
+        waitUntil(
+            () => overlay?.state === 'opened',
+            `${messagePrefix ? `${messagePrefix}: ` : ''}open timeout (still ${overlay?.state})`,
+            { timeout: timeout }
+        ),
+        oneEvent(overlay, 'sp-opened'),
+    ]);
 };
 
 export const overlayClosed = async (
@@ -35,9 +38,16 @@ export const overlayClosed = async (
     timeout: number = 100,
     messagePrefix?: string
 ): Promise<unknown> => {
-    return await waitUntil(
-        () => overlay?.state === 'closed' || oneEvent(overlay, 'sp-closed'),
-        `${messagePrefix ? `${messagePrefix}: ` : ''}closed timeout (still ${overlay?.state})`,
-        { timeout: timeout }
-    );
+    if (overlay?.state === 'closed') {
+        return Promise.resolve();
+    }
+
+    return await Promise.race([
+        waitUntil(
+            () => overlay?.state === 'closed',
+            `${messagePrefix ? `${messagePrefix}: ` : ''}closed timeout (still ${overlay?.state})`,
+            { timeout: timeout }
+        ),
+        oneEvent(overlay, 'sp-closed'),
+    ]);
 };
