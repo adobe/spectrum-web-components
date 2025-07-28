@@ -2,7 +2,7 @@
 
 An `<sp-color-wheel>` allows users to visually select the hue of a color on a circular track. It's commonly used together with other color components to create comprehensive color selection interfaces.
 
-### Usage
+## Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-wheel)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-wheel)
@@ -24,7 +24,7 @@ When looking to leverage the `ColorWheel` base class as a type and/or for extens
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
 ```
 
-### Anatomy
+## Anatomy
 
 The color wheel consists of several key parts:
 
@@ -37,7 +37,7 @@ The color wheel consists of several key parts:
 <sp-color-wheel></sp-color-wheel>
 ```
 
-#### Custom Gradient
+## Custom Gradient
 
 You can provide a custom gradient to replace the default color wheel appearance using the `gradient` slot:
 
@@ -49,13 +49,13 @@ You can provide a custom gradient to replace the default color wheel appearance 
 </sp-color-wheel>
 ```
 
-### Options
+## Options
 
-#### Properties
+### Properties
 
 The color wheel supports several properties for configuration:
 
-##### Value (Hue)
+#### Value (Hue)
 
 Control the hue value directly (0-360 degrees):
 
@@ -63,7 +63,7 @@ Control the hue value directly (0-360 degrees):
 <sp-color-wheel value="180"></sp-color-wheel>
 ```
 
-##### Color Values
+#### Color Values
 
 The color wheel supports a wide variety of color formats for setting and getting color values:
 
@@ -132,7 +132,7 @@ The color wheel supports a wide variety of color formats for setting and getting
     </sp-table-body>
 </sp-table>
 
-##### Step Size
+#### Step Size
 
 The `step` attribute controls the increment of hue adjustment when using keyboard navigation. It defines how many degrees the hue changes with each arrow key press:
 
@@ -156,7 +156,7 @@ The step size affects keyboard navigation:
     - **step="10"**: Balanced control, good for general use
     - **step="45"**: Quick selection between major hues, ideal for simple color pickers
 
-##### Label
+#### Label
 
 Provide a custom aria-label for accessibility:
 
@@ -164,7 +164,7 @@ Provide a custom aria-label for accessibility:
 <sp-color-wheel label="Select color hue"></sp-color-wheel>
 ```
 
-##### Direction
+#### Direction
 
 The color wheel supports both left-to-right and right-to-left layouts:
 
@@ -172,7 +172,7 @@ The color wheel supports both left-to-right and right-to-left layouts:
 <sp-color-wheel dir="rtl"></sp-color-wheel>
 ```
 
-#### Custom Sizing
+### Custom Sizing
 
 An `<sp-color-wheel>`'s size can be customized appropriately for its context. By default, the size is size-2400 (192 px on desktop, 240 px on mobile).
 
@@ -180,9 +180,9 @@ An `<sp-color-wheel>`'s size can be customized appropriately for its context. By
 <sp-color-wheel style="width: 300px; height: 300px;"></sp-color-wheel>
 ```
 
-### States
+## States
 
-#### Disabled
+### Disabled
 
 A color wheel in a disabled state shows that an input exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that the wheel may become available later.
 
@@ -190,7 +190,7 @@ A color wheel in a disabled state shows that an input exists, but is not availab
 <sp-color-wheel disabled></sp-color-wheel>
 ```
 
-#### Focused
+### Focused
 
 The color wheel manages its focused state automatically, providing visual feedback during keyboard navigation:
 
@@ -199,9 +199,9 @@ const colorWheel = document.querySelector('sp-color-wheel');
 console.log(colorWheel.focused); // true or false
 ```
 
-### Behaviors
+## Behaviors
 
-#### Color Formatting
+### Color Formatting
 
 When using the color elements, use `el.color` to access the `color` property, which should manage itself in the color format supplied. If you supply a color in `rgb()` format, `el.color` should return the color in `rgb()` format, as well.
 
@@ -216,7 +216,7 @@ The current color formats supported are as follows:
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
 When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [colorjs documentation](https://colorjs.io/docs/). Separately, the element's `value` property is directly managed by the hue as represented in the interface.
 
-#### Pointer Interactions
+### Pointer Interactions
 
 The color wheel supports both mouse and touch interactions:
 
@@ -224,15 +224,15 @@ The color wheel supports both mouse and touch interactions:
 - **Drag**: Continuously adjust hue while dragging around the wheel
 - **Touch**: Full touch support for mobile devices
 
-#### Focus Management
+### Focus Management
 
 The color wheel automatically manages focus for keyboard accessibility, ensuring proper focus indication and keyboard operability.
 
-### Accessibility
+## Accessibility
 
 The `<sp-color-wheel>` is rendered with appropriate ARIA attributes to ensure accessibility for screen readers and keyboard navigation.
 
-#### Keyboard Navigation
+### Keyboard Navigation
 
 The color wheel supports comprehensive keyboard interaction:
 
@@ -257,7 +257,7 @@ The color wheel supports comprehensive keyboard interaction:
     </sp-table-body>
 </sp-table>
 
-#### ARIA Attributes
+### ARIA Attributes
 
 The component provides comprehensive ARIA support:
 
@@ -266,7 +266,7 @@ The component provides comprehensive ARIA support:
 - **Value Text**: Announces the current hue value in degrees with proper internationalization
 - **Orientation**: Implicitly circular, supporting both LTR and RTL layouts
 
-#### Screen Reader Support
+### Screen Reader Support
 
 The component provides meaningful announcements for assistive technologies:
 
@@ -274,7 +274,7 @@ The component provides meaningful announcements for assistive technologies:
 - Internationalized number formatting based on user's locale
 - Clear indication of the control's purpose through proper labeling
 
-#### Mobile Accessibility
+### Mobile Accessibility
 
 The color wheel is fully accessible on mobile devices with:
 
