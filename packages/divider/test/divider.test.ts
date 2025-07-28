@@ -51,7 +51,7 @@ describe('Divider', () => {
         expect(el.getAttribute('static-color')).to.equal('black');
         el.removeAttribute('static-color');
         await elementUpdated(el);
-        expect(el.staticColor).to.be.undefined;
+        expect(el.staticColor).to.be.null;
         expect(el.hasAttribute('static-color')).to.be.false;
     });
 });
