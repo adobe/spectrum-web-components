@@ -285,7 +285,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     protected handleEscape = (
         event: MenuItemKeydownEvent | KeyboardEvent
     ): void => {
-        if (event.key === 'Escape' && this.open) {
+        if (event.key === 'Escape') {
             event.stopPropagation();
             event.preventDefault();
             this.toggle(false);

@@ -1,13 +1,14 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import { Overlay } from './Overlay.js';
 
@@ -25,10 +26,6 @@ class OverlayStack {
     private root: HTMLElement = document.body;
 
     stack: Overlay[] = [];
-
-    private originalBodyOverflow = '';
-
-    private bodyScrollBlocked = false;
 
     constructor() {
         this.bindEvents();
@@ -82,26 +79,7 @@ class OverlayStack {
             this.stack.splice(overlayIndex, 1);
         }
         overlay.open = false;
-
-        this.manageBodyScroll();
     }
-
-    /**
-     * Manage body scroll blocking based on modal/page overlays
-     */
-        private manageBodyScroll(): void {
-            const shouldBlock = this.stack.some(
-                (overlay) => overlay.type === 'modal' || overlay.type === 'page'
-            );
-            if (shouldBlock && !this.bodyScrollBlocked) {
-                this.originalBodyOverflow = document.body.style.overflow || '';
-                document.body.style.overflow = 'hidden';
-                this.bodyScrollBlocked = true;
-            } else if (!shouldBlock && this.bodyScrollBlocked) {
-                document.body.style.overflow = this.originalBodyOverflow;
-                this.bodyScrollBlocked = false;
-            }
-        }
 
     /**
      * Cach the `pointerdownTarget` for later testing
@@ -173,14 +151,14 @@ class OverlayStack {
 
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
-        if (event.defaultPrevented) return; // Don't handle if already handled
         if (!this.stack.length) return;
         const last = this.stack[this.stack.length - 1];
         if (last?.type === 'page') {
             event.preventDefault();
             return;
         }
-        if (last?.type === 'manual' || last?.type === 'modal') {
+        if (last?.type === 'manual') {
+            // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
             this.closeOverlay(last);
             return;
         }
@@ -235,17 +213,8 @@ class OverlayStack {
                     const path = event.composedPath();
                     this.stack.forEach((overlayEl) => {
                         const inPath = path.find((el) => el === overlayEl);
-
-                        // Check if the trigger element is inside this overlay
-                        const triggerInOverlay =
-                            overlay.triggerElement &&
-                            overlay.triggerElement instanceof HTMLElement &&
-                            overlayEl.contains &&
-                            overlayEl.contains(overlay.triggerElement);
-
                         if (
                             !inPath &&
-                            !triggerInOverlay &&
                             overlayEl.type !== 'manual' &&
                             overlayEl.type !== 'modal'
                         ) {
@@ -279,7 +248,6 @@ class OverlayStack {
             overlay.addEventListener('beforetoggle', this.handleBeforetoggle, {
                 once: true,
             });
-            this.manageBodyScroll();
         });
     }
 

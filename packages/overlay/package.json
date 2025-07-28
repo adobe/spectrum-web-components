@@ -171,7 +171,6 @@
         "@spectrum-web-components/reactive-controllers": "1.7.0",
         "@spectrum-web-components/shared": "1.7.0",
         "@spectrum-web-components/theme": "1.7.0",
-        "@spectrum-web-components/underlay": "1.7.0",
         "focus-trap": "^7.6.4"
     },
     "types": "./src/index.d.ts",
