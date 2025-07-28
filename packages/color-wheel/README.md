@@ -43,8 +43,11 @@ You can provide a custom gradient to replace the default color wheel appearance 
 
 ```html
 <sp-color-wheel>
-        <svg slot="gradient" class="custom-gradient" ...>...</svg>
+    <div slot="gradient" class="custom-gradient">
+        <!-- Custom SVG or gradient implementation -->
+    </div>
 </sp-color-wheel>
+```
 
 ### Options
 
