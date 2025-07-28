@@ -13,13 +13,13 @@ yarn add @spectrum-web-components/badge
 
 Import the side effectful registration of `<sp-badge>` via:
 
-```ts
+```js
 import '@spectrum-web-components/badge/sp-badge.js';
 ```
 
 When looking to leverage the `Badge` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import { Badge } from '@spectrum-web-components/badge';
 ```
 
