@@ -23,13 +23,15 @@
         "storybook:first-gen": "yarn workspace @adobe/spectrum-web-components storybook",
         "lint": "yarn workspace @adobe/spectrum-web-components lint",
         "lint:first-gen": "yarn workspace @adobe/spectrum-web-components lint",
+        "lint-staged": "git status --porcelain && git add . && lint-staged --allow-empty",
         "postinstall": "husky || true"
     },
     "workspaces": [
         "first-gen"
     ],
     "devDependencies": {
-        "husky": "^9.0.10"
+        "husky": "^9.0.10",
+        "lint-staged": "^16.1.2"
     },
     "keywords": [
         "design-system",
