@@ -30,6 +30,8 @@
         "first-gen"
     ],
     "devDependencies": {
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
         "husky": "^9.0.10",
         "lint-staged": "^16.1.2"
     },
