@@ -95,20 +95,21 @@ commands:
             #       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             #       - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             #       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            # - run:
-            #       name: Count baseline images
-            #       command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+            - run:
+                  name: Count baseline images
+                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
-                  command: cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  command: |
+                      yarn test:ci --config first-gen/web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -170,11 +171,11 @@ commands:
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
                       # Prepare files for deployment
-                      cp first-gen/projects/documentation/content/favicon.ico first-gen/test/visual/ || echo "Failed to copy favicon"
+                      cp first-gen/projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
 
                       # Upload VRT results to Azure Blob Storage
                       echo "Uploading VRT results to ${PR_HASH}/${combination}/"
-                      azcopy copy "first-gen/test/visual/*" \
+                      azcopy copy "test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
                         --recursive \
                         --from-to LocalBlob
@@ -188,18 +189,18 @@ commands:
             - run:
                   when: always
                   command: |
-                      rm -rf first-gen/test/visual/screenshots-baseline
-                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
+                      rm -rf test/visual/screenshots-baseline
+                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - first-gen/test/visual/screenshots-baseline
+                      - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - first-gen/test/visual/screenshots-baseline
+                      - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
@@ -326,8 +327,8 @@ jobs:
             - run:
                   name: Count baseline images
                   command: |
-                      mkdir -p first-gen/test/visual/screenshots-baseline
-                      find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                      mkdir -p test/visual/screenshots-baseline
+                      find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
@@ -339,7 +340,7 @@ jobs:
             - run:
                   when: on_success
                   name: Count current images
-                  command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -398,11 +399,11 @@ jobs:
                       fi
 
                       # Prepare files for deployment
-                      cp first-gen/projects/documentation/content/favicon.ico first-gen/test/visual/
+                      cp first-gen/projects/documentation/content/favicon.ico test/visual/
 
                       # Upload HCM VRT results to Azure Blob Storage
                       echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
-                      azcopy copy "first-gen/test/visual/*" \
+                      azcopy copy "test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
                         --recursive \
                         --from-to LocalBlob
@@ -416,18 +417,18 @@ jobs:
             - run:
                   when: always
                   command: |
-                      rm -rf first-gen/test/visual/screenshots-baseline
-                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
+                      rm -rf test/visual/screenshots-baseline
+                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - first-gen/test/visual/screenshots-baseline
+                      - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - first-gen/test/visual/screenshots-baseline
+                      - test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
 
     visual:
