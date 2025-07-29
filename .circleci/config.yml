@@ -28,7 +28,7 @@ parameters:
         default: wireit
 commands:
     install-azcopy:
-        description: 'Install AzCopy and set up authentication'
+        description: "Install AzCopy and set up authentication"
         steps:
             - run:
                   when: always
@@ -97,12 +97,12 @@ commands:
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      yarn test:ci --config first-gen/web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
@@ -124,8 +124,8 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
+                      node first-gen/test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      yarn rollup -c first-gen/test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -172,11 +172,11 @@ commands:
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
                       # Prepare files for deployment
-                      cp projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
+                      cp first-gen/projects/documentation/content/favicon.ico first-gen/test/visual/ || echo "Failed to copy favicon"
 
                       # Upload VRT results to Azure Blob Storage
                       echo "Uploading VRT results to ${PR_HASH}/${combination}/"
-                      azcopy copy "test/visual/*" \
+                      azcopy copy "first-gen/test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
                         --recursive \
                         --from-to LocalBlob
@@ -190,18 +190,18 @@ commands:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf first-gen/test/visual/screenshots-baseline
+                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - first-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - first-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
@@ -325,19 +325,19 @@ jobs:
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+                      yarn test:ci --config first-gen/web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -352,8 +352,8 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
-                      yarn rollup -c test/visual/rollup.config.js
+                      node first-gen/test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
+                      yarn rollup -c first-gen/test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
