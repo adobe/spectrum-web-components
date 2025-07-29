@@ -101,7 +101,7 @@ commands:
             - run:
                   when: always
                   name: VRT Run
-                  command: cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  command: cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> --update-visual-baseline
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
