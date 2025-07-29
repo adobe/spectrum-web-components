@@ -139,7 +139,9 @@ It is not recommended to make badges interactive. Consider using a different com
 
 The `<sp-badge>` can be customized with either semantic or non-semantic variants. Badges are intended as display elements (like status lights), so avoid using badges for critical actions.
 
-##### Semantic
+<sp-tabs selected="semantic" auto label="Semantic and non-semantic variants">
+<sp-tab value="semantic">Semantic</sp-tab>
+<sp-tab-panel value="semantic">
 
 When badges have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
 
@@ -159,7 +161,9 @@ When badges have a semantic meaning, they use semantic colors. Use these variant
 </div>
 ```
 
-##### Non-Semantic
+</sp-tab-panel>
+<sp-tab value="nonsemantic">Non-semantic</sp-tab>
+<sp-tab-panel value="nonsemantic">
 
 When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
 
@@ -182,7 +186,10 @@ When badges are for color-coded categories, they use non-semantic colors. Non-se
 </div>
 ```
 
-##### Fixed positioning
+</sp-tab-panel>
+</sp-tabs>
+
+#### Fixed positioning
 
 `<sp-badge>` can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
 
@@ -218,13 +225,6 @@ When badges are for color-coded categories, they use non-semantic colors. Non-se
 </div>
 ```
 
-| Do ✅                                   | Don't ❌                                            |
-| :-------------------------------------- | :-------------------------------------------------- |
-| Use badges for status indication        | Use badges for critical actions                     |
-| Use visible labels most often           | Overwhelm a user with too much critical information |
-| Use icon-only badges with aria-label    |                                                     |
-| Use badges for supplemental information |                                                     |
-
 ### Behaviors
 
 Badges are not interactive by default.
@@ -247,6 +247,31 @@ When a badge's label is too long for the available horizontal space, it wraps to
 ```
 
 ### Accessibility
+
+<div style="margin-block-end: 2rem">
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Do ✅</sp-table-head-cell>
+        <sp-table-head-cell>Don't ❌</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>Use badges for status indication</sp-table-cell>
+            <sp-table-cell>Use badges for critical actions</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Use visible labels most often</sp-table-cell>
+            <sp-table-cell>Overwhelm a user with too much critical information</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+        <sp-table-cell>Use icon-only badges with aria-label</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Use badges for supplemental information</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+</div>
 
 #### Always include a label
 
@@ -276,4 +301,4 @@ Remember that a tooltip does not replace an accessible label.
 
 #### Don't override semantic colors
 
-The badges's variants provide semantic meaning through both color and ARIA attributes, ensuring that information is not conveyed through color alone.
+The badge's variants provide semantic meaning through both color and ARIA attributes, ensuring that information is not conveyed through color alone.
