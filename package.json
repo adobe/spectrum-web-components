@@ -24,7 +24,7 @@
         "lint": "yarn workspace @adobe/spectrum-web-components lint",
         "lint:first-gen": "yarn workspace @adobe/spectrum-web-components lint",
         "lint-staged": "git status --porcelain && git add . && lint-staged --allow-empty",
-        "postinstall": "husky || true"
+        "postinstall": "husky || true && patch-package"
     },
     "workspaces": [
         "first-gen"
@@ -33,7 +33,8 @@
         "@commitlint/cli": "^19.8.1",
         "@commitlint/config-conventional": "^19.8.1",
         "husky": "^9.0.10",
-        "lint-staged": "^16.1.2"
+        "lint-staged": "^16.1.2",
+        "patch-package": "^8.0.0"
     },
     "keywords": [
         "design-system",

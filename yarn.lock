@@ -210,6 +210,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:^19.8.1"
     husky: "npm:^9.0.10"
     lint-staged: "npm:^16.1.2"
+    patch-package: "npm:^8.0.0"
   languageName: unknown
   linkType: soft
 
@@ -303,7 +304,6 @@ __metadata:
     next: "npm:^14.2.26"
     node-fetch: "npm:^3.1.0"
     npm-run-all2: "npm:^8.0.1"
-    patch-package: "npm:^8.0.0"
     pinst: "npm:^3.0.0"
     prettier: "npm:^3.5.3"
     prettier-plugin-package: "npm:^1.3.0"
