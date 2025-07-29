@@ -139,18 +139,6 @@ It is not recommended to make badges interactive. Consider using a different com
 
 The `<sp-badge>` can be customized with either semantic or non-semantic variants. Badges are intended as display elements (like status lights), so avoid using badges for critical actions.
 
-**Do ✅**
-
-- Use badges for status indication
-- Use visible labels most often
-- Use icon-only badges with `aria-label`
-- Use badges for supplemental information
-
-**Don't ❌**
-
-- Use badges for critical actions
-- Overwhelm a user with too much critical information
-
 ##### Semantic
 
 When badges have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
@@ -229,6 +217,13 @@ When badges are for color-coded categories, they use non-semantic colors. Non-se
     </sp-badge>
 </div>
 ```
+
+| Do ✅                                   | Don't ❌                                            |
+| :-------------------------------------- | :-------------------------------------------------- |
+| Use badges for status indication        | Use badges for critical actions                     |
+| Use visible labels most often           | Overwhelm a user with too much critical information |
+| Use icon-only badges with aria-label    |                                                     |
+| Use badges for supplemental information |                                                     |
 
 ### Behaviors
 
