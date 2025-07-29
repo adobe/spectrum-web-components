@@ -958,6 +958,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 ],
             });
             await open;
+            await elementUpdated(el);
 
             expect(el.open).to.be.true;
             await aTimeout(50);

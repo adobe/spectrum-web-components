@@ -797,7 +797,7 @@ export const PickerInModal = (): TemplateResult => {
     return html`
         <sp-button id="trigger">Overlay Trigger</sp-button>
         <sp-overlay trigger="trigger@click" placement="bottom">
-            <sp-popover>
+            <sp-popover slot="default">
                 <sp-picker
                     label="What would you like to do?"
                     value="item-2"
