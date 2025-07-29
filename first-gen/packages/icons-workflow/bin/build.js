@@ -27,7 +27,7 @@ const rootDir = path.join(__dirname, '../../../');
 
 const disclaimer = `
 /*
-Copyright 2024 Adobe. All rights reserved.
+Copyright 2025 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -58,7 +58,6 @@ const directories = [
 ];
 
 directories.forEach(ensureDirectoryExists);
-
 fs.writeFileSync(
     path.join(rootDir, 'packages', 'icons-workflow', 'src', 'icons.ts'),
     disclaimer,
@@ -352,11 +351,11 @@ async function buildIcons(icons, tag, iconsNameList) {
 }
 
 const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
+    await fg(`${rootDir}/../node_modules/${S1IConsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
+    await fg(`${rootDir}/../node_modules/${S2IConsPackageDir}/**.svg`)
 ).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
@@ -365,7 +364,8 @@ const iconsV1NameList = iconsV1.map((i) => {
 const iconsV2NameList = iconsV2.map((i) => {
     return getComponentName(i);
 });
-
+console.log('iconsV1', iconsV1);
+console.log('iconsV2', iconsV2);
 await buildIcons(iconsV1, 'icons', iconsV2NameList);
 await buildIcons(iconsV2, 'icons-s2', iconsV1NameList);
 

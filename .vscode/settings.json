@@ -1,14 +1,28 @@
 {
     "files.exclude": {
-        "**/*.css.ts": { "when": "$(basename)" },
-        "packages/**/*.js.map": true,
-        "packages/**/*.js": { "when": "$(basename).ts" },
-        "packages/**/*.dev.js": { "when": "$(basename).js" },
-        "packages/**/*.d.ts": { "when": "$(basename).ts" },
-        "tools/**/*.js.map": true,
-        "tools/**/*.js": { "when": "$(basename).ts" },
-        "tools/**/*.dev.js": { "when": "$(basename).js" },
-        "tools/**/*.d.ts": { "when": "$(basename).ts" },
+        "**/*.css.ts": {
+            "when": "$(basename)"
+        },
+        "first-gen/packages/**/*.js.map": true,
+        "first-gen/packages/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "first-gen/packages/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "first-gen/packages/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
+        "first-gen/tools/**/*.js.map": true,
+        "first-gen/tools/**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "first-gen/tools/**/*.dev.js": {
+            "when": "$(basename).js"
+        },
+        "first-gen/tools/**/*.d.ts": {
+            "when": "$(basename).ts"
+        },
         "**/*.test-vrt.ts": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",

@@ -49,6 +49,7 @@ const spectrumIconsPath = path.resolve(
     path.join(
         __dirname,
         '..',
+        '..',
         'node_modules',
         '@spectrum-css',
         'ui-icons',
