@@ -291,6 +291,164 @@ describe('ColorWheel', () => {
 
         expect(el.value).to.equal(0);
     });
+    it('respects custom step value with keyboard navigation', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel step="10"></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        expect(el.value).to.equal(0);
+        expect(el.step).to.equal(10);
+
+        // Test arrow right with step=10
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(10);
+
+        // Test arrow right again
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(20);
+
+        // Test arrow up
+        await sendKeys({ press: 'ArrowUp' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(30);
+
+        // Test arrow left
+        await sendKeys({ press: 'ArrowLeft' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(20);
+
+        // Test arrow down
+        await sendKeys({ press: 'ArrowDown' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(10);
+    });
+    it('respects large step value (45 degrees)', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel step="45"></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        expect(el.value).to.equal(0);
+        expect(el.step).to.equal(45);
+
+        // Test movement with 45-degree steps (8 stops around the wheel)
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(45);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(90);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(135);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(180);
+
+        // Test wrapping around
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(0); // Should wrap back to 0
+    });
+    it('applies 10x multiplier with Shift key and custom step', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel step="5"></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        expect(el.value).to.equal(0);
+        expect(el.step).to.equal(5);
+
+        // Test with Shift key (should be 5 * 10 = 50)
+        await sendKeys({ down: 'Shift' });
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(50);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(100);
+
+        await sendKeys({ press: 'ArrowUp' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(150);
+
+        await sendKeys({ up: 'Shift' });
+
+        // Test without Shift key (should be back to step=5)
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(155);
+    });
+    it('maintains step value after property update', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        // Default step is 1
+        expect(el.step).to.equal(1);
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(1);
+
+        // Update step to 15
+        el.step = 15;
+        await elementUpdated(el);
+        expect(el.step).to.equal(15);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(16); // 1 + 15
+
+        // Update step to 30
+        el.step = 30;
+        await elementUpdated(el);
+        expect(el.step).to.equal(30);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(46); // 16 + 30
+    });
+    it('respects step value in RTL direction', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel dir="rtl" step="20"></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        expect(el.value).to.equal(0);
+        expect(el.step).to.equal(20);
+
+        // In RTL, arrow right should decrease value
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(340); // 360 - 20
+
+        // Arrow left should increase value in RTL
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowLeft' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(20); // 340 + 20 + 20, wrapped around
+    });
     it('accepts "Arrow*" keypresses with alteration', async () => {
         const el = await fixture<ColorWheel>(html`
             <sp-color-wheel></sp-color-wheel>
