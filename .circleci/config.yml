@@ -88,16 +88,16 @@ commands:
             regression_dir:
                 type: string
         steps:
-            - restore_cache:
-                  name: Restore Golden Images Cache
-                  keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-                      - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            - run:
-                  name: Count baseline images
-                  command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+            # - restore_cache:
+            #   name: Restore Golden Images Cache
+            #   keys:
+            #       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            #       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            #       - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            #       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            # - run:
+            #       name: Count baseline images
+            #       command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
@@ -108,7 +108,7 @@ commands:
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
