@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/dialog"
+        "directory": "first-gen/packages/dialog"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/dialog",

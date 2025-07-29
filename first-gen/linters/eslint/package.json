@@ -8,7 +8,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "linters/eslint"
+        "directory": "first-gen/linters/eslint"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

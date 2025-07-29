@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/alert-banner"
+        "directory": "first-gen/packages/alert-banner"
     },
     "author": "Adobe",
     "homepage": "https://adobe.github.io/spectrum-web-components/components/alert-banner",

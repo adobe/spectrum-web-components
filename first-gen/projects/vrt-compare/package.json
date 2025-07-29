@@ -9,7 +9,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/vrt-compare"
+        "directory": "first-gen/projects/vrt-compare"
     },
     "author": "Adobe",
     "bugs": {
