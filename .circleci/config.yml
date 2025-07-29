@@ -123,8 +123,7 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
-                      cd first-gen && yarn rollup -c test/visual/rollup.config.js
+                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -355,8 +354,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
-                      cd first-gen && yarn rollup -c test/visual/rollup.config.js
+                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
