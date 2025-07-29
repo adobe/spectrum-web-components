@@ -56,7 +56,7 @@ commands:
             #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             # - restore_cache:
             #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "first-gen/package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -64,7 +64,7 @@ commands:
                       yarn --immutable
             - run:
                   name: Build the project
-                  command: yarn build
+                  command: cd first-gen && yarn build
 
             - save_cache:
                   paths:
@@ -73,8 +73,8 @@ commands:
                   key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
-                      - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                      - first-gen/.wireit
+                  key: v4b-wireit-{{ arch }}-{{ checksum "first-gen/package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
@@ -101,8 +101,7 @@ commands:
             - run:
                   when: always
                   name: VRT Run
-                  command: |
-                      yarn test:ci --config first-gen/web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  command: cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
@@ -124,8 +123,8 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node first-gen/test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
-                      yarn rollup -c first-gen/test/visual/rollup.config.js
+                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      cd first-gen && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -212,11 +211,11 @@ jobs:
             - downstream
             - run:
                   name: Run unit tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+                  command: cd first-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/first-gen/results/
             - store_artifacts:
-                  path: coverage
+                  path: first-gen/coverage
 
     test-chromium-memory:
         executor: node
@@ -225,7 +224,7 @@ jobs:
             - downstream
             - run:
                   name: Run memory tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+                  command: cd first-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -238,6 +237,7 @@ jobs:
             - run:
                   name: Run tests
                   command: |
+                      cd first-gen
                       TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
@@ -252,6 +252,7 @@ jobs:
             - run:
                   name: Run tests
                   command: |
+                      cd first-gen
                       TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
@@ -276,33 +277,33 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  command: cd first-gen && yarn docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp first-gen/projects/documentation/custom-elements.json first-gen/storybook/
             - run:
                   name: Build documentation with path prefix
                   command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
             - run:
                   name: Build documentation
-                  command: yarn docs:build
+                  command: cd first-gen && yarn docs:build
             - run:
                   name: Build Storybook
-                  command: yarn storybook:build
+                  command: cd first-gen && yarn storybook:build
             - install-azcopy
             - run:
                   name: Deploy Beta Documentation to Azure Blob Storage
                   command: |
                       # Upload documentation to beta path
                       echo "Uploading documentation to beta/docs/"
-                      azcopy copy "projects/documentation/dist/*" \
+                      azcopy copy "first-gen/projects/documentation/dist/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
                         --recursive \
                         --from-to LocalBlob
 
                       # Upload Storybook to beta path
                       echo "Uploading Storybook to beta/docs/storybook/"
-                      azcopy copy "storybook-static/*" \
+                      azcopy copy "first-gen/storybook-static/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
                         --recursive \
                         --from-to LocalBlob
@@ -325,12 +326,14 @@ jobs:
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
-                  command: find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      mkdir -p first-gen/test/visual/screenshots-baseline
+                      find first-gen/test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config first-gen/web-test-runner.config.vrt.js --group vrt-hcm
+                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
@@ -352,8 +355,8 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node first-gen/test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
-                      yarn rollup -c first-gen/test/visual/rollup.config.js
+                      cd first-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
+                      cd first-gen && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -397,11 +400,11 @@ jobs:
                       fi
 
                       # Prepare files for deployment
-                      cp projects/documentation/content/favicon.ico test/visual/
+                      cp first-gen/projects/documentation/content/favicon.ico first-gen/test/visual/
 
                       # Upload HCM VRT results to Azure Blob Storage
                       echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
-                      azcopy copy "test/visual/*" \
+                      azcopy copy "first-gen/test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
                         --recursive \
                         --from-to LocalBlob
@@ -415,18 +418,18 @@ jobs:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf first-gen/test/visual/screenshots-baseline
+                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - first-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - first-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
 
     visual:
