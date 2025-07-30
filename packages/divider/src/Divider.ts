@@ -31,8 +31,17 @@ export class Divider extends SizedMixin(SpectrumElement, {
 }) {
     public static override styles: CSSResultArray = [styles];
 
+    /**
+     * Whether the divider is vertical. If false, the divider is horizontal. The default is false.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
+
+    /**
+     * The static color variant to use for the divider.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override render(): TemplateResult {
         return html``;
