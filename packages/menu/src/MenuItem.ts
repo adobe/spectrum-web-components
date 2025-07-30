@@ -472,18 +472,25 @@ export class MenuItem extends LikeAnchor(
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('mouseover', this.handleMouseover);
+        this.addEventListener('mouseenter', this.handleMouseenter);
+        this.addEventListener('mouseleave', this.handleMouseleave);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
     }
-    handleMouseover(event: MouseEvent): void {
+    handleMouseenter(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
             this.focus();
             this.focused = false;
+        }
+    }
+    handleMouseleave(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (target === this) {
+            this.blur();
         }
     }
     /**
