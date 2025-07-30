@@ -86,10 +86,10 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Install Playwright Browsers
-              run: yarn playwright install --with-deps
+              run: cd first-gen && yarn playwright install --with-deps
 
             - name: Run Playwright tests
-              run: yarn playwright test projects/documentation/e2e/published.spec.ts
+              run: cd first-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
               env:
                   DOC_PREVIEW_URL: ${{ needs.wait-for-deployment.outputs.doc_url }}
                   SWC_DIR: ${{ needs.wait-for-deployment.outputs.swc_dir }}
