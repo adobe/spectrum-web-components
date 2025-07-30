@@ -51,12 +51,12 @@ commands:
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "first-gen/package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "first-gen/package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -88,13 +88,13 @@ commands:
             regression_dir:
                 type: string
         steps:
-            # - restore_cache:
-            #   name: Restore Golden Images Cache
-            #   keys:
-            #       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #       - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
@@ -319,11 +319,11 @@ jobs:
 
         steps:
             - downstream
-            # - restore_cache:
-            #       name: Restore Golden Images Cache
-            #       keys:
-            #           - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
-            #           - v2-golden-images-main-hcm-
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+                      - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
                   command: |
