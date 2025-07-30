@@ -4,7 +4,7 @@ on:
     pull_request:
         types: [opened, synchronize, reopened, closed]
         branches:
-            - '**'
+            - "**"
 
 permissions:
     contents: read
@@ -64,23 +64,23 @@ jobs:
               run: yarn install --immutable
 
             - name: Build
-              run: yarn build
+              run: cd first-gen && yarn build
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+              run: cd first-gen && yarn docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+              run: cp first-gen/projects/documentation/custom-elements.json storybook/
 
             - name: Build documentation with path prefix
               env:
                   SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
               run: |
-                  cd projects/documentation
-                  yarn build
+                  cd first-gen/projects/documentation
+                  cd first-gen && yarn build
 
             - name: Build Storybook
-              run: yarn storybook:build
+              run: cd first-gen && yarn storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
             - name: Setup AzCopy
@@ -93,14 +93,14 @@ jobs:
               run: |
                   # Upload documentation
                   echo "Uploading documentation to ${PR_HASH}/docs/"
-                  azcopy copy "projects/documentation/dist/*" \
+                  azcopy copy "first-gen/projects/documentation/dist/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Upload Storybook
                   echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
-                  azcopy copy "storybook-static/*" \
+                  azcopy copy "first-gen/storybook-static/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/" \
                     --recursive \
                     --from-to LocalBlob
