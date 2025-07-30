@@ -29,7 +29,8 @@ export default {
             description: 'Whether the popover is open or not.',
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -41,6 +42,7 @@ export default {
             table: {
                 type: { summary: 'string' },
                 defaultValue: { summary: 'none' },
+                category: 'Attributes',
             },
             control: 'text',
         },
@@ -50,7 +52,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: 'boolean',
         },
@@ -80,7 +83,6 @@ Default.argTypes = {
         type: { name: 'string', required: false },
         table: {
             type: { summary: 'string' },
-            defaultValue: { summary: '' },
         },
         control: 'text',
     },

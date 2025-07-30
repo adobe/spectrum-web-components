@@ -19,29 +19,6 @@ export default {
     component: 'sp-meter',
 };
 
-const makeOverBackground =
-    (variant?: 'white' | 'black') =>
-    (story: () => TemplateResult): TemplateResult => {
-        const color =
-            variant === 'black'
-                ? 'rgb(181, 209, 211)'
-                : 'var(--spectrum-seafoam-900)';
-        return html`
-            <div
-                style="
-                    --mod-actionbutton-static-content-color: ${color};
-                    --mod-button-static-content-color: ${color};
-                    background-color: ${color};
-                    color: ${color};
-                    padding: var(--spectrum-font-size-100) var(--spectrum-font-size-400);
-                    display: inline-block;
-                "
-            >
-                ${story()}
-            </div>
-        `;
-    };
-
 export const sideLabel = (): TemplateResult => {
     return html`
         <sp-meter side-label progress="50">Storage Space</sp-meter>
@@ -67,11 +44,7 @@ export const positive = (): TemplateResult => {
 };
 
 export const staticWhite = (): TemplateResult => {
-    return makeOverBackground('white')(
-        (): TemplateResult => html`
-            <sp-meter static-color="white" progress="50">
-                Storage Space
-            </sp-meter>
-        `
-    );
+    return html`
+        <sp-meter static-color="white" progress="50">Storage Space</sp-meter>
+    `;
 };

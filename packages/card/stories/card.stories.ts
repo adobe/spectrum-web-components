@@ -35,7 +35,8 @@ export default {
             type: { name: 'boolean', required: false },
             table: {
                 type: { summary: 'boolean' },
-                defaultValue: { summary: false },
+                defaultValue: { summary: 'false' },
+                category: 'Attributes',
             },
             control: {
                 type: 'boolean',

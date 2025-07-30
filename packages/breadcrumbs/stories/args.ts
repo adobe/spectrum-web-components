@@ -18,7 +18,8 @@ export const argTypes = {
             'Reduces the size of the Breadcrumbs and the padding around the items.',
         table: {
             type: { summary: 'boolean' },
-            defaultValue: { summary: false },
+            defaultValue: { summary: 'false' },
+            category: 'Attributes',
         },
         control: {
             type: 'boolean',
@@ -30,6 +31,7 @@ export const argTypes = {
         table: {
             type: { summary: 'string' },
             defaultValue: { summary: 'Breadcrumbs' },
+            category: 'Attributes',
         },
         control: 'text',
     },
@@ -39,6 +41,7 @@ export const argTypes = {
         table: {
             type: { summary: 'number' },
             defaultValue: { summary: '4' },
+            category: 'Attributes',
         },
         control: 'number',
         min: 0,
