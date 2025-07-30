@@ -1,50 +1,44 @@
 {
     "name": "@spectrum-web-components/bundle",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/bundle",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "tools/bundle"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/bundle",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
+        },
+        "./elements.js": {
+            "default": "./elements.js",
+            "development": "./elements.dev.js"
+        },
+        "./icons.js": {
+            "default": "./icons.js",
+            "development": "./icons.dev.js"
         },
         "./package.json": "./package.json",
         "./src/icons.js": {
-            "development": "./src/icons.dev.js",
-            "default": "./src/icons.js"
+            "default": "./src/icons.js",
+            "development": "./src/icons.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
-        "./elements.js": {
-            "development": "./elements.dev.js",
-            "default": "./elements.js"
-        },
-        "./icons.js": {
-            "development": "./icons.dev.js",
-            "default": "./icons.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -53,18 +47,13 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./elements.js"
     ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/accordion": "1.7.0",
         "@spectrum-web-components/action-bar": "1.7.0",
@@ -141,9 +130,20 @@
         "@spectrum-web-components/truncated": "1.7.0",
         "@spectrum-web-components/underlay": "1.7.0"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./elements.js"
-    ]
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "customElements": "custom-elements.json"
 }

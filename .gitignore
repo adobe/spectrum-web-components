@@ -11,6 +11,9 @@ build-storybook.log
 tach-results.*
 .gitconfig
 .env
+.nx/workspace-data
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
 
 # documentation
 documentation/components/searchIndex.json
@@ -25,7 +28,7 @@ lib
 # build artifacts
 custom-elements.json
 
-!packages/icons-workflow/bin/build.js
+!packages/icons*/bin/build.js
 !packages/icons-workflow/src/DefaultIcon.ts
 
 packages/*/src/**/*.css.js
@@ -61,7 +64,7 @@ tools/**/*.test-vrt.ts
 !tools/base/src/version.d.ts
 
 # cache directories
-.wireit
+.nx/cache
 .eslintcache
 .stylelintcache
 

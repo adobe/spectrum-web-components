@@ -1,90 +1,84 @@
 {
     "name": "@spectrum-web-components/shared",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/shared",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "tools/shared"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/shared",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./package.json": "./package.json",
         "./src/first-focusable-in.js": {
-            "development": "./src/first-focusable-in.dev.js",
-            "default": "./src/first-focusable-in.js"
+            "default": "./src/first-focusable-in.js",
+            "development": "./src/first-focusable-in.dev.js"
         },
         "./src/focus-visible.js": {
-            "development": "./src/focus-visible.dev.js",
-            "default": "./src/focus-visible.js"
+            "default": "./src/focus-visible.js",
+            "development": "./src/focus-visible.dev.js"
         },
         "./src/focusable-selectors.js": {
-            "development": "./src/focusable-selectors.dev.js",
-            "default": "./src/focusable-selectors.js"
+            "default": "./src/focusable-selectors.js",
+            "development": "./src/focusable-selectors.dev.js"
         },
         "./src/focusable.js": {
-            "development": "./src/focusable.dev.js",
-            "default": "./src/focusable.js"
+            "default": "./src/focusable.js",
+            "development": "./src/focusable.dev.js"
         },
         "./src/get-active-element.js": {
-            "development": "./src/get-active-element.dev.js",
-            "default": "./src/get-active-element.js"
+            "default": "./src/get-active-element.js",
+            "development": "./src/get-active-element.dev.js"
         },
         "./src/get-deep-element-from-point.js": {
-            "development": "./src/get-deep-element-from-point.dev.js",
-            "default": "./src/get-deep-element-from-point.js"
+            "default": "./src/get-deep-element-from-point.js",
+            "development": "./src/get-deep-element-from-point.dev.js"
         },
         "./src/get-label-from-slot.js": {
-            "development": "./src/get-label-from-slot.dev.js",
-            "default": "./src/get-label-from-slot.js"
+            "default": "./src/get-label-from-slot.js",
+            "development": "./src/get-label-from-slot.dev.js"
         },
         "./src/index.js": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
         },
         "./src/like-anchor.js": {
-            "development": "./src/like-anchor.dev.js",
-            "default": "./src/like-anchor.js"
+            "default": "./src/like-anchor.js",
+            "development": "./src/like-anchor.dev.js"
         },
         "./src/observe-slot-presence.js": {
-            "development": "./src/observe-slot-presence.dev.js",
-            "default": "./src/observe-slot-presence.js"
+            "default": "./src/observe-slot-presence.js",
+            "development": "./src/observe-slot-presence.dev.js"
         },
         "./src/observe-slot-text.js": {
-            "development": "./src/observe-slot-text.dev.js",
-            "default": "./src/observe-slot-text.js"
+            "default": "./src/observe-slot-text.js",
+            "development": "./src/observe-slot-text.dev.js"
         },
         "./src/platform.js": {
-            "development": "./src/platform.dev.js",
-            "default": "./src/platform.js"
+            "default": "./src/platform.js",
+            "development": "./src/platform.dev.js"
         },
         "./src/random-id.js": {
-            "development": "./src/random-id.dev.js",
-            "default": "./src/random-id.js"
+            "default": "./src/random-id.js",
+            "development": "./src/random-id.dev.js"
         },
         "./src/reparent-children.js": {
-            "development": "./src/reparent-children.dev.js",
-            "default": "./src/reparent-children.js"
+            "default": "./src/reparent-children.js",
+            "development": "./src/reparent-children.dev.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -93,6 +87,18 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/base": "1.7.0",
+        "focus-visible": "^5.1.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -105,14 +111,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/base": "1.7.0",
-        "focus-visible": "^5.1.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

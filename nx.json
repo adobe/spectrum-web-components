@@ -1,0 +1,181 @@
+{
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "cli": {
+        "analytics": false,
+        "packageManager": "yarn",
+        "warnings": {
+            "versionMismatch": true
+        }
+    },
+    "namedInputs": {
+        "eslint": [
+            "{workspaceRoot}/.eslintrc.json",
+            "{workspaceRoot}/.eslintignore",
+            { "externalDependencies": ["eslint"] }
+        ],
+        "prettier": [
+            "{workspaceRoot}/.prettierrc.yaml",
+            { "externalDependencies": ["prettier"] }
+        ],
+        "stories": ["{projectRoot}/stories/*.js"],
+        "stylelint": [
+            "{workspaceRoot}/.stylelintignore",
+            "{workspaceRoot}/.stylelintrc.json",
+            { "externalDependencies": ["stylelint"] }
+        ]
+    },
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["setup", "build:ts", "build:types"]
+        },
+        "build:css": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/**/*.css",
+                "{workspaceRoot}/scripts/build-css.js",
+                "{workspaceRoot}/scripts/css-tools.js"
+            ],
+            "options": {
+                "command": "node ./scripts/build-css.js"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.css.ts",
+                "{projectRoot}/**/*.css.ts"
+            ]
+        },
+        "build:ts": {
+            "cache": true,
+            "dependsOn": ["setup"],
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/**/*.ts",
+                "!{projectRoot}/**/*.d.ts",
+                "{workspaceRoot}/scripts/build-ts.js"
+            ],
+            "options": {
+                "command": "node ./scripts/build-ts.js"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.js",
+                "{projectRoot}/**/*.js.map",
+                "!{projectRoot}/bin/*.js"
+            ]
+        },
+        "build:types": {
+            "cache": true,
+            "dependsOn": ["setup"],
+            "executor": "nx:run-commands",
+            "inputs": ["{projectRoot}/tsconfig.json", "{projectRoot}/**/*.ts"],
+            "options": {
+                "command": "tsc --build tsconfig.json --pretty",
+                "cwd": "{projectRoot}"
+            },
+            "outputs": [
+                "{projectRoot}/**/*.d.ts",
+                "{projectRoot}/**/tsconfig.tsbuildinfo",
+                "!{projectRoot}/**/local.d.ts",
+                "!{projectRoot}/src/version.d.ts"
+            ]
+        },
+        "clean": {
+            "cache": true,
+            "dependsOn": ["clean:ts"]
+        },
+        "clean:ts": {
+            "cache": true,
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "rimraf {projectRoot}/tsconfig.tsbuildinfo"
+            }
+        },
+        "format": {
+            "dependsOn": ["format:css", "format:ts", "format:js"]
+        },
+        "format:css": {
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.css",
+                "{projectRoot}/**/*.css",
+                "stylelint",
+                "prettier"
+            ],
+            "options": {
+                "commands": [
+                    "stylelint --fix --cache --allow-empty-input {projectRoot}/*.css {projectRoot}/**/*.css",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/*.css {projectRoot}/**/*.css"
+                ],
+                "parallel": false
+            }
+        },
+        "format:js": {
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.js",
+                "{projectRoot}/**/*.js",
+                "eslint",
+                "prettier"
+            ],
+            "options": {
+                "commands": [
+                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet {projectRoot}/**/*.js",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/**/*.js"
+                ],
+                "parallel": false
+            }
+        },
+        "format:ts": {
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.ts",
+                "{projectRoot}/**/*.ts",
+                "eslint",
+                "prettier"
+            ],
+            "options": {
+                "commands": [
+                    "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet {projectRoot}/**/*.ts",
+                    "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write {projectRoot}/**/*.ts"
+                ],
+                "parallel": false
+            }
+        },
+        "lint": {
+            "dependsOn": ["lint:css", "lint:ts", "lint:js", "lint:lit"]
+        },
+        "lint:css": {
+            "executor": "nx:run-commands",
+            "inputs": [
+                "{projectRoot}/*.css",
+                "{projectRoot}/**/*.css",
+                "stylelint"
+            ],
+            "options": {
+                "command": "stylelint --cache --allow-empty-input {projectRoot}/*.css {projectRoot}/**/*.css || exit 0"
+            }
+        },
+        "lint:js": {
+            "executor": "nx:run-commands",
+            "inputs": ["{projectRoot}/*.js", "{projectRoot}/**/*.js", "eslint"],
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern {projectRoot}/**/*.ts || exit 0"
+            }
+        },
+        "lint:lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "lit-analyzer"
+            }
+        },
+        "lint:ts": {
+            "executor": "nx:run-commands",
+            "inputs": ["{projectRoot}/*.ts", "{projectRoot}/**/*.ts", "eslint"],
+            "options": {
+                "command": "eslint --format pretty --cache --no-error-on-unmatched-pattern {projectRoot}/**/*.ts || exit 0"
+            }
+        },
+        "setup": {
+            "dependsOn": ["build:css"]
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "icons-workflow",
+    "projectType": "library",
+    "sourceRoot": "packages/icons-workflow/src",
+    "tags": ["icon"],
+    "targets": {
+        "build": {},
+        "build:css": {},
+        "build:ts": {},
+        "build:types": {},
+        "clean": {},
+        "clean:ts": {},
+        "format": {},
+        "format:css": {},
+        "format:js": {},
+        "format:ts": {},
+        "lint": {},
+        "lint:css": {},
+        "lint:js": {},
+        "lint:lit": {},
+        "lint:ts": {},
+        "setup": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node ./bin/build.js",
+                "cwd": "{projectRoot}"
+            },
+            "outputs": ["{projectRoot}/**/*.svg.ts"]
+        }
+    }
+}
