@@ -74,6 +74,9 @@
                     "script": "build:assets"
                 },
                 {
+                    "script": "build:eleventy"
+                },
+                {
                     "script": "build:search-index"
                 }
             ]
