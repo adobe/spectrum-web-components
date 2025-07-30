@@ -56,6 +56,10 @@ first-gen/projects/**/*.d.ts
 !first-gen/projects/documentation/src/utils/*.js
 !first-gen/projects/documentation/rollup.config.js
 !first-gen/projects/documentation/content/serviceWorker.js
+!first-gen/projects/example-project-rollup/rollup.config.js
+!first-gen/projects/example-project-webpack/src/index.js
+!first-gen/projects/example-project-webpack/webpack.config.js
+!first-gen/projects/templates/plopfile.js
 
 first-gen/tools/*/src/**/*.css.js
 first-gen/tools/*/src/**/*.css.js.map
