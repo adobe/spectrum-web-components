@@ -76,8 +76,7 @@ jobs:
               env:
                   SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
               run: |
-                  cd first-gen/projects/documentation
-                  cd first-gen && yarn build
+                  cd first-gen/projects/documentation  && yarn build
 
             - name: Build Storybook
               run: cd first-gen && yarn storybook:build
