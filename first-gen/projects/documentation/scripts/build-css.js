@@ -25,6 +25,7 @@ const nodeModulesDir = path.resolve(
     '..',
     '..',
     '..',
+    '..',
     'node_modules'
 );
 const outDir = path.resolve(projectDir, '_site');

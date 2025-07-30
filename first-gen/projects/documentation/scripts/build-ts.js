@@ -23,6 +23,7 @@ const nodeModulesDir = path.resolve(
     '..',
     '..',
     '..',
+    '..',
     'node_modules'
 );
 
