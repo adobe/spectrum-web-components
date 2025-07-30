@@ -225,13 +225,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }
-        if (changed.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
-        }
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
@@ -254,6 +247,14 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
             // Set up focus delegation
             this.anchorElement.addEventListener('focus', this.proxyFocus);
+
+            if (changed.has('label')) {
+                if (this.label) {
+                    this.setAttribute('aria-label', this.label);
+                } else {
+                    this.removeAttribute('aria-label');
+                }
+            }
         }
     }
     protected override update(changes: PropertyValues): void {
