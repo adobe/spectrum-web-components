@@ -45,13 +45,13 @@ jobs:
                   echo "Checking Chrome version..."
                   google-chrome --version
                   echo "Checking tachometer chromedriver version..."
-                  yarn tachometer --version
+                  cd first-gen && yarn tachometer --version
 
             - name: Tachometer the changed packages
-              run: yarn test:changed --browser=${{ matrix.browser }}
+              run: cd first-gen && yarn test:changed --browser=${{ matrix.browser }}
 
             - name: Create a dummy file to ensure at least one results file exists
-              run: touch tachometer.${{ matrix.browser }}-ran.txt
+              run: touch first-gen/tachometer.${{ matrix.browser }}-ran.txt
 
             - name: Archive ${{ matrix.browser }} tachometer results
               id: upload-artifact
@@ -59,8 +59,8 @@ jobs:
               with:
                   name: tachometer-results-${{ matrix.browser }}
                   path: |
-                      tach-results.${{ matrix.browser }}.*.json
-                      tachometer.${{ matrix.browser }}-ran.txt
+                      first-gen/tach-results.${{ matrix.browser }}.*.json
+                      first-gen/tachometer.${{ matrix.browser }}-ran.txt
 
     comment-performance:
         name: Comment tachometer performance results
