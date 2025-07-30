@@ -24,8 +24,17 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
     noDefaultSize: true,
 }) {
+    /**
+     * Whether the divider is vertical. If false, the divider is horizontal. The default is false.
+     */
     @property({ type: Boolean, reflect: true })
     public vertical = false;
+
+    /**
+     * The static color variant to use for the divider.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
 
     protected override firstUpdated(changed: PropertyValues<this>): void {
         super.firstUpdated(changed);
