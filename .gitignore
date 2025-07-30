@@ -55,6 +55,7 @@ first-gen/projects/**/*.d.ts
 !first-gen/projects/*/src/global.d.ts
 !first-gen/projects/documentation/src/utils/*.js
 !first-gen/projects/documentation/rollup.config.js
+!first-gen/projects/documentation/content/serviceWorker.js
 
 first-gen/tools/*/src/**/*.css.js
 first-gen/tools/*/src/**/*.css.js.map
