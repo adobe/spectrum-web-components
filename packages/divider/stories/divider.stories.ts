@@ -110,3 +110,41 @@ export const verticalLarge = (): TemplateResult => {
         </div>
     `;
 };
+
+export const staticBlack = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: var(--spectrum-docs-static-black-background-color); padding: 20px"
+        >
+            <h2
+                class="spectrum-Heading spectrum-Heading--sizeS"
+                style="color: var(--spectrum-black)"
+            >
+                Static black on light background
+            </h2>
+            <sp-divider static-color="black" size="m"></sp-divider>
+            <p class="spectrum-Body" style="color: var(--spectrum-black)">
+                Use static black on light color or image backgrounds.
+            </p>
+        </div>
+    `;
+};
+
+export const staticWhite = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: var(--spectrum-docs-static-white-background-color); padding: 20px;"
+        >
+            <h2
+                class="spectrum-Heading spectrum-Heading--sizeS"
+                style="color: var(--spectrum-white)"
+            >
+                Static white on dark background
+            </h2>
+            <sp-divider static-color="white" size="m"></sp-divider>
+            <p class="spectrum-Body" style="color: var(--spectrum-white)">
+                Use static white on dark color or image backgrounds.
+            </p>
+        </div>
+    `;
+};
