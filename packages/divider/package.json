@@ -25,6 +25,10 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/Divider.base.ts": {
+            "default": "./src/Divider.base.ts",
+            "development": "./src/Divider.base.dev.ts"
+        },
         "./src/Divider.js": {
             "development": "./src/Divider.dev.js",
             "default": "./src/Divider.js"
