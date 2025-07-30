@@ -42,7 +42,7 @@
             "error",
             {
                 "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-                "templateFile": "../config/license.js"
+                "templateFile": "first-gen/config/license.js"
             }
         ],
         "@typescript-eslint/explicit-function-return-type": [
