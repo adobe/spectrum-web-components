@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { ProgressCircleBase } from './ProgressCircleBase.js';
+import { ProgressCircleBase } from './ProgressCircle.base.js';
 
 import progressCircleStyles from './progress-circle.css.js';
 
