@@ -140,16 +140,22 @@ describe('card', () => {
         const cards = await Promise.all(
             variants.map(async (variant) => {
                 const card = await fixture<Card>(html`
-                    <sp-card variant=${variant} heading="${variant} Card">
-                        <img
-                            slot="preview"
-                            src="https://picsum.photos/532/192"
-                            alt="Slotted Preview"
-                        />
-                    </sp-card>
+                    <div style="height: 200px; position: relative;">
+                        <sp-card
+                            variant=${variant}
+                            heading="${variant} Card"
+                            style="position: absolute;"
+                        >
+                            <img
+                                slot="preview"
+                                src="https://picsum.photos/532/192"
+                                alt="Slotted Preview"
+                            />
+                        </sp-card>
+                    </div>
                 `);
                 await elementUpdated(card);
-                return { variant, card };
+                return { variant, card: card.querySelector('sp-card') as Card };
             })
         );
 
@@ -158,16 +164,23 @@ describe('card', () => {
             expect(card.getAttribute('variant')).to.equal(variant);
         });
 
-        // Verify CSS selectors: only gallery and quiet should get block-size: 100%
+        // Verify that block-size: 100% is applied only to gallery and quiet variants
         const fullHeightVariants = ['gallery', 'quiet'];
         cards.forEach(({ variant, card }) => {
+            const computedStyle = getComputedStyle(card);
+            const blockSize = computedStyle.blockSize;
+
             if (fullHeightVariants.includes(variant)) {
-                expect(fullHeightVariants).to.include(
-                    card.getAttribute('variant')
+                // For gallery and quiet variants, block-size should be 100% of container (200px)
+                expect(blockSize).to.equal(
+                    '200px',
+                    `Expected ${variant} variant to have block-size: 100% (computed as 200px), but got ${blockSize}`
                 );
             } else {
-                expect(fullHeightVariants).to.not.include(
-                    card.getAttribute('variant')
+                // For standard variant, block-size should not be 100% of container
+                expect(blockSize).to.not.equal(
+                    '200px',
+                    `Expected ${variant} variant to not have block-size: 100% (computed as 200px), but got ${blockSize}`
                 );
             }
         });
