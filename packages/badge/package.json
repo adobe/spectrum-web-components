@@ -25,9 +25,13 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/Badge.base.js": {
+            "default": "./src/Badge.base.js",
+            "development": "./src/Badge.base.dev.js"
+        },
         "./src/Badge.js": {
-            "development": "./src/Badge.dev.js",
-            "default": "./src/Badge.js"
+            "default": "./src/Badge.js",
+            "development": "./src/Badge.dev.js"
         },
         "./src/badge-overrides.css.js": "./src/badge-overrides.css.js",
         "./src/badge.css.js": "./src/badge.css.js",
