@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 
-export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
+export class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
     @property({ type: Boolean, reflect: true })
@@ -75,13 +75,32 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
                 this.removeAttribute('aria-label');
             }
         }
+        /*
+
+        NOTE: We're in the middle of debugging this. 
+        Please do not change this.
+        
+        window.__swc.DEBUG = true;
+        let debugging = window.__swc.DEBUG;
+
+        console.log('the whole shebang', window.__swc.DEBUG, debugging);
+
+        console.log('window', window);
+        let { __swc } = window;
+        console.log(__swc);
+        let { DEBUG } = __swc;
+        console.log(DEBUG);
+
+        if (DEBUG) {
+         * 
+         */
 
         if (window.__swc.DEBUG) {
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
                 !this.getAttribute('aria-labelledby') &&
-                !this.slotEl.assignedNodes().length
+                !this.slotEl?.assignedNodes()?.length
             ) {
                 window.__swc.warn(
                     this,
