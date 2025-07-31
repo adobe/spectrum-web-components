@@ -10,59 +10,245 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-tooltip.css");
-@import url("./tooltip-overrides.css");
-
 :host {
+    --spectrum-tooltip-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-tooltip-animation-distance-default: var(--spectrum-tooltip-animation-distance-default);
+    --spectrum-tooltip-margin: var(--mod-tooltip-margin, 0);
+    --spectrum-tooltip-height: var(--mod-tooltip-height, var(--spectrum-component-height-75));
+    --spectrum-tooltip-max-inline-size: var(--mod-tooltip-max-inline-size, var(--spectrum-tooltip-maximum-width));
+    --spectrum-tooltip-border-radius: var(--mod-tooltip-border-radius, var(--spectrum-corner-radius-100));
+    --spectrum-tooltip-icon-width: var(--mod-tooltip-icon-width, var(--spectrum-workflow-icon-size-50));
+    --spectrum-tooltip-icon-height: var(--mod-tooltip-icon-height, var(--spectrum-workflow-icon-size-50));
+    --spectrum-tooltip-font-size: var(--mod-tooltip-font-size, var(--spectrum-font-size-75));
+    --spectrum-tooltip-line-height: var(--mod-tooltip-line-height, var(--spectrum-line-height-100));
+    --spectrum-tooltip-cjk-line-height: var(--mod-tooltip-cjk-line-height, var(--spectrum-cjk-line-height-100));
+    --spectrum-tooltip-font-weight: var(--mod-tooltip-font-weight, var(--spectrum-regular-font-weight));
+    --spectrum-tooltip-spacing-inline: var(--mod-tooltip-spacing-inline, var(--spectrum-component-edge-to-text-75));
+    --spectrum-tooltip-spacing-block-start: var(--mod-tooltip-spacing-block-start, var(--spectrum-component-top-to-text-75));
+    --spectrum-tooltip-spacing-block-end: var(--mod-tooltip-spacing-block-end, var(--spectrum-component-bottom-to-text-75));
+    --spectrum-tooltip-icon-spacing-inline-start: var(--mod-tooltip-icon-spacing-inline-start, var(--spectrum-text-to-visual-75));
+    --spectrum-tooltip-icon-spacing-inline-end: var(--mod-tooltip-icon-spacing-inline-end, var(--spectrum-text-to-visual-75));
+    --spectrum-tooltip-icon-spacing-block-start: var(--mod-tooltip-icon-spacing-block-start, var(--spectrum-component-top-to-workflow-icon-75));
+    --spectrum-tooltip-background-color-informative: var(--mod-tooltip-background-color-informative, var(--spectrum-informative-background-color-default));
+    --spectrum-tooltip-background-color-positive: var(--mod-tooltip-background-color-positive, var(--spectrum-positive-background-color-default));
+    --spectrum-tooltip-background-color-negative: var(--mod-tooltip-background-color-negative, var(--spectrum-negative-background-color-default));
+    --spectrum-tooltip-content-color: var(--mod-tooltip-content-color, var(--spectrum-white));
+    --spectrum-tooltip-tip-block-size: var(--mod-tooltip-tip-block-size, var(--spectrum-tooltip-tip-height));
+    --spectrum-tooltip-tip-square-size: var(--mod-tooltip-tip-square-size, var(--spectrum-tooltip-tip-width));
+    --spectrum-tooltip-tip-height-percentage: var(--mod-tooltip-tip-height-percentage, 50%);
+    --spectrum-tooltip-tip-antialiasing-inset: var(--mod-tooltip-tip-antialiasing-inset, 0.5px);
+    --spectrum-tooltip-pointer-corner-spacing: var(--spectrum-corner-radius-100);
+    --spectrum-tooltip-background-color-default: var(--highcontrast-tooltip-background-color-default, var(--mod-tooltip-background-color-default, var(--spectrum-tooltip-backgound-color-default-neutral, var(--system-tooltip-backgound-color-default-neutral))));
+
     display: contents;
-}
-
-#tooltip {
-    width: fit-content;
-    white-space: initial;
-    max-width: var(--spectrum-tooltip-max-inline-size);
-}
-
-#tip {
-    clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
-    width: var(--spectrum-tooltip-tip-inline-size) !important;
-    height: var(--spectrum-tooltip-tip-inline-size) !important;
-}
-
-#tip[style] {
-    transform: none !important;
-}
-
-:host(:not([placement*="top"])) #tooltip {
-    margin-bottom: 0;
-}
-
-:host([placement*="top"]) #tooltip #tip {
-    inset-block-start: 100%;
-}
-
-:host([placement*="bottom"]) #tooltip #tip {
-    inset-block-end: 100%;
-    clip-path: polygon(50% 50%, 0 105%, 100% 105%);
-    top: auto;
-}
-
-:host([placement*="left"]) #tooltip #tip,
-:host([placement*="right"]) #tooltip #tip {
-    inset-block-start: 50%;
-    transform: translateY(-50%);
-}
-
-:host([placement*="right"]) #tooltip #tip {
-    clip-path: polygon(50% 50%, 105% 100%, 105% 0);
-    inset-inline: calc(var(--mod-tooltip-tip-block-size, var(--spectrum-tooltip-tip-block-size)) * -2) 100%;
-}
-
-:host([placement*="left"]) #tooltip #tip {
-    clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
-    inset-inline-start: 100%;
 }
 
 sp-overlay:not(:defined) {
     display: none;
+}
+
+:host([variant="info"]) {
+    --mod-tooltip-background-color-default: var(--spectrum-tooltip-background-color-informative);
+}
+
+:host([variant="positive"]) {
+    --mod-tooltip-background-color-default: var(--spectrum-tooltip-background-color-positive);
+}
+
+:host([variant="negative"]) {
+    --mod-tooltip-background-color-default: var(--spectrum-tooltip-background-color-negative);
+}
+
+:host(:lang(ja), :lang(ko), :lang(zh)) {
+    --mod-tooltip-line-height: var(--spectrum-tooltip-cjk-line-height);
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-tooltip-background-color-default: CanvasText;
+    }
+
+    #tooltip {
+        border: 1px solid #0000;
+    }
+
+    #tip {
+        forced-color-adjust: none;
+    }
+}
+
+#tooltip {
+    box-sizing: border-box;
+    vertical-align: top;
+    inline-size: fit-content;
+    padding-inline: var(--spectrum-tooltip-spacing-inline);
+    border-radius: var(--spectrum-tooltip-border-radius);
+    block-size: auto;
+    min-block-size: var(--spectrum-tooltip-height);
+    max-inline-size: var(--spectrum-tooltip-max-inline-size);
+    background-color: var(--spectrum-tooltip-background-color-default);
+    color: var(--spectrum-tooltip-content-color);
+    font-size: var(--spectrum-tooltip-font-size);
+    font-weight: var(--spectrum-tooltip-font-weight);
+    line-height: var(--spectrum-tooltip-line-height);
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    cursor: default;
+    user-select: none;
+    flex-direction: row;
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+    white-space: initial;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        transform var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
+        opacity var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)) ease-in-out,
+        visibility 0s linear var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s));
+}
+
+#tooltip p {
+    margin: 0;
+}
+
+:host([open]) #tooltip {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition-delay: var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0, 0s));
+}
+
+#tip {
+    block-size: var(--spectrum-tooltip-tip-square-size);
+    inline-size: var(--spectrum-tooltip-tip-square-size);
+    background-color: var(--spectrum-tooltip-background-color-default);
+    clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
+    clip-path: polygon(0 calc(0% - var(--spectrum-tooltip-tip-antialiasing-inset)), 50% var(--spectrum-tooltip-tip-height-percentage), 100% calc(0% - var(--spectrum-tooltip-tip-antialiasing-inset)));
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+}
+
+/** @todo: this needs more documentation */
+#tip[style] {
+    transform: none !important;
+}
+
+::slotted([slot="icon"]) {
+    inline-size: var(--spectrum-tooltip-icon-width);
+    block-size: var(--spectrum-tooltip-icon-height);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-block-start: var(--spectrum-tooltip-icon-spacing-block-start);
+    margin-inline-start: calc(var(--spectrum-tooltip-icon-spacing-inline-start) - var(--spectrum-tooltip-spacing-inline));
+    margin-inline-end: var(--spectrum-tooltip-icon-spacing-inline-end);
+}
+
+#label {
+    line-height: var(--spectrum-tooltip-line-height);
+    margin-block-start: var(--spectrum-tooltip-spacing-block-start);
+    margin-block-end: var(--spectrum-tooltip-spacing-block-end);
+}
+
+/* @note: this is the same as the default */
+
+/* :host([placement*="top"]) #tip {
+    inset-block-start: 100%;
+} */
+
+:host([placement*="bottom"]) #tip {
+    clip-path: polygon(50% calc(100% - var(--spectrum-tooltip-tip-height-percentage)), 0 calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)), 100% calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)));
+    inset-block: auto 100%;
+}
+
+:host([placement="bottom-end"]) #tip,
+:host([placement="bottom-start"]) #tip,
+:host([placement="top-end"]) #tip,
+:host([placement="top-start"]) #tip {
+    transform: none;
+}
+
+:host([placement="bottom-start"]) #tip,
+:host([placement="top-start"]) #tip {
+    inset-inline: var(--mod-tooltip-pointer-corner-spacing, var(--spectrum-tooltip-pointer-corner-spacing)) auto;
+}
+
+:host([placement="bottom-end"]) #tip,
+:host([placement="top-end"]) #tip {
+    inset-inline: auto var(--mod-tooltip-pointer-corner-spacing, var(--spectrum-tooltip-pointer-corner-spacing));
+}
+
+:host([placement*="left"]) #tip,
+:host([placement*="right"]) #tip {
+    inset-block-start: 50%;
+
+    /* @note: this is the same as the default */
+
+    /* transform: translateY(-50%); */
+}
+
+#tooltip,
+:host([placement*="top"]) #tooltip {
+    margin-block-end: calc(var(--spectrum-tooltip-tip-block-size) + var(--spectrum-tooltip-margin));
+}
+
+:host(:not([placement*="top"])) #tooltip {
+    margin-block-end: 0;
+}
+
+/* :host([placement="top-start"][open]),
+:host([placement="top-end"][open]), */
+:host([placement*="top"][open]) #tooltip,
+:host([open]) #tooltip {
+    transform: translateY(calc(var(--spectrum-tooltip-animation-distance-default) * -1));
+}
+
+:host([placement*="bottom"]) #tooltip {
+    margin-block-start: calc(var(--spectrum-tooltip-tip-block-size) + var(--spectrum-tooltip-margin));
+}
+
+:host([placement*="bottom"][open]) #tooltip {
+    transform: translateY(var(--spectrum-tooltip-animation-distance-default));
+}
+
+/** Right placement */
+:host([placement*="right"]) #tooltip {
+    margin-left: calc(var(--spectrum-tooltip-tip-block-size) + var(--spectrum-tooltip-margin));
+}
+
+:host([placement*="right"][open]) #tooltip {
+    transform: translateX(var(--spectrum-tooltip-animation-distance-default));
+}
+
+:host([placement*="right"]) #tip {
+    clip-path: polygon(calc(100% - var(--spectrum-tooltip-tip-height-percentage)) 50%, calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)) 100%, calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)) 0);
+    left: calc(var(--spectrum-tooltip-tip-block-size) * -2);
+    right: 100%;
+}
+
+:host([placement*="right"][dir="rtl"]) #tip {
+    clip-path: polygon(var(--spectrum-tooltip-tip-height-percentage) 50%, calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)) 100%, calc(100% + var(--spectrum-tooltip-tip-antialiasing-inset)) 0);
+    left: auto;
+}
+
+/** Left placement */
+:host([placement*="left"]) #tooltip {
+    margin-right: calc(var(--spectrum-tooltip-tip-block-size) + var(--spectrum-tooltip-margin));
+}
+
+:host([placement*="left"][open]) #tooltip {
+    transform: translateX(calc(var(--spectrum-tooltip-animation-distance-default) * -1));
+}
+
+:host([placement*="left"]) #tip {
+    clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
+    clip-path: polygon(calc(0% - var(--spectrum-tooltip-tip-antialiasing-inset)) 0, calc(0% - var(--spectrum-tooltip-tip-antialiasing-inset)) 100%, var(--spectrum-tooltip-tip-height-percentage) 50%);
+    left: 100%;
+}
+
+:host([placement*="left"][dir="rtl"]) #tip {
+    right: auto;
 }

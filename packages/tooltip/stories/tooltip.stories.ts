@@ -74,7 +74,11 @@ export const Default = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            variant=${ifDefined(variant)}
+        >
             ${text}
         </sp-tooltip>
     `;
@@ -159,7 +163,11 @@ export const wIcon = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${ifDefined(placement)}
+            variant=${ifDefined(variant)}
+        >
             ${!!variant ? iconOptions[variant]() : nothing} ${text}
         </sp-tooltip>
     `;
@@ -287,12 +295,13 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 <sp-overlay
                     trigger="trigger-${placement}@hover"
                     type="hint"
-                    placement=${placement}
-                    open=${ifDefined(
-                        openPlacement === placement ? 'hover' : undefined
-                    )}
+                    placement=${ifDefined(placement)}
+                    ?open=${openPlacement === placement}
                 >
-                    <sp-tooltip variant=${variant} placement=${placement}>
+                    <sp-tooltip
+                        variant=${ifDefined(variant)}
+                        placement=${ifDefined(placement)}
+                    >
                         ${placement}
                     </sp-tooltip>
                 </sp-overlay>
@@ -319,8 +328,8 @@ export const selfManaged = ({
         This is a button.
         <sp-tooltip
             self-managed
-            placement=${placement}
-            offset=${offset}
+            placement=${ifDefined(placement)}
+            offset=${ifDefined(offset)}
             ?delayed=${delayed}
             ?disabled=${disabled}
             ?open=${open}
