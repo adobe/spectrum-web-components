@@ -24,10 +24,6 @@
             "default": "./sp-divider.js",
             "development": "./sp-divider.dev.js"
         },
-        "./src/Divider.base.js": {
-            "default": "./src/Divider.base.js",
-            "development": "./src/Divider.base.dev.js"
-        },
         "./src/Divider.js": {
             "default": "./src/Divider.js",
             "development": "./src/Divider.dev.js"
