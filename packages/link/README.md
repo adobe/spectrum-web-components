@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-An `<sp-link>` allow users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
+An `<sp-link>` allows users to navigate to a different location. They can be presented in-line inside a paragraph or as a standalone text.
 
 ### Usage
 
@@ -24,16 +24,14 @@ When looking to leverage the `Link` base class as a type and/or for extension pu
 import { Link } from '@spectrum-web-components/link';
 ```
 
-## Example
+### Options
 
 <!-- prettier-ignore -->
 ```html
 This is an <sp-link href="#">example link</sp-link>.
 ```
 
-## Variants
-
-### Standard links
+#### Standard links
 
 Standard links are blue and should be used to call attention to the link or for when the blue color won’t feel too overwhelming in the experience.
 
@@ -42,16 +40,7 @@ Standard links are blue and should be used to call attention to the link or for 
 This is a <sp-link href="#">standard link</sp-link>.
 ```
 
-### Disabled links
-
-Disabled links are blue and should not propagate any events and they are not focussable.
-
-<!-- prettier-ignore -->
-```html
-This is a <sp-link disabled href="#">disabled link</sp-link>.
-```
-
-### Secondary links
+#### Secondary links
 
 The secondary variant is the same color as the paragraph text inline of which it appears. Its subdued appearance is optimal for when the primary variant is too overwhelming, such as in blocks of text with several references linked throughout.
 
@@ -60,7 +49,7 @@ The secondary variant is the same color as the paragraph text inline of which it
 This is a <sp-link href="#" variant="secondary">secondary link</sp-link>.
 ```
 
-### Static colored links
+#### Static colored links
 
 When a link needs to be placed on top of a colored background or a visual it may be appropriate to ship it with a static color, regardless of the theme settings with which it is delivered. Leverage the `static-color` attribute with its `white` or `black` values to ensure the delivery is the same in all contexts.
 
@@ -99,7 +88,7 @@ When a link needs to be placed on top of a colored background or a visual it may
 </sp-tab-panel>
 </sp-tabs>
 
-### Quiet links
+#### Quiet links
 
 All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary. Quiet links are less accessible, so they should not be used for links that are essential to the experience. These are commonly used in website footers, where there are several lists of links that are shortcuts to other pages.
 
@@ -118,7 +107,16 @@ All links can have a quiet style, which means they don’t have an underline. Th
 </div>
 ```
 
-### Download attribute
+#### Disabled links
+
+Disabled links are blue and should not propagate any events and they are not focussable.
+
+<!-- prettier-ignore -->
+```html
+This is a <sp-link disabled href="#">disabled link</sp-link>.
+```
+
+#### Download attribute
 
 The download attribute on an `<a>` tag prompts a user to download a link as opposed to navigating to it. This attribute has been carried forward to `<sp-link>` to function the same.
 
@@ -129,3 +127,18 @@ with standard `<a>` [rules](https://developer.mozilla.org/en-US/docs/Web/HTML/El
 ```html
 This is a <sp-link download="myfile.txt" href="#">download link</sp-link>.
 ```
+
+### Accessibility
+
+#### Best Practices
+
+- Use links in body copy.
+- Identify the target of each link directly in the link text to communicate context and set clear expectations about where the link will go.
+- Be mindful of link placement and language, and create experiences that are inclusive of users navigating with screen readers.
+- Ensure labels for links are descriptive and specific.
+
+#### Keyboard Interaction
+
+- `Tab`: Move focus to the next focusable element.
+- `Enter`: Activate the link.
+- `Shift + F10` (Optional): Open the context menu for the link.
