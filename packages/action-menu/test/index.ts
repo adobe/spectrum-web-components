@@ -14,6 +14,7 @@ import {
     aTimeout,
     elementUpdated,
     expect,
+    fixtureCleanup,
     html,
     nextFrame,
     oneEvent,
@@ -99,6 +100,9 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
 
 export const testActionMenu = (mode: 'sync' | 'async'): void => {
     describe(`Action menu: ${mode}`, () => {
+        afterEach(() => {
+            fixtureCleanup();
+        });
         testForLitDevWarnings(async () => await actionMenuFixture());
         it('loads', async () => {
             const el = await actionMenuFixture();
@@ -127,6 +131,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             afterEach(() => {
                 // Restore original warn function
                 window.__swc.warn = originalWarn;
+                fixtureCleanup();
             });
 
             it('warns when no accessible label is provided', async () => {
@@ -936,12 +941,11 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('opens, then closes, on subsequent clicks', async function () {
             const el = await actionMenuFixture();
+            await elementUpdated(el);
             const rect = el.getBoundingClientRect();
 
-            await nextFrame();
-            await nextFrame();
+            const open = await oneEvent(el, 'sp-opened');
 
-            const open = oneEvent(el, 'sp-opened');
             await sendMouse({
                 steps: [
                     {
@@ -959,7 +963,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await aTimeout(50);
             expect(el.open).to.be.true;
 
-            const close = oneEvent(el, 'sp-closed');
+            const close = await oneEvent(el, 'sp-closed');
             await sendMouse({
                 steps: [
                     {

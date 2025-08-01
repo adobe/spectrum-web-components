@@ -491,12 +491,12 @@ describe('ActionGroup', () => {
     it('applies `quiet` attribute to slotted children with overlays', async () => {
         const el = await fixture<ActionGroup>(html`
             <quiet-action-group>
-                <overlay-trigger slot="first">
+                <overlay-trigger slot="first" triggered-by="click">
                     <sp-action-button slot="trigger" id="first">
                         First
                     </sp-action-button>
                 </overlay-trigger>
-                <overlay-trigger slot="second">
+                <overlay-trigger slot="second" triggered-by="click">
                     <sp-action-button slot="trigger" id="second">
                         Second
                     </sp-action-button>
@@ -516,12 +516,12 @@ describe('ActionGroup', () => {
     it('applies `emphasized` attribute to slotted children with overlays', async () => {
         const el = await fixture<ActionGroup>(html`
             <emphasized-action-group>
-                <overlay-trigger slot="first">
+                <overlay-trigger slot="first" triggered-by="click">
                     <sp-action-button slot="trigger" id="first">
                         First
                     </sp-action-button>
                 </overlay-trigger>
-                <overlay-trigger slot="second">
+                <overlay-trigger slot="second" triggered-by="click">
                     <sp-action-button slot="trigger" id="second">
                         Second
                     </sp-action-button>
@@ -1467,13 +1467,13 @@ describe('ActionGroup', () => {
     it('accepts keybord input with tooltip', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group label="Selects Single Group" selects="single">
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger">First</sp-action-button>
                     <sp-tooltip slot="hover-content">
                         Definitely the first one.
                     </sp-tooltip>
                 </overlay-trigger>
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger" selected>
                         Second
                     </sp-action-button>
@@ -1481,7 +1481,7 @@ describe('ActionGroup', () => {
                         Not the first, not the last.
                     </sp-tooltip>
                 </overlay-trigger>
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger" class="third">
                         Third
                     </sp-action-button>
