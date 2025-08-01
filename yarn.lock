@@ -10553,8 +10553,8 @@ __metadata:
   linkType: hard
 
 "chromedriver@npm:^136.0.0":
-  version: 136.0.0
-  resolution: "chromedriver@npm:136.0.0"
+  version: 136.0.3
+  resolution: "chromedriver@npm:136.0.3"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
     axios: "npm:^1.7.4"
@@ -10565,7 +10565,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/ba804ceed3749f8dd10fa5dc714bf4b259ddb004d2b1382f7c0a1246bba84c85c35038f65fead268916f53fbbb3f126f20320bf72336bd3252ed9e95d2863daa
+  checksum: 10c0/59b1c21bd6652f8d4d07ba98d57461db79047926f2a32ee9b4b827e97557518fd53d2c26ef2e86434ea15ba0d52deb70cac95fbd1b35c10f9272393151856b0b
   languageName: node
   linkType: hard
 
