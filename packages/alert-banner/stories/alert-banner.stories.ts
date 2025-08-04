@@ -11,7 +11,7 @@
  */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { AlertBannerVariants } from '@spectrum-web-components/alert-banner/src/AlertBanner.base.js';
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner/src/AlertBanner.js';
 import { AlertBannerMarkup } from './';
 import { argTypes } from './args.js';
 

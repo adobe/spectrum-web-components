@@ -20,6 +20,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
 import { AlertBannerBase } from './AlertBanner.base.js';
 
+import type { AlertBannerVariants } from './AlertBanner.base.js';
+export type { AlertBannerVariants };
+
 /**
  * @element sp-alert-banner
  *
