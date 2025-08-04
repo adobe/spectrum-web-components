@@ -25,6 +25,14 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const StepSize = (): TemplateResult => {
+    return html`
+        <sp-color-wheel step="1"></sp-color-wheel>
+        <sp-color-wheel step="10"></sp-color-wheel>
+        <sp-color-wheel step="50"></sp-color-wheel>
+    `;
+};
+
 export const sized = (): TemplateResult => {
     return html`
         <sp-color-wheel style="width: 300px; height: 300px;"></sp-color-wheel>
