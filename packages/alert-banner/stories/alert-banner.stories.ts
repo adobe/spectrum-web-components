@@ -74,3 +74,13 @@ export const Multilanguage = (args: Properties): TemplateResult => html`
         actionLabel: `اشتري الآن`,
     })}
 `;
+
+export const TriggerAlertBanner = (args: Properties): TemplateResult => html`
+    <sp-button
+        onclick="document.querySelector('sp-alert-banner').setAttribute('open', true)"
+    >
+        Trigger Alert Banner
+    </sp-button>
+    <p>Some text here.</p>
+    ${AlertBannerMarkup({ ...args, open: false })}
+`;
