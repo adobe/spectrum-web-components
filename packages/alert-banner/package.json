@@ -25,10 +25,6 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/AlertBanner.base.js": {
-            "development": "./src/AlertBanner.base.dev.js",
-            "default": "./src/AlertBanner.base.js"
-        },
         "./src/AlertBanner.js": {
             "development": "./src/AlertBanner.dev.js",
             "default": "./src/AlertBanner.js"
