@@ -88,9 +88,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * This prevents the common iPad issue where users accidentally select menu
      * items while trying to scroll through the menu content.
      */
-    private touchStartY = 0;
-    private touchStartTime = 0;
-    private isScrolling = false;
+    private touchStartY: number | undefined = undefined;
+    private touchStartTime: number | undefined = undefined;
+    private isCurrentlyScrolling = false;
 
     /**
      * Minimum vertical movement (in pixels) required to trigger scrolling detection.
@@ -107,14 +107,24 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private scrollTimeThreshold = 300; // milliseconds
 
     /**
-     * Public getter/setter for scrolling state
+     * Public getter for scrolling state
+     * Returns true if the component is currently in a scrolling state
+     */
+    public get isScrolling(): boolean {
+        return this.isCurrentlyScrolling;
+    }
+
+    /**
+     * Public getter/setter for scrolling state (backward compatibility)
+     * @deprecated Use isScrolling getter instead
      */
     public get scrolling(): boolean {
         return this.isScrolling;
     }
 
     public set scrolling(value: boolean) {
-        this.isScrolling = value;
+        // For testing purposes, allow setting the scrolling state
+        this.isCurrentlyScrolling = value;
     }
 
     /**
@@ -509,7 +519,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (event.touches.length === 1) {
             this.touchStartY = event.touches[0].clientY;
             this.touchStartTime = Date.now();
-            this.isScrolling = false;
+            this.isCurrentlyScrolling = false;
         }
     }
 
@@ -524,7 +534,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * @param event - The TouchEvent from the touchmove event
      */
     private handleTouchMove(event: TouchEvent): void {
-        if (event.touches.length === 1) {
+        if (
+            event.touches.length === 1 &&
+            this.touchStartY !== undefined &&
+            this.touchStartTime !== undefined
+        ) {
             const currentY = event.touches[0].clientY;
             const deltaY = Math.abs(currentY - this.touchStartY);
             const deltaTime = Date.now() - this.touchStartTime;
@@ -533,7 +547,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 deltaY > this.scrollThreshold &&
                 deltaTime < this.scrollTimeThreshold
             ) {
-                this.isScrolling = true;
+                this.isCurrentlyScrolling = true;
             }
         }
     }
@@ -548,7 +562,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private handleTouchEnd(): void {
         // Reset scrolling state after a short delay
         setTimeout(() => {
-            this.isScrolling = false;
+            this.isCurrentlyScrolling = false;
+            this.touchStartY = undefined;
+            this.touchStartTime = undefined;
         }, 100);
     }
 

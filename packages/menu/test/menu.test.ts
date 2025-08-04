@@ -735,11 +735,11 @@ describe('Menu', () => {
         ) as MenuItem;
 
         // Test scrolling state management
-        expect(el.scrolling).to.be.false;
+        expect(el.isScrolling).to.be.false;
         el.scrolling = true;
-        expect(el.scrolling).to.be.true;
+        expect(el.isScrolling).to.be.true;
         el.scrolling = false;
-        expect(el.scrolling).to.be.false;
+        expect(el.isScrolling).to.be.false;
 
         // Test normal selection when not scrolling
         firstItem.click();
@@ -813,7 +813,7 @@ describe('Menu', () => {
 
         // Manually set scrolling state to simulate iPad scroll detection
         el.scrolling = true;
-        expect(el.scrolling).to.be.true;
+        expect(el.isScrolling).to.be.true;
 
         // Try to select an item while scrolling is detected
         middleItem.click();
@@ -826,7 +826,7 @@ describe('Menu', () => {
 
         // Reset scrolling state
         el.scrolling = false;
-        expect(el.scrolling).to.be.false;
+        expect(el.isScrolling).to.be.false;
 
         // Now try to select the item again (should work since scrolling is reset)
         middleItem.click();
@@ -834,6 +834,48 @@ describe('Menu', () => {
         await elementUpdated(middleItem);
         expect(middleItem.selected).to.be.true;
         expect(el.value).to.equal('15');
+
+        // Test that the component can be disconnected without errors
+        el.remove();
+    });
+
+    it('provides isScrolling getter for public API', async () => {
+        const menuItems = Array.from(
+            { length: 5 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 200px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Wait for all menu items to be properly rendered
+        await waitUntil(
+            () => el.childItems.length === 5,
+            'expected menu to manage 5 items'
+        );
+
+        // Test initial state
+        expect(el.isScrolling).to.be.false;
+
+        // Test that scrolling property works for backward compatibility
+        expect(el.scrolling).to.be.false;
+        el.scrolling = true;
+        expect(el.scrolling).to.be.true;
+        expect(el.isScrolling).to.be.true;
+
+        // Test that isScrolling getter reflects the same state
+        el.scrolling = false;
+        expect(el.isScrolling).to.be.false;
+        expect(el.scrolling).to.be.false;
 
         // Test that the component can be disconnected without errors
         el.remove();
