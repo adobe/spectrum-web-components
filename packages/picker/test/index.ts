@@ -255,10 +255,13 @@ export function runPickerTests(): void {
         it('closes accessibly', async () => {
             el.focus();
             await elementUpdated(el);
+
             expect(el.shadowRoot.activeElement).to.equal(el.button);
+            
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await elementUpdated(el);
 
             expect(el.open, 'open?').to.be.true;
             const accessibleCloseButton = el.shadowRoot.querySelector(
@@ -272,7 +275,6 @@ export function runPickerTests(): void {
             const closed = oneEvent(el, 'sp-closed');
             accessibleCloseButton.click();
             await closed;
-
             await elementUpdated(el);
 
             expect(el.open, 'open?').to.be.false;
@@ -555,7 +557,7 @@ export function runPickerTests(): void {
 
             expect(firstItem.focused, 'not visually focused').to.be.false;
             const opened = oneEvent(el, 'sp-opened');
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -631,9 +633,9 @@ export function runPickerTests(): void {
             ): Promise<void> => {
                 // The DesktopController.handleActivate() method, it has logic that ignores click events if the open state changed between pointerdown and click.
                 // Wait for any previous interaction to complete
-                await new Promise((resolve) => setTimeout(resolve, 50));
+                await aTimeout(140);
 
-                sendMouse({
+                await sendMouse({
                     steps: [
                         {
                             type: 'click',
@@ -645,13 +647,8 @@ export function runPickerTests(): void {
                     ],
                 });
 
-                // Wait for the open property to change with a reasonable timeout
-                let attempts = 0;
-                const maxAttempts = 100; // 1000ms timeout
-                while (el.open !== expectedState && attempts < maxAttempts) {
-                    await new Promise((resolve) => setTimeout(resolve, 10));
-                    attempts++;
-                }
+                // Wait for the open property to change
+                await waitUntil(() => el.open === expectedState, description);
 
                 await elementUpdated(el);
                 expect(el.open, description).to.equal(expectedState);
@@ -830,7 +827,7 @@ export function runPickerTests(): void {
             const opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -918,7 +915,7 @@ export function runPickerTests(): void {
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
-            sendKeys({
+            await sendKeys({
                 press: 'Escape',
             });
             await closed;
@@ -1068,7 +1065,7 @@ export function runPickerTests(): void {
             }
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
-            sendKeys({ press: 'Enter' });
+            await sendKeys({ press: 'Enter' });
             await opened;
             await elementUpdated(el);
 
@@ -1107,7 +1104,7 @@ export function runPickerTests(): void {
             }
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
-            sendKeys({ down: 'Enter' });
+            await sendKeys({ down: 'Enter' });
             await opened;
             await aTimeout(300);
             expect(openSpy.callCount).to.equal(1);
@@ -1123,7 +1120,7 @@ export function runPickerTests(): void {
             expect(thirdItem.focused, 'thirdItem focused?').to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
-            sendKeys({ down: 'Enter' });
+            await sendKeys({ down: 'Enter' });
             await closed;
             await aTimeout(300);
 
@@ -1144,7 +1141,7 @@ export function runPickerTests(): void {
             el.focus();
 
             const closed = oneEvent(el, 'sp-closed');
-            sendKeys({ press: 'Tab' });
+            await sendKeys({ press: 'Tab' });
             await closed;
 
             expect(el.open, 'closes').to.be.false;
@@ -1274,7 +1271,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement).to.equal(el);
 
                 const focused = oneEvent(input1, 'focus');
-                sendKeys({ press: 'Shift+Tab' });
+                await sendKeys({ press: 'Shift+Tab' });
                 await focused;
 
                 expect(el.open, 'open?').to.be.false;
@@ -1396,7 +1393,7 @@ export function runPickerTests(): void {
             let opened = oneEvent(el, 'sp-opened');
 
             const boundingRect = el.button.getBoundingClientRect();
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
@@ -1929,7 +1926,7 @@ export function runPickerTests(): void {
         expect(el1.open, 'click el1 again: el1 to be open').to.be.true;
 
         el1closed = oneEvent(el1, 'sp-closed');
-        sendKeys({
+        await sendKeys({
             press: 'Escape',
         });
         await el1closed;
@@ -1975,7 +1972,7 @@ export function runPickerTests(): void {
         ).to.be.true;
 
         const opened = oneEvent(el, 'sp-opened');
-        sendKeys({ press: 'Enter' });
+        await sendKeys({ press: 'Enter' });
         await opened;
 
         expect(
@@ -2165,7 +2162,7 @@ export function runPickerTests(): void {
 
             const boundingRect = this.el.button.getBoundingClientRect();
 
-            sendMouse({
+            await sendMouse({
                 steps: [
                     {
                         type: 'click',
