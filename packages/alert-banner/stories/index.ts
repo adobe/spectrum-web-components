@@ -12,7 +12,7 @@
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { AlertBannerVariants } from '@spectrum-web-components/alert-banner';
+import { AlertBannerVariants } from '@spectrum-web-components/alert-banner/src/AlertBannerBase.js';
 import '@spectrum-web-components/alert-banner/sp-alert-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 
