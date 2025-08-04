@@ -1,45 +1,222 @@
-## Description
+## Overview
 
-The `<sp-color-handle>` is used to select a colour on an `<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`. It functions similarly to the handle on an `<sp-slider>`.
+The `<sp-color-handle>` is used to select a color on an `<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`. It functions similarly to the handle on an `<sp-slider>`, providing a draggable control point for precise color selection within color components.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-handle?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-handle)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-handle?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-handle)
 
-```
+```bash
 yarn add @spectrum-web-components/color-handle
 ```
 
 Import the side effectful registration of `<sp-color-handle>` via:
 
-```
+```javascript
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 ```
 
 When looking to leverage the `ColorHandle` base class as a type and/or for extension purposes, do so via:
 
-```
+```javascript
 import { ColorHandle } from '@spectrum-web-components/color-handle';
 ```
 
-## Standard
+### Anatomy
+
+The color handle consists of several key parts:
+
+- A visual handle element that indicates the current position
+- An optional color loupe that appears above the handle when active
+- Touch-responsive interaction areas
+- Color display showing the current selected color
+- Opacity checkerboard pattern for transparent colors
 
 ```html
 <sp-color-handle></sp-color-handle>
 ```
 
-## Disabled
+**Internal Structure**: The component renders an inner div with the background color and an `<sp-color-loupe>` element that appears when the `open` property is true and the component is not disabled.
+
+### Options
+
+#### Color
+
+The `color` property sets the visual color displayed within the handle. This accepts any valid CSS color format. The default color is `rgba(255, 0, 0, 0.5)` (semi-transparent red).
+
+```html
+<div style="display: flex; gap: 16px; align-items: center; margin: 16px 0;">
+    <!-- Hex color -->
+    <div style="position: relative; height: 20px; margin: 20px;">
+        <sp-color-handle color="#ff0000"></sp-color-handle>
+    </div>
+
+    <!-- RGB format -->
+    <div style="position: relative; height: 20px; margin: 20px;">
+        <sp-color-handle color="rgb(255, 0, 0)"></sp-color-handle>
+    </div>
+
+    <!-- RGBA format with transparency -->
+    <div style="position: relative; height: 20px; margin: 20px;">
+        <sp-color-handle color="rgba(255, 0, 0, 0.5)"></sp-color-handle>
+    </div>
+
+    <!-- HSL format -->
+    <div style="position: relative; height: 20px; margin: 20px;">
+        <sp-color-handle color="hsl(0, 100%, 50%)"></sp-color-handle>
+    </div>
+
+    <!-- Named colors -->
+    <div style="position: relative; height: 20px; margin: 20px;">
+        <sp-color-handle color="red"></sp-color-handle>
+    </div>
+</div>
+```
+
+**Transparency Support**: When using transparent colors, the handle displays an opacity checkerboard pattern background to clearly show the transparency level.
+
+### States
+
+#### Standard
+
+The default state of the color handle, ready for interaction:
+
+```html
+<sp-color-handle></sp-color-handle>
+```
+
+#### Disabled
+
+A disabled color handle shows that the control exists but is not available for interaction. This maintains layout continuity and communicates that the handle may become available later:
 
 ```html
 <sp-color-handle disabled></sp-color-handle>
 ```
 
-## Open
+#### Open
 
-When the `<sp-color-handle>` uses the `open` property, the `<sp-color-loupe>` component can be used above the handle to show the selected color that would otherwise be covered by a mouse, stylus, or finger on the down/touch state. This can be customized to appear only on finger-input, or always appear regardless of input type.
+When the `open` property is set, the `<sp-color-loupe>` component appears above the handle to show the selected color that would otherwise be covered by a mouse, stylus, or finger on the down/touch state. The loupe automatically appears for touch input (`pointerType === 'touch'`) and can be manually controlled for other input types.
 
 ```html
 <div style="height: 72px"></div>
 <sp-color-handle open></sp-color-handle>
 ```
+
+**Automatic Behavior**: The loupe automatically opens when touched and closes when the touch interaction ends. For mouse and stylus input, the loupe remains hidden by default unless explicitly set to `open="true"`.
+
+#### Focused
+
+The color handle can receive keyboard focus when used within interactive color components. The focused state is managed automatically by the parent component and is indicated visually:
+
+```html
+<sp-color-handle focused></sp-color-handle>
+```
+
+### Behaviors
+
+#### Pointer Interactions
+
+The color handle automatically manages pointer events to provide the optimal user experience:
+
+- **Touch Input**: When touched (`pointerType === 'touch'`), the color loupe automatically appears to prevent the finger from obscuring the selected color
+- **Mouse/Stylus Input**: The loupe remains hidden by default for precision pointing devices
+- **Pointer Capture**: The handle captures pointer events during interaction to ensure smooth dragging even when the pointer moves outside the handle area
+- **Event Handling**: The component listens for `pointerdown`, `pointerup`, and `pointercancel` events to manage the interaction lifecycle
+
+#### Color Display
+
+The handle displays the current color with proper support for transparency:
+
+- Transparent colors are shown with an opacity checkerboard pattern background
+- The color updates in real-time as the user interacts with the parent color component
+- Supports all standard CSS color formats
+
+</br>
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>Format</sp-table-head-cell>
+        <sp-table-head-cell>Example Values</sp-table-head-cell>
+        <sp-table-head-cell>Description</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>Hex3</sp-table-cell>
+            <sp-table-cell><code>#f00</code>, <code>#0a5</code></sp-table-cell>
+            <sp-table-cell>3-digit hexadecimal</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Hex4</sp-table-cell>
+            <sp-table-cell><code>#f00f</code>, <code>#0a58</code></sp-table-cell>
+            <sp-table-cell>3-digit hexadecimal + alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Hex6</sp-table-cell>
+            <sp-table-cell><code>#ff0000</code>, <code>#00aa55</code></sp-table-cell>
+            <sp-table-cell>6-digit hexadecimal</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Hex8</sp-table-cell>
+            <sp-table-cell><code>#ff0000ff</code>, <code>#00aa5580</code></sp-table-cell>
+            <sp-table-cell>6-digit hexadecimal + alpha</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>RGB</sp-table-cell>
+            <sp-table-cell><code>rgb(255, 0, 0)</code>, <code>rgb(0, 170, 85)</code></sp-table-cell>
+            <sp-table-cell>Red, Green, Blue values (0-255)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>RGBA</sp-table-cell>
+            <sp-table-cell><code>rgba(255, 0, 0, 1)</code>, <code>rgba(0, 170, 85, 0.5)</code></sp-table-cell>
+            <sp-table-cell>RGB + Alpha channel (0-1)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>HSL</sp-table-cell>
+            <sp-table-cell><code>hsl(0, 100%, 50%)</code>, <code>hsl(150, 100%, 33%)</code></sp-table-cell>
+            <sp-table-cell>Hue (0-360°), Saturation, Lightness</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>HSLA</sp-table-cell>
+            <sp-table-cell><code>hsla(0, 100%, 50%, 1)</code>, <code>hsla(150, 100%, 33%, 0.5)</code></sp-table-cell>
+            <sp-table-cell>HSL + Alpha channel (0-1)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>HSV</sp-table-cell>
+            <sp-table-cell><code>hsv(0, 100%, 100%)</code>, <code>hsv(150, 100%, 67%)</code></sp-table-cell>
+            <sp-table-cell>Hue (0-360°), Saturation, Value</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>HSVA</sp-table-cell>
+            <sp-table-cell><code>hsva(0, 100%, 100%, 1)</code>, <code>hsva(150, 100%, 67%, 0.5)</code></sp-table-cell>
+            <sp-table-cell>HSV + Alpha channel (0-1)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Named Colors</sp-table-cell>
+            <sp-table-cell><code>red</code>, <code>rebeccapurple</code>, <code>darkseagreen</code></sp-table-cell>
+            <sp-table-cell>CSS color keywords (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/named-color">full list</a>)</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+</br>
+
+### Accessibility
+
+The `<sp-color-handle>` is designed to work as part of accessible color selection components:
+
+#### Keyboard Support
+
+While the color handle itself is not directly keyboard accessible, it works in conjunction with its parent components (`<sp-color-area>`, `<sp-color-slider>`, `<sp-color-wheel>`) which provide comprehensive keyboard navigation.
+
+#### Screen Reader Support
+
+The color handle is rendered as a visual indicator and does not directly interface with screen readers. Accessibility is provided through the parent color component's ARIA implementation.
+
+#### Touch Accessibility
+
+- **Color Loupe**: Automatically appears for touch input to ensure the selected color remains visible
+- **Large Touch Target**: The handle provides an appropriately sized touch target for mobile interaction
+- **Pointer Capture**: Ensures reliable dragging behavior across different touch devices
+
+#### Focus Management
+
+Focus is managed by the parent color component, with the handle reflecting the focused state visually when its parent component has keyboard focus.
