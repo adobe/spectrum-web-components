@@ -296,7 +296,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 #### Context
 
-An alert dialog should be placed inside a modal overaly:
+An alert dialog should be placed inside a modal overlay:
 
 ```html
 <sp-button id="trigger">open modal</sp-button>
