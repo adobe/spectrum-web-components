@@ -327,6 +327,42 @@ describe('ColorWheel', () => {
         await elementUpdated(el);
         expect(el.value).to.equal(10);
     });
+    it('respects custom fractional step value with keyboard navigation', async () => {
+        const el = await fixture<ColorWheel>(html`
+            <sp-color-wheel step="0.5"></sp-color-wheel>
+        `);
+
+        await elementUpdated(el);
+        el.focus();
+
+        expect(el.value).to.equal(0);
+        expect(el.step).to.equal(0.5);
+
+        // Test arrow right with step=10
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(0.5);
+
+        // Test arrow right again
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(1);
+
+        // Test arrow up
+        await sendKeys({ press: 'ArrowUp' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(1.5);
+
+        // Test arrow left
+        await sendKeys({ press: 'ArrowLeft' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(1);
+
+        // Test arrow down
+        await sendKeys({ press: 'ArrowDown' });
+        await elementUpdated(el);
+        expect(el.value).to.equal(0.5);
+    });
     it('respects large step value (45 degrees)', async () => {
         const el = await fixture<ColorWheel>(html`
             <sp-color-wheel step="45"></sp-color-wheel>
