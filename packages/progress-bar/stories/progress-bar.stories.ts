@@ -138,7 +138,12 @@ export const staticWhiteSideLabelIndeterminate = (): TemplateResult => {
 export const updatingProgress = (): TemplateResult => {
     return html`
         <script>
-            let interval = setInterval(updateProgress, 100);
+            let interval = null;
+            function startProgress() {
+                clearInterval(interval);
+                document.querySelector('sp-progress-bar').progress = 0;
+                let interval = setInterval(updateProgress, 100);
+            }
             function updateProgress() {
                 if (document.querySelector('sp-progress-bar').progress < 100) {
                     document.querySelector('sp-progress-bar').progress += 1;
@@ -148,7 +153,7 @@ export const updatingProgress = (): TemplateResult => {
                 }
             }
         </script>
-        <button onclick="updateProgress()">Restart progress</button>
+        <button onclick="startProgress()">Show progress</button>
         <p>Some text here.</p>
         <sp-progress-bar label="Loading" progress="0">
             <span slot="label">Loading</span>
