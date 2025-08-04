@@ -110,7 +110,7 @@ jobs:
                   filter_mode: diff_context
                   level: error
                   reporter: github-pr-review
-                  stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }}'
+                  stylelint_input: '${{ needs.changed_files.outputs.styles_added_files }} ${{ needs.changed_files.outputs.styles_modified_files }} --allow-empty-input'
                   stylelint_config: '${{ github.workspace }}/.stylelintrc.json'
                   packages: 'stylelint-header stylelint-config-standard'
 
