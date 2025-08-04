@@ -24,7 +24,7 @@ When looking to leverage the `Link` base class as a type and/or for extension pu
 import { Link } from '@spectrum-web-components/link';
 ```
 
-### Options
+### Variants
 
 <!-- prettier-ignore -->
 ```html
@@ -90,7 +90,8 @@ When a link needs to be placed on top of a colored background or a visual it may
 
 #### Quiet links
 
-All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary. Quiet links are less accessible, so they should not be used for links that are essential to the experience. These are commonly used in website footers, where there are several lists of links that are shortcuts to other pages.
+All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary.
+Quiet links are less accessible because users may not recognise them as links. Use only when context and placement make their purpose unmistakable, and avoid using quiet links for critical navigation.
 
 <!-- prettier-ignore -->
 ```html
@@ -109,7 +110,7 @@ All links can have a quiet style, which means they don’t have an underline. Th
 
 #### Disabled links
 
-Disabled links are blue and should not propagate any events and they are not focussable.
+Disabled links are blue, unfocusable, unclickable and should not propagate any events.
 
 <!-- prettier-ignore -->
 ```html
@@ -136,6 +137,10 @@ This is a <sp-link download="myfile.txt" href="#">download link</sp-link>.
 - Identify the target of each link directly in the link text to communicate context and set clear expectations about where the link will go.
 - Be mindful of link placement and language, and create experiences that are inclusive of users navigating with screen readers.
 - Ensure labels for links are descriptive and specific.
+- Implement skip links to improve navigation for keyboard and screen reader users when necessary especially the page has many sections and lengthy scroll.
+- For links that open in a new tab, add `target="_blank"`, `rel="noopener noreferrer"` and a UI icon to the link.
+- Add `aria-label` or `aria-labelledby` to links for additonal context. Links can be more concise to lessen visible noise, but adding these attributes can help make the purpose of the link more clear.
+- Ensure strong color contrast between the link and its background. For users with low vision,consider using `7:1 ratio` for critical links and `21:1 ratio` for severe vision impairments.
 
 #### Keyboard Interaction
 
