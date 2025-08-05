@@ -21,6 +21,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
