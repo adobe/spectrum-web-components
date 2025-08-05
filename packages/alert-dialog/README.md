@@ -6,6 +6,7 @@
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/alert-dialog?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/alert-dialog)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/alert-dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/alert-dialog)
+[![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-1dvcjyvh)
 
 ```bash
 yarn add @spectrum-web-components/alert-dialog
@@ -27,9 +28,9 @@ import { AlertDialog } from '@spectrum-web-components/alert-dialog';
 
 The alert dialog consists of several key parts:
 
--   **Title:** All alert dialogs must have a title, using `slot="heading"`, that uses a few words to convey the outcome of what will happen if a user continues with an action
--   **Content:** Alert dialogs can include a description using the default slot. A description briefly communicates any additional information or context that a user needs to know to continue with an action
--   Action buttons, using `slot="button"`, that allow users to respond
+- **Title:** All alert dialogs must have a title, using `slot="heading"`, that uses a few words to convey the outcome of what will happen if a user continues with an action
+- **Content:** Alert dialogs can include a description using the default slot. A description briefly communicates any additional information or context that a user needs to know to continue with an action
+- Action buttons, using `slot="button"`, that allow users to respond
 
 ```html
 <sp-alert-dialog
@@ -63,12 +64,12 @@ The alert dialog consists of several key parts:
 
 Use `slot="button"` to render your action button(s) that allow users to respond
 
--   An alert dialog must have one primary action button (with `variant="primary"`) with the option to include a secondary action and/or a cancel action.
--   Non-primary action buttons should be `variant="secondary"` and `treatment="outline"`.
--   The three buttons should be rendered in the DOM in the following order:
-    -   **Cancel action:** Offers an option to go back and cancel the action.
-    -   **Secondary action:** Offers a secondary action. e.g. "Remind me later"
-    -   **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
+- An alert dialog must have one primary action button (with `variant="primary"`) with the option to include a secondary action and/or a cancel action.
+- Non-primary action buttons should be `variant="secondary"` and `treatment="outline"`.
+- The three buttons should be rendered in the DOM in the following order:
+    - **Cancel action:** Offers an option to go back and cancel the action.
+    - **Secondary action:** Offers a secondary action. e.g. "Remind me later"
+    - **Primary action:** The first (right-most) button communicates what the button will do if selected, or to acknowledge and dismiss the dialog. Check [variants](#variants) for the correct primary button styling. See also the [Alert Dialog design options](https://spectrum.adobe.com/page/alert-dialog/#Options).
 
 ```html
 <sp-alert-dialog
@@ -333,20 +334,20 @@ An alert dialog should be placed inside a modal overaly:
 
 #### `<sp-alert-banner>` Element
 
--   Use `role="alertdialog"` on the alert dialog
--   Make sure the alert dialog has an `aria-labelledby` attribute that references the title's `id`.
--   Make sure the alert dialog has an `aria-describedby` attribute that references the content's `id`.
+- Use `role="alertdialog"` on the alert dialog
+- Make sure the alert dialog has an `aria-labelledby` attribute that references the title's `id`.
+- Make sure the alert dialog has an `aria-describedby` attribute that references the content's `id`.
 
 #### Title
 
--   Consider the appropriate variant based on the message's importance and urgency
--   Use concise, meaningful dialog title that clearly states the purpose
--   Use semantic heading elements (`<h2>`) for the dialog title
+- Consider the appropriate variant based on the message's importance and urgency
+- Use concise, meaningful dialog title that clearly states the purpose
+- Use semantic heading elements (`<h2>`) for the dialog title
 
 #### Content
 
--   Provide clear, concise content that explains the situation and required actions
+- Provide clear, concise content that explains the situation and required actions
 
 ####Buttons
 
--   Ensure button labels clearly indicate the action they will perform
+- Ensure button labels clearly indicate the action they will perform
