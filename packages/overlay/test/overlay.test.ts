@@ -1195,3 +1195,90 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(input);
     });
 });
+
+it('allows programmatic clicks outside overlay to register after user interactions', async () => {
+    const el = await fixture<HTMLDivElement>(html`
+        <div>
+            <sp-button id="interaction-trigger">Open Overlay</sp-button>
+            <sp-overlay
+                trigger="interaction-trigger@click"
+                type="modal"
+                placement="bottom"
+            >
+                <sp-popover style="padding: 10px">
+                    <div style="margin-bottom: 10px">
+                        Overlay with interactive content
+                    </div>
+                    <sp-button id="interactive-button">
+                        Interactive Button
+                    </sp-button>
+                    <input
+                        type="text"
+                        id="interactive-input"
+                        placeholder="Type here"
+                    />
+                </sp-popover>
+            </sp-overlay>
+        </div>
+    `);
+
+    const trigger = el.querySelector('#interaction-trigger') as HTMLElement;
+    const overlay = el.querySelector('sp-overlay') as Overlay;
+
+    await elementUpdated(overlay);
+
+    // Create an element outside the overlay for testing clicks
+    const outsideElement = document.createElement('div');
+    outsideElement.id = 'outside-element';
+    outsideElement.style.cssText =
+        'position: fixed; top: 10px; right: 10px; width: 100px; height: 100px; background: red; z-index: 1;';
+    document.body.appendChild(outsideElement);
+
+    // Open the overlay
+    const opened = oneEvent(overlay, 'sp-opened');
+    trigger.click();
+    await opened;
+
+    // Interact with elements inside the overlay
+    const insideButton = overlay.querySelector(
+        '#interactive-button'
+    ) as HTMLElement;
+    const insideInput = overlay.querySelector(
+        '#interactive-input'
+    ) as HTMLInputElement;
+
+    // Click inside button
+    insideButton.click();
+    await nextFrame();
+
+    // Focus and type in input
+    insideInput.focus();
+    await sendKeys({
+        type: 'test text',
+    });
+    await nextFrame();
+
+    // Verify overlay is still open after interactions
+    expect(overlay.open).to.be.true;
+
+    // Test that clicking outside the overlay still registers and closes it
+    const closedEvent = oneEvent(overlay, 'sp-closed');
+
+    // Click outside the overlay
+    await sendMouse({
+        steps: [
+            {
+                type: 'click',
+                position: [window.innerWidth - 50, 50], // Click in top-right corner
+            },
+        ],
+    });
+
+    await closedEvent;
+
+    // Verify overlay is now closed
+    expect(overlay.open).to.be.false;
+
+    // Clean up
+    document.body.removeChild(outsideElement);
+});
