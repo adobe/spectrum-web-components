@@ -26,22 +26,22 @@
         },
         "./package.json": "./package.json",
         "./src/ProgressCircle.js": {
-            "default": "./src/ProgressCircle.js",
-            "development": "./src/ProgressCircle.dev.js"
+            "development": "./src/ProgressCircle.dev.js",
+            "default": "./src/ProgressCircle.js"
         },
         "./src/ProgressCircle.base.js": {
-            "default": "./src/ProgressCircle.base.js",
-            "development": "./src/ProgressCircle.base.dev.js"
+            "development": "./src/ProgressCircle.base.dev.js",
+            "default": "./src/ProgressCircle.base.js"
         },
         "./src/index.js": {
-            "default": "./src/index.js",
-            "development": "./src/index.dev.js"
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
         },
         "./src/progress-circle-overrides.css.js": "./src/progress-circle-overrides.css.js",
         "./src/progress-circle.css.js": "./src/progress-circle.css.js",
         "./sp-progress-circle.js": {
-            "default": "./sp-progress-circle.js",
-            "development": "./sp-progress-circle.dev.js"
+            "development": "./sp-progress-circle.dev.js",
+            "default": "./sp-progress-circle.js"
         }
     },
     "scripts": {
