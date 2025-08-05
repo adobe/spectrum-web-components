@@ -269,7 +269,7 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 
 The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
 
--   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+- You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
@@ -408,8 +408,8 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 
 "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
 
--   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
--   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
+- `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
+- `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
 This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
@@ -772,9 +772,9 @@ When nesting multiple overlays, it is important to ensure that the nested overla
 
 The overlay manages focus based on its type:
 
--   For `modal` and `page` types, focus is always trapped within the overlay
--   For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
--   For `hint` type, focus remains on the trigger element
+- For `modal` and `page` types, focus is always trapped within the overlay
+- For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
+- For `hint` type, focus remains on the trigger element
 
 Example of proper focus management:
 
@@ -811,6 +811,54 @@ Example of proper focus management:
 </sp-overlay>
 ```
 
+#### External click handling
+
+The overlay uses a focus trap for `modal` and `page` type overlays that includes special handling for external clicks. The `allowOutsideClick` configuration allows programmatic clicks (non-trusted events) to close the overlay while preventing user-initiated clicks from doing so.
+
+This means:
+
+- **Programmatic clicks** (e.g., `element.click()` in JavaScript) will close the overlay
+- **User clicks** (trusted events from mouse/touch interaction) will not close the overlay
+- This behavior is automatic for `modal` and `page` type overlays
+
+Example of programmatic click behavior:
+
+```javascript
+// This will close the overlay
+const outsideElement = document.createElement('button');
+outsideElement.click(); // Programmatic click - will close overlay
+
+// User clicking outside will NOT close the overlay
+// (unless the overlay type is 'auto' or 'manual')
+```
+
+Example of external click registration:
+
+```javascript
+// Programmatic click outside will close the overlay
+function closeOverlayProgrammatically() {
+    const outsideElement = document.createElement('div');
+    outsideElement.style.position = 'fixed';
+    outsideElement.style.top = '0';
+    outsideElement.style.left = '0';
+    document.body.appendChild(outsideElement);
+
+    outsideElement.click(); // Programmatic click - will close overlay
+
+    document.body.removeChild(outsideElement);
+}
+
+// User clicks outside will NOT close the overlay (default modal behavior)
+// This is handled automatically by the overlay's focus trap
+// Users clicking outside modal overlays will not close them
+```
+
+This design ensures that:
+
+- Users can't accidentally close important modal dialogs by clicking outside
+- Developers can programmatically close overlays when needed
+- The overlay maintains proper focus management and accessibility
+
 #### Keyboard navigation
 
 <sp-table>
@@ -840,10 +888,10 @@ Example of proper focus management:
 
 #### Screen reader considerations
 
--   Use `aria-haspopup` on trigger elements to indicate the type of overlay
--   Provide descriptive labels using `aria-label` or `aria-labelledby`
--   Use proper heading structure within overlays
--   Ensure error messages are announced using `aria-live`
+- Use `aria-haspopup` on trigger elements to indicate the type of overlay
+- Provide descriptive labels using `aria-label` or `aria-labelledby`
+- Use proper heading structure within overlays
+- Ensure error messages are announced using `aria-live`
 
 Example of a tooltip with proper screen reader support:
 
