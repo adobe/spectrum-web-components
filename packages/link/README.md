@@ -24,7 +24,7 @@ When looking to leverage the `Link` base class as a type and/or for extension pu
 import { Link } from '@spectrum-web-components/link';
 ```
 
-### Variants
+## Variants
 
 <!-- prettier-ignore -->
 ```html
