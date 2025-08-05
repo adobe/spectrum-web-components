@@ -154,6 +154,7 @@ export default {
                 '!packages/color-area/test/*-memory.test.js',
                 '!packages/color-wheel/test/*-memory.test.js',
                 '!packages/color-slider/test/*-memory.test.js',
+                '!tools/grid/test/*-memory.test.js',
             ],
             browsers: [chromiumWithMemoryToolingCI],
         },
