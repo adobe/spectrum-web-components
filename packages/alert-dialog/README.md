@@ -296,7 +296,7 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 #### Context
 
-An alert dialog should be placed inside a modal overlay or a dialog base:
+An alert dialog should be placed inside a modal [overlay](../overlay/) or a [dialog base](../dialog-base/):
 
 <sp-tabs selected="modal" auto label="Alert dialogs in context">
 <sp-tab value="modal">Modal overlay</sp-tab>
