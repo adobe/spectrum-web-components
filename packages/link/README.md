@@ -8,30 +8,32 @@ An `<sp-link>` allows users to navigate to a different location. They can be pre
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/link?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/link)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-jp2cck3i)
 
-```
+```bash
 yarn add @spectrum-web-components/link
 ```
 
 Import the side effectful registration of `<sp-link>` via:
 
-```
+```ts
 import '@spectrum-web-components/link/sp-link.js';
 ```
 
 When looking to leverage the `Link` base class as a type and/or for extension purposes, do so via:
 
-```
+```ts
 import { Link } from '@spectrum-web-components/link';
 ```
 
-## Variants
+### Variants
 
 <!-- prettier-ignore -->
 ```html
 This is an <sp-link href="#">example link</sp-link>.
 ```
 
-#### Standard links
+<sp-tabs selected="standard" auto label="Variant Options">
+<sp-tab value="standard">Standard</sp-tab>
+<sp-tab-panel value="standard">
 
 Standard links are blue and should be used to call attention to the link or for when the blue color won’t feel too overwhelming in the experience.
 
@@ -40,7 +42,9 @@ Standard links are blue and should be used to call attention to the link or for 
 This is a <sp-link href="#">standard link</sp-link>.
 ```
 
-#### Secondary links
+</sp-tab-panel>
+<sp-tab value="secondary">Secondary</sp-tab>
+<sp-tab-panel value="secondary">
 
 The secondary variant is the same color as the paragraph text inline of which it appears. Its subdued appearance is optimal for when the primary variant is too overwhelming, such as in blocks of text with several references linked throughout.
 
@@ -48,6 +52,31 @@ The secondary variant is the same color as the paragraph text inline of which it
 ```html
 This is a <sp-link href="#" variant="secondary">secondary link</sp-link>.
 ```
+
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
+
+All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary.
+Quiet links are less accessible because users may not recognise them as links. Use only when context and placement make their purpose unmistakable, and avoid using quiet links for critical navigation.
+
+<!-- prettier-ignore -->
+```html
+<p>This is a <sp-link quiet href="#">quiet standard link</sp-link>.</p>
+<p>This is a <sp-link quiet variant="secondary" href="#">quiet secondary link</sp-link>.</p>
+<div
+    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
+>
+    <p style="color: rgb(240, 240, 240);">
+        This is a
+        <sp-link static-color="white" quiet href="#">quiet link</sp-link>
+        over a background.
+    </p>
+</div>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Static colored links
 
@@ -88,25 +117,7 @@ When a link needs to be placed on top of a colored background or a visual it may
 </sp-tab-panel>
 </sp-tabs>
 
-#### Quiet links
-
-All links can have a quiet style, which means they don’t have an underline. This style should only be used when the placement and context of the link is explicit enough that a visible underline isn’t necessary.
-Quiet links are less accessible because users may not recognise them as links. Use only when context and placement make their purpose unmistakable, and avoid using quiet links for critical navigation.
-
-<!-- prettier-ignore -->
-```html
-<p>This is a <sp-link quiet href="#">quiet standard link</sp-link>.</p>
-<p>This is a <sp-link quiet variant="secondary" href="#">quiet secondary link</sp-link>.</p>
-<div
-    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
->
-    <p style="color: rgb(240, 240, 240);">
-        This is a
-        <sp-link static-color="white" quiet href="#">quiet link</sp-link>
-        over a background.
-    </p>
-</div>
-```
+### States
 
 #### Disabled links
 
@@ -117,7 +128,7 @@ Disabled links are blue, unfocusable, unclickable and should not propagate any e
 This is a <sp-link disabled href="#">disabled link</sp-link>.
 ```
 
-#### Download attribute
+### Download attribute
 
 The download attribute on an `<a>` tag prompts a user to download a link as opposed to navigating to it. This attribute has been carried forward to `<sp-link>` to function the same.
 
