@@ -140,7 +140,7 @@ export const updatingProgress = (): TemplateResult => {
         <script>
             let interval = null;
             function startProgress() {
-                clearInterval(interval);
+                if (!!interval) clearInterval(interval);
                 document.querySelector('sp-progress-bar').progress = 0;
                 let interval = setInterval(updateProgress, 100);
             }
