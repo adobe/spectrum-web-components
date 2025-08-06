@@ -69,7 +69,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             `,
             html`
                 <span id="label">
-                    <slot @slotchange=${this.handleSlotChange}></slot>
+                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
                 </span>
             `,
         ];
@@ -252,11 +252,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             }
             this.removeAttribute('aria-label');
         }
-    }
-
-    private handleSlotChange(): void {
-        this.manageTextObservedSlot();
-        this.updateAriaLabel();
     }
 
     protected override firstUpdated(changed: PropertyValues): void {
