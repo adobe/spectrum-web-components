@@ -239,8 +239,8 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
                 this.getAttribute('aria-label') !== ''
             ) {
                 console.warn(
-                    "Don't set aria-label attribute on sp-button, use label prop instead.",
-                    this
+                    this,
+                    'DO NOT set aria-label attribute on sp-button, use label prop instead.'
                 );
                 return;
             }
