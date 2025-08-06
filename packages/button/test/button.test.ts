@@ -40,6 +40,29 @@ describe('Button', () => {
                 <sp-button>Button</sp-button>
             `)
     );
+    it('preserves aria-label when slot content changes', async () => {
+        const el = await fixture<Button>(html`
+            <sp-button label="Test Label">Initial Content</sp-button>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Test Label');
+
+        // Change the slot content
+        el.textContent = 'Updated Content';
+        await elementUpdated(el);
+
+        // The aria-label should still be preserved
+        expect(el.getAttribute('aria-label')).to.equal('Test Label');
+
+        // Change slot content again
+        el.innerHTML = '<span>New Content</span>';
+        await elementUpdated(el);
+
+        // The aria-label should still be preserved
+        expect(el.getAttribute('aria-label')).to.equal('Test Label');
+    });
+
     describe('dev mode', () => {
         let consoleWarnStub!: ReturnType<typeof stub>;
         before(() => {
@@ -395,15 +418,12 @@ describe('Button', () => {
 
         it('manages aria-label from pending state', async () => {
             const el = await fixture<Button>(html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    label="clickable"
-                    pending
-                >
+                <sp-button href="test_url" target="_blank" label="clickable">
                     Click me
                 </sp-button>
             `);
+
+            el.setAttribute('pending', '');
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('Pending');
 
@@ -412,12 +432,12 @@ describe('Button', () => {
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
 
-            // pending is removed and the aria-label should not change as the button is disabled
+            // // pending is removed and the aria-label should not change as the button is disabled
             el.pending = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
 
-            // button is enabled and the aria-label should not change
+            // // button is enabled and the aria-label should not change
             el.disabled = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
