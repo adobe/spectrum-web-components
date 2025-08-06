@@ -69,7 +69,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             `,
             html`
                 <span id="label">
-                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
+                    <slot @slotchange=${this.handleSlotChange}></slot>
                 </span>
             `,
         ];
@@ -258,13 +258,38 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.addEventListener('keypress', this.handleKeypress);
     }
 
+    private handleSlotChange(): void {
+        // Call the original manageTextObservedSlot method
+        this.manageTextObservedSlot();
+        // Only update aria-label if we have a label property and we're not in a pending state
+        if (
+            this.label &&
+            !(
+                'pending' in this &&
+                (this as { pending: boolean }).pending === true
+            )
+        ) {
+            this.updateAriaLabel();
+        }
+    }
+
+    protected override update(changed: PropertyValues): void {
+        super.update(changed);
+        if (changed.has('label')) {
+            this.updateAriaLabel();
+        }
+    }
+
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (changed.has('href')) {
             this.manageAnchor();
         }
 
-        this.updateAriaLabel();
+        if (changed.has('label')) {
+            this.updateAriaLabel();
+        }
+
         if (this.anchorElement) {
             // Ensure the anchor element is not focusable directly via tab
             this.anchorElement.tabIndex = -1;
