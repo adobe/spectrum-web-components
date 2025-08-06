@@ -30,16 +30,15 @@ import { ColorHandle } from '@spectrum-web-components/color-handle';
 The color handle consists of several key parts:
 
 - A visual handle element that indicates the current position
-- An optional color loupe that appears above the handle when active
 - Touch-responsive interaction areas
 - Color display showing the current selected color
 - Opacity checkerboard pattern for transparent colors
+- An optional `sp-color-loupe` that appears above the handle when the properties `open = true` and `disabled = false`
 
 ```html
 <sp-color-handle></sp-color-handle>
 ```
 
-**Internal Structure**: The component renders an inner div with the background color and an `<sp-color-loupe>` element that appears when the `open` property is true and the component is not disabled.
 
 ### Options
 
