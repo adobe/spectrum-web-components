@@ -225,6 +225,13 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
      * Need to check actualy @label property value instead.
      */
     protected updateAriaLabel(): void {
+        if (
+            'pending' in this &&
+            (this as { pending: boolean }).pending === true
+        ) {
+            return;
+        }
+
         // check if label exists and is not empty
         if (this.label && this.label !== '') {
             // prevent update if the label is the same as the aria-label
@@ -235,8 +242,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             // if dev set aria-label instead of label, don't remove it, and throw warning
             if (
                 this.getAttribute('label') === null &&
-                this.getAttribute('aria-label') !== null &&
-                this.getAttribute('aria-label') !== ''
+                this.hasAttribute('aria-label')
             ) {
                 console.warn(
                     this,
@@ -246,6 +252,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             }
             this.removeAttribute('aria-label');
         }
+    }
+
+    private handleSlotChange(): void {
+        this.manageTextObservedSlot();
+        this.updateAriaLabel();
     }
 
     protected override firstUpdated(changed: PropertyValues): void {
@@ -258,37 +269,13 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         this.addEventListener('keypress', this.handleKeypress);
     }
 
-    private handleSlotChange(): void {
-        // Call the original manageTextObservedSlot method
-        this.manageTextObservedSlot();
-        // Only update aria-label if we have a label property and we're not in a pending state
-        if (
-            this.label &&
-            !(
-                'pending' in this &&
-                (this as { pending: boolean }).pending === true
-            )
-        ) {
-            this.updateAriaLabel();
-        }
-    }
-
-    protected override update(changed: PropertyValues): void {
-        super.update(changed);
-        if (changed.has('label')) {
-            this.updateAriaLabel();
-        }
-    }
-
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (changed.has('href')) {
             this.manageAnchor();
         }
 
-        if (changed.has('label')) {
-            this.updateAriaLabel();
-        }
+        this.updateAriaLabel();
 
         if (this.anchorElement) {
             // Ensure the anchor element is not focusable directly via tab
