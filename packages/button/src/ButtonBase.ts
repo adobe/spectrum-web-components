@@ -232,6 +232,18 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
                 this.setAttribute('aria-label', this.label);
             }
         } else {
+            // if dev set aria-label instead of label, don't remove it, and throw warning
+            if (
+                this.getAttribute('label') === null &&
+                this.getAttribute('aria-label') !== null &&
+                this.getAttribute('aria-label') !== ''
+            ) {
+                console.warn(
+                    "Don't set aria-label attribute on sp-button, use label prop instead.",
+                    this
+                );
+                return;
+            }
             this.removeAttribute('aria-label');
         }
     }
