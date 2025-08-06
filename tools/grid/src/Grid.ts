@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import {
     adoptStyles,
@@ -70,8 +70,25 @@ export class Grid extends LitVirtualizer {
         padding: () => this.padding || this.gap,
     });
 
+    private lastTargetForChange?: HTMLElement;
+    private animationFrameId?: number;
+
     protected handleChange(event: Event): void {
         const target = event.target as HTMLElement;
+
+        // This prevents the event from being fired multiple times
+        // when the change event originates from the same item.
+        // For example, the capture event phase used by grid
+        // captures change events from both the checkbox in
+        // the shadowDom for the card and the card itself.
+        if (this.lastTargetForChange === target) {
+            return;
+        }
+        this.lastTargetForChange = target;
+        this.animationFrameId = requestAnimationFrame(() => {
+            this.lastTargetForChange = undefined;
+        });
+
         const value = this.items[
             parseFloat(target.getAttribute('key') || '')
         ] as Record<string, unknown>;
@@ -166,6 +183,11 @@ export class Grid extends LitVirtualizer {
             capture: true,
         });
         this.__gridPart?.setConnected(false);
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = undefined;
+            this.lastTargetForChange = undefined;
+        }
         super.disconnectedCallback();
     }
 }

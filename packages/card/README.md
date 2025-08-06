@@ -232,6 +232,18 @@ When leveraging the `asset` attribute, a card can be declared as representing a 
 </sp-card>
 ```
 
+#### Toggles
+
+When the `toggles` boolean attribute set to `true`, the card can be toggled between selected and unselected states.
+A checkbox will be rendered on hover, focus within, and when the card is selected.
+
+```html
+<sp-card toggles variant="quiet" heading="Card Heading" subheading="JPG Photo">
+    <img alt="" slot="preview" src="https://picsum.photos/200/350" />
+    <div slot="description">10/15/18</div>
+</sp-card>
+```
+
 ### Accessibility
 
 #### Be concise

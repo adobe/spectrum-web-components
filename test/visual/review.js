@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import fs from 'fs';
 import fg from 'fast-glob';
 import { PNG } from 'pngjs';
@@ -26,31 +26,62 @@ const getHash = (context) => {
     return md5.digest('hex');
 };
 
+const getAzureUrl = (combination) => {
+    const baseUrl = 'https://swcpreviews.z13.web.core.windows.net';
+
+    // For main branch beta deployment
+    if (branch === 'main') {
+        return `${baseUrl}/beta/docs/`;
+    }
+
+    // Extract PR number using the same logic as CircleCI
+    let prNumber = null;
+
+    // Check environment variables (same as CircleCI)
+    if (process.env.CIRCLE_PULL_REQUEST) {
+        const match = process.env.CIRCLE_PULL_REQUEST.match(/\/pull\/(\d+)/);
+        if (match) {
+            prNumber = match[1];
+        }
+    } else if (process.env.CIRCLE_PR_NUMBER) {
+        prNumber = process.env.CIRCLE_PR_NUMBER;
+    } else if (branch.match(/^pull\/(\d+)$/)) {
+        // Forked PR branch pattern
+        const match = branch.match(/^pull\/(\d+)$/);
+        if (match) {
+            prNumber = match[1];
+        }
+    }
+
+    // For PR deployments
+    if (prNumber) {
+        return `${baseUrl}/pr-${prNumber}/${combination}/`;
+    }
+
+    // Default fallback for non-PR branches
+    return `${baseUrl}/${slugify(branch)}/${combination}/`;
+};
+
 const vrts = [];
 const themes = ['Spectrum', 'Express', 'Spectrum-two'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
-vrts.push([
-    `High Contrast Mode | Medium | LTR`,
-    `https://${getHash(`${branch}-hcm`)}--spectrum-wc.netlify.app/review/`,
-]);
-themes.map((theme) =>
-    colors.map((color) => {
+vrts.push([`High Contrast Mode | Medium | LTR`, `${getAzureUrl('hcm')}`]);
+themes.forEach((theme) =>
+    colors.forEach((color) => {
         if (
             theme === 'Spectrum-two' &&
             (color === 'Lightest' || color === 'Darkest')
         ) {
             return;
         }
-        scales.map((scale) =>
-            directions.map((direction) => {
-                const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+        scales.forEach((scale) =>
+            directions.forEach((direction) => {
+                const combination = `${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
                 vrts.push([
                     `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${getHash(
-                        context
-                    )}--spectrum-wc.netlify.app/review/`,
+                    `${getAzureUrl(combination)}`,
                 ]);
             })
         );
@@ -178,7 +209,7 @@ async function main() {
     const data = JSON.stringify({
         meta: {
             branch,
-            preview: `https://${slugify(branch)}--spectrum-wc.netlify.app`,
+            preview: getAzureUrl('docs'),
             commit,
             system,
             vrts,

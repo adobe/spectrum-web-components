@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab>` becomes `selected`. An `<sp-tab-panel>` can be associated with an `<sp-tab>` by sharing the same `value` attribute.
 
@@ -7,25 +7,23 @@ An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tabs?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tabs)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tabs)
 
-```
+```javascript
 yarn add @spectrum-web-components/tabs
 ```
 
 Import the side effectful registration of `<sp-tab-panel>` via:
 
-```
+```javascript
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 ```
 
 When looking to leverage the `TabPanel` base class as a type and/or for extension purposes, do so via:
 
-```
-import {
-    TabPanel,
-} from '@spectrum-web-components/tabs';
+```javascript
+import { TabPanel } from '@spectrum-web-components/tabs';
 ```
 
-## Examples
+### Anatomy
 
 ```html
 <sp-tabs selected="1">
@@ -40,7 +38,9 @@ import {
 </sp-tabs>
 ```
 
-## Customizing transitions
+### Options
+
+#### Customizing transitions
 
 The state of the `<sp-tab-panel>` is reflected to the boolean `selected` attribute, which can be used to customize the transition between panels when the selection changes.
 
@@ -84,3 +84,12 @@ The state of the `<sp-tab-panel>` is reflected to the boolean `selected` attribu
     <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
 </sp-tabs>
 ```
+
+### Accessibility
+
+The tabpanel provides proper ARIA attributes and focus management for its content:
+
+- The content area has `role="tabpanel"`
+- `aria-labelledby` points to the associated tab
+- `tabindex="0"` when selected, `-1` when not selected
+- `aria-hidden="true"` when not selected

@@ -1,14 +1,14 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 import { copy } from '@web/rollup-plugin-copy';
 import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
@@ -91,8 +91,11 @@ export default async () => {
                         modulepreloads[importPath] =
                             `<link rel="modulepreload" href="${importPath}">`;
                         for (const importPath of Object.values(chunk.imports)) {
+                            const prefixedPath = process.env.SWC_DIR
+                                ? `/${process.env.SWC_DIR}/${importPath}`
+                                : `/${importPath}`;
                             modulepreloads[importPath] =
-                                `<link rel="modulepreload" href="/${importPath}">`;
+                                `<link rel="modulepreload" href="${prefixedPath}">`;
                         }
                         // Leverage when/if `importance` lands.
                         // modulepreloads.push(
@@ -102,13 +105,19 @@ export default async () => {
                         //     )
                         // );
                     });
+                    const fontPrefix = process.env.SWC_DIR
+                        ? `/${process.env.SWC_DIR}`
+                        : '';
                     modulepreloads['font1'] =
-                        `<link rel="preload" href="/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
+                        `<link rel="preload" href="${fontPrefix}/typekit/adobe-clean-normal-400.woff2" as="font" type="font/woff2" crossorigin/>`;
                     modulepreloads['font2'] =
-                        `<link rel="preload" href="/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
+                        `<link rel="preload" href="${fontPrefix}/typekit/adobe-clean-normal-700.woff2" as="font" type="font/woff2" crossorigin/>`;
+                    const cssPreloadHref = process.env.SWC_DIR
+                        ? `/${process.env.SWC_DIR}/styles.css`
+                        : '/styles.css';
                     return html.replace(
-                        '<link rel="preload" href="/styles.css" as="style">',
-                        `<link rel="preload" href="/styles.css" as="style">${[
+                        `<link rel="preload" href="${cssPreloadHref}" as="style">`,
+                        `<link rel="preload" href="${cssPreloadHref}" as="style">${[
                             ...Object.values(modulepreloads),
                         ].join('')}`
                     );
