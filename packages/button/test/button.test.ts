@@ -432,12 +432,12 @@ describe('Button', () => {
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
 
-            // // pending is removed and the aria-label should not change as the button is disabled
+            // pending is removed and the aria-label should not change as the button is disabled
             el.pending = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
 
-            // // button is enabled and the aria-label should not change
+            // button is enabled and the aria-label should not change
             el.disabled = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
