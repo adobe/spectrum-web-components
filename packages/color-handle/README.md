@@ -1,11 +1,13 @@
 ## Overview
 
-The `<sp-color-handle>` is used to select a color on an `<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`. It functions similarly to the handle on an `<sp-slider>`, providing a draggable control point for precise color selection within color components.
+The `<sp-color-handle>` is used to select a color on an `<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`. It provides a draggable control point for precise color selection within color components.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-handle?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-handle)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-handle?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-handle)
+
+**Note**: `<sp-color-handle>` is a primitive component designed to be used within other color selection components. It's not typically used directly in applications, but rather as part of higher-level color components like `<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`.
 
 ```bash
 yarn add @spectrum-web-components/color-handle
@@ -140,7 +142,7 @@ The `<sp-color-handle>` is designed to work as part of accessible color selectio
 
 #### Keyboard Support
 
-While the color handle itself is not directly keyboard accessible, it works in conjunction with its parent components (`<sp-color-area>`, `<sp-color-slider>`, `<sp-color-wheel>`) which provide comprehensive keyboard navigation.
+While the color handle itself is not directly keyboard accessible, it works in conjunction with its parent components ([`<sp-color-area>`](/components/color-area), [`<sp-color-slider>`](/components/color-slider), [`<sp-color-wheel>`](/components/color-wheel)) which provide comprehensive keyboard navigation.
 Example: Keyboard accessibility with `sp-color-area` as parent component
 
 ```html
