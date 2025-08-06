@@ -1,16 +1,15 @@
-/*
-Copyright 2023 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
-
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-card-background-color: var(--mod-card-background-color, var(--spectrum-background-layer-2-color));
     --spectrum-card-body-spacing: var(--mod-card-body-spacing, var(--spectrum-spacing-400));
@@ -68,7 +67,6 @@ governing permissions and limitations under the License.
 :host {
     box-sizing: border-box;
     min-inline-size: var(--mod-card-minimum-width, var(--spectrum-card-minimum-width));
-    block-size: 100%;
     border: var(--spectrum-card-border-width) solid transparent;
     border-radius: var(--spectrum-card-corner-radius);
     border-color: var(--mod-card-border-color, var(--spectrum-card-border-color));
@@ -285,6 +283,7 @@ governing permissions and limitations under the License.
 :host([variant="quiet"]) {
     --mod-card-border-color-hover: transparent;
     background-color: initial;
+    block-size: 100%;
     border-width: 0;
     border-color: #0000;
     border-radius: 0;

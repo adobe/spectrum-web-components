@@ -1,14 +1,14 @@
-/*
-Copyright 2020 Adobe. All rights reserved.
-This file is licensed to you under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. You may obtain a copy
-of the License at http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under
-the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
-OF ANY KIND, either express or implied. See the License for the specific language
-governing permissions and limitations under the License.
-*/
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
 
 import '@spectrum-web-components/card/sp-card.js';
 import { Card } from '@spectrum-web-components/card';
@@ -25,7 +25,7 @@ import {
     href,
     StoryArgs,
 } from '../stories/card.stories.js';
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import { Checkbox } from '@spectrum-web-components/checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
@@ -134,6 +134,58 @@ describe('card', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('applies block-size: 100% only to gallery and quiet variants', async () => {
+        const variants = ['standard', 'gallery', 'quiet'] as const;
+        const cards = await Promise.all(
+            variants.map(async (variant) => {
+                const card = await fixture<Card>(html`
+                    <div style="height: 200px; position: relative;">
+                        <sp-card
+                            variant=${variant}
+                            heading="${variant} Card"
+                            style="position: absolute;"
+                        >
+                            <img
+                                slot="preview"
+                                src="https://picsum.photos/532/192"
+                                alt="Slotted Preview"
+                            />
+                        </sp-card>
+                    </div>
+                `);
+                await elementUpdated(card);
+                return { variant, card: card.querySelector('sp-card') as Card };
+            })
+        );
+
+        // Verify variant attributes are correctly set
+        cards.forEach(({ variant, card }) => {
+            expect(card.getAttribute('variant')).to.equal(variant);
+        });
+
+        // Verify that block-size: 100% is applied only to gallery and quiet variants
+        const fullHeightVariants = ['gallery', 'quiet'];
+        cards.forEach(({ variant, card }) => {
+            const computedStyle = getComputedStyle(card);
+            const blockSize = computedStyle.blockSize;
+
+            if (fullHeightVariants.includes(variant)) {
+                // For gallery and quiet variants, block-size should be 100% of container (200px)
+                expect(blockSize).to.equal(
+                    '200px',
+                    `Expected ${variant} variant to have block-size: 100% (computed as 200px), but got ${blockSize}`
+                );
+            } else {
+                // For standard variant, block-size should not be 100% of container
+                expect(blockSize).to.not.equal(
+                    '200px',
+                    `Expected ${variant} variant to not have block-size: 100% (computed as 200px), but got ${blockSize}`
+                );
+            }
+        });
+    });
+
     it('loads - [horizontal]', async () => {
         const el = await fixture<Card>(
             Horizontal(Horizontal.args as StoryArgs)
@@ -511,5 +563,173 @@ describe('card', () => {
 
         expect(clickSpy.called).to.be.true;
         expect(clickSpy.calledOnce).to.be.true;
+    });
+
+    it('sets aria-label attribute when label property is provided', async () => {
+        const testLabel = 'Test Card Label';
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${testLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal(testLabel);
+    });
+
+    it('removes aria-label attribute when label property is not provided', async () => {
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('updates aria-label attribute when label property changes', async () => {
+        const initialLabel = 'Initial Label';
+        const updatedLabel = 'Updated Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Update the label property
+        el.label = updatedLabel;
+        await elementUpdated(el);
+
+        expect(el.getAttribute('aria-label')).to.equal(updatedLabel);
+    });
+
+    it('removes aria-label attribute when label property is set to empty string', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Set label to empty string
+        el.label = '';
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('removes aria-label attribute when label property is set to undefined', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Set label to undefined
+        el.label = undefined;
+        await elementUpdated(el);
+
+        expect(el.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('removes aria-label attribute when label property is cleared', async () => {
+        const initialLabel = 'Initial Label';
+
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label=${initialLabel}>
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal(initialLabel);
+
+        // Remove the label attribute to trigger the else branch
+        el.removeAttribute('label');
+        el.label = undefined;
+        await elementUpdated(el);
+
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should be removed when label is cleared'
+        ).to.be.false;
+    });
+
+    it('does not set aria-label during firstUpdated when label is not provided', async () => {
+        // Create element without a label to test firstUpdated else branch
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        // The element should not have an aria-label attribute after firstUpdated
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should not be set during firstUpdated when no label is provided'
+        ).to.be.false;
+    });
+
+    it('removes aria-label during firstUpdated when label is explicitly set to empty string', async () => {
+        // Create element with an empty label to test firstUpdated else branch
+        const el = await fixture<Card>(html`
+            <sp-card heading="Card Heading" label="">
+                <img
+                    slot="preview"
+                    src="https://picsum.photos/532/192"
+                    alt="Slotted Preview"
+                />
+            </sp-card>
+        `);
+
+        // The element should not have an aria-label attribute after firstUpdated
+        expect(
+            el.hasAttribute('aria-label'),
+            'aria-label should be removed during firstUpdated when label is empty string'
+        ).to.be.false;
     });
 });

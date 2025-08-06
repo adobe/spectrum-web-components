@@ -70,7 +70,7 @@
     --spectrum-font-style: var(--spectrum-default-font-style);
     --spectrum-font-size: var(--spectrum-font-size-100);
     --spectrum-cjk-font-family-stack: adobe-clean-han-japanese, var(--spectrum-cjk-font-family), sans-serif;
-    --spectrum-cjk-font: var(--spectrum-code-font-family-stack);
+    --spectrum-cjk-font: var(--spectrum-cjk-font-family-stack);
     --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
     --spectrum-docs-static-white-background-color: rgba(var(--spectrum-docs-static-white-background-color-rgb));
     --spectrum-docs-static-black-background-color-rgb: 181, 209, 211;
