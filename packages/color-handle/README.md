@@ -39,12 +39,15 @@ The color handle consists of several key parts:
 <sp-color-handle></sp-color-handle>
 ```
 
-
 ### Options
 
 #### Color
 
 The `color` property sets the visual color displayed within the handle. This accepts any valid CSS color format. The default color is `rgba(255, 0, 0, 0.5)` (semi-transparent red).
+
+For a complete list of supported color formats, see the [ColorController documentation](/tools/color-controller#supported-color-formats).
+
+**Transparency Support**: When using transparent colors, the handle displays an opacity checkerboard pattern background to clearly show the transparency level.
 
 ```html
 <div style="display: flex; gap: 16px; align-items: center; margin: 16px 0;">
@@ -75,8 +78,6 @@ The `color` property sets the visual color displayed within the handle. This acc
 </div>
 ```
 
-**Transparency Support**: When using transparent colors, the handle displays an opacity checkerboard pattern background to clearly show the transparency level.
-
 ### States
 
 #### Standard
@@ -97,7 +98,7 @@ A disabled color handle shows that the control exists but is not available for i
 
 #### Open
 
-When the `open` property is set, the `<sp-color-loupe>` component appears above the handle to show the selected color that would otherwise be covered by a mouse, stylus, or finger on the down/touch state. The loupe automatically appears for touch input (`pointerType === 'touch'`) and can be manually controlled for other input types.
+When the `open` property is set, the `<sp-color-loupe>` component appears above the handle to show the selected color that would otherwise be covered by a mouse, stylus, or finger on the down/touch state. The loupe automatically appears for touch input (`pointerType === 'touch'`).
 
 ```html
 <div style="height: 72px"></div>
