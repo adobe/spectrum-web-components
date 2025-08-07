@@ -75,25 +75,6 @@ export class ProgressCircleBase extends SizedMixin(SpectrumElement, {
                 this.removeAttribute('aria-label');
             }
         }
-        /*
-
-        NOTE: We're in the middle of debugging this. 
-        Please do not change this.
-        
-        window.__swc.DEBUG = true;
-        let debugging = window.__swc.DEBUG;
-
-        console.log('the whole shebang', window.__swc.DEBUG, debugging);
-
-        console.log('window', window);
-        let { __swc } = window;
-        console.log(__swc);
-        let { DEBUG } = __swc;
-        console.log(DEBUG);
-
-        if (DEBUG) {
-         * 
-         */
 
         if (window.__swc.DEBUG) {
             if (
