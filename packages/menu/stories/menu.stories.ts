@@ -508,5 +508,27 @@ export const MenuWithOverlayTrigger = (): TemplateResult => {
                 </sp-menu>
             </sp-popover>
         </overlay-trigger>
+        <overlay-trigger placement="bottom" type="modal">
+            <sp-action-button slot="trigger">
+                Open menu (with selected items)
+            </sp-action-button>
+            <sp-popover open style="width: 200px;" slot="click-content">
+                <sp-menu selects="multiple">
+                    <sp-menu-group selects="inherit">
+                        <span slot="header">Many of these</span>
+                        <sp-menu-item selected>Camden</sp-menu-item>
+                        <sp-menu-item>Cedar Riverside</sp-menu-item>
+                        <sp-menu-item selected>Downtown</sp-menu-item>
+                        <sp-menu-item>Northeast Arts District</sp-menu-item>
+                        <sp-menu-item>Uptown</sp-menu-item>
+                    </sp-menu-group>
+                    <sp-menu-group selects="inherit">
+                        <span slot="header">And these, too</span>
+                        <sp-menu-item>Lowertown</sp-menu-item>
+                        <sp-menu-item selected>Grand Ave</sp-menu-item>
+                    </sp-menu-group>
+                </sp-menu>
+            </sp-popover>
+        </overlay-trigger>
     `;
 };
