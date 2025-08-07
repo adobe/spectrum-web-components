@@ -312,7 +312,7 @@ describe('Dialog Wrapper', () => {
 
             await elementUpdated(el);
 
-            expect(consoleWarnStub.called).to.be.true;
+            expect(consoleWarnStub.called, 'console.warn called').to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
                 spyCall.args.at(0).includes('accessible'),
