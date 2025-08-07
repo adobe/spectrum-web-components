@@ -14,32 +14,27 @@ yarn add @spectrum-web-components/link
 
 Import the side effectful registration of `<sp-link>` via:
 
-```ts
+```js
 import '@spectrum-web-components/link/sp-link.js';
 ```
 
 When looking to leverage the `Link` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import { Link } from '@spectrum-web-components/link';
 ```
 
 ### Variants
 
-<!-- prettier-ignore -->
-```html
-This is an <sp-link href="#">example link</sp-link>.
-```
+<sp-tabs selected="primary" auto label="Variant Options">
+<sp-tab value="primary">Primary</sp-tab>
+<sp-tab-panel value="primary">
 
-<sp-tabs selected="standard" auto label="Variant Options">
-<sp-tab value="standard">Standard</sp-tab>
-<sp-tab-panel value="standard">
-
-Standard links are blue and should be used to call attention to the link or for when the blue color won’t feel too overwhelming in the experience.
+Primary links are blue and should be used to call attention to the link or for when the blue color won’t feel too overwhelming in the experience.
 
 <!-- prettier-ignore -->
 ```html
-This is a <sp-link href="#">standard link</sp-link>.
+This is a <sp-link href="#">primary link</sp-link>.
 ```
 
 </sp-tab-panel>
@@ -62,12 +57,12 @@ Quiet links are less accessible because users may not recognise them as links. U
 
 <!-- prettier-ignore -->
 ```html
-<p>This is a <sp-link quiet href="#">quiet standard link</sp-link>.</p>
+<p>This is a <sp-link quiet href="#">quiet primary link</sp-link>.</p>
 <p>This is a <sp-link quiet variant="secondary" href="#">quiet secondary link</sp-link>.</p>
 <div
-    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
+    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 15px 20px; display: inline-block;"
 >
-    <p style="color: rgb(240, 240, 240);">
+    <p style="color: var(--spectrum-white);">
         This is a
         <sp-link static-color="white" quiet href="#">quiet link</sp-link>
         over a background.
@@ -88,9 +83,9 @@ When a link needs to be placed on top of a colored background or a visual it may
 
 ```html
 <div
-    style="background-color: #0f797d; padding: 15px 20px; display: inline-block;"
+    style="background-color: var(--spectrum-docs-static-white-background-color); padding: 15px 20px; display: inline-block;"
 >
-    <p style="color: rgb(240, 240, 240);">
+    <p style="color: var(--spectrum-white);">
         This
         <sp-link static-color="white" href="#">link</sp-link>
         is over a background.
@@ -104,9 +99,9 @@ When a link needs to be placed on top of a colored background or a visual it may
 
 ```html
 <div
-    style="background-color: rgb(181, 209, 211); padding: 15px 20px; display: inline-block;"
+    style="background-color: var(--spectrum-docs-static-black-background-color); padding: 15px 20px; display: inline-block;"
 >
-    <p style="color: rgb(15, 15, 15);">
+    <p style="color: var(--spectrum-black);">
         This
         <sp-link static-color="black" href="#">link</sp-link>
         is over a background.
@@ -144,14 +139,14 @@ This is a <sp-link download="myfile.txt" href="#">download link</sp-link>.
 
 #### Best Practices
 
-- Use links in body copy.
+- Use links in body copy and not in titles. For larger projects, consider using a [button](/components/button/) instead.
 - Identify the target of each link directly in the link text to communicate context and set clear expectations about where the link will go.
-- Be mindful of link placement and language, and create experiences that are inclusive of users navigating with screen readers.
-- Ensure labels for links are descriptive and specific.
-- Implement skip links to improve navigation for keyboard and screen reader users when necessary especially the page has many sections and lengthy scroll.
+- Be mindful of link placement and language, and create experiences that are inclusive of users navigating with screen readers, who may navigate links without their surrounding language.
+- It’s more accessible and inclusive to write link text as unique descriptions of the navigational target or function.
+- Implement skip links to improve navigation for keyboard and screen reader users when necessary, especially when the page has many sections and lengthy scroll.
 - For links that open in a new tab, add `target="_blank"`, `rel="noopener noreferrer"` and a UI icon to the link.
 - Add `aria-label` or `aria-labelledby` to links for additonal context. Links can be more concise to lessen visible noise, but adding these attributes can help make the purpose of the link more clear.
-- Ensure strong color contrast between the link and its background. For users with low vision,consider using `7:1 ratio` for critical links and `21:1 ratio` for severe vision impairments.
+- Ensure strong color contrast between the link and its background. For users with low vision,consider using 7:1 ratio for critical links and 21:1 ratio for severe vision impairments.
 
 #### Keyboard Interaction
 
