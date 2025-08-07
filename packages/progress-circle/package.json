@@ -29,10 +29,6 @@
             "development": "./src/ProgressCircle.dev.js",
             "default": "./src/ProgressCircle.js"
         },
-        "./src/ProgressCircle.base.js": {
-            "development": "./src/ProgressCircle.base.dev.js",
-            "default": "./src/ProgressCircle.base.js"
-        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
