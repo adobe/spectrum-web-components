@@ -241,7 +241,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         } else {
             // if dev set aria-label instead of label, don't remove it, and throw warning
             if (
-                this.getAttribute('label') === null &&
+                !this.hasAttribute('label') &&
                 this.hasAttribute('aria-label')
             ) {
                 console.warn(
