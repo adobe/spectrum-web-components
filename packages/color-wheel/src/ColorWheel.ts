@@ -85,7 +85,7 @@ export class ColorWheel extends Focusable {
         this.colorController.color = color;
     }
 
-    private _baseStep = 1; // Preserves user's value
+    private _baseStep: number = 1; // Preserves user's value
 
     private set altered(altered: number) {
         this._altered = altered;
