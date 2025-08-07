@@ -204,9 +204,6 @@ if (window.__swc.DEBUG) {
     };
     window.__swc = {
         ...window.__swc,
-        // NOTE: We're in the middle of debugging this.
-        // Please do not change this.
-        DEBUG: true,
         ignoreWarningLocalNames: {
             /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLocalNames || {}),
