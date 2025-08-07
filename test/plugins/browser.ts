@@ -10,45 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-import { executeServerCommand } from '@web/test-runner-commands';
+import { executeServerCommand, resetMouse } from '@web/test-runner-commands';
 import type { Step } from './send-mouse-plugin.js';
-
-/**
- * Return the mouse to the `up` position.
- */
-async function mouseCleanup() {
-    await executeServerCommand('send-pointer', {
-        steps: [
-            {
-                type: 'move',
-                position: [0, 0],
-            },
-            {
-                type: 'up',
-            },
-        ],
-    });
-}
 
 /**
  * If available, add cleanup work to the `afterEach` and `after` commands.
  */
 function queueMouseCleanUp() {
-    if (mouseCleanupQueued) return;
+    if (mouseCleanupQueued) {
+        return;
+    }
     /**
      * This registers the fixture cleanup as a side effect
      */
     try {
-        // we should not assume that our users load mocha types globally
-        // @ts-ignore
+        // We should not assume that our users load mocha types globally
         if ('afterEach' in window && 'after' in window) {
             mouseCleanupQueued = true;
-            // @ts-ignore
             afterEach(async function () {
-                // @ts-ignore
-                await mouseCleanup();
+                await resetMouse();
             });
-            // @ts-ignore
             after(() => {
                 mouseCleanupQueued = false;
             });
@@ -64,9 +45,9 @@ let mouseCleanupQueued = false;
  * Call to the browser with instructions for interacting with the pointing
  * device while queueing cleanup of those commands after the test is run.
  */
-export function sendMouse(options: { steps: Step[] }) {
+export async function sendMouse(options: { steps: Step[] }) {
     queueMouseCleanUp();
-    return executeServerCommand('send-pointer', options);
+    return await executeServerCommand('send-pointer', options);
 }
 
 /**

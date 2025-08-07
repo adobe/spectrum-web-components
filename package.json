@@ -1,7 +1,7 @@
 {
-    "private": true,
     "name": "@adobe/spectrum-web-components",
     "version": "0.0.9",
+    "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -22,14 +22,14 @@
         "build:css": "wireit",
         "build:css:watch": "wireit",
         "build:react": "rimraf react && node ./scripts/build-react.js && tsc --build tsconfig-react-wrapper.json",
-        "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
+        "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json && tsc --build test/tsconfig-plugins.json && tsc --build test/tsconfig-test.json",
         "build:ts": "wireit",
         "build:ts:watch": "wireit",
         "build:types": "wireit",
         "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
-        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "changelog:global": "node ./scripts/update-global-changelog.js",
+        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
+        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
         "create-git-tag": "node --no-warnings ./scripts/create-git-tag.js",
         "custom-element-json": "node ./scripts/custom-element-json.js",
@@ -72,7 +72,7 @@
         "test:ci": "yarn test:start",
         "test:create": "wireit",
         "test:errors": "yarn test | grep -A 32 ❌",
-        "test:focus": "yarn build && yarn test:ci --group",
+        "test:focus": "yarn build && yarn build:tests && yarn test:ci --group",
         "test:start": "web-test-runner",
         "test:visual": "yarn test:visual:ci",
         "test:visual:ci": "yarn test:start --group",
@@ -224,7 +224,6 @@
             ]
         },
         "build:css": {
-            "clean": "if-file-deleted",
             "command": "node ./scripts/build-css.js",
             "files": [
                 "packages/**/*.css",
@@ -242,7 +241,6 @@
             "service": true
         },
         "build:ts": {
-            "clean": "if-file-deleted",
             "command": "node ./scripts/build-ts.js",
             "dependencies": [
                 "process-icons",
@@ -296,7 +294,6 @@
             "service": true
         },
         "build:types": {
-            "clean": "if-file-deleted",
             "command": "tsc --build tsconfig-all.json --pretty",
             "dependencies": [
                 "process-icons",
@@ -399,7 +396,6 @@
             "service": true
         },
         "test:create": {
-            "clean": "if-file-deleted",
             "command": "node test/visual/create.js",
             "files": [
                 "packages/*/stories/*.stories.ts",
