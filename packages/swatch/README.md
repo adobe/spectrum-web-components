@@ -13,13 +13,13 @@ yarn add @spectrum-web-components/swatch
 
 Import the side effectful registration of `<sp-swatch>` via:
 
-```ts
+```js
 import '@spectrum-web-components/swatch/sp-swatch.js';
 ```
 
 When looking to leverage the `Swatch` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import { Swatch } from '@spectrum-web-components/swatch';
 ```
 
