@@ -358,23 +358,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 new RovingTabindexController<MenuItem>(this, {
                     direction: 'vertical',
                     focusInIndex: (elements: MenuItem[] | undefined) => {
-                        let firstEnabledIndex = -1;
+                        // If there are no selected items, return -1
                         const firstSelectedIndex = elements?.findIndex(
-                            (el, index) => {
-                                if (
-                                    !elements[firstEnabledIndex] &&
-                                    !el.disabled
-                                ) {
-                                    firstEnabledIndex = index;
-                                }
-                                return el.selected && !el.disabled;
-                            }
+                            (el) => el.selected && !el.disabled
                         );
-                        return elements &&
-                            firstSelectedIndex &&
-                            elements[firstSelectedIndex]
+                        return firstSelectedIndex !== undefined &&
+                            firstSelectedIndex >= 0
                             ? firstSelectedIndex
-                            : firstEnabledIndex;
+                            : -1;
                     },
                     elements: () => this.childItems,
                     isFocusableElement: this.isFocusableElement.bind(this),
