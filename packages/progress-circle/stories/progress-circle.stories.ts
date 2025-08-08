@@ -47,7 +47,6 @@ export const Default = ({ indeterminate }: StoryArgs = {}): TemplateResult => {
                 progress="27"
                 size="s"
                 ?indeterminate=${indeterminate}
-                label="Loading progress demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="27"
