@@ -220,17 +220,44 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * @label property is empty within changed propertyValues on slot change event.
+     * Need to check actualy @label property value instead.
+     */
+    protected updateAriaLabel(): void {
+        if (
+            'pending' in this &&
+            (this as { pending: boolean }).pending === true
+        ) {
+            return;
+        }
+
+        // check if label exists and is not empty
+        if (this.label && this.label !== '') {
+            // prevent update if the label is the same as the aria-label
+            if (this.label !== this.getAttribute('aria-label')) {
+                this.setAttribute('aria-label', this.label);
+            }
+        } else {
+            // if dev set aria-label instead of label, don't remove it, and throw warning
+            if (
+                !this.hasAttribute('label') &&
+                this.hasAttribute('aria-label')
+            ) {
+                console.warn(
+                    this,
+                    'DO NOT set aria-label attribute on sp-button, use label prop instead.'
+                );
+                return;
+            }
+            this.removeAttribute('aria-label');
+        }
+    }
+
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
-        }
-        if (changed.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
         }
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
@@ -243,6 +270,8 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.manageAnchor();
         }
 
+        this.updateAriaLabel();
+
         if (this.anchorElement) {
             // Ensure the anchor element is not focusable directly via tab
             this.anchorElement.tabIndex = -1;
@@ -254,16 +283,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
 
             // Set up focus delegation
             this.anchorElement.addEventListener('focus', this.proxyFocus);
-        }
-    }
-    protected override update(changes: PropertyValues): void {
-        super.update(changes);
-        if (changes.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
         }
     }
 }
