@@ -552,6 +552,10 @@ export class Overlay extends ComputedOverlayBase {
                 },
                 // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
                 escapeDeactivates: false,
+                // allow outside clicks to close the overlay
+                allowOutsideClick: (event: Event) => {
+                    return !event.isTrusted;
+                },
             });
 
             if (this.type === 'modal' || this.type === 'page') {
