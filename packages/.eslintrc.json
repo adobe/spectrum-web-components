@@ -135,6 +135,15 @@
             "files": ["*.json"],
             "parser": "jsonc-eslint-parser",
             "rules": {
+                "jsonc/sort-keys": ["warn"],
+                "notice/notice": "off"
+            }
+        },
+        {
+            "extends": ["plugin:jsonc/recommended-with-jsonc"],
+            "files": ["package.json"],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
                 "jsonc/sort-keys": [
                     "warn",
                     {
@@ -183,14 +192,13 @@
                             "cpu",
                             "publishConfig"
                         ],
-                        "pathPattern": ".*" // Hits the all properties
+                        "pathPattern": "^$" // Top-level properties
                     },
                     {
                         "order": { "type": "asc" },
-                        "pathPattern": ".*"
+                        "pathPattern": "^(?!exports\\[).*" // All other properties except export conditions
                     }
-                ],
-                "notice/notice": "off"
+                ]
             }
         }
     ]
