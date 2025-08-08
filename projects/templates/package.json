@@ -1,26 +1,14 @@
 {
-    "name": "swc-templates",
-    "version": "1.2.0",
-    "private": true,
-    "description": "Templates for generating a Spectrum Web Component package.",
-    "license": "Apache-2.0",
     "author": "Adobe",
-    "main": "index.js",
-    "scripts": {
-        "plop": "plop"
-    },
-    "devDependencies": {
-        "plop": "^4.0.0"
-    },
-    "customElements": "custom-elements.json",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/templates"
-    },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
+    "customElements": "custom-elements.json",
+    "description": "Templates for generating a Spectrum Web Component package.",
+    "devDependencies": {
+        "plop": "^4.0.0"
+    },
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "keywords": [
         "design-system",
         "spectrum",
@@ -31,5 +19,17 @@
         "lit-element",
         "lit-html"
     ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    "license": "Apache-2.0",
+    "main": "index.js",
+    "name": "swc-templates",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/templates"
+    },
+    "scripts": {
+        "plop": "plop"
+    },
+    "version": "1.2.0"
 }
