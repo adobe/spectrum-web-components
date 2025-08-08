@@ -1,6 +1,8 @@
-## Description
+## Overview
 
 `<sp-tags>` elements contain a collection of `<sp-tag>` elements and allow users to categorize content. They can represent keywords or people, and are grouped to describe an item or a search request.
+
+[View the design documentation for this component.](https://spectrum.adobe.com/page/tag/)
 
 ### Usage
 
@@ -8,27 +10,31 @@
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tags)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-pbqsxwt5)
 
-```
+```zsh
 yarn add @spectrum-web-components/tags
 ```
 
 Import the side effectful registration of `<sp-tags>` or `<sp-tag>` via:
 
-```
+```js
 import '@spectrum-web-components/tags/sp-tags.js';
 import '@spectrum-web-components/tags/sp-tag.js';
 ```
 
 When looking to leverage the `Tags` or `Tag` base classes as a type and/or for extension purposes, do so via:
 
-```
-import {
-    Tags,
-    Tag
-} from '@spectrum-web-components/tags';
+```js
+import { Tags, Tag } from '@spectrum-web-components/tags';
 ```
 
-## Example
+### Anatomy
+
+Tags are created from the following parts:
+
+- **Tags**: The container component (`<sp-tags>`) that manages a collection of `Tag` elements.
+- **Tag**: The individual tag element (`<sp-tag>`) that represents a single tag. [Read more about the `Tag` component.](/components/tag/)
+
+### Examples
 
 ```html-live
 <sp-tags>
@@ -83,3 +89,9 @@ import {
     </sp-tag>
 </sp-tags>
 ```
+
+### Accessibility
+
+`<sp-tags>` is a `role="list"` container that manages a collection of `Tag` elements. It has an `aria-label` attribute that defaults to "Tags".
+
+`<sp-tags>` uses the roving tabindex pattern for efficient keyboard navigation. `Tab` enters the collection, arrow keys navigate between tags, and only deletable tags are focusable. The container provides `role="list"` semantics with each tag as a `role="listitem"` for proper screen reader support.
