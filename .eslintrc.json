@@ -29,6 +29,16 @@
                 "jsonc/sort-keys": [
                     "warn",
                     {
+                        "order": [
+                            "development",
+                            "types",
+                            "import",
+                            "require",
+                            "default"
+                        ],
+                        "pathPattern": "^exports.*$"
+                    },
+                    {
                         "hasProperties": ["type"],
                         "order": [
                             "$schema",
@@ -98,6 +108,84 @@
             "files": ["react/**/*.ts"],
             "rules": {
                 "@typescript-eslint/no-explicit-any": "off"
+            }
+        },
+        {
+            "env": {
+                "browser": true,
+                "es6": true,
+                "node": false
+            },
+            "files": ["packages/*"],
+            "rules": {
+                "@spectrum-web-components/document-active-element": ["error"],
+                "@typescript-eslint/explicit-function-return-type": [
+                    1,
+                    {
+                        "allowExpressions": true
+                    }
+                ],
+                "@typescript-eslint/no-unused-vars": [
+                    "error",
+                    {
+                        "argsIgnorePattern": "^_"
+                    }
+                ],
+                "import/no-extraneous-dependencies": [
+                    "error",
+                    {
+                        "devDependencies": false,
+                        "optionalDependencies": false,
+                        "peerDependencies": false
+                    }
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.test.ts",
+                "*.stories.ts",
+                "**/benchmark/*.ts",
+                "**/test/*.ts"
+            ],
+            "rules": {
+                "@spectrum-web-components/document-active-element": ["off"],
+                "import/no-extraneous-dependencies": ["off"],
+                "lit-a11y/no-autofocus": ["off"],
+                "lit-a11y/tabindex-no-positive": ["off"]
+            }
+        },
+        {
+            "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
+            "rules": {
+                "sort-imports": ["off"]
+            }
+        },
+        {
+            "files": ["*.stories.ts"],
+            "rules": {
+                "no-console": ["off"]
+            }
+        },
+        {
+            "files": ["Picker.ts"],
+            "rules": {
+                "lit-a11y/click-events-have-key-events": [
+                    "error",
+                    {
+                        "allowList": [
+                            "sp-button",
+                            "sp-action-button",
+                            "sp-checkbox",
+                            "sp-radio",
+                            "sp-switch",
+                            "sp-menu-item",
+                            "sp-clear-button",
+                            "sp-underlay",
+                            "sp-popover"
+                        ]
+                    }
+                ]
             }
         }
     ],

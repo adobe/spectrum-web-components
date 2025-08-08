@@ -1,23 +1,18 @@
 {
     "name": "@spectrum-web-components/shared",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/shared",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "tools/shared"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/shared",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -82,9 +77,8 @@
             "default": "./src/reparent-children.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -93,6 +87,18 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./**/*.dev.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@lit-labs/observers": "^2.0.2",
+        "@spectrum-web-components/base": "1.7.0",
+        "focus-visible": "^5.1.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -105,14 +111,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@lit-labs/observers": "^2.0.2",
-        "@spectrum-web-components/base": "1.7.0",
-        "focus-visible": "^5.1.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./**/*.dev.js"
-    ]
+    "customElements": "custom-elements.json"
 }

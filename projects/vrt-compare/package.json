@@ -1,22 +1,18 @@
 {
     "name": "@spectrum-web-components/vrt-compare",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "projects/vrt-compare"
     },
-    "author": "Adobe",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "src/index.js",
-    "module": "src/index.js",
     "type": "module",
     "exports": {
         ".": {
@@ -42,9 +38,8 @@
             "default": "./vrt-compare.js"
         }
     },
-    "scripts": {
-        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-    },
+    "main": "src/index.js",
+    "module": "src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -53,12 +48,16 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "spectrum css",
-        "web components",
-        "lit-element",
-        "lit-html"
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./onion-skinner.js",
+        "./onion-skinner.ts",
+        "./vrt-compare.js",
+        "./vrt-compare.ts"
     ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/action-bar": "1.7.0",
         "@spectrum-web-components/action-button": "1.7.0",
@@ -70,13 +69,14 @@
         "@spectrum-web-components/styles": "1.7.0",
         "@spectrum-web-components/theme": "1.7.0"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./onion-skinner.js",
-        "./onion-skinner.ts",
-        "./vrt-compare.js",
-        "./vrt-compare.ts"
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
     ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    "publishConfig": {
+        "access": "public"
+    },
+    "customElements": "custom-elements.json"
 }

@@ -1,20 +1,10 @@
 {
-    "name": "@types/swc",
-    "version": "1.2.0",
-    "private": true,
-    "main": "",
-    "types": "./global.d.ts",
-    "customElements": "custom-elements.json",
-    "license": "Apache-2.0",
     "author": "Adobe",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/types"
-    },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
+    "customElements": "custom-elements.json",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "keywords": [
         "design-system",
         "spectrum",
@@ -25,5 +15,15 @@
         "lit-element",
         "lit-html"
     ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    "license": "Apache-2.0",
+    "main": "",
+    "name": "@types/swc",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/types"
+    },
+    "types": "./global.d.ts",
+    "version": "1.2.0"
 }

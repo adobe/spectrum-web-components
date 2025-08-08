@@ -5,8 +5,17 @@
     "description": "An example project that uses the web components and gives an example of how to bundle them minimally with webpack.",
     "license": "Apache-2.0",
     "author": "Adobe",
-    "main": "index.js",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "projects/example-project-webpack"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
     "type": "module",
+    "main": "index.js",
     "scripts": {
         "build": "webpack",
         "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
@@ -37,14 +46,6 @@
         "not IE 11"
     ],
     "customElements": "custom-elements.json",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/example-project-webpack"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
-    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -54,6 +55,5 @@
         "web-components",
         "lit-element",
         "lit-html"
-    ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    ]
 }
