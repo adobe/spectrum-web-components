@@ -89,7 +89,7 @@ export class ContextualHelp extends SpectrumElement {
             if (this.variant === 'help') {
                 return 'Help';
             }
-            return 'Informations';
+            return 'Information';
         }
     }
 
