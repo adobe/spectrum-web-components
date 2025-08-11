@@ -31,7 +31,7 @@ describe('ContextualHelp', () => {
         const button = document
             .querySelector('sp-contextual-help')
             ?.shadowRoot?.querySelector('sp-action-button');
-        expect(button).to.have.attribute('aria-label', 'Informations');
+        expect(button).to.have.attribute('aria-label', 'Information');
 
         el.variant = 'help';
 
@@ -82,9 +82,9 @@ describe('ContextualHelp', () => {
         expect(el.buttonAriaLabel).to.equal('Help');
     });
 
-    it('returns "Informations" if variant is not "help" and label is not set', async () => {
+    it('returns "Information" if variant is not "help" and label is not set', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
-        expect(el.buttonAriaLabel).to.equal('Informations');
+        expect(el.buttonAriaLabel).to.equal('Information');
     });
     it('renders correctly when actualPlacement is undefined', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
@@ -95,7 +95,7 @@ describe('ContextualHelp', () => {
 
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
         expect(trigger).to.exist;
-        expect(trigger).to.have.attribute('aria-label', 'Informations');
+        expect(trigger).to.have.attribute('aria-label', 'Information');
 
         const overlay = el.shadowRoot?.querySelector(
             'sp-overlay'
