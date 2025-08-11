@@ -139,13 +139,13 @@ This is a <sp-link download="myfile.txt" href="#">download link</sp-link>.
 
 #### Best Practices
 
-- Use links in body copy and not in titles. For larger projects, consider using a [button](/components/button/) instead.
+- Use links in body copy and not in titles. For a larger call to action, consider using a [button](/components/button/) instead.
 - Identify the target of each link directly in the link text to communicate context and set clear expectations about where the link will go.
 - Be mindful of link placement and language, and create experiences that are inclusive of users navigating with screen readers, who may navigate links without their surrounding language.
 - It’s more accessible and inclusive to write link text as unique descriptions of the navigational target or function.
 - Implement skip links to improve navigation for keyboard and screen reader users when necessary, especially when the page has many sections and lengthy scroll.
 - For links that open in a new tab, add `target="_blank"`, `rel="noopener noreferrer"` and a UI icon to the link.
-- Add `aria-label` or `aria-labelledby` to links for additonal context. Links can be more concise to lessen visible noise, but adding these attributes can help make the purpose of the link more clear.
+- Add `aria-label` or `aria-labelledby` to links for screen readers who need additional context. Links can be more concise to lessen visible noise, but adding these attributes can help make the purpose of the link more clear.
 - Ensure strong color contrast between the link and its background. For users with low vision,consider using 7:1 ratio for critical links and 21:1 ratio for severe vision impairments.
 
 #### Keyboard Interaction
