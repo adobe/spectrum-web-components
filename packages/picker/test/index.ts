@@ -30,6 +30,10 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/button/sp-button.js';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/shared/src/focus-visible.js';
@@ -64,6 +68,8 @@ import {
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { Button } from '@spectrum-web-components/button';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -2263,5 +2269,87 @@ export function runPickerTests(): void {
             expect(displayedIconSrcAfter).to.be.a.string;
             expect(displayedIconSrcAfter).to.equal(newSrc);
         });
+    });
+
+    it('closes modal overlay immediately when escape is pressed on closed picker in modal', async function () {
+        const test = await fixture<HTMLDivElement>(html`
+            <sp-theme scale="medium" color="light" system="spectrum">
+                <overlay-trigger
+                    type="modal"
+                    id="modal-trigger"
+                    placement="top"
+                >
+                    <sp-button
+                        variant="primary"
+                        slot="trigger"
+                        style="position:absolute;bottom:50px"
+                    >
+                        Open Modal
+                    </sp-button>
+                    <sp-popover slot="click-content" tip>
+                        <sp-dialog no-divider class="options-popover-content">
+                            <sp-picker
+                                label="Select a Country"
+                                value="item-2"
+                                id="picker-value"
+                            >
+                                <sp-menu-item value="item-1">
+                                    Deselect
+                                </sp-menu-item>
+                                <sp-menu-item value="item-2">
+                                    Select inverse
+                                </sp-menu-item>
+                                <sp-menu-item value="item-3">
+                                    Feather...
+                                </sp-menu-item>
+                                <sp-menu-item value="item-4">
+                                    Select and mask...
+                                </sp-menu-item>
+                                <sp-menu-item value="item-5">
+                                    Save selection
+                                </sp-menu-item>
+                                <sp-menu-item disabled value="item-6">
+                                    Make work path
+                                </sp-menu-item>
+                            </sp-picker>
+                        </sp-dialog>
+                    </sp-popover>
+                </overlay-trigger>
+            </sp-theme>
+        `);
+
+        const overlayTrigger = test.querySelector(
+            'overlay-trigger'
+        ) as OverlayTrigger;
+        const button = test.querySelector('sp-button') as Button;
+        const picker = test.querySelector('sp-picker') as Picker;
+
+        // Open the modal overlay
+        button.click();
+        await elementUpdated(overlayTrigger);
+
+        // Wait for the overlay to open
+        await waitUntil(
+            () => overlayTrigger.open === 'click',
+            'overlay should be open'
+        );
+
+        // Focus on the picker (but don't open it)
+        picker.focus();
+        await elementUpdated(picker);
+
+        // Verify picker is closed
+        expect(picker.open, 'picker should be closed initially').to.be.false;
+
+        // Press escape - this should close the modal overlay immediately since picker is not open
+        const modalClosed = oneEvent(overlayTrigger, 'sp-closed');
+        await sendKeys({ press: 'Escape' });
+        await modalClosed;
+
+        // Verify modal overlay is closed
+        expect(
+            overlayTrigger.open,
+            'modal overlay should be closed after escape'
+        ).to.be.undefined;
     });
 }
