@@ -195,8 +195,13 @@
                         "pathPattern": "^$" // Top-level properties
                     },
                     {
+                        /*
+                         * This rule excludes export conditions from alphabetical sorting.
+                         * Since node.js processes export conditions in order and chooses the
+                         * first match, they need to be ordered logically, not alphabetically.
+                         */
                         "order": { "type": "asc" },
-                        "pathPattern": "^(?!exports\\[).*" // All other properties except export conditions
+                        "pathPattern": "^(?!exports\\[).*" // All properties except export conditions
                     }
                 ]
             }
