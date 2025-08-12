@@ -1,23 +1,18 @@
 {
     "name": "@spectrum-web-components/icons-ui",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-ui",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
         "directory": "packages/icons-ui"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-ui",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
@@ -25,9 +20,8 @@
         "./icons/*": "./icons/*",
         "./package.json": "./package.json"
     },
-    "scripts": {
-        "build": "node ./bin/build.js"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -37,18 +31,15 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
+    "scripts": {
+        "build": "node ./bin/build.js"
+    },
+    "sideEffects": [
+        "./src/index.js",
+        "./icons/*",
+        "./icons-s2/*"
     ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/base": "1.7.0",
         "@spectrum-web-components/icon": "1.7.0",
@@ -64,11 +55,20 @@
         "path": "^0.12.7",
         "prettier": "^3.5.3"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./src/index.js",
-        "./icons/*",
-        "./icons-s2/*"
-    ]
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "customElements": "custom-elements.json"
 }
