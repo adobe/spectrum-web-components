@@ -22,9 +22,9 @@ import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
-import { sendMouseTo } from '../../../test/testing-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('ActionMenu, responsive', () => {
     let el: ActionMenu;
@@ -62,10 +62,11 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            sendMouseTo(el.button, {
+            sendMouse({
                 steps: [
                     {
                         type: 'click',
+                        position: [el.button],
                     },
                 ],
             });

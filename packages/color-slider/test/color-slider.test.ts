@@ -24,13 +24,13 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
-import '@spectrum-web-components/color-slider/sp-color-slider.js';
+import { ColorHandle } from '@spectrum-web-components/color-handle';
 import { ColorSlider } from '@spectrum-web-components/color-slider';
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
-import { ColorHandle } from '@spectrum-web-components/color-handle';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { Default } from '../stories/color-slider.stories.js';
 
 describe('ColorSlider', () => {
@@ -526,20 +526,16 @@ describe('ColorSlider', () => {
             'sp-color-handle'
         ) as ColorHandle;
         const boundingClientRect = handle.getBoundingClientRect();
-        const handleLocation: [number, number] = [
-            boundingClientRect.left + boundingClientRect.width / 2,
-            boundingClientRect.top + boundingClientRect.height / 2,
-        ];
         const targetLocation: [number, number] = [
-            handleLocation[0] + 105,
-            handleLocation[1],
+            boundingClientRect.left + boundingClientRect.width / 2 + 105,
+            boundingClientRect.top + boundingClientRect.height / 2,
         ];
 
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: handleLocation,
+                    position: [handle],
                 },
                 {
                     type: 'down',

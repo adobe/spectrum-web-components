@@ -68,7 +68,7 @@ export function sendMousePlugin() {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }): Promise<void> {
+        }): Promise<boolean | undefined> {
             if (command === 'send-pointer') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {
@@ -122,6 +122,7 @@ export function sendMousePlugin() {
                     `Sending mouse commands is not supported for browser type ${session.browser.type}.`
                 );
             }
+            return undefined;
         },
     };
 }

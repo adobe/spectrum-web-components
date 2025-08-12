@@ -170,7 +170,7 @@ describe('Overlay Trigger - extended', () => {
             'bottom'
         );
     });
-    // TODO: skipping this test because its flaky in most browsers in CI. Will review in the migration to Spectrum 2.
+    // TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
     it.skip('occludes content behind the overlay', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div class="container">

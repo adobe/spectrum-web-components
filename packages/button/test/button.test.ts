@@ -235,16 +235,12 @@ describe('Button', () => {
                     event.preventDefault();
                     clicked = true;
                 });
-            const rect = el.getBoundingClientRect();
 
             // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
             await sendMouse({
                 steps: [
                     {
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
+                        position: [el],
                         type: 'click',
                     },
                 ],
