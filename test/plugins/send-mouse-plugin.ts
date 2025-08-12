@@ -11,11 +11,48 @@
  */
 import type { Page } from 'playwright';
 
+/**
+ * The element or rect to get the position from
+ */
+export type PointerTarget = HTMLElement | DOMRect;
+
+/**
+ * The position of the pointer relative to the element or rect
+ * @default center
+ */
+export type PointerPosition = 'center' | 'top-left' | 'outside';
+
+export type PointerTargetAndPosition = [
+    target: PointerTarget,
+    position?: PointerPosition,
+];
+
 export type Step = {
     type: 'move' | 'down' | 'up' | 'click' | 'wheel';
-    position?: [number, number];
+    position?: [number, number] | PointerTargetAndPosition;
     options?: { button?: 'left' | 'right' | 'middle'; delay?: number };
 };
+
+/**
+ * Convert a DOMRect and position to coordinates
+ */
+function getPositionFromRect(
+    rect: DOMRect,
+    position: PointerPosition = 'center'
+): [number, number] {
+    const points: Record<PointerPosition, [number, number]> = {
+        center: [
+            Math.round(rect.left + rect.width / 2),
+            Math.round(rect.top + rect.height / 2),
+        ],
+        'top-left': [Math.round(rect.left + 10), Math.round(rect.top + 2)],
+        outside: [
+            Math.round(rect.left + rect.width / 2),
+            Math.round(rect.top + rect.height * 2),
+        ],
+    };
+    return points[position];
+}
 
 export function sendMousePlugin() {
     return {
@@ -31,7 +68,7 @@ export function sendMousePlugin() {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }): Promise<any> {
+        }): Promise<void> {
             if (command === 'send-pointer') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {
@@ -40,13 +77,38 @@ export function sendMousePlugin() {
                         step.options = step.options || {};
                         // adding a delay to make sure the consecutive mouse events are not too fast
                         // picker open/close tests were failing without this
-                        step.options.delay = 1;
-                        if (step.position) {
-                            await page.mouse[step.type](
-                                Math.round(step.position[0]),
-                                Math.round(step.position[1]),
-                                step.options
-                            );
+                        step.options.delay = step.options.delay || 1;
+
+                        // if no PointerPosition is provided, default to center
+                        if (
+                            step.position &&
+                            step.position.length === 1 &&
+                            typeof step.position[0] === 'object'
+                        ) {
+                            step.position.push('center');
+                        }
+
+                        if (step.position && step.position.length === 2) {
+                            if (
+                                typeof step.position[0] === 'number' &&
+                                typeof step.position[1] === 'number'
+                            ) {
+                                await page.mouse[step.type](
+                                    Math.round(step.position[0]),
+                                    Math.round(step.position[1]),
+                                    step.options
+                                );
+                            } else if (
+                                typeof step.position[0] === 'object' &&
+                                typeof step.position[1] === 'string'
+                            ) {
+                                // Now step.position[0] should be a DOMRect (serialized from browser)
+                                const [x, y] = getPositionFromRect(
+                                    step.position[0] as DOMRect,
+                                    step.position[1] as PointerPosition
+                                );
+                                await page.mouse[step.type](x, y, step.options);
+                            }
                         } else {
                             await page.mouse[step.type as 'down' | 'up'](
                                 step.options

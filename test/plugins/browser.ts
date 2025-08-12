@@ -13,6 +13,10 @@
 import { executeServerCommand, resetMouse } from '@web/test-runner-commands';
 import type { Step } from './send-mouse-plugin.js';
 
+export type SendMouseOptions = {
+    steps: Step[];
+};
+
 /**
  * If available, add cleanup work to the `afterEach` and `after` commands.
  */
@@ -45,9 +49,36 @@ let mouseCleanupQueued = false;
  * Call to the browser with instructions for interacting with the pointing
  * device while queueing cleanup of those commands after the test is run.
  */
-export async function sendMouse(options: { steps: Step[] }) {
+export async function sendMouse(options: SendMouseOptions) {
     queueMouseCleanUp();
-    return await executeServerCommand('send-pointer', options);
+
+    // Process steps to convert HTMLElements to DOMRects on the browser side
+    const processedOptions = {
+        ...options,
+        steps: options.steps.map((step) => {
+            if (
+                step.position &&
+                Array.isArray(step.position) &&
+                step.position.length >= 1
+            ) {
+                const [target, position] = step.position;
+
+                // If the target is an HTMLElement, convert it to a DOMRect
+                if (target instanceof HTMLElement) {
+                    return {
+                        ...step,
+                        position: [
+                            target.getBoundingClientRect(),
+                            position || 'center',
+                        ],
+                    };
+                }
+            }
+            return step;
+        }),
+    };
+
+    return await executeServerCommand('send-pointer', processedOptions);
 }
 
 /**

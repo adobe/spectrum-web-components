@@ -243,7 +243,13 @@ describe('Overlay Trigger - extended', () => {
         expect(textfield.tabIndex, 'textfield is focusable').to.be.equal(0);
 
         // Focus the textfield by clicking it (simulates user interaction)
-        await sendMouseTo(textfield, 'click');
+        await sendMouseTo(textfield, {
+            steps: [
+                {
+                    type: 'click',
+                },
+            ],
+        });
 
         await waitUntil(
             () => document.activeElement === textfield,
@@ -281,7 +287,13 @@ describe('Overlay Trigger - extended', () => {
         await overlayOpened(overlayTrigger.clickOverlayElement, 400);
 
         // Attempt to click the textfield while the overlay is open
-        await sendMouseTo(textfield, 'click');
+        await sendMouseTo(textfield, {
+            steps: [
+                {
+                    type: 'click',
+                },
+            ],
+        });
 
         // Give the click action time to process
         await aTimeout(100);
@@ -304,7 +316,13 @@ describe('Overlay Trigger - extended', () => {
         );
 
         // Try clicking the textfield again after the overlay is closed
-        await sendMouseTo(textfield, 'click');
+        await sendMouseTo(textfield, {
+            steps: [
+                {
+                    type: 'click',
+                },
+            ],
+        });
 
         await waitUntil(
             () => document.activeElement === textfield,
@@ -335,7 +353,13 @@ describe('Overlay Trigger - extended', () => {
 
         expect(scrollingArea.scrollTop).to.equal(0);
         const distance = 1;
-        await sendMouseTo(scrollingArea, 'move');
+        await sendMouseTo(scrollingArea, {
+            steps: [
+                {
+                    type: 'move',
+                },
+            ],
+        });
         await sendMouse({
             steps: [
                 {

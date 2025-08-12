@@ -15,42 +15,84 @@ import {
     expect,
     nextFrame,
     fixture as owcFixture,
+    waitUntil,
 } from '@open-wc/testing';
-import { html, render } from '@spectrum-web-components/base';
-import { SinonStub, spy, stub } from 'sinon';
-import type { HookFunction } from 'mocha';
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { TemplateResult } from '@spectrum-web-components/base';
+import type { HookFunction } from 'mocha';
+import { SinonStub, spy, stub } from 'sinon';
 
-import { sendMouse } from './plugins/browser.js';
+import { sendMouse, SendMouseOptions } from './plugins/browser.js';
+import {
+    PointerPosition,
+    PointerTarget,
+    Step,
+} from './plugins/send-mouse-plugin.js';
+
+export function getPositionFromElement(
+    target: PointerTarget,
+    position: PointerPosition = 'center'
+): [number, number] {
+    const rect =
+        target instanceof HTMLElement ? target.getBoundingClientRect() : target;
+    const points: Record<PointerPosition, [number, number]> = {
+        center: [
+            Math.round(rect.left + rect.width / 2),
+            Math.round(rect.top + rect.height / 2),
+        ],
+        'top-left': [Math.round(rect.left + 10), Math.round(rect.top + 2)],
+        outside: [
+            Math.round(rect.left + rect.width / 2),
+            Math.round(rect.top + rect.height * 2),
+        ],
+    };
+    return points[position];
+}
+
+type StepTo = {
+    type: 'move' | 'down' | 'up' | 'click' | 'wheel';
+    position?: 'center' | 'top-left' | 'outside';
+    options?: {
+        button?: 'left' | 'right' | 'middle';
+        delay?: number;
+    };
+};
+
+type SendMouseToOptions = {
+    steps: StepTo[];
+};
 
 /**
  * send mouse to the middle of a specific DOM rect or HTMLElement
  */
 export async function sendMouseTo(
     elementOrRect: HTMLElement | DOMRect,
-    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right' | 'middle'
+    options?: SendMouseToOptions
 ): Promise<unknown> {
-    const rect =
-        elementOrRect instanceof HTMLElement
-            ? elementOrRect.getBoundingClientRect()
-            : elementOrRect;
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const options = button ? { button: button } : {};
-
+    const steps = options?.steps || [];
+    const computedSteps: Step[] = [];
+    if (steps.length === 0) {
+        steps.push({
+            options: {},
+            position: 'center',
+            type: 'move',
+        });
+    } else {
+        for (const step of steps) {
+            computedSteps.push({
+                options: step.options,
+                position: step.position
+                    ? getPositionFromElement(elementOrRect, step.position)
+                    : undefined,
+                type: step.type,
+            });
+        }
+    }
     return await sendMouse({
-        steps: [
-            {
-                options: options,
-                position: [x, y],
-                type: type,
-            },
-        ],
-    });
+        steps: computedSteps,
+    } as SendMouseOptions);
 }
 
 /**
@@ -58,26 +100,28 @@ export async function sendMouseTo(
  */
 export async function sendMouseFrom(
     elementOrRect: HTMLElement | DOMRect,
-    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right' | 'middle'
+    options?: SendMouseToOptions
 ): Promise<unknown> {
-    const rect =
-        elementOrRect instanceof HTMLElement
-            ? elementOrRect.getBoundingClientRect()
-            : elementOrRect;
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height * 2;
-    const options = button ? { button: button } : {};
-
+    const steps = options?.steps || [];
+    const computedSteps: Step[] = [];
+    if (steps.length === 0) {
+        steps.push({
+            options: {},
+            position: 'outside',
+            type: 'move',
+        });
+    } else {
+        for (const step of steps) {
+            computedSteps.push({
+                options: step.options,
+                position: getPositionFromElement(elementOrRect, 'outside'),
+                type: step.type,
+            });
+        }
+    }
     return await sendMouse({
-        steps: [
-            {
-                options: options,
-                position: [x, y],
-                type: type,
-            },
-        ],
-    });
+        steps: computedSteps,
+    } as SendMouseOptions);
 }
 
 export async function testForLitDevWarnings(
@@ -235,25 +279,64 @@ export function ignoreResizeObserverLoopError(
     before: HookFunction,
     after: HookFunction
 ) {
+    // Store reference to the original global error handler
     let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
+    // Store reference to our custom error listener for cleanup
+    let errorListener: (error: ErrorEvent) => void;
+
+    // Setup function - called before tests run
     before(function () {
-        // Save Mocha's handler.
-        (
-            Mocha as unknown as {
-                process: { removeListener(name: string): void };
-            }
-        ).process.removeListener('uncaughtException');
+        // Remove Mocha's default uncaught exception handler to prevent interference
+        // with our custom error handling logic
+        try {
+            (
+                Mocha as unknown as {
+                    process: { removeListener: (event: string) => void };
+                }
+            )?.process?.removeListener?.('uncaughtException');
+        } catch (error) {
+            console.warn(
+                'Failed to remove Mocha uncaught exception handler:',
+                error
+            );
+        }
+
+        // Save the current window.onerror handler so we can restore it later
         globalErrorHandler = window.onerror;
-        addEventListener('error', (error) => {
-            console.error('Uncaught global error:', error);
-            if (error.message?.match?.(/ResizeObserver loop/)) {
+
+        // Create custom error handler that filters out ResizeObserver loop errors
+        errorListener = (error: ErrorEvent) => {
+            // Check if this is a ResizeObserver loop error (common in tests)
+            // Using more comprehensive pattern matching for ResizeObserver errors
+            const isResizeObserverError = error.message?.match?.(
+                /ResizeObserver.*loop|loop.*ResizeObserver/i
+            );
+            if (isResizeObserverError) {
+                console.warn(
+                    'Uncaught global error in ignoreResizeObserverLoopError:',
+                    error.message
+                );
+                // Silently ignore ResizeObserver loop errors - they're benign in tests
                 return;
             } else {
+                console.warn(
+                    'There is a non-resize observer loop error',
+                    error.message
+                );
+                // For all other errors, delegate to the original error handler
                 globalErrorHandler?.(error);
             }
-        });
+        };
+
+        // Install custom error handler
+        addEventListener('error', errorListener);
     });
+
+    // Cleanup function - called after tests complete
     after(function () {
+        // Remove our custom error listener to prevent memory leaks
+        removeEventListener('error', errorListener);
+        // Restore the original global error handler
         window.onerror = globalErrorHandler as OnErrorEventHandler;
     });
 }
@@ -315,35 +398,36 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
 
 export async function isInteractive(
     el: HTMLElement,
-    position = 'center'
+    position: PointerPosition = 'center'
 ): Promise<boolean> {
-    const clickSpy = spy();
-    el.addEventListener(
-        'click',
-        () => {
-            clickSpy();
-        },
-        { once: true }
-    );
-    await nextFrame();
-    await nextFrame();
-    const clientRect = el.getBoundingClientRect();
-    const points: Record<string, [number, number]> = {
-        center: [
-            clientRect.left + clientRect.width / 2,
-            clientRect.top + clientRect.height / 2,
-        ],
-        'top-left': [clientRect.left + 10, clientRect.top + 2],
-    };
-    await sendMouse({
-        steps: [
-            {
-                type: 'click',
-                position: points[position],
+    try {
+        const clickSpy = spy();
+        el.addEventListener(
+            'click',
+            () => {
+                clickSpy();
             },
-        ],
-    });
-    return clickSpy.callCount === 1;
+            { once: true }
+        );
+        await elementUpdated(el);
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: getPositionFromElement(el, position),
+                },
+            ],
+        });
+        await waitUntil(
+            () => clickSpy.callCount === 1,
+            'click event not fired'
+        );
+        el.removeEventListener('click', clickSpy);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
 export async function fixture<T extends Element>(

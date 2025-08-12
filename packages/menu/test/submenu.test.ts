@@ -71,7 +71,13 @@ describe('Submenu', () => {
             const item2 = document.querySelector('.submenu-item-2') as MenuItem;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouseTo(item2, 'click');
+            await sendMouseTo(item2, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
 
             expect(
@@ -109,7 +115,13 @@ describe('Submenu', () => {
             expect(this.rootItem.open, `submenu should stay open`).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouseTo(item2, 'click');
+            await sendMouseTo(item2, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
 
             expect(
@@ -365,7 +377,13 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouseTo(subItem, 'click');
+            await sendMouseTo(subItem, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
 
             expect(clickSpy.callCount).to.equal(1);
@@ -400,7 +418,13 @@ describe('Submenu', () => {
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendMouseTo(subItem, 'click');
+            await sendMouseTo(subItem, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
 
             expect(clickSpy.callCount).to.equal(1);
@@ -560,7 +584,13 @@ describe('Submenu', () => {
 
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
-        await sendMouseTo(itemC, 'click');
+        await sendMouseTo(itemC, {
+            steps: [
+                {
+                    type: 'click',
+                },
+            ],
+        });
         await closed;
 
         expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
@@ -770,7 +800,13 @@ describe('Submenu', () => {
                 oneEvent(childMenu2, 'sp-closed'),
                 oneEvent(rootMenu1, 'sp-closed'),
             ]);
-            await sendMouseTo(ancestorItem, 'click');
+            await sendMouseTo(ancestorItem, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await closed;
         });
     });
@@ -824,7 +860,13 @@ describe('Submenu', () => {
         await nextFrame();
         const closed = oneEvent(rootItem2, 'sp-closed');
         // Close the second submenu
-        await sendMouseFrom(rootItemBoundingRect2);
+        await sendMouseFrom(rootItemBoundingRect2, {
+            steps: [
+                {
+                    type: 'click',
+                },
+            ],
+        });
         await closed;
 
         expect(rootItem1.open, 'finally closed 1').to.be.false;

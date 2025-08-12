@@ -62,7 +62,13 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            sendMouseTo(el.button, 'click');
+            sendMouseTo(el.button, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
 
             // in this test we only need to wait to see if a tray opens
             let tray: Tray | null = null;
@@ -82,7 +88,6 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens
@@ -140,7 +145,6 @@ describe('ActionMenu, responsive', () => {
         });
 
         it('is a Popover in desktop', async () => {
-
             el.open = true;
 
             // in this test we only need to wait to see if a popover opens

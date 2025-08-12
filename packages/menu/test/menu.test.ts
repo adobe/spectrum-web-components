@@ -580,15 +580,30 @@ describe('Menu', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
+        //@TODO: this tests opens a context menu outside of the test runner and that should be fixed.
         // send right mouse click to the secondItem
-        sendMouseTo(secondItem, 'click', 'right');
+        await sendMouseTo(secondItem, {
+            steps: [
+                {
+                    type: 'click',
+                    options: { button: 'right' },
+                },
+            ],
+        });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        await sendMouseTo(secondItem, 'click', 'middle');
+        await sendMouseTo(secondItem, {
+            steps: [
+                {
+                    type: 'click',
+                    options: { button: 'middle' },
+                },
+            ],
+        });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);

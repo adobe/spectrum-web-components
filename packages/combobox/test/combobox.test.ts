@@ -22,6 +22,7 @@ import {
     escapeEvent,
     fixture,
     homeEvent,
+    sendMouseTo,
 } from '../../../test/testing-helpers.js';
 import {
     executeServerCommand,
@@ -980,15 +981,10 @@ describe('Combobox', () => {
             const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
             const disabledItem = menuItems[2];
 
-            const bounds = disabledItem.getBoundingClientRect();
-            sendMouse({
+            await sendMouseTo(disabledItem, {
                 steps: [
                     {
                         type: 'click',
-                        position: [
-                            bounds.x + bounds.width / 2,
-                            bounds.y + bounds.height / 2,
-                        ],
                     },
                 ],
             });

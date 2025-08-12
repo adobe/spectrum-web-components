@@ -10,11 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import {
-    ActionButton,
-    LONGPRESS_DURATION,
-} from '@spectrum-web-components/action-button';
 import {
     aTimeout,
     elementUpdated,
@@ -23,11 +18,16 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+import {
+    ActionButton,
+    LONGPRESS_DURATION,
+} from '@spectrum-web-components/action-button';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('ActionButton', () => {
     testForLitDevWarnings(
@@ -313,16 +313,12 @@ describe('ActionButton', () => {
                 event.preventDefault();
                 clicked = true;
             });
-        const rect = el.getBoundingClientRect();
 
         // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
         await sendMouse({
             steps: [
                 {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
+                    position: [el],
                     type: 'click',
                 },
             ],

@@ -312,7 +312,7 @@ __metadata:
     terser: "npm:^4.8.1"
     typescript: "npm:^5.3.3"
     webpack-merge: "npm:^6.0.1"
-    wireit: "npm:^0.14.3"
+    wireit: "npm:^0.14.12"
     yargs: "npm:^17.2.1"
   languageName: unknown
   linkType: soft
@@ -12311,7 +12311,7 @@ __metadata:
     rollup-plugin-styles: "npm:^4.0.0"
     rollup-plugin-visualizer: "npm:^5.12.0"
     rollup-plugin-workbox: "npm:^8.1.0"
-    wireit: "npm:^0.14.3"
+    wireit: "npm:^0.14.12"
   languageName: unknown
   linkType: soft
 
@@ -28566,7 +28566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wireit@npm:^0.14.3":
+"wireit@npm:^0.14.12":
   version: 0.14.12
   resolution: "wireit@npm:0.14.12"
   dependencies:

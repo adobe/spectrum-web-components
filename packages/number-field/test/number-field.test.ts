@@ -952,7 +952,13 @@ describe('NumberField', () => {
                 'input'
             ) as HTMLInputElement;
 
-            await sendMouseTo(el.focusElement, 'click');
+            await sendMouseTo(el.focusElement, {
+                steps: [
+                    {
+                        type: 'click',
+                    },
+                ],
+            });
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
