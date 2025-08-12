@@ -227,8 +227,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     }
 
     private updateAriaLabel(): void {
-        if (this.isPendingState()) return;
-
         if (this.label) {
             this.setAttribute('aria-label', this.label);
         } else {
@@ -253,7 +251,8 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.manageAnchor();
         }
 
-        if (changed.has('label')) {
+        // Don't override PendingStateController's aria-label changes
+        if (changed.has('label') && !this.isPendingState()) {
             this.updateAriaLabel();
         }
 
@@ -273,11 +272,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     protected override update(changes: PropertyValues): void {
         super.update(changes);
         if (changes.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
+            this.updateAriaLabel();
         }
     }
 }
