@@ -220,18 +220,28 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    private isPendingState(): boolean {
+        return (
+            'pending' in this && (this as { pending: boolean }).pending === true
+        );
+    }
+
+    private updateAriaLabel(): void {
+        if (this.isPendingState()) return;
+
+        if (this.label) {
+            this.setAttribute('aria-label', this.label);
+        } else {
+            this.removeAttribute('aria-label');
+        }
+    }
+
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }
-        if (changed.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
-        }
+
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
@@ -241,6 +251,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         super.updated(changed);
         if (changed.has('href')) {
             this.manageAnchor();
+        }
+
+        if (changed.has('label')) {
+            this.updateAriaLabel();
         }
 
         if (this.anchorElement) {
