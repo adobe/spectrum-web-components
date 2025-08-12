@@ -33,6 +33,11 @@ import {
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import styles from './contextual-help.css.js';
 
+export const DEFAULT_ARIA_LABELS = {
+    help: 'Help',
+    info: 'Information',
+} as const;
+
 /**
  * Spectrum Contextual help provides additional information about
  * the state of either an adjacent component or an entire view.
@@ -87,9 +92,9 @@ export class ContextualHelp extends SpectrumElement {
             return this.label;
         } else {
             if (this.variant === 'help') {
-                return 'Help';
+                return DEFAULT_ARIA_LABELS.help;
             }
-            return 'Information';
+            return DEFAULT_ARIA_LABELS.info;
         }
     }
 

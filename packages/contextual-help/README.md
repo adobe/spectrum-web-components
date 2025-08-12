@@ -1,6 +1,6 @@
 ## Overview
 
-A `sp-contextual-help` shows a user extra information about the state of either an adjacent component or an entire view. It explains a high-level topic about an experience and can point users to more information elsewhere.
+An `<sp-contextual-help>` shows a user extra information about the state of either an adjacent component or an entire view. It explains a high-level topic about an experience and can point users to more information elsewhere.
 
 [View the design documentation for this component.](https://spectrum.adobe.com/page/contextual-help/)
 
@@ -34,7 +34,7 @@ It consists of the following parts:
 
 - **Heading**: assign the appropriate heading level to the `heading` slot to provide a title for the popover.
 - **Content**: text can be displayed within the popover by using the default slot.
-- **Link**: an optional `sp-link` can be assigned to the `link` slot per [standalone link guidance](https://spectrum.adobe.com/page/contextual-help/#When-to-use-a-standalone-link).
+- **Link**: an optional `<sp-link>` can be assigned to the `link` slot per [standalone link guidance](https://spectrum.adobe.com/page/contextual-help/#When-to-use-a-standalone-link).
 
 ### Options
 
@@ -84,7 +84,7 @@ Use `variant="help"` for helpful content: more detailed, in-depth guidance about
 
 #### Placement
 
-By default a `sp-contextual-help` will render its popover at the `bottom-start` position. This can be customized using the `placement` attribute and supports [all the placement options](http://localhost:8000/components/overlay-trigger/#placement) an `overlay-trigger` component supports.
+By default an `<sp-contextual-help>` will render its popover at the `bottom-start` position. This can be customized using the `placement` attribute and supports [all the placement options](http://localhost:8000/components/overlay-trigger/#placement) an `overlay-trigger` component supports.
 
 ```html
 <sp-contextual-help placement="top-start">
@@ -117,12 +117,12 @@ Note: Maximum width should not be less than 100px.
 
 ### Behaviors
 
-`sp-contextual-help` does not fire any events of its own. You can listen, however, for the `sp-open` and `sp-closed` events which are fired when the popover opens or closes.
+`<sp-contextual-help>` does not fire any events of its own. You can listen, however, for the `sp-open` and `sp-closed` events which are fired when the popover opens or closes.
 
 ### Accessibility
 
-Given that the trigger is an icon-only `sp-action-button`, it is important to provide an accessible name for it, so that it can be properly announced by screen readers.
-By default, the `sp-contextual-help` uses an `aria-label` property with either "Information" or "Help" as values, depending on the component's `variant`.
+Given that the trigger is an icon-only `<sp-action-button>`, it is important to provide an accessible name for it, so that it can be properly announced by screen readers.
+By default, the `<sp-contextual-help>` uses an `aria-label` property with either "Information" or "Help" as values, depending on the component's `variant`.
 You can customize this using the `label` attribute.
 
 When providing headings using the `heading` slot, make sure to provide actual heading elements such as `h1`, `h2`, `h3` ... or use the `role="heading"` attribute.
