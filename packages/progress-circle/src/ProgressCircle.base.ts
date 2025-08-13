@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 
-export class ProgressCircleBase extends SizedMixin(SpectrumElement, {
+export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
     @property({ type: Boolean, reflect: true })
