@@ -26,8 +26,11 @@ import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
-import { emulateMedia, sendKeys, sendMouse } from '@web/test-runner-commands';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { emulateMedia, resetMouse, sendKeys } from '@web/test-runner-commands';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import { Default } from '../stories/grid.stories.js';
 
 describe('Grid', () => {
@@ -70,10 +73,7 @@ describe('Grid', () => {
         await nextFrame();
 
         if (!isWebKit()) {
-            sendMouse({
-                type: 'click',
-                position: [0, 0],
-            });
+            resetMouse();
         }
 
         expect(
@@ -100,18 +100,9 @@ describe('Grid', () => {
 
         expect(firstItem === document.activeElement).to.be.true;
 
-        const firstRect = firstItem?.getBoundingClientRect();
-        const position = [
-            Math.round(firstRect.x + firstRect.width + 2),
-            Math.round(firstRect.y + 2),
-        ] as [number, number];
-        await sendMouse({
-            type: 'click',
-            position,
-        });
+        await mouseClickOn(firstItem, 'top-left');
 
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(firstItem);
 
         expect(
             el.querySelector(el.focusableSelector) === document.activeElement

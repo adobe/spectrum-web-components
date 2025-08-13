@@ -25,8 +25,10 @@ import {
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
 describe('ActionButton', () => {
@@ -315,14 +317,7 @@ describe('ActionButton', () => {
             });
 
         // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-        await sendMouse({
-            steps: [
-                {
-                    position: [el],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(el);
         await elementUpdated(el);
         expect(clicked).to.be.true;
     });

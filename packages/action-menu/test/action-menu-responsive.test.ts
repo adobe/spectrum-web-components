@@ -21,10 +21,10 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { spreadProps } from '../../../test/lit-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
+import { mouseClickOn } from '../../../test/testing-helpers.js';
 
 describe('ActionMenu, responsive', () => {
     let el: ActionMenu;
@@ -62,14 +62,7 @@ describe('ActionMenu, responsive', () => {
             el.isMobile.matches = true;
             el.bindEvents();
 
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [el.button],
-                    },
-                ],
-            });
+            await mouseClickOn(el.button);
 
             // in this test we only need to wait to see if a tray opens
             let tray: Tray | null = null;

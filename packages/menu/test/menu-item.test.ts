@@ -23,7 +23,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { sendMouseTo } from '../../../test/testing-helpers.js';
+import { mouseClickOn } from '../../../test/testing-helpers.js';
 
 describe('Menu item', () => {
     it('renders', async () => {
@@ -54,20 +54,18 @@ describe('Menu item', () => {
 
         const disabled = el.querySelector('[disabled]') as MenuItem;
 
-        await sendMouseTo(disabled, {
-            steps: [
-                {
-                    type: 'move',
-                    position: 'center',
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [disabled],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'up',
+            },
+        ]);
         await elementUpdated(el);
         expect(el.value).to.equal('Selected');
 
@@ -153,18 +151,7 @@ describe('Menu item', () => {
         expect(item === document.activeElement).to.be.true;
 
         // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-        const rect = el.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(el);
 
         expect(clickTargetSpy.calledWith(anchorElement)).to.be.true;
     });

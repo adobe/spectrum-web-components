@@ -24,12 +24,12 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
-import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
+import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -492,31 +492,23 @@ describe('ColorWheel', () => {
 
         expect(el.value).to.equal(0);
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [80, 15],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: [80, 160],
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [80, 15],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: [80, 160],
+            },
+        ]);
 
         await elementUpdated(el);
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse({ type: 'up' });
 
         await elementUpdated(el);
         expect(el.value).to.equal(0);

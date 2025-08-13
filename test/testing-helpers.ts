@@ -15,7 +15,6 @@ import {
     expect,
     nextFrame,
     fixture as owcFixture,
-    waitUntil,
 } from '@open-wc/testing';
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
@@ -26,6 +25,7 @@ import { SinonStub, spy, stub } from 'sinon';
 
 import { sendMouse, SendMouseOptions } from './plugins/browser.js';
 import {
+    MouseOptions,
     PointerPosition,
     PointerTarget,
     Step,
@@ -63,6 +63,73 @@ type StepTo = {
 type SendMouseToOptions = {
     steps: StepTo[];
 };
+
+/**
+ * Send a mouse click to a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to click on
+ * @param type - The type of mouse event to send (move, down, up, click, wheel)
+ * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseClickOn(
+    target: HTMLElement | DOMRect,
+    pointerPosition: PointerPosition = 'center',
+    options?: MouseOptions
+): Promise<unknown> {
+    const position = getPositionFromElement(target, pointerPosition);
+    return await sendMouse({
+        type: 'click',
+        position: position,
+        options: options,
+    });
+}
+
+/**
+ * Send a mouse click away from a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to click away from
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseClickAway(
+    target: HTMLElement | DOMRect,
+    options?: MouseOptions
+): Promise<unknown> {
+    return await mouseClickOn(target, 'outside', options);
+}
+
+/**
+ * Send a mouse move over a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to move over
+ * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseMoveOver(
+    target: HTMLElement | DOMRect,
+    pointerPosition: PointerPosition = 'center',
+    options?: MouseOptions
+): Promise<unknown> {
+    const position = getPositionFromElement(target, pointerPosition);
+    return await sendMouse({
+        type: 'move',
+        position: position,
+        options: options,
+    });
+}
+
+/**
+ * Send a mouse move away from a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to move away from
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseMoveAway(
+    target: HTMLElement | DOMRect,
+    options?: MouseOptions
+): Promise<unknown> {
+    return await mouseMoveOver(target, 'outside', options);
+}
 
 /**
  * send mouse to the middle of a specific DOM rect or HTMLElement
@@ -398,7 +465,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
 
 export async function isInteractive(
     el: HTMLElement,
-    position: PointerPosition = 'center'
+    pointerPosition: PointerPosition = 'center'
 ): Promise<boolean> {
     try {
         const clickSpy = spy();
@@ -409,23 +476,14 @@ export async function isInteractive(
             },
             { once: true }
         );
-        await elementUpdated(el);
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: getPositionFromElement(el, position),
-                },
-            ],
-        });
-        await waitUntil(
-            () => clickSpy.callCount === 1,
-            'click event not fired'
-        );
-        el.removeEventListener('click', clickSpy);
+        await nextFrame();
+        await nextFrame();
+        await mouseClickOn(el, pointerPosition);
+        // console.log('clickSpy.callCount', clickSpy.callCount);
+        expect(clickSpy.callCount, 'should have been called once').to.equal(1);
         return true;
     } catch (error) {
-        console.error(error);
+        console.error('isInteractive error: ', error);
         return false;
     }
 }

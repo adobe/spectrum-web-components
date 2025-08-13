@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
 import {
     elementUpdated,
     expect,
@@ -20,14 +18,18 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
 import {
     a11ySnapshot,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy, stub } from 'sinon';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 
 type TestableButtonType = {
     hasLabel: boolean;
@@ -237,14 +239,7 @@ describe('Button', () => {
                 });
 
             // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-            await sendMouse({
-                steps: [
-                    {
-                        position: [el],
-                        type: 'click',
-                    },
-                ],
-            });
+            await mouseClickOn(el);
             await elementUpdated(el);
             expect(clicked).to.be.true;
         });

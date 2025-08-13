@@ -52,6 +52,8 @@ import {
     arrowRightEvent,
     arrowUpEvent,
     ignoreResizeObserverLoopError,
+    mouseClickAway,
+    mouseClickOn,
     fixture as styledFixture,
     testForLitDevWarnings,
     tEvent,
@@ -561,21 +563,10 @@ export function runPickerTests(): void {
             await nextFrame();
             await nextFrame();
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-            const boundingRect = el.button.getBoundingClientRect();
 
             expect(firstItem.focused, 'not visually focused').to.be.false;
             const opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(el.button);
             await opened;
 
             expect(el.open, 'open?').to.be.true;
@@ -589,42 +580,30 @@ export function runPickerTests(): void {
             const thirdItem = el.querySelector(
                 'sp-menu-item:nth-of-type(3)'
             ) as MenuItem;
-            const boundingRect = el.button.getBoundingClientRect();
 
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [el.button],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
             await opened;
 
-            const thirdItemRect = thirdItem.getBoundingClientRect();
             const closed = oneEvent(el, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            thirdItemRect.x + thirdItemRect.width / 2,
-                            thirdItemRect.y + thirdItemRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [thirdItem],
+                },
+                {
+                    type: 'up',
+                },
+            ]);
             await closed;
 
             expect(el.open, 'open?').to.be.false;
@@ -632,7 +611,6 @@ export function runPickerTests(): void {
         });
         it('opens/closes multiple times', async () => {
             expect(!el.open, 'starts closed').to.be.true;
-            const boundingRect = el.button.getBoundingClientRect();
 
             // Helper function to wait for open state change
             const waitForOpenState = async (
@@ -643,17 +621,7 @@ export function runPickerTests(): void {
                 // Wait for any previous interaction to complete
                 await aTimeout(140);
 
-                await sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [
-                                boundingRect.x + boundingRect.width / 2,
-                                boundingRect.y + boundingRect.height / 2,
-                            ],
-                        },
-                    ],
-                });
+                await mouseClickOn(el.button);
 
                 // Wait for the open property to change
                 await waitUntil(() => el.open === expectedState, description);
@@ -834,18 +802,7 @@ export function runPickerTests(): void {
 
             const opened = oneEvent(el, 'sp-opened');
 
-            const boundingRect = el.button.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(el.button);
 
             await opened;
             await elementUpdated(el);
@@ -1400,18 +1357,7 @@ export function runPickerTests(): void {
 
             let opened = oneEvent(el, 'sp-opened');
 
-            const boundingRect = el.button.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(el.button);
 
             await opened;
 
@@ -1443,14 +1389,7 @@ export function runPickerTests(): void {
             expect(document.activeElement).to.equal(el);
 
             // click outside (0,0)
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [0, 0],
-                    },
-                ],
-            });
+            await mouseClickAway(el.button);
 
             // picker should not have focus
             expect(document.activeElement).not.to.equal(el);
@@ -1490,14 +1429,7 @@ export function runPickerTests(): void {
             ).to.be.true;
 
             // Click elsewhere to remove focus completely
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [0, 0],
-                    },
-                ],
-            });
+            await mouseClickAway(el.button);
 
             // Now picker should not have focus
             expect(document.activeElement).not.to.equal(el);
@@ -2168,19 +2100,7 @@ export function runPickerTests(): void {
             expect(this.el.disabled, 'this.el disabled?').to.be.true;
             expect(this.el.focused, 'this.el open?').to.be.false;
 
-            const boundingRect = this.el.button.getBoundingClientRect();
-
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(this.el.button);
             // Synthetic delay for "open" but not "sp-open" as it would never come.
             await nextFrame();
             await nextFrame();

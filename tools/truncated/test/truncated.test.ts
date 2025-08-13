@@ -17,11 +17,11 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
-import { sendMouse } from '@web/test-runner-commands';
 
-import { Truncated } from '../src/index.js';
-import '../sp-truncated.js';
 import { isWebKit } from '@spectrum-web-components/shared';
+import { mouseMoveOver } from '../../../test/testing-helpers.js';
+import '../sp-truncated.js';
+import { Truncated } from '../src/index.js';
 
 describe('Truncated', () => {
     afterEach(() => {
@@ -42,12 +42,8 @@ describe('Truncated', () => {
         `);
         const el = p.querySelector('sp-truncated') as Truncated;
         const tooltip = el.shadowRoot!.querySelector('sp-tooltip') as Tooltip;
-        const rect = el.getBoundingClientRect();
 
-        await sendMouse({
-            type: 'move',
-            position: [Math.round(rect.left + 2), Math.round(rect.top + 2)],
-        });
+        await mouseMoveOver(el, 'top-left');
         const opened = oneEvent(el, 'sp-opened');
 
         await opened;
@@ -63,11 +59,7 @@ describe('Truncated', () => {
         const tooltip = el.shadowRoot!.querySelector(
             'sp-tooltip'
         ) as Tooltip | null;
-        const rect = el.getBoundingClientRect();
-        await sendMouse({
-            type: 'move',
-            position: [Math.round(rect.left + 2), Math.round(rect.top + 2)],
-        });
+        await mouseMoveOver(el, 'top-left');
 
         expect(tooltip).to.be.null;
     });

@@ -49,36 +49,38 @@ let mouseCleanupQueued = false;
  * Call to the browser with instructions for interacting with the pointing
  * device while queueing cleanup of those commands after the test is run.
  */
-export async function sendMouse(options: SendMouseOptions) {
+export async function sendMouse(options: Step[] | Step | SendMouseOptions) {
     queueMouseCleanUp();
-
+    let steps: Step[];
+    if (typeof options === 'object' && 'steps' in options) {
+        steps = options.steps;
+    } else {
+        steps = Array.isArray(options) ? options : [options];
+    }
     // Process steps to convert HTMLElements to DOMRects on the browser side
-    const processedOptions = {
-        ...options,
-        steps: options.steps.map((step) => {
-            if (
-                step.position &&
-                Array.isArray(step.position) &&
-                step.position.length >= 1
-            ) {
-                const [target, position] = step.position;
+    const processedSteps = steps.map((step) => {
+        if (
+            step.position &&
+            Array.isArray(step.position) &&
+            step.position.length >= 1
+        ) {
+            const [target, position] = step.position;
 
-                // If the target is an HTMLElement, convert it to a DOMRect
-                if (target instanceof HTMLElement) {
-                    return {
-                        ...step,
-                        position: [
-                            target.getBoundingClientRect(),
-                            position || 'center',
-                        ],
-                    };
-                }
+            // If the target is an HTMLElement, convert it to a DOMRect
+            if (target instanceof HTMLElement) {
+                return {
+                    ...step,
+                    position: [
+                        target.getBoundingClientRect(),
+                        position || 'center',
+                    ],
+                };
             }
-            return step;
-        }),
-    };
+        }
+        return step;
+    });
 
-    return await executeServerCommand('send-pointer', processedOptions);
+    return await executeServerCommand('send-pointer', processedSteps);
 }
 
 /**

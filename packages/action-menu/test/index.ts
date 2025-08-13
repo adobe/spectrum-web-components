@@ -20,7 +20,12 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import {
+    mouseClickAway,
+    mouseClickOn,
+    mouseMoveOver,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers';
 
 import { spy } from 'sinon';
 
@@ -470,14 +475,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             let opened = oneEvent(el, 'sp-opened');
 
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [el.button],
-                    },
-                ],
-            });
+            await mouseClickOn(el.button);
 
             await opened;
 
@@ -509,14 +507,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(document.activeElement === el).to.be.true;
 
             // click outside (0,0)
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [el, 'outside'],
-                    },
-                ],
-            });
+            await mouseClickAway(el);
 
             // picker should not have focus
             expect(document.activeElement === el).to.be.false;
@@ -606,17 +597,15 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(el.value).to.not.equal(thirdItem.value);
             const opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [el.button],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [el.button],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
@@ -624,17 +613,15 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             el.addEventListener('change', (event: Event) => {
                 selected = (event.target as ActionMenu).value;
             });
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [thirdItem],
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [thirdItem],
+                },
+                {
+                    type: 'up',
+                },
+            ]);
             await closed;
 
             expect(el.open).to.be.false;
@@ -873,28 +860,14 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(overlay.triggerElement === el.button).to.be.true;
             let open = oneEvent(tooltip, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        position: [el],
-                        type: 'move',
-                    },
-                ],
-            });
+            await mouseMoveOver(el);
             await open;
 
             expect(tooltip.open).to.be.true;
 
             const close = oneEvent(tooltip, 'sp-closed');
             open = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        position: [el],
-                        type: 'click',
-                    },
-                ],
-            });
+            await mouseClickOn(el);
             await close;
             await open;
 
@@ -903,14 +876,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             const menu = (el as unknown as TestablePicker).optionsMenu;
 
-            await sendMouse({
-                steps: [
-                    {
-                        position: [menu],
-                        type: 'move',
-                    },
-                ],
-            });
+            await mouseMoveOver(menu);
 
             await aTimeout(150);
 

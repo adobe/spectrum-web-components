@@ -9,10 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
@@ -20,10 +16,13 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { fixture } from '../../../test/testing-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { fixture, mouseClickOn } from '../../../test/testing-helpers.js';
 
 describe('Menu [selects]', () => {
     let el!: Menu;
@@ -44,19 +43,8 @@ describe('Menu [selects]', () => {
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
-            const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(item1);
             await change;
             expect(el.value).to.equal('1');
         });
@@ -166,19 +154,8 @@ describe('Menu [selects] w/ group', () => {
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
-            const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(item1);
             await change;
             expect(el.value).to.equal('1');
         });
@@ -289,19 +266,8 @@ describe('Menu w/ group [selects]', () => {
     describe('fires `change` events', async () => {
         it('on browser clicks', async () => {
             const item1 = options[0];
-            const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(group, 'change');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(item1);
             await change;
             expect(group.value).to.equal('1');
         });
@@ -422,38 +388,16 @@ describe('Menu w/ groups [selects]', () => {
         it('on browser clicks', async () => {
             const item1a = options[0];
             const item1b = options[3];
-            const boundingRectA = item1a.getBoundingClientRect();
             expect(groupA.value).to.equal('');
             expect(groupB.value).to.equal('');
             let change = oneEvent(el, 'change');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRectA.x + boundingRectA.width / 2,
-                            boundingRectA.y + boundingRectA.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(item1a);
             await change;
             await elementUpdated(item1a);
             expect(groupA.value).to.equal('1a');
             expect(groupB.value).to.equal('');
             change = oneEvent(el, 'change');
-            const boundingRectB = item1b.getBoundingClientRect();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            boundingRectB.x + boundingRectB.width / 2,
-                            boundingRectB.y + boundingRectB.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(item1b);
             await change;
             expect(groupA.value).to.equal('1a');
             expect(groupB.value).to.equal('1b');

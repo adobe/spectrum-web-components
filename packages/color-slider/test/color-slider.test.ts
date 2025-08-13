@@ -531,33 +531,25 @@ describe('ColorSlider', () => {
             boundingClientRect.top + boundingClientRect.height / 2,
         ];
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [handle],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: targetLocation,
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: targetLocation,
+            },
+        ]);
 
         await elementUpdated(el);
 
         expect(el.value).to.be.greaterThan(190);
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse({ type: 'up' });
 
         await elementUpdated(el);
         expect(el.value).to.equal(0);

@@ -41,7 +41,6 @@ import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { sendKeys } from '@web/test-runner-commands';
 import sinon, { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -49,7 +48,9 @@ import {
     arrowUpEvent,
     endEvent,
     homeEvent,
-    testForLitDevWarnings
+    mouseClickAway,
+    mouseClickOn,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
 import '../stories/action-group.stories.js';
@@ -269,14 +270,7 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [firstButton],
-                },
-            ],
-        });
+        await mouseClickOn(firstButton);
 
         await elementUpdated(firstButton);
 
@@ -299,14 +293,7 @@ describe('ActionGroup', () => {
         ).to.equal(-1);
 
         // click outside the action-group and it should loose focus and update the tabIndexes
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [el, 'outside'],
-                },
-            ],
-        });
+        await mouseClickAway(el);
 
         await elementUpdated(el);
 
@@ -333,14 +320,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [actionMenu],
-                },
-            ],
-        });
+        await mouseClickOn(actionMenu);
         await waitUntil(
             () => actionMenu?.strategy?.overlay?.state === 'opened',
             `action-menu opened (status ${actionMenu?.strategy?.overlay?.state})`,
@@ -923,14 +903,7 @@ describe('ActionGroup', () => {
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [icon],
-                },
-            ],
-        });
+        await mouseClickOn(icon);
         icon.click();
         await elementUpdated(el);
 
@@ -1557,14 +1530,7 @@ describe('ActionGroup', () => {
 
         const changeSpy = spy();
         test.addEventListener('change', () => changeSpy());
-        await sendMouse({
-            steps: [
-                {
-                    position: [actionButtons[1]],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(actionButtons[1]);
 
         await aTimeout(500);
 

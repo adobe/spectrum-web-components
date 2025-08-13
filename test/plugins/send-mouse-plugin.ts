@@ -12,6 +12,19 @@
 import type { Page } from 'playwright';
 
 /**
+ * The type of mouse event to send
+ */
+export type MouseType = 'move' | 'down' | 'up' | 'click' | 'wheel';
+
+/**
+ * The options for the mouse event
+ */
+export type MouseOptions = {
+    button?: 'left' | 'right' | 'middle';
+    delay?: number;
+};
+
+/**
  * The element or rect to get the position from
  */
 export type PointerTarget = HTMLElement | DOMRect;
@@ -28,9 +41,9 @@ export type PointerTargetAndPosition = [
 ];
 
 export type Step = {
-    type: 'move' | 'down' | 'up' | 'click' | 'wheel';
+    type: MouseType;
     position?: [number, number] | PointerTargetAndPosition;
-    options?: { button?: 'left' | 'right' | 'middle'; delay?: number };
+    options?: MouseOptions;
 };
 
 /**
@@ -54,6 +67,47 @@ function getPositionFromRect(
     return points[position];
 }
 
+async function executeStep(step: Step, page: Page) {
+    step.options = step.options || {};
+    // adding a delay to make sure the consecutive mouse events are not too fast
+    // picker open/close tests were failing without this
+    step.options.delay = step.options.delay || 1;
+
+    // if no PointerPosition is provided, default to center
+    if (
+        step.position &&
+        step.position.length === 1 &&
+        typeof step.position[0] === 'object'
+    ) {
+        step.position.push('center');
+    }
+
+    if (step.position && step.position.length === 2) {
+        if (
+            typeof step.position[0] === 'number' &&
+            typeof step.position[1] === 'number'
+        ) {
+            await page.mouse[step.type](
+                Math.round(step.position[0]),
+                Math.round(step.position[1]),
+                step.options
+            );
+        } else if (
+            typeof step.position[0] === 'object' &&
+            typeof step.position[1] === 'string'
+        ) {
+            // Now step.position[0] should be a DOMRect (serialized from browser)
+            const [x, y] = getPositionFromRect(
+                step.position[0] as DOMRect,
+                step.position[1] as PointerPosition
+            );
+            await page.mouse[step.type](x, y, step.options);
+        }
+    } else {
+        await page.mouse[step.type as 'down' | 'up'](step.options);
+    }
+}
+
 export function sendMousePlugin() {
     return {
         name: 'send-pointer-command',
@@ -62,58 +116,24 @@ export function sendMousePlugin() {
             session,
             payload,
         }: {
-            payload: { steps: Step[] };
+            payload: Step[] | Step;
             command: string;
             session: {
                 id: string;
                 browser: { type: string; getPage: (id: string) => Page };
             };
-        }): Promise<boolean | undefined> {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        }): Promise<any> {
             if (command === 'send-pointer') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {
                     const page = session.browser.getPage(session.id);
-                    for (const step of payload.steps) {
-                        step.options = step.options || {};
-                        // adding a delay to make sure the consecutive mouse events are not too fast
-                        // picker open/close tests were failing without this
-                        step.options.delay = step.options.delay || 1;
-
-                        // if no PointerPosition is provided, default to center
-                        if (
-                            step.position &&
-                            step.position.length === 1 &&
-                            typeof step.position[0] === 'object'
-                        ) {
-                            step.position.push('center');
+                    if (Array.isArray(payload) && payload) {
+                        for (const step of payload) {
+                            await executeStep(step, page);
                         }
-
-                        if (step.position && step.position.length === 2) {
-                            if (
-                                typeof step.position[0] === 'number' &&
-                                typeof step.position[1] === 'number'
-                            ) {
-                                await page.mouse[step.type](
-                                    Math.round(step.position[0]),
-                                    Math.round(step.position[1]),
-                                    step.options
-                                );
-                            } else if (
-                                typeof step.position[0] === 'object' &&
-                                typeof step.position[1] === 'string'
-                            ) {
-                                // Now step.position[0] should be a DOMRect (serialized from browser)
-                                const [x, y] = getPositionFromRect(
-                                    step.position[0] as DOMRect,
-                                    step.position[1] as PointerPosition
-                                );
-                                await page.mouse[step.type](x, y, step.options);
-                            }
-                        } else {
-                            await page.mouse[step.type as 'down' | 'up'](
-                                step.options
-                            );
-                        }
+                    } else {
+                        await executeStep(payload, page);
                     }
                     return true;
                 }
@@ -122,7 +142,6 @@ export function sendMousePlugin() {
                     `Sending mouse commands is not supported for browser type ${session.browser.type}.`
                 );
             }
-            return undefined;
         },
     };
 }
