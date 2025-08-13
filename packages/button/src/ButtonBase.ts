@@ -23,6 +23,10 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import {
+    type HostWithPendingState,
+    PendingStateController,
+} from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import buttonStyles from './button-base.css.js';
 
 /**
@@ -220,10 +224,18 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
-    private isPendingState(): boolean {
+    /**
+     * Type guard to check if this instance implements HostWithPendingState.
+     */
+    private isHostWithPendingState(): this is this & HostWithPendingState {
         return (
-            'pending' in this && (this as { pending: boolean }).pending === true
+            'pendingStateController' in this &&
+            this.pendingStateController instanceof PendingStateController
         );
+    }
+
+    private isPendingState(): boolean {
+        return this.isHostWithPendingState() && this.pending === true;
     }
 
     private updateAriaLabel(): void {
@@ -251,7 +263,8 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.manageAnchor();
         }
 
-        // Don't override PendingStateController's aria-label changes
+        // Do not update aria-label if component is in pending state,
+        // as PendingStateController may manage it for accessibility.
         if (changed.has('label') && !this.isPendingState()) {
             this.updateAriaLabel();
         }
@@ -269,9 +282,10 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.anchorElement.addEventListener('focus', this.proxyFocus);
         }
     }
+
     protected override update(changes: PropertyValues): void {
         super.update(changes);
-        if (changes.has('label')) {
+        if (changes.has('label') && this.isPendingState()) {
             this.updateAriaLabel();
         }
     }
