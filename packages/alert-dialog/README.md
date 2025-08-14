@@ -297,38 +297,84 @@ Destructive alert dialogs are for when a user needs to confirm an action that wi
 
 #### Context
 
-An alert dialog should be placed inside a modal overaly:
+An alert dialog should be placed inside a modal [overlay](../overlay/) or a [dialog base](../dialog-base/):
+
+<sp-tabs selected="modal" auto label="Alert dialogs in context">
+<sp-tab value="modal">Modal overlay</sp-tab>
+<sp-tab-panel value="modal">
 
 ```html
 <sp-button id="trigger">open modal</sp-button>
-<sp-overlay trigger="trigger@click" type="modal">
-    <sp-alert-dialog
-        role="alertdialog"
-        aria-labelledby="modal-heading"
-        aria-describedby="modal-message"
-        variant="confirmation"
-    >
-        <h2 id="modal-heading" slot="heading">Important Notice</h2>
-        <p id="modal-message">This action requires your confirmation.</p>
-        <sp-button
-            slot="button"
-            variant="secondary"
-            treatment="outline"
-            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+<sp-overlay trigger="trigger@click" type="modal" placement="bottom">
+    <sp-popover>
+        <sp-alert-dialog
+            role="alertdialog"
+            aria-labelledby="modal-heading"
+            aria-describedby="modal-message"
+            variant="confirmation"
         >
-            Cancel
-        </sp-button>
-        <sp-button
-            slot="button"
-            variant="accent"
-            treatment="fill"
-            onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
-        >
-            Confirm
-        </sp-button>
-    </sp-alert-dialog>
+            <h2 id="modal-heading" slot="heading">Important Notice</h2>
+            <p id="modal-message">This action requires your confirmation.</p>
+            <sp-button
+                slot="button"
+                variant="secondary"
+                treatment="outline"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Cancel
+            </sp-button>
+            <sp-button
+                slot="button"
+                variant="accent"
+                treatment="fill"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Confirm
+            </sp-button>
+        </sp-alert-dialog>
+    </sp-popover>
 </sp-overlay>
 ```
+
+</sp-tab-panel>
+<sp-tab value="dialog">Dialog base</sp-tab>
+<sp-tab-panel value="dialog">
+
+```html
+<overlay-trigger type="modal">
+    <sp-dialog-base underlay slot="click-content">
+        <sp-alert-dialog
+            role="alertdialog"
+            aria-labelledby="modal-heading"
+            aria-describedby="modal-message"
+            variant="confirmation"
+        >
+            <h2 id="modal-heading" slot="heading">Important Notice</h2>
+            <p id="modal-message">This action requires your confirmation.</p>
+            <sp-button
+                slot="button"
+                variant="secondary"
+                treatment="outline"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Cancel
+            </sp-button>
+            <sp-button
+                slot="button"
+                variant="accent"
+                treatment="fill"
+                onclick="this.dispatchEvent(new Event('close', { bubbles: true, composed: true }));"
+            >
+                Confirm
+            </sp-button>
+        </sp-alert-dialog>
+    </sp-dialog-base>
+    <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Accessibility
 

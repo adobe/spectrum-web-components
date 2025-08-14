@@ -25,6 +25,37 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const StepSize = (): TemplateResult => {
+    return html`
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="text-align: center;">
+                <sp-color-wheel step="0.5"></sp-color-wheel>
+                <p style="margin: 8px 0 0 0; font-size: 14px; color: #666;">
+                    Step: 0.5°
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <sp-color-wheel step="1"></sp-color-wheel>
+                <p style="margin: 8px 0 0 0; font-size: 14px; color: #666;">
+                    Step: 1°
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <sp-color-wheel step="10"></sp-color-wheel>
+                <p style="margin: 8px 0 0 0; font-size: 14px; color: #666;">
+                    Step: 10°
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <sp-color-wheel step="50"></sp-color-wheel>
+                <p style="margin: 8px 0 0 0; font-size: 14px; color: #666;">
+                    Step: 50°
+                </p>
+            </div>
+        </div>
+    `;
+};
+
 export const sized = (): TemplateResult => {
     return html`
         <sp-color-wheel style="width: 300px; height: 300px;"></sp-color-wheel>
