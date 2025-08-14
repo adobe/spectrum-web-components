@@ -269,7 +269,7 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 
 The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
 
--   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+- You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
@@ -278,6 +278,8 @@ The `type` of an Overlay outlines a number of things about the interaction model
 <sp-tab-panel value="modal">
 
 `'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
+
+**Accessibility behavior:** Modal overlays implement strict focus trapping and prevent outside interactions for accessibility compliance. These overlays create a modal context that precludes usage of other content on the page, ensuring all interactive elements are descendants of the overlay. Clicking outside the modal will not close it, maintaining the modal context as required by ARIA specifications.
 
 They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
 
@@ -309,6 +311,8 @@ They should be used when you need to ensure that the user has interacted with th
 <sp-tab-panel value="page">
 
 `'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
+
+**Accessibility behavior:** Page overlays implement strict focus trapping and prevent outside interactions for accessibility compliance, similar to modal overlays. These overlays create a modal context that precludes usage of other content on the page, ensuring all interactive elements are descendants of the overlay. Clicking outside the page overlay will not close it, maintaining the modal context as required by ARIA specifications.
 
 A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
 
@@ -408,8 +412,8 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 
 "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
 
--   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
--   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
+- `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
+- `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
 This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
@@ -772,9 +776,9 @@ When nesting multiple overlays, it is important to ensure that the nested overla
 
 The overlay manages focus based on its type:
 
--   For `modal` and `page` types, focus is always trapped within the overlay
--   For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
--   For `hint` type, focus remains on the trigger element
+- For `modal` and `page` types, focus is always trapped within the overlay
+- For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
+- For `hint` type, focus remains on the trigger element
 
 Example of proper focus management:
 
@@ -840,10 +844,10 @@ Example of proper focus management:
 
 #### Screen reader considerations
 
--   Use `aria-haspopup` on trigger elements to indicate the type of overlay
--   Provide descriptive labels using `aria-label` or `aria-labelledby`
--   Use proper heading structure within overlays
--   Ensure error messages are announced using `aria-live`
+- Use `aria-haspopup` on trigger elements to indicate the type of overlay
+- Provide descriptive labels using `aria-label` or `aria-labelledby`
+- Use proper heading structure within overlays
+- Ensure error messages are announced using `aria-live`
 
 Example of a tooltip with proper screen reader support:
 
