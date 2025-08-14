@@ -736,9 +736,9 @@ describe('Menu', () => {
 
         // Test scrolling state management
         expect(el.isScrolling).to.be.false;
-        el.scrolling = true;
+        el.isScrolling = true;
         expect(el.isScrolling).to.be.true;
-        el.scrolling = false;
+        el.isScrolling = false;
         expect(el.isScrolling).to.be.false;
 
         // Test normal selection when not scrolling
@@ -812,7 +812,7 @@ describe('Menu', () => {
         expect(el.value).to.equal('1');
 
         // Manually set scrolling state to simulate iPad scroll detection
-        el.scrolling = true;
+        el.isScrolling = true;
         expect(el.isScrolling).to.be.true;
 
         // Try to select an item while scrolling is detected
@@ -825,7 +825,7 @@ describe('Menu', () => {
         expect(el.value).to.equal('1'); // Should still be the first item
 
         // Reset scrolling state
-        el.scrolling = false;
+        el.isScrolling = false;
         expect(el.isScrolling).to.be.false;
 
         // Now try to select the item again (should work since scrolling is reset)
@@ -867,15 +867,15 @@ describe('Menu', () => {
         expect(el.isScrolling).to.be.false;
 
         // Test that scrolling property works for backward compatibility
-        expect(el.scrolling).to.be.false;
-        el.scrolling = true;
-        expect(el.scrolling).to.be.true;
+        expect(el.isScrolling).to.be.false;
+        el.isScrolling = true;
+        expect(el.isScrolling).to.be.true;
         expect(el.isScrolling).to.be.true;
 
         // Test that isScrolling getter reflects the same state
-        el.scrolling = false;
+        el.isScrolling = false;
         expect(el.isScrolling).to.be.false;
-        expect(el.scrolling).to.be.false;
+        expect(el.isScrolling).to.be.false;
 
         // Test that the component can be disconnected without errors
         el.remove();

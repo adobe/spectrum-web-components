@@ -114,15 +114,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         return this.isCurrentlyScrolling;
     }
 
-    /**
-     * Public getter/setter for scrolling state (backward compatibility)
-     * @deprecated Use isScrolling getter instead
-     */
-    public get scrolling(): boolean {
-        return this.isScrolling;
-    }
-
-    public set scrolling(value: boolean) {
+    public set isScrolling(value: boolean) {
         // For testing purposes, allow setting the scrolling state
         this.isCurrentlyScrolling = value;
     }
