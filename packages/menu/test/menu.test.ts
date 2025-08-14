@@ -838,46 +838,4 @@ describe('Menu', () => {
         // Test that the component can be disconnected without errors
         el.remove();
     });
-
-    it('provides isScrolling getter for public API', async () => {
-        const menuItems = Array.from(
-            { length: 5 },
-            (_, i) => html`
-                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
-            `
-        );
-
-        const el = await fixture<Menu>(html`
-            <sp-menu
-                selects="single"
-                style="max-height: 200px; overflow-y: auto;"
-            >
-                ${menuItems}
-            </sp-menu>
-        `);
-        await elementUpdated(el);
-
-        // Wait for all menu items to be properly rendered
-        await waitUntil(
-            () => el.childItems.length === 5,
-            'expected menu to manage 5 items'
-        );
-
-        // Test initial state
-        expect(el.isScrolling).to.be.false;
-
-        // Test that scrolling property works for backward compatibility
-        expect(el.isScrolling).to.be.false;
-        el.isScrolling = true;
-        expect(el.isScrolling).to.be.true;
-        expect(el.isScrolling).to.be.true;
-
-        // Test that isScrolling getter reflects the same state
-        el.isScrolling = false;
-        expect(el.isScrolling).to.be.false;
-        expect(el.isScrolling).to.be.false;
-
-        // Test that the component can be disconnected without errors
-        el.remove();
-    });
 });
