@@ -73,6 +73,79 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
     /**
+     * iPad scroll detection properties
+     *
+     * This feature prevents menu item selection during iPad scrolling to avoid
+     * accidental selections when users are trying to scroll through a long menu.
+     *
+     * How it works:
+     * 1. On touchstart: Record initial Y position and timestamp
+     * 2. On touchmove: Calculate vertical movement and time elapsed
+     * 3. If movement > threshold AND time < threshold: Mark as scrolling
+     * 4. On touchend: Reset scrolling state after a delay
+     * 5. During selection: Prevent selection if scrolling is detected
+     *
+     * This prevents the common iPad issue where users accidentally select menu
+     * items while trying to scroll through the menu content.
+     *
+     * Threshold Values:
+     * - Movement threshold: 10px (consistent with Card component click vs. drag detection)
+     * - Time threshold: 300ms (consistent with longpress duration across the design system)
+     * - Reset delay: 100ms (allows final touch events to be processed)
+     *
+     * These values are carefully chosen to balance preventing accidental triggers
+     * while allowing intentional scroll gestures. They represent a common UX pattern
+     * in mobile interfaces and are consistent with other components in the design system.
+     */
+    private touchStartY: number | undefined = undefined;
+    private touchStartTime: number | undefined = undefined;
+    private isCurrentlyScrolling = false;
+
+    /**
+     * Minimum vertical movement (in pixels) required to trigger scrolling detection.
+     * 
+     * This threshold is consistent with other components in the design system:
+     * - Card component uses 10px for click vs. drag detection
+     * - Menu component uses 10px for scroll vs. selection detection
+     * 
+     * The 10px threshold is carefully chosen to:
+     * - Allow for natural finger tremor and accidental touches
+     * - Distinguish between intentional scroll gestures and taps
+     * - Provide consistent behavior across the platform
+     * 
+     * @see {@link packages/card/src/Card.ts} for similar threshold usage
+     */
+    private scrollThreshold = 10; // pixels
+
+    /**
+     * Maximum time (in milliseconds) for a movement to be considered scrolling.
+     * 
+     * This threshold is consistent with other timing values in the design system:
+     * - Longpress duration: 300ms (ActionButton, LongpressController)
+     * - Scroll detection: 300ms (Menu component)
+     * 
+     * Quick movements within this timeframe are likely intentional scrolls,
+     * while slower movements are more likely taps or selections.
+     * 
+     * @see {@link packages/action-button/src/ActionButton.ts} for longpress duration
+     * @see {@link packages/overlay/src/LongpressController.ts} for longpress duration
+     */
+    private scrollTimeThreshold = 300; // milliseconds
+
+    /**
+     * Public getter for scrolling state
+     * Returns true if the component is currently in a scrolling state
+     */
+    public get isScrolling(): boolean {
+        return this.isCurrentlyScrolling;
+    }
+
+    public set isScrolling(value: boolean) {
+        // For testing purposes, allow setting the scrolling state
+        this.isCurrentlyScrolling = value;
+    }
+
+    /**
      * label of the menu
      */
     @property({ type: String, reflect: true })
@@ -400,6 +473,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
+
+        // Add touch event listeners for iPad scroll detection
+        this.addEventListener('touchstart', this.handleTouchStart, {
+            passive: true,
+        });
+        this.addEventListener('touchmove', this.handleTouchMove, {
+            passive: true,
+        });
     }
 
     /**
@@ -443,6 +524,72 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Handles touchstart events for iPad scroll detection.
+     *
+     * Records the initial touch position and timestamp to establish a baseline
+     * for detecting scroll gestures. Only processes single-touch events to
+     * avoid interference with multi-touch gestures.
+     *
+     * @param event - The TouchEvent from the touchstart event
+     */
+    private handleTouchStart(event: TouchEvent): void {
+        if (event.touches.length === 1) {
+            this.touchStartY = event.touches[0].clientY;
+            this.touchStartTime = Date.now();
+            this.isCurrentlyScrolling = false;
+        }
+    }
+
+    /**
+     * Handles touchmove events for iPad scroll detection.
+     *
+     * Calculates the vertical movement distance and time elapsed since touchstart.
+     * If the movement exceeds the threshold (10px) and happens within the time
+     * threshold (300ms), it marks the interaction as scrolling. This helps
+     * distinguish between intentional scroll gestures and accidental touches.
+     *
+     * @param event - The TouchEvent from the touchmove event
+     */
+    private handleTouchMove(event: TouchEvent): void {
+        if (
+            event.touches.length === 1 &&
+            this.touchStartY !== undefined &&
+            this.touchStartTime !== undefined
+        ) {
+            const currentY = event.touches[0].clientY;
+            const deltaY = Math.abs(currentY - this.touchStartY);
+            const deltaTime = Date.now() - this.touchStartTime;
+
+            if (
+                deltaY > this.scrollThreshold &&
+                deltaTime < this.scrollTimeThreshold
+            ) {
+                this.isCurrentlyScrolling = true;
+            }
+        }
+    }
+
+    /**
+     * Handles touchend events for iPad scroll detection.
+     *
+     * Resets the scrolling state after a short delay (100ms) to allow for
+     * any final touch events to be processed. This delay prevents immediate
+     * state changes that could interfere with the selection logic.
+     * 
+     * The 100ms delay is consistent with the design system's approach to
+     * touch event handling and ensures that any final touch events or
+     * gesture recognition can complete before the scrolling state is reset.
+     */
+    private handleTouchEnd(): void {
+        // Reset scrolling state after a short delay
+        setTimeout(() => {
+            this.isCurrentlyScrolling = false;
+            this.touchStartY = undefined;
+            this.touchStartTime = undefined;
+        }, 100);
+    }
+
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
@@ -461,6 +608,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerup(event: Event): void {
+        // Reset scrolling state for iPad scroll detection
+        // This ensures the scrolling state is properly reset for both touch
+        // and pointer events, maintaining consistency across different input methods.
+        this.handleTouchEnd();
+
         /*
          * early return if drag and select is not supported
          * in this case, selection will be handled by the click event
@@ -475,6 +627,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
+            return;
+        }
+
+        // Prevent selection if we're currently scrolling (iPad fix)
+        // This prevents accidental menu item selection when users are trying
+        // to scroll through a long menu on iPad devices.
+        if (this.isScrolling) {
             return;
         }
 
