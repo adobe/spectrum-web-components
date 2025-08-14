@@ -31,12 +31,18 @@ describe('ContextualHelp', () => {
         const button = document
             .querySelector('sp-contextual-help')
             ?.shadowRoot?.querySelector('sp-action-button');
-        expect(button).to.have.attribute('aria-label', DEFAULT_ARIA_LABELS.info);
+        expect(button).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.info
+        );
 
         el.variant = 'help';
 
         await elementUpdated(el);
-        expect(button).to.have.attribute('aria-label', DEFAULT_ARIA_LABELS.help);
+        expect(button).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.help
+        );
     });
     it('is a popover on web', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
@@ -95,7 +101,10 @@ describe('ContextualHelp', () => {
 
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
         expect(trigger).to.exist;
-        expect(trigger).to.have.attribute('aria-label', DEFAULT_ARIA_LABELS.info);
+        expect(trigger).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.info
+        );
 
         const overlay = el.shadowRoot?.querySelector(
             'sp-overlay'
