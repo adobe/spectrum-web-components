@@ -13,6 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
@@ -20,10 +21,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
@@ -793,25 +795,80 @@ BackgroundClickTest.swc_vrt = {
     skip: true,
 };
 
-export const PickerInModal = (): TemplateResult => {
+export const PickerInModalOverlay = (): TemplateResult => {
     return html`
-        <sp-button id="trigger">Overlay Trigger</sp-button>
-        <sp-overlay trigger="trigger@click" placement="bottom">
-            <sp-popover slot="default">
-                <sp-picker
-                    label="What would you like to do?"
-                    value="item-2"
-                    id="picker-icons"
-                    style="margin: 20px"
+        <div>
+            <div>
+                <h3>Picker in sp-overlay (non-modal)</h3>
+                <sp-button id="trigger">Overlay Trigger</sp-button>
+                <sp-overlay trigger="trigger@click" placement="bottom">
+                    <sp-popover>
+                        <sp-picker
+                            label="What would you like to do?"
+                            value="item-2"
+                            id="picker-icons"
+                            style="margin: 20px"
+                        >
+                            <sp-menu-item>Save</sp-menu-item>
+                            <sp-menu-item>Finish</sp-menu-item>
+                            <sp-menu-item>Review</sp-menu-item>
+                        </sp-picker>
+                    </sp-popover>
+                </sp-overlay>
+            </div>
+
+            <div>
+                <h3>
+                    Picker in overlay-trigger (modal) - Test Escape key behavior
+                </h3>
+                <overlay-trigger
+                    type="modal"
+                    id="modal-trigger"
+                    placement="top"
                 >
-                    <sp-menu-item>Save</sp-menu-item>
-                    <sp-menu-item>Finish</sp-menu-item>
-                    <sp-menu-item>Review</sp-menu-item>
-                </sp-picker>
-            </sp-popover>
-        </sp-overlay>
+                    <sp-button
+                        variant="primary"
+                        slot="trigger"
+                        style="position:absolute;bottom:50px"
+                    >
+                        Button popover
+                    </sp-button>
+                    <sp-popover slot="click-content" tip>
+                        <sp-dialog no-divider class="options-popover-content">
+                            <sp-picker
+                                label="Select a Country with a very long label, too long in fact"
+                                value="item-2"
+                                id="picker-value"
+                            >
+                                <sp-menu-item value="item-1">
+                                    Deselect
+                                </sp-menu-item>
+                                <sp-menu-item value="item-2">
+                                    Select inverse
+                                </sp-menu-item>
+                                <sp-menu-item value="item-3">
+                                    Feather...
+                                </sp-menu-item>
+                                <sp-menu-item value="item-4">
+                                    Select and mask...
+                                </sp-menu-item>
+                                <sp-menu-item value="item-5">
+                                    Save selection
+                                </sp-menu-item>
+                                <sp-menu-item disabled value="item-6">
+                                    Make work path
+                                </sp-menu-item>
+                            </sp-picker>
+                        </sp-dialog>
+                    </sp-popover>
+                    <sp-tooltip slot="hover-content" placement="right">
+                        I'm a tooltip in a different direction
+                    </sp-tooltip>
+                </overlay-trigger>
+            </div>
+        </div>
     `;
 };
-PickerInModal.swc_vrt = {
+PickerInModalOverlay.swc_vrt = {
     skip: true,
 };

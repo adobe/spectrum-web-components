@@ -84,13 +84,16 @@ export class ColorWheel extends Focusable {
         this.colorController.color = color;
     }
 
-    private get altered(): number {
-        return this._altered;
-    }
+    private _baseStep: number = 1; // Preserves user's value
 
     private set altered(altered: number) {
         this._altered = altered;
-        this.step = Math.max(1, this.altered * 10);
+        // Don't modify anything here!
+    }
+
+    private get effectiveStep(): number {
+        // Calculate on-the-fly without modifying stored values
+        return this._altered > 0 ? this._baseStep * 10 : this._baseStep;
     }
 
     private _altered = 0;
@@ -111,16 +114,16 @@ export class ColorWheel extends Focusable {
         let delta = 0;
         switch (key) {
             case 'ArrowUp':
-                delta = this.step;
+                delta = this.effectiveStep;
                 break;
             case 'ArrowDown':
-                delta = -this.step;
+                delta = -this.effectiveStep;
                 break;
             case 'ArrowLeft':
-                delta = this.step * (this.isLTR ? -1 : 1);
+                delta = this.effectiveStep * (this.isLTR ? -1 : 1);
                 break;
             case 'ArrowRight':
-                delta = this.step * (this.isLTR ? 1 : -1);
+                delta = this.effectiveStep * (this.isLTR ? 1 : -1);
                 break;
             default:
                 return;
@@ -391,6 +394,12 @@ export class ColorWheel extends Focusable {
         this.boundingClientRect = this.getBoundingClientRect();
         this.addEventListener('focus', this.handleFocus);
         this.addEventListener('blur', this.handleBlur);
+    }
+
+    protected override willUpdate(changed: PropertyValues<this>): void {
+        if (changed.has('step')) {
+            this._baseStep = this.step;
+        }
     }
 
     private observer?: ResizeObserver;

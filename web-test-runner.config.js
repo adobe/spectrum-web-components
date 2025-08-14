@@ -156,6 +156,7 @@ export default {
             files: [
                 '{packages,tools}/**/*-memory.test.js',
                 '!packages/color-*/test/*-memory.test.js',
+                '!tools/grid/test/*-memory.test.js',
             ],
             browsers: [chromiumWithMemoryToolingCI],
         },
