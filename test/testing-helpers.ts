@@ -480,8 +480,8 @@ export async function isInteractive(
         await nextFrame();
         await mouseClickOn(el, pointerPosition);
         // console.log('clickSpy.callCount', clickSpy.callCount);
-        expect(clickSpy.callCount, 'should have been called once').to.equal(1);
-        return true;
+        // expect(clickSpy.callCount, 'should have been called once').to.equal(1);
+        return clickSpy.callCount === 1;
     } catch (error) {
         console.error('isInteractive error: ', error);
         return false;
