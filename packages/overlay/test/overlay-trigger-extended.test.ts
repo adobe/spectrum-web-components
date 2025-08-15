@@ -26,7 +26,11 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { fixture, sendMouseTo } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    mouseClickOn,
+    mouseMoveOver,
+} from '../../../test/testing-helpers.js';
 import { overlayClosed, overlayOpened } from './overlay-testing-helpers.js';
 
 const initTest = async (
@@ -47,7 +51,12 @@ const initTest = async (
                 }
             </style>
             ${styles}
-            <overlay-trigger type="modal" id="trigger" placement="top">
+            <overlay-trigger
+                type="modal"
+                id="trigger"
+                placement="top"
+                triggered-by="click"
+            >
                 <sp-button id="outer-button" variant="primary" slot="trigger">
                     Show Popover
                 </sp-button>
@@ -243,13 +252,7 @@ describe('Overlay Trigger - extended', () => {
         expect(textfield.tabIndex, 'textfield is focusable').to.be.equal(0);
 
         // Focus the textfield by clicking it (simulates user interaction)
-        await sendMouseTo(textfield, {
-            steps: [
-                {
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(textfield);
 
         await waitUntil(
             () => document.activeElement === textfield,
@@ -287,13 +290,7 @@ describe('Overlay Trigger - extended', () => {
         await overlayOpened(overlayTrigger.clickOverlayElement, 400);
 
         // Attempt to click the textfield while the overlay is open
-        await sendMouseTo(textfield, {
-            steps: [
-                {
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(textfield);
 
         // Give the click action time to process
         await aTimeout(100);
@@ -316,13 +313,7 @@ describe('Overlay Trigger - extended', () => {
         );
 
         // Try clicking the textfield again after the overlay is closed
-        await sendMouseTo(textfield, {
-            steps: [
-                {
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(textfield);
 
         await waitUntil(
             () => document.activeElement === textfield,
@@ -353,20 +344,10 @@ describe('Overlay Trigger - extended', () => {
 
         expect(scrollingArea.scrollTop).to.equal(0);
         const distance = 1;
-        await sendMouseTo(scrollingArea, {
-            steps: [
-                {
-                    type: 'move',
-                },
-            ],
-        });
+        await mouseMoveOver(scrollingArea);
         await sendMouse({
-            steps: [
-                {
-                    type: 'wheel',
-                    position: [0, distance],
-                },
-            ],
+            type: 'wheel',
+            position: [0, distance],
         });
 
         // wait for scroll to complete
@@ -395,12 +376,8 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
         expect(scrollingArea.scrollTop).to.equal(distance);
         await sendMouse({
-            steps: [
-                {
-                    type: 'wheel',
-                    position: [0, -distance],
-                },
-            ],
+            type: 'wheel',
+            position: [0, -distance],
         });
 
         await aTimeout(50);

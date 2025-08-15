@@ -56,7 +56,7 @@ describe('Grid', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('accepts focus', async () => {
+    it('should accept focus when tabbing into the grid', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${Default()}</div>
         `);
@@ -80,7 +80,7 @@ describe('Grid', () => {
             el.querySelector(el.focusableSelector) === document.activeElement
         ).to.be.true;
     });
-    it('does not focus when clicking grid', async () => {
+    it('should not focus the grid when clicking inside the grid after an item is focused', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${Default()}</div>
         `);
@@ -100,7 +100,7 @@ describe('Grid', () => {
 
         expect(firstItem === document.activeElement).to.be.true;
 
-        await mouseClickOn(firstItem, 'top-left');
+        await mouseClickOn(el, 'top-right');
 
         await elementUpdated(firstItem);
 

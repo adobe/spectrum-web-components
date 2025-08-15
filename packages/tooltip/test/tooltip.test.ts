@@ -278,8 +278,8 @@ describe('Tooltip', () => {
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
-                (spyCall.args.at(0) as string).includes('Self managed'),
-                'confirm self managed-centric message'
+                (spyCall.args.at(0) as string).includes('Self-managed'),
+                'confirm dev warning message includes `Self-managed`'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {

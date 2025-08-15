@@ -29,7 +29,6 @@ import {
     NumberField,
 } from '@spectrum-web-components/number-field';
 import '@spectrum-web-components/number-field/sp-number-field.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -43,9 +42,19 @@ import {
     fixture,
     mouseClickOn,
     mouseMoveOver,
-    testForLitDevWarnings
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
+import {
+    currency,
+    decimals,
+    Default,
+    germanDecimals,
+    indeterminate,
+    percents,
+    pixels,
+    units,
+} from '../stories/number-field.stories.js';
 import { clickBySelector, getElFrom } from './helpers.js';
 
 // Helper function to set up input and change spies
@@ -710,11 +719,9 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-
             sendMouse([
                 {
                     type: 'move',
@@ -821,14 +828,14 @@ describe('NumberField', () => {
 
             // Press and hold the step-up button
             await sendMouse([
-                    {
-                        type: 'move',
-                        position: [buttonUp],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ]);
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
 
             // Wait for first increment
             await oneEvent(el, 'input');
@@ -847,13 +854,7 @@ describe('NumberField', () => {
             expect(el.value).to.be.greaterThan(firstIncrementValue);
 
             // Release the button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
 
             // Verify no further increments after release
             const finalValue = el.value;
@@ -871,23 +872,20 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
 
             // Press and hold the step-up button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [buttonUp],
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
 
             // Wait for increment to start
             await oneEvent(el, 'input');
@@ -904,14 +902,7 @@ describe('NumberField', () => {
 
             // Move to step-down button while still holding
             inputSpy.resetHistory();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [buttonDown],
-                    },
-                ],
-            });
+            await mouseMoveOver(buttonDown);
 
             // input is only processed onces per FRAMES_PER_CHANGE number of frames so wait for the direction to change
             let framesToWait = FRAMES_PER_CHANGE * 2;
@@ -928,13 +919,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.be.at.least(1);
 
             // Release the button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
             // Verify no further increments after release
             const finalValue = el.value;
             // We intentionally use a timeout here to verify the ABSENCE of events.
@@ -1371,7 +1356,6 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-
             await mouseClickOn(buttonDown);
             await elementUpdated(el);
             expect(el.value).to.equal(0);
@@ -1783,10 +1767,6 @@ describe('NumberField', () => {
     });
     describe('accessibility model', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
-            // TODO: remove this once the infield-button is no longer a role='button'
-            if (isWebKit()) {
-                return;
-            }
             await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({
@@ -1804,23 +1784,20 @@ describe('NumberField', () => {
                 children: NamedNode[];
             };
 
-            const increase = findAccessibilityNode<NamedNode>(
-                snapshot,
-                (node) => node.name === 'Increase Enter a number'
-            );
-            const decrease = findAccessibilityNode<NamedNode>(
-                snapshot,
-                (node) => node.name === 'Decrease Enter a number'
-            );
-
             expect(
-                increase,
-                'increase button is hidden from accessibility tree'
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Increase Enter a number'
+                ),
+                '`name` is the label text'
             ).to.be.null;
 
             expect(
-                decrease,
-                'decrease button is hidden from accessibility tree'
+                findAccessibilityNode<NamedNode>(
+                    snapshot,
+                    (node) => node.name === 'Decrease Enter a number'
+                ),
+                '`name` is the label text'
             ).to.be.null;
         });
     });

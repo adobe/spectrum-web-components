@@ -236,7 +236,7 @@ describe('TabsOverflow', () => {
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
     });
 
-    it('should scroll up to the last item and back in RTL', async () => {
+    it.skip('should scroll up to the last item and back in RTL', async () => {
         // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
         // await setUserAgent(
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'

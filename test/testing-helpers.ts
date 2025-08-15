@@ -23,46 +23,8 @@ import '@spectrum-web-components/theme/src/themes.js';
 import type { HookFunction } from 'mocha';
 import { SinonStub, spy, stub } from 'sinon';
 
-import { sendMouse, SendMouseOptions } from './plugins/browser.js';
-import {
-    MouseOptions,
-    PointerPosition,
-    PointerTarget,
-    Step,
-} from './plugins/send-mouse-plugin.js';
-
-export function getPositionFromElement(
-    target: PointerTarget,
-    position: PointerPosition = 'center'
-): [number, number] {
-    const rect =
-        target instanceof HTMLElement ? target.getBoundingClientRect() : target;
-    const points: Record<PointerPosition, [number, number]> = {
-        center: [
-            Math.round(rect.left + rect.width / 2),
-            Math.round(rect.top + rect.height / 2),
-        ],
-        'top-left': [Math.round(rect.left + 10), Math.round(rect.top + 2)],
-        outside: [
-            Math.round(rect.left + rect.width / 2),
-            Math.round(rect.top + rect.height * 2),
-        ],
-    };
-    return points[position];
-}
-
-type StepTo = {
-    type: 'move' | 'down' | 'up' | 'click' | 'wheel';
-    position?: 'center' | 'top-left' | 'outside';
-    options?: {
-        button?: 'left' | 'right' | 'middle';
-        delay?: number;
-    };
-};
-
-type SendMouseToOptions = {
-    steps: StepTo[];
-};
+import { sendMouse } from './plugins/browser.js';
+import { MouseOptions, PointerPosition } from './plugins/send-mouse-plugin.js';
 
 /**
  * Send a mouse click to a specific DOMRect or HTMLElement
@@ -77,10 +39,9 @@ export async function mouseClickOn(
     pointerPosition: PointerPosition = 'center',
     options?: MouseOptions
 ): Promise<unknown> {
-    const position = getPositionFromElement(target, pointerPosition);
     return await sendMouse({
         type: 'click',
-        position: position,
+        position: [target, pointerPosition],
         options: options,
     });
 }
@@ -110,10 +71,9 @@ export async function mouseMoveOver(
     pointerPosition: PointerPosition = 'center',
     options?: MouseOptions
 ): Promise<unknown> {
-    const position = getPositionFromElement(target, pointerPosition);
     return await sendMouse({
         type: 'move',
-        position: position,
+        position: [target, pointerPosition],
         options: options,
     });
 }
@@ -129,66 +89,6 @@ export async function mouseMoveAway(
     options?: MouseOptions
 ): Promise<unknown> {
     return await mouseMoveOver(target, 'outside', options);
-}
-
-/**
- * send mouse to the middle of a specific DOM rect or HTMLElement
- */
-export async function sendMouseTo(
-    elementOrRect: HTMLElement | DOMRect,
-    options?: SendMouseToOptions
-): Promise<unknown> {
-    const steps = options?.steps || [];
-    const computedSteps: Step[] = [];
-    if (steps.length === 0) {
-        steps.push({
-            options: {},
-            position: 'center',
-            type: 'move',
-        });
-    } else {
-        for (const step of steps) {
-            computedSteps.push({
-                options: step.options,
-                position: step.position
-                    ? getPositionFromElement(elementOrRect, step.position)
-                    : undefined,
-                type: step.type,
-            });
-        }
-    }
-    return await sendMouse({
-        steps: computedSteps,
-    } as SendMouseOptions);
-}
-
-/**
- * send mouse outside of a particular DOMRect or HTMLElement
- */
-export async function sendMouseFrom(
-    elementOrRect: HTMLElement | DOMRect,
-    options?: SendMouseToOptions
-): Promise<unknown> {
-    const steps = options?.steps || [];
-    const computedSteps: Step[] = [];
-    if (steps.length === 0) {
-        steps.push({
-            options: {},
-            position: 'outside',
-            type: 'move',
-        });
-    } else {
-        for (const step of steps) {
-            computedSteps.push({
-                options: step.options,
-                position: getPositionFromElement(elementOrRect, 'outside'),
-                type: step.type,
-            });
-        }
-    }
-    return await sendMouse({
-        steps: computedSteps,
-    } as SendMouseOptions);
 }
 
 export async function testForLitDevWarnings(
@@ -342,6 +242,7 @@ export const arrowUpKeyupEvent = (): KeyboardEvent =>
 export const arrowDownKeyupEvent = (): KeyboardEvent =>
     keyboardEvent('ArrowDown', {}, 'keyup');
 
+// @TODO - SWC-1013 - resolve the uncaught global error in tests
 export function ignoreResizeObserverLoopError(
     before: HookFunction,
     after: HookFunction
@@ -467,25 +368,18 @@ export async function isInteractive(
     el: HTMLElement,
     pointerPosition: PointerPosition = 'center'
 ): Promise<boolean> {
-    try {
-        const clickSpy = spy();
-        el.addEventListener(
-            'click',
-            () => {
-                clickSpy();
-            },
-            { once: true }
-        );
-        await nextFrame();
-        await nextFrame();
-        await mouseClickOn(el, pointerPosition);
-        // console.log('clickSpy.callCount', clickSpy.callCount);
-        // expect(clickSpy.callCount, 'should have been called once').to.equal(1);
-        return clickSpy.callCount === 1;
-    } catch (error) {
-        console.error('isInteractive error: ', error);
-        return false;
-    }
+    const clickSpy = spy();
+    el.addEventListener(
+        'click',
+        () => {
+            clickSpy();
+        },
+        { once: true }
+    );
+    await nextFrame();
+    await nextFrame();
+    await mouseClickOn(el, pointerPosition);
+    return clickSpy.callCount === 1;
 }
 
 export async function fixture<T extends Element>(

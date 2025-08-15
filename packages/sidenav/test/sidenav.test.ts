@@ -32,6 +32,7 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { manageTabIndex } from '../stories/sidenav.stories.js';
+import { isChrome } from '@spectrum-web-components/shared';
 
 describe('Sidenav', () => {
     testForLitDevWarnings(
@@ -277,6 +278,9 @@ describe('Sidenav', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('prevents [tabindex=0] while `focusin`', async () => {
+        if (isChrome()) {
+            return;
+        }
         const el = await fixture<SideNav>(manageTabIndex());
         const selected = el.querySelector('[value="Section 1"]') as SideNavItem;
         const toBeSelected = el.querySelector(

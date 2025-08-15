@@ -33,7 +33,7 @@ export type PointerTarget = HTMLElement | DOMRect;
  * The position of the pointer relative to the element or rect
  * @default center
  */
-export type PointerPosition = 'center' | 'top-left' | 'outside';
+export type PointerPosition = 'center' | 'top-left' | 'top-right' | 'outside';
 
 export type PointerTargetAndPosition = [
     target: PointerTarget,
@@ -59,6 +59,7 @@ function getPositionFromRect(
             Math.round(rect.top + rect.height / 2),
         ],
         'top-left': [Math.round(rect.left + 10), Math.round(rect.top + 2)],
+        'top-right': [Math.round(rect.right - 10), Math.round(rect.top + 2)],
         outside: [
             Math.round(rect.left + rect.width / 2),
             Math.round(rect.top + rect.height * 2),
