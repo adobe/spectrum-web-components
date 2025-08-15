@@ -1,3 +1,7 @@
+/*!
+ * config/license.js
+ */
+
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -67,13 +71,12 @@
 :host {
     box-sizing: border-box;
     min-inline-size: var(--mod-card-minimum-width, var(--spectrum-card-minimum-width));
-    block-size: 100%;
     border: var(--spectrum-card-border-width) solid transparent;
     border-radius: var(--spectrum-card-corner-radius);
     border-color: var(--mod-card-border-color, var(--spectrum-card-border-color));
     background-color: var(--spectrum-card-background-color);
     flex-direction: column;
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
@@ -113,11 +116,12 @@
 }
 
 :host([selected]):before {
-    background-color: rgba(var(--mod-card-selected-background-color-rgb, var(--spectrum-card-selected-background-color-rgb)), var(--spectrum-card-selected-background-opacity));
+    background-color: rgb(var(--mod-card-selected-background-color-rgb, var(--spectrum-card-selected-background-color-rgb)), var(--spectrum-card-selected-background-opacity));
 }
 
 :host([drop-target]) {
     --mod-card-background-color: var(--spectrum-background-base-color);
+
     box-shadow: 0 0 0 1px var(--spectrum-card-border-color);
 }
 
@@ -138,7 +142,7 @@
     inline-size: var(--spectrum-card-actions-size);
     block-size: var(--spectrum-card-actions-size);
     border-radius: var(--spectrum-card-actions-border-radius);
-    background-color: rgba(var(--spectrum-card-actions-background-color-rgb), var(--spectrum-card-actions-background-color-opacity));
+    background-color: rgb(var(--spectrum-card-actions-background-color-rgb), var(--spectrum-card-actions-background-color-opacity));
     pointer-events: auto;
     box-sizing: border-box;
     transition:
@@ -283,7 +287,9 @@
 :host([variant="gallery"]),
 :host([variant="quiet"]) {
     --mod-card-border-color-hover: transparent;
+
     background-color: initial;
+    block-size: 100%;
     border-width: 0;
     border-color: #0000;
     border-radius: 0;
@@ -354,7 +360,7 @@
 
 :host([variant="gallery"][selected]) #preview:before,
 :host([variant="quiet"][selected]) #preview:before {
-    background-color: rgba(var(--mod-card-selected-background-color-rgb, var(--spectrum-card-selected-background-color-rgb)), var(--mod-card-selected-background-opacity, var(--spectrum-card-selected-background-opacity)));
+    background-color: rgb(var(--mod-card-selected-background-color-rgb, var(--spectrum-card-selected-background-color-rgb)), var(--mod-card-selected-background-opacity, var(--spectrum-card-selected-background-opacity)));
 }
 
 :host([variant="gallery"]) .body,

@@ -267,7 +267,7 @@ __metadata:
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
     chromatic: "npm:^11.20.0"
-    chromedriver: "npm:^136.0.0"
+    chromedriver: "npm:^138.0.0"
     colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     crypto: "npm:^1.0.1"
@@ -316,7 +316,7 @@ __metadata:
     stylelint: "npm:^16.19.1"
     stylelint-config-standard: "npm:^38.0.0"
     stylelint-header: "npm:^3.0.0"
-    tachometer: "npm:^0.7.1"
+    tachometer: "npm:^0.7.2"
     tar-stream: "npm:^3.0.0"
     terser: "npm:^4.8.1"
     typescript: "npm:^5.3.3"
@@ -5062,6 +5062,7 @@ __metadata:
     "@spectrum-web-components/icons-workflow": "npm:1.7.0"
     "@spectrum-web-components/overlay": "npm:1.7.0"
     "@spectrum-web-components/popover": "npm:1.7.0"
+    "@spectrum-web-components/reactive-controllers": "npm:1.7.0"
   languageName: unknown
   linkType: soft
 
@@ -5908,7 +5909,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/blocks@npm:8.6.12, @storybook/blocks@npm:^8.6.12":
+"@storybook/blocks@npm:8.6.12":
   version: 8.6.12
   resolution: "@storybook/blocks@npm:8.6.12"
   dependencies:
@@ -5924,6 +5925,25 @@ __metadata:
     react-dom:
       optional: true
   checksum: 10c0/ce15861061888b73a2f05e2fa1dd8947dd37904e61a978299f96c19f3a45b7a65eca265bd10ba101b2e56dcb24f5ff1871cdaff86640142fe46d8491b7b4ac12
+  languageName: node
+  linkType: hard
+
+"@storybook/blocks@npm:^8.6.12":
+  version: 8.6.14
+  resolution: "@storybook/blocks@npm:8.6.14"
+  dependencies:
+    "@storybook/icons": "npm:^1.2.12"
+    ts-dedent: "npm:^2.0.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    storybook: ^8.6.14
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/3f87c1f224031dee8b5fa6e296022997d21956832fea1e4ffa3525931c05a8ef6450b67c728635297a08548d65ef5abde05d7740d4ea3a9a811f2ff08a5f0148
   languageName: node
   linkType: hard
 
@@ -6239,12 +6259,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-api@npm:8.6.12, @storybook/manager-api@npm:^8.6.12":
+"@storybook/manager-api@npm:8.6.12":
   version: 8.6.12
   resolution: "@storybook/manager-api@npm:8.6.12"
   peerDependencies:
     storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
   checksum: 10c0/88a0d361c27c53f0f7cd32564d404a5e5a3fa129136449003e8ecaecd63fd8e38ddeeda30f189fffddf24a14b674e7d0400003b4dbbdafedfae7d37bbc32272f
+  languageName: node
+  linkType: hard
+
+"@storybook/manager-api@npm:^8.6.12":
+  version: 8.6.14
+  resolution: "@storybook/manager-api@npm:8.6.14"
+  peerDependencies:
+    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+  checksum: 10c0/141089caf50df9f1dbd18c22b8e8dfa45641f67ab148c9956c046c0141ff7a70f3341f440c454d5f6247dac389499d67bad8b6c81cbcd6f08c7fe34bf42fd264
   languageName: node
   linkType: hard
 
@@ -6361,12 +6390,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/theming@npm:8.6.12, @storybook/theming@npm:^8.6.12":
+"@storybook/theming@npm:8.6.12":
   version: 8.6.12
   resolution: "@storybook/theming@npm:8.6.12"
   peerDependencies:
     storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
   checksum: 10c0/cd7033dbc9415d765fd15a60c058ea039ce02a84c7cdbe6d7e597adb418694f28ac7cacf849cccef1e8b4374e7fa0df5010f801e6b55844c2fa391968eecba3c
+  languageName: node
+  linkType: hard
+
+"@storybook/theming@npm:^8.6.12":
+  version: 8.6.14
+  resolution: "@storybook/theming@npm:8.6.14"
+  peerDependencies:
+    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+  checksum: 10c0/765bfbfedcbdcdb719b164a14bb61b8ad60819c6124d0e1f243b6b45e62de877ec8dff6259092207a58d6c2771f4883650e9784a2be1aaf7e0ef0fe75465db0d
   languageName: node
   linkType: hard
 
@@ -10561,9 +10599,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^136.0.0":
-  version: 136.0.0
-  resolution: "chromedriver@npm:136.0.0"
+"chromedriver@npm:^138.0.0":
+  version: 138.0.5
+  resolution: "chromedriver@npm:138.0.5"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
     axios: "npm:^1.7.4"
@@ -10574,7 +10612,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/ba804ceed3749f8dd10fa5dc714bf4b259ddb004d2b1382f7c0a1246bba84c85c35038f65fead268916f53fbbb3f126f20320bf72336bd3252ed9e95d2863daa
+  checksum: 10c0/b814df6ce699c37fa3d9b5c7be099c6f82923db5e5a56d7a979b09c320e51b345fb623ef264b82b2ef39e959163f892e19480eb96270b571ce89d16b439ab212
   languageName: node
   linkType: hard
 
@@ -26819,9 +26857,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tachometer@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "tachometer@npm:0.7.1"
+"tachometer@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "tachometer@npm:0.7.2"
   dependencies:
     ansi-escape-sequences: "npm:^6.0.1"
     command-line-args: "npm:^5.0.2"
@@ -26853,7 +26891,7 @@ __metadata:
   bin:
     tach: bin/tach.js
     tachometer: bin/tach.js
-  checksum: 10c0/85d63918b44d4b873de6e3c09a8268c3bbe20b4c76689e7bafa8f1450d043bd30ad889a74030f8973b4175892d879e4e27c2308d67346b0c1844c3b38442f658
+  checksum: 10c0/8023743b08b7bcf783538f9cd0b3a2dd13d7cbca58529382b05bd0eab24faed8e890d837b5669d57a1498320728ef033a2fc9b91925fcaab3525f959c7ada002
   languageName: node
   linkType: hard
 
