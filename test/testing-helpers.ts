@@ -16,68 +16,79 @@ import {
     nextFrame,
     fixture as owcFixture,
 } from '@open-wc/testing';
-import { html, render } from '@spectrum-web-components/base';
-import { SinonStub, spy, stub } from 'sinon';
-import type { HookFunction } from 'mocha';
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
+import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { TemplateResult } from '@spectrum-web-components/base';
+import type { HookFunction } from 'mocha';
+import { SinonStub, spy, stub } from 'sinon';
 
 import { sendMouse } from './plugins/browser.js';
+import { MouseOptions, PointerPosition } from './plugins/send-mouse-plugin.js';
 
 /**
- * send mouse to the middle of a specific DOM rect or HTMLElement
+ * Send a mouse click to a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to click on
+ * @param type - The type of mouse event to send (move, down, up, click, wheel)
+ * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
  */
-export async function sendMouseTo(
-    elementOrRect: HTMLElement | DOMRect,
-    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right' | 'middle'
+export async function mouseClickOn(
+    target: HTMLElement | DOMRect,
+    pointerPosition: PointerPosition = 'center',
+    options?: MouseOptions
 ): Promise<unknown> {
-    const rect =
-        elementOrRect instanceof HTMLElement
-            ? elementOrRect.getBoundingClientRect()
-            : elementOrRect;
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const options = button ? { button: button } : {};
-
     return await sendMouse({
-        steps: [
-            {
-                options: options,
-                position: [x, y],
-                type: type,
-            },
-        ],
+        type: 'click',
+        position: [target, pointerPosition],
+        options: options,
     });
 }
 
 /**
- * send mouse outside of a particular DOMRect or HTMLElement
+ * Send a mouse click away from a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to click away from
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
  */
-export async function sendMouseFrom(
-    elementOrRect: HTMLElement | DOMRect,
-    type: 'click' | 'move' | 'down' | 'up' | 'wheel' = 'move',
-    button?: 'left' | 'right' | 'middle'
+export async function mouseClickAway(
+    target: HTMLElement | DOMRect,
+    options?: MouseOptions
 ): Promise<unknown> {
-    const rect =
-        elementOrRect instanceof HTMLElement
-            ? elementOrRect.getBoundingClientRect()
-            : elementOrRect;
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height * 2;
-    const options = button ? { button: button } : {};
+    return await mouseClickOn(target, 'outside', options);
+}
 
+/**
+ * Send a mouse move over a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to move over
+ * @param pointerPosition - The position of the pointer relative to the element (center, top-left, outside)
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseMoveOver(
+    target: HTMLElement | DOMRect,
+    pointerPosition: PointerPosition = 'center',
+    options?: MouseOptions
+): Promise<unknown> {
     return await sendMouse({
-        steps: [
-            {
-                options: options,
-                position: [x, y],
-                type: type,
-            },
-        ],
+        type: 'move',
+        position: [target, pointerPosition],
+        options: options,
     });
+}
+
+/**
+ * Send a mouse move away from a specific DOMRect or HTMLElement
+ * @param target - The DOMRect or HTMLElement to move away from
+ * @param options - The options for the mouse event ({button: 'left' | 'right' | 'middle', delay: number in ms})
+ * @returns The result of the mouse event
+ */
+export async function mouseMoveAway(
+    target: HTMLElement | DOMRect,
+    options?: MouseOptions
+): Promise<unknown> {
+    return await mouseMoveOver(target, 'outside', options);
 }
 
 export async function testForLitDevWarnings(
@@ -231,29 +242,69 @@ export const arrowUpKeyupEvent = (): KeyboardEvent =>
 export const arrowDownKeyupEvent = (): KeyboardEvent =>
     keyboardEvent('ArrowDown', {}, 'keyup');
 
+// @TODO - SWC-1013 - resolve the uncaught global error in tests
 export function ignoreResizeObserverLoopError(
     before: HookFunction,
     after: HookFunction
 ) {
+    // Store reference to the original global error handler
     let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
+    // Store reference to our custom error listener for cleanup
+    let errorListener: (error: ErrorEvent) => void;
+
+    // Setup function - called before tests run
     before(function () {
-        // Save Mocha's handler.
-        (
-            Mocha as unknown as {
-                process: { removeListener(name: string): void };
-            }
-        ).process.removeListener('uncaughtException');
+        // Remove Mocha's default uncaught exception handler to prevent interference
+        // with our custom error handling logic
+        try {
+            (
+                Mocha as unknown as {
+                    process: { removeListener: (event: string) => void };
+                }
+            )?.process?.removeListener?.('uncaughtException');
+        } catch (error) {
+            console.warn(
+                'Failed to remove Mocha uncaught exception handler:',
+                error
+            );
+        }
+
+        // Save the current window.onerror handler so we can restore it later
         globalErrorHandler = window.onerror;
-        addEventListener('error', (error) => {
-            console.error('Uncaught global error:', error);
-            if (error.message?.match?.(/ResizeObserver loop/)) {
+
+        // Create custom error handler that filters out ResizeObserver loop errors
+        errorListener = (error: ErrorEvent) => {
+            // Check if this is a ResizeObserver loop error (common in tests)
+            // Using more comprehensive pattern matching for ResizeObserver errors
+            const isResizeObserverError = error.message?.match?.(
+                /ResizeObserver.*loop|loop.*ResizeObserver/i
+            );
+            if (isResizeObserverError) {
+                console.warn(
+                    'Uncaught global error in ignoreResizeObserverLoopError:',
+                    error.message
+                );
+                // Silently ignore ResizeObserver loop errors - they're benign in tests
                 return;
             } else {
+                console.warn(
+                    'There is a non-resize observer loop error',
+                    error.message
+                );
+                // For all other errors, delegate to the original error handler
                 globalErrorHandler?.(error);
             }
-        });
+        };
+
+        // Install custom error handler
+        addEventListener('error', errorListener);
     });
+
+    // Cleanup function - called after tests complete
     after(function () {
+        // Remove our custom error listener to prevent memory leaks
+        removeEventListener('error', errorListener);
+        // Restore the original global error handler
         window.onerror = globalErrorHandler as OnErrorEventHandler;
     });
 }
@@ -315,7 +366,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
 
 export async function isInteractive(
     el: HTMLElement,
-    position = 'center'
+    pointerPosition: PointerPosition = 'center'
 ): Promise<boolean> {
     const clickSpy = spy();
     el.addEventListener(
@@ -327,22 +378,7 @@ export async function isInteractive(
     );
     await nextFrame();
     await nextFrame();
-    const clientRect = el.getBoundingClientRect();
-    const points: Record<string, [number, number]> = {
-        center: [
-            clientRect.left + clientRect.width / 2,
-            clientRect.top + clientRect.height / 2,
-        ],
-        'top-left': [clientRect.left + 10, clientRect.top + 2],
-    };
-    await sendMouse({
-        steps: [
-            {
-                type: 'click',
-                position: points[position],
-            },
-        ],
-    });
+    await mouseClickOn(el, pointerPosition);
     return clickSpy.callCount === 1;
 }
 

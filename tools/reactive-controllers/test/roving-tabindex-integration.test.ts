@@ -9,22 +9,22 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ActionGroup } from '@spectrum-web-components/action-group';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { html } from '@spectrum-web-components/base';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
-import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-import { html } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { mouseClickOn } from '../../../test/testing-helpers.js';
 
 const createTabs = async (): Promise<Tabs> => {
     const tabs = await fixture<Tabs>(html`
@@ -172,19 +172,8 @@ describe('Action Group inside of Tabs', () => {
         expect(document.activeElement === tab2).to.be.false;
         expect(actionGroup3.contains(document.activeElement)).to.be.true;
 
-        const boundingRect = tab1.getBoundingClientRect();
         // tab1.click() doesn't current reach into the focus management here.
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        boundingRect.left + boundingRect.width / 2,
-                        boundingRect.top + boundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseClickOn(tab1);
         expect(document.activeElement === tab1).to.be.true;
 
         actionGroup1.focus();

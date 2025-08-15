@@ -31,7 +31,8 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     fixture,
-    sendMouseTo,
+    mouseClickOn,
+    mouseMoveOver,
     tabEvent,
     testForLitDevWarnings,
     tEvent,
@@ -339,7 +340,7 @@ describe('Menu', () => {
         expect(document.activeElement).to.equal(firstItem);
         expect(firstItem.focused, 'first item focused').to.be.true;
 
-        await sendMouseTo(secondItem);
+        await mouseMoveOver(secondItem);
 
         expect(document.activeElement, 'active element after hover').to.equal(
             secondItem
@@ -580,15 +581,16 @@ describe('Menu', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
+        //@TODO: this tests opens a context menu outside of the test runner and that should be fixed.
         // send right mouse click to the secondItem
-        sendMouseTo(secondItem, 'click', 'right');
+        await mouseClickOn(secondItem, 'center', { button: 'right' });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        await sendMouseTo(secondItem, 'click', 'middle');
+        await mouseClickOn(secondItem, 'center', { button: 'middle' });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);

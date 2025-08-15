@@ -32,7 +32,7 @@ import { Tooltip } from '@spectrum-web-components/tooltip';
 describe('Overlay Trigger - accessible hover content management', () => {
     it('accessibly describes trigger content with hover content', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
+            <overlay-trigger placement="right-start" triggered-by="hover">
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
@@ -66,7 +66,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
     });
     it('gardens `aria-describedby` in its target', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
+            <overlay-trigger placement="right-start" triggered-by="hover">
                 <sp-action-button slot="trigger" aria-describedby="descriptor">
                     Button with Tooltip
                 </sp-action-button>
@@ -104,7 +104,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
     });
     it('applies `aria-describedby` attribute', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
+            <overlay-trigger placement="right-start" triggered-by="hover">
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
@@ -143,7 +143,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
-                <overlay-trigger placement="right-start">
+                <overlay-trigger placement="right-start" triggered-by="hover">
                     <sp-tooltip slot="hover-content" delayed>
                         Described by this content on focus/hover. 2
                     </sp-tooltip>
