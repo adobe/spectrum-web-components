@@ -39,17 +39,16 @@ a:active {
     --mod-link-text-color: var(--mod-link-text-color-active, var(--mod-link-text-color-primary-active, var(--spectrum-accent-content-color-down)));
 }
 
-:host([quiet]) a {
-    -webkit-text-decoration: none;
-    text-decoration: none;
-}
-
-:host a:focus-visible,
-:host([quiet]) a:focus-visible {
+a:focus-visible {
     --mod-link-text-color: var(--mod-link-text-color-focus, var(--mod-link-text-color-primary-focus, var(--spectrum-accent-content-color-key-focus)));
     -webkit-text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
+}
+
+:host([quiet]) a {
+    -webkit-text-decoration: none;
+    text-decoration: none;
 }
 
 @media (hover: hover) {
