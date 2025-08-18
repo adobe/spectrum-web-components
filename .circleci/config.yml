@@ -22,7 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: e919c253a7cb75ee16c0ef680b50a032236f7275
+        default: 0a197126e48956d0e4d27126d64d28d4a1abf95b
     temp_hcm_golden_images_hash:
         type: string
         default: 0f5ee69c57a188b45f12adec4b621fa47b483946
@@ -91,13 +91,13 @@ commands:
             regression_dir:
                 type: string
         steps:
-            # - restore_cache:
-            #       name: Restore Golden Images Cache
-            #       keys:
-            #           - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #           - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #           - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
-            #           - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
                   command: |
@@ -113,7 +113,7 @@ commands:
                   when: always
                   name: VRT Run
                   command: |
-                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> --update-visual-baseline
+                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/first-gen/results/
@@ -122,13 +122,13 @@ commands:
                   name: Count current images
                   command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
-            # - run:
-            #       when: on_success
-            #       name: Fail if there are a different number of images...
-            #       command: |
-            #           echo $(cat count_start.txt)
-            #           echo $(cat count_end.txt)
-            #           if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+            - run:
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
                   when: always
@@ -197,11 +197,11 @@ commands:
                       echo "VRT URL for ${combination}: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
-            # - run:
-            #       when: always
-            #       command: |
-            #           rm -rf first-gen/test/visual/screenshots-baseline
-            #           cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
+            - run:
+                  when: always
+                  command: |
+                      rm -rf first-gen/test/visual/screenshots-baseline
+                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
