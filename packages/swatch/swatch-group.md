@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 An `<sp-swatch-group>` group is a grouping of `<sp-swatch>` elements that are related to each other.
 
@@ -7,23 +7,25 @@ An `<sp-swatch-group>` group is a grouping of `<sp-swatch>` elements that are re
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/swatch?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/swatch)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/swatch?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/swatch)
 
-```
+```bash
 yarn add @spectrum-web-components/swatch
 ```
 
 Import the side effectful registration of `<sp-swatch-group>` via:
 
-```
+```js
 import '@spectrum-web-components/swatch/sp-swatch-group.js';
 ```
 
 When looking to leverage the `SwatchGroup` base class as a type and/or for extension purposes, do so via:
 
-```
+```js
 import { SwatchGroup } from '@spectrum-web-components/swatch';
 ```
 
-## Sizes
+### Options
+
+#### Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
 <sp-tab value="xs">Extra Small</sp-tab>
@@ -116,11 +118,13 @@ import { SwatchGroup } from '@spectrum-web-components/swatch';
 </sp-tab-panel>
 </sp-tabs>
 
-## Density
+#### Density
 
 The `density` attribute/property is not required and when applied accepts the values of `compact` or `spacious`.
 
-### Compact
+<sp-tabs selected="compact" auto label="Density Attribute Options">
+<sp-tab value="compact">Compact</sp-tab>
+<sp-tab-panel value="compact">
 
 ```html
 <sp-swatch-group density="compact">
@@ -132,7 +136,9 @@ The `density` attribute/property is not required and when applied accepts the va
 </sp-swatch-group>
 ```
 
-### Spacious
+</sp-tab-panel>
+<sp-tab value="spacious">Spacious</sp-tab>
+<sp-tab-panel value="spacious">
 
 ```html
 <sp-swatch-group density="spacious">
@@ -144,7 +150,10 @@ The `density` attribute/property is not required and when applied accepts the va
 </sp-swatch-group>
 ```
 
-## Selection
+</sp-tab-panel>
+</sp-tabs>
+
+#### Selection
 
 An `<sp-swatch-group>` element can carry a selection of a `single` swatch or of `multiple` swatches. Then the `selects` property is set to one of these values, the `selected` property will surface an array the represents the string values that have been selected in the UI.
 
@@ -152,7 +161,9 @@ When the value of `selected` is updated via user input, the `change` event will 
 
 The value of `selected` can also be provided directly from the `<sp-swatch>` children. Child `<sp-swatch>` elements with their own `selected` attribute will be gathered and merged with any other selection data on the `<sp-swatch-group>` parent to populate `selected`.
 
-### Single
+<sp-tabs selected="single" auto label="Selection Attribute Options">
+<sp-tab value="single">Single</sp-tab>
+<sp-tab-panel value="single">
 
 The `selected` property is always represented as an array, and as such an application leveraging an `<sp-swatch-group>` element can apply more than one selection, regardless of the vaue of `selects`, however all future interactions will force the interace to a single selection.
 
@@ -163,16 +174,16 @@ The `selected` property is always represented as an array, and as such an applic
 >
     <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)" selected></sp-swatch>
+    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-magenta-500)" selected></sp-swatch>
 </sp-swatch-group>
-<div>
-    Selected: [ "var(--spectrum-purple-500)", "var(--spectrum-magenta-500)" ]
-</div>
+<div>Selected: [ "var(--spectrum-magenta-500)" ]</div>
 ```
 
-### Multiple
+</sp-tab-panel>
+<sp-tab value="multiple">Multiple</sp-tab>
+<sp-tab-panel value="multiple">
 
 `<sp-swatch>` children of an `<sp-swatch-group selects="mutiple">` parent will toggle their selection.
 
@@ -181,14 +192,19 @@ The `selected` property is always represented as an array, and as such an applic
     selects="multiple"
     onchange="this.nextElementSibling.textContent = `Selected: ${JSON.stringify(this.selected, null, ' ')}`"
 >
-    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-blue-500)" selected></sp-swatch>
     <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
-    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-purple-500)" selected></sp-swatch>
     <sp-swatch color="var(--spectrum-fuchsia-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
-<div>Selected: [ ]</div>
+<div>
+    Selected: [ "var(--spectrum-blue-500)", "var(--spectrum-purple-500)" ]
+</div>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Value
 
@@ -217,6 +233,27 @@ When available, the value of `selected` will be constructed from the `value` att
 <div>Selected: [ "color-2", "color-1", "color-3" ]</div>
 ```
 
-## Swatch modifying attributes
+### Swatch modifying attributes
 
-An `<sp-swatch-group>` element can be modified by the following attributes/properties to customize its delivery as desired for your use case: `border`, `disabled`, `mixedValue` (accepted as the `mixed-value` attribute), `nothing`, `rounding`, `shape`, and `size`. Use these in concert with each other for a variety of final visual deliveries. Applying a value for one of these attributes/properties to an `<sp-swatch-group>` element will have it forward the value to all of the `<sp-swatch>` elements that are a direct child of the group, overriding any value that may be applied directly to those children.
+An `<sp-swatch-group>` element can be modified by the following attributes/properties to customize its delivery as desired for your use case: `border`, `disabled`, `mixedValue` (accepted as the `mixed-value` attribute), `nothing`, `rounding`, `shape`, and `size`. Use these in concert with each other for a variety of final visual deliveries. Applying a value for one of these attributes/properties to an `<sp-swatch-group>` element will have it forward the value to all of the `<sp-swatch>` elements that are a direct child of the group, overriding any value that may be applied directly to those children. For example:
+
+```html
+<sp-swatch-group border="light" rounding="full" shape="rectangle" size="l">
+    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+</sp-swatch-group>
+```
+
+### Accessibility
+
+#### Best practices
+
+- Ensure swatches have sufficient color contrast for visibility.
+- Verify that swatches are appropriately labeled for screen readers.
+
+#### Keyboard navigation
+
+- `Tab`: Move focus to the next focusable element
+- `Arrow keys`: Navigate between swatches in the group and move the focus indicator
+- `Enter` or `Space`: Select the focused swatch
