@@ -97,7 +97,14 @@ commands:
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      baseline_count=$(find test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                      if [ $baseline_count -eq 0 ]; then
+                          echo "ERROR: No baseline images found!"
+                          exit 1
+                      fi
             - run:
                   when: always
                   name: VRT Run
@@ -328,7 +335,13 @@ jobs:
                   name: Count baseline images
                   command: |
                       mkdir -p test/visual/screenshots-baseline
-                      find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                      baseline_count=$(find test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                      if [ $baseline_count -eq 0 ]; then
+                          echo "ERROR: No baseline images found!"
+                          exit 1
+                      fi
             - run:
                   when: always
                   name: VRT Run
