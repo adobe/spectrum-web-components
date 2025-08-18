@@ -23,6 +23,9 @@ parameters:
     current_golden_images_hash:
         type: string
         default: e919c253a7cb75ee16c0ef680b50a032236f7275
+    temp_hcm_golden_images_hash:
+        type: string
+        default: 0f5ee69c57a188b45f12adec4b621fa47b483946
     wireit_cache_name:
         type: string
         default: wireit
@@ -329,7 +332,7 @@ jobs:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+                      - v2-golden-images-<< pipeline.parameters.temp_hcm_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
@@ -346,7 +349,7 @@ jobs:
                   when: always
                   name: VRT Run
                   command: |
-                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm --update-visual-baseline
+                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/first-gen/results/
