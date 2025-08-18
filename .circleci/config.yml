@@ -326,11 +326,11 @@ jobs:
 
         steps:
             - downstream
-            # - restore_cache:
-            #       name: Restore Golden Images Cache
-            #       keys:
-            #           - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
-            #           - v2-golden-images-main-hcm-
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+                      - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
                   command: |
@@ -355,13 +355,13 @@ jobs:
                   name: Count current images
                   command: find first-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
-            # - run:
-            #       when: on_success
-            #       name: Fail if there are a different number of images...
-            #       command: |
-            #           echo $(cat count_start.txt)
-            #           echo $(cat count_end.txt)
-            #           if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+            - run:
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             # build diff review site
             - run:
                   when: always
@@ -427,11 +427,11 @@ jobs:
                       echo "HCM Visual Test URL: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
-            # - run:
-            #       when: always
-            #       command: |
-            #           rm -rf first-gen/test/visual/screenshots-baseline
-            #           cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
+            - run:
+                  when: always
+                  command: |
+                      rm -rf first-gen/test/visual/screenshots-baseline
+                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
