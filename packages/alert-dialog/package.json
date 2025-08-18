@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://adobe.github.io/spectrum-web-components/components/alert-dialog",
     "repository": {
+        "directory": "packages/alert-dialog",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/alert-dialog"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

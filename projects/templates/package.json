@@ -24,9 +24,9 @@
     "name": "swc-templates",
     "private": true,
     "repository": {
+        "directory": "projects/templates",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/templates"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "scripts": {
         "plop": "plop"

@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/theme",
     "repository": {
+        "directory": "tools/theme",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "tools/theme"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

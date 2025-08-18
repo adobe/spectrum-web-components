@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/opacity-checkerboard",
     "repository": {
+        "directory": "tools/opacity-checkerboard",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "tools/opacity-checkerboard"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

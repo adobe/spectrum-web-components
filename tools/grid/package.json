@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/grid",
     "repository": {
+        "directory": "tools/grid",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "tools/grid"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

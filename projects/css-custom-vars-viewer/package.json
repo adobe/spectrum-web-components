@@ -7,9 +7,9 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
+        "directory": "projects/css-custom-vars-viewer",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "projects/css-custom-vars-viewer"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

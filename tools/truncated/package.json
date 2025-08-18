@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://adobe.github.io/spectrum-web-components/components/truncated",
     "repository": {
+        "directory": "tools/truncated",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "tools/truncated"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"

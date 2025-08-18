@@ -6,9 +6,9 @@
     "author": "Adobe",
     "homepage": "https://adobe.github.io/spectrum-web-components/components/combobox",
     "repository": {
+        "directory": "packages/combobox",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/combobox"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
