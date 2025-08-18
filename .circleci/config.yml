@@ -349,7 +349,7 @@ jobs:
                       cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm --update-visual-baseline
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/first-gen/results/
             - run:
                   when: on_success
                   name: Count current images
@@ -427,11 +427,11 @@ jobs:
                       echo "HCM Visual Test URL: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
-            - run:
-                  when: always
-                  command: |
-                      rm -rf first-gen/test/visual/screenshots-baseline
-                      cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
+            # - run:
+            #       when: always
+            #       command: |
+            #           rm -rf first-gen/test/visual/screenshots-baseline
+            #           cp -R first-gen/test/visual/screenshots-actual/updates first-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
