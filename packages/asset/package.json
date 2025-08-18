@@ -25,6 +25,10 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/Asset.base.ts": {
+            "development": "./src/Asset.base.dev.ts",
+            "default": "./src/Asset.base.ts"
+        },
         "./src/Asset.js": {
             "development": "./src/Asset.dev.js",
             "default": "./src/Asset.js"
