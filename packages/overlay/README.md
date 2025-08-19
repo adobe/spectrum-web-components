@@ -279,8 +279,6 @@ The `type` of an Overlay outlines a number of things about the interaction model
 
 `'modal'` Overlays create a modal context that traps focus within the content and prevents interaction with the rest of the page. The overlay manages focus trapping and accessibility features like `aria-modal="true"` to ensure proper screen reader behavior.
 
-**Accessibility behavior:** Modal overlays implement strict focus trapping and prevent outside interactions for accessibility compliance. These overlays create a modal context that precludes usage of other content on the page, ensuring all interactive elements are descendants of the overlay. Clicking outside the modal will not close it, maintaining the modal context as required by ARIA specifications.
-
 They should be used when you need to ensure that the user has interacted with the content of the Overlay before continuing with their work. This is commonly used for dialogs that require a user to confirm or cancel an action before continuing.
 
 ```html
@@ -311,8 +309,6 @@ They should be used when you need to ensure that the user has interacted with th
 <sp-tab-panel value="page">
 
 `'page'` Overlays behave similarly to `'modal'` Overlays by creating a modal context and trapping focus, but they will not be allowed to close via the "light dismiss" algorithm (e.g. the Escape key).
-
-**Accessibility behavior:** Page overlays implement strict focus trapping and prevent outside interactions for accessibility compliance, similar to modal overlays. These overlays create a modal context that precludes usage of other content on the page, ensuring all interactive elements are descendants of the overlay. Clicking outside the page overlay will not close it, maintaining the modal context as required by ARIA specifications.
 
 A page overlay could be used for a full-screen menu on a mobile website. When the user clicks on the menu button, the entire screen is covered with the menu options.
 
