@@ -15,7 +15,6 @@ import {
     elementUpdated,
     expect,
     html,
-    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -461,7 +460,7 @@ describe('Menu', () => {
                 bubbles: true,
             })
         );
-        await nextFrame();
+        await elementUpdated(el);
 
         el.focus();
         // focus management should start again from the first item.
@@ -680,31 +679,163 @@ describe('Menu', () => {
                 <sp-menu-item value="3">Third</sp-menu-item>
             </sp-menu>
         `);
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         expect(el.selected).to.deep.equal([]);
 
         const items = [...el.children] as MenuItem[];
         await Promise.all(items.map((child) => child.updateComplete));
 
         items[0].click();
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         expect(el.selected).to.deep.equal(['1']);
 
         items[0].click();
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         expect(el.selected).to.deep.equal([]);
 
         items[1].click();
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         expect(el.selected).to.deep.equal(['2']);
 
         items[2].click();
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         expect(el.selected).to.deep.equal(['3']);
+    });
+
+    it('handles long menu with basic selection', async () => {
+        const menuItems = Array.from(
+            { length: 30 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 200px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Wait for all menu items to be properly rendered
+        await waitUntil(
+            () => el.childItems.length === 30,
+            'expected menu to manage 30 items'
+        );
+
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+        const middleItem = el.querySelector(
+            'sp-menu-item:nth-child(15)'
+        ) as MenuItem;
+        const lastItem = el.querySelector(
+            'sp-menu-item:nth-child(30)'
+        ) as MenuItem;
+
+        // Test scrolling state management
+        expect(el.isScrolling).to.be.false;
+        el.isScrolling = true;
+        expect(el.isScrolling).to.be.true;
+        el.isScrolling = false;
+        expect(el.isScrolling).to.be.false;
+
+        // Test normal selection when not scrolling
+        firstItem.click();
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        expect(firstItem.selected).to.be.true;
+        expect(el.value).to.equal('1');
+
+        // Test selection of middle item when not scrolling
+        middleItem.click();
+        await elementUpdated(el);
+        await elementUpdated(middleItem);
+        expect(middleItem.selected).to.be.true;
+        expect(el.value).to.equal('15');
+        expect(firstItem.selected).to.be.false;
+
+        // Test selection of last item when not scrolling
+        lastItem.click();
+        await elementUpdated(el);
+        await elementUpdated(lastItem);
+        expect(lastItem.selected).to.be.true;
+        expect(el.value).to.equal('30');
+        expect(middleItem.selected).to.be.false;
+
+        // Test that the component can be disconnected without errors
+        el.remove();
+    });
+
+    it('prevents selection during iPad scroll detection', async () => {
+        const menuItems = Array.from(
+            { length: 30 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 200px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        // Wait for all menu items to be properly rendered
+        await waitUntil(
+            () => el.childItems.length === 30,
+            'expected menu to manage 30 items'
+        );
+
+        const middleItem = el.querySelector(
+            'sp-menu-item:nth-child(15)'
+        ) as MenuItem;
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+
+        // Test normal selection first (no scrolling)
+        middleItem.click();
+        await elementUpdated(el);
+        await elementUpdated(middleItem);
+        expect(middleItem.selected).to.be.true;
+        expect(el.value).to.equal('15');
+
+        // Reset selection
+        firstItem.click();
+        await elementUpdated(el);
+        await elementUpdated(firstItem);
+        expect(firstItem.selected).to.be.true;
+        expect(el.value).to.equal('1');
+
+        // Manually set scrolling state to simulate iPad scroll detection
+        el.isScrolling = true;
+        expect(el.isScrolling).to.be.true;
+
+        // Try to select an item while scrolling is detected
+        middleItem.click();
+        await elementUpdated(el);
+        await elementUpdated(middleItem);
+
+        // Verify that selection is prevented during scroll
+        expect(middleItem.selected).to.be.false;
+        expect(el.value).to.equal('1'); // Should still be the first item
+
+        // Reset scrolling state
+        el.isScrolling = false;
+        expect(el.isScrolling).to.be.false;
+
+        // Now try to select the item again (should work since scrolling is reset)
+        middleItem.click();
+        await elementUpdated(el);
+        await elementUpdated(middleItem);
+        expect(middleItem.selected).to.be.true;
+        expect(el.value).to.equal('15');
+
+        // Test that the component can be disconnected without errors
+        el.remove();
     });
 });
