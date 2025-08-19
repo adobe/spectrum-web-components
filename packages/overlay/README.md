@@ -536,6 +536,7 @@ This means that in both cases, if the transition is meant to be a part of the op
     .triggerElement=${HTMLElement}
     .triggerInteraction=${'click' | 'longpress' | 'hover'}
     type=${'auto' | 'hint' | 'manual' | 'modal' | 'page'}
+    ?allow-outside-click=${boolean}
 ></sp-overlay>
 ```
 
@@ -576,6 +577,23 @@ Common in `modal`/`page` overlays for full-screen content</sp-table-cell>
 </sp-table-row>
 </sp-table-body>
 </sp-table>
+
+##### Deprecated Properties
+
+> **⚠️ Deprecation Notice**: The `allow-outside-click` property is deprecated and will be removed in a future version.
+
+The `allow-outside-click` property allows clicks outside the overlay to close it. **We do not recommend using this property for accessibility reasons** as it can cause unexpected behavior and accessibility issues. When set to `true`, it configures the focus trap to allow outside clicks, which may interfere with proper focus management and user expectations.
+
+```html
+<!-- @deprecated Not recommended for accessibility reasons -->
+<sp-overlay trigger="trigger@click" allow-outside-click="true">
+    <sp-popover>
+        <p>This overlay can be closed by clicking outside</p>
+    </sp-popover>
+</sp-overlay>
+```
+
+**Alternative approaches**: Instead of using `allow-outside-click`, consider implementing explicit close buttons or using the `type="modal"` or `type="page"` overlay types which provide better accessibility and user experience.
 
 #### Styling
 
