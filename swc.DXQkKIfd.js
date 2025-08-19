@@ -1,2 +1,2 @@
 import{T as e}from"./swc.DRMeE6Te.js";import{j as o}from"./swc.BkWj9Vim.js";import"./swc.BeOzoba5.js";import"./swc.Cl2X6-fK.js";const t=document.querySelector(".demo-preview"),c=document.querySelector(".demo-config");function r(){const e={};if(!c)return e;return c.querySelectorAll(".demo-control").forEach((o=>{e[o.id]="false"!==o.value&&o.value})),e}const n=(c={})=>{o(e(c),t)};c&&c.addEventListener("change",(()=>{n(r())})),customElements.whenDefined("sp-picker").then((()=>{const e=r();console.log(e),n(e)}));
-//# sourceMappingURL=swc.DcU4QyGm.js.map
+//# sourceMappingURL=swc.DSaU9daf.js.map
