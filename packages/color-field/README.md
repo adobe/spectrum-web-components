@@ -134,7 +134,7 @@ For a complete list of supported color formats, see the [ColorController documen
 A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `BB` (blue) are hexadecimal integers between `00` and `FF` specifying the intensity of the color.
 
 ```html
-<sp-color-field value="#ff0000"></sp-color-field>
+<sp-color-field view-color value="#ff0000"></sp-color-field>
 ```
 
 </sp-tab-panel>
