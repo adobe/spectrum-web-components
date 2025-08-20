@@ -28,7 +28,6 @@ export function isMac(): boolean {
 }
 
 export function isIPhone(): boolean {
-    console.log('isIPhone(): ', testPlatform(/^iPhone/), 'testPlatform: ', /^iPhone/.toString(), ' User agent: ', window.navigator.userAgent);
     return testPlatform(/^iPhone/);
 }
 
@@ -41,34 +40,25 @@ export function isIPad(): boolean {
 }
 
 export function isIOS(): boolean {
-    console.log('isIOS(): ', isIPhone() || isIPad(), 'testPlatform: ', /^iPhone OR ^iPad/.toString(), ' User agent: ', window.navigator.userAgent);
     return isIPhone() || isIPad();
 }
 
 /* c8 ignore next 3 */
 export function isAppleDevice(): boolean {
-    console.log('isAppleDevice(): ', isMac() || isIOS(), 'testPlatform: ', /^Mac OR ^iPhone OR ^iPad/.toString(), ' User agent: ', window.navigator.userAgent);
-
     return isMac() || isIOS();
 }
 
 /* c8 ignore next 3 */
 export function isWebKit(): boolean {
-    console.log('isWebKit() AND not Chrome: ', testUserAgent(/AppleWebKit/) && !isChrome(), 'testUserAgent: ', /AppleWebKit & Chrome/.toString(), ' User agent: ', window.navigator.userAgent);
-
     return testUserAgent(/AppleWebKit/) && !isChrome();
 }
 
 /* c8 ignore next 3 */
 export function isChrome(): boolean {
-    console.log('isChrome(): ', testUserAgent(/Chrome/), 'testUserAgent: ', /Chrome/.toString(), ' User agent: ', window.navigator.userAgent);
-
     return testUserAgent(/Chrome/);
 }
 
 export function isFirefox(): boolean {
-    console.log('isFirefox() AND not Seamonkey: ', testUserAgent(/Firefox/) && !isSeamonkey(), 'testUserAgent: ', /Firefox & Seamonkey/.toString(), ' User agent: ', window.navigator.userAgent);
-
     return testUserAgent(/Firefox/) && !isSeamonkey();
 }
 
@@ -77,7 +67,5 @@ export function isSeamonkey(): boolean {
 }
 
 export function isAndroid(): boolean {
-    console.log('isAndroid(): ', testUserAgent(/Android/), 'testUserAgent: ', /Android/.toString(), ' User agent: ', window.navigator.userAgent);
-
     return testUserAgent(/Android/);
 }

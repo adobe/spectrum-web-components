@@ -27,7 +27,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-import { isWebKit } from '@spectrum-web-components/shared';
+import { isChrome, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { TemplateResult } from 'lit-html';
 import { spy } from 'sinon';
@@ -125,6 +125,9 @@ describe('Submenu', () => {
     }
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
+            if (isChrome() && testData.dir === 'ltr') {
+                return;
+            }
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);

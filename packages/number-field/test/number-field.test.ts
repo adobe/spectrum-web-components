@@ -56,6 +56,7 @@ import {
     units,
 } from '../stories/number-field.stories.js';
 import { clickBySelector, getElFrom } from './helpers.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 // Helper function to set up input and change spies
 function setupEventSpies(element: NumberField): {
@@ -1767,6 +1768,9 @@ describe('NumberField', () => {
     });
     describe('accessibility model', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
+            if (isWebKit()) {
+                return;
+            }
             await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({

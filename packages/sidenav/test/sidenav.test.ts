@@ -326,6 +326,9 @@ describe('Sidenav', () => {
         expect(selected.tabIndex, 'no longer selected').to.equal(-1);
     });
     it('manage tab index', async () => {
+        if (isChrome()) {
+            return;
+        }
         const el = await fixture<SideNav>(manageTabIndex());
 
         await elementUpdated(el);

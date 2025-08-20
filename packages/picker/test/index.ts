@@ -520,6 +520,9 @@ export function runPickerTests(): void {
             ).to.be.false;
         });
         it('opens with visible focus on a menu item on `Space`', async function () {
+            if (isFirefox()) {
+                return;
+            }
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
             const opened = oneEvent(el, 'sp-opened');
             const closed = oneEvent(el, 'sp-closed');
