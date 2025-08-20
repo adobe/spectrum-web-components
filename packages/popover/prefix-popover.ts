@@ -9,8 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { Popover } from './src/Popover.js';
+import { definePrefixedElement } from '@spectrum-web-components/base/src/Base.js';
 
-export * from './Base.js';
-export * from './sizedMixin.js';
-export * from 'lit';
-export { html as staticHtml, literal } from 'lit/static-html.js';
+export function definePopover(prefix: string): void {
+    definePrefixedElement(Popover.tagName, prefix, Popover);
+}
