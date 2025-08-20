@@ -135,6 +135,25 @@ The color loupe is typically managed by its parent color component (such as `<sp
 
 The `<sp-color-loupe>` is designed to work as part of accessible color selection components. The loupe automatically appears during touch interactions with any of these components to ensure the selected color remains visible:
 
+<sp-tabs selected="color-area" auto label="ColorArea">
+<sp-tab value="color-area">Color-Area</sp-tab>
+<sp-tab-panel value="color-area">
+
+```html
+<div
+    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+>
+    <sp-color-area
+        aria-label="Saturation and brightness selector - adjust color intensity and lightness"
+        aria-describedby="color-context"
+    ></sp-color-area>
+</div>
+```
+
+</sp-tab-panel>
+<sp-tab value="color-slider">Color-Slider</sp-tab>
+<sp-tab-panel value="color-slider">
+
 ```html
 <div
     style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
@@ -143,18 +162,26 @@ The `<sp-color-loupe>` is designed to work as part of accessible color selection
         aria-label="Hue slider - adjust the base color"
         aria-describedby="color-context"
     ></sp-color-slider>
+</div>
+```
 
-    <sp-color-area
-        aria-label="Saturation and brightness selector - adjust color intensity and lightness"
-        aria-describedby="color-context"
-    ></sp-color-area>
+</sp-tab-panel>
+<sp-tab value="color-wheel">Color-Wheel</sp-tab>
+<sp-tab-panel value="color-wheel">
 
+```html
+<div
+    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+>
     <sp-color-wheel
         aria-label="Color wheel - select from the full color spectrum"
         aria-describedby="color-context"
     ></sp-color-wheel>
 </div>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 #### Screen reader support
 
