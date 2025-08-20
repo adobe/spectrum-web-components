@@ -330,6 +330,7 @@ describe('ActionGroup', () => {
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
+        // TODO: handling browser differences in keyboard navigation. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             // focus on the first menu item as not all items are keyboard focusable in Safari by default
             // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html

@@ -29,6 +29,7 @@ import {
     NumberField,
 } from '@spectrum-web-components/number-field';
 import '@spectrum-web-components/number-field/sp-number-field.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -56,7 +57,6 @@ import {
     units,
 } from '../stories/number-field.stories.js';
 import { clickBySelector, getElFrom } from './helpers.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 
 // Helper function to set up input and change spies
 function setupEventSpies(element: NumberField): {
@@ -1768,6 +1768,7 @@ describe('NumberField', () => {
     });
     describe('accessibility model', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
+            // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
             if (isWebKit()) {
                 return;
             }

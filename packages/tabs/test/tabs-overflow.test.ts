@@ -41,8 +41,8 @@ import {
     nothing,
 } from '@spectrum-web-components/base';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
-import { repeat } from 'lit/directives/repeat.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { repeat } from 'lit/directives/repeat.js';
 
 const RIGHT_BUTTON_SELECTOR = '.right-scroll';
 const LEFT_BUTTON_SELECTOR = '.left-scroll';
@@ -209,7 +209,7 @@ describe('TabsOverflow', () => {
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // Skipping on Firefox due to timeouts on CI
+        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
@@ -242,7 +242,7 @@ describe('TabsOverflow', () => {
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // Skipping on Firefox due to timeouts on CI
+        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({

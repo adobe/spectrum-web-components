@@ -125,6 +125,7 @@ describe('Submenu', () => {
     }
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
+            // TODO: skipping this test because it's flaky in Chrome with LTR direction. Will review in the migration to Spectrum 2.
             if (isChrome() && testData.dir === 'ltr') {
                 return;
             }

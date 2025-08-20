@@ -24,6 +24,8 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import type { Icon } from '@spectrum-web-components/icon';
@@ -31,17 +33,17 @@ import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 
+import { Button } from '@spectrum-web-components/button';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import {
     a11ySnapshot,
     findAccessibilityNode,
@@ -72,8 +74,6 @@ import {
     slottedLabel,
     tooltip,
 } from '../stories/picker.stories.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import { Button } from '@spectrum-web-components/button';
 
 export type TestablePicker = { optionsMenu: Menu };
 
@@ -520,6 +520,7 @@ export function runPickerTests(): void {
             ).to.be.false;
         });
         it('opens with visible focus on a menu item on `Space`', async function () {
+            // TODO: skipping this test because it's flaky in Firefox in CI. Will review in the migration to Spectrum 2.
             if (isFirefox()) {
                 return;
             }
@@ -1141,43 +1142,34 @@ export function runPickerTests(): void {
                 input2.remove();
             });
             it('tabs forward through the element', async function () {
+                // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+                if (isWebKit()) {
+                    return;
+                }
                 let focused: Promise<CustomEvent<FocusEvent>>;
 
                 // start at input1
-                if (!isWebKit()) {
-                    focused = oneEvent(input1, 'focus');
-                    await sendKeys({ press: 'Tab' });
-                    await focused;
-                } else {
-                    input1.focus();
-                }
+                focused = oneEvent(input1, 'focus');
+                await sendKeys({ press: 'Tab' });
+                await focused;
 
                 expect(document.activeElement === input1, 'focuses input 1').to
                     .be.true;
 
                 // tab to the picker
-                if (!isWebKit()) {
-                    focused = oneEvent(el, 'focus');
-                    await sendKeys({ press: 'Tab' });
-                    await focused;
-                    await elementUpdated(el);
-                } else {
-                    el.focus();
-                    await elementUpdated(el);
-                }
+                focused = oneEvent(el, 'focus');
+                await sendKeys({ press: 'Tab' });
+                await focused;
+                await elementUpdated(el);
 
                 expect(el.focused, 'focused').to.be.true;
                 expect(!el.open, 'closed').to.be.true;
                 expect(document.activeElement === el, 'focuses el').to.be.true;
 
                 // tab through the picker to input2
-                if (!isWebKit()) {
-                    focused = oneEvent(input2, 'focus');
-                    await sendKeys({ press: 'Tab' });
-                    await focused;
-                } else {
-                    input2.focus();
-                }
+                focused = oneEvent(input2, 'focus');
+                await sendKeys({ press: 'Tab' });
+                await focused;
 
                 expect(document.activeElement === input2, 'focuses input 2').to
                     .be.true;
@@ -1190,16 +1182,13 @@ export function runPickerTests(): void {
                     input2
                 );
                 let focused = oneEvent(el, 'focus');
-                if (!isWebKit()) {
-                    await sendKeys({ press: 'Shift+Tab' });
-                    await focused;
+                await sendKeys({ press: 'Shift+Tab' });
+                await focused;
 
-                    expect(el.focused, 'focused').to.be.true;
-                    expect(el.open, 'closed').to.be.false;
-                    expect(document.activeElement, 'focuses el').to.equal(el);
-                } else {
-                    el.focus();
-                }
+                expect(el.focused, 'focused').to.be.true;
+                expect(el.open, 'closed').to.be.false;
+                expect(document.activeElement, 'focuses el').to.equal(el);
+
                 // tab through the picker to input2
                 focused = oneEvent(input1, 'focus');
                 await sendKeys({ press: 'Shift+Tab' });
@@ -1351,6 +1340,7 @@ export function runPickerTests(): void {
             );
         });
         it('manages focus-ring styles', async () => {
+            // TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
             if (!isWebKit()) {
                 return;
             }

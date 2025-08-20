@@ -78,6 +78,7 @@ describe('Truncated', () => {
         expect(customOverflow.hasCustomOverflow).to.be.true;
     });
     it('copies the text when clicked', async () => {
+        // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             return;
         }
