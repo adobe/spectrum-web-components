@@ -85,6 +85,14 @@ When `view-color` is true, the color handle will be rendered. This is useful for
 <sp-color-field view-color value="#f00"></sp-color-field>
 ```
 
+#### Quiet
+
+A quiet color field provides a more subtle appearance:
+
+```html
+<sp-color-field quiet value="#e6e600"></sp-color-field>
+```
+
 ### States
 
 #### Standard
@@ -93,14 +101,6 @@ The default state of the color field, ready for user input:
 
 ```html
 <sp-color-field value="#ffff00"></sp-color-field>
-```
-
-#### Quiet
-
-A quiet color field provides a more subtle appearance:
-
-```html
-<sp-color-field quiet value="#e6e600"></sp-color-field>
 ```
 
 #### Read Only
@@ -127,14 +127,11 @@ The `<sp-color-field>` component accepts color values in various formats: `HEX`,
 
 For a complete list of supported color formats, see the [ColorController documentation](/tools/color-controller#supported-color-formats).
 
-
-<sp-tabs selected="label" auto label="Color format examples">
+<sp-tabs selected="hex" auto label="Color format examples">
 <sp-tab value="hex">HEX</sp-tab>
 <sp-tab-panel value="hex">
 
 A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `BB` (blue) are hexadecimal integers between `00` and `FF` specifying the intensity of the color.
-
-
 
 ```html
 <sp-color-field value="#ff0000"></sp-color-field>
