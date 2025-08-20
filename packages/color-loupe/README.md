@@ -50,7 +50,7 @@ Transparency Support: When using transparent colors, the handle displays an opac
 
 ```html
 <div
-    style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; width: 100%; max-width: 600px;"
+    style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; width: 100%;;"
 >
     <!-- Yellow color loupe -->
     <div style="padding: 100px 0 0; position: relative; min-width: 120px;">
@@ -126,13 +126,35 @@ The color loupe is typically managed by its parent color component (such as `<sp
 
 #### Automatic behavior
 
-- **Touch input**: The loupe automatically appears to prevent the finger from obscuring the selected color
+- **Touch input**: The loupe automatically appears during touch interactions with any color component (`<sp-color-area>`, `<sp-color-slider>`, or `<sp-color-wheel>`) to prevent the finger from obscuring the selected color
 - **Mouse/Stylus input**: The loupe remains hidden by default for precision pointing devices
 - **Parent control**: The loupe's visibility is managed by the parent color component
+- **Accessibility**: The loupe ensures that users can see the selected color even when their finger covers the interaction point
 
 ### Accessibility
 
-The `<sp-color-loupe>` is designed to work as part of accessible color selection components:
+The `<sp-color-loupe>` is designed to work as part of accessible color selection components. The loupe automatically appears during touch interactions with any of these components to ensure the selected color remains visible:
+
+```html
+<div
+    style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;"
+>
+    <sp-color-slider
+        aria-label="Hue slider - adjust the base color"
+        aria-describedby="color-context"
+    ></sp-color-slider>
+
+    <sp-color-area
+        aria-label="Saturation and brightness selector - adjust color intensity and lightness"
+        aria-describedby="color-context"
+    ></sp-color-area>
+
+    <sp-color-wheel
+        aria-label="Color wheel - select from the full color spectrum"
+        aria-describedby="color-context"
+    ></sp-color-wheel>
+</div>
+```
 
 #### Screen reader support
 
@@ -142,34 +164,39 @@ The color loupe is rendered as a visual indicator and does not directly interfac
 
 Focus is managed by the parent color component, with the loupe reflecting the focused state visually when its parent component has keyboard focus.
 
+#### Touch accessibility
+
+- **Automatic loupe display**: During touch interactions with any color component, the loupe automatically appears to ensure the selected color remains visible
+- **Finger coverage prevention**: The loupe prevents the user's finger from obscuring the color they're selecting
+- **Touch interaction support**: Color components support touch interactions with proper pointer event handling
+- **Visual feedback**: The loupe provides immediate visual feedback during touch interactions
+
 #### Best practices
 
 - Ensure the parent color component (for example, `sp-color-area`, `sp-color-slider`, or `sp-color-wheel`) provides appropriate labeling via visible text or ARIA
 - Avoid conveying meaning through color alone; pair color with text, labels, or other indicators as appropriate
 - The loupe is visual-only and should not receive focus. Manage focus on the interactive parent control
+- Test touch interactions on mobile devices to ensure the loupe appears correctly and provides adequate visual feedback
 
 #### Accessible example
 
-Provide clear context for what the loupe displays. The loupe itself is presentational and is typically managed by its parent color component.
+Provide clear context for what the loupe displays. The loupe itself is presentational and is typically managed by its parent color component. During touch interactions, the loupe automatically appears to ensure the selected color remains visible. The loupe is a visual-only element and doesn't require ARIA attributes since it doesn't provide interactive functionality.
 
 ```html
 <div
     role="region"
-    aria-label="Selected color preview"
+    aria-label="Color selection interface"
     style="padding: 100px 0 0;"
 >
     <div
         style="position: relative; display: flex; flex-direction: column; align-items: center;"
     >
-        <sp-color-loupe
-            open
-            dir="ltr"
-            aria-label="Selected color"
-        ></sp-color-loupe>
+        <sp-color-loupe open dir="ltr"></sp-color-loupe>
     </div>
     <p id="color-context" style="margin-top: 8px; text-align: center;">
-        This loupe shows the color currently sampled by the color control.
+        The loupe above shows the color currently selected. During touch
+        interactions, it automatically appears to prevent your finger from
+        covering the selected color.
     </p>
-    <!-- Ensure the parent color control exposes appropriate labeling and ARIA attributes. -->
 </div>
 ```
