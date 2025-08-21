@@ -37,7 +37,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import { SAFARI_FOCUS_RING_CLASS } from '@spectrum-web-components/picker/src/InteractionController.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { isChrome, isFirefox, isWebKit } from '@spectrum-web-components/shared';
+import { isChrome, isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Tooltip } from '@spectrum-web-components/tooltip';
@@ -84,6 +84,60 @@ const isMenuActiveElement = function (el: Picker): boolean {
         document.activeElement?.tagName === 'SP-MENU-ITEM' &&
         el.contains(document.activeElement)
     );
+};
+
+/**
+ * Helper function to wait for focus events with timeout protection
+ * Provides fallback verification for browsers with inconsistent focus event timing
+ */
+const waitForFocusEvent = async (
+    focusPromise: Promise<CustomEvent<FocusEvent>>,
+    expectedElement: Element,
+    timeoutMs: number = 3000
+): Promise<void> => {
+    try {
+        await Promise.race([
+            focusPromise,
+            new Promise((_, reject) =>
+                setTimeout(
+                    () => reject(new Error('Focus event timed out')),
+                    timeoutMs
+                )
+            ),
+        ]);
+    } catch (error) {
+        // Fallback: verify focus manually for browsers with inconsistent focus events
+        await waitUntil(
+            () => document.activeElement === expectedElement,
+            `Expected element should be focused`,
+            { timeout: 2000 }
+        );
+    }
+};
+
+/**
+ * Helper function to wait for element to be ready with proper synchronization
+ * Replaces manual nextFrame() calls with semantic waiting
+ */
+const waitForElementReady = async (element: HTMLElement): Promise<void> => {
+    await elementUpdated(element);
+    await nextFrame();
+    // Additional frame for complex elements that need extra rendering time
+    if (element.shadowRoot) {
+        await nextFrame();
+    }
+};
+
+/**
+ * Helper function to safely open picker and wait for it to be ready
+ * Handles timing differences across browsers
+ */
+const openPickerAndWait = async (picker: Picker): Promise<void> => {
+    const opened = oneEvent(picker, 'sp-opened');
+    picker.open = true;
+    await opened;
+    await waitForElementReady(picker);
+    await waitUntil(() => picker.open === true, 'Picker should be open');
 };
 
 export function runPickerTests(): void {
@@ -257,19 +311,16 @@ export function runPickerTests(): void {
             await expect(el).to.be.accessible();
         });
         it('closes accessibly', async () => {
-            // TODO: skipping this test because it's flaky in Firefox in CI. Will review in the migration to Spectrum 2.
-            if (isFirefox()) {
-                return;
-            }
+            // Focus the picker and wait for it to be ready
+            const focused = oneEvent(el, 'focus');
             el.focus();
-            await elementUpdated(el);
+            await waitForFocusEvent(focused, el);
+            await waitForElementReady(el);
 
             expect(el.shadowRoot.activeElement).to.equal(el.button);
 
-            const opened = oneEvent(el, 'sp-opened');
-            el.open = true;
-            await opened;
-            await elementUpdated(el);
+            // Open picker using helper function
+            await openPickerAndWait(el);
 
             expect(el.open, 'open?').to.be.true;
             const accessibleCloseButton = el.shadowRoot.querySelector(
@@ -280,10 +331,11 @@ export function runPickerTests(): void {
                 'Dismiss'
             );
 
+            // Close picker and wait for completion
             const closed = oneEvent(el, 'sp-closed');
             accessibleCloseButton.click();
             await closed;
-            await elementUpdated(el);
+            await waitForElementReady(el);
 
             expect(el.open, 'open?').to.be.false;
             expect(el.shadowRoot.activeElement).to.equal(el.button);
@@ -472,35 +524,45 @@ export function runPickerTests(): void {
             await expect(el).to.be.accessible();
         });
         it('opens with visible focus on a menu item on `DownArrow`', async () => {
-            // TODO: skipping this test because it's flaky in Firefox in CI. Will review in the migration to Spectrum 2.
-            if (isFirefox()) {
-                return;
-            }
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-            const opened = oneEvent(el, 'sp-opened');
-            const closed = oneEvent(el, 'sp-closed');
 
             expect(
                 firstItem.focused,
                 'first item should not be visually focused before opening'
             ).to.be.false;
 
+            // Focus picker with robust waiting
+            const focused = oneEvent(el, 'focus');
             el.focus();
-            await elementUpdated(el);
+            await waitForFocusEvent(focused, el);
+            await waitForElementReady(el);
 
+            // Open with ArrowDown and wait for completion
+            const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ press: 'ArrowDown' });
             await opened;
+            await waitForElementReady(el);
 
             expect(el.open, 'picker should be open').to.be.true;
+
+            // Wait for first item to receive visual focus
+            await waitUntil(
+                () => firstItem.focused,
+                'first item should be visually focused after opening',
+                { timeout: 2000 }
+            );
             expect(
                 firstItem.focused,
                 'first item should be visually focused after opening'
             ).to.be.true;
 
+            // Close with Escape and wait for completion
+            const closed = oneEvent(el, 'sp-closed');
             await sendKeys({
                 press: 'Escape',
             });
             await closed;
+            await waitForElementReady(el);
 
             expect(el.open, 'picker should be closed').to.be.false;
 
@@ -516,35 +578,45 @@ export function runPickerTests(): void {
             ).to.be.false;
         });
         it('opens with visible focus on a menu item on `Space`', async function () {
-            // TODO: skipping this test because it's flaky in Firefox in CI. Will review in the migration to Spectrum 2.
-            if (isFirefox()) {
-                return;
-            }
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
-            const opened = oneEvent(el, 'sp-opened');
-            const closed = oneEvent(el, 'sp-closed');
 
             expect(
                 firstItem.focused,
                 'should not be visually focused before opening'
             ).to.be.false;
 
+            // Focus picker with robust waiting
+            const focused = oneEvent(el, 'focus');
             el.focus();
-            await elementUpdated(el);
+            await waitForFocusEvent(focused, el);
+            await waitForElementReady(el);
 
+            // Open with Space and wait for completion
+            const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ press: 'Space' });
             await opened;
+            await waitForElementReady(el);
 
             expect(el.open, 'open?').to.be.true;
+
+            // Wait for first item to receive visual focus
+            await waitUntil(
+                () => firstItem.focused,
+                'should be visually focused after opening',
+                { timeout: 2000 }
+            );
             expect(
                 firstItem.focused,
                 'should be visually focused after opening'
             ).to.be.true;
 
+            // Close with Escape and wait for completion
+            const closed = oneEvent(el, 'sp-closed');
             await sendKeys({
                 press: 'Escape',
             });
             await closed;
+            await waitForElementReady(el);
 
             expect(el.open, 'picker should be closed').to.be.false;
 
@@ -1142,7 +1214,7 @@ export function runPickerTests(): void {
             it('tabs forward through the element', async function () {
                 // Increase timeout for this test to avoid timeout failures in webkit
                 this.timeout(10000);
-                
+
                 let focused: Promise<CustomEvent<FocusEvent>>;
 
                 // start at input1
@@ -1202,27 +1274,10 @@ export function runPickerTests(): void {
                 let focused = oneEvent(el, 'focus');
                 if (!isWebKit()) {
                     await sendKeys({ press: 'Shift+Tab' });
-                    
-                    // Add timeout handling for Firefox focus events
-                    try {
-                        await Promise.race([
-                            focused,
-                            new Promise((_, reject) =>
-                                setTimeout(
-                                    () => reject(new Error('Focus event timed out')),
-                                    3000
-                                )
-                            ),
-                        ]);
-                    } catch (error) {
-                        // Firefox may not fire focus event consistently, verify focus manually
-                        await waitUntil(
-                            () => document.activeElement === el,
-                            'element should be focused',
-                            { timeout: 2000 }
-                        );
-                    }
-                    
+
+                    // Use helper function for robust focus handling
+                    await waitForFocusEvent(focused, el);
+
                     expect(el.focused, 'focused').to.be.true;
                     expect(el.open, 'closed').to.be.false;
                     expect(document.activeElement, 'focuses el').to.equal(el);
@@ -1233,18 +1288,10 @@ export function runPickerTests(): void {
                 // tab through the picker to input1
                 focused = oneEvent(input1, 'focus');
                 await sendKeys({ press: 'Shift+Tab' });
-                
-                // Add similar timeout handling for input1 focus
-                try {
-                    await focused;
-                } catch (error) {
-                    await waitUntil(
-                        () => document.activeElement === input1,
-                        'input1 should be focused',
-                        { timeout: 2000 }
-                    );
-                }
-                
+
+                // Use helper function for robust focus handling
+                await waitForFocusEvent(focused, input1);
+
                 await elementUpdated(el);
                 expect(document.activeElement).to.equal(input1);
             });
