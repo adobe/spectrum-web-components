@@ -42,6 +42,7 @@ export class HelpTextManager {
         return html`
             <div
                 id=${ifDefined(this.isInternal ? this.id : undefined)}
+                class="help-text"
                 aria-live="assertive"
             >
                 <slot
