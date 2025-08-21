@@ -185,7 +185,7 @@ By default the text area has a fixed height and will scroll when text entry goes
 
 ```html
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    <div>
+    <div style="overflow: scroll">
         <sp-field-label for="pinocchio-1">Tell me a story</sp-field-label>
         <sp-textfield
             id="pinocchio-1"
