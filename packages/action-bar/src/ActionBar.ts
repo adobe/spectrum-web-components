@@ -12,12 +12,12 @@
 
 import {
     CSSResultArray,
-    html,
-    SpectrumElement,
+    staticHtml as html,
+    LitElement,
+    SpectrumMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -26,11 +26,15 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 export const actionBarVariants = ['sticky', 'fixed'];
 
+import { Popover } from '@spectrum-web-components/popover/src/Popover.js';
+
 /**
  * @element sp-action-bar
  * @slot - Content to display with the Action Bar
  */
-export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
+export class ActionBar extends FocusVisiblePolyfillMixin(
+    SpectrumMixin(LitElement, 'action-bar')
+) {
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
@@ -97,7 +101,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public override render(): TemplateResult {
         return html`
-            <sp-popover ?open=${this.open} id="popover">
+            <${Popover.tag} ?open=${this.open} id="popover">
                 <slot name="override">
                     <sp-close-button
                         static-color=${ifDefined(
@@ -120,7 +124,7 @@ export class ActionBar extends FocusVisiblePolyfillMixin(SpectrumElement) {
                         <slot name="buttons"></slot>
                     </sp-action-group>
                 </slot>
-            </sp-popover>
+            </${Popover.tag}>
         `;
     }
 }

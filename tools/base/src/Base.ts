@@ -12,15 +12,27 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
+
+import { defineElement } from './define-element.js';
+
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
 };
 
-type Constructor<T = Record<string, unknown>> = {
+export type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new (...args: any[]): T;
     prototype: T;
+};
+export type PrefixedConstructor<T = Record<string, unknown>> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (...args: any[]): T;
+    prototype: T;
+    VERSION: string;
+    tagName: string;
+    prefix: string;
+    tag: string;
 };
 
 export interface SpectrumInterface {
@@ -58,8 +70,9 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     el.tagName === 'SP-THEME';
 
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
-    constructor: T
-): T & Constructor<SpectrumInterface> {
+    constructor: T,
+    tagName: string = 'base'
+): T & PrefixedConstructor<SpectrumInterface> {
     class SpectrumMixinElement extends constructor {
         /**
          * @private
@@ -77,6 +90,16 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
          */
         public get isLTR(): boolean {
             return this.dir === 'ltr';
+        }
+
+        public static VERSION = version;
+        public static prefix = 'sp';
+        public static tagName = tagName;
+
+        public static get tag(): string {
+            // note static getters this is the constructor so this method
+            // gets the derived class prefix and tag
+            return `${this.prefix}-${this.tagName}`;
         }
 
         public hasVisibleFocusInTree(): boolean {
@@ -185,8 +208,32 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     return SpectrumMixinElement;
 }
 
-export class SpectrumElement extends SpectrumMixin(LitElement) {
-    static VERSION = version;
+export class SpectrumElement extends SpectrumMixin(LitElement, 'base') {
+    public static override VERSION = version;
+}
+
+export function PrefixedMixin<T extends PrefixedConstructor<SpectrumInterface>>(
+    constructor: T,
+    tagName: string,
+    prefix: string = 'sp'
+): T & PrefixedConstructor<SpectrumInterface> {
+    class PrefixedMixinElement extends constructor {
+        public static override prefix = prefix;
+        public static override tagName = tagName;
+    }
+    return PrefixedMixinElement;
+}
+
+export function definePrefixedElement(
+    name: string,
+    prefix: string,
+    constructor: PrefixedConstructor<SpectrumInterface>
+): void {
+    const PrefixedClass = PrefixedMixin(constructor, name, prefix);
+    defineElement(
+        PrefixedClass.tag,
+        PrefixedClass as unknown as CustomElementConstructor
+    );
 }
 
 if (window.__swc.DEBUG) {

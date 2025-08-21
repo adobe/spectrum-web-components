@@ -12,7 +12,8 @@
 import { Popover } from './src/Popover.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 
-defineElement('sp-popover', Popover);
+// register our dependency elements too
+defineElement(Popover.tag, Popover);
 
 declare global {
     interface HTMLElementTagNameMap {
