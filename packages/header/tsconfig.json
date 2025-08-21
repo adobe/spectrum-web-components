@@ -1,0 +1,25 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts", "src/**/*.ts", "stories/**/*.ts", "test/**/*.ts"],
+    "exclude": [],
+    "references": [
+        { "path": "../../tools/base" },
+        { "path": "../action-button" },
+        { "path": "../action-menu" },
+        { "path": "../divider" },
+        { "path": "../help-text" },
+        { "path": "../icons-ui" },
+        { "path": "../icons-workflow" },
+        { "path": "../menu" },
+        { "path": "../overlay" },
+        { "path": "../../tools/reactive-controllers" },
+        { "path": "../../tools/shared" },
+        { "path": "../textfield" },
+        { "path": "../toast" },
+        { "path": "../tooltip" }
+    ]
+}
