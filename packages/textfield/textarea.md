@@ -2,6 +2,7 @@
 
 `sp-textfield[multiline]` components are text areas that allow users to input custom multiline text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 
+[View the design documentation for this component.](https://spectrum.adobe.com/page/text-area/)
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/textfield?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/textfield)
