@@ -332,9 +332,9 @@ Every textarea must have an associated label for accessibility. Use either:
 - The `label` attribute on the `<sp-textfield>` element
 - An `<sp-field-label>` element with a `for` attribute that matches the textarea's `id`
 
-#### Keyboard navigation
+#### Keyboard navigation and focus management
 
-- Use <kbd>Tab</kbd> to navigate to and from the textarea
+- Use <kbd>Tab</kbd> to move focus to and from the textarea
 - Use <kbd>Enter</kbd> to create new lines within the textarea
 - Use arrow keys to navigate within the text content
 - Screen readers announce the textarea label and current value
