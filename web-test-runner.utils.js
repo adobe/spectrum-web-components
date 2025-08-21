@@ -106,6 +106,8 @@ export const firefox = playwrightLauncher({
             'extensions.enabledScopes': 15,
             'dom.events.asyncClipboard.readText': true,
             'dom.events.testing.asyncClipboard': true,
+            // Enable tab navigation to all focusable elements in Firefox
+            'accessibility.tabfocus': 7, // Focus links, form controls, and other elements
         },
     },
 });
@@ -117,6 +119,10 @@ export const webkit = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
         }),
+    launchOptions: {
+        // Enable tab navigation through all focusable elements
+        args: ['--enable-tabs-to-links'],
+    },
 });
 
 const tools = fs
