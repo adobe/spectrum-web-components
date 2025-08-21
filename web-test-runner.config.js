@@ -66,21 +66,6 @@ export default {
             },
         },
         setViewportPlugin(),
-        {
-            name: 'webkit-tab-to-links-plugin',
-            transformIndexHtml(html) {
-                return html.replace(
-                    '<head>',
-                    `<head>
-                    <script>
-                        // Enable tabbing through all focusable elements in WebKit
-                        if (window.testRunner) {
-                            testRunner.overridePreference('WebKitTabToLinksPreferenceKey', 1);
-                        }
-                    </script>`
-                );
-            },
-        },
     ],
     mimeTypes: {
         '**/*.json': 'js',
