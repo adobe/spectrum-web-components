@@ -59,4 +59,4 @@ import{i as t}from"./swc.Cl2X6-fK.js";import{S as e}from"./swc.fxarMd8g.js";impo
                 ${this.dismissable?this.renderDismiss():i}
             </div>
         `}shouldUpdate(t){return t.has("mode")&&this.mode&&(this.dismissable=!1),t.has("dismissable")&&this.dismissable&&(this.dismissable=!this.mode),super.shouldUpdate(t)}firstUpdated(t){super.firstUpdated(t),this.setAttribute("role","dialog")}updated(t){super.updated(t)}}C([a(".close-button")],$.prototype,"closeButton"),C([r({type:Boolean,reflect:!0})],$.prototype,"error"),C([r({type:Boolean,reflect:!0})],$.prototype,"dismissable"),C([r({type:String,reflect:!0,attribute:"dismiss-label"})],$.prototype,"dismissLabel"),C([r({type:Boolean,reflect:!0,attribute:"no-divider"})],$.prototype,"noDivider"),C([r({type:String,reflect:!0})],$.prototype,"mode"),C([r({type:String,reflect:!0})],$.prototype,"size"),n("sp-dialog",$);var E=Object.freeze({__proto__:null});export{B as A,E as s};
-//# sourceMappingURL=swc.C0qv4llH.js.map
+//# sourceMappingURL=swc.oJN--sLY.js.map
