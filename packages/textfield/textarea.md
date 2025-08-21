@@ -261,7 +261,7 @@ Textareas support standard form input behaviors:
 
 - **Text input**: Users can type and edit multiline text
 - **Scrolling**: Content scrolls vertically when it exceeds the visible area
-- **Resizing**: Can be resized by users when the `grows` attribute is not set
+- **Resizing _(optional)_**: Can be resized by users when the `grows` attribute is not set
 - **Form integration**: Works with standard HTML forms and validation
 
 #### Managed validation
