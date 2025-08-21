@@ -125,7 +125,6 @@ export const webkit = playwrightLauncher({
     launchOptions: {
         // Enable tab navigation through all focusable elements
         args: [
-            '--enable-tabs-to-links',
             // Additional WebKit stability flags for CI environments
             '--disable-web-security',
             '--disable-features=VizDisplayCompositor',
