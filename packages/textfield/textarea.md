@@ -280,7 +280,7 @@ Textareas support standard form input behaviors:
 >
     <sp-help-text slot="help-text">Words can be space-separated.</sp-help-text>
     <sp-help-text slot="negative-help-text">
-        Words ust start with the letter "E".
+        Words must start with the letter "E".
     </sp-help-text>
 </sp-textfield>
 ```
