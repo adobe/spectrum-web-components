@@ -19,6 +19,7 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 export const chromium = playwrightLauncher({
     product: 'chromium',
     concurrency: 4,
+    launchOptions: { channel: 'chromium' },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -37,6 +38,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
         }),
     launchOptions: {
         headless: false,
+        channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
             '--headless=new',
@@ -61,6 +63,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
         }),
     launchOptions: {
         headless: false,
+        channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
             '--headless=new',
@@ -78,6 +81,7 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
+        channel: 'chromium',
         args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
@@ -119,10 +123,6 @@ export const webkit = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
         }),
-    launchOptions: {
-        // Enable tab navigation through all focusable elements
-        args: ['--enable-tabs-to-links'],
-    },
 });
 
 const tools = fs
