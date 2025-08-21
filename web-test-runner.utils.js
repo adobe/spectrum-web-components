@@ -122,15 +122,6 @@ export const webkit = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
         }),
-    launchOptions: {
-        // Enable tab navigation through all focusable elements
-        args: [
-            // Additional WebKit stability flags for CI environments
-            '--disable-web-security',
-            '--disable-features=VizDisplayCompositor',
-            '--max_old_space_size=4096',
-        ],
-    },
 });
 
 const tools = fs
