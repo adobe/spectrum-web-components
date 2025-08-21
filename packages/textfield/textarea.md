@@ -26,7 +26,7 @@ import { Textfield } from '@spectrum-web-components/textfield';
 
 ### Anatomy
 
-A text area consistes of an area for the user to enter text and optional placeholder text. It should be used with an [field label](../field-label/index.md) element.
+A text area consists of an area for the user to enter text and optional placeholder text. It should be used with an [field label](../field-label/index.md) element.
 
 ```html
 <sp-field-label for="story-0">Background</sp-field-label>
