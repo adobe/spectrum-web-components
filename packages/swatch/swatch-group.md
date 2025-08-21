@@ -173,17 +173,17 @@ Swatch groups come in 3 densities: regular (default), compact, and spacious. The
 
 An `<sp-swatch-group>` element has two selection modes. The `selects` property can be set to either `single`, indicating a user can choose up to one swatch, or `multiple`, indicating a user can choose more than one swatch.
 
-When the `selects` property is set to one of these values, the `selected` property of `<sp-swatch-group>` will surface an array the represents the string values that have been selected in the UI. This `selected` property can be populated in two ways: though user input, or directly from `<sp-swatch>` children.
+When the `selects` property is set to one of these values, the `selected` property of `<sp-swatch-group>` will surface an array the represents the string values that have been selected in the UI. This `selected` property can be populated in two ways: through user input, or directly from `<sp-swatch>` children.
 
 When the value of `selected` is updated via user input, the `change` event will be dispatched on the `<sp-swatch-group>` element to announce that interaction. Calling `preventDefault()` on the `change` event will prevent both the `<sp-swatch-group>` and the `<sp-swatch>` that initiated the `change` interaction from updating their `selected` values.
 
 The value of the `selected` property also can be provided directly from the `<sp-swatch>` children. Child `<sp-swatch>` elements with their own `selected` attribute will be gathered and merged with any other selection data on the `<sp-swatch-group>` parent to populate `selected`.
 
+The `selected` property is always an array, so applications can programmatically set multiple selections regardless of the value of `selects`. However, user interactions will respect the `selects` property and enforce either single or multiple selection behavior accordingly.
+
 <sp-tabs selected="single" auto label="Selection Attribute Options">
 <sp-tab value="single">Single</sp-tab>
 <sp-tab-panel value="single">
-
-The `selected` property is always an array, so applications can programmatically set multiple selections regardless of the value of `selects`. However, user interactions will respect the `selects` property and enforce either single or multiple selection behavior accordingly.
 
 ```html
 <sp-swatch-group
@@ -282,11 +282,35 @@ Once applied to an `<sp-swatch-group>` element, the value of the `border`, `roun
 ```
 
 </sp-tab-panel>
+<sp-tab value="no-rounding">No Rounding</sp-tab>
+<sp-tab-panel value="no-rounding">
+
+```html
+<sp-swatch-group rounding="none">
+    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+</sp-swatch-group>
+```
+
+</sp-tab-panel>
 <sp-tab value="border">Border</sp-tab>
 <sp-tab-panel value="border">
 
 ```html
 <sp-swatch-group border="light">
+    <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
+</sp-swatch-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="no-border">No Border</sp-tab>
+<sp-tab-panel value="no-border">
+
+```html
+<sp-swatch-group border="none">
     <sp-swatch color="var(--spectrum-blue-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-indigo-500)"></sp-swatch>
     <sp-swatch color="var(--spectrum-purple-500)"></sp-swatch>
