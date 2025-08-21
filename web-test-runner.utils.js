@@ -39,9 +39,9 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
         }),
     launchOptions: {
         headless: false,
-        channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
+            '--headless=new',
             /**
              * Cause `measureUserAgentSpecificMemory()` to GC immediately,
              * instead of up to 20s later:
@@ -63,9 +63,9 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
         }),
     launchOptions: {
         headless: false,
-        channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
+            '--headless=new',
             /**
              * Cause `measureUserAgentSpecificMemory()` to GC immediately,
              * instead of up to 20s later:
