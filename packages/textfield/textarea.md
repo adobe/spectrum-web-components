@@ -149,7 +149,7 @@ Use the `placeholder` attribute to include placeholder text. **Note**: Placehold
 <sp-field-label size="xl" for="story-xl">Background</sp-field-label>
 <sp-textfield
     size="xl"
-    id="story-0-xl"
+    id="story-xl"
     multiline
     placeholder="Enter your life story"
 >
