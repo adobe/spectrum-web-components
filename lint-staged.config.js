@@ -26,7 +26,9 @@ export default {
         'yarn install --refresh-lockfile',
         'git add tools/base/src/version.js yarn.lock',
     ],
-    '.changeset/*.md': ['sed -i "" -E "s/`?(<[a-zA-Z]+(-[a-zA-Z]+)*>)`?/`\\1`/g"'],
+    '.changeset/*.md': [
+        'sed -i "" -E "s/`?(<[a-zA-Z]+(-[a-zA-Z]+)*>)`?/`\\1`/g"',
+    ],
     '!(*.css|*.ts)': [
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
