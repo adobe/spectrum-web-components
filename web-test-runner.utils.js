@@ -35,20 +35,19 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
     launchOptions: {
         headless: false,
         channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
-            '--headless=new',
             /**
              * Cause `measureUserAgentSpecificMemory()` to GC immediately,
              * instead of up to 20s later:
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
-            '--lang=en-US',
         ],
     },
 });
@@ -60,20 +59,19 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
     launchOptions: {
         headless: false,
         channel: 'chromium',
         args: [
             '--js-flags=--expose-gc',
-            '--headless=new',
             /**
              * Cause `measureUserAgentSpecificMemory()` to GC immediately,
              * instead of up to 20s later:
              * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
              **/
             '--enable-blink-features=ForceEagerMeasureMemory',
-            '--lang=en-US',
         ],
     },
 });
@@ -88,6 +86,7 @@ export const chromiumWithFlags = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
 });
 
@@ -123,6 +122,16 @@ export const webkit = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
         }),
+    launchOptions: {
+        // Enable tab navigation through all focusable elements
+        args: [
+            '--enable-tabs-to-links',
+            // Additional WebKit stability flags for CI environments
+            '--disable-web-security',
+            '--disable-features=VizDisplayCompositor',
+            '--max_old_space_size=4096',
+        ],
+    },
 });
 
 const tools = fs

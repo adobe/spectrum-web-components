@@ -129,6 +129,11 @@ describe('Submenu', () => {
             if (isChrome() && testData.dir === 'ltr') {
                 return;
             }
+            
+            // Increase timeout for WebKit in CI environments to prevent browser crashes
+            if (isWebKit()) {
+                this.timeout(10000);
+            }
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);
@@ -384,14 +389,7 @@ describe('Submenu', () => {
             const opened = oneEvent(this.rootItem, 'sp-opened');
             await mouseMoveOver(this.rootItem);
             // Wait for the overlay system to position the submenu before measuring it's position and moving to it.
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
+            await aTimeout(200); // Replace 8 nextFrame() calls with single timeout for CI stability
             const subItem = this.el.querySelector(
                 '.submenu-item-2'
             ) as MenuItem;

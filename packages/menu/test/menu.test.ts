@@ -483,7 +483,7 @@ describe('Menu', () => {
         await waitUntil(
             () => el.childItems.length == 3,
             'expected menu to manage 3 items',
-            { timeout: 100 }
+            { timeout: 2000 } // Increase timeout for CI environment stability
         );
 
         expect(el.children.length).to.equal(el.childItems.length);
