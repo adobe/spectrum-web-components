@@ -196,28 +196,43 @@ systemVariants.forEach((systemVariant) => {
 vrtGroups = [
     ...vrtGroups,
     ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
+        const skipPkgs = ['bundle', 'modal', 'clear-button', 'close-button'];
         if (!skipPkgs.includes(pkg)) {
-            acc.push({
-                name: `vrt-${pkg}`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-            acc.push({
-                name: `vrt-${pkg}-single`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    systemVariant: 'spectrum',
-                    color: 'light',
-                    scale: 'medium',
-                    dir: 'ltr',
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
+            // Check if the package has VRT test files
+            const testDir = pkg.startsWith('tools/')
+                ? `${pkg}/test`
+                : `packages/${pkg}/test`;
+            try {
+                if (fs.statSync(testDir).isDirectory()) {
+                    const vrtFiles = fs
+                        .readdirSync(testDir)
+                        .filter((file) => file.endsWith('.test-vrt.js'));
+                    if (vrtFiles.length > 0) {
+                        acc.push({
+                            name: `vrt-${pkg}`,
+                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                            testRunnerHtml: vrtHTML({
+                                reduceMotion: true,
+                            }),
+                            browsers: [chromium],
+                        });
+                        acc.push({
+                            name: `vrt-${pkg}-single`,
+                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                            testRunnerHtml: vrtHTML({
+                                systemVariant: 'spectrum',
+                                color: 'light',
+                                scale: 'medium',
+                                dir: 'ltr',
+                                reduceMotion: true,
+                            }),
+                            browsers: [chromium],
+                        });
+                    }
+                }
+            } catch {
+                // Directory doesn't exist or can't be read, skip this package
+            }
         }
         return acc;
     }, []),
