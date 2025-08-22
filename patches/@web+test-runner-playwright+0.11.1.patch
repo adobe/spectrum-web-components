@@ -1,0 +1,10 @@
+diff --git a/node_modules/@web/test-runner-playwright/dist/PlaywrightLauncherPage.js b/node_modules/@web/test-runner-playwright/dist/PlaywrightLauncherPage.js
+index 25ee085..f8a9b2e 100644
+--- a/node_modules/@web/test-runner-playwright/dist/PlaywrightLauncherPage.js
++++ b/node_modules/@web/test-runner-playwright/dist/PlaywrightLauncherPage.js
+@@ -30,7 +30,7 @@ class PlaywrightLauncherPage {
+             : undefined;
+         // navigate to an empty page to kill any running code on the page, stopping timers and
+         // breaking a potential endless reload loop
+-        await this.playwrightPage.goto('about:blank');
++        // await this.playwrightPage.goto('about:blank');
