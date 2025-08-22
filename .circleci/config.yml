@@ -229,17 +229,23 @@ jobs:
 
     test-firefox:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-firefox.js
+                  command: |
+                      mkdir test-results
+                      yarn serve &
+                      TESTFILES=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js")
+                      echo "$TESTFILES" | circleci tests run --command="xargs yarn test:start --files $TESTFILES  --config=web-test-runner.config.ci-firefox.js --reporter=junit" --verbose --split-by=timings
             - store_test_results:
                   path: /root/project/results/
 
     test-webkit:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream

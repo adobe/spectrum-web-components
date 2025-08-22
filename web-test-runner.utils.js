@@ -18,7 +18,6 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
-    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -116,7 +115,7 @@ export const firefox = playwrightLauncher({
 
 export const webkit = playwrightLauncher({
     product: 'webkit',
-    concurrency: 2,
+    concurrency: 4,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
