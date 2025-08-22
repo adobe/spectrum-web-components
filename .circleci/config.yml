@@ -239,7 +239,7 @@ jobs:
                       mkdir test-results
                       echo $(circleci tests glob "{packages,tools}/**/*.test.js")
                       TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit
             - store_test_results:
                   path: results.xml
 
@@ -255,7 +255,7 @@ jobs:
                       mkdir test-results
                       echo $(circleci tests glob "{packages,tools}/**/*.test.js")
                       TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit
             - store_test_results:
                   path: results.xml
 
