@@ -8,7 +8,7 @@ executors:
     node:
         docker:
             - image: mcr.microsoft.com/playwright:v1.53.1-noble
-        resource_class: xlarge
+        resource_class: 2xlarge
         environment:
             NODE_ENV: development
             AZCOPY_AUTO_LOGIN_TYPE: SPN
