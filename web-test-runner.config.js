@@ -113,8 +113,7 @@ export default {
         {
             name: 'unit',
             files: [
-                'packages/*/test/*.test.js',
-                'tools/*/test/*.test.js',
+                '{packages,tools}/**/*.test.js',
                 '!{packages,tools}/**/*-memory.test.js',
             ],
         },

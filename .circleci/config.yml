@@ -237,7 +237,7 @@ jobs:
                   name: Run tests
                   command: |
                       mkdir test-results
-                      TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js" "!{packages,tools}/**/*.test-vrt.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js
             - store_test_results:
                   path: results.xml
@@ -252,7 +252,7 @@ jobs:
                   name: Run tests
                   command: |
                       mkdir test-results
-                      TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js" "!{packages,tools}/**/*.test-vrt.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js
             - store_test_results:
                   path: results.xml
