@@ -55,6 +55,10 @@ export class Search extends Textfield {
     @property()
     public override placeholder = 'Search';
 
+    /**
+     * Controls whether the typed value should be held (i.e., not cleared or reset) when the Escape key is pressed.
+     * If set to true, pressing the Escape key will not affect the value in the search field.
+     */
     @property({ type: Boolean })
     public holdValueOnEscape!: boolean;
 
