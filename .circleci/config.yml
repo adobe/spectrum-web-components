@@ -237,9 +237,8 @@ jobs:
                   name: Run tests
                   command: |
                       mkdir test-results
-                      yarn serve &
-                      TESTFILES=$(circleci tests glob "{packages,tools}/**/*.test.js" "!{packages,tools}/**/*-memory.test.js")
-                      echo "$TESTFILES" | circleci tests run --command="xargs yarn test:start --files $TESTFILES  --config=web-test-runner.config.ci-firefox.js --reporter=junit" --verbose --split-by=timings
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit
             - store_test_results:
                   path: results.xml
 
@@ -251,9 +250,12 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-webkit.js
+                  command: |
+                      mkdir test-results
+                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit
             - store_test_results:
-                  path: /root/project/results/
+                  path: results.xml
 
     beta-docs:
         executor: node
