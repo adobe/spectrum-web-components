@@ -42,6 +42,7 @@ import {
     fixture,
     isInteractive,
     isOnTopLayer,
+    mouseClickAway,
 } from '../../../test/testing-helpers.js';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
@@ -587,12 +588,7 @@ describe('Overlay - type="modal", v1', () => {
         });
         it('closes the second "contextmenu" when clicking away', async () => {
             const closed = oneEvent(document, 'sp-closed');
-            await sendMouse([
-                {
-                    type: 'click',
-                    position: [width - width / 8, height - height / 8],
-                },
-            ]);
+            await mouseClickAway(secondMenu);
             await closed;
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
