@@ -236,12 +236,10 @@ jobs:
             - run:
                   name: Run tests
                   command: |
-                      mkdir test-results
-                      echo $(circleci tests glob "{packages,tools}/**/*.test.js")
                       TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit
             - store_test_results:
-                  path: results.xml
+                  path: /root/project/results/
 
     test-webkit:
         executor: node
@@ -252,12 +250,10 @@ jobs:
             - run:
                   name: Run tests
                   command: |
-                      mkdir test-results
-                      echo $(circleci tests glob "{packages,tools}/**/*.test.js")
                       TEST=$(circleci tests glob "{packages,tools}/**/*.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit
             - store_test_results:
-                  path: results.xml
+                  path: /root/project/results/
 
     beta-docs:
         executor: node
