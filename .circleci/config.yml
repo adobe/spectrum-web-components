@@ -207,23 +207,29 @@ commands:
 jobs:
     test-chromium:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run chromium tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-chromium.js --coverage
+                  command: |
+                      TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
     test-chromium-memory:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run memory tests
-                  command: yarn test:focus memory-ci --config web-test-runner.config.ci-chromium.js
+                  command: |
+                      TEST=$(circleci tests glob "packages/*/test/*-memory.test.js" | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 

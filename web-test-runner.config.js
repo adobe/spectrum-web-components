@@ -24,7 +24,6 @@ import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithMemoryTooling,
-    chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
     filterBrowserLogs,
     firefox,
@@ -170,17 +169,11 @@ export default {
                 '!packages/color-*/test/*-memory.test.js',
                 '!tools/grid/test/*-memory.test.js',
             ],
-            browsers: [chromiumWithMemoryToolingCI],
+            browsers: [chromiumWithMemoryTooling],
         },
         {
+            // This is an empty group with no files for the CI to run the unit tests in parallel as a workaround for the fact that we set a default group of 'unit' which has files defined.
             name: 'unit-ci',
-        },
-        {
-            name: 'no-memory-ci',
-            files: [
-                '{packages,tools}/**/*.test.js',
-                '!{packages,tools}/**/*-memory.test.js',
-            ],
         },
     ],
     group: 'unit',
