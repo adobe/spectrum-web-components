@@ -136,6 +136,15 @@
             "files": ["*.json"],
             "parser": "jsonc-eslint-parser",
             "rules": {
+                "jsonc/sort-keys": ["warn"],
+                "notice/notice": "off"
+            }
+        },
+        {
+            "extends": ["plugin:jsonc/recommended-with-jsonc"],
+            "files": ["package.json"],
+            "parser": "jsonc-eslint-parser",
+            "rules": {
                 "jsonc/sort-keys": [
                     "warn",
                     {
@@ -184,14 +193,18 @@
                             "cpu",
                             "publishConfig"
                         ],
-                        "pathPattern": ".*" // Hits the all properties
+                        "pathPattern": "^$" // Top-level properties
                     },
                     {
+                        /*
+                         * This rule excludes export conditions from alphabetical sorting.
+                         * Since node.js processes export conditions in order and chooses the
+                         * first match, they need to be ordered logically, not alphabetically.
+                         */
                         "order": { "type": "asc" },
-                        "pathPattern": ".*"
+                        "pathPattern": "^(?!exports\\[).*" // All properties except export conditions
                     }
-                ],
-                "notice/notice": "off"
+                ]
             }
         }
     ]
