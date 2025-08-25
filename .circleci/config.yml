@@ -215,7 +215,7 @@ jobs:
                   name: Run chromium tests
                   command: |
                       TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci --coverage
             - store_test_results:
                   path: /root/project/results/
 
