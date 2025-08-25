@@ -312,7 +312,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 - include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 - leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
-- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- modified .selected to make `<sp-action-group>` a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
 - shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
 - support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
 - **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
@@ -455,7 +455,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- modified .selected to make `<sp-action-group>` a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
 
 ## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.6.1...@spectrum-web-components/action-group@0.6.2) (2022-01-07)
 

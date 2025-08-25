@@ -289,7 +289,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add reactive controllers package ([d434e9d](https://github.com/adobe/spectrum-web-components/commit/d434e9df151991bac031a0e8c1bde10ebecb5047))
 - include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
-- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- modified .selected to make `<sp-action-group>` a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
 - **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
 
 ## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.4...@spectrum-web-components/reactive-controllers@0.3.5) (2023-01-09)
@@ -361,4 +361,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - add reactive controllers package ([d434e9d](https://github.com/adobe/spectrum-web-components/commit/d434e9df151991bac031a0e8c1bde10ebecb5047))
-- modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+- modified .selected to make `<sp-action-group>` a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))

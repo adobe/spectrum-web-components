@@ -266,7 +266,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/adobe/spectrum-web-components/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
 - **field-label:** do not assume a target is available and surface t-shirt sizing ([c5daead](https://github.com/adobe/spectrum-web-components/commit/c5daead76698733ce52878fc50e01cdb640396cc))
 - move property management into update or willUpdate ([f66069f](https://github.com/adobe/spectrum-web-components/commit/f66069f2e38ea89de67d649b3b0bb84cc726ed73))
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 - update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
 - update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
@@ -487,7 +487,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 
 ### Features
 

@@ -26,6 +26,7 @@ export default {
         'yarn install --refresh-lockfile',
         'git add tools/base/src/version.js yarn.lock',
     ],
+    '.changeset/*.md': ['node ./scripts/escape-changelog-tags.js'],
     '!(*.css|*.ts)': [
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],

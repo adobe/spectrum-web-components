@@ -254,7 +254,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
 - lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
 - proper overflow rtl support ([9b1c9d4](https://github.com/adobe/spectrum-web-components/commit/9b1c9d4470051e059c8e22b544dee7f46d03593a))
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 - **tabs:** add "tablist" part to manage list styles ([bbf8074](https://github.com/adobe/spectrum-web-components/commit/bbf8074b177f51929ec3bddbffcd2c22ad1971b5))
 - **tabs:** correct indicator size by scaling from 100px ([a3fb68b](https://github.com/adobe/spectrum-web-components/commit/a3fb68bb8103bc87a9c1e14e3bca8a5476e3a2f1))
 - **top-nav:** ensure focus state in all contexts ([6de83be](https://github.com/adobe/spectrum-web-components/commit/6de83be28811979284044a395f9cbf9b984f97c6))
@@ -514,7 +514,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 
 ## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.2.0...@spectrum-web-components/top-nav@0.2.1) (2021-03-05)
 

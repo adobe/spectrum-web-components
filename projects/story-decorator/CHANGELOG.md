@@ -294,7 +294,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
 - **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 - remove duplicate box-sizing style from storybook-decorator ([3f45dd7](https://github.com/adobe/spectrum-web-components/commit/3f45dd7fbdca6ffd4d811fd4805ad24b885ef09f))
 - **story-decorator:** ensure reduce motion application in overlays ([3f1bc23](https://github.com/adobe/spectrum-web-components/commit/3f1bc23bb2e87dedd285915c034ea497a0271d07))
 - **story-decorator:** use sp-field-label ([5992c98](https://github.com/adobe/spectrum-web-components/commit/5992c98024bbb9476a18c4a69a024968c05cac17))
@@ -565,7 +565,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.0...@spectrum-web-components/story-decorator@0.3.1) (2021-03-05)
 
