@@ -214,7 +214,7 @@ jobs:
             - run:
                   name: Run chromium tests
                   command: |
-                      TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v "{packages,tools}/**/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
@@ -228,7 +228,7 @@ jobs:
             - run:
                   name: Run memory tests
                   command: |
-                      TEST=$(circleci tests glob "packages/*/test/*-memory.test.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "packages/*/test/*-memory.test.js" | grep -v "packages/color-*/test/*-memory.test.js" | grep -v "tools/grid/test/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
@@ -242,7 +242,7 @@ jobs:
             - run:
                   name: Run firefox tests
                   command: |
-                      TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v "{packages,tools}/**/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
@@ -256,7 +256,7 @@ jobs:
             - run:
                   name: Run webkit tests
                   command: |
-                      TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v "{packages,tools}/**/*-memory.test.js" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
