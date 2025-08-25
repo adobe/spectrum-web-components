@@ -411,5 +411,8 @@
             ]
         }
     },
-    "packageManager": "yarn@4.9.2"
+    "packageManager": "yarn@4.9.2",
+    "dependencies": {
+        "replace-in-file": "^8.3.0"
+    }
 }
