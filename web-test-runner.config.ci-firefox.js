@@ -17,5 +17,4 @@ export default {
     ...standard,
     browsers: [firefox],
     concurrency: 1,
-    groups: standard.groups.filter((group) => group.name === 'unit'),
 };

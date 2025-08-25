@@ -173,6 +173,9 @@ export default {
             browsers: [chromiumWithMemoryToolingCI],
         },
         {
+            name: 'unit-ci',
+        },
+        {
             name: 'no-memory-ci',
             files: [
                 '{packages,tools}/**/*.test.js',

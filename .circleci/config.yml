@@ -237,7 +237,7 @@ jobs:
                   name: Run firefox tests
                   command: |
                       TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -251,7 +251,7 @@ jobs:
                   name: Run webkit tests
                   command: |
                       TEST=$(circleci tests glob "packages/*/test/*.test.js" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
