@@ -28,7 +28,6 @@ export const chromium = playwrightLauncher({
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
-    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -257,8 +256,6 @@ export const configuredVisualRegressionPlugin = () =>
                 ...nameParts
             );
         },
-        failureThresholdType: 'percent',
-        failureThreshold: 3,
     });
 
 export const filterBrowserLogs = (log) => {
