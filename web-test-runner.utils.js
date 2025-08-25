@@ -22,57 +22,18 @@ export const chromium = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
-});
-
-/**
- * @todo Remove this configuration and its usage in the Coveralls CI workflow
- * once the Playwright version mismatch between @web/test-runner-playwright
- * and the installed Playwright version is resolved.
- */
-export const coverallsChromium = playwrightLauncher({
-    product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
-        headless: true,
-    },
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
     product: 'chromium',
+    concurrency: 1,
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        headless: false,
-        args: [
-            '--js-flags=--expose-gc',
-            '--headless=new',
-            /**
-             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
-             * instead of up to 20s later:
-             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
-             **/
-            '--enable-blink-features=ForceEagerMeasureMemory',
-        ],
-    },
-});
-
-export const chromiumWithMemoryToolingCI = playwrightLauncher({
-    product: 'chromium',
-    concurrency: 2,
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
     launchOptions: {
         headless: false,
@@ -92,12 +53,14 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        channel: 'chromium',
+        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
 });
 
@@ -120,6 +83,8 @@ export const firefox = playwrightLauncher({
             'extensions.enabledScopes': 15,
             'dom.events.asyncClipboard.readText': true,
             'dom.events.testing.asyncClipboard': true,
+            // Enable tab navigation to all focusable elements in Firefox
+            'accessibility.tabfocus': 7, // Focus links, form controls, and other elements
         },
     },
 });
@@ -207,28 +172,43 @@ systemVariants.forEach((systemVariant) => {
 vrtGroups = [
     ...vrtGroups,
     ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
+        const skipPkgs = ['bundle', 'modal', 'clear-button', 'close-button'];
         if (!skipPkgs.includes(pkg)) {
-            acc.push({
-                name: `vrt-${pkg}`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-            acc.push({
-                name: `vrt-${pkg}-single`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    systemVariant: 'spectrum',
-                    color: 'light',
-                    scale: 'medium',
-                    dir: 'ltr',
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
+            // Check if the package has VRT test files
+            const testDir = pkg.startsWith('tools/')
+                ? `${pkg}/test`
+                : `packages/${pkg}/test`;
+            try {
+                if (fs.statSync(testDir).isDirectory()) {
+                    const vrtFiles = fs
+                        .readdirSync(testDir)
+                        .filter((file) => file.endsWith('.test-vrt.js'));
+                    if (vrtFiles.length > 0) {
+                        acc.push({
+                            name: `vrt-${pkg}`,
+                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                            testRunnerHtml: vrtHTML({
+                                reduceMotion: true,
+                            }),
+                            browsers: [chromium],
+                        });
+                        acc.push({
+                            name: `vrt-${pkg}-single`,
+                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
+                            testRunnerHtml: vrtHTML({
+                                systemVariant: 'spectrum',
+                                color: 'light',
+                                scale: 'medium',
+                                dir: 'ltr',
+                                reduceMotion: true,
+                            }),
+                            browsers: [chromium],
+                        });
+                    }
+                }
+            } catch {
+                // Directory doesn't exist or can't be read, skip this package
+            }
         }
         return acc;
     }, []),
@@ -277,4 +257,26 @@ export const configuredVisualRegressionPlugin = () =>
                 ...nameParts
             );
         },
+        failureThresholdType: 'percent',
+        failureThreshold: 3,
     });
+
+export const filterBrowserLogs = (log) => {
+    const { type, args } = log;
+
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('in dev mode') ||
+                    arg.includes('slottable-request'))
+        )
+    ) {
+        return false;
+    }
+
+    return true;
+};

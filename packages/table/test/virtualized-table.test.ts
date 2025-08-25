@@ -46,12 +46,7 @@ describe('Virtualized Table', () => {
 
     it('loads virtualized table accessibly', async () => {
         const el = await styledFixture<Table>(virtualized());
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
+        await elementUpdated(el);
         await expect(el).to.be.accessible();
     });
 
@@ -62,7 +57,7 @@ describe('Virtualized Table', () => {
                 style="height: 120px"
                 .items=${virtualItems}
                 .renderItem=${renderItem}
-                scroller?="true"
+                scroller
             >
                 <sp-table-head>
                     <sp-table-head-cell>Column Title</sp-table-head-cell>

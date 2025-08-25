@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 import {
     aTimeout,
     elementUpdated,
@@ -19,18 +18,20 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
+import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     OverlayTrigger,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
+import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
@@ -46,7 +47,11 @@ export const runOverlayTriggerTests = (type: string): void => {
                             }
                         </style>
                         <input type="text" />
-                        <overlay-trigger id="trigger" placement="top">
+                        <overlay-trigger
+                            id="trigger"
+                            placement="top"
+                            triggered-by="click hover"
+                        >
                             <sp-button
                                 id="outer-button"
                                 variant="primary"
@@ -57,7 +62,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                             <sp-popover
                                 id="outer-popover"
                                 slot="click-content"
-                                direction="bottom"
+                                placement="bottom"
                                 tip
                             >
                                 <sp-dialog
@@ -67,6 +72,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                                     <overlay-trigger
                                         id="inner-trigger"
                                         placement="bottom"
+                                        triggered-by="click"
                                     >
                                         <sp-button
                                             id="inner-button"
@@ -287,13 +293,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'hover available at point'
                 ).to.be.true;
                 let closed = oneEvent(this.outerTrigger, 'sp-closed');
-                sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [1, 1],
-                        },
-                    ],
+                await sendMouse({
+                    type: 'click',
+                    position: [1, 1],
                 });
                 await closed;
                 expect(
@@ -549,13 +551,9 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
-                sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [1, 1],
-                        },
-                    ],
+                await sendMouse({
+                    type: 'click',
+                    position: [1, 1],
                 });
                 await innerClose;
                 await outerClose;
@@ -576,14 +574,10 @@ export const runOverlayTriggerTests = (type: string): void => {
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
                 sendMouse({
-                    steps: [
-                        {
-                            type: 'move',
-                            position: [
-                                rect.left + rect.width / 2,
-                                rect.top + rect.height / 2,
-                            ],
-                        },
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
                     ],
                 });
                 await open;
@@ -594,14 +588,10 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const close = oneEvent(this.outerTrigger, 'sp-closed');
                 sendMouse({
-                    steps: [
-                        {
-                            type: 'move',
-                            position: [
-                                rect.left + rect.width * 2,
-                                rect.top + rect.height / 2,
-                            ],
-                        },
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width * 2,
+                        rect.top + rect.height / 2,
                     ],
                 });
                 await close;
@@ -617,14 +607,10 @@ export const runOverlayTriggerTests = (type: string): void => {
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
                 await sendMouse({
-                    steps: [
-                        {
-                            type: 'move',
-                            position: [
-                                rect.left + rect.width / 2,
-                                rect.top + rect.height / 2,
-                            ],
-                        },
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
                     ],
                 });
                 await open;
@@ -634,14 +620,10 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'hover content is available at point'
                 ).to.be.true;
                 await sendMouse({
-                    steps: [
-                        {
-                            type: 'move',
-                            position: [
-                                rect.left + rect.width * 2,
-                                rect.top + rect.height / 2,
-                            ],
-                        },
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width * 2,
+                        rect.top + rect.height / 2,
                     ],
                 });
                 await close;
@@ -665,13 +647,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                 expect(openedEvent.detail.interaction).to.equal('auto');
 
                 const closed = oneEvent(this.outerButton, 'sp-closed');
-                sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [1, 1],
-                        },
-                    ],
+                await sendMouse({
+                    type: 'click',
+                    position: [1, 1],
                 });
                 const closedEvent = await closed;
                 expect(closedEvent.detail.interaction).to.equal('auto');

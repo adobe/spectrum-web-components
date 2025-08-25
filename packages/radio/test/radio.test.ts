@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/radio/sp-radio.js';
-import { Radio } from '@spectrum-web-components/radio';
 import {
     elementUpdated,
     expect,
@@ -20,8 +18,10 @@ import {
     triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { Radio } from '@spectrum-web-components/radio';
+import '@spectrum-web-components/radio/sp-radio.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -34,16 +34,14 @@ describe('Radio', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div id="test-radio">
-                    <sp-radio value="first" checked>Option 1</sp-radio>
-                    <sp-radio value="second">Option 2</sp-radio>
-                    <sp-radio value="third" autofocus>Option 3</sp-radio>
-                    <sp-radio value="fourth" disabled>Option 4</sp-radio>
-                </div>
-            `
-        );
+        testDiv = await fixture<HTMLDivElement>(html`
+            <div id="test-radio">
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+                <sp-radio value="third" autofocus>Option 3</sp-radio>
+                <sp-radio value="fourth" disabled>Option 4</sp-radio>
+            </div>
+        `);
     });
     it('loads', async () => {
         const el = testDiv.querySelector('sp-radio[value=first]') as Radio;
@@ -153,25 +151,18 @@ describe('Radio', () => {
             expect(el.checked).to.be.true;
         });
         it('imperatively', async () => {
-            const boundingClientRecrt = el.getBoundingClientRect();
-            const radioPosition: [number, number] = [
-                boundingClientRecrt.x + boundingClientRecrt.width / 2,
-                boundingClientRecrt.y + boundingClientRecrt.height / 2,
-            ];
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: radioPosition,
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [el],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ]);
             await elementUpdated(el);
 
             expect(el.checked).to.be.true;

@@ -9,20 +9,22 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { Textfield, TextfieldType } from '../';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import {
     isFirefox,
     isWebKit,
 } from '@spectrum-web-components/shared/src/platform.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { Textfield, TextfieldType } from '../';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import {
+    fixture,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -171,30 +173,29 @@ describe('Textfield', () => {
         const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
             .focusElement;
         const startBounds = sizedElement.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [startBounds.right - 6, startBounds.bottom - 6],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: [startBounds.right + 50, startBounds.bottom + 50],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [startBounds.right - 6, startBounds.bottom - 6],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: [startBounds.right + 50, startBounds.bottom + 50],
+            },
+            {
+                type: 'up',
+            },
+        ]);
 
         const endBounds = sizedElement.getBoundingClientRect();
         expect(endBounds.height).equals(startBounds.height);
         expect(endBounds.width).equals(startBounds.width);
     });
     it('resizes by default', async function () {
+        // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             this.skip();
         }
@@ -209,24 +210,22 @@ describe('Textfield', () => {
         const sizedElement = (el as HTMLElement & { focusElement: HTMLElement })
             .focusElement;
         const startBounds = sizedElement.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [startBounds.right - 6, startBounds.bottom - 6],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: [startBounds.right + 50, startBounds.bottom + 50],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [startBounds.right - 6, startBounds.bottom - 6],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: [startBounds.right + 50, startBounds.bottom + 50],
+            },
+            {
+                type: 'up',
+            },
+        ]);
 
         const endBounds = sizedElement.getBoundingClientRect();
         expect(endBounds.height).to.be.greaterThan(startBounds.height);
@@ -243,24 +242,22 @@ describe('Textfield', () => {
         `);
         const startBounds = el.getBoundingClientRect();
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [startBounds.right - 2, startBounds.bottom - 2],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: [startBounds.right + 50, startBounds.bottom + 50],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [startBounds.right - 2, startBounds.bottom - 2],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: [startBounds.right + 50, startBounds.bottom + 50],
+            },
+            {
+                type: 'up',
+            },
+        ]);
 
         const endBounds = el.getBoundingClientRect();
         expect(endBounds.width).equals(startBounds.width);
@@ -1040,10 +1037,10 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            // There's an issue in the way Firefox processes the a11y tree for
+            // TODO: There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error
-            // when our tooling no longer runs into this error.
+            // when our tooling no longer runs into this error. Will review in the migration to Spectrum 2.
             try {
                 await findDescribedNode(name, descriptionNegative);
                 if (isFirefox()) {
@@ -1079,10 +1076,10 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            // There's an issue in the way Firefox processes the a11y tree for
+            // TODO: There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error
-            // when our tooling no longer runs into this error.
+            // when our tooling no longer runs into this error. Will review in the migration to Spectrum 2.
             try {
                 await findDescribedNode(name, descriptionNegative);
                 if (isFirefox()) {

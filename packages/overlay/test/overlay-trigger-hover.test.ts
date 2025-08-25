@@ -37,6 +37,8 @@ import { Tooltip } from '@spectrum-web-components/tooltip';
 import {
     fixture,
     ignoreResizeObserverLoopError,
+    mouseMoveAway,
+    mouseMoveOver,
 } from '../../../test/testing-helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -61,6 +63,7 @@ describe('Overlay Trigger - Hover', () => {
                 <overlay-trigger
                     placement="right-start"
                     open="hover"
+                    triggered-by="hover"
                     @sp-opened=${() => openedSpy()}
                     @sp-closed=${() => closedSpy()}
                 >
@@ -72,6 +75,10 @@ describe('Overlay Trigger - Hover', () => {
             `)()
         );
         await elementUpdated(el);
+        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+
+        await mouseMoveOver(trigger);
+        await elementUpdated(el);
 
         await waitUntil(
             () => openedSpy.calledOnce,
@@ -79,7 +86,7 @@ describe('Overlay Trigger - Hover', () => {
             { timeout: 2000 }
         );
 
-        el.removeAttribute('open');
+        await mouseMoveAway(trigger);
         await elementUpdated(el);
 
         await waitUntil(() => closedSpy.calledOnce, 'hover content returned', {
@@ -93,7 +100,10 @@ describe('Overlay Trigger - Hover', () => {
         beforeEach(async () => {
             el = await fixture<OverlayTrigger>(
                 (() => html`
-                    <overlay-trigger placement="right-start">
+                    <overlay-trigger
+                        placement="right-start"
+                        triggered-by="hover"
+                    >
                         <sp-action-button slot="trigger">
                             <sp-icon-magnify slot="icon"></sp-icon-magnify>
                         </sp-action-button>
@@ -203,7 +213,7 @@ describe('Overlay Trigger - Hover', () => {
     it('persists hover content', async () => {
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start">
+                <overlay-trigger placement="right-start" triggered-by="hover">
                     <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
@@ -236,7 +246,10 @@ describe('Overlay Trigger - Hover', () => {
     it('closes persistent hover content on `longpress`', async () => {
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start">
+                <overlay-trigger
+                    placement="right-start"
+                    triggered-by="hover longpress"
+                >
                     <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
@@ -273,7 +286,11 @@ describe('Overlay Trigger - Hover', () => {
     it('closes `hover` overlay when [type="modal"]', async () => {
         const el = await fixture<OverlayTrigger>(
             (() => html`
-                <overlay-trigger placement="right-start" type="modal">
+                <overlay-trigger
+                    placement="right-start"
+                    type="modal"
+                    triggered-by="hover"
+                >
                     <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
                     </sp-action-button>
@@ -305,7 +322,7 @@ describe('Overlay Trigger - Hover', () => {
     });
     it('will not return focus to a "modal" parent', async () => {
         const el = await styledFixture<OverlayTrigger>(html`
-            <overlay-trigger type="modal">
+            <overlay-trigger type="modal" triggered-by="click">
                 <sp-button slot="trigger">Toggle Dialog</sp-button>
                 <sp-dialog-wrapper
                     slot="click-content"
@@ -314,7 +331,7 @@ describe('Overlay Trigger - Hover', () => {
                 >
                     ${[1, 2, 3, 4].map(
                         (index) => html`
-                            <overlay-trigger>
+                            <overlay-trigger triggered-by="hover">
                                 <sp-button slot="trigger" id="button-${index}">
                                     Button with Tooltip ${index}
                                 </sp-button>

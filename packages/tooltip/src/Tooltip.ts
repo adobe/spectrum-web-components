@@ -27,9 +27,9 @@ import type {
     Placement,
 } from '@spectrum-web-components/overlay';
 
-import tooltipStyles from './tooltip.css.js';
-import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import { focusableSelector } from '@spectrum-web-components/shared/src/focusable-selectors.js';
+import tooltipStyles from './tooltip.css.js';
 
 class TooltipOpenable extends HTMLElement {
     constructor() {
@@ -205,15 +205,38 @@ export class Tooltip extends SpectrumElement {
         );
     }
 
+    /**
+     * Finds the trigger element for a self-managed tooltip by traversing up the composed DOM tree.
+     *
+     * Self-managed tooltips automatically bind to their first focusable ancestor element.
+     * This method walks up through shadow DOM boundaries to find a suitable trigger element.
+     *
+     * A trigger element must match the focusableSelector, which includes:
+     * - Interactive elements like buttons, inputs, links, etc.
+     * - Elements with tabindex (except -1)
+     * - Elements with focusable="true"
+     *
+     * Common scenarios where no trigger element is found:
+     * 1. Tooltip is placed directly in document body without a focusable parent
+     * 2. Tooltip is nested in non-interactive elements (divs, spans) without focusable ancestors
+     * 3. All ancestor elements have tabindex="-1" or are otherwise non-focusable
+     *
+     * Expected usage: <sp-action-button><sp-tooltip self-managed>...</sp-tooltip></sp-action-button>
+     *
+     * @returns The first focusable ancestor element, or null if none found
+     */
     private get triggerElement(): HTMLElement | null {
-        // Resolve the parent element of the assigned slot (if one exists) or of the Tooltip.
+        // Start from the assigned slot (if tooltip is slotted) or the tooltip itself
         let start: HTMLElement = this.assignedSlot || this;
         let root = start.getRootNode();
+
+        // Check if we've reached the document root without finding a parent
+        // This happens when the tooltip is at the top level without a container
         if (root === document) {
             if (window.__swc.DEBUG) {
                 window.__swc.warn(
                     this,
-                    `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
+                    `[INITIAL_TRAVERSAL] Self-managed <${this.localName}> is at document root without a parent element. Self-managed tooltips must be nested inside focusable elements like <sp-action-button>, <sp-button>, or elements with tabindex.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays',
                     {
                         level: 'high',
@@ -222,20 +245,32 @@ export class Tooltip extends SpectrumElement {
             }
             return null;
         }
+
+        // Get the initial candidate trigger element:
+        // 1. Direct parent element in the same document/shadow root
+        // 2. Shadow host if we're in a shadow root
+        // 3. The root itself as fallback
         let triggerElement = (start.parentElement ||
             (root as ShadowRoot).host ||
-            /* c8 ignore next 1 */
             root) as HTMLElement;
+
+        // Walk up the composed tree until we find a focusable element
+        // The focusableSelector matches interactive elements that can receive focus
         while (!triggerElement?.matches?.(focusableSelector)) {
+            // Move to the next level up in the composed tree
+            // This handles both regular DOM and shadow DOM traversal
             start =
                 triggerElement.assignedSlot || (triggerElement as HTMLElement);
             root = start.getRootNode();
+
             /* c8 ignore next 13 */
+            // Check if we've reached the document root during traversal
+            // This happens when no focusable ancestor is found
             if (root === document) {
                 if (window.__swc.DEBUG) {
                     window.__swc.warn(
                         this,
-                        `Self managed <${this.localName}> elements walk up the composed tree to acquire a trigger element. No trigger element was found before the document.`,
+                        `[TRAVERSAL_EXHAUSTED] Self-managed <${this.localName}> could not find a focusable trigger element. All ancestor elements are non-focusable. Ensure the tooltip is nested inside an interactive element like <sp-action-button>, <sp-button>, or add tabindex="0" to a parent element.`,
                         'https://opensource.adobe.com/spectrum-web-components/components/tooltip#self-managed-overlays',
                         {
                             level: 'high',
@@ -244,11 +279,14 @@ export class Tooltip extends SpectrumElement {
                 }
                 return null;
             }
+
+            // Continue traversing up to find the next candidate
             triggerElement = (start.parentElement ||
                 (root as ShadowRoot).host ||
                 /* c8 ignore next 1 */
                 root) as HTMLElement;
         }
+
         return triggerElement;
     }
 

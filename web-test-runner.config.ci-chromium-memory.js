@@ -11,10 +11,10 @@
  */
 
 import standard from './web-test-runner.config.ci.js';
+import { chromiumWithMemoryTooling } from './web-test-runner.utils.js';
 
-standard.concurrency = 8;
-standard.testsFinishTimeout = 200000;
-standard.testFramework.config.timeout = 100000;
-standard.testFramework.config.retries = 0;
-
-export default standard;
+export default {
+    ...standard,
+    browsers: [chromiumWithMemoryTooling],
+    concurrency: 1,
+};

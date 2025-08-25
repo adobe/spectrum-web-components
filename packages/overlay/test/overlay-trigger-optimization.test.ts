@@ -26,7 +26,7 @@ import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
 describe('Overlay Trigger - Trigger Interactions', () => {
     it('accepts valid trigger interaction combinations', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger>
+            <overlay-trigger triggered-by="click hover longpress">
                 <sp-button slot="trigger">Test Button</sp-button>
                 <sp-popover slot="click-content">Click Content</sp-popover>
                 <sp-tooltip slot="hover-content">Hover Content</sp-tooltip>

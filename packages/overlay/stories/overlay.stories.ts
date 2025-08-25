@@ -179,7 +179,11 @@ const template = ({
                     <div id="styled-div">
                         The background of this div should be blue
                     </div>
-                    <overlay-trigger id="inner-trigger" placement="bottom">
+                    <overlay-trigger
+                        id="inner-trigger"
+                        placement="bottom"
+                        triggered-by="click hover"
+                    >
                         <sp-button slot="trigger">Press Me</sp-button>
                         <sp-popover slot="click-content" placement="bottom" tip>
                             <sp-dialog size="s" no-divider>
@@ -222,7 +226,11 @@ export const Default = (args: Properties): TemplateResult => template(args);
 
 export const accordion = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal" placement="top-start">
+        <overlay-trigger
+            type="modal"
+            placement="top-start"
+            triggered-by="click"
+        >
             <style>
                 sp-button {
                     margin-top: 70vh;
@@ -306,7 +314,7 @@ accordion.parameters = {
 
 export const clickAndHoverTarget = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal">
+        <overlay-trigger type="modal" triggered-by="click hover">
             <sp-button variant="primary" slot="trigger">Button</sp-button>
             <sp-popover slot="click-content" placement="bottom" tip>
                 Popover content
@@ -338,7 +346,7 @@ export const clickAndHoverTargets = (): TemplateResult => {
                     cursor: default;
                 }
             </style>
-            <overlay-trigger placement="right">
+            <overlay-trigger placement="right" triggered-by="click">
                 <div class="friendly-target" slot="trigger" tabindex="0">
                     Click me
                 </div>
@@ -346,7 +354,7 @@ export const clickAndHoverTargets = (): TemplateResult => {
                     Ok, now hover the other trigger
                 </sp-tooltip>
             </overlay-trigger>
-            <overlay-trigger placement="left">
+            <overlay-trigger placement="left" triggered-by="hover">
                 <div class="friendly-target" slot="trigger" tabindex="0">
                     Then hover me
                 </div>
@@ -513,7 +521,7 @@ export const complexModal = (): TemplateResult => {
                 place-content: center;
             }
         </style>
-        <overlay-trigger type="modal" open="click">
+        <overlay-trigger type="modal" open="click" triggered-by="click">
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"
@@ -561,11 +569,11 @@ export const customizedClickContent = (
 `;
 
 export const deep = (): TemplateResult => html`
-    <overlay-trigger>
+    <overlay-trigger triggered-by="click">
         <sp-button variant="primary" slot="trigger">
             Open popover 1 with buttons + selfmanaged Tooltips
         </sp-button>
-        <sp-popover slot="click-content" direction="bottom" tip>
+        <sp-popover slot="click-content" placement="bottom" tip>
             <sp-dialog size="s" no-divider>
                 <sp-action-button>
                     <sp-tooltip self-managed placement="bottom">
@@ -583,7 +591,7 @@ export const deep = (): TemplateResult => html`
         </sp-popover>
     </overlay-trigger>
 
-    <overlay-trigger>
+    <overlay-trigger triggered-by="click">
         <sp-button variant="primary" slot="trigger">
             Open popover 2 with buttons without ToolTips
         </sp-button>
@@ -605,16 +613,16 @@ deep.parameters = {
 };
 
 export const deepChildTooltip = (): TemplateResult => html`
-    <overlay-trigger>
+    <overlay-trigger triggered-by="click">
         <sp-button variant="primary" slot="trigger">Open popover</sp-button>
-        <sp-popover slot="click-content" direction="bottom" tip>
+        <sp-popover slot="click-content" plaeemenm="bottom" tip>
             <sp-dialog no-divider>
                 <p>Let us open another overlay here</p>
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click">
                     <sp-button variant="primary" slot="trigger">
                         Open sub popover
                     </sp-button>
-                    <sp-popover slot="click-content" direction="bottom" tip>
+                    <sp-popover slot="click-content" placement="bottom" tip>
                         <sp-dialog no-divider>
                             <p>
                                 Render an action button with tooltips. Clicking
@@ -761,9 +769,9 @@ const definedOverlayDecorator = (
 
 export const definedOverlayElement = (): TemplateResult => {
     return html`
-        <overlay-trigger placement="bottom" type="modal">
+        <overlay-trigger placement="bottom" type="modal" triggered-by="click">
             <sp-button variant="primary" slot="trigger">Open popover</sp-button>
-            <sp-popover slot="click-content" direction="bottom">
+            <sp-popover slot="click-content" placement="bottom">
                 <sp-dialog no-divider>
                     <popover-content></popover-content>
                 </sp-dialog>
@@ -858,7 +866,11 @@ export const edges = (): TemplateResult => {
                 left: 0;
             }
         </style>
-        <overlay-trigger class="demo top-left" placement="bottom">
+        <overlay-trigger
+            class="demo top-left"
+            placement="bottom"
+            triggered-by="hover"
+        >
             <sp-button slot="trigger">
                 Top/
                 <br />
@@ -868,7 +880,11 @@ export const edges = (): TemplateResult => {
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
-        <overlay-trigger class="demo top-right" placement="bottom">
+        <overlay-trigger
+            class="demo top-right"
+            placement="bottom"
+            triggered-by="hover"
+        >
             <sp-button slot="trigger">
                 Top/
                 <br />
@@ -878,7 +894,11 @@ export const edges = (): TemplateResult => {
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
-        <overlay-trigger class="demo bottom-left" placement="top">
+        <overlay-trigger
+            class="demo bottom-left"
+            placement="top"
+            triggered-by="hover"
+        >
             <sp-button slot="trigger">
                 Bottom/
                 <br />
@@ -888,7 +908,11 @@ export const edges = (): TemplateResult => {
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
-        <overlay-trigger placement="top" class="demo bottom-right">
+        <overlay-trigger
+            placement="top"
+            class="demo bottom-right"
+            triggered-by="hover"
+        >
             <sp-button slot="trigger">
                 Bottom/
                 <br />
@@ -904,7 +928,7 @@ export const edges = (): TemplateResult => {
 export const inline = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="inline">
+        <overlay-trigger type="inline" triggered-by="click">
             <sp-button slot="trigger">Open</sp-button>
             <sp-popover slot="click-content">
                 <sp-button
@@ -955,7 +979,7 @@ export const longpress = (): TemplateResult => {
 export const modalLoose = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="modal">
+        <overlay-trigger type="modal" triggered-by="click">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog
                 size="s"
@@ -987,7 +1011,11 @@ export const modalLoose = (): TemplateResult => {
 export const modalNoFocus = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="modal" receives-focus="false">
+        <overlay-trigger
+            type="modal"
+            receives-focus="false"
+            triggered-by="click"
+        >
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog-wrapper
                 underlay
@@ -1032,7 +1060,7 @@ export const modalNoFocus = (): TemplateResult => {
 export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="modal">
+        <overlay-trigger type="modal" triggered-by="click">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog-wrapper
                 underlay
@@ -1070,13 +1098,13 @@ export const modalManaged = (): TemplateResult => {
 
 export const modalWithinNonModal = (): TemplateResult => {
     return html`
-        <overlay-trigger type="inline">
+        <overlay-trigger type="inline" triggered-by="click">
             <sp-button variant="primary" slot="trigger">
                 Open inline overlay
             </sp-button>
             <sp-popover slot="click-content">
                 <sp-dialog size="s" no-divider>
-                    <overlay-trigger type="modal">
+                    <overlay-trigger type="modal" triggered-by="click">
                         <sp-button variant="primary" slot="trigger">
                             Open modal overlay
                         </sp-button>
@@ -1128,7 +1156,7 @@ export const openHoverContent = (args: Properties): TemplateResult =>
 export const replace = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`
-        <overlay-trigger type="replace">
+        <overlay-trigger type="replace" triggered-by="click">
             <sp-button slot="trigger">Open</sp-button>
             <sp-popover slot="click-content">
                 <sp-button
@@ -1153,7 +1181,7 @@ export const sideHoverDraggable = (): TemplateResult => {
             }
         </style>
         <overlay-drag>
-            <overlay-trigger placement="right">
+            <overlay-trigger placement="right" triggered-by="hover">
                 <overlay-target-icon slot="trigger"></overlay-target-icon>
                 <sp-tooltip slot="hover-content" delayed tip="right">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -1177,17 +1205,20 @@ export const sideHoverDraggable = (): TemplateResult => {
 
 export const superComplexModal = (): TemplateResult => {
     return html`
-        <overlay-trigger type="modal">
+        <overlay-trigger type="modal" triggered-by="click">
             <sp-button slot="trigger" variant="accent">Toggle Dialog</sp-button>
             <sp-popover slot="click-content">
                 <sp-dialog size="s">
-                    <overlay-trigger>
+                    <overlay-trigger triggered-by="click">
                         <sp-button slot="trigger" variant="primary">
                             Toggle Dialog
                         </sp-button>
                         <sp-popover slot="click-content">
                             <sp-dialog size="s" no-divider>
-                                <overlay-trigger type="modal">
+                                <overlay-trigger
+                                    type="modal"
+                                    triggered-by="click"
+                                >
                                     <sp-button
                                         slot="trigger"
                                         variant="secondary"
@@ -1232,7 +1263,11 @@ export const updated = (): TemplateResult => {
             }
         </style>
         <overlay-drag>
-            <overlay-trigger class="demo top-left" placement="bottom">
+            <overlay-trigger
+                class="demo top-left"
+                placement="bottom"
+                triggered-by="hover"
+            >
                 <overlay-target-icon
                     slot="trigger"
                     style="translate(400px, 300px)"
@@ -1240,7 +1275,7 @@ export const updated = (): TemplateResult => {
                 <sp-tooltip slot="hover-content" delayed tip="bottom">
                     Click to open popover
                 </sp-tooltip>
-                <sp-popover slot="click-content" position="bottom" tip>
+                <sp-popover slot="click-content" placement="bottom" tip>
                     <sp-dialog size="s" no-divider>
                         <sp-slider
                             value="5"
@@ -1252,7 +1287,11 @@ export const updated = (): TemplateResult => {
                         <div id="styled-div">
                             The background of this div should be blue
                         </div>
-                        <overlay-trigger id="inner-trigger" placement="bottom">
+                        <overlay-trigger
+                            id="inner-trigger"
+                            placement="bottom"
+                            triggered-by="click hover"
+                        >
                             <sp-button slot="trigger">Press Me</sp-button>
                             <sp-popover
                                 slot="click-content"
@@ -1287,7 +1326,7 @@ export const updating = (): TemplateResult => {
         button.style.position = 'fixed';
     };
     return html`
-        <overlay-trigger type="click">
+        <overlay-trigger triggered-by="click">
             <sp-button variant="primary" slot="trigger">
                 Open inline overlay
             </sp-button>

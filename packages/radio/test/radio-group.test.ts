@@ -10,9 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import { Radio, RadioGroup } from '@spectrum-web-components/radio';
 import {
     elementUpdated,
     expect,
@@ -20,6 +17,16 @@ import {
     html,
     nextFrame,
 } from '@open-wc/testing';
+import { Radio, RadioGroup } from '@spectrum-web-components/radio';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
+import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -29,21 +36,12 @@ import {
     enterEvent,
     homeEvent,
 } from '../../../test/testing-helpers.js';
-import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys,
-} from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { spy } from 'sinon';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group></sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group></sp-radio-group>
+        `);
 
         await elementUpdated(el);
 
@@ -56,15 +54,13 @@ describe('Radio Group - focus control', () => {
     });
     it('focuses selected before first', async () => {
         const values = ['first', 'second', 'third'];
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group selected="second">
-                    <sp-radio value=${values[0]}>Option 1</sp-radio>
-                    <sp-radio value=${values[1]}>Option 2</sp-radio>
-                    <sp-radio value=${values[2]}>Option 3</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group selected="second">
+                <sp-radio value=${values[0]}>Option 1</sp-radio>
+                <sp-radio value=${values[1]}>Option 2</sp-radio>
+                <sp-radio value=${values[2]}>Option 3</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
         const selected = el.querySelector('[value="second"]') as Radio;
@@ -78,15 +74,13 @@ describe('Radio Group - focus control', () => {
     });
     it('focuses the child input not the root when [tabindex=-1]', async () => {
         const values = ['first', 'second', 'third'];
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group selected="second">
-                    <sp-radio value=${values[0]}>Option 1</sp-radio>
-                    <sp-radio value=${values[1]}>Option 2</sp-radio>
-                    <sp-radio value=${values[2]}>Option 3</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group selected="second">
+                <sp-radio value=${values[0]}>Option 1</sp-radio>
+                <sp-radio value=${values[1]}>Option 2</sp-radio>
+                <sp-radio value=${values[2]}>Option 3</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
         const first = el.querySelector('[value="first"]') as Radio;
@@ -94,18 +88,15 @@ describe('Radio Group - focus control', () => {
         expect(selected.tabIndex).to.equal(0);
         expect(first.tabIndex).to.equal(-1);
 
-        const firstRect = first.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [firstRect.x + 2, firstRect.y + 2],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [first, 'top-left'],
+            },
+            {
+                type: 'down',
+            },
+        ]);
         await elementUpdated(el);
 
         // Safari can have a situation where it thinks the root is focused, but really something inside of the
@@ -116,17 +107,15 @@ describe('Radio Group - focus control', () => {
         ).to.be.true;
     });
     it('does not select on focus', async () => {
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group>
-                    <sp-radio value="1">Options 1</sp-radio>
-                    <sp-radio value="2">Options 2</sp-radio>
-                    <sp-radio value="3">Options 3</sp-radio>
-                    <sp-radio value="4">Options 4</sp-radio>
-                    <sp-radio value="5">Options 5</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="1">Options 1</sp-radio>
+                <sp-radio value="2">Options 2</sp-radio>
+                <sp-radio value="3">Options 3</sp-radio>
+                <sp-radio value="4">Options 4</sp-radio>
+                <sp-radio value="5">Options 5</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
 
@@ -151,17 +140,15 @@ describe('Radio Group - focus control', () => {
         expect(radio1.checked).to.be.true;
     });
     it('loads accepts keyboard events while focused', async () => {
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group>
-                    <sp-radio>Options 1</sp-radio>
-                    <sp-radio>Options 2</sp-radio>
-                    <sp-radio>Options 3</sp-radio>
-                    <sp-radio>Options 4</sp-radio>
-                    <sp-radio>Options 5</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio>Options 1</sp-radio>
+                <sp-radio>Options 2</sp-radio>
+                <sp-radio>Options 3</sp-radio>
+                <sp-radio>Options 4</sp-radio>
+                <sp-radio>Options 5</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
 
@@ -207,17 +194,15 @@ describe('Radio Group - focus control', () => {
         radio1.blur();
     });
     it('accepts keyboard interactions where `checked` and `calculateFocusInIndex` might conflict', async () => {
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group>
-                    <sp-radio>Options 1</sp-radio>
-                    <sp-radio>Options 2</sp-radio>
-                    <sp-radio>Options 3</sp-radio>
-                    <sp-radio>Options 4</sp-radio>
-                    <sp-radio>Options 5</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio>Options 1</sp-radio>
+                <sp-radio>Options 2</sp-radio>
+                <sp-radio>Options 3</sp-radio>
+                <sp-radio>Options 4</sp-radio>
+                <sp-radio>Options 5</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
 
@@ -238,17 +223,15 @@ describe('Radio Group - focus control', () => {
         expect(radio1.checked).to.be.true;
     });
     it('acknowledges `disabled` and accepts keyboard events while focused', async () => {
-        const el = await fixture<RadioGroup>(
-            html`
-                <sp-radio-group>
-                    <sp-radio value="1" disabled>Option 1</sp-radio>
-                    <sp-radio value="2">Option 2</sp-radio>
-                    <sp-radio value="3">Option 3</sp-radio>
-                    <sp-radio value="4">Option 4</sp-radio>
-                    <sp-radio value="5" disabled>Option 5</sp-radio>
-                </sp-radio-group>
-            `
-        );
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="1" disabled>Option 1</sp-radio>
+                <sp-radio value="2">Option 2</sp-radio>
+                <sp-radio value="3">Option 3</sp-radio>
+                <sp-radio value="4">Option 4</sp-radio>
+                <sp-radio value="5" disabled>Option 5</sp-radio>
+            </sp-radio-group>
+        `);
 
         await elementUpdated(el);
 
@@ -340,56 +323,51 @@ describe('Radio Group', () => {
     let testDiv!: HTMLDivElement;
 
     beforeEach(async () => {
-        testDiv = await fixture<HTMLDivElement>(
-            html`
-                <div id="test-radio-group">
-                    <sp-radio-group id="test-default">
-                        <sp-radio value="first" checked>Option 1</sp-radio>
-                        <sp-radio value="second">Option 2</sp-radio>
-                        <sp-radio value="third">Option 3</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-multiple-checked">
-                        <sp-radio value="first" checked>Option 1</sp-radio>
-                        <sp-radio value="second" checked>Option 2</sp-radio>
-                        <sp-radio value="third">Option 3</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-disabled">
-                        <sp-radio value="first" checked>Option 1</sp-radio>
-                        <sp-radio value="second" disabled>Option 2</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-all-checked">
-                        <sp-radio value="first" checked>Option 1</sp-radio>
-                        <sp-radio value="second" checked>Option 2</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-selected" selected="third">
-                        <sp-radio value="first">Option 1</sp-radio>
-                        <sp-radio value="second">Option 2</sp-radio>
-                        <sp-radio value="third">Option 3</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-selected-click" selected="third">
-                        <sp-radio value="first">Option 1</sp-radio>
-                        <sp-radio value="second">Option 2</sp-radio>
-                        <sp-radio value="third">Option 3</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group
-                        id="test-checked-prioritized"
-                        selected="second"
-                    >
-                        <sp-radio value="first" checked>Option 1</sp-radio>
-                        <sp-radio value="second">Option 2</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-integer-value" selected="5">
-                        <sp-radio value="5" checked>Option 5</sp-radio>
-                        <sp-radio value="7">Option 7</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group id="test-none-selected">
-                        <sp-radio value="first">Option 1</sp-radio>
-                        <sp-radio value="second">Option 2</sp-radio>
-                        <sp-radio value="third">Option 3</sp-radio>
-                    </sp-radio-group>
-                </div>
-            `
-        );
+        testDiv = await fixture<HTMLDivElement>(html`
+            <div id="test-radio-group">
+                <sp-radio-group id="test-default">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                    <sp-radio value="third">Option 3</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-multiple-checked">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second" checked>Option 2</sp-radio>
+                    <sp-radio value="third">Option 3</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-disabled">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second" disabled>Option 2</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-all-checked">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second" checked>Option 2</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-selected" selected="third">
+                    <sp-radio value="first">Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                    <sp-radio value="third">Option 3</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-selected-click" selected="third">
+                    <sp-radio value="first">Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                    <sp-radio value="third">Option 3</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-checked-prioritized" selected="second">
+                    <sp-radio value="first" checked>Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-integer-value" selected="5">
+                    <sp-radio value="5" checked>Option 5</sp-radio>
+                    <sp-radio value="7">Option 7</sp-radio>
+                </sp-radio-group>
+                <sp-radio-group id="test-none-selected">
+                    <sp-radio value="first">Option 1</sp-radio>
+                    <sp-radio value="second">Option 2</sp-radio>
+                    <sp-radio value="third">Option 3</sp-radio>
+                </sp-radio-group>
+            </div>
+        `);
     });
 
     it('loads', () => {
