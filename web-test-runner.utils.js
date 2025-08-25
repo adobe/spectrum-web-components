@@ -97,15 +97,6 @@ export const webkit = playwrightLauncher({
         }),
 });
 
-const tools = fs
-    .readdirSync('tools')
-    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
-
-export const packages = fs
-    .readdirSync('packages')
-    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
-    .concat(tools);
-
 const vrtHTML =
     ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
     (testFramework) =>
@@ -170,47 +161,6 @@ systemVariants.forEach((systemVariant) => {
 
 vrtGroups = [
     ...vrtGroups,
-    ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal', 'clear-button', 'close-button'];
-        if (!skipPkgs.includes(pkg)) {
-            // Check if the package has VRT test files
-            const testDir = pkg.startsWith('tools/')
-                ? `${pkg}/test`
-                : `packages/${pkg}/test`;
-            try {
-                if (fs.statSync(testDir).isDirectory()) {
-                    const vrtFiles = fs
-                        .readdirSync(testDir)
-                        .filter((file) => file.endsWith('.test-vrt.js'));
-                    if (vrtFiles.length > 0) {
-                        acc.push({
-                            name: `vrt-${pkg}`,
-                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                            testRunnerHtml: vrtHTML({
-                                reduceMotion: true,
-                            }),
-                            browsers: [chromium],
-                        });
-                        acc.push({
-                            name: `vrt-${pkg}-single`,
-                            files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                            testRunnerHtml: vrtHTML({
-                                systemVariant: 'spectrum',
-                                color: 'light',
-                                scale: 'medium',
-                                dir: 'ltr',
-                                reduceMotion: true,
-                            }),
-                            browsers: [chromium],
-                        });
-                    }
-                }
-            } catch {
-                // Directory doesn't exist or can't be read, skip this package
-            }
-        }
-        return acc;
-    }, []),
     {
         name: `vrt-hcm`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
@@ -225,6 +175,84 @@ vrtGroups = [
         browsers: [chromium],
     },
 ];
+
+const tools = fs
+    .readdirSync('tools')
+    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
+
+export const packages = fs
+    .readdirSync('packages')
+    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
+    .concat(tools);
+
+export const byPackageOrTool = packages.reduce((acc, pkg) => {
+    const isTool = tools.includes(pkg);
+    const testDir = isTool ? `tools/${pkg}/test` : `packages/${pkg}/test`;
+    // Check if the package has a test directory
+    try {
+        if (fs.statSync(testDir).isDirectory()) {
+            // Unit tests for current package
+            try {
+                acc.push({
+                    name: pkg,
+                    files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test.js`,
+                });
+            } catch {
+                //Directory is missing unit tests, skipping package.
+            }
+
+            // VRT tests for current package
+            try {
+                const vrtFiles = fs
+                    .readdirSync(testDir)
+                    .filter((file) => file.endsWith('.test-vrt.js'));
+
+                if (vrtFiles.length > 0) {
+                    acc.push({
+                        name: `vrt-${pkg}`,
+                        files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test-vrt.js`,
+                        testRunnerHtml: vrtHTML({
+                            reduceMotion: true,
+                        }),
+                        browsers: [chromium],
+                    });
+                    acc.push({
+                        name: `vrt-${pkg}-single`,
+                        files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test-vrt.js`,
+                        testRunnerHtml: vrtHTML({
+                            systemVariant: 'spectrum',
+                            color: 'light',
+                            scale: 'medium',
+                            dir: 'ltr',
+                            reduceMotion: true,
+                        }),
+                        browsers: [chromium],
+                    });
+                }
+            } catch {
+                //Directory is missing unit tests, skipping package. leaving for future reference.
+            }
+        }
+    } catch {
+        //Directory is missing test directory, skipping package. leaving for future reference.
+    }
+
+    return acc;
+}, []);
+
+export const byFile = fs
+    .readdirSync('.', { withFileTypes: true, recursive: true })
+    .reduce((acc, file) => {
+        if (file.isFile()) {
+            if (file.name.endsWith('.test.js')) {
+                acc.push({
+                    name: file.name,
+                    files: file.parentPath + '/' + file.name,
+                });
+            }
+        }
+        return acc;
+    }, []);
 
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({

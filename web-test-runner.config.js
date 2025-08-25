@@ -18,16 +18,16 @@ import {
     sendKeysPlugin,
     setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
-import fs from 'fs';
 import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
+    byFile,
+    byPackageOrTool,
     chromium,
     chromiumWithMemoryTooling,
     configuredVisualRegressionPlugin,
     filterBrowserLogs,
     firefox,
-    packages,
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
@@ -117,34 +117,8 @@ export default {
             ],
         },
         ...vrtGroups,
-        ...packages.reduce((acc, pkg) => {
-            const skipPkgs = [
-                'bundle',
-                'icons-ui',
-                'icons-workflow',
-                'modal',
-                'styles',
-                'clear-button',
-                'close-button',
-            ];
-            if (!skipPkgs.includes(pkg)) {
-                // Check if the package has a test directory
-                const testDir = pkg.startsWith('tools/')
-                    ? `${pkg}/test`
-                    : `packages/${pkg}/test`;
-                try {
-                    if (fs.statSync(testDir).isDirectory()) {
-                        acc.push({
-                            name: pkg,
-                            files: `{packages,tools}/${pkg}/test/*.test.js`,
-                        });
-                    }
-                } catch {
-                    // Directory doesn't exist, skip this package
-                }
-            }
-            return acc;
-        }, []),
+        ...byPackageOrTool,
+        ...byFile,
         {
             name: 'overlay-api',
             files: [
