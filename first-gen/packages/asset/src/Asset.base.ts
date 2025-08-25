@@ -10,27 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    CSSResultArray,
-    html,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { StatusLightBase } from './StatusLight.base.js';
-import statusLightStyles from './status-light.css.js';
+import { SpectrumElement } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-/**
- * @element sp-status-light
- *
- * @slot - text label of the Status Light
- */
-export class StatusLight extends StatusLightBase {
-    public static override get styles(): CSSResultArray {
-        return [statusLightStyles];
-    }
+export abstract class AssetBase extends SpectrumElement {
+    @property({ type: String, reflect: true })
+    public variant: 'file' | 'folder' | undefined;
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
+    @property()
+    public label = '';
 }
