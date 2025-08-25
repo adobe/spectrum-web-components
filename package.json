@@ -212,6 +212,9 @@
         "lit-element",
         "lit-html"
     ],
+    "dependencies": {
+        "replace-in-file": "^8.3.0"
+    },
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
@@ -411,8 +414,5 @@
             ]
         }
     },
-    "packageManager": "yarn@4.9.2",
-    "dependencies": {
-        "replace-in-file": "^8.3.0"
-    }
+    "packageManager": "yarn@4.9.2"
 }
