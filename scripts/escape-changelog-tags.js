@@ -1,3 +1,5 @@
+import { replaceInFile } from 'replace-in-file';
+
 // make sure inline tags are escaped
 const tagOptions = {
     files: '.changeset/*.md',
