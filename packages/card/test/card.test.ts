@@ -10,26 +10,29 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/card/sp-card.js';
-import { Card } from '@spectrum-web-components/card';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import { Card } from '@spectrum-web-components/card';
+import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import { setViewport } from '@web/test-runner-commands';
 
+import { Checkbox } from '@spectrum-web-components/checkbox';
+import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    mouseClickOn,
+    spaceEvent,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import {
     Default,
     Horizontal,
     href,
     StoryArgs,
 } from '../stories/card.stories.js';
-import { Checkbox } from '@spectrum-web-components/checkbox';
-import { spy } from 'sinon';
-import { spaceEvent } from '../../../test/testing-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('card', () => {
     testForLitDevWarnings(
@@ -216,24 +219,18 @@ describe('card', () => {
         expect(clickSpy.callCount).to.equal(2);
 
         const img = el.querySelector('img') as HTMLImageElement;
-        const boundingRect = img.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        boundingRect.x + boundingRect.width / 2,
-                        boundingRect.y + boundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [img],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'up',
+            },
+        ]);
 
         expect(clickSpy.callCount).to.equal(3);
     });
@@ -265,36 +262,29 @@ describe('card', () => {
 
         el.click();
 
-        expect(clickSpy.callCount).to.equal(1);
+        expect(
+            clickSpy.callCount,
+            'clickSpy.callCount after card click'
+        ).to.equal(1);
 
         const footer = el.querySelector('[slot="footer"]') as HTMLElement;
-        let boundingRect = footer.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [boundingRect.x, boundingRect.y],
-                },
-            ],
-        });
+        await mouseClickOn(footer, 'top-left');
 
-        expect(clickSpy.callCount).to.equal(2);
+        expect(
+            clickSpy.callCount,
+            'clickSpy.callCount after footer click'
+        ).to.equal(2);
 
         const link = el.querySelector(
             'sp-link[href="https://google.com"]'
         ) as HTMLElement;
         link.setAttribute('style', 'display: block');
-        boundingRect = link.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [boundingRect.x + 2, boundingRect.y + 2],
-                },
-            ],
-        });
+        await mouseClickOn(link, 'top-left');
 
-        expect(clickSpy.callCount).to.equal(2);
+        expect(
+            clickSpy.callCount,
+            'clickSpy.callCount after link click'
+        ).to.equal(2);
     });
     it('converts `Space` to `click` event', async () => {
         const clickSpy = spy();

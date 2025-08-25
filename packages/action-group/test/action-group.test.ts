@@ -22,21 +22,25 @@ import {
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ActionGroup } from '@spectrum-web-components/action-group';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/picker/sp-picker.js';
 import {
     LitElement,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { MenuItem } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { ActionGroup } from '@spectrum-web-components/action-group';
+import { sendKeys } from '@web/test-runner-commands';
+import sinon, { spy } from 'sinon';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -44,19 +48,13 @@ import {
     arrowUpEvent,
     endEvent,
     homeEvent,
-    sendMouseFrom,
-    sendMouseTo,
+    mouseClickAway,
+    mouseClickOn,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
-import { sendKeys } from '@web/test-runner-commands';
-import '@spectrum-web-components/action-group/sp-action-group.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
-import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
-import sinon from 'sinon';
-import { isWebKit } from '@spectrum-web-components/shared';
+import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -272,7 +270,7 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
-        sendMouseTo(firstButton, 'click');
+        await mouseClickOn(firstButton);
 
         await elementUpdated(firstButton);
 
@@ -295,7 +293,7 @@ describe('ActionGroup', () => {
         ).to.equal(-1);
 
         // click outside the action-group and it should loose focus and update the tabIndexes
-        sendMouseFrom(el, 'click');
+        await mouseClickAway(el);
 
         await elementUpdated(el);
 
@@ -322,7 +320,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
 
-        sendMouseTo(actionMenu, 'click');
+        await mouseClickOn(actionMenu);
         await waitUntil(
             () => actionMenu?.strategy?.overlay?.state === 'opened',
             `action-menu opened (status ${actionMenu?.strategy?.overlay?.state})`,
@@ -332,6 +330,7 @@ describe('ActionGroup', () => {
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
+        // TODO: handling browser differences in keyboard navigation. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             // focus on the first menu item as not all items are keyboard focusable in Safari by default
             // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html
@@ -905,18 +904,7 @@ describe('ActionGroup', () => {
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
-        const rect = icon.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseClickOn(icon);
         icon.click();
         await elementUpdated(el);
 
@@ -1543,18 +1531,7 @@ describe('ActionGroup', () => {
 
         const changeSpy = spy();
         test.addEventListener('change', () => changeSpy());
-        const rect = actionButtons[1].getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(actionButtons[1]);
 
         await aTimeout(500);
 

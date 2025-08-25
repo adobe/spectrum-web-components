@@ -18,32 +18,33 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Theme } from '@spectrum-web-components/theme';
-import { TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/button/sp-button.js';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { Button } from '@spectrum-web-components/button';
+import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
+import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { stub } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { mouseClickOn } from '../../../test/testing-helpers.js';
+import {
+    removeSlottableRequest,
+    SlottableRequestEvent,
+} from '../src/slottable-request-event.js';
 import {
     click,
     receivesFocus,
     withSlider,
 } from '../stories/overlay-element.stories.js';
-import {
-    removeSlottableRequest,
-    SlottableRequestEvent,
-} from '../src/slottable-request-event.js';
-import { stub } from 'sinon';
-import { OverlayStateEvent } from '@spectrum-web-components/overlay/src/events.js';
-import { Slider } from '@spectrum-web-components/slider/src/Slider.js';
 
 const OVERLAY_TYPES = ['modal', 'page', 'hint', 'auto', 'manual'] as const;
 type OverlayTypes = (typeof OVERLAY_TYPES)[number];
@@ -571,12 +572,8 @@ describe('sp-overlay', () => {
             // Pointer enter the button to trigger the tooltip
             let opened = oneEvent(button, 'sp-opened');
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             await elementUpdated(overlay);
             // Allow the overlay process time to get started (we're not waiting for it to finish),
@@ -586,31 +583,29 @@ describe('sp-overlay', () => {
             expect(overlay.open).to.be.true;
             // Pointer leave the button to close the tooltip, but...
             // Pointer enter the tooltip to keep the tooltip open
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width / 2,
-                            buttonRect.y + buttonRect.height - 1,
-                        ],
-                    },
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width / 2,
-                            buttonRect.y + buttonRect.height,
-                        ],
-                    },
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width / 2,
-                            buttonRect.y + buttonRect.height + 1,
-                        ],
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [
+                        buttonRect.x + buttonRect.width / 2,
+                        buttonRect.y + buttonRect.height - 1,
+                    ],
+                },
+                {
+                    type: 'move',
+                    position: [
+                        buttonRect.x + buttonRect.width / 2,
+                        buttonRect.y + buttonRect.height,
+                    ],
+                },
+                {
+                    type: 'move',
+                    position: [
+                        buttonRect.x + buttonRect.width / 2,
+                        buttonRect.y + buttonRect.height + 1,
+                    ],
+                },
+            ]);
             // Give the Overlay some time to process what just happened.
             await nextFrame();
             await nextFrame();
@@ -623,24 +618,16 @@ describe('sp-overlay', () => {
             let closed = oneEvent(button, 'sp-closed');
             // point enter the button to trigger the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             // pointer leave the button to close the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width * 2,
-                            buttonRect.y + buttonRect.height * 2,
-                        ] as [number, number],
-                    },
-                ],
+                type: 'move',
+                position: [
+                    buttonRect.x + buttonRect.width * 2,
+                    buttonRect.y + buttonRect.height * 2,
+                ] as [number, number],
             });
             await closed;
 
@@ -649,39 +636,31 @@ describe('sp-overlay', () => {
             opened = oneEvent(button, 'sp-opened');
             // pointer enter the button to trigger the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             await opened;
             await elementUpdated(el);
             closed = oneEvent(button, 'sp-closed');
             // pointer leave the button to close the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width * 2,
-                            buttonRect.y + buttonRect.height * 2,
-                        ] as [number, number],
-                    },
-                ],
+                type: 'move',
+                position: [
+                    buttonRect.x + buttonRect.width * 2,
+                    buttonRect.y + buttonRect.height * 2,
+                ] as [number, number],
             });
             await closed;
         });
         it('stays open when pointer enters overlay from trigger element: self managed', async () => {
-            const button = await styledFixture(html`
+            const button = (await styledFixture(html`
                 <sp-button>
                     This is a button.
                     <sp-tooltip self-managed placement="bottom">
                         Help text.
                     </sp-tooltip>
                 </sp-button>
-            `);
+            `)) as Button;
 
             const el = button.querySelector('sp-tooltip') as Tooltip;
             const buttonRect = button.getBoundingClientRect();
@@ -696,12 +675,8 @@ describe('sp-overlay', () => {
             // Pointer enter the button to trigger the tooltip
             let opened = oneEvent(button, 'sp-opened');
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             // It takes this many frame for the overlay content to actual be queryable.
             // We're trying to do work _before_ `sp-opened` so it's a little tricky.
@@ -721,12 +696,8 @@ describe('sp-overlay', () => {
             // Pointer leave the button to close the tooltip, but...
             // Pointer enter the tooltip to keep the tooltip open
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: tooltipPoint,
-                    },
-                ],
+                type: 'move',
+                position: tooltipPoint,
             });
             await opened;
 
@@ -736,24 +707,16 @@ describe('sp-overlay', () => {
             let closed = oneEvent(button, 'sp-closed');
             // point enter the button to trigger the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             // pointer leave the button to close the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width * 2,
-                            buttonRect.y + buttonRect.height * 2,
-                        ] as [number, number],
-                    },
-                ],
+                type: 'move',
+                position: [
+                    buttonRect.x + buttonRect.width * 2,
+                    buttonRect.y + buttonRect.height * 2,
+                ] as [number, number],
             });
             await closed;
 
@@ -762,12 +725,8 @@ describe('sp-overlay', () => {
             opened = oneEvent(button, 'sp-opened');
             // pointer enter the button to trigger the tooltip
             await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonPoint,
-                    },
-                ],
+                type: 'move',
+                position: buttonPoint,
             });
             await opened;
             expect(el.open).to.be.true;
@@ -775,15 +734,11 @@ describe('sp-overlay', () => {
             closed = oneEvent(button, 'sp-closed');
             // pointer leave the button to close the tooltip
             sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            buttonRect.x + buttonRect.width * 2,
-                            buttonRect.y + buttonRect.height * 2,
-                        ] as [number, number],
-                    },
-                ],
+                type: 'move',
+                position: [
+                    buttonRect.x + buttonRect.width * 2,
+                    buttonRect.y + buttonRect.height * 2,
+                ] as [number, number],
             });
             await closed;
             expect(el.open).to.be.false;
@@ -820,18 +775,7 @@ describe('sp-overlay', () => {
             expect(el.open).to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
-            const buttonRect = button.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            buttonRect.left + buttonRect.width / 2,
-                            buttonRect.top + buttonRect.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(button);
             await opened;
 
             expect(el.open).to.be.true;
@@ -1020,12 +964,8 @@ describe('sp-overlay', () => {
                 expect(el === overlay).to.be.true;
 
                 await sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [50, 400],
-                        },
-                    ],
+                    type: 'click',
+                    position: [50, 400],
                 });
 
                 await aTimeout(200);

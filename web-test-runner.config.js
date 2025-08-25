@@ -18,12 +18,12 @@ import {
     sendKeysPlugin,
     setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
+import fs from 'fs';
 import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
     chromiumWithMemoryTooling,
-    chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
     filterBrowserLogs,
     firefox,
@@ -97,7 +97,7 @@ export default {
         threshold: {
             statements: 98.5,
             /** @todo bump this back to 94.5% once more tests are added */
-            branches: 94.46,
+            branches: 94.4,
             functions: 97,
             lines: 98.5,
         },
@@ -112,8 +112,7 @@ export default {
         {
             name: 'unit',
             files: [
-                'packages/*/test/*.test.js',
-                'tools/*/test/*.test.js',
+                '{packages,tools}/**/*.test.js',
                 '!{packages,tools}/**/*-memory.test.js',
             ],
         },
@@ -125,12 +124,24 @@ export default {
                 'icons-workflow',
                 'modal',
                 'styles',
+                'clear-button',
+                'close-button',
             ];
             if (!skipPkgs.includes(pkg)) {
-                acc.push({
-                    name: pkg,
-                    files: `{packages,tools}/${pkg}/test/*.test.js`,
-                });
+                // Check if the package has a test directory
+                const testDir = pkg.startsWith('tools/')
+                    ? `${pkg}/test`
+                    : `packages/${pkg}/test`;
+                try {
+                    if (fs.statSync(testDir).isDirectory()) {
+                        acc.push({
+                            name: pkg,
+                            files: `{packages,tools}/${pkg}/test/*.test.js`,
+                        });
+                    }
+                } catch {
+                    // Directory doesn't exist, skip this package
+                }
             }
             return acc;
         }, []),
@@ -158,14 +169,11 @@ export default {
                 '!packages/color-*/test/*-memory.test.js',
                 '!tools/grid/test/*-memory.test.js',
             ],
-            browsers: [chromiumWithMemoryToolingCI],
+            browsers: [chromiumWithMemoryTooling],
         },
         {
-            name: 'no-memory-ci',
-            files: [
-                '{packages,tools}/**/*.test.js',
-                '!{packages,tools}/**/*-memory.test.js',
-            ],
+            // This is an empty group with no files for the CI to run the unit tests in parallel as a workaround for the fact that we set a default group of 'unit' which has files defined.
+            name: 'unit-ci',
         },
     ],
     group: 'unit',

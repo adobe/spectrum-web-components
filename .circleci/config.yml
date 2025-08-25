@@ -207,45 +207,58 @@ commands:
 jobs:
     test-chromium:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
-                  name: Run unit tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-chromium.js --coverage
+                  name: Run chromium tests
+                  command: |
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
     test-chromium-memory:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
                   name: Run memory tests
-                  command: yarn test:focus memory-ci --config web-test-runner.config.ci-chromium.js
+                  command: |
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings)
+                      echo $TEST
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
     test-firefox:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
-                  name: Run tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-firefox.js
+                  name: Run firefox tests
+                  command: |
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
     test-webkit:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
-                  name: Run tests
-                  command: yarn test:focus no-memory-ci --config web-test-runner.config.ci-webkit.js
+                  name: Run webkit tests
+                  command: |
+                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
+                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 

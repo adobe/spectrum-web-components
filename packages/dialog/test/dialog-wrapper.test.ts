@@ -19,12 +19,21 @@ import {
 } from '@open-wc/testing';
 import { SinonStub, spy, stub } from 'sinon';
 
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Button } from '@spectrum-web-components/button';
+import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
-import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import {
     lazyHero,
     longContent,
@@ -38,13 +47,6 @@ import {
     wrapperWithHeadline,
     wrapperWithHeadlineNoDivider,
 } from '../stories/dialog-wrapper.stories.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { Theme } from '@spectrum-web-components/theme';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -312,7 +314,7 @@ describe('Dialog Wrapper', () => {
 
             await elementUpdated(el);
 
-            expect(consoleWarnStub.called).to.be.true;
+            expect(consoleWarnStub.called, 'console.warn called').to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
                 spyCall.args.at(0).includes('accessible'),
@@ -339,7 +341,6 @@ describe('Dialog Wrapper', () => {
             'sp-dialog-wrapper'
         ) as DialogWrapper;
         const button = document.querySelector('sp-button') as Button;
-        const rect = button.getBoundingClientRect();
         const contentElement = (
             (dialog as unknown as { dialog: Dialog }).dialog as unknown as {
                 contentElement: HTMLElement;
@@ -348,17 +349,7 @@ describe('Dialog Wrapper', () => {
         expect(contentElement.hasAttribute('tabindex')).to.be.false;
         await elementUpdated(dialog);
         const opened = oneEvent(test, 'sp-opened');
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(button);
         await opened;
         await elementUpdated(dialog);
         await imgReadyPromise;

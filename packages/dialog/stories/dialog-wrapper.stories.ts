@@ -262,6 +262,7 @@ export const longContent = (
             type="modal"
             @close=${handleClose(args)}
             open=${ifDefined(open)}
+            triggered-by="click hover"
         >
             <sp-button slot="trigger" variant="primary">
                 Toggle Dialog

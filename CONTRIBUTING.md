@@ -4,27 +4,32 @@ Welcome! We're excited you're interested in improving Spectrum Web Components. W
 
 Here you'll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we're all on the same page.
 
--   [Community \& support](#community--support)
-    -   [External contributors](#external-contributors)
-    -   [Internal contributors](#internal-contributors)
--   [How you can contribute](#how-you-can-contribute)
--   [Contributor license agreement](#contributor-license-agreement)
--   [Code of conduct](#code-of-conduct)
--   [Using the issue tracker](#using-the-issue-tracker)
-    -   [Before submitting a bug report](#before-submitting-a-bug-report)
--   [Bug reports](#bug-reports)
-    -   [Issue severity classification](#issue-severity-classification)
--   [Feature requests/new component](#feature-requestsnew-component)
--   [Pull requests](#pull-requests)
--   [Branches](#branches)
--   [Developing locally](#developing-locally)
--   [Testing](#testing)
--   [Documentation](#documentation)
--   [Best practices \& guidelines](#best-practices--guidelines)
-    -   [Code formatting](#code-formatting)
-    -   [Accessibility](#accessibility)
-    -   [Commit guidelines](#commit-guidelines)
--   [Thank you](#thank-you)
+- [Community \& support](#community--support)
+    - [External contributors](#external-contributors)
+    - [Internal contributors](#internal-contributors)
+- [How you can contribute](#how-you-can-contribute)
+- [Contributor license agreement](#contributor-license-agreement)
+- [Code of conduct](#code-of-conduct)
+- [Using the issue tracker](#using-the-issue-tracker)
+    - [Before submitting a bug report](#before-submitting-a-bug-report)
+- [Bug reports](#bug-reports)
+    - [Issue severity classification](#issue-severity-classification)
+- [Feature requests/new component](#feature-requestsnew-component)
+- [Pull requests](#pull-requests)
+- [Branches](#branches)
+- [Developing locally](#developing-locally)
+- [Testing](#testing)
+- [Patching dependencies](#patching-dependencies)
+    - [Creating a patch](#creating-a-patch)
+    - [How patches work](#how-patches-work)
+    - [Updating existing patches](#updating-existing-patches)
+    - [Best practices](#best-practices)
+- [Documentation](#documentation)
+- [Best practices \& guidelines](#best-practices--guidelines)
+    - [Code formatting](#code-formatting)
+    - [Accessibility](#accessibility)
+    - [Commit guidelines](#commit-guidelines)
+- [Thank you](#thank-you)
 
 ---
 
@@ -32,9 +37,9 @@ Here you'll find a broad overview of how you can get involved. Please read throu
 
 A fantastic first step to contributing is filing an issue. This is where you can:
 
--   Ask questions, file bugs, and troubleshoot with other users.
--   Propose new features and ideas or get feedback on your own through a linked pull request.
--   Additionally, you can check GitHub Discussions to stay up-to-date with any major announcements about the project.
+- Ask questions, file bugs, and troubleshoot with other users.
+- Propose new features and ideas or get feedback on your own through a linked pull request.
+- Additionally, you can check GitHub Discussions to stay up-to-date with any major announcements about the project.
 
 ### External contributors
 
@@ -51,12 +56,12 @@ If you work for Adobe, our Slack channel #spectrum_web_components has some great
 
 There's a common misconception that you need to code in order to contribute. In reality, there are many different ways to help:
 
--   Filing well-structured bug reports that show what's broken and how to reproduce it.
--   Suggesting new features that improve the current design system.
--   Improving our documentation to make it clearer for the next person.
--   Reviewing pull requests from other community members and sharing feedback.
--   Helping other users on GitHub Discussions.
--   Advocating for the project on social media or at meetups.
+- Filing well-structured bug reports that show what's broken and how to reproduce it.
+- Suggesting new features that improve the current design system.
+- Improving our documentation to make it clearer for the next person.
+- Reviewing pull requests from other community members and sharing feedback.
+- Helping other users on GitHub Discussions.
+- Advocating for the project on social media or at meetups.
 
 Of course, contributing code is also welcome from fixing a bug to building a brand-new component. All types of contributions help keep Spectrum Web Components thriving.
 
@@ -98,12 +103,12 @@ If you're having a usage issue or need support, do not open an issue. Instead, r
 
 When you file a bug, please use the `Bug Report` template provided in GitHub. Include the following information:
 
--   A concise summary of the problem.
--   Relevant components involved in the issue.
--   Issue Severity based on our classifications defined below.
--   What you expected vs. what actually happened, along with any errors logged in the console.
--   Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
--   Relevant environment details (OS, browser, library version).
+- A concise summary of the problem.
+- Relevant components involved in the issue.
+- Issue Severity based on our classifications defined below.
+- What you expected vs. what actually happened, along with any errors logged in the console.
+- Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
+- Relevant environment details (OS, browser, library version).
 
 Clear bug reports speed up the triage process, help us replicate the issue, and keep the project robust.
 
@@ -126,8 +131,8 @@ Below is our issue severity classification criteria:
 
 Is there something you wish the project did differently? Have a new component in mind? We love hearing new ideas and are eager to collaborate!
 
--   Start with a discussion: Share your idea in Discussions to gather feedback and see if it aligns with project goals.
--   Open a feature request issue: After some positive initial conversation, open an issue using the `Feature Request` or `New Component` template with details and potential use cases.
+- Start with a discussion: Share your idea in Discussions to gather feedback and see if it aligns with project goals.
+- Open a feature request issue: After some positive initial conversation, open an issue using the `Feature Request` or `New Component` template with details and potential use cases.
 
 ---
 
@@ -141,8 +146,8 @@ If you plan to fix a bug, create a feature, or improve documentation, follow the
 
 We keep things organized with a branch naming strategy:
 
--   `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`) is often all you need.
--   If your work references a known issue, you could also incorporate the issue number (e.g., `alex/123-bug-fix`).
+- `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`) is often all you need.
+- If your work references a known issue, you could also incorporate the issue number (e.g., `alex/123-bug-fix`).
 
 Avoid editing distribution files (if present). Make changes to the source files, then allow the build system to generate any bundled or output files automatically.
 
@@ -160,9 +165,9 @@ If you encounter hurdles, feel free to ask for help in your pull request or in t
 
 Quality and stability are important. We require writing tests for any fixes or features you introduce. This helps ensure:
 
--   Bugs don't resurface later.
--   New features work as intended for all users.
--   Overall library reliability remains high.
+- Bugs don't resurface later.
+- New features work as intended for all users.
+- Overall library reliability remains high.
 
 Read about our testing guidance in the [README.md](README.md).
 
@@ -170,12 +175,72 @@ If you're unsure how to write tests for certain parts of the library, don't hesi
 
 ---
 
+## Patching dependencies
+
+Sometimes you may need to temporarily patch a dependency to fix a bug or add functionality while waiting for an upstream fix. This project uses **Yarn 4's built-in patching system** instead of external tools like `patch-package`.
+
+### Creating a patch
+
+1. **Extract the package** for editing:
+
+    ```bash
+    yarn patch <package-name>
+    ```
+
+    Example:
+
+    ```bash
+    yarn patch @web/test-runner-playwright
+    ```
+
+2. **Edit the extracted files** in the temporary directory that Yarn creates. Yarn will show you the path where you can make your changes.
+
+3. **Commit the patch** once you're done editing:
+
+    ```bash
+    yarn patch-commit -s <temp-folder-path>
+    ```
+
+    Example:
+
+    ```bash
+    yarn patch-commit -s /private/var/folders/.../user
+    ```
+
+### How patches work
+
+- Patches are automatically stored in `.yarn/patches/` directory
+- They are applied automatically during `yarn install`
+- Patches are version-specific and will need to be recreated if the dependency version changes
+- All patches are committed to the repository so they apply for all contributors
+
+### Updating existing patches
+
+To modify an existing patch:
+
+```bash
+yarn patch <package-name> --update
+```
+
+This will extract the current patched version, allowing you to make additional changes.
+
+### Best practices
+
+- **Keep patches minimal**: Only change what's necessary to fix the specific issue
+- **Document the reason**: Add comments in your pull request explaining why the patch is needed
+- **Plan for removal**: Patches should be temporary until the upstream fix is available
+- **Test thoroughly**: Ensure your patch doesn't break other functionality
+
+For more details, see the [Yarn patching documentation](https://yarnpkg.com/features/patching).
+
+---
+
 ## Documentation
 
 In addition to well-tested code, documentation is crucial. Whenever you add or change a feature,include documentation for it in the relevant areas:
 
--   **README.md**: Each component has a README within its directory. Ensure your changes are included here. This file is used in our generated documentation site.
--   **Comment annotations**: We use comment-based documentation ([JSDocs](https://jsdoc.app/)) so that references are generated automatically where possible.
+- **README.md**: Each component has a README within its directory. Ensure your changes are included here. This file is used in our generated documentation site.
+- **Comment annotations**: We use comment-based documentation ([JSDocs](https://jsdoc.app/)) so that references are generated automatically where possible.
 
 Accessible, helpful docs are a huge win for everyone, especially newcomers.
 
@@ -191,9 +256,9 @@ We rely on automated tools like Prettier, ESLint, and Stylelint to enforce style
 
 Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
 
--   The use of semantic markup.
--   Labeled interactive elements with appropriate accordance's.
--   Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
+- The use of semantic markup.
+- Labeled interactive elements with appropriate accordance's.
+- Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
 
 If you're unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
 
@@ -206,9 +271,9 @@ As mentioned previously, we use [Conventional Commit](https://www.conventionalco
 
 Examples:
 
--   `feat(sp-card): add shadow styles for theme consistency`
--   `fix(sp-action-menu): correct arrow key navigation in nested menus`
--   `docs: clarify how to submit bug reports`
+- `feat(sp-card): add shadow styles for theme consistency`
+- `fix(sp-action-menu): correct arrow key navigation in nested menus`
+- `docs: clarify how to submit bug reports`
 
 This helps us track changes in a predictable way and automate versioning.
 

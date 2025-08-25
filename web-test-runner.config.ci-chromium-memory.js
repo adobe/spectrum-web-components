@@ -11,10 +11,10 @@
  */
 
 import standard from './web-test-runner.config.ci.js';
-import { webkit } from './web-test-runner.utils.js';
+import { chromiumWithMemoryTooling } from './web-test-runner.utils.js';
 
 export default {
     ...standard,
-    browsers: [webkit],
+    browsers: [chromiumWithMemoryTooling],
     concurrency: 1,
 };

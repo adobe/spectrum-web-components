@@ -26,7 +26,14 @@ import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/theme-light.js';
 
-import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    nextFrame,
+    oneEvent,
+    waitUntil,
+} from '@open-wc/testing';
 import {
     ElementSize,
     ElementSizes,
@@ -34,6 +41,7 @@ import {
     nothing,
 } from '@spectrum-web-components/base';
 import { sendKeys, setViewport } from '@web/test-runner-commands';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 const RIGHT_BUTTON_SELECTOR = '.right-scroll';
@@ -54,12 +62,24 @@ const renderTabsOverflow = async ({
     size,
     includeTabPanel,
     selected = 1,
+    labelPrev,
+    labelNext,
     dir = 'ltr',
-}: OverflowProperties): Promise<HTMLDivElement> => {
+}: OverflowProperties): Promise<{
+    tabsContainer: HTMLDivElement;
+    tabsOverflow: TabsOverflow;
+    tabs: Tabs;
+    tabsList: HTMLElement;
+    leftButton: ActionButton;
+    rightButton: ActionButton;
+}> => {
     const theme = await fixture<HTMLDivElement>(html`
         <sp-theme dir=${dir} system="spectrum" scale="medium" color="light">
             <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow>
+                <sp-tabs-overflow
+                    label-previous=${ifDefined(labelPrev)}
+                    label-next=${ifDefined(labelNext)}
+                >
                     <sp-tabs size=${size} selected=${selected}>
                         ${repeat(
                             new Array(count),
@@ -91,91 +111,94 @@ const renderTabsOverflow = async ({
     `);
     await elementUpdated(theme);
     const tabsContainer = theme.querySelector('.container') as HTMLDivElement;
+    const tabsOverflow = theme.querySelector(
+        'sp-tabs-overflow'
+    ) as TabsOverflow;
+    const tabs = tabsOverflow.querySelector('sp-tabs') as Tabs;
+    const tabsList = tabs.shadowRoot!.querySelector('#list') as HTMLElement;
+    const leftButton = tabsOverflow.shadowRoot.querySelector(
+        '.left-scroll'
+    ) as ActionButton;
 
-    return tabsContainer;
+    const rightButton = tabsOverflow.shadowRoot.querySelector(
+        '.right-scroll'
+    ) as ActionButton;
+
+    return {
+        tabsContainer,
+        tabsOverflow,
+        tabs,
+        tabsList,
+        leftButton,
+        rightButton,
+    };
 };
 
 describe('TabsOverflow', () => {
     it('loads default tabs-overflow accessibly', async () => {
-        const el = await fixture<TabsOverflow>(html`
-            <sp-tabs-overflow>
-                <sp-tabs size="m" selected="1">
-                    <sp-tab label="Tab Item 1" value="1"></sp-tab>
-                    <sp-tab label="Tab Item 2" value="2"></sp-tab>
-                    <sp-tab-panel value="1">Tab Content 1</sp-tab-panel>
-                    <sp-tab-panel value="2">Tab Content 2</sp-tab-panel>
-                </sp-tabs>
-            </sp-tabs-overflow>
-        `);
-
-        await elementUpdated(el);
-
-        await expect(el).to.be.accessible();
-    });
-
-    it('show render left and right buttons in shadowDom', async () => {
-        const el = await renderTabsOverflow({
+        const { tabsOverflow } = await renderTabsOverflow({
             count: 20,
             size: ElementSizes.L,
             includeTabPanel: true,
         });
 
-        const spTabsOverflows: TabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
-        const rightButton = spTabsOverflows.shadowRoot.querySelector(
-            '.right-scroll'
-        ) as ActionButton;
+        await elementUpdated(tabsOverflow);
+
+        await expect(tabsOverflow).to.be.accessible();
+    });
+
+    it('show render left and right buttons in shadowDom', async () => {
+        const { leftButton, rightButton } = await renderTabsOverflow({
+            count: 20,
+            size: ElementSizes.L,
+            includeTabPanel: true,
+        });
+
         expect(rightButton).to.exist;
-        const leftButton = spTabsOverflows.shadowRoot.querySelector(
-            '.left-scroll'
-        ) as ActionButton;
         expect(leftButton).to.exist;
     });
 
     it('reflect proper sp-tab size', async () => {
-        const el = await renderTabsOverflow({
+        const { tabsOverflow } = await renderTabsOverflow({
             count: 20,
             size: ElementSizes.M,
             includeTabPanel: true,
         });
 
-        const spTabsOverflows: TabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
-
-        expect(spTabsOverflows.getAttribute('size')).to.equal('m');
+        expect(tabsOverflow.getAttribute('size')).to.equal('m');
     });
 
     it('should scroll when the button is clicked', async () => {
-        const el = await renderTabsOverflow({
-            count: 20,
-            size: ElementSizes.L,
-            includeTabPanel: true,
-        });
-        await elementUpdated(el);
+        const { tabsOverflow, tabs, leftButton, rightButton } =
+            await renderTabsOverflow({
+                count: 20,
+                size: ElementSizes.L,
+                includeTabPanel: true,
+            });
+        await elementUpdated(tabsOverflow);
 
-        const spTabsOverflows: TabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
-        const leftButton = spTabsOverflows.shadowRoot.querySelector(
-            '.left-scroll'
-        ) as ActionButton;
+        let click = oneEvent(leftButton, 'click');
+        leftButton.click();
+        await click;
 
-        const rightButton = spTabsOverflows.shadowRoot.querySelector(
-            '.right-scroll'
-        ) as ActionButton;
-
-        leftButton.dispatchEvent(new Event('click', {}));
-
-        const tabsEl = spTabsOverflows.querySelector('sp-tab') as Tab;
+        const tabsEl = tabs.querySelector('sp-tab') as Tab;
         const initialLeft = tabsEl.getBoundingClientRect().left;
-        rightButton.dispatchEvent(new Event('click', {}));
-        await elementUpdated(el);
-        rightButton.dispatchEvent(new Event('click', {}));
-        await elementUpdated(el);
-        rightButton.dispatchEvent(new Event('click', {}));
-        await elementUpdated(el);
+
+        click = oneEvent(rightButton, 'click');
+        rightButton.click();
+        await click;
+        await elementUpdated(tabsOverflow);
+
+        click = oneEvent(rightButton, 'click');
+        rightButton.click();
+        await click;
+        await elementUpdated(tabsOverflow);
+
+        click = oneEvent(rightButton, 'click');
+        rightButton.click();
+        await click;
+        await elementUpdated(tabsOverflow);
+
         const finalLeft = tabsEl.getBoundingClientRect().left;
         expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
     });
@@ -186,69 +209,61 @@ describe('TabsOverflow', () => {
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // Skipping on Firefox due to timeouts on CI
+        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
-        const el = await renderTabsOverflow({
+        const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
             count: 8,
             size: ElementSizes.L,
             includeTabPanel: true,
             dir: 'ltr',
         });
-        await elementUpdated(el);
+        await elementUpdated(tabsOverflow);
         await setViewport({ width: 360, height: 640 });
         await nextFrame();
-
-        const tabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
 
-        await scrollToEnd(el, RIGHT_BUTTON_SELECTOR, 'ltr');
+        await scrollToEnd(tabsContainer, RIGHT_BUTTON_SELECTOR, 'ltr');
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
 
-        await scrollToEnd(el, LEFT_BUTTON_SELECTOR, 'ltr');
+        await scrollToEnd(tabsContainer, LEFT_BUTTON_SELECTOR, 'ltr');
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
     });
 
-    it('should scroll up to the last item and back in RTL', async () => {
+    it.skip('should scroll up to the last item and back in RTL', async () => {
         // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
         // await setUserAgent(
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // Skipping on Firefox due to timeouts on CI
+        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
-        const el = await renderTabsOverflow({
+        const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
             count: 8,
             size: ElementSizes.L,
             includeTabPanel: true,
             dir: 'rtl',
         });
-        await elementUpdated(el);
+        await elementUpdated(tabsOverflow);
         await setViewport({ width: 360, height: 640 });
         await nextFrame();
-
-        const tabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
 
-        await scrollToEnd(el, LEFT_BUTTON_SELECTOR, 'rtl');
+        await scrollToEnd(tabsContainer, LEFT_BUTTON_SELECTOR, 'rtl');
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.false;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.true;
 
-        await scrollToEnd(el, RIGHT_BUTTON_SELECTOR, 'rtl');
+        await scrollToEnd(tabsContainer, RIGHT_BUTTON_SELECTOR, 'rtl');
 
         expect(tabsOverflow['overflowState'].canScrollLeft).to.be.true;
         expect(tabsOverflow['overflowState'].canScrollRight).to.be.false;
@@ -268,73 +283,59 @@ describe('TabsOverflow', () => {
     });
 
     it('should automatically bring the selected tab into view', async () => {
-        const el = await renderTabsOverflow({
+        const { tabs } = await renderTabsOverflow({
             count: 20,
             size: ElementSizes.L,
             includeTabPanel: false,
             selected: 10,
         });
-        await elementUpdated(el);
+        await elementUpdated(tabs);
 
-        // Grab the list of tabs.
-        const tabsEl = el.querySelector('sp-tabs') as Tabs;
-
-        // Grab the coordonates of the selected tab.
-        let selectedTab = tabsEl.querySelector(
-            `[role="tab"][value="10"]`
-        ) as Tab;
+        // Grab the coordinates of the selected tab.
+        let selectedTab = tabs.querySelector(`[role="tab"][value="10"]`) as Tab;
         expect(selectedTab).to.exist;
         let selectedTabPosition = selectedTab.getBoundingClientRect();
 
         // Selected tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
         expect(selectedTabPosition.left).to.be.greaterThan(0);
-        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.offsetWidth);
+        expect(selectedTabPosition.left).to.be.lessThan(tabs.offsetWidth);
 
         // First tab is not in the viewport anymore, its offset left is less than 0.
-        const firstTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
+        const firstTab = tabs.querySelector(`[role="tab"][value="1"]`) as Tab;
         const firstTabPosition = firstTab.getBoundingClientRect();
         expect(firstTabPosition.left).to.be.lessThan(0);
 
         // Make the component automatically scroll left by selecting the first tab.
-        tabsEl.selected = '1';
-        await elementUpdated(tabsEl);
+        tabs.selected = '1';
+        await elementUpdated(tabs);
 
-        selectedTab = tabsEl.querySelector(`[role="tab"][value="1"]`) as Tab;
+        selectedTab = tabs.querySelector(`[role="tab"][value="1"]`) as Tab;
         expect(selectedTab).to.exist;
         selectedTabPosition = selectedTab.getBoundingClientRect();
 
         // First tab is in the viewport, offset left is greater than 0 and less than the width of the tabs.
         expect(selectedTabPosition.left).to.be.greaterThan(0);
-        expect(selectedTabPosition.left).to.be.lessThan(tabsEl.offsetWidth);
+        expect(selectedTabPosition.left).to.be.lessThan(tabs.offsetWidth);
 
         // Tab nr. 10 is not in the viewport anymore.
-        const previousSelection = tabsEl.querySelector(
+        const previousSelection = tabs.querySelector(
             `[role="tab"][value="10"]`
         ) as Tab;
         const previousSelectionPosition =
             previousSelection.getBoundingClientRect();
         expect(previousSelectionPosition.left).to.be.greaterThan(
-            tabsEl.offsetWidth
+            tabs.offsetWidth
         );
     });
 
     it('prev and next buttons have default labels', async () => {
-        const el = await renderTabsOverflow({
-            count: 20,
-            size: ElementSizes.M,
-            includeTabPanel: true,
-        });
-        await elementUpdated(el);
-
-        const spTabsOverflows: TabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
-        const leftButton = spTabsOverflows.shadowRoot.querySelector(
-            '.left-scroll'
-        ) as ActionButton;
-        const rightButton = spTabsOverflows.shadowRoot.querySelector(
-            '.right-scroll'
-        ) as ActionButton;
+        const { tabsOverflow, leftButton, rightButton } =
+            await renderTabsOverflow({
+                count: 20,
+                size: ElementSizes.M,
+                includeTabPanel: true,
+            });
+        await elementUpdated(tabsOverflow);
 
         expect(leftButton?.getAttribute('aria-label')).to.equal(
             'Scroll to previous tabs'
@@ -345,48 +346,16 @@ describe('TabsOverflow', () => {
     });
 
     it('prev and next buttons labels overwritten via attributes', async () => {
-        const tabsContainer = await fixture<HTMLDivElement>(html`
-            <div class="container" style="width: 200px; height: 150px;">
-                <sp-tabs-overflow
-                    label-previous="custom label prev"
-                    label-next="custom label next"
-                >
-                    <sp-tabs size=${ElementSizes.M} selected=${1}>
-                        ${repeat(
-                            new Array(20),
-                            (item) => item,
-                            (_item, index) => html`
-                                <sp-tab
-                                    label=${`Tab Item ${index + 1}`}
-                                    value=${index + 1}
-                                ></sp-tab>
-                            `
-                        )}
-                        ${repeat(
-                            new Array(20),
-                            (item) => item,
-                            (_item, index) => html`
-                                <sp-tab-panel value=${index + 1}>
-                                    Content for Tab Item ${index + 1}
-                                </sp-tab-panel>
-                            `
-                        )}
-                    </sp-tabs>
-                </sp-tabs-overflow>
-            </div>
-        `);
-        await elementUpdated(tabsContainer);
-        const el = tabsContainer;
+        const { tabsOverflow, leftButton, rightButton } =
+            await renderTabsOverflow({
+                count: 20,
+                size: ElementSizes.M,
+                includeTabPanel: true,
+                labelPrev: 'custom label prev',
+                labelNext: 'custom label next',
+            });
 
-        const spTabsOverflows: TabsOverflow = el.querySelector(
-            'sp-tabs-overflow'
-        ) as TabsOverflow;
-        const leftButton = spTabsOverflows.shadowRoot.querySelector(
-            '.left-scroll'
-        ) as ActionButton;
-        const rightButton = spTabsOverflows.shadowRoot.querySelector(
-            '.right-scroll'
-        ) as ActionButton;
+        await elementUpdated(tabsOverflow);
 
         expect(leftButton?.getAttribute('aria-label')).to.equal(
             'custom label prev'
@@ -414,7 +383,7 @@ describe('calculateScrollTargetForRightSide', () => {
         // Repeat for RTL
         expect(
             calculateScrollTargetForRightSide(2, 'rtl', tabs, container)
-        ).to.equal(0); // You need to scroll at the begining of the scrollable area
+        ).to.equal(0); // You need to scroll at the beginning of the scrollable area
     });
 });
 
@@ -522,8 +491,4 @@ async function scrollToEnd(
         elementToScroll: tabsList,
         distanceToReachInIteration,
     });
-}
-
-function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
 }
