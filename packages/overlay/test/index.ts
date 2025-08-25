@@ -680,6 +680,39 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'hover content is not available at point'
                 ).to.be.false;
             });
+
+            it('blocks body scroll when modal overlay is opened and restores when closed', async function () {
+                const originalBodyOverflow = document.body.style.overflow;
+
+                const modalTrigger = this.outerTrigger;
+                modalTrigger.type = 'modal';
+                await elementUpdated(modalTrigger);
+
+                // Open modal overlay
+                const opened = oneEvent(modalTrigger, 'sp-opened');
+                this.outerButton.click();
+                await opened;
+
+                // Check that body scroll is blocked
+                expect(document.body.style.overflow).to.equal('hidden');
+
+                // Close modal overlay
+                const closed = oneEvent(modalTrigger, 'sp-closed');
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
+                await closed;
+
+                // Check that body scroll is restored
+                expect(document.body.style.overflow).to.equal(
+                    originalBodyOverflow
+                );
+            });
         });
         describe('System interactions', () => {
             afterEach(async () => {
