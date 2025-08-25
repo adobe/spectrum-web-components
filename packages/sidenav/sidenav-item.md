@@ -1,29 +1,33 @@
-## Description
+## Overview
 
-An `<sp-sidenav-item>` stands as both a child item of an `<sp-sidenav>` element, as well as a parent for further subdivisions of that navigation. An `<sp-sidenav-item>` with further `<sp-sidenav-item>` children will count as a toggle for the visibility of this next level of navigation items, while also updating the parent `<sp-sidenav>` element to its value when selected.
+An `<sp-sidenav-item>` stands as both a child item of an `<sp-sidenav>` element, as well as a parent for further subdivisions of that navigation. An `<sp-sidenav-item>` with further `<sp-sidenav-item>` children will count as a toggle for the visibility of the next level of navigation items, while also updating the parent `<sp-sidenav>` element to its value when selected.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/sidenav)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/sidenav?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/sidenav)
 
-```
+```bash
 yarn add @spectrum-web-components/sidenav
 ```
 
 Import the side effectful registration of `<sp-sidenav-item>` via:
 
-```
+```js
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 ```
 
 When looking to leverage the `SidenavItem` base classes as a type and/or for extension purposes, do so via:
 
-```
+```js
 import { SidenavItem } from '@spectrum-web-components/sidenav';
 ```
 
-## Example
+### Anatomy
+
+label, value
+
+### Options
 
 ```html
 <sp-sidenav>
@@ -54,7 +58,7 @@ import { SidenavItem } from '@spectrum-web-components/sidenav';
 </sp-sidenav-itm>
 ```
 
-## Icon
+## Accommodating icons
 
 ```html
 <sp-sidenav>
@@ -63,3 +67,11 @@ import { SidenavItem } from '@spectrum-web-components/sidenav';
     </sp-sidenav-item>
 </sp-sidenav>
 ```
+
+## Announces a change in the `value` property of the navigation element. This change can be "canceled" via `event.preventDefault()`
+
+### States
+
+disabled, expanded, selected
+
+### Accessibility
