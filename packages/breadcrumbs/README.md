@@ -15,14 +15,14 @@ yarn add @spectrum-web-components/breadcrumbs
 
 Import the side effectful registration of `<sp-breadcrumbs>` and `<sp-breadcrumb-item>` via:
 
-```ts
+```js
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumbs.js';
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 ```
 
 When looking to leverage the `Breadcrumbs` or `BreadcrumbItem` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import {
     Breadcrumbs,
     BreadcrumbItem,
@@ -170,7 +170,7 @@ Use the `root` slot on the first breadcrumb item to always render the first brea
     <sp-breadcrumb-item slot="root" value="your_stuff">
         Your stuff
     </sp-breadcrumb-item>
-    <sp-breadcrumb-item value="team">Files</sp-breadcrumb-item>
+    <sp-breadcrumb-item value="files">Files</sp-breadcrumb-item>
     <sp-breadcrumb-item value="trend">Trend</sp-breadcrumb-item>
     <sp-breadcrumb-item value="winter">Winter</sp-breadcrumb-item>
     <sp-breadcrumb-item value="assets">Assets</sp-breadcrumb-item>

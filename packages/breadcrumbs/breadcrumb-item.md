@@ -13,13 +13,13 @@ yarn add @spectrum-web-components/breadcrumbs
 
 Import the side effectful registration of `<sp-breadcrumb-item>` as follows:
 
-```ts
+```js
 import '@spectrum-web-components/breadcrumbs/sp-breadcrumb-item.js';
 ```
 
 When looking to leverage the `BreadcrumbItem` base class as a type and/or for extension purposes, do so via:
 
-```ts
+```js
 import { BreadcrumbItem } from '@spectrum-web-components/breadcrumbs';
 ```
 
