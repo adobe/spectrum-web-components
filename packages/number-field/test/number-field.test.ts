@@ -43,6 +43,7 @@ import {
     fixture,
     mouseClickOn,
     mouseMoveOver,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
@@ -1033,9 +1034,7 @@ describe('NumberField', () => {
                 'input'
             ) as HTMLInputElement;
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
@@ -1160,18 +1159,10 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(0);
             expect(el.value).to.equal(5);
             el.focus();
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: '1',
-            });
-            await sendKeys({
-                press: '5',
-            });
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: '1' });
+            await sendKeys({ press: '5' });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(10);
             expect(inputSpy.callCount).to.equal(3);
@@ -1236,18 +1227,10 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(0);
             expect(el.value).to.equal(15);
             el.focus();
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: '5',
-            });
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: '5' });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(10);
             expect(inputSpy.callCount).to.equal(3);
@@ -1768,7 +1751,7 @@ describe('NumberField', () => {
     });
     describe('accessibility model', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
-            // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+            // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
             if (isWebKit()) {
                 return;
             }

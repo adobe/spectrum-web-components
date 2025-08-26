@@ -420,9 +420,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 // Why does this make the test pass in Chromium? 🤷🏻‍♂️
-                await sendKeys({
-                    press: 'Space',
-                });
+                await sendKeys({ press: 'Space' });
 
                 expect(
                     await isOnTopLayer(this.outerClickContent),
@@ -434,9 +432,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                await sendKeys({
-                    press: 'Escape',
-                });
+                await sendKeys({ press: 'Escape' });
                 await innerClose;
 
                 expect(
@@ -480,9 +476,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                await sendKeys({
-                    press: 'Escape',
-                });
+                await sendKeys({ press: 'Escape' });
                 await innerClose;
 
                 expect(
@@ -495,9 +489,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
-                await sendKeys({
-                    press: 'Escape',
-                });
+                await sendKeys({ press: 'Escape' });
                 await outerClose;
 
                 expect(

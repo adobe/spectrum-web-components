@@ -140,9 +140,7 @@ describe('Action Group inside of Tabs', () => {
         expect(document.activeElement === actionButton2).to.be.true;
 
         await nextFrame();
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
 
         expect(document.activeElement === tab1).to.be.false;
         expect(actionGroup2.contains(document.activeElement)).to.be.true;
@@ -150,24 +148,18 @@ describe('Action Group inside of Tabs', () => {
         el.focus();
         expect(document.activeElement === tab2).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
 
         expect(document.activeElement === tab3).to.be.true;
 
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         expect(document.activeElement === tab3).to.be.true;
 
         actionGroup3.focus();
         expect(document.activeElement === actionButton3).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
 
         expect(document.activeElement === tab2).to.be.false;
         expect(actionGroup3.contains(document.activeElement)).to.be.true;
@@ -179,9 +171,7 @@ describe('Action Group inside of Tabs', () => {
         actionGroup1.focus();
         expect(document.activeElement === actionButton1).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
 
         expect(document.activeElement === tab2).to.be.false;
         expect(actionGroup1.contains(document.activeElement)).to.be.true;
@@ -205,9 +195,7 @@ describe('Action Menu inside of Action Group', () => {
         el.focus();
         expect(document.activeElement === actionButton1).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
 
         expect(document.activeElement === actionButton2).to.be.true;
 
@@ -217,9 +205,7 @@ describe('Action Menu inside of Action Group', () => {
         expect(actionButton3.tabIndex).to.equal(-1);
         expect(actionMenu.tabIndex).to.equal(-1);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
 
         expect(document.activeElement === actionButton3).to.be.true;
 
@@ -229,9 +215,7 @@ describe('Action Menu inside of Action Group', () => {
         expect(actionButton1.tabIndex).to.equal(-1);
         expect(actionMenu.tabIndex).to.equal(-1);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
 
         expect(document.activeElement === actionMenu).to.be.true;
 

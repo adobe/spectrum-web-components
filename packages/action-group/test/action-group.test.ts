@@ -50,6 +50,7 @@ import {
     homeEvent,
     mouseClickAway,
     mouseClickOn,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
@@ -181,7 +182,7 @@ describe('ActionGroup', () => {
         await waitUntil(() => el.children.length === 4);
 
         // press Tab to focus into the action-group
-        await sendKeys({ press: 'Tab' });
+        await sendTabKey();
 
         await elementUpdated(el);
 
@@ -330,7 +331,7 @@ describe('ActionGroup', () => {
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
-        // TODO: handling browser differences in keyboard navigation. Will review in the migration to Spectrum 2.
+        // @TODO: handling browser differences in keyboard navigation. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             // focus on the first menu item as not all items are keyboard focusable in Safari by default
             // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html

@@ -12,12 +12,15 @@
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
-import '@spectrum-web-components/swatch/sp-swatch.js';
-import { Swatch, SwatchGroup } from '../';
-import { Default } from '../stories/swatch-group.stories.js';
-import { spy, stub } from 'sinon';
 import { html } from '@spectrum-web-components/base';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
+import { spy, stub } from 'sinon';
+import { Swatch, SwatchGroup } from '../';
+import {
+    sendTabKey,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { Default } from '../stories/swatch-group.stories.js';
 
 describe('Swatch Group', () => {
     let el: SwatchGroup;
@@ -230,17 +233,11 @@ describe('Swatch Group', () => {
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();
         expect(document.activeElement === el.children[0]).to.be.false;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === el.children[0]).to.be.true;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === el.children[0]).to.be.false;
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendKeys({ press: 'Shift+Tab' });
         expect(document.activeElement === el.children[0]).to.be.true;
     });
     it('makes the first selected child the single tab stop', async () => {
@@ -263,17 +260,11 @@ describe('Swatch Group', () => {
         expect(selectedChild.selected).to.be.true;
 
         expect(document.activeElement === selectedChild).to.be.false;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === selectedChild).to.be.true;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === selectedChild).to.be.false;
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendKeys({ press: 'Shift+Tab' });
         expect(document.activeElement === selectedChild).to.be.true;
     });
     it('focus()es to the first Swatch', async () => {
@@ -312,13 +303,11 @@ describe('Swatch Group - DOM selected', () => {
         });
 
         it('warns in Dev Mode when mixed-value attribute is added in sp-swatch when parent sp-swatch-group is not having selects="multiple"', async () => {
-            const el = await fixture<SwatchGroup>(
-                html`
-                    <sp-swatch-group selects="single">
-                        <sp-swatch mixed-value></sp-swatch>
-                    </sp-swatch-group>
-                `
-            );
+            const el = await fixture<SwatchGroup>(html`
+                <sp-swatch-group selects="single">
+                    <sp-swatch mixed-value></sp-swatch>
+                </sp-swatch-group>
+            `);
 
             await elementUpdated(el);
             await nextFrame();
@@ -415,15 +404,13 @@ describe('Swatch Group - DOM selected', () => {
 
 describe('Swatch Group - slotted', () => {
     it('manages [selects="single"] selection through multiple slots', async () => {
-        const test = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-swatch value="First">First</sp-swatch>
-                    <sp-swatch value="Second">Second</sp-swatch>
-                    <sp-swatch value="Third" selected>Third</sp-swatch>
-                </div>
-            `
-        );
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-swatch value="First">First</sp-swatch>
+                <sp-swatch value="Second">Second</sp-swatch>
+                <sp-swatch value="Third" selected>Third</sp-swatch>
+            </div>
+        `);
 
         const firstItem = test.querySelector('sp-swatch') as Swatch;
         const thirdItem = test.querySelector('sp-swatch[selected]') as Swatch;

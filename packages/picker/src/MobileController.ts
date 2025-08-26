@@ -25,7 +25,6 @@ export class MobileController extends InteractionController {
             return;
         }
         if (this.preventNextToggle == 'no') {
-
             this.host.toggle();
         }
         this.preventNextToggle = 'no';

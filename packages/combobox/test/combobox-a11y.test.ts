@@ -188,9 +188,7 @@ describe('Combobox accessibility', () => {
         el.focus();
         await elementUpdated(el);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
@@ -211,7 +209,7 @@ describe('Combobox accessibility', () => {
         await expect(el).to.be.accessible();
     });
     it('manages aria-selected', async () => {
-        // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             return;
         }
@@ -240,9 +238,7 @@ describe('Combobox accessibility', () => {
         el.focus();
         await elementUpdated(el);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
 
         expect(el.activeDescendant.value).to.equal('apple');

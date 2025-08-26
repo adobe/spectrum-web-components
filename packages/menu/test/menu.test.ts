@@ -148,7 +148,7 @@ describe('Menu', () => {
     });
 
     it('has a "value" that can be copied during "change" events', async function () {
-        // TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
         if (isWebKit() || isFirefox()) {
             this.skip();
         }
@@ -176,13 +176,9 @@ describe('Menu', () => {
         selectedItem.focus();
 
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         const clipboardText = await navigator.clipboard.readText();
         await elementUpdated(el);
@@ -191,7 +187,7 @@ describe('Menu', () => {
     });
 
     it('accepts Numpad keys', async function () {
-        // TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
         if (isWebKit() || isFirefox()) {
             this.skip();
         }
@@ -216,13 +212,9 @@ describe('Menu', () => {
         ) as MenuItem;
         selectedItem.focus();
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'NumpadEnter',
-        });
+        await sendKeys({ press: 'NumpadEnter' });
 
         await elementUpdated(el);
 
@@ -500,7 +492,7 @@ describe('Menu', () => {
         expect(children[0], 'first element is focused').to.equal(
             document.activeElement
         );
-        // TODO: skipping this test because it fails on Chromium and is flaky in Firefox and WebKit. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it fails on Chromium and is flaky in Firefox and WebKit. Will review in the migration to Spectrum 2.
         if (isFirefox() || isWebKit()) {
             children[0].remove();
             await elementUpdated(el);

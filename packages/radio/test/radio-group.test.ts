@@ -214,9 +214,7 @@ describe('Radio Group - focus control', () => {
         expect(document.activeElement === radio5).to.be.true;
         expect(radio5.checked).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
 
         expect(document.activeElement === radio1).to.be.true;

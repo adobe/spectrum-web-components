@@ -18,31 +18,25 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('PickerButton', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<PickerButton>(
-                html`
-                    <sp-picker-button label="More"></sp-picker-button>
-                `
-            )
+            await fixture<PickerButton>(html`
+                <sp-picker-button label="More"></sp-picker-button>
+            `)
     );
     it('loads default picker-button accessibly', async () => {
-        const el = await fixture<PickerButton>(
-            html`
-                <sp-picker-button label="More"></sp-picker-button>
-            `
-        );
+        const el = await fixture<PickerButton>(html`
+            <sp-picker-button label="More"></sp-picker-button>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads labeled picker-button accessibly', async () => {
-        const el = await fixture<PickerButton>(
-            html`
-                <sp-picker-button>
-                    <span slot="label">All</span>
-                </sp-picker-button>
-            `
-        );
+        const el = await fixture<PickerButton>(html`
+            <sp-picker-button>
+                <span slot="label">All</span>
+            </sp-picker-button>
+        `);
 
         await elementUpdated(el);
 

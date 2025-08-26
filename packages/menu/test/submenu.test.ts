@@ -37,6 +37,7 @@ import {
     mouseClickOn,
     mouseMoveAway,
     mouseMoveOver,
+    sendTabKey,
 } from '../../../test/testing-helpers.js';
 
 type SelectsWithKeyboardTest = {
@@ -102,9 +103,7 @@ describe('Submenu', () => {
 
             // arrow up should move focus away from the submenu
             // but submenu stays open while pointer is over it
-            await sendKeys({
-                press: 'ArrowUp',
-            });
+            await sendKeys({ press: 'ArrowUp' });
             expect(document.activeElement).to.equal(prev);
             expect(prev.focused, `focus is on previous item`).to.be.true;
             expect(this.rootItem.open, `submenu should stay open`).to.be.true;
@@ -125,11 +124,11 @@ describe('Submenu', () => {
     }
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
-            // TODO: skipping this test because it's flaky in Chrome with LTR direction. Will review in the migration to Spectrum 2.
+            // @TODO: skipping this test because it's flaky in Chrome with LTR direction. Will review in the migration to Spectrum 2.
             if (isChrome() && testData.dir === 'ltr') {
                 return;
             }
-            
+
             // Increase timeout for WebKit in CI environments to prevent browser crashes
             if (isWebKit()) {
                 this.timeout(10000);
@@ -147,20 +146,14 @@ describe('Submenu', () => {
 
             // by default, Safari doesn't tab to some elements
             if (!isWebKit) {
-                await sendKeys({
-                    press: 'Shift+Tab',
-                });
+                await sendKeys({ press: 'Shift+Tab' });
 
                 expect(document.activeElement).to.equal(input);
-                await sendKeys({
-                    press: 'Tab',
-                });
+                await sendTabKey();
 
                 expect(document.activeElement).to.equal(this.el);
             }
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.rootItem);
 
             expect(
@@ -169,9 +162,7 @@ describe('Submenu', () => {
             ).to.be.true;
 
             let opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendKeys({
-                press: testData.openKey,
-            });
+            await sendKeys({ press: testData.openKey });
             await opened;
 
             const rootItem = this.el.querySelector('.root') as MenuItem;
@@ -189,9 +180,7 @@ describe('Submenu', () => {
             expect(document.activeElement).to.equal(submenuItem);
 
             let closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendKeys({
-                press: testData.closeKey,
-            });
+            await sendKeys({ press: testData.closeKey });
             await closed;
 
             expect(
@@ -203,9 +192,7 @@ describe('Submenu', () => {
             expect(document.activeElement).to.equal(rootItem);
 
             opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendKeys({
-                press: testData.openKey,
-            });
+            await sendKeys({ press: testData.openKey });
             await opened;
             await elementUpdated(this.rootItem);
 
@@ -215,9 +202,7 @@ describe('Submenu', () => {
             expect(submenuItem.focused, 'submenuItem.focused').to.be.true;
             expect(document.activeElement).to.equal(submenuItem);
 
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(submenu);
             await elementUpdated(submenuItem);
 
@@ -227,9 +212,7 @@ describe('Submenu', () => {
                 .be.true;
 
             closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await closed;
 
             expect(this.submenuChanged.calledWith('Two'), 'submenu changed').to
@@ -247,21 +230,15 @@ describe('Submenu', () => {
             this.el.insertAdjacentElement('beforebegin', input);
             // by default, Safari doesn't tab to some elements
             if (!isWebKit) {
-                await sendKeys({
-                    press: 'Shift+Tab',
-                });
+                await sendKeys({ press: 'Shift+Tab' });
 
                 expect(document.activeElement).to.equal(input);
-                await sendKeys({
-                    press: 'Tab',
-                });
+                await sendTabKey();
 
                 expect(document.activeElement).to.equal(this.el);
             }
             this.el.focus();
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.el);
             await nextFrame();
             await nextFrame();
@@ -274,27 +251,21 @@ describe('Submenu', () => {
             expect(document.activeElement).to.equal(this.rootItem);
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
             await opened;
 
             expect(this.rootItem.active).to.be.true;
             expect(this.rootItem.focused).to.be.false;
             expect(this.rootItem.open).to.be.true;
 
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
 
             expect(this.rootItem.active).to.be.true;
             expect(this.rootItem.focused).to.be.false;
             expect(this.rootItem.open).to.be.true;
 
             const closed = oneEvent(this.rootItem, 'sp-closed');
-            await sendKeys({
-                press: 'ArrowLeft',
-            });
+            await sendKeys({ press: 'ArrowLeft' });
             await closed;
 
             expect(this.rootItem.active).to.be.false;

@@ -107,16 +107,12 @@ describe('Slider', () => {
         expect(el.highlight).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
 
         expect(el.value).to.equal(45);
         expect(el.highlight).to.be.true;
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         await elementUpdated(el);
 
         expect(el.value).to.equal(46);
@@ -1515,9 +1511,7 @@ describe('Slider', () => {
         const lastHandle = el.querySelector('#last-handle') as SliderHandle;
         lastHandle.focus();
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
@@ -1635,9 +1629,7 @@ describe('Slider', () => {
 
         slider.focus();
         // send escape key
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
 
         await elementUpdated(el);
 
@@ -1654,9 +1646,7 @@ describe('Slider', () => {
 
         const closed = oneEvent(el, 'sp-closed');
         // send escape key again
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
         await closed;
 
         // now the overlay should be closed

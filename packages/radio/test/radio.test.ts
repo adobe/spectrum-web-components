@@ -143,9 +143,7 @@ describe('Radio', () => {
         it('from the keyboard', async () => {
             el.focus();
             await elementUpdated(el);
-            await sendKeys({
-                press: 'Space',
-            });
+            await sendKeys({ press: 'Space' });
             await elementUpdated(el);
 
             expect(el.checked).to.be.true;

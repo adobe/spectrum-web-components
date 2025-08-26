@@ -28,6 +28,8 @@ import {
 import { spy, stub } from 'sinon';
 import {
     mouseClickOn,
+    sendShiftTabKey,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
@@ -262,17 +264,13 @@ describe('Button', () => {
             });
             expect(focusedCount).to.equal(0);
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await elementUpdated(el);
 
             expect(document.activeElement === el).to.be.true;
             expect(focusedCount).to.equal(1);
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendShiftTabKey();
             await elementUpdated(el);
 
             expect(focusedCount).to.equal(1);
@@ -720,14 +718,10 @@ describe('Button', () => {
             await elementUpdated(el);
             el.focus();
             await elementUpdated(el);
-            await sendKeys({
-                down: 'Space',
-            });
+            await sendKeys({ down: 'Space' });
             await elementUpdated(el);
             expect(el.active).to.be.true;
-            await sendKeys({
-                up: 'Space',
-            });
+            await sendKeys({ up: 'Space' });
             await elementUpdated(el);
             expect(el.active).to.be.false;
         });

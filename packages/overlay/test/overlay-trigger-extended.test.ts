@@ -179,7 +179,7 @@ describe('Overlay Trigger - extended', () => {
             'bottom'
         );
     });
-    // TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
+    // @TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
     it.skip('occludes content behind the overlay', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div class="container">
@@ -325,7 +325,7 @@ describe('Overlay Trigger - extended', () => {
         expect(document.activeElement, `textfield focused`).to.equal(textfield);
     });
 
-    // TODO: skipping this test because it hasn't worked ever. Will review in the migration to Spectrum 2.
+    // @TODO: skipping this test because it hasn't worked ever. Will review in the migration to Spectrum 2.
     it.skip('occludes wheel interactions behind the overlay', async () => {
         // currently fails for no reason in Firefox locally, and most browsers in CI.
         ({ overlayTrigger, button, popover } = await initTest());

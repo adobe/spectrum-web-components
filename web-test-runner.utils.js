@@ -246,7 +246,7 @@ export const byFile = fs
         if (file.isFile()) {
             if (file.name.endsWith('.test.js')) {
                 acc.push({
-                    name: file.name,
+                    name: file.parentPath + '/' + file.name,
                     files: file.parentPath + '/' + file.name,
                 });
             }
@@ -297,7 +297,8 @@ export const filterBrowserLogs = (log) => {
                 typeof arg === 'string' &&
                 (arg.includes('Could not resolve module specifier') ||
                     arg.includes('in dev mode') ||
-                    arg.includes('slottable-request'))
+                    arg.includes('slottable-request') ||
+                    arg.includes('The Overlay Trigger Directive'))
         )
     ) {
         return false;

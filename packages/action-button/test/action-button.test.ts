@@ -134,14 +134,10 @@ describe('ActionButton', () => {
         await elementUpdated(el);
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         expect(longpressSpy.callCount).to.equal(1);
-        await sendKeys({
-            press: 'Alt+ArrowDown',
-        });
+        await sendKeys({ press: 'Alt+ArrowDown' });
 
         expect(longpressSpy.callCount).to.equal(2);
         el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
@@ -226,9 +222,7 @@ describe('ActionButton', () => {
         expect(button.getAttribute('aria-pressed')).to.equal('false');
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
         await elementUpdated(el);
 
         expect(el.toggles).to.be.true;
@@ -264,9 +258,7 @@ describe('ActionButton', () => {
         expect(button).to.have.attribute('aria-expanded', 'false');
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
         await elementUpdated(el);
 
         expect(el.toggles).to.be.true;

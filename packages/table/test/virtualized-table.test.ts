@@ -18,25 +18,28 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/table/sp-table.js';
-import '@spectrum-web-components/table/sp-table-head.js';
-import '@spectrum-web-components/table/sp-table-head-cell.js';
-import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-row.js';
-import '@spectrum-web-components/table/sp-table-cell.js';
 import type {
     Table,
     TableCheckboxCell,
     TableHeadCell,
     TableRow,
 } from '@spectrum-web-components/table';
-import { virtualized } from '../stories/table-virtualized.stories.js';
-import { makeItems, renderItem } from '../stories/index.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-cell.js';
+import '@spectrum-web-components/table/sp-table-head-cell.js';
+import '@spectrum-web-components/table/sp-table-head.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import {
+    ignoreResizeObserverLoopError,
+    sendTabKey,
+} from '../../../test/testing-helpers.js';
+import { makeItems, renderItem } from '../stories/index.js';
+import { virtualized } from '../stories/table-virtualized.stories.js';
 import { styledFixture, tableLayoutComplete } from './helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -89,14 +92,10 @@ describe('Virtualized Table', () => {
             '[sortable]:nth-of-type(2)'
         ) as TableHeadCell;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(firstSortable === test.shadowRoot?.activeElement).to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(secondSortable === test.shadowRoot?.activeElement).to.be.true;
     });
 
@@ -120,19 +119,13 @@ describe('Virtualized Table', () => {
             'sp-table-head-cell:nth-of-type(3)'
         ) as TableHeadCell;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(firstHeadCell === test.shadowRoot?.activeElement).to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(secondHeadCell === test.shadowRoot?.activeElement).to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(thirdHeadCell === test.shadowRoot?.activeElement).to.be.false;
     });
 
@@ -195,9 +188,7 @@ describe('Virtualized Table', () => {
 
         tableHeadCell2.focus();
         await nextFrame();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
         await nextFrame();
 
         expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
@@ -206,9 +197,7 @@ describe('Virtualized Table', () => {
 
         tableHeadCell2.focus();
         await nextFrame();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
         await nextFrame();
 
         expect(tableHeadCell1.hasAttribute('sort-direction')).to.be.false;
@@ -217,9 +206,7 @@ describe('Virtualized Table', () => {
 
         tableHeadCell1.focus();
         await nextFrame();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
         await nextFrame();
 
         expect(tableHeadCell2.hasAttribute('sort-direction')).to.be.false;

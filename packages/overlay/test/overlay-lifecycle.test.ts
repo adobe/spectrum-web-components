@@ -18,16 +18,13 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys,
-} from '@web/test-runner-commands';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { sendTabKey } from '../../../test/testing-helpers';
 
 describe('Overlay Trigger - accessible hover content management', () => {
     it('accessibly describes trigger content with hover content', async () => {
@@ -168,9 +165,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
         input.focus();
 
         const opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await opened;
 
         expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);

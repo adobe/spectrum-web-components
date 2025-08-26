@@ -45,6 +45,7 @@ import {
     fixture,
     isInteractive,
     isOnTopLayer,
+    sendTabKey,
 } from '../../../test/testing-helpers.js';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
@@ -212,32 +213,22 @@ describe('Overlays', () => {
              * that triggered the dialog and is outside of the modal. A test that was able to cycle would be better.
              */
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
 
             expect(document.activeElement === button).to.be.false;
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendKeys({ press: 'Shift+Tab' });
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendKeys({ press: 'Shift+Tab' });
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendKeys({ press: 'Shift+Tab' });
 
             expect(document.activeElement === button).to.be.false;
         });
@@ -526,16 +517,12 @@ describe('Overlays', () => {
         expect(document.activeElement).to.equal(input);
 
         const closed = oneEvent(content, 'sp-closed');
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendKeys({ press: 'Shift+Tab' });
         await closed;
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(after);
         expect(await isInteractive(content)).to.be.false;
     });
@@ -574,15 +561,11 @@ describe('Overlays', () => {
 
         expect(document.activeElement).to.equal(input);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendKeys({ press: 'Shift+Tab' });
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendKeys({ press: 'Shift+Tab' });
 
         expect(document.activeElement).to.equal(before);
     });
@@ -753,9 +736,7 @@ describe('Overlay - type="modal"', () => {
         expect(await isInteractive(firstMenu)).to.be.true;
 
         const closed = oneEvent(document, 'sp-closed');
-        sendKeys({
-            press: 'Escape',
-        });
+        sendKeys({ press: 'Escape' });
         await closed;
 
         expect(await isInteractive(firstMenu)).to.be.false;
@@ -833,10 +814,9 @@ describe('Overlay - type="modal"', () => {
         expect(overlayTrigger.open).to.equal('click');
 
         const closed = oneEvent(trigger, 'sp-closed');
-        sendKeys({
-            press: 'Escape',
-        });
+        sendKeys({ press: 'Escape' });
         await closed;
+        await elementUpdated(overlayTrigger);
 
         expect(overlayTrigger.open).to.be.undefined;
         expect(document.activeElement === trigger, 'trigger focused').to.be
@@ -1055,9 +1035,7 @@ describe('Overlay should correctly trap focus', () => {
         const opened = oneEvent(overlay, 'sp-opened');
         // use keyboard to open the overlay
         trigger.focus();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
         await opened;
 
         expect(overlay.open).to.be.true;
@@ -1069,21 +1047,15 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button2);
 
         // press tab to focus on button1
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button2);
     });
     it('should trap focus when the overlay type is page', async () => {
@@ -1118,21 +1090,15 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button2);
 
         // press tab to focus on button1
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(button2);
     });
     it('should not trap focus when the overlay type is auto', async () => {
@@ -1160,9 +1126,7 @@ describe('Overlay should correctly trap focus', () => {
 
         expect(overlay.open).to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         const input = el.querySelector('#input') as HTMLInputElement;
         expect(document.activeElement).to.equal(input);

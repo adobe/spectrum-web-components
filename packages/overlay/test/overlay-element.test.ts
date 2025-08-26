@@ -483,9 +483,7 @@ describe('sp-overlay', () => {
 
             expect(el.open).to.be.true;
 
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
 
             await elementUpdated(el);
 
@@ -1001,9 +999,7 @@ describe('sp-overlay', () => {
                 let { overlay } = await opened;
                 expect(el === overlay).to.be.true;
 
-                await sendKeys({
-                    press: 'Escape',
-                });
+                await sendKeys({ press: 'Escape' });
 
                 await elementUpdated(el);
                 // the last item of the overlay stack should close on pressing escape

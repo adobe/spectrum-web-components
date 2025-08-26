@@ -24,6 +24,7 @@ import {
     mouseClickAway,
     mouseClickOn,
     mouseMoveOver,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 
@@ -118,7 +119,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await expect(el).to.be.accessible();
         });
 
-        describe('accessibility warnings', () => {
+        describe('accessibility/dev mode warnings', () => {
             let warnSpy: sinon.SinonSpy;
 
             let originalWarn: typeof window.__swc.warn;
@@ -231,6 +232,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
                 expect(warnSpy.called).to.be.false;
             });
+            it('opens unmeasured with deprecated syntax', async () => {
+                const el = await deprecatedActionMenuFixture();
+
+                el.click();
+                await elementUpdated(el);
+                expect(el.open).to.be.true;
+            });
         });
         it('loads - [slot="label"]', async () => {
             const el = await fixture<ActionMenu>(html`
@@ -273,7 +281,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             await expect(el).to.be.accessible();
         });
         it('has menuitems in accessibility tree', async () => {
-            // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+            // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
             if (isWebKit()) {
                 return;
             }
@@ -461,7 +469,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
         });
         it('manages focus-ring styles', async () => {
-            // TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
+            // @TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
             if (!isWebKit()) {
                 return;
             }
@@ -519,12 +527,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             // Let's use keyboard to open the tray now
             opened = oneEvent(el, 'sp-opened');
-            await sendKeys({
-                press: 'Tab',
-            });
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendTabKey();
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             await opened;
 
@@ -684,13 +688,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             await findDescribedNode(name, description);
         });
-        it('opens unmeasured with deprecated syntax', async () => {
-            const el = await deprecatedActionMenuFixture();
 
-            el.click();
-            await elementUpdated(el);
-            expect(el.open).to.be.true;
-        });
         it('toggles open/close multiple time', async () => {
             const el = await actionMenuFixture();
 
@@ -887,7 +885,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
 
             expect(openSpy.callCount).to.equal(1);
         });
-        // TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because its flaky. Will review in the migration to Spectrum 2.
         it.skip('opens, then closes, on subsequent clicks', async function () {
             const el = await actionMenuFixture();
             await elementUpdated(el);

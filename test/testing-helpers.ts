@@ -25,6 +25,8 @@ import { SinonStub, spy, stub } from 'sinon';
 
 import { sendMouse } from './plugins/browser.js';
 import { MouseOptions, PointerPosition } from './plugins/send-mouse-plugin.js';
+import { sendKeys } from '@web/test-runner-commands';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 /**
  * Send a mouse click to a specific DOMRect or HTMLElement
@@ -89,6 +91,24 @@ export async function mouseMoveAway(
     options?: MouseOptions
 ): Promise<unknown> {
     return await mouseMoveOver(target, 'outside', options);
+}
+
+/**
+ * Send the correct tab key event based on the browser to the active element.
+ * @returns The result of the tab key event
+ */
+export async function sendTabKey() {
+    const tab = isWebKit() ? 'Alt+Tab' : 'Tab';
+    return await sendKeys({ press: tab });
+}
+
+/**
+ * Send the correct shift tab key event based on the browser to the active element.
+ * @returns The result of the shift tab key event
+ */
+export async function sendShiftTabKey() {
+    const shiftTab = isWebKit() ? 'Alt+Shift+Tab' : 'Shift+Tab';
+    return await sendKeys({ press: shiftTab });
 }
 
 export async function testForLitDevWarnings(

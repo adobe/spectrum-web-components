@@ -204,12 +204,12 @@ describe('TabsOverflow', () => {
     });
 
     it('should scroll up to the last item and back in LTR', async () => {
-        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // @TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
         // await setUserAgent(
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
+        // @TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({
@@ -237,12 +237,12 @@ describe('TabsOverflow', () => {
     });
 
     it.skip('should scroll up to the last item and back in RTL', async () => {
-        // TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
+        // @TODO: run on iPhone as per https://github.com/adobe/spectrum-web-components/pull/4722
         // await setUserAgent(
         // 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
         // );
 
-        // TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
+        // @TODO: Skipping on Firefox due to timeouts on CI. Will review in the migration to Spectrum 2.
         if (isFirefox()) return;
 
         const { tabsContainer, tabsOverflow } = await renderTabsOverflow({

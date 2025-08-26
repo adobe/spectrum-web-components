@@ -17,22 +17,24 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger.js';
 import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { Button } from '@spectrum-web-components/button';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    ignoreResizeObserverLoopError,
+    sendTabKey,
+} from '../../../test/testing-helpers.js';
+import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -210,15 +212,9 @@ describe('Overlay Trigger - Hover and Click', () => {
         const opened = oneEvent(el, 'sp-opened');
         trigger.focus();
         // For `:focus-visible` heuristic.
-        await sendKeys({
-            press: 'Tab',
-        });
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendTabKey();
+        await sendKeys({ press: 'Shift+Tab' });
+        await sendKeys({ press: 'Space' });
         await opened;
 
         expect(el.open).to.equal('click');
@@ -233,9 +229,7 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         let closed = oneEvent(button, 'sp-closed');
         expect(document.activeElement === button, `button focused`).to.be.true;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === button2, `button focused`).to.be.true;
         await closed;
 

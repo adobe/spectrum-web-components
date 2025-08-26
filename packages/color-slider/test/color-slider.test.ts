@@ -21,6 +21,8 @@ import {
     arrowUpEvent,
     arrowUpKeyupEvent,
     fixture,
+    sendShiftTabKey,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
@@ -65,38 +67,26 @@ describe('ColorSlider', () => {
 
         expect(document.activeElement).to.equal(input1);
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         expect(document.activeElement).to.equal(el);
 
         let value = el.value;
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         expect(document.activeElement).to.equal(input2);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(el);
 
         value = el.value;
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(input1);
     });
@@ -107,7 +97,7 @@ describe('ColorSlider', () => {
 
         expect(el.focused).to.be.false;
 
-        await sendKeys({ press: 'Tab' });
+        await sendTabKey();
         await elementUpdated(el);
 
         expect(el.focused).to.be.true;
@@ -315,15 +305,9 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(0);
         expect(el.value).to.equal(0);
 
-        await sendKeys({
-            down: 'Shift',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ down: 'Shift' });
+        await sendKeys({ press: 'ArrowUp' });
+        await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
 
@@ -333,12 +317,8 @@ describe('ColorSlider', () => {
         );
         expect(el.value).to.equal(20);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
 
         await elementUpdated(el);
 
@@ -348,12 +328,8 @@ describe('ColorSlider', () => {
         );
         expect(el.value).to.equal(40);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
 
         await elementUpdated(el);
 
@@ -363,15 +339,9 @@ describe('ColorSlider', () => {
         );
         expect(el.value).to.be.approximately(20, 0.000001);
 
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
-        await sendKeys({
-            up: 'Shift',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ up: 'Shift' });
 
         await elementUpdated(el);
 

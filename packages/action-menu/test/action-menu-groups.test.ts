@@ -31,9 +31,7 @@ describe('Action Menu - Groups', () => {
 
         const opened = oneEvent(el, 'sp-opened');
         el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
 
         expect(firstItem.focused).to.be.true;
@@ -56,52 +54,45 @@ describe('Action Menu - Groups', () => {
             'sp-menu-item'
         ) as MenuItem;
 
-        expect(firstItem.selected, 'before opening: first item selected?').to.be.false;
+        expect(firstItem.selected, 'before opening: first item selected?').to.be
+            .false;
 
         let opened = oneEvent(el, 'sp-opened');
         el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
         expect(el.open, 'first opened: open?').to.be.true;
 
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         await elementUpdated(el);
 
         let closed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
         await closed;
 
         await elementUpdated(el);
         await elementUpdated(firstItem);
 
         expect(el.open, 'first closed: open?').to.be.false;
-        expect(firstItem.selected, 'after select: first item selected?').to.be.true;
+        expect(firstItem.selected, 'after select: first item selected?').to.be
+            .true;
         expect(document.activeElement === el, document.activeElement?.localName)
             .to.be.true;
 
         opened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await opened;
         expect(el.open, 'reopened: open?').to.be.true;
 
         closed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
         await closed;
 
         await elementUpdated(el);
         await elementUpdated(firstItem);
 
         expect(el.open, 'reclosed: open?').to.be.false;
-        expect(firstItem.selected, 'after deselect: first item selected?').to.be.false;
+        expect(firstItem.selected, 'after deselect: first item selected?').to.be
+            .false;
     });
 });

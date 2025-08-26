@@ -433,17 +433,11 @@ describe('Menu group', () => {
         await mouseClickOn(items.i9);
         await elementUpdated(items.i9);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         await elementUpdated(items.i9);
         expect(items.i9.focused).to.be.true;
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         let i = 9;
         const count = Object.keys(items).length + 1;
         while (!items.i9.focused) {
@@ -452,9 +446,7 @@ describe('Menu group', () => {
             await elementUpdated(items[`i${i}`]);
             expect(items[`i${i}`].focused, `i${i} should be focused`).to.be
                 .true;
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(menu);
             await elementUpdated(items[`i${i}`]);
         }

@@ -195,7 +195,7 @@ describe('Textfield', () => {
         expect(endBounds.width).equals(startBounds.width);
     });
     it('resizes by default', async function () {
-        // TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             this.skip();
         }
@@ -308,9 +308,7 @@ describe('Textfield', () => {
             el.focus();
             el.select();
             for (let i = 0; i < 100; i++) {
-                await sendKeys({
-                    type: 'ab',
-                });
+                await sendKeys({ type: 'ab' });
                 await sendKeys({ press: 'Enter' });
             }
             const finalHeight = textArea.offsetHeight;
@@ -769,17 +767,13 @@ describe('Textfield', () => {
             <sp-textfield required minlength="3"></sp-textfield>
         `);
         el.focus();
-        await sendKeys({
-            type: 'ab',
-        });
+        await sendKeys({ type: 'ab' });
         await elementUpdated(el);
 
         expect(el.value).to.equal('ab');
         expect(el.checkValidity()).to.be.false;
 
-        await sendKeys({
-            type: 'c',
-        });
+        await sendKeys({ type: 'c' });
         await elementUpdated(el);
 
         expect(el.value).to.equal('abc');
@@ -797,44 +791,32 @@ describe('Textfield', () => {
         await elementUpdated(el);
         el.focus();
 
-        await sendKeys({
-            type: 'a',
-        });
+        await sendKeys({ type: 'a' });
         await elementUpdated(el);
         expect(el.value).to.equal('a');
         expect(el.checkValidity()).to.be.false;
 
-        await sendKeys({
-            type: 'b',
-        });
+        await sendKeys({ type: 'b' });
         await elementUpdated(el);
         expect(el.value).to.equal('ab');
         expect(el.checkValidity());
 
-        await sendKeys({
-            type: 'c',
-        });
+        await sendKeys({ type: 'c' });
         await elementUpdated(el);
         expect(el.value).to.equal('abc');
         expect(el.checkValidity());
 
-        await sendKeys({
-            type: 'd',
-        });
+        await sendKeys({ type: 'd' });
         await elementUpdated(el);
         expect(el.value).to.equal('abc');
         expect(el.checkValidity());
 
-        await sendKeys({
-            press: 'Backspace',
-        });
+        await sendKeys({ press: 'Backspace' });
         await elementUpdated(el);
         expect(el.value).to.equal('ab');
         expect(el.checkValidity());
 
-        await sendKeys({
-            press: 'Backspace',
-        });
+        await sendKeys({ press: 'Backspace' });
         await elementUpdated(el);
         expect(el.value).to.equal('a');
         expect(el.checkValidity()).to.be.false;
@@ -1037,7 +1019,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            // TODO: There's an issue in the way Firefox processes the a11y tree for
+            // @TODO: There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error
             // when our tooling no longer runs into this error. Will review in the migration to Spectrum 2.
@@ -1076,7 +1058,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(negativeHelpText.variant).to.equal('negative');
-            // TODO: There's an issue in the way Firefox processes the a11y tree for
+            // @TODO: There's an issue in the way Firefox processes the a11y tree for
             // elements with an `invalid` attribute/property. The following try/catch
             // wrapping preps the code to pass in that context regardless and error
             // when our tooling no longer runs into this error. Will review in the migration to Spectrum 2.

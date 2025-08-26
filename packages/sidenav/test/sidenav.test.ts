@@ -278,7 +278,7 @@ describe('Sidenav', () => {
         expect(changeSpy.callCount).to.equal(1);
     });
     it('prevents [tabindex=0] while `focusin`', async () => {
-        // TODO: skipping this test because it's flaky in Chrome in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in Chrome in CI. Will review in the migration to Spectrum 2.
         if (isChrome()) {
             return;
         }
@@ -327,7 +327,7 @@ describe('Sidenav', () => {
         expect(selected.tabIndex, 'no longer selected').to.equal(-1);
     });
     it('manage tab index', async () => {
-        // TODO: skipping this test because it's flaky in Chrome in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in Chrome in CI. Will review in the migration to Spectrum 2.
         if (isChrome()) {
             return;
         }

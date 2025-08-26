@@ -60,6 +60,7 @@ import {
     ignoreResizeObserverLoopError,
     mouseClickAway,
     mouseClickOn,
+    sendTabKey,
     fixture as styledFixture,
     testForLitDevWarnings,
     tEvent,
@@ -558,9 +559,7 @@ export function runPickerTests(): void {
 
             // Close with Escape and wait for completion
             const closed = oneEvent(el, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             await waitForElementReady(el);
 
@@ -612,9 +611,7 @@ export function runPickerTests(): void {
 
             // Close with Escape and wait for completion
             const closed = oneEvent(el, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             await waitForElementReady(el);
 
@@ -958,9 +955,7 @@ export function runPickerTests(): void {
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             expect(el.open, 'should be closed after escape key is pressed').to
                 .be.false;
@@ -1009,9 +1004,7 @@ export function runPickerTests(): void {
                         .length === 6
             );
 
-            await sendKeys({
-                press: 'ArrowLeft',
-            });
+            await sendKeys({ press: 'ArrowLeft' });
             await elementUpdated(el);
 
             expect(
@@ -1019,41 +1012,29 @@ export function runPickerTests(): void {
                 `selectionSpy.callCount: ${selectionSpy.callCount}`
             ).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
-            await sendKeys({
-                press: 'ArrowLeft',
-            });
+            await sendKeys({ press: 'ArrowLeft' });
 
             await elementUpdated(el);
             expect(
                 selectionSpy.callCount,
                 `selectionSpy.callCount: ${selectionSpy.callCount}`
             ).to.equal(1);
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
 
             await nextFrame();
             await nextFrame();
             expect(selectionSpy.calledWith('option-2'), 'option-2');
 
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
             await nextFrame();
             await nextFrame();
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
             await nextFrame();
             await nextFrame();
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
             await nextFrame();
             await nextFrame();
-            await sendKeys({
-                press: 'ArrowRight',
-            });
+            await sendKeys({ press: 'ArrowRight' });
             await nextFrame();
             await nextFrame();
             expect(
@@ -1102,7 +1083,7 @@ export function runPickerTests(): void {
 
             el.focus();
             if (!isWebKit()) {
-                await sendKeys({ press: 'Tab' });
+                await sendTabKey();
                 expect(document.activeElement).to.equal(input);
                 await sendKeys({ press: 'Shift+Tab' });
             }
@@ -1141,7 +1122,7 @@ export function runPickerTests(): void {
 
             el.focus();
             if (!isWebKit()) {
-                await sendKeys({ press: 'Tab' });
+                await sendTabKey();
                 expect(document.activeElement).to.equal(input);
                 await sendKeys({ press: 'Shift+Tab' });
             }
@@ -1184,7 +1165,7 @@ export function runPickerTests(): void {
             el.focus();
 
             const closed = oneEvent(el, 'sp-closed');
-            await sendKeys({ press: 'Tab' });
+            await sendTabKey();
             await closed;
 
             expect(el.open, 'closes').to.be.false;
@@ -1227,7 +1208,7 @@ export function runPickerTests(): void {
 
                 // tab to the picker
                 focused = oneEvent(el, 'focus');
-                await sendKeys({ press: 'Tab' });
+                await sendTabKey();
                 // Increase timeout for focus event to prevent flakiness
                 try {
                     await Promise.race([
@@ -1256,7 +1237,7 @@ export function runPickerTests(): void {
 
                 // tab through the picker to input2
                 focused = oneEvent(input2, 'focus');
-                await sendKeys({ press: 'Tab' });
+                await sendTabKey();
                 await focused;
 
                 expect(document.activeElement === input2, 'focuses input 2').to
@@ -1310,7 +1291,7 @@ export function runPickerTests(): void {
 
                 expect(el.open, 'open?').to.be.false;
                 expect(document.activeElement).to.equal(el);
-                await sendKeys({ press: 'Tab' });
+                await sendTabKey();
 
                 expect(el.open, 'open?').to.be.false;
                 expect(document.activeElement).to.equal(input2);
@@ -1354,7 +1335,7 @@ export function runPickerTests(): void {
         });
         it('scrolls selected into view on open', async () => {
             // the Popover is transient, you need to be able to apply custom styles to it...
-            // TODO: but why is this needed in this test?
+            // @TODO: but why is this needed in this test?
             const styles = document.createElement('style');
             styles.innerText = 'sp-popover { height: 40px; }';
             el.shadowRoot.append(styles);
@@ -1372,9 +1353,7 @@ export function runPickerTests(): void {
 
             // Wait for picker to open using property polling instead of unreliable events
             el.focus();
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
 
             // Wait for the picker to be open with timeout
             let attempts = 0;
@@ -1419,9 +1398,7 @@ export function runPickerTests(): void {
             const expectedMinFirstOffset = isChrome() ? 10 : -1; // More lenient for Chromium
             expect(firstItemOffset).to.be.lessThan(expectedMinFirstOffset);
 
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(el);
             await nextFrame();
 
@@ -1438,7 +1415,7 @@ export function runPickerTests(): void {
             );
         });
         it('manages focus-ring styles', async () => {
-            // TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
+            // @TODO: skipping this test for non-WebKit browsers. Will review in the migration to Spectrum 2.
             if (!isWebKit()) {
                 return;
             }
@@ -1494,18 +1471,14 @@ export function runPickerTests(): void {
             // Let's use keyboard to open the tray now
             opened = oneEvent(el, 'sp-opened');
             el.focus();
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await opened;
 
             expect(firstItem.focused, 'firstItem focused?').to.be.true;
 
             // Make a selection again
             closed = oneEvent(el, 'sp-closed');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await closed;
 
             await elementUpdated(el);
@@ -1963,9 +1936,7 @@ export function runPickerTests(): void {
         expect(el1.open, 'click el1 again: el1 to be open').to.be.true;
 
         el1closed = oneEvent(el1, 'sp-closed');
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
         await el1closed;
         expect(el1.open, 'escape key: el1 to be closed').to.be.false;
     });
@@ -2126,9 +2097,7 @@ export function runPickerTests(): void {
         expect(document.activeElement).to.equal(input1);
         const tooltipOpened = oneEvent(el, 'sp-opened');
         if (!isWebKit()) {
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
         } else {
             // by default Safari does not focus the button on tab unless user sets preferences
             el.focus();
@@ -2144,9 +2113,7 @@ export function runPickerTests(): void {
 
         const menuOpen = oneEvent(el, 'sp-opened');
         const tooltipClosed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await menuOpen;
         await tooltipClosed;
         const firstOption = el.querySelector('sp-menu-item') as MenuItem;
@@ -2158,9 +2125,7 @@ export function runPickerTests(): void {
         expect(el.open, 'menu open').to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await menuClosed;
         expect(document.activeElement).not.to.equal(el);
         expect(tooltipEl.open, 'tooltipEl open?').to.be.false;
@@ -2173,7 +2138,7 @@ export function runPickerTests(): void {
             `);
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
-            await elementUpdated(this.elel);
+            await elementUpdated(this.el);
         });
         it('does not recieve focus from an `<sp-field-label>`', async function () {
             expect(this.el.disabled, 'this.el disabled?').to.be.true;
@@ -2214,7 +2179,7 @@ export function runPickerTests(): void {
             `);
             this.label = test.querySelector('sp-field-label') as FieldLabel;
             this.el = test.querySelector('sp-picker') as Picker;
-            await elementUpdated(this.elel);
+            await elementUpdated(this.el);
         });
         it('receives focus from an `<sp-field-label>`', async function () {
             expect(this.el.focused, 'this.el focused?').to.be.false;
@@ -2258,7 +2223,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.el);
         });
-        // TODO: skipping this test because it's flaky in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in CI. Will review in the migration to Spectrum 2.
         it.skip('displays the same icon as the selected menu item', async function () {
             // Delay long enough for the picker to display the selected item.
             // Chromium and Webkit require 2 frames, Firefox requires 3 frames.

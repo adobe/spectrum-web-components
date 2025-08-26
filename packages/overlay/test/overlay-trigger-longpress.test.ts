@@ -35,7 +35,11 @@ import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
-import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    isOnTopLayer,
+    sendTabKey,
+} from '../../../test/testing-helpers.js';
 import { longpress } from '../stories/overlay.stories.js';
 
 describe('Overlay Trigger - Longpress', () => {
@@ -62,16 +66,12 @@ describe('Overlay Trigger - Longpress', () => {
             input.focus();
 
             const open = oneEvent(this.el, 'sp-opened');
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await open;
         });
         it('opens/closes for `Space`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
-            await sendKeys({
-                press: 'Space',
-            });
+            await sendKeys({ press: 'Space' });
             await open;
             expect(this.content.open, 'opens for `Space`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
@@ -92,18 +92,14 @@ describe('Overlay Trigger - Longpress', () => {
         });
         it('opens/closes for `Alt+ArrowDown`', async function () {
             const open = oneEvent(this.el, 'sp-opened');
-            sendKeys({
-                press: 'Alt+ArrowDown',
-            });
+            sendKeys({ press: 'Alt+ArrowDown' });
             await open;
             await nextFrame();
             await nextFrame();
             expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.el, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             await nextFrame();
             await nextFrame();
@@ -119,18 +115,14 @@ describe('Overlay Trigger - Longpress', () => {
             await elementUpdated(button);
 
             const open = oneEvent(this.el, 'sp-opened');
-            sendKeys({
-                press: 'Alt+ArrowDown',
-            });
+            sendKeys({ press: 'Alt+ArrowDown' });
             await open;
             await nextFrame();
             await nextFrame();
             expect(await isOnTopLayer(this.content)).to.be.true;
             expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
             const closed = oneEvent(this.el, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             await nextFrame();
             await nextFrame();
@@ -174,9 +166,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'stays open for `pointerup`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(this.trigger, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             expect(await isOnTopLayer(this.content)).to.be.false;
             expect(this.content.open, 'closes for `pointerdown`').to.be.false;
@@ -250,9 +240,7 @@ describe('Overlay Trigger - Longpress', () => {
             expect(this.content.open, 'stays open for `pointerup`').to.be.true;
             expect(await isOnTopLayer(this.content)).to.be.true;
             const closed = oneEvent(button, 'sp-closed');
-            await sendKeys({
-                press: 'Escape',
-            });
+            await sendKeys({ press: 'Escape' });
             await closed;
             expect(await isOnTopLayer(this.content)).to.be.false;
             expect(this.content.open, 'closes for `pointerdown`').to.be.false;
@@ -351,9 +339,7 @@ describe('Overlay Trigger - Longpress', () => {
         );
 
         const closed = oneEvent(el, 'sp-closed');
-        sendKeys({
-            press: 'Escape',
-        });
+        sendKeys({ press: 'Escape' });
         await closed;
 
         expect(el.open).to.be.undefined;
@@ -534,9 +520,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         first.focus();
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         expect(document.activeElement === trigger, 'Trigger focused').to.be
             .true;
@@ -546,9 +530,7 @@ describe('Overlay Trigger - Longpress', () => {
             LONGPRESS_INSTRUCTIONS.keyboard
         );
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         await findDescribedNode(
             'Trigger with hold affordance',
