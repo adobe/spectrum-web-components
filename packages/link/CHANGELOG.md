@@ -273,10 +273,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
 - leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 - leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
-- **link:** add download attribute to <sp-link> ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
-- **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
-- **link:** add download attribute to <sp-link> ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba672882178b09a33c4834e42144e6b081d))
-- **link:** add download attribute to <sp-link> ([0763504](https://github.com/adobe/spectrum-web-components/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
+- **link:** add download attribute to `<sp-link>` ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
+- **link:** add download attribute to `<sp-link>` ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
+- **link:** add download attribute to `<sp-link>` ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba672882178b09a33c4834e42144e6b081d))
+- **link:** add download attribute to `<sp-link>` ([0763504](https://github.com/adobe/spectrum-web-components/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
 - **link:** support rel attribute ([df4b5a8](https://github.com/adobe/spectrum-web-components/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
 - **link:** update spectrum css input ([e8cd359](https://github.com/adobe/spectrum-web-components/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
 - **link:** use core tokens ([510173b](https://github.com/adobe/spectrum-web-components/commit/510173bad82b61138c31d680ca11319590b3aaa3))
@@ -603,10 +603,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **link:** add download attribute to <sp-link> ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104))
-- **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28e))
-- **link:** add download attribute to <sp-link> ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba))
-- **link:** add download attribute to <sp-link> ([0763504](https://github.com/adobe/spectrum-web-components/commit/0763504))
+- **link:** add download attribute to `<sp-link>` ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104))
+- **link:** add download attribute to `<sp-link>` ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28e))
+- **link:** add download attribute to `<sp-link>` ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba))
+- **link:** add download attribute to `<sp-link>` ([0763504](https://github.com/adobe/spectrum-web-components/commit/0763504))
 
 ## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.7...@spectrum-web-components/link@0.2.8) (2020-02-24)
 
