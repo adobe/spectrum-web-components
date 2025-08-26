@@ -290,7 +290,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
 - match "pointerup" listeners with "pointercancel" for full coverage ([7f2ce92](https://github.com/adobe/spectrum-web-components/commit/7f2ce924ce03fb0881505e6f144184bd3d25355d))
 - override and clear text-transform: uppercase ([dddce4b](https://github.com/adobe/spectrum-web-components/commit/dddce4bc438f8cf8df217b062c9681ec52587060))
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 - remove standard variant from image getter ([97e4713](https://github.com/adobe/spectrum-web-components/commit/97e47132bad276ef2b2989395622dc57d37efb7c))
 - stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
 - switch to heading/subheading instead of title ([d182a0f](https://github.com/adobe/spectrum-web-components/commit/d182a0f829b21296f07b50f37c8aecda2c0ed137))
@@ -561,7 +561,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+- remove `<sp-menu>` usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 
 ## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.8.0...@spectrum-web-components/card@0.8.1) (2021-03-05)
 
