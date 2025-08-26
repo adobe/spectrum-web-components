@@ -16,13 +16,9 @@
     "type": "module",
     "scripts": {
         "build": "yarn workspace @adobe/spectrum-web-components build",
-        "build:first-gen": "yarn workspace @adobe/spectrum-web-components build",
         "test": "yarn workspace @adobe/spectrum-web-components test",
-        "test:first-gen": "yarn workspace @adobe/spectrum-web-components test",
-        "storybook": "yarn workspace @adobe/spectrum-web-components storybook",
-        "storybook:first-gen": "yarn workspace @adobe/spectrum-web-components storybook",
+        "start": "yarn workspace @adobe/spectrum-web-components storybook",
         "lint": "yarn workspace @adobe/spectrum-web-components lint",
-        "lint:first-gen": "yarn workspace @adobe/spectrum-web-components lint",
         "lint-staged": "git status --porcelain && git add . && lint-staged --allow-empty",
         "postinstall": "husky || true && patch-package"
     },
