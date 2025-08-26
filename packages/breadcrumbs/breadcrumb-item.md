@@ -82,6 +82,8 @@ When breadcrumbs overflow, `<sp-breadcrumbs>` will create an `<sp-breadcrumb-ite
 </sp-breadcrumbs>
 ```
 
+### States
+
 #### Disabled
 
 An `sp-breadcrumb-item` can have a `disabled` state which disables the events from that item.
