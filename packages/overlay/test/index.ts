@@ -713,6 +713,52 @@ export const runOverlayTriggerTests = (type: string): void => {
                     originalBodyOverflow
                 );
             });
+
+            it('actually prevents page scrolling when modal overlay is open and restores scrolling when closed', async function () {
+                // Create a long enough page to enable scrolling
+                const longContent = document.createElement('div');
+                longContent.style.height = '200vh'; // Make page twice viewport height
+                longContent.style.width = '100%';
+                longContent.style.backgroundColor = 'transparent';
+                document.body.appendChild(longContent);
+
+                const modalTrigger = this.outerTrigger;
+                modalTrigger.type = 'modal';
+                await elementUpdated(modalTrigger);
+
+                // Open modal overlay
+                const opened = oneEvent(modalTrigger, 'sp-opened');
+                this.outerButton.click();
+                await opened;
+
+                // Attempt to scroll while modal is open
+                const scrollYBeforeScroll = window.scrollY;
+                window.scrollTo(0, 100);
+                await nextFrame();
+
+                // Verify that scrolling was prevented
+                expect(window.scrollY).to.equal(scrollYBeforeScroll);
+
+                // Close modal overlay
+                const closed = oneEvent(modalTrigger, 'sp-closed');
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
+                await closed;
+
+                // Verify scrolling works again after modal is closed
+                window.scrollTo(0, 100);
+                await nextFrame();
+                expect(window.scrollY).to.equal(100);
+
+                // Clean up
+                document.body.removeChild(longContent);
+            });
         });
         describe('System interactions', () => {
             afterEach(async () => {
