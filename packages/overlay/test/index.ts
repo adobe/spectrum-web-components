@@ -741,7 +741,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 // Close modal overlay
                 const closed = oneEvent(modalTrigger, 'sp-closed');
-                sendMouse({
+                await sendMouse({
                     steps: [
                         {
                             type: 'click',
