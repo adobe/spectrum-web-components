@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./",
+        "composite": true,
+        "noEmit": false,
+        "allowImportingTsExtensions": false
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+    "references": [
+        {
+            "path": "../base"
+        }
+    ]
+}

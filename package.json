@@ -26,7 +26,9 @@
         "first-gen",
         "first-gen/packages/*",
         "first-gen/tools/*",
-        "first-gen/linters/*"
+        "first-gen/linters/*",
+        "second-gen",
+        "second-gen/packages/*"
     ],
     "devDependencies": {
         "@changesets/cli": "^2.29.6",

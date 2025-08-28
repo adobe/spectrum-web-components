@@ -110,6 +110,10 @@ first-gen/test/**/*.d.ts
 first-gen/test/visual/test.js
 test-results
 
+# second gen build artifacts
+second-gen/packages/*/dist/
+second-gen/packages/*/custom-elements.json
+
 # npm assets
 node_modules
 npm-debug.log

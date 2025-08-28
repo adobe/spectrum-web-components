@@ -1,0 +1,45 @@
+{
+    "private": true,
+    "name": "@adobe/spectrum-web-components-2nd-gen",
+    "version": "0.0.1",
+    "description": "Second generation Spectrum Web Components with modern tooling and architecture",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "second-gen"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "scripts": {
+        "build": "yarn workspaces foreach --from '@swc/*' run build",
+        "clean": "yarn workspaces foreach --from '@swc/*' run clean",
+        "test": "yarn workspace @swc/components test",
+        "storybook": "yarn workspace @swc/components storybook",
+        "storybook:build": "yarn workspace @swc/components storybook:build",
+        "lint": "eslint . --ext .ts,.js,.json"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "second-gen"
+    ],
+    "engines": {
+        "node": ">=20",
+        "yarn": ">=4.6.0"
+    },
+    "packageManager": "yarn@4.9.2"
+}
