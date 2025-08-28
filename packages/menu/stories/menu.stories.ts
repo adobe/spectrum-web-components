@@ -28,6 +28,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+
 export default {
     component: 'sp-menu',
     title: 'Menu',
