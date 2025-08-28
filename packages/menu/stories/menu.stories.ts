@@ -28,8 +28,6 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
 export default {
     component: 'sp-menu',
     title: 'Menu',
@@ -483,52 +481,5 @@ export const dynamicRemoval = (): TemplateResult => {
             <sp-menu-item>Save Selection</sp-menu-item>
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-menu>
-    `;
-};
-
-export const MenuWithOverlayTrigger = (): TemplateResult => {
-    return html`
-        <overlay-trigger placement="bottom" type="modal">
-            <sp-action-button slot="trigger">Open menu</sp-action-button>
-            <sp-popover open style="width: 200px;" slot="click-content">
-                <sp-menu selects="multiple">
-                    <sp-menu-group selects="inherit">
-                        <span slot="header">Many of these</span>
-                        <sp-menu-item>Camden</sp-menu-item>
-                        <sp-menu-item>Cedar Riverside</sp-menu-item>
-                        <sp-menu-item>Downtown</sp-menu-item>
-                        <sp-menu-item>Northeast Arts District</sp-menu-item>
-                        <sp-menu-item>Uptown</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group selects="inherit">
-                        <span slot="header">And these, too</span>
-                        <sp-menu-item>Lowertown</sp-menu-item>
-                        <sp-menu-item>Grand Ave</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            </sp-popover>
-        </overlay-trigger>
-        <overlay-trigger placement="bottom" type="modal">
-            <sp-action-button slot="trigger">
-                Open menu (with selected items)
-            </sp-action-button>
-            <sp-popover open style="width: 200px;" slot="click-content">
-                <sp-menu selects="multiple">
-                    <sp-menu-group selects="inherit">
-                        <span slot="header">Many of these</span>
-                        <sp-menu-item selected>Camden</sp-menu-item>
-                        <sp-menu-item>Cedar Riverside</sp-menu-item>
-                        <sp-menu-item selected>Downtown</sp-menu-item>
-                        <sp-menu-item>Northeast Arts District</sp-menu-item>
-                        <sp-menu-item>Uptown</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group selects="inherit">
-                        <span slot="header">And these, too</span>
-                        <sp-menu-item>Lowertown</sp-menu-item>
-                        <sp-menu-item selected>Grand Ave</sp-menu-item>
-                    </sp-menu-group>
-                </sp-menu>
-            </sp-popover>
-        </overlay-trigger>
     `;
 };

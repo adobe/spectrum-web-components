@@ -1029,6 +1029,25 @@ export const modalNoFocus = (): TemplateResult => {
     `;
 };
 
+export const modalNoFocusInMenu = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="modal" receives-focus="false">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                underlay
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                size="s"
+            >
+                <sp-menu>
+                    <sp-menu-item>Item 1</sp-menu-item>
+                    <sp-menu-item>Item 2</sp-menu-item>
+                </sp-menu>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+    `;
+};
+
 export const modalManaged = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`

@@ -541,7 +541,11 @@ export class Overlay extends ComputedOverlayBase {
         if (targetOpenState) {
             const focusTrap = await import('focus-trap');
             this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
-                initialFocus: focusEl || undefined,
+                // When receives-focus="false", set initialFocus to false to prevent any focus
+                initialFocus:
+                    this.receivesFocus === 'false'
+                        ? false
+                        : focusEl || undefined,
                 tabbableOptions: {
                     getShadowRoot: true,
                 },

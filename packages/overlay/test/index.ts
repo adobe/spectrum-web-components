@@ -681,6 +681,79 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
             });
         });
+        describe('receives-focus behavior', () => {
+            it('focuses first focusable element when modal overlay opens with Enter and receives-focus is not false but auto by default', async () => {
+                const el = await fixture<OverlayTrigger>(html`
+                    <overlay-trigger type="modal">
+                        <sp-button slot="trigger">Open Overlay</sp-button>
+                        <sp-popover slot="click-content">
+                            <p>This overlay should receive focus</p>
+                            <sp-button variant="primary">
+                                Action Button
+                            </sp-button>
+                            <sp-button variant="secondary">Cancel</sp-button>
+                        </sp-popover>
+                    </overlay-trigger>
+                `);
+
+                const trigger = el.querySelector(
+                    'sp-button[slot="trigger"]'
+                ) as HTMLElement;
+                const actionButton = el.querySelector(
+                    'sp-button[variant="primary"]'
+                ) as HTMLElement;
+
+                trigger.focus();
+                expect(document.activeElement).to.equal(trigger);
+
+                await sendKeys({ press: 'Enter' });
+                await elementUpdated(el);
+                await nextFrame();
+                await nextFrame();
+
+                expect(el.open).to.equal('click');
+
+                // Check if the first focusable element is focused (default behavior)
+                expect(document.activeElement).to.equal(actionButton);
+            });
+
+            it('does not focus first focusable element when overlay opens with Enter and receives-focus="false"', async () => {
+                const el = await fixture<OverlayTrigger>(html`
+                    <overlay-trigger type="modal" receives-focus="false">
+                        <sp-button slot="trigger">Open Overlay</sp-button>
+                        <sp-popover slot="click-content">
+                            <p>This overlay should not receive focus</p>
+                            <sp-button variant="primary">
+                                Action Button
+                            </sp-button>
+                            <sp-button variant="secondary">Cancel</sp-button>
+                        </sp-popover>
+                    </overlay-trigger>
+                `);
+
+                const trigger = el.querySelector(
+                    'sp-button[slot="trigger"]'
+                ) as HTMLElement;
+                const actionButton = el.querySelector(
+                    'sp-button[variant="primary"]'
+                ) as HTMLElement;
+
+                trigger.focus();
+                expect(document.activeElement).to.equal(trigger);
+
+                await sendKeys({ press: 'Enter' });
+                await elementUpdated(el);
+                await nextFrame();
+                await nextFrame();
+
+                expect(el.open).to.equal('click');
+                // Check that the first focusable element is NOT focused when receives-focus="false"
+                expect(document.activeElement).to.not.equal(actionButton);
+
+                // Focus should remain on the trigger
+                expect(document.activeElement).to.equal(trigger);
+            });
+        });
         describe('System interactions', () => {
             afterEach(async () => {
                 const triggers =
