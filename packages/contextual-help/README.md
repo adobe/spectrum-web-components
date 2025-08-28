@@ -1,6 +1,8 @@
-## Description
+## Overview
 
-A `sp-contextual-help` shows a user extra information about the state of either an adjacent component or an entire view. It explains a high-level topic about an experience and can point users to more information elsewhere.
+An `<sp-contextual-help>` shows a user extra information about the state of either an adjacent component or an entire view. It explains a high-level topic about an experience and can point users to more information elsewhere.
+
+[View the design documentation for this component.](https://spectrum.adobe.com/page/contextual-help/)
 
 ### Usage
 
@@ -8,23 +10,41 @@ A `sp-contextual-help` shows a user extra information about the state of either 
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/contextual-help?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/contextual-help)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-ly7a9m4p)
 
-```
+```bash
 yarn add @spectrum-web-components/contextual-help
 ```
 
 Import the side effectful registration of `<sp-contextual-help>` via:
 
-```
+```js
 import '@spectrum-web-components/contextual-help/sp-contextual-help.js';
 ```
 
 When looking to leverage the `ContextualHelp` base class as a type and/or for extension purposes, do so via:
 
-```
+```js
 import { ContextualHelp } from '@spectrum-web-components/contextual-help';
 ```
 
-## Example
+### Anatomy
+
+Contextual help is a wrapper that attaches a popover to an icon-only action button.
+
+It consists of the following parts:
+
+- **Heading**: assign the appropriate heading level to the `heading` slot to provide a title for the popover.
+- **Content**: text can be displayed within the popover by using the default slot.
+- **Link**: an optional `<sp-link>` can be assigned to the `link` slot per [standalone link guidance](https://spectrum.adobe.com/page/contextual-help/#When-to-use-a-standalone-link).
+
+### Options
+
+#### Variants
+
+<sp-tabs selected="info" auto label="Variant Options">
+<sp-tab value="info">Information</sp-tab>
+<sp-tab-panel value="info">
+
+The default variant is for in-line information using the "info" icon. Use the info icon for informative content: specific, brief, and contextual guidance. This is best for supplemental or nice-to-know information, in-line with a label or a component (if there is no label). The content should be [instructive](https://spectrum.adobe.com/page/voice-and-tone/#Tone-spectrum) in tone.
 
 ```html
 <sp-contextual-help>
@@ -39,9 +59,11 @@ import { ContextualHelp } from '@spectrum-web-components/contextual-help';
 </sp-contextual-help>
 ```
 
-## Help
+</sp-tab-panel>
+<sp-tab value="help">Help</sp-tab>
+<sp-tab-panel value="help">
 
-Use `variant="help"` for helpful content: more detailed, in-depth guidance about a task, UI element, tool, or keyboard shortcuts. This may include an image, video, or link and should be helpful in tone.
+Use `variant="help"` for helpful content: more detailed, in-depth guidance about a task, UI element, tool, or keyboard shortcuts. This may include an image, video, or link and should be [helpful](https://spectrum.adobe.com/page/voice-and-tone/#Tone-spectrum) in tone.
 
 ```html
 <sp-contextual-help variant="help">
@@ -57,9 +79,12 @@ Use `variant="help"` for helpful content: more detailed, in-depth guidance about
 </sp-contextual-help>
 ```
 
-## Placement
+</sp-tab-panel>
+</sp-tabs>
 
-By default a `sp-contextual-help` will render its popover at the `bottom-start` position. This can be customized using the `placement` attribute and supports [all the placement options](http://localhost:8000/components/overlay-trigger/#placement) an `overlay-trigger` component supports.
+#### Placement
+
+By default an `<sp-contextual-help>` will render its popover at the `bottom-start` position. This can be customized using the `placement` attribute and supports [all the placement options](http://localhost:8000/components/overlay-trigger/#placement) an `overlay-trigger` component supports.
 
 ```html
 <sp-contextual-help placement="top-start">
@@ -74,7 +99,7 @@ By default a `sp-contextual-help` will render its popover at the `bottom-start` 
 </sp-contextual-help>
 ```
 
-## Custom max width
+#### Custom max width
 
 Contextual help allows for a custom maximum width to be set using the `--mod-spectrum-contextual-help-popover-maximum-width` custom property.
 
@@ -90,14 +115,14 @@ Note: Maximum width should not be less than 100px.
 </sp-contextual-help>
 ```
 
-## Events
+### Behaviors
 
-`sp-contextual-help` does not fire any events of its own. You can listen, however, for the `sp-open` and `sp-closed` events which are fired when the popover opens or closes.
+`<sp-contextual-help>` does not fire any events of its own. You can listen, however, for the `sp-open` and `sp-closed` events which are fired when the popover opens or closes.
 
-## Accessibility
+### Accessibility
 
-Given that the trigger is an icon-only `sp-action-button`, it is important to provide an accessible name for it, so that it can be properly announced by screen readers.
-By default, the `sp-contextual-help` uses an `aria-label` property with either "Informations" or "Help" as values, depending on the component's `variant`.
+Given that the trigger is an icon-only `<sp-action-button>`, it is important to provide an accessible name for it, so that it can be properly announced by screen readers.
+By default, the `<sp-contextual-help>` uses an `aria-label` property with either "Information" or "Help" as values, depending on the component's `variant`.
 You can customize this using the `label` attribute.
 
 When providing headings using the `heading` slot, make sure to provide actual heading elements such as `h1`, `h2`, `h3` ... or use the `role="heading"` attribute.

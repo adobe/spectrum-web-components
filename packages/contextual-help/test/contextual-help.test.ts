@@ -13,7 +13,7 @@ import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { ContextualHelp } from '../src/ContextualHelp.js';
+import { ContextualHelp, DEFAULT_ARIA_LABELS } from '../src/ContextualHelp.js';
 import { ContextualHelpMarkup } from '../stories';
 import { render, TemplateResult } from 'lit';
 
@@ -31,12 +31,18 @@ describe('ContextualHelp', () => {
         const button = document
             .querySelector('sp-contextual-help')
             ?.shadowRoot?.querySelector('sp-action-button');
-        expect(button).to.have.attribute('aria-label', 'Informations');
+        expect(button).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.info
+        );
 
         el.variant = 'help';
 
         await elementUpdated(el);
-        expect(button).to.have.attribute('aria-label', 'Help');
+        expect(button).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.help
+        );
     });
     it('is a popover on web', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
@@ -76,15 +82,15 @@ describe('ContextualHelp', () => {
         expect(el.buttonAriaLabel).to.equal('Custom Label');
     });
 
-    it('returns "Help" if variant is "help" and label is not set', async () => {
+    it(`returns ${DEFAULT_ARIA_LABELS.help} if variant is "help" and label is not set`, async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
         el.variant = 'help';
-        expect(el.buttonAriaLabel).to.equal('Help');
+        expect(el.buttonAriaLabel).to.equal(DEFAULT_ARIA_LABELS.help);
     });
 
-    it('returns "Informations" if variant is not "help" and label is not set', async () => {
+    it(`returns ${DEFAULT_ARIA_LABELS.info} if variant is not "help" and label is not set`, async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
-        expect(el.buttonAriaLabel).to.equal('Informations');
+        expect(el.buttonAriaLabel).to.equal(DEFAULT_ARIA_LABELS.info);
     });
     it('renders correctly when actualPlacement is undefined', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
@@ -95,7 +101,10 @@ describe('ContextualHelp', () => {
 
         const trigger = el.shadowRoot?.querySelector('#trigger') as HTMLElement;
         expect(trigger).to.exist;
-        expect(trigger).to.have.attribute('aria-label', 'Informations');
+        expect(trigger).to.have.attribute(
+            'aria-label',
+            DEFAULT_ARIA_LABELS.info
+        );
 
         const overlay = el.shadowRoot?.querySelector(
             'sp-overlay'
