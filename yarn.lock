@@ -4948,6 +4948,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/shared": "npm:1.7.0"
+    "@swc/base": "workspace:*"
   languageName: unknown
   linkType: soft
 

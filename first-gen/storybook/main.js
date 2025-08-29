@@ -11,6 +11,7 @@
  */
 
 import { merge } from 'webpack-merge';
+import { resolve } from 'path';
 
 /** @type { import('@storybook/web-components-webpack5').StorybookConfig } */
 export default {
@@ -42,7 +43,19 @@ export default {
         return merge(config, {
             resolve: {
                 conditionNames: ['development', 'browser'],
-                modules: ['node_modules', 'packages', 'projects', 'tools'],
+                modules: [
+                    'node_modules',
+                    'packages',
+                    'projects',
+                    'tools',
+                    '../second-gen/packages',
+                ],
+                alias: {
+                    '@swc/base': resolve('../second-gen/packages/base/dist'),
+                    '@swc/components': resolve(
+                        '../second-gen/packages/swc/dist'
+                    ),
+                },
             },
         });
     },

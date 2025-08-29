@@ -9,18 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineConfig } from 'tsdown';
-
-export default defineConfig({
-    entry: {
-        index: './index.ts',
-        'components/badge/index': './components/badge/index.ts',
-    },
-    format: 'esm',
-    target: 'es2022',
-    dts: true,
-    sourcemap: true,
-    clean: true,
-    outDir: 'dist',
-    tsconfig: './tsconfig.json',
-});
+export { BadgeBase } from './components/badge/index.js';

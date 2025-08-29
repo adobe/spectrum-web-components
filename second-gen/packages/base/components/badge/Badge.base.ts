@@ -9,3 +9,32 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import {
+    css,
+    type CSSResult,
+    html,
+    LitElement,
+    type TemplateResult,
+} from 'lit';
+import { property } from 'lit/decorators.js';
+
+export class BadgeBase extends LitElement {
+    @property({ type: String })
+    variant: 'neutral' | 'accent' | 'informative' | 'positive' | 'negative' =
+        'neutral';
+
+    @property({ type: String })
+    size: 'small' | 'medium' | 'large' = 'medium';
+
+    static styles: CSSResult = css`
+        :host {
+            display: inline-block;
+            font-family: adobe-clean, sans-serif;
+        }
+    `;
+
+    render(): TemplateResult {
+        return html`<slot></slot>`;
+    }
+}
