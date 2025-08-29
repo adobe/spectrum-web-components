@@ -9,12 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-// import { PropertyValues } from 'lit';
+import { PropertyValues } from 'lit';
 
-// import { SizedMixin, SpectrumElement } from '@swc/core/tools/base';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 
-// import { ObserveSlotText } from '@swc/core/tools/shared/observe-slot-text';
-// import { ObserveSlotPresence } from '@swc/core/tools/shared/observe-slot-presence';
+import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
+import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 
 export const BADGE_VARIANTS = [
     'accent',

@@ -91,7 +91,7 @@ second-gen/
 
 ### Creating a New Component
 
-1. **Base Class**: Create base class in `packages/base/components/`
+1. **Base Class**: Create base class in `packages/core/components/`
 2. **Implementation**: Create concrete rendering implementation in `packages/swc/components/`
 3. **Styles**: TBD (WIP)
 4. **Stories**: Create Storybook stories (CSF) for development and documentation
