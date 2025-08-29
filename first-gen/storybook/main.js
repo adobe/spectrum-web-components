@@ -51,7 +51,7 @@ export default {
                     '../second-gen/packages',
                 ],
                 alias: {
-                    '@swc/base': resolve('../second-gen/packages/base/dist'),
+                    '@swc/core': resolve('../second-gen/packages/core/dist'),
                     '@swc/components': resolve(
                         '../second-gen/packages/swc/dist'
                     ),

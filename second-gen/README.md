@@ -6,7 +6,7 @@ This folder contains the second generation of Spectrum Web Components.
 
 The 2nd generation follows a dual-package architecture:
 
-- **`packages/base/`** - Abstract base classes providing common functionality
+- **`packages/core/`** - Abstract base classes providing common functionality
 - **`packages/swc/`** - Concrete component implementations with styling and stories
 
 ## Components

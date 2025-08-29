@@ -20,7 +20,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@swc/base': './packages/base',
+            '@swc/core': './packages/core',
             '@swc/components': './packages/swc',
         },
     },

@@ -1,5 +1,5 @@
 {
-    "name": "@swc/base",
+    "name": "@swc/core",
     "version": "0.0.1",
     "description": "Abstract base classes for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -8,7 +8,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "second-gen/packages/base"
+        "directory": "second-gen/packages/core"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
