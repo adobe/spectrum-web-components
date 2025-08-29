@@ -13,6 +13,14 @@
 import { elementUpdated, expect, oneEvent } from '@open-wc/testing';
 
 import '@spectrum-web-components/combobox/sp-combobox.js';
+import { MenuItem } from '@spectrum-web-components/menu';
+import { PickerButton } from '@spectrum-web-components/picker-button';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+import {
+    executeServerCommand,
+    sendKeys,
+    setViewport,
+} from '@web/test-runner-commands';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -22,13 +30,11 @@ import {
     escapeEvent,
     fixture,
     homeEvent,
+    mouseClickOn,
+    sendTabKey,
 } from '../../../test/testing-helpers.js';
-import {
-    executeServerCommand,
-    sendKeys,
-    setViewport,
-} from '@web/test-runner-commands';
-import { PickerButton } from '@spectrum-web-components/picker-button';
+import { withTooltip } from '../stories/combobox.stories.js';
+import { countries } from '../stories/index.js';
 import {
     comboboxFixture,
     longComboboxFixture,
@@ -36,11 +42,6 @@ import {
     testActiveElement,
     withDisabledItemsFixture,
 } from './helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { withTooltip } from '../stories/combobox.stories.js';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
-import { MenuItem } from '@spectrum-web-components/menu';
-import { countries } from '../stories/index.js';
 
 describe('Combobox', () => {
     describe('manages focus', () => {
@@ -350,20 +351,9 @@ describe('Combobox', () => {
             expect(el.shadowRoot.activeElement).to.equal(input);
 
             const closed = oneEvent(el.focusElement, 'sp-closed');
-            const rect = button.getBoundingClientRect();
             // required to test that focus remains with the <input>,
             // since button.click() doesn't allow the button to steal focus
-            await sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'click',
-                    },
-                ],
-            });
+            await mouseClickOn(button);
             await closed;
 
             await elementUpdated(el);
@@ -563,19 +553,8 @@ describe('Combobox', () => {
             expect(el.open, 'open after click?').to.be.true;
 
             const itemValue = (item.textContent as string).trim();
-            const rect = item.getBoundingClientRect();
 
-            await sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'click',
-                    },
-                ],
-            });
+            await mouseClickOn(item);
             await elementUpdated(el);
 
             expect(el.value, 'value after item click?').to.equal(itemValue);
@@ -604,19 +583,8 @@ describe('Combobox', () => {
             expect(el.open).to.be.true;
 
             const itemValue = item.itemText;
-            const rect = item.getBoundingClientRect();
             const closed = oneEvent(el, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                        type: 'click',
-                    },
-                ],
-            });
+            await mouseClickOn(item);
             await closed;
 
             expect(el.value).to.equal(itemValue);
@@ -913,16 +881,12 @@ describe('Combobox', () => {
             await elementUpdated(el);
 
             el.focusElement.focus();
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
 
             await elementUpdated(el);
 
             const typed = oneEvent(el, 'input');
-            await sendKeys({
-                press: 'g',
-            });
+            await sendKeys({ press: 'g' });
             await typed;
 
             expect(el.focusElement.value, '<input> has value').to.equal('g');
@@ -960,15 +924,9 @@ describe('Combobox', () => {
             await opened;
 
             // let's press arrow down 3 times and check if we are on Algeria (the next to disabled item)
-            await sendKeys({
-                press: 'ArrowDown',
-            });
-            await sendKeys({
-                press: 'ArrowDown',
-            });
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
+            await sendKeys({ press: 'ArrowDown' });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(el);
             expect(el.activeDescendant?.itemText).to.equal('Algeria');
         });
@@ -980,18 +938,7 @@ describe('Combobox', () => {
             const menuItems = el.shadowRoot.querySelectorAll('sp-menu-item');
             const disabledItem = menuItems[2];
 
-            const bounds = disabledItem.getBoundingClientRect();
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [
-                            bounds.x + bounds.width / 2,
-                            bounds.y + bounds.height / 2,
-                        ],
-                    },
-                ],
-            });
+            await mouseClickOn(disabledItem);
             await elementUpdated(el);
 
             // active descendant should be undefined
@@ -1023,9 +970,7 @@ describe('Combobox', () => {
         input1.focus();
         expect(document.activeElement === input1).to.be.true;
         const tooltipOpened = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await tooltipOpened;
         expect(
             document.activeElement === el,
@@ -1037,9 +982,7 @@ describe('Combobox', () => {
 
         const menuOpen = oneEvent(el, 'sp-opened');
         const tooltipClosed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await menuOpen;
         await tooltipClosed;
         expect(document.activeElement === el).to.be.true;
@@ -1047,9 +990,7 @@ describe('Combobox', () => {
         expect(el.open).to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await menuClosed;
         expect(document.activeElement === el).to.be.false;
         expect(tooltipEl.open).to.be.false;

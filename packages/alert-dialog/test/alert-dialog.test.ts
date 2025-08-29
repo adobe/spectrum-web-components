@@ -49,27 +49,19 @@ describe('AlertDialog', () => {
         expect(cancelButton).to.be.not.null;
         expect(secondaryButton).to.be.not.null;
     });
-    it('validates variants', async () => {
-        const el = await fixture<AlertDialog>(
-            html`
-                <sp-alert-dialog variant="invalid">
-                    This Alert Dialog validates variants.
-                </sp-alert-dialog>
-            `
-        );
-
+    it('should only accept valid alertDialogVariants', async () => {
+        const el = await fixture<AlertDialog>(html`
+            <sp-alert-dialog variant="invalid">
+                This Alert Dialog validates variants.
+            </sp-alert-dialog>
+        `);
         await elementUpdated(el);
         expect(el.variant).to.equal('');
 
         el.variant = alertDialogVariants[0];
 
         await elementUpdated(el);
-        expect(el.variant).to.equal(alertDialogVariants[0]);
-
-        el.variant = alertDialogVariants[0];
-
-        await elementUpdated(el);
-        expect(el.variant).to.equal(alertDialogVariants[0]);
+        expect(el.variant).to.equal('confirmation');
     });
     it('does not recycle applied content ids', async () => {
         const el = await fixture<AlertDialog>(html`

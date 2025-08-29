@@ -48,8 +48,6 @@ const renderPopover = (): TemplateResult => {
     `;
 };
 
-measureFixtureCreation(
-    html`
-        <sp-button ${trigger(renderPopover)}>Trigger</sp-button>
-    `
-);
+measureFixtureCreation(html`
+    <sp-button ${trigger(renderPopover)}>Trigger</sp-button>
+`);
