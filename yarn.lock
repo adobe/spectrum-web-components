@@ -23419,21 +23419,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"posthtml-match-helper@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "posthtml-match-helper@npm:2.0.0"
+"posthtml-match-helper@npm:^2.0.0, posthtml-match-helper@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "posthtml-match-helper@npm:2.0.3"
   peerDependencies:
     posthtml: ^0.16.6
-  checksum: 10c0/9082622f4bfc2f0046aa839eaee4cf1d764b50cb640f94036afdc172614b72370e74bb989e028817b5f646f48f44f3505325066970095cd2678e255fc75028dc
-  languageName: node
-  linkType: hard
-
-"posthtml-match-helper@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "posthtml-match-helper@npm:2.0.2"
-  peerDependencies:
-    posthtml: ^0.16.6
-  checksum: 10c0/3e6fb0df9361c817a4300bbef750af26213be4ff78bfc98a4e32157166759b4993392887ea0d52a704457b9f78a40d02245281c2975097a2bcfa3461e59b2ca3
+  checksum: 10c0/845de578a32174ee7f045689391b2c9ddbf66cd0b8ed71745009d56da8a219ac97fe14c08dc38f4a5dfc7042c658c767253cb3521432c15829de8ff3208f5824
   languageName: node
   linkType: hard
 
