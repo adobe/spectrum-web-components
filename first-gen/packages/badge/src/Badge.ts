@@ -17,7 +17,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { BadgeBase } from '@swc/core';
+import { BadgeBase } from '@swc/core/components/badge';
 import styles from './badge.css.js';
 
 // Export types and values to avoid breaking changes

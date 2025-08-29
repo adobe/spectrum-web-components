@@ -11,7 +11,7 @@
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
     "references": [
         {
-            "path": "../base"
+            "path": "../core"
         }
     ]
 }

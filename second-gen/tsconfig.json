@@ -4,7 +4,6 @@
         "module": "ESNext",
         "lib": ["ES2022", "DOM", "DOM.Iterable"],
         "declaration": true,
-        "isolatedDeclarations": true,
         "outDir": "./dist",
         "rootDir": "./",
         "strict": true,
