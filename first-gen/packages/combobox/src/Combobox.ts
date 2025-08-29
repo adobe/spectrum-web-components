@@ -64,6 +64,16 @@ export class Combobox extends Textfield {
     @state()
     private activeDescendant?: ComboboxOption | MenuItem;
 
+    /**
+     * Internal tracking property to detect activeDescendant changes
+     */
+    private _previousActiveDescendant?: ComboboxOption | MenuItem;
+
+    /**
+     * Internal tracking property to detect optionEls changes
+     */
+    private _previousOptionEls?: MenuItem[];
+
     @property({ type: String })
     public override autocomplete: 'list' | 'none' = 'none';
 
@@ -596,11 +606,7 @@ export class Combobox extends Textfield {
         }
     }
 
-    protected override updated(
-        changed: PropertyValues<
-            this & { optionEls: MenuItem[]; activeDescendant: MenuItem }
-        >
-    ): void {
+    protected override updated(changed: PropertyValues<this>): void {
         if (changed.has('open') && !this.pending) {
             this.manageListOverlay();
         }
@@ -610,13 +616,18 @@ export class Combobox extends Textfield {
         if (changed.has('pending') && this.pending) {
             this.open = false;
         }
-        if (changed.has('activeDescendant')) {
-            const previouslyActiveDescendant = changed.get(
-                'activeDescendant'
-            ) as unknown as MenuItem;
-            if (previouslyActiveDescendant) {
-                previouslyActiveDescendant.focused = false;
+        // Manual tracking for @state activeDescendant property
+        if (this.activeDescendant !== this._previousActiveDescendant) {
+            // Unfocus the previously active descendant
+            if (
+                this._previousActiveDescendant &&
+                typeof (this._previousActiveDescendant as MenuItem).focused !==
+                    'undefined'
+            ) {
+                (this._previousActiveDescendant as MenuItem).focused = false;
             }
+
+            // Focus the new active descendant
             if (
                 this.activeDescendant &&
                 typeof (this.activeDescendant as MenuItem).focused !==
@@ -624,14 +635,26 @@ export class Combobox extends Textfield {
             ) {
                 (this.activeDescendant as MenuItem).focused = true;
             }
+
+            // Update the tracking property
+            this._previousActiveDescendant = this.activeDescendant;
         }
-        if (changed.has('options') || changed.has('optionEls')) {
+        // Check for options property changes or optionEls state changes
+        const optionsChanged = changed.has('options');
+        const optionElsChanged = this.optionEls !== this._previousOptionEls;
+
+        if (optionsChanged || optionElsChanged) {
             // if all options are disabled, set combobox to disabled
             if (this.options?.every((option) => option.disabled)) {
                 this.disabled = true;
             }
 
             this.availableOptions = this.options || this.optionEls;
+
+            // Update tracking for optionEls
+            if (optionElsChanged) {
+                this._previousOptionEls = this.optionEls;
+            }
         }
     }
 
