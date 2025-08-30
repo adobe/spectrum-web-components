@@ -55,6 +55,7 @@ import {
 
 import styles from './overlay.css.js';
 import { FocusTrap } from 'focus-trap';
+import '@spectrum-web-components/underlay/sp-underlay.js';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
@@ -433,9 +434,9 @@ export class Overlay extends ComputedOverlayBase {
      * Determines the value for the popover attribute based on the overlay type.
      *
      * @private
-     * @returns {'auto' | 'manual' | undefined} The popover value or undefined if not applicable.
+     * @returns {'auto' | 'manual' | 'hint' | undefined} The popover value or undefined if not applicable.
      */
-    private get popoverValue(): 'auto' | 'manual' | undefined {
+    private get popoverValue(): 'auto' | 'manual' | 'hint' | undefined {
         const hasPopoverAttribute = 'popover' in this;
 
         if (!hasPopoverAttribute) {
@@ -444,10 +445,8 @@ export class Overlay extends ComputedOverlayBase {
 
         switch (this.type) {
             case 'modal':
-                return 'auto';
-            case 'page':
                 return 'manual';
-            case 'hint':
+            case 'page':
                 return 'manual';
             default:
                 return this.type;
@@ -554,6 +553,9 @@ export class Overlay extends ComputedOverlayBase {
             const focusTrap = await import('focus-trap');
             this._focusTrap = focusTrap.createFocusTrap(this.dialogEl, {
                 initialFocus: focusEl || undefined,
+                allowOutsideClick: (event) => {
+                    return !event.isTrusted;
+                },
                 tabbableOptions: {
                     getShadowRoot: true,
                 },
@@ -567,7 +569,10 @@ export class Overlay extends ComputedOverlayBase {
                 allowOutsideClick: this.allowOutsideClick,
             });
 
-            if (this.type === 'modal' || this.type === 'page') {
+            if (
+                (this.type === 'modal' || this.type === 'page') &&
+                this.receivesFocus !== 'false'
+            ) {
                 this._focusTrap.activate();
             }
         }
@@ -1171,6 +1176,19 @@ export class Overlay extends ComputedOverlayBase {
      */
     public override render(): TemplateResult {
         return html`
+            ${this.type === 'modal' || this.type === 'page'
+                ? html`
+                      <popover>
+                          <sp-underlay
+                              ?open=${this.open}
+                              @close=${() => {
+                                  this.open = false;
+                              }}
+                              style="--spectrum-underlay-background-color: transparent"
+                          ></sp-underlay>
+                      </popover>
+                  `
+                : ''}
             ${this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
