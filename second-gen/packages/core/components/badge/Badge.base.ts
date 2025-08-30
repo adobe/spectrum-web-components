@@ -11,10 +11,10 @@
  */
 import { PropertyValues } from 'lit';
 
-import { SizedMixin, SpectrumElement } from '../../shared/base/index.js';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index.js';
 
-import { ObserveSlotText } from '../../shared/observe-slot-text.js';
-import { ObserveSlotPresence } from '../../shared/observe-slot-presence.js';
+import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
+import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { property } from 'lit/decorators.js';
 
 export const BADGE_VARIANTS = [

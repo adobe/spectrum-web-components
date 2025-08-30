@@ -11,7 +11,6 @@
  */
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
@@ -44,7 +43,9 @@ export default defineConfig({
             formats: ['es'],
         },
         rollupOptions: {
-            external: ['lit'],
+            external: (id) => {
+                return id === 'lit' || id.startsWith('@swc/core/');
+            },
             output: {
                 preserveModules: true,
                 preserveModulesRoot: '.',

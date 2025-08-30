@@ -5,7 +5,11 @@
         "rootDir": "./",
         "composite": true,
         "noEmit": false,
-        "allowImportingTsExtensions": false
+        "allowImportingTsExtensions": false,
+        "paths": {
+            "@swc/core/shared/*": ["./shared/*"],
+            "@swc/core/*": ["./*"]
+        }
     },
     "include": ["**/*.ts"],
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"]
