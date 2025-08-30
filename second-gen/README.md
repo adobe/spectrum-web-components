@@ -19,7 +19,7 @@ The following components are available in the barebones milestone:
 
 ### Build System
 
-- **tsdown**
+- **Vite**
 - **TypeScript**
 
 ### Development & Testing

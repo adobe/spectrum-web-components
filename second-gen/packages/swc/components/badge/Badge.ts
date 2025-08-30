@@ -9,3 +9,41 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import { BadgeBase } from '@swc/core/components/badge';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import styles from './badge.css';
+
+// Export types and values to avoid breaking changes
+export { BADGE_VARIANTS, FIXED_VALUES } from '@swc/core/components/badge';
+export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
+
+/**
+ * @element sp-badge
+ *
+ * @slot - Text label of the badge
+ * @slot icon - Optional icon that appears to the left of the label
+ */
+export class Badge extends BadgeBase {
+    public static override get styles(): CSSResultArray {
+        return [styles];
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            ${this.hasIcon
+                ? html`
+                      <slot
+                          name="icon"
+                          ?icon-only=${!this.slotHasContent}
+                      ></slot>
+                  `
+                : nothing}
+            <div class="label">
+                <slot></slot>
+            </div>
+        `;
+    }
+}
+
+customElements.define('sp-badge', Badge);

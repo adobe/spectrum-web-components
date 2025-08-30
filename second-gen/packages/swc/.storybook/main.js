@@ -1,4 +1,4 @@
-import { dirname, join } from 'path';
+import { resolve } from 'path';
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
@@ -11,7 +11,7 @@ const config = {
         config.resolve = config.resolve || {};
         config.resolve.alias = {
             ...config.resolve.alias,
-            '@swc/base': join(__dirname, '../../base'),
+            '@swc/core': resolve(__dirname, '../../core'),
         };
 
         return config;

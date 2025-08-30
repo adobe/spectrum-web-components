@@ -189,7 +189,7 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
 }
 
-if (window.__swc.DEBUG) {
+if (window.__swc?.DEBUG) {
     const ignoreWarningTypes = {
         default: false,
         accessibility: false,
@@ -269,7 +269,7 @@ if (window.__swc.DEBUG) {
         },
     };
 
-    window.__swc.warn(
+    window.__swc?.warn(
         undefined,
         'Spectrum Web Components is in dev mode. Not recommended for production!',
         'https://opensource.adobe.com/spectrum-web-components/dev-mode/',

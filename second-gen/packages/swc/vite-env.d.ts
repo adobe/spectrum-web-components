@@ -9,4 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Badge.base.js';
+
+/// <reference types="vite/client" />
+
+declare module '*.css' {
+    import { CSSResult } from 'lit';
+    const css: CSSResult;
+    export default css;
+}

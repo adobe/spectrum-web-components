@@ -13,9 +13,11 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
+import litCss from 'vite-plugin-lit-css';
 
 export default defineConfig({
     plugins: [
+        litCss(),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
@@ -23,6 +25,11 @@ export default defineConfig({
             insertTypesEntry: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@swc/core': resolve(__dirname, '../core'),
+        },
+    },
     build: {
         lib: {
             entry: glob
@@ -37,7 +44,9 @@ export default defineConfig({
             formats: ['es'],
         },
         rollupOptions: {
-            external: ['lit', '@swc/core'],
+            external: (id) => {
+                return id === 'lit' || id.startsWith('@swc/core/');
+            },
             output: {
                 preserveModules: true,
                 preserveModulesRoot: '.',

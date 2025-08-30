@@ -60,7 +60,7 @@ export abstract class BadgeBase extends SizedMixin(
     }
 ) {
     @property({ type: String, reflect: true })
-    public variant: BadgeVariant = 'informative';
+    public variant: BadgeVariant = 'negative';
 
     @property({ reflect: true })
     public get fixed(): FixedValues | undefined {
@@ -89,7 +89,7 @@ export abstract class BadgeBase extends SizedMixin(
 
     protected override update(changedProperties: PropertyValues): void {
         super.update(changedProperties);
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!BADGE_VARIANTS.includes(this.variant)) {
                 window.__swc.warn(
                     this,

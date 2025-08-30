@@ -1,0 +1,30 @@
+{
+    "plugins": ["stylelint-header"],
+    "extends": [],
+    "rules": {
+        "header/header": ["../first-gen/config/license.js", {}]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.css"],
+            "extends": ["stylelint-config-standard"],
+            "rules": {
+                "header/header": ["../first-gen/config/license.js", {}],
+                "length-zero-no-unit": [
+                    true,
+                    { "ignore": "custom-properties" }
+                ],
+                "selector-type-no-unknown": [
+                    true,
+                    { "ignore": ["custom-elements"] }
+                ],
+                "selector-pseudo-element-colon-notation": ["single", {}],
+                "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+                "no-duplicate-selectors": null,
+                "selector-class-pattern": null,
+                "no-descending-specificity": null,
+                "declaration-block-no-redundant-longhand-properties": null
+            }
+        }
+    ]
+}

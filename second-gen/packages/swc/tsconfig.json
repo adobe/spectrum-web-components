@@ -5,9 +5,12 @@
         "rootDir": "./",
         "composite": true,
         "noEmit": false,
-        "allowImportingTsExtensions": false
+        "allowImportingTsExtensions": false,
+        "paths": {
+            "@swc/core/*": ["../core/*"]
+        }
     },
-    "include": ["**/*.ts"],
+    "include": ["**/*.ts", "vite-env.d.ts"],
     "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
     "references": [
         {
