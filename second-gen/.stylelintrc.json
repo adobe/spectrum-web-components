@@ -1,15 +1,13 @@
 {
     "plugins": ["stylelint-header"],
     "extends": [],
-    "rules": {
-        "header/header": ["../first-gen/config/license.js", {}]
-    },
+    "rules": {},
     "overrides": [
         {
             "files": ["**/*.css"],
             "extends": ["stylelint-config-standard"],
             "rules": {
-                "header/header": ["../first-gen/config/license.js", {}],
+                "header/header": ["./COPYRIGHT", {}],
                 "length-zero-no-unit": [
                     true,
                     { "ignore": "custom-properties" }
