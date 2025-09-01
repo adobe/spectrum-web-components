@@ -1,0 +1,11 @@
+node_modules
+COPYRIGHT
+first-gen/node_modules
+second-gen/node_modules
+first-gen/task
+second-gen/task
+*.*
+!*.css
+first-gen/projects/example-project/dist
+first-gen/tools/styles
+first-gen/spectrum-*.css

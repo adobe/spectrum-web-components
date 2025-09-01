@@ -1,7 +1,3 @@
-/*!
- * config/license.js
- */
-
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -76,7 +72,6 @@
     border-color: var(--mod-card-border-color, var(--spectrum-card-border-color));
     background-color: var(--spectrum-card-background-color);
     flex-direction: column;
-    text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     position: relative;
