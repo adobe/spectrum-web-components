@@ -21,8 +21,8 @@ import { BadgeBase } from '@swc/core/components/badge';
 import styles from './badge.css.js';
 
 // Export types and values to avoid breaking changes
-export { BADGE_VARIANTS, FIXED_VALUES } from './Badge.base.js';
-export type { BadgeVariant, FixedValues } from './Badge.base.js';
+export { BADGE_VARIANTS, FIXED_VALUES } from '@swc/core/components/badge';
+export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
 
 /**
  * @element sp-badge

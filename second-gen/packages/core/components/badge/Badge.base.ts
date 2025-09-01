@@ -60,7 +60,7 @@ export abstract class BadgeBase extends SizedMixin(
     }
 ) {
     @property({ type: String, reflect: true })
-    public variant: BadgeVariant = 'negative';
+    public variant: BadgeVariant = 'informative';
 
     @property({ reflect: true })
     public get fixed(): FixedValues | undefined {
