@@ -22,3 +22,4 @@ export {
     type DefaultElementSize,
     type SizedElementInterface,
 } from './sizedMixin.js';
+export { defineElement } from './define-element.js';
