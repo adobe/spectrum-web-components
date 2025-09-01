@@ -30,14 +30,6 @@
         "second-gen",
         "second-gen/packages/*"
     ],
-    "devDependencies": {
-        "@changesets/cli": "^2.29.6",
-        "@commitlint/cli": "^19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
-        "husky": "^9.0.10",
-        "lint-staged": "^16.1.2",
-        "patch-package": "^8.0.0"
-    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -49,6 +41,15 @@
         "lit-html",
         "monorepo"
     ],
+    "devDependencies": {
+        "@changesets/cli": "^2.29.6",
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "husky": "^9.0.10",
+        "lint-staged": "^16.1.2",
+        "patch-package": "^8.0.0",
+        "replace-in-file": "^8.3.0"
+    },
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"

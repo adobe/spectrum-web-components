@@ -11,24 +11,25 @@
  */
 
 export default {
-    "*.css": [
-        "stylelint --fix --cache --allow-empty-input",
-        "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write",
+    '*.css': [
+        'stylelint --fix --cache --allow-empty-input',
+        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
-    "*.ts": [
-        "eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet",
-        "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write",
+    '*.ts': [
+        'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
+        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
-    "first-gen/{packages,tools}/*/src/**/!(*.css).ts": [
-        "yarn workspace @adobe/spectrum-web-components lit-analyzer",
+    'first-gen/{packages,tools}/*/src/**/!(*.css).ts': [
+        'yarn workspace @adobe/spectrum-web-components lit-analyzer',
     ],
-    "package.json": () => [
-        "cd first-gen && genversion --es6 --semi tools/base/src/version.js",
-        "yarn constraints --fix",
-        "yarn install --refresh-lockfile",
-        "git add first-gen/tools/base/src/version.js yarn.lock",
+    'package.json': () => [
+        'cd first-gen && genversion --es6 --semi tools/base/src/version.js',
+        'yarn constraints --fix',
+        'yarn install --refresh-lockfile',
+        'git add first-gen/tools/base/src/version.js yarn.lock',
     ],
-    "!(*.css|*.ts)": [
-        "prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write",
+    '.changeset/*.md': ['node first-gen/scripts/escape-changelog-tags.js'],
+    '!(*.css|*.ts)': [
+        'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
 };

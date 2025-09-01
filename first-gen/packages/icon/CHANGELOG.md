@@ -284,7 +284,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
 - adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
 - **icon:** add UIIcon styles ([6f03b1a](https://github.com/adobe/spectrum-web-components/commit/6f03b1a0b898adf608d5ee2ca94f53416ecffe73))
-- **icon:** allow <sp-icon> to accept a slotted icon ([cbf7a07](https://github.com/adobe/spectrum-web-components/commit/cbf7a078a6adb6e6d28e07d1429cc96e3207db7a))
+- **icon:** allow `<sp-icon>` to accept a slotted icon ([cbf7a07](https://github.com/adobe/spectrum-web-components/commit/cbf7a078a6adb6e6d28e07d1429cc96e3207db7a))
 - **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 - **icon:** update spectrum css input ([42f17db](https://github.com/adobe/spectrum-web-components/commit/42f17db9ac249a12f224759fe4ead418720e85d4))
 - include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
@@ -617,7 +617,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **icon:** allow <sp-icon> to accept a slotted icon ([cbf7a07](https://github.com/adobe/spectrum-web-components/commit/cbf7a07))
+- **icon:** allow `<sp-icon>` to accept a slotted icon ([cbf7a07](https://github.com/adobe/spectrum-web-components/commit/cbf7a07))
 
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.1.3...@spectrum-web-components/icon@0.2.0) (2019-10-14)
 

@@ -31,7 +31,7 @@ import {
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
+import { StyleInfo } from 'lit/directives/style-map.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
@@ -44,7 +44,6 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 /**
  * @element sp-slider
  *
- * @slot - @deprecated Text label for the Slider. Use the `label` property instead.
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
 export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
