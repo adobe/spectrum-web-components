@@ -9,3 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { defineElement } from '@swc/core/shared/base/define-element';
+
+import { Badge } from './Badge.js';
+
+export * from './Badge.js';
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-badge': Badge;
+    }
+}
+defineElement('sp-badge', Badge);

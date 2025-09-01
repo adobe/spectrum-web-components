@@ -45,5 +45,3 @@ export class Badge extends BadgeBase {
         `;
     }
 }
-
-customElements.define('sp-badge', Badge);

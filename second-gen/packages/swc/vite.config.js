@@ -14,6 +14,8 @@ import { resolve } from 'path';
 import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
+import autoprefixer from 'autoprefixer';
+import postcssPresetEnv from 'postcss-preset-env';
 
 export default defineConfig({
     plugins: [
@@ -25,6 +27,20 @@ export default defineConfig({
             insertTypesEntry: true,
         }),
     ],
+    css: {
+        postcss: {
+            plugins: [
+                autoprefixer(),
+                postcssPresetEnv({
+                    stage: 2, // Use stage 2 features (stable)
+                    features: {
+                        'nesting-rules': true,
+                        'custom-properties': false, // Let lit-css handle this
+                    },
+                }),
+            ],
+        },
+    },
     resolve: {
         alias: {
             '@swc/core': resolve(__dirname, '../core'),
