@@ -19,7 +19,6 @@
         "test": "yarn workspace @adobe/spectrum-web-components test",
         "start": "yarn workspace @adobe/spectrum-web-components storybook",
         "lint": "yarn workspace @adobe/spectrum-web-components lint",
-        "lint-staged": "git status --porcelain && git add . && lint-staged --allow-empty",
         "postinstall": "husky || true && patch-package"
     },
     "workspaces": [
