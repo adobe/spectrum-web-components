@@ -3,6 +3,11 @@
 // TODO: check globalTypes / themes
 /** @type { import('@storybook/web-components').Preview } */
 
+import './index.css';
+import './light-vars.css';
+import './medium-vars.css';
+import './global-vars.css';
+
 import { html } from 'lit';
 
 const preview = {

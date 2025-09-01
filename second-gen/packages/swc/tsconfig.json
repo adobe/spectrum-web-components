@@ -1,17 +1,18 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "outDir": "./dist",
-        "rootDir": "./",
+        "allowImportingTsExtensions": false,
         "composite": true,
         "noEmit": false,
-        "allowImportingTsExtensions": false,
+        "outDir": "./dist",
         "paths": {
+            "@swc/components/*": ["./components/*"],
             "@swc/core/*": ["../core/*"]
-        }
+        },
+        "rootDir": "./"
     },
+    "exclude": ["node_modules", "dist", "**/*.test.ts"],
+    "extends": "../../tsconfig.json",
     "include": ["**/*.ts", "vite-env.d.ts"],
-    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
     "references": [
         {
             "path": "../core"

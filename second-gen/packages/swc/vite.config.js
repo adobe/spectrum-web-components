@@ -44,6 +44,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@swc/core': resolve(__dirname, '../core'),
+            '@swc/components': resolve(__dirname, './components'),
         },
     },
     build: {

@@ -12,8 +12,8 @@
 
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../Badge.js';
-import { BADGE_VARIANTS, FIXED_VALUES } from '../Badge.js';
+import '@swc/components/badge';
+import { BADGE_VARIANTS, FIXED_VALUES } from '@swc/components/badge';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 const meta: Meta = {
@@ -49,7 +49,7 @@ export const Default: Story = {
         <sp-badge
             variant="${args.variant}"
             size="${args.size || 'm'}"
-            fixed="${ifDefined(args.fixed)}"
+            ?fixed=${ifDefined(args.fixed)}
         >
             Badge
         </sp-badge>
