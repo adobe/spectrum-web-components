@@ -11,7 +11,7 @@
  */
 import { PropertyValues } from 'lit';
 
-import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index.js';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index';
 
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';

@@ -1,4 +1,5 @@
 - Add exports generation from component index files
+- re-export second-gen shared/base from first-gen
 - Fix stylelint header process.cwd() path resolution https://github.com/castastrophe/stylelint-header/blob/main/index.js#L79
 - Set up barebones 2nd-gen testing
     - Including A11Y testing
