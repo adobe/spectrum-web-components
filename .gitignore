@@ -113,6 +113,7 @@ test-results
 # second gen build artifacts
 second-gen/packages/*/dist/
 second-gen/packages/*/custom-elements.json
+second-gen/packages/*/storybook-static
 
 # npm assets
 node_modules
