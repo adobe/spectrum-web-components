@@ -9,4 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './ProgressCircle.base';
+import { defineElement } from '@swc/core/shared/base';
+
+import { ProgressCircle } from './ProgressCircle';
+
+export * from './ProgressCircle';
+declare global {
+    interface HTMLElementTagNameMap {
+        'swc-progress-circle': ProgressCircle;
+    }
+}
+defineElement('swc-progress-circle', ProgressCircle);
