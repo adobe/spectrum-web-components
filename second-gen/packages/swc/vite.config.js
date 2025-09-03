@@ -19,7 +19,7 @@ import postcssPresetEnv from 'postcss-preset-env';
 
 export default defineConfig({
     plugins: [
-        litCss(),
+        litCss({ exclude: ['./tokens/*.css'] }),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],

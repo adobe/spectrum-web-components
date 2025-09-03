@@ -19,4 +19,4 @@ declare global {
         'sp-badge': Badge;
     }
 }
-defineElement('sp-badge', Badge);
+defineElement('swc-badge', Badge);

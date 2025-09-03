@@ -3,21 +3,14 @@
 // TODO: check globalTypes / themes
 /** @type { import('@storybook/web-components').Preview } */
 
-import './index.css';
-import './light-vars.css';
-import './medium-vars.css';
-import './global-vars.css';
+import '../tokens/index.css';
+import '../tokens/light-vars.css';
+import '../tokens/medium-vars.css';
+import '../tokens/global-vars.css';
 
 import { html } from 'lit';
 
 const preview = {
-    decorators: [
-        (story) => html`
-            <div class="spectrum spectrum--light spectrum--medium">
-                ${story()}
-            </div>
-        `,
-    ],
     parameters: {
         a11y: {
             config: {
