@@ -311,7 +311,7 @@
 
 :host([invalid]) .input {
     color: var(--highcontrast-textfield-text-color-invalid, var(--mod-textfield-text-color-invalid, var(--spectrum-textfield-text-color-invalid)));
-    border-color: var(--highcontrast-textfield-border-color-invalid-default, var(--mod-textfield-border-color-invalid-default, var(--spectrum-textfield-border-color-invalid-default)));
+    border-color: var(--spectrum-blue-1000, var(--mod-textfield-border-color-invalid-default, var(--spectrum-textfield-border-color-invalid-default)));
     padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-invalid, var(--spectrum-textfield-icon-spacing-inline-start-invalid)) + var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid)) + var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
 }
 
