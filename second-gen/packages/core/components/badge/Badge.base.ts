@@ -37,6 +37,11 @@ export const BADGE_VARIANTS = [
     'green',
     'cyan',
     'blue',
+    'pink',
+    'turquoise',
+    'brown',
+    'cinnamon',
+    'silver',
 ] as const;
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES = [
@@ -49,8 +54,11 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge-base
- * @slot - The text label to display in the badge.
- * @slot icon - The icon to display in the badge.
+ * @property {BadgeVariant} variant - The variant of the badge.
+ * @property {boolean} subtle - Whether the badge is subtle.
+ * @property {boolean} outline - Whether the badge is outlined.
+ * @property {FixedValues} fixed - The fixed position of the badge.
+ * @property {string[]} customStyles - The custom styles of the badge.
  */
 export abstract class BadgeBase extends SizedMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
@@ -61,26 +69,14 @@ export abstract class BadgeBase extends SizedMixin(
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
 
-    @property({ reflect: true })
-    public get fixed(): FixedValues | undefined {
-        return this._fixed;
-    }
+    @property({ type: Boolean, reflect: true })
+    public subtle: boolean = false;
 
-    public set fixed(fixed: FixedValues | undefined) {
-        if (fixed === this.fixed) {
-            return;
-        }
-        const oldValue = this.fixed;
-        this._fixed = fixed;
-        if (fixed) {
-            this.setAttribute('fixed', fixed);
-        } else {
-            this.removeAttribute('fixed');
-        }
-        this.requestUpdate('fixed', oldValue);
-    }
+    @property({ type: Boolean, reflect: true })
+    public outline: boolean = false;
 
-    private _fixed?: FixedValues;
+    @property({ type: String, reflect: true })
+    public fixed?: FixedValues;
 
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
