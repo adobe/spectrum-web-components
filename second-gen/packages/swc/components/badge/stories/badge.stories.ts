@@ -10,11 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '@swc/components/badge';
+import type { Meta, StoryObj } from '@storybook/web-components';
+
 import { BADGE_VARIANTS, FIXED_VALUES } from '@swc/components/badge';
-import { ifDefined } from 'lit/directives/if-defined.js';
+
+import '@swc/components/badge';
 
 const meta: Meta = {
     title: 'Components/Badge',
@@ -49,7 +50,7 @@ export const Default: Story = {
         <swc-badge
             variant="${args.variant}"
             size="${args.size || 'm'}"
-            ?fixed=${ifDefined(args.fixed)}
+            .fixed=${args.fixed}
         >
             Badge
         </swc-badge>

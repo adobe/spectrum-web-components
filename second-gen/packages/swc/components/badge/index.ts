@@ -16,7 +16,7 @@ import { Badge } from './Badge';
 export * from './Badge';
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-badge': Badge;
+        'swc-badge': Badge;
     }
 }
 defineElement('swc-badge', Badge);

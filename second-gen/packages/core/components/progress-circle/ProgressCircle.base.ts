@@ -70,14 +70,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
             }
         }
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
                 !this.getAttribute('aria-labelledby') &&
                 !this.slotEl?.assignedNodes()?.length
             ) {
-                window.__swc.warn(
+                window.__swc?.warn(
                     this,
                     '<sp-progress-circle> elements need one of the following to be accessible:',
                     'https://opensource.adobe.com/spectrum-web-components/components/progress-circle/#accessibility',

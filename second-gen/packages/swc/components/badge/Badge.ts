@@ -21,7 +21,7 @@ export { BADGE_VARIANTS, FIXED_VALUES } from '@swc/core/components/badge';
 export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
 
 /**
- * @element sp-badge
+ * @element swc-badge
  *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
