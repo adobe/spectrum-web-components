@@ -425,11 +425,11 @@ describe('Button', () => {
 
         it('updates aria-label when label changes', async () => {
             const el = await fixture<Button>(html`
-                <sp-button label="Initial Label">Button</sp-button>
+                <sp-button label="Initial label">Button</sp-button>
             `);
 
             await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('Initial Label');
+            expect(el.getAttribute('aria-label')).to.equal('Initial label');
 
             // Change the label
             el.label = 'New Label';
@@ -441,25 +441,25 @@ describe('Button', () => {
 
         it('preserves aria-label when slot content changes', async () => {
             const el = await fixture<Button>(html`
-                <sp-button label="Test Label">Initial Content</sp-button>
+                <sp-button label="Test label">Initial Content</sp-button>
             `);
 
             await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('Test Label');
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
 
             // Change the slot content
-            el.textContent = 'Updated Content';
+            el.textContent = 'Updated content';
             await elementUpdated(el);
 
             // The aria-label should still be preserved
-            expect(el.getAttribute('aria-label')).to.equal('Test Label');
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
 
             // Change slot content again
-            el.innerHTML = '<span>New Content</span>';
+            el.innerHTML = '<span>New content</span>';
             await elementUpdated(el);
 
             // The aria-label should still be preserved
-            expect(el.getAttribute('aria-label')).to.equal('Test Label');
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
         });
 
         it('manages aria-label set from outside', async () => {
