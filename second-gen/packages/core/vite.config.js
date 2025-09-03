@@ -19,9 +19,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Automatically discover entry points
 function getEntries() {
-    const entries = {
-        index: resolve(__dirname, 'index.ts'),
-    };
+    const entries = {};
 
     // Find all components/*/index.ts
     try {

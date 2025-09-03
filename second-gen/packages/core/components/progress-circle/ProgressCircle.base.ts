@@ -12,7 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property, query } from 'lit/decorators.js';
 
-import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
 
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {

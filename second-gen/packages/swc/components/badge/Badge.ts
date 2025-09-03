@@ -10,8 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { BadgeBase } from '@swc/core/components/badge';
 import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+
+import { BadgeBase } from '@swc/core/components/badge';
+
 import styles from './badge.css';
 
 // Export types and values to avoid breaking changes

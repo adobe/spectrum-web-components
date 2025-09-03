@@ -12,7 +12,7 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
