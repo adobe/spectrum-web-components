@@ -57,9 +57,9 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge-base
- * @property {BadgeVariant} variant - The variant of the badge.
- * @property {FixedValues} fixed - The fixed position of the badge.
- * @property {string[]} customStyles - The custom styles of the badge.
+ * @attribute {ElementSize} size - The size of the badge.
+ * @attribute {BadgeVariant} variant - The variant of the badge.
+ * @attribute {FixedValues} fixed - The fixed position of the badge.
  */
 export abstract class BadgeBase extends SizedMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
@@ -73,6 +73,9 @@ export abstract class BadgeBase extends SizedMixin(
     @property({ type: String, reflect: true })
     public fixed?: FixedValues;
 
+    /**
+     * @internal Used for rendering gap when the badge has an icon.
+     */
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }

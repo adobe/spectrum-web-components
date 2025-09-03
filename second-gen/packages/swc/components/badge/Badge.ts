@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
@@ -55,17 +55,13 @@ export type { FixedValues } from '@swc/core/components/badge';
  * @github https://github.com/adobe/spectrum-web-components/tree/main/...
  * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=36806-6551
  *
- * @property {BadgeVariant} variant - The variant of the badge.
- * @property {boolean} subtle - Whether the badge is subtle.
- * @property {boolean} outline - Whether the badge is outlined.
- * @property {FixedValues} fixed - The fixed position of the badge.
- * @property {string[]} customStyles - The custom styles of the badge.
+ * @attribute {BadgeVariant} variant - The variant of the badge.
+ * @attribute {boolean} subtle - Whether the badge is subtle.
+ * @attribute {boolean} outline - Whether the badge is outlined.
+ * @attribute {FixedValues} fixed - The fixed position of the badge.
  *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
- *
- * @csspart label - The text content area of the badge
- * @csspart icon - The icon area of the badge (when present)
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
@@ -121,5 +117,24 @@ export class Badge extends BadgeBase {
                 </div>
             </div>
         `;
+    }
+
+    protected override update(changedProperties: PropertyValues): void {
+        super.update(changedProperties);
+        if (window.__swc?.DEBUG) {
+            if (
+                this.outline &&
+                !BADGE_VARIANTS_SEMANTIC.includes(this.variant)
+            ) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
+                    {
+                        issues: [...BADGE_VARIANTS_SEMANTIC],
+                    }
+                );
+            }
+        }
     }
 }
