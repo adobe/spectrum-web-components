@@ -9,9 +9,77 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { readdirSync, statSync } from 'fs';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Automatically discover entry points
+function getEntries() {
+    const entries = {
+        index: resolve(__dirname, 'index.ts'),
+    };
+
+    // Find all components/*/index.ts
+    try {
+        const componentsDir = resolve(__dirname, 'components');
+        const componentDirs = readdirSync(componentsDir);
+        for (const dir of componentDirs) {
+            const dirPath = resolve(componentsDir, dir);
+            if (statSync(dirPath).isDirectory()) {
+                const indexPath = resolve(dirPath, 'index.ts');
+                try {
+                    statSync(indexPath);
+                    entries[`components/${dir}/index`] = indexPath;
+                } catch {
+                    // index.ts doesn't exist, skip
+                }
+            }
+        }
+    } catch {
+        // components directory doesn't exist
+    }
+
+    // Find all shared/*.ts files (excluding directories)
+    try {
+        const sharedDir = resolve(__dirname, 'shared');
+        const sharedItems = readdirSync(sharedDir);
+        for (const item of sharedItems) {
+            const itemPath = resolve(sharedDir, item);
+            if (statSync(itemPath).isFile() && item.endsWith('.ts')) {
+                const entryName = `shared/${item.replace('.ts', '')}`;
+                entries[entryName] = itemPath;
+            }
+        }
+    } catch {
+        // shared directory doesn't exist
+    }
+
+    // Find all shared/*/index.ts
+    try {
+        const sharedDir = resolve(__dirname, 'shared');
+        const sharedItems = readdirSync(sharedDir);
+        for (const item of sharedItems) {
+            const itemPath = resolve(sharedDir, item);
+            if (statSync(itemPath).isDirectory()) {
+                const indexPath = resolve(itemPath, 'index.ts');
+                try {
+                    statSync(indexPath);
+                    entries[`shared/${item}/index`] = indexPath;
+                } catch {
+                    // index.ts doesn't exist, skip
+                }
+            }
+        }
+    } catch {
+        // shared directory doesn't exist
+    }
+
+    return entries;
+}
 
 export default defineConfig({
     plugins: [
@@ -24,30 +92,7 @@ export default defineConfig({
     ],
     build: {
         lib: {
-            entry: {
-                index: resolve(__dirname, 'index.ts'),
-                'components/badge/index': resolve(
-                    __dirname,
-                    'components/badge/index.ts'
-                ),
-                'components/progress-circle/index': resolve(
-                    __dirname,
-                    'components/progress-circle/index.ts'
-                ),
-                'shared/base/index': resolve(__dirname, 'shared/base/index.ts'),
-                'shared/get-label-from-slot': resolve(
-                    __dirname,
-                    'shared/get-label-from-slot.ts'
-                ),
-                'shared/observe-slot-presence': resolve(
-                    __dirname,
-                    'shared/observe-slot-presence.ts'
-                ),
-                'shared/observe-slot-text': resolve(
-                    __dirname,
-                    'shared/observe-slot-text.ts'
-                ),
-            },
+            entry: getEntries(),
             formats: ['es'],
         },
         rollupOptions: {
