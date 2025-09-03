@@ -10,40 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { when } from 'lit/directives/when.js';
+import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
 
-import {
-    BADGE_VARIANTS_COLOR as BADGE_VARIANTS_COLOR_BASE,
-    BADGE_VARIANTS_SEMANTIC,
-    BadgeBase,
-} from '@swc/core/components/badge';
-
-export const BADGE_VARIANTS_COLOR = [
-    ...BADGE_VARIANTS_COLOR_BASE,
-    'pink',
-    'turquoise',
-    'brown',
-    'cinnamon',
-    'silver',
-] as const;
-
-export const BADGE_VARIANTS = [
-    ...BADGE_VARIANTS_SEMANTIC,
-    ...BADGE_VARIANTS_COLOR,
-] as const;
-export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
+import { BadgeBase } from '@swc/core/components/badge';
 
 import styles from './badge.css';
 
 // Export types and values to avoid breaking changes
-export {
-    BADGE_VARIANTS_SEMANTIC,
-    FIXED_VALUES,
-} from '@swc/core/components/badge';
-export type { FixedValues } from '@swc/core/components/badge';
+export { BADGE_VARIANTS, FIXED_VALUES } from '@swc/core/components/badge';
+export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
 
 /**
  * A badge component that displays short, descriptive information about an element.
@@ -53,13 +28,7 @@ export type { FixedValues } from '@swc/core/components/badge';
  * @since 1.0.0
  * @status stable
  * @github https://github.com/adobe/spectrum-web-components/tree/main/...
- * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=36806-6551
- *
- * @property {BadgeVariant} variant - The variant of the badge.
- * @property {boolean} subtle - Whether the badge is subtle.
- * @property {boolean} outline - Whether the badge is outlined.
- * @property {FixedValues} fixed - The fixed position of the badge.
- * @property {string[]} customStyles - The custom styles of the badge.
+ * @figma https://www.figma.com/design/...
  *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
@@ -77,48 +46,22 @@ export type { FixedValues } from '@swc/core/components/badge';
  * </swc-badge>
  */
 export class Badge extends BadgeBase {
-    @property({ type: Boolean, reflect: true })
-    public subtle: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    public outline: boolean = false;
-
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     protected override render(): TemplateResult {
         return html`
-            <div
-                class=${classMap({
-                    ['spectrum-Badge']: true,
-                    [`spectrum-Badge--size${this.size?.toUpperCase()}`]:
-                        typeof this.size !== 'undefined',
-                    [`spectrum-Badge--${this.variant}`]:
-                        typeof this.variant !== 'undefined',
-                    [`spectrum-Badge--subtle`]: this.subtle,
-                    [`spectrum-Badge--outline`]: this.outline,
-                    [`spectrum-Badge--fixed-${this.fixed}`]:
-                        typeof this.fixed !== 'undefined',
-                })}
-            >
-                ${when(
-                    this.hasIcon,
-                    () => html`
-                        <div
-                            class=${classMap({
-                                [`spectrum-Badge-icon`]: true,
-                                [`spectrum-Badge-icon--no-label`]:
-                                    !this.slotHasContent,
-                            })}
-                        >
-                            <slot name="icon"></slot>
-                        </div>
-                    `
-                )}
-                <div class="spectrum-Badge-label">
-                    <slot></slot>
-                </div>
+            ${this.hasIcon
+                ? html`
+                      <slot
+                          name="icon"
+                          ?icon-only=${!this.slotHasContent}
+                      ></slot>
+                  `
+                : nothing}
+            <div class="label">
+                <slot></slot>
             </div>
         `;
     }

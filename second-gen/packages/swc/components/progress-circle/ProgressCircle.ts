@@ -14,6 +14,7 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ProgressCircleBase } from '@swc/core/components/progress-circle';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import progressCircleStyles from './progress-circle.css';
 
@@ -46,9 +47,18 @@ export class ProgressCircle extends ProgressCircleBase {
         return [progressCircleStyles];
     }
 
+    /**
+     * Static color variant for use on different backgrounds.
+     * When set to 'white', the component uses white styling for images with a dark tinted background.
+     * When set to 'black', the component uses black styling for images with a light tinted background.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: 'white' | 'black';
+
     protected override render(): TemplateResult {
+        const strokeWidth = this.size === 's' ? 2 : this.size === 'm' ? 4 : 6;
         // SVG strokes are centered, so subtract half the stroke width from the radius to create an inner stroke.
-        const radius = `calc(50% - ${this.strokeWidth / 2}px)`;
+        const radius = `calc(50% - ${strokeWidth / 2}px)`;
 
         return html`
             <div
@@ -72,8 +82,8 @@ export class ProgressCircle extends ProgressCircleBase {
                         class="spectrum-innerCircle"
                         cx="50%"
                         cy="50%"
-                        r=${`calc(50% - ${this.strokeWidth / 1}px)`}
-                        stroke-width=${this.strokeWidth}
+                        r=${`calc(50% - ${strokeWidth / 1}px)`}
+                        stroke-width=${strokeWidth}
                     />
                     <circle
                         cx="50%"
