@@ -9,17 +9,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { PropertyValues } from 'lit';
+import { property, query } from 'lit/decorators.js';
 
-import {
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-} from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
-import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index';
+import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
 
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],

@@ -30,14 +30,22 @@ export default defineConfig({
                     __dirname,
                     'components/badge/index.ts'
                 ),
-                'shared/base/index': resolve(__dirname, 'shared/base/index.ts'),
-                'shared/observe-slot-text': resolve(
+                'components/progress-circle/index': resolve(
                     __dirname,
-                    'shared/observe-slot-text.ts'
+                    'components/progress-circle/index.ts'
+                ),
+                'shared/base/index': resolve(__dirname, 'shared/base/index.ts'),
+                'shared/get-label-from-slot': resolve(
+                    __dirname,
+                    'shared/get-label-from-slot.ts'
                 ),
                 'shared/observe-slot-presence': resolve(
                     __dirname,
                     'shared/observe-slot-presence.ts'
+                ),
+                'shared/observe-slot-text': resolve(
+                    __dirname,
+                    'shared/observe-slot-text.ts'
                 ),
             },
             formats: ['es'],

@@ -9,9 +9,26 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { BadgeBase } from './components/badge/index.js';
-export { ProgressCircleBase } from './components/progress-circle/index.js';
-export * from './shared/base/index.js';
-export { getLabelFromSlot } from './shared/get-label-from-slot.js';
-export { ObserveSlotPresence } from './shared/observe-slot-presence.js';
-export { ObserveSlotText } from './shared/observe-slot-text.js';
+
+export const getLabelFromSlot = (
+    label: string,
+    slotEl: HTMLSlotElement
+): string | null => {
+    if (label) {
+        return null;
+    }
+    const textContent = slotEl
+        .assignedNodes()
+        .reduce((accumulator: string, node: Node) => {
+            if (node.textContent) {
+                return accumulator + node.textContent;
+            } else {
+                return accumulator;
+            }
+        }, '');
+    if (textContent) {
+        return textContent.trim();
+    } else {
+        return null;
+    }
+};

@@ -9,9 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export { BadgeBase } from './components/badge/index.js';
-export { ProgressCircleBase } from './components/progress-circle/index.js';
-export * from './shared/base/index.js';
-export { getLabelFromSlot } from './shared/get-label-from-slot.js';
-export { ObserveSlotPresence } from './shared/observe-slot-presence.js';
-export { ObserveSlotText } from './shared/observe-slot-text.js';
+export * from './ProgressCircle.base.js';
