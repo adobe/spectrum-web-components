@@ -67,7 +67,7 @@
     display: inline-block;
     inline-size: var(--spectrum-progress-circle-size);
     block-size: var(--spectrum-progress-circle-size);
-    position: var(--mod-progress-circle-position, relative);
+    position: relative;
     direction: ltr;
     transform: translateZ(0);
 }
