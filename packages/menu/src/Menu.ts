@@ -72,6 +72,22 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
+    private touchStartY: number | undefined = undefined;
+    private touchStartTime: number | undefined = undefined;
+    private isCurrentlyScrolling = false;
+
+    private scrollThreshold = 10; // pixels
+    private scrollTimeThreshold = 300; // milliseconds
+
+    public get isScrolling(): boolean {
+        return this.isCurrentlyScrolling;
+    }
+
+    public set isScrolling(value: boolean) {
+        // For testing purposes, allow setting the scrolling state
+        this.isCurrentlyScrolling = value;
+    }
+
     /**
      * label of the menu
      */
@@ -400,6 +416,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
+
+        this.addEventListener('touchstart', this.handleTouchStart, {
+            passive: true,
+        });
+        this.addEventListener('touchmove', this.handleTouchMove, {
+            passive: true,
+        });
     }
 
     /**
@@ -443,6 +466,42 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    private handleTouchStart(event: TouchEvent): void {
+        if (event.touches.length === 1) {
+            this.touchStartY = event.touches[0].clientY;
+            this.touchStartTime = Date.now();
+            this.isCurrentlyScrolling = false;
+        }
+    }
+
+    private handleTouchMove(event: TouchEvent): void {
+        if (
+            event.touches.length === 1 &&
+            this.touchStartY !== undefined &&
+            this.touchStartTime !== undefined
+        ) {
+            const currentY = event.touches[0].clientY;
+            const deltaY = Math.abs(currentY - this.touchStartY);
+            const deltaTime = Date.now() - this.touchStartTime;
+
+            if (
+                deltaY > this.scrollThreshold &&
+                deltaTime < this.scrollTimeThreshold
+            ) {
+                this.isCurrentlyScrolling = true;
+            }
+        }
+    }
+
+    private handleTouchEnd(): void {
+        // Reset scrolling state after a short delay
+        setTimeout(() => {
+            this.isCurrentlyScrolling = false;
+            this.touchStartY = undefined;
+            this.touchStartTime = undefined;
+        }, 100);
+    }
+
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
@@ -461,6 +520,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private handlePointerup(event: Event): void {
+        this.handleTouchEnd();
         /*
          * early return if drag and select is not supported
          * in this case, selection will be handled by the click event
@@ -475,6 +535,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private async handlePointerBasedSelection(event: Event): Promise<void> {
         // Only handle left clicks
         if (event instanceof MouseEvent && event.button !== 0) {
+            return;
+        }
+
+        if (this.isScrolling) {
             return;
         }
 
