@@ -111,7 +111,8 @@
         "notice",
         "@spectrum-web-components",
         "import",
-        "require-extensions"
+        "require-extensions",
+        "simple-import-sort"
     ],
     "root": true,
     "rules": {
@@ -157,13 +158,20 @@
                 "templateFile": "first-gen/config/license.js"
             }
         ],
-        "sort-imports": [
+        "simple-import-sort/imports": [
             "error",
             {
-                "allowSeparatedGroups": false,
-                "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false
+                "groups": [
+                    [
+                        "^lit",
+                        "^@lit",
+                        "^(?!@swc|@spectrum-web-components)@?\\w"
+                    ],
+                    ["^@swc", "^@spectrum-web-components"],
+                    ["^\\u0000"],
+                    ["^\\."],
+                    ["^.+\\.(css|scss|sass|less|styl)$"]
+                ]
             }
         ]
     }

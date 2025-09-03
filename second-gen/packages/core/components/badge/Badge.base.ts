@@ -10,12 +10,11 @@
  * governing permissions and limitations under the License.
  */
 import { PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base/index';
-
-import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
-import { property } from 'lit/decorators.js';
+import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
 export const BADGE_VARIANTS = [
     'accent',
