@@ -16,13 +16,16 @@ import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
-export const BADGE_VARIANTS = [
+export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
     'neutral',
     'informative',
     'positive',
     'negative',
     'notice',
+] as const;
+
+export const BADGE_VARIANTS_COLOR = [
     'fuchsia',
     'indigo',
     'magenta',
@@ -37,11 +40,11 @@ export const BADGE_VARIANTS = [
     'green',
     'cyan',
     'blue',
-    'pink',
-    'turquoise',
-    'brown',
-    'cinnamon',
-    'silver',
+] as const;
+
+export const BADGE_VARIANTS = [
+    ...BADGE_VARIANTS_SEMANTIC,
+    ...BADGE_VARIANTS_COLOR,
 ] as const;
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES = [
@@ -55,8 +58,6 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 /**
  * @element sp-badge-base
  * @property {BadgeVariant} variant - The variant of the badge.
- * @property {boolean} subtle - Whether the badge is subtle.
- * @property {boolean} outline - Whether the badge is outlined.
  * @property {FixedValues} fixed - The fixed position of the badge.
  * @property {string[]} customStyles - The custom styles of the badge.
  */
@@ -68,12 +69,6 @@ export abstract class BadgeBase extends SizedMixin(
 ) {
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
-
-    @property({ type: Boolean, reflect: true })
-    public subtle: boolean = false;
-
-    @property({ type: Boolean, reflect: true })
-    public outline: boolean = false;
 
     @property({ type: String, reflect: true })
     public fixed?: FixedValues;

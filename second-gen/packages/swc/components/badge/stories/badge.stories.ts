@@ -13,7 +13,12 @@
 import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import { BADGE_VARIANTS, FIXED_VALUES } from '@swc/components/badge';
+import {
+    BADGE_VARIANTS,
+    BADGE_VARIANTS_COLOR,
+    BADGE_VARIANTS_SEMANTIC,
+    FIXED_VALUES,
+} from '@swc/components/badge';
 
 import '@swc/components/badge';
 
@@ -33,9 +38,17 @@ const meta: Meta = {
             control: { type: 'select' },
             options: ['s', 'm', 'l', 'xl'],
         },
+        subtle: {
+            control: { type: 'boolean' },
+        },
+        outline: {
+            control: { type: 'boolean' },
+        },
     },
     args: {
         variant: 'informative',
+        subtle: false,
+        outline: false,
     },
 };
 
@@ -57,10 +70,22 @@ export const Default: Story = {
     `,
 };
 
-export const Variants: Story = {
+export const SemanticVariants: Story = {
     render: () => html`
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            ${BADGE_VARIANTS.map(
+            ${BADGE_VARIANTS_SEMANTIC.map(
+                (variant) => html`
+                    <swc-badge variant="${variant}">${variant}</swc-badge>
+                `
+            )}
+        </div>
+    `,
+};
+
+export const ColorVariants: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${BADGE_VARIANTS_COLOR.map(
                 (variant) => html`
                     <swc-badge variant="${variant}">${variant}</swc-badge>
                 `
@@ -86,5 +111,33 @@ export const WithIcon: Story = {
             <span slot="icon">✓</span>
             With icon
         </swc-badge>
+    `,
+};
+
+export const Subtle: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${BADGE_VARIANTS.map(
+                (variant) => html`
+                    <swc-badge variant="${variant}" subtle>
+                        ${variant}
+                    </swc-badge>
+                `
+            )}
+        </div>
+    `,
+};
+
+export const Outline: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${BADGE_VARIANTS_SEMANTIC.map(
+                (variant) => html`
+                    <swc-badge variant="${variant}" outline>
+                        ${variant}
+                    </swc-badge>
+                `
+            )}
+        </div>
     `,
 };
