@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, nothing, TemplateResult } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
 
 import { BadgeBase } from '@swc/core/components/badge';
 
@@ -28,7 +30,7 @@ export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
  * @since 1.0.0
  * @status stable
  * @github https://github.com/adobe/spectrum-web-components/tree/main/...
- * @figma https://www.figma.com/design/...
+ * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=36806-6551
  *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
@@ -52,16 +54,36 @@ export class Badge extends BadgeBase {
 
     protected override render(): TemplateResult {
         return html`
-            ${this.hasIcon
-                ? html`
-                      <slot
-                          name="icon"
-                          ?icon-only=${!this.slotHasContent}
-                      ></slot>
-                  `
-                : nothing}
-            <div class="label">
-                <slot></slot>
+            <div
+                class=${classMap({
+                    ['spectrum-Badge']: true,
+                    [`spectrum-Badge--size${this.size?.toUpperCase()}`]:
+                        typeof this.size !== 'undefined',
+                    [`spectrum-Badge--${this.variant}`]:
+                        typeof this.variant !== 'undefined',
+                    [`spectrum-Badge--subtle`]: this.subtle,
+                    [`spectrum-Badge--outline`]: this.outline,
+                    [`spectrum-Badge--fixed-${this.fixed}`]:
+                        typeof this.fixed !== 'undefined',
+                })}
+            >
+                ${when(
+                    this.hasIcon,
+                    () => html`
+                        <div
+                            class=${classMap({
+                                [`spectrum-Badge-icon`]: true,
+                                [`spectrum-Badge-icon--no-label`]:
+                                    !this.slotHasContent,
+                            })}
+                        >
+                            <slot name="icon"></slot>
+                        </div>
+                    `
+                )}
+                <div class="spectrum-Badge-label">
+                    <slot></slot>
+                </div>
             </div>
         `;
     }
