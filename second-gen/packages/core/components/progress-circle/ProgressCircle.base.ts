@@ -18,15 +18,31 @@ import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
+    /**
+     * Whether the progress circle shows indeterminate progress (loading state).
+     * When true, displays an animated loading indicator instead of a specific progress value.
+     */
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
 
+    /**
+     * Accessible label for the progress circle.
+     * Used to provide context about what is loading or progressing.
+     */
     @property({ type: String })
     public label = '';
 
+    /**
+     * Static color variant for use on different backgrounds.
+     * When set to 'white', the component uses white styling for dark backgrounds.
+     */
     @property({ reflect: true, attribute: 'static-color' })
     public staticColor?: 'white';
 
+    /**
+     * Progress value from 0 to 100.
+     * Only relevant when indeterminate is false.
+     */
     @property({ type: Number })
     public progress = 0;
 

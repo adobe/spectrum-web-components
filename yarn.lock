@@ -2705,6 +2705,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@custom-elements-manifest/analyzer@npm:^0.10.5":
+  version: 0.10.5
+  resolution: "@custom-elements-manifest/analyzer@npm:0.10.5"
+  dependencies:
+    "@custom-elements-manifest/find-dependencies": "npm:^0.0.5"
+    "@github/catalyst": "npm:^1.6.0"
+    "@web/config-loader": "npm:0.1.3"
+    chokidar: "npm:3.5.2"
+    command-line-args: "npm:5.1.2"
+    comment-parser: "npm:1.2.4"
+    custom-elements-manifest: "npm:1.0.0"
+    debounce: "npm:1.2.1"
+    globby: "npm:11.0.4"
+    typescript: "npm:~5.4.2"
+  bin:
+    cem: cem.js
+    custom-elements-manifest: cem.js
+  checksum: 10c0/f8916fcbaa432f00f0954a7bb9be1d41d8b46e36737e3673989c5c3225c9e257cd49d1dd68c18c708b6b8f4068ba294a9fa67da13d905d82aaa60956e952f20c
+  languageName: node
+  linkType: hard
+
 "@custom-elements-manifest/analyzer@npm:^0.9.0":
   version: 0.9.9
   resolution: "@custom-elements-manifest/analyzer@npm:0.9.9"
@@ -7030,9 +7051,12 @@ __metadata:
   resolution: "@swc/components@workspace:second-gen/packages/swc"
   dependencies:
     "@axe-core/playwright": "npm:^4.10.2"
+    "@custom-elements-manifest/analyzer": "npm:^0.10.5"
     "@storybook/test-runner": "npm:^0.23.0"
     "@storybook/web-components-vite": "npm:9.1.3"
     "@swc/core": "workspace:*"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
     "@vitest/ui": "npm:^3.2.4"
     autoprefixer: "npm:^10.4.21"
     glob: "npm:^11.0.0"
@@ -7040,6 +7064,8 @@ __metadata:
     playwright: "npm:^1.55.0"
     postcss: "npm:^8.5.6"
     postcss-preset-env: "npm:^10.3.1"
+    react: "npm:^19.1.1"
+    react-dom: "npm:^19.1.1"
     rimraf: "npm:^6.0.1"
     storybook: "npm:^9.1.3"
     typescript: "npm:^5.3.3"
@@ -8133,6 +8159,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^19":
+  version: 19.1.9
+  resolution: "@types/react-dom@npm:19.1.9"
+  peerDependencies:
+    "@types/react": ^19.0.0
+  checksum: 10c0/34c8dda86c1590b3ef0e7ecd38f9663a66ba2dd69113ba74fb0adc36b83bbfb8c94c1487a2505282a5f7e5e000d2ebf36f4c0fd41b3b672f5178fd1d4f1f8f58
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:^18.3.20":
   version: 18.3.24
   resolution: "@types/react@npm:18.3.24"
@@ -8140,6 +8175,15 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/9e188fa8e50f172cf647fc48fea2e04d88602afff47190b697de281a8ac88df9ee059864757a2a438ff599eaf9276d9a9e0e60585e88f7d57f01a2e4877d37ec
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19":
+  version: 19.1.12
+  resolution: "@types/react@npm:19.1.12"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/e35912b43da0caaab5252444bab87a31ca22950cde2822b3b3dc32e39c2d42dad1a4cf7b5dde9783aa2d007f0b2cba6ab9563fc6d2dbcaaa833b35178118767c
   languageName: node
   linkType: hard
 
@@ -25013,7 +25057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react-dom@npm:^19.1.1":
   version: 19.1.1
   resolution: "react-dom@npm:19.1.1"
   dependencies:
@@ -25050,7 +25094,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react@npm:^19.1.1":
   version: 19.1.1
   resolution: "react@npm:19.1.1"
   checksum: 10c0/8c9769a2dfd02e603af6445058325e6c8a24b47b185d0e461f66a6454765ddcaecb3f0a90184836c68bb509f3c38248359edbc42f0d07c23eb500a5c30c87b4e

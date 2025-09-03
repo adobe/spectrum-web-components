@@ -21,10 +21,29 @@ export { BADGE_VARIANTS, FIXED_VALUES } from '@swc/core/components/badge';
 export type { BadgeVariant, FixedValues } from '@swc/core/components/badge';
 
 /**
+ * A badge component that displays short, descriptive information about an element.
+ * Badges are typically used to indicate status, categories, or provide supplementary information.
+ *
  * @element swc-badge
+ * @since 1.0.0
+ * @status stable
+ * @github https://github.com/adobe/spectrum-web-components/tree/main/...
+ * @figma https://www.figma.com/design/...
  *
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
+ *
+ * @csspart label - The text content area of the badge
+ * @csspart icon - The icon area of the badge (when present)
+ *
+ * @example
+ * <swc-badge variant="positive">New</swc-badge>
+ *
+ * @example
+ * <swc-badge variant="neutral" fixed="fill">
+ *   <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+ *   Verified
+ * </swc-badge>
  */
 export class Badge extends BadgeBase {
     public static override get styles(): CSSResultArray {

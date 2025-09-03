@@ -18,7 +18,27 @@ import { ProgressCircleBase } from '@swc/core/components/progress-circle';
 import progressCircleStyles from './progress-circle.css';
 
 /**
- * @element sp-progress-circle
+ * A progress circle component that visually represents the completion progress of a task.
+ * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ *
+ * @element swc-progress-circle
+ * @since 2.0.0
+ * @status stable
+ * @github https://github.com/adobe/spectrum-web-components/tree/main/second-gen/packages/swc/components/progress-circle
+ * @figma https://spectrum.figma.com/file/progress-circle
+ *
+ * @slot - Optional content to display inside the progress circle (e.g., percentage text)
+ *
+ * @csspart track - The background track of the progress circle
+ * @csspart fill - The filled portion of the progress circle
+ *
+ * @fires progress-change - Dispatched when the progress value changes
+ *
+ * @example
+ * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>
+ *
+ * @example
+ * <swc-progress-circle indeterminate label="Loading..."></swc-progress-circle>
  */
 export class ProgressCircle extends ProgressCircleBase {
     public static override get styles(): CSSResultArray {
