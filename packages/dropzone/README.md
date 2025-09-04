@@ -1,6 +1,6 @@
 ## Overview
 
-A `<sp-dropzone>` is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a drop zone might be used in an upload workflow to enable the user to drop a file from their operating system into the drop zone, which is a more efficient and intuitive action, rather than utilize the standard "Choose File" dialog.
+A `<sp-dropzone>` is an area on the screen into which an object can be dragged and dropped to accomplish a task. For example, a drop zone might be used in an upload workflow to enable the user to drop a file from their operating system into the drop zone, which is a more efficient and intuitive action than utilizing the standard "Choose File" dialog.
 
 Drop zones should be used with an [illustrated message](/components/illustrated-message) component as a child if the drop zone is empty, otherwise the existing content should be passed as a child.
 
@@ -10,7 +10,7 @@ Drop zones should be used with an [illustrated message](/components/illustrated-
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/dropzone?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/dropzone)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-q5adfsfk)
 
-```bash
+```zsh
 yarn add @spectrum-web-components/dropzone
 ```
 
@@ -30,7 +30,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 
 The `<sp-dropzone>` element consists of several key parts:
 
-- An [illustrated message](/components/illustrated-message) child component.
+- An [illustrated message](/components/illustrated-message) child component that includes a heading, illustration and an optional body area.
 - An optional action area that can be used to provide additional context to the heading, including a single button or links to prompt the user to take action.
 
 ### Examples
@@ -97,7 +97,7 @@ The `<sp-dropzone>` element consists of several key parts:
         </svg>
     </sp-illustrated-message>
 
-    <sp-button variant="accent">Browswe files</sp-button>
+    <sp-button variant="accent">Browse files</sp-button>
 </sp-dropzone>
 ```
 
