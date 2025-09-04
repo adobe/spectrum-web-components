@@ -662,4 +662,4 @@ import"./swc.CGGc6elb.js";import"./swc.BtcUComg.js";import"./swc.N0vrI1eP.js";im
                     <slot></slot>
                 </div>
             `}}Je([k({type:String,reflect:!0})],rt.prototype,"background",2),Je([k({type:Boolean,reflect:!0})],rt.prototype,"cover",2),Je([k({type:Boolean,reflect:!0})],rt.prototype,"layer",2),Je([k({type:String,reflect:!0})],rt.prototype,"size",1),e("sp-thumbnail",rt);
-//# sourceMappingURL=swc.BUIS2FQH.js.map
+//# sourceMappingURL=swc.CYLajunX.js.map
