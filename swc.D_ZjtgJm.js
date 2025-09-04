@@ -50,4 +50,4 @@ import{c as r,S as e}from"./swc.CzgZrZGT.js";import{i as o}from"./swc.Cl2X6-fK.j
                       `:s}
             </form>
         `}firstUpdated(r){super.firstUpdated(r),this.hasAttribute("holdValueOnEscape")||this.inputElement.setAttribute("type","search")}willUpdate(){this.multiline=!1}}k([a()],x.prototype,"action"),k([a()],x.prototype,"label"),k([a()],x.prototype,"method"),k([a()],x.prototype,"placeholder"),k([a({type:Boolean})],x.prototype,"holdValueOnEscape"),k([d("#form")],x.prototype,"form"),i("sp-search",x);
-//# sourceMappingURL=swc.B-ss1I3E.js.map
+//# sourceMappingURL=swc.CKeH35K9.js.map
