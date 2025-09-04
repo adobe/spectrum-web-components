@@ -44,7 +44,6 @@ export const variants = ['filled', 'ramp', 'range', 'tick'];
 /**
  * @element sp-slider
  *
- * @slot - @deprecated Text label for the Slider. Use the `label` property instead.
  * @slot handle - optionally accepts two or more sp-slider-handle elements
  */
 export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
