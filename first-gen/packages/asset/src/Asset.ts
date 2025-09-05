@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { AssetBase } from './Asset.base.js';
+import { AssetBase } from '@swc/core/components/asset';
 import styles from './asset.css.js';
 
 const file = (label: string): TemplateResult => html`
