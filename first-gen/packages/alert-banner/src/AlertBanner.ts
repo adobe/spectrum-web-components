@@ -18,9 +18,11 @@ import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import styles from './alert-banner.css.js';
-import { AlertBannerBase } from './AlertBanner.base.js';
+import {
+    AlertBannerBase,
+    AlertBannerVariants,
+} from '@swc/core/components/alert-banner';
 
-import type { AlertBannerVariants } from './AlertBanner.base.js';
 export type { AlertBannerVariants };
 
 /**

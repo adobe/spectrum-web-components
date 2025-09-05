@@ -9,13 +9,10 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import {
-    CSSResultArray,
-    PropertyValues,
-    SpectrumElement,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { CSSResultArray, PropertyValues, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
+
+import { SpectrumElement } from '@swc/core/shared/base';
 
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
 export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];
