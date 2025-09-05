@@ -220,6 +220,32 @@
 
 </details>
 
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+  <div class="spectrum-AlertBanner-end">
+-     <div
+-         class="spectrum-Divider spectrum-Divider--vertical spectrum-Divider--sizeS"
+-     ></div>
+      <button
+          class="spectrum-CloseButton spectrum-CloseButton--sizeM spectrum-CloseButton--staticWhite"
+      >
+          <span class="spectrum-CloseButton-icon" aria-hidden="true">
+              <svg
+                  class="spectrum-Icon spectrum-Icon--sizeS"
+                  focusable="false"
+                  aria-hidden="true"
+              >
+                  <use xlink:href="#spectrum-icon-18-Cross"></use>
+              </svg>
+          </span>
+      </button>
+  </div>
+```
+
+</details>
+
 ### CSS => SWC mapping
 
 | CSS selector                                                                                     | Attribute or slot                       | Status           |

@@ -144,6 +144,17 @@ Create a three-way HTML comparison using markdown code blocks. Use collapsible s
 ```
 
 </details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+<!-- Show only the differences between main and spectrum-two branches using diff format -->
+<!-- Use - for removed elements, + for added elements, no prefix for unchanged elements -->
+<!-- Only include this section if there are actual differences between the branches -->
+```
+
+</details>
 ````
 
 #### 2.3 CSS => SWC mapping
