@@ -212,6 +212,18 @@ Be sure to note:
 - Conditional elements that differ between branches
 - Import differences that affect rendered output
 
+### 4. Resources section
+
+Create a Level 2 Heading: `## Resources`
+
+Under this heading, add a placeholder section for resources with a bulleted list that can be filled in:
+
+```markdown
+- [CSS migration]()
+- [Spectrum 2 preview]()
+- [React]()
+```
+
 ## Output format notes
 
 - Create individual markdown files in the migration-roadmap/ directory

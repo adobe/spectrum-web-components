@@ -246,11 +246,14 @@ Based on the CSS => SWC mapping table above, all CSS selectors have correspondin
 - **State management**: CSS `.is-open` class maps to web component `open` attribute
 - **Content structure**: CSS text and icon selectors map to web component slots and programmatic icon rendering
 - **Dismissible functionality**: CSS close button presence maps to web component `dismissible` attribute
-- **Language support**: CSS language selectors are implemented in the web component
-- **Action slot**: The web component provides an `action` slot that has no direct CSS equivalent
 
 ### CSS DOM structure changes
 
 **Divider element removed in spectrum-two branch**: The `<div class="spectrum-Divider spectrum-Divider--vertical spectrum-Divider--sizeS"></div>` element is no longer included in the close button section. The spectrum-two branch template only includes the close button without the divider separator.
 
 This divider does not appear to be present in SWC, and therefore will not need to be removed for Spectrum 2.
+
+## Resources
+
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2652)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-alert-banner--docs)
