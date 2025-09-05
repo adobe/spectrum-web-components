@@ -10,15 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import {
-    PropertyValues,
-    SizedMixin,
-    SpectrumElement,
-} from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
+
+import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 
 /**
- * @element sp-divider
+ * @element swc-divider
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],

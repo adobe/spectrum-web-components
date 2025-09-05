@@ -9,23 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-import {
-    CSSResultArray,
-    html,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-
-import { DividerBase } from '@swc/core/components/divider';
-import styles from './divider.css.js';
-
-/**
- * @element sp-divider
- */
-export class Divider extends DividerBase {
-    public static override styles: CSSResultArray = [styles];
-
-    protected override render(): TemplateResult {
-        return html``;
-    }
-}
+export * from './Divider.base';
