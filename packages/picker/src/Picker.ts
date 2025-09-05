@@ -40,6 +40,7 @@ import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/tags/sp-tag.js';
 import type {
     Menu,
     MenuItem,
@@ -139,7 +140,39 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
-    public selects: undefined | 'single' = 'single';
+    /**
+     * When `true`, the user can select multiple options.
+     * When `multiple` is enabled, the value attribute will be a space-delimited list of values
+     * based on the options selected, and the value property will be an array.
+     * For this reason, values must not contain spaces.
+     */
+    @property({ type: Boolean, reflect: true })
+    public multiple = false;
+
+    /**
+     * The maximum number of selected options to show when `multiple` is true.
+     * After the maximum, "+n" will be shown to indicate the number of additional items that are selected.
+     * Set to 0 to remove the limit.
+     */
+    @property({ type: Number, attribute: 'max-options-visible' })
+    public maxOptionsVisible = 3;
+
+    /**
+     * A function that customizes the tags to be rendered when multiple=true.
+     * The first argument is the option, the second is the current tag's index.
+     * The function should return either a Lit TemplateResult or a string containing
+     * trusted HTML of the symbol to render at the specified value.
+     */
+    @property({ attribute: false })
+    public renderTag?: (
+        option: MenuItem,
+        index: number
+    ) => TemplateResult | string;
+
+    @state()
+    protected _selectedItems: MenuItem[] = [];
+
+    public selects: undefined | 'single' | 'multiple' = 'single';
 
     @state()
     public labelAlignment?: 'inline';
@@ -177,8 +210,20 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public value = '';
 
+    /**
+     * When TypeScript compiler needs help with the types
+     */
+    public get typedValue(): string | string[] {
+        return this.value;
+    }
+
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
+        if (this.multiple) {
+            return this._selectedItems.length > 0
+                ? this._selectedItems[0]
+                : undefined;
+        }
         return this._selectedItem;
     }
 
@@ -194,6 +239,36 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
+        if (this.multiple) {
+            if (!selectedItem) {
+                this._selectedItems = [];
+                this.selectedItemContent = undefined;
+                this.value = '';
+                return;
+            }
+
+            const index = this._selectedItems.indexOf(selectedItem);
+            if (index === -1) {
+                this._selectedItems = [...this._selectedItems, selectedItem];
+            } else {
+                this._selectedItems = this._selectedItems.filter(
+                    (_, i) => i !== index
+                );
+            }
+
+            // @ts-expect-error Type 'MenuItemChildren[] | undefined' is not assignable to type 'MenuItemChildren | undefined'
+            this.selectedItemContent = this._selectedItems.length
+                ? this._selectedItems.map((item) => item.itemChildren)
+                : undefined;
+
+            // Use string value for DOM attributes
+            this.value = this._selectedItems.length
+                ? this._selectedItems.map((item) => item.value).join(' ')
+                : '';
+
+            return;
+        }
+
         this.selectedItemContent = selectedItem
             ? selectedItem.itemChildren
             : undefined;
@@ -331,48 +406,86 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {
-        this.open = false;
-        // should always close when "setting" a value
-        const oldSelectedItem = this.selectedItem;
-        const oldValue = this.value;
+        if (this.readonly) {
+            return;
+        }
 
-        // Set a value.
+        if (this.multiple) {
+            const index = this._selectedItems.findIndex(
+                (i) => i.value === item.value
+            );
+            const wasSelected = index !== -1;
+
+            if (wasSelected) {
+                // Deselect the item
+                this._selectedItems = this._selectedItems.filter(
+                    (i) => i.value !== item.value
+                );
+                this.setMenuItemSelected(item, false);
+            } else {
+                // Select the item
+                this._selectedItems = [...this._selectedItems, item];
+                this.setMenuItemSelected(item, true);
+            }
+
+            // Update the value property as an array internally
+            const valueArray = this._selectedItems.map(
+                (selectedItem) => selectedItem.value
+            );
+
+            // For the attribute, use space-delimited string
+            const oldValue = this.value;
+            this.value = valueArray.join(' ');
+
+            if (oldValue !== this.value) {
+                this.selectedItemContent =
+                    this._selectedItems.length > 0
+                        ? (this._selectedItems.map(
+                              (item) => item.itemChildren
+                          ) as unknown as MenuItemChildren)
+                        : undefined;
+
+                if (menuChangeEvent) {
+                    this.handleChange(menuChangeEvent);
+                } else {
+                    const changeEvent = new Event('change', {
+                        bubbles: true,
+                    });
+                    this.dispatchEvent(changeEvent);
+                }
+            }
+
+            // Keep the menu open for multiple selection
+            return;
+        }
+
+        // Original single selection behavior
+        const oldValue = this.value;
+        this.value = item.value;
         this.selectedItem = item;
-        this.value = item?.value ?? '';
-        await this.updateComplete;
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                // Allow it to be prevented.
-                cancelable: true,
-                composed: true,
-            })
-        );
-        if (!applyDefault && this.selects) {
+
+        if (oldValue !== this.value) {
+            const selectedItems = this.menuItems;
+            for (const selectedItem of selectedItems) {
+                this.setMenuItemSelected(
+                    selectedItem,
+                    selectedItem.value === this.value
+                );
+            }
+
             if (menuChangeEvent) {
-                menuChangeEvent.preventDefault();
+                this.handleChange(menuChangeEvent);
+            } else {
+                const changeEvent = new Event('change', {
+                    bubbles: true,
+                });
+                this.dispatchEvent(changeEvent);
             }
-            this.setMenuItemSelected(this.selectedItem as MenuItem, false);
-            if (oldSelectedItem) {
-                this.setMenuItemSelected(oldSelectedItem, true);
-            }
-            this.selectedItem = oldSelectedItem;
-            this.value = oldValue;
-            this.open = true;
-            if (this.strategy) {
-                this.strategy.open = true;
-            }
-            return;
-        } else if (!this.selects) {
-            // Unset the value if not carrying a selection
-            this.selectedItem = oldSelectedItem;
-            this.value = oldValue;
-            return;
         }
-        if (oldSelectedItem) {
-            this.setMenuItemSelected(oldSelectedItem, false);
+
+        if (!this.multiple) {
+            await this.close();
         }
-        this.setMenuItemSelected(item, !!this.selects);
     }
 
     protected setMenuItemSelected(item: MenuItem, value: boolean): void {
@@ -458,7 +571,76 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         `;
     }
 
+    private renderSelectedTags(): TemplateResult {
+        if (!this.multiple || this._selectedItems.length === 0) {
+            return html``;
+        }
+
+        const visibleCount =
+            this.maxOptionsVisible > 0
+                ? Math.min(this._selectedItems.length, this.maxOptionsVisible)
+                : this._selectedItems.length;
+
+        const hiddenCount = this._selectedItems.length - visibleCount;
+
+        return html`
+            <div class="tags">
+                ${this._selectedItems
+                    .slice(0, visibleCount)
+                    .map((item, index) => {
+                        if (this.renderTag) {
+                            const customTag = this.renderTag(item, index);
+                            if (typeof customTag === 'string') {
+                                return html`
+                                    ${customTag}
+                                `;
+                            }
+                            return customTag;
+                        }
+
+                        // Get icon from menu item's children if available
+                        const itemChildren = item.itemChildren || {};
+                        const hasIcon =
+                            'icon' in itemChildren && !!itemChildren.icon;
+
+                        return html`
+                            <sp-tag
+                                size=${this.size || 'm'}
+                                ?deletable=${!this.readonly}
+                                ?disabled=${this.disabled}
+                                ?readonly=${this.readonly}
+                                @delete=${(event: Event) => {
+                                    event.stopPropagation();
+                                    this.setValueFromItem(item);
+                                }}
+                            >
+                                ${hasIcon
+                                    ? html`
+                                          <slot name="icon" slot="icon">
+                                              ${itemChildren.icon}
+                                          </slot>
+                                      `
+                                    : nothing}
+                                ${item.textContent}
+                            </sp-tag>
+                        `;
+                    })}
+                ${hiddenCount > 0
+                    ? html`
+                          <sp-tag size=${this.size || 'm'}>
+                              +${hiddenCount}
+                          </sp-tag>
+                      `
+                    : nothing}
+            </div>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
+        if (this.multiple && this._selectedItems.length > 0) {
+            return [this.renderSelectedTags()];
+        }
+
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
@@ -676,6 +858,32 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         if (changes.has('open')) {
             this.strategy.open = this.open;
         }
+
+        if (changes.has('multiple')) {
+            this.selects = this.multiple ? 'multiple' : 'single';
+            if (this.optionsMenu) {
+                this.optionsMenu.selects = this.selects;
+            }
+        }
+
+        if (changes.has('value') && this.multiple) {
+            const valueArray =
+                typeof this.value === 'string'
+                    ? this.value.split(' ')
+                    : this.value;
+
+            if (this.optionsMenu) {
+                const validOptions = this.menuItems.filter(
+                    (option) => !!option.value
+                );
+                validOptions.forEach((item) => {
+                    this.setMenuItemSelected(
+                        item,
+                        valueArray.includes(item.value)
+                    );
+                });
+            }
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues<this>): void {
@@ -815,36 +1023,70 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
      * updates menu selection based on value
      */
     protected async manageSelection(): Promise<void> {
-        if (this.selects == null) return;
+        const values = this.menuItems;
+        const validOptions = values.filter((option) => !!option.value);
 
-        this.selectionPromise = new Promise(
-            (res) => (this.selectionResolver = res)
-        );
-        let selectedItem: MenuItem | undefined;
-        await this.optionsMenu.updateComplete;
-        if (this.recentlyConnected) {
-            // Work around for attach timing differences in Safari and Firefox.
-            // Remove when refactoring to Menu passthrough wrapper.
-            await new Promise((res) => requestAnimationFrame(() => res(true)));
-            this.recentlyConnected = false;
-        }
-        this.menuItems.forEach((item) => {
-            if (this.value === item.value && !item.disabled) {
-                selectedItem = item;
+        if (this.multiple) {
+            // For multiple selection
+            if (this.value) {
+                const selectedValues =
+                    typeof this.value === 'string'
+                        ? this.value.split(' ')
+                        : this.value;
+
+                this._selectedItems = validOptions.filter((option) =>
+                    selectedValues.includes(option.value)
+                );
+
+                this._selectedItems.forEach((item) => {
+                    this.setMenuItemSelected(item, true);
+                });
+
+                if (this._selectedItems.length > 0) {
+                    this.selectedItemContent = this._selectedItems.map(
+                        (item) => item.itemChildren
+                    ) as unknown as MenuItemChildren;
+                }
             } else {
-                item.selected = false;
+                this._selectedItems = [];
+                validOptions.forEach((item) =>
+                    this.setMenuItemSelected(item, false)
+                );
             }
-        });
-        if (selectedItem) {
-            selectedItem.selected = !!this.selects;
-            this.selectedItem = selectedItem;
         } else {
-            this.value = '';
-            this.selectedItem = undefined;
-        }
-        if (this.open) {
+            if (this.selects == null) return;
+
+            this.selectionPromise = new Promise(
+                (res) => (this.selectionResolver = res)
+            );
+            let selectedItem: MenuItem | undefined;
             await this.optionsMenu.updateComplete;
-            this.optionsMenu.updateSelectedItemIndex();
+            if (this.recentlyConnected) {
+                // Work around for attach timing differences in Safari and Firefox.
+                // Remove when refactoring to Menu passthrough wrapper.
+                await new Promise((res) =>
+                    requestAnimationFrame(() => res(true))
+                );
+                this.recentlyConnected = false;
+            }
+            this.menuItems.forEach((item) => {
+                if (this.value === item.value && !item.disabled) {
+                    selectedItem = item;
+                } else {
+                    item.selected = false;
+                }
+            });
+            if (selectedItem) {
+                selectedItem.selected = !!this.selects;
+                this.selectedItem = selectedItem;
+            } else {
+                this.value = '';
+                this.selectedItem = undefined;
+            }
+            if (this.open) {
+                await this.optionsMenu.updateComplete;
+                this.optionsMenu.updateSelectedItemIndex();
+            }
         }
         this.selectionResolver();
         this.willManageSelection = false;
