@@ -9,28 +9,4 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-import {
-    CSSResultArray,
-    html,
-    TemplateResult,
-} from '@spectrum-web-components/base';
-import { StatusLightBase } from '@swc/core/components/status-light';
-import statusLightStyles from './status-light.css.js';
-
-/**
- * @element sp-status-light
- *
- * @slot - text label of the Status Light
- */
-export class StatusLight extends StatusLightBase {
-    public static override get styles(): CSSResultArray {
-        return [statusLightStyles];
-    }
-
-    protected override render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
-}
+export * from './StatusLight.base';
