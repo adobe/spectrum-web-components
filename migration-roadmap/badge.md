@@ -1,6 +1,8 @@
 # Badge migration roadmap
 
-## CSS selectors
+## Component specifications
+
+### CSS
 
 <details>
 <summary>CSS selectors</summary>
@@ -75,41 +77,18 @@
 - `.spectrum-Badge-icon + .spectrum-Badge-label`
 - `.spectrum-Badge-icon--no-label`
 - `.spectrum-Badge-label`
-- `.spectrum-Badge-label:lang(ja)`, `.spectrum-Badge-label:lang(ko)`, `.spectrum-Badge-label:lang(zh)`
+- `.spectrum-Badge-label:lang(ja)`
+- `.spectrum-Badge-label:lang(ko)`
+- `.spectrum-Badge-label:lang(zh)`
 
 </details>
-
-## Passthroughs
 
 <details>
 <summary>Passthroughs</summary>
 
-No passthroughs found for this component.
+None found for this component.
 
 </details>
-
-## Attributes
-
-<details>
-<summary>Attributes</summary>
-
-- `variant` - accent, neutral, informative, positive, negative, notice, fuchsia, indigo, magenta, purple, seafoam, yellow, gray, red, orange, chartreuse, celery, green, cyan, blue
-- `size` - s, m, l, xl
-- `fixed` - inline-start, inline-end, block-start, block-end
-
-</details>
-
-## Slots
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - Text label of the badge
-- `icon` slot - Optional icon that appears to the left of the label
-
-</details>
-
-## Modifiers
 
 <details>
 <summary>Modifiers</summary>
@@ -192,7 +171,28 @@ No passthroughs found for this component.
 
 </details>
 
-## Visual Comparison
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `variant` - Badge variant (accent, neutral, informative, positive, negative, notice, fuchsia, indigo, magenta, purple, seafoam, yellow, gray, red, orange, chartreuse, celery, green, cyan, blue)
+- `fixed` - Fixed positioning (inline-start, inline-end, block-start, block-end)
+- `size` - Badge size (s, m, l, xl)
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot - Text label of the badge
+- `icon` - Optional icon that appears to the left of the label
+
+</details>
+
+## Comparison
+
+### Visual comparison
 
 **Legacy Component:**
 
@@ -202,143 +202,136 @@ No passthroughs found for this component.
 
 <!-- Screenshot of Spectrum 2 component will be added here -->
 
-## DOM Structure Changes
+### DOM structure changes
 
-**Legacy (main branch):**
+<details>
+<summary>Spectrum Web Components:</summary>
 
 ```html
-<div class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--neutral">
-    <svg
-        class="spectrum-Icon spectrum-Badge-icon spectrum-Badge-icon--no-label"
-        aria-hidden="true"
-        focusable="false"
-    >
-        <!-- icon content -->
-    </svg>
-    <div class="spectrum-Badge-label">Label</div>
-</div>
+<sp-badge variant="informative" fixed="inline-start" size="m">
+    <sp-icon slot="icon" name="ui:CheckmarkSmall"></sp-icon>
+    <div class="label">
+        <slot></slot>
+    </div>
+</sp-badge>
 ```
 
-**Spectrum 2 (spectrum-two branch):**
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
 ```html
 <div
-    class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--neutral spectrum-Badge--style-default"
+    class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--informative spectrum-Badge--fixed-inline-start"
 >
     <svg
-        class="spectrum-Icon spectrum-Badge-icon spectrum-Badge-icon--no-label"
-        aria-hidden="true"
+        class="spectrum-Icon spectrum-Badge-icon"
         focusable="false"
+        aria-hidden="true"
     >
-        <!-- icon content -->
+        <!-- Icon content -->
     </svg>
-    <div class="spectrum-Badge-label">Label</div>
+    <div class="spectrum-Badge-label">Label text</div>
 </div>
 ```
 
-## Comparison
+</details>
 
-| CSS selector                                                                                         | Attribute or slot                | Status          |
-| ---------------------------------------------------------------------------------------------------- | -------------------------------- | --------------- |
-| `.spectrum-Badge`                                                                                    | Base component                   | Implemented     |
-| `.spectrum-Badge--accent`                                                                            | `variant="accent"`               | Implemented     |
-| `.spectrum-Badge--blue`                                                                              | `variant="blue"`                 | Implemented     |
-| `.spectrum-Badge--brown`                                                                             | `variant="brown"`                | Missing from WC |
-| `.spectrum-Badge--celery`                                                                            | `variant="celery"`               | Implemented     |
-| `.spectrum-Badge--chartreuse`                                                                        | `variant="chartreuse"`           | Implemented     |
-| `.spectrum-Badge--cinnamon`                                                                          | `variant="cinnamon"`             | Missing from WC |
-| `.spectrum-Badge--cyan`                                                                              | `variant="cyan"`                 | Implemented     |
-| `.spectrum-Badge--fixed-block-end`                                                                   | `fixed="block-end"`              | Implemented     |
-| `.spectrum-Badge--fixed-block-start`                                                                 | `fixed="block-start"`            | Implemented     |
-| `.spectrum-Badge--fixed-inline-end`                                                                  | `fixed="inline-end"`             | Implemented     |
-| `.spectrum-Badge--fixed-inline-start`                                                                | `fixed="inline-start"`           | Implemented     |
-| `.spectrum-Badge--fuchsia`                                                                           | `variant="fuchsia"`              | Implemented     |
-| `.spectrum-Badge--gray`                                                                              | `variant="gray"`                 | Implemented     |
-| `.spectrum-Badge--green`                                                                             | `variant="green"`                | Implemented     |
-| `.spectrum-Badge--indigo`                                                                            | `variant="indigo"`               | Implemented     |
-| `.spectrum-Badge--informative`                                                                       | `variant="informative"`          | Implemented     |
-| `.spectrum-Badge--magenta`                                                                           | `variant="magenta"`              | Implemented     |
-| `.spectrum-Badge--negative`                                                                          | `variant="negative"`             | Implemented     |
-| `.spectrum-Badge--neutral`                                                                           | `variant="neutral"`              | Implemented     |
-| `.spectrum-Badge--notice`                                                                            | `variant="notice"`               | Implemented     |
-| `.spectrum-Badge--orange`                                                                            | `variant="orange"`               | Implemented     |
-| `.spectrum-Badge--pink`                                                                              | `variant="pink"`                 | Missing from WC |
-| `.spectrum-Badge--positive`                                                                          | `variant="positive"`             | Implemented     |
-| `.spectrum-Badge--purple`                                                                            | `variant="purple"`               | Implemented     |
-| `.spectrum-Badge--red`                                                                               | `variant="red"`                  | Implemented     |
-| `.spectrum-Badge--seafoam`                                                                           | `variant="seafoam"`              | Implemented     |
-| `.spectrum-Badge--silver`                                                                            | `variant="silver"`               | Missing from WC |
-| `.spectrum-Badge--sizeL`                                                                             | `size="l"`                       | Implemented     |
-| `.spectrum-Badge--sizeS`                                                                             | `size="s"`                       | Implemented     |
-| `.spectrum-Badge--sizeXL`                                                                            | `size="xl"`                      | Implemented     |
-| `.spectrum-Badge--style-outline`                                                                     | Style variant                    | Missing from WC |
-| `.spectrum-Badge--style-subtle`                                                                      | Style variant                    | Missing from WC |
-| `.spectrum-Badge--turquoise`                                                                         | `variant="turquoise"`            | Missing from WC |
-| `.spectrum-Badge--yellow`                                                                            | `variant="yellow"`               | Implemented     |
-| `.spectrum-Badge-icon`                                                                               | `icon` slot                      | Implemented     |
-| `.spectrum-Badge-icon + .spectrum-Badge-label`                                                       | `icon` slot + default slot       | Implemented     |
-| `.spectrum-Badge-icon--no-label`                                                                     | `icon` slot without default slot | Implemented     |
-| `.spectrum-Badge-label`                                                                              | Default slot                     | Implemented     |
-| `.spectrum-Badge-label:lang(ja)`, `.spectrum-Badge-label:lang(ko)`, `.spectrum-Badge-label:lang(zh)` | Language-specific styling        | Implemented     |
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
-## Key Structural Changes
+```html
+<div
+    class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--informative spectrum-Badge--style-default spectrum-Badge--fixed-inline-start"
+>
+    <svg
+        class="spectrum-Icon spectrum-Badge-icon"
+        focusable="false"
+        aria-hidden="true"
+    >
+        <!-- Icon content -->
+    </svg>
+    <div class="spectrum-Badge-label">Label text</div>
+</div>
+```
 
-**Element Hierarchy Changes:**
+</details>
 
-- No significant changes in nesting depth or parent-child relationships
-- Both versions maintain the same basic structure with icon and label elements
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-**Class Name Changes:**
+**No significant structural changes.** The only difference is the addition of the `spectrum-Badge--style-default` class in the Spectrum 2 version, which provides default styling context.
 
-- Spectrum 2 adds `spectrum-Badge--style-default` class by default
-- Legacy version doesn't include style variant classes
+</details>
 
-**Attribute Changes:**
+### CSS => SWC mapping
 
-- No new required attributes
-- No removed attributes
-- Both versions support the same core attributes
+#### Non-color selectors
 
-**Slot/Content Changes:**
+| CSS selector                                                                                     | Attribute or slot         | Status          |
+| ------------------------------------------------------------------------------------------------ | ------------------------- | --------------- |
+| `.spectrum-Badge--sizeS`                                                                         | `size="s"`                | Implemented     |
+| `.spectrum-Badge--sizeL`                                                                         | `size="l"`                | Implemented     |
+| `.spectrum-Badge--sizeXL`                                                                        | `size="xl"`               | Implemented     |
+| `.spectrum-Badge--fixed-inline-start`                                                            | `fixed="inline-start"`    | Implemented     |
+| `.spectrum-Badge--fixed-inline-end`                                                              | `fixed="inline-end"`      | Implemented     |
+| `.spectrum-Badge--fixed-block-start`                                                             | `fixed="block-start"`     | Implemented     |
+| `.spectrum-Badge--fixed-block-end`                                                               | `fixed="block-end"`       | Implemented     |
+| `.spectrum-Badge`                                                                                | Base component            | Implemented     |
+| `.spectrum-Badge-icon`                                                                           | `icon` slot               | Implemented     |
+| `.spectrum-Badge-label`                                                                          | Default slot              | Implemented     |
+| `.spectrum-Badge-label:lang(ja), .spectrum-Badge-label:lang(ko), .spectrum-Badge-label:lang(zh)` | Language-specific styling | Implemented     |
+| `.spectrum-Badge--style-outline`                                                                 | `style="outline"`         | Missing from WC |
+| `.spectrum-Badge--style-subtle`                                                                  | `style="subtle"`          | Missing from WC |
 
-- No changes in content structure or slot usage
-- Both versions use the same slot pattern for icon and label
+#### Color/variant selectors
 
-**Migration Impact:**
+| CSS selector                   | Attribute or slot       | Status          |
+| ------------------------------ | ----------------------- | --------------- |
+| `.spectrum-Badge--accent`      | `variant="accent"`      | Implemented     |
+| `.spectrum-Badge--blue`        | `variant="blue"`        | Implemented     |
+| `.spectrum-Badge--celery`      | `variant="celery"`      | Implemented     |
+| `.spectrum-Badge--chartreuse`  | `variant="chartreuse"`  | Implemented     |
+| `.spectrum-Badge--cyan`        | `variant="cyan"`        | Implemented     |
+| `.spectrum-Badge--fuchsia`     | `variant="fuchsia"`     | Implemented     |
+| `.spectrum-Badge--gray`        | `variant="gray"`        | Implemented     |
+| `.spectrum-Badge--green`       | `variant="green"`       | Implemented     |
+| `.spectrum-Badge--indigo`      | `variant="indigo"`      | Implemented     |
+| `.spectrum-Badge--informative` | `variant="informative"` | Implemented     |
+| `.spectrum-Badge--magenta`     | `variant="magenta"`     | Implemented     |
+| `.spectrum-Badge--negative`    | `variant="negative"`    | Implemented     |
+| `.spectrum-Badge--neutral`     | `variant="neutral"`     | Implemented     |
+| `.spectrum-Badge--notice`      | `variant="notice"`      | Implemented     |
+| `.spectrum-Badge--orange`      | `variant="orange"`      | Implemented     |
+| `.spectrum-Badge--positive`    | `variant="positive"`    | Implemented     |
+| `.spectrum-Badge--purple`      | `variant="purple"`      | Implemented     |
+| `.spectrum-Badge--red`         | `variant="red"`         | Implemented     |
+| `.spectrum-Badge--seafoam`     | `variant="seafoam"`     | Implemented     |
+| `.spectrum-Badge--yellow`      | `variant="yellow"`      | Implemented     |
+| `.spectrum-Badge--brown`       | `variant="brown"`       | Missing from WC |
+| `.spectrum-Badge--cinnamon`    | `variant="cinnamon"`    | Missing from WC |
+| `.spectrum-Badge--pink`        | `variant="pink"`        | Missing from WC |
+| `.spectrum-Badge--silver`      | `variant="silver"`      | Missing from WC |
+| `.spectrum-Badge--turquoise`   | `variant="turquoise"`   | Missing from WC |
 
-- Minimal breaking changes
-- Main difference is the addition of default style variant class
-- Web component implementation is already well-aligned with CSS structure
+## Summary of changes
 
-## Implementation Gaps Analysis
+### CSS => SWC changes
 
-### CSS Features Missing from Web Component
+**Missing from WC:**
 
-- **Style variants**: CSS supports `style-outline` and `style-subtle` variants that are not implemented in the web component
-- **Additional color variants**: CSS includes `brown`, `cinnamon`, `pink`, `silver`, and `turquoise` variants not available in the web component
-- **Border styling**: CSS includes border-related custom properties that may not be fully utilized
+- **New color variants**: `brown`, `cinnamon`, `pink`, `silver`, `turquoise`
+- **Style variants**: `outline` and `subtle` styles
 
-### Web Component Features Missing from CSS
+**Note**: Fixed positioning exists in both SWC and CSS but is not in the design spec. Consider whether to keep this for 2nd gen.
 
-- No significant gaps identified - the web component implementation covers most CSS capabilities
+### CSS DOM structure changes
 
-### Features Being Deprecated/Removed
+**No significant structural changes.** Only difference is the addition of `spectrum-Badge--style-default` class in Spectrum 2, which explicitly declares the default style for consistency with new outline/subtle variants.
 
-- No features are being deprecated or removed in this component
+## Resources
 
-## Action Items for Web Component Maintainers
-
-**Required Additions:**
-
-- Implement `style` attribute to support `outline` and `subtle` style variants
-- Add missing color variants: `brown`, `cinnamon`, `pink`, `silver`, `turquoise`
-- Consider exposing border styling custom properties for more granular control
-
-**Required Removals:**
-
-- No removals required
-
-**Breaking Changes:**
-
-- No breaking changes identified
-- The component maintains backward compatibility
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3740)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/story/components-badge--default)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/badge--docs)
