@@ -9,12 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import {
+    VirtualizerHostElement,
+    virtualizerRef,
+} from '@lit-labs/virtualizer/virtualize.js';
+import { fixture, html } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import type { Table, TableBody } from '@spectrum-web-components/table';
 import type { Theme } from '@spectrum-web-components/theme';
-import { fixture, html } from '@open-wc/testing';
-import { virtualizerRef } from '@lit-labs/virtualizer/virtualize.js';
-import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
 
 export async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -31,10 +33,7 @@ export async function styledFixture<T extends Element>(
  ** layout complete to ensure the TableBody has updated for tests involving scrolling.
  */
 export async function tableLayoutComplete(table: Table): Promise<void> {
-    const body = table.querySelector(
-        'sp-table-body'
-    ) as unknown as TableBody & {
-        [virtualizerRef]: Virtualizer;
-    };
-    await body[virtualizerRef].layoutComplete;
+    const body = table.querySelector('sp-table-body') as unknown as TableBody &
+        VirtualizerHostElement;
+    await body[virtualizerRef]?.layoutComplete;
 }

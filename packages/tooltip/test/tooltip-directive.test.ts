@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import {
     elementUpdated,
     expect,
@@ -18,17 +17,17 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/button/sp-button.js';
-import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
-import { sendKeys } from '@web/test-runner-commands';
 import { render, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/button/sp-button.js';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
+import { sendTabKey } from '../../../test/testing-helpers';
 
 describe('Tooltip Directive', () => {
-    const renderTooltip = (): TemplateResult =>
-        html`
-            Tip me!
-        `;
+    const renderTooltip = (): TemplateResult => html`
+        Tip me!
+    `;
     function renderButton(
         ...directiveParams: Parameters<typeof tooltip>
     ): TemplateResult {
@@ -50,9 +49,7 @@ describe('Tooltip Directive', () => {
 
             const opened = oneEvent(this.el, 'sp-opened');
             input.focus();
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             expect(document.activeElement === this.el).to.be.true;
             expect(this.el.matches(':focus-visible')).to.be.true;
             await opened;

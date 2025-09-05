@@ -106,11 +106,9 @@ describe('Iconset', () => {
             })
         );
 
-        const el = await fixture<Icon>(
-            html`
-                <sp-icon name="ui:Chevron200"></sp-icon>
-            `
-        );
+        const el = await fixture<Icon>(html`
+            <sp-icon name="ui:Chevron200"></sp-icon>
+        `);
 
         let svg = el.shadowRoot
             ? el.shadowRoot.querySelector('[role="img"]')
@@ -130,14 +128,12 @@ describe('Iconset', () => {
     });
 
     it('can be after `<sp-icon/>` in the DOM order', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-icon name="ui:Chevron200"></sp-icon>
-                    <sp-icons-medium></sp-icons-medium>
-                </div>
-            `
-        );
+        const el = await fixture<HTMLDivElement>(html`
+            <div>
+                <sp-icon name="ui:Chevron200"></sp-icon>
+                <sp-icons-medium></sp-icons-medium>
+            </div>
+        `);
 
         const icon = el.querySelector('sp-icon') as Icon;
         const iconSet = el.querySelector('sp-icons-medium') as IconsMedium;

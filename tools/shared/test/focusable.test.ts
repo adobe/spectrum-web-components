@@ -18,11 +18,9 @@ describe('Focusable', () => {
     it('enforces the presense of a `focusElement`', async () => {
         customElements.define('focusable-test', class extends Focusable {});
         try {
-            const el = await fixture<Focusable>(
-                html`
-                    <focusable-test></focusable-test>
-                `
-            );
+            const el = await fixture<Focusable>(html`
+                <focusable-test></focusable-test>
+            `);
             await elementUpdated(el);
             const focusEl = el.focusElement;
             expect(focusEl).to.exist;

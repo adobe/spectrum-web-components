@@ -10,14 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { html } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
-import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import { sendShiftTabKey, sendTabKey } from '../../../test/testing-helpers';
 
 describe('Accordion - keyboard', () => {
     it('does not accept keyboard events when items are not present', async () => {
@@ -37,11 +38,7 @@ describe('Accordion - keyboard', () => {
         el.focus();
         item.remove();
         await elementUpdated(el);
-        el.dispatchEvent(
-            new KeyboardEvent('keydown', {
-                code: 'ArrowDown',
-            })
-        );
+        await sendKeys({ press: 'ArrowDown' });
 
         expect(errorSpy.callCount).to.equal(0);
     });
@@ -80,11 +77,6 @@ describe('Accordion - keyboard', () => {
         const fourthItem = el.querySelector(
             'sp-accordion-item:nth-of-type(4)'
         ) as AccordionItem;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(
-            navigator.userAgent
-        );
-        const tab = isSafari ? 'Alt+Tab' : 'Tab';
-        const shiftTab = isSafari ? 'Alt+Shift+Tab' : 'Shift+Tab';
 
         el.focus();
 
@@ -94,24 +86,16 @@ describe('Accordion - keyboard', () => {
             document.activeElement?.localName
         ).to.be.true;
 
-        await sendKeys({
-            press: tab,
-        });
+        await sendTabKey();
 
         expect(document.activeElement === thirdItem).to.be.true;
 
-        await sendKeys({
-            press: tab,
-        });
+        await sendTabKey();
 
         expect(document.activeElement === fourthItem).to.be.true;
 
-        await sendKeys({
-            press: shiftTab,
-        });
-        await sendKeys({
-            press: shiftTab,
-        });
+        await sendShiftTabKey();
+        await sendShiftTabKey();
 
         expect(document.activeElement === secondItem).to.be.true;
 
@@ -120,9 +104,7 @@ describe('Accordion - keyboard', () => {
         el.focus();
         expect(document.activeElement === secondItem).to.be.true;
 
-        await sendKeys({
-            press: shiftTab,
-        });
+        await sendShiftTabKey();
         await elementUpdated(el);
 
         const outsideFocused = document.activeElement as HTMLElement;
@@ -152,9 +134,7 @@ describe('Accordion Item - keyboard', () => {
         expect(open).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
 
@@ -164,9 +144,7 @@ describe('Accordion Item - keyboard', () => {
         await elementUpdated(el);
 
         el.focus();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
 
@@ -191,9 +169,7 @@ describe('Accordion Item - keyboard', () => {
         expect(open).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         await elementUpdated(el);
 
@@ -203,9 +179,7 @@ describe('Accordion Item - keyboard', () => {
         await elementUpdated(el);
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         await elementUpdated(el);
 
@@ -234,9 +208,7 @@ describe('Accordion Item - keyboard', () => {
         expect(closed).to.be.false;
 
         button.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         await elementUpdated(el);
 
@@ -244,9 +216,7 @@ describe('Accordion Item - keyboard', () => {
 
         await elementUpdated(el);
 
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
 

@@ -66,9 +66,7 @@ describe('ContextualHelp', () => {
         expect(heading).to.equal('Permission required');
 
         const closed = oneEvent(el, 'sp-closed');
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
         await closed;
         await nextFrame();
         await nextFrame();

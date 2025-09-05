@@ -10,9 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { chromium } from './web-test-runner.utils.js';
 import standard from './web-test-runner.config.ci.js';
+import { chromium } from './web-test-runner.utils.js';
 
-standard.browsers = [chromium];
-
-export default standard;
+export default {
+    ...standard,
+    browsers: [chromium],
+    concurrency: 1,
+};

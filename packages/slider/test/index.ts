@@ -156,25 +156,20 @@ export const testEditableSlider = (type: string): void => {
                 ],
             }));
             const toLeft: Steps = toRight.slice(0, -1).reverse();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    ...toRight,
-                    ...toLeft,
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [handle],
+                },
+                {
+                    type: 'down',
+                },
+                ...toRight,
+                ...toLeft,
+                {
+                    type: 'up',
+                },
+            ]);
             shouldCountFrames = false;
             await elementUpdated(el);
             await nextFrame();
@@ -397,21 +392,14 @@ export const testEditableSlider = (type: string): void => {
             const rect = handle.getBoundingClientRect();
 
             // click handle once
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rect.left + rect.width / 2,
-                            rect.top + rect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    { type: 'up' },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [handle],
+                },
+                { type: 'down' },
+                { type: 'up' },
+            ]);
 
             await elementUpdated(el);
 
@@ -419,21 +407,17 @@ export const testEditableSlider = (type: string): void => {
             expect(inputSpy.callCount, 'no input').to.equal(0);
 
             // move to and click track once
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            rect.left - rect.width,
-                            rect.top + rect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    { type: 'up' },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [
+                        rect.left - rect.width,
+                        rect.top + rect.height / 2,
+                    ],
+                },
+                { type: 'down' },
+                { type: 'up' },
+            ]);
 
             await elementUpdated(el);
 

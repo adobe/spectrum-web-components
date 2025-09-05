@@ -34,6 +34,7 @@ Use these syntax rules when writing GitHub descriptions:
 ## Description structure
 
 - Present title, labels, and type before description content
+- Description format and structure should follow the pull request template in the Templates section below
 - Include links to related issues, RFCs, or documentation when applicable
 - All descriptions must include clear acceptance criteria or expected outcomes
 - Provide enough context so anyone can understand the objective

@@ -56,7 +56,7 @@ try {
  * implementation that coordinates with the :focus-visible polyfill
  */
 export const FocusVisiblePolyfillMixin = <
-    T extends Constructor<MixableBaseClass>
+    T extends Constructor<MixableBaseClass>,
 >(
     SuperClass: T
 ): T => {
