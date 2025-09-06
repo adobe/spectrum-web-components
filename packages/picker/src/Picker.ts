@@ -237,8 +237,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.toggle();
     }
 
-    public handleButtonBlur(): void {
-        this.focused = false;
+    public handleButtonBlur(event?: FocusEvent): void {
+        // Only set focused to false if focus is moving outside the picker entirely
+        // If focus is moving to a menu item within the picker, keep focused true
+        if (
+            !event ||
+            !event.relatedTarget ||
+            !this.contains(event.relatedTarget as Node)
+        ) {
+            this.focused = false;
+        }
     }
 
     public override focus(options?: FocusOptions): void {
@@ -586,8 +594,10 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 id="button"
                 class=${ifDefined(
                     this.labelAlignment
-                        ? `label-${this.labelAlignment}`
-                        : undefined
+                        ? `label-${this.labelAlignment} ${this.focused ? 'focus-visible is-keyboardFocused' : ''}`
+                        : this.focused
+                          ? 'focus-visible is-keyboardFocused'
+                          : undefined
                 )}
                 @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
@@ -916,6 +926,11 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
         this.recentlyConnected = this.hasUpdated;
         this.addEventListener('focus', this.handleFocus);
+
+        // Add sp-closed listener to set focused to false when picker closes
+        this.addEventListener('sp-closed', () => {
+            this.focused = false;
+        });
     }
 
     public override disconnectedCallback(): void {
