@@ -10,17 +10,23 @@
  * governing permissions and limitations under the License.
  */
 
-@import url("./spectrum-field-group.css");
-@import url("./field-group-overrides.css");
+:host,
+.group {
+    --spectrum-field-group-spacing: var(--mod-field-group-spacing, var(--spectrum-spacing-300));
 
-:host([horizontal][dir="rtl"]) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir="rtl"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 0 0 var(--spectrum-fieldgroup-margin);
+    flex-flow: column wrap;
+    display: flex;
+    flex-direction: column;
 }
 
-:host([horizontal][dir="ltr"]) slot:not([name])::slotted(*:not(:last-child)),
-:host([dir="ltr"]:not([vertical])) slot:not([name])::slotted(*:not(:last-child)) {
-    /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
-    margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
+:host(:not([vertical])) .group {
+    flex-direction: row;
+}
+
+:host(:not([vertical])) .group + .help-text {
+    flex-basis: 100%;
+}
+
+:host(:not([vertical])) .group {
+    gap: var(--spectrum-field-group-spacing);
 }

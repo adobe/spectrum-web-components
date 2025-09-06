@@ -291,8 +291,6 @@
     --system-divider-background-color-static-white: var(--spectrum-transparent-white-200);
     --system-divider-background-color-static-black: var(--spectrum-transparent-black-200);
     --system-drop-zone-border-color: var(--spectrum-gray-200);
-    --system-field-group-margin: var(--spectrum-spacing-300);
-    --system-field-group-readonly-delimiter: ",";
     --system-infield-button-border-width: var(--spectrum-border-width-100);
     --system-infield-button-border-color: inherit;
     --system-infield-button-border-radius: var(--spectrum-corner-radius-100);
