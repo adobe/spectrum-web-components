@@ -52,6 +52,9 @@
     "devDependencies": {
         "@axe-core/playwright": "^4.10.2",
         "@custom-elements-manifest/analyzer": "^0.10.5",
+        "@storybook/addon-a11y": "9.1.3",
+        "@storybook/addon-designs": "10.0.2",
+        "@storybook/addon-docs": "9.1.3",
         "@storybook/test-runner": "^0.23.0",
         "@storybook/web-components-vite": "9.1.3",
         "@types/react": "^19",

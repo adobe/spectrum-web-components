@@ -139,7 +139,7 @@ export const Indeterminate: Story = {
 export const StaticWhite: Story = {
     render: () => html`
         <div
-            style="background-color: rgba(0,0,0,0.4); padding: 24px; display: flex; gap: 24px; align-items: center;"
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
         >
             <swc-progress-circle
                 .progress=${60}
@@ -156,6 +156,33 @@ export const StaticWhite: Story = {
             <swc-progress-circle
                 .progress=${60}
                 static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+};
+
+export const StaticBlack: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="s"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="m"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
                 size="l"
                 label="Loading on dark background"
             ></swc-progress-circle>
@@ -187,11 +214,5 @@ export const IndeterminateStaticWhite: Story = {
                 label="Loading on dark background"
             ></swc-progress-circle>
         </div>
-    `,
-};
-
-export const WithSlottedContent: Story = {
-    render: () => html`
-        <swc-progress-circle .progress=${45}> Loading... </swc-progress-circle>
     `,
 };

@@ -7,6 +7,11 @@ const config = {
     core: {
         disableTelemetry: true,
     },
+    addons: [
+        '@storybook/addon-docs',
+        '@storybook/addon-a11y',
+        '@storybook/addon-designs',
+    ],
     viteFinal: async (config) => {
         config.resolve = config.resolve || {};
         config.resolve.alias = {

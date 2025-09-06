@@ -11,12 +11,18 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { ProgressCircleBase } from '@swc/core/components/progress-circle';
 
 import progressCircleStyles from './progress-circle.css';
 
+function capitalize(str?: string): string {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
 /**
  * A progress circle component that visually represents the completion progress of a task.
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
@@ -25,12 +31,7 @@ import progressCircleStyles from './progress-circle.css';
  * @since 2.0.0
  * @status stable
  * @github https://github.com/adobe/spectrum-web-components/tree/main/second-gen/packages/swc/components/progress-circle
- * @figma https://spectrum.figma.com/file/progress-circle
- *
- * @slot - Optional content to display inside the progress circle (e.g., percentage text)
- *
- * @csspart track - The background track of the progress circle
- * @csspart fill - The filled portion of the progress circle
+ * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=13061-181
  *
  * @fires progress-change - Dispatched when the progress value changes
  *
@@ -46,29 +47,51 @@ export class ProgressCircle extends ProgressCircleBase {
     }
 
     protected override render(): TemplateResult {
-        const styles = [
-            this.makeRotation(-180 + (180 / 50) * Math.min(this.progress, 50)),
-            this.makeRotation(
-                -180 + (180 / 50) * Math.max(this.progress - 50, 0)
-            ),
-        ];
-        const masks = ['Mask1', 'Mask2'];
+        // SVG strokes are centered, so subtract half the stroke width from the radius to create an inner stroke.
+        const radius = `calc(50% - ${this.strokeWidth / 2}px)`;
+
         return html`
-            <slot @slotchange=${this.handleSlotchange}></slot>
-            <div class="track"></div>
-            <div class="fills">
-                ${masks.map(
-                    (mask, index) => html`
-                        <div class="fill${mask}">
-                            <div
-                                class="fillSub${mask}"
-                                style=${ifDefined(styles[index])}
-                            >
-                                <div class="fill"></div>
-                            </div>
-                        </div>
-                    `
-                )}
+            <div
+                class=${classMap({
+                    ['spectrum-ProgressCircle']: true,
+                    [`spectrum-ProgressCircle--indeterminate`]:
+                        this.indeterminate,
+                    [`spectrum-ProgressCircle--static${capitalize(this.staticColor)}`]:
+                        typeof this.staticColor !== 'undefined',
+                    [`spectrum-ProgressCircle--size${this.size?.toUpperCase()}`]:
+                        typeof this.size !== 'undefined',
+                })}
+            >
+                <svg
+                    fill="none"
+                    width="100%"
+                    height="100%"
+                    class="spectrum-outerCircle"
+                >
+                    <circle
+                        class="spectrum-innerCircle"
+                        cx="50%"
+                        cy="50%"
+                        r=${`calc(50% - ${this.strokeWidth / 1}px)`}
+                        stroke-width=${this.strokeWidth}
+                    />
+                    <circle
+                        cx="50%"
+                        cy="50%"
+                        class="spectrum-ProgressCircle-track"
+                        r=${radius}
+                    />
+                    <circle
+                        cx="50%"
+                        cy="50%"
+                        r=${radius}
+                        class="spectrum-ProgressCircle-fill"
+                        pathLength="100"
+                        stroke-dasharray="100 200"
+                        stroke-dashoffset=${100 - this.progress}
+                        stroke-linecap="round"
+                    />
+                </svg>
             </div>
         `;
     }

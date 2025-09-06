@@ -5,7 +5,6 @@ import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
 import '../tokens/global-vars.css';
 
-import { html } from 'lit';
 import { setCustomElementsManifest } from '@storybook/web-components';
 import customElements from './custom-elements.json';
 
@@ -14,6 +13,7 @@ setCustomElementsManifest(customElements);
 
 const preview = {
     parameters: {
+        layout: 'centered',
         controls: {
             expanded: true,
             matchers: {
@@ -29,6 +29,7 @@ const preview = {
             },
         },
     },
+    tags: ['autodocs'],
 };
 
 export default preview;
