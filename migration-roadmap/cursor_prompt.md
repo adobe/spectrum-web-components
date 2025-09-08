@@ -2,6 +2,8 @@
 
 For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files within the `migration-roadmap/` directory of the spectrum-web-components repository, following this exact structure:
 
+**IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
+
 ## File Organization
 
 - **One markdown file per component**
@@ -149,10 +151,15 @@ Create a three-way HTML comparison using markdown code blocks. Use collapsible s
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
 ```diff
-<!-- Show only the differences between main and spectrum-two branches using diff format -->
-<!-- Use - for removed elements, + for added elements, no prefix for unchanged elements -->
-<!-- Only include this section if there are actual differences between the branches -->
+--- a/components/[component-name]/stories/template.js (main branch)
++++ b/components/[component-name]/stories/template.js (spectrum-two branch)
+@@ -1,3 +1,3 @@
+-// removed line
++// added line
+ // unchanged line
 ```
+
+**Note**: Only include this diff section if there are actual differences between the main and spectrum-two branches. If the templates are identical, omit this section entirely.
 
 </details>
 ````
