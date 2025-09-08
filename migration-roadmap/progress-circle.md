@@ -1,6 +1,8 @@
 # Progress Circle migration roadmap
 
-## CSS selectors
+## Component specifications
+
+### CSS
 
 <details>
 <summary>CSS selectors</summary>
@@ -18,38 +20,12 @@
 
 </details>
 
-## Passthroughs
-
 <details>
 <summary>Passthroughs</summary>
 
-No passthroughs found for this component.
+None found for this component.
 
 </details>
-
-## Attributes
-
-<details>
-<summary>Attributes</summary>
-
-- `indeterminate` - Boolean attribute for indeterminate state
-- `label` - String attribute for accessibility label
-- `static-color` - String attribute for static color variants (white)
-- `progress` - Number attribute for progress value (0-100)
-- `size` - String attribute for size variants (s, m, l)
-
-</details>
-
-## Slots
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - Optional content for accessibility labeling
-
-</details>
-
-## Modifiers
 
 <details>
 <summary>Modifiers</summary>
@@ -62,7 +38,29 @@ No passthroughs found for this component.
 
 </details>
 
-## Visual Comparison
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `size` (s, m, l)
+- `indeterminate` (boolean)
+- `label` (string)
+- `static-color` (white)
+- `progress` (number)
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot (for label content, sets the aria label)
+
+</details>
+
+## Comparison
+
+### Visual comparison
 
 **Legacy Component:**
 
@@ -72,13 +70,40 @@ No passthroughs found for this component.
 
 <!-- Screenshot of Spectrum 2 component will be added here -->
 
-## DOM Structure Changes
+### DOM structure changes
 
-**Legacy (main branch):**
+<details>
+<summary>Spectrum Web Components:</summary>
+
+```html
+<sp-progress-circle role="progressbar" aria-valuenow="50">
+    <slot></slot>
+    <div class="track"></div>
+    <div class="fills">
+        <div class="fillMask1">
+            <div class="fillSubMask1" style="transform: rotate(0deg);">
+                <div class="fill"></div>
+            </div>
+        </div>
+        <div class="fillMask2">
+            <div class="fillSubMask2" style="transform: rotate(0deg);">
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+</sp-progress-circle>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
 ```html
 <div
-    class="spectrum-ProgressCircle spectrum-ProgressCircle--medium spectrum-ProgressCircle--indeterminate"
+    class="spectrum-ProgressCircle spectrum-ProgressCircle--medium"
+    id="progress-circle-123"
+    data-testid="test-id"
 >
     <div class="spectrum-ProgressCircle-track"></div>
     <div class="spectrum-ProgressCircle-fills">
@@ -96,16 +121,23 @@ No passthroughs found for this component.
 </div>
 ```
 
-**Spectrum 2 (spectrum-two branch):**
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
-<div class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate">
+<div
+    class="spectrum-ProgressCircle"
+    id="progress-circle-123"
+    data-testid="test-id"
+>
     <svg fill="none" width="100%" height="100%" class="spectrum-outerCircle">
         <circle
             class="spectrum-innerCircle"
             cx="50%"
             cy="50%"
-            r="calc(50% - 1px)"
+            r="calc(50% - 3px)"
             stroke-width="2"
         />
         <circle
@@ -121,93 +153,90 @@ No passthroughs found for this component.
             class="spectrum-ProgressCircle-fill"
             pathLength="100"
             stroke-dasharray="100 200"
-            stroke-dashoffset="0"
+            stroke-dashoffset="50"
             stroke-linecap="round"
         />
     </svg>
 </div>
 ```
 
-## Comparison
+</details>
 
-| CSS selector                                                                                  | Attribute or slot         | Status          |
-| --------------------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-ProgressCircle`                                                                    | Base component            | Implemented     |
-| `.spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fill`                       | `indeterminate` attribute | Implemented     |
-| `.spectrum-ProgressCircle--sizeL`                                                             | `size="l"`                | Implemented     |
-| `.spectrum-ProgressCircle--sizeS`                                                             | `size="s"`                | Implemented     |
-| `.spectrum-ProgressCircle-fill`                                                               | Progress fill element     | Implemented     |
-| `.spectrum-ProgressCircle-track`                                                              | Track element             | Implemented     |
-| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color` attribute  | Missing from WC |
-| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite`                               | `static-color="white"`    | Implemented     |
-| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-innerCircle` | Non-indeterminate state   | Implemented     |
-| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-outerCircle` | Non-indeterminate state   | Implemented     |
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-## Key Structural Changes
+```diff
+<div
+    class="spectrum-ProgressCircle"
+-   class="spectrum-ProgressCircle spectrum-ProgressCircle--medium"
+    id="progress-circle-123"
+    data-testid="test-id"
+>
+-   <div class="spectrum-ProgressCircle-track"></div>
+-   <div class="spectrum-ProgressCircle-fills">
+-       <div class="spectrum-ProgressCircle-fillMask1">
+-           <div class="spectrum-ProgressCircle-fillSubMask1">
+-               <div class="spectrum-ProgressCircle-fill"></div>
+-           </div>
+-       </div>
+-       <div class="spectrum-ProgressCircle-fillMask2">
+-           <div class="spectrum-ProgressCircle-fillSubMask2">
+-               <div class="spectrum-ProgressCircle-fill"></div>
+-           </div>
+-       </div>
+-   </div>
++   <svg fill="none" width="100%" height="100%" class="spectrum-outerCircle">
++       <circle class="spectrum-innerCircle" cx="50%" cy="50%" r="calc(50% - 3px)" stroke-width="2" />
++       <circle
++           cx="50%"
++           cy="50%"
++           class="spectrum-ProgressCircle-track"
++           r="calc(50% - 1.5px)"
++       />
++       <circle
++           cx="50%"
++           cy="50%"
++           r="calc(50% - 1.5px)"
++           class="spectrum-ProgressCircle-fill"
++           pathLength="100"
++           stroke-dasharray="100 200"
++           stroke-dashoffset="50"
++           stroke-linecap="round"
++       />
++   </svg>
+</div>
+```
 
-**Element Hierarchy Changes:**
+</details>
 
-- **Major restructuring**: Legacy uses complex nested div structure with masks and submasks
-- **Spectrum 2**: Simplified to SVG-based approach with circles for track and fill
-- **Removed complexity**: Eliminated the complex mask/submask system in favor of SVG stroke-dasharray
+### CSS => SWC mapping
 
-**Class Name Changes:**
+| CSS selector                                                                                  | Attribute or slot          | Status           |
+| --------------------------------------------------------------------------------------------- | -------------------------- | ---------------- |
+| `.spectrum-ProgressCircle--sizeS`                                                             | `size="s"`                 | Implemented      |
+| `.spectrum-ProgressCircle--sizeL`                                                             | `size="l"`                 | Implemented      |
+| `.spectrum-ProgressCircle--indeterminate`                                                     | `indeterminate`            | Implemented      |
+| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color="black"`     | Missing from WC  |
+| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite`                               | `static-color="white"`     | Implemented      |
+| `.spectrum-ProgressCircle`                                                                    | Base component             | Implemented      |
+| `.spectrum-ProgressCircle-fill`                                                               | Internal fill element      | Implemented      |
+| `.spectrum-ProgressCircle-track`                                                              | Internal track element     | Implemented      |
+| `.spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fill`                       | Indeterminate fill styling | Implemented      |
+| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-innerCircle` | Determinate inner circle   | Missing from CSS |
+| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-outerCircle` | Determinate outer circle   | Missing from CSS |
+|                                                                                               | `label`                    | Missing from CSS |
+|                                                                                               | `progress`                 | Missing from CSS |
+|                                                                                               | Default slot               | Missing from CSS |
 
-- **Size classes**: Legacy uses `--small`, `--medium`, `--large` while Spectrum 2 uses `--sizeS`, `--sizeM`, `--sizeL`
-- **Static color**: Legacy supports both `--staticBlack` and `--staticWhite`, Spectrum 2 only supports `--staticWhite`
-- **Simplified structure**: Removed complex fill mask classes in favor of SVG-based approach
+## Summary of changes
 
-**Attribute Changes:**
+The progress circle component has significant differences between CSS and web component implementations:
 
-- **No new required attributes**
-- **No removed attributes**
-- **Size values**: Legacy uses `small/medium/large`, Spectrum 2 uses `s/m/l`
+- **Rendering approach**: Complete shift from div-based CSS masks to SVG-based rendering - **this will require changes to SWC's render method** and will also potentially affect how `progress` is applied to calculate inline styles
+- **Label attribute**: Web component supports a `label` attribute for accessibility that is not present in CSS
 
-**Slot/Content Changes:**
+## Resources
 
-- **No changes in slot usage**
-- **Content structure**: Completely different internal implementation approach
-
-**Migration Impact:**
-
-- **Breaking changes**: Complete restructuring of internal DOM elements
-- **Visual consistency**: Maintained through CSS styling but different underlying structure
-- **Accessibility**: Preserved through maintained attributes and ARIA support
-
-## Implementation Gaps Analysis
-
-### CSS Features Missing from Web Component
-
-- **Static black variant**: CSS supports `--staticBlack` but web component only supports `--staticWhite`
-- **Complex mask system**: Legacy CSS has sophisticated mask/submask system that's not replicated in web component
-- **Theme imports**: Legacy includes multiple theme imports that may affect styling
-
-### Web Component Features Missing from CSS
-
-- **SVG-based rendering**: Web component uses modern SVG approach not present in legacy CSS
-- **Simplified structure**: Web component eliminates complex mask system in favor of cleaner SVG implementation
-
-### Features Being Deprecated/Removed
-
-- **Complex mask system**: The intricate fillMask1/fillMask2/fillSubMask1/fillSubMask2 structure is removed
-- **Theme-specific imports**: Legacy theme imports are simplified in Spectrum 2
-- **Static black variant**: No longer supported in Spectrum 2
-
-## Action Items for Web Component Maintainers
-
-**Required Additions:**
-
-- Implement `static-color="black"` variant to match legacy `--staticBlack` support
-- Ensure SVG-based rendering maintains visual parity with legacy mask-based approach
-- Consider exposing mask-related custom properties for advanced customization
-
-**Required Removals:**
-
-- No specific removals required - the web component already simplifies the complex legacy structure
-
-**Breaking Changes:**
-
-- **Major structural changes**: Complete rewrite of internal DOM structure from div-based masks to SVG-based circles
-- **Size class changes**: Migration from `small/medium/large` to `s/m/l` values
-- **Static color limitation**: Loss of `staticBlack` variant support
-- **Template updates required**: Consumers will need to update any code that relies on the specific legacy DOM structure
+- [CSS migration](https://github.com/adobe/spectrum-css/commit/0c52c4820a3c5fb0881f23c6144fb0d0bd9a35cf)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-progress-circle--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/progresscircle--docs)
