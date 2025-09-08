@@ -1,6 +1,8 @@
 # Divider migration roadmap
 
-## CSS selectors
+## Component specifications
+
+### CSS
 
 <details>
 <summary>CSS selectors</summary>
@@ -17,36 +19,12 @@
 
 </details>
 
-## Passthroughs
-
 <details>
 <summary>Passthroughs</summary>
 
-No passthroughs found for this component.
+None found for this component.
 
 </details>
-
-## Attributes
-
-<details>
-<summary>Attributes</summary>
-
-- `vertical` - Boolean attribute for vertical orientation
-- `static-color` - String attribute for static color variants (white, black)
-- `size` - String attribute for size variants (s, m, l)
-
-</details>
-
-## Slots
-
-<details>
-<summary>Slots</summary>
-
-No slots found for this component.
-
-</details>
-
-## Modifiers
 
 <details>
 <summary>Modifiers</summary>
@@ -61,7 +39,27 @@ No slots found for this component.
 
 </details>
 
-## Visual Comparison
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `size` (s, m, l)
+- `vertical` (boolean)
+- `static-color` (white, black)
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+None found for this component.
+
+</details>
+
+## Comparison
+
+### Visual comparison
 
 **Legacy Component:**
 
@@ -71,103 +69,87 @@ No slots found for this component.
 
 <!-- Screenshot of Spectrum 2 component will be added here -->
 
-## DOM Structure Changes
+### DOM structure changes
 
-**Legacy (main branch):**
+<details>
+<summary>Spectrum Web Components:</summary>
+
+```html
+<sp-divider role="separator" aria-orientation="vertical"></sp-divider>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
 ```html
 <hr
-    class="spectrum-Divider spectrum-Divider--sizeM spectrum-Divider--vertical"
+    class="spectrum-Divider spectrum-Divider--sizeM"
+    style="min-inline-size: 200px;"
     role="separator"
-    style="min-block-size: 20px;"
 />
 ```
 
-**Spectrum 2 (spectrum-two branch):**
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
 <hr
-    class="spectrum-Divider spectrum-Divider--sizeM spectrum-Divider--vertical"
+    class="spectrum-Divider spectrum-Divider--sizeM"
+    style=""
     role="separator"
 />
 ```
 
-## Comparison
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+<hr
+    class="spectrum-Divider spectrum-Divider--sizeM"
+-   style="min-inline-size: 200px;"
++   style=""
+    role="separator"
+/>
+```
+
+</details>
+
+### CSS => SWC mapping
 
 | CSS selector                                                          | Attribute or slot                   | Status      |
 | --------------------------------------------------------------------- | ----------------------------------- | ----------- |
-| `.spectrum-Divider`                                                   | Base component                      | Implemented |
-| `.spectrum-Divider--sizeL`                                            | `size="l"`                          | Implemented |
 | `.spectrum-Divider--sizeS`                                            | `size="s"`                          | Implemented |
+| `.spectrum-Divider--sizeL`                                            | `size="l"`                          | Implemented |
+| `.spectrum-Divider--vertical`                                         | `vertical`                          | Implemented |
 | `.spectrum-Divider--staticBlack`                                      | `static-color="black"`              | Implemented |
-| `.spectrum-Divider--staticBlack.spectrum-Divider--sizeL`              | `static-color="black"` + `size="l"` | Implemented |
 | `.spectrum-Divider--staticWhite`                                      | `static-color="white"`              | Implemented |
+| `.spectrum-Divider`                                                   | Base component                      | Implemented |
+| `.spectrum-Divider:not(.spectrum-Divider.spectrum-Divider--vertical)` | Default horizontal orientation      | Implemented |
+| `.spectrum-Divider--staticBlack.spectrum-Divider--sizeL`              | `static-color="black"` + `size="l"` | Implemented |
 | `.spectrum-Divider--staticWhite.spectrum-Divider--sizeL`              | `static-color="white"` + `size="l"` | Implemented |
-| `.spectrum-Divider--vertical`                                         | `vertical` attribute                | Implemented |
-| `.spectrum-Divider:not(.spectrum-Divider.spectrum-Divider--vertical)` | Non-vertical state                  | Implemented |
 
-## Key Structural Changes
+## Summary of changes
 
-**Element Hierarchy Changes:**
+### CSS => SWC changes
 
-- No significant changes in nesting depth or parent-child relationships
-- Both versions maintain the same basic structure with `<hr>` or `<div>` elements
+All CSS selectors have corresponding web component attributes. The mapping is complete with no missing features:
 
-**Class Name Changes:**
+- **Size variants** (`--sizeS`, `--sizeL`) map to the `size` attribute with values "s" and "l", with "m"/medium being the default size in CSS
+- **Vertical orientation** (`--vertical`) maps to the `vertical` boolean attribute
+- **Static color variants** (`--staticBlack`, `--staticWhite`) map to the `static-color` attribute with values "black" and "white"
 
-- **Size classes**: Both versions use the same `--sizeS`, `--sizeM`, `--sizeL` pattern
-- **Static color classes**: Both versions use the same `--staticBlack` and `--staticWhite` pattern
-- **Vertical orientation**: Both versions use the same `--vertical` class
+### CSS DOM structure changes
 
-**Attribute Changes:**
+The main difference between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches is the removal of minimum dimension styling. Horizontal divider's minimum width and vertical divider's minimum height are now controlled by tokens.
 
-- **No new required attributes**
-- **No removed attributes**
-- **Size values**: Both versions use `s`, `m`, `l` consistently
+## Resources
 
-**Slot/Content Changes:**
-
-- **No slots**: This component doesn't use slots
-- **Content structure**: Both versions are self-closing elements with no content
-
-**Migration Impact:**
-
-- **Minimal breaking changes**: The component maintains backward compatibility
-- **Main difference**: Legacy includes additional theme imports and min-dimension styling
-- **Web component implementation**: Already well-aligned with CSS structure
-
-## Implementation Gaps Analysis
-
-### CSS Features Missing from Web Component
-
-- **Theme imports**: Legacy includes multiple theme imports (`spectrum.css`, `express.css`) that may affect styling
-- **Min-dimension styling**: Legacy includes `min-inline-size` and `min-block-size` styling that's not present in Spectrum 2
-- **System theme support**: Legacy includes system theme custom properties that may not be fully utilized
-
-### Web Component Features Missing from CSS
-
-- **No significant gaps identified**: The web component implementation covers most CSS capabilities
-- **Accessibility features**: Web component includes ARIA attributes and role management
-
-### Features Being Deprecated/Removed
-
-- **Theme-specific imports**: Legacy theme imports are simplified in Spectrum 2
-- **Min-dimension styling**: The explicit min-dimension styling is removed in favor of CSS-based sizing
-
-## Action Items for Web Component Maintainers
-
-**Required Additions:**
-
-- Ensure theme imports are properly handled in web component CSS
-- Consider implementing min-dimension styling if needed for layout consistency
-- Verify system theme support is properly implemented
-
-**Required Removals:**
-
-- No specific removals required - the web component already simplifies the legacy structure
-
-**Breaking Changes:**
-
-- **No breaking changes identified**: The component maintains backward compatibility
-- **Styling differences**: Some legacy styling approaches are simplified in Spectrum 2
-- **Migration guidance**: Consumers may need to adjust any custom styling that relied on legacy theme imports
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3557)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-divider--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/divider--docs)
