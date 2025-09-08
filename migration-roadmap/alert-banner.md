@@ -266,12 +266,13 @@
 
 ### CSS => SWC changes
 
-Based on the CSS => SWC mapping table above, all CSS selectors have corresponding web component implementations:
+**No missing features.** All CSS selectors have corresponding web component implementations:
 
-- **All variants implemented**: CSS variants (`--info`, `--negative`) map to web component `variant` attribute
-- **State management**: CSS `.is-open` class maps to web component `open` attribute
-- **Content structure**: CSS text and icon selectors map to web component slots and programmatic icon rendering
-- **Dismissible functionality**: CSS close button presence maps to web component `dismissible` attribute
+- **Variants**: `--info` → `variant="info"`, `--negative` → `variant="negative"`
+- **State**: `.is-open` → `open` attribute
+- **Content**: Text and icon selectors → default slot and programmatic icon rendering
+- **Dismissible**: Close button presence → `dismissible` attribute
+- **Action slot**: Available in SWC but not in CSS templates
 
 ### CSS DOM structure changes
 

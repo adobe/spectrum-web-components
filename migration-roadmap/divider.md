@@ -138,11 +138,11 @@ None found for this component.
 
 ### CSS => SWC changes
 
-All CSS selectors have corresponding web component attributes. The mapping is complete with no missing features:
+**No missing features.** All CSS selectors have corresponding web component attributes:
 
-- **Size variants** (`--sizeS`, `--sizeL`) map to the `size` attribute with values "s" and "l", with "m"/medium being the default size in CSS
-- **Vertical orientation** (`--vertical`) maps to the `vertical` boolean attribute
-- **Static color variants** (`--staticBlack`, `--staticWhite`) map to the `static-color` attribute with values "black" and "white"
+- **Size variants**: `--sizeS` → `size="s"`, `--sizeL` → `size="l"` (medium is default)
+- **Orientation**: `--vertical` → `vertical` boolean attribute
+- **Static colors**: `--staticBlack` → `static-color="black"`, `--staticWhite` → `static-color="white"`
 
 ### CSS DOM structure changes
 
