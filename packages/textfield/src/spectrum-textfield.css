@@ -15,7 +15,7 @@
     --spectrum-texfield-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-textfield-width: 240px;
     --spectrum-textfield-min-width: var(--spectrum-text-field-minimum-width-multiplier);
-    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-100);
+    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-medium);
     --spectrum-textfield-spacing-inline-quiet: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-textfield-spacing-block-start: var(--spectrum-component-top-to-text-100);
     --spectrum-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-100);
@@ -68,6 +68,7 @@
     --spectrum-textfield-character-count-spacing-block-quiet: var(--spectrum-character-count-to-field-quiet-medium);
     --spectrum-textfield-character-count-spacing-block-side: var(--spectrum-side-label-character-count-top-margin-medium);
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-100);
+    --spectrum-textfield-border-width-default: var(--spectrum-border-width-200);
 }
 
 :host([size="s"]) #textfield {
@@ -88,6 +89,9 @@
     --spectrum-textfield-character-count-spacing-block-quiet: var(--spectrum-character-count-to-field-quiet-small);
     --spectrum-textfield-character-count-spacing-block-side: var(--spectrum-side-label-character-count-top-margin-small);
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-75);
+    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-small);
+    --spectrum-textfield-spacing-block-start: var(--spectrum-component-top-to-text-75);
+    --spectrum-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-75);
 }
 
 :host([size="l"]) #textfield {
@@ -108,6 +112,9 @@
     --spectrum-textfield-character-count-spacing-block-quiet: var(--spectrum-character-count-to-field-quiet-large);
     --spectrum-textfield-character-count-spacing-block-side: var(--spectrum-side-label-character-count-top-margin-large);
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-200);
+    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-large);
+    --spectrum-textfield-spacing-block-start: var(--spectrum-component-top-to-text-200);
+    --spectrum-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-200);
 }
 
 :host([size="xl"]) #textfield {
@@ -128,6 +135,9 @@
     --spectrum-textfield-character-count-spacing-block-quiet: var(--spectrum-character-count-to-field-quiet-extra-large);
     --spectrum-textfield-character-count-spacing-block-side: var(--spectrum-side-label-character-count-top-margin-extra-large);
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-300);
+    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-extra-large);
+    --spectrum-textfield-spacing-block-start: var(--spectrum-component-top-to-text-300);
+    --spectrum-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-300);
 }
 
 #textfield {
@@ -230,12 +240,12 @@
     inline-size: 100%;
     min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
     block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
-    padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
-    padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
-    padding-inline: calc(var(--mod-textfield-spacing-inline, var(--spectrum-textfield-spacing-inline)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
+    padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default)));
+    padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default)));
+    padding-inline: calc(var(--mod-textfield-spacing-inline, var(--spectrum-textfield-spacing-inline)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default)));
     vertical-align: top;
     background-color: var(--mod-textfield-background-color, var(--spectrum-textfield-background-color));
-    border-width: var(--mod-textfield-border-width, var(--spectrum-textfield-border-width));
+    border-width: var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default));
     border-style: solid;
     border-color: var(--highcontrast-textfield-border-color, var(--mod-textfield-border-color, var(--spectrum-textfield-border-color)));
     border-radius: var(--mod-textfield-corner-radius, var(--spectrum-textfield-corner-radius));
@@ -306,13 +316,13 @@
 
 :host([valid]) .input {
     color: var(--highcontrast-textfield-text-color-valid, var(--mod-textfield-text-color-valid, var(--spectrum-textfield-text-color-valid)));
-    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-valid, var(--spectrum-textfield-icon-spacing-inline-start-valid)) + var(--mod-textfield-icon-size-valid, var(--spectrum-textfield-icon-size-valid)) + var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
+    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-valid, var(--spectrum-textfield-icon-spacing-inline-start-valid)) + var(--mod-textfield-icon-size-valid, var(--spectrum-textfield-icon-size-valid)) + var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default)));
 }
 
 :host([invalid]) .input {
     color: var(--highcontrast-textfield-text-color-invalid, var(--mod-textfield-text-color-invalid, var(--spectrum-textfield-text-color-invalid)));
     border-color: var(--highcontrast-textfield-border-color-invalid-default, var(--mod-textfield-border-color-invalid-default, var(--spectrum-textfield-border-color-invalid-default)));
-    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-invalid, var(--spectrum-textfield-icon-spacing-inline-start-invalid)) + var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid)) + var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
+    padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-invalid, var(--spectrum-textfield-icon-spacing-inline-start-invalid)) + var(--mod-textfield-icon-size-invalid, var(--spectrum-textfield-icon-size-invalid)) + var(--mod-textfield-icon-spacing-inline-end-invalid, var(--spectrum-textfield-icon-spacing-inline-end-invalid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width-default)));
 }
 
 :host([invalid]) .input:focus,
