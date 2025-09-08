@@ -1,16 +1,17 @@
 # Status Light migration roadmap
 
-## CSS selectors
+## Component specifications
+
+### CSS
 
 <details>
 <summary>CSS selectors</summary>
 
 - `.spectrum-StatusLight`
+- `.spectrum-StatusLight--accent:before`
 - `.spectrum-StatusLight--blue:before`
-- `.spectrum-StatusLight--brown:before`
 - `.spectrum-StatusLight--celery:before`
 - `.spectrum-StatusLight--chartreuse:before`
-- `.spectrum-StatusLight--cinnamon:before`
 - `.spectrum-StatusLight--cyan:before`
 - `.spectrum-StatusLight--fuchsia:before`
 - `.spectrum-StatusLight--gray:before`
@@ -23,52 +24,28 @@
 - `.spectrum-StatusLight--neutral:before`
 - `.spectrum-StatusLight--notice:before`
 - `.spectrum-StatusLight--orange:before`
-- `.spectrum-StatusLight--pink:before`
 - `.spectrum-StatusLight--positive:before`
 - `.spectrum-StatusLight--purple:before`
 - `.spectrum-StatusLight--red:before`
 - `.spectrum-StatusLight--seafoam:before`
-- `.spectrum-StatusLight--silver:before`
 - `.spectrum-StatusLight--sizeL`
+- `.spectrum-StatusLight--sizeM`
 - `.spectrum-StatusLight--sizeS`
 - `.spectrum-StatusLight--sizeXL`
-- `.spectrum-StatusLight--turquoise:before`
 - `.spectrum-StatusLight--yellow:before`
 - `.spectrum-StatusLight:before`
-- `.spectrum-StatusLight:lang(ja)`, `.spectrum-StatusLight:lang(ko)`, `.spectrum-StatusLight:lang(zh)`
+- `.spectrum-StatusLight:lang(ja)`
+- `.spectrum-StatusLight:lang(ko)`
+- `.spectrum-StatusLight:lang(zh)`
 
 </details>
-
-## Passthroughs
 
 <details>
 <summary>Passthroughs</summary>
 
-No passthroughs found for this component.
+None found for this component.
 
 </details>
-
-## Attributes
-
-<details>
-<summary>Attributes</summary>
-
-- `variant` - negative, notice, positive, info, neutral, yellow, fuchsia, indigo, seafoam, chartreuse, magenta, celery, purple
-- `size` - s, m, l, xl
-- `disabled` - Boolean attribute for disabled state
-
-</details>
-
-## Slots
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - Text label of the Status Light
-
-</details>
-
-## Modifiers
 
 <details>
 <summary>Modifiers</summary>
@@ -77,18 +54,14 @@ No passthroughs found for this component.
 - `--mod-statuslight-content-color-default`
 - `--mod-statuslight-corner-radius`
 - `--mod-statuslight-dot-size`
-- `--mod-statuslight-font-family`
 - `--mod-statuslight-font-size`
-- `--mod-statuslight-font-style`
 - `--mod-statuslight-font-weight`
 - `--mod-statuslight-height`
 - `--mod-statuslight-line-height`
 - `--mod-statuslight-line-height-cjk`
 - `--mod-statuslight-nonsemantic-blue-color`
-- `--mod-statuslight-nonsemantic-brown-color`
 - `--mod-statuslight-nonsemantic-celery-color`
 - `--mod-statuslight-nonsemantic-chartreuse-color`
-- `--mod-statuslight-nonsemantic-cinnamon-color`
 - `--mod-statuslight-nonsemantic-cyan-color`
 - `--mod-statuslight-nonsemantic-fuchsia-color`
 - `--mod-statuslight-nonsemantic-gray-color`
@@ -96,13 +69,11 @@ No passthroughs found for this component.
 - `--mod-statuslight-nonsemantic-indigo-color`
 - `--mod-statuslight-nonsemantic-magenta-color`
 - `--mod-statuslight-nonsemantic-orange-color`
-- `--mod-statuslight-nonsemantic-pink-color`
 - `--mod-statuslight-nonsemantic-purple-color`
 - `--mod-statuslight-nonsemantic-red-color`
 - `--mod-statuslight-nonsemantic-seafoam-color`
-- `--mod-statuslight-nonsemantic-silver-color`
-- `--mod-statuslight-nonsemantic-turquoise-color`
 - `--mod-statuslight-nonsemantic-yellow-color`
+- `--mod-statuslight-semantic-accent-color`
 - `--mod-statuslight-semantic-info-color`
 - `--mod-statuslight-semantic-negative-color`
 - `--mod-statuslight-semantic-neutral-color`
@@ -116,7 +87,27 @@ No passthroughs found for this component.
 
 </details>
 
-## Visual Comparison
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `size` (s, m, l, xl)
+- `variant` (negative, notice, positive, info, neutral, yellow, fuchsia, indigo, seafoam, chartreuse, magenta, celery, purple)
+- `disabled` (boolean)
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot (for label content)
+
+</details>
+
+## Comparison
+
+### Visual comparison
 
 **Legacy Component:**
 
@@ -126,126 +117,143 @@ No passthroughs found for this component.
 
 <!-- Screenshot of Spectrum 2 component will be added here -->
 
-## DOM Structure Changes
+### DOM structure changes
 
-**Legacy (main branch):**
+<details>
+<summary>Spectrum Web Components:</summary>
+
+```html
+<sp-status-light variant="info" size="m">Status text</sp-status-light>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
 ```html
 <div
     class="spectrum-StatusLight spectrum-StatusLight--sizeM spectrum-StatusLight--info"
 >
-    Info status
+    Status text
 </div>
 ```
 
-**Spectrum 2 (spectrum-two branch):**
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
 <div
     class="spectrum-StatusLight spectrum-StatusLight--sizeM spectrum-StatusLight--info"
 >
-    Info status
+    Status text
 </div>
 ```
 
-## Comparison
+</details>
 
-| CSS selector                                                                                         | Attribute or slot         | Status          |
-| ---------------------------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-StatusLight`                                                                              | Base component            | Implemented     |
-| `.spectrum-StatusLight--blue:before`                                                                 | `variant="blue"`          | Missing from WC |
-| `.spectrum-StatusLight--brown:before`                                                                | `variant="brown"`         | Missing from WC |
-| `.spectrum-StatusLight--celery:before`                                                               | `variant="celery"`        | Implemented     |
-| `.spectrum-StatusLight--chartreuse:before`                                                           | `variant="chartreuse"`    | Implemented     |
-| `.spectrum-StatusLight--cinnamon:before`                                                             | `variant="cinnamon"`      | Missing from WC |
-| `.spectrum-StatusLight--cyan:before`                                                                 | `variant="cyan"`          | Missing from WC |
-| `.spectrum-StatusLight--fuchsia:before`                                                              | `variant="fuchsia"`       | Implemented     |
-| `.spectrum-StatusLight--gray:before`                                                                 | `variant="gray"`          | Missing from WC |
-| `.spectrum-StatusLight--green:before`                                                                | `variant="green"`         | Missing from WC |
-| `.spectrum-StatusLight--indigo:before`                                                               | `variant="indigo"`        | Implemented     |
-| `.spectrum-StatusLight--info:before`                                                                 | `variant="info"`          | Implemented     |
-| `.spectrum-StatusLight--magenta:before`                                                              | `variant="magenta"`       | Implemented     |
-| `.spectrum-StatusLight--negative:before`                                                             | `variant="negative"`      | Implemented     |
-| `.spectrum-StatusLight--neutral`                                                                     | `variant="neutral"`       | Implemented     |
-| `.spectrum-StatusLight--neutral:before`                                                              | `variant="neutral"`       | Implemented     |
-| `.spectrum-StatusLight--notice:before`                                                               | `variant="notice"`        | Implemented     |
-| `.spectrum-StatusLight--orange:before`                                                               | `variant="orange"`        | Missing from WC |
-| `.spectrum-StatusLight--pink:before`                                                                 | `variant="pink"`          | Missing from WC |
-| `.spectrum-StatusLight--positive:before`                                                             | `variant="positive"`      | Implemented     |
-| `.spectrum-StatusLight--purple:before`                                                               | `variant="purple"`        | Implemented     |
-| `.spectrum-StatusLight--red:before`                                                                  | `variant="red"`           | Missing from WC |
-| `.spectrum-StatusLight--seafoam:before`                                                              | `variant="seafoam"`       | Implemented     |
-| `.spectrum-StatusLight--silver:before`                                                               | `variant="silver"`        | Missing from WC |
-| `.spectrum-StatusLight--sizeL`                                                                       | `size="l"`                | Implemented     |
-| `.spectrum-StatusLight--sizeS`                                                                       | `size="s"`                | Implemented     |
-| `.spectrum-StatusLight--sizeXL`                                                                      | `size="xl"`               | Implemented     |
-| `.spectrum-StatusLight--turquoise:before`                                                            | `variant="turquoise"`     | Missing from WC |
-| `.spectrum-StatusLight--yellow:before`                                                               | `variant="yellow"`        | Implemented     |
-| `.spectrum-StatusLight:before`                                                                       | Pseudo-element for dot    | Missing from WC |
-| `.spectrum-StatusLight:lang(ja)`, `.spectrum-StatusLight:lang(ko)`, `.spectrum-StatusLight:lang(zh)` | Language-specific styling | Implemented     |
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-## Key Structural Changes
+```diff
+<!-- No differences found between main and spectrum-two branches -->
+```
 
-**Element Hierarchy Changes:**
+</details>
 
-- No significant changes in nesting depth or parent-child relationships
-- Both versions maintain the same basic structure with text content
+### CSS => SWC mapping
 
-**Class Name Changes:**
+#### Non-color selectors
 
-- **Size classes**: Both versions use the same `--sizeS`, `--sizeM`, `--sizeL`, `--sizeXL` pattern
-- **Variant classes**: Both versions use the same variant naming convention
-- **Disabled state**: Legacy uses `is-disabled` class, Spectrum 2 maintains this pattern
+| CSS selector                                                                                     | Attribute or slot           | Status           |
+| ------------------------------------------------------------------------------------------------ | --------------------------- | ---------------- |
+| `.spectrum-StatusLight--sizeS`                                                                   | `size="s"`                  | Implemented      |
+| `.spectrum-StatusLight--sizeM`                                                                   | `size="m"`                  | Implemented      |
+| `.spectrum-StatusLight--sizeL`                                                                   | `size="l"`                  | Implemented      |
+| `.spectrum-StatusLight--sizeXL`                                                                  | `size="xl"`                 | Implemented      |
+| `.spectrum-StatusLight`                                                                          | Base component              | Implemented      |
+| `.spectrum-StatusLight:before`                                                                   | Status dot (pseudo-element) | Implemented      |
+| `.spectrum-StatusLight:lang(ja), .spectrum-StatusLight:lang(ko), .spectrum-StatusLight:lang(zh)` | Language-specific styling   | Implemented      |
+|                                                                                                  | `disabled`                  | Missing from CSS |
+|                                                                                                  | Default slot                | Missing from CSS |
 
-**Attribute Changes:**
+#### Color/variant selectors
 
-- **No new required attributes**
-- **No removed attributes**
-- **Size values**: Both versions use `s`, `m`, `l`, `xl` consistently
+| CSS selector                        | Attribute or slot      | Status                                                                                    |
+| ----------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------- |
+| `.spectrum-StatusLight--negative`   | `variant="negative"`   | Implemented                                                                               |
+| `.spectrum-StatusLight--notice`     | `variant="notice"`     | Implemented                                                                               |
+| `.spectrum-StatusLight--positive`   | `variant="positive"`   | Implemented                                                                               |
+| `.spectrum-StatusLight--info`       | `variant="info"`       | Implemented                                                                               |
+| `.spectrum-StatusLight--neutral`    | `variant="neutral"`    | Implemented                                                                               |
+| `.spectrum-StatusLight--yellow`     | `variant="yellow"`     | Implemented                                                                               |
+| `.spectrum-StatusLight--fuchsia`    | `variant="fuchsia"`    | Implemented                                                                               |
+| `.spectrum-StatusLight--indigo`     | `variant="indigo"`     | Implemented                                                                               |
+| `.spectrum-StatusLight--seafoam`    | `variant="seafoam"`    | Implemented                                                                               |
+| `.spectrum-StatusLight--chartreuse` | `variant="chartreuse"` | Implemented                                                                               |
+| `.spectrum-StatusLight--magenta`    | `variant="magenta"`    | Implemented                                                                               |
+| `.spectrum-StatusLight--celery`     | `variant="celery"`     | Implemented                                                                               |
+| `.spectrum-StatusLight--purple`     | `variant="purple"`     | Implemented                                                                               |
+| `.spectrum-StatusLight--cyan`       | `variant="cyan"`       | Missing from WC, present in both S1 and S2                                                |
+| `.spectrum-StatusLight--pink`       | `variant="pink"`       | Missing from WC - new for S2                                                              |
+| `.spectrum-StatusLight--turquoise`  | `variant="turquoise"`  | Missing from WC - new for S2                                                              |
+| `.spectrum-StatusLight--cinnamon`   | `variant="cinnamon"`   | Missing from WC - new for S2                                                              |
+| `.spectrum-StatusLight--brown`      | `variant="brown"`      | Missing from WC - new for S2                                                              |
+| `.spectrum-StatusLight--silver`     | `variant="silver"`     | Missing from WC - new for S2                                                              |
+| `.spectrum-StatusLight--gray`       | `variant="gray"`       | Missing from WC, not in the design spec for S2                                            |
+| `.spectrum-StatusLight--blue`       | `variant="blue"`       | Missing from WC, not in the design spec for S2 (appears to be different from "info")      |
+| `.spectrum-StatusLight--green`      | `variant="green"`      | Missing from WC, not in the design spec for S2 (appears to be different from "positive")  |
+| `.spectrum-StatusLight--orange`     | `variant="orange"`     | Missing from WC, not in the design spec for S2 (appears to be different from "notice")    |
+| `.spectrum-StatusLight--red`        | `variant="red"`        | Missing from WC, not in the design spec for S2 (appears to be different from "negative" ) |
+| `.spectrum-StatusLight--accent`     | `variant="accent"`     | Missing from WC, appears to be deprecated for S2                                          |
 
-**Slot/Content Changes:**
+## Summary of changes
 
-- **No changes in slot usage**
-- **Content structure**: Both versions use the same text-based content approach
+### CSS => SWC changes
 
-**Migration Impact:**
+The status light component has several missing variants in the web component implementation:
 
-- **Minimal breaking changes**: The component maintains backward compatibility
-- **Main difference**: Spectrum 2 removes the `accent` variant that was deprecated in legacy
-- **Web component implementation**: Already well-aligned with CSS structure
+**Missing from WC:**
 
-## Implementation Gaps Analysis
+**New variants for S2:**
 
-### CSS Features Missing from Web Component
+- Pink variant
+- Turquoise variant
+- Cinnamon variant
+- Brown variant
+- Silver variant
 
-- **Additional color variants**: CSS includes `blue`, `brown`, `cinnamon`, `cyan`, `gray`, `green`, `orange`, `pink`, `red`, `silver`, and `turquoise` variants not available in the web component
-- **Pseudo-element dot**: CSS uses `:before` pseudo-element for the status dot, which may not be fully replicated in web component styling
-- **Semantic vs non-semantic distinction**: CSS has more comprehensive color variant support
+**Variants present in both S1 and S2:**
 
-### Web Component Features Missing from CSS
+- Cyan variant: CSS supports `--cyan` but web components doesn't, this is in the design spec and **will need to be added in 2nd gen**
 
-- **Disabled state**: Web component has explicit `disabled` attribute support that may not be fully represented in CSS
-- **Accessibility features**: Web component includes ARIA attributes and accessibility warnings
+**Variants not in design spec for S2 (need verification):**
+These variants are not in the design spec for S2 but are present in the S2 preview for CSS. These will likely need verification to determine whether or not we will include them.
 
-### Features Being Deprecated/Removed
+Notes: These variants all exist in the S2 design spec and CSS preview of the Badge component. These all also have a similarly-colored "semantic" variant. This may be useful when determining whether they should be included in the 2nd gen web components.
 
-- **Accent variant**: Legacy includes `accent` variant that is marked for removal in Spectrum 2
-- **Some color variants**: Several color variants are not carried forward to the web component
+- Gray variant (similar to "neutral" variant)
+- Blue variant (similar to "info" variant)
+- Green variant (similar to "positive" variant)
+- Orange variant (similar to "notice" variant)
+- Red variant (similar to "negative" variant)
 
-## Action Items for Web Component Maintainers
+**Deprecated variants:**
 
-**Required Additions:**
+- Accent variant: deprecated for S2
 
-- Implement missing color variants: `blue`, `brown`, `cinnamon`, `cyan`, `gray`, `green`, `orange`, `pink`, `red`, `silver`, `turquoise`
-- Ensure the `:before` pseudo-element dot styling is properly replicated in web component CSS
-- Consider adding support for all semantic and non-semantic color variants present in CSS
+**Other implementation differences:**
 
-**Required Removals:**
+- **Disabled attribute**: There does not appear to be a disabled state for this component in the S2 design spec, we can likely deprecate this attribute for 2nd gen web components.
 
-- No specific removals required - the web component already excludes the deprecated `accent` variant
+### CSS DOM structure changes
 
-**Breaking Changes:**
+No differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches. The template structure and class naming remain consistent across both branches.
 
-- **No breaking changes identified**: The component maintains backward compatibility
-- **Variant limitations**: Some legacy color variants are not available in the web component
-- **Migration guidance**: Consumers may need to map some color variants to available alternatives
+## Resources
+
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2818)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-status-light--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/statuslight--docs)
