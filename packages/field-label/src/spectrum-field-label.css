@@ -13,8 +13,6 @@
 :host,
 :host {
     --spectrum-field-label-min-height: var(--spectrum-component-height-75);
-    --spectrum-field-label-top-to-text: var(--spectrum-component-top-to-text-100);
-    --spectrum-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
     --spectrum-field-label-font-size: var(--spectrum-font-size-75);
     --spectrum-field-label-side-margin-block-start: var(--spectrum-field-label-top-margin-medium);
     --spectrum-field-label-side-padding-right: var(--spectrum-spacing-200);
@@ -23,8 +21,6 @@
 
 :host([size="s"]) {
     --spectrum-field-label-min-height: var(--spectrum-component-height-75);
-    --spectrum-field-label-top-to-text: var(--spectrum-component-top-to-text-75);
-    --spectrum-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
     --spectrum-field-label-font-size: var(--spectrum-font-size-75);
     --spectrum-field-label-side-margin-block-start: var(--spectrum-field-label-top-margin-small);
     --spectrum-field-label-side-padding-right: var(--spectrum-spacing-100);
@@ -33,8 +29,6 @@
 
 :host([size="l"]) {
     --spectrum-field-label-min-height: var(--spectrum-component-height-100);
-    --spectrum-field-label-top-to-text: var(--spectrum-component-top-to-text-200);
-    --spectrum-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
     --spectrum-field-label-font-size: var(--spectrum-font-size-100);
     --spectrum-field-label-side-margin-block-start: var(--spectrum-field-label-top-margin-large);
     --spectrum-field-label-side-padding-right: var(--spectrum-spacing-200);
@@ -43,8 +37,6 @@
 
 :host([size="xl"]) {
     --spectrum-field-label-min-height: var(--spectrum-component-height-200);
-    --spectrum-field-label-top-to-text: var(--spectrum-component-top-to-text-300);
-    --spectrum-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-300);
     --spectrum-field-label-font-size: var(--spectrum-font-size-200);
     --spectrum-field-label-side-margin-block-start: var(--spectrum-field-label-top-margin-extra-large);
     --spectrum-field-label-side-padding-right: var(--spectrum-spacing-200);
