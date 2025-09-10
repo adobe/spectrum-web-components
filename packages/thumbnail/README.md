@@ -1,6 +1,6 @@
-## Description
+## Overview
 
-An `sp-thumbnail` can be used in a variety of locations as a way to display a preview of an image, layer, or effect. `sp-thumbnail` elements are not keyboard-focusable since they're intended to be used inside of a component that a user sets focus to (such as select lists or tree items).
+An `sp-thumbnail` can be used in a variety of locations as a way to display a preview of an image, layer, or effect.
 
 ### Usage
 
@@ -8,23 +8,25 @@ An `sp-thumbnail` can be used in a variety of locations as a way to display a pr
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/thumbnail?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/thumbnail)
 [![Try it on Stackblitz](https://img.shields.io/badge/Try%20it%20on-Stackblitz-blue?style=for-the-badge)](https://stackblitz.com/edit/vitejs-vite-p4qyy5j2)
 
-```
+```zsh
 yarn add @spectrum-web-components/thumbnail
 ```
 
 Import the side effectful registration of `<sp-thumbnail>` via:
 
-```
+```js
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 ```
 
 When looking to leverage the `Thumbnail` base class as a type and/or for extension purposes, do so via:
 
-```
+```js
 import { Thumbnail } from '@spectrum-web-components/thumbnail';
 ```
 
-## Sizes
+### Options
+
+#### Sizes
 
 <sp-tabs selected="500" auto label="Size Attribute Options">
 <sp-tab value="50">50</sp-tab>
@@ -149,28 +151,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 </sp-tab-panel>
 </sp-tabs>
 
-## Focused
-
-When `focused` the `sp-thumbnail` element will be displayed as follows:
-
-```html
-<sp-thumbnail focused>
-    <img src="https://picsum.photos/100/100" alt="Demo Image" />
-</sp-thumbnail>
-```
-
-## Disabled
-
-Thumbnail should only be displayed as disabled if the entire componet is also disabled.
-When `disabled` the `sp-thumbnail` element will be displayed as follows:
-
-```html
-<sp-thumbnail disabled>
-    <img src="https://picsum.photos/100/100" alt="Demo Image" />
-</sp-thumbnail>
-```
-
-## Representing non-square content
+#### Representing non-square content
 
 By default, an `sp-thumbnail` will ensure that the entirety of the content that it respresents is visible by letterboxing that content with a checkerboard background when its aspect ratio is not square.
 
@@ -214,7 +195,7 @@ The `cover` attribute will cause the content to fill the space provided by the `
 </div>
 ```
 
-## Layer and Layer Selected
+#### Layer and Layer Selected
 
 For when `sp-thumbail` is used in layer management (such as the Compact or Detail Layers panels). The thumbnail is given a thick blue border to indicate its selection when used in layer management.
 
@@ -229,3 +210,30 @@ For when `sp-thumbail` is used in layer management (such as the Compact or Detai
     </sp-thumbnail>
 </div>
 ```
+
+### States
+
+#### Focused
+
+When `focused` the `sp-thumbnail` element will be displayed as follows:
+
+```html
+<sp-thumbnail focused>
+    <img src="https://picsum.photos/100/100" alt="Demo Image" />
+</sp-thumbnail>
+```
+
+#### Disabled
+
+Thumbnail should only be displayed as disabled if the entire component is also disabled.
+When `disabled` the `sp-thumbnail` element will be displayed as follows:
+
+```html
+<sp-thumbnail disabled>
+    <img src="https://picsum.photos/100/100" alt="Demo Image" />
+</sp-thumbnail>
+```
+
+### Accessibility
+
+`alt` attributes must be set on the `img` element inside of the `sp-thumbnail` element.
