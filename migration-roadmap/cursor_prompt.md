@@ -203,7 +203,7 @@ Create a Level 2 Heading: `## Summary of changes`
 
 After the comparison table, create a new section that provide a focused summary of changes that will impact SWC engineers:
 
-**CSS => SWC changes:**
+#### CSS => SWC implementation gaps
 
 Summarize changes in **CSS => SWC mapping** section above. Note any statuses that are missing, and whether they are missing from WC or CSS.
 
@@ -211,7 +211,7 @@ Entries with status indicating that they appear in WC but not CSS might be an in
 
 Entries with status indicating that they appear in CSS but not WC are often an indication of new features that may need to be added when migrating WC to 2nd gen.
 
-**CSS DOM structure changes:**
+#### CSS Spectrum 2 changes
 
 Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section:
 

@@ -211,22 +211,22 @@ None found for this component.
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                                  | Attribute or slot          | Status           |
-| --------------------------------------------------------------------------------------------- | -------------------------- | ---------------- |
-| `.spectrum-ProgressCircle--sizeS`                                                             | `size="s"`                 | Implemented      |
-| `.spectrum-ProgressCircle--sizeL`                                                             | `size="l"`                 | Implemented      |
-| `.spectrum-ProgressCircle--indeterminate`                                                     | `indeterminate`            | Implemented      |
-| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color="black"`     | Missing from WC  |
-| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite`                               | `static-color="white"`     | Implemented      |
-| `.spectrum-ProgressCircle`                                                                    | Base component             | Implemented      |
-| `.spectrum-ProgressCircle-fill`                                                               | Internal fill element      | Implemented      |
-| `.spectrum-ProgressCircle-track`                                                              | Internal track element     | Implemented      |
-| `.spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fill`                       | Indeterminate fill styling | Implemented      |
-| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-innerCircle` | Determinate inner circle   | Missing from CSS |
-| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-outerCircle` | Determinate outer circle   | Missing from CSS |
-|                                                                                               | `label`                    | Missing from CSS |
-|                                                                                               | `progress`                 | Missing from CSS |
-|                                                                                               | Default slot               | Missing from CSS |
+| CSS selector                                                                                  | Attribute or slot          | Status                                    |
+| --------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------------------- |
+| `.spectrum-ProgressCircle`                                                                    | `:host`                    | Implemented                               |
+| `.spectrum-ProgressCircle--sizeS`                                                             | `size="s"`                 | Implemented                               |
+| `.spectrum-ProgressCircle--sizeL`                                                             | `size="l"`                 | Implemented                               |
+| `.spectrum-ProgressCircle--indeterminate`                                                     | `indeterminate`            | Implemented                               |
+| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color="black"`     | Missing from WC                           |
+| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite`                               | `static-color="white"`     | Implemented                               |
+| `.spectrum-ProgressCircle-fill`                                                               | `.fills`                   | Implemented                               |
+| `.spectrum-ProgressCircle-track`                                                              | `.track`                   | Implemented                               |
+| `.spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fill`                       | Indeterminate fill styling | Implemented                               |
+| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-innerCircle` | Determinate inner circle   | Missing from CSS                          |
+| `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-outerCircle` | Determinate outer circle   | Missing from CSS                          |
+|                                                                                               | `label`                    | Missing from CSS                          |
+| Maps to `stroke-dashoffset` attribute (100 - value) within `.spectrum-ProgressCircle-fill`    | `progress`                 | Implemented, but will need changes for S2 |
+|                                                                                               | Default slot               | Missing from CSS                          |
 
 ## Summary of changes
 

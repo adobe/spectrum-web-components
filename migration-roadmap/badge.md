@@ -243,7 +243,7 @@ None found for this component.
 
 ```html
 <div
-    class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--informative spectrum-Badge--style-default spectrum-Badge--fixed-inline-start"
+    class="spectrum-Badge spectrum-Badge--sizeM spectrum-Badge--informative spectrum-Badge--style-subtle spectrum-Badge--fixed-inline-start"
 >
     <svg
         class="spectrum-Icon spectrum-Badge-icon"
@@ -261,7 +261,7 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-**No significant structural changes.** The only difference is the addition of the `spectrum-Badge--style-default` class in the Spectrum 2 version, which provides default styling context.
+No significant structural changes.
 
 </details>
 
@@ -328,10 +328,10 @@ None found for this component.
 
 ### CSS DOM structure changes
 
-**No significant structural changes.** Only difference is the addition of `spectrum-Badge--style-default` class in Spectrum 2, which explicitly declares the default style for consistency with new outline/subtle variants.
+**No significant structural changes.**
 
 ## Resources
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3740)
-- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/story/components-badge--default)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-badge--docs)
 - [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/badge--docs)

@@ -248,23 +248,25 @@
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                                     | Attribute or slot                       | Status           |
-| ------------------------------------------------------------------------------------------------ | --------------------------------------- | ---------------- |
-| `.spectrum-AlertBanner--info`                                                                    | `variant="info"`                        | Implemented      |
-| `.spectrum-AlertBanner--negative`                                                                | `variant="negative"`                    | Implemented      |
-| `.spectrum-AlertBanner.is-open`                                                                  | `open` attribute                        | Implemented      |
-| `.spectrum-AlertBanner-text`                                                                     | Default slot                            | Implemented      |
-| `.spectrum-AlertBanner-icon`                                                                     | Icon rendering (info/negative variants) | Implemented      |
-| `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`                    | `dismissible` attribute                 | Implemented      |
-| `.spectrum-AlertBanner:lang(ja), .spectrum-AlertBanner:lang(ko), .spectrum-AlertBanner:lang(zh)` | Language-specific styling               | Implemented      |
-| `.spectrum-AlertBanner`                                                                          | Base component                          | Implemented      |
-| `.spectrum-AlertBanner-body`                                                                     | Internal structure                      | Implemented      |
-| `.spectrum-AlertBanner-content`                                                                  | Internal structure                      | Implemented      |
-|                                                                                                  | `action` slot                           | Missing from CSS |
+| CSS selector                                                                                     | Attribute or slot                       | Status      |
+| ------------------------------------------------------------------------------------------------ | --------------------------------------- | ----------- |
+| `.spectrum-AlertBanner`                                                                          | Base component, `variant="neutral"`     | Implemented |
+| `.spectrum-AlertBanner--info`                                                                    | `variant="info"`                        | Implemented |
+| `.spectrum-AlertBanner--negative`                                                                | `variant="negative"`                    | Implemented |
+| `.spectrum-AlertBanner.is-open`                                                                  | `open` attribute                        | Implemented |
+| `.spectrum-AlertBanner-text`                                                                     | Default slot                            | Implemented |
+| `.spectrum-AlertBanner-icon`                                                                     | Icon rendering (info/negative variants) | Implemented |
+| `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`                    | `dismissible` attribute                 | Implemented |
+| `.spectrum-AlertBanner:lang(ja), .spectrum-AlertBanner:lang(ko), .spectrum-AlertBanner:lang(zh)` | Language-specific styling               | Implemented |
+| `.spectrum-AlertBanner-body`                                                                     | `.body`                                 | Implemented |
+| `.spectrum-AlertBanner-content`                                                                  | `.content`                              | Implemented |
+| Corresponds to `.spectrum-Button` within `.spectrum-AlertBanner`                                 | `action` slot                           | Implemented |
+
+Note: the `neutral` variant of Alert banner is the default variant in both CSS and SWC.
 
 ## Summary of changes
 
-### CSS => SWC changes
+### CSS => SWC implementation gaps
 
 **No missing features.** All CSS selectors have corresponding web component implementations:
 
@@ -274,7 +276,7 @@
 - **Dismissible**: Close button presence → `dismissible` attribute
 - **Action slot**: Available in SWC but not in CSS templates
 
-### CSS DOM structure changes
+### CSS Spectrum 2 changes
 
 **Divider element removed in spectrum-two branch**: The `<div class="spectrum-Divider spectrum-Divider--vertical spectrum-Divider--sizeS"></div>` element is no longer included in the close button section. The spectrum-two branch template only includes the close button without the divider separator.
 

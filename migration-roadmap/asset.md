@@ -1,6 +1,6 @@
 # Asset migration roadmap
 
-Note: This component has no S2 design spec, and therefore the CSS _not_ been migrated to S2.
+Note: This component has no S2 design spec, and therefore the CSS _has not_ been migrated to S2.
 
 ## Component specifications
 
@@ -166,27 +166,28 @@ None found for this component.
 
 #### Non-variant selectors
 
-| CSS selector             | Attribute or slot  | Status           |
-| ------------------------ | ------------------ | ---------------- |
-| `.spectrum-Asset`        | Base component     | Implemented      |
-| `.spectrum-Asset-file`   | File variant SVG   | Implemented      |
-| `.spectrum-Asset-folder` | Folder variant SVG | Implemented      |
-| `.spectrum-Asset-image`  | Image content      | Missing from WC  |
-|                          | `label`            | Missing from CSS |
-|                          | Default slot       | Missing from CSS |
+| CSS selector             | Attribute or slot             | Status           |
+| ------------------------ | ----------------------------- | ---------------- |
+| `.spectrum-Asset`        | `:host`                       | Implemented      |
+| `.spectrum-Asset-file`   | `variant='file'`, `.file`     | Implemented      |
+| `.spectrum-Asset-folder` | `variant='folder'`, `.folder` | Implemented      |
+| `.spectrum-Asset-image`  | default `<slot>` content      | Implemented      |
+|                          | `label`                       | Missing from CSS |
 
 #### Variant-specific selectors
 
-| CSS selector                       | Attribute or slot      | Status      |
-| ---------------------------------- | ---------------------- | ----------- |
-| `.spectrum-Asset-fileBackground`   | File background path   | Implemented |
-| `.spectrum-Asset-fileOutline`      | File outline path      | Implemented |
-| `.spectrum-Asset-folderBackground` | Folder background path | Implemented |
-| `.spectrum-Asset-folderOutline`    | Folder outline path    | Implemented |
+These CSS selectors correspond to the class names used in the SVG path elements within the Asset component's `file()` and `folder()` template functions.
+
+| CSS selector                       | Attribute or slot   | Status      |
+| ---------------------------------- | ------------------- | ----------- |
+| `.spectrum-Asset-fileBackground`   | `.fileBackground`   | Implemented |
+| `.spectrum-Asset-fileOutline`      | `.fileOutline`      | Implemented |
+| `.spectrum-Asset-folderBackground` | `.folderBackground` | Implemented |
+| `.spectrum-Asset-folderOutline`    | `.folderOutline`    | Implemented |
 
 ## Summary of changes
 
-### CSS => SWC changes
+### CSS => SWC implementation gaps
 
 The asset component has a relatively straightforward mapping between CSS and web components. There do not appear to be any significant differences from CSS that we might consider bringing into 2nd gen web components.
 
@@ -195,6 +196,10 @@ The asset component has a relatively straightforward mapping between CSS and web
 - **Variant system**: Web component uses a `variant` attribute (file, folder) to determine which SVG to render, while CSS uses preset parameters in templates
 - **Image support**: CSS uses a dedicated `image` parameter that renders `<img class="spectrum-Asset-image">`, while web component uses the default slot for custom content including images
 
-### CSS DOM structure changes
+### CSS Spectrum 2 changes
 
 No differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches, as no component migration has been done.
+
+## Resources
+
+- [CSS Storybook](https://opensource.adobe.com/spectrum-css/?path=/docs/components-asset--docs)
