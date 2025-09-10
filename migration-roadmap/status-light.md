@@ -8,10 +8,11 @@
 <summary>CSS selectors</summary>
 
 - `.spectrum-StatusLight`
-- `.spectrum-StatusLight--accent:before`
 - `.spectrum-StatusLight--blue:before`
+- `.spectrum-StatusLight--brown:before`
 - `.spectrum-StatusLight--celery:before`
 - `.spectrum-StatusLight--chartreuse:before`
+- `.spectrum-StatusLight--cinnamon:before`
 - `.spectrum-StatusLight--cyan:before`
 - `.spectrum-StatusLight--fuchsia:before`
 - `.spectrum-StatusLight--gray:before`
@@ -24,14 +25,16 @@
 - `.spectrum-StatusLight--neutral:before`
 - `.spectrum-StatusLight--notice:before`
 - `.spectrum-StatusLight--orange:before`
+- `.spectrum-StatusLight--pink:before`
 - `.spectrum-StatusLight--positive:before`
 - `.spectrum-StatusLight--purple:before`
 - `.spectrum-StatusLight--red:before`
 - `.spectrum-StatusLight--seafoam:before`
+- `.spectrum-StatusLight--silver:before`
 - `.spectrum-StatusLight--sizeL`
-- `.spectrum-StatusLight--sizeM`
 - `.spectrum-StatusLight--sizeS`
 - `.spectrum-StatusLight--sizeXL`
+- `.spectrum-StatusLight--turquoise:before`
 - `.spectrum-StatusLight--yellow:before`
 - `.spectrum-StatusLight:before`
 - `.spectrum-StatusLight:lang(ja)`
@@ -54,14 +57,18 @@ None found for this component.
 - `--mod-statuslight-content-color-default`
 - `--mod-statuslight-corner-radius`
 - `--mod-statuslight-dot-size`
+- `--mod-statuslight-font-family`
 - `--mod-statuslight-font-size`
+- `--mod-statuslight-font-style`
 - `--mod-statuslight-font-weight`
 - `--mod-statuslight-height`
 - `--mod-statuslight-line-height`
 - `--mod-statuslight-line-height-cjk`
 - `--mod-statuslight-nonsemantic-blue-color`
+- `--mod-statuslight-nonsemantic-brown-color`
 - `--mod-statuslight-nonsemantic-celery-color`
 - `--mod-statuslight-nonsemantic-chartreuse-color`
+- `--mod-statuslight-nonsemantic-cinnamon-color`
 - `--mod-statuslight-nonsemantic-cyan-color`
 - `--mod-statuslight-nonsemantic-fuchsia-color`
 - `--mod-statuslight-nonsemantic-gray-color`
@@ -69,11 +76,13 @@ None found for this component.
 - `--mod-statuslight-nonsemantic-indigo-color`
 - `--mod-statuslight-nonsemantic-magenta-color`
 - `--mod-statuslight-nonsemantic-orange-color`
+- `--mod-statuslight-nonsemantic-pink-color`
 - `--mod-statuslight-nonsemantic-purple-color`
 - `--mod-statuslight-nonsemantic-red-color`
 - `--mod-statuslight-nonsemantic-seafoam-color`
+- `--mod-statuslight-nonsemantic-silver-color`
+- `--mod-statuslight-nonsemantic-turquoise-color`
 - `--mod-statuslight-nonsemantic-yellow-color`
-- `--mod-statuslight-semantic-accent-color`
 - `--mod-statuslight-semantic-info-color`
 - `--mod-statuslight-semantic-negative-color`
 - `--mod-statuslight-semantic-neutral-color`
@@ -83,7 +92,7 @@ None found for this component.
 - `--mod-statuslight-spacing-dot-to-label`
 - `--mod-statuslight-spacing-top-to-dot`
 - `--mod-statuslight-spacing-top-to-label`
-- `--mod-statuslight-subdued-content-color-default`
+- `--mod-statuslight-subdued-content-color-defaul`
 
 </details>
 
@@ -167,17 +176,17 @@ None found for this component.
 
 #### Non-color selectors
 
-| CSS selector                                                                                     | Attribute or slot           | Status           |
-| ------------------------------------------------------------------------------------------------ | --------------------------- | ---------------- |
-| `.spectrum-StatusLight--sizeS`                                                                   | `size="s"`                  | Implemented      |
-| `.spectrum-StatusLight--sizeM`                                                                   | `size="m"`                  | Implemented      |
-| `.spectrum-StatusLight--sizeL`                                                                   | `size="l"`                  | Implemented      |
-| `.spectrum-StatusLight--sizeXL`                                                                  | `size="xl"`                 | Implemented      |
-| `.spectrum-StatusLight`                                                                          | Base component              | Implemented      |
-| `.spectrum-StatusLight:before`                                                                   | Status dot (pseudo-element) | Implemented      |
-| `.spectrum-StatusLight:lang(ja), .spectrum-StatusLight:lang(ko), .spectrum-StatusLight:lang(zh)` | Language-specific styling   | Implemented      |
-|                                                                                                  | `disabled`                  | Missing from CSS |
-|                                                                                                  | Default slot                | Missing from CSS |
+| CSS selector                                                                                     | Attribute or slot           | Status                        |
+| ------------------------------------------------------------------------------------------------ | --------------------------- | ----------------------------- |
+| `.spectrum-StatusLight`                                                                          | Base component              | Implemented                   |
+| `.spectrum-StatusLight--sizeS`                                                                   | `size="s"`                  | Implemented                   |
+| `.spectrum-StatusLight--sizeM`                                                                   | `size="m"`                  | Implemented                   |
+| `.spectrum-StatusLight--sizeL`                                                                   | `size="l"`                  | Implemented                   |
+| `.spectrum-StatusLight--sizeXL`                                                                  | `size="xl"`                 | Implemented                   |
+| `.spectrum-StatusLight:before`                                                                   | Status dot (pseudo-element) | Implemented                   |
+| `.spectrum-StatusLight:lang(ja), .spectrum-StatusLight:lang(ko), .spectrum-StatusLight:lang(zh)` | Language-specific styling   | Implemented                   |
+| No selector, corresponds to default content within `.spectrum-StatusLight`                       | Default slot                | Implemented                   |
+|                                                                                                  | `disabled`                  | Missing from CSS (deprecated) |
 
 #### Color/variant selectors
 
@@ -211,7 +220,7 @@ None found for this component.
 
 ## Summary of changes
 
-### CSS => SWC changes
+### CSS => SWC implementation gaps
 
 The status light component has several missing variants in the web component implementation:
 
@@ -246,9 +255,9 @@ Notes: These variants all exist in the S2 design spec and CSS preview of the Bad
 
 **Other implementation differences:**
 
-- **Disabled attribute**: There does not appear to be a disabled state for this component in the S2 design spec, we can likely deprecate this attribute for 2nd gen web components.
+- **Disabled attribute**: There is no disabled state for this component in the S2 design spec, this attribute should be deprecated.
 
-### CSS DOM structure changes
+### CSS Spectrum 2 changes
 
 No differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches. The template structure and class naming remain consistent across both branches.
 

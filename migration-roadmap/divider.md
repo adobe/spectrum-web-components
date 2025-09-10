@@ -136,7 +136,7 @@ None found for this component.
 
 ## Summary of changes
 
-### CSS => SWC changes
+### CSS => SWC implementation gaps
 
 **No missing features.** All CSS selectors have corresponding web component attributes:
 
@@ -144,7 +144,7 @@ None found for this component.
 - **Orientation**: `--vertical` → `vertical` boolean attribute
 - **Static colors**: `--staticBlack` → `static-color="black"`, `--staticWhite` → `static-color="white"`
 
-### CSS DOM structure changes
+### CSS Spectrum 2 changes
 
 The main difference between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches is the removal of minimum dimension styling. Horizontal divider's minimum width and vertical divider's minimum height are now controlled by tokens.
 
