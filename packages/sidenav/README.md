@@ -67,7 +67,7 @@ Make sure to use the right option for the context and user needs. Don’t mix be
 
 - When navigation is simple, use the single level side navigation.
 - When navigation is simple but categorical, use the single level side navigation with headers.
-- When navigation is expansive, hierarchical, and/or you need progressive disclosure in the menu behavior, use the multi-level side navigation.
+- When navigation is expansive, hierarchical, and/or you need progressive disclosure in the menu behavior, use the multi-level side navigation. Up to three levels of navigation is supported.
 
 ```html
 <sp-sidenav defaultValue="Docs">
@@ -113,7 +113,7 @@ Make sure to use the right option for the context and user needs. Don’t mix be
 <sp-tab value="headings">With headings</sp-tab>
 <sp-tab-panel value="headings">
 
-Use a single level with headers side navigation when needing to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headers that aren’t interactive. If items don’t fall into a category, place them at the top.
+Use a single level with headers side navigation when needing to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headers that aren’t interactive. If items don’t fall into a category, place them at the top. When using the heading variation, an entire category should either all have icons or all be text-only.
 
 ```html
 <sp-sidenav variant="multilevel">
@@ -134,11 +134,11 @@ Use a single level with headers side navigation when needing to group navigation
 <sp-tab value="multilevel">Multi-level</sp-tab>
 <sp-tab-panel value="multilevel">
 
-Use `variant="multi-level` when you have multiple layers of hierarchical navigation.
+Use `variant="multilevel"` when you have multiple layers of hierarchical navigation.
 In the instances where a top-level navigation item has no children, clicking
 will send the user to the location of the item.
 
-In multi-level side navigation, only the first-level items can have icons. Any sub-level items should always be text-only to ensure clear hierarchy. In cases where the navigation content might be user-generated, stick to text-only navigation items.
+Up to three levels of navigation is supported.
 
 ```html
 <sp-sidenav variant="multilevel" defaultValue="Layout">
@@ -163,21 +163,33 @@ In multi-level side navigation, only the first-level items can have icons. Any s
 ```
 
 </sp-tab-panel>
-<sp-tab value="icon">Icons</sb-tab>
+<sp-tab value="icon">Icons</sp-tab>
 <sp-tab-panel value="icon">
 
-Icon and text-only navigation items can be used in combination. However, do not alternate the two to keep a clear hierarchy. When using the heading variation, an entire category should either all have icons or all be text-only.
+In multi-level side navigation, icon and text-only navigation items can be used in combination, but only the first-level items can have icons. Do not alternate the two styles or mix styles. Any sub-level items should always be text-only to ensure clear hierarchy. In cases where the navigation content might be user-generated, stick to text-only navigation items.
 
 ```html
 <sp-sidenav>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
         <sp-icon-star slot="icon"></sp-icon-star>
+        <sp-sidenav-item
+            value="Typography"
+            label="Typography"
+        ></sp-sidenav-item>
     </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2">
+    <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
         <sp-icon-star slot="icon"></sp-icon-star>
+        <sp-sidenav-item
+            value="Iconography"
+            label="Iconography"
+        ></sp-sidenav-item>
     </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 3" label="Section Title 3">
+    <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
         <sp-icon-star slot="icon"></sp-icon-star>
+        <sp-sidenav-item value="Patterns" label="Patterns" expanded>
+            <sp-sidenav-item value="Forms" label="Forms"></sp-sidenav-item>
+            <sp-sidenav-item value="Cards" label="Cards"></sp-sidenav-item>
+        </sp-sidenav-item>
     </sp-sidenav-item>
 </sp-sidenav>
 ```
@@ -187,18 +199,18 @@ Icon and text-only navigation items can be used in combination. However, do not 
 
 ### Behaviors
 
-When an side navigation item becomes selected in `variant="multilevel"`, all of its parent items automatically expand to reveal the selection path.
+When an side navigation item is programmatically selected in `variant="multilevel"`, all of its parent items automatically expand to reveal the selection path.
 
 ### States
 
-With the `disabled` attribute, the entire `sp-sidenav` can be removed from the tab order.
+With the `disabled` attribute, the entire `<sp-sidenav>` can be removed from the tab order.
 
 ```html
-<sp-sidenav >
+<sp-sidenav>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
         <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2">
+    <sp-sidenav-item value="Section Title 2" label="Section Title 2" disabled>
         <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
     <sp-sidenav-item value="Section Title 3" label="Section Title 3">
@@ -209,21 +221,23 @@ With the `disabled` attribute, the entire `sp-sidenav` can be removed from the t
 
 ### Accessibility
 
-When the `manage-tab-index` attribute is set on an `sp-sidenav` element, it will present its `sp-sidenav-item` children with a single tab-stop. This will leave items beyond the selected item (or when there is no focusable selected item), accessible via the up and down arrow keys. Items with expanded children that aren't selected lose focus when `manage-tab-index` is active.
+When the `manage-tab-index` attribute is set on an `<sp-sidenav>` element, it will present its `<sp-sidenav-item>` children with a single tab-stop. This will leave items beyond the selected item (or when there is no focusable selected item), accessible via the up and down arrow keys. Items with expanded children that aren't selected lose focus when `manage-tab-index` is active.
+
+#### Roles and ARIA attributes
 
 - `<sp-sidenav>` renders a `<nav>` tag and implicitly sets `role="navigation"`
 - Optional `aria-label` is available for further identification
 - Individual items use `role="listitem"` automatically
-- Nested list containers (i.e. `div` tags) use `role="list"`
+- Nested list containers (i.e. `<div>` tags) use `role="list"`
 - Nested item containers use `aria-labelledby` referencing their parent item's `id`
 - `aria-expanded="true/false"` indicates expand/collapse state for parent items
 - `aria-controls` on parent items is set to the `id` of their child `role="list"` containers when expanded
 - `aria-current="page"` indicates the currently selected item when it has an `href`
-- When the `sp-sidenav` includes the `disabled` property, the entire component receives `tabindex="-1"`
+- When the `<sp-sidenav>` includes the `disabled` property, the entire component receives `tabindex="-1"`
 - `aria-hidden="true"` is applied to all decorative icons
 
 #### Keyboard interaction
 
 - `Tab` and `Shift + Tab` moves focus into or out of the side nav
 - If `manage-tab-index` is enabled, the up and down arrow keys will shift focus between all visible sidenav items
-- `Enter` or `Space` selects a side nav item or toggles expansion for parent items
+- `Enter` selects a side nav item or toggles expansion for parent items

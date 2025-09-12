@@ -30,7 +30,9 @@ import { SidenavHeading } from '@spectrum-web-components/sidenav';
 
 ### Options
 
-#### Single-level with headings
+<sp-tabs selected="single-level" auto label="Side nav heading options">
+<sp-tab value="single-level">Single-level with headings</sp-tab>
+<sp-tab-panel value="single-level">
 
 Use a single level side navigation with headings when needing to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headers that aren’t interactive.
 
@@ -51,25 +53,36 @@ Use a single level side navigation with headings when needing to group navigatio
 </sp-sidenav>
 ```
 
-#### Multi-level with headings
+</sp-tab-panel>
+<sp-tab value="multi-level">Multi-level with headings</sp-tab>
+<sp-tab-panel value="multi-level">
 
-In multi-level side navigation, `sp-sidenav-heading` elements can be children of `sp-sidenav-item` elements and used to wrap additional nested `sp-sidenav-item` children elements.
+In multi-level side navigation, `<sp-sidenav-heading>` elements can be children of `<sp-sidenav-item>` elements and used to wrap additional nested `<sp-sidenav-item>` children elements.
 
 ```html
 <sp-sidenav variant="multilevel">
     <sp-sidenav-heading label="Styles">
         <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
-        <sp-sidenav-item value="Grid" label="Grid" expanded></sp-sidenav-item>
+        <sp-sidenav-item value="Grid" label="Grid"></sp-sidenav-item>
         <sp-sidenav-item value="Typography" label="Typography" expanded>
             <sp-sidenav-heading label="Heading styles">
-                <sp-sidenav-item value="Display" label="Display headings"></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Display"
+                    label="Display headings"
+                ></sp-sidenav-item>
                 <sp-sidenav-item value="H1" label="H1"></sp-sidenav-item>
                 <sp-sidenav-item value="H2" label="H2"></sp-sidenav-item>
             </sp-sidenav-heading>
 
             <sp-sidenav-heading label="Font styles">
-                <sp-sidenav-item value="Body" label="Body copy"></sp-sidenav-item>
-                <sp-sidenav-item value="Details" label="Details"></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Body"
+                    label="Body copy"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    value="Details"
+                    label="Details"
+                ></sp-sidenav-item>
                 <sp-sidenav-item value="Code" label="Code"></sp-sidenav-item>
             </sp-sidenav-heading>
         </sp-sidenav-item>
@@ -77,9 +90,12 @@ In multi-level side navigation, `sp-sidenav-heading` elements can be children of
 </sp-sidenav>
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 ### Accessibility
 
-`sp-sidenav-heading` elements are non-interactive.
+Although `<sp-sidenav-heading>` elements are non-interactive, they do offer accessibility features.
 
 - Uses `<h2>` elements for heading text to provide proper document outline
 - Automatically sets `role="listitem"` on the heading component itself

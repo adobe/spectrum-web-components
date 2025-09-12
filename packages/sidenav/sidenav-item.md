@@ -28,7 +28,7 @@ import { SidenavItem } from '@spectrum-web-components/sidenav';
 - **Label**: Text content of the navigation item
 - **Value**: Unique identifier; required for selection changes via the `sidenav-select` event
 - **href** (optional): When defined, renders the side nav item as an anchor link
-- **Default slot**: Nested `sp-sidenav-items`
+- **Default slot**: Nested `<sp-sidenav-item>` elements
 
 ### Options
 
@@ -52,7 +52,7 @@ Most often, the default side nav item includes an `href` to navigate users to a 
 <sp-tab value="multi-level">Multi-level</sp-tab>
 <sp-tab-panel value="multi-level">
 
-To create a multi-level navigation, set the parent `<sp-sidenav>` to `variant="multilevel"` and nest `sp-sidenav-item` elements inside each other. Parent `sp-sidenav-item` elements that contain children can use the `expanded` attribute to show and hide their nested items. Each `sp-sidenav-item` with nested children acts as both a selectable navigation item (with its own value) and a toggle for expanding/collapsing its children.
+To create a multi-level navigation, set the parent `<sp-sidenav>` to `variant="multilevel"` and nest `<sp-sidenav-item>` elements inside each other. Parent `<sp-sidenav-item>` elements that contain children can use the `expanded` attribute to show and hide their nested items. Each `<sp-sidenav-item>` with nested children acts as both a selectable navigation item (with its own value) and a toggle for expanding/collapsing its children.
 
 ```html
 <sp-sidenav variant="multilevel">
@@ -190,7 +190,7 @@ Adding the `disabled` attribute to a side nav item renders it non-interactive.
 <sp-tab value="expanded">Expanded</sp-tab>
 <sp-tab-panel value="expanded">
 
-Adding `expanded` to an `sp-sidenav-item` will render it as expanded if it has subsequent child items.
+Adding `expanded` to an `<sp-sidenav-item>` will render it as expanded if it has subsequent child items.
 
 ```html
 <sp-sidenav>
@@ -224,7 +224,7 @@ Adding `expanded` to an `sp-sidenav-item` will render it as expanded if it has s
 <sp-tab value="selected">Selected</sp-tab>
 <sp-tab-panel value="selected">
 
-When users select an item, the `selected` attribute is applied. The `value` of the selected item will be bubbled up to the parent `sp-sidenav` to update the `value` of `sp-sidenav`.
+When users select an item, the `selected` attribute is applied. The `value` of the selected item will be bubbled up to the parent `<sp-sidenav>` to update the `value` of `<sp-sidenav>`.
 
 ```html
 <sp-sidenav value="wall-e">
@@ -250,15 +250,8 @@ When users select an item, the `selected` attribute is applied. The `value` of t
         value="incredibles"
         label="The Incredibles"
     ></sp-sidenav-item>
-    <sp-sidenav-item 
-        value="up" 
-        label="Up"
-    ></sp-sidenav-item>
-    <sp-sidenav-item 
-        value="wall-e"
-        label="Wall-E" 
-        selected
-    ></sp-sidenav-item>
+    <sp-sidenav-item value="up" label="Up"></sp-sidenav-item>
+    <sp-sidenav-item value="wall-e" label="Wall-E" selected></sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -271,16 +264,16 @@ When the side navigation item text is too long for the horizontal space availabl
 
 For RTL (right-to-left) languages, the layout of the side navigation is mirrored. Navigation items are left-aligned and their icons are placed on the right side of the text.
 
-When users select an `sp-sidenav-item`, the change in the `value` property of the parent side navigation element is announced. This change can be "canceled" via `event.preventDefault()`.
+When users select an `<sp-sidenav-item>`, the change in the `value` property of the parent side navigation element is announced. This change can be "canceled" via `event.preventDefault()`.
 
-When `manage-tab-index` is enabled on the parent side nav, expanded parent side nav items that aren't selected lose focus to prevent focus traps.
+When `manage-tab-index` is enabled on the parent side nav, a roving tabindex is implemented so expanded parent side nav items that aren't selected lose focus to prevent focus traps.
 
 ### Accessibility
 
-#### ARIA attributes
+#### Roles and ARIA attributes
 
 - Individual items use `role="listitem"` automatically
-- Nested list containers (i.e. `div` tags) use `role="list"`
+- Nested list containers (i.e. `<div>` tags) use `role="list"`
 - Nested item containers use `aria-labelledby` referencing their parent item's `id`
 - `aria-expanded="true/false"` indicates expand/collapse state for parent side nav items
 - `aria-controls` on parent items is set to the `id` of their child `role="list"` containers when expanded
@@ -294,9 +287,9 @@ When `manage-tab-index` is enabled on the parent side nav, expanded parent side 
 - `Tab` moves focus to individual items
 - `Enter` or `Space` select a focused item or toggle the expansion of any nested side nav items
 
-**Roving `tabindex` mode** (when parent side nav has `manage-tab-index="true"`):
+**Roving `tabindex` mode:** (when parent side nav has `manage-tab-index="true"`)
 
-- The parent `sp-sidenav` component is the single tab-stop
+- The parent `<sp-sidenav>` component is the single tab-stop
 - `Up` and `Down` arrow keys navigate between all visible side nav items
 - `Home` and `End` keys jump to first/last items respectively
-- `Enter` or `Space` select a focused item or toggle the expansion of any nested side nav items
+- `Enter` selects a focused item or toggle the expansion of any nested side nav items
