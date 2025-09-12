@@ -60,7 +60,7 @@ The side navigation consists of several key parts:
 ### Options
 
 <sp-tabs selected="default" auto label="Side navigation options">
-<sp-tab value="default">Default</sp-tab>
+<sp-tab value="default">Default (single-level)</sp-tab>
 <sp-tab-panel value="default">
 
 Make sure to use the right option for the context and user needs. Don’t mix behavior, styles, or variations together in a single navigation menu. Follow these guidelines:
@@ -110,13 +110,33 @@ Make sure to use the right option for the context and user needs. Don’t mix be
 ```
 
 </sp-tab-panel>
+<sp-tab value="icon-single">Single-level with icons</sp-tab>
+<sp-tab-panel value="icon-single">
+
+In single-level side navigation, do not mix icon usage between side nav items. Either all side nav items have icons, or no items have icons. In cases where the navigation content might be user-generated, stick to text-only navigation items.
+
+```html
+<sp-sidenav>
+    <sp-sidenav-item value="Section Title 1" label="Section Title 1">
+        <sp-icon-star slot="icon"></sp-icon-star>
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Section Title 2" label="Section Title 2" expanded>
+        <sp-icon-star slot="icon"></sp-icon-star>
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Section Title 3" label="Section Title 3" expanded>
+        <sp-icon-star slot="icon"></sp-icon-star>
+    </sp-sidenav-item>
+</sp-sidenav>
+```
+
+</sp-tab-panel>
 <sp-tab value="headings">With headings</sp-tab>
 <sp-tab-panel value="headings">
 
-Use a single level with headers side navigation when needing to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headers that aren’t interactive. If items don’t fall into a category, place them at the top. When using the heading variation, an entire category should either all have icons or all be text-only.
+Use headings in single level side navigation when it's beneficial to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headings that aren’t interactive. If items don’t fall into a category, place them at the top. When using the heading variation, an entire category should either all have icons or all be text-only.
 
 ```html
-<sp-sidenav variant="multilevel">
+<sp-sidenav>
     <sp-sidenav-item value="Section 1" label="Section 1"></sp-sidenav-item>
     <sp-sidenav-item value="Section 2" label="Section 2"></sp-sidenav-item>
     <sp-sidenav-heading label="Category 1">
@@ -143,7 +163,7 @@ Up to three levels of navigation is supported.
 ```html
 <sp-sidenav variant="multilevel" defaultValue="Layout">
     <sp-sidenav-item value="Guidelines" label="Guidelines"></sp-sidenav-item>
-    <sp-sidenav-heading value="Styles" label="Styles" expanded>
+    <sp-sidenav-heading value="Styles" label="Styles">
         <sp-sidenav-item value="Color" label="Color"></sp-sidenav-item>
         <sp-sidenav-item value="Grid" label="Grid" expanded>
             <sp-sidenav-item value="Layout" label="Layout"></sp-sidenav-item>
@@ -163,10 +183,16 @@ Up to three levels of navigation is supported.
 ```
 
 </sp-tab-panel>
-<sp-tab value="icon">Icons</sp-tab>
-<sp-tab-panel value="icon">
+<sp-tab value="icon-multi">Multi-level with icons</sp-tab>
+<sp-tab-panel value="icon-multi">
 
-In multi-level side navigation, icon and text-only navigation items can be used in combination, but only the first-level items can have icons. Do not alternate the two styles or mix styles. Any sub-level items should always be text-only to ensure clear hierarchy. In cases where the navigation content might be user-generated, stick to text-only navigation items.
+In multi-level side navigation, icon and text-only navigation items can be used in combination, but only the first-level items can have icons to maintain visual clarity and hierarchy. Icons only appear on first-level items, and sublevels (second and third) should not include icons. In cases where the navigation content might be user-generated, stick to text-only navigation items.
+
+#### Multi-level side navigation icon usage
+
+- All icons: all items have icons
+- No icons: no items have icons
+- Mixed icons: only first-level items have icons; second and third-level items do not
 
 ```html
 <sp-sidenav>

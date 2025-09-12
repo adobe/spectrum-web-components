@@ -75,7 +75,11 @@ To create a multi-level navigation, set the parent `<sp-sidenav>` to `variant="m
 <sp-tab value="icons">Accommodating icons</sp-tab>
 <sp-tab-panel value="icons">
 
-Icons can be displayed in first-level items of any type of side navigation (single level or multi-level). Use icons only when absolutely necessary: when they add essential value and have a strong association with the text. Never use icons just as decoration.
+Icons can be displayed in first-level items of any type of side navigation (single level or multi-level). Icon usage for further subdivision of the navigation must be consistent with the scenarios described below. Use icons only when absolutely necessary: when they add essential value and have a strong association with the text. Never use icons just as decoration.
+
+- All icons: all items have icons
+- No icons: no items have icons
+- Mixed icons: only first-level items have icons; second and third-level items do not
 
 ```html
 <sp-sidenav>
