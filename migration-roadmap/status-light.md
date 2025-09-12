@@ -92,7 +92,7 @@ None found for this component.
 - `--mod-statuslight-spacing-dot-to-label`
 - `--mod-statuslight-spacing-top-to-dot`
 - `--mod-statuslight-spacing-top-to-label`
-- `--mod-statuslight-subdued-content-color-defaul`
+- `--mod-statuslight-subdued-content-color-default`
 
 </details>
 
