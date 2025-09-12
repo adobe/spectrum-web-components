@@ -70,32 +70,18 @@ If any of these sections are empty, write for that section only, "None found for
 
 Create a Level 2 Heading: `## Comparison`
 
-#### 2.1 Visual Comparison
-
-Add a placeholder section for component screenshots:
-
-```markdown
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
-```
-
-#### 2.2 DOM Structure Changes
+#### 2.1 DOM Structure Changes
 
 **Critical Instruction**: Analyze files from THREE different sources. Always confirm the branch and repository being used.
 
-**2.2.1 Web Component DOM Structure Analysis**:
+**2.1.1 Web Component DOM Structure Analysis**:
 
 - **Source**: spectrum-web-components `main` branch, `/packages/[component-name]/src/[component-name].ts` (`main` branch)
 - Analyze the component's `render()` method or template structure
 - Extract the actual HTML markup that the web component generates
 - Document the current DOM structure, including attributes
 
-**2.2.2 CSS DOM Structure Analysis**:
+**2.1.2 CSS DOM Structure Analysis**:
 
 **Branch switching requirements**: You will need to analyze the same component across two different branches of the spectrum-css repository. Use these git commands to switch between branches:
 
@@ -164,7 +150,7 @@ Create a three-way HTML comparison using markdown code blocks. Use collapsible s
 </details>
 ````
 
-#### 2.3 CSS => SWC mapping
+#### 2.2 CSS => SWC mapping
 
 Create a markdown table with these exact column headers:
 

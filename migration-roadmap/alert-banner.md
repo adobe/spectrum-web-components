@@ -85,16 +85,6 @@
 
 ## Comparison
 
-### Visual comparison
-
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
-
 ### DOM structure changes
 
 <details>
