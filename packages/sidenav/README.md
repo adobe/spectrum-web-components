@@ -230,24 +230,6 @@ In multi-level side navigation, icon and text-only navigation items can be used 
 
 When an side navigation item is programmatically selected in `variant="multilevel"`, all of its parent items automatically expand to reveal the selection path.
 
-### States
-
-With the `disabled` attribute, the entire `<sp-sidenav>` can be removed from the tab order.
-
-```html
-<sp-sidenav disabled>
-    <sp-sidenav-item value="Section Title 1" label="Section Title 1">
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2">
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 3" label="Section Title 3">
-        <sp-icon-star slot="icon"></sp-icon-star>
-    </sp-sidenav-item>
-</sp-sidenav>
-```
-
 ### Accessibility
 
 When the `manage-tab-index` attribute is set on an `<sp-sidenav>` element, it will present its `<sp-sidenav-item>` children with a single tab-stop. This will leave items beyond the selected item (or when there is no focusable selected item), accessible via the up and down arrow keys. Items with expanded children that aren't selected lose focus when `manage-tab-index` is active.
