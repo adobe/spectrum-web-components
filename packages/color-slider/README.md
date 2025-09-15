@@ -108,6 +108,14 @@ The `<sp-color-slider>` is rendered with appropriate ARIA attributes to ensure a
             <sp-table-cell>Increases the hue value</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
+            <sp-table-cell><kbd>Shift + Arrow Left</kbd>/<kbd>Shift + Arrow Down</kbd></sp-table-cell>
+            <sp-table-cell>Decreases the hue value by a larger step (10x)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><kbd>Shift + Arrow Right</kbd>/<kbd>Shift + Arrow Up</kbd></sp-table-cell>
+            <sp-table-cell>Increases the hue value by a larger step (10x)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
             <sp-table-cell><kbd>Page Down</kbd></sp-table-cell>
             <sp-table-cell>Decreases the hue value by a larger step</sp-table-cell>
         </sp-table-row>
