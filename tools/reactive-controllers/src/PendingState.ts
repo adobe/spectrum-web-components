@@ -73,17 +73,27 @@ export class PendingStateController<T extends HostWithPendingState>
         const { pending, disabled, pendingLabel } = this.host;
         const currentAriaLabel = this.host.getAttribute('aria-label');
 
-        if (pending && !disabled && currentAriaLabel !== pendingLabel) {
-            // Cache the current `aria-label` to be restored when no longer `pending`
+        // If the current `aria-label` is different from the pending label, cache it
+        // or if the cached `aria-label` is different from the current `aria-label`, cache it
+        if (
+            (!this.cachedAriaLabel &&
+                currentAriaLabel &&
+                currentAriaLabel !== pendingLabel) ||
+            (this.cachedAriaLabel !== currentAriaLabel &&
+                currentAriaLabel &&
+                currentAriaLabel !== pendingLabel)
+        ) {
             this.cachedAriaLabel = currentAriaLabel;
+        }
+
+        if (pending && !disabled) {
             // Since it is pending, we set the aria-label to `pendingLabel` or "Pending"
             this.host.setAttribute('aria-label', pendingLabel || 'Pending');
-        } else if (!pending || disabled) {
+        } else {
             // Restore the cached `aria-label` if it exists
             if (this.cachedAriaLabel) {
                 this.host.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (!pending) {
-                // If no cached `aria-label` and not `pending`, remove the `aria-label`
+            } else {
                 this.host.removeAttribute('aria-label');
             }
         }
