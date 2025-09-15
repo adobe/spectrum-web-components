@@ -1,5 +1,9 @@
 # Search migration roadmap
 
+## Component specifications
+
+### CSS
+
 <details>
 <summary>CSS selectors</summary>
 
@@ -27,7 +31,9 @@
 - `.spectrum-Search.is-collapsed`
 - `.spectrum-Search.is-disabled .spectrum-Search-clearButton`
 - `.spectrum-Search.is-expanded`
-- `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)`
+- `.spectrum-Search:lang(ja)`
+- `.spectrum-Search:lang(ko)`
+- `.spectrum-Search:lang(zh)`
 
 </details>
 
@@ -56,30 +62,6 @@
 - `--mod-textfield-text-color-focus-hover`
 - `--mod-textfield-text-color-hover`
 - `--mod-textfield-text-color-keyboard-focus`
-
-</details>
-
-<details>
-<summary>Attributes</summary>
-
-- `action` (String) - Form action attribute
-- `label` (String) - Label for the search field (default: "Search")
-- `method` (String) - Form method (`get`, `post`, `dialog`)
-- `placeholder` (String) - Placeholder text (default: "Search")
-- `holdValueOnEscape` (Boolean) - Whether to hold the value when Escape is pressed
-- `value` (String) - Current search input value
-- `size` (String) - Search field size (`s`, `m`, `l`, `xl`)
-- `disabled` (Boolean) - Whether the search field is disabled
-- `invalid` (Boolean) - Whether the search field is in an invalid state
-- `quiet` (Boolean) - Whether to use the quiet variant
-
-</details>
-
-<details>
-<summary>Slots</summary>
-
-- `help-text` - Default or non-negative help text to associate to your form element
-- `negative-help-text` - Negative help text to associate to your form element when `invalid`
 
 </details>
 
@@ -124,155 +106,329 @@
 
 </details>
 
-## Visual Comparison
+### SWC
 
-**Legacy Component:**
+<details>
+<summary>Attributes</summary>
 
-<!-- Screenshot of legacy component will be added here -->
+- `action` (string)
+- `label` (string) - defaults to "Search"
+- `method` (string) - "get" | "post" | "dialog"
+- `placeholder` (string) - defaults to "Search"
+- `holdValueOnEscape` (boolean)
+- `size` (inherited from Textfield)
+- `disabled` (inherited from Textfield)
+- `invalid` (inherited from Textfield)
+- `value` (inherited from Textfield)
 
-**Spectrum 2 Component:**
+</details>
 
-<!-- Screenshot of Spectrum 2 component will be added here -->
+<details>
+<summary>Slots</summary>
 
-## DOM Structure Changes
+- `help-text` - default or non-negative help text to associate to your form element
+- `negative-help-text` - negative help text to associate to your form element when `invalid`
 
-**Legacy (main branch):**
-
-```html
-<form
-    class="spectrum-Search spectrum-Search--size{size} spectrum-Search--quiet"
->
-    <div class="spectrum-Textfield spectrum-Search-textfield">
-        <svg
-            class="spectrum-Icon spectrum-Search-icon spectrum-UIIcon-Magnify"
-        ></svg>
-        <input
-            type="search"
-            placeholder="Search"
-            name="search"
-            class="spectrum-Textfield-input spectrum-Search-input"
-            autocomplete="off"
-        />
-    </div>
-    <button class="spectrum-ClearButton spectrum-Search-clearButton">
-        <svg class="spectrum-ClearButton-fill"></svg>
-    </button>
-    <div class="spectrum-HelpText">[help text]</div>
-</form>
-```
-
-**Spectrum 2 (spectrum-two branch):**
-
-```html
-<form
-    class="spectrum-Search spectrum-Search--size{size} spectrum-Search--quiet"
->
-    <div class="spectrum-Textfield spectrum-Search-textfield">
-        <svg
-            class="spectrum-Icon spectrum-Search-icon spectrum-UIIcon-Magnify"
-        ></svg>
-        <input
-            type="search"
-            placeholder="Search"
-            name="search"
-            class="spectrum-Textfield-input spectrum-Search-input"
-            autocomplete="off"
-        />
-    </div>
-    <button class="spectrum-ClearButton spectrum-Search-clearButton">
-        <svg class="spectrum-ClearButton-fill"></svg>
-    </button>
-    <div class="spectrum-HelpText">[help text]</div>
-</form>
-```
+</details>
 
 ## Comparison
 
-| CSS selector                                                                          | Attribute or slot             | Status           |
-| ------------------------------------------------------------------------------------- | ----------------------------- | ---------------- |
-| `.spectrum-Search`                                                                    | Root element                  | Implemented      |
-| `.spectrum-Search--sizeS`                                                             | `size="s"`                    | Implemented      |
-| `.spectrum-Search--sizeL`                                                             | `size="l"`                    | Implemented      |
-| `.spectrum-Search--sizeXL`                                                            | `size="xl"`                   | Implemented      |
-| `.spectrum-Search-textfield`                                                          | Textfield wrapper             | Implemented      |
-| `.spectrum-Search-input`                                                              | Input element                 | Implemented      |
-| `.spectrum-Search-icon`                                                               | Search icon                   | Implemented      |
-| `.spectrum-Search-clearButton`                                                        | Clear button                  | Implemented      |
-| `.spectrum-Search .spectrum-HelpText`                                                 | Help text element             | Implemented      |
-| `.spectrum-Search.is-collapsed`                                                       | Collapsed state               | Missing from WC  |
-| `.spectrum-Search.is-expanded`                                                        | Expanded state                | Missing from WC  |
-| `.spectrum-Search.is-disabled`                                                        | `disabled` attribute          | Implemented      |
-| `.spectrum-Search-textfield.is-focused`                                               | Focus state                   | Implemented      |
-| `.spectrum-Search-textfield.is-keyboardFocused`                                       | Keyboard focus state          | Implemented      |
-| `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling     | Implemented      |
-| -                                                                                     | `action` attribute            | Missing from CSS |
-| -                                                                                     | `method` attribute            | Missing from CSS |
-| -                                                                                     | `holdValueOnEscape` attribute | Missing from CSS |
-| -                                                                                     | `help-text` slot              | Missing from CSS |
-| -                                                                                     | `negative-help-text` slot     | Missing from CSS |
+### DOM Structure changes
 
-## Key Structural Changes
+<details>
+<summary>Spectrum Web Components:</summary>
 
-**Element Hierarchy Changes:**
+```html
+<sp-search>
+    #shadow-root
+    <form
+        action=""
+        id="form"
+        method=""
+        @submit="handleSubmit"
+        @reset="reset"
+        @keydown="handleKeydown"
+    >
+        <sp-icon-search
+            size=""
+            class="icon magnifier icon-workflow icon-search"
+        ></sp-icon-search>
+        <div id="textfield">
+            <input type="search" class="input" />
+        </div>
+        <!-- Conditionally rendered only when there's a value -->
+        <sp-clear-button
+            id="button"
+            label="Reset"
+            tabindex="-1"
+            type="reset"
+            size=""
+            @keydown="stopPropagation"
+        ></sp-clear-button>
+    </form>
+    <div id="sp-help-text-..." aria-live="assertive">
+        <slot name="help-text"></slot>
+    </div>
+</sp-search>
+```
 
-- No significant hierarchy changes between main and spectrum-two branches
-- Maintained consistent form > textfield > input structure
+</details>
 
-**Class Name Changes:**
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
-- No major class name changes
-- Consistent naming convention maintained
+```html
+<form class="spectrum-Search spectrum-Search--sizeM">
+    <!-- TextField component -->
+    <div class="spectrum-Textfield spectrum-Search-textfield">
+        <svg
+            class="spectrum-Icon spectrum-Search-icon spectrum-UIIcon-Magnify"
+            focusable="false"
+            aria-hidden="true"
+            role="img"
+        >
+            <title>Magnify</title>
+            <use
+                xlink:href="#spectrum-css-icon-Magnify"
+                href="#spectrum-css-icon-Magnify"
+            />
+        </svg>
+        <input
+            type="search"
+            placeholder="Search"
+            name="search"
+            class="spectrum-Textfield-input spectrum-Search-input"
+            autocomplete="off"
+        />
+    </div>
+    <!-- ClearButton component -->
+    <button
+        class="spectrum-ClearButton spectrum-Search-clearButton"
+        type="reset"
+    >
+        <div class="spectrum-ClearButton-fill">
+            <svg
+                class="spectrum-Icon spectrum-ClearButton-icon spectrum-UIIcon-Cross"
+                focusable="false"
+                aria-hidden="true"
+                role="img"
+            >
+                <title>Cross</title>
+                <use
+                    xlink:href="#spectrum-css-icon-Cross"
+                    href="#spectrum-css-icon-Cross"
+                />
+            </svg>
+        </div>
+    </button>
+    <!-- HelpText component (conditional) -->
+    <div class="spectrum-HelpText">
+        <!-- help text content -->
+    </div>
+</form>
+```
 
-**Attribute Changes:**
+</details>
 
-- Added `action` and `method` attributes for form functionality
-- Added `holdValueOnEscape` for controlling escape key behavior
-- Added `label` attribute for accessibility
-- Extended Textfield functionality with search-specific features
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
-**Slot/Content Changes:**
+```html
+<!-- When expanded -->
+<form
+    class="spectrum-Search spectrum-Search--sizeM is-expanded"
+    aria-label="Search"
+>
+    <div class="spectrum-Textfield spectrum-Search-textfield">
+        <svg
+            class="spectrum-Icon spectrum-Search-icon spectrum-Icon--sizeM"
+            focusable="false"
+            aria-hidden="true"
+            role="img"
+        >
+            <title>Search</title>
+            <use
+                xlink:href="#spectrum-icon-18-Search"
+                href="#spectrum-icon-18-Search"
+            />
+        </svg>
+        <input
+            type="search"
+            placeholder="Search"
+            name="search"
+            class="spectrum-Textfield-input spectrum-Search-input"
+            autocomplete="off"
+            value=""
+        />
+    </div>
+    <!-- ClearButton component (when value is present) -->
+    <button
+        class="spectrum-ClearButton spectrum-Search-clearButton"
+        type="reset"
+    >
+        <div class="spectrum-ClearButton-fill">
+            <svg
+                class="spectrum-Icon spectrum-ClearButton-icon spectrum-UIIcon-Cross"
+                focusable="false"
+                aria-hidden="true"
+                role="img"
+            >
+                <title>Cross</title>
+                <use
+                    xlink:href="#spectrum-css-icon-Cross"
+                    href="#spectrum-css-icon-Cross"
+                />
+            </svg>
+        </div>
+    </button>
+    <!-- HelpText component (optional/conditional) -->
+    <div class="spectrum-HelpText">
+        <!-- help text content -->
+    </div>
+</form>
 
-- Added `help-text` slot for descriptive text
-- Added `negative-help-text` slot for error messaging
-- Inherits all Textfield slots and functionality
+<!-- When collapsed (isCollapsed=true) -->
+<form
+    class="spectrum-Search spectrum-Search--sizeM is-collapsed"
+    aria-label="Search"
+>
+    <button class="spectrum-ActionButton spectrum-Search-actionButton is-quiet">
+        <svg
+            class="spectrum-Icon spectrum-ActionButton-icon spectrum-Icon--sizeM"
+            focusable="false"
+            aria-hidden="true"
+            role="img"
+        >
+            <title>Search</title>
+            <use
+                xlink:href="#spectrum-icon-18-Search"
+                href="#spectrum-icon-18-Search"
+            />
+        </svg>
+    </button>
+</form>
+```
 
-**Migration Impact:**
+</details>
 
-- Search component extends Textfield providing all textfield functionality
-- Enhanced form handling with action and method support
-- Better accessibility with automatic labeling
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-### Implementation Gaps
+```diff
+--- a/components/search/stories/template.js (main branch)
++++ b/components/search/stories/template.js (spectrum-two branch)
+@@ -1,1 +1,1 @@
+-<form class="spectrum-Search spectrum-Search--sizeM">
++<form class="spectrum-Search spectrum-Search--sizeM is-expanded" aria-label="Search">
+@@ -3,4 +3,4 @@
+-        <svg
+-            class="spectrum-Icon spectrum-Search-icon spectrum-UIIcon-Magnify"
++        <svg
++            class="spectrum-Icon spectrum-Search-icon spectrum-Icon--sizeM"
+             focusable="false"
+             aria-hidden="true"
+             role="img"
+         >
+-            <title>Magnify</title>
++            <title>Search</title>
+             <use
+-                xlink:href="#spectrum-css-icon-Magnify"
+-                href="#spectrum-css-icon-Magnify"
++                xlink:href="#spectrum-icon-18-Search"
++                href="#spectrum-icon-18-Search"
+             />
+         </svg>
+         <input
+             type="search"
+             placeholder="Search"
+             name="search"
+             class="spectrum-Textfield-input spectrum-Search-input"
+             autocomplete="off"
++            value=""
+         />
+     </div>
+@@ -15,4 +15,4 @@
+-    <button
+-        class="spectrum-ClearButton spectrum-Search-clearButton"
+-        type="reset"
+-    >
++    <!-- ClearButton component (when value is present) -->
++    <button
++        class="spectrum-ClearButton spectrum-Search-clearButton"
++        type="reset"
++    >
+@@ -25,4 +25,4 @@
+     </button>
+-    <!-- HelpText component (conditional) -->
++    <!-- HelpText component (optional/conditional) -->
+     <div class="spectrum-HelpText">
+         <!-- help text content -->
+     </div>
+ </form>
++
++<!-- When collapsed (isCollapsed=true) -->
++<form
++    class="spectrum-Search spectrum-Search--sizeM is-collapsed"
++    aria-label="Search"
++>
++    <button class="spectrum-ActionButton spectrum-Search-actionButton is-quiet">
++        <svg
++            class="spectrum-Icon spectrum-ActionButton-icon spectrum-Icon--sizeM"
++            focusable="false"
++            aria-hidden="true"
++            role="img"
++        >
++            <title>Search</title>
++            <use
++                xlink:href="#spectrum-icon-18-Search"
++                href="#spectrum-icon-18-Search"
++            />
++        </svg>
++    </button>
++</form>
+```
 
-**CSS Features Missing from Web Component:**
+</details>
 
-- Collapsed/expanded state support - web component should support animated expansion/collapse
-- More sophisticated state management for search interactions
+### CSS => SWC mapping
 
-**Web Component Features Missing from CSS:**
+| CSS selector                                                                          | Attribute or slot          | Status                       |
+| ------------------------------------------------------------------------------------- | -------------------------- | ---------------------------- |
+| `.spectrum-Search--sizeS`, `.spectrum-Search--sizeL`, `.spectrum-Search--sizeXL`      | `size`                     | Implemented                  |
+| `.spectrum-Search.is-disabled`                                                        | `disabled`                 | Implemented                  |
+| `.spectrum-Search .spectrum-HelpText`                                                 | `help-text` slot           | Implemented                  |
+| `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling  | Implemented                  |
+| `.spectrum-Search .spectrum-Search-clearButton`                                       | Clear button functionality | Implemented                  |
+| `.spectrum-Search .spectrum-Search-textfield`                                         | Textfield functionality    | Implemented                  |
+| `.spectrum-Search .spectrum-Search-icon`                                              | Search icon                | Implemented                  |
+| `.spectrum-Search .spectrum-Search-input`                                             | Input element              | Implemented                  |
+|                                                                                       | `action`                   | Missing from CSS             |
+|                                                                                       | `method`                   | Missing from CSS             |
+|                                                                                       | `holdValueOnEscape`        | Missing from CSS             |
+|                                                                                       | `negative-help-text` slot  | Missing from CSS             |
+| `.spectrum-Search.is-collapsed`                                                       |                            | Missing from WC (new for S2) |
+| `.spectrum-Search.is-expanded`                                                        |                            | Missing from WC (new for S2) |
 
-- `action` attribute - CSS should provide styling for form action states
-- `method` attribute - CSS should provide styling based on form method
-- `holdValueOnEscape` attribute - CSS should provide styling for this behavior state
-- Help text slots - CSS should provide styling for slotted help text elements
+## Summary of changes
 
-**Features Being Deprecated/Removed:**
+### CSS => SWC implementation gaps
 
-- None identified - component maintains backward compatibility
+The primary implementation gap between CSS and SWC is the S2 implementation of the collapsed Search variant, which allows for expansion and collapse of the search field to and from a quiet action button that uses the same magnifying glass icon. In CSS, these collapsed/expanded states and controlled by the classes `.spectrum-Search.is-collapsed` and `.spectrum-Search.is-expanded`).
 
-### Action Items for Web Component Maintainers
+Also, because Search extends Textfield, S2 updates to Textfield also apply here. The most notable update to S2 Textfield is the removal of the quiet variant. **Therefore, there is no quiet variant in S2 Search.**
 
-**Required Additions:**
+### CSS Spectrum 2 changes
 
-- Collapsed/expanded state functionality for search field animations
-- Enhanced form integration with action and method handling
-- Better state management for search-specific interactions
+The most notable changes seen in Spectrum 2 migration work include:
 
-**Required Removals:**
+- **Collapsible functionality**: Added support and styling for collapsed/expanded states
+- **ActionButton integration**: When collapsed, the search shows as a quiet action button instead of a textfield
+- **Icon change**: Changed from "Magnify" icon to "Search" icon with workflow icon set
+- **Quiet variant**: Removed `isQuiet` parameter and `--quiet` modifier support
 
-- None identified
+## Resources
 
-**Breaking Changes:**
-
-- None identified - component extends existing Textfield functionality
-- Migration guidance: Search component provides enhanced functionality while maintaining Textfield compatibility
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2673)
+- [CSS expand/collapse feature](https://github.com/adobe/spectrum-css/pull/4115)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-search-field--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/searchfield--docs)
