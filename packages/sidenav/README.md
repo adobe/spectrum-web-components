@@ -46,7 +46,7 @@ The side navigation consists of several key parts:
 - A container element that manages the side navigation behavior
 - Individual side navigation items that may or may not be expandable
 - Children side navigation items that are revealed when a parent item is expanded
-- Optional header with a label
+- Optional heading with a label
 
 ```html live-demo
 <sp-sidenav>
@@ -67,7 +67,7 @@ Make sure to use the right option for the context and user needs. Don’t mix be
 
 - When navigation is simple, use the single level side navigation.
 - When navigation is simple but categorical, use the single level side navigation with headers.
-- When navigation is expansive, hierarchical, and/or you need progressive disclosure in the menu behavior, use the multi-level side navigation. Up to three levels of navigation is supported.
+- When navigation is expansive, hierarchical, and/or you need progressive disclosure in the menu behavior, use the multi-level side navigation. Up to three levels of navigation are supported.
 
 ```html
 <sp-sidenav defaultValue="Docs">
@@ -79,7 +79,7 @@ Make sure to use the right option for the context and user needs. Don’t mix be
     ></sp-sidenav-item>
     <sp-sidenav-item
         value="Guides"
-        href="/guides/getting_started"
+        href="/guides"
         label="Guides"
     ></sp-sidenav-item>
     <sp-sidenav-item
@@ -95,14 +95,14 @@ Make sure to use the right option for the context and user needs. Don’t mix be
     ></sp-sidenav-item>
     <sp-sidenav-item
         value="Releases"
-        href="http://git.corp.adobe.com/React/react-spectrum/releases"
+        href="/releases"
         target="_blank"
         label="Releases"
         disabled
     ></sp-sidenav-item>
     <sp-sidenav-item
         value="GitHub"
-        href="http://git.corp.adobe.com/React/react-spectrum"
+        href="/github"
         target="_blank"
         label="Github"
     ></sp-sidenav-item>
@@ -133,7 +133,9 @@ In single-level side navigation, do not mix icon usage between side nav items. E
 <sp-tab value="headings">With headings</sp-tab>
 <sp-tab-panel value="headings">
 
-Use headings in single level side navigation when it's beneficial to group navigation items into categories. This variation has the same behavior as the single level side navigation, but it has headings that aren’t interactive. If items don’t fall into a category, place them at the top. When using the heading variation, an entire category should either all have icons or all be text-only.
+Use headings in single level side navigation when it's beneficial to group navigation items into categories. The headings are not interactive. If items don’t fall into a category, place them at the top. When using the heading variation, an entire category should either all have icons or all be text-only.
+
+Although headings can be used in multi-level side navigation, they can only be used as first-level items, and are not to be nested.
 
 ```html
 <sp-sidenav>
@@ -156,9 +158,10 @@ Use headings in single level side navigation when it's beneficial to group navig
 
 Use `variant="multilevel"` when you have multiple layers of hierarchical navigation.
 In the instances where a top-level navigation item has no children, clicking
-will send the user to the location of the item.
+will send the user to the location of the item. Additionally, headings can be used
+in multi-level side navigation, but they can only be used as first-level items, and are not to be nested.
 
-Up to three levels of navigation is supported.
+Up to three levels of navigation are supported.
 
 ```html
 <sp-sidenav variant="multilevel" defaultValue="Layout">
@@ -232,11 +235,11 @@ When an side navigation item is programmatically selected in `variant="multileve
 With the `disabled` attribute, the entire `<sp-sidenav>` can be removed from the tab order.
 
 ```html
-<sp-sidenav>
+<sp-sidenav disabled>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
         <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
-    <sp-sidenav-item value="Section Title 2" label="Section Title 2" disabled>
+    <sp-sidenav-item value="Section Title 2" label="Section Title 2">
         <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
     <sp-sidenav-item value="Section Title 3" label="Section Title 3">

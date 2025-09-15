@@ -86,8 +86,8 @@ Icons can be displayed in first-level items of any type of side navigation (sing
     <sp-sidenav-item value="star" label="Starred">
         <sp-icon-star slot="icon"></sp-icon-star>
     </sp-sidenav-item>
-    <sp-sidenav-item value="home" label="Home">
-        <sp-icon-home slot="icon"></sp-icon-home>
+    <sp-sidenav-item value="add" label="Add more">
+        <sp-icon-add slot="icon"></sp-icon-add>
     </sp-sidenav-item>
 </sp-sidenav>
 ```
