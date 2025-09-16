@@ -83,7 +83,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                                         <sp-popover
                                             id="inner-popover"
                                             slot="click-content"
-                                            direction="bottom"
+                                            placement="bottom"
                                             tip
                                         >
                                             <sp-dialog
@@ -565,7 +565,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
-                sendMouse({
+                await sendMouse({
                     type: 'move',
                     position: [
                         rect.left + rect.width / 2,
@@ -579,7 +579,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const close = oneEvent(this.outerTrigger, 'sp-closed');
-                sendMouse({
+                await sendMouse({
                     type: 'move',
                     position: [
                         rect.left + rect.width * 2,

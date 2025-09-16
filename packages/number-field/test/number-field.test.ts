@@ -683,7 +683,7 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            sendMouse([
+            await sendMouse([
                 {
                     type: 'move',
                     position: [buttonUp],
@@ -704,7 +704,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(53);
             expect(inputSpy.callCount).to.equal(3);
             expect(changeSpy.callCount).to.equal(0);
-            mouseMoveOver(buttonDown);
+            await mouseMoveOver(buttonDown);
             let framesToWait = FRAMES_PER_CHANGE * 2;
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames
@@ -724,7 +724,7 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            sendMouse([
+            await sendMouse([
                 {
                     type: 'move',
                     position: [buttonUp],
@@ -741,7 +741,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(52);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(0);
-            mouseMoveOver(buttonDown);
+            await mouseMoveOver(buttonDown);
             let framesToWait = FRAMES_PER_CHANGE * 2;
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames

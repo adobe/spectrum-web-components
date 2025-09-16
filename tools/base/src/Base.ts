@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { LitElement, ReactiveElement } from 'lit';
 import { version } from '@spectrum-web-components/base/src/version.js';
+import { LitElement, ReactiveElement } from 'lit';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;

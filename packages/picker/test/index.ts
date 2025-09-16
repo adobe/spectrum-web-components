@@ -60,6 +60,7 @@ import {
     ignoreResizeObserverLoopError,
     mouseClickAway,
     mouseClickOn,
+    sendShiftTabKey,
     sendTabKey,
     fixture as styledFixture,
     testForLitDevWarnings,
@@ -1253,18 +1254,14 @@ export function runPickerTests(): void {
                 );
 
                 let focused = oneEvent(el, 'focus');
-                if (!isWebKit()) {
-                    await sendKeys({ press: 'Shift+Tab' });
+                await sendShiftTabKey();
 
-                    // Use helper function for robust focus handling
-                    await waitForFocusEvent(focused, el);
+                // Use helper function for robust focus handling
+                await waitForFocusEvent(focused, el);
 
-                    expect(el.focused, 'focused').to.be.true;
-                    expect(el.open, 'closed').to.be.false;
-                    expect(document.activeElement, 'focuses el').to.equal(el);
-                } else {
-                    el.focus();
-                }
+                expect(el.focused, 'focused').to.be.true;
+                expect(el.open, 'closed').to.be.false;
+                expect(document.activeElement, 'focuses el').to.equal(el);
 
                 // tab through the picker to input1
                 focused = oneEvent(input1, 'focus');
@@ -2096,12 +2093,7 @@ export function runPickerTests(): void {
         input1.focus();
         expect(document.activeElement).to.equal(input1);
         const tooltipOpened = oneEvent(el, 'sp-opened');
-        if (!isWebKit()) {
-            await sendTabKey();
-        } else {
-            // by default Safari does not focus the button on tab unless user sets preferences
-            el.focus();
-        }
+        await sendTabKey();
         await tooltipOpened;
         expect(
             document.activeElement === el,

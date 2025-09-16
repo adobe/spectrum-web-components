@@ -731,7 +731,7 @@ describe('sp-overlay', () => {
 
             closed = oneEvent(button, 'sp-closed');
             // pointer leave the button to close the tooltip
-            sendMouse({
+            await sendMouse({
                 type: 'move',
                 position: [
                     buttonRect.x + buttonRect.width * 2,

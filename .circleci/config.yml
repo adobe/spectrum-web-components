@@ -456,9 +456,9 @@ workflows:
     build:
         jobs:
             - test-chromium
+            - test-chromium-memory
             - test-firefox
             - test-webkit
-            - test-chromium-memory
             - test-chromium-coverage
             - hcm-visual:
                   filters:
