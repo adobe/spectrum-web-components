@@ -101,6 +101,7 @@ export class SplitView extends SpectrumElement {
     @property({ type: String, attribute: false })
     private firstPaneSize = 'auto';
 
+    /** Sets the `aria-label` on the splitter component */
     @property()
     public label?: string;
 
