@@ -71,31 +71,6 @@ None found for this component.
 
 </details>
 
-### SWC
-
-<details>
-<summary>Attributes</summary>
-
-- `disabled` - Boolean attribute to disable the checkbox
-- `indeterminate` - Boolean attribute for indeterminate state
-- `invalid` - Boolean attribute for invalid state styling
-- `emphasized` - Boolean attribute for emphasized styling
-- `checked` - Boolean attribute for checked state (inherited from CheckboxMixin)
-- `name` - String attribute for form submission (inherited from CheckboxMixin)
-- `readonly` - Boolean attribute for read-only state (inherited from CheckboxMixin)
-- `size` - String attribute with values: `s`, `m`, `l`, `xl` (from SizedMixin)
-- `tabindex` - Number attribute for tab order management
-- `autofocus` - Boolean HTML attribute for auto-focusing (handled in connectedCallback)
-
-</details>
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - Content to display as the label for the Checkbox
-
-</details>
-
 <details>
 <summary>Modifiers</summary>
 
@@ -133,15 +108,32 @@ None found for this component.
 
 </details>
 
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `disabled` - Boolean attribute to disable the checkbox
+- `indeterminate` - Boolean attribute for indeterminate state
+- `invalid` - Boolean attribute for invalid state styling
+- `emphasized` - Boolean attribute for emphasized styling
+- `checked` - Boolean attribute for checked state (inherited from CheckboxMixin)
+- `name` - String attribute for form submission (inherited from CheckboxMixin)
+- `readonly` - Boolean attribute for read-only state (inherited from CheckboxMixin)
+- `size` - String attribute with values: `s`, `m`, `l`, `xl` (from SizedMixin)
+- `tabindex` - Number attribute for tab order management
+- `autofocus` - Boolean HTML attribute for auto-focusing (handled in connectedCallback)
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot - Content to display as the label for the Checkbox
+
+</details>
+
 ## Comparison
-
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
 
 ### DOM Structure changes
 
@@ -192,12 +184,12 @@ None found for this component.
         id="checkbox-input-123"
     />
     <span class="spectrum-Checkbox-box">
-        <span
+        <svg
             class="spectrum-Icon spectrum-UIIcon-Checkmark75 spectrum-Checkbox-checkmark"
-        ></span>
-        <span
+        ></svg>
+        <svg
             class="spectrum-Icon spectrum-UIIcon-Dash75 spectrum-Checkbox-partialCheckmark"
-        ></span>
+        ></svg>
     </span>
     <span class="spectrum-Checkbox-label">Checkbox Label</span>
 </label>
@@ -224,12 +216,12 @@ None found for this component.
         id="checkbox-input-123"
     />
     <span class="spectrum-Checkbox-box">
-        <span
+        <svg
             class="spectrum-Icon spectrum-UIIcon-Checkmark75 spectrum-Checkbox-checkmark"
-        ></span>
-        <span
+        ></svg>
+        <svg
             class="spectrum-Icon spectrum-UIIcon-Dash75 spectrum-Checkbox-partialCheckmark"
-        ></span>
+        ></svg>
     </span>
     <span class="spectrum-Checkbox-label">Checkbox Label</span>
 </label>
@@ -237,41 +229,43 @@ None found for this component.
 
 </details>
 
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+**No differences found between main and spectrum-two branches.**
+
+</details>
+
 ### CSS => SWC mapping
 
-| CSS selector                                                                                | Attribute or slot               | Status           |
-| ------------------------------------------------------------------------------------------- | ------------------------------- | ---------------- |
-| `.spectrum-Checkbox`                                                                        | Component base                  | Implemented      |
-| `.spectrum-Checkbox--emphasized`                                                            | `emphasized` attribute          | Implemented      |
-| `.spectrum-Checkbox--sizeS`                                                                 | `size="s"` attribute            | Implemented      |
-| `.spectrum-Checkbox--sizeL`                                                                 | `size="l"` attribute            | Implemented      |
-| `.spectrum-Checkbox--sizeXL`                                                                | `size="xl"` attribute           | Implemented      |
-| `.spectrum-Checkbox.is-indeterminate`                                                       | `indeterminate` attribute       | Implemented      |
-| `.spectrum-Checkbox.is-invalid`                                                             | `invalid` attribute             | Implemented      |
-| `.spectrum-Checkbox-input`                                                                  | Internal checkbox input element | Implemented      |
-| `.spectrum-Checkbox-input:checked`                                                          | `checked` attribute             | Implemented      |
-| `.spectrum-Checkbox-input:disabled`                                                         | `disabled` attribute            | Implemented      |
-| `.spectrum-Checkbox-input:focus-visible`                                                    | Focus-visible state             | Implemented      |
-| `.spectrum-Checkbox-box`                                                                    | Internal checkbox box element   | Implemented      |
-| `.spectrum-Checkbox-checkmark`                                                              | Checkmark icon element          | Implemented      |
-| `.spectrum-Checkbox-partialCheckmark`                                                       | Indeterminate dash icon element | Implemented      |
-| `.spectrum-Checkbox-label`                                                                  | Default slot content            | Implemented      |
-| `.spectrum-Checkbox:lang(ja)`, `.spectrum-Checkbox:lang(ko)`, `.spectrum-Checkbox:lang(zh)` | Language-specific styling       | Implemented      |
-| `.spectrum-Checkbox:hover`                                                                  | Hover state styling             | Missing from WC  |
-| `.spectrum-Checkbox:active`                                                                 | Active state styling            | Missing from WC  |
-| `.spectrum-Checkbox.is-readOnly`                                                            | `readonly` attribute            | Implemented      |
-|                                                                                             | `name` attribute                | Missing from CSS |
-|                                                                                             | `tabindex` attribute            | Missing from CSS |
-|                                                                                             | `autofocus` attribute           | Missing from CSS |
+| CSS selector                                                                                | Attribute or slot                                    | Status           |
+| ------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------- |
+| `.spectrum-Checkbox`                                                                        | `:host`                                              | Implemented      |
+| `.spectrum-Checkbox--emphasized`                                                            | `emphasized` attribute                               | Implemented      |
+| `.spectrum-Checkbox--sizeS`                                                                 | `size="s"` attribute                                 | Implemented      |
+| `.spectrum-Checkbox--sizeL`                                                                 | `size="l"` attribute                                 | Implemented      |
+| `.spectrum-Checkbox--sizeXL`                                                                | `size="xl"` attribute                                | Implemented      |
+| `.spectrum-Checkbox.is-indeterminate`                                                       | `indeterminate` attribute                            | Implemented      |
+| `.spectrum-Checkbox.is-invalid`                                                             | `invalid` attribute                                  | Implemented      |
+| `.spectrum-Checkbox-input`                                                                  | Internal checkbox input element, `#input`            | Implemented      |
+| `.spectrum-Checkbox-input:checked`                                                          | `checked` attribute                                  | Implemented      |
+| `.spectrum-Checkbox-input:disabled`                                                         | `disabled` attribute                                 | Implemented      |
+| `.spectrum-Checkbox-box`                                                                    | Internal checkbox box element, `#box`                | Implemented      |
+| `.spectrum-Checkbox-checkmark`                                                              | Checkmark icon element, `#checkmark`                 | Implemented      |
+| `.spectrum-Checkbox-partialCheckmark`                                                       | Indeterminate dash icon element, `#partialCheckmark` | Implemented      |
+| `.spectrum-Checkbox-label`                                                                  | Default slot content                                 | Implemented      |
+| `.spectrum-Checkbox:lang(ja)`, `.spectrum-Checkbox:lang(ko)`, `.spectrum-Checkbox:lang(zh)` | Language-specific styling                            | Implemented      |
+| `.spectrum-Checkbox.is-readOnly`                                                            | `readonly` attribute                                 | Implemented      |
+|                                                                                             | `name` attribute                                     | Missing from CSS |
+|                                                                                             | `tabindex` attribute                                 | Missing from CSS |
+|                                                                                             | `autofocus` attribute                                | Missing from CSS |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-**Features Missing from WC:**
-
-- Interactive state classes (`.spectrum-Checkbox:hover`, `.spectrum-Checkbox:active`) are not automatically applied during user interactions
-- Enhanced visual feedback requires manual state management
+**New for S2:**
+The checkbox component in Spectrum 2 has the new down state (active) perspective shift applied. Additionally, the checkbox CSS was expanded to ensure coverage of a variety of interactive and variant states: hover, focus-visible, hover+disabled, checked+disabled, focus-visible+checked+hover, indeterminate+invalid, invalid+focused, disabled+read-only, etc.
 
 **Features Missing from CSS:**
 
@@ -279,30 +273,12 @@ None found for this component.
 - `tabindex` attribute for accessibility has no CSS representation
 - `autofocus` attribute functionality implemented in JavaScript but has no CSS counterpart
 
-**Implementation Status:**
-
-- All core checkbox functionality (checked, indeterminate, invalid, emphasized, disabled, readonly) is fully implemented
-- Complex state combinations (invalid + indeterminate + emphasized) are supported
-- Size variants and language-specific styling are implemented
-
 ### CSS Spectrum 2 changes
 
-Based on the analysis between CSS main and spectrum-two branches:
-
-**Enhanced interactive states** - The spectrum-two branch adds improved interactive state classes:
-
-- Added `is-active` class on the label element for active/pressed states
-- Added `is-focus-visible` and `is-active` classes on the input element for enhanced focus and interaction feedback
-- All other structural elements remain identical
-
-**No structural changes** - The core HTML structure is preserved between branches:
-
-- Same element hierarchy (label > input + box span + label span)
-- Same class application patterns
-- Same attribute handling
+No structural differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches. The template structure and class naming remain consistent across both branches.
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3531)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-checkbox--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/checkbox--docs)
