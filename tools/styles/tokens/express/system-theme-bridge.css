@@ -670,8 +670,8 @@
     --system-textfield-spacing-block-end-small: var(--spectrum-component-bottom-to-text-75);
     --system-textfield-spacing-block-end-large: var(--spectrum-component-bottom-to-text-200);
     --system-textfield-spacing-block-end-extra-large: var(--spectrum-component-bottom-to-text-300);
-    --system-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-medium);
-    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-medium-size-small);
-    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-medium-size-large);
-    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-medium-size-extra-large);
+    --system-textfield-corner-radius: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-75);
+    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-200);
+    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-200);
 }
