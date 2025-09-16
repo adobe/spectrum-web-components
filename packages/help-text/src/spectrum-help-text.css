@@ -39,8 +39,6 @@
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
     --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-small);
     --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
-    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-75);
-    --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
 }
 
 :host,
@@ -51,8 +49,6 @@
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
     --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-medium);
     --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
-    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-100);
-    --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
 }
 
 :host([size="l"]) {
@@ -62,8 +58,6 @@
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-100);
     --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-large);
     --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
-    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-200);
-    --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
 }
 
 :host([size="xl"]) {
@@ -73,8 +67,6 @@
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-200);
     --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-extra-large);
     --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
-    --spectrum-helptext-top-to-text: var(--spectrum-component-top-to-text-300);
-    --spectrum-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-300);
 }
 
 :host([variant="neutral"]) {
