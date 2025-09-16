@@ -479,12 +479,83 @@ export class MenuItem extends LikeAnchor(
             this.id = `sp-menu-item-${randomID()}`;
         }
     }
+
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
-            this.focus();
+            // Get the currently focused element within the component's root context
+            const rootNode = this.getRootNode() as Document | ShadowRoot;
+            const activeElement = rootNode.activeElement as HTMLElement;
+
+            // Only focus this menu item if no input element is currently active
+            // This prevents interrupting user input in search boxes, text fields, etc.
+            if (!activeElement || !this.isInputElement(activeElement)) {
+                this.focus();
+            }
             this.focused = false;
         }
+    }
+
+    /**
+     * Determines if an element is an input field that should retain focus.
+     * Uses multiple detection strategies to identify input elements generically.
+     */
+    private isInputElement(element: HTMLElement): boolean {
+        // Check for native HTML input elements
+        if (this.isNativeInputElement(element)) {
+            return true;
+        }
+
+        // Check for contenteditable elements (rich text editors)
+        if (element.contentEditable === 'true') {
+            return true;
+        }
+
+        // Check for Spectrum Web Components with input-like behavior
+        if (this.isSpectrumInputComponent(element)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if an element is a native HTML input element.
+     */
+    private isNativeInputElement(element: HTMLElement): boolean {
+        return (
+            element instanceof HTMLInputElement ||
+            element instanceof HTMLTextAreaElement ||
+            element instanceof HTMLSelectElement
+        );
+    }
+
+    /**
+     * Checks if an element is a Spectrum Web Component with input behavior.
+     * Uses ARIA roles and component patterns for generic detection.
+     */
+    private isSpectrumInputComponent(element: HTMLElement): boolean {
+        // Check if it's a Spectrum Web Component
+        if (!element.tagName.startsWith('SP-')) {
+            return false;
+        }
+
+        // Check ARIA role for input-like behavior
+        const role = element.getAttribute('role');
+        const inputRoles = ['textbox', 'searchbox', 'combobox', 'slider'];
+        if (role && inputRoles.includes(role)) {
+            return true;
+        }
+
+        // Check for components that typically contain input elements
+        // This covers components like sp-search, sp-textfield, sp-number-field, etc.
+        const inputComponentPattern =
+            /^(SP-SEARCH|SP-TEXTFIELD|SP-NUMBER-FIELD|SP-COMBOBOX|SP-COLOR-FIELD)$/;
+        if (inputComponentPattern.test(element.tagName)) {
+            return true;
+        }
+
+        return false;
     }
     /**
      * forward key info from keydown event to parent menu
