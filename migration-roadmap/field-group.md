@@ -28,16 +28,7 @@ None found for this component.
 <details>
 <summary>Modifiers</summary>
 
-- `--mod-fieldgroup-content-area-spacing-block-end`
-- `--mod-fieldgroup-content-area-spacing-block-start`
-- `--mod-fieldgroup-flex-direction`
-- `--mod-fieldgroup-invalid-icon-color`
-- `--mod-fieldgroup-margin-bottom-fieldlabel`
-- `--mod-fieldgroup-margin-left-fieldlabel`
-- `--mod-fieldgroup-max-inline-size`
-- `--mod-fieldgroup-min-block-size`
-- `--mod-fieldgroup-min-inline-size`
-- `--mod-fieldgroup-spacing-label-to-field`
+None found for this component.
 
 </details>
 
@@ -48,7 +39,6 @@ None found for this component.
 
 - `horizontal` - Boolean attribute for horizontal layout orientation
 - `invalid` - Boolean attribute for invalid state to show negative help text
-- `required` - Boolean attribute for required field indication
 
 </details>
 
@@ -63,25 +53,16 @@ None found for this component.
 
 ## Comparison
 
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
-
 ### DOM Structure changes
 
 <details>
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<!-- Current HTML structure from web component render() method -->
 <div class="group" role="presentation">
     <slot @slotchange="handleSlotchange"></slot>
 </div>
-<!-- Help text rendered via renderHelpText method -->
+<!-- Help text rendered via renderHelpText() method -->
 <sp-help-text slot="help-text" variant="neutral" icon id="help-text-id">
     Help text content
 </sp-help-text>
@@ -94,24 +75,57 @@ None found for this component.
 
 ```html
 <div
-    class="spectrum-FieldGroup spectrum-FieldGroup--horizontal spectrum-FieldGroup--sidelabel"
+    class="spectrum-FieldGroup spectrum-FieldGroup--vertical spectrum-FieldGroup--toplabel"
+    role="radiogroup"
+    aria-labelledby="group-label-cg6lg"
 >
+    <label
+        class=" spectrum-FieldLabel spectrum-FieldLabel--sizeM spectrum-FieldLabel--top "
+        style=""
+        id="group-label-cg6lg"
+    >
+        Field group label
+    </label>
     <div class="spectrum-FieldGroupInputLayout">
-        <sp-checkbox class="spectrum-FieldGroup-item" name="pets" value="dogs">
-            Dogs
-        </sp-checkbox>
-        <sp-checkbox class="spectrum-FieldGroup-item" name="pets" value="cats">
-            Cats
-        </sp-checkbox>
-        <sp-checkbox
-            class="spectrum-FieldGroup-item"
-            name="pets"
-            value="dragons"
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
         >
-            Dragons
-        </sp-checkbox>
-        <div class="spectrum-HelpText spectrum-HelpText--sizeS">
-            <span class="spectrum-HelpText-text">Choose one or more pets.</span>
+            <input
+                type="radio"
+                name="field-group-example-spectrum-ctk9m"
+                class="spectrum-Radio-input"
+                id="radio-9ossr-input"
+            />
+            <span
+                class="spectrum-Radio-button spectrum-Radio-button--sizeS"
+            ></span>
+            <label
+                class="spectrum-Radio-label spectrum-Radio-label--sizeS"
+                for="radio-9ossr-input"
+            >
+                Apples are best
+            </label>
+        </div>
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
+        >
+            <!-- radio component internals -->
+        </div>
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
+        >
+            <!-- radio component internals -->
+        </div>
+
+        <div
+            class=" spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--neutral "
+            style=""
+            id="helptext-l2iu5"
+        >
+            <div class="spectrum-HelpText-text">Select an option.</div>
         </div>
     </div>
 </div>
@@ -124,24 +138,57 @@ None found for this component.
 
 ```html
 <div
-    class="spectrum-FieldGroup spectrum-FieldGroup--horizontal spectrum-FieldGroup--sidelabel"
+    class="spectrum-FieldGroup spectrum-FieldGroup--vertical spectrum-FieldGroup--toplabel"
+    role="radiogroup"
+    aria-labelledby="group-label-cg6lg"
 >
+    <label
+        class=" spectrum-FieldLabel spectrum-FieldLabel--sizeM spectrum-FieldLabel--top "
+        style=""
+        id="group-label-cg6lg"
+    >
+        Field group label
+    </label>
     <div class="spectrum-FieldGroupInputLayout">
-        <sp-checkbox class="spectrum-FieldGroup-item" name="pets" value="dogs">
-            Dogs
-        </sp-checkbox>
-        <sp-checkbox class="spectrum-FieldGroup-item" name="pets" value="cats">
-            Cats
-        </sp-checkbox>
-        <sp-checkbox
-            class="spectrum-FieldGroup-item"
-            name="pets"
-            value="dragons"
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
         >
-            Dragons
-        </sp-checkbox>
-        <div class="spectrum-HelpText spectrum-HelpText--sizeS">
-            <span class="spectrum-HelpText-text">Choose one or more pets.</span>
+            <input
+                type="radio"
+                name="field-group-example-spectrum-ctk9m"
+                class="spectrum-Radio-input"
+                id="radio-9ossr-input"
+            />
+            <span
+                class="spectrum-Radio-button spectrum-Radio-button--sizeS"
+            ></span>
+            <label
+                class="spectrum-Radio-label spectrum-Radio-label--sizeS"
+                for="radio-9ossr-input"
+            >
+                Apples are best
+            </label>
+        </div>
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
+        >
+            <!-- radio component internals -->
+        </div>
+        <div
+            class=" spectrum-Radio spectrum-Radio--sizeM spectrum-FieldGroup-item "
+            style=""
+        >
+            <!-- radio component internals -->
+        </div>
+
+        <div
+            class=" spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--neutral "
+            style=""
+            id="helptext-l2iu5"
+        >
+            <div class="spectrum-HelpText-text">Select an option.</div>
         </div>
     </div>
 </div>
@@ -149,61 +196,38 @@ None found for this component.
 
 </details>
 
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+**No differences found between main and spectrum-two branches.**
+
+</details>
+
 ### CSS => SWC mapping
 
-| CSS selector                       | Attribute or slot         | Status                         |
-| ---------------------------------- | ------------------------- | ------------------------------ |
-| `.spectrum-FieldGroup`             | Component base            | Implemented                    |
-| `.spectrum-FieldGroup--horizontal` | `horizontal` attribute    | Implemented                    |
-| `.spectrum-FieldGroup--vertical`   | Default (vertical) layout | Implemented                    |
-| `.spectrum-FieldGroup--sidelabel`  | Layout variant            | Missing from WC                |
-| `.spectrum-FieldGroup--toplabel`   | Layout variant            | Missing from WC                |
-| `.spectrum-FieldGroupInputLayout`  | Internal layout container | Missing from WC                |
-| `.spectrum-FieldGroup-item`        | Individual field items    | Missing from WC                |
-| `.spectrum-HelpText`               | Help text styling         | Implemented via `sp-help-text` |
-|                                    | `invalid` attribute       | Missing from CSS               |
-|                                    | `required` attribute      | Missing from CSS               |
-|                                    | `help-text` slot          | Missing from CSS               |
-|                                    | `negative-help-text` slot | Missing from CSS               |
+| CSS selector                       | Attribute or slot                    | Status                         |
+| ---------------------------------- | ------------------------------------ | ------------------------------ |
+| `.spectrum-FieldGroup`             | :host                                | Implemented                    |
+| `.spectrum-FieldGroup--horizontal` | `horizontal` attribute               | Implemented                    |
+| `.spectrum-FieldGroup--vertical`   | Default variant; `vertical attribute | Implemented                    |
+| `.spectrum-FieldGroup--sidelabel`  | Layout variant                       | Missing from WC                |
+| `.spectrum-FieldGroup--toplabel`   | Layout variant                       | Missing from WC                |
+| `.spectrum-FieldGroupInputLayout`  | Internal layout container            | Missing from WC                |
+| `.spectrum-FieldGroup-item`        | Individual field item classes        | Missing from WC                |
+| `.spectrum-HelpText`               | Help text styling                    | Implemented via `sp-help-text` |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-**Features Missing from WC:**
-
-- `.spectrum-FieldGroup--sidelabel` and `.spectrum-FieldGroup--toplabel` layout variants are not supported by the web component
-- `.spectrum-FieldGroupInputLayout` wrapper container is not generated by the web component
-- `.spectrum-FieldGroup-item` classes are not automatically applied to slotted elements
-
-**Features Missing from CSS:**
-
-- `invalid` attribute has no corresponding CSS selector for error state styling
-- `required` attribute has no corresponding CSS selector
-- Help text slot functionality is implemented via `sp-help-text` component but lacks CSS integration
-- `negative-help-text` slot for error states has no CSS representation
-
-**Implementation Status:**
-
-- Basic field group functionality (horizontal/vertical layout) is implemented
-- Help text integration via `sp-help-text` component provides functionality but with different structure
-- Core slot-based content grouping works as expected
+- In CSS, the field label is incorporated into the field group component in both S1 and S2, however `<sp-field-group>` does not have a slot for a corresponding `<sp-field-label>`. Because of this, `<sp-field-group>` doesn't technically support `.spectrum-FieldGroup--sidelabel` and `.spectrum-FieldGroup--toplabel` layout variants. However, `<sp-field-label>` can be defined as top- or side-aligned, so we may be able to reevaluate if this behavior can be supported.
+- `.spectrum-FieldGroupInputLayout` wrapper container is not generated by the web component.
+- `.spectrum-FieldGroup-item` classes are not automatically applied to slotted elements.
 
 ### CSS Spectrum 2 changes
 
-Based on the analysis between CSS main and spectrum-two branches:
-
-**No structural changes detected** - The field-group template.js files are identical between main and spectrum-two branches, including:
-
-- Same import statements
-- Identical HTML structure generation
-- Same class application logic
-- No differences in element attributes or nesting
-
-The field-group component appears to be stable between legacy and Spectrum 2 implementations at the template level.
+No structural differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches. The template structure and class naming remain consistent across both branches.
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-field-group--docs)
