@@ -199,7 +199,8 @@ None found for this component.
 
 ```html
 <sp-badge variant="informative" fixed="inline-start" size="m">
-    <sp-icon slot="icon" name="ui:CheckmarkSmall"></sp-icon>
+    #shadow-root
+    <slot name="icon"></slot>
     <div class="label">
         <slot></slot>
     </div>
@@ -259,51 +260,51 @@ No significant structural changes.
 
 #### Non-color selectors
 
-| CSS selector                                                                                     | Attribute or slot         | Status          |
-| ------------------------------------------------------------------------------------------------ | ------------------------- | --------------- |
-| `.spectrum-Badge--sizeS`                                                                         | `size="s"`                | Implemented     |
-| `.spectrum-Badge--sizeL`                                                                         | `size="l"`                | Implemented     |
-| `.spectrum-Badge--sizeXL`                                                                        | `size="xl"`               | Implemented     |
-| `.spectrum-Badge--fixed-inline-start`                                                            | `fixed="inline-start"`    | Implemented     |
-| `.spectrum-Badge--fixed-inline-end`                                                              | `fixed="inline-end"`      | Implemented     |
-| `.spectrum-Badge--fixed-block-start`                                                             | `fixed="block-start"`     | Implemented     |
-| `.spectrum-Badge--fixed-block-end`                                                               | `fixed="block-end"`       | Implemented     |
-| `.spectrum-Badge`                                                                                | Base component            | Implemented     |
-| `.spectrum-Badge-icon`                                                                           | `icon` slot               | Implemented     |
-| `.spectrum-Badge-label`                                                                          | Default slot              | Implemented     |
-| `.spectrum-Badge-label:lang(ja), .spectrum-Badge-label:lang(ko), .spectrum-Badge-label:lang(zh)` | Language-specific styling | Implemented     |
-| `.spectrum-Badge--style-outline`                                                                 | `style="outline"`         | Missing from WC |
-| `.spectrum-Badge--style-subtle`                                                                  | `style="subtle"`          | Missing from WC |
+| CSS selector                                                                                     | Attribute or slot         | Status                       |
+| ------------------------------------------------------------------------------------------------ | ------------------------- | ---------------------------- |
+| `.spectrum-Badge--sizeS`                                                                         | `size="s"`                | Implemented                  |
+| `.spectrum-Badge--sizeL`                                                                         | `size="l"`                | Implemented                  |
+| `.spectrum-Badge--sizeXL`                                                                        | `size="xl"`               | Implemented                  |
+| `.spectrum-Badge--fixed-inline-start`                                                            | `fixed="inline-start"`    | Implemented                  |
+| `.spectrum-Badge--fixed-inline-end`                                                              | `fixed="inline-end"`      | Implemented                  |
+| `.spectrum-Badge--fixed-block-start`                                                             | `fixed="block-start"`     | Implemented                  |
+| `.spectrum-Badge--fixed-block-end`                                                               | `fixed="block-end"`       | Implemented                  |
+| `.spectrum-Badge`                                                                                | Base component            | Implemented                  |
+| `.spectrum-Badge-icon`                                                                           | `icon` slot               | Implemented                  |
+| `.spectrum-Badge-label`                                                                          | Default slot              | Implemented                  |
+| `.spectrum-Badge-label:lang(ja), .spectrum-Badge-label:lang(ko), .spectrum-Badge-label:lang(zh)` | Language-specific styling | Implemented                  |
+| `.spectrum-Badge--style-outline`                                                                 | `style="outline"`         | Missing from WC (new for S2) |
+| `.spectrum-Badge--style-subtle`                                                                  | `style="subtle"`          | Missing from WC (new for S2) |
 
 #### Color/variant selectors
 
-| CSS selector                   | Attribute or slot       | Status          |
-| ------------------------------ | ----------------------- | --------------- |
-| `.spectrum-Badge--accent`      | `variant="accent"`      | Implemented     |
-| `.spectrum-Badge--blue`        | `variant="blue"`        | Implemented     |
-| `.spectrum-Badge--celery`      | `variant="celery"`      | Implemented     |
-| `.spectrum-Badge--chartreuse`  | `variant="chartreuse"`  | Implemented     |
-| `.spectrum-Badge--cyan`        | `variant="cyan"`        | Implemented     |
-| `.spectrum-Badge--fuchsia`     | `variant="fuchsia"`     | Implemented     |
-| `.spectrum-Badge--gray`        | `variant="gray"`        | Implemented     |
-| `.spectrum-Badge--green`       | `variant="green"`       | Implemented     |
-| `.spectrum-Badge--indigo`      | `variant="indigo"`      | Implemented     |
-| `.spectrum-Badge--informative` | `variant="informative"` | Implemented     |
-| `.spectrum-Badge--magenta`     | `variant="magenta"`     | Implemented     |
-| `.spectrum-Badge--negative`    | `variant="negative"`    | Implemented     |
-| `.spectrum-Badge--neutral`     | `variant="neutral"`     | Implemented     |
-| `.spectrum-Badge--notice`      | `variant="notice"`      | Implemented     |
-| `.spectrum-Badge--orange`      | `variant="orange"`      | Implemented     |
-| `.spectrum-Badge--positive`    | `variant="positive"`    | Implemented     |
-| `.spectrum-Badge--purple`      | `variant="purple"`      | Implemented     |
-| `.spectrum-Badge--red`         | `variant="red"`         | Implemented     |
-| `.spectrum-Badge--seafoam`     | `variant="seafoam"`     | Implemented     |
-| `.spectrum-Badge--yellow`      | `variant="yellow"`      | Implemented     |
-| `.spectrum-Badge--brown`       | `variant="brown"`       | Missing from WC |
-| `.spectrum-Badge--cinnamon`    | `variant="cinnamon"`    | Missing from WC |
-| `.spectrum-Badge--pink`        | `variant="pink"`        | Missing from WC |
-| `.spectrum-Badge--silver`      | `variant="silver"`      | Missing from WC |
-| `.spectrum-Badge--turquoise`   | `variant="turquoise"`   | Missing from WC |
+| CSS selector                   | Attribute or slot       | Status                       |
+| ------------------------------ | ----------------------- | ---------------------------- |
+| `.spectrum-Badge--accent`      | `variant="accent"`      | Implemented                  |
+| `.spectrum-Badge--blue`        | `variant="blue"`        | Implemented                  |
+| `.spectrum-Badge--celery`      | `variant="celery"`      | Implemented                  |
+| `.spectrum-Badge--chartreuse`  | `variant="chartreuse"`  | Implemented                  |
+| `.spectrum-Badge--cyan`        | `variant="cyan"`        | Implemented                  |
+| `.spectrum-Badge--fuchsia`     | `variant="fuchsia"`     | Implemented                  |
+| `.spectrum-Badge--gray`        | `variant="gray"`        | Implemented                  |
+| `.spectrum-Badge--green`       | `variant="green"`       | Implemented                  |
+| `.spectrum-Badge--indigo`      | `variant="indigo"`      | Implemented                  |
+| `.spectrum-Badge--informative` | `variant="informative"` | Implemented                  |
+| `.spectrum-Badge--magenta`     | `variant="magenta"`     | Implemented                  |
+| `.spectrum-Badge--negative`    | `variant="negative"`    | Implemented                  |
+| `.spectrum-Badge--neutral`     | `variant="neutral"`     | Implemented                  |
+| `.spectrum-Badge--notice`      | `variant="notice"`      | Implemented                  |
+| `.spectrum-Badge--orange`      | `variant="orange"`      | Implemented                  |
+| `.spectrum-Badge--positive`    | `variant="positive"`    | Implemented                  |
+| `.spectrum-Badge--purple`      | `variant="purple"`      | Implemented                  |
+| `.spectrum-Badge--red`         | `variant="red"`         | Implemented                  |
+| `.spectrum-Badge--seafoam`     | `variant="seafoam"`     | Implemented                  |
+| `.spectrum-Badge--yellow`      | `variant="yellow"`      | Implemented                  |
+| `.spectrum-Badge--brown`       | `variant="brown"`       | Missing from WC (new for S2) |
+| `.spectrum-Badge--cinnamon`    | `variant="cinnamon"`    | Missing from WC (new for S2) |
+| `.spectrum-Badge--pink`        | `variant="pink"`        | Missing from WC (new for S2) |
+| `.spectrum-Badge--silver`      | `variant="silver"`      | Missing from WC (new for S2) |
+| `.spectrum-Badge--turquoise`   | `variant="turquoise"`   | Missing from WC (new for S2) |
 
 ## Summary of changes
 

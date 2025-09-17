@@ -91,20 +91,23 @@
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<div class="body" role="alert">
-    <div class="content">
-        <sp-icon-info label="Information" class="type"></sp-icon-info>
-        <div class="text"><slot></slot></div>
+<sp-alert-banner variant="info" dismissible>
+    #shadow-root
+    <div class="body" role="alert">
+        <div class="content">
+            <sp-icon-info label="Information" class="type"></sp-icon-info>
+            <div class="text"><slot></slot></div>
+        </div>
+        <slot name="action"></slot>
     </div>
-    <slot name="action"></slot>
-</div>
-<div class="end">
-    <sp-close-button
-        @click="${this.shouldClose}"
-        label="Close"
-        static-color="white"
-    ></sp-close-button>
-</div>
+    <div class="end">
+        <sp-close-button
+            @click="${this.shouldClose}"
+            label="Close"
+            static-color="white"
+        ></sp-close-button>
+    </div>
+</sp-alert-banner>
 ```
 
 </details>
@@ -244,12 +247,13 @@
 | `.spectrum-AlertBanner--info`                                                                    | `variant="info"`                        | Implemented |
 | `.spectrum-AlertBanner--negative`                                                                | `variant="negative"`                    | Implemented |
 | `.spectrum-AlertBanner.is-open`                                                                  | `open` attribute                        | Implemented |
-| `.spectrum-AlertBanner-text`                                                                     | Default slot                            | Implemented |
+| `.spectrum-AlertBanner-text`                                                                     | Default slot within `.text`             | Implemented |
 | `.spectrum-AlertBanner-icon`                                                                     | Icon rendering (info/negative variants) | Implemented |
 | `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`                    | `dismissible` attribute                 | Implemented |
 | `.spectrum-AlertBanner:lang(ja), .spectrum-AlertBanner:lang(ko), .spectrum-AlertBanner:lang(zh)` | Language-specific styling               | Implemented |
 | `.spectrum-AlertBanner-body`                                                                     | `.body`                                 | Implemented |
 | `.spectrum-AlertBanner-content`                                                                  | `.content`                              | Implemented |
+| `.spectrum-AlertBanner-end`                                                                      | `.end`                                  | Implemented |
 | Corresponds to `.spectrum-Button` within `.spectrum-AlertBanner`                                 | `action` slot                           | Implemented |
 
 Note: the `neutral` variant of Alert banner is the default variant in both CSS and SWC.

@@ -67,6 +67,7 @@ None found for this component.
 
 ```html
 <sp-progress-circle role="progressbar" aria-valuenow="50">
+    #shadow-root
     <slot></slot>
     <div class="track"></div>
     <div class="fills">
@@ -207,7 +208,6 @@ None found for this component.
 | `.spectrum-ProgressCircle--sizeS`                                                             | `size="s"`                 | Implemented                               |
 | `.spectrum-ProgressCircle--sizeL`                                                             | `size="l"`                 | Implemented                               |
 | `.spectrum-ProgressCircle--indeterminate`                                                     | `indeterminate`            | Implemented                               |
-| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color="black"`     | Missing from WC                           |
 | `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite`                               | `static-color="white"`     | Implemented                               |
 | `.spectrum-ProgressCircle-fill`                                                               | `.fills`                   | Implemented                               |
 | `.spectrum-ProgressCircle-track`                                                              | `.track`                   | Implemented                               |
@@ -215,14 +215,16 @@ None found for this component.
 | `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-innerCircle` | Determinate inner circle   | Missing from CSS                          |
 | `.spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate) .spectrum-outerCircle` | Determinate outer circle   | Missing from CSS                          |
 |                                                                                               | `label`                    | Missing from CSS                          |
-| Maps to `stroke-dashoffset` attribute (100 - value) within `.spectrum-ProgressCircle-fill`    | `progress`                 | Implemented, but will need changes for S2 |
 |                                                                                               | Default slot               | Missing from CSS                          |
+| Maps to `stroke-dashoffset` attribute (100 - value) within `.spectrum-ProgressCircle-fill`    | `progress`                 | Implemented, but will need changes for S2 |
+| `.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack`                               | `static-color="black"`     | Missing from WC (New for S2)              |
 
 ## Summary of changes
 
 The progress circle component has significant differences between CSS and web component implementations:
 
 - **Rendering approach**: Complete shift from div-based CSS masks to SVG-based rendering - **this will require changes to SWC's render method** and will also potentially affect how `progress` is applied to calculate inline styles
+- **Static black**: Static white was previously supported, but Spectrum 2 should support both static white and static black
 - **Label attribute**: Web component supports a `label` attribute for accessibility that is not present in CSS
 
 ## Resources

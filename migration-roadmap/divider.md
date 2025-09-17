@@ -65,7 +65,10 @@ None found for this component.
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<sp-divider role="separator" aria-orientation="vertical"></sp-divider>
+<sp-divider>
+    #shadow-root
+    <!-- Empty - styling applied to :host -->
+</sp-divider>
 ```
 
 </details>

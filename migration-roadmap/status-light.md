@@ -122,7 +122,10 @@ None found for this component.
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<sp-status-light variant="info" size="m">Status text</sp-status-light>
+<sp-status-light variant="info" size="m">
+    #shadow-root
+    <slot></slot>
+</sp-status-light>
 ```
 
 </details>
