@@ -1,0 +1,164 @@
+# Field label migration roadmap
+
+## Component specifications
+
+### CSS
+
+<details>
+<summary>CSS selectors</summary>
+
+- `.spectrum-FieldLabel`
+- `.spectrum-FieldLabel--left`
+- `.spectrum-FieldLabel--right`
+- `.spectrum-FieldLabel--sizeL`
+- `.spectrum-FieldLabel--sizeS`
+- `.spectrum-FieldLabel--sizeXL`
+- `.spectrum-FieldLabel--staticBlack`
+- `.spectrum-FieldLabel--staticWhite`
+- `.spectrum-FieldLabel-requiredIcon`
+- `.spectrum-FieldLabel.is-disabled`
+- `.spectrum-FieldLabel:lang(ja)`
+- `.spectrum-FieldLabel:lang(ko)`
+- `.spectrum-FieldLabel:lang(zh)`
+
+</details>
+
+<details>
+<summary>Passthroughs</summary>
+
+None found for this component.
+
+</details>
+
+<details>
+<summary>Modifiers</summary>
+
+- `--mod-fieldlabel-asterisk-vertical-align`
+- `--mod-fieldlabel-bottom-to-text`
+- `--mod-fieldlabel-font-size`
+- `--mod-fieldlabel-font-weight`
+- `--mod-fieldlabel-line-height`
+- `--mod-fieldlabel-line-height-cjk`
+- `--mod-fieldlabel-min-height`
+- `--mod-fieldlabel-padding-inline`
+- `--mod-fieldlabel-side-margin-block-start`
+- `--mod-fieldlabel-side-padding-right`
+- `--mod-fieldlabel-text-to-asterisk`
+- `--mod-fieldlabel-top-to-text`
+
+</details>
+
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+- `disabled` (Boolean) - Whether the field label is disabled
+- `id` (String) - Unique identifier for the field label
+- `for` (String) - ID of the form control the label is associated with
+- `required` (Boolean) - Whether the field is required
+- `side-aligned` (String) - Alignment of the label: 'start' or 'end'
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot - Text content of the label
+
+</details>
+
+## Comparison
+
+### DOM Structure changes
+
+<details>
+<summary>Spectrum Web Components:</summary>
+
+```html
+<label>
+    <slot></slot>
+    <sp-icon-asterisk100
+        class="required-icon spectrum-UIIcon-Asterisk100"
+    ></sp-icon-asterisk100>
+</label>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
+
+```html
+<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+    Label text
+    <sp-icon-asterisk100
+        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
+    ></sp-icon-asterisk100>
+</label>
+```
+
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+
+```html
+<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+    Label text&#8288;
+    <sp-icon-asterisk100
+        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
+    ></sp-icon-asterisk100>
+</label>
+```
+
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+--- a/components/fieldlabel/stories/template.js (main branch)
++++ b/components/fieldlabel/stories/template.js (spectrum-two branch)
+@@ -60,7 +60,7 @@ export const Template = ({
+ 			for=${ifDefined(forInput)}
+ 		>
+-			${label}
+-			${when(isRequired, () => icon)}
++			${label?.trim()}${when(isRequired, () => html`&#8288;${icon}`)}
+ 		</label>
+ 	`;
+ };
+```
+
+</details>
+
+### CSS => SWC mapping
+
+| CSS selector                                                                                  | Attribute or slot         | Status          |
+| --------------------------------------------------------------------------------------------- | ------------------------- | --------------- |
+| `.spectrum-FieldLabel`                                                                        | Base element              | Implemented     |
+| `.spectrum-FieldLabel--left`                                                                  | `side-aligned="start"`    | Implemented     |
+| `.spectrum-FieldLabel--right`                                                                 | `side-aligned="end"`      | Implemented     |
+| `.spectrum-FieldLabel--sizeL`                                                                 | `size="l"`                | Implemented     |
+| `.spectrum-FieldLabel--sizeS`                                                                 | `size="s"`                | Implemented     |
+| `.spectrum-FieldLabel--sizeXL`                                                                | `size="xl"`               | Implemented     |
+| `.spectrum-FieldLabel--staticBlack`                                                           | `static-color="black"`    | Missing from WC |
+| `.spectrum-FieldLabel--staticWhite`                                                           | `static-color="white"`    | Missing from WC |
+| `.spectrum-FieldLabel-requiredIcon`                                                           | Required icon element     | Implemented     |
+| `.spectrum-FieldLabel.is-disabled`                                                            | `disabled` attribute      | Implemented     |
+| `.spectrum-FieldLabel:lang(ja), .spectrum-FieldLabel:lang(ko), .spectrum-FieldLabel:lang(zh)` | Language-specific styling | Implemented     |
+
+## Summary of changes
+
+### CSS => SWC implementation gaps
+
+- **Static color variants**: The web component is missing support for static color variants (`--staticBlack` and `--staticWhite`). These are commonly used for overlays and high-contrast scenarios where labels need to maintain visibility over varying backgrounds.
+
+### CSS Spectrum 2 changes
+
+- **Improved text handling**: Enhanced label text processing with `?.trim()` to remove whitespace and added a zero-width non-joiner (`&#8288;`) between label text and the required asterisk icon. This ensures proper spacing and prevents text wrapping issues in internationalized content.
+
+## Resources
+
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2569)
