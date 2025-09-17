@@ -16,8 +16,6 @@
     --spectrum-textfield-width: 240px;
     --spectrum-textfield-min-width: var(--spectrum-text-field-minimum-width-multiplier);
     --spectrum-textfield-spacing-inline-quiet: var(--spectrum-field-edge-to-text-quiet);
-    --spectrum-textfield-spacing-block-start: var(--spectrum-component-top-to-text-100);
-    --spectrum-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-100);
     --spectrum-textfield-spacing-block-quiet: var(--spectrum-field-edge-to-border-quiet);
     --spectrum-textfield-label-spacing-block: var(--spectrum-field-label-to-component);
     --spectrum-textfield-helptext-spacing-block: var(--spectrum-help-text-to-component);
@@ -67,6 +65,10 @@
     --spectrum-textfield-character-count-spacing-block-quiet: var(--spectrum-character-count-to-field-quiet-medium);
     --spectrum-textfield-character-count-spacing-block-side: var(--spectrum-side-label-character-count-top-margin-medium);
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-100);
+    --spectrum-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-medium);
+    --spectrum-textfield-corner-radius-small: var(--spectrum-corner-radius-medium-size-small);
+    --spectrum-textfield-corner-radius-large: var(--spectrum-corner-radius-medium-size-large);
+    --spectrum-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-medium-size-extra-large);
 }
 
 :host([size="s"]) #textfield {
