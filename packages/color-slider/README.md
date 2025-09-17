@@ -81,6 +81,7 @@ The current color formats supported are as follows:
 For a complete list of supported color formats, see the [ColorController documentation](/tools/color-controller#supported-color-formats).
 
 **Please note for the following formats: HSV, HSVA, HSL, HSLA**
+
 When using the HSL or HSV formats, and a color's value (in HSV) is set to 0, or its luminosity (in HSL) is set to 0 or 1, the hue and saturation values may not be preserved by the element's `color` property. This is detailed in the [colorjs documentation](https://colorjs.io/docs/). Seperately, the element's `value` property is directly managed by the hue as represented in the interface.
 
 ### Accessibility
@@ -90,6 +91,27 @@ The `<sp-color-slider>` is rendered with appropriate ARIA attributes to ensure a
 - Uses native `input[type="range"]` element with implicit "slider" role
 - Provides value text announcements for screen readers
 - Supports full keyboard navigation
+
+#### Accessible Labels
+
+The color slider includes an accessible label that describes what the slider controls. By default, the label is set to "hue", but you can customize it using the `label` attribute:
+
+```html
+<!-- Default label -->
+<sp-color-slider></sp-color-slider>
+
+<!-- Custom label -->
+<sp-color-slider label="Color hue"></sp-color-slider>
+<sp-color-slider label="Saturation level"></sp-color-slider>
+```
+
+The label serves several important accessibility purposes:
+
+- **Screen Reader Announcements**: Screen readers announce the label when the slider receives focus, helping users understand what they're adjusting
+- **ARIA Labeling**: The label is used as the `aria-label` attribute on the internal range input
+- **Context for Value Changes**: When the slider value changes, screen readers announce both the current value and the label for context
+
+For example, when a user focuses on a color slider with `label="Color hue"`, screen readers will announce something like "Color hue slider, 180 degrees" to provide clear context about what the control does and its current value.
 
 #### Keyboard Navigation
 
@@ -117,11 +139,11 @@ The `<sp-color-slider>` is rendered with appropriate ARIA attributes to ensure a
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>Page Down</kbd></sp-table-cell>
-            <sp-table-cell>Decreases the hue value by a larger step</sp-table-cell>
+            <sp-table-cell>Decreases the hue value by a larger step(10% of total value)</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>Page Up</kbd></sp-table-cell>
-            <sp-table-cell>Increases the hue value by a larger step</sp-table-cell>
+            <sp-table-cell>Increases the hue value by a larger step(10% of total value)</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
             <sp-table-cell><kbd>Home</kbd></sp-table-cell>
