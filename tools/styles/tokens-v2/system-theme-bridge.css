@@ -637,7 +637,7 @@
     --system-textfield-border-color-focus-hover: var(--spectrum-gray-900);
     --system-textfield-border-color-keyboard-focus: var(--spectrum-gray-800);
     --system-textfield-border-color-disabled: var(--spectrum-gray-300);
-    --system-textfield-border-width: var(--spectrum-border-width-200);
+    --system-textfield-border-width: var(--spectrum-border-width-100);
     --system-textfield-border-color: var(--spectrum-gray-300);
     --system-textfield-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-100);
     --system-textfield-size-s-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-75);
