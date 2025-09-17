@@ -39,7 +39,9 @@
 - `.spectrum-Switch-input:focus-visible ~ .spectrum-Switch-label`
 - `.spectrum-Switch-input[disabled]`
 - `.spectrum-Switch-label`
-- `.spectrum-Switch-label:lang(ja)`, `.spectrum-Switch-label:lang(ko)`, `.spectrum-Switch-label:lang(zh)`
+- `.spectrum-Switch-label:lang(ja)`
+- `.spectrum-Switch-label:lang(ko)`
+- `.spectrum-Switch-label:lang(zh)`
 - `.spectrum-Switch-switch`
 - `.spectrum-Switch-switch .spectrum-Switch--active`
 - `.spectrum-Switch-switch:after`
@@ -139,6 +141,8 @@ None found for this component.
 - `checked` - Boolean attribute for checked state (inherited from CheckboxBase)
 - `disabled` - Boolean attribute for disabled state (inherited from CheckboxBase)
 - `size` - String attribute with values: `s`, `m`, `l`, `xl` (from SizedMixin)
+- `readonly` - Boolean attribute for read-only state
+- `autofocus` - Boolean attribute for auto-focusing the switch input
 
 </details>
 
@@ -151,14 +155,6 @@ None found for this component.
 
 ## Comparison
 
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
-
 ### DOM Structure changes
 
 <details>
@@ -170,6 +166,7 @@ None found for this component.
     id="input"
     name="example-name"
     type="checkbox"
+    role="switch"
     .checked="true"
     ?disabled="false"
     @change="handleChange"
@@ -184,9 +181,7 @@ None found for this component.
 <summary>Legacy (CSS main branch):</summary>
 
 ```html
-<div
-    class="spectrum-Switch spectrum-Switch--disabled spectrum-Switch--emphasized spectrum-Switch--sizeM"
->
+<div class="spectrum-Switch spectrum-Switch--emphasized spectrum-Switch--sizeM">
     <input
         type="checkbox"
         class="spectrum-Switch-input"
@@ -207,9 +202,7 @@ None found for this component.
 <summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
-<div
-    class="spectrum-Switch spectrum-Switch--disabled spectrum-Switch--emphasized spectrum-Switch--sizeM spectrum-Switch--active"
->
+<div class="spectrum-Switch spectrum-Switch--emphasized spectrum-Switch--sizeM">
     <input
         type="checkbox"
         class="spectrum-Switch-input"
@@ -226,59 +219,43 @@ None found for this component.
 
 </details>
 
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+**No differences found between main and spectrum-two branches.**
+
+</details>
+
 ### CSS => SWC mapping
 
-| CSS selector                                                                                            | Attribute or slot         | Status          |
-| ------------------------------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-Switch`                                                                                      | Component base            | Implemented     |
-| `.spectrum-Switch--disabled`                                                                            | `disabled` attribute      | Implemented     |
-| `.spectrum-Switch--emphasized`                                                                          | `emphasized` attribute    | Implemented     |
-| `.spectrum-Switch--sizeS`                                                                               | `size="s"` attribute      | Implemented     |
-| `.spectrum-Switch--sizeL`                                                                               | `size="l"` attribute      | Implemented     |
-| `.spectrum-Switch--sizeXL`                                                                              | `size="xl"` attribute     | Implemented     |
-| `.spectrum-Switch--active`                                                                              | Active state styling      | Missing from WC |
-| `.spectrum-Switch-input`                                                                                | Internal input element    | Implemented     |
-| `.spectrum-Switch-input:checked`                                                                        | `checked` attribute       | Implemented     |
-| `.spectrum-Switch-input:disabled`                                                                       | `disabled` attribute      | Implemented     |
-| `.spectrum-Switch-switch`                                                                               | Internal switch element   | Implemented     |
-| `.spectrum-Switch-label`                                                                                | Default slot content      | Implemented     |
-| `.spectrum-Switch-label:lang(ja)`, `.spectrum-Switch-label:lang(ko)`, `.spectrum-Switch-label:lang(zh)` | Language-specific styling | Implemented     |
+| CSS selector                                                                                            | Attribute or slot                  | Status      |
+| ------------------------------------------------------------------------------------------------------- | ---------------------------------- | ----------- |
+| `.spectrum-Switch`                                                                                      | `:host`                            | Implemented |
+| `.spectrum-Switch--disabled`                                                                            | `disabled` attribute               | Implemented |
+| `.spectrum-Switch--emphasized`                                                                          | `emphasized` attribute             | Implemented |
+| `.spectrum-Switch--sizeS`                                                                               | `size="s"` attribute               | Implemented |
+| `.spectrum-Switch--sizeL`                                                                               | `size="l"` attribute               | Implemented |
+| `.spectrum-Switch--sizeXL`                                                                              | `size="xl"` attribute              | Implemented |
+| `.spectrum-Switch-input`                                                                                | Internal input element, `#input`   | Implemented |
+| `.spectrum-Switch-input:checked`                                                                        | `checked` attribute                | Implemented |
+| `.spectrum-Switch-input:disabled`                                                                       | `disabled` attribute               | Implemented |
+| `.spectrum-Switch-switch`                                                                               | Internal switch element, `#switch` | Implemented |
+| `.spectrum-Switch-label`                                                                                | Default slot content               | Implemented |
+| `.spectrum-Switch-label:lang(ja)`, `.spectrum-Switch-label:lang(ko)`, `.spectrum-Switch-label:lang(zh)` | Language-specific styling          | Implemented |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-**Features Missing from WC:**
-
-- `.spectrum-Switch--active` class is not automatically applied by the web component during active/pressed states
-- Enhanced active state styling requires manual class management
-
-**Features Missing from CSS:**
-
-- All web component attributes have corresponding CSS selectors
-- No identified gaps in CSS support for web component functionality
-
-**Implementation Status:**
-
-- All core switch functionality (checked, disabled, emphasized, size) is fully implemented
-- Language-specific styling is supported
-- Size variants are implemented
+**New for S2:**
+The switch component in Spectrum 2 has the new down state (active) perspective shift applied.
 
 ### CSS Spectrum 2 changes
 
-Based on the analysis between CSS main and spectrum-two branches:
-
-**No structural changes detected** - The switch template.js files are identical between main and spectrum-two branches, including:
-
-- Same import statements
-- Identical HTML structure generation
-- Same class application logic
-- No differences in element attributes or nesting
-
-The switch component appears to be stable between legacy and Spectrum 2 implementations at the template level.
+No structural differences found between the legacy (CSS main) and Spectrum 2 (CSS spectrum-two) branches. The template structure and class naming remain consistent across both branches.
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2651)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-switch--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/switch--docs)
