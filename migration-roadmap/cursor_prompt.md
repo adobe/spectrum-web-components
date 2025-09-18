@@ -1,91 +1,89 @@
 # Spectrum Migration Documentation Prompt
 
-For the **\_\_** component(s), create comprehensive migration documentation in individual markdown files within the `migration-roadmap/` directory of the spectrum-web-components repository, following this exact structure:
+For the **[COMPONENT_NAME]** component(s), create comprehensive migration documentation in individual markdown files within the `migration-roadmap/` directory of the spectrum-web-components repository, following this exact structure:
+
+**IMPORTANT**: All files must be created on the original spectrum-web-components branch where the session started.
 
 ## File Organization
 
-Create a separate markdown file for each component using the component/package name from the spectrum-web-components repository:
-
-- File path: `migration-roadmap/[COMPONENT_NAME].md`
+- **One markdown file per component**
+- Use the component/package name from the spectrum-web-components repository:
+- File path format: `migration-roadmap/[COMPONENT_NAME].md`
 - Example: `migration-roadmap/alert-banner.md`, `migration-roadmap/dialog.md`
 
 ## Component Documentation Structure
 
-### 1. Component Heading
-
-- Create a Level 1 heading (`#`) with the format: "[Component name] migration roadmap"
+- Create a Level 1 heading (`#`) with the format: `# [Component name] migration roadmap`
 - Example: `# Alert Banner migration roadmap`
 
-### 2. Metadata Extraction (spectrum-css repository)
+### 1. Component Specifications
 
-From the `spectrum-two` branch of the spectrum-css repository, locate the component's `metadata.json` file in the `components/[component-name]/` directory.
+Create a Level 2 Heading: `## Component specifications`
 
-**Additional Context**: Review the component's CHANGELOG file (if available) for historical context on changes, deprecations, and new features that may inform the migration documentation.
+Within this heading, we'll have a Level 3 heading for CSS (`### CSS`) and one for Spectrum web components (`### SWC`).
 
-Create collapsible sections using `<details>` and `<summary>` for each category:
+#### 1.1 CSS Section
+
+Check out the `spectrum-two` branch of the spectrum-css repository and locate the component's `metadata.json` file in the `components/[component-name]/` directory.
+
+**Required git command**: `git checkout spectrum-two` (verify branch before proceeding)
+
+Create collapsible sections using `<details>` and `<summary>` under `### CSS` for each category:
 
 **CSS Selectors Section:**
 
 - Title: "CSS selectors"
 - Extract all selectors from metadata.json
-- If empty, write: "No CSS selectors found for this component."
 
 **Passthroughs Section:**
 
 - Title: "Passthroughs"
 - Extract all passthroughs from metadata.json
-- If empty, write: "No passthroughs found for this component."
 
-**Modifiers Section (ALWAYS LAST):**
+**Modifiers Section:**
 
 - Title: "Modifiers"
 - Extract all modifiers from metadata.json
-- If empty, write: "No modifiers found for this component."
-- **Important**: This section must always be the final `<details><summary>` list
 
-### 3. Web Component Analysis (spectrum-web-components repository)
+If any of these sections are empty in metadata.json, write for that section only, "None found for this component."
 
-From the spectrum-web-components repository, analyze the component and create additional collapsible sections:
+#### 1.2 SWC Section
+
+Check out the `main` branch of the spectrum-web-components repository, analyze the component and create additional collapsible sections under `### SWC`:
+
+**Required source**: `packages/[component-name]/src/[component-name].ts` (analyze the `render()` method)
 
 **Attributes Section:**
 
 - Title: "Attributes"
-- List all component attributes
+- Look for `@property` decorators in TypeScript
 - For string properties with enumerated values, extract each value as a separate attribute entry
-- If empty, write: "No attributes found for this component."
 
 **Slots Section:**
 
 - Title: "Slots"
-- List all component slots
-- If empty, write: "No slots found for this component."
+- Look for `<slot name="...">` patterns in render method
 
-**Ensure modifiers remain the final section after adding attributes and slots.**
+If any of these sections are empty, write for that section only, "None found for this component."
 
-### 4. Visual Comparison Section
+### 2. Comparison
 
-Create a Level 2 heading (`##`) titled "Visual Comparison"
+Create a Level 2 Heading: `## Comparison`
 
-Add a placeholder section for component screenshots:
+#### 2.1 DOM Structure Changes
 
-```markdown
-### Visual Comparison
+**Critical Instruction**: Analyze files from THREE different sources. Always confirm the branch and repository being used.
 
-**Legacy Component:**
+**2.1.1 Web Component DOM Structure Analysis**:
 
-<!-- Screenshot of legacy component will be added here -->
+- **Source**: spectrum-web-components `main` branch, `/packages/[component-name]/src/[component-name].ts` (`main` branch)
+- Analyze the component's `render()` method or template structure
+- Extract the actual HTML markup that the web component generates
+- Document the current DOM structure, including attributes
 
-**Spectrum 2 Component:**
+**2.1.2 CSS DOM Structure Analysis**:
 
-<!-- Screenshot of Spectrum 2 component will be added here -->
-```
-
-### 5. DOM Structure Analysis
-
-Create a Level 2 heading (`##`) titled "DOM Structure Changes"
-
-**Branch Switching Requirements**:
-You will need to analyze the same component across two different branches of the spectrum-css repository. Use these git commands to switch between branches:
+**Branch switching requirements**: You will need to analyze the same component across two different branches of the spectrum-css repository. Use these git commands to switch between branches:
 
 ```bash
 # For legacy analysis
@@ -95,46 +93,72 @@ git checkout main
 git checkout spectrum-two
 ```
 
-**Source Analysis**:
-
-- Compare the component's `stories/template.js` file between the `main` branch and `spectrum-two` branch of spectrum-css
-- Analyze generated HTML patterns from Storybook stories
+- **Legacy Source**: spectrum-css `main` branch, `/components/[component-name]/stories/template.js`
+- **Spectrum 2 Source**: spectrum-css `spectrum-two` branch, `/components/[component-name]/stories/template.js`
+- **IMPORTANT**: Check both the import statements AND the template logic, as components may be removed from imports between sources
+- **Line-by-line comparison required**: Don't assume templates are identical - carefully check imports, component usage, and structure
 - Document class application differences
-
-**Analysis Process**:
-
-1. Switch to `main` branch and analyze the component's template structure
-2. Switch to `spectrum-two` branch and analyze the updated template structure
-3. Document the differences between both versions
+- **Verification steps**: After each git checkout, confirm you're viewing the correct branch's files. After documenting each DOM structure, verify the accuracy by re-reading the actual template files to ensure the HTML matches exactly what's in the source code for that branch.
+- **Final accuracy check**: Before completing the documentation, re-read each template file one more time to verify the DOM structures are 100% accurate. Any discrepancies between documented HTML and actual template code will require correction.
 
 **Output Format**:
-Create a side-by-side HTML comparison using markdown code blocks:
+
+Create a three-way HTML comparison using markdown code blocks. Use collapsible sections using `<details>` and `<summary>` under `### DOM Structure changes` for each category:
 
 ````markdown
-**Legacy (main branch):**
+<details>
+<summary>Spectrum Web Components:</summary>
 
 ```html
-<!-- Legacy HTML structure from main branch -->
+<!-- Current HTML structure from web component render() method -->
 ```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
+
+```html
+<!-- Legacy HTML structure from main branch template.js -->
+```
+
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+
+```html
+<!-- Spectrum 2 HTML structure from spectrum-two branch template.js -->
+```
+
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+```diff
+--- a/components/[component-name]/stories/template.js (main branch)
++++ b/components/[component-name]/stories/template.js (spectrum-two branch)
+@@ -1,3 +1,3 @@
+-// removed line
++// added line
+ // unchanged line
+```
+
+**Note**: Only include this diff section if there are actual differences between the main and spectrum-two branches. If the templates are identical, omit this section entirely.
+
+</details>
 ````
 
-**Spectrum 2 (spectrum-two branch):**
+#### 2.2 CSS => SWC mapping
 
-```html
-<!-- Spectrum 2 HTML structure from spectrum-two branch -->
-```
-
-### 6. Comparison Table
-
-Create a Level 2 heading (`##`) titled "Comparison"
-
-Below the collapsible sections, create a markdown table with:
+Create a markdown table with these exact column headers:
 
 - Column 1: "CSS selector"
 - Column 2: "Attribute or slot"
 - Column 3: "Status"
 
-**Status Values:**
+**Status Values (use exactly as written):**
 
 - "Implemented" - CSS selector has corresponding web component feature
 - "Missing from WC" - CSS exists but no web component equivalent
@@ -143,126 +167,76 @@ Below the collapsible sections, create a markdown table with:
 
 **Mapping Logic:**
 
-- **Variants to Attributes**: CSS selectors with variants (noted after "—") likely map to component attributes
-- **Base Elements to Slots**: Selectors with base class + single "-" (e.g., `.spectrum-button-label`) likely map to slots
-- **Language Selectors**: Group all selectors containing `:lang` together on a single row, comma-separated, as they serve the same internationalization purpose and are typically implemented as a block
+- **Variants to Attributes**: CSS selectors with variants (noted after double dash `--`) likely map to component attributes
+- **Base Elements to Slots**: Selectors with base class + single dash `-` (e.g., `.spectrum-button-label`) likely map to slots
+- **Language Selectors**: Group all selectors containing :lang together on a single row, comma-separated, as they serve the same internationalization purpose and are typically implemented as a block
 
-**Language Selector Formatting Example:**
+**Language Selector Formatting example:**
 
+```markdown
+.spectrum-Search:lang(ja), .spectrum-Search:lang(ko), .spectrum-Search:lang(zh) | Language-specific styling | Implemented
 ```
-`.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling | Implemented
-```
 
-**Table Organization:**
+**Table Organization Order:**
 
 1. Mapped pairs (CSS selector ↔ Attribute/Slot) with appropriate status
 2. Unmapped selectors (empty "Attribute or slot" column, "Missing from WC" status)
 3. Unmapped attributes/slots (empty "CSS selector" column, "Missing from CSS" status)
 
-## Additional Requirements
+### 3. Summary of changes
 
-### Clarifying Questions
+Create a Level 2 Heading: `## Summary of changes`
 
-If you encounter any ambiguities, edge cases, or unclear mappings during documentation, please ask clarifying questions rather than making assumptions. This includes:
+After the comparison table, create a new section that provide a focused summary of changes that will impact SWC engineers:
 
-- Uncertain CSS selector to attribute/slot mappings
-- Components with unusual metadata structure
-- Missing or incomplete metadata.json files
-- Conflicting information between repositories
+#### CSS => SWC implementation gaps
 
-### Property Change Documentation
+Summarize changes in **CSS => SWC mapping** section above. Note any statuses that are missing, and whether they are missing from WC or CSS.
 
-When documenting modifiers, include analysis of:
+Entries with status indicating that they appear in WC but not CSS might be an indication of implementation differences, but could also be an indication of a deprecated feature.
 
-- Properties that were renamed/restructured
-- Properties that were removed entirely
-- New properties that were added
-- Changes in default values or behavior
+Entries with status indicating that they appear in CSS but not WC are often an indication of new features that may need to be added when migrating WC to 2nd gen.
 
-### 7. Structural Changes Summary
+#### CSS Spectrum 2 changes
 
-Create a Level 2 heading (`##`) titled "Key Structural Changes"
+Analyze the differences between CSS `main` and CSS `spectrum-two` branches surfaced in the DOM structure comparison and document them in this section:
 
-After the comparison table, provide a focused summary of DOM changes that will impact SWC engineers:
+- **Required**: Compare the HTML structures from main vs spectrum-two templates line by line
+- **Document**: Any elements that are added, removed, or modified between branches
+- **Include**: Changes in element attributes, class names, or structural differences
+- **Note**: Even subtle differences like conditional elements or missing components must be documented
+- **Focus on changes in Spectrum CSS**, not changes between spectrum web components and CSS.
 
-**Element Hierarchy Changes:**
+Be sure to note:
 
-- Document any changes in nesting depth or parent-child relationships
-- Note new wrapper elements or removed containers
+- Elements present in main but missing in spectrum-two
+- Elements present in spectrum-two but missing in main
+- Changes in element attributes or class names
+- Structural changes (different nesting, wrapper elements)
+- Conditional elements that differ between branches
+- Import differences that affect rendered output
 
-**Class Name Changes:**
+### 4. Resources section
 
-- List renamed, added, or removed CSS classes
-- Highlight changes in class application patterns
+Create a Level 2 Heading: `## Resources`
 
-**Attribute Changes:**
+Under this heading, add a placeholder section for resources with a bulleted list that can be filled in:
 
-- Document new required attributes or removed attributes
-- Note changes in attribute naming or values
+```markdown
+- [CSS migration]()
+- [Spectrum 2 preview]()
+- [React]()
+```
 
-**Slot/Content Changes:**
+## Output format notes
 
-- Identify changes in how content is structured or slotted
-- Document new content containers or removed content areas
-
-**Migration Impact:**
-
-- Summarize the most critical changes that will require template updates
-- Flag any breaking changes in component structure
-
-### 8. Implementation Gaps Analysis
-
-Create a Level 3 heading (`###`) titled "Implementation Gaps"
-
-Analyze and document the following subsections:
-
-**CSS Features Missing from Web Component:**
-
-- List CSS selectors/features that have no web component equivalent
-- Include any new Spectrum 2 capabilities not yet implemented
-
-**Web Component Features Missing from CSS:**
-
-- List web component attributes/slots that have no CSS equivalent
-- Include legacy features that may no longer be supported
-
-**Features Being Deprecated/Removed:**
-
-- List any legacy web component features being removed in Spectrum 2
-- Note any breaking changes in functionality
-
-### 9. Action Items Summary
-
-Create a Level 3 heading (`###`) titled "Action Items for Web Component Maintainers"
-
-Provide clear, actionable next steps:
-
-**Required Additions:**
-
-- Web component features that need to be implemented to match CSS capabilities
-
-**Required Removals:**
-
-- Legacy features that should be removed or deprecated
-
-**Breaking Changes:**
-
-- Changes that will affect existing web component consumers
-- Migration guidance where applicable
-
-### Integration Guidance
-
-Where applicable, include brief notes on:
-
-- Usage pattern differences between legacy and Spectrum 2
-- Integration considerations for web component consumers
-
-## Output Format
-
-- Create individual markdown files in the `migration-roadmap/` directory
+- Create individual markdown files in the migration-roadmap/ directory
 - Use component names from spectrum-web-components repository for filenames
 - Use proper markdown formatting with Level 1 heading for component name
-- Ensure all `<details>` elements are properly closed
+- Ensure all <details> elements are properly closed
 - Use consistent table formatting
-- Maintain hierarchical heading structure (Level 1 for component, Level 2 for major sections)
-- Keep modifiers section as the final collapsible section in each component
+- Maintain hierarchical heading structure
+- Always verify git branch before analyzing any file
+- Perform line-by-line comparisons - don't assume files are similar
+- Ask clarifying questions for uncertain mappings instead of guessing
+- Use exact file paths specified in this prompt
