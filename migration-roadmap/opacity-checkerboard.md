@@ -1,0 +1,136 @@
+# Opacity Checkerboard migration roadmap
+
+## Component specifications
+
+### CSS
+
+<details>
+<summary>CSS selectors</summary>
+
+- `.spectrum-OpacityCheckerboard`
+- `.spectrum-OpacityCheckerboard--sizeS`
+
+</details>
+
+<details>
+<summary>Passthroughs</summary>
+
+None found for this component.
+
+</details>
+
+<details>
+<summary>Modifiers</summary>
+
+- `--mod-opacity-checkerboard-dark`
+- `--mod-opacity-checkerboard-light`
+- `--mod-opacity-checkerboard-position`
+- `--mod-opacity-checkerboard-size`
+
+</details>
+
+### SWC
+
+<details>
+<summary>Attributes</summary>
+
+None found for this component. This is a utility component used by other components.
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+None found for this component. This is a utility component used by other components.
+
+</details>
+
+## Comparison
+
+### DOM Structure changes
+
+<details>
+<summary>Spectrum Web Components:</summary>
+
+```html
+<!-- Used as a utility class in other components -->
+<div class="opacity-checkerboard [variant]">
+    <!-- Content -->
+</div>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
+
+```html
+<div
+    class="spectrum-OpacityCheckerboard spectrum-OpacityCheckerboard--sizeS"
+    style="--mod-opacity-checkerboard-position: [backgroundPosition]; [customStyles]"
+    role="[role]"
+    id="[id]"
+>
+    <!-- Content -->
+</div>
+```
+
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+
+```html
+<div
+    class="spectrum-OpacityCheckerboard spectrum-OpacityCheckerboard--sizeS"
+    style="--mod-opacity-checkerboard-position: [backgroundPosition]; [customStyles]"
+    role="[role]"
+    id="[id]"
+>
+    <!-- Content -->
+</div>
+```
+
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+No significant structural changes.
+
+</details>
+
+### CSS => SWC mapping
+
+| CSS selector                           | Attribute or slot   | Status                 |
+| -------------------------------------- | ------------------- | ---------------------- |
+| `.spectrum-OpacityCheckerboard`        | Utility class       | Implemented as utility |
+| `.spectrum-OpacityCheckerboard--sizeS` | Size variant        | Implemented as utility |
+| `--mod-opacity-checkerboard-position`  | CSS custom property | Implemented as utility |
+| `--mod-opacity-checkerboard-size`      | CSS custom property | Implemented as utility |
+| `--mod-opacity-checkerboard-dark`      | CSS custom property | Implemented as utility |
+| `--mod-opacity-checkerboard-light`     | CSS custom property | Implemented as utility |
+
+## Summary of changes
+
+### CSS => SWC implementation gaps
+
+**CSS Features Missing from Web Component:**
+None found for this component. The opacity checkerboard is implemented as a utility class in the Web Components.
+
+**Web Component Features Missing from CSS:**
+None found for this component.
+
+### CSS Spectrum 2 changes
+
+No significant structural changes between CSS main and spectrum-two branches. The templates are identical, indicating that the opacity checkerboard component structure remains consistent across Spectrum 2 migration.
+
+## Notes
+
+The opacity checkerboard is a utility component that provides a checkerboard pattern background to highlight transparency in other components. It's not a standalone component but rather a utility class that's used by components like thumbnail, swatch, and others to provide visual indication of transparency.
+
+## Resources
+
+- [CSS migration]()
+- [Spectrum 2 preview]()
+- [React]()
