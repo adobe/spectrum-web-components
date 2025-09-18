@@ -23,6 +23,10 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import {
+    type HostWithPendingState,
+    PendingStateController,
+} from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 import buttonStyles from './button-base.css.js';
 
 /**
@@ -220,18 +224,34 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
     }
 
+    /**
+     * Type guard to check if this instance implements HostWithPendingState.
+     */
+    private isHostWithPendingState(): this is this & HostWithPendingState {
+        return (
+            'pendingStateController' in this &&
+            this.pendingStateController instanceof PendingStateController
+        );
+    }
+
+    private isPendingState(): boolean {
+        return this.isHostWithPendingState() && this.pending === true;
+    }
+
+    private updateAriaLabel(): void {
+        if (this.label) {
+            this.setAttribute('aria-label', this.label);
+        } else {
+            this.removeAttribute('aria-label');
+        }
+    }
+
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
             this.setAttribute('tabindex', '0');
         }
-        if (changed.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
-        }
+
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
@@ -241,6 +261,12 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         super.updated(changed);
         if (changed.has('href')) {
             this.manageAnchor();
+        }
+
+        // Do not update aria-label if component is in pending state,
+        // as PendingStateController may manage it for accessibility.
+        if (changed.has('label') && !this.isPendingState()) {
+            this.updateAriaLabel();
         }
 
         if (this.anchorElement) {
@@ -256,14 +282,11 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
             this.anchorElement.addEventListener('focus', this.proxyFocus);
         }
     }
+
     protected override update(changes: PropertyValues): void {
         super.update(changes);
-        if (changes.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
+        if (changes.has('label') && this.isPendingState()) {
+            this.updateAriaLabel();
         }
     }
 }
