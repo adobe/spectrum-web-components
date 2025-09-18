@@ -146,12 +146,11 @@ None found for this component.
 
 ### CSS => SWC implementation gaps
 
-- **Enhanced accessibility**: The web component includes `indeterminate` and `label` attributes that provide better accessibility support and user experience compared to the CSS-only implementation.
-- **Complete CSS coverage**: All CSS selectors have corresponding functionality in the web component implementation.
+- **CSS coverage**: All CSS selectors are available in the `spectrum-two` branch, but the web component has not yet been implemented.
 
 ### CSS Spectrum 2 changes
 
-- **New component introduction**: The infield progress circle is entirely new in the spectrum-two branch, designed specifically for inline loading states within form fields and input components.
+- **New component introduction**: The infield progress circle is entirely new in the `spectrum-two` branch, designed specifically for inline loading states within form fields and input components.
 - **Modular architecture**: Built as a wrapper around the base ProgressCircle component with infield-specific styling classes, promoting code reuse and consistency.
 - **Comprehensive sizing**: Introduced S, M, L, and XL size variants to match the sizing scale used throughout the Spectrum design system.
 - **Static color variants**: Added support for static color variants to ensure visibility in various background contexts and high-contrast scenarios.

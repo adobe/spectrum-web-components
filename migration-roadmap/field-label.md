@@ -117,19 +117,35 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-```diff
---- a/components/fieldlabel/stories/template.js (main branch)
-+++ b/components/fieldlabel/stories/template.js (spectrum-two branch)
-@@ -60,7 +60,7 @@ export const Template = ({
- 			for=${ifDefined(forInput)}
- 		>
--			${label}
--			${when(isRequired, () => icon)}
-+			${label?.trim()}${when(isRequired, () => html`&#8288;${icon}`)}
- 		</label>
- 	`;
- };
+### HTML Output Comparison
+
+**Legacy (CSS main branch):**
+
+```html
+<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+    Label text
+    <sp-icon-asterisk100
+        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
+    ></sp-icon-asterisk100>
+</label>
 ```
+
+**Spectrum 2 (CSS spectrum-two branch):**
+
+```html
+<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+    Label text&#8288;
+    <sp-icon-asterisk100
+        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
+    ></sp-icon-asterisk100>
+</label>
+```
+
+### Key Changes in HTML Structure
+
+1. **Text processing enhancement**: Added `?.trim()` to remove whitespace from label text
+2. **Zero-width non-joiner**: Added `&#8288;` (zero-width non-joiner) between label text and required asterisk icon to prevent text wrapping issues in internationalized content
+3. **Static color support**: Added support for `--staticBlack` and `--staticWhite` variants through the `staticColor` parameter
 
 </details>
 
@@ -143,8 +159,8 @@ None found for this component.
 | `.spectrum-FieldLabel--sizeL`                                                                 | `size="l"`                | Implemented     |
 | `.spectrum-FieldLabel--sizeS`                                                                 | `size="s"`                | Implemented     |
 | `.spectrum-FieldLabel--sizeXL`                                                                | `size="xl"`               | Implemented     |
-| `.spectrum-FieldLabel--staticBlack`                                                           | `static-color="black"`    | Missing from WC |
-| `.spectrum-FieldLabel--staticWhite`                                                           | `static-color="white"`    | Missing from WC |
+| `.spectrum-FieldLabel--staticBlack`                                                           | `static-color="black"`    | Missing from WC (new for S2) |
+| `.spectrum-FieldLabel--staticWhite`                                                           | `static-color="white"`    | Missing from WC (new for S2) |
 | `.spectrum-FieldLabel-requiredIcon`                                                           | Required icon element     | Implemented     |
 | `.spectrum-FieldLabel.is-disabled`                                                            | `disabled` attribute      | Implemented     |
 | `.spectrum-FieldLabel:lang(ja), .spectrum-FieldLabel:lang(ko), .spectrum-FieldLabel:lang(zh)` | Language-specific styling | Implemented     |
@@ -162,3 +178,4 @@ None found for this component.
 ## Resources
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/2569)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-field-label--docs)

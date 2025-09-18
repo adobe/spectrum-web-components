@@ -145,78 +145,64 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-```diff
---- a/components/pickerbutton/stories/template.js (main branch)
-+++ b/components/pickerbutton/stories/template.js (spectrum-two branch)
-@@ -1,5 +1,3 @@
--import { Template as Icon } from "@spectrum-css/icon/stories/template.js";
--import { getRandomId } from "@spectrum-css/preview/decorators";
--import { Template as Typography } from "@spectrum-css/typography/stories/template.js";
-+import { Template as Icon } from "@spectrum-css/icon/stories/template.js";
-+import { Container, getRandomId } from "@spectrum-css/preview/decorators";
-@@ -15,7 +13,6 @@ import "../themes/express.css";
- export const Template = ({
- 	rootClass = "spectrum-PickerButton",
- 	id = getRandomId("pickerbutton"),
- 	size = "m",
--	label,
--	position,
- 	iconSet = "ui",
--	iconName = "ChevronDown",
-+	workflowIconName = "Calendar",
-+	uiIconName = "ChevronDown",
- 	isDisabled = false,
--	isFocused = false,
- 	isOpen = false,
- 	isQuiet = false,
- 	customClasses = [],
--	isRounded = false,
- 	customStyles = {},
- 	onclick,
- 	tabindex,
-@@ -30,7 +27,6 @@ export const Template = ({
- 		<button
- 			class=${classMap({
- 				[rootClass]: true,
--				[`${rootClass}--textuiicon`]: label && iconSet === "ui",
--				[`${rootClass}--uiicononly`]: !label && iconSet === "ui",
--				[`${rootClass}--icononly`]: !label && iconSet !== "ui",
--				[`${rootClass}--${position}`]: typeof position !== "undefined",
--				[`${rootClass}--rounded`]: isRounded,
-+				[`${rootClass}--workflowicon`]: iconSet !== "ui",
- 				[`${rootClass}--size${size?.toUpperCase()}`]:
- 					typeof size !== "undefined",
--				"is-disabled": isDisabled,
--				"is-focused": isFocused,
-+				"is-active": isActive,
-+				"is-hover": isHovered,
-+				"is-disabled": isDisabled,
- 				"is-open": isOpen && !isDisabled,
- 				[`${rootClass}--quiet`]: isQuiet,
- 				...customClasses.reduce((a, c) => ({ ...a, [c]: true }), {}),
-@@ -45,7 +41,6 @@ export const Template = ({
- 			@click=${onclick ??
- 			function () {
- 				if (isDisabled) return;
- 				updateArgs({ isOpen: !isOpen });
- 			}}
- 			tabindex=${ifDefined(tabindex)}
--		>
-+			type="button"
-+		>
- 			<div class="${rootClass}-fill">
--				${when(label, () => html`
--					<span class="spectrum-PickerButton-label is-placeholder">
--						${label}
--					</span>
--				`)}
- 				${Icon({
--					iconName: iconName ?? "ChevronDown",
-+					iconName: iconSet === "ui" ? (uiIconName ?? "ChevronDown") : iconSet === "workflow" ? (workflowIconName ?? "ChevronDown") : "ChevronDown",
- 					setName: iconSet,
- 					size,
- 					customClasses: [`${rootClass}-icon`],
+### HTML Output Comparison
+
+**Legacy (CSS main branch) - With Label:**
+
+```html
+<button
+    class="spectrum-PickerButton spectrum-PickerButton--textuiicon spectrum-PickerButton--right spectrum-PickerButton--sizeM"
+    aria-haspopup="listbox"
+>
+    <div class="spectrum-PickerButton-fill">
+        <span class="spectrum-PickerButton-label is-placeholder">Select</span>
+        <sp-icon-chevron100
+            class="spectrum-PickerButton-icon"
+        ></sp-icon-chevron100>
+    </div>
+</button>
 ```
+
+**Legacy (CSS main branch) - Icon Only:**
+
+```html
+<button
+    class="spectrum-PickerButton spectrum-PickerButton--uiicononly spectrum-PickerButton--right spectrum-PickerButton--sizeM"
+    aria-haspopup="listbox"
+>
+    <div class="spectrum-PickerButton-fill">
+        <sp-icon-chevron100
+            class="spectrum-PickerButton-icon"
+        ></sp-icon-chevron100>
+    </div>
+</button>
+```
+
+**Spectrum 2 (CSS spectrum-two branch):**
+
+```html
+<button
+    class="spectrum-PickerButton spectrum-PickerButton--sizeM"
+    aria-haspopup="listbox"
+    type="button"
+>
+    <div class="spectrum-PickerButton-fill">
+        <sp-icon-chevron100
+            class="spectrum-PickerButton-icon spectrum-Icon spectrum-UIIcon-ChevronDown100"
+        ></sp-icon-chevron100>
+    </div>
+</button>
+```
+
+### Key Changes in HTML Structure
+
+1. **Label removal**: The `<span class="spectrum-PickerButton-label is-placeholder">` element is completely removed
+2. **Class simplification**:
+    - Removed: `--textuiicon`, `--uiicononly`, `--icononly`, `--right`/`--left` positioning classes
+    - Added: `--workflowicon` for workflow icons only
+3. **Button attributes**: Added explicit `type="button"` attribute
+4. **Icon classes**: Enhanced with `spectrum-Icon spectrum-UIIcon-*` classes for better specificity
+5. **State management**: Simplified from `is-focused` to `is-active`/`is-hover` pattern
 
 </details>
 
@@ -256,3 +242,4 @@ None found for this component.
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/4114)
 - [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/picker--docs)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-picker-button--docs)

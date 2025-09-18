@@ -134,24 +134,111 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-```diff
---- a/components/infieldbutton/stories/template.js (main branch)
-+++ b/components/infieldbutton/stories/template.js (spectrum-two branch)
-@@ -1,5 +1,3 @@
--import { Template as Icon } from "@spectrum-css/icon/stories/template.js";
--import { html } from "lit";
--import { classMap } from "lit/directives/class-map.js";
--import { when } from "lit/directives/when.js";
-+import { Template as Icon } from "@spectrum-css/icon/stories/template.js";
-+import { html } from "lit";
-+import { classMap } from "lit/directives/class-map.js";
-+import { when } from "lit/directives/when.js";
-@@ -7,7 +5,6 @@ import { when } from "lit/directives/when.js";
- import "../index.css";
--import "../themes/spectrum.css";
--/* Must be imported last */
--import "../themes/express.css";
-+import "../index.css";
+### HTML Output Comparison
+
+**Legacy (CSS main branch) - Single button:**
+
+```html
+<button
+    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+    aria-haspopup="listbox"
+    type="button"
+    tabindex="0"
+>
+    <div class="spectrum-InfieldButton-fill">
+        <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
+    </div>
+</button>
+```
+
+**Legacy (CSS main branch) - Stacked buttons:**
+
+```html
+<button
+    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--top"
+    aria-haspopup="listbox"
+    type="button"
+    tabindex="0"
+    aria-label="add"
+>
+    <div class="spectrum-InfieldButton-fill">
+        <sp-icon-chevronup75
+            class="spectrum-InfieldButton-icon"
+        ></sp-icon-chevronup75>
+    </div>
+</button>
+<button
+    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--bottom"
+    aria-haspopup="listbox"
+    type="button"
+    tabindex="0"
+    aria-label="add"
+>
+    <div class="spectrum-InfieldButton-fill">
+        <sp-icon-chevrondown75
+            class="spectrum-InfieldButton-icon"
+        ></sp-icon-chevrondown75>
+    </div>
+</button>
+```
+
+**Spectrum 2 (CSS spectrum-two branch) - Single button:**
+
+```html
+<button
+    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+    aria-haspopup="listbox"
+    type="button"
+    tabindex="0"
+    role="presentation"
+>
+    <div class="spectrum-InfieldButton-fill">
+        <sp-icon-add100 class="spectrum-InfieldButton-icon"></sp-icon-add100>
+    </div>
+</button>
+```
+
+**Spectrum 2 (CSS spectrum-two branch) - Inline buttons:**
+
+```html
+<div class="spectrum-InfieldButton-inline">
+    <button
+        class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+        aria-haspopup="listbox"
+        type="button"
+        tabindex="0"
+        aria-label="minus"
+    >
+        <div class="spectrum-InfieldButton-fill">
+            <sp-icon-dash class="spectrum-InfieldButton-icon"></sp-icon-dash>
+        </div>
+    </button>
+    <button
+        class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+        aria-haspopup="listbox"
+        type="button"
+        tabindex="0"
+        aria-label="add"
+    >
+        <div class="spectrum-InfieldButton-fill">
+            <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
+        </div>
+    </button>
+</div>
+```
+
+### Key Changes in HTML Structure
+
+1. **Layout paradigm shift**: Replaced `isStacked` vertical stacking with `isInline` horizontal grouping
+2. **Enhanced iconography**:
+    - Single button: Uses size-specific icon names (e.g., `Add100` instead of `Add`)
+    - Inline buttons: Switched from chevron icons to more intuitive action icons (`Dash`/`Add`)
+3. **Simplified state management**: Removed `isInvalid` and `isFocused` states while preserving `isHovered`/`isActive`
+4. **Improved accessibility**: Added `role="presentation"` for single buttons and proper `aria-label` differentiation for inline buttons
+5. **Container structure**: Inline variant wraps buttons in `spectrum-InfieldButton-inline` container
+
+</details>
+### CSS => SWC mapping
 @@ -15,7 +12,6 @@ export const Template = (
  		rootClass = "spectrum-InfieldButton",
  		customClasses = [],
@@ -292,20 +379,20 @@ None found for this component.
 
 ### CSS => SWC mapping
 
-| CSS selector                            | Attribute or slot      | Status          |
-| --------------------------------------- | ---------------------- | --------------- |
-| `.spectrum-InfieldButton`               | Base element           | Implemented     |
-| `.spectrum-InfieldButton--quiet`        | `quiet` attribute      | Implemented     |
-| `.spectrum-InfieldButton-fill`          | Fill container         | Implemented     |
-| `.spectrum-InfieldButton-icon`          | Icon slot              | Implemented     |
-| `.spectrum-InfieldButton-inline`        | Inline group container | Missing from WC |
-| `.spectrum-InfieldButton--sizeL`        | `size="l"`             | Implemented     |
-| `.spectrum-InfieldButton--sizeS`        | `size="s"`             | Implemented     |
-| `.spectrum-InfieldButton--sizeXL`       | `size="xl"`            | Implemented     |
-| `.spectrum-InfieldButton:disabled`      | `disabled` attribute   | Implemented     |
-| `.spectrum-InfieldButton:focus-visible` | Focus state            | Implemented     |
-| `.spectrum-InfieldButton:hover`         | Hover state            | Implemented     |
-| `.spectrum-InfieldButton:active`        | Active state           | Implemented     |
+| CSS selector                            | Attribute or slot      | Status                       |
+| --------------------------------------- | ---------------------- | ---------------------------- |
+| `.spectrum-InfieldButton`               | Base element           | Implemented                  |
+| `.spectrum-InfieldButton--quiet`        | `quiet` attribute      | Implemented                  |
+| `.spectrum-InfieldButton-fill`          | Fill container         | Implemented                  |
+| `.spectrum-InfieldButton-icon`          | Icon slot              | Implemented                  |
+| `.spectrum-InfieldButton-inline`        | Inline group container | Missing from WC (new for S2) |
+| `.spectrum-InfieldButton--sizeL`        | `size="l"`             | Implemented                  |
+| `.spectrum-InfieldButton--sizeS`        | `size="s"`             | Implemented                  |
+| `.spectrum-InfieldButton--sizeXL`       | `size="xl"`            | Implemented                  |
+| `.spectrum-InfieldButton:disabled`      | `disabled` attribute   | Implemented                  |
+| `.spectrum-InfieldButton:focus-visible` | Focus state            | Implemented                  |
+| `.spectrum-InfieldButton:hover`         | Hover state            | Implemented                  |
+| `.spectrum-InfieldButton:active`        | Active state           | Implemented                  |
 
 ## Summary of changes
 
@@ -324,3 +411,4 @@ None found for this component.
 ## Resources
 
 - [CSS migration](https://github.com/adobe/spectrum-css/pull/3642)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-in-field-button--docs)
