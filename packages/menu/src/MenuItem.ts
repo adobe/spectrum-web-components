@@ -13,6 +13,7 @@
 import {
     CSSResultArray,
     html,
+    INPUT_COMPONENT_PATTERN,
     nothing,
     PropertyValues,
     TemplateResult,
@@ -549,8 +550,7 @@ export class MenuItem extends LikeAnchor(
 
         // Check for components that typically contain input elements
         // This covers components like sp-search, sp-textfield, sp-number-field, etc.
-        const inputComponentPattern =
-            /^(SP-SEARCH|SP-TEXTFIELD|SP-NUMBER-FIELD|SP-COMBOBOX|SP-COLOR-FIELD)$/;
+        const inputComponentPattern = INPUT_COMPONENT_PATTERN;
         if (inputComponentPattern.test(element.tagName)) {
             return true;
         }
