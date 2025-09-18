@@ -663,7 +663,7 @@
     --system-helptext-bottom-to-text-large: var(--spectrum-component-bottom-to-text-200);
     --system-helptext-bottom-to-text-extra-large: var(--spectrum-component-bottom-to-text-300);
     --system-textfield-corner-radius: var(--spectrum-corner-radius-100);
-    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-75);
-    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-200);
-    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-200);
+    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-100);
 }
