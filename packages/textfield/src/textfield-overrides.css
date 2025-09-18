@@ -20,18 +20,22 @@
     --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
     --spectrum-textfield-border-color-disabled: var(--system-textfield-border-color-disabled);
     --spectrum-textfield-border-width: var(--system-textfield-border-width);
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-icon-spacing-block-invalid);
 }
 
 :host([size="s"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-small);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-s-icon-spacing-block-invalid);
 }
 
 :host([size="l"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-large);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-l-icon-spacing-block-invalid);
 }
 
 :host([size="xl"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-extra-large);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-xl-icon-spacing-block-invalid);
 }
 
