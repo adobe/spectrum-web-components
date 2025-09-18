@@ -646,4 +646,24 @@
     --system-toast-background-color-default: var(--spectrum-neutral-subdued-background-color-default);
     --system-toast-divider-color: var(--spectrum-transparent-white-300);
     --system-tooltip-backgound-color-default-neutral: var(--spectrum-neutral-subdued-background-color-default);
+    --system-field-label-top-to-text: var(--spectrum-component-top-to-text-75);
+    --system-field-label-top-to-text-small: var(--spectrum-component-top-to-text-75);
+    --system-field-label-top-to-text-large: var(--spectrum-component-top-to-text-100);
+    --system-field-label-top-to-text-extra-large: var(--spectrum-component-top-to-text-200);
+    --system-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
+    --system-field-label-bottom-to-text-small: var(--spectrum-component-bottom-to-text-75);
+    --system-field-label-bottom-to-text-large: var(--spectrum-component-bottom-to-text-100);
+    --system-field-label-bottom-to-text-extra-large: var(--spectrum-component-bottom-to-text-200);
+    --system-helptext-top-to-text: var(--spectrum-component-top-to-text-75);
+    --system-helptext-top-to-text-small: var(--spectrum-component-top-to-text-75);
+    --system-helptext-top-to-text-large: var(--spectrum-component-top-to-text-100);
+    --system-helptext-top-to-text-extra-large: var(--spectrum-component-top-to-text-200);
+    --system-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
+    --system-helptext-bottom-to-text-small: var(--spectrum-component-bottom-to-text-75);
+    --system-helptext-bottom-to-text-large: var(--spectrum-component-bottom-to-text-100);
+    --system-helptext-bottom-to-text-extra-large: var(--spectrum-component-bottom-to-text-200);
+    --system-textfield-corner-radius: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-100);
+    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-100);
 }

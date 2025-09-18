@@ -20,19 +20,23 @@
     --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
     --spectrum-textfield-border-color-disabled: var(--system-textfield-border-color-disabled);
     --spectrum-textfield-border-width: var(--system-textfield-border-width);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-icon-spacing-block-invalid);
 }
 
 :host([size="s"]) #textfield#textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-s-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-small);
 }
 
 :host([size="l"]) #textfield#textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-l-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-large);
 }
 
 :host([size="xl"]) #textfield#textfield {
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-xl-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-extra-large);
 }
 
 :host([quiet]) #textfield {
