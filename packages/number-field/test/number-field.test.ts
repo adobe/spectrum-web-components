@@ -683,7 +683,7 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            await sendMouse([
+            sendMouse([
                 {
                     type: 'move',
                     position: [buttonUp],
@@ -724,7 +724,7 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            await sendMouse([
+            sendMouse([
                 {
                     type: 'move',
                     position: [buttonUp],
