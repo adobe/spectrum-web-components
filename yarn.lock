@@ -3596,11 +3596,11 @@ __metadata:
   linkType: hard
 
 "@internationalized/number@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "@internationalized/number@npm:3.6.0"
+  version: 3.6.5
+  resolution: "@internationalized/number@npm:3.6.5"
   dependencies:
     "@swc/helpers": "npm:^0.5.0"
-  checksum: 10c0/fbb15c76e002b7cee85c398653a0b8b20c5e6b68b7be20592a56a3363798f68ad1b687289090d370ed89cbbf466ca276ebe5949210cc8d2a89fb6e79b26beb95
+  checksum: 10c0/f87d710863a8dbf057aac311193c82f3c42e862abdd99e5b71034f1022926036552620eab5dd00c23e975f28b9e41e830cb342ba0264436749d9cdc5ae031d44
   languageName: node
   linkType: hard
 
