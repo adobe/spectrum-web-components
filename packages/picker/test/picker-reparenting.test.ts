@@ -34,7 +34,7 @@ const fixtureElements = async (): Promise<{
     after: HTMLDivElement;
 }> => {
     const test = await fixture(html`
-        <sp-theme color="light" scale="medium">
+        <sp-theme color="light" scale="medium" system="spectrum">
             <div id="before">
                 <sp-picker
                     id="picker"

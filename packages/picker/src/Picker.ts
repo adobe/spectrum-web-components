@@ -22,41 +22,41 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
+    property,
+    query,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
     classMap,
     ifDefined,
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import {
-    property,
-    query,
-    state,
-} from '@spectrum-web-components/base/src/decorators.js';
 
-import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import pickerStyles from './picker.css.js';
 
-import type { Tooltip } from '@spectrum-web-components/tooltip';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import type {
     Menu,
     MenuItem,
     MenuItemChildren,
 } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu.js';
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 
+import type { FieldLabel } from '@spectrum-web-components/field-label';
 import type { MenuItemKeydownEvent } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import type { FieldLabel } from '@spectrum-web-components/field-label';
 
 import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
@@ -437,6 +437,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.tooltipEl = event.target.assignedElements()[0] as
             | Tooltip
             | undefined;
+
+        // Set up trigger element for self-managed tooltips
+        if (this.tooltipEl?.selfManaged) {
+            // Wait for the tooltip to be fully initialized
+            this.updateComplete.then(() => {
+                if (this.tooltipEl?.overlayElement && this.button) {
+                    this.tooltipEl.overlayElement.triggerElement = this.button;
+                }
+            });
+        }
     }
 
     public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};

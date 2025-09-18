@@ -23,11 +23,9 @@ describe('Base', () => {
     });
     it('sets `dir` from `document`', async () => {
         document.dir = 'rtl';
-        const el = await fixture<DirElement>(
-            html`
-                <dir-element></dir-element>
-            `
-        );
+        const el = await fixture<DirElement>(html`
+            <dir-element></dir-element>
+        `);
 
         await elementUpdated(el);
 
