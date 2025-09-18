@@ -381,3 +381,72 @@ fs.appendFileSync(
     `${manifestImports}${manifestListings}];\r\n`,
     'utf-8'
 );
+
+/**
+ * Generates iconsList.json for filtering icons in Storybook demos and documentation website.
+ *
+ * This function processes the available S1 and S2 icon component names and creates a JSON file
+ * that serves as an allowlist for filtering icons in the iconset Storybook demos. The filtering
+ * ensures that only icons available in the current Spectrum version are displayed to users.
+ *
+ * The function performs the following transformations:
+ * 1. Converts PascalCase component names (e.g., "HeartFilled") to lowercase (e.g., "heartfilled")
+ * 2. Filters out any names that start with numbers (invalid icon names)
+ * 3. Sorts the lists alphabetically for consistent output
+ * 4. Creates separate arrays for S1 and S2 icons
+ * 5. Writes the prettifiedformatted JSON to packages/iconset/stories/iconsList.json
+ *
+ * @example
+ * Input: ["HeartFilled", "AddCircle", "20Asset"]
+ * Output: ["addcircle", "heartfilled"] (20Asset filtered out)
+ *
+ * @example
+ * Generated JSON structure:
+ * {
+ *   "s1": ["abc", "addcircle", "heart", ...],
+ *   "s2": ["accessibility", "addcontent", "heartfilled", ...]
+ * }
+ *
+ *  */
+const generateIconsList = () => {
+    // Convert component names to lowercase format for iconsList.json
+    const s1IconsList = iconsV1NameList
+        .map((name) =>
+            name.replace(/([A-Z])/g, (match, letter) => letter.toLowerCase())
+        )
+        .filter((name) => !Number.isNaN(Number(name[0])) === false) // Filter out names starting with numbers
+        .sort();
+
+    const s2IconsList = iconsV2NameList
+        .map((name) =>
+            name.replace(/([A-Z])/g, (match, letter) => letter.toLowerCase())
+        )
+        .filter((name) => !Number.isNaN(Number(name[0])) === false) // Filter out names starting with numbers
+        .sort();
+
+    const iconsListData = {
+        s1: s1IconsList,
+        s2: s2IconsList,
+    };
+
+    const iconsListPath = path.join(
+        rootDir,
+        'packages',
+        'iconset',
+        'stories',
+        'iconsList.json'
+    );
+
+    prettier
+        .format(JSON.stringify(iconsListData), {
+            parser: 'json',
+            printWidth: 100,
+            tabWidth: 4,
+            useTabs: false,
+        })
+        .then((formattedJson) => {
+            fs.writeFileSync(iconsListPath, formattedJson, 'utf-8');
+        });
+};
+
+generateIconsList();
