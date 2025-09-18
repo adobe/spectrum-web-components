@@ -348,7 +348,7 @@
     --system-picker-border-color-active: transparent;
     --system-picker-border-color-key-focus: transparent;
     --system-picker-border-color-disabled: transparent;
-    --system-picker-border-width: var(--spectrum-border-width-100);
+    --system-picker-border-width: var(--spectrum-border-width-200);
     --system-picker-button-background-color: var(--spectrum-gray-100);
     --system-picker-button-background-color-hover: var(--spectrum-gray-200);
     --system-picker-button-background-color-down: var(--spectrum-gray-200);
