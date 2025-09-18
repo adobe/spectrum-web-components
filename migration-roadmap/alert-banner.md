@@ -1,5 +1,9 @@
 # Alert Banner migration roadmap
 
+## Component specifications
+
+### CSS
+
 <details>
 <summary>CSS selectors</summary>
 
@@ -12,7 +16,9 @@
 - `.spectrum-AlertBanner-text`
 - `.spectrum-AlertBanner.is-open`
 - `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`
-- `.spectrum-AlertBanner:lang(ja)`, `.spectrum-AlertBanner:lang(ko)`, `.spectrum-AlertBanner:lang(zh)`
+- `.spectrum-AlertBanner:lang(ja)`
+- `.spectrum-AlertBanner:lang(ko)`
+- `.spectrum-AlertBanner:lang(zh)`
 
 </details>
 
@@ -23,23 +29,6 @@
 - `--mod-closebutton-margin-inline`
 - `--mod-closebutton-margin-top`
 - `--mod-icon-size`
-
-</details>
-
-<details>
-<summary>Attributes</summary>
-
-- `open` (Boolean) - Controls the display of the alert banner
-- `dismissible` (Boolean) - Whether to include an icon-only close button to dismiss the alert banner
-- `variant` (String) - The variant applies specific styling when set to `negative`, `neutral`, or `info`
-
-</details>
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - The alert banner text context
-- `action` - Slot for the button element that surfaces the contextual action a user can take
 
 </details>
 
@@ -75,31 +64,81 @@
 
 </details>
 
-## Visual Comparison
+### SWC
 
-**Legacy Component:**
+<details>
+<summary>Attributes</summary>
 
-<!-- Screenshot of legacy component will be added here -->
+- `open` (Boolean) - Controls the display of the alert banner
+- `dismissible` (Boolean) - Whether to include an icon-only close button to dismiss the alert banner
+- `variant` (String) - The variant applies specific styling when set to `negative` or `info`; `variant` attribute is removed when it's passed an invalid variant. Valid values: `neutral`, `info`, `negative`
 
-**Spectrum 2 Component:**
+</details>
 
-<!-- Screenshot of Spectrum 2 component will be added here -->
+<details>
+<summary>Slots</summary>
 
-## DOM Structure Changes
+- Default slot - The alert banner text context
+- `action` - Slot for the button element that surfaces the contextual action a user can take
 
-**Legacy (main branch):**
+</details>
+
+## Comparison
+
+### DOM structure changes
+
+<details>
+<summary>Spectrum Web Components:</summary>
 
 ```html
-<div class="spectrum-AlertBanner spectrum-AlertBanner--{variant} is-open">
+<sp-alert-banner variant="info" dismissible>
+    #shadow-root
+    <div class="body" role="alert">
+        <div class="content">
+            <sp-icon-info label="Information" class="type"></sp-icon-info>
+            <div class="text"><slot></slot></div>
+        </div>
+        <slot name="action"></slot>
+    </div>
+    <div class="end">
+        <sp-close-button
+            @click="${this.shouldClose}"
+            label="Close"
+            static-color="white"
+        ></sp-close-button>
+    </div>
+</sp-alert-banner>
+```
+
+</details>
+
+<details>
+<summary>Legacy (CSS main branch):</summary>
+
+```html
+<div class="spectrum-AlertBanner is-open spectrum-AlertBanner--info">
     <div class="spectrum-AlertBanner-body">
         <div class="spectrum-AlertBanner-content">
-            <svg class="spectrum-AlertBanner-icon">[icon]</svg>
-            <p class="spectrum-AlertBanner-text">[text]</p>
+            <div
+                class="spectrum-Icon spectrum-Icon--sizeM spectrum-AlertBanner-icon"
+                aria-hidden="true"
+            >
+                <svg
+                    class="spectrum-Icon-svg"
+                    focusable="false"
+                    aria-hidden="true"
+                >
+                    <use xlink:href="#spectrum-icon-18-Info"></use>
+                </svg>
+            </div>
+            <p class="spectrum-AlertBanner-text">
+                Your trial will expire in 3 days
+            </p>
         </div>
         <button
-            class="spectrum-Button spectrum-Button--outline spectrum-Button--staticWhite"
+            class="spectrum-Button spectrum-Button--outline spectrum-Button--staticWhite spectrum-Button--sizeM"
         >
-            [action button]
+            <span class="spectrum-Button-label">Action</span>
         </button>
     </div>
     <div class="spectrum-AlertBanner-end">
@@ -109,107 +148,135 @@
         <button
             class="spectrum-CloseButton spectrum-CloseButton--sizeM spectrum-CloseButton--staticWhite"
         >
-            [close button]
+            <span class="spectrum-CloseButton-icon" aria-hidden="true">
+                <svg
+                    class="spectrum-Icon spectrum-Icon--sizeS"
+                    focusable="false"
+                    aria-hidden="true"
+                >
+                    <use xlink:href="#spectrum-icon-18-Cross"></use>
+                </svg>
+            </span>
         </button>
     </div>
 </div>
 ```
 
-**Spectrum 2 (spectrum-two branch):**
+</details>
+
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
-<div class="spectrum-AlertBanner spectrum-AlertBanner--{variant} is-open">
+<div class="spectrum-AlertBanner is-open spectrum-AlertBanner--info">
     <div class="spectrum-AlertBanner-body">
         <div class="spectrum-AlertBanner-content">
-            <svg class="spectrum-AlertBanner-icon">[icon]</svg>
-            <p class="spectrum-AlertBanner-text">[text]</p>
+            <div
+                class="spectrum-Icon spectrum-Icon--sizeM spectrum-AlertBanner-icon"
+                aria-hidden="true"
+            >
+                <svg
+                    class="spectrum-Icon-svg"
+                    focusable="false"
+                    aria-hidden="true"
+                >
+                    <use xlink:href="#spectrum-icon-18-Info"></use>
+                </svg>
+            </div>
+            <p class="spectrum-AlertBanner-text">
+                Your trial will expire in 3 days
+            </p>
         </div>
         <button
-            class="spectrum-Button spectrum-Button--outline spectrum-Button--staticWhite"
+            class="spectrum-Button spectrum-Button--outline spectrum-Button--staticWhite spectrum-Button--sizeM"
         >
-            [action button]
+            <span class="spectrum-Button-label">Action</span>
         </button>
     </div>
     <div class="spectrum-AlertBanner-end">
         <button
             class="spectrum-CloseButton spectrum-CloseButton--sizeM spectrum-CloseButton--staticWhite"
         >
-            [close button]
+            <span class="spectrum-CloseButton-icon" aria-hidden="true">
+                <svg
+                    class="spectrum-Icon spectrum-Icon--sizeS"
+                    focusable="false"
+                    aria-hidden="true"
+                >
+                    <use xlink:href="#spectrum-icon-18-Cross"></use>
+                </svg>
+            </span>
         </button>
     </div>
 </div>
 ```
 
-## Comparison
+</details>
 
-| CSS selector                                                                                         | Attribute or slot         | Status           |
-| ---------------------------------------------------------------------------------------------------- | ------------------------- | ---------------- |
-| `.spectrum-AlertBanner`                                                                              | Root element              | Implemented      |
-| `.spectrum-AlertBanner--info`                                                                        | `variant="info"`          | Implemented      |
-| `.spectrum-AlertBanner--negative`                                                                    | `variant="negative"`      | Implemented      |
-| `.spectrum-AlertBanner-body`                                                                         | -                         | Implemented      |
-| `.spectrum-AlertBanner-content`                                                                      | -                         | Implemented      |
-| `.spectrum-AlertBanner-icon`                                                                         | -                         | Implemented      |
-| `.spectrum-AlertBanner-text`                                                                         | Default slot              | Implemented      |
-| `.spectrum-AlertBanner.is-open`                                                                      | `open` attribute          | Implemented      |
-| `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`                        | `dismissible` attribute   | Implemented      |
-| `.spectrum-AlertBanner:lang(ja)`, `.spectrum-AlertBanner:lang(ko)`, `.spectrum-AlertBanner:lang(zh)` | Language-specific styling | Implemented      |
-| -                                                                                                    | `action` slot             | Missing from CSS |
-| -                                                                                                    | `dismissible` attribute   | Missing from CSS |
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-## Key Structural Changes
+```diff
+  <div class="spectrum-AlertBanner-end">
+-     <div
+-         class="spectrum-Divider spectrum-Divider--vertical spectrum-Divider--sizeS"
+-     ></div>
+      <button
+          class="spectrum-CloseButton spectrum-CloseButton--sizeM spectrum-CloseButton--staticWhite"
+      >
+          <span class="spectrum-CloseButton-icon" aria-hidden="true">
+              <svg
+                  class="spectrum-Icon spectrum-Icon--sizeS"
+                  focusable="false"
+                  aria-hidden="true"
+              >
+                  <use xlink:href="#spectrum-icon-18-Cross"></use>
+              </svg>
+          </span>
+      </button>
+  </div>
+```
 
-**Element Hierarchy Changes:**
+</details>
 
-- Removed divider element between content and close button in Spectrum 2
-- Simplified end container structure
+### CSS => SWC mapping
 
-**Class Name Changes:**
+| CSS selector                                                                                     | Attribute or slot                       | Status      |
+| ------------------------------------------------------------------------------------------------ | --------------------------------------- | ----------- |
+| `.spectrum-AlertBanner`                                                                          | Base component, `variant="neutral"`     | Implemented |
+| `.spectrum-AlertBanner--info`                                                                    | `variant="info"`                        | Implemented |
+| `.spectrum-AlertBanner--negative`                                                                | `variant="negative"`                    | Implemented |
+| `.spectrum-AlertBanner.is-open`                                                                  | `open` attribute                        | Implemented |
+| `.spectrum-AlertBanner-text`                                                                     | Default slot within `.text`             | Implemented |
+| `.spectrum-AlertBanner-icon`                                                                     | Icon rendering (info/negative variants) | Implemented |
+| `.spectrum-AlertBanner:has(.spectrum-CloseButton) .spectrum-AlertBanner-body`                    | `dismissible` attribute                 | Implemented |
+| `.spectrum-AlertBanner:lang(ja), .spectrum-AlertBanner:lang(ko), .spectrum-AlertBanner:lang(zh)` | Language-specific styling               | Implemented |
+| `.spectrum-AlertBanner-body`                                                                     | `.body`                                 | Implemented |
+| `.spectrum-AlertBanner-content`                                                                  | `.content`                              | Implemented |
+| `.spectrum-AlertBanner-end`                                                                      | `.end`                                  | Implemented |
+| Corresponds to `.spectrum-Button` within `.spectrum-AlertBanner`                                 | `action` slot                           | Implemented |
 
-- No major class name changes
-- Maintained consistent naming convention
+Note: the `neutral` variant of Alert banner is the default variant in both CSS and SWC.
 
-**Attribute Changes:**
+## Summary of changes
 
-- Added `open` attribute for controlling display state
-- Added `dismissible` attribute for controlling close button visibility
+### CSS => SWC implementation gaps
 
-**Slot/Content Changes:**
+**No missing features.** All CSS selectors have corresponding web component implementations:
 
-- Added dedicated `action` slot for button elements
-- Default slot remains for text content
+- **Variants**: `--info` → `variant="info"`, `--negative` → `variant="negative"`
+- **State**: `.is-open` → `open` attribute
+- **Content**: Text and icon selectors → default slot and programmatic icon rendering
+- **Dismissible**: Close button presence → `dismissible` attribute
+- **Action slot**: Available in SWC but not in CSS templates
 
-**Migration Impact:**
+### CSS Spectrum 2 changes
 
-- Removal of divider element will affect visual separation between content and close button
-- Web component provides better semantic structure with slots
+**Divider element removed in spectrum-two branch**: The `<div class="spectrum-Divider spectrum-Divider--vertical spectrum-Divider--sizeS"></div>` element is no longer included in the close button section. The spectrum-two branch template only includes the close button without the divider separator.
 
-### Implementation Gaps
+This divider does not appear to be present in SWC, and therefore will not need to be removed for Spectrum 2.
 
-**CSS Features Missing from Web Component:**
+## Resources
 
-- All CSS selectors are properly implemented in the web component
-
-**Web Component Features Missing from CSS:**
-
-- `action` slot - needs CSS support for slotted action button positioning
-- `dismissible` attribute - CSS should provide conditional styling based on this attribute
-
-**Features Being Deprecated/Removed:**
-
-- Divider element between content and close button has been removed in Spectrum 2
-
-### Action Items for Web Component Maintainers
-
-**Required Additions:**
-
-- No major additions needed - component is well-aligned with CSS implementation
-
-**Required Removals:**
-
-- None identified
-
-**Breaking Changes:**
-
-- Divider removal may affect existing implementations expecting visual separation
-- Migration guidance: Update expectations for visual separation between content and close button
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2652)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-alert-banner--docs)
