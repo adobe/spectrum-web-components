@@ -117,29 +117,12 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-### HTML Output Comparison
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-**Legacy (CSS main branch):**
+No significant structural changes.
 
-```html
-<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-    Label text
-    <sp-icon-asterisk100
-        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
-</label>
-```
-
-**Spectrum 2 (CSS spectrum-two branch):**
-
-```html
-<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-    Label text&#8288;
-    <sp-icon-asterisk100
-        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
-</label>
-```
+</details>
 
 ### Key Changes in HTML Structure
 
