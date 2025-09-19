@@ -2201,8 +2201,6 @@ export function runPickerTests(): void {
 
             expect(
                 findAccessibilityNode<NamedNode>(snapshot, (node) => {
-                    // eslint-disable-next-line no-console
-                    console.log(node.name);
                     return (
                         node.name ===
                         'Pending Choose your neighborhood Where do you live?'
