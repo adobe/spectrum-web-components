@@ -10,7 +10,7 @@
         "plop": "plop"
     },
     "devDependencies": {
-        "plop": "^4.0.0"
+        "plop": "4.0.2"
     },
     "customElements": "custom-elements.json",
     "repository": {
