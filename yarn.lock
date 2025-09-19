@@ -188,10 +188,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@4.1.0":
-  version: 4.1.0
-  resolution: "@adobe/spectrum-css-workflow-icons@npm:4.1.0"
-  checksum: 10c0/0547f86ce4a0ca2f477a72b80d70c071c79ddd10fb6f0fc6ad7f144e4928c29dfc8af44327f67b54d61d18fd88523701aa5d02bf1b52792ed2e17fceff7f08f0
+"@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@5.0.0":
+  version: 5.0.0
+  resolution: "@adobe/spectrum-css-workflow-icons@npm:5.0.0"
+  checksum: 10c0/286c5c3bbf52ab1c787c1ad29699567f07f9b2ce77c49e8624f567ebb72e169c5fedf2a8a26e708166dfe5cb876ad48941a56267b63b05f1ccb6c746a424ae1b
   languageName: node
   linkType: hard
 
@@ -5219,7 +5219,7 @@ __metadata:
   resolution: "@spectrum-web-components/icons-workflow@workspace:packages/icons-workflow"
   dependencies:
     "@adobe/spectrum-css-workflow-icons": "npm:1.7.0"
-    "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0"
+    "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@5.0.0"
     "@spectrum-web-components/base": "npm:1.7.0"
     "@spectrum-web-components/icon": "npm:1.7.0"
     case: "npm:^1.6.1"
