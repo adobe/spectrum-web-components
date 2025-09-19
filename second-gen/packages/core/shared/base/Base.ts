@@ -190,7 +190,7 @@ export class SpectrumElement extends SpectrumMixin(LitElement) {
     static VERSION = version;
 }
 
-if (window.__swc?.DEBUG) {
+if (process.env.NODE_ENV === 'development') {
     const ignoreWarningTypes = {
         default: false,
         accessibility: false,
@@ -205,18 +205,16 @@ if (window.__swc?.DEBUG) {
     };
     window.__swc = {
         ...window.__swc,
+        DEBUG: true,
         ignoreWarningLocalNames: {
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLocalNames || {}),
         },
         ignoreWarningTypes: {
             ...ignoreWarningTypes,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningTypes || {}),
         },
         ignoreWarningLevels: {
             ...ignoreWarningLevels,
-            /* c8 ignore next 1 */
             ...(window.__swc?.ignoreWarningLevels || {}),
         },
         issuedWarnings: new Set(),
@@ -231,7 +229,6 @@ if (window.__swc?.DEBUG) {
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
                 return;
             }
-            /* c8 ignore next 3 */
             if (window.__swc.ignoreWarningLocalNames[localName]) {
                 return;
             }
@@ -270,7 +267,7 @@ if (window.__swc?.DEBUG) {
         },
     };
 
-    window.__swc?.warn(
+    window.__swc.warn(
         undefined,
         'Spectrum Web Components is in dev mode. Not recommended for production!',
         'https://opensource.adobe.com/spectrum-web-components/dev-mode/',
