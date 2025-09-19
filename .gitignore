@@ -109,6 +109,7 @@ first-gen/test/**/*.d.ts
 !first-gen/test/visual/**/*.js
 first-gen/test/visual/test.js
 test-results
+second-gen/packages/swc/playwright-report
 
 # second gen build artifacts
 second-gen/packages/*/dist/
