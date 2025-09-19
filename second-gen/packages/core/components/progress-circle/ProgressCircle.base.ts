@@ -34,11 +34,10 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
 
     /**
      * Static color variant for use on different backgrounds.
-     * When set to 'white', the component uses white styling for images with a dark tinted background.
-     * When set to 'black', the component uses black styling for images with a light tinted background.
+     * When set to 'white', the component uses white styling for dark backgrounds.
      */
     @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white' | 'black';
+    public staticColor?: 'white';
 
     /**
      * Progress value from 0 to 100.
@@ -46,24 +45,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
      */
     @property({ type: Number })
     public progress = 0;
-
-    /**
-     * Stroke width for the progress circle.
-     */
-    @property({ type: Number, reflect: false })
-    public get strokeWidth(): number {
-        return this._strokeWidth;
-    }
-
-    public set strokeWidth(customWidth: unknown) {
-        if (customWidth && customWidth instanceof Number) {
-            this._strokeWidth = customWidth as number;
-        }
-
-        this._strokeWidth = this.size === 's' ? 2 : this.size === 'l' ? 4 : 3;
-    }
-
-    private _strokeWidth: number = 2;
 
     @query('slot')
     private slotEl!: HTMLSlotElement;
