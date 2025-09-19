@@ -409,24 +409,21 @@ fs.appendFileSync(
  *
  *  */
 const generateIconsList = () => {
-    // Convert component names to lowercase format for iconsList.json
-    const s1IconsList = iconsV1NameList
-        .map((name) =>
-            name.replace(/([A-Z])/g, (match, letter) => letter.toLowerCase())
-        )
-        .filter((name) => !Number.isNaN(Number(name[0])) === false) // Filter out names starting with numbers
-        .sort();
-
-    const s2IconsList = iconsV2NameList
-        .map((name) =>
-            name.replace(/([A-Z])/g, (match, letter) => letter.toLowerCase())
-        )
-        .filter((name) => !Number.isNaN(Number(name[0])) === false) // Filter out names starting with numbers
-        .sort();
+    // Helper function to transform component names to lowercase format for iconsList.json
+    const transformIconNames = (nameList) => {
+        return nameList
+            .map((name) =>
+                name.replace(/([A-Z])/g, (match, letter) =>
+                    letter.toLowerCase()
+                )
+            )
+            .filter((name) => !Number.isNaN(Number(name[0])) === false)
+            .sort();
+    };
 
     const iconsListData = {
-        s1: s1IconsList,
-        s2: s2IconsList,
+        s1: transformIconNames(iconsV1NameList),
+        s2: transformIconNames(iconsV2NameList),
     };
 
     const iconsListPath = path.join(
