@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
 
 /**
  * Represents a host element with pending state.
@@ -58,7 +58,7 @@ export class PendingStateController<T extends HostWithPendingState>
                       id="loader"
                       size="s"
                       indeterminate
-                      aria-valuetext=${pendingLabel}
+                      aria-label=${pendingLabel}
                       class="progress-circle"
                   ></sp-progress-circle>
               `
@@ -73,15 +73,25 @@ export class PendingStateController<T extends HostWithPendingState>
         const { pending, disabled, pendingLabel } = this.host;
         const currentAriaLabel = this.host.getAttribute('aria-label');
 
+        function shouldCacheAriaLabel(
+            cached: string | null,
+            current: string | null,
+            pending: string | undefined
+        ): string | boolean | null {
+            return (
+                (!cached && current && current !== pending) ||
+                (cached !== current && current && current !== pending)
+            );
+        }
+
         // If the current `aria-label` is different from the pending label, cache it
         // or if the cached `aria-label` is different from the current `aria-label`, cache it
         if (
-            (!this.cachedAriaLabel &&
-                currentAriaLabel &&
-                currentAriaLabel !== pendingLabel) ||
-            (this.cachedAriaLabel !== currentAriaLabel &&
-                currentAriaLabel &&
-                currentAriaLabel !== pendingLabel)
+            shouldCacheAriaLabel(
+                this.cachedAriaLabel,
+                currentAriaLabel,
+                pendingLabel
+            )
         ) {
             this.cachedAriaLabel = currentAriaLabel;
         }
