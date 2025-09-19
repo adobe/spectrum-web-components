@@ -9,13 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import autoprefixer from 'autoprefixer';
 import { glob } from 'glob';
+import { resolve } from 'path';
+import postcssPresetEnv from 'postcss-preset-env';
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import litCss from 'vite-plugin-lit-css';
-import autoprefixer from 'autoprefixer';
-import postcssPresetEnv from 'postcss-preset-env';
 
 export default defineConfig({
     plugins: [

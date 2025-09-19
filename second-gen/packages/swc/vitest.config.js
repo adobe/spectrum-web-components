@@ -12,12 +12,15 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ['playwright', 'playwright-core', '@playwright/test'],
+    },
     test: {
         browser: {
             enabled: true,
             provider: 'playwright',
-            name: 'chromium',
             headless: true,
+            instances: [{ browser: 'chromium' }],
         },
         include: ['components/**/*.test.ts'],
         coverage: {
