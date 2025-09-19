@@ -71,6 +71,7 @@ None found for this component.
 ### CSS Spectrum 2 changes
 
 - **New component introduction**: The infield progress circle is entirely new in the spectrum-two branch, designed specifically for inline loading states within form fields and input components.
+- **Relationship to infield button**: This component follows the same design patterns as the infield button component in Spectrum 2, both being designed for inline use within form fields. While they were kept as separate components in the CSS implementation, there was discussion about combining them, and this might be worth considering during the web component migration to reduce duplication and maintain consistency.
 - **Modular architecture**: Built as a wrapper around the base ProgressCircle component with infield-specific styling classes, promoting code reuse and consistency.
 - **Comprehensive sizing**: Introduced S, M, L, and XL size variants to match the sizing scale used throughout the Spectrum design system.
 - **Static color variants**: Added support for static color variants to ensure visibility in various background contexts and high-contrast scenarios.
