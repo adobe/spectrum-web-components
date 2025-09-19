@@ -75,16 +75,27 @@ None found for this component.
 <details>
 <summary>Attributes</summary>
 
+- `active` (Boolean) - Whether the infield button is in an active state
 - `block` (String) - Vertical stack position: 'start' or 'end'
+- `disabled` (Boolean) - Disable this control. It will not receive focus or events
+- `download` (String) - Causes the browser to treat the linked URL as a download
+- `href` (String) - The URL that the hyperlink points to
 - `inline` (String) - Horizontal group position: 'start' or 'end'
+- `label` (String) - An accessible label that describes the component. It will be applied to aria-label, but not visually rendered
 - `quiet` (Boolean) - Whether the button is in quiet variant
+- `referrerpolicy` (String) - How much of the referrer to send when following the link
+- `rel` (String) - The relationship of the linked URL as space-separated link types
+- `tabIndex` (Number) - The tab index to apply to this control
+- `target` (String) - Where to display the linked URL, as the name for a browsing context
+- `type` (String) - The default behavior of the button: 'button', 'submit', or 'reset'
 
 </details>
 
 <details>
 <summary>Slots</summary>
 
-- Default slot - Icon content for the button
+- Default slot - Text content for the button
+- Icon slot - Icon content for the button
 
 </details>
 
@@ -111,7 +122,15 @@ None found for this component.
 ```html
 <button class="spectrum-InfieldButton spectrum-InfieldButton--sizeM">
     <div class="spectrum-InfieldButton-fill">
-        <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
+        <svg
+            class="spectrum-InfieldButton-icon"
+            focusable="false"
+            aria-hidden="true"
+        >
+            <path
+                d="M10 2C10.55 2 11 2.45 11 3V9H17C17.55 9 18 9.45 18 10C18 10.55 17.55 11 17 11H11V17C11 17.55 10.55 18 10 18C9.45 18 9 17.55 9 17V11H3C2.45 11 2 10.55 2 10C2 9.45 2.45 9 3 9H9V3C9 2.45 9.45 2 10 2Z"
+            ></path>
+        </svg>
     </div>
 </button>
 ```
@@ -122,9 +141,20 @@ None found for this component.
 <summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
-<button class="spectrum-InfieldButton spectrum-InfieldButton--sizeM">
+<button
+    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+    role="presentation"
+>
     <div class="spectrum-InfieldButton-fill">
-        <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
+        <svg
+            class="spectrum-InfieldButton-icon"
+            focusable="false"
+            aria-hidden="true"
+        >
+            <path
+                d="M10 2C10.55 2 11 2.45 11 3V9H17C17.55 9 18 9.45 18 10C18 10.55 17.55 11 17 11H11V17C11 17.55 10.55 18 10 18C9.45 18 9 17.55 9 17V11H3C2.45 11 2 10.55 2 10C2 9.45 2.45 9 3 9H9V3C9 2.45 9.45 2 10 2Z"
+            ></path>
+        </svg>
     </div>
 </button>
 ```
@@ -134,279 +164,133 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-### HTML Output Comparison
+### HTML Output Diff
 
-**Legacy (CSS main branch) - Single button:**
+**Single Button Changes:**
 
-```html
+```diff
 <button
     class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
     aria-haspopup="listbox"
     type="button"
     tabindex="0"
++   role="presentation"
 >
     <div class="spectrum-InfieldButton-fill">
-        <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
+        <svg class="spectrum-InfieldButton-icon" focusable="false" aria-hidden="true">
+            <path d="M10 2C10.55 2 11 2.45 11 3V9H17C17.55 9 18 9.45 18 10C18 10.55 17.55 11 17 11H11V17C11 17.55 10.55 18 10 18C9.45 18 9 17.55 9 17V11H3C2.45 11 2 10.55 2 10C2 9.45 2.45 9 3 9H9V3C9 2.45 9.45 2 10 2Z"></path>
+        </svg>
     </div>
 </button>
 ```
 
-**Legacy (CSS main branch) - Stacked buttons:**
+**Stacked → Inline Layout Changes:**
 
-```html
+```diff
++<div class="spectrum-InfieldButton-inline">
 <button
-    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--top"
+-   class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--top"
++   class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
+    aria-haspopup="listbox"
+    type="button"
+    tabindex="0"
+-   aria-label="add"
++   aria-label="minus"
+>
+    <div class="spectrum-InfieldButton-fill">
+        <svg class="spectrum-InfieldButton-icon" focusable="false" aria-hidden="true">
+-           <path d="M10 2C10.55 2 11 2.45 11 3V9H17C17.55 9 18 9.45 18 10C18 10.55 17.55 11 17 11H11V17C11 17.55 10.55 18 10 18C9.45 18 9 17.55 9 17V11H3C2.45 11 2 10.55 2 10C2 9.45 2.45 9 3 9H9V3C9 2.45 9.45 2 10 2Z"></path>
++           <path d="M3 10C3 9.45 3.45 9 4 9H16C16.55 9 17 9.45 17 10C17 10.55 16.55 11 16 11H4C3.45 11 3 10.55 3 10Z"></path>
+        </svg>
+    </div>
+</button>
+<button
+-   class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--bottom"
++   class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
     aria-haspopup="listbox"
     type="button"
     tabindex="0"
     aria-label="add"
 >
     <div class="spectrum-InfieldButton-fill">
-        <sp-icon-chevronup75
-            class="spectrum-InfieldButton-icon"
-        ></sp-icon-chevronup75>
+        <svg class="spectrum-InfieldButton-icon" focusable="false" aria-hidden="true">
+            <path d="M10 2C10.55 2 11 2.45 11 3V9H17C17.55 9 18 9.45 18 10C18 10.55 17.55 11 17 11H11V17C11 17.55 10.55 18 10 18C9.45 18 9 17.55 9 17V11H3C2.45 11 2 10.55 2 10C2 9.45 2.45 9 3 9H9V3C9 2.45 9.45 2 10 2Z"></path>
+        </svg>
     </div>
 </button>
-<button
-    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM spectrum-InfieldButton--bottom"
-    aria-haspopup="listbox"
-    type="button"
-    tabindex="0"
-    aria-label="add"
->
-    <div class="spectrum-InfieldButton-fill">
-        <sp-icon-chevrondown75
-            class="spectrum-InfieldButton-icon"
-        ></sp-icon-chevrondown75>
-    </div>
-</button>
-```
-
-**Spectrum 2 (CSS spectrum-two branch) - Single button:**
-
-```html
-<button
-    class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
-    aria-haspopup="listbox"
-    type="button"
-    tabindex="0"
-    role="presentation"
->
-    <div class="spectrum-InfieldButton-fill">
-        <sp-icon-add100 class="spectrum-InfieldButton-icon"></sp-icon-add100>
-    </div>
-</button>
-```
-
-**Spectrum 2 (CSS spectrum-two branch) - Inline buttons:**
-
-```html
-<div class="spectrum-InfieldButton-inline">
-    <button
-        class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
-        aria-haspopup="listbox"
-        type="button"
-        tabindex="0"
-        aria-label="minus"
-    >
-        <div class="spectrum-InfieldButton-fill">
-            <sp-icon-dash class="spectrum-InfieldButton-icon"></sp-icon-dash>
-        </div>
-    </button>
-    <button
-        class="spectrum-InfieldButton spectrum-InfieldButton--sizeM"
-        aria-haspopup="listbox"
-        type="button"
-        tabindex="0"
-        aria-label="add"
-    >
-        <div class="spectrum-InfieldButton-fill">
-            <sp-icon-add class="spectrum-InfieldButton-icon"></sp-icon-add>
-        </div>
-    </button>
-</div>
++</div>
 ```
 
 ### Key Changes in HTML Structure
 
 1. **Layout paradigm shift**: Replaced `isStacked` vertical stacking with `isInline` horizontal grouping
-2. **Enhanced iconography**:
+2. **Position styles removed**: The `inline` and `block` position properties from SWC are no longer supported in CSS-only implementations
+3. **Enhanced iconography**:
     - Single button: Uses size-specific icon names (e.g., `Add100` instead of `Add`)
     - Inline buttons: Switched from chevron icons to more intuitive action icons (`Dash`/`Add`)
-3. **Simplified state management**: Removed `isInvalid` and `isFocused` states while preserving `isHovered`/`isActive`
-4. **Improved accessibility**: Added `role="presentation"` for single buttons and proper `aria-label` differentiation for inline buttons
-5. **Container structure**: Inline variant wraps buttons in `spectrum-InfieldButton-inline` container
-
-</details>
-### CSS => SWC mapping
-@@ -15,7 +12,6 @@ export const Template = (
- 		rootClass = "spectrum-InfieldButton",
- 		customClasses = [],
- 		size = "m",
--		position,
- 		isQuiet,
- 		iconName = "Add",
- 		iconSet = "workflow",
-@@ -22,7 +18,6 @@ export const Template = (
- 		isDisabled,
--		isInvalid,
- 		isHovered,
- 		isActive,
--		isFocused,
--		isStacked,
-+		isInline,
- 		tabIndex = 0,
--		onSubtract,
--		onAdd,
- 		onclick,
- 	} = {},
- 	context = {},
-@@ -30,7 +25,6 @@ export const Template = (
- 	let iconSize = size === "s" ? "75" : size === "l" ? "200" : size === "xl" ? "300" : "100";
- 	let iconNameWithSize = `${iconName}${iconSize}`;
--	return isStacked
-+	return isInline
- 		? html`
--			<div class="${rootClass}-inline">
-+			<div class="${rootClass}-inline">
- 			<button
- 				class=${classMap({
- 					[rootClass]: true,
- 					[`${rootClass}--size${size?.toUpperCase()}`]:
- 						typeof size !== "undefined",
--					[`${rootClass}--top`]: typeof position !== "undefined",
- 					[`${rootClass}--quiet`]: isQuiet,
--					"is-invalid": isInvalid,
- 					"is-hover": isHovered,
- 					"is-active": isActive,
--					"is-focus-visible": isFocused,
- 					...customClasses.reduce((a, c) => ({ ...a, [c]: true }), {}),
- 					})}
- 					?disabled=${isDisabled}
- 					aria-haspopup="listbox"
- 					type="button"
- 					tabindex=${tabIndex}
--					aria-label="add"
-+					aria-label="minus"
- 					>
- 					<div class="${rootClass}-fill">
- 						${Icon(
- 							{
- 								size,
--								iconName: "ChevronUp75",
-+								iconName: "Dash",
- 								setName: "ui",
- 								customClasses: [`${rootClass}-icon`],
- 							},
- 							context,
- 						)}
- 					</div>
- 				</button>
- 				<button
- 					class=${classMap({
- 						[rootClass]: true,
- 						[`${rootClass}--size${size?.toUpperCase()}`]:
- 							typeof size !== "undefined",
--						[`${rootClass}--bottom`]: typeof position !== "end",
-+						[`${rootClass}--quiet`]: isQuiet,
- 						"is-hover": isHovered,
- 						"is-active": isActive,
--						"is-focus-visible": isFocused,
- 						...customClasses.reduce((a, c) => ({ ...a, [c]: true }), {}),
- 					})}
- 					?disabled=${isDisabled}
- 					aria-haspopup="listbox"
- 					type="button"
- 					tabindex=${tabIndex}
--					aria-label="add"
-+					aria-label="add"
- 				>
- 					<div class="${rootClass}-fill">
- 						${Icon(
- 							{
- 								size,
--								iconName: "ChevronDown75",
-+								iconName: "Add",
- 								setName: "ui",
- 								customClasses: [`${rootClass}-icon`],
- 							},
- 							context,
- 						)}
- 					</div>
- 				</button>
- 			</div>
- 			`
- 		: html`
- 				<button
- 					class=${classMap({
- 						[rootClass]: true,
- 						[`${rootClass}--size${size?.toUpperCase()}`]:
- 							typeof size !== "undefined",
--						[`${rootClass}--${position}`]: typeof position !== "undefined",
- 						[`${rootClass}--quiet`]: isQuiet,
- 						"is-hover": isHovered,
- 						"is-active": isActive,
--						"is-focus-visible": isFocused,
- 						...customClasses.reduce((a, c) => ({ ...a, [c]: true }), {}),
- 					})}
- 					?disabled=${isDisabled}
- 					aria-haspopup="listbox"
- 					type="button"
- 					tabindex=${tabIndex}
--				>
-+					@click=${onclick}
-+					role="presentation"
-+				>
- 					<div class="${rootClass}-fill">
- 						${when(iconName, () =>
- 							Icon(
- 								{
- 									size,
--									iconName,
-+									iconName: iconNameWithSize,
- 									setName: iconSet,
- 									customClasses: [`${rootClass}-icon`],
- 								},
- 								context,
- 							),
- 						)}
- 					</div>
- 				</button>
- 			`;
-```
+4. **Simplified state management**: Removed `isInvalid` and `isFocused` states while preserving `isHovered`/`isActive`
+5. **Improved accessibility**: Added `role="presentation"` for single buttons and proper `aria-label` differentiation for inline buttons
+6. **Container structure**: Inline variant wraps buttons in `spectrum-InfieldButton-inline` container
+7. **Consistent corner radius**: Position-specific border radius variants have been removed in favor of a consistent corner radius approach
 
 </details>
 
 ### CSS => SWC mapping
 
-| CSS selector                            | Attribute or slot      | Status                       |
-| --------------------------------------- | ---------------------- | ---------------------------- |
-| `.spectrum-InfieldButton`               | Base element           | Implemented                  |
-| `.spectrum-InfieldButton--quiet`        | `quiet` attribute      | Implemented                  |
-| `.spectrum-InfieldButton-fill`          | Fill container         | Implemented                  |
-| `.spectrum-InfieldButton-icon`          | Icon slot              | Implemented                  |
-| `.spectrum-InfieldButton-inline`        | Inline group container | Missing from WC (new for S2) |
-| `.spectrum-InfieldButton--sizeL`        | `size="l"`             | Implemented                  |
-| `.spectrum-InfieldButton--sizeS`        | `size="s"`             | Implemented                  |
-| `.spectrum-InfieldButton--sizeXL`       | `size="xl"`            | Implemented                  |
-| `.spectrum-InfieldButton:disabled`      | `disabled` attribute   | Implemented                  |
-| `.spectrum-InfieldButton:focus-visible` | Focus state            | Implemented                  |
-| `.spectrum-InfieldButton:hover`         | Hover state            | Implemented                  |
-| `.spectrum-InfieldButton:active`        | Active state           | Implemented                  |
+| CSS selector                       | Attribute or slot      | Status                       |
+| ---------------------------------- | ---------------------- | ---------------------------- |
+| `.spectrum-InfieldButton`          | `:host`                | Implemented                  |
+| `.spectrum-InfieldButton--quiet`   | `quiet` attribute      | Implemented                  |
+| `.spectrum-InfieldButton-fill`     | Fill container         | Implemented                  |
+| `.spectrum-InfieldButton-icon`     | Icon slot              | Implemented                  |
+| `.spectrum-InfieldButton-inline`   | Inline group container | Missing from WC (new for S2) |
+| `.spectrum-InfieldButton--sizeL`   | `size="l"`             | Implemented                  |
+| `.spectrum-InfieldButton--sizeS`   | `size="s"`             | Implemented                  |
+| `.spectrum-InfieldButton--sizeXL`  | `size="xl"`            | Implemented                  |
+| `.spectrum-InfieldButton:disabled` | `disabled` attribute   | Implemented                  |
+| `.spectrum-InfieldButton:active`   | `active` attribute     | Implemented                  |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
 - **Inline group functionality**: The web component lacks support for `.spectrum-InfieldButton-inline` which enables horizontal button grouping, commonly used for increment/decrement controls in number inputs and similar interfaces.
+- **Required wrapper div**: Spectrum 2 introduces a mandatory `<div class="spectrum-InfieldButton-inline">` wrapper element for inline button layouts. This structural change is essential for proper CSS styling and must be implemented during migration to ensure the component renders correctly in Spectrum 2.
 
 ### CSS Spectrum 2 changes
 
 - **Reduced API complexity**: Eliminated numerous parameters (`position`, `isInvalid`, `isFocused`, `isStacked`, `onSubtract`, `onAdd`) to create a more focused and maintainable component API.
 - **Layout paradigm shift**: Replaced the `isStacked` vertical stacking approach with `isInline` horizontal grouping, better aligning with common use cases for infield buttons.
+- **Position styles removed**: The `inline` and `block` position properties from SWC are no longer supported in CSS-only implementations due to the consistent corner radius approach.
 - **Enhanced iconography**: Switched from chevron-based icons to more intuitive action icons (Dash/Add), providing clearer visual cues for increment/decrement operations.
 - **Streamlined state management**: Removed `isInvalid`/`isFocused` states while preserving essential interaction feedback (`isHovered`/`isActive`).
 - **Flexible template structure**: Inline variant automatically creates paired buttons for common operations, while single variant provides direct click handling for custom actions.
+- **Focus state inheritance**: Infield buttons no longer manage their own focus states, instead inheriting focus styling from their parent components (like textfields or pickers). This creates a more cohesive user experience where the entire input field appears focused rather than individual button elements.
+
+#### Removed modifiers
+
+Due to deprecation of the position variants in the infield button, several spacing and border radius modifiers have been removed:
+
+- `--mod-infield-button-inner-edge-to-fill`
+- `--mod-infield-button-stacked-border-radius-reset`
+- `--mod-infield-button-stacked-bottom-border-block-end-width`
+- `--mod-infield-button-stacked-bottom-border-radius-end-end`
+- `--mod-infield-button-stacked-bottom-border-radius-end-start`
+- `--mod-infield-button-stacked-fill-padding-inline`
+- `--mod-infield-button-stacked-fill-padding-inner`
+
+#### New tokens
+
+These new tokens support the inline variant and stepper (number field) use cases:
+
+- `--spectrum-in-field-button-side-edge-to-fill-small`
+- `--spectrum-in-field-button-side-edge-to-fill-medium`
+- `--spectrum-in-field-button-side-edge-to-fill-large`
+- `--spectrum-in-field-button-side-edge-to-fill-extra-large`
+- `--spectrum-field-edge-to-icon-75`
+- `--spectrum-field-edge-to-icon-100`
+- `--spectrum-field-edge-to-icon-200`
+- `--spectrum-field-edge-to-icon-300`
 
 ## Resources
 

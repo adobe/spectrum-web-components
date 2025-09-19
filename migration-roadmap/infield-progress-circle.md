@@ -50,107 +50,32 @@ None found for this component.
 
 </details>
 
-## Comparison
-
-### DOM Structure changes
-
-<details>
-<summary>Spectrum Web Components:</summary>
-
-```html
-<slot></slot>
-<div class="track"></div>
-<div class="fills">
-    <div class="fillMask1">
-        <div class="fillSubMask1" style="transform: rotate(0deg);">
-            <div class="fill"></div>
-        </div>
-    </div>
-    <div class="fillMask2">
-        <div class="fillSubMask2" style="transform: rotate(0deg);">
-            <div class="fill"></div>
-        </div>
-    </div>
-</div>
-```
-
-</details>
-
-<details>
-<summary>Legacy (CSS main branch):</summary>
-
-```html
-<!-- No template.js file exists in main branch -->
-```
-
-</details>
-
-<details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
-
-```html
-<div
-    class="spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM"
->
-    <div class="spectrum-ProgressCircle-fill"></div>
-</div>
-```
-
-</details>
-
-<details>
-<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
-
-```diff
---- a/components/infieldprogresscircle/stories/template.js (main branch)
-+++ b/components/infieldprogresscircle/stories/template.js (spectrum-two branch)
-@@ -1,0 +1,22 @@
-+import { Template as ProgressCircle } from "@spectrum-css/progresscircle/stories/template.js";
-+import { capitalize } from "lodash-es";
-+import "../index.css";
-+
-+export const Template = ({
-+	customClasses = [],
-+	rootClass = "spectrum-InfieldProgressCircle",
-+	size = "m",
-+	staticColor,
-+	...item
-+} = {}, context = {}) => ProgressCircle({
-+	customClasses: [
-+		rootClass,
-+		typeof size !== "undefined" ? `${rootClass}--size${size.toUpperCase()}` : null,
-+		typeof staticColor !== "undefined" ? `${rootClass}--static${capitalize(staticColor)}` : null,
-+		...customClasses
-+	].filter(Boolean),
-+	size,
-+	staticColor,
-+	...item
-+}, context );
-```
-
-</details>
-
 ### CSS => SWC mapping
 
-| CSS selector                                                    | Attribute or slot     | Status             |
-| --------------------------------------------------------------- | --------------------- | ------------------ |
-| `.spectrum-InfieldProgressCircle`                               | Base element          | Implemented        |
-| `.spectrum-InfieldProgressCircle .spectrum-ProgressCircle-fill` | Progress fill element | Implemented        |
-| `.spectrum-InfieldProgressCircle--sizeL`                        | `size="l"`            | Implemented        |
-| `.spectrum-InfieldProgressCircle--sizeS`                        | `size="s"`            | Implemented        |
-| `.spectrum-InfieldProgressCircle--sizeXL`                       | `size="xl"`           | Implemented        |
-| N/A                                                             | `indeterminate`       | Web component only |
-| N/A                                                             | `label`               | Web component only |
+Since the infield progress circle doesn't exist as a separate web component, this mapping shows how it **could** work with the existing `sp-progress-circle` component:
+
+| CSS selector                                                    | ProgressCircle attribute       | Status                       |
+| --------------------------------------------------------------- | ------------------------------ | ---------------------------- |
+| `.spectrum-InfieldProgressCircle`                               | `:host` (with infield classes) | Would need implementation    |
+| `.spectrum-InfieldProgressCircle .spectrum-ProgressCircle-fill` | Progress fill element          | Available via ProgressCircle |
+| `.spectrum-InfieldProgressCircle--sizeL`                        | `size="l"`                     | Available via ProgressCircle |
+| `.spectrum-InfieldProgressCircle--sizeS`                        | `size="s"`                     | Available via ProgressCircle |
+| `.spectrum-InfieldProgressCircle--sizeXL`                       | `size="xl"`                    | Available via ProgressCircle |
+| N/A                                                             | `indeterminate`                | Available via ProgressCircle |
+| N/A                                                             | `label`                        | Available via ProgressCircle |
+| N/A                                                             | `progress`                     | Available via ProgressCircle |
+| N/A                                                             | `static-color`                 | Available via ProgressCircle |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-- **CSS coverage**: All CSS selectors are available in the `spectrum-two` branch, but the web component has not yet been implemented.
+- **Missing infield variant**: The infield progress circle doesn't exist as a separate web component. Implementation would likely involve extending the existing `sp-progress-circle` component with infield-specific styling classes, similar to how it's done in CSS.
+- **Infield-specific styling**: The `.spectrum-InfieldProgressCircle` base class and its size variants would need to be implemented as additional CSS classes that can be applied to the base progress circle component.
 
 ### CSS Spectrum 2 changes
 
-- **New component introduction**: The infield progress circle is entirely new in the `spectrum-two` branch, designed specifically for inline loading states within form fields and input components.
+- **New component introduction**: The infield progress circle is entirely new in the spectrum-two branch, designed specifically for inline loading states within form fields and input components.
 - **Modular architecture**: Built as a wrapper around the base ProgressCircle component with infield-specific styling classes, promoting code reuse and consistency.
 - **Comprehensive sizing**: Introduced S, M, L, and XL size variants to match the sizing scale used throughout the Spectrum design system.
 - **Static color variants**: Added support for static color variants to ensure visibility in various background contexts and high-contrast scenarios.

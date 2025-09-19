@@ -92,9 +92,15 @@ None found for this component.
 ```html
 <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
     Label text
-    <sp-icon-asterisk100
+    <svg
         class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
+        focusable="false"
+        aria-hidden="true"
+    >
+        <path
+            d="M10 2L13.09 8.26L20 9L14 14.74L15.18 22L10 18.77L4.82 22L6 14.74L0 9L6.91 8.26L10 2Z"
+        ></path>
+    </svg>
 </label>
 ```
 
@@ -106,9 +112,15 @@ None found for this component.
 ```html
 <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
     Label text&#8288;
-    <sp-icon-asterisk100
+    <svg
         class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
+        focusable="false"
+        aria-hidden="true"
+    >
+        <path
+            d="M10 2L13.09 8.26L20 9L14 14.74L15.18 22L10 18.77L4.82 22L6 14.74L0 9L6.91 8.26L10 2Z"
+        ></path>
+    </svg>
 </label>
 ```
 
@@ -117,29 +129,25 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-### HTML Output Comparison
+### HTML Output Diff
 
-**Legacy (CSS main branch):**
-
-```html
+```diff
 <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-    Label text
-    <sp-icon-asterisk100
+-    Label text
++    Label text&#8288;
+    <svg
         class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
+        focusable="false"
+        aria-hidden="true"
+    >
+        <path
+            d="M10 2L13.09 8.26L20 9L14 14.74L15.18 22L10 18.77L4.82 22L6 14.74L0 9L6.91 8.26L10 2Z"
+        ></path>
+    </svg>
 </label>
 ```
 
-**Spectrum 2 (CSS spectrum-two branch):**
-
-```html
-<label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-    Label text&#8288;
-    <sp-icon-asterisk100
-        class="spectrum-FieldLabel-UIIcon spectrum-FieldLabel-requiredIcon"
-    ></sp-icon-asterisk100>
-</label>
-```
+</details>
 
 ### Key Changes in HTML Structure
 
@@ -151,19 +159,19 @@ None found for this component.
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                                  | Attribute or slot         | Status          |
-| --------------------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-FieldLabel`                                                                        | Base element              | Implemented     |
-| `.spectrum-FieldLabel--left`                                                                  | `side-aligned="start"`    | Implemented     |
-| `.spectrum-FieldLabel--right`                                                                 | `side-aligned="end"`      | Implemented     |
-| `.spectrum-FieldLabel--sizeL`                                                                 | `size="l"`                | Implemented     |
-| `.spectrum-FieldLabel--sizeS`                                                                 | `size="s"`                | Implemented     |
-| `.spectrum-FieldLabel--sizeXL`                                                                | `size="xl"`               | Implemented     |
-| `.spectrum-FieldLabel--staticBlack`                                                           | `static-color="black"`    | Missing from WC (new for S2) |
-| `.spectrum-FieldLabel--staticWhite`                                                           | `static-color="white"`    | Missing from WC (new for S2) |
-| `.spectrum-FieldLabel-requiredIcon`                                                           | Required icon element     | Implemented     |
-| `.spectrum-FieldLabel.is-disabled`                                                            | `disabled` attribute      | Implemented     |
-| `.spectrum-FieldLabel:lang(ja), .spectrum-FieldLabel:lang(ko), .spectrum-FieldLabel:lang(zh)` | Language-specific styling | Implemented     |
+| CSS selector                                                                                  | Attribute or slot                       | Status                       |
+| --------------------------------------------------------------------------------------------- | --------------------------------------- | ---------------------------- |
+| `.spectrum-FieldLabel`                                                                        | `:host`                                 | Implemented                  |
+| `.spectrum-FieldLabel--left`                                                                  | `side-aligned="start"`                  | Implemented                  |
+| `.spectrum-FieldLabel--right`                                                                 | `side-aligned="end"`                    | Implemented                  |
+| `.spectrum-FieldLabel--sizeL`                                                                 | `size="l"`                              | Implemented                  |
+| `.spectrum-FieldLabel--sizeS`                                                                 | `size="s"`                              | Implemented                  |
+| `.spectrum-FieldLabel--sizeXL`                                                                | `size="xl"`                             | Implemented                  |
+| `.spectrum-FieldLabel--staticBlack`                                                           | `static-color="black"`                  | Missing from WC (new for S2) |
+| `.spectrum-FieldLabel--staticWhite`                                                           | `static-color="white"`                  | Missing from WC (new for S2) |
+| `.spectrum-FieldLabel-requiredIcon`                                                           | Required icon element; `.required-icon` | Implemented                  |
+| `.spectrum-FieldLabel.is-disabled`                                                            | `disabled` attribute                    | Implemented                  |
+| `.spectrum-FieldLabel:lang(ja), .spectrum-FieldLabel:lang(ko), .spectrum-FieldLabel:lang(zh)` | Language-specific styling               | Implemented                  |
 
 ## Summary of changes
 

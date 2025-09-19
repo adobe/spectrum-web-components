@@ -61,6 +61,7 @@ None found for this component.
 <details>
 <summary>Attributes</summary>
 
+- `disabled` (Boolean) - Whether the help text is disabled
 - `icon` (Boolean) - Whether to show the validation icon
 - `variant` (String) - Visual variant: 'neutral' or 'negative'
 
@@ -92,7 +93,16 @@ None found for this component.
 
 ```html
 <div class="spectrum-HelpText spectrum-HelpText--sizeM">
-    <sp-icon-alert class="spectrum-HelpText-validationIcon"></sp-icon-alert>
+    <svg
+        class="spectrum-HelpText-validationIcon"
+        focusable="false"
+        aria-hidden="true"
+        role="img"
+    >
+        <path
+            d="M10 2L13.09 8.26L20 9L14 14.74L15.18 22L10 18.77L4.82 22L6 14.74L0 9L6.91 8.26L10 2Z"
+        ></path>
+    </svg>
     <div class="spectrum-HelpText-text">Help text content</div>
 </div>
 ```
@@ -104,7 +114,16 @@ None found for this component.
 
 ```html
 <div class="spectrum-HelpText spectrum-HelpText--sizeM">
-    <sp-icon-alert class="spectrum-HelpText-validationIcon"></sp-icon-alert>
+    <svg
+        class="spectrum-Icon spectrum-HelpText-validationIcon"
+        focusable="false"
+        aria-hidden="true"
+        role="img"
+    >
+        <path
+            d="M10 2L13.09 8.26L20 9L14 14.74L15.18 22L10 18.77L4.82 22L6 14.74L0 9L6.91 8.26L10 2Z"
+        ></path>
+    </svg>
     <div class="spectrum-HelpText-text">Help text content</div>
 </div>
 ```
@@ -114,59 +133,30 @@ None found for this component.
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-### HTML Output Comparison
-
-**Legacy (CSS main branch) - Negative variant:**
-
-```html
-<div
-    class="spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--negative"
->
-    <sp-icon-alert class="spectrum-HelpText-validationIcon"></sp-icon-alert>
-    <div class="spectrum-HelpText-text">Help text content</div>
-</div>
-```
-
-**Spectrum 2 (CSS spectrum-two branch) - Negative variant:**
-
-```html
-<div
-    class="spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--negative"
->
-    <sp-icon-alerttriangle
-        class="spectrum-HelpText-validationIcon"
-    ></sp-icon-alerttriangle>
-    <div class="spectrum-HelpText-text">Help text content</div>
-</div>
-```
-
-### Key Changes in HTML Structure
-
-1. **Updated validation icon**: Changed from `sp-icon-alert` to `sp-icon-alerttriangle` for better visual consistency with other form validation elements
-2. **Enhanced text alignment**: Added support for custom text alignment through CSS custom properties (`--mod-helptext-align-text`)
+No significant structural changes.
 
 </details>
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                            | Attribute or slot         | Status          |
-| --------------------------------------------------------------------------------------- | ------------------------- | --------------- |
-| `.spectrum-HelpText`                                                                    | Base element              | Implemented     |
-| `.spectrum-HelpText-text`                                                               | Text slot                 | Implemented     |
-| `.spectrum-HelpText-validationIcon`                                                     | Icon element              | Implemented     |
-| `.spectrum-HelpText.is-disabled`                                                        | `disabled` attribute      | Missing from WC (Implementation gap) |
-| `.spectrum-HelpText--negative`                                                          | `variant="negative"`      | Implemented     |
-| `.spectrum-HelpText--neutral`                                                           | `variant="neutral"`       | Implemented     |
-| `.spectrum-HelpText--sizeL`                                                             | `size="l"`                | Implemented     |
-| `.spectrum-HelpText--sizeS`                                                             | `size="s"`                | Implemented     |
-| `.spectrum-HelpText--sizeXL`                                                            | `size="xl"`               | Implemented     |
-| `.spectrum-HelpText:lang(ja), .spectrum-HelpText:lang(ko), .spectrum-HelpText:lang(zh)` | Language-specific styling | Implemented     |
+| CSS selector                                                                            | Attribute or slot         | Status      |
+| --------------------------------------------------------------------------------------- | ------------------------- | ----------- |
+| `.spectrum-HelpText`                                                                    | `:host`                   | Implemented |
+| `.spectrum-HelpText-text`                                                               | Text slot                 | Implemented |
+| `.spectrum-HelpText-validationIcon`                                                     | Icon element              | Implemented |
+| `.spectrum-HelpText.is-disabled`                                                        | `disabled` attribute      | Implemented |
+| `.spectrum-HelpText--negative`                                                          | `variant="negative"`      | Implemented |
+| `.spectrum-HelpText--neutral`                                                           | `variant="neutral"`       | Implemented |
+| `.spectrum-HelpText--sizeL`                                                             | `size="l"`                | Implemented |
+| `.spectrum-HelpText--sizeS`                                                             | `size="s"`                | Implemented |
+| `.spectrum-HelpText--sizeXL`                                                            | `size="xl"`               | Implemented |
+| `.spectrum-HelpText:lang(ja), .spectrum-HelpText:lang(ko), .spectrum-HelpText:lang(zh)` | Language-specific styling | Implemented |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-- **Disabled state**: The web component lacks a `disabled` attribute, which would be useful for form validation scenarios where help text should be visually de-emphasized when the associated input is disabled.
+No implementation gaps found. All CSS functionality is properly mapped to web component attributes and slots.
 
 ### CSS Spectrum 2 changes
 
