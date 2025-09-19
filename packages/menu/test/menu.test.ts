@@ -23,6 +23,12 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/search/sp-search.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/color-field/sp-color-field.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { isFirefox, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
@@ -837,5 +843,143 @@ describe('Menu', () => {
 
         // Test that the component can be disconnected without errors
         el.remove();
+    });
+
+    it('does not steal focus from input elements on mouseover', async () => {
+        const el = await fixture<Menu>(html`
+            <div>
+                <sp-search
+                    id="test-search"
+                    placeholder="Search input..."
+                ></sp-search>
+                <sp-textfield
+                    id="test-textfield"
+                    placeholder="Textfield input..."
+                ></sp-textfield>
+                <sp-number-field
+                    id="test-number"
+                    placeholder="Number input..."
+                ></sp-number-field>
+                <sp-combobox
+                    id="test-combobox"
+                    placeholder="Combobox input..."
+                ></sp-combobox>
+                <sp-color-field
+                    id="test-color"
+                    placeholder="Color input..."
+                ></sp-color-field>
+                <input id="test-native" placeholder="Native input..." />
+
+                <sp-popover open>
+                    <sp-menu>
+                        <sp-menu-item id="menu-item-1">
+                            Menu Item 1
+                        </sp-menu-item>
+                        <sp-menu-item id="menu-item-2">
+                            Menu Item 2
+                        </sp-menu-item>
+                        <sp-menu-item id="menu-item-3">
+                            Menu Item 3
+                        </sp-menu-item>
+                    </sp-menu>
+                </sp-popover>
+            </div>
+        `);
+
+        await elementUpdated(el);
+
+        const searchInput = el.querySelector('#test-search') as HTMLElement;
+        const textfieldInput = el.querySelector(
+            '#test-textfield'
+        ) as HTMLElement;
+        const numberInput = el.querySelector('#test-number') as HTMLElement;
+        const comboboxInput = el.querySelector('#test-combobox') as HTMLElement;
+        const colorInput = el.querySelector('#test-color') as HTMLElement;
+        const nativeInput = el.querySelector(
+            '#test-native'
+        ) as HTMLInputElement;
+
+        const menuItem1 = el.querySelector('#menu-item-1') as MenuItem;
+        const menuItem2 = el.querySelector('#menu-item-2') as MenuItem;
+        const menuItem3 = el.querySelector('#menu-item-3') as MenuItem;
+
+        // Test with sp-search
+        searchInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(searchInput);
+
+        await sendMouseTo(menuItem1);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            searchInput,
+            'sp-search should retain focus'
+        );
+
+        await sendMouseTo(menuItem2);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            searchInput,
+            'sp-search should retain focus'
+        );
+
+        // Test with sp-textfield
+        textfieldInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(textfieldInput);
+
+        await sendMouseTo(menuItem1);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            textfieldInput,
+            'sp-textfield should retain focus'
+        );
+
+        // Test with sp-number-field
+        numberInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(numberInput);
+
+        await sendMouseTo(menuItem2);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            numberInput,
+            'sp-number-field should retain focus'
+        );
+
+        // Test with sp-combobox
+        comboboxInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(comboboxInput);
+
+        await sendMouseTo(menuItem3);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            comboboxInput,
+            'sp-combobox should retain focus'
+        );
+
+        // Test with sp-color-field
+        colorInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(colorInput);
+
+        await sendMouseTo(menuItem1);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            colorInput,
+            'sp-color-field should retain focus'
+        );
+
+        // Test with native input
+        nativeInput.focus();
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(nativeInput);
+
+        await sendMouseTo(menuItem2);
+        await elementUpdated(el);
+        expect(document.activeElement).to.equal(
+            nativeInput,
+            'native input should retain focus'
+        );
     });
 });
