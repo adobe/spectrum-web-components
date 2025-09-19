@@ -50,86 +50,6 @@ None found for this component.
 
 </details>
 
-## Comparison
-
-### DOM Structure changes
-
-<details>
-<summary>Spectrum Web Components:</summary>
-
-```html
-<slot></slot>
-<div class="track"></div>
-<div class="fills">
-    <div class="fillMask1">
-        <div class="fillSubMask1" style="transform: rotate(0deg);">
-            <div class="fill"></div>
-        </div>
-    </div>
-    <div class="fillMask2">
-        <div class="fillSubMask2" style="transform: rotate(0deg);">
-            <div class="fill"></div>
-        </div>
-    </div>
-</div>
-```
-
-</details>
-
-<details>
-<summary>Legacy (CSS main branch):</summary>
-
-```html
-<!-- No template.js file exists in main branch -->
-```
-
-</details>
-
-<details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
-
-```html
-<div
-    class="spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM"
->
-    <div class="spectrum-ProgressCircle-fill"></div>
-</div>
-```
-
-</details>
-
-<details>
-<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
-
-```diff
---- a/components/infieldprogresscircle/stories/template.js (main branch)
-+++ b/components/infieldprogresscircle/stories/template.js (spectrum-two branch)
-@@ -1,0 +1,22 @@
-+import { Template as ProgressCircle } from "@spectrum-css/progresscircle/stories/template.js";
-+import { capitalize } from "lodash-es";
-+import "../index.css";
-+
-+export const Template = ({
-+	customClasses = [],
-+	rootClass = "spectrum-InfieldProgressCircle",
-+	size = "m",
-+	staticColor,
-+	...item
-+} = {}, context = {}) => ProgressCircle({
-+	customClasses: [
-+		rootClass,
-+		typeof size !== "undefined" ? `${rootClass}--size${size.toUpperCase()}` : null,
-+		typeof staticColor !== "undefined" ? `${rootClass}--static${capitalize(staticColor)}` : null,
-+		...customClasses
-+	].filter(Boolean),
-+	size,
-+	staticColor,
-+	...item
-+}, context );
-```
-
-</details>
-
 ### CSS => SWC mapping
 
 | CSS selector                                                    | Attribute or slot     | Status             |
@@ -150,7 +70,7 @@ None found for this component.
 
 ### CSS Spectrum 2 changes
 
-- **New component introduction**: The infield progress circle is entirely new in the `spectrum-two` branch, designed specifically for inline loading states within form fields and input components.
+- **New component introduction**: The infield progress circle is entirely new in the spectrum-two branch, designed specifically for inline loading states within form fields and input components.
 - **Modular architecture**: Built as a wrapper around the base ProgressCircle component with infield-specific styling classes, promoting code reuse and consistency.
 - **Comprehensive sizing**: Introduced S, M, L, and XL size variants to match the sizing scale used throughout the Spectrum design system.
 - **Static color variants**: Added support for static color variants to ensure visibility in various background contexts and high-contrast scenarios.
