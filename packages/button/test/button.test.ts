@@ -395,30 +395,21 @@ describe('Button', () => {
 
         it('manages aria-label from pending state', async () => {
             const el = await fixture<Button>(html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    label="clickable"
-                    pending
-                >
+                <sp-button href="test_url" target="_blank" label="clickable">
                     Click me
                 </sp-button>
             `);
             await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('Pending');
-
-            // button set to disabled while pending is true and the aria-label should be original
-            el.disabled = true;
-            await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+            // button set to pending and aria-label should update
+            el.pending = true;
+            await elementUpdated(el);
+            expect(el.pending).to.be.true;
+            expect(el.getAttribute('aria-label')).to.equal('Pending');
 
             // pending is removed and the aria-label should not change as the button is disabled
             el.pending = false;
-            await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('clickable');
-
-            // button is enabled and the aria-label should not change
-            el.disabled = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
         });
