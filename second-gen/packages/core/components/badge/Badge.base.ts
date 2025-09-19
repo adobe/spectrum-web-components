@@ -16,13 +16,16 @@ import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
-export const BADGE_VARIANTS = [
+export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
     'neutral',
     'informative',
     'positive',
     'negative',
     'notice',
+] as const;
+
+export const BADGE_VARIANTS_COLOR = [
     'fuchsia',
     'indigo',
     'magenta',
@@ -38,6 +41,11 @@ export const BADGE_VARIANTS = [
     'cyan',
     'blue',
 ] as const;
+
+export const BADGE_VARIANTS = [
+    ...BADGE_VARIANTS_SEMANTIC,
+    ...BADGE_VARIANTS_COLOR,
+] as const;
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES = [
     'inline-start',
@@ -49,8 +57,9 @@ export type FixedValues = (typeof FIXED_VALUES)[number];
 
 /**
  * @element sp-badge-base
- * @slot - The text label to display in the badge.
- * @slot icon - The icon to display in the badge.
+ * @attribute {ElementSize} size - The size of the badge.
+ * @attribute {BadgeVariant} variant - The variant of the badge.
+ * @attribute {FixedValues} fixed - The fixed position of the badge.
  */
 export abstract class BadgeBase extends SizedMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
@@ -61,27 +70,12 @@ export abstract class BadgeBase extends SizedMixin(
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
 
-    @property({ reflect: true })
-    public get fixed(): FixedValues | undefined {
-        return this._fixed;
-    }
+    @property({ type: String, reflect: true })
+    public fixed?: FixedValues;
 
-    public set fixed(fixed: FixedValues | undefined) {
-        if (fixed === this.fixed) {
-            return;
-        }
-        const oldValue = this.fixed;
-        this._fixed = fixed;
-        if (fixed) {
-            this.setAttribute('fixed', fixed);
-        } else {
-            this.removeAttribute('fixed');
-        }
-        this.requestUpdate('fixed', oldValue);
-    }
-
-    private _fixed?: FixedValues;
-
+    /**
+     * @internal Used for rendering gap when the badge has an icon.
+     */
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
     }
