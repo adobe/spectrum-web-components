@@ -4,7 +4,7 @@ import { resolve } from 'path';
 const config = {
     stories: ['../components/**/*.stories.@(js|ts|md|mdx)'],
     framework: '@storybook/web-components-vite',
-    addons: ['@storybook/addon-vitest'],
+    addons: ['@storybook/addon-vitest', '@storybook/addon-a11y'],
     core: {
         disableTelemetry: true,
     },

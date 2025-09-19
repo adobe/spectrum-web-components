@@ -9,13 +9,23 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-    optimizeDeps: {
-        exclude: ['playwright', 'playwright-core', '@playwright/test'],
-    },
+    // optimizeDeps: {
+    //     exclude: [
+    //         'playwright',
+    //         'playwright-core',
+    //         '@playwright/test',
+    //         'storybook',
+    //         '@storybook/addon-vitest',
+    //         'fs',
+    //         'crypto',
+    //     ],
+    // },
     test: {
+        // Default test configuration
         browser: {
             enabled: true,
             provider: 'playwright',
@@ -27,9 +37,7 @@ export default defineConfig({
             provider: 'v8',
             reporter: ['text', 'json', 'html'],
             include: [
-                // Include SWC components (the implementations)
                 'components/**/*.ts',
-                // Include core base classes and shared utilities
                 '../core/components/**/*.ts',
                 '../core/shared/**/*.ts',
             ],
@@ -37,12 +45,47 @@ export default defineConfig({
                 '**/*.test.ts',
                 '**/*.stories.ts',
                 '**/node_modules/**',
-                // Exclude dist and build artifacts
                 '**/dist/**',
                 '**/*.d.ts',
             ],
         },
         globals: true,
+        // Add projects for Storybook addon
+        projects: [
+            // Regular tests
+            {
+                name: 'default',
+                test: {
+                    browser: {
+                        enabled: true,
+                        provider: 'playwright',
+                        headless: true,
+                        instances: [{ browser: 'chromium' }],
+                    },
+                    include: ['components/**/*.test.ts'],
+                    globals: true,
+                },
+            },
+            // Storybook tests (required for addon)
+            {
+                extends: 'vite.config.ts',
+                plugins: [
+                    // The plugin will run tests for the stories defined in our Storybook config
+                    // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+                    storybookTest(),
+                ],
+                test: {
+                    name: 'storybook',
+                    browser: {
+                        enabled: true,
+                        headless: true,
+                        provider: 'playwright',
+                        instances: [{ browser: 'chromium' }],
+                    },
+                    setupFiles: ['.storybook/vitest.setup.ts'],
+                },
+            },
+        ],
     },
     resolve: {
         alias: {

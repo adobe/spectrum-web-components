@@ -8,7 +8,8 @@
             "@swc/components/*": ["./components/*"],
             "@swc/core/*": ["../core/*"]
         },
-        "rootDir": "./"
+        "rootDir": "./",
+        "types": ["@vitest/browser/providers/playwright"]
     },
     "exclude": ["node_modules", "dist", "**/*.test.ts"],
     "extends": "../../tsconfig.json",
