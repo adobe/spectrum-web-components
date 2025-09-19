@@ -16,8 +16,8 @@ import {
     PendingStateController,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 describe('PendingStateController', () => {
     let host: HostWithPendingState;
@@ -84,6 +84,7 @@ describe('PendingStateController', () => {
                     size="s"
                     indeterminate
                     aria-label=${pendingLabel}
+                    aria-valuetext=${pendingLabel}
                     class="progress-circle"
                 ></sp-progress-circle>
             `);
@@ -104,6 +105,7 @@ describe('PendingStateController', () => {
                     size="s"
                     indeterminate
                     aria-label="Pending"
+                    aria-valuetext="Pending"
                     class="progress-circle"
                 ></sp-progress-circle>
             `);
@@ -148,6 +150,7 @@ describe('PendingStateController', () => {
                     size="s"
                     indeterminate
                     aria-label="Pending"
+                    aria-valuetext="Pending"
                     class="progress-circle"
                 ></sp-progress-circle>
             `);

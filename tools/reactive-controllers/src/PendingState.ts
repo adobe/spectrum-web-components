@@ -47,7 +47,7 @@ export class PendingStateController<T extends HostWithPendingState>
 
     public cachedAriaLabel: string | null = null;
     /**
-     * Renders the pending state UI.
+     * Renders the pending state UI. The aria-valuetext is needed for Firefox
      * @returns A TemplateResult representing the pending state UI.
      */
     public renderPendingState(): TemplateResult {
@@ -59,6 +59,7 @@ export class PendingStateController<T extends HostWithPendingState>
                       size="s"
                       indeterminate
                       aria-label=${pendingLabel}
+                      aria-valuetext=${pendingLabel}
                       class="progress-circle"
                   ></sp-progress-circle>
               `
