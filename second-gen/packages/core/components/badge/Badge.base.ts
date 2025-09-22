@@ -16,14 +16,6 @@ import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
-export const FIXED_VALUES = [
-    'inline-start',
-    'inline-end',
-    'block-start',
-    'block-end',
-] as const;
-export type FixedValues = (typeof FIXED_VALUES)[number];
-
 /**
  * @element sp-badge-base
  * @attribute {ElementSize} size - The size of the badge.
@@ -36,6 +28,16 @@ export abstract class BadgeBase extends SizedMixin(
         noDefaultSize: true,
     }
 ) {
+    /**
+     * @internal
+     */
+    static readonly FIXED_VALUES = [
+        'inline-start',
+        'inline-end',
+        'block-start',
+        'block-end',
+    ] as const;
+
     /**
      * @internal
      */
@@ -109,8 +111,10 @@ export abstract class BadgeBase extends SizedMixin(
 
 // Export types and values for backward compatibility
 export type BadgeVariant = (typeof BadgeBase.BADGE_VARIANTS)[number];
+export type FixedValues = (typeof BadgeBase.FIXED_VALUES)[number];
 
 // Re-export constants as module-level exports for backward compatibility
+export const FIXED_VALUES = BadgeBase.FIXED_VALUES;
 export const BADGE_VARIANTS_SEMANTIC = BadgeBase.BADGE_VARIANTS_SEMANTIC;
 export const BADGE_VARIANTS_COLOR = BadgeBase.BADGE_VARIANTS_COLOR;
 export const BADGE_VARIANTS = BadgeBase.BADGE_VARIANTS;

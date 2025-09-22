@@ -15,7 +15,6 @@ import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
 import { Badge } from '@swc/components/badge';
-import { FIXED_VALUES } from '@swc/components/badge';
 
 import '@swc/components/badge';
 
@@ -72,7 +71,7 @@ const meta: Meta = {
         fixed: {
             name: 'Fixed',
             control: { type: 'select' },
-            options: [...FIXED_VALUES],
+            options: [...Badge.FIXED_VALUES],
         },
         label: {
             name: 'Label',

@@ -20,8 +20,6 @@ import { BadgeBase } from '@swc/core/components/badge';
 import styles from './badge.css';
 
 // Export types and values to avoid breaking changes
-export { FIXED_VALUES } from '@swc/core/components/badge';
-export type { FixedValues } from '@swc/core/components/badge';
 
 /**
  * A badge component that displays short, descriptive information about an element.
@@ -140,8 +138,10 @@ export class Badge extends BadgeBase {
 
 // Export types and constants for backward compatibility
 export type BadgeVariant = (typeof Badge.BADGE_VARIANTS)[number];
+export type { FixedValues } from '@swc/core/components/badge';
 
 // Re-export constants as module-level exports for backward compatibility
+export const FIXED_VALUES = BadgeBase.FIXED_VALUES;
 export const BADGE_VARIANTS_SEMANTIC = Badge.BADGE_VARIANTS_SEMANTIC;
 export const BADGE_VARIANTS_COLOR = Badge.BADGE_VARIANTS_COLOR;
 export const BADGE_VARIANTS = Badge.BADGE_VARIANTS;
