@@ -37,6 +37,7 @@ import {
     mouseClickOn,
     mouseMoveAway,
     mouseMoveOver,
+    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 
@@ -144,15 +145,13 @@ describe('Submenu', () => {
             this.el.insertAdjacentElement('beforebegin', input);
             this.el.focus();
 
-            // by default, Safari doesn't tab to some elements
-            if (!isWebKit) {
-                await sendKeys({ press: 'Shift+Tab' });
+            await sendShiftTabKey();
 
-                expect(document.activeElement).to.equal(input);
-                await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendTabKey();
 
-                expect(document.activeElement).to.equal(this.el);
-            }
+            expect(document.activeElement).to.equal(this.el);
+
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.rootItem);
 
@@ -228,16 +227,14 @@ describe('Submenu', () => {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            // by default, Safari doesn't tab to some elements
-            if (!isWebKit) {
-                await sendKeys({ press: 'Shift+Tab' });
 
-                expect(document.activeElement).to.equal(input);
-                await sendTabKey();
+            await sendShiftTabKey();
 
-                expect(document.activeElement).to.equal(this.el);
-            }
-            this.el.focus();
+            expect(document.activeElement).to.equal(input);
+            await sendTabKey();
+
+            expect(document.activeElement).to.equal(this.el);
+
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.el);
             await nextFrame();

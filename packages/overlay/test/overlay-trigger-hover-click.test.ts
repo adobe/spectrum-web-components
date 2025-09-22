@@ -32,6 +32,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     ignoreResizeObserverLoopError,
+    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
@@ -213,7 +214,7 @@ describe('Overlay Trigger - Hover and Click', () => {
         trigger.focus();
         // For `:focus-visible` heuristic.
         await sendTabKey();
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         await sendKeys({ press: 'Space' });
         await opened;
 

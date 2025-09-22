@@ -1082,12 +1082,10 @@ export function runPickerTests(): void {
             const input = document.createElement('input');
             el.insertAdjacentElement('afterend', input);
 
-            el.focus();
-            if (!isWebKit()) {
-                await sendTabKey();
-                expect(document.activeElement).to.equal(input);
-                await sendKeys({ press: 'Shift+Tab' });
-            }
+            await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendShiftTabKey();
+
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ press: 'Enter' });
@@ -1121,12 +1119,10 @@ export function runPickerTests(): void {
             const input = document.createElement('input');
             el.insertAdjacentElement('afterend', input);
 
-            el.focus();
-            if (!isWebKit()) {
-                await sendTabKey();
-                expect(document.activeElement).to.equal(input);
-                await sendKeys({ press: 'Shift+Tab' });
-            }
+            await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendShiftTabKey();
+
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ down: 'Enter' });
@@ -1265,7 +1261,7 @@ export function runPickerTests(): void {
 
                 // tab through the picker to input1
                 focused = oneEvent(input1, 'focus');
-                await sendKeys({ press: 'Shift+Tab' });
+                await sendShiftTabKey();
 
                 // Use helper function for robust focus handling
                 await waitForFocusEvent(focused, input1);
@@ -1312,7 +1308,7 @@ export function runPickerTests(): void {
                 expect(document.activeElement).to.equal(el);
 
                 const focused = oneEvent(input1, 'focus');
-                await sendKeys({ press: 'Shift+Tab' });
+                await sendShiftTabKey();
                 await focused;
 
                 expect(el.open, 'open?').to.be.false;

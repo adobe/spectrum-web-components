@@ -16,6 +16,7 @@ import { spy } from 'sinon';
 import { ElementSize } from '@spectrum-web-components/base';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import {
+    sendShiftTabKey,
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
@@ -170,7 +171,7 @@ describe('Swatch', () => {
         expect(document.activeElement === el).to.be.true;
         await sendTabKey();
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         expect(document.activeElement === el).to.be.true;
     });
     it('is not in the tab order when [disabled]', async () => {
@@ -185,7 +186,7 @@ describe('Swatch', () => {
         expect(document.activeElement === el).to.be.false;
         await sendTabKey();
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         expect(document.activeElement === el).to.be.false;
     });
 });

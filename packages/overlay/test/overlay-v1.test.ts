@@ -43,6 +43,7 @@ import {
     isInteractive,
     isOnTopLayer,
     mouseClickAway,
+    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 import { PopoverContent } from '../stories/overlay-story-components.js';
@@ -200,15 +201,15 @@ describe('Overlays, v1', () => {
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({ press: 'Shift+Tab' });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({ press: 'Shift+Tab' });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({ press: 'Shift+Tab' });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
         });
@@ -415,7 +416,7 @@ describe('Overlays, v1', () => {
         expect(document.activeElement).to.equal(input);
 
         const closed = oneEvent(content, 'sp-closed');
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         await closed;
 
         expect(document.activeElement).to.equal(trigger);
@@ -450,11 +451,11 @@ describe('Overlays, v1', () => {
 
         expect(document.activeElement).to.equal(input);
 
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(before);
     });
