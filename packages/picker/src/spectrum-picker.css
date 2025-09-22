@@ -55,7 +55,7 @@
     --spectrum-picker-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-100);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
-    --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-100);
+    --spectrum-picker-spacing-edge-to-text: calc(var(--spectrum-component-edge-to-text-100) - var(--spectrum-picker-border-width));
     --spectrum-picker-spacing-edge-to-text-quiet: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-picker-spacing-label-to-picker: var(--spectrum-field-label-to-component);
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-100);
@@ -100,7 +100,7 @@
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-75);
-    --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-75);
+    --spectrum-picker-spacing-edge-to-text: calc(var(--spectrum-component-edge-to-text-75) - var(--spectrum-picker-border-width));
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-75);
     --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-small);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-small);
@@ -116,7 +116,7 @@
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-200);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-200);
-    --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-200);
+    --spectrum-picker-spacing-edge-to-text: calc(var(--spectrum-component-edge-to-text-200) - var(--spectrum-picker-border-width));
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-200);
     --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-large);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-large);
@@ -132,7 +132,7 @@
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
     --spectrum-picker-spacing-top-to-text: var(--spectrum-component-top-to-text-300);
     --spectrum-picker-spacing-bottom-to-text: var(--spectrum-component-bottom-to-text-300);
-    --spectrum-picker-spacing-edge-to-text: var(--spectrum-component-edge-to-text-300);
+    --spectrum-picker-spacing-edge-to-text: calc(var(--spectrum-component-edge-to-text-300) - var(--spectrum-picker-border-width));
     --spectrum-picker-spacing-text-to-icon: var(--spectrum-text-to-visual-300);
     --spectrum-picker-spacing-text-to-icon-inline-end: var(--spectrum-field-text-to-alert-icon-extra-large);
     --spectrum-picker-spacing-icon-to-disclosure-icon: var(--spectrum-picker-visual-to-disclosure-icon-extra-large);
