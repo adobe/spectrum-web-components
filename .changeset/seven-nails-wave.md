@@ -14,7 +14,6 @@
 **PendingState controller changes:**
 
 - Improved aria-label caching logic to better handle dynamic label changes
-- Changed progress circle from `aria-valuetext` to `aria-label` for better accessibility
 - Enhanced caching mechanism to preserve user-set aria-labels during pending states
 
 These changes ensure that aria-labels are properly managed and preserved across component state changes, improving accessibility for screen reader users.
