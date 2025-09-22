@@ -38,9 +38,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
-const S2IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
+const S1IconsPackagePath = path.dirname(
+    fileURLToPath(
+        import.meta.resolve('@adobe/spectrum-css-workflow-icons/package.json')
+    )
+);
+const S2IconsPackagePath = path.dirname(
+    fileURLToPath(
+        import.meta.resolve(
+            '@adobe/spectrum-css-workflow-icons-s2/package.json'
+        )
+    )
+);
+
+const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18');
+const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg');
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
@@ -351,13 +363,9 @@ async function buildIcons(icons, tag, iconsNameList) {
     });
 }
 
-const iconsV1 = (
-    await fg(`${rootDir}/node_modules/${S1IConsPackageDir}/**.svg`)
-).sort();
+const iconsV1 = (await fg(`${S1IconsDir}/**.svg`)).sort();
 
-const iconsV2 = (
-    await fg(`${rootDir}/node_modules/${S2IConsPackageDir}/**.svg`)
-).sort();
+const iconsV2 = (await fg(`${S2IconsDir}/**.svg`)).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
     return getComponentName(i);
