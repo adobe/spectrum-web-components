@@ -247,9 +247,9 @@ __metadata:
     "@web/dev-server-rollup": "npm:^0.6.4"
     "@web/rollup-plugin-copy": "npm:^0.5.1"
     "@web/rollup-plugin-html": "npm:^2.3.0"
-    "@web/test-runner": "npm:^0.20.2"
+    "@web/test-runner": "npm:0.20.2"
     "@web/test-runner-commands": "npm:^0.9.0"
-    "@web/test-runner-junit-reporter": "npm:^0.8.0"
+    "@web/test-runner-junit-reporter": "npm:0.8.0"
     "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch"
     "@web/test-runner-visual-regression": "patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch"
     "@webcomponents/webcomponentsjs": "npm:^2.8.0"
@@ -312,7 +312,7 @@ __metadata:
     terser: "npm:^4.8.1"
     typescript: "npm:^5.3.3"
     webpack-merge: "npm:^6.0.1"
-    wireit: "npm:^0.14.12"
+    wireit: "npm:0.14.12"
     yargs: "npm:^17.2.1"
   languageName: unknown
   linkType: soft
@@ -5067,7 +5067,7 @@ __metadata:
     "@web/dev-server-rollup": "npm:^0.6.4"
     "@web/storybook-builder": "npm:^0.1.7"
     "@web/storybook-framework-web-components": "npm:^0.1.1"
-    "@web/test-runner": "npm:^0.20.2"
+    "@web/test-runner": "npm:0.20.2"
     concurrently: "npm:^8.0.0"
     lit: "npm:^2.5.0 || ^3.1.3"
     react: "npm:^18.2.0"
@@ -8202,7 +8202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-junit-reporter@npm:^0.8.0":
+"@web/test-runner-junit-reporter@npm:0.8.0":
   version: 0.8.0
   resolution: "@web/test-runner-junit-reporter@npm:0.8.0"
   dependencies:
@@ -8277,7 +8277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:^0.20.2":
+"@web/test-runner@npm:0.20.2":
   version: 0.20.2
   resolution: "@web/test-runner@npm:0.20.2"
   dependencies:
@@ -12348,7 +12348,7 @@ __metadata:
     rollup-plugin-styles: "npm:^4.0.0"
     rollup-plugin-visualizer: "npm:^5.12.0"
     rollup-plugin-workbox: "npm:^8.1.0"
-    wireit: "npm:^0.14.12"
+    wireit: "npm:0.14.12"
   languageName: unknown
   linkType: soft
 
@@ -28913,7 +28913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wireit@npm:^0.14.12":
+"wireit@npm:0.14.12":
   version: 0.14.12
   resolution: "wireit@npm:0.14.12"
   dependencies:

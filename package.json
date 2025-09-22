@@ -92,16 +92,6 @@
         "tools/*",
         "react/*"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html"
-    ],
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",
         "@changesets/cli": "^2.27.5",
@@ -144,9 +134,9 @@
         "@web/dev-server-rollup": "^0.6.4",
         "@web/rollup-plugin-copy": "^0.5.1",
         "@web/rollup-plugin-html": "^2.3.0",
-        "@web/test-runner": "^0.20.2",
+        "@web/test-runner": "0.20.2",
         "@web/test-runner-commands": "^0.9.0",
-        "@web/test-runner-junit-reporter": "^0.8.0",
+        "@web/test-runner-junit-reporter": "0.8.0",
         "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch",
         "@web/test-runner-visual-regression": "patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch",
         "@webcomponents/webcomponentsjs": "^2.8.0",
@@ -209,9 +199,19 @@
         "terser": "^4.8.1",
         "typescript": "^5.3.3",
         "webpack-merge": "^6.0.1",
-        "wireit": "^0.14.12",
+        "wireit": "0.14.12",
         "yargs": "^17.2.1"
     },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
