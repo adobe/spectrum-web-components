@@ -83,7 +83,6 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-label=${pendingLabel}
                     aria-valuetext=${pendingLabel}
                     class="progress-circle"
                 ></sp-progress-circle>
@@ -104,7 +103,6 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-label="Pending"
                     aria-valuetext="Pending"
                     class="progress-circle"
                 ></sp-progress-circle>
@@ -149,7 +147,6 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-label="Pending"
                     aria-valuetext="Pending"
                     class="progress-circle"
                 ></sp-progress-circle>
