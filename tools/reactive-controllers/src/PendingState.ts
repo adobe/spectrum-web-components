@@ -49,8 +49,8 @@ export class PendingStateController<T extends HostWithPendingState>
     /**
      * Renders the pending state UI. The aria-valuetext is needed for Firefox
      * @returns A TemplateResult representing the pending state UI.
-     * 
-     * @TODO: This should now be using the progress-circle component. It should be using an animated SVG icon with correct role and aria.
+     *
+     * @TODO: [SWC-1255] This should now be using the progress-circle component. It should be using an animated SVG icon with correct role and aria.
      */
     public renderPendingState(): TemplateResult {
         const pendingLabel = this.host.pendingLabel || 'Pending';
