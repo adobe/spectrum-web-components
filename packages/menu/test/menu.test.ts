@@ -492,7 +492,7 @@ describe('Menu', () => {
         expect(children[0], 'first element is focused').to.equal(
             document.activeElement
         );
-        // @TODO: skipping this test because it fails on Chromium and is flaky in Firefox and WebKit. Will review in the migration to Spectrum 2.
+        // @TODO: skipping the remaining assertions because it fails on Chromium. Will review in the migration to Spectrum 2.
         if (isFirefox() || isWebKit()) {
             children[0].remove();
             await elementUpdated(el);
