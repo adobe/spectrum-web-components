@@ -11,13 +11,6 @@
  */
 
 /**
- * Regular expression pattern to match Spectrum Web Components input elements.
- * Used to identify components that should maintain focus during menu interactions.
- */
-export const INPUT_COMPONENT_PATTERN =
-    /^(SP-SEARCH|SP-TEXTFIELD|SP-NUMBER-FIELD|SP-COMBOBOX|SP-COLOR-FIELD)$/;
-
-/**
  * Array of input component tag names for easier iteration and maintenance.
  */
 export const INPUT_COMPONENT_TAGS = [
@@ -27,3 +20,11 @@ export const INPUT_COMPONENT_TAGS = [
     'SP-COMBOBOX',
     'SP-COLOR-FIELD',
 ] as const;
+
+/**
+ * Regular expression pattern to match Spectrum Web Components input elements.
+ * Used to identify components that should maintain focus during menu interactions.
+ */
+export const INPUT_COMPONENT_PATTERN = new RegExp(
+    `^(${INPUT_COMPONENT_TAGS.join('|')})$`
+);
