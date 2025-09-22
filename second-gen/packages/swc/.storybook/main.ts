@@ -1,8 +1,18 @@
 import { resolve } from 'path';
 
+// Components to exclude from Storybook
+const excludedComponents = ['alert-banner'];
+
+// Dynamically construct the glob pattern
+const getStoriesPattern = (excluded: string[]) => {
+    const excludePattern =
+        excluded.length === 0 ? '*' : `!(${excluded.join('|')})`;
+    return `../components/${excludePattern}/**/*.stories.@(js|ts|md|mdx)`;
+};
+
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
-    stories: ['../components/**/*.stories.@(js|ts|md|mdx)'],
+    stories: [getStoriesPattern(excludedComponents)],
     framework: '@storybook/web-components-vite',
     core: {
         disableTelemetry: true,
