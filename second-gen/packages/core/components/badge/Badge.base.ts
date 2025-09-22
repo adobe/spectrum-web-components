@@ -16,37 +16,6 @@ import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { ObserveSlotPresence } from '@swc/core/shared/observe-slot-presence';
 import { ObserveSlotText } from '@swc/core/shared/observe-slot-text';
 
-export const BADGE_VARIANTS_SEMANTIC = [
-    'accent',
-    'neutral',
-    'informative',
-    'positive',
-    'negative',
-    'notice',
-] as const;
-
-export const BADGE_VARIANTS_COLOR = [
-    'fuchsia',
-    'indigo',
-    'magenta',
-    'purple',
-    'seafoam',
-    'yellow',
-    'gray',
-    'red',
-    'orange',
-    'chartreuse',
-    'celery',
-    'green',
-    'cyan',
-    'blue',
-] as const;
-
-export const BADGE_VARIANTS = [
-    ...BADGE_VARIANTS_SEMANTIC,
-    ...BADGE_VARIANTS_COLOR,
-] as const;
-export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 export const FIXED_VALUES = [
     'inline-start',
     'inline-end',
@@ -67,6 +36,46 @@ export abstract class BadgeBase extends SizedMixin(
         noDefaultSize: true,
     }
 ) {
+    /**
+     * @internal
+     */
+    static readonly BADGE_VARIANTS_SEMANTIC: readonly string[] = [
+        'accent',
+        'neutral',
+        'informative',
+        'positive',
+        'negative',
+        'notice',
+    ] as const;
+
+    /**
+     * @internal
+     */
+    static readonly BADGE_VARIANTS_COLOR: readonly string[] = [
+        'fuchsia',
+        'indigo',
+        'magenta',
+        'purple',
+        'seafoam',
+        'yellow',
+        'gray',
+        'red',
+        'orange',
+        'chartreuse',
+        'celery',
+        'green',
+        'cyan',
+        'blue',
+    ] as const;
+
+    /**
+     * @internal
+     */
+    static readonly BADGE_VARIANTS: readonly string[] = [
+        ...BadgeBase.BADGE_VARIANTS_SEMANTIC,
+        ...BadgeBase.BADGE_VARIANTS_COLOR,
+    ] as const;
+
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
 
@@ -83,16 +92,25 @@ export abstract class BadgeBase extends SizedMixin(
     protected override update(changedProperties: PropertyValues): void {
         super.update(changedProperties);
         if (window.__swc?.DEBUG) {
-            if (!BADGE_VARIANTS.includes(this.variant)) {
+            const constructor = this.constructor as typeof BadgeBase;
+            if (!constructor.BADGE_VARIANTS.includes(this.variant)) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
                     'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
                     {
-                        issues: [...BADGE_VARIANTS],
+                        issues: [...constructor.BADGE_VARIANTS],
                     }
                 );
             }
         }
     }
 }
+
+// Export types and values for backward compatibility
+export type BadgeVariant = (typeof BadgeBase.BADGE_VARIANTS)[number];
+
+// Re-export constants as module-level exports for backward compatibility
+export const BADGE_VARIANTS_SEMANTIC = BadgeBase.BADGE_VARIANTS_SEMANTIC;
+export const BADGE_VARIANTS_COLOR = BadgeBase.BADGE_VARIANTS_COLOR;
+export const BADGE_VARIANTS = BadgeBase.BADGE_VARIANTS;

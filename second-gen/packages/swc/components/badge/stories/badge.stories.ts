@@ -14,12 +14,8 @@ import { html, nothing, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import {
-    BADGE_VARIANTS,
-    BADGE_VARIANTS_COLOR,
-    BADGE_VARIANTS_SEMANTIC,
-    FIXED_VALUES,
-} from '@swc/components/badge';
+import { Badge } from '@swc/components/badge';
+import { FIXED_VALUES } from '@swc/components/badge';
 
 import '@swc/components/badge';
 
@@ -63,7 +59,7 @@ const meta: Meta = {
         variant: {
             name: 'Variant',
             control: { type: 'select' },
-            options: BADGE_VARIANTS,
+            options: Badge.BADGE_VARIANTS,
         },
         subtle: {
             name: 'Subtle',
@@ -157,7 +153,7 @@ export const WithIcon: Story = {
 export const SemanticVariants: Story = {
     render: (args) =>
         CONTAINER(
-            BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            Badge.BADGE_VARIANTS_SEMANTIC.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -175,12 +171,12 @@ export const Outline: Story = {
     argTypes: {
         variant: {
             control: { type: 'select' },
-            options: BADGE_VARIANTS_SEMANTIC,
+            options: Badge.BADGE_VARIANTS_SEMANTIC,
         },
     },
     render: (args) =>
         CONTAINER(
-            BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            Badge.BADGE_VARIANTS_SEMANTIC.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -198,7 +194,7 @@ export const Outline: Story = {
 export const ColorVariants: Story = {
     render: (args) =>
         CONTAINER(
-            BADGE_VARIANTS_COLOR.map((variant) =>
+            Badge.BADGE_VARIANTS_COLOR.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -229,7 +225,7 @@ export const Sizes: Story = {
 export const Subtle: Story = {
     render: (args) =>
         CONTAINER(
-            BADGE_VARIANTS.map((variant) =>
+            Badge.BADGE_VARIANTS.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
