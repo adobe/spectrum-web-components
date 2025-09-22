@@ -290,6 +290,9 @@
     --system-divider-background-color: var(--spectrum-gray-200);
     --system-divider-background-color-static-white: var(--spectrum-transparent-white-200);
     --system-divider-background-color-static-black: var(--spectrum-transparent-black-200);
+    --system-alert-dialog-divider-background-color: transparent;
+    --system-alert-dialog-divider-background-color-static-white: transparent;
+    --system-alert-dialog-divider-background-color-static-black: transparent;
     --system-drop-zone-border-color: var(--spectrum-gray-200);
     --system-field-group-margin: var(--spectrum-spacing-300);
     --system-field-group-readonly-delimiter: ",";
