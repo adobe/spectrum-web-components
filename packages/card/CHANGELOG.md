@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5638](https://github.com/adobe/spectrum-web-components/pull/5638) [`f8da034`](https://github.com/adobe/spectrum-web-components/commit/f8da034a2c37a4b7f3d06facf36cdcbc11b79833) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** the card component's CSS by moving `block-size: 100%` from the base `:host` selector to only apply to `gallery` and `quiet` variants
+
+- [#5171](https://github.com/adobe/spectrum-web-components/pull/5171) [`eae4332`](https://github.com/adobe/spectrum-web-components/commit/eae433283d09e4b0d72cd5fd21c17c3e6c22543b) Thanks [@majornista](https://github.com/majornista)! - Enhanced the Card component's checkbox functionality with improved screen reader support and keyboard navigation.
+
+### Patch Changes
+
+- Updated dependencies [[`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba), [`826a2d5`](https://github.com/adobe/spectrum-web-components/commit/826a2d533e46a6f945daefa8999fadca78bd8688)]:
+    - @spectrum-web-components/styles@1.8.0
+    - @spectrum-web-components/divider@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/asset@1.8.0
+    - @spectrum-web-components/checkbox@1.8.0
+    - @spectrum-web-components/icons-workflow@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Minor Changes

@@ -1,5 +1,26 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5616](https://github.com/adobe/spectrum-web-components/pull/5616) [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : Fix iPad scrolling issue in picker dropdown where scrolling through menu items would accidentally select the first touched item and close the picker.
+
+    The fix implements touch gesture detection to distinguish between scrolling and selection. Added `isScrolling` getter for public API access. Test on iPad devices with long menus to validate scrolling behavior and selection accuracy.
+
+### Patch Changes
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`826a2d5`](https://github.com/adobe/spectrum-web-components/commit/826a2d533e46a6f945daefa8999fadca78bd8688)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/divider@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/action-button@1.8.0
+    - @spectrum-web-components/icon@1.8.0
+    - @spectrum-web-components/icons-ui@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5695](https://github.com/adobe/spectrum-web-components/pull/5695) [`aa411d0`](https://github.com/adobe/spectrum-web-components/commit/aa411d0db3586e2ace255c701c15a1a21e8425c4) Thanks [@TiffanyAltieri](https://github.com/TiffanyAltieri)! - **Fixed** quiet variant links not showing keyboard focus state in Safari. Links with the `quiet` attribute now properly display focus indicators when navigating with keyboard, improving accessibility for keyboard users.
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

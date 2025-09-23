@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5524](https://github.com/adobe/spectrum-web-components/pull/5524) [`dcd2cd3`](https://github.com/adobe/spectrum-web-components/commit/dcd2cd351d1cc877212cc00e9d139b7829bf4017) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - ### Fix down state colors for switch
+
+    Because the `postcss-hover-media-feature` plugin converts hover styles into a media query for devices that support hover, the hover styles were overriding any active/down state styles. We needed to target the active/down states of the switch with additional active state selectors, in order to ensure that the active state takes precedence over the hover state, maintaining the correct visual behavior of the switch component across different interaction states.
+
+    This fix should address hover + active state discrepancies in S1 and S2 foundations.
+
+- Updated dependencies []:
+    - @spectrum-web-components/checkbox@1.8.0
+    - @spectrum-web-components/base@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
