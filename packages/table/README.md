@@ -44,7 +44,15 @@ import {
 } from '@spectrum-web-components/table';
 ```
 
-## Example
+### Anatomy
+
+A table consists of the following parts:
+
+- a table head section (`<sp-table-head>`)
+- header cells (`<sp-table-head-cell>`) within the table head section
+- a table body section, ie.`<sp-table-body>`
+- rows (`<sp-table-row>`) within the table body section
+- body cells (`<sp-table-cell>`) within the table body rows
 
 ```html demo
 <sp-table>
@@ -340,7 +348,7 @@ The `quiet` attribute creates a more subtle table appearance with a transparent 
 </sp-tab-panel>
 </sp-tabs>
 
-## Virtualized tables
+### Behaviors
 
 For large amounts of data, the `<sp-table>` can be virtualised to easily add table rows by using properties.
 
@@ -427,7 +435,7 @@ For large amounts of data, the `<sp-table>` can be virtualised to easily add tab
     });
 </script>
 
-### How to use it
+#### How to use it
 
 The virtualised table takes `items` as either a property or a JSON-encoded string, an array of type `Record`, where the key is a `string` and the value can be whatever you'd like. `items` is then fed into the `renderItem` method, which takes an `item` and its `index` as parameters and renders the `<sp-table-row>` for each item. An example is as follows:
 
@@ -462,7 +470,7 @@ const renderItem = (item: Item, index: number): TemplateResult => {
 
 Please note that there is a bug when attempting to select all virtualised elements. The items are selected programatically, it's just not reflected visually.
 
-### Virtualized table selection
+#### Virtualized table selection
 
 By default the `selected` property will surface an array of item indexes that are currently selected. However, when making a selection on a virtualized table, it can be useful to track selection as something other than indexes. To do so, set a custom method for the `itemValue` property. The `itemValue` method accepts an item and its index as arguments and should return the value you would like to track in the `selected` property.
 
@@ -564,7 +572,7 @@ By default the `selected` property will surface an array of item indexes that ar
     });
 </script>
 
-### Row Types
+#### Row Types
 
 All values in the item array are assumed to be homogenous by default. This means all of the rendered rows are either delivered as provided, or, in the case you are leveraging `selects`, rendered with an `<sp-table-checkbox-cell>`. However, when virtualizing a table with selection, it can sometimes be useful to surface rows with additional interactions, e.g. "Load more data" links. To support that, you can optionally include the `_$rowType$` brand in your item. The values for this are outlined by the `RowType` enum and include `ITEM` (0) and `INFORMATION` (1). When `_$rowType$: RowType.INFORMATION` is provided, it instructs the `<sp-table>` not to deliver an `<sp-table-checkbox-cell>` in that row.
 
@@ -670,7 +678,7 @@ All values in the item array are assumed to be homogenous by default. This means
     });
 </script>
 
-### The `scroller` property
+#### The `scroller` property
 
 By default, the virtualized table doesn't contain a scroll bar and will display the entire length of the table body. Use the `scroller` property and specify an inline style for the height to get a `Table` of your desired height that scrolls.
 
@@ -796,11 +804,11 @@ For each table column you want to sort, use the `sortable` attribute in its resp
     });
 </script>
 
-## Accessibility
+### Accessibility
 
 The `<sp-table>` component provides accessibility support for tabular data:
 
-### ARIA attributes
+#### ARIA attributes
 
 The table automatically manages ARIA attributes for proper semantic structure:
 
@@ -815,7 +823,7 @@ The table automatically manages ARIA attributes for proper semantic structure:
 - `aria-rowindex` on virtualized table rows
 - `aria-rowcount` on virtualized tables
 
-### Selection accessibility
+#### Selection accessibility
 
 When using row selection:
 
@@ -823,9 +831,7 @@ When using row selection:
 - Selection state is announced to screen readers
 - Checkboxes in selection cells are properly labeled
 
-### Keyboard navigation
-
-#### Sortable column headers
+#### Keyboard navigation
 
 Sortable column headers support keyboard interaction:
 
@@ -834,14 +840,10 @@ Sortable column headers support keyboard interaction:
 - **Numpad Enter** - Immediately sorts the column
 - **Tab** - Navigates to sortable headers (only sortable headers are focusable)
 
-#### Row selection
-
 Selectable rows support keyboard interaction:
 
 - **Click** - Toggles row selection
 - **Tab** - Navigates through focusable elements
-
-#### Scrollable tables
 
 - **Tab** - Table body automatically receives `tabindex="0"` when content is scrollable
 - **Mouse wheel** - Scrolls through table content when focused
