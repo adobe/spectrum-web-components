@@ -638,7 +638,7 @@
     --system-textfield-border-color-disabled: var(--spectrum-gray-200);
     --system-textfield-border-width: var(--spectrum-border-width-200);
     --system-textfield-spacing-block-start: var(--spectrum-component-top-to-text-100);
-    --system-textfield-spacing-block-start-small: var(--spectrum-component-top-to-text-50);
+    --system-textfield-spacing-block-start-small: var(--spectrum-component-top-to-text-75);
     --system-textfield-spacing-block-start-large: var(--spectrum-component-top-to-text-200);
     --system-textfield-spacing-block-start-extra-large: var(--spectrum-component-top-to-text-300);
     --system-textfield-icon-spacing-block-invalid: var(--spectrum-field-top-to-alert-icon-medium);
