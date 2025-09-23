@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5690](https://github.com/adobe/spectrum-web-components/pull/5690) [`99ab45e`](https://github.com/adobe/spectrum-web-components/commit/99ab45ea77ae5870b2170c1860c67a70e9a5d66a) Thanks [@5t3ph](https://github.com/5t3ph)! - Fixed a typo in the default `info` variant label from "Informations" to "Information".
+
+    Additionally, added package dependency for `@spectrum-web-components/reactive-controllers@1.7.0`.
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/action-button@1.8.0
+    - @spectrum-web-components/dialog@1.8.0
+    - @spectrum-web-components/icons-workflow@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

@@ -1,5 +1,31 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5672](https://github.com/adobe/spectrum-web-components/pull/5672) [`6c2acaf`](https://github.com/adobe/spectrum-web-components/commit/6c2acaf14ca1c210a876bdbd65a273d6a5fc22d0) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** escape key behavior in modal overlays containing picker components. Previously, pressing the Escape key when a picker was open inside a modal overlay would not properly close the modal, instead moving focus to the picker. Now, the escape key correctly closes the picker first (if open), then closes the modal overlay on subsequent escape key presses.
+
+    This fix adds a check for `this.open` in the picker's `handleEscape` method to ensure proper modal overlay closure behavior.
+
+### Patch Changes
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/menu@1.8.0
+    - @spectrum-web-components/button@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/tooltip@1.8.0
+    - @spectrum-web-components/field-label@1.8.0
+    - @spectrum-web-components/icon@1.8.0
+    - @spectrum-web-components/icons-ui@1.8.0
+    - @spectrum-web-components/icons-workflow@1.8.0
+    - @spectrum-web-components/progress-circle@1.8.0
+    - @spectrum-web-components/tray@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
