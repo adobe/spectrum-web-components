@@ -1,7 +1,7 @@
 {
-    "private": true,
     "name": "@adobe/spectrum-web-components",
     "version": "0.0.9",
+    "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -27,9 +27,9 @@
         "build:ts:watch": "wireit",
         "build:types": "wireit",
         "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
-        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
         "changelog:global": "node ./scripts/update-global-changelog.js",
+        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
+        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
         "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
         "create-git-tag": "node --no-warnings ./scripts/create-git-tag.js",
         "custom-element-json": "node ./scripts/custom-element-json.js",
@@ -92,16 +92,6 @@
         "tools/*",
         "react/*"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html"
-    ],
     "devDependencies": {
         "@changesets/changelog-github": "^0.5.0",
         "@changesets/cli": "^2.27.5",
@@ -154,7 +144,7 @@
         "alex": "^11.0.1",
         "cem-plugin-module-file-extensions": "^0.0.5",
         "chromatic": "^11.20.0",
-        "chromedriver": "^138.0.0",
+        "chromedriver": "140.0.3",
         "colors": "^1.4.0",
         "common-tags": "^1.8.2",
         "crypto": "^1.0.1",
@@ -205,7 +195,7 @@
         "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0",
         "stylelint-header": "^3.0.0",
-        "tachometer": "^0.7.2",
+        "tachometer": "0.7.2",
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^5.3.3",
@@ -213,6 +203,16 @@
         "wireit": "^0.14.3",
         "yargs": "^17.2.1"
     },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
