@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [[`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba)]:
+    - @spectrum-web-components/styles@1.8.0
+    - @spectrum-web-components/base@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
