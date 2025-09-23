@@ -17,6 +17,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -27,7 +28,6 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { slottableRequest } from '@spectrum-web-components/overlay/src/slottable-request-directive.js';
-import { isChrome, isWebKit } from '@spectrum-web-components/shared';
 import { sendKeys } from '@web/test-runner-commands';
 import { TemplateResult } from 'lit-html';
 import { spy } from 'sinon';
@@ -37,7 +37,6 @@ import {
     mouseClickOn,
     mouseMoveAway,
     mouseMoveOver,
-    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 
@@ -125,15 +124,6 @@ describe('Submenu', () => {
     }
     function selectsWithKeyboard(testData: SelectsWithKeyboardTest): void {
         it(`with keyboard: ${testData.dir}`, async function () {
-            // @TODO: skipping this test because it's flaky in Chrome with LTR direction. Will review in the migration to Spectrum 2.
-            if (isChrome() && testData.dir === 'ltr') {
-                return;
-            }
-
-            // Increase timeout for WebKit in CI environments to prevent browser crashes
-            if (isWebKit()) {
-                this.timeout(10000);
-            }
             this.el.parentElement.dir = testData.dir;
 
             await elementUpdated(this.el);
@@ -143,16 +133,19 @@ describe('Submenu', () => {
             ).to.be.false;
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            this.el.focus();
-            // by default, Safari doesn't tab to some elements
-            if (!isWebKit()) {
-                await sendShiftTabKey();
+            await elementUpdated(input);
+            await sendTabKey();
+            await elementUpdated(input);
 
-                expect(document.activeElement).to.equal(input);
-                await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendTabKey();
+            await elementUpdated(this.el);
+            await waitUntil(
+                () => document.activeElement === this.el.children[0],
+                'focuses first menu item after tab'
+            );
 
-                expect(document.activeElement).to.equal(this.el);
-            }
+            expect(document.activeElement).to.equal(this.el.children[0]);
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.rootItem);
 
@@ -228,27 +221,35 @@ describe('Submenu', () => {
         it('returns visible focus when submenu closed', async function () {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
-            // by default, Safari doesn't tab to some elements
-            if (!isWebKit()) {
-                await sendShiftTabKey();
 
-                expect(document.activeElement).to.equal(input);
-                await sendTabKey();
+            await sendTabKey();
+            await elementUpdated(input);
+            expect(document.activeElement, 'focuses input').to.equal(input);
+            await sendTabKey();
+            await waitUntil(
+                () => document.activeElement === this.el.children[0],
+                'focuses first menu item after tab'
+            );
+            expect(document.activeElement, 'focuses first menu item').to.equal(
+                this.el.children[0]
+            );
 
-                expect(document.activeElement).to.equal(this.el);
-            }
-            this.el.focus();
             await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(this.el);
             await nextFrame();
             await nextFrame();
-            expect(this.rootItem.active, 'not active').to.be.false;
+            expect(this.rootItem.active, 'menu with submenu is not active').to
+                .be.false;
             expect(
                 this.rootItem.focused,
                 `focused: ${document.activeElement?.localName}`
             ).to.be.true;
-            expect(this.rootItem.open, 'not open').to.be.false;
-            expect(document.activeElement).to.equal(this.rootItem);
+            expect(this.rootItem.open, 'menu with submenu is not open').to.be
+                .false;
+            expect(
+                document.activeElement,
+                'focuses menu with submenu'
+            ).to.equal(this.rootItem);
 
             const opened = oneEvent(this.rootItem, 'sp-opened');
             await sendKeys({ press: 'ArrowRight' });
