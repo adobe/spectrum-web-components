@@ -190,6 +190,7 @@ describe('Submenu', () => {
             await elementUpdated(this.rootItem);
 
             submenu = this.el.querySelector('[slot="submenu"]') as Menu;
+            await elementUpdated(submenu);
 
             expect(this.rootItem.open, 'rootItem.open').to.be.true;
             expect(submenuItem.focused, 'submenuItem.focused').to.be.true;
