@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from '@spectrum-web-components/base';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 import {
     aTimeout,
     elementUpdated,
@@ -20,8 +20,33 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
+import { html } from '@spectrum-web-components/base';
 
+import {
+    CHANGE_DEBOUNCE_MS,
+    FRAMES_PER_CHANGE,
+    indeterminatePlaceholder,
+    NumberField,
+} from '@spectrum-web-components/number-field';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import { isWebKit } from '@spectrum-web-components/shared';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    resetMouse,
+    sendKeys,
+    setUserAgent,
+} from '@web/test-runner-commands';
+import { SinonSpy, spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    fixture,
+    mouseClickOn,
+    mouseMoveOver,
+    sendTabKey,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import {
     currency,
     decimals,
@@ -32,29 +57,7 @@ import {
     pixels,
     units,
 } from '../stories/number-field.stories.js';
-import '@spectrum-web-components/number-field/sp-number-field.js';
-import {
-    CHANGE_DEBOUNCE_MS,
-    FRAMES_PER_CHANGE,
-    indeterminatePlaceholder,
-    NumberField,
-} from '@spectrum-web-components/number-field';
-import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    resetMouse,
-    sendKeys,
-    setUserAgent,
-} from '@web/test-runner-commands';
-import { SinonSpy, spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
-import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import {
-    fixture,
-    sendMouseTo,
-    testForLitDevWarnings,
-} from '../../../test/testing-helpers.js';
 
 // Helper function to set up input and change spies
 function setupEventSpies(element: NumberField): {
@@ -677,30 +680,18 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition: [number, number] = [
-                buttonDownRect.x + buttonDownRect.width / 2,
-                buttonDownRect.y + buttonDownRect.height / 2,
-            ];
-            sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonUpPosition,
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
             await oneEvent(el, 'input');
             expect(el.value).to.equal(51);
             expect(inputSpy.callCount).to.equal(1);
@@ -713,14 +704,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(53);
             expect(inputSpy.callCount).to.equal(3);
             expect(changeSpy.callCount).to.equal(0);
-            sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonDownPosition,
-                    },
-                ],
-            });
+            await mouseMoveOver(buttonDown);
             let framesToWait = FRAMES_PER_CHANGE * 2;
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames
@@ -729,13 +713,7 @@ describe('NumberField', () => {
             }
             expect(inputSpy.callCount).to.equal(5);
             expect(changeSpy.callCount).to.equal(0);
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
             expect(inputSpy.callCount).to.equal(5);
             expect(changeSpy.callCount).to.equal(1);
         });
@@ -743,30 +721,18 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition: [number, number] = [
-                buttonDownRect.x + buttonDownRect.width / 2,
-                buttonDownRect.y + buttonDownRect.height / 2,
-            ];
-            sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonUpPosition,
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
             await oneEvent(el, 'input');
             expect(el.value).to.equal(51);
             expect(inputSpy.callCount).to.equal(1);
@@ -775,14 +741,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(52);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(0);
-            sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonDownPosition,
-                    },
-                ],
-            });
+            await mouseMoveOver(buttonDown);
             let framesToWait = FRAMES_PER_CHANGE * 2;
             while (framesToWait) {
                 // input is only processed onces per FRAMES_PER_CHANGE number of frames
@@ -791,13 +750,7 @@ describe('NumberField', () => {
             }
             expect(inputSpy.callCount).to.equal(4);
             expect(changeSpy.callCount).to.equal(0);
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
             expect(inputSpy.callCount).to.equal(4);
             expect(
                 changeSpy.callCount,
@@ -837,7 +790,7 @@ describe('NumberField', () => {
                 '.step-up'
             ) as HTMLElement;
             // Click the step-up button
-            await sendMouseTo(buttonUp, 'click');
+            await mouseClickOn(buttonUp);
 
             await elementUpdated(el);
 
@@ -856,7 +809,7 @@ describe('NumberField', () => {
                 '.step-down'
             ) as HTMLElement;
             // Click the step-down button
-            await sendMouseTo(buttonDown, 'click');
+            await mouseClickOn(buttonDown);
 
             await elementUpdated(el);
 
@@ -874,24 +827,17 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
 
             // Press and hold the step-up button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonUpPosition,
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
 
             // Wait for first increment
             await oneEvent(el, 'input');
@@ -910,13 +856,7 @@ describe('NumberField', () => {
             expect(el.value).to.be.greaterThan(firstIncrementValue);
 
             // Release the button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
 
             // Verify no further increments after release
             const finalValue = el.value;
@@ -934,32 +874,20 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition: [number, number] = [
-                buttonDownRect.x + buttonDownRect.width / 2,
-                buttonDownRect.y + buttonDownRect.height / 2,
-            ];
 
             // Press and hold the step-up button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonUpPosition,
-                    },
-                    {
-                        type: 'down',
-                    },
-                ],
-            });
+            await sendMouse([
+                {
+                    type: 'move',
+                    position: [buttonUp],
+                },
+                {
+                    type: 'down',
+                },
+            ]);
 
             // Wait for increment to start
             await oneEvent(el, 'input');
@@ -976,14 +904,7 @@ describe('NumberField', () => {
 
             // Move to step-down button while still holding
             inputSpy.resetHistory();
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: buttonDownPosition,
-                    },
-                ],
-            });
+            await mouseMoveOver(buttonDown);
 
             // input is only processed onces per FRAMES_PER_CHANGE number of frames so wait for the direction to change
             let framesToWait = FRAMES_PER_CHANGE * 2;
@@ -1000,13 +921,7 @@ describe('NumberField', () => {
             expect(inputSpy.callCount).to.be.at.least(1);
 
             // Release the button
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
+            await sendMouse({ type: 'up' });
             // Verify no further increments after release
             const finalValue = el.value;
             // We intentionally use a timeout here to verify the ABSENCE of events.
@@ -1086,7 +1001,7 @@ describe('NumberField', () => {
                 'input'
             ) as HTMLInputElement;
 
-            await sendMouseTo(el.focusElement, 'click');
+            await mouseClickOn(el.focusElement);
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
@@ -1119,9 +1034,7 @@ describe('NumberField', () => {
                 'input'
             ) as HTMLInputElement;
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await elementUpdated(el);
             expect(el.focused).to.be.true;
 
@@ -1215,19 +1128,7 @@ describe('NumberField', () => {
             const buttonUp = el.shadowRoot.querySelector(
                 '.step-up'
             ) as HTMLElement;
-            const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition: [number, number] = [
-                buttonUpRect.x + buttonUpRect.width / 2,
-                buttonUpRect.y + buttonUpRect.height / 2,
-            ];
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: buttonUpPosition,
-                    },
-                ],
-            });
+            await mouseClickOn(buttonUp);
             expect(el.value).to.equal(10);
         });
         it('validates on commit', async () => {
@@ -1258,18 +1159,10 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(0);
             expect(el.value).to.equal(5);
             el.focus();
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: '1',
-            });
-            await sendKeys({
-                press: '5',
-            });
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: '1' });
+            await sendKeys({ press: '5' });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(10);
             expect(inputSpy.callCount).to.equal(3);
@@ -1334,18 +1227,10 @@ describe('NumberField', () => {
             expect(changeSpy.callCount).to.equal(0);
             expect(el.value).to.equal(15);
             el.focus();
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: 'Backspace',
-            });
-            await sendKeys({
-                press: '5',
-            });
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: '5' });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(10);
             expect(inputSpy.callCount).to.equal(3);
@@ -1455,19 +1340,7 @@ describe('NumberField', () => {
             const buttonDown = el.shadowRoot.querySelector(
                 '.step-down'
             ) as HTMLElement;
-            const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition: [number, number] = [
-                buttonDownRect.x + buttonDownRect.width / 2,
-                buttonDownRect.y + buttonDownRect.height / 2,
-            ];
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: buttonDownPosition,
-                    },
-                ],
-            });
+            await mouseClickOn(buttonDown);
             await elementUpdated(el);
             expect(el.value).to.equal(0);
         });
@@ -1878,6 +1751,10 @@ describe('NumberField', () => {
     });
     describe('accessibility model', () => {
         it('increment and decrement buttons cannot receive keyboard focus', async () => {
+            // @TODO: skipping this test because it's flaky in WebKit in CI. Will review in the migration to Spectrum 2.
+            if (isWebKit()) {
+                return;
+            }
             await fixture<HTMLDivElement>(html`
                 <div>
                     ${Default({

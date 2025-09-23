@@ -280,7 +280,11 @@ class RecursivePopover extends LitElement {
                 <sp-radio value="bottom">Bottom</sp-radio>
                 <sp-radio value="left">Left</sp-radio>
             </sp-radio-group>
-            <overlay-trigger placement="${this.placement}" type="modal">
+            <overlay-trigger
+                placement="${this.placement}"
+                type="modal"
+                triggered-by="click hover"
+            >
                 <sp-button
                     slot="trigger"
                     variant="accent"
@@ -322,7 +326,11 @@ export class PopoverContent extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <overlay-trigger type="modal" placement="bottom">
+            <overlay-trigger
+                type="modal"
+                placement="bottom"
+                triggered-by="click hover"
+            >
                 <sp-button slot="trigger">Open me</sp-button>
                 <sp-popover slot="click-content" direction="bottom">
                     <sp-dialog no-divider>

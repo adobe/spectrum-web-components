@@ -25,7 +25,12 @@ import {
     insertionOptions,
 } from '../stories/overlay-directive.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { fixture } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    mouseClickAway,
+    mouseClickOn,
+    mouseMoveOver,
+} from '../../../test/testing-helpers.js';
 
 describe('Overlay Directive', () => {
     it('opens declaratively', async function () {
@@ -64,39 +69,27 @@ describe('Overlay Directive', () => {
         const rect = el.getBoundingClientRect();
         let opened = oneEvent(el, 'sp-opened');
         // Open the Tooltip via "hover"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseMoveOver(el);
         await opened;
 
         opened = oneEvent(el, 'sp-opened');
         // Open the Popover via "click"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-                {
-                    type: 'move',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'click',
+                position: [
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height / 2,
+                ],
+            },
+            {
+                type: 'move',
+                position: [
+                    rect.left - rect.width / 2,
+                    rect.top - rect.height / 2,
+                ],
+            },
+        ]);
         await opened;
 
         overlays = document.querySelectorAll('sp-overlay');
@@ -106,15 +99,8 @@ describe('Overlay Directive', () => {
         // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
         const closed = oneEvent(overlays[0], 'slottable-request');
         await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
+            type: 'click',
+            position: [rect.left - rect.width / 2, rect.top - rect.height / 2],
         });
         await closed;
 
@@ -145,35 +131,14 @@ describe('Overlay Directive', () => {
         let overlays = otherElement.querySelectorAll('sp-overlay');
         expect(overlays.length).to.equal(0);
 
-        const rect = el.getBoundingClientRect();
         let opened = oneEvent(el, 'sp-opened');
         // Open the Tooltip via "hover"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseMoveOver(el);
         await opened;
 
         opened = oneEvent(el, 'sp-opened');
         // Open the Popover via "click"
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseClickOn(el);
         await opened;
 
         overlays = otherElement.querySelectorAll('sp-overlay');
@@ -181,17 +146,7 @@ describe('Overlay Directive', () => {
 
         // `slottable-request` comes _after_ `sp-closed` and triggers DOM cleanup
         const closed = oneEvent(overlays[0], 'slottable-request');
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left - rect.width / 2,
-                        rect.top - rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseClickAway(el);
         await closed;
 
         // Wait for DOM clean up to complete

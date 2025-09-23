@@ -18,11 +18,9 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers';
 describe('Close Button', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<CloseButton>(
-                html`
-                    <sp-close-button size="m" label="Close"></sp-close-button>
-                `
-            )
+            await fixture<CloseButton>(html`
+                <sp-close-button size="m" label="Close"></sp-close-button>
+            `)
     );
     (
         ['s', 'm', 'l', 'xl'] as (
@@ -36,14 +34,9 @@ describe('Close Button', () => {
         )[]
     ).map((size) => {
         it(`loads - ${size}`, async () => {
-            const el = await fixture<CloseButton>(
-                html`
-                    <sp-close-button
-                        size=${size}
-                        label="Close"
-                    ></sp-close-button>
-                `
-            );
+            const el = await fixture<CloseButton>(html`
+                <sp-close-button size=${size} label="Close"></sp-close-button>
+            `);
 
             await expect(el).to.be.accessible();
         });

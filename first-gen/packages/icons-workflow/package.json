@@ -1,34 +1,27 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
     "version": "1.7.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
     "repository": {
+        "directory": "packages/icons-workflow",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "first-gen/packages/icons-workflow"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
-        "./src/*": "./src/*",
         "./icons/*": "./icons/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./src/*": "./src/*"
     },
-    "scripts": {
-        "build": "node ./bin/build.js",
-        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -38,6 +31,29 @@
         "!stories/",
         "!test/"
     ],
+    "scripts": {
+        "build": "node ./bin/build.js",
+        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
+    },
+    "sideEffects": [
+        "./src/index.js",
+        "./icons/*"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.7.0",
+        "@spectrum-web-components/icon": "1.7.0",
+        "case": "^1.6.1"
+    },
+    "devDependencies": {
+        "@adobe/spectrum-css-workflow-icons": "1.7.0",
+        "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0",
+        "cheerio": "^1.0.0-rc.2",
+        "fast-glob": "^3.3.3",
+        "fs": "^0.0.1-security",
+        "path": "^0.12.7",
+        "prettier": "^3.5.3"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -50,24 +66,8 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/icon": "1.7.0"
+    "publishConfig": {
+        "access": "public"
     },
-    "devDependencies": {
-        "@adobe/spectrum-css-workflow-icons": "1.7.0",
-        "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0",
-        "case": "^1.6.1",
-        "cheerio": "^1.0.0-rc.2",
-        "fast-glob": "^3.3.3",
-        "fs": "^0.0.1-security",
-        "path": "^0.12.7",
-        "prettier": "^3.5.3"
-    },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./src/index.js",
-        "./icons/*"
-    ]
+    "customElements": "custom-elements.json"
 }

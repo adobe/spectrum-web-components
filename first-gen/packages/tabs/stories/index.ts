@@ -47,25 +47,23 @@ export const renderTabsOverflowExample = ({
                     ${repeat(
                         new Array(count),
                         (item) => item,
-                        (_item, index) =>
-                            html`
-                                <sp-tab
-                                    label=${`Tab Item ${index + 1}`}
-                                    value=${index + 1}
-                                ></sp-tab>
-                            `
+                        (_item, index) => html`
+                            <sp-tab
+                                label=${`Tab Item ${index + 1}`}
+                                value=${index + 1}
+                            ></sp-tab>
+                        `
                     )}
                     ${includeTabPanel
                         ? html`
                               ${repeat(
                                   new Array(count),
                                   (item) => item,
-                                  (_item, index) =>
-                                      html`
-                                          <sp-tab-panel value=${index + 1}>
-                                              Content for Tab Item ${index + 1}
-                                          </sp-tab-panel>
-                                      `
+                                  (_item, index) => html`
+                                      <sp-tab-panel value=${index + 1}>
+                                          Content for Tab Item ${index + 1}
+                                      </sp-tab-panel>
+                                  `
                               )}
                           `
                         : nothing}

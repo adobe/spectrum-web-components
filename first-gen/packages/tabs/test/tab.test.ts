@@ -19,35 +19,29 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('Tab', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Tabs>(
-                html`
-                    <sp-tabs>
-                        <sp-tab label="Tab 1" value="first"></sp-tab>
-                    </sp-tabs>
-                `
-            )
-    );
-    it('loads default tab accessibly', async () => {
-        const el = await fixture<Tabs>(
-            html`
+            await fixture<Tabs>(html`
                 <sp-tabs>
                     <sp-tab label="Tab 1" value="first"></sp-tab>
                 </sp-tabs>
-            `
-        );
+            `)
+    );
+    it('loads default tab accessibly', async () => {
+        const el = await fixture<Tabs>(html`
+            <sp-tabs>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('Updates label', async () => {
-        const el = await fixture<Tabs>(
-            html`
-                <sp-tabs>
-                    <sp-tab label="Tab 1" value="first"></sp-tab>
-                </sp-tabs>
-            `
-        );
+        const el = await fixture<Tabs>(html`
+            <sp-tabs>
+                <sp-tab label="Tab 1" value="first"></sp-tab>
+            </sp-tabs>
+        `);
 
         await elementUpdated(el);
         const firstTab = el.querySelector('sp-tab') as Tab;

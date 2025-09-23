@@ -10,45 +10,30 @@
  * governing permissions and limitations under the License.
  */
 
-import { executeServerCommand } from '@web/test-runner-commands';
+import { executeServerCommand, resetMouse } from '@web/test-runner-commands';
 import type { Step } from './send-mouse-plugin.js';
 
-/**
- * Return the mouse to the `up` position.
- */
-async function mouseCleanup() {
-    await executeServerCommand('send-pointer', {
-        steps: [
-            {
-                type: 'move',
-                position: [0, 0],
-            },
-            {
-                type: 'up',
-            },
-        ],
-    });
-}
+export type SendMouseOptions = {
+    steps: Step[];
+};
 
 /**
  * If available, add cleanup work to the `afterEach` and `after` commands.
  */
 function queueMouseCleanUp() {
-    if (mouseCleanupQueued) return;
+    if (mouseCleanupQueued) {
+        return;
+    }
     /**
      * This registers the fixture cleanup as a side effect
      */
     try {
-        // we should not assume that our users load mocha types globally
-        // @ts-ignore
+        // We should not assume that our users load mocha types globally
         if ('afterEach' in window && 'after' in window) {
             mouseCleanupQueued = true;
-            // @ts-ignore
             afterEach(async function () {
-                // @ts-ignore
-                await mouseCleanup();
+                await resetMouse();
             });
-            // @ts-ignore
             after(() => {
                 mouseCleanupQueued = false;
             });
@@ -64,9 +49,38 @@ let mouseCleanupQueued = false;
  * Call to the browser with instructions for interacting with the pointing
  * device while queueing cleanup of those commands after the test is run.
  */
-export function sendMouse(options: { steps: Step[] }) {
+export async function sendMouse(options: Step[] | Step | SendMouseOptions) {
     queueMouseCleanUp();
-    return executeServerCommand('send-pointer', options);
+    let steps: Step[];
+    if (typeof options === 'object' && 'steps' in options) {
+        steps = options.steps;
+    } else {
+        steps = Array.isArray(options) ? options : [options];
+    }
+    // Process steps to convert HTMLElements to DOMRects on the browser side
+    const processedSteps = steps.map((step) => {
+        if (
+            step.position &&
+            Array.isArray(step.position) &&
+            step.position.length >= 1
+        ) {
+            const [target, position] = step.position;
+
+            // If the target is an HTMLElement, convert it to a DOMRect
+            if (target instanceof HTMLElement) {
+                return {
+                    ...step,
+                    position: [
+                        target.getBoundingClientRect(),
+                        position || 'center',
+                    ],
+                };
+            }
+        }
+        return step;
+    });
+
+    return await executeServerCommand('send-pointer', processedSteps);
 }
 
 /**

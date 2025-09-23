@@ -10,11 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.ci.js';
-import { webkit } from './web-test-runner.utils.js';
+import { Default } from '../stories/accordion.stories.js';
+import { testForMemoryLeaks } from '../../../test/testing-helpers.js';
 
-export default {
-    ...standard,
-    browsers: [webkit],
-    concurrency: 1,
-};
+describe('Accordion - memory usage', () => {
+    testForMemoryLeaks(Default());
+});

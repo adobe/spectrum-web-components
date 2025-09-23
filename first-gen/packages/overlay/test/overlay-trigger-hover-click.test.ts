@@ -17,29 +17,31 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger.js';
+import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay/src/OverlayTrigger';
-import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overlay-types';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
-import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { Button } from '@spectrum-web-components/button';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    ignoreResizeObserverLoopError,
+    sendTabKey,
+} from '../../../test/testing-helpers.js';
+import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
 
 ignoreResizeObserverLoopError(before, after);
 
 describe('Overlay Trigger - Hover and Click', () => {
     it('toggles open and closed on click', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger>
+            <overlay-trigger triggered-by="click hover">
                 <sp-button slot="trigger">Click and hover</sp-button>
                 <sp-popover slot="click-content" dialog tip>
                     Popover content
@@ -71,7 +73,7 @@ describe('Overlay Trigger - Hover and Click', () => {
     });
     it('toggles on click after hover', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger>
+            <overlay-trigger triggered-by="click hover">
                 <sp-button slot="trigger">Click and hover</sp-button>
                 <sp-popover slot="click-content" dialog tip>
                     Popover content
@@ -92,22 +94,20 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         // hover over the button to trigger the tooltip
         const hoveredEvent = oneEvent(el, 'sp-opened');
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [bounds.left - 1, bounds.top - 1],
-                },
-                {
-                    type: 'move',
-                    position: [bounds.left, bounds.top],
-                },
-                {
-                    type: 'move',
-                    position: [bounds.left + 1, bounds.top + 1],
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [bounds.left - 1, bounds.top - 1],
+            },
+            {
+                type: 'move',
+                position: [bounds.left, bounds.top],
+            },
+            {
+                type: 'move',
+                position: [bounds.left + 1, bounds.top + 1],
+            },
+        ]);
         interaction = (await hoveredEvent).detail.interaction;
 
         expect(interaction).equals('hint');
@@ -156,15 +156,11 @@ describe('Overlay Trigger - Hover and Click', () => {
         const rect1 = trigger1.getBoundingClientRect();
         const rect2 = trigger2.getBoundingClientRect();
         let opened = oneEvent(trigger1, 'sp-opened');
-        sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect1.left + rect1.width / 2,
-                        rect1.top + rect1.height / 2,
-                    ],
-                },
+        await sendMouse({
+            type: 'click',
+            position: [
+                rect1.left + rect1.width / 2,
+                rect1.top + rect1.height / 2,
             ],
         });
         await opened;
@@ -173,15 +169,11 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(overlayTrigger2.open).to.undefined;
 
         opened = oneEvent(trigger2, 'sp-opened');
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect2.left + rect2.width / 2,
-                        rect2.top + rect2.height / 2,
-                    ],
-                },
+        await sendMouse({
+            type: 'move',
+            position: [
+                rect2.left + rect2.width / 2,
+                rect2.top + rect2.height / 2,
             ],
         });
         await opened;
@@ -190,15 +182,11 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(overlayTrigger2.open).to.equal('hover');
 
         const closed = oneEvent(trigger1, 'sp-closed');
-        sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect2.left + rect2.width / 2,
-                        rect2.top + rect2.height / 2,
-                    ],
-                },
+        await sendMouse({
+            type: 'click',
+            position: [
+                rect2.left + rect2.width / 2,
+                rect2.top + rect2.height / 2,
             ],
         });
         await closed;
@@ -224,15 +212,9 @@ describe('Overlay Trigger - Hover and Click', () => {
         const opened = oneEvent(el, 'sp-opened');
         trigger.focus();
         // For `:focus-visible` heuristic.
-        await sendKeys({
-            press: 'Tab',
-        });
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendTabKey();
+        await sendKeys({ press: 'Shift+Tab' });
+        await sendKeys({ press: 'Space' });
         await opened;
 
         expect(el.open).to.equal('click');
@@ -247,9 +229,7 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         let closed = oneEvent(button, 'sp-closed');
         expect(document.activeElement === button, `button focused`).to.be.true;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === button2, `button focused`).to.be.true;
         await closed;
 
@@ -257,13 +237,9 @@ describe('Overlay Trigger - Hover and Click', () => {
         expect(tooltip.open).to.be.false;
 
         closed = oneEvent(el, 'sp-closed');
-        sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [1, 1],
-                },
-            ],
+        await sendMouse({
+            type: 'click',
+            position: [1, 1],
         });
         await closed;
 

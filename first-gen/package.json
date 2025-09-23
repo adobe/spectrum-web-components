@@ -409,5 +409,8 @@
             ]
         }
     },
-    "packageManager": "yarn@4.9.1"
+    "packageManager": "yarn@4.9.1",
+    "dependencies": {
+        "@rollup/plugin-replace": "^6.0.2"
+    }
 }

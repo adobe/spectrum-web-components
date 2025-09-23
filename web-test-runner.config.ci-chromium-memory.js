@@ -10,11 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import standard from './web-test-runner.config.ci.js';
-import { webkit } from './web-test-runner.utils.js';
+import standard from './first-gen/web-test-runner.config.ci.js';
+import { chromiumWithMemoryTooling } from './first-gen/web-test-runner.utils.js';
 
 export default {
     ...standard,
-    browsers: [webkit],
+    browsers: [chromiumWithMemoryTooling],
     concurrency: 1,
 };

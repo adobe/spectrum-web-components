@@ -10,14 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from '@spectrum-web-components/base';
-import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
-import { getElFrom } from './helpers.js';
-import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
+import { elementUpdated, expect, nextFrame } from '@open-wc/testing';
+import { html } from '@spectrum-web-components/base';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
+import { getElFrom } from './helpers.js';
 
-import '@spectrum-web-components/number-field/sp-number-field.js';
 import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import { sendKeys } from '@web/test-runner-commands';
 import {
     currency,
     decimals,
@@ -25,7 +26,7 @@ import {
     minMax,
     percents,
 } from '../stories/number-field.stories.js';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendTabKey } from '../../../test/testing-helpers.js';
 
 describe('NumberField - inputs', () => {
     before(async () => {
@@ -53,9 +54,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '３、５６７、８９０。１',
-            });
+            await sendKeys({ type: '３、５６７、８９０。１' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('3,567,890.1');
         });
@@ -66,9 +65,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '２４％',
-            });
+            await sendKeys({ type: '２４％' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('24%');
         });
@@ -82,9 +79,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '1.1.1',
-            });
+            await sendKeys({ type: '1.1.1' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('1.11');
         });
@@ -98,17 +93,13 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: 'D2.2',
-            });
+            await sendKeys({ type: 'D2.2' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('2.2');
 
             el.value = NaN;
 
-            await sendKeys({
-                type: '8u23.s7',
-            });
+            await sendKeys({ type: '8u23.s7' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('823.7');
         });
@@ -119,9 +110,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '-54',
-            });
+            await sendKeys({ type: '-54' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('-54');
         });
@@ -132,17 +121,13 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '54-',
-            });
+            await sendKeys({ type: '54-' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('54');
 
             el.value = NaN;
 
-            await sendKeys({
-                type: '5-4',
-            });
+            await sendKeys({ type: '5-4' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('54');
         });
@@ -153,9 +138,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '+54',
-            });
+            await sendKeys({ type: '+54' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('54');
         });
@@ -168,9 +151,7 @@ describe('NumberField - inputs', () => {
                 signDisplay: 'always',
             };
             el.focus();
-            await sendKeys({
-                type: '+54',
-            });
+            await sendKeys({ type: '+54' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('+54');
         });
@@ -181,9 +162,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '63%',
-            });
+            await sendKeys({ type: '63%' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('63');
             el.blur();
@@ -197,9 +176,7 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '63%',
-            });
+            await sendKeys({ type: '63%' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('63%');
             el.blur();
@@ -219,9 +196,7 @@ describe('NumberField - inputs', () => {
                     inputElement: HTMLInputElement;
                 }
             ).inputElement.setSelectionRange(2, 2);
-            await sendKeys({
-                press: 'Backspace',
-            });
+            await sendKeys({ press: 'Backspace' });
             await elementUpdated(el);
             expect(
                 (el as unknown as { inputElement: HTMLInputElement })
@@ -244,14 +219,10 @@ describe('NumberField - inputs', () => {
             };
             el.focus();
             await elementUpdated(el);
-            await sendKeys({
-                type: '5.2',
-            });
+            await sendKeys({ type: '5.2' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('52');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(52);
         });
@@ -264,14 +235,10 @@ describe('NumberField - inputs', () => {
 
             el.focus();
             await elementUpdated(el);
-            await sendKeys({
-                type: '٢١',
-            });
+            await sendKeys({ type: '٢١' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('21');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(21);
         });
@@ -284,14 +251,10 @@ describe('NumberField - inputs', () => {
 
             el.focus();
             await elementUpdated(el);
-            await sendKeys({
-                type: '二一',
-            });
+            await sendKeys({ type: '二一' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('21');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(21);
         });
@@ -302,14 +265,10 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '12345678901234567890',
-            });
+            await sendKeys({ type: '12345678901234567890' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('255');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(255);
         });
@@ -323,14 +282,10 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '6',
-            });
+            await sendKeys({ type: '6' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('0.56');
-            await sendKeys({
-                press: 'Enter',
-            });
+            await sendKeys({ press: 'Enter' });
             await elementUpdated(el);
             expect(el.value).to.equal(0.56);
         });
@@ -344,14 +299,10 @@ describe('NumberField - inputs', () => {
             await elementUpdated(el);
 
             el.focus();
-            await sendKeys({
-                type: '123.456.789',
-            });
+            await sendKeys({ type: '123.456.789' });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('123.456.789');
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('123.456.789');
         });
@@ -414,9 +365,7 @@ describe('NumberField - inputs', () => {
             expect(el.formattedValue, 'tracked').to.equal('1,234,567.89');
             expect(el.value, 'value').to.equal(Number(1234567.89));
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
             await elementUpdated(el);
             expect(el.focusElement.value, 'visible').to.equal('1,234,567.89');
             expect(el.formattedValue, 'tracked').to.equal('1,234,567.89');

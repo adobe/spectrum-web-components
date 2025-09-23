@@ -19,7 +19,7 @@ import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
 
-import systemsIconMapping from './icons-mapping.json' assert { type: 'json' };
+import systemsIconMapping from './icons-mapping.json' with { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

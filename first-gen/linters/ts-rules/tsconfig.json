@@ -1,23 +1,23 @@
 {
     "compilerOptions": {
-        "outDir": ".",
-        "module": "commonjs",
-        "target": "es5",
-        "lib": ["es6", "dom"],
-        "skipLibCheck": false,
-        "sourceMap": false,
         "allowJs": true,
-        "jsx": "react",
-        "moduleResolution": "node",
-        "rootDir": ".",
         "forceConsistentCasingInFileNames": true,
+        "jsx": "react",
+        "lib": ["es6", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "outDir": ".",
+        "rootDir": ".",
+        "skipLibCheck": false,
+        "sourceMap": false,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
-        "noUnusedLocals": true
+        "target": "es5"
     },
-    "include": ["*.ts"],
-    "exclude": ["nothing"]
+    "exclude": ["nothing"],
+    "include": ["*.ts"]
 }

@@ -5,8 +5,17 @@
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
     "author": "Adobe",
-    "main": "index.js",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "first-gen/projects/documentation"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
     "type": "module",
+    "main": "index.js",
     "scripts": {
         "build": "wireit",
         "build:assets": "wireit",
@@ -21,6 +30,14 @@
         "serve": "wireit",
         "watch": "yarn serve --watch"
     },
+    "sideEffects": [
+        "_site/**/*.css",
+        "_site/**/*.js",
+        "_site/**/*.json",
+        "src/**/*.css",
+        "src/**/*.js",
+        "src/**/*.ts"
+    ],
     "dependencies": {
         "@spectrum-web-components/bundle": "1.7.0",
         "@spectrum-web-components/custom-vars-viewer": "1.7.0"
@@ -33,6 +50,7 @@
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^6.0.1",
         "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-replace": "^5.0.1",
         "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
@@ -56,16 +74,8 @@
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.12.0",
         "rollup-plugin-workbox": "^8.1.0",
-        "wireit": "^0.14.3"
+        "wireit": "^0.14.12"
     },
-    "sideEffects": [
-        "_site/**/*.css",
-        "_site/**/*.js",
-        "_site/**/*.json",
-        "src/**/*.css",
-        "src/**/*.js",
-        "src/**/*.ts"
-    ],
     "wireit": {
         "build": {
             "command": "rollup -c rollup.config.js",
@@ -94,43 +104,15 @@
                 }
             ]
         },
-        "build:eleventy": {
-            "command": "eleventy --config=.eleventy.js --incremental --quiet",
+        "build:css": {
+            "clean": "if-file-deleted",
+            "command": "node scripts/build-css.js --files=\"src/components/{styles,fonts,medium,large,light,dark}.css\"",
             "dependencies": [
                 {
-                    "script": "copy-docs"
+                    "cascade": false,
+                    "script": "build:eleventy"
                 }
             ],
-            "files": [
-                "./content/**/*",
-                "./.eleventy.js"
-            ],
-            "clean": "if-file-deleted",
-            "output": [
-                "_site/**/*.html",
-                "_site/favicon.ico",
-                "_site/favicon.svg",
-                "_site/serviceWorker.js",
-                "_site/images/**/*",
-                "_site/manifest.webmanifest"
-            ]
-        },
-        "build:move-css": {
-            "command": "mkdir -p _site/src/components/ && cp src/components/*.css _site/src/components/",
-            "files": [
-                "./src/components/*.css",
-                "!./src/components/style.css",
-                "!./src/components/fonts.css"
-            ],
-            "output": [
-                "./_site/src/components/*.css",
-                "!./_site/src/components/style.css",
-                "!./_site/src/components/fonts.css"
-            ],
-            "clean": "if-file-deleted"
-        },
-        "build:css": {
-            "command": "node scripts/build-css.js --files=\"src/components/{styles,fonts,medium,large,light,dark}.css\"",
             "files": [
                 "./src/components/styles.css",
                 "./src/components/medium.css",
@@ -148,13 +130,41 @@
                 "./_site/src/components/light.css",
                 "./_site/src/components/dark.css",
                 "./_site/src/components/fonts.css"
-            ],
+            ]
+        },
+        "build:eleventy": {
             "clean": "if-file-deleted",
+            "command": "eleventy --config=.eleventy.js --incremental --quiet",
             "dependencies": [
                 {
-                    "script": "build:eleventy",
-                    "cascade": false
+                    "script": "copy-docs"
                 }
+            ],
+            "files": [
+                "./content/**/*",
+                "./.eleventy.js"
+            ],
+            "output": [
+                "_site/**/*.html",
+                "_site/favicon.ico",
+                "_site/favicon.svg",
+                "_site/serviceWorker.js",
+                "_site/images/**/*",
+                "_site/manifest.webmanifest"
+            ]
+        },
+        "build:move-css": {
+            "clean": "if-file-deleted",
+            "command": "mkdir -p _site/src/components/ && cp src/components/*.css _site/src/components/",
+            "files": [
+                "./src/components/*.css",
+                "!./src/components/style.css",
+                "!./src/components/fonts.css"
+            ],
+            "output": [
+                "./_site/src/components/*.css",
+                "!./_site/src/components/style.css",
+                "!./_site/src/components/fonts.css"
             ]
         },
         "build:production": {
@@ -194,16 +204,8 @@
             ]
         },
         "build:ts": {
-            "command": "node scripts/build-ts.js",
-            "files": [
-                "./src/**/*.ts",
-                "scripts/build-ts.js"
-            ],
-            "output": [
-                "./src/**/*.js",
-                "!src/utils/**/*.js"
-            ],
             "clean": "if-file-deleted",
+            "command": "node scripts/build-ts.js",
             "dependencies": [
                 {
                     "script": "../css-custom-vars-viewer/:build"
@@ -211,10 +213,25 @@
                 {
                     "script": "../../:build"
                 }
+            ],
+            "files": [
+                "./src/**/*.ts",
+                "scripts/build-ts.js"
+            ],
+            "output": [
+                "./src/**/*.js",
+                "!src/utils/**/*.js"
             ]
         },
         "copy-docs": {
+            "clean": "if-file-deleted",
             "command": "node scripts/copy-component-docs.js",
+            "dependencies": [
+                {
+                    "cascade": false,
+                    "script": "../../:docs:analyze"
+                }
+            ],
             "files": [
                 "../../packages/**/*.md",
                 "../../packages/**/*.ts",
@@ -230,7 +247,6 @@
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],
-            "clean": "if-file-deleted",
             "output": [
                 "content/components/*.md",
                 "content/components/*.11tydata.js",
@@ -239,18 +255,10 @@
                 "content/_data/demoURLs.js",
                 "content/_data/spectrumURLs.js",
                 "content/_data/storybookURLs.js"
-            ],
-            "dependencies": [
-                {
-                    "script": "../../:docs:analyze",
-                    "cascade": false
-                }
             ]
         },
         "serve": {
             "command": "wds --config web-dev-server.config.js",
-            "service": true,
-            "files": [],
             "dependencies": [
                 {
                     "script": "build:assets"
@@ -258,16 +266,10 @@
                 {
                     "script": "build:search-index"
                 }
-            ]
+            ],
+            "files": [],
+            "service": true
         }
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "first-gen/projects/documentation"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "keywords": [
         "design-system",
@@ -278,6 +280,5 @@
         "web-components",
         "lit-element",
         "lit-html"
-    ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    ]
 }
