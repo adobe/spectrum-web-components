@@ -9,3 +9,23 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+:host {
+    --spectrum-helptext-top-to-text: var(--system-helptext-top-to-text);
+    --spectrum-helptext-bottom-to-text: var(--system-helptext-bottom-to-text);
+}
+
+:host([size="s"]) {
+    --spectrum-helptext-top-to-text: var(--system-helptext-top-to-text-small);
+    --spectrum-helptext-bottom-to-text: var(--system-helptext-bottom-to-text-small);
+}
+
+:host([size="l"]) {
+    --spectrum-helptext-top-to-text: var(--system-helptext-top-to-text-large);
+    --spectrum-helptext-bottom-to-text: var(--system-helptext-bottom-to-text-large);
+}
+
+:host([size="xl"]) {
+    --spectrum-helptext-top-to-text: var(--system-helptext-top-to-text-extra-large);
+    --spectrum-helptext-bottom-to-text: var(--system-helptext-bottom-to-text-extra-large);
+}
