@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "description": "",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -22,6 +22,9 @@
     },
     "main": "./src/index.js",
     "module": "./src/index.js",
+    "publishConfig": {
+        "access": "public"
+    },
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -41,13 +44,13 @@
     ],
     "types": "./src/index.d.ts",
     "dependencies": {
-        "@spectrum-web-components/base": "1.7.0",
-        "@spectrum-web-components/icon": "1.7.0",
-        "case": "^1.6.1"
+        "@spectrum-web-components/base": "1.8.0",
+        "@spectrum-web-components/icon": "1.8.0"
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "1.7.0",
         "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0",
+        "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fast-glob": "^3.3.3",
         "fs": "^0.0.1-security",
@@ -66,8 +69,5 @@
         "component",
         "css"
     ],
-    "publishConfig": {
-        "access": "public"
-    },
     "customElements": "custom-elements.json"
 }

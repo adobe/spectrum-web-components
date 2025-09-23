@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/adobe/spectrum-web-components/compare/v1.7.0...v1.8.0) (2025-09-23)
+
+## Minor Changes
+
+**sp-picker**: **Fixed** escape key behavior in modal overlays containing picker components. Previously, pressing the Escape key when a picker was open inside a modal overlay would not properly close the modal, instead moving focus to the picker. Now, the escape key correctly closes the picker first (if open), then closes the modal overlay on subsequent escape key presses.
+
+This fix adds a check for `this.open` in the picker's `handleEscape` method to ensure proper modal overlay closure behavior.
+
+**sp-overlay**: Added `allow-outside-click` property to `<sp-overlay>` with deprecation notice. This property allows clicks outside the overlay to close it, but is not recommended for accessibility reasons and will be removed in a future version.
+
+This property is being added as deprecated to support the fallback for `showModal()` which was removed as part of performance optimization. We will no longer support outside clicks for modal overlays as they violate accessibility guidelines.
+
+The property defaults to `false` and shows deprecation warnings when used. Consider using explicit close buttons or modal/page overlay types instead for better accessibility.
+
+**sp-menu**: **Fixed** : Fix iPad scrolling issue in picker dropdown where scrolling through menu items would accidentally select the first touched item and close the picker.
+
+The fix implements touch gesture detection to distinguish between scrolling and selection. Added `isScrolling` getter for public API access. Test on iPad devices with long menus to validate scrolling behavior and selection accuracy.
+
+**sp-overlay**: **Fixed** : Added body scroll prevention for modal and page overlays. Overlay automatically blocks body scroll when modal or page overlays are open and restores the original scroll state when they are closed, improving user experience and accessibility for modal dialogs.
+
+**sp-clear-button**: Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
+
+This update spans the following additional packages:
+
+- @spectrum-web-components/button
+- @spectrum-web-components/styles
+
+As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
+
+- `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
+- `disabled` - when set to true, the button will be rendered as a disabled button.
+- `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
+
+### Deprecation
+
+The `variant="overBackground"` attribute is deprecated; please use the new `static-color="white"` attribute instead. When this property is used in the component, a deprecation warning will be shown in the console when in debug mode. The `variant` attribute will be removed in a future release.
+
+**sp-card**: **Fixed** the card component's CSS by moving `block-size: 100%` from the base `:host` selector to only apply to `gallery` and `quiet` variants
+
+**sp-overlay**: **Fixed** : external click registration behavior in the `sp-overlay` component. Programmatic clicks on elements outside of modal overlays now properly register and close the overlay, while user-initiated clicks are prevented from doing so.
+
+**sp-card**: Enhanced the Card component's checkbox functionality with improved screen reader support and keyboard navigation.
+
+## Patch Changes
+
+**sp-progress-bar**: **Added**: Deprecation warning for the over-background attribute.
+
+**sp-combobox**: Replace the use of offsetWidth with a resizeObserver to avoid unecessary, performance-impacting layout reflows.
+
+**sp-styles**: Bring the CJK font alias token fix from CSS [#3883](https://github.com/adobe/spectrum-css/pull/3883) [`4e3a120`](https://github.com/adobe/spectrum-css/commit/4e3a120339a6e7e6d0d19e3f2f7f608ab96621ed).
+
+The `--spectrum-cjk-font` token was incorrectly mapped to the code font-family stack instead of `--spectrum-cjk-font-family-stack`. Thanks [@byteakp](https://github.com/byteakp)!
+
+**sp-color-wheel**: Fixed `<sp-color-wheel>` step attribute functionality for keyboard navigation. The step attribute now properly controls the increment size when using arrow keys to navigate the color wheel.
+
+**sp-switch**: ### Fix down state colors for switch
+
+Because the `postcss-hover-media-feature` plugin converts hover styles into a media query for devices that support hover, the hover styles were overriding any active/down state styles. We needed to target the active/down states of the switch with additional active state selectors, in order to ensure that the active state takes precedence over the hover state, maintaining the correct visual behavior of the switch component across different interaction states.
+
+This fix should address hover + active state discrepancies in S1 and S2 foundations.
+
+**sp-contextual-help**: Fixed a typo in the default `info` variant label from "Informations" to "Information".
+
+Additionally, added package dependency for `@spectrum-web-components/reactive-controllers@1.7.0`.
+
+**sp-slider**: Editable sliders will now reliably emit `input` events when interaction starts with the track.
+
+**sp-link**: **Fixed** quiet variant links not showing keyboard focus state in Safari. Links with the `quiet` attribute now properly display focus indicators when navigating with keyboard, improving accessibility for keyboard users.
+
+**sp-progress-bar**: Smooths the transition animation of indeterminate progress bar by overriding the incoming CSS, and positioning the animating fill element completely off of the progress bar track in both LTR and RTL languages. Before, the fill element was automatically starting on the track which led to a jarring animation loop.
+
+**sp-divider**: **Added**: `staticColor` property to the Divider component, enabling programmatic control of the existing static color functionality.
+
 # [1.7.0](https://github.com/adobe/spectrum-web-components/compare/v1.6.0...v1.7.0) (2025-06-11)
 
 ## Minor Changes
