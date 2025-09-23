@@ -10,13 +10,12 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
-
 import { html } from '@spectrum-web-components/base';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import { spy, stub } from 'sinon';
 import { Swatch, SwatchGroup } from '../';
 import {
+    sendShiftTabKey,
     sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
@@ -237,7 +236,7 @@ describe('Swatch Group', () => {
         expect(document.activeElement === el.children[0]).to.be.true;
         await sendTabKey();
         expect(document.activeElement === el.children[0]).to.be.false;
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         expect(document.activeElement === el.children[0]).to.be.true;
     });
     it('makes the first selected child the single tab stop', async () => {
@@ -264,7 +263,7 @@ describe('Swatch Group', () => {
         expect(document.activeElement === selectedChild).to.be.true;
         await sendTabKey();
         expect(document.activeElement === selectedChild).to.be.false;
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         expect(document.activeElement === selectedChild).to.be.true;
     });
     it('focus()es to the first Swatch', async () => {

@@ -37,6 +37,7 @@ import {
     mouseClickOn,
     mouseMoveAway,
     mouseMoveOver,
+    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 
@@ -143,10 +144,9 @@ describe('Submenu', () => {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
             this.el.focus();
-
             // by default, Safari doesn't tab to some elements
-            if (!isWebKit) {
-                await sendKeys({ press: 'Shift+Tab' });
+            if (!isWebKit()) {
+                await sendShiftTabKey();
 
                 expect(document.activeElement).to.equal(input);
                 await sendTabKey();
@@ -229,8 +229,8 @@ describe('Submenu', () => {
             const input = document.createElement('input');
             this.el.insertAdjacentElement('beforebegin', input);
             // by default, Safari doesn't tab to some elements
-            if (!isWebKit) {
-                await sendKeys({ press: 'Shift+Tab' });
+            if (!isWebKit()) {
+                await sendShiftTabKey();
 
                 expect(document.activeElement).to.equal(input);
                 await sendTabKey();

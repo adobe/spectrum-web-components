@@ -76,8 +76,7 @@ describe('ProgressBar', () => {
         const el = await fixture<ProgressBar>(html`
             <sp-progress-bar></sp-progress-bar>
         `);
-        // el.removeAttribute('label');
-        // el.shadowRoot.textContent = '';
+
         expect(el.getAttribute('label')).to.equal('');
         expect(el.shadowRoot.textContent?.trim()).to.equal('');
     });

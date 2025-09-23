@@ -22,7 +22,11 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { fixture, mouseClickOn } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    mouseClickOn,
+    sendShiftTabKey,
+} from '../../../test/testing-helpers.js';
 
 describe('Menu [selects]', () => {
     let el!: Menu;
@@ -575,7 +579,7 @@ describe('Menu w/ groups [selects]', () => {
         el.insertAdjacentElement('afterend', input);
         input.focus();
         expect(document.activeElement === input).to.be.true;
-        await sendKeys({ press: 'Shift+Tab' });
+        await sendShiftTabKey();
         expect(document.activeElement === options[0]).to.be.true;
         await sendKeys({ press: 'ArrowDown' });
         expect(document.activeElement === options[1]).to.be.true;
