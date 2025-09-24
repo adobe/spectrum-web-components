@@ -692,6 +692,8 @@ describe('Overlay - type="modal"', () => {
                 position: [width - width / 8, height - height / 8],
             });
             await closed;
+            await elementUpdated(firstMenu);
+            await elementUpdated(secondMenu);
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
         });

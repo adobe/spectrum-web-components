@@ -92,6 +92,9 @@
         "tools/*",
         "react/*"
     ],
+    "resolutions": {
+        "playwright": "1.55.1"
+    },
     "devDependencies": {
         "@changesets/changelog-github": "0.5.1",
         "@changesets/cli": "2.29.7",
@@ -102,7 +105,7 @@
         "@lit/react": "1.0.8",
         "@open-wc/dev-server-hmr": "0.2.0",
         "@open-wc/testing": "4.0.0",
-        "@playwright/test": "1.53.1",
+        "@playwright/test": "1.55.1",
         "@rollup/plugin-commonjs": "25.0.8",
         "@rollup/plugin-json": "6.1.0",
         "@rollup/plugin-node-resolve": "15.3.1",
@@ -134,7 +137,7 @@
         "@web/dev-server-rollup": "0.6.4",
         "@web/rollup-plugin-copy": "0.5.1",
         "@web/rollup-plugin-html": "2.3.0",
-        "@web/test-runner": "0.18.3",
+        "@web/test-runner": "0.20.2",
         "@web/test-runner-commands": "0.9.0",
         "@web/test-runner-junit-reporter": "0.8.0",
         "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch",
