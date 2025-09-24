@@ -7,7 +7,10 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-OpacityCheckerboard`
+**Root class**: `.spectrum-OpacityCheckerboard`
+
+**Variants**:
+
 - `.spectrum-OpacityCheckerboard--sizeS`
 
 </details>
@@ -20,7 +23,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-opacity-checkerboard-dark`
 - `--mod-opacity-checkerboard-light`

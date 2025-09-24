@@ -7,32 +7,43 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-Thumbnail`
-- `.spectrum-Thumbnail--cover .spectrum-Thumbnail-image`
-- `.spectrum-Thumbnail--size50`
-- `.spectrum-Thumbnail--size75`
-- `.spectrum-Thumbnail--size100`
-- `.spectrum-Thumbnail--size200`
-- `.spectrum-Thumbnail--size300`
-- `.spectrum-Thumbnail--size400`
-- `.spectrum-Thumbnail--size500`
-- `.spectrum-Thumbnail--size600`
-- `.spectrum-Thumbnail--size700`
-- `.spectrum-Thumbnail--size800`
-- `.spectrum-Thumbnail--size900`
-- `.spectrum-Thumbnail--size1000`
-- `.spectrum-Thumbnail-background`
+**Root class**: `.spectrum-Thumbnail`
+
+**Elements**:
+
+- `.spectrum-Thumbnail:before`
 - `.spectrum-Thumbnail-image`
 - `.spectrum-Thumbnail-image-wrapper`
 - `.spectrum-Thumbnail-layer`
-- `.spectrum-Thumbnail-layer-inner`
-- `.spectrum-Thumbnail-layer.is-selected`
 - `.spectrum-Thumbnail-layer:before`
-- `.spectrum-Thumbnail.is-disabled`
-- `.spectrum-Thumbnail.is-focused`
-- `.spectrum-Thumbnail.is-focused .spectrum-Thumbnail-image-wrapper`
-- `.spectrum-Thumbnail.is-focused:after`
-- `.spectrum-Thumbnail:before`
+- `.spectrum-Thumbnail-layer-inner`
+- `.spectrum-Thumbnail-background`
+
+**States**:
+
+- `.is-disabled`, `:disabled`
+- `.is-focused`, `:focus-visible`
+- `.is-selected` (attached to `.spectrum-Thumbnail-layer`, not to the root element)
+
+**Variants**:
+
+- **Size**:
+
+    - `.spectrum-Thumbnail--size50`
+    - `.spectrum-Thumbnail--size75`
+    - `.spectrum-Thumbnail--size100`
+    - `.spectrum-Thumbnail--size200`
+    - `.spectrum-Thumbnail--size300`
+    - `.spectrum-Thumbnail--size400`
+    - `.spectrum-Thumbnail--size500`
+    - `.spectrum-Thumbnail--size600`
+    - `.spectrum-Thumbnail--size700`
+    - `.spectrum-Thumbnail--size800`
+    - `.spectrum-Thumbnail--size900`
+    - `.spectrum-Thumbnail--size1000`
+
+- **Image cover**:
+    - `.spectrum-Thumbnail--cover`
 
 </details>
 
@@ -44,7 +55,7 @@
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-thumbnail-border-color`
 - `--mod-thumbnail-border-color-selected`
@@ -68,7 +79,7 @@
 <details>
 <summary>Attributes</summary>
 
-- `background` (string) - Background color for the thumbnail
+- `background` (string) - Background color or gradient for the thumbnail
 - `cover` (boolean) - Whether the image should cover the entire thumbnail
 - `layer` (boolean) - Whether the thumbnail is in layer mode
 - `size` (string) - Size of the thumbnail (50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
@@ -251,12 +262,9 @@ No significant structural changes.
 | `.spectrum-Thumbnail-image`         | Default slot           | Implemented     |
 | `.spectrum-Thumbnail-image-wrapper` | Internal wrapper       | Implemented     |
 | `.spectrum-Thumbnail-layer-inner`   | Internal wrapper       | Implemented     |
-| `.spectrum-Thumbnail.is-disabled`   | `disabled` attribute   | Missing from WC |
-| `.spectrum-Thumbnail.is-focused`    | Focus state            | Missing from WC |
-| `.spectrum-Thumbnail.is-selected`   | `selected` attribute   | Missing from WC |
-| `.spectrum-Thumbnail:before`        | Pseudo-element styling | Missing from WC |
-| `.spectrum-Thumbnail:after`         | Pseudo-element styling | Missing from WC |
-| `.spectrum-Thumbnail-layer:before`  | Pseudo-element styling | Missing from WC |
+| `.is-disabled`                      | `disabled` attribute   | Missing from WC |
+| `.is-focused`                       | Focus state            | Missing from WC |
+| `.is-selected`                      | `selected` attribute   | Missing from WC |
 
 ## Summary of changes
 
@@ -264,10 +272,9 @@ No significant structural changes.
 
 **CSS features missing from Web Component:**
 
-- Disabled state support (`.spectrum-Thumbnail.is-disabled`)
-- Focus state support (`.spectrum-Thumbnail.is-focused`)
-- Selected state support (`.spectrum-Thumbnail.is-selected`)
-- Pseudo-element styling (`:before`, `:after` selectors)
+- Disabled state support (`.is-disabled`)
+- Focus state support (`.is-focused`)
+- Selected state support (`.is-selected`)
 
 **Web Component features missing from CSS:**
 None found for this component.
