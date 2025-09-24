@@ -13,8 +13,9 @@
 import {
     CSSResultArray,
     html,
+    LitElement,
     nothing,
-    SpectrumElement,
+    SpectrumMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -29,7 +30,7 @@ import popoverStyles from './popover.css.js';
  *
  * @slot - content to display within the Popover
  */
-export class Popover extends SpectrumElement {
+export class Popover extends SpectrumMixin(LitElement, 'popover') {
     public static override get styles(): CSSResultArray {
         return [popoverStyles];
     }

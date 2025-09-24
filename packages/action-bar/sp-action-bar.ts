@@ -10,8 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
+import { Popover } from '@spectrum-web-components/popover/src/Popover.js';
 import { ActionBar } from './src/ActionBar.js';
 import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
+
+// register our dependency elements too
+defineElement(Popover.tag, Popover);
 
 defineElement('sp-action-bar', ActionBar);
 

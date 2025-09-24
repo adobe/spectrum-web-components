@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './Base.js';
-export * from './sizedMixin.js';
-export * from 'lit';
-export { html as staticHtml, literal } from 'lit/static-html.js';
+import { definePopover } from '@spectrum-web-components/popover/prefix-popover.js';
+import { ActionBar } from './src/ActionBar.js';
+import { definePrefixedElement } from '@spectrum-web-components/base/src/Base.js';
+
+export function defineActionBar(prefix: string): void {
+    definePopover(prefix);
+    definePrefixedElement(ActionBar.tagName, prefix, ActionBar);
+}
