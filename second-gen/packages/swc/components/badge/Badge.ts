@@ -32,13 +32,8 @@ import styles from './badge.css';
  * @github https://github.com/adobe/spectrum-web-components/tree/main/...
  * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=36806-6551
  *
- * @attribute {BadgeVariant} variant - The variant of the badge.
  * @attribute {boolean} subtle - Whether the badge is subtle.
  * @attribute {boolean} outline - Whether the badge is outlined.
- * @attribute {FixedValues} fixed - The fixed position of the badge.
- *
- * @slot - Text label of the badge
- * @slot icon - Optional icon that appears to the left of the label
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>

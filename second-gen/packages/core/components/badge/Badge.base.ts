@@ -26,10 +26,15 @@ import {
 } from './Badge.types';
 
 /**
- * @element sp-badge-base
+ * A badge component that displays short, descriptive information about an element.
+ * Badges are typically used to indicate status, categories, or provide supplementary information.
+ *
  * @attribute {ElementSize} size - The size of the badge.
  * @attribute {BadgeVariant} variant - The variant of the badge.
  * @attribute {FixedValues} fixed - The fixed position of the badge.
+ *
+ * @slot - Text label of the badge
+ * @slot icon - Optional icon that appears to the left of the label
  */
 export abstract class BadgeBase extends SizedMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), ''),
