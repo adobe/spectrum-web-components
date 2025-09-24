@@ -20,10 +20,8 @@
         "./package.json": "./package.json",
         "./src/*": "./src/*"
     },
-    "scripts": {
-        "build": "node ./bin/build.js",
-        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -33,18 +31,15 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
+    "scripts": {
+        "build": "node ./bin/build.js",
+        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
+    },
+    "sideEffects": [
+        "./src/index.js",
+        "./icons/*"
     ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/base": "1.8.0",
         "@spectrum-web-components/icon": "1.8.0"
@@ -57,15 +52,20 @@
         "fast-glob": "3.3.3",
         "prettier": "3.6.2"
     },
-    "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./src/index.js",
-        "./icons/*"
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
     ],
+    "customElements": "custom-elements.json",
     "publishConfig": {
         "access": "public"
-    },
-    "main": "./src/index.js",
-    "module": "./src/index.js"
+    }
 }
