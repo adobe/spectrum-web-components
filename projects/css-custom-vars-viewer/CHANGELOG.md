@@ -1,5 +1,22 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [[`77bdef6`](https://github.com/adobe/spectrum-web-components/commit/77bdef68a40e0f6cd5476271b01b4c0f00531f4f), [`6c2acaf`](https://github.com/adobe/spectrum-web-components/commit/6c2acaf14ca1c210a876bdbd65a273d6a5fc22d0), [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba), [`aa411d0`](https://github.com/adobe/spectrum-web-components/commit/aa411d0db3586e2ace255c701c15a1a21e8425c4)]:
+    - @spectrum-web-components/styles@1.8.0
+    - @spectrum-web-components/picker@1.8.0
+    - @spectrum-web-components/menu@1.8.0
+    - @spectrum-web-components/link@1.8.0
+    - @spectrum-web-components/theme@1.8.0
+    - @spectrum-web-components/story-decorator@1.8.0
+    - @spectrum-web-components/toast@1.8.0
+    - @spectrum-web-components/field-label@1.8.0
+    - @spectrum-web-components/swatch@1.8.0
+    - @spectrum-web-components/table@1.8.0
+    - @spectrum-web-components/base@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5171](https://github.com/adobe/spectrum-web-components/pull/5171) [`eae4332`](https://github.com/adobe/spectrum-web-components/commit/eae433283d09e4b0d72cd5fd21c17c3e6c22543b) Thanks [@majornista](https://github.com/majornista)! - Enhanced the Card component's checkbox functionality with improved screen reader support and keyboard navigation.
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

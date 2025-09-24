@@ -14,7 +14,7 @@ import {
     ReactiveController,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay';
+import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import { PickerBase } from './Picker.js';
 

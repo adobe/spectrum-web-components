@@ -22,6 +22,7 @@
     --spectrum-textfield-border-width: var(--system-textfield-border-width);
     --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start);
     --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-icon-spacing-block-invalid);
 }
 
@@ -29,18 +30,21 @@
     --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-small);
     --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-small);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-s-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-small);
 }
 
 :host([size="l"]) #textfield#textfield {
     --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-large);
     --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-large);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-l-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-large);
 }
 
 :host([size="xl"]) #textfield#textfield {
     --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-extra-large);
     --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-extra-large);
     --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-xl-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-extra-large);
 }
 
 :host([quiet]) #textfield {

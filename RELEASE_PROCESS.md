@@ -94,7 +94,7 @@ If not logged in, run `npm login` to sign in to your account.
     1. In your IDE search `': major` , `': minor`, `': patch` , based on the results in the order of this search list, the highest level takes precedence
         1. exclude files: `.changeset/README.md`
 4. Open your authenticator app to have it ready
-5. Run`yarn publish:changeset`
+5. Run`yarn changeset-publish`
 6. Enter the one-time password from your authenticator for NPM.
     1. Wait for a fresh password; a stale timer might cause issues.
 7. After the SWC packages are released, the React Wrapper packages will be generated.
