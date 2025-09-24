@@ -15,11 +15,12 @@ import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
-import { BadgeBase } from '@swc/core/components/badge';
+import {
+    BadgeBase,
+    type BadgeVariantS2 as BadgeVariant,
+} from '@swc/core/components/badge';
 
 import styles from './badge.css';
-
-// Export types and values to avoid breaking changes
 
 /**
  * A badge component that displays short, descriptive information about an element.
@@ -49,29 +50,18 @@ import styles from './badge.css';
  * </swc-badge>
  */
 export class Badge extends BadgeBase {
-    /**
-     * @internal
-     */
-    static override readonly BADGE_VARIANTS_COLOR = [
-        ...BadgeBase.BADGE_VARIANTS_COLOR,
-        'pink',
-        'turquoise',
-        'brown',
-        'cinnamon',
-        'silver',
-    ] as const;
+    @property({ type: String, reflect: true })
+    public override variant: BadgeVariant = 'informative';
 
     /**
-     * @internal
+     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
      */
-    static override readonly BADGE_VARIANTS = [
-        ...Badge.BADGE_VARIANTS_SEMANTIC,
-        ...Badge.BADGE_VARIANTS_COLOR,
-    ] as const;
-
     @property({ type: Boolean, reflect: true })
     public subtle: boolean = false;
 
+    /**
+     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+     */
     @property({ type: Boolean, reflect: true })
     public outline: boolean = false;
 
@@ -115,33 +105,26 @@ export class Badge extends BadgeBase {
         `;
     }
 
+    /**
+     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+     */
     protected override update(changedProperties: PropertyValues): void {
         super.update(changedProperties);
         if (window.__swc?.DEBUG) {
             const constructor = this.constructor as typeof Badge;
             if (
                 this.outline &&
-                !constructor.BADGE_VARIANTS_SEMANTIC.includes(this.variant)
+                !constructor.VARIANTS_SEMANTIC.includes(this.variant)
             ) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
                     {
-                        issues: [...constructor.BADGE_VARIANTS_SEMANTIC],
+                        issues: [...constructor.VARIANTS_SEMANTIC],
                     }
                 );
             }
         }
     }
 }
-
-// Export types and constants for backward compatibility
-export type BadgeVariant = (typeof Badge.BADGE_VARIANTS)[number];
-export type { FixedValues } from '@swc/core/components/badge';
-
-// Re-export constants as module-level exports for backward compatibility
-export const FIXED_VALUES = BadgeBase.FIXED_VALUES;
-export const BADGE_VARIANTS_SEMANTIC = Badge.BADGE_VARIANTS_SEMANTIC;
-export const BADGE_VARIANTS_COLOR = Badge.BADGE_VARIANTS_COLOR;
-export const BADGE_VARIANTS = Badge.BADGE_VARIANTS;

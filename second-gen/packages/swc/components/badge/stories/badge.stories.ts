@@ -58,7 +58,7 @@ const meta: Meta = {
         variant: {
             name: 'Variant',
             control: { type: 'select' },
-            options: Badge.BADGE_VARIANTS,
+            options: Badge.VARIANTS,
         },
         subtle: {
             name: 'Subtle',
@@ -71,7 +71,7 @@ const meta: Meta = {
         fixed: {
             name: 'Fixed',
             control: { type: 'select' },
-            options: [...Badge.FIXED_VALUES],
+            options: Badge.FIXED_VALUES,
         },
         label: {
             name: 'Label',
@@ -152,7 +152,7 @@ export const WithIcon: Story = {
 export const SemanticVariants: Story = {
     render: (args) =>
         CONTAINER(
-            Badge.BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            Badge.VARIANTS_SEMANTIC.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -170,12 +170,12 @@ export const Outline: Story = {
     argTypes: {
         variant: {
             control: { type: 'select' },
-            options: Badge.BADGE_VARIANTS_SEMANTIC,
+            options: Badge.VARIANTS_SEMANTIC,
         },
     },
     render: (args) =>
         CONTAINER(
-            Badge.BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            Badge.VARIANTS_SEMANTIC.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -193,7 +193,7 @@ export const Outline: Story = {
 export const ColorVariants: Story = {
     render: (args) =>
         CONTAINER(
-            Badge.BADGE_VARIANTS_COLOR.map((variant) =>
+            Badge.VARIANTS_COLOR.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
@@ -224,7 +224,7 @@ export const Sizes: Story = {
 export const Subtle: Story = {
     render: (args) =>
         CONTAINER(
-            Badge.BADGE_VARIANTS.map((variant) =>
+            Badge.VARIANTS.map((variant) =>
                 BASE_TEMPLATE({
                     ...args,
                     variant,
