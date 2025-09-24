@@ -188,10 +188,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@4.1.0":
-  version: 4.1.0
-  resolution: "@adobe/spectrum-css-workflow-icons@npm:4.1.0"
-  checksum: 10c0/0547f86ce4a0ca2f477a72b80d70c071c79ddd10fb6f0fc6ad7f144e4928c29dfc8af44327f67b54d61d18fd88523701aa5d02bf1b52792ed2e17fceff7f08f0
+"@adobe/spectrum-css-workflow-icons-s2@npm:@adobe/spectrum-css-workflow-icons@5.0.0":
+  version: 5.0.0
+  resolution: "@adobe/spectrum-css-workflow-icons@npm:5.0.0"
+  checksum: 10c0/286c5c3bbf52ab1c787c1ad29699567f07f9b2ce77c49e8624f567ebb72e169c5fedf2a8a26e708166dfe5cb876ad48941a56267b63b05f1ccb6c746a424ae1b
   languageName: node
   linkType: hard
 
@@ -257,7 +257,7 @@ __metadata:
     alex: "npm:^11.0.1"
     cem-plugin-module-file-extensions: "npm:^0.0.5"
     chromatic: "npm:^11.20.0"
-    chromedriver: "npm:^138.0.0"
+    chromedriver: "npm:140.0.3"
     colors: "npm:^1.4.0"
     common-tags: "npm:^1.8.2"
     crypto: "npm:^1.0.1"
@@ -308,7 +308,7 @@ __metadata:
     stylelint: "npm:^16.19.1"
     stylelint-config-standard: "npm:^38.0.0"
     stylelint-header: "npm:^3.0.0"
-    tachometer: "npm:^0.7.2"
+    tachometer: "npm:0.7.2"
     tar-stream: "npm:^3.0.0"
     terser: "npm:^4.8.1"
     typescript: "npm:^5.3.3"
@@ -5219,7 +5219,7 @@ __metadata:
   resolution: "@spectrum-web-components/icons-workflow@workspace:packages/icons-workflow"
   dependencies:
     "@adobe/spectrum-css-workflow-icons": "npm:1.7.0"
-    "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@4.1.0"
+    "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@5.0.0"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/icon": "npm:1.8.0"
     case: "npm:^1.6.1"
@@ -9404,14 +9404,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.4":
-  version: 1.7.7
-  resolution: "axios@npm:1.7.7"
+"axios@npm:^1.12.0":
+  version: 1.12.2
+  resolution: "axios@npm:1.12.2"
   dependencies:
     follow-redirects: "npm:^1.15.6"
-    form-data: "npm:^4.0.0"
+    form-data: "npm:^4.0.4"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/4499efc89e86b0b49ffddc018798de05fab26e3bf57913818266be73279a6418c3ce8f9e934c7d2d707ab8c095e837fc6c90608fb7715b94d357720b5f568af7
+  checksum: 10c0/80b063e318cf05cd33a4d991cea0162f3573481946f9129efb7766f38fde4c061c34f41a93a9f9521f02b7c9565ccbc197c099b0186543ac84a24580017adfed
   languageName: node
   linkType: hard
 
@@ -10472,12 +10472,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:^138.0.0":
-  version: 138.0.5
-  resolution: "chromedriver@npm:138.0.5"
+"chromedriver@npm:140.0.3":
+  version: 140.0.3
+  resolution: "chromedriver@npm:140.0.3"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
-    axios: "npm:^1.7.4"
+    axios: "npm:^1.12.0"
     compare-versions: "npm:^6.1.0"
     extract-zip: "npm:^2.0.1"
     proxy-agent: "npm:^6.4.0"
@@ -10485,7 +10485,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/b814df6ce699c37fa3d9b5c7be099c6f82923db5e5a56d7a979b09c320e51b345fb623ef264b82b2ef39e959163f892e19480eb96270b571ce89d16b439ab212
+  checksum: 10c0/828614a9f87eb0dde3462d570ff2a09815f791f2ecbcab6ce3a84baae4f9b4bb74c671a8496b5135eaa692342782546e74cb6e7826be2b1fea6cc3f610729a1c
   languageName: node
   linkType: hard
 
@@ -12977,6 +12977,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-set-tostringtag@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "es-set-tostringtag@npm:2.1.0"
+  dependencies:
+    es-errors: "npm:^1.3.0"
+    get-intrinsic: "npm:^1.2.6"
+    has-tostringtag: "npm:^1.0.2"
+    hasown: "npm:^2.0.2"
+  checksum: 10c0/ef2ca9ce49afe3931cb32e35da4dcb6d86ab02592cfc2ce3e49ced199d9d0bb5085fc7e73e06312213765f5efa47cc1df553a6a5154584b21448e9fb8355b1af
+  languageName: node
+  linkType: hard
+
 "es-shim-unscopables@npm:^1.0.0, es-shim-unscopables@npm:^1.0.2":
   version: 1.0.2
   resolution: "es-shim-unscopables@npm:1.0.2"
@@ -14890,6 +14902,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"form-data@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "form-data@npm:4.0.4"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    es-set-tostringtag: "npm:^2.1.0"
+    hasown: "npm:^2.0.2"
+    mime-types: "npm:^2.1.12"
+  checksum: 10c0/373525a9a034b9d57073e55eab79e501a714ffac02e7a9b01be1c820780652b16e4101819785e1e18f8d98f0aee866cc654d660a435c378e16a72f2e7cac9695
+  languageName: node
+  linkType: hard
+
 "format@npm:^0.2.0":
   version: 0.2.2
   resolution: "format@npm:0.2.2"
@@ -15176,7 +15201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.3.0":
+"get-intrinsic@npm:^1.2.5, get-intrinsic@npm:^1.2.6, get-intrinsic@npm:^1.3.0":
   version: 1.3.0
   resolution: "get-intrinsic@npm:1.3.0"
   dependencies:
@@ -26817,7 +26842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tachometer@npm:^0.7.2":
+"tachometer@npm:0.7.2":
   version: 0.7.2
   resolution: "tachometer@npm:0.7.2"
   dependencies:

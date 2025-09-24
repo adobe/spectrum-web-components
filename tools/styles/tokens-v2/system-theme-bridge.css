@@ -637,7 +637,7 @@
     --system-textfield-border-color-focus-hover: var(--spectrum-gray-900);
     --system-textfield-border-color-keyboard-focus: var(--spectrum-gray-800);
     --system-textfield-border-color-disabled: var(--spectrum-gray-300);
-    --system-textfield-border-width: var(--spectrum-border-width-100);
+    --system-textfield-border-width: var(--spectrum-border-width-200);
     --system-textfield-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-100);
     --system-textfield-size-s-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-75);
     --system-textfield-size-l-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-200);
@@ -647,4 +647,24 @@
     --system-toast-background-color-default: var(--spectrum-neutral-subdued-background-color-default);
     --system-toast-divider-color: var(--spectrum-transparent-white-400);
     --system-tooltip-backgound-color-default-neutral: var(--spectrum-neutral-subdued-background-color-default);
+    --system-field-label-top-to-text: var(--spectrum-component-top-to-text-100);
+    --system-field-label-top-to-text-small: var(--spectrum-component-top-to-text-75);
+    --system-field-label-top-to-text-large: var(--spectrum-component-top-to-text-200);
+    --system-field-label-top-to-text-extra-large: var(--spectrum-component-top-to-text-300);
+    --system-field-label-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
+    --system-field-label-bottom-to-text-small: var(--spectrum-component-bottom-to-text-75);
+    --system-field-label-bottom-to-text-large: var(--spectrum-component-bottom-to-text-200);
+    --system-field-label-bottom-to-text-extra-large: var(--spectrum-component-bottom-to-text-300);
+    --system-helptext-top-to-text: var(--spectrum-component-top-to-text-100);
+    --system-helptext-top-to-text-small: var(--spectrum-component-top-to-text-75);
+    --system-helptext-top-to-text-large: var(--spectrum-component-top-to-text-200);
+    --system-helptext-top-to-text-extra-large: var(--spectrum-component-top-to-text-300);
+    --system-helptext-bottom-to-text: var(--spectrum-component-bottom-to-text-100);
+    --system-helptext-bottom-to-text-small: var(--spectrum-component-bottom-to-text-75);
+    --system-helptext-bottom-to-text-large: var(--spectrum-component-bottom-to-text-200);
+    --system-helptext-bottom-to-text-extra-large: var(--spectrum-component-bottom-to-text-300);
+    --system-textfield-corner-radius: var(--spectrum-corner-radius-medium-size-medium);
+    --system-textfield-corner-radius-small: var(--spectrum-corner-radius-medium-size-small);
+    --system-textfield-corner-radius-large: var(--spectrum-corner-radius-medium-size-large);
+    --system-textfield-corner-radius-extra-large: var(--spectrum-corner-radius-medium-size-extra-large);
 }
