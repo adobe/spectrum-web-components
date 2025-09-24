@@ -193,7 +193,7 @@ __metadata:
     "@lit/react": "npm:1.0.8"
     "@open-wc/dev-server-hmr": "npm:0.2.0"
     "@open-wc/testing": "npm:4.0.0"
-    "@playwright/test": "npm:1.51.1"
+    "@playwright/test": "npm:1.53.1"
     "@rollup/plugin-commonjs": "npm:25.0.8"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
@@ -228,8 +228,8 @@ __metadata:
     "@web/test-runner": "npm:0.18.3"
     "@web/test-runner-commands": "npm:0.9.0"
     "@web/test-runner-junit-reporter": "npm:0.8.0"
-    "@web/test-runner-playwright": "npm:0.11.0"
-    "@web/test-runner-visual-regression": "npm:0.9.0"
+    "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch"
+    "@web/test-runner-visual-regression": "patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch"
     "@webcomponents/webcomponentsjs": "npm:2.8.0"
     "@yarnpkg/types": "npm:4.0.1"
     alex: "npm:11.0.1"
@@ -4132,14 +4132,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.51.1":
-  version: 1.51.1
-  resolution: "@playwright/test@npm:1.51.1"
+"@playwright/test@npm:1.53.1":
+  version: 1.53.1
+  resolution: "@playwright/test@npm:1.53.1"
   dependencies:
-    playwright: "npm:1.51.1"
+    playwright: "npm:1.53.1"
   bin:
     playwright: cli.js
-  checksum: 10c0/bdb98f3df58f60b5c62e6d5c79c30910404d1855afea0803af0efd6dc63f90c473dbf92ff7dc212f1459f1d32c85dc44a60f70c2e0ea604f975b953d59523234
+  checksum: 10c0/f2ef7899ca6bc178c9f2ba6c8633d0bbeb5ba135048e9df01ecb949c6f743811ba5ef76d495f619454074c81dbfa28be12e4c0a1224bb2af0d4cb403182c716f
   languageName: node
   linkType: hard
 
@@ -8430,20 +8430,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-playwright@npm:0.11.0":
-  version: 0.11.0
-  resolution: "@web/test-runner-playwright@npm:0.11.0"
+"@web/test-runner-playwright@npm:0.11.1":
+  version: 0.11.1
+  resolution: "@web/test-runner-playwright@npm:0.11.1"
   dependencies:
     "@web/test-runner-core": "npm:^0.13.0"
     "@web/test-runner-coverage-v8": "npm:^0.8.0"
-    playwright: "npm:^1.22.2"
-  checksum: 10c0/f2483fe51ae405d545be9381b698c2d5d776725e0dadd06c95283545e21f8beba65b1df0d669a10160cc89d479e9dde9d357af8188d026b796f80fd4b795e810
+    playwright: "npm:^1.53.0"
+  checksum: 10c0/9c6d871b90757d331e424b9174b318227e7891bb46bac48060e12625ad7c01180ed491f930ec55acf67d620f7edeba1a46a79966f7748b3c0b12dac31fa48d6e
   languageName: node
   linkType: hard
 
-"@web/test-runner-visual-regression@npm:0.9.0":
-  version: 0.9.0
-  resolution: "@web/test-runner-visual-regression@npm:0.9.0"
+"@web/test-runner-playwright@patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch":
+  version: 0.11.1
+  resolution: "@web/test-runner-playwright@patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch::version=0.11.1&hash=28de29"
+  dependencies:
+    "@web/test-runner-core": "npm:^0.13.0"
+    "@web/test-runner-coverage-v8": "npm:^0.8.0"
+    playwright: "npm:^1.53.0"
+  checksum: 10c0/57740c8a9cb885d553dfcedb917fb512e3fc5452f4d6693ef07c739e970f4ecf74d51ce28f67e56d71b653349dcac8d1e0f42a48a58326b3f93608ae9b5dbcae
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-visual-regression@npm:0.10.0":
+  version: 0.10.0
+  resolution: "@web/test-runner-visual-regression@npm:0.10.0"
   dependencies:
     "@types/mkdirp": "npm:^1.0.1"
     "@types/pixelmatch": "npm:^5.2.2"
@@ -8453,7 +8464,23 @@ __metadata:
     mkdirp: "npm:^1.0.4"
     pixelmatch: "npm:^5.2.1"
     pngjs: "npm:^7.0.0"
-  checksum: 10c0/4175879d676954248823b82f832e0c3febd8316b65907de4e407ca030f2032f5ae43b786ea5d2e6d7959659a93d392f1e077f76cbef54708633b71276078cb19
+  checksum: 10c0/91eadc92955a91bcf3854a18045efd4d51bd886e97e7db9ebc872593eca533ad479c7bd5781b517bee4ee51fb8fe97a0f83d92a0dc6b3122785bda1ca87a1604
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-visual-regression@patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch":
+  version: 0.10.0
+  resolution: "@web/test-runner-visual-regression@patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch::version=0.10.0&hash=3d6e8c"
+  dependencies:
+    "@types/mkdirp": "npm:^1.0.1"
+    "@types/pixelmatch": "npm:^5.2.2"
+    "@types/pngjs": "npm:^6.0.0"
+    "@web/test-runner-commands": "npm:^0.9.0"
+    "@web/test-runner-core": "npm:^0.13.0"
+    mkdirp: "npm:^1.0.4"
+    pixelmatch: "npm:^5.2.1"
+    pngjs: "npm:^7.0.0"
+  checksum: 10c0/345770f22cb577d430e1560b782a8edf6c228c2f2de2dbbbe5410472e4ca545b0cce26614a2c67bd4090bc1d37244757447a1ab7acab45e64f2907447ccb812e
   languageName: node
   linkType: hard
 
@@ -23450,51 +23477,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.44.0":
-  version: 1.44.0
-  resolution: "playwright-core@npm:1.44.0"
+"playwright-core@npm:1.53.1":
+  version: 1.53.1
+  resolution: "playwright-core@npm:1.53.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/e1220371a76cdf145f6aaefb2dd6c5194531d1c1e2b67712c56dbc1d589dffb66fd4fc0168be60cd2115aca40660aa13c572e14be47674c0542bc879705b9fb3
+  checksum: 10c0/8780552740741b94c346373ab6f949e9a44d3df54016b12123da9fe2f5fb60c1838197642916789b0a2ffb567e4ba0089f2e57d496bef7e460ddc4526f9b3b0f
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright-core@npm:1.51.1"
+"playwright-core@npm:1.55.1":
+  version: 1.55.1
+  resolution: "playwright-core@npm:1.55.1"
   bin:
     playwright-core: cli.js
-  checksum: 10c0/4f004d9dea5ecbd76b84c858fa4880ed955600b6cda972a3e8093ea47e150ce20bf2ea806e73e740497d34f4b61b080c208339a661fc75ad04d8f00bedcc21e0
+  checksum: 10c0/39837a8c1232ec27486eac8c3fcacc0b090acc64310f7f9004b06715370fc426f944e3610fe8c29f17cd3d68280ed72c75f660c02aa5b5cf0eb34bab0031308f
   languageName: node
   linkType: hard
 
-"playwright@npm:1.51.1":
-  version: 1.51.1
-  resolution: "playwright@npm:1.51.1"
+"playwright@npm:1.53.1":
+  version: 1.53.1
+  resolution: "playwright@npm:1.53.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.51.1"
+    playwright-core: "npm:1.53.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/2aea553b8b1086ee419e72c9d4f4117686e6bdb5e09e0f47dfe563ce0f0bd79c4ee79dd9c8a0f023a2fb7803b81d4fdc552887410d16c036be07f21ab72b3f46
+  checksum: 10c0/3dcbcd3791a7f0d1007db4d3126c8136258a2002c2fbfc8b840086b64cbc1fb628b2e25dd3b345d685fb27ba39790ab0f4ce81a8faade7dc748af3a63bdf3550
   languageName: node
   linkType: hard
 
-"playwright@npm:^1.22.2":
-  version: 1.44.0
-  resolution: "playwright@npm:1.44.0"
+"playwright@npm:^1.53.0":
+  version: 1.55.1
+  resolution: "playwright@npm:1.55.1"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.44.0"
+    playwright-core: "npm:1.55.1"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10c0/dcbee9022623dd9e219e9867983789262e80339f0c3601219930883e5a304ce75e1397715c0f378a2bab0a799cf88a73ea4b58fe595cfd9058bd7a82f5d8e3b6
+  checksum: 10c0/b84a97b0d764403df512f5bbb10c7343974e151a28202cc06f90883a13e8a45f4491a0597f0ae5fb03a026746cbc0d200f0f32195bfaa381aee5ca5770626771
   languageName: node
   linkType: hard
 
