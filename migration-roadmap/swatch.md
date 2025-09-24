@@ -132,7 +132,7 @@ None found for this component.
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components</summary>
 
 ```html
 <div class="opacity-checkerboard fill" style="--spectrum-picked-color: [color]">
@@ -145,7 +145,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Legacy (CSS main branch):</summary>
+<summary>Legacy (CSS main branch)</summary>
 
 ```html
 <div
@@ -172,7 +172,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+<summary>Spectrum 2 (CSS spectrum-two branch)</summary>
 
 ```html
 <div
@@ -237,7 +237,7 @@ No significant structural changes.
 
 ### CSS => SWC implementation gaps
 
-**CSS Features Missing from Web Component:**
+**CSS features missing from Web Component:**
 
 - Add swatch functionality (`.spectrum-Swatch.is-addSwatch`)
 - Focus state support (`.spectrum-Swatch.is-keyboardFocused`)
@@ -247,15 +247,16 @@ No significant structural changes.
 - Pseudo-element styling (`:before`, `:after` selectors)
 - Focus styling (`:focus-visible`)
 
-**Web Component Features Missing from CSS:**
+**Web Component features missing from CSS:**
+
 None found for this component.
 
 ### CSS Spectrum 2 changes
 
-No significant structural changes between CSS main and spectrum-two branches. The templates are identical, indicating that the swatch component structure remains consistent across Spectrum 2 migration.
+There is a new add swatch functionality in the `spectrum-two` branch.
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3677)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-swatch--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorswatch--docs)

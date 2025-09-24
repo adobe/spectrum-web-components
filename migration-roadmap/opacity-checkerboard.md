@@ -50,7 +50,7 @@ None found for this component. This is a utility component used by other compone
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components</summary>
 
 ```html
 <!-- Used as a utility class in other components -->
@@ -62,7 +62,7 @@ None found for this component. This is a utility component used by other compone
 </details>
 
 <details>
-<summary>Legacy (CSS main branch):</summary>
+<summary>Legacy (CSS main branch)</summary>
 
 ```html
 <div
@@ -78,7 +78,7 @@ None found for this component. This is a utility component used by other compone
 </details>
 
 <details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+<summary>Spectrum 2 (CSS spectrum-two branch)</summary>
 
 ```html
 <div
@@ -115,10 +115,10 @@ No significant structural changes.
 
 ### CSS => SWC implementation gaps
 
-**CSS Features Missing from Web Component:**
+**CSS features missing from Web Component:**
 None found for this component. The opacity checkerboard is implemented as a utility class in the Web Components.
 
-**Web Component Features Missing from CSS:**
+**Web Component features missing from CSS:**
 None found for this component.
 
 ### CSS Spectrum 2 changes
@@ -131,6 +131,6 @@ The opacity checkerboard is a utility component that provides a checkerboard pat
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3394)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-opacity-checkerboard--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorslider--docs) (not a standalone component, but styles are used by the color slider)

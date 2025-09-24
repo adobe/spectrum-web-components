@@ -8,25 +8,25 @@
 <summary>CSS selectors</summary>
 
 - `.spectrum-Avatar`
+- `.spectrum-Avatar-image`
+- `.spectrum-Avatar-link`
+- `.spectrum-Avatar--size50`
+- `.spectrum-Avatar--size75`
 - `.spectrum-Avatar--size100`
+- `.spectrum-Avatar--size200`
+- `.spectrum-Avatar--size300`
+- `.spectrum-Avatar--size400`
+- `.spectrum-Avatar--size500`
+- `.spectrum-Avatar--size600`
+- `.spectrum-Avatar--size700`
+- `.spectrum-Avatar--size800`
+- `.spectrum-Avatar--size900`
 - `.spectrum-Avatar--size1000`
 - `.spectrum-Avatar--size1100`
 - `.spectrum-Avatar--size1200`
 - `.spectrum-Avatar--size1300`
 - `.spectrum-Avatar--size1400`
 - `.spectrum-Avatar--size1500`
-- `.spectrum-Avatar--size200`
-- `.spectrum-Avatar--size300`
-- `.spectrum-Avatar--size400`
-- `.spectrum-Avatar--size50`
-- `.spectrum-Avatar--size500`
-- `.spectrum-Avatar--size600`
-- `.spectrum-Avatar--size700`
-- `.spectrum-Avatar--size75`
-- `.spectrum-Avatar--size800`
-- `.spectrum-Avatar--size900`
-- `.spectrum-Avatar-image`
-- `.spectrum-Avatar-link`
 - `.spectrum-Avatar.is-disabled`
 - `.spectrum-Avatar.is-focused:not(.is-disabled):after`
 - `.spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after`
@@ -78,7 +78,7 @@ None found for this component.
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components</summary>
 
 ```html
 <!-- With link -->
@@ -93,7 +93,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Legacy (CSS main branch):</summary>
+<summary>Legacy (CSS main branch)</summary>
 
 ```html
 <!-- With link -->
@@ -122,7 +122,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+<summary>Spectrum 2 (CSS spectrum-two branch)</summary>
 
 ```html
 <!-- With link -->
@@ -187,13 +187,13 @@ No significant structural changes.
 
 ### CSS => SWC implementation gaps
 
-**CSS Features Missing from Web Component:**
+**CSS features missing from Web Component:**
 
 - Disabled state support (`.spectrum-Avatar.is-disabled`)
 - Focus state support (`.spectrum-Avatar.is-focused`)
 - Larger size variants (800, 900, 1000, 1100, 1200, 1300, 1400, 1500)
 
-**Web Component Features Missing from CSS:**
+**Web Component features missing from CSS:**
 None found for this component.
 
 ### CSS Spectrum 2 changes
@@ -202,6 +202,6 @@ No significant structural changes between CSS main and spectrum-two branches. Th
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3355)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-avatar--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/avatar--docs)

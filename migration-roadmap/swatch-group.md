@@ -55,7 +55,7 @@
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components</summary>
 
 ```html
 <slot @change="[handleChange]" @slotchange="[manageChange]">
@@ -66,7 +66,7 @@
 </details>
 
 <details>
-<summary>Legacy (CSS main branch):</summary>
+<summary>Legacy (CSS main branch)</summary>
 
 ```html
 <div
@@ -81,7 +81,7 @@
 </details>
 
 <details>
-<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
+<summary>Spectrum 2 (CSS spectrum-two branch)</summary>
 
 ```html
 <div
@@ -120,10 +120,10 @@ No significant structural changes.
 
 ### CSS => SWC implementation gaps
 
-**CSS Features Missing from Web Component:**
+**CSS features missing from Web Component:**
 None found for this component.
 
-**Web Component Features Missing from CSS:**
+**Web Component features missing from CSS:**
 
 - Border attribute support
 - Rounding attribute support
@@ -138,6 +138,6 @@ No significant structural changes between CSS main and spectrum-two branches. Th
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3677)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-swatch-group--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/colorswatchpicker--docs)
