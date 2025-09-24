@@ -9,18 +9,18 @@
 
 - `.spectrum-Thumbnail`
 - `.spectrum-Thumbnail--cover .spectrum-Thumbnail-image`
+- `.spectrum-Thumbnail--size50`
+- `.spectrum-Thumbnail--size75`
 - `.spectrum-Thumbnail--size100`
-- `.spectrum-Thumbnail--size1000`
 - `.spectrum-Thumbnail--size200`
 - `.spectrum-Thumbnail--size300`
 - `.spectrum-Thumbnail--size400`
-- `.spectrum-Thumbnail--size50`
 - `.spectrum-Thumbnail--size500`
 - `.spectrum-Thumbnail--size600`
 - `.spectrum-Thumbnail--size700`
-- `.spectrum-Thumbnail--size75`
 - `.spectrum-Thumbnail--size800`
 - `.spectrum-Thumbnail--size900`
+- `.spectrum-Thumbnail--size1000`
 - `.spectrum-Thumbnail-background`
 - `.spectrum-Thumbnail-image`
 - `.spectrum-Thumbnail-image-wrapper`
@@ -87,7 +87,7 @@
 ### DOM Structure changes
 
 <details>
-<summary>Spectrum Web Components:</summary>
+<summary>Spectrum Web Components</summary>
 
 ```html
 <!-- With background -->
@@ -262,14 +262,14 @@ No significant structural changes.
 
 ### CSS => SWC implementation gaps
 
-**CSS Features Missing from Web Component:**
+**CSS features missing from Web Component:**
 
 - Disabled state support (`.spectrum-Thumbnail.is-disabled`)
 - Focus state support (`.spectrum-Thumbnail.is-focused`)
 - Selected state support (`.spectrum-Thumbnail.is-selected`)
 - Pseudo-element styling (`:before`, `:after` selectors)
 
-**Web Component Features Missing from CSS:**
+**Web Component features missing from CSS:**
 None found for this component.
 
 ### CSS Spectrum 2 changes
@@ -278,6 +278,6 @@ No significant structural changes between CSS main and spectrum-two branches. Th
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3367)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-thumbnail--docs)
+- React (no thumbnail component in React Spectrum)
