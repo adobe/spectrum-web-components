@@ -29,6 +29,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -43,13 +44,20 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(
-    SizedMixin(Focusable, {
-        noDefaultSize: true,
-    })
+export class TextfieldBase extends FieldLabelMixin(
+    ManageHelpText(
+        SizedMixin(Focusable, {
+            noDefaultSize: true,
+        })
+    )
 ) {
     public static override get styles(): CSSResultArray {
-        return [textfieldStyles, checkmarkStyles];
+        const superStyles = Array.isArray(super.styles)
+            ? super.styles
+            : super.styles
+              ? [super.styles]
+              : [];
+        return [...superStyles, textfieldStyles, checkmarkStyles];
     }
 
     @state()
@@ -185,12 +193,6 @@ export class TextfieldBase extends ManageHelpText(
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
-
-    /**
-     * Whether the form control will be found to be invalid when it holds no `value`
-     */
-    @property({ type: Boolean, reflect: true })
-    public required = false;
 
     /**
      * What form of assistance should be provided when attempting to supply a value to the form control
@@ -377,6 +379,7 @@ export class TextfieldBase extends ManageHelpText(
 
     protected override render(): TemplateResult {
         return html`
+            ${this.renderFieldLabel('textfield')}
             <div id="textfield">${this.renderField()}</div>
             ${this.renderHelpText(this.invalid)}
         `;
