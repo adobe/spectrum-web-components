@@ -642,6 +642,10 @@
     --system-textfield-spacing-block-start-small: var(--spectrum-component-top-to-text-75);
     --system-textfield-spacing-block-start-large: var(--spectrum-component-top-to-text-200);
     --system-textfield-spacing-block-start-extra-large: var(--spectrum-component-top-to-text-300);
+    --system-textfield-spacing-block-start: var(--spectrum-component-bottom-to-text-100);
+    --system-textfield-spacing-block-start-small: var(--spectrum-component-bottom-to-text-75);
+    --system-textfield-spacing-block-start-large: var(--spectrum-component-bottom-to-text-200);
+    --system-textfield-spacing-block-start-extra-large: var(--spectrum-component-bottom-to-text-300);
     --system-textfield-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-100);
     --system-textfield-size-s-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-75);
     --system-textfield-size-l-icon-spacing-block-invalid: var(--spectrum-component-top-to-workflow-icon-200);

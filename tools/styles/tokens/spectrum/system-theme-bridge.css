@@ -646,6 +646,10 @@
     --system-textfield-spacing-block-start-small: var(--spectrum-component-top-to-text-100);
     --system-textfield-spacing-block-start-large: var(--spectrum-component-top-to-text-100);
     --system-textfield-spacing-block-start-extra-large: var(--spectrum-component-top-to-text-100);
+    --system-textfield-spacing-block-end: var(--spectrum-component-bottom-to-text-100);
+    --system-textfield-spacing-block-end-small: var(--spectrum-component-bottom-to-text-100);
+    --system-textfield-spacing-block-end-large: var(--spectrum-component-bottom-to-text-100);
+    --system-textfield-spacing-block-end-extra-large: var(--spectrum-component-bottom-to-text-100);
     --system-thumbnail-border-radius: var(--spectrum-corner-radius-75);
     --system-toast-background-color-default: var(--spectrum-neutral-subdued-background-color-default);
     --system-toast-divider-color: var(--spectrum-transparent-white-300);
