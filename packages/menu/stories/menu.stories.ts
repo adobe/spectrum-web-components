@@ -497,10 +497,13 @@ export const InputsWithMenu = (): TemplateResult => {
             <p>
                 Try typing in any input field below, then hover over the menu
                 items. The input should maintain focus and not be interrupted.
-                This demonstrates the fix for focus stealing from all supported input types.
+                This demonstrates the fix for focus stealing from all supported
+                input types.
             </p>
 
-            <div style="display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-bottom: 20px;">
+            <div
+                style="display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-bottom: 20px;"
+            >
                 <!-- Search Input -->
                 <div>
                     <label for="demo-search">Search:</label>
@@ -574,4 +577,17 @@ export const InputsWithMenu = (): TemplateResult => {
             </sp-popover>
         </div>
     `;
+};
+
+InputsWithMenu.parameters = {
+    tags: ['!dev'],
+};
+
+InputsWithMenu.swc_vrt = {
+    skip: true,
+};
+
+InputsWithMenu.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };
