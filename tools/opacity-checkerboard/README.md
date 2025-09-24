@@ -37,7 +37,7 @@ Apply the `opacity-checkerboard` class to any element that needs to display the 
 <div
     class="opacity-checkerboard"
     style="inline-size: 100px; block-size: 100px;"
-    aria-label="Transparency indicator showing checkerboard pattern"
+    aria-hidden="true"
 ></div>
 ```
 
@@ -49,8 +49,7 @@ The opacity checkerboard works well as a background for elements with partial tr
 <div
     class="opacity-checkerboard"
     style="inline-size: 200px; block-size: 200px; position: relative;"
-    role="img"
-    aria-label="Color preview with transparency"
+    aria-hidden="true"
 >
     <div
         style="
@@ -58,7 +57,6 @@ The opacity checkerboard works well as a background for elements with partial tr
             inset: 0;
             background-color: rgba(255, 0, 0, 0.5);
         "
-        aria-label="Semi-transparent red color overlay"
     ></div>
 </div>
 ```
@@ -67,22 +65,48 @@ The opacity checkerboard works well as a background for elements with partial tr
 
 When implementing the opacity checkerboard pattern, ensure proper accessibility by:
 
-- **Providing context**: Add appropriate ARIA labels to describe what the checkerboard pattern represents
-- **Role attribution**: Use `role="img"` when the checkerboard serves as a visual indicator
-- **Descriptive labels**: Include `aria-label` attributes that explain the purpose of the transparency indicator
-- **Alternative text**: When used in color pickers or image editors, provide text alternatives that describe the transparency level
+- **Hiding from screen readers**: Use `aria-hidden="true"` on the checkerboard element since it's purely visual
+- **Providing semantic information**: Use separate text nodes or live regions to convey opacity information
+- **Using live regions**: Implement `aria-live` regions to announce opacity changes dynamically
+- **Descriptive context**: Provide meaningful descriptions of the actual color and opacity values, not the visual pattern
 
 #### Screen reader support
 
-The opacity checkerboard is a purely visual indicator. Always provide alternative text or descriptions for screen reader users:
+The opacity checkerboard is a purely visual indicator and should remain hidden from screen readers. Instead, provide semantic information through separate text nodes or live regions that update as opacity changes:
 
 ```html-live
-<div
-    class="opacity-checkerboard"
-    style="inline-size: 100px; block-size: 100px;"
-    aria-label="Checkerboard pattern indicating transparent areas"
->
-    <span class="visually-hidden">Current opacity: 75%</span>
+<div class="color-container">
+    <div
+        class="opacity-checkerboard"
+        style="inline-size: 100px; block-size: 100px;"
+        aria-hidden="true"
+    ></div>
+    <div class="visually-hidden" aria-live="polite" id="opacity-status">
+        Current opacity: 75%
+    </div>
+</div>
+```
+
+For components that change opacity dynamically, use a live region to announce changes:
+
+```html-live
+<div class="dynamic-opacity-example">
+    <div
+        class="opacity-checkerboard"
+        style="inline-size: 100px; block-size: 100px; position: relative;"
+        aria-hidden="true"
+    >
+        <div
+            style="
+                position: absolute;
+                inset: 0;
+                background-color: rgba(255, 0, 0, 0.6);
+            "
+        ></div>
+    </div>
+    <div aria-live="assertive" class="visually-hidden">
+        Opacity changed to 60%
+    </div>
 </div>
 ```
 
@@ -93,16 +117,16 @@ When the opacity checkerboard is part of an interactive component, ensure it doe
 ```html-live
 <button
     class="color-button"
-    aria-label="Select color with 50% opacity"
+    aria-label="Select red color with 50% opacity"
     aria-describedby="opacity-description"
 >
     <span
         class="opacity-checkerboard"
         style="inline-size: 40px; block-size: 40px; display: block;"
+        aria-hidden="true"
     ></span>
     <span id="opacity-description" class="visually-hidden">
-        Color preview shown over checkerboard pattern indicating 50%
-        transparency
+        Red color with 50% transparency
     </span>
 </button>
 ```
