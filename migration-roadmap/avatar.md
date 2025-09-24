@@ -7,9 +7,21 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-Avatar`
+**Root class**: `.spectrum-Avatar`
+
+**Elements**:
+
 - `.spectrum-Avatar-image`
 - `.spectrum-Avatar-link`
+
+**States**:
+
+- `.spectrum-Avatar.is-disabled`
+- `.spectrum-Avatar.is-focused:not(.is-disabled):after`
+- `.spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after`
+
+**Variants**:
+
 - `.spectrum-Avatar--size50`
 - `.spectrum-Avatar--size75`
 - `.spectrum-Avatar--size100`
@@ -27,9 +39,6 @@
 - `.spectrum-Avatar--size1300`
 - `.spectrum-Avatar--size1400`
 - `.spectrum-Avatar--size1500`
-- `.spectrum-Avatar.is-disabled`
-- `.spectrum-Avatar.is-focused:not(.is-disabled):after`
-- `.spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after`
 
 </details>
 
@@ -41,7 +50,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-avatar-block-size`
 - `--mod-avatar-border-radius`
@@ -63,6 +72,9 @@ None found for this component.
 - `size` (number) - Size of the avatar (50, 75, 100, 200, 300, 400, 500, 600, 700)
 - `href` (string) - Link URL when avatar is clickable
 - `label` (string) - Alt text for the avatar image
+- `disabled` (boolean) - Whether the avatar is disabled
+
+Note that other link-related attributes are available on the base `LikeAnchor` class, such as `download`, `href`, `referrerpolicy`, `rel`, `target`, and `type` but are not necessarily applicable to the avatar component and so not listed out explicitly here.
 
 </details>
 
@@ -159,29 +171,29 @@ No significant structural changes.
 
 ### CSS => SWC mapping
 
-| CSS selector                   | Attribute or slot    | Status          |
-| ------------------------------ | -------------------- | --------------- |
-| `.spectrum-Avatar--size50`     | `size="50"`          | Implemented     |
-| `.spectrum-Avatar--size75`     | `size="75"`          | Implemented     |
-| `.spectrum-Avatar--size100`    | `size="100"`         | Implemented     |
-| `.spectrum-Avatar--size200`    | `size="200"`         | Implemented     |
-| `.spectrum-Avatar--size300`    | `size="300"`         | Implemented     |
-| `.spectrum-Avatar--size400`    | `size="400"`         | Implemented     |
-| `.spectrum-Avatar--size500`    | `size="500"`         | Implemented     |
-| `.spectrum-Avatar--size600`    | `size="600"`         | Implemented     |
-| `.spectrum-Avatar--size700`    | `size="700"`         | Implemented     |
-| `.spectrum-Avatar-image`       | `src` attribute      | Implemented     |
-| `.spectrum-Avatar-link`        | `href` attribute     | Implemented     |
-| `.spectrum-Avatar.is-disabled` | `disabled` attribute | Missing from WC |
-| `.spectrum-Avatar.is-focused`  | Focus state          | Missing from WC |
-| `.spectrum-Avatar--size800`    | `size="800"`         | Missing from WC |
-| `.spectrum-Avatar--size900`    | `size="900"`         | Missing from WC |
-| `.spectrum-Avatar--size1000`   | `size="1000"`        | Missing from WC |
-| `.spectrum-Avatar--size1100`   | `size="1100"`        | Missing from WC |
-| `.spectrum-Avatar--size1200`   | `size="1200"`        | Missing from WC |
-| `.spectrum-Avatar--size1300`   | `size="1300"`        | Missing from WC |
-| `.spectrum-Avatar--size1400`   | `size="1400"`        | Missing from WC |
-| `.spectrum-Avatar--size1500`   | `size="1500"`        | Missing from WC |
+| CSS selector                 | Attribute or slot    | Status                                   |
+| ---------------------------- | -------------------- | ---------------------------------------- |
+| `.spectrum-Avatar--size50`   | `size="50"`          | Implemented                              |
+| `.spectrum-Avatar--size75`   | `size="75"`          | Implemented                              |
+| `.spectrum-Avatar--size100`  | `size="100"`         | Implemented                              |
+| `.spectrum-Avatar--size200`  | `size="200"`         | Implemented                              |
+| `.spectrum-Avatar--size300`  | `size="300"`         | Implemented                              |
+| `.spectrum-Avatar--size400`  | `size="400"`         | Implemented                              |
+| `.spectrum-Avatar--size500`  | `size="500"`         | Implemented                              |
+| `.spectrum-Avatar--size600`  | `size="600"`         | Implemented                              |
+| `.spectrum-Avatar--size700`  | `size="700"`         | Implemented                              |
+| `.spectrum-Avatar-image`     | `src` attribute      | Implemented                              |
+| `.spectrum-Avatar-link`      | `href` attribute     | Implemented                              |
+| `.is-focused`                | Focus state          | Implemented                              |
+| `.is-disabled`               | `disabled` attribute | Implemented                              |
+| `.spectrum-Avatar--size800`  | `size="800"`         | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size900`  | `size="900"`         | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1000` | `size="1000"`        | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1100` | `size="1100"`        | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1200` | `size="1200"`        | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1300` | `size="1300"`        | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1400` | `size="1400"`        | Missing from WC (new size in Spectrum 2) |
+| `.spectrum-Avatar--size1500` | `size="1500"`        | Missing from WC (new size in Spectrum 2) |
 
 ## Summary of changes
 
@@ -189,8 +201,7 @@ No significant structural changes.
 
 **CSS features missing from Web Component:**
 
-- Disabled state support (`.spectrum-Avatar.is-disabled`)
-- Focus state support (`.spectrum-Avatar.is-focused`)
+- Disabled state support (`.is-disabled`)
 - Larger size variants (800, 900, 1000, 1100, 1200, 1300, 1400, 1500)
 
 **Web Component features missing from CSS:**

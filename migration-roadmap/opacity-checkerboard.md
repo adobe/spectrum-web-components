@@ -7,7 +7,10 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-OpacityCheckerboard`
+**Root class**: `.spectrum-OpacityCheckerboard`
+
+**Variants**:
+
 - `.spectrum-OpacityCheckerboard--sizeS`
 
 </details>
@@ -20,7 +23,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-opacity-checkerboard-dark`
 - `--mod-opacity-checkerboard-light`
@@ -54,7 +57,7 @@ None found for this component. This is a utility component used by other compone
 
 ```html
 <!-- Used as a utility class in other components -->
-<div class="opacity-checkerboard [variant]">
+<div class="opacity-checkerboard">
     <!-- Content -->
 </div>
 ```
@@ -102,14 +105,10 @@ No significant structural changes.
 
 ### CSS => SWC mapping
 
-| CSS selector                           | Attribute or slot   | Status                 |
-| -------------------------------------- | ------------------- | ---------------------- |
-| `.spectrum-OpacityCheckerboard`        | Utility class       | Implemented as utility |
-| `.spectrum-OpacityCheckerboard--sizeS` | Size variant        | Implemented as utility |
-| `--mod-opacity-checkerboard-position`  | CSS custom property | Implemented as utility |
-| `--mod-opacity-checkerboard-size`      | CSS custom property | Implemented as utility |
-| `--mod-opacity-checkerboard-dark`      | CSS custom property | Implemented as utility |
-| `--mod-opacity-checkerboard-light`     | CSS custom property | Implemented as utility |
+| CSS selector                           | Attribute or slot | Status                 |
+| -------------------------------------- | ----------------- | ---------------------- |
+| `.spectrum-OpacityCheckerboard`        | Utility class     | Implemented as utility |
+| `.spectrum-OpacityCheckerboard--sizeS` | Size variant      | Implemented as utility |
 
 ## Summary of changes
 

@@ -7,59 +7,46 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-Swatch`
-- `.spectrum-Swatch .spectrum-Swatch-disabledIcon`
-- `.spectrum-Swatch .spectrum-Swatch-fill`
-- `.spectrum-Swatch--rectangle`
-- `.spectrum-Swatch--roundingFull.is-selected:not(.spectrum-Swatch--rectangle) .spectrum-Swatch-fill`
-- `.spectrum-Swatch--roundingFull.is-selected:not(.spectrum-Swatch--rectangle) .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch--roundingFull:not(.spectrum-Swatch--rectangle)`
-- `.spectrum-Swatch--roundingFull:not(.spectrum-Swatch--rectangle) .spectrum-Swatch-fill`
-- `.spectrum-Swatch--roundingFull:not(.spectrum-Swatch--rectangle) .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch--roundingFull:not(.spectrum-Swatch--rectangle):after`
-- `.spectrum-Swatch--roundingFull:not(.spectrum-Swatch--rectangle):before`
-- `.spectrum-Swatch--roundingNone`
-- `.spectrum-Swatch--roundingNone .spectrum-Swatch-fill`
-- `.spectrum-Swatch--roundingNone .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch--roundingNone.is-selected .spectrum-Swatch-fill`
-- `.spectrum-Swatch--roundingNone.is-selected .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch--roundingNone:after`
-- `.spectrum-Swatch--roundingNone:before`
-- `.spectrum-Swatch--sizeL`
-- `.spectrum-Swatch--sizeS`
-- `.spectrum-Swatch--sizeXS`
-- `.spectrum-Swatch-disabledIcon`
-- `.spectrum-Swatch-disabledIcon path:first-child`
-- `.spectrum-Swatch-disabledIcon path:last-child`
-- `.spectrum-Swatch-fill`
-- `.spectrum-Swatch-fill:before`
+**Root class**: `.spectrum-Swatch`
+
+**Elements**:
+
+- `.spectrum-Swatch:before`
+- `.spectrum-Swatch:after`
 - `.spectrum-Swatch-icon`
 - `.spectrum-Swatch-image`
-- `.spectrum-Swatch.is-addSwatch`
-- `.spectrum-Swatch.is-addSwatch .spectrum-Swatch-fill`
-- `.spectrum-Swatch.is-addSwatch .spectrum-Swatch-icon`
-- `.spectrum-Swatch.is-addSwatch.is-keyboardFocused`
-- `.spectrum-Swatch.is-addSwatch:active`
-- `.spectrum-Swatch.is-addSwatch:focus-visible`
-- `.spectrum-Swatch.is-addSwatch:hover`
-- `.spectrum-Swatch.is-disabled`
-- `.spectrum-Swatch.is-disabled .spectrum-Swatch-disabledIcon`
-- `.spectrum-Swatch.is-image .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch.is-keyboardFocused`
-- `.spectrum-Swatch.is-mixedValue`
-- `.spectrum-Swatch.is-mixedValue .spectrum-Swatch-fill`
-- `.spectrum-Swatch.is-mixedValue .spectrum-Swatch-icon`
-- `.spectrum-Swatch.is-nothing.spectrum-Swatch--rectangle:not(.spectrum-Swatch.is-mixedValue, .spectrum-Swatch.is-addSwatch) .spectrum-Swatch-fill:after`
-- `.spectrum-Swatch.is-nothing:not(.spectrum-Swatch.is-mixedValue, .spectrum-Swatch.is-addSwatch) .spectrum-Swatch-fill`
-- `.spectrum-Swatch.is-nothing:not(.spectrum-Swatch.is-mixedValue, .spectrum-Swatch.is-addSwatch) .spectrum-Swatch-fill:after`
-- `.spectrum-Swatch.is-selected`
-- `.spectrum-Swatch.is-selected .spectrum-Swatch-fill`
-- `.spectrum-Swatch.is-selected .spectrum-Swatch-fill:before`
-- `.spectrum-Swatch.is-selected:before`
-- `.spectrum-Swatch:before`
-- `.spectrum-Swatch:focus-visible`
-- `.spectrum-Swatch[disabled]`
-- `.spectrum-Swatch[disabled] .spectrum-Swatch-disabledIcon`
+- `.spectrum-Swatch-disabledIcon` - visible only when the swatch is disabled
+    - `.spectrum-Swatch-disabledIcon path:first-child`
+    - `.spectrum-Swatch-disabledIcon path:last-child`
+- `.spectrum-Swatch-fill`
+    - `.spectrum-Swatch-fill:before`
+- `.spectrum-Swatch-icon`
+- `.spectrum-Swatch-image`
+
+**Variants**:
+
+- **Rounding**:
+    - `.spectrum-Swatch--rectangle`
+    - `.spectrum-Swatch--roundingFull`
+    - `.spectrum-Swatch--roundingNone`
+- **Size**:
+    - `.spectrum-Swatch--sizeXS`
+    - `.spectrum-Swatch--sizeS`
+    - (medium is the default)
+    - `.spectrum-Swatch--sizeL`
+- `.is-addSwatch`
+- `.is-image`
+- `.is-mixedValue`
+- `.is-nothing`
+
+**States**:
+
+- `.is-disabled`, `[disabled]`
+- `.is-focused`, `:focus-visible`
+- `.is-keyboardFocused`
+- `.is-selected`
+- `.is-hover`, `:hover`
+- `.is-active`, `:active`
 
 </details>
 
@@ -71,7 +58,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-add-button-background`
 - `--mod-add-button-background-down`
@@ -116,6 +103,7 @@ None found for this component.
 - `selected` (boolean) - Whether the swatch is selected
 - `shape` (string) - Shape variant: 'rectangle'
 - `size` (string) - Size: 'xs', 's', 'm', 'l'
+- `disabled` (boolean) - Whether the swatch is disabled
 - `value` (string) - Value of the swatch (computed from color or label)
 
 </details>
@@ -207,31 +195,32 @@ No significant structural changes.
 
 ### CSS => SWC mapping
 
-| CSS selector                          | Attribute or slot        | Status          |
-| ------------------------------------- | ------------------------ | --------------- |
-| `.spectrum-Swatch--sizeXS`            | `size="xs"`              | Implemented     |
-| `.spectrum-Swatch--sizeS`             | `size="s"`               | Implemented     |
-| `.spectrum-Swatch--sizeM`             | `size="m"`               | Implemented     |
-| `.spectrum-Swatch--sizeL`             | `size="l"`               | Implemented     |
-| `.spectrum-Swatch--roundingNone`      | `rounding="none"`        | Implemented     |
-| `.spectrum-Swatch--roundingFull`      | `rounding="full"`        | Implemented     |
-| `.spectrum-Swatch--rectangle`         | `shape="rectangle"`      | Implemented     |
-| `.spectrum-Swatch.is-selected`        | `selected` attribute     | Implemented     |
-| `.spectrum-Swatch.is-disabled`        | `disabled` attribute     | Implemented     |
-| `.spectrum-Swatch.is-mixedValue`      | `mixed-value` attribute  | Implemented     |
-| `.spectrum-Swatch.is-addSwatch`       | Add swatch functionality | Missing from WC |
-| `.spectrum-Swatch.is-nothing`         | `nothing` attribute      | Implemented     |
-| `.spectrum-Swatch.is-keyboardFocused` | Focus state              | Missing from WC |
-| `.spectrum-Swatch.is-hover`           | Hover state              | Missing from WC |
-| `.spectrum-Swatch.is-active`          | Active state             | Missing from WC |
-| `.spectrum-Swatch.is-image`           | Image state              | Missing from WC |
-| `.spectrum-Swatch-image`              | `image` slot             | Implemented     |
-| `.spectrum-Swatch-fill`               | Internal wrapper         | Implemented     |
-| `.spectrum-Swatch-icon`               | Icon elements            | Implemented     |
-| `.spectrum-Swatch-disabledIcon`       | Disabled icon            | Implemented     |
-| `.spectrum-Swatch:before`             | Pseudo-element styling   | Missing from WC |
-| `.spectrum-Swatch:after`              | Pseudo-element styling   | Missing from WC |
-| `.spectrum-Swatch:focus-visible`      | Focus styling            | Missing from WC |
+| CSS selector                     | Attribute or slot        | Status                                     |
+| -------------------------------- | ------------------------ | ------------------------------------------ |
+| `.spectrum-Swatch--sizeXS`       | `size="xs"`              | Implemented                                |
+| `.spectrum-Swatch--sizeS`        | `size="s"`               | Implemented                                |
+| `.spectrum-Swatch--sizeM`        | `size="m"`               | Implemented                                |
+| `.spectrum-Swatch--sizeL`        | `size="l"`               | Implemented                                |
+| `.spectrum-Swatch--roundingNone` | `rounding="none"`        | Implemented                                |
+| `.spectrum-Swatch--roundingFull` | `rounding="full"`        | Implemented                                |
+| `.spectrum-Swatch--rectangle`    | `shape="rectangle"`      | Implemented                                |
+| `.is-selected`                   | `selected` attribute     | Implemented                                |
+| `.is-disabled`                   | `disabled` attribute     | Implemented                                |
+| `.is-mixedValue`                 | `mixed-value` attribute  | Implemented                                |
+| `.spectrum-Swatch--lightBorder`  | `border` attribute       | **Deprecated**                             |
+| `.is-addSwatch`                  | Add swatch functionality | Missing from WC (new for S2)               |
+| `.is-nothing`                    | `nothing` attribute      | Implemented                                |
+| `.is-keyboardFocused`            | Focus state              | Implemented                                |
+| `.is-hover`, `:hover`            | Hover state              | Implemented                                |
+| `.is-active`, `:active`          | Active state             | Implemented                                |
+| `:focus-visible`                 | Focus styling            | Implemented                                |
+| `.is-image`                      | `image` slot not empty   | Might need additional hooks or logic in WC |
+| `.spectrum-Swatch-image`         | `image` slot             | Implemented                                |
+| `.spectrum-Swatch-fill`          | Internal wrapper         | Implemented                                |
+| `.spectrum-Swatch-icon`          | Icon elements            | Implemented                                |
+| `.spectrum-Swatch-disabledIcon`  | Disabled icon            | Implemented                                |
+| `.spectrum-Swatch:before`        | Pseudo-element styling   | Implemented                                |
+| `.spectrum-Swatch:after`         | Pseudo-element styling   | Implemented                                |
 
 ## Summary of changes
 
@@ -239,13 +228,7 @@ No significant structural changes.
 
 **CSS features missing from Web Component:**
 
-- Add swatch functionality (`.spectrum-Swatch.is-addSwatch`)
-- Focus state support (`.spectrum-Swatch.is-keyboardFocused`)
-- Hover state support (`.spectrum-Swatch.is-hover`)
-- Active state support (`.spectrum-Swatch.is-active`)
-- Image state support (`.spectrum-Swatch.is-image`)
-- Pseudo-element styling (`:before`, `:after` selectors)
-- Focus styling (`:focus-visible`)
+- Add swatch functionality (`.is-addSwatch`)
 
 **Web Component features missing from CSS:**
 
@@ -253,7 +236,9 @@ None found for this component.
 
 ### CSS Spectrum 2 changes
 
-There is a new add swatch functionality in the `spectrum-two` branch.
+There is a new **add swatch** functionality in the `spectrum-two` branch and supplemental state and pseudo-element styling selectors in the `spectrum-two` branch which will automatically be applied when consumed by the web component for Spectrum 2.
+
+The light and no border variants have been removed. Individual swatches have a border set to `--spectrum-gray-1000` at 42% opacity, while the border opacity is set to 20% in swatch groups.
 
 ## Resources
 

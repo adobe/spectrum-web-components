@@ -7,10 +7,13 @@
 <details>
 <summary>CSS selectors</summary>
 
-- `.spectrum-SwatchGroup`
+**Root class**: `.spectrum-SwatchGroup`
+
+**Variants**:
+
+- **Density**:
 - `.spectrum-SwatchGroup--compact`
-- `.spectrum-SwatchGroup--spacious:has(.spectrum-Swatch--sizeM, .spectrum-Swatch--sizeL)`
-- `.spectrum-SwatchGroup--spacious:has(.spectrum-Swatch--sizeXS, .spectrum-Swatch--sizeS)`
+- `.spectrum-SwatchGroup--spacious`
 
 </details>
 
@@ -22,7 +25,7 @@
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers *deprecated*</summary>
 
 - `--mod-swatchgroup-spacing`
 
@@ -33,13 +36,13 @@
 <details>
 <summary>Attributes</summary>
 
-- `border` (string) - Border style: 'light', 'none'
+- `border` (string) - Border style: 'light', 'none' **deprecated** (from Swatch component)
 - `density` (string) - Density: 'compact', 'spacious'
 - `rounding` (string) - Corner rounding: 'none', 'full'
+- `shape` (string) - Shape variant: 'rectangle' **note**: should this be combined with rounding?
 - `selected` (array) - Array of selected swatch values
-- `selects` (string) - Selection mode: 'single', 'multiple'
-- `shape` (string) - Shape variant: 'rectangle'
-- `size` (string) - Size: 'xs', 's', 'm', 'l'
+- `selects` (string) - Selection mode: 'single', 'multiple' **note**: does this need any unique styles designed for single or multi-select swatch groups?
+- `size` (string) - Size: 'xs', 's', 'm' (default), 'l'
 
 </details>
 
@@ -104,17 +107,17 @@ No significant structural changes.
 
 ### CSS => SWC mapping
 
-| CSS selector                      | Attribute or slot    | Status           |
-| --------------------------------- | -------------------- | ---------------- |
-| `.spectrum-SwatchGroup--compact`  | `density="compact"`  | Implemented      |
-| `.spectrum-SwatchGroup--spacious` | `density="spacious"` | Implemented      |
-| `.spectrum-SwatchGroup`           | Base component       | Implemented      |
-| -                                 | `border` attribute   | Missing from CSS |
-| -                                 | `rounding` attribute | Missing from CSS |
-| -                                 | `selected` attribute | Missing from CSS |
-| -                                 | `selects` attribute  | Missing from CSS |
-| -                                 | `shape` attribute    | Missing from CSS |
-| -                                 | `size` attribute     | Missing from CSS |
+| CSS selector                      | Attribute or slot    | Status                                                             |
+| --------------------------------- | -------------------- | ------------------------------------------------------------------ |
+| `.spectrum-SwatchGroup--compact`  | `density="compact"`  | Implemented                                                        |
+| `.spectrum-SwatchGroup--spacious` | `density="spacious"` | Implemented                                                        |
+| `.spectrum-SwatchGroup`           | Base component       | Implemented                                                        |
+| -                                 | `border` attribute   | **deprecated** (from Swatch component)                             |
+| -                                 | `rounding` attribute | See Swatch component                                               |
+| -                                 | `selected` state     | See Swatch component                                               |
+| -                                 | `selects` attribute  | No unique styles designed for single or multi-select swatch groups |
+| -                                 | `shape` attribute    | See Swatch component                                               |
+| -                                 | `size` attribute     | See Swatch component                                               |
 
 ## Summary of changes
 
@@ -125,16 +128,13 @@ None found for this component.
 
 **Web Component features missing from CSS:**
 
-- Border attribute support
-- Rounding attribute support
-- Selected state management
-- Selection mode (single/multiple)
-- Shape attribute support
-- Size attribute support
+None identified for this component.
 
 ### CSS Spectrum 2 changes
 
-No significant structural changes between CSS main and spectrum-two branches. The templates are identical, indicating that the swatch group component structure remains consistent across Spectrum 2 migration.
+No significant structural changes between CSS main and spectrum-two branches. The templates are identical, indicating that the swatch group component structure remains consistent across Spectrum 2 migration. Swatch group includes a setting for single or multiple selection and it might be worth connecting with design to see if there should be any unique styles designed that differentiates single or multi-select swatch groups.
+
+The border attribute is being removed from the group component as the border property is no longer customizable. The design direction is more opinionated for Spectrum 2 than it was for S1.
 
 ## Resources
 
