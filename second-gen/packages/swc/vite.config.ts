@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import autoprefixer from 'autoprefixer';
-import { glob } from 'glob';
+import fg from 'fast-glob';
 import { resolve } from 'path';
 import postcssPresetEnv from 'postcss-preset-env';
 import { defineConfig } from 'vite';
@@ -49,15 +49,15 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: glob
-                .sync(resolve(__dirname, 'components/*/index.ts'))
-                .reduce((entries, file) => {
-                    const name = file
-                        .replace(resolve(__dirname) + '/', '')
-                        .replace('.ts', '');
-                    entries[name] = file;
-                    return entries;
-                }, {}),
+            entry: (
+                await fg(resolve(__dirname, 'components/*/index.ts'))
+            ).reduce((entries, file) => {
+                const name = file
+                    .replace(resolve(__dirname) + '/', '')
+                    .replace('.ts', '');
+                entries[name] = file;
+                return entries;
+            }, {}),
             formats: ['es'],
         },
         rollupOptions: {

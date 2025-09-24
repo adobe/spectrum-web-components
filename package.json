@@ -18,6 +18,7 @@
         "build": "yarn workspace @adobe/spectrum-web-components build",
         "test": "yarn workspace @adobe/spectrum-web-components test",
         "start": "yarn workspace @adobe/spectrum-web-components storybook",
+        "start:s2": "yarn workspace @adobe/spectrum-web-components-2nd-gen storybook",
         "lint": "yarn workspace @adobe/spectrum-web-components lint",
         "postinstall": "husky || true && patch-package"
     },

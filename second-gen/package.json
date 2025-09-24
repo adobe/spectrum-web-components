@@ -20,7 +20,7 @@
         "clean": "yarn workspaces foreach --from '@swc/*' run clean",
         "lint": "eslint . --ext .ts,.js,.json",
         "storybook": "yarn workspace @swc/components storybook",
-        "storybook:build": "yarn workspace @swc/components storybook:build",
+        "storybook:build": "yarn build && yarn workspace @swc/components storybook:build",
         "test": "yarn workspace @swc/components test"
     },
     "workspaces": [
