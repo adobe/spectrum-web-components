@@ -58,10 +58,10 @@ export default {
         alias({
             entries: [
                 {
-                    find: '@swc/core',
+                    find: /^@swc\/core\/(.*)$/,
                     replacement: path.resolve(
                         __dirname,
-                        '../second-gen/packages/core/dist'
+                        '../second-gen/packages/core/dist/$1'
                     ),
                 },
             ],
@@ -112,6 +112,12 @@ export default {
             'tools/*/stories/*',
             'tools/styles/**',
             '**/node_modules/**',
+            // Exclude second-gen packages from coverage - we only want to measure first-gen code
+            '../second-gen/**',
+            '**/second-gen/**',
+            '__wds-outside-root__/**',
+            '**/first-gen/__wds-outside-root__/**',
+            '**/packages/core/dist/**',
             // The following files are not used in Chrome where coverage is calculated.
             '**/OverlayNoPopover.*',
             'tools/shared/src/focus-visible.*',

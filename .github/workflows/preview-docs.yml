@@ -63,8 +63,14 @@ jobs:
               shell: bash
               run: yarn install --immutable
 
-            - name: Build
+            - name: Build first-gen
               run: cd first-gen && yarn build
+
+            - name: Build second-gen core  
+              run: cd second-gen/packages/core && yarn build
+
+            - name: Build second-gen swc
+              run: cd second-gen/packages/swc && yarn build
 
             - name: Generate Custom Elements Manifest
               run: cd first-gen && yarn docs:analyze

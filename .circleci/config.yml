@@ -240,9 +240,9 @@ jobs:
             - downstream
             - run:
                   name: Run chromium tests with coverage
-                  command: yarn test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+                  command: cd first-gen && yarn test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/first-gen/results/
 
     test-chromium-memory:
         executor: node

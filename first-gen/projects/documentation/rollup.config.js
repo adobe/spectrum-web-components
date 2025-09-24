@@ -234,6 +234,10 @@ export default async () => {
                     find: '@swc-packages-internal',
                     replacement: '../../packages/',
                 },
+                {
+                    find: /^@swc\/core\/(.*)$/,
+                    replacement: path.resolve('../../../second-gen/packages/core/dist/$1'),
+                },
             ],
         })
     );
