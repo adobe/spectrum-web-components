@@ -1,6 +1,9 @@
 {
     "name": "@spectrum-web-components/divider",
-    "version": "1.7.0",
+    "version": "1.8.0",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -54,9 +57,6 @@
         "./stories/typography-decorator.js"
     ],
     "types": "./src/index.d.ts",
-    "dependencies": {
-        "@spectrum-web-components/base": "1.7.0"
-    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -69,8 +69,8 @@
         "component",
         "css"
     ],
-    "publishConfig": {
-        "access": "public"
+    "dependencies": {
+        "@spectrum-web-components/base": "1.8.0"
     },
     "customElements": "custom-elements.json"
 }

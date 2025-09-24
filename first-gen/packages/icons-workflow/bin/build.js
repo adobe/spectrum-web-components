@@ -38,9 +38,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-const S1IConsPackageDir = '@adobe/spectrum-css-workflow-icons/dist/18';
-const S2IConsPackageDir =
-    '@adobe/spectrum-css-workflow-icons-s2/dist/assets/svg';
+const S1IconsPackagePath = path.dirname(
+    fileURLToPath(
+        import.meta.resolve('@adobe/spectrum-css-workflow-icons/package.json')
+    )
+);
+const S2IconsPackagePath = path.dirname(
+    fileURLToPath(
+        import.meta.resolve(
+            '@adobe/spectrum-css-workflow-icons-s2/package.json'
+        )
+    )
+);
+
+const S1IconsDir = path.join(S1IconsPackagePath, 'dist/18');
+const S2IconsDir = path.join(S2IconsPackagePath, 'dist/assets/svg');
 const keepColors = '';
 
 const ensureDirectoryExists = (dirPath) => {
@@ -350,13 +362,9 @@ async function buildIcons(icons, tag, iconsNameList) {
     });
 }
 
-const iconsV1 = (
-    await fg(`${rootDir}/../node_modules/${S1IConsPackageDir}/**.svg`)
-).sort();
+const iconsV1 = (await fg(`${S1IconsDir}/**.svg`)).sort();
 
-const iconsV2 = (
-    await fg(`${rootDir}/../node_modules/${S2IConsPackageDir}/**.svg`)
-).sort();
+const iconsV2 = (await fg(`${S2IconsDir}/**.svg`)).sort();
 
 const iconsV1NameList = iconsV1.map((i) => {
     return getComponentName(i);
@@ -381,3 +389,69 @@ fs.appendFileSync(
     `${manifestImports}${manifestListings}];\r\n`,
     'utf-8'
 );
+
+/**
+ * Generates iconsList.json for filtering icons in Storybook demos and documentation website.
+ *
+ * This function processes the available S1 and S2 icon component names and creates a JSON file
+ * that serves as an allowlist for filtering icons in the iconset Storybook demos. The filtering
+ * ensures that only icons available in the current Spectrum version are displayed to users.
+ *
+ * The function performs the following transformations:
+ * 1. Converts PascalCase component names (e.g., "HeartFilled") to lowercase (e.g., "heartfilled")
+ * 2. Filters out any names that start with numbers (invalid icon names)
+ * 3. Sorts the lists alphabetically for consistent output
+ * 4. Creates separate arrays for S1 and S2 icons
+ * 5. Writes the prettifiedformatted JSON to packages/iconset/stories/iconsList.json
+ *
+ * @example
+ * Input: ["HeartFilled", "AddCircle", "20Asset"]
+ * Output: ["addcircle", "heartfilled"] (20Asset filtered out)
+ *
+ * @example
+ * Generated JSON structure:
+ * {
+ *   "s1": ["abc", "addcircle", "heart", ...],
+ *   "s2": ["accessibility", "addcontent", "heartfilled", ...]
+ * }
+ *
+ *  */
+const generateIconsList = () => {
+    // Helper function to transform component names to lowercase format for iconsList.json
+    const transformIconNames = (nameList) => {
+        return nameList
+            .map((name) =>
+                name.replace(/([A-Z])/g, (match, letter) =>
+                    letter.toLowerCase()
+                )
+            )
+            .filter((name) => !Number.isNaN(Number(name[0])) === false)
+            .sort();
+    };
+
+    const iconsListData = {
+        s1: transformIconNames(iconsV1NameList),
+        s2: transformIconNames(iconsV2NameList),
+    };
+
+    const iconsListPath = path.join(
+        rootDir,
+        'packages',
+        'iconset',
+        'stories',
+        'iconsList.json'
+    );
+
+    prettier
+        .format(JSON.stringify(iconsListData), {
+            parser: 'json',
+            printWidth: 100,
+            tabWidth: 4,
+            useTabs: false,
+        })
+        .then((formattedJson) => {
+            fs.writeFileSync(iconsListPath, formattedJson, 'utf-8');
+        });
+};
+
+generateIconsList();

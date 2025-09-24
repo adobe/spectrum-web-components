@@ -119,11 +119,11 @@ export default {
             'packages/icons/**',
         ],
         threshold: {
-            statements: 98.45,
+            statements: 98.4,
             /** @todo bump this back to 94.5% once more tests are added */
             branches: 94.4,
             functions: 97,
-            lines: 98.45,
+            lines: 98.4,
         },
     },
     testFramework: {

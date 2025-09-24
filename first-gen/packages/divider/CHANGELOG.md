@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5629](https://github.com/adobe/spectrum-web-components/pull/5629) [`826a2d5`](https://github.com/adobe/spectrum-web-components/commit/826a2d533e46a6f945daefa8999fadca78bd8688) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - **Added**: `staticColor` property to the Divider component, enabling programmatic control of the existing static color functionality.
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
