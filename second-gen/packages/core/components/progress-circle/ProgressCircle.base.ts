@@ -15,9 +15,20 @@ import { property, query } from 'lit/decorators.js';
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
 
+import {
+    PROGRESS_CIRCLE_STATIC_COLORS_S2,
+    PROGRESS_CIRCLE_VALID_SIZES,
+    ProgressCircleStaticColor,
+} from './ProgressCircle.types';
+
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l'],
+    validSizes: PROGRESS_CIRCLE_VALID_SIZES,
 }) {
+    /**
+     * @internal
+     */
+    static readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS_S2;
+
     /**
      * Whether the progress circle shows indeterminate progress (loading state).
      * When true, displays an animated loading indicator instead of a specific progress value.
@@ -38,6 +49,14 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
      */
     @property({ type: Number })
     public progress = 0;
+
+    /**
+     * Static color variant for use on different backgrounds.
+     * When set to 'white', the component uses white styling for images with a dark tinted background.
+     * When set to 'black', the component uses black styling for images with a light tinted background.
+     */
+    @property({ reflect: true, attribute: 'static-color' })
+    public staticColor?: ProgressCircleStaticColor;
 
     @query('slot')
     private slotEl!: HTMLSlotElement;

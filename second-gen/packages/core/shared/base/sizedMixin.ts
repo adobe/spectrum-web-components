@@ -34,6 +34,10 @@ export interface SizedElementInterface {
     size: ElementSize;
 }
 
+export interface SizedElementConstructor {
+    readonly VALID_SIZES: ElementSize[];
+}
+
 export function SizedMixin<T extends Constructor<ReactiveElement>>(
     constructor: T,
     {
@@ -45,8 +49,13 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
         noDefaultSize?: boolean;
         defaultSize?: ElementSize;
     } = {}
-): T & Constructor<SizedElementInterface> {
+): T & Constructor<SizedElementInterface> & SizedElementConstructor {
     class SizedElement extends constructor {
+        /**
+         * @internal
+         */
+        static readonly VALID_SIZES: ElementSize[] = validSizes;
+
         @property({ type: String })
         public get size(): ElementSize {
             return this._size || defaultSize;

@@ -14,7 +14,6 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ProgressCircleBase } from '@swc/core/components/progress-circle';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import progressCircleStyles from './progress-circle.css';
 
@@ -46,14 +45,6 @@ export class ProgressCircle extends ProgressCircleBase {
     public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
     }
-
-    /**
-     * Static color variant for use on different backgrounds.
-     * When set to 'white', the component uses white styling for images with a dark tinted background.
-     * When set to 'black', the component uses black styling for images with a light tinted background.
-     */
-    @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white' | 'black';
 
     protected override render(): TemplateResult {
         const strokeWidth = this.size === 's' ? 2 : this.size === 'm' ? 4 : 6;

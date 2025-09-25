@@ -14,6 +14,8 @@ import { html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
+import { ProgressCircle } from '@swc/components/progress-circle';
+
 import '@swc/components/progress-circle';
 
 const meta: Meta = {
@@ -30,12 +32,12 @@ const meta: Meta = {
         },
         size: {
             control: { type: 'select' },
-            options: ['s', 'm', 'l'],
+            options: ProgressCircle.VALID_SIZES,
             description: 'Size of the progress circle.',
         },
         staticColor: {
             control: { type: 'select' },
-            options: [undefined, 'white'],
+            options: [undefined, ...ProgressCircle.STATIC_COLORS],
             description: 'Static color variant.',
         },
         label: {
