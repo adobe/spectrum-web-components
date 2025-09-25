@@ -1,5 +1,24 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5538](https://github.com/adobe/spectrum-web-components/pull/5538) [`cc6e91e`](https://github.com/adobe/spectrum-web-components/commit/cc6e91eca2b5d84769d2ed42758299e2ec57e3b2) Thanks [@tjgupta](https://github.com/tjgupta)! - Replace the use of offsetWidth with a resizeObserver to avoid unecessary, performance-impacting layout reflows.
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/menu@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/action-button@1.8.0
+    - @spectrum-web-components/picker-button@1.8.0
+    - @spectrum-web-components/icon@1.8.0
+    - @spectrum-web-components/icons-ui@1.8.0
+    - @spectrum-web-components/progress-circle@1.8.0
+    - @spectrum-web-components/textfield@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

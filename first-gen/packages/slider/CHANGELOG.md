@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5554](https://github.com/adobe/spectrum-web-components/pull/5554) [`b0570bc`](https://github.com/adobe/spectrum-web-components/commit/b0570bc7a9dcba189d79b8f4d856680330977c57) Thanks [@augustjk](https://github.com/augustjk)! - Editable sliders will now reliably emit `input` events when interaction starts with the track.
+
+- Updated dependencies []:
+    - @spectrum-web-components/theme@1.8.0
+    - @spectrum-web-components/number-field@1.8.0
+    - @spectrum-web-components/field-label@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

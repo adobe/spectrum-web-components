@@ -10,14 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/slider/sp-slider-handle.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Overlay } from '@spectrum-web-components/overlay';
-import { Slider, SliderHandle } from '@spectrum-web-components/slider';
-import { tick } from '../stories/slider.stories.js';
 import {
     elementUpdated,
     expect,
@@ -27,11 +19,19 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import '@spectrum-web-components/button/sp-button.js';
+import { Overlay } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Slider, SliderHandle } from '@spectrum-web-components/slider';
+import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/slider/sp-slider.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy, stub } from 'sinon';
-import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
+import { tick } from '../stories/slider.stories.js';
 
 describe('Slider', () => {
     testForLitDevWarnings(
@@ -107,16 +107,12 @@ describe('Slider', () => {
         expect(el.highlight).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
 
         expect(el.value).to.equal(45);
         expect(el.highlight).to.be.true;
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         await elementUpdated(el);
 
         expect(el.value).to.equal(46);
@@ -339,23 +335,15 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
 
-        const handleBoundingRect = handle.getBoundingClientRect();
-
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        handleBoundingRect.x + handleBoundingRect.width / 2,
-
-                        handleBoundingRect.y + handleBoundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
         await elementUpdated(el);
 
         expect(el.dragging, 'is dragging').to.be.true;
@@ -469,8 +457,6 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
 
-        const handleBoundingRect = handle.getBoundingClientRect();
-
         expect(inputSpy.callCount, 'start clean').to.equal(0);
         expect(changeSpy.callCount, 'start clean').to.equal(0);
 
@@ -492,25 +478,20 @@ describe('Slider', () => {
         }));
         const toLeft: Steps = toRight.slice(0, -1).reverse();
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        handleBoundingRect.x + handleBoundingRect.width / 2,
-                        handleBoundingRect.y + handleBoundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-                ...toRight,
-                ...toLeft,
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+            ...toRight,
+            ...toLeft,
+            {
+                type: 'up',
+            },
+        ]);
         shouldCountFrames = false;
 
         expect(
@@ -529,21 +510,15 @@ describe('Slider', () => {
         expect(el.value).to.equal(6);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        const handleBoundingRect = handle.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        handleBoundingRect.x + handleBoundingRect.width / 2,
-                        handleBoundingRect.y + handleBoundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
         await elementUpdated(el);
 
         expect(el.dragging, 'is dragging').to.be.true;
@@ -572,20 +547,15 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        handleBoundingRect.x + handleBoundingRect.width / 2,
-                        handleBoundingRect.y + handleBoundingRect.height / 2,
-                    ],
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
         await elementUpdated(el);
 
         expect(el.dragging, 'is dragging').to.be.true;
@@ -594,16 +564,10 @@ describe('Slider', () => {
 
         const inputEvent = oneEvent(el, 'input');
         await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        handleBoundingRect.x +
-                            handleBoundingRect.width / 2 +
-                            100,
-                        handleBoundingRect.y + handleBoundingRect.height / 2,
-                    ],
-                },
+            type: 'move',
+            position: [
+                handleBoundingRect.x + handleBoundingRect.width / 2 + 100,
+                handleBoundingRect.y + handleBoundingRect.height / 2,
             ],
         });
         await inputEvent;
@@ -617,14 +581,10 @@ describe('Slider', () => {
         expect(el.highlight, 'not highlighted').to.be.false;
 
         await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        0,
-                        handleBoundingRect.top + handleBoundingRect.height / 2,
-                    ],
-                },
+            type: 'move',
+            position: [
+                0,
+                handleBoundingRect.top + handleBoundingRect.height / 2,
             ],
         });
 
@@ -762,21 +722,16 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
-        const position: [number, number] = [
-            handleBoundingRect.x + handleBoundingRect.width / 2,
-            handleBoundingRect.y + handleBoundingRect.height / 2,
-        ];
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position,
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
 
         await elementUpdated(el);
 
@@ -785,14 +740,10 @@ describe('Slider', () => {
 
         let inputEvent = oneEvent(el, 'input');
         await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        200,
-                        handleBoundingRect.y + handleBoundingRect.height + 100,
-                    ],
-                },
+            type: 'move',
+            position: [
+                200,
+                handleBoundingRect.y + handleBoundingRect.height + 100,
             ],
         });
         await inputEvent;
@@ -802,11 +753,10 @@ describe('Slider', () => {
 
         inputEvent = oneEvent(el, 'input');
         await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [125, position[1]],
-                },
+            type: 'move',
+            position: [
+                125,
+                handleBoundingRect.y + handleBoundingRect.height / 2,
             ],
         });
         await inputEvent;
@@ -973,32 +923,22 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
-        const position: [number, number] = [
-            handleBoundingRect.x + handleBoundingRect.width / 2,
-            handleBoundingRect.y + handleBoundingRect.height / 2,
-        ];
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position,
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
 
         await elementUpdated(el);
         await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        200,
-                        handleBoundingRect.y + handleBoundingRect.height + 100,
-                    ],
-                },
+            type: 'move',
+            position: [
+                200,
+                handleBoundingRect.y + handleBoundingRect.height + 100,
             ],
         });
         await nextFrame();
@@ -1571,9 +1511,7 @@ describe('Slider', () => {
         const lastHandle = el.querySelector('#last-handle') as SliderHandle;
         lastHandle.focus();
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
@@ -1599,37 +1537,29 @@ describe('Slider', () => {
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
-        const position: [number, number] = [
-            handleBoundingRect.x + handleBoundingRect.width / 2,
-            handleBoundingRect.y + handleBoundingRect.height / 2,
-        ];
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position,
-                },
-                {
-                    type: 'down',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [handle],
+            },
+            {
+                type: 'down',
+            },
+        ]);
 
         await elementUpdated(el);
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        150,
-                        handleBoundingRect.y + handleBoundingRect.height + 100,
-                    ],
-                },
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [
+                    150,
+                    handleBoundingRect.y + handleBoundingRect.height + 100,
+                ],
+            },
+            {
+                type: 'up',
+            },
+        ]);
 
         await elementUpdated(el);
 
@@ -1699,9 +1629,7 @@ describe('Slider', () => {
 
         slider.focus();
         // send escape key
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
 
         await elementUpdated(el);
 
@@ -1718,9 +1646,7 @@ describe('Slider', () => {
 
         const closed = oneEvent(el, 'sp-closed');
         // send escape key again
-        await sendKeys({
-            press: 'Escape',
-        });
+        await sendKeys({ press: 'Escape' });
         await closed;
 
         // now the overlay should be closed

@@ -1,5 +1,15 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

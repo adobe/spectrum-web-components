@@ -13,9 +13,11 @@
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 
+import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+import { Tag, Tags } from '@spectrum-web-components/tags';
 import '@spectrum-web-components/tags/sp-tag.js';
 import '@spectrum-web-components/tags/sp-tags.js';
-import { Tag, Tags } from '@spectrum-web-components/tags';
+import { sendKeys } from '@web/test-runner-commands';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -25,10 +27,9 @@ import {
     homeEvent,
     pageDownEvent,
     pageUpEvent,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
-import { sendKeys } from '@web/test-runner-commands';
-import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
 
 describe('Tags', () => {
     testForLitDevWarnings(
@@ -187,42 +188,32 @@ describe('Tags', () => {
         tag1.focus();
         await elementUpdated(el);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
 
         expect(document.activeElement === tag2).to.be.true;
 
-        await sendKeys({
-            press: 'Delete',
-        });
+        await sendKeys({ press: 'Delete' });
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
 
         expect(document.activeElement === tag3).to.be.true;
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
 
         expect(document.activeElement === tag5).to.be.true;
 
-        await sendKeys({
-            press: 'Delete',
-        });
+        await sendKeys({ press: 'Delete' });
         await elementUpdated(el);
         await nextFrame();
         await nextFrame();
@@ -336,14 +327,10 @@ describe('Tags', () => {
         const tagA = tagset2.querySelector('sp-tag:nth-child(1)') as Tag;
         const tagB = tagset2.querySelector('sp-tag:nth-child(2)') as Tag;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === tag1).to.be.true;
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === tagA).to.be.true;
 
         tagset2.dispatchEvent(arrowDownEvent());

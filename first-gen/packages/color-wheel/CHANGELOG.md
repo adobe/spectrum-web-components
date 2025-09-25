@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5641](https://github.com/adobe/spectrum-web-components/pull/5641) [`c3d5558`](https://github.com/adobe/spectrum-web-components/commit/c3d5558a776c6fc607b4f1758372f631d182dfc9) Thanks [@blunteshwar](https://github.com/blunteshwar)! - Fixed `<sp-color-wheel>` step attribute functionality for keyboard navigation. The step attribute now properly controls the increment size when using arrow keys to navigate the color wheel.
+
+- Updated dependencies []:
+    - @spectrum-web-components/color-handle@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

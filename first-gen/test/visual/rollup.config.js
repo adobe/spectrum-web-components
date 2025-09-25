@@ -12,7 +12,9 @@
 import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { copy } from '@web/rollup-plugin-copy';
-import { visualizer } from 'rollup-plugin-visualizer';
+import alias from '@rollup/plugin-alias';
+import replace from '@rollup/plugin-replace';
+import path from 'path';
 
 export default {
     input: 'test/visual/src/index.html',
@@ -22,11 +24,22 @@ export default {
         nodeResolve({
             exportConditions: ['browser', 'production'],
         }),
+        alias({
+            entries: [
+                {
+                    find: /^@swc\/core\/(.*)$/,
+                    replacement: path.resolve(
+                        process.cwd(),
+                        '../second-gen/packages/core/dist/$1'
+                    ),
+                },
+            ],
+        }),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            preventAssignment: true,
+        }),
         html(),
         copy({ patterns: '**/*.json', rootDir: 'test/visual/src' }),
-        visualizer({
-            brotliSize: true,
-            gzipSize: true,
-        }),
     ],
 };

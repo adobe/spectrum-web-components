@@ -37,8 +37,7 @@
         "web components",
         "web-components",
         "lit-element",
-        "lit-html",
-        "monorepo"
+        "lit-html"
     ],
     "devDependencies": {
         "@changesets/cli": "^2.29.6",

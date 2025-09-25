@@ -22,21 +22,25 @@ import {
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import { MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ActionGroup } from '@spectrum-web-components/action-group';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/picker/sp-picker.js';
 import {
     LitElement,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { MenuItem } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/picker/sp-picker.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { ActionGroup } from '@spectrum-web-components/action-group';
+import { sendKeys } from '@web/test-runner-commands';
+import sinon, { spy } from 'sinon';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -44,19 +48,14 @@ import {
     arrowUpEvent,
     endEvent,
     homeEvent,
-    sendMouseFrom,
-    sendMouseTo,
+    mouseClickAway,
+    mouseClickOn,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
-import { sendKeys } from '@web/test-runner-commands';
-import '@spectrum-web-components/action-group/sp-action-group.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
-import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 import '../stories/action-group.stories.js';
-import sinon from 'sinon';
-import { isWebKit } from '@spectrum-web-components/shared';
+import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
@@ -183,7 +182,7 @@ describe('ActionGroup', () => {
         await waitUntil(() => el.children.length === 4);
 
         // press Tab to focus into the action-group
-        await sendKeys({ press: 'Tab' });
+        await sendTabKey();
 
         await elementUpdated(el);
 
@@ -272,7 +271,7 @@ describe('ActionGroup', () => {
 
         // get the bounding box of the first button
         const firstButton = el.querySelector('#first') as ActionButton;
-        sendMouseTo(firstButton, 'click');
+        await mouseClickOn(firstButton);
 
         await elementUpdated(firstButton);
 
@@ -295,7 +294,7 @@ describe('ActionGroup', () => {
         ).to.equal(-1);
 
         // click outside the action-group and it should loose focus and update the tabIndexes
-        sendMouseFrom(el, 'click');
+        await mouseClickAway(el);
 
         await elementUpdated(el);
 
@@ -322,7 +321,7 @@ describe('ActionGroup', () => {
         // get the bounding box of the action-menu
         const actionMenu = el.querySelector('#action-menu') as ActionMenu;
 
-        sendMouseTo(actionMenu, 'click');
+        await mouseClickOn(actionMenu);
         await waitUntil(
             () => actionMenu?.strategy?.overlay?.state === 'opened',
             `action-menu opened (status ${actionMenu?.strategy?.overlay?.state})`,
@@ -332,6 +331,7 @@ describe('ActionGroup', () => {
         expect(actionMenu).to.equal(document.activeElement);
         const closed = oneEvent(el.children[3] as ActionMenu, 'sp-closed');
 
+        // @TODO: handling browser differences in keyboard navigation. Will review in the migration to Spectrum 2.
         if (isWebKit()) {
             // focus on the first menu item as not all items are keyboard focusable in Safari by default
             // https://www.scottohara.me/blog/2014/10/03/link-tabbing-firefox-osx.html
@@ -491,12 +491,12 @@ describe('ActionGroup', () => {
     it('applies `quiet` attribute to slotted children with overlays', async () => {
         const el = await fixture<ActionGroup>(html`
             <quiet-action-group>
-                <overlay-trigger slot="first">
+                <overlay-trigger slot="first" triggered-by="click">
                     <sp-action-button slot="trigger" id="first">
                         First
                     </sp-action-button>
                 </overlay-trigger>
-                <overlay-trigger slot="second">
+                <overlay-trigger slot="second" triggered-by="click">
                     <sp-action-button slot="trigger" id="second">
                         Second
                     </sp-action-button>
@@ -516,12 +516,12 @@ describe('ActionGroup', () => {
     it('applies `emphasized` attribute to slotted children with overlays', async () => {
         const el = await fixture<ActionGroup>(html`
             <emphasized-action-group>
-                <overlay-trigger slot="first">
+                <overlay-trigger slot="first" triggered-by="click">
                     <sp-action-button slot="trigger" id="first">
                         First
                     </sp-action-button>
                 </overlay-trigger>
-                <overlay-trigger slot="second">
+                <overlay-trigger slot="second" triggered-by="click">
                     <sp-action-button slot="trigger" id="second">
                         Second
                     </sp-action-button>
@@ -905,18 +905,7 @@ describe('ActionGroup', () => {
         expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button not selected').to.be.false;
 
-        const rect = icon.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        await mouseClickOn(icon);
         icon.click();
         await elementUpdated(el);
 
@@ -1467,13 +1456,13 @@ describe('ActionGroup', () => {
     it('accepts keybord input with tooltip', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group label="Selects Single Group" selects="single">
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger">First</sp-action-button>
                     <sp-tooltip slot="hover-content">
                         Definitely the first one.
                     </sp-tooltip>
                 </overlay-trigger>
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger" selected>
                         Second
                     </sp-action-button>
@@ -1481,7 +1470,7 @@ describe('ActionGroup', () => {
                         Not the first, not the last.
                     </sp-tooltip>
                 </overlay-trigger>
-                <overlay-trigger>
+                <overlay-trigger triggered-by="click hover">
                     <sp-action-button slot="trigger" class="third">
                         Third
                     </sp-action-button>
@@ -1543,18 +1532,7 @@ describe('ActionGroup', () => {
 
         const changeSpy = spy();
         test.addEventListener('change', () => changeSpy());
-        const rect = actionButtons[1].getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(actionButtons[1]);
 
         await aTimeout(500);
 

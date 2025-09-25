@@ -1,5 +1,28 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5670](https://github.com/adobe/spectrum-web-components/pull/5670) [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Added `allow-outside-click` property to `<sp-overlay>` with deprecation notice. This property allows clicks outside the overlay to close it, but is not recommended for accessibility reasons and will be removed in a future version.
+
+    This property is being added as deprecated to support the fallback for `showModal()` which was removed as part of performance optimization. We will no longer support outside clicks for modal overlays as they violate accessibility guidelines.
+
+    The property defaults to `false` and shows deprecation warnings when used. Consider using explicit close buttons or modal/page overlay types instead for better accessibility.
+
+- [#5710](https://github.com/adobe/spectrum-web-components/pull/5710) [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : Added body scroll prevention for modal and page overlays. Overlay automatically blocks body scroll when modal or page overlays are open and restores the original scroll state when they are closed, improving user experience and accessibility for modal dialogs.
+
+- [#5670](https://github.com/adobe/spectrum-web-components/pull/5670) [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : external click registration behavior in the `sp-overlay` component. Programmatic clicks on elements outside of modal overlays now properly register and close the overlay, while user-initiated clicks are prevented from doing so.
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/theme@1.8.0
+    - @spectrum-web-components/action-button@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Minor Changes

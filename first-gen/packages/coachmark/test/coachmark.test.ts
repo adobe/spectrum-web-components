@@ -41,17 +41,15 @@ const defaultItem: CoachmarkItem = {
 describe('Coachmark', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<Coachmark>(
-                html`
-                    <sp-coachmark
-                        id="coachmark"
-                        .content=${{
-                            title: defaultItem.heading,
-                            description: defaultItem.content,
-                        }}
-                    ></sp-coachmark>
-                `
-            )
+            await fixture<Coachmark>(html`
+                <sp-coachmark
+                    id="coachmark"
+                    .content=${{
+                        title: defaultItem.heading,
+                        description: defaultItem.content,
+                    }}
+                ></sp-coachmark>
+            `)
     );
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(Default());

@@ -25,7 +25,11 @@ import { ColorArea } from '@spectrum-web-components/color-area';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { ColorHandle } from '@spectrum-web-components/color-handle';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    sendShiftTabKey,
+    sendTabKey,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 
 describe('ColorArea', () => {
     testForLitDevWarnings(
@@ -48,7 +52,7 @@ describe('ColorArea', () => {
             <sp-color-area></sp-color-area>
         `);
 
-        await sendKeys({ press: 'Tab' });
+        await sendTabKey();
         await el.updateComplete;
 
         el._pointerDown = true;
@@ -115,44 +119,30 @@ describe('ColorArea', () => {
 
         expect(document.activeElement, 'before input').to.equal(input1);
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await elementUpdated(el);
 
         expect(document.activeElement, 'element').to.equal(el);
         let value = el.value;
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         await elementUpdated(el);
 
         expect(document.activeElement, 'after input').to.equal(input2);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
         await elementUpdated(el);
 
         expect(document.activeElement, 'element again').to.equal(el);
 
         value = el.value;
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement, 'before input again').to.equal(input1);
     });
@@ -308,112 +298,80 @@ describe('ColorArea', () => {
         await nextFrame();
 
         let changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         await changeEvent;
 
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.77);
 
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await changeEvent;
 
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.77);
 
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await changeEvent;
 
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.75);
 
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await changeEvent;
 
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
         el.setAttribute('dir', 'rtl');
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await changeEvent;
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.75);
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await changeEvent;
         changeEvent = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await changeEvent;
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
 
-        await sendKeys({
-            press: 'Home',
-        });
+        await sendKeys({ press: 'Home' });
         await changeEvent;
         expect(el.x).to.equal(0.77);
         expect(el.y).to.equal(0.75);
 
-        await sendKeys({
-            press: 'End',
-        });
+        await sendKeys({ press: 'End' });
         await changeEvent;
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
 
         el.dir = 'ltr';
 
-        await sendKeys({
-            press: 'Home',
-        });
+        await sendKeys({ press: 'Home' });
         await changeEvent;
         expect(el.x).to.equal(0.57);
         expect(el.y).to.equal(0.75);
 
-        await sendKeys({
-            press: 'End',
-        });
+        await sendKeys({ press: 'End' });
         await changeEvent;
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
@@ -429,18 +387,12 @@ describe('ColorArea', () => {
         expect(el.x, 'x').to.equal(0.67);
         expect(el.y, 'y').to.equal(0.75);
 
-        await sendKeys({
-            down: 'Shift',
-        });
+        await sendKeys({ down: 'Shift' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
         // This ensures that all the keystrokes are processed seperately
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
 
@@ -448,26 +400,18 @@ describe('ColorArea', () => {
         expect(el.x, 'first').to.equal(0.67);
         expect(el.y).to.equal(0.85);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         await elementUpdated(el);
 
         expect(el.color).to.equal('hsla(100, 66%, 56%, 1)');
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.85);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
 
         await elementUpdated(el);
 
@@ -475,17 +419,11 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.69);
         expect(el.y).to.equal(0.75);
 
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         await elementUpdated(el);
-        await sendKeys({
-            up: 'Shift',
-        });
+        await sendKeys({ up: 'Shift' });
 
         await elementUpdated(el);
 
