@@ -7,7 +7,7 @@ executors:
         resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.55.1-noble
+            - image: mcr.microsoft.com/playwright:v1.53.1-noble
         resource_class: xlarge
         environment:
             NODE_ENV: development
@@ -22,7 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: da6da22dec85163edb697d494830b8683d33bb10
+        default: 3fb5ba95eb096b5a9b4f19c01030fcc985719399
     temp_hcm_golden_images_hash:
         type: string
         default: fe30e066f58d73af2c9591c27b97f2f44c632823
