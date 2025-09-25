@@ -29,6 +29,10 @@
             "development": "./src/FieldLabel.dev.js",
             "default": "./src/FieldLabel.js"
         },
+        "./src/FieldLabelMixin.js": {
+            "development": "./src/FieldLabelMixin.dev.js",
+            "default": "./src/FieldLabelMixin.js"
+        },
         "./src/field-label-overrides.css.js": "./src/field-label-overrides.css.js",
         "./src/field-label.css.js": "./src/field-label.css.js",
         "./src/index.js": {
@@ -38,6 +42,10 @@
         "./sp-field-label.js": {
             "development": "./sp-field-label.dev.js",
             "default": "./sp-field-label.js"
+        },
+        "./sp-field-label-mixin.js": {
+            "development": "./sp-field-label-mixin.dev.js",
+            "default": "./sp-field-label-mixin.js"
         }
     },
     "scripts": {
