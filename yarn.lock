@@ -2973,12 +2973,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit-labs/observers@npm:2.0.2":
-  version: 2.0.2
-  resolution: "@lit-labs/observers@npm:2.0.2"
+"@lit-labs/observers@npm:2.0.6":
+  version: 2.0.6
+  resolution: "@lit-labs/observers@npm:2.0.6"
   dependencies:
     "@lit/reactive-element": "npm:^1.0.0 || ^2.0.0"
-  checksum: 10c0/77099b1596bf053a3378abbd9ab0e0edb2ab2602de9aa86ed8e7238ea64803cc9c5c8fdd61f100d06ae11a187dbd5b8df4dafec7cbbd4066e4f6afb335a7c816
+    lit-html: "npm:^3.2.0"
+  checksum: 10c0/2e9559beb3b48af9ad6ac4593ec3a15cb8600cf9867ff7b07eb19cc543dc2b5d87aabdd072f007cb389c79bf3a0ef517cebc292e97d95f7153deb1166c66bef1
   languageName: node
   linkType: hard
 
@@ -3994,7 +3995,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-group@workspace:packages/action-group"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/action-button": "npm:1.8.0"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/icons-workflow": "npm:1.8.0"
@@ -4029,7 +4030,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/alert-dialog@workspace:packages/alert-dialog"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/button": "npm:1.8.0"
     "@spectrum-web-components/button-group": "npm:1.8.0"
@@ -4453,7 +4454,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/grid@workspace:tools/grid"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@lit-labs/virtualizer": "npm:2.0.12"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.8.0"
@@ -4560,7 +4561,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/menu@workspace:packages/menu"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/action-button": "npm:1.8.0"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/divider": "npm:1.8.0"
@@ -4731,7 +4732,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/shared@workspace:tools/shared"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/base": "npm:1.8.0"
     focus-visible: "npm:5.2.1"
   languageName: unknown
@@ -4752,7 +4753,7 @@ __metadata:
   resolution: "@spectrum-web-components/slider@workspace:packages/slider"
   dependencies:
     "@internationalized/number": "npm:3.6.5"
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/field-label": "npm:1.8.0"
     "@spectrum-web-components/number-field": "npm:1.8.0"
@@ -4809,7 +4810,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/swatch@workspace:packages/swatch"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/icon": "npm:1.8.0"
     "@spectrum-web-components/icons-ui": "npm:1.8.0"
@@ -4832,7 +4833,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/table@workspace:packages/table"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@lit-labs/virtualizer": "npm:2.0.12"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/checkbox": "npm:1.8.0"
@@ -4845,7 +4846,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tabs@workspace:packages/tabs"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/action-button": "npm:1.8.0"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/icon": "npm:1.8.0"
@@ -4924,7 +4925,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/top-nav@workspace:packages/top-nav"
   dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
+    "@lit-labs/observers": "npm:2.0.6"
     "@spectrum-web-components/base": "npm:1.8.0"
     "@spectrum-web-components/shared": "npm:1.8.0"
     "@spectrum-web-components/tabs": "npm:1.8.0"
@@ -16608,7 +16609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.3.0":
+"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.2.0, lit-html@npm:^3.3.0":
   version: 3.3.1
   resolution: "lit-html@npm:3.3.1"
   dependencies:

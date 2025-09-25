@@ -106,7 +106,7 @@
         "css"
     ],
     "dependencies": {
-        "@lit-labs/observers": "2.0.2",
+        "@lit-labs/observers": "2.0.6",
         "@spectrum-web-components/base": "1.8.0",
         "focus-visible": "5.2.1"
     },
