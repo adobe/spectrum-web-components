@@ -69,6 +69,7 @@ commands:
                   name: Build the project
                   command: |
                       cd second-gen/packages/core && yarn build
+                      cd second-gen/packages/swc && yarn build
                       cd ../../../first-gen && yarn build
 
             - save_cache:
