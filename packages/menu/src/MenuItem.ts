@@ -482,7 +482,8 @@ export class MenuItem extends LikeAnchor(
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
-            this.focus();
+            // Track hovered item for keyboard navigation without stealing focus
+            this.menuData.parentMenu?.setHoveredItem(this);
             this.focused = false;
         }
     }
