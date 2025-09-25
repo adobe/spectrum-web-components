@@ -87,7 +87,7 @@ A table consists of the following parts:
 
 ### Options
 
-<sp-tabs selected="selection" auto label="Table Options">
+<sp-tabs selected="selection" auto label="Table options">
 <sp-tab value="selection">Selection</sp-tab>
 <sp-tab-panel value="selection">
 
