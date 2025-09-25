@@ -32,31 +32,21 @@ export async function clickBySelector(
     options: { button?: 'left' | 'right' | 'middle' } = {}
 ): Promise<void> {
     const target = el.shadowRoot.querySelector(selector) as HTMLElement;
-    const targetRect = target.getBoundingClientRect();
-    await sendMouse({
-        steps: [
-            {
-                type: 'move',
-                position: [
-                    targetRect.x + targetRect.width / 2,
-                    targetRect.y + targetRect.height / 2,
-                ],
-                options,
-            },
-            {
-                type: 'down',
-                options,
-            },
-        ],
-    });
+    await sendMouse([
+        {
+            type: 'move',
+            position: [target],
+            options,
+        },
+        {
+            type: 'down',
+            options,
+        },
+    ]);
     await nextFrame();
     await sendMouse({
-        steps: [
-            {
-                type: 'up',
-                options,
-            },
-        ],
+        type: 'up',
+        options,
     });
     await elementUpdated(el);
 }

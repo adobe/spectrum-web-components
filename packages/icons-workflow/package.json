@@ -1,34 +1,27 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
     "version": "1.8.0",
-    "publishConfig": {
-        "access": "public"
-    },
     "description": "",
     "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/icons-workflow"
-    },
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
+    "repository": {
+        "directory": "packages/icons-workflow",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
     "type": "module",
     "exports": {
         ".": "./src/index.js",
-        "./src/*": "./src/*",
         "./icons/*": "./icons/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./src/*": "./src/*"
     },
-    "scripts": {
-        "build": "node ./bin/build.js",
-        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
-    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
     "files": [
         "**/*.d.ts",
         "**/*.js",
@@ -38,18 +31,15 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
+    "scripts": {
+        "build": "node ./bin/build.js",
+        "build-icons-mapping": "node ./bin/build-icons-mapping.js"
+    },
+    "sideEffects": [
+        "./src/index.js",
+        "./icons/*"
     ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/base": "1.8.0",
         "@spectrum-web-components/icon": "1.8.0"
@@ -62,10 +52,20 @@
         "fast-glob": "3.3.3",
         "prettier": "3.6.2"
     },
-    "types": "./src/index.d.ts",
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
     "customElements": "custom-elements.json",
-    "sideEffects": [
-        "./src/index.js",
-        "./icons/*"
-    ]
+    "publishConfig": {
+        "access": "public"
+    }
 }

@@ -215,6 +215,7 @@ export class AbstractOverlay extends SpectrumElement {
         document.dispatchEvent(overlayUpdateEvent);
     }
 
+    // @TODO remove this long standing legacy API
     /**
      * Overloaded imperative API entry point that allows for both the pre-0.37.0
      * argument signature as well as the post-0.37.0 signature. This allows for
@@ -240,6 +241,7 @@ export class AbstractOverlay extends SpectrumElement {
         content?: HTMLElement,
         optionsV1?: OverlayOptionsV1
     ): Promise<Overlay | (() => void)> {
+        // eslint-disable-next-line import/no-extraneous-dependencies
         await import('@spectrum-web-components/overlay/sp-overlay.js');
         const v2 = arguments.length === 2;
         const overlayContent = content || triggerOrContent;

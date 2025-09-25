@@ -101,7 +101,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     /**
      * The Spectrum system that is applied to the content scoped to this `sp-theme` element.
      *
-     * A value is requried.
+     * A value is required.
      * @type {"spectrum" | "express" }
      * @attr
      */
@@ -135,7 +135,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     /**
      * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
      *
-     * A value is requried.
+     * A value is required.
      * @type {"lightest" | "light" | "dark" | "darkest" | ""}
      * @attr
      */
@@ -168,7 +168,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     /**
      * The Spectrum platform scale to apply to content scoped by this `sp-theme` element.
      *
-     * A value is requried.
+     * A value is required.
      * @type {"medium" | "large" | ""}
      * @attr
      */
@@ -308,7 +308,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     public updateComplete!: Promise<boolean>;
-    private __resolve!: (compelted: boolean) => void;
+    private __resolve!: (completed: boolean) => void;
 
     private __createDeferredPromise(): Promise<boolean> {
         return new Promise((resolve) => {

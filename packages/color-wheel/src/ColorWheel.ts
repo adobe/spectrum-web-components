@@ -16,14 +16,12 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import type { ColorHandle } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import {
@@ -31,6 +29,7 @@ import {
     ColorTypes,
 } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import styles from './color-wheel.css.js';
 
@@ -403,21 +402,18 @@ export class ColorWheel extends Focusable {
         }
     }
 
-    private observer?: WithSWCResizeObserver['ResizeObserver'];
+    private observer?: ResizeObserver;
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        if (
-            !this.observer &&
-            (window as unknown as WithSWCResizeObserver).ResizeObserver
-        ) {
-            this.observer = new (
-                window as unknown as WithSWCResizeObserver
-            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
-                for (const entry of entries) {
-                    this.boundingClientRect = entry.contentRect;
-                }
-                this.requestUpdate();
+        if (!this.observer && window.ResizeObserver) {
+            this.observer = new ResizeObserver((entries) => {
+                requestAnimationFrame(() => {
+                    for (const entry of entries) {
+                        this.boundingClientRect = entry.contentRect;
+                    }
+                    this.requestUpdate();
+                });
             });
         }
         this.observer?.observe(this);

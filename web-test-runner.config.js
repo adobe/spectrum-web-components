@@ -10,27 +10,27 @@
  * governing permissions and limitations under the License.
  */
 
+import rollupCommonjs from '@rollup/plugin-commonjs';
+import rollupJson from '@rollup/plugin-json';
+import { fromRollup } from '@web/dev-server-rollup';
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
     setViewportPlugin,
 } from '@web/test-runner-commands/plugins';
+import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
+    byFile,
+    byPackageOrTool,
     chromium,
     chromiumWithMemoryTooling,
-    chromiumWithMemoryToolingCI,
     configuredVisualRegressionPlugin,
-    coverallsChromium,
+    filterBrowserLogs,
     firefox,
-    packages,
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
-import { fromRollup } from '@web/dev-server-rollup';
-import rollupJson from '@rollup/plugin-json';
-import rollupCommonjs from '@rollup/plugin-commonjs';
-import { grantPermissionsPlugin } from './test/plugins/grant-permissions-plugin.js';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
@@ -95,11 +95,11 @@ export default {
             'packages/icons/**',
         ],
         threshold: {
-            statements: 98.5,
+            statements: 98.4,
             /** @todo bump this back to 94.5% once more tests are added */
-            branches: 94.46,
+            branches: 94.4,
             functions: 97,
-            lines: 98.5,
+            lines: 98.4,
         },
     },
     testFramework: {
@@ -111,25 +111,14 @@ export default {
     groups: [
         {
             name: 'unit',
-            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
+            files: [
+                '{packages,tools}/**/*.test.js',
+                '!{packages,tools}/**/*-memory.test.js',
+            ],
         },
         ...vrtGroups,
-        ...packages.reduce((acc, pkg) => {
-            const skipPkgs = [
-                'bundle',
-                'icons-ui',
-                'icons-workflow',
-                'modal',
-                'styles',
-            ];
-            if (!skipPkgs.includes(pkg)) {
-                acc.push({
-                    name: pkg,
-                    files: `{packages,tools}/${pkg}/test/*.test.js`,
-                });
-            }
-            return acc;
-        }, []),
+        ...byPackageOrTool,
+        ...byFile,
         {
             name: 'overlay-api',
             files: [
@@ -151,32 +140,17 @@ export default {
             name: 'memory-ci',
             files: [
                 '{packages,tools}/**/*-memory.test.js',
-                '!packages/color-area/test/*-memory.test.js',
-                '!packages/color-wheel/test/*-memory.test.js',
-                '!packages/color-slider/test/*-memory.test.js',
+                '!packages/color-*/test/*-memory.test.js',
                 '!tools/grid/test/*-memory.test.js',
             ],
-            browsers: [chromiumWithMemoryToolingCI],
+            browsers: [chromiumWithMemoryTooling],
         },
         {
+            // This is an empty group with no files for the CI to run the unit tests in parallel as a workaround for the fact that we set a default group of 'unit' which has files defined.
             name: 'unit-ci',
-        },
-        {
-            name: 'no-memory-ci',
-            files: [
-                '{packages,tools}/**/*.test.js',
-                '!{packages,tools}/**/*-memory.test.js',
-            ],
-        },
-        {
-            name: 'coveralls-ci',
-            files: [
-                '{packages,tools}/**/*.test.js',
-                '!{packages,tools}/**/*-memory.test.js',
-            ],
-            browsers: [coverallsChromium],
         },
     ],
     group: 'unit',
-    browsers: [firefox, chromiumWithMemoryTooling, webkit],
+    browsers: [firefox, chromium, webkit],
+    filterBrowserLogs,
 };

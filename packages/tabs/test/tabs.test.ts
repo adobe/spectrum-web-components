@@ -204,17 +204,11 @@ describe('Tabs', () => {
 
         expect(el.selected).to.equal('second');
         el.focus();
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         expect(el.selected).to.equal('first');
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
         expect(el.selected).to.equal('third');
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         expect(el.selected).to.equal('first');
     });
 

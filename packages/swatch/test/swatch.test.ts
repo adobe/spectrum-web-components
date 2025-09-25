@@ -10,13 +10,17 @@
  * governing permissions and limitations under the License.
  */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
-import '@spectrum-web-components/swatch/sp-swatch.js';
-import { Swatch } from '../src/Swatch.js';
 import { ElementSize } from '@spectrum-web-components/base';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
+import {
+    sendShiftTabKey,
+    sendTabKey,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { Swatch } from '../src/Swatch.js';
 
 describe('Swatch', () => {
     let el: Swatch;
@@ -98,9 +102,7 @@ describe('Swatch', () => {
         expect(el.selected).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         expect(el.selected).to.be.true;
     });
@@ -108,15 +110,11 @@ describe('Swatch', () => {
         expect(el.selected).to.be.false;
 
         el.focus();
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         expect(el.selected).to.be.true;
 
-        await sendKeys({
-            press: 'NumpadEnter',
-        });
+        await sendKeys({ press: 'NumpadEnter' });
 
         expect(el.selected).to.be.false;
     });
@@ -169,17 +167,11 @@ describe('Swatch', () => {
         el.insertAdjacentElement('afterend', inputAfter);
         inputBefore.focus();
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === el).to.be.true;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
         expect(document.activeElement === el).to.be.true;
     });
     it('is not in the tab order when [disabled]', async () => {
@@ -192,13 +184,9 @@ describe('Swatch', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement === el).to.be.false;
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
         expect(document.activeElement === el).to.be.false;
     });
 });

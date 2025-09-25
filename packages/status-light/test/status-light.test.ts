@@ -15,11 +15,9 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Status Light', () => {
     it('loads correctly', async () => {
-        const el = await fixture<StatusLight>(
-            html`
-                <sp-status-light variant="positive"></sp-status-light>
-            `
-        );
+        const el = await fixture<StatusLight>(html`
+            <sp-status-light variant="positive"></sp-status-light>
+        `);
 
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
@@ -29,11 +27,9 @@ describe('Status Light', () => {
         expect(rootEl).to.not.be.undefined;
     });
     it('[disabled] manages [aria-disabled]', async () => {
-        const el = await fixture<StatusLight>(
-            html`
-                <sp-status-light variant="positive"></sp-status-light>
-            `
-        );
+        const el = await fixture<StatusLight>(html`
+            <sp-status-light variant="positive"></sp-status-light>
+        `);
 
         await elementUpdated(el);
 
