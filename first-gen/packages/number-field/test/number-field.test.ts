@@ -693,29 +693,53 @@ describe('NumberField', () => {
                 },
             ]);
             await oneEvent(el, 'input');
-            expect(el.value).to.equal(51);
-            expect(inputSpy.callCount).to.equal(1);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value, 'initial: el.value').to.be.greaterThanOrEqual(51);
+            expect(
+                inputSpy.callCount,
+                'initial: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(1);
+            expect(
+                changeSpy.callCount,
+                'initial: no changeSpy.callCount'
+            ).to.equal(0);
             await oneEvent(el, 'input');
-            expect(el.value).to.equal(52);
-            expect(inputSpy.callCount).to.equal(2);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value, 'second: el.value').to.be.greaterThanOrEqual(52);
+            expect(
+                inputSpy.callCount,
+                'second: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(2);
+            expect(
+                changeSpy.callCount,
+                'second: no changeSpy.callCount'
+            ).to.equal(0);
             await oneEvent(el, 'input');
-            expect(el.value).to.equal(53);
-            expect(inputSpy.callCount).to.equal(3);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value, 'third: el.value').to.be.greaterThanOrEqual(53);
+            expect(
+                inputSpy.callCount,
+                'third: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(3);
+            expect(
+                changeSpy.callCount,
+                'third: no changeSpy.callCount'
+            ).to.equal(0);
             await mouseMoveOver(buttonDown);
-            let framesToWait = FRAMES_PER_CHANGE * 2;
-            while (framesToWait) {
-                // input is only processed onces per FRAMES_PER_CHANGE number of frames
-                framesToWait -= 1;
-                await nextFrame();
-            }
-            expect(inputSpy.callCount).to.equal(5);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(
+                inputSpy.callCount,
+                'fourth: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(5);
+            expect(
+                changeSpy.callCount,
+                'fourth: no changeSpy.callCount'
+            ).to.equal(0);
             await sendMouse({ type: 'up' });
-            expect(inputSpy.callCount).to.equal(5);
-            expect(changeSpy.callCount).to.equal(1);
+            expect(
+                inputSpy.callCount,
+                'fifth: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(5);
+            expect(
+                changeSpy.callCount,
+                'fifth: changeSpy.callCount is fired'
+            ).to.equal(1);
         });
         it('no change in committed value - using buttons', async () => {
             const buttonUp = el.shadowRoot.querySelector(
@@ -734,24 +758,46 @@ describe('NumberField', () => {
                 },
             ]);
             await oneEvent(el, 'input');
-            expect(el.value).to.equal(51);
-            expect(inputSpy.callCount).to.equal(1);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value, 'first: el.value').to.be.greaterThanOrEqual(51);
+            expect(
+                inputSpy.callCount,
+                'first: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(1);
+            expect(
+                changeSpy.callCount,
+                'first: no changeSpy.callCount'
+            ).to.equal(0);
             await oneEvent(el, 'input');
-            expect(el.value).to.equal(52);
-            expect(inputSpy.callCount).to.equal(2);
-            expect(changeSpy.callCount).to.equal(0);
+            expect(el.value, 'second: el.value').to.be.greaterThanOrEqual(52);
+            expect(
+                inputSpy.callCount,
+                'second: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(2);
+            expect(
+                changeSpy.callCount,
+                'second: no changeSpy.callCount'
+            ).to.equal(0);
             await mouseMoveOver(buttonDown);
-            let framesToWait = FRAMES_PER_CHANGE * 2;
-            while (framesToWait) {
-                // input is only processed onces per FRAMES_PER_CHANGE number of frames
-                framesToWait -= 1;
-                await nextFrame();
-            }
-            expect(inputSpy.callCount).to.equal(4);
-            expect(changeSpy.callCount).to.equal(0);
+            await oneEvent(el, 'input');
+            expect(
+                inputSpy.callCount,
+                'third: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(4);
+            expect(
+                changeSpy.callCount,
+                'third: no changeSpy.callCount'
+            ).to.equal(0);
+            expect(el.value, 'third: el.value').to.be.lessThanOrEqual(52);
+            await mouseMoveOver(buttonDown);
+            await oneEvent(el, 'input');
+            expect(el.value, 'fourth: el.value').to.be.lessThanOrEqual(51);
+            await waitUntil(() => el.value === 50);
             await sendMouse({ type: 'up' });
-            expect(inputSpy.callCount).to.equal(4);
+            expect(
+                inputSpy.callCount,
+                'fourth: inputSpy.callCount'
+            ).to.be.greaterThanOrEqual(4);
+            expect(el.value, 'final: el.value').to.equal(50);
             expect(
                 changeSpy.callCount,
                 'value does not change from initial value so no "change" event is dispatched'

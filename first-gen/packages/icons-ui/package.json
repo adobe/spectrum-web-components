@@ -55,14 +55,12 @@
         "@spectrum-web-components/iconset": "1.8.0"
     },
     "devDependencies": {
-        "@spectrum-css/ui-icons": "^1.1.2",
+        "@spectrum-css/ui-icons": "1.1.2",
         "@spectrum-css/ui-icons-s2": "npm:@spectrum-css/ui-icons@2.0.0-s2-foundations.10",
-        "case": "^1.6.1",
-        "cheerio": "^1.0.0-rc.2",
-        "fast-glob": "^3.3.3",
-        "fs": "^0.0.1-security",
-        "path": "^0.12.7",
-        "prettier": "^3.5.3"
+        "case": "1.6.3",
+        "cheerio": "1.1.2",
+        "fast-glob": "3.3.3",
+        "prettier": "3.6.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
