@@ -27,7 +27,7 @@
         "packages/*"
     ],
     "devDependencies": {
-        "eslint-plugin-simple-import-sort": "^12.1.1"
+        "eslint-plugin-simple-import-sort": "12.1.1"
     },
     "keywords": [
         "design-system",
