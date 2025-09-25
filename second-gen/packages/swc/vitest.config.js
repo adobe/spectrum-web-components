@@ -13,17 +13,17 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-    // optimizeDeps: {
-    //     exclude: [
-    //         'playwright',
-    //         'playwright-core',
-    //         '@playwright/test',
-    //         'storybook',
-    //         '@storybook/addon-vitest',
-    //         'fs',
-    //         'crypto',
-    //     ],
-    // },
+    optimizeDeps: {
+        exclude: [
+            'playwright',
+            'playwright-core',
+            '@playwright/test',
+            'storybook',
+            '@storybook/addon-vitest',
+            'fs',
+            'crypto',
+        ],
+    },
     test: {
         // Default test configuration
         browser: {
@@ -74,6 +74,25 @@ export default defineConfig({
                     // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
                     storybookTest(),
                 ],
+                define: {
+                    global: 'globalThis',
+                    process: {
+                        env: {},
+                    },
+                },
+                optimizeDeps: {
+                    exclude: [
+                        'playwright',
+                        'playwright-core',
+                        '@playwright/test',
+                        'storybook',
+                        '@storybook/addon-vitest',
+                        'fs',
+                        'crypto',
+                        'path',
+                        'os',
+                    ],
+                },
                 test: {
                     name: 'storybook',
                     browser: {
