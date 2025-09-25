@@ -20,7 +20,6 @@
 #tooltip {
     width: fit-content;
     white-space: initial;
-    max-width: var(--spectrum-tooltip-max-inline-size);
 }
 
 #tip {
