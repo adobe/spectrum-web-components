@@ -168,7 +168,7 @@
         "express": "4.21.2",
         "fast-glob": "3.3.3",
         "fs-extra": "11.3.2",
-        "geckodriver": "4.4.0",
+        "geckodriver": "4.5.1",
         "genversion": "3.2.0",
         "gh-pages": "6.3.0",
         "gunzip-maybe": "1.4.2",
