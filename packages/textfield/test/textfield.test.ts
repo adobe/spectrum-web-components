@@ -51,6 +51,21 @@ describe('Textfield', () => {
 
         await expect(el).to.be.accessible();
     });
+    testForLitDevWarnings(
+        async () =>
+            await litFixture<Textfield>(html`
+                <sp-textfield label="Enter Your Name"></sp-textfield>
+            `)
+    );
+    it('loads textfield with slotted label accessibly', async () => {
+        const el = await litFixture<Textfield>(html`
+            <sp-textfield>Enter Your Name</sp-textfield>
+        `);
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
 
     it('manages tabIndex while disabled', async () => {
         const el = await litFixture<Textfield>(html`
