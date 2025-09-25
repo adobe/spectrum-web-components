@@ -265,7 +265,9 @@ None found for this component.
 ### CSS => SWC implementation gaps
 
 **New for S2:**
-The checkbox component in Spectrum 2 has the new down state (active) perspective shift applied. Additionally, the checkbox CSS was expanded to ensure coverage of a variety of interactive and variant states: hover, focus-visible, hover+disabled, checked+disabled, focus-visible+checked+hover, indeterminate+invalid, invalid+focused, disabled+read-only, etc.
+The checkbox component in Spectrum 2 has the new down state (active) perspective shift applied.
+
+Note: There is some discussion ongoing about the invalid styles for checkbox. Currently, CSS supports individual red borders on the checkbox component, however, these styles are not present in the Figma specs for checkbox. The only invalid styling supported by design is the negative help text found in the field group component. When migrating, we'll need to consider clarifying the invalid styling with the design team for individual checkboxes.
 
 **Features Missing from CSS:**
 
