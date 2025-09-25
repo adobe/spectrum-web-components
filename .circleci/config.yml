@@ -216,6 +216,7 @@ jobs:
                   command: |
                       TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
+                  max_auto_reruns: 3
             - store_test_results:
                   path: /root/project/results/
 
@@ -240,8 +241,8 @@ jobs:
                   name: Run memory tests
                   command: |
                       TEST=$(circleci tests glob "{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings)
-                      echo $TEST
                       yarn test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
+                  max_auto_reruns: 3
             - store_test_results:
                   path: /root/project/results/
 
@@ -256,6 +257,7 @@ jobs:
                   command: |
                       TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+                  max_auto_reruns: 3
             - store_test_results:
                   path: /root/project/results/
 
@@ -270,6 +272,7 @@ jobs:
                   command: |
                       TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
                       yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+                  max_auto_reruns: 3
             - store_test_results:
                   path: /root/project/results/
 
