@@ -11,10 +11,33 @@
  */
 
 import standard from './web-test-runner.config.ci.js';
+import { playwrightLauncher } from '@web/test-runner-playwright';
+
+// Override the chromium browser with VRT-specific flags for stable rendering
+const chromiumVRT = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+            permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
+        }),
+    launchOptions: {
+        args: [
+            '--disable-font-subpixel-positioning',
+            '--disable-lcd-text',
+            '--force-color-profile=srgb',
+            '--force-device-scale-factor=1',
+        ],
+    },
+});
 
 standard.concurrency = 4;
 standard.testsFinishTimeout = 200000;
 standard.testFramework.config.timeout = 100000;
 standard.testFramework.config.retries = 0;
+
+// Replace the browsers array with our VRT-optimized chromium
+standard.browsers = [chromiumVRT];
 
 export default standard;
