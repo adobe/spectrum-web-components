@@ -22,6 +22,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 
 import styles from './field-label.css.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
@@ -42,7 +43,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
     superClass: T
 ) => {
     class FieldLabelMixinClass extends superClass {
-        static styles(): CSSResultArray {
+        public static get styles(): CSSResultArray {
             return [styles, asteriskIconStyles];
         }
 
@@ -55,10 +56,13 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         @property({ type: String, reflect: true, attribute: 'side-aligned' })
         public sideAligned?: 'start' | 'end';
 
-        protected renderFieldLabel(fieldId: string = ''): TemplateResult {
+        protected renderFieldLabel(
+            fieldId: string = '',
+            slotName?: string
+        ): TemplateResult {
             return html`
                 <label for="${fieldId}">
-                    <slot name="field-label"></slot>
+                    <slot name="${ifDefined(slotName)}"></slot>
                     ${this.required
                         ? html`
                               <sp-icon-asterisk100
