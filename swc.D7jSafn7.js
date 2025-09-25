@@ -1,0 +1,2 @@
+import{r as e}from"./swc.mUX8iMJZ.js";customElements.whenDefined("code-example").then(()=>{customElements.whenDefined("sp-overlay").then(()=>{document.querySelector('[trigger="js-trigger@click"]').addEventListener("slottable-request",function(n){n.data===e?this.innerHTML="":this.innerHTML="\n                <sp-popover>\n                    <p>This content will display within the Overlay and <em>only</em> be on the DOM when the Overlay is open.</p>\n                </sp-popover>\n                "})})});
+//# sourceMappingURL=swc.BX7-0w8U.js.map
