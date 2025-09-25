@@ -9,3 +9,10 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+/* Override divider background color when used inside alert-dialog */
+.divider {
+    --spectrum-divider-background-color: var(--system-alert-dialog-divider-background-color);
+    --spectrum-divider-background-color-static-white: var(--spectrum-alert-dialog-divider-background-color-static-white);
+    --spectrum-divider-background-color-static-black: var(--spectrum-alert-dialog-divider-background-color-static-black);
+}

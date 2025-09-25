@@ -22,7 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: da6da22dec85163edb697d494830b8683d33bb10
+        default: 1c1fd165262e5b50ee1e708f6838df7a6ff5e855
     wireit_cache_name:
         type: string
         default: wireit
@@ -153,7 +153,7 @@ commands:
                                   -H "Accept: application/vnd.github+json" \
                                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
                                   | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                              
+
                               if [ -n "$PR_NUMBER" ]; then
                                   echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
                               else
@@ -381,7 +381,7 @@ jobs:
                                   -H "Accept: application/vnd.github+json" \
                                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
                                   | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                              
+
                               if [ -n "$PR_NUMBER" ]; then
                                   echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
                               else
