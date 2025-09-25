@@ -73,6 +73,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
     /**
+     * Tracks the last hovered menu item for keyboard navigation
+     */
+    private hoveredItem?: MenuItem;
+
+    /**
+     * Tracks whether we have a global keyboard listener active
+     */
+    private hasGlobalKeyListener = false;
+
+    /**
      * iPad scroll detection properties
      *
      * This feature prevents menu item selection during iPad scrolling to avoid
@@ -103,30 +113,30 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     /**
      * Minimum vertical movement (in pixels) required to trigger scrolling detection.
-     * 
+     *
      * This threshold is consistent with other components in the design system:
      * - Card component uses 10px for click vs. drag detection
      * - Menu component uses 10px for scroll vs. selection detection
-     * 
+     *
      * The 10px threshold is carefully chosen to:
      * - Allow for natural finger tremor and accidental touches
      * - Distinguish between intentional scroll gestures and taps
      * - Provide consistent behavior across the platform
-     * 
+     *
      * @see {@link packages/card/src/Card.ts} for similar threshold usage
      */
     private scrollThreshold = 10; // pixels
 
     /**
      * Maximum time (in milliseconds) for a movement to be considered scrolling.
-     * 
+     *
      * This threshold is consistent with other timing values in the design system:
      * - Longpress duration: 300ms (ActionButton, LongpressController)
      * - Scroll detection: 300ms (Menu component)
-     * 
+     *
      * Quick movements within this timeframe are likely intentional scrolls,
      * while slower movements are more likely taps or selections.
-     * 
+     *
      * @see {@link packages/action-button/src/ActionButton.ts} for longpress duration
      * @see {@link packages/overlay/src/LongpressController.ts} for longpress duration
      */
@@ -431,6 +441,26 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 new RovingTabindexController<MenuItem>(this, {
                     direction: 'vertical',
                     focusInIndex: (elements: MenuItem[] | undefined) => {
+                        // If we have a hovered item and no current focus, use it for transition
+                        if (
+                            this.hoveredItem &&
+                            elements?.includes(this.hoveredItem) &&
+                            !this.matches(':focus-within')
+                        ) {
+                            const hoveredIndex = elements.indexOf(
+                                this.hoveredItem
+                            );
+                            if (
+                                hoveredIndex !== -1 &&
+                                !this.hoveredItem.disabled
+                            ) {
+                                // Clear hovered item after using it for focus transition
+                                this.hoveredItem = undefined;
+                                return hoveredIndex;
+                            }
+                        }
+
+                        // Fall back to original logic (selected item or first enabled)
                         let firstEnabledIndex = -1;
                         const firstSelectedIndex = elements?.findIndex(
                             (el, index) => {
@@ -525,6 +555,51 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     /**
+     * Sets the hovered item for keyboard navigation without stealing focus
+     */
+    public setHoveredItem(item: MenuItem): void {
+        this.hoveredItem = item;
+
+        // Add global keyboard listener when we have a hovered item
+        if (item && !this.hasGlobalKeyListener) {
+            this.hasGlobalKeyListener = true;
+            document.addEventListener(
+                'keydown',
+                this.handleGlobalKeydown,
+                true
+            );
+        }
+    }
+
+    /**
+     * Handle global keyboard events for hover-to-focus transition
+     */
+    private handleGlobalKeydown = (event: KeyboardEvent): void => {
+        if (
+            [
+                'ArrowUp',
+                'ArrowDown',
+                'ArrowLeft',
+                'ArrowRight',
+                'Home',
+                'End',
+            ].includes(event.key)
+        ) {
+            if (this.hoveredItem) {
+                // Focus the menu to enable keyboard navigation
+                this.focus();
+                // Clear the global listener
+                this.hasGlobalKeyListener = false;
+                document.removeEventListener(
+                    'keydown',
+                    this.handleGlobalKeydown,
+                    true
+                );
+            }
+        }
+    };
+
+    /**
      * Handles touchstart events for iPad scroll detection.
      *
      * Records the initial touch position and timestamp to establish a baseline
@@ -576,7 +651,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Resets the scrolling state after a short delay (100ms) to allow for
      * any final touch events to be processed. This delay prevents immediate
      * state changes that could interfere with the selection logic.
-     * 
+     *
      * The 100ms delay is consistent with the design system's approach to
      * touch event handling and ensures that any final touch events or
      * gesture recognition can complete before the scrolling state is reset.
@@ -1089,6 +1164,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.selectedItemsMap.clear();
         this.childItemSet.clear();
         this.descendentOverlays = new Map<Overlay, Overlay>();
+
+        // Clean up global listener if active
+        if (this.hasGlobalKeyListener) {
+            document.removeEventListener(
+                'keydown',
+                this.handleGlobalKeydown,
+                true
+            );
+            this.hasGlobalKeyListener = false;
+        }
+
         super.disconnectedCallback();
     }
 

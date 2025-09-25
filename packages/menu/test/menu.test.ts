@@ -82,7 +82,6 @@ describe('Menu', () => {
                 <sp-menu-item disabled>Disabled item 2</sp-menu-item>
             </sp-menu>
         `);
-        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
         await elementUpdated(el);
         expect(document.activeElement).to.not.equal(el);
@@ -91,7 +90,6 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.not.equal(el);
         expect(focusinSpy.callCount).to.equal(0);
-        firstItem.focus();
         await elementUpdated(el);
         expect(document.activeElement).to.not.equal(el);
         expect(focusinSpy.callCount).to.equal(0);
@@ -338,24 +336,37 @@ describe('Menu', () => {
         expect(document.activeElement).to.equal(firstItem);
         expect(firstItem.focused, 'first item focused').to.be.true;
 
+        // Hover over second item - should not steal focus
         await sendMouseTo(secondItem);
+        await elementUpdated(el);
 
+        // Active element should remain on first item since focus is not stolen on hover
         expect(document.activeElement, 'active element after hover').to.equal(
-            secondItem
+            firstItem
         );
-        expect(document.activeElement).to.equal(secondItem);
+        expect(firstItem.focused, 'first item should still be focused').to.be
+            .true;
         expect(
             secondItem.focused,
             'second item should not have focus styling on hover'
         ).to.be.false;
 
-        await sendKeys({ press: 'ArrowUp' });
+        // Test keyboard navigation still works
+        await sendKeys({ press: 'ArrowDown' });
+        await elementUpdated(el);
 
-        expect(document.activeElement).to.equal(firstItem);
+        expect(
+            document.activeElement,
+            'active element after arrow down'
+        ).to.equal(secondItem);
+        expect(
+            secondItem.focused,
+            'second item should be focused after keyboard'
+        ).to.be.true;
         expect(
             firstItem.focused,
-            'first item should have focus styling after keyboard'
-        ).to.be.true;
+            'first item should not be focused after keyboard'
+        ).to.be.false;
     });
 
     it('handle focus and late descendant additions', async () => {
