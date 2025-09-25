@@ -59,7 +59,7 @@
         "@web/dev-server": "0.4.6",
         "@web/storybook-builder": "0.2.3",
         "@web/storybook-framework-web-components": "0.2.1",
-        "@web/test-runner": "0.18.3",
+        "@web/test-runner": "0.20.2",
         "concurrently": "8.2.2",
         "react": "18.3.1",
         "react-dom": "18.3.1",

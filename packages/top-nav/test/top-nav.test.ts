@@ -13,10 +13,12 @@
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
-import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers';
+import { Default, Selected } from '../stories/top-nav.stories.js';
 
 describe('TopNav', () => {
     testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
@@ -125,16 +127,8 @@ describe('TopNavItem', () => {
             clickSpy(target);
         });
         await elementUpdated(el);
-        const rect = el.getBoundingClientRect();
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [rect.left + rect.width / 2, rect.top + 1],
-                },
-            ],
-        });
+        await mouseClickOn(el);
         await elementUpdated(test);
 
         expect(clickSpy.called).to.be.true;

@@ -22,26 +22,8 @@ export const chromium = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
-});
-
-/**
- * @todo Remove this configuration and its usage in the Coveralls CI workflow
- * once the Playwright version mismatch between @web/test-runner-playwright
- * and the installed Playwright version is resolved.
- */
-export const coverallsChromium = playwrightLauncher({
-    product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        executablePath:
-            '/home/runner/.cache/ms-playwright/chromium-1148/chrome-linux/chrome',
-        headless: true,
-    },
 });
 
 export const chromiumWithMemoryTooling = playwrightLauncher({
@@ -50,29 +32,7 @@ export const chromiumWithMemoryTooling = playwrightLauncher({
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
-        }),
-    launchOptions: {
-        headless: false,
-        args: [
-            '--js-flags=--expose-gc',
-            '--headless=new',
-            /**
-             * Cause `measureUserAgentSpecificMemory()` to GC immediately,
-             * instead of up to 20s later:
-             * https://web.dev/articles/monitor-total-page-memory-usage#local_testing
-             **/
-            '--enable-blink-features=ForceEagerMeasureMemory',
-        ],
-    },
-});
-
-export const chromiumWithMemoryToolingCI = playwrightLauncher({
-    product: 'chromium',
-    concurrency: 2,
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-            permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
     launchOptions: {
         headless: false,
@@ -92,12 +52,14 @@ export const chromiumWithMemoryToolingCI = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        channel: 'chromium',
+        args: ['--enable-experimental-web-platform-features', '--lang=en-US'],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
             permissions: ['clipboard-read', 'clipboard-write'],
+            locale: 'en-US',
         }),
 });
 
@@ -120,6 +82,8 @@ export const firefox = playwrightLauncher({
             'extensions.enabledScopes': 15,
             'dom.events.asyncClipboard.readText': true,
             'dom.events.testing.asyncClipboard': true,
+            // Enable tab navigation to all focusable elements in Firefox
+            'accessibility.tabfocus': 7, // Focus links, form controls, and other elements
         },
     },
 });
@@ -132,15 +96,6 @@ export const webkit = playwrightLauncher({
             ignoreHTTPSErrors: true,
         }),
 });
-
-const tools = fs
-    .readdirSync('tools')
-    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
-
-export const packages = fs
-    .readdirSync('packages')
-    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
-    .concat(tools);
 
 const vrtHTML =
     ({ systemVariant, color, scale, dir, reduceMotion, hcm }) =>
@@ -206,32 +161,6 @@ systemVariants.forEach((systemVariant) => {
 
 vrtGroups = [
     ...vrtGroups,
-    ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal'];
-        if (!skipPkgs.includes(pkg)) {
-            acc.push({
-                name: `vrt-${pkg}`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-            acc.push({
-                name: `vrt-${pkg}-single`,
-                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
-                testRunnerHtml: vrtHTML({
-                    systemVariant: 'spectrum',
-                    color: 'light',
-                    scale: 'medium',
-                    dir: 'ltr',
-                    reduceMotion: true,
-                }),
-                browsers: [chromium],
-            });
-        }
-        return acc;
-    }, []),
     {
         name: `vrt-hcm`,
         files: '(packages|tools)/*/test/*.test-vrt.js',
@@ -246,6 +175,84 @@ vrtGroups = [
         browsers: [chromium],
     },
 ];
+
+const tools = fs
+    .readdirSync('tools')
+    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
+
+export const packages = fs
+    .readdirSync('packages')
+    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
+    .concat(tools);
+
+export const byPackageOrTool = packages.reduce((acc, pkg) => {
+    const isTool = tools.includes(pkg);
+    const testDir = isTool ? `tools/${pkg}/test` : `packages/${pkg}/test`;
+    // Check if the package has a test directory
+    try {
+        if (fs.statSync(testDir).isDirectory()) {
+            // Unit tests for current package
+            try {
+                acc.push({
+                    name: pkg,
+                    files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test.js`,
+                });
+            } catch {
+                //Directory is missing unit tests, skipping package.
+            }
+
+            // VRT tests for current package
+            try {
+                const vrtFiles = fs
+                    .readdirSync(testDir)
+                    .filter((file) => file.endsWith('.test-vrt.js'));
+
+                if (vrtFiles.length > 0) {
+                    acc.push({
+                        name: `vrt-${pkg}`,
+                        files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test-vrt.js`,
+                        testRunnerHtml: vrtHTML({
+                            reduceMotion: true,
+                        }),
+                        browsers: [chromium],
+                    });
+                    acc.push({
+                        name: `vrt-${pkg}-single`,
+                        files: `${isTool ? 'tools' : 'packages'}/${pkg}/test/*.test-vrt.js`,
+                        testRunnerHtml: vrtHTML({
+                            systemVariant: 'spectrum',
+                            color: 'light',
+                            scale: 'medium',
+                            dir: 'ltr',
+                            reduceMotion: true,
+                        }),
+                        browsers: [chromium],
+                    });
+                }
+            } catch {
+                //Directory is missing unit tests, skipping package. leaving for future reference.
+            }
+        }
+    } catch {
+        //Directory is missing test directory, skipping package. leaving for future reference.
+    }
+
+    return acc;
+}, []);
+
+export const byFile = fs
+    .readdirSync('.', { withFileTypes: true, recursive: true })
+    .reduce((acc, file) => {
+        if (file.isFile()) {
+            if (file.name.endsWith('.test.js')) {
+                acc.push({
+                    name: file.parentPath + '/' + file.name,
+                    files: file.parentPath + '/' + file.name,
+                });
+            }
+        }
+        return acc;
+    }, []);
 
 export const configuredVisualRegressionPlugin = () =>
     visualRegressionPlugin({
@@ -278,3 +285,24 @@ export const configuredVisualRegressionPlugin = () =>
             );
         },
     });
+
+export const filterBrowserLogs = (log) => {
+    const { type, args } = log;
+
+    // Filter out noisy development messages
+    if (
+        type === 'warn' &&
+        args.some(
+            (arg) =>
+                typeof arg === 'string' &&
+                (arg.includes('Could not resolve module specifier') ||
+                    arg.includes('in dev mode') ||
+                    arg.includes('slottable-request') ||
+                    arg.includes('The Overlay Trigger Directive'))
+        )
+    ) {
+        return false;
+    }
+
+    return true;
+};

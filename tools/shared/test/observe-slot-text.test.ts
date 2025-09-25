@@ -26,11 +26,9 @@ customElements.define('observe-slot-test', ObserverTest);
 
 describe('ObserveSlotText', () => {
     it('does no management when slot unavailable', async () => {
-        const el = await fixture<ObserverTest>(
-            html`
-                <observe-slot-test></observe-slot-test>
-            `
-        );
+        const el = await fixture<ObserverTest>(html`
+            <observe-slot-test></observe-slot-test>
+        `);
         await elementUpdated(el);
 
         expect(el.slotHasContent).to.be.false;

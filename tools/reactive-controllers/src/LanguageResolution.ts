@@ -19,7 +19,7 @@ export const languageResolverUpdatedSymbol = Symbol(
 
 export class LanguageResolutionController implements ReactiveController {
     private host: ReactiveElement;
-    language = document.documentElement.lang || navigator.language;
+    language = document.documentElement.lang || navigator.language || 'en-US';
     private unsubscribe?: () => void;
 
     constructor(host: ReactiveElement) {
@@ -36,6 +36,11 @@ export class LanguageResolutionController implements ReactiveController {
     }
 
     private resolveLanguage(): void {
+        try {
+            Intl.DateTimeFormat.supportedLocalesOf([this.language]);
+        } catch {
+            this.language = 'en-US';
+        }
         const queryThemeEvent = new CustomEvent<ProvideLang>(
             'sp-language-context',
             {
