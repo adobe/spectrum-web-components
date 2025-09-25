@@ -154,7 +154,7 @@
         "custom-elements-manifest": "2.1.0",
         "debounce": "2.2.0",
         "deepmerge": "4.3.1",
-        "esbuild": "0.21.5",
+        "esbuild": "0.25.10",
         "eslint": "8.57.1",
         "eslint-config-prettier": "9.1.2",
         "eslint-formatter-pretty": "5.0.0",
