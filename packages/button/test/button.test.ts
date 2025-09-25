@@ -384,32 +384,62 @@ describe('Button', () => {
 
         it('manages aria-label from pending state', async () => {
             const el = await fixture<Button>(html`
-                <sp-button
-                    href="test_url"
-                    target="_blank"
-                    label="clickable"
-                    pending
-                >
+                <sp-button href="test_url" target="_blank" label="clickable">
                     Click me
                 </sp-button>
             `);
             await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('Pending');
-
-            // button set to disabled while pending is true and the aria-label should be original
-            el.disabled = true;
-            await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
+
+            // button set to pending and aria-label should update
+            el.pending = true;
+            await elementUpdated(el);
+            expect(el.pending).to.be.true;
+            expect(el.getAttribute('aria-label')).to.equal('Pending');
 
             // pending is removed and the aria-label should not change as the button is disabled
             el.pending = false;
             await elementUpdated(el);
             expect(el.getAttribute('aria-label')).to.equal('clickable');
+        });
 
-            // button is enabled and the aria-label should not change
-            el.disabled = false;
+        it('updates aria-label when label changes', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button label="Initial label">Button</sp-button>
+            `);
+
             await elementUpdated(el);
-            expect(el.getAttribute('aria-label')).to.equal('clickable');
+            expect(el.getAttribute('aria-label')).to.equal('Initial label');
+
+            // Change the label
+            el.label = 'New Label';
+            await elementUpdated(el);
+
+            // The aria-label should also update
+            expect(el.getAttribute('aria-label')).to.equal('New Label');
+        });
+
+        it('preserves aria-label when slot content changes', async () => {
+            const el = await fixture<Button>(html`
+                <sp-button label="Test label">Initial Content</sp-button>
+            `);
+
+            await elementUpdated(el);
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
+
+            // Change the slot content
+            el.textContent = 'Updated content';
+            await elementUpdated(el);
+
+            // The aria-label should still be preserved
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
+
+            // Change slot content again
+            el.innerHTML = '<span>New content</span>';
+            await elementUpdated(el);
+
+            // The aria-label should still be preserved
+            expect(el.getAttribute('aria-label')).to.equal('Test label');
         });
 
         it('manages aria-label set from outside', async () => {

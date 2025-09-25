@@ -2117,12 +2117,12 @@ export function runPickerTests(): void {
             };
 
             expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
+                findAccessibilityNode<NamedNode>(snapshot, (node) => {
+                    return (
                         node.name ===
                         'Pending Choose your neighborhood Where do you live?'
-                )
+                    );
+                })
             ).to.not.be.null;
         });
     });

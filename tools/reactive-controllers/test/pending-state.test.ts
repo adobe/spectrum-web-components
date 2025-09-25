@@ -16,8 +16,8 @@ import {
     PendingStateController,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 describe('PendingStateController', () => {
     let host: HostWithPendingState;
