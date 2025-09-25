@@ -31,11 +31,9 @@ describe('ActionBar', () => {
     });
 
     it('accepts variants', async () => {
-        const el = await fixture<ActionBar>(
-            html`
-                <sp-action-bar variant="sticky">Help text.</sp-action-bar>
-            `
-        );
+        const el = await fixture<ActionBar>(html`
+            <sp-action-bar variant="sticky">Help text.</sp-action-bar>
+        `);
 
         await elementUpdated(el);
 
@@ -64,11 +62,9 @@ describe('ActionBar', () => {
         expect(el.hasAttribute('variant')).to.be.false;
     });
     it('validates variants', async () => {
-        const el = await fixture<ActionBar>(
-            html`
-                <sp-action-bar variant="other">Help text.</sp-action-bar>
-            `
-        );
+        const el = await fixture<ActionBar>(html`
+            <sp-action-bar variant="other">Help text.</sp-action-bar>
+        `);
 
         await elementUpdated(el);
 

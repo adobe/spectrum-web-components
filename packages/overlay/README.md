@@ -58,7 +58,7 @@ When a `<sp-overlay>` element is opened, it will pass that state to its direct c
 <sp-tab value="delayed">delayed</sp-tab>
 <sp-tab-panel value="delayed">
 
-An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cooldown period of 1000ms will begin. Once the cooldown has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
+An Overlay that is `delayed` will wait until a warm-up period of 1000ms has completed before opening. Once the warmup period has completed, all subsequent Overlays will open immediately. When no Overlays are opened, a cool down period of 1000ms will begin. Once the cool down has completed, the next Overlay to be opened will be subject to the warm-up period if provided that option.
 
 ```html
 <sp-button id="trigger">Overlay Trigger</sp-button>
@@ -152,14 +152,14 @@ When an Overlay is `notImmediatelyCloseable` that means that the first interacti
 
 <script type="module">
     import { VirtualTrigger } from '@spectrum-web-components/overlay';
-     
+
     const init = () => {
         const overlay = document.querySelector('sp-overlay');
         const popover = overlay.querySelector('sp-popover');
-        
+
         // Set up the virtual trigger
         overlay.triggerElement = new VirtualTrigger(0, 0);
-        
+
         // Set up change handler for menu items
         popover.addEventListener('change', (event) => {
             event.target.dispatchEvent(new Event('close', { bubbles: true }));
@@ -411,7 +411,7 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 - `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
 - `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
-This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to redispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
+This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to re-dispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
 ### Integration patterns
 

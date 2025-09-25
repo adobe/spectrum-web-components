@@ -44,6 +44,7 @@ describe('Overlay Trigger - Click', () => {
                     open="click"
                     @sp-opened=${() => openedSpy()}
                     @sp-closed=${() => closedSpy()}
+                    triggered-by="click"
                 >
                     <sp-action-button slot="trigger">
                         <sp-icon-magnify slot="icon"></sp-icon-magnify>
@@ -89,7 +90,7 @@ describe('Overlay Trigger - Click', () => {
                         <overlay-trigger
                             placement="right"
                             type=${interaction}
-                            content="click"
+                            triggered-by="click"
                         >
                             <sp-action-button
                                 slot="trigger"
@@ -141,6 +142,7 @@ describe('Overlay Trigger - Click', () => {
                 placement="right-start"
                 type="modal"
                 open="click"
+                triggered-by="click"
                 @sp-opened=${() => openedSpy()}
                 @sp-closed=${() => closedSpy()}
             >
@@ -180,7 +182,7 @@ describe('Overlay Trigger - Click', () => {
 
     it('opens with a delay on click', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
+            <overlay-trigger placement="right-start" triggered-by="click">
                 <sp-button slot="trigger" variant="primary"></sp-button>
                 <sp-tooltip
                     slot="click-content"
