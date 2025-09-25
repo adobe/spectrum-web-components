@@ -22,15 +22,21 @@ export default {
 
 export const Default = (): TemplateResult => {
     return html`
-        <sp-textfield placeholder="Enter your name"></sp-textfield>
-        <sp-textfield placeholder="Enter your name" disabled></sp-textfield>
+        <sp-textfield label="Name" placeholder="Enter your name"></sp-textfield>
         <sp-textfield
+            label="Name"
+            placeholder="Enter your name"
+            disabled
+        ></sp-textfield>
+        <sp-textfield
+            label="Name"
             placeholder="Enter your name"
             pattern="[\\w\\s]*"
             required
             value="A valid input"
         ></sp-textfield>
         <sp-textfield
+            label="Name"
             placeholder="Enter your name"
             pattern="[\\w\\s]*"
             required
@@ -38,11 +44,13 @@ export const Default = (): TemplateResult => {
             disabled
         ></sp-textfield>
         <sp-textfield
+            label="Name"
             placeholder="Enter your name"
             pattern="[\\d]*"
             value="Not a valid input"
         ></sp-textfield>
         <sp-textfield
+            label="Name"
             placeholder="Enter your name"
             pattern="^[\\d]$"
             required
@@ -54,55 +62,58 @@ export const Default = (): TemplateResult => {
 
 export const growsOnly = (): TemplateResult => {
     return html`
-        <sp-field-label for="grows-only">
-            This Textfield has the "grows" attribute without the "multiline"
-            attribute
-        </sp-field-label>
         <sp-textfield
             grows
             id="grows-only"
             placeholder="Does not grow or display incorrectly"
-        ></sp-textfield>
+        >
+            This Textfield has the "grows" attribute without the "multiline"
+            attribute
+        </sp-textfield>
     `;
 };
 
 export const quiet = (): TemplateResult => {
     return html`
-        <sp-field-label for="name">Enter your name</sp-field-label>
         <sp-textfield
             id="name"
             placeholder="This Text Field doesn't make much noise"
             quiet
-        ></sp-textfield>
+        >
+            Enter your name
+        </sp-textfield>
     `;
 };
 
 export const defaultAutofocus = (): TemplateResult => {
     return html`
-        <sp-field-label for="name">Enter your name</sp-field-label>
         <sp-textfield
             id="name"
             placeholder="Include your first and last name"
             autofocus
-        ></sp-textfield>
+        >
+            Enter your name
+        </sp-textfield>
     `;
 };
 
 export const quietAutofocus = (): TemplateResult => {
     return html`
-        <sp-field-label for="name">Enter your name</sp-field-label>
         <sp-textfield
             id="name"
             placeholder="Include your first and last name"
             autofocus
             quiet
-        ></sp-textfield>
+        >
+            Enter your name
+        </sp-textfield>
     `;
 };
 
 export const notRequiredWithPattern = (): TemplateResult => {
     return html`
         <sp-textfield
+            label="Letter z, x, c, or v"
             placeholder="Enter z, x, c, or v"
             pattern="[zxcv]+"
         ></sp-textfield>
@@ -112,6 +123,7 @@ export const notRequiredWithPattern = (): TemplateResult => {
 export const allowedKeys = (): TemplateResult => {
     return html`
         <sp-textfield
+            label="Name"
             placeholder="Enter your name"
             allowed-keys="a-z"
         ></sp-textfield>
@@ -155,10 +167,8 @@ export const types = (): TemplateResult => html`
 `;
 
 export const empty = (): TemplateResult => html`
-    <sp-field-label for="empty">
-        This textfield hasn't been used yet
-    </sp-field-label>
     <sp-textfield id="empty" placeholder="You can type here">
+        This textfield hasn't been used yet
         <sp-help-text slot="help-text">
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>
@@ -166,14 +176,12 @@ export const empty = (): TemplateResult => html`
 `;
 
 export const sized = (): TemplateResult => html`
-    <sp-field-label for="sized">
-        This textfield hasn't been used yet
-    </sp-field-label>
     <sp-textfield
         id="sized"
         placeholder="You can type here"
         style="width: 400px"
     >
+        This textfield hasn't been used yet
         <sp-help-text slot="help-text">
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>

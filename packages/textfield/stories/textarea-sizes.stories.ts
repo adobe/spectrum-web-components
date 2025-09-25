@@ -27,15 +27,13 @@ const template = ({
     size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
     return html`
-        <sp-field-label for="name" size=${ifDefined(size)}>
-            Enter your life story
-        </sp-field-label>
         <sp-textfield
             id="name"
             multiline
             size=${ifDefined(size)}
             value="Sized Textarea"
         >
+            Enter your life story
             <sp-help-text size=${ifDefined(size)} slot="help-text">
                 Spare no expense.
             </sp-help-text>
