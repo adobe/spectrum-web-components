@@ -1,27 +1,25 @@
 # Spectrum 2 migration roadmap
 
-This directory contains comprehensive migration documentation for Spectrum 2 components, serving as a bridge between migrated Spectrum 2 CSS work and corresponding web components. This documentation helps engineers understand what needs to be implemented, updated, or aligned between the two systems to guide development of second-generation web components.
+This directory contains comprehensive migration documentation for 2nd generation Spectrum Web Components based on the implementation of Spectrum 2 components that were previously migrated in [Spectrum CSS](https://github.com/adobe/spectrum-css/tree/spectrum-two). It helps engineers understand what needs to be implemented, updated, or aligned between the two systems to guide development of 2nd generation web components.
 
 ## Purpose
 
 ### Why we do this analysis
 
-The migration roadmap addresses a critical need in the Spectrum 2 development process:
+The migration roadmap facilitates development of 2nd generation, full-fidelity Spectrum 2 web components by providing:
 
-- **Development roadmap**: Provides clear guidance for building 2nd generation web components
-- **Feature gap analysis**: Identifies all features and capabilities that need implementation to match Spectrum 2 CSS and design specifications
-- **API impact assessment**: Establishes implementation requirements and design changes that may lead to breaking changes and/or API changes for the next major version
-- **Planning support**: Enables consuming teams to plan for 2nd gen web component adoption and understand migration effort required
-- **Transparency**: Provides visibility into what will be available in the next major version
+- **Feature gap analysis**: Identifies new features and capabilities needed to match Spectrum 2 design specifications
+- **Implementation comparison**: Maps CSS selectors to existing SWC properties and notes markup differences between systems
+- **Deprecation tracking**: Documents features or variants being removed in Spectrum 2
+- **Planning guidance**: High-level overview of changes to assist with estimating migration effort
 
 ### The bigger picture
 
-When an SWC developer picks up Spectrum 2 implementation work, this documentation provides:
+When engineers begin 2nd generation Spectrum 2 implementation work, this documentation provides:
 
-- **Starting point**: Clear entry point for development work
-- **Implementation checklist**: Things that probably need to be done
-- **Reference materials**: Links to CSS and React implementations, CSS selectors
-- **Gap identification**: Analysis of differences that would prevent Spectrum 2 CSS from working in SWC
+- **Clear starting point**: Entry point for development work that identifies specific areas needing adjustment
+- **Gap analysis**: Differences that would prevent Spectrum 2 CSS from working in SWC
+- **Reference materials**: Links to CSS and React implementations, and previous migration work
 
 ## What we analyze
 
@@ -29,7 +27,7 @@ When an SWC developer picks up Spectrum 2 implementation work, this documentatio
 
 We extract and document:
 
-- **CSS selectors**: All selectors from `metadata.json` in spectrum-css `spectrum-two` branch
+- **CSS selectors**: All selectors from `metadata.json` in the spectrum-css `spectrum-two` branch
 - **Passthroughs**: CSS passthrough properties
 - **Modifiers**: CSS modifier classes
 - **SWC attributes**: Properties with `@property` decorators in TypeScript
@@ -62,62 +60,54 @@ We create mapping tables that connect:
 
 The analysis surfaces:
 
-- **Missing from WC**: CSS features without web component equivalents
+- **Missing from SWC**: CSS features without web component equivalents
 - **Missing from CSS**: Web component features without CSS support
-- **New for Spectrum 2**: Features that need to be added for 2nd gen
+- **New for Spectrum 2**: Features that need to be added for 2nd generation
 - **Deprecated**: Features being removed in Spectrum 2
-
-## How to use this documentation
-
-### For SWC developers
-
-1. **Start here**: Review the component's migration roadmap document
-2. **Check specifications**: Understand all CSS selectors and SWC features
-3. **Review DOM changes**: Identify structural changes needed in render methods
-4. **Analyze mapping table**: Find features that need implementation or removal
-5. **Read summary**: Get focused overview of required changes
-
-### For planning
-
-- **API changes**: Look for missing attributes or deprecated features
-- **Breaking changes**: Review DOM structure changes and removed features
-- **New features**: Identify capabilities being added in Spectrum 2
-- **Effort estimation**: Use gap analysis to estimate development work
 
 ## Documentation structure
 
 Each component follows this format:
 
-```
+```markdown
 # [Component name] migration roadmap
 
 ## Component specifications
+
 ### CSS
+
 - CSS selectors (collapsible)
 - Passthroughs (collapsible)
 - Modifiers (collapsible)
 
 ### SWC
+
 - Attributes (collapsible)
 - Slots (collapsible)
 
 ## Comparison
+
 ### DOM structure changes
+
 - Spectrum Web Components (collapsible)
 - Legacy CSS main branch (collapsible)
 - Spectrum 2 CSS spectrum-two branch (collapsible)
-- Diff: Legacy → Spectrum 2 (collapsible, if changes exist)
+- Diff: Legacy → Spectrum 2, based on changes made to template in CSS migration work (collapsible, if changes exist)
 
 ### CSS => SWC mapping
-| CSS selector | Attribute or slot | Status |
-|--------------|-------------------|---------|
-| ... | ... | Implemented/Missing from WC/Missing from CSS/Deprecated |
+
+| CSS selector | Attribute or slot | Status                                                  |
+| ------------ | ----------------- | ------------------------------------------------------- |
+| ...          | ...               | Implemented/Missing from WC/Missing from CSS/Deprecated |
 
 ## Summary of changes
+
 ### CSS => SWC implementation gaps
+
 ### CSS Spectrum 2 changes
 
 ## Resources
+
 - [CSS migration]()
 - [Spectrum 2 preview]()
 - [React]()
@@ -127,7 +117,7 @@ Each component follows this format:
 
 ### Prerequisites
 
-Set up Cursor workspace with both repositories:
+Set up a Cursor workspace with both repositories:
 
 - `spectrum-css` (primarily `spectrum-two` branch, with comparisons to `main`)
 - `spectrum-web-components` (`main` branch)
@@ -137,15 +127,15 @@ Set up Cursor workspace with both repositories:
 1. **Load the prompt**: Reference `migration-roadmap/cursor_prompt.md`
 2. **Specify component**: Replace `[COMPONENT_NAME]` with the target component
 3. **Branch verification**: Ensure correct branches are checked out:
-    - spectrum-css: `spectrum-two` for specifications, both `main` and `spectrum-two` for comparisons
-    - spectrum-web-components: `main` branch
+    - `spectrum-css`: `spectrum-two` for specifications, both `main` and `spectrum-two` for comparisons
+    - `spectrum-web-components`: `main` branch
 4. **Generate documentation**: Follow the structured prompt to create component markdown files
 
 ### Quality assurance
 
 **Human review is required** for all generated documentation:
 
-- **Verify data accuracy**: Check extracted information against source repositories
+- **Verify data accuracy**: Check extracted information against source repositories/branches
 - **Validate mappings**: Ensure CSS selector to SWC feature mappings are correct
 - **Review summaries**: Confirm summaries provide clear, actionable guidance
 - **Check DOM structures**: Verify HTML snippets match actual template/render method output
@@ -154,17 +144,10 @@ Set up Cursor workspace with both repositories:
 ### Common issues to watch for
 
 - **Branch confusion**: AI may analyze wrong branches or mix up repositories
-- **Incomplete mappings**: Missing hover, focus, disabled states in mapping tables
-- **Verbose summaries**: Trim AI-generated text to focus on actionable changes
+- **Incomplete mappings**: AI may incorrectly mark implemented states or variants as missing in mapping tables
+- **Verbose summaries**: Trim AI-generated text to focus on actionable changes and human readability
 - **DOM accuracy**: Verify render method HTML matches documented structure
 - **Missing components**: Note when components don't exist in one system or the other
-
-## Current components
-
-The following components have migration documentation:
-
-- Alert Banner (`alert-banner.md`)
-- [Add other completed components here]
 
 ## Contributing
 
@@ -182,14 +165,7 @@ The cursor prompt template (`cursor_prompt.md`) can be modified to improve AI pe
 1. Use the cursor prompt with the target component name
 2. Generate the markdown file in `migration-roadmap/[component-name].md`
 3. Review and validate all sections for accuracy
-4. Submit PR to the `2nd-gen-component-analysis` branch
-
-### Updating existing documentation
-
-If a component already exists in the migration-roadmap directory:
-
-- Re-run the prompt to overwrite the component documentation, or
-- Manually audit existing documentation for accuracy and completeness
+4. Submit a PR to the `2nd-gen-component-analysis` branch
 
 ## Resources
 
