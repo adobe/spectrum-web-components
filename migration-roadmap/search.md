@@ -111,15 +111,43 @@
 <details>
 <summary>Attributes</summary>
 
-- `action` (string)
-- `label` (string) - defaults to "Search"
-- `method` (string) - "get" | "post" | "dialog"
-- `placeholder` (string) - defaults to "Search"
-- `holdValueOnEscape` (boolean)
-- `size` (inherited from Textfield)
-- `disabled` (inherited from Textfield)
-- `invalid` (inherited from Textfield)
-- `value` (inherited from Textfield)
+**Search specific attributes:**
+
+- `action` (string) - Form action URL
+- `holdValueOnEscape` (boolean) - Whether the typed value should be held when Escape key is pressed
+- `label` (string) - defaults to "Search" (overrides Textfield)
+- `method` (string) - Form method: "get" | "post" | "dialog"
+- `placeholder` (string) - defaults to "Search" (overrides Textfield)
+
+**Inherited from Textfield (extends TextfieldBase):**
+
+- `allowed-keys` - A regular expression outlining the keys that will be allowed to update the value
+- `autocomplete` - What form of assistance should be provided when attempting to supply a value
+- `focused` - Whether the search field is focused
+- `grows` - Whether a form control with multiline attribute will change size vertically
+- `invalid` - Whether the search field is invalid
+- `maxlength` - Defines the maximum string length that the user can enter
+- `minlength` - Defines the minimum string length that the user can enter
+- `multiline` - Whether the form control should accept a value longer than one line (forced to false)
+- `name` - Name of the form control
+- `pattern` - Pattern the value must match to be valid
+- `quiet` - Whether to display the form control with no visible background
+- `readonly` - Whether a user can interact with the value of the form control
+- `required` - Whether the form control will be found to be invalid when it holds no value
+- `rows` - The specific number of rows the form control should provide in the user interface
+- `type` - The type of the form control (set to 'search' automatically)
+- `valid` - Whether the value held by the form control is valid
+- `value` - The value held by the form control
+
+**Inherited from SizedMixin:**
+
+- `size` - Size of the search field (s, m, l, xl)
+
+**Inherited from Focusable:**
+
+- `autofocus` - When this control is rendered, focus it automatically
+- `disabled` - Disable this control. It will not receive focus or events
+- `tabIndex` - The tab index to apply to this control
 
 </details>
 
@@ -139,37 +167,65 @@
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<sp-search>
-    #shadow-root
+<!-- Outer textfield wrapper from TextfieldBase.render() -->
+<div id="textfield">
     <form
-        action=""
+        action="..."
         id="form"
-        method=""
+        method="..."
         @submit="handleSubmit"
         @reset="reset"
         @keydown="handleKeydown"
     >
+        <!-- Search icon -->
         <sp-icon-search
-            size=""
+            size="..."
             class="icon magnifier icon-workflow icon-search"
         ></sp-icon-search>
-        <div id="textfield">
-            <input type="search" class="input" />
-        </div>
-        <!-- Conditionally rendered only when there's a value -->
+
+        <!-- State icons (when invalid or valid) -->
+        <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
+        <!-- OR -->
+        <sp-icon-checkmark100
+            id="valid"
+            class="icon spectrum-UIIcon-Checkmark100"
+        ></sp-icon-checkmark100>
+
+        <!-- Input element -->
+        <input
+            type="search"
+            class="input"
+            aria-describedby="sp-help-text-..."
+            aria-label="Search"
+            name="..."
+            maxlength="..."
+            minlength="..."
+            pattern="..."
+            placeholder="Search"
+            autocomplete="..."
+            ?disabled
+            ?required
+            ?readonly
+        />
+
+        <!-- Clear button (only when there's a value) -->
         <sp-clear-button
             id="button"
             label="Reset"
             tabindex="-1"
             type="reset"
-            size=""
+            size="..."
             @keydown="stopPropagation"
         ></sp-clear-button>
     </form>
-    <div id="sp-help-text-..." aria-live="assertive">
-        <slot name="help-text"></slot>
-    </div>
-</sp-search>
+</div>
+
+<!-- Help text container (inherited from TextfieldBase) -->
+<div id="sp-help-text-..." aria-live="assertive">
+    <slot name="negative-help-text"></slot>
+    <!-- OR -->
+    <slot name="help-text"></slot>
+</div>
 ```
 
 </details>
@@ -292,7 +348,7 @@
     class="spectrum-Search spectrum-Search--sizeM is-collapsed"
     aria-label="Search"
 >
-    <button class="spectrum-ActionButton spectrum-Search-actionButton is-quiet">
+    <button class="spectrum-ActionButton spectrum-ActionButton--quiet spectrum-Search-actionButton">
         <svg
             class="spectrum-Icon spectrum-ActionButton-icon spectrum-Icon--sizeM"
             focusable="false"
@@ -394,18 +450,17 @@
 
 | CSS selector                                                                          | Attribute or slot          | Status                       |
 | ------------------------------------------------------------------------------------- | -------------------------- | ---------------------------- |
-| `.spectrum-Search--sizeS`, `.spectrum-Search--sizeL`, `.spectrum-Search--sizeXL`      | `size`                     | Implemented                  |
+| `.spectrum-Search`                                                                    | `:host`                    | Implemented                  |
+| `.spectrum-Search--sizeS`                                                             | `size="s"`                 | Implemented                  |
+| `.spectrum-Search--sizeL`                                                             | `size="l"`                 | Implemented                  |
+| `.spectrum-Search--sizeXL`                                                            | `size="xl"`                | Implemented                  |
 | `.spectrum-Search.is-disabled`                                                        | `disabled`                 | Implemented                  |
 | `.spectrum-Search .spectrum-HelpText`                                                 | `help-text` slot           | Implemented                  |
 | `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling  | Implemented                  |
-| `.spectrum-Search .spectrum-Search-clearButton`                                       | Clear button functionality | Implemented                  |
+| `.spectrum-Search .spectrum-Search-clearButton`                                       | `<sp-clear-button>`        | Implemented                  |
 | `.spectrum-Search .spectrum-Search-textfield`                                         | Textfield functionality    | Implemented                  |
-| `.spectrum-Search .spectrum-Search-icon`                                              | Search icon                | Implemented                  |
+| `.spectrum-Search .spectrum-Search-icon`                                              | `<sp-icon-search>`         | Implemented                  |
 | `.spectrum-Search .spectrum-Search-input`                                             | Input element              | Implemented                  |
-|                                                                                       | `action`                   | Missing from CSS             |
-|                                                                                       | `method`                   | Missing from CSS             |
-|                                                                                       | `holdValueOnEscape`        | Missing from CSS             |
-|                                                                                       | `negative-help-text` slot  | Missing from CSS             |
 | `.spectrum-Search.is-collapsed`                                                       |                            | Missing from WC (new for S2) |
 | `.spectrum-Search.is-expanded`                                                        |                            | Missing from WC (new for S2) |
 
@@ -413,7 +468,7 @@
 
 ### CSS => SWC implementation gaps
 
-The primary implementation gap between CSS and SWC is the S2 implementation of the collapsed Search variant, which allows for expansion and collapse of the search field to and from a quiet action button that uses the same magnifying glass icon. In CSS, these collapsed/expanded states and controlled by the classes `.spectrum-Search.is-collapsed` and `.spectrum-Search.is-expanded`).
+The primary implementation gap between CSS and SWC is the S2 implementation of the collapsed Search variant, which allows for expansion and collapse of the search field to and from a quiet action button that uses the same magnifying glass icon. In CSS, these collapsed/expanded states and controlled by the classes `.spectrum-Search.is-collapsed` and `.spectrum-Search.is-expanded`.
 
 Also, because Search extends Textfield, S2 updates to Textfield also apply here. The most notable update to S2 Textfield is the removal of the quiet variant. **Therefore, there is no quiet variant in S2 Search.**
 

@@ -9,23 +9,41 @@ There is no CSS implementation for this component; it only exists in SWC.
 <details>
 <summary>Attributes</summary>
 
-- `disabled` - Disables the color field
-- `focused` - Whether the color field is focused
-- `invalid` - Whether the color field is invalid
-- `keyboard-focused` - Whether the color field has keyboard focus
-- `label` - The label for the color field
-- `max` - Maximum value for the color field
-- `min` - Minimum value for the color field
-- `multiline` - Whether the color field is multiline (inherited from TextfieldBase)
-- `pattern` - Pattern for validation (inherited from TextfieldBase)
-- `placeholder` - Placeholder text (inherited from TextfieldBase)
-- `quiet` - Quiet variant (inherited from TextfieldBase)
-- `readonly` - Whether the color field is readonly
-- `required` - Whether the color field is required (inherited from TextfieldBase)
-- `size` - Size of the color field (s, m, l, xl)
-- `step` - Step value for the color field
-- `value` - The value of the color field
+**Color Field specific attributes:**
+
 - `view-color` - Whether to show the color preview
+
+**Inherited from TextfieldBase:**
+
+- `allowed-keys` - A regular expression outlining the keys that will be allowed to update the value
+- `autocomplete` - What form of assistance should be provided when attempting to supply a value
+- `focused` - Whether the color field is focused
+- `grows` - Whether a form control with multiline attribute will change size vertically
+- `invalid` - Whether the color field is invalid
+- `label` - A string applied via aria-label to the form control when a user visible label is not provided
+- `maxlength` - Defines the maximum string length that the user can enter
+- `minlength` - Defines the minimum string length that the user can enter
+- `multiline` - Whether the form control should accept a value longer than one line
+- `name` - Name of the form control
+- `pattern` - Pattern the value must match to be valid
+- `placeholder` - Text that appears in the form control when it has no value set
+- `quiet` - Whether to display the form control with no visible background
+- `readonly` - Whether a user can interact with the value of the form control
+- `required` - Whether the form control will be found to be invalid when it holds no value
+- `rows` - The specific number of rows the form control should provide in the user interface
+- `type` - The type of the form control (defaults to 'text')
+- `valid` - Whether the value held by the form control is valid
+- `value` - The value held by the form control
+
+**Inherited from SizedMixin:**
+
+- `size` - Size of the color field (s, m, l, xl)
+
+**Inherited from Focusable:**
+
+- `autofocus` - When this control is rendered, focus it automatically
+- `disabled` - Disable this control. It will not receive focus or events
+- `tabIndex` - The tab index to apply to this control
 
 </details>
 
@@ -72,17 +90,42 @@ There is no CSS implementation for this component; it only exists in SWC.
 ### SWC DOM structure
 
 ```html
-<sp-field-label for="color-field">Label</sp-field-label>
-<sp-color-field id="color-field" view-color>
-    #shadow-root
-    <div id="textfield">
-        <input type="text" class="input" aria-label="Label" />
-    </div>
-    <div id="sp-help-text-..." aria-live="assertive">
-        <slot name="help-text"></slot>
-    </div>
-    <sp-color-handle size="m" color="..."></sp-color-handle>
-</sp-color-field>
+<div id="textfield">
+    <!-- State icons (when invalid or valid) -->
+    <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
+    <!-- OR -->
+    <sp-icon-checkmark100
+        id="valid"
+        class="icon spectrum-UIIcon-Checkmark100"
+    ></sp-icon-checkmark100>
+
+    <!-- Input element -->
+    <input
+        type="text"
+        class="input"
+        aria-describedby="sp-help-text-..."
+        aria-label="Label"
+        name="..."
+        maxlength="..."
+        minlength="..."
+        pattern="..."
+        placeholder="..."
+        autocomplete="..."
+        ?disabled
+        ?required
+        ?readonly
+    />
+</div>
+
+<!-- Help text container (inherited from TextfieldBase) -->
+<div id="sp-help-text-..." aria-live="assertive">
+    <slot name="negative-help-text"></slot>
+    <!-- OR -->
+    <slot name="help-text"></slot>
+</div>
+
+<!-- Color handle (only when view-color=true and valid=true) -->
+<sp-color-handle size="m" color="rgb(...)"></sp-color-handle>
 ```
 
 ## Summary of changes

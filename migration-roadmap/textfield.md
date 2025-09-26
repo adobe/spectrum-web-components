@@ -178,25 +178,37 @@ None found for this component.
 <details>
 <summary>Attributes</summary>
 
+**TextfieldBase specific attributes:**
+
 - `allowed-keys` - A regular expression outlining the keys that will be allowed to update the value of the form control
+- `autocomplete` - What form of assistance should be provided when attempting to supply a value to the form control
 - `focused` - Whether the component is focused (private)
+- `grows` - Whether a form control delivered with the multiline attribute will change size vertically to accommodate longer input
 - `invalid` - Whether the value held by the form control is invalid
 - `label` - A string applied via aria-label to the form control when a user visible label is not provided
-- `name` - Name of the form control
-- `placeholder` - Text that appears in the form control when it has no value set
-- `type` - Input type (text, url, tel, email, password)
-- `pattern` - Pattern the value must match to be valid
-- `grows` - Whether a form control delivered with the multiline attribute will change size vertically to accommodate longer input
 - `maxlength` - Defines the maximum string length that the user can enter
 - `minlength` - Defines the minimum string length that the user can enter
 - `multiline` - Whether the form control should accept a value longer than one line
+- `name` - Name of the form control
+- `pattern` - Pattern the value must match to be valid
+- `placeholder` - Text that appears in the form control when it has no value set
+- `quiet` - Whether to display the form control with no visible background
 - `readonly` - Whether a user can interact with the value of the form control
+- `required` - Whether the form control will be found to be invalid when it holds no value
 - `rows` - The specific number of rows the form control should provide in the user interface
+- `type` - Input type (text, url, tel, email, password)
 - `valid` - Whether the value held by the form control is valid
 - `value` - The value held by the form control
-- `quiet` - Whether to display the form control with no visible background
-- `required` - Whether the form control will be found to be invalid when it holds no value
-- `autocomplete` - What form of assistance should be provided when attempting to supply a value to the form control
+
+**Inherited from SizedMixin:**
+
+- `size` - Size of the textfield (s, m, l, xl)
+
+**Inherited from Focusable:**
+
+- `autofocus` - When this control is rendered, focus it automatically
+- `disabled` - Disable this control. It will not receive focus or events
+- `tabIndex` - The tab index to apply to this control
 
 </details>
 
@@ -210,77 +222,71 @@ None found for this component.
 
 ## Comparison
 
-### Visual comparison
-
-**Legacy Component:**
-
-<!-- Screenshot of legacy component will be added here -->
-
-**Spectrum 2 Component:**
-
-<!-- Screenshot of Spectrum 2 component will be added here -->
-
 ### DOM structure changes
 
 <details>
 <summary>Spectrum Web Components:</summary>
 
 ```html
-<sp-textfield>
-    #shadow-root
-    <div id="textfield">
-        <!-- Validation icons (alert or checkmark, or none if neither invalid nor valid) -->
-        <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
-        <!-- OR -->
-        <sp-icon-checkmark100
-            id="valid"
-            class="icon spectrum-UIIcon-Checkmark100"
-        ></sp-icon-checkmark100>
-        <input
-            name="name"
-            type="text"
-            aria-describedby="helpTextId"
-            aria-label="label"
-            aria-invalid="true"
-            class="input"
-            title=""
-            maxlength="10"
-            minlength="5"
-            pattern="pattern"
-            placeholder="placeholder"
-            .value="value"
-            disabled
-            required
-            readonly
-            autocomplete="off"
-            @pointerdown="handleInputElementPointerdown"
-        />
-        <!-- OR for multiline, instead of input -->
-        <!-- Sizer (multiline only, when grows && rows === -1) -->
-        <div id="sizer" class="input" aria-hidden="true">value&#8203;</div>
-        <textarea
-            name="name"
-            aria-describedby="helpTextId"
-            aria-label="label"
-            aria-invalid="true"
-            class="input"
-            maxlength="10"
-            minlength="5"
-            title=""
-            pattern="pattern"
-            placeholder="placeholder"
-            .value="value"
-            disabled
-            required
-            readonly
-            rows="3"
-            autocomplete="off"
-        ></textarea>
-    </div>
-    <div id="sp-help-text-..." aria-live="assertive">
-        <slot name="help-text"></slot>
-    </div>
-</sp-textfield>
+<div id="textfield">
+    <!-- State icons (when invalid or valid) -->
+    <sp-icon-alert id="invalid" class="icon"></sp-icon-alert>
+    <!-- OR -->
+    <sp-icon-checkmark100
+        id="valid"
+        class="icon spectrum-UIIcon-Checkmark100"
+    ></sp-icon-checkmark100>
+
+    <!-- Input element (single line) -->
+    <input
+        name="..."
+        type="text"
+        aria-describedby="sp-help-text-..."
+        aria-label="..."
+        aria-invalid="true"
+        class="input"
+        title=""
+        maxlength="..."
+        minlength="..."
+        pattern="..."
+        placeholder="..."
+        .value="..."
+        ?disabled
+        ?required
+        ?readonly
+        autocomplete="..."
+        @pointerdown="handleInputElementPointerdown"
+    />
+
+    <!-- OR for multiline -->
+    <!-- Sizer (multiline only, when grows && rows === -1) -->
+    <div id="sizer" class="input" aria-hidden="true">value&#8203;</div>
+    <textarea
+        name="..."
+        aria-describedby="sp-help-text-..."
+        aria-label="..."
+        aria-invalid="true"
+        class="input"
+        maxlength="..."
+        minlength="..."
+        title=""
+        pattern="..."
+        placeholder="..."
+        .value="..."
+        ?disabled
+        ?required
+        ?readonly
+        rows="..."
+        autocomplete="..."
+    ></textarea>
+</div>
+
+<!-- Help text container (inherited from ManageHelpText) -->
+<div id="sp-help-text-..." aria-live="assertive">
+    <slot name="negative-help-text"></slot>
+    <!-- OR -->
+    <slot name="help-text"></slot>
+</div>
 ```
 
 </details>
@@ -293,21 +299,20 @@ None found for this component.
     class="spectrum-Textfield spectrum-Textfield--sizeM spectrum-Textfield--multiline spectrum-Textfield--grows spectrum-Textfield--quiet spectrum-Textfield--sideLabel is-invalid is-valid is-focused is-keyboardFocused is-disabled is-readOnly"
     id="textfield"
 >
-    <div class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-        <label class="spectrum-FieldLabel-text">Label Text</label>
-    </div>
+    <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+        Label Text
+    </label>
     <span class="spectrum-Textfield-characterCount">Character Count</span>
-    <div
+    <svg
         class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon"
+        focusable="false"
+        aria-hidden="true"
+        aria-label="AlertTriangle"
+        role="img"
     >
-        <svg
-            class="spectrum-Icon-spectrum"
-            focusable="false"
-            aria-hidden="true"
-        >
-            <!-- Icon content -->
-        </svg>
-    </div>
+        <title>Alert Triangle</title>
+        <use xlink:href="#spectrum-icon-18-AlertTriangle" href="#spectrum-icon-18-AlertTriangle" />
+    </svg>
     <textarea
         placeholder="placeholder"
         name="name"
@@ -357,21 +362,20 @@ None found for this component.
     class="spectrum-Textfield spectrum-Textfield--sizeM spectrum-Textfield--multiline spectrum-Textfield--grows spectrum-Textfield--sideLabel is-invalid is-valid is-hover is-focused is-keyboardFocused is-disabled is-readOnly"
     id="textfield"
 >
-    <div class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-        <label class="spectrum-FieldLabel-text">Label Text</label>
-    </div>
+    <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+        Label Text
+    </label>
     <span class="spectrum-Textfield-characterCount">Character Count</span>
-    <div
+    <svg
         class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon"
+        focusable="false"
+        aria-hidden="true"
+        aria-label="AlertTriangle"
+        role="img"
     >
-        <svg
-            class="spectrum-Icon-spectrum"
-            focusable="false"
-            aria-hidden="true"
-        >
-            <!-- Icon content -->
-        </svg>
-    </div>
+        <title>Alert Triangle</title>
+        <use xlink:href="#spectrum-icon-18-AlertTriangle" href="#spectrum-icon-18-AlertTriangle" />
+    </svg>
     <textarea
         placeholder="placeholder"
         name="name"
@@ -422,15 +426,28 @@ None found for this component.
 @@ -1,7 +1,7 @@
 -<div class="spectrum-Textfield spectrum-Textfield--sizeM spectrum-Textfield--multiline spectrum-Textfield--grows spectrum-Textfield--quiet spectrum-Textfield--sideLabel is-invalid is-valid is-focused is-keyboardFocused is-disabled is-readOnly" id="textfield">
 +<div class="spectrum-Textfield spectrum-Textfield--sizeM spectrum-Textfield--multiline spectrum-Textfield--grows spectrum-Textfield--sideLabel is-invalid is-valid is-hover is-focused is-keyboardFocused is-disabled is-readOnly" id="textfield">
-   <div class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-     <label class="spectrum-FieldLabel-text">Label Text</label>
-   </div>
+-  <div class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+-    <label class="spectrum-FieldLabel-text">Label Text</label>
+-  </div>
++  <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
++    Label Text
++  </label>
    <span class="spectrum-Textfield-characterCount">Character Count</span>
-   <div class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon">
-     <svg class="spectrum-Icon-spectrum" focusable="false" aria-hidden="true">
-       <!-- Icon content -->
-     </svg>
-   </div>
+-  <div class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon">
+-    <svg class="spectrum-Icon-spectrum" focusable="false" aria-hidden="true">
+-      <!-- Icon content -->
+-    </svg>
+-  </div>
++  <svg
++    class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon"
++    focusable="false"
++    aria-hidden="true"
++    aria-label="AlertTriangle"
++    role="img"
++  >
++    <title>Alert Triangle</title>
++    <use xlink:href="#spectrum-icon-18-AlertTriangle" href="#spectrum-icon-18-AlertTriangle" />
++  </svg>
    <textarea
      placeholder="placeholder"
      name="name"
@@ -461,9 +478,12 @@ None found for this component.
 +  <div class="spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM spectrum-InfieldProgressCircle--indeterminate">
      <!-- Progress circle content -->
    </div>
-   <div class="spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--negative">
-     <div class="spectrum-HelpText-text">Help text content</div>
-   </div>
+-  <div class="spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--negative">
+-    <div class="spectrum-HelpText-text">Help text content</div>
+-  </div>
++  <div class="spectrum-HelpText spectrum-HelpText--sizeM spectrum-HelpText--negative">
++    <div class="spectrum-HelpText-text">Help text content</div>
++  </div>
  </div>
 ```
 
@@ -480,10 +500,12 @@ None found for this component.
 
 | CSS selector                                                                                                                                 | Attribute or slot       | Status                                                                             |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------- |
-| `.spectrum-Textfield--sizeS`, `.spectrum-Textfield--sizeM`, `.spectrum-Textfield--sizeL`, `.spectrum-Textfield--sizeXL`                      | `size`                  | Implemented                                                                        |
+| `.spectrum-Textfield`                                                                                                                        | `:host`                 | Implemented                                                                        |
+| `.spectrum-Textfield--sizeS`                                                                                                                 | `size="s"`              | Implemented                                                                        |
+| `.spectrum-Textfield--sizeL`                                                                                                                 | `size="l"`              | Implemented                                                                        |
+| `.spectrum-Textfield--sizeXL`                                                                                                                | `size="xl"`             | Implemented                                                                        |
 | `.spectrum-Textfield--multiline`                                                                                                             | `multiline`             | Implemented                                                                        |
 | `.spectrum-Textfield--grows`                                                                                                                 | `grows`                 | Implemented                                                                        |
-| `.spectrum-Textfield--quiet`                                                                                                                 | `quiet`                 | Implemented                                                                        |
 | `.spectrum-Textfield.is-invalid`                                                                                                             | `invalid`               | Implemented                                                                        |
 | `.spectrum-Textfield.is-valid`                                                                                                               | `valid`                 | Implemented                                                                        |
 | `.spectrum-Textfield.is-disabled`                                                                                                            | `disabled`              | Implemented                                                                        |
@@ -510,6 +532,7 @@ None found for this component.
 | `input[allowed-keys]` (custom attribute)                                                                                                     | `allowed-keys`          | Implemented (custom)                                                               |
 | `.spectrum-Textfield--sideLabel`                                                                                                             | `labelPosition` (side)  | Missing from SWC textfield but exists within SWC field label                       |
 | `.spectrum-Textfield-characterCount`                                                                                                         | Character count feature | Missing from SWC (existed in S1 but never implemented in SWC)                      |
+| `.spectrum-Textfield--quiet`                                                                                                                 | `quiet`                 | Deprecated for S2                                                                        |
 
 ## Summary of changes
 
@@ -528,9 +551,9 @@ In comparing Legacy CSS to Spectrum 2 CSS, and CSS to SWC, here are the changes 
 - Look into adding side label position option to textfield
 - Implement character count (note that this appears next to the field label for a top label, and on the opposite side of the input for a side label)
 - Removal of the quiet variant
-- Use of the inline progress circle component for the textfield's progress circle
+- Use of the inline progress circle component for the textfield's progress circle (**Note**: Spectrum CSS doesn't currently show textfield with the progress circle as there is no design spec for it)
 - Implementation of the new inline textfield variant
-- Allow field label to offer an option to be required, without displaying the asterisk (may be out of scope for textfield)
+- Applying the `required` attribute to the text input without displaying the asterisk in the field label to accommodate the [two styling options available](https://spectrum.adobe.com/page/text-field/#Required-or-optional) for required text fields
 - Look into keyboard focus state, determine if this should differ from mouse focused state
 
 See below for more details.
@@ -561,19 +584,13 @@ The comparison between CSS `main` and CSS `spectrum-two` branches reveals severa
 
 **Template parameter changes:**
 
-- **Added**: `step` parameter for number input step attribute
-- **Removed**: `isRequiredWithoutAsterisk` parameter (present in spectrum-two but not main)
+- Added `step` parameter for number input step attribute
+- Added `isRequiredWithoutAsterisk` parameter (allows for input to be marked with required attribute without applying the asterisk to the associated field label)
 
 **Icon changes:**
 
 - **Invalid icon**: Changed from `"Alert"` to `"AlertTriangle"`
 - **Valid icon**: Changed from simple `"Checkmark"` to size-specific checkmarks (`"Checkmark75"`, `"Checkmark100"`, `"Checkmark200"`, `"Checkmark300"`)
-
-**Input changes:**
-
-- **Added**: `step` attribute for number inputs
-
-These changes indicate a move toward more specialized components (InfieldProgressCircle vs generic ProgressCircle) and improved state management with hover states and more granular icon sizing.
 
 #### Textarea changes
 
