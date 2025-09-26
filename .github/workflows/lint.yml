@@ -115,7 +115,7 @@ jobs:
                   packages: 'stylelint-header stylelint-config-standard'
 
             - name: ESLint
-              uses: reviewdog/action-eslint@v1.33.2
+              uses: reviewdog/action-eslint@v1.34.0
               if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
               with:
                   fail_level: error
