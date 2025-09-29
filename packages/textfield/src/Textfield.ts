@@ -34,6 +34,8 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
@@ -44,12 +46,15 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends FieldLabelMixin(
-    ManageHelpText(
-        SizedMixin(Focusable, {
-            noDefaultSize: true,
-        })
-    )
+export class TextfieldBase extends ObserveSlotText(
+    FieldLabelMixin(
+        ManageHelpText(
+            SizedMixin(Focusable, {
+                noDefaultSize: true,
+            })
+        )
+    ),
+    ''
 ) {
     public static override get styles(): CSSResultArray {
         const superStyles = Array.isArray(super.styles)
@@ -294,6 +299,32 @@ export class TextfieldBase extends FieldLabelMixin(
         return this.value.toString();
     }
 
+    protected get _ariaLabel(): string | undefined {
+        if (this.label && this.label.length > 0) {
+            return this.label;
+        } else if (this.appliedLabel && this.appliedLabel.length > 0) {
+            return this.appliedLabel;
+        } else if (this.slotHasContent) {
+            return undefined;
+        } else if (this.placeholder && this.placeholder.length > 0) {
+            return this.placeholder;
+        } else {
+            window.__swc.warn(
+                this,
+                '<sp-textfield> elements needs a label:',
+                'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
+                {
+                    type: 'accessibility',
+                    issues: [
+                        'value supplied to the default slot, which will be displayed visually as part of the element, or',
+                        'value supplied to the "label" attribute, which will read by assistive technologies',
+                    ],
+                }
+            );
+            return undefined;
+        }
+    }
+
     // prettier-ignore
     private get renderMultiline(): TemplateResult {
         return html`
@@ -305,11 +336,10 @@ export class TextfieldBase extends FieldLabelMixin(
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                id="field"
                 name=${ifDefined(this.name || undefined)}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label ||
-                this.appliedLabel ||
-                this.placeholder}
+                aria-label=${ifDefined(this._ariaLabel)}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 maxlength=${ifDefined(
@@ -320,7 +350,7 @@ export class TextfieldBase extends FieldLabelMixin(
                 )}
                 title=${this.invalid ? '' : nothing}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${this.placeholder}
+                placeholder=${ifDefined(this.placeholder?.length > 0 ? this.placeholder : undefined)}
                 .value=${this.displayValue}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
@@ -339,12 +369,11 @@ export class TextfieldBase extends FieldLabelMixin(
         return html`
             <!-- @ts-ignore -->
             <input
+                id="field"
                 name=${ifDefined(this.name || undefined)}
                 type=${this.type}
                 aria-describedby=${this.helpTextId}
-                aria-label=${this.label ||
-                this.appliedLabel ||
-                this.placeholder}
+                aria-label=${ifDefined(this._ariaLabel)}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
                 title=${this.invalid ? '' : nothing}
@@ -355,7 +384,9 @@ export class TextfieldBase extends FieldLabelMixin(
                     this.minlength > -1 ? this.minlength : undefined
                 )}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${this.placeholder}
+                placeholder=${ifDefined(
+                    this.placeholder?.length > 0 ? this.placeholder : undefined
+                )}
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
@@ -379,7 +410,7 @@ export class TextfieldBase extends FieldLabelMixin(
 
     protected override render(): TemplateResult {
         return html`
-            ${this.renderFieldLabel('textfield')}
+            ${this.renderFieldLabel('field')}
             <div id="textfield">${this.renderField()}</div>
             ${this.renderHelpText(this.invalid)}
         `;
