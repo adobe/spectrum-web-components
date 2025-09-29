@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- [#5553](https://github.com/adobe/spectrum-web-components/pull/5553) [`a292dc7`](https://github.com/adobe/spectrum-web-components/commit/a292dc7a14dd64bafb331227082e4318d204933e) Thanks [@cdransf](https://github.com/cdransf)! - **Added**: Deprecation warning for the over-background attribute.
+
+- [#5535](https://github.com/adobe/spectrum-web-components/pull/5535) [`d5f2909`](https://github.com/adobe/spectrum-web-components/commit/d5f2909c53f0e3ece7035cbbb81c8ecdddb02d46) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - Smooths the transition animation of indeterminate progress bar by overriding the incoming CSS, and positioning the animating fill element completely off of the progress bar track in both LTR and RTL languages. Before, the fill element was automatically starting on the track which led to a jarring animation loop.
+
+- Updated dependencies []:
+    - @spectrum-web-components/field-label@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

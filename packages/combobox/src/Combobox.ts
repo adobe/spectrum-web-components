@@ -576,11 +576,9 @@ export class Combobox extends Textfield {
                 this.focused = false;
             }
         });
-        this.resizeObserver = new ResizeObserver(
-            (entries: ResizeObserverEntry[]) => {
-                this.fieldWidth = entries[0].borderBoxSize[0].inlineSize;
-            }
-        );
+        this.resizeObserver = new ResizeObserver((entries) => {
+            this.fieldWidth = entries[0].borderBoxSize[0].inlineSize;
+        });
 
         this.resizeObserver.observe(this);
     }

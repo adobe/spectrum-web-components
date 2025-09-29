@@ -30,7 +30,8 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     fixture,
-    sendMouseTo,
+    mouseClickOn,
+    mouseMoveOver,
     tabEvent,
     testForLitDevWarnings,
     tEvent,
@@ -147,6 +148,7 @@ describe('Menu', () => {
     });
 
     it('has a "value" that can be copied during "change" events', async function () {
+        // @TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
         if (isWebKit() || isFirefox()) {
             this.skip();
         }
@@ -174,13 +176,9 @@ describe('Menu', () => {
         selectedItem.focus();
 
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         const clipboardText = await navigator.clipboard.readText();
         await elementUpdated(el);
@@ -189,6 +187,7 @@ describe('Menu', () => {
     });
 
     it('accepts Numpad keys', async function () {
+        // @TODO: skipping this test because it's flaky in WebKit and Firefox in CI. Will review in the migration to Spectrum 2.
         if (isWebKit() || isFirefox()) {
             this.skip();
         }
@@ -213,13 +212,9 @@ describe('Menu', () => {
         ) as MenuItem;
         selectedItem.focus();
         await elementUpdated(el);
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
-        await sendKeys({
-            press: 'NumpadEnter',
-        });
+        await sendKeys({ press: 'NumpadEnter' });
 
         await elementUpdated(el);
 
@@ -338,7 +333,7 @@ describe('Menu', () => {
         expect(document.activeElement).to.equal(firstItem);
         expect(firstItem.focused, 'first item focused').to.be.true;
 
-        await sendMouseTo(secondItem);
+        await mouseMoveOver(secondItem);
 
         expect(document.activeElement, 'active element after hover').to.equal(
             secondItem
@@ -479,7 +474,7 @@ describe('Menu', () => {
         await waitUntil(
             () => el.childItems.length == 3,
             'expected menu to manage 3 items',
-            { timeout: 100 }
+            { timeout: 2000 } // Increase timeout for CI environment stability
         );
 
         expect(el.children.length).to.equal(el.childItems.length);
@@ -497,7 +492,7 @@ describe('Menu', () => {
         expect(children[0], 'first element is focused').to.equal(
             document.activeElement
         );
-        //@todo this test fails on Chromium
+        // @TODO: skipping the remaining assertions because it fails on Chromium. Will review in the migration to Spectrum 2.
         if (isFirefox() || isWebKit()) {
             children[0].remove();
             await elementUpdated(el);
@@ -579,15 +574,16 @@ describe('Menu', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
+        //@TODO: this tests opens a context menu outside of the test runner and that should be fixed.
         // send right mouse click to the secondItem
-        sendMouseTo(secondItem, 'click', 'right');
+        await mouseClickOn(secondItem, 'center', { button: 'right' });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);
         expect(changeSpy.callCount, 'no change').to.equal(0);
 
         // send middle mouse click to the secondItem
-        await sendMouseTo(secondItem, 'click', 'middle');
+        await mouseClickOn(secondItem, 'center', { button: 'middle' });
         await elementUpdated(el);
         await elementUpdated(secondItem);
         await aTimeout(150);

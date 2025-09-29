@@ -1,0 +1,13 @@
+diff --git a/dist/PlaywrightLauncherPage.js b/dist/PlaywrightLauncherPage.js
+index 25ee08570e75005ce1100c52fa8dc1ac08e05109..8030b543e72815e55bfce78d6929c33a48022d88 100644
+--- a/dist/PlaywrightLauncherPage.js
++++ b/dist/PlaywrightLauncherPage.js
+@@ -31,7 +31,7 @@ class PlaywrightLauncherPage {
+             : undefined;
+         // navigate to an empty page to kill any running code on the page, stopping timers and
+         // breaking a potential endless reload loop
+-        await this.playwrightPage.goto('about:blank');
++        // await this.playwrightPage.goto('about:blank');
+         await this.playwrightContext.close();
+         return { testCoverage };
+     }

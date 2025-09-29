@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.8.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/opacity-checkerboard@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes

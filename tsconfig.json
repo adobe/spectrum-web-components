@@ -13,15 +13,15 @@
         "moduleResolution": "node",
         "noImplicitOverride": true,
         "noImplicitReturns": true,
-        "noUnusedParameters": true,
         "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "resolveJsonModule": true,
         "rootDir": ".",
         "skipLibCheck": true,
-        "strict": true,
         "sourceMap": true,
+        "strict": true,
         "target": "es2018",
-        "types": ["mocha", "chai", "sinon", "node", "swc"],
-        "resolveJsonModule": true
+        "types": ["mocha", "chai", "sinon", "node", "swc"]
     },
     "include": ["./global.d.ts"]
 }
