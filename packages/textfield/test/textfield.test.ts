@@ -26,6 +26,8 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
+import { spy } from 'sinon';
+
 describe('Textfield', () => {
     testForLitDevWarnings(
         async () =>
@@ -65,6 +67,38 @@ describe('Textfield', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('labels textfield with slotted label correctly', async () => {
+        const el = await litFixture<Textfield>(html`
+            <sp-textfield id="textfield" placeholder="Enter Your Name">
+                Name
+            </sp-textfield>
+        `);
+
+        await elementUpdated(el);
+        const ariaLabel = el.focusElement?.getAttribute('aria-label');
+
+        expect(ariaLabel).not.to.equal('Enter Your Name');
+    });
+
+    it('warns when no accessible label is provided', async () => {
+        const warnSpy: sinon.SinonSpy = spy();
+        window.__swc = window.__swc || { warn: () => {} };
+        const originalWarn = window.__swc.warn;
+        window.__swc.warn = warnSpy;
+
+        const el = await litFixture<Textfield>(html`
+            <sp-textfield></sp-textfield>
+        `);
+
+        await elementUpdated(el);
+
+        expect(warnSpy.called).to.be.true;
+        expect(warnSpy.firstCall.args[0]).to.equal(el);
+        expect(warnSpy.firstCall.args[1]).to.equal(
+            '<sp-textfield> elements needs a label:'
+        );
+        window.__swc.warn = originalWarn;
     });
 
     it('manages tabIndex while disabled', async () => {
