@@ -31,7 +31,10 @@ export declare class FieldLabelMixinInterface {
     disabled: boolean;
     required: boolean;
     sideAligned: 'start' | 'end';
-    protected renderFieldLabel(fieldId: string): TemplateResult;
+    protected renderFieldLabel(
+        fieldId: string,
+        slotName?: string
+    ): TemplateResult;
 }
 
 /**
@@ -61,7 +64,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             slotName?: string
         ): TemplateResult {
             return html`
-                <label for="${fieldId}">
+                <label id="${fieldId}-label" for="${fieldId}">
                     <slot name="${ifDefined(slotName)}"></slot>
                     ${this.required
                         ? html`
