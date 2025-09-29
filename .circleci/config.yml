@@ -22,10 +22,10 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: 89e0789b87e4970ea0b40aaae944592b4dacb52b
+        default: 407a8fa17e7336a352601ac431128466ed859696
     temp_hcm_golden_images_hash:
         type: string
-        default: 89e0789b87e4970ea0b40aaae944592b4dacb52b
+        default: 407a8fa17e7336a352601ac431128466ed859696
     wireit_cache_name:
         type: string
         default: wireit
@@ -69,7 +69,6 @@ commands:
                   name: Build the project
                   command: |
                       cd second-gen/packages/core && yarn build
-                      cd second-gen/packages/swc && yarn build
                       cd ../../../first-gen && yarn build
 
             - save_cache:
