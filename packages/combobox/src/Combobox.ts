@@ -37,6 +37,7 @@ import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
@@ -53,7 +54,7 @@ export type ComboboxOption = {
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
-export class Combobox extends Textfield {
+export class Combobox extends ObserveSlotPresence(Textfield, '[slot="label"]') {
     public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
@@ -402,6 +403,33 @@ export class Combobox extends Textfield {
             ></sp-progress-circle>
         `;
     }
+    protected get hasConditionalSlotContent() {
+        return this.slotContentIsPresent;
+    }
+
+    protected override get _ariaLabel(): string | undefined {
+        if (this.label && this.label.length > 0) {
+            return this.label;
+        } else if (this.appliedLabel && this.appliedLabel.length > 0) {
+            return this.appliedLabel;
+        } else if (this.hasConditionalSlotContent) {
+            return undefined;
+        } else {
+            window.__swc.warn(
+                this,
+                '<sp-textfield> elements needs a label:',
+                'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
+                {
+                    type: 'accessibility',
+                    issues: [
+                        'value supplied to the default slot, which will be displayed visually as part of the element, or',
+                        'value supplied to the "label" attribute, which will read by assistive technologies',
+                    ],
+                }
+            );
+            return undefined;
+        }
+    }
 
     protected override renderField(): TemplateResult {
         return html`
@@ -420,7 +448,7 @@ export class Combobox extends Textfield {
                 )}
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
-                aria-label=${ifDefined(this.label || this.appliedLabel)}
+                aria-label=${ifDefined(this._ariaLabel)}
                 aria-labelledby="label applied-label pending-label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
@@ -458,13 +486,17 @@ export class Combobox extends Textfield {
         }
 
         return html`
-            ${super.render()}
+            ${this.hasConditionalSlotContent
+                ? this.renderFieldLabel('field', 'label')
+                : html``}
+            <div id="textfield">${this.renderField()}</div>
+            ${this.renderHelpText(this.invalid)}
             <sp-picker-button
                 aria-controls="listbox-menu"
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label"
+                aria-labelledby="field-label applied-label label"
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
