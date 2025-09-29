@@ -719,6 +719,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                     id="popover"
                     role="presentation"
                     style=${styleMap(this.containerStyles)}
+                    picker
                 >
                     ${accessibleMenu}
                 </sp-tray>
@@ -732,6 +733,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 role="presentation"
                 style=${styleMap(this.containerStyles)}
                 placement=${this.placement}
+                picker
             >
                 ${accessibleMenu}
             </sp-popover>

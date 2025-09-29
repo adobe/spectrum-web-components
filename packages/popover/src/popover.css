@@ -78,3 +78,7 @@
 :host([tip][placement]) #tip {
     height: auto;
 }
+
+:host([picker]) {
+    inline-size: var(--mod-picker-inline-size, var(--spectrum-picker-inline-size));
+}
