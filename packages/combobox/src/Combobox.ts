@@ -487,8 +487,8 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="label"]') {
 
         return html`
             ${this.hasConditionalSlotContent
-                ? this.renderFieldLabel('field', 'label')
-                : html``}
+                ? this.renderFieldLabel('input', 'label')
+                : nothing}
             <div id="textfield">${this.renderField()}</div>
             ${this.renderHelpText(this.invalid)}
             <sp-picker-button
@@ -496,7 +496,7 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="label"]') {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="field-label applied-label label"
+                aria-labelledby="input-label applied-label label"
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
