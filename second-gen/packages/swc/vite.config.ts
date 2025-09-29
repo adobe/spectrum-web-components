@@ -51,13 +51,16 @@ export default defineConfig({
         lib: {
             entry: glob
                 .sync(resolve(__dirname, 'components/*/index.ts'))
-                .reduce((entries, file) => {
-                    const name = file
-                        .replace(resolve(__dirname) + '/', '')
-                        .replace('.ts', '');
-                    entries[name] = file;
-                    return entries;
-                }, {}),
+                .reduce(
+                    (entries, file) => {
+                        const name = file
+                            .replace(resolve(__dirname) + '/', '')
+                            .replace('.ts', '');
+                        (entries as Record<string, string>)[name] = file;
+                        return entries;
+                    },
+                    {} as Record<string, string>
+                ),
             formats: ['es'],
         },
         rollupOptions: {
