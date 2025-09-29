@@ -3,13 +3,13 @@
     "version": "1.8.0",
     "description": "",
     "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
     "repository": {
         "directory": "packages/icons-workflow",
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git"
     },
-    "author": "Adobe",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },

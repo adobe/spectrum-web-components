@@ -539,6 +539,9 @@ dynamicIcons.args = {
     open: true,
 };
 dynamicIcons.decorators = [areIconsPresent];
+dynamicIcons.swc_vrt = {
+    skip: true,
+};
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`

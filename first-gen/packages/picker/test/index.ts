@@ -2134,7 +2134,7 @@ export function runPickerTests(): void {
             this.el = test.querySelector('sp-picker') as Picker;
             await elementUpdated(this.el);
         });
-        // @TODO: skipping this test because it's flaky in CI. Will review in the migration to Spectrum 2.
+        // @TODO: skipping this test because it's flaky in CI also flaky in VRT. Will review in the migration to Spectrum 2.
         it.skip('displays the same icon as the selected menu item', async function () {
             // Delay long enough for the picker to display the selected item.
             // Chromium and Webkit require 2 frames, Firefox requires 3 frames.
