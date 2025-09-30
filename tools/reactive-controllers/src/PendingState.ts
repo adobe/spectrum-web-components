@@ -47,21 +47,20 @@ export class PendingStateController<T extends HostWithPendingState>
 
     public cachedAriaLabel: string | null = null;
     /**
-     * Renders the pending state UI. The aria-valuetext is needed for Firefox
+     * Renders the pending state UI.
      * @returns A TemplateResult representing the pending state UI.
      *
-     * @TODO: [SWC-1255] This should now be using the progress-circle component. It should be using an animated SVG icon with correct role and aria.
+     * @TODO: [SWC-1119, SWC-1255, SWC-459] Confirm the accessibility warning and a11y dom tree are accurate for the pending state in button, combobox, and picker components.
      */
     public renderPendingState(): TemplateResult {
-        const pendingLabel = this.host.pendingLabel || 'Pending';
         return this.host.pending
             ? html`
                   <sp-progress-circle
                       id="loader"
                       size="s"
                       indeterminate
-                      aria-valuetext=${pendingLabel}
                       class="progress-circle"
+                      role="presentation"
                   ></sp-progress-circle>
               `
             : html``;
@@ -79,10 +78,10 @@ export class PendingStateController<T extends HostWithPendingState>
             cached: string | null,
             current: string | null,
             pending: string | undefined
-        ): string | boolean | null {
+        ): boolean {
             return (
-                (!cached && current && current !== pending) ||
-                (cached !== current && current && current !== pending)
+                (!cached && current !== pending) ||
+                (cached !== current && current !== pending)
             );
         }
 
