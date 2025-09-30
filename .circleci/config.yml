@@ -227,7 +227,7 @@ jobs:
                   name: Run chromium tests
                   command: |
                       TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/first-gen\///')
-                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
                   path: /root/project/first-gen/results/
             - store_artifacts:
