@@ -255,7 +255,7 @@ jobs:
                   command: |
                       TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/first-gen\///')
                       echo $TEST
-                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config ../web-test-runner.config.ci-chromium-memory.js --group unit-ci
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
