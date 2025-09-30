@@ -57,6 +57,9 @@
         "./stories/typography-decorator.js"
     ],
     "types": "./src/index.d.ts",
+    "dependencies": {
+        "@swc/core": "workspace:*"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -69,8 +72,5 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.8.0"
-    },
     "customElements": "custom-elements.json"
 }

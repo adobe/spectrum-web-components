@@ -6,7 +6,7 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/components/icons-workflow",
     "repository": {
-        "directory": "packages/icons-workflow",
+        "directory": "first-gen/packages/icons-workflow",
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git"
     },

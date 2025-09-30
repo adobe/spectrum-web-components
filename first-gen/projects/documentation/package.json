@@ -7,7 +7,7 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
-        "directory": "projects/documentation",
+        "directory": "first-gen/projects/documentation",
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git"
     },

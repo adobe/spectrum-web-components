@@ -15,16 +15,16 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "paths": {
+            "@swc/*": ["../second-gen/packages/*/dist"]
+        },
         "resolveJsonModule": true,
         "rootDir": ".",
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
         "target": "es2018",
-        "types": ["mocha", "chai", "sinon", "node", "swc"],
-        "paths": {
-            "@swc/*": ["../second-gen/packages/*/dist"]
-        }
+        "types": ["mocha", "chai", "sinon", "node", "swc"]
     },
     "include": ["./global.d.ts"]
 }

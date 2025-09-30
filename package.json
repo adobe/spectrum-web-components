@@ -1,8 +1,8 @@
 {
-    "private": true,
     "name": "@adobe/spectrum-web-components-monorepo",
     "version": "0.0.9",
-    "description": "Spectrum Web Components monorepo supporting both current-gen and next-gen development approaches",
+    "private": true,
+    "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
     "license": "Apache-2.0",
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
@@ -29,6 +29,9 @@
         "second-gen",
         "second-gen/packages/*"
     ],
+    "resolutions": {
+        "playwright": "1.53.1"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -40,10 +43,10 @@
         "lit-html"
     ],
     "devDependencies": {
-        "@changesets/cli": "^2.29.6",
-        "@commitlint/cli": "^19.8.1",
+        "@changesets/cli": "2.29.7",
+        "@commitlint/cli": "19.8.1",
         "@commitlint/config-conventional": "^19.8.1",
-        "husky": "^9.0.10",
+        "husky": "9.1.7",
         "lint-staged": "^16.1.2",
         "patch-package": "^8.0.0",
         "replace-in-file": "^8.3.0"
