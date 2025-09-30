@@ -26,5 +26,6 @@
         "**/*.test-vrt.ts": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",
-    "lit-plugin.strict": true
+    "lit-plugin.strict": true,
+    "cSpell.words": ["activedescendant", "coachmark", "valuetext"]
 }

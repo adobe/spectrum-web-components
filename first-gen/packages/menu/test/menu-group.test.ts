@@ -9,11 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
@@ -22,11 +17,18 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { complexSlotted } from '../stories/menu-group.stories.js';
-import { ComplexSlottedGroup, ComplexSlottedMenu } from '../stories/index.js';
+import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
+import { ComplexSlottedGroup, ComplexSlottedMenu } from '../stories/index.js';
+import { complexSlotted } from '../stories/menu-group.stories.js';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
     return menu.childItems.filter(
@@ -428,31 +430,14 @@ describe('Menu group', () => {
         items.i11 = group?.renderRoot.querySelector('#i-11') as MenuItem;
         items.i12 = group?.renderRoot.querySelector('#i-12') as MenuItem;
 
-        const rect = items.i9.getBoundingClientRect();
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(items.i9);
         await elementUpdated(items.i9);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowUp' });
         await elementUpdated(items.i9);
         expect(items.i9.focused).to.be.true;
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         let i = 9;
         const count = Object.keys(items).length + 1;
         while (!items.i9.focused) {
@@ -461,9 +446,7 @@ describe('Menu group', () => {
             await elementUpdated(items[`i${i}`]);
             expect(items[`i${i}`].focused, `i${i} should be focused`).to.be
                 .true;
-            await sendKeys({
-                press: 'ArrowDown',
-            });
+            await sendKeys({ press: 'ArrowDown' });
             await elementUpdated(menu);
             await elementUpdated(items[`i${i}`]);
         }

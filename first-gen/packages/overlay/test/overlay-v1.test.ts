@@ -10,19 +10,19 @@
  * governing permissions and limitations under the License.
  */
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Dialog } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
-import { setViewport } from '@web/test-runner-commands';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     Overlay,
     OverlayTrigger,
     Placement,
 } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import { Popover } from '@spectrum-web-components/popover';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { setViewport } from '@web/test-runner-commands';
 
 import {
     elementUpdated,
@@ -31,23 +31,26 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { sendKeys } from '@web/test-runner-commands';
-import {
-    definedOverlayElement,
-    virtualElementV1,
-} from '../stories/overlay.stories';
-import { PopoverContent } from '../stories/overlay-story-components.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
+import { render, TemplateResult } from '@spectrum-web-components/base';
+import { Menu } from '@spectrum-web-components/menu';
+import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import { Theme } from '@spectrum-web-components/theme';
-import { render, TemplateResult } from '@spectrum-web-components/base';
+import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
     isInteractive,
     isOnTopLayer,
+    mouseClickAway,
+    sendShiftTabKey,
+    sendTabKey,
 } from '../../../test/testing-helpers.js';
-import { Menu } from '@spectrum-web-components/menu';
+import { PopoverContent } from '../stories/overlay-story-components.js';
+import {
+    definedOverlayElement,
+    virtualElementV1,
+} from '../stories/overlay.stories';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -191,32 +194,22 @@ describe('Overlays, v1', () => {
              * that triggered the dialog and is outside of the modal. A test that was able to cycle would be better.
              */
 
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
 
             expect(document.activeElement === button).to.be.false;
-            await sendKeys({
-                press: 'Tab',
-            });
+            await sendTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendKeys({
-                press: 'Shift+Tab',
-            });
+            await sendShiftTabKey();
 
             expect(document.activeElement === button).to.be.false;
         });
@@ -423,16 +416,12 @@ describe('Overlays, v1', () => {
         expect(document.activeElement).to.equal(input);
 
         const closed = oneEvent(content, 'sp-closed');
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
         await closed;
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
         expect(document.activeElement).to.equal(after);
         expect(await isInteractive(content)).to.be.false;
     });
@@ -462,15 +451,11 @@ describe('Overlays, v1', () => {
 
         expect(document.activeElement).to.equal(input);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(before);
     });
@@ -512,7 +497,7 @@ describe('Overlay - type="modal", v1', () => {
         before(async () => {
             render(
                 html`
-                    <sp-theme color="light" scale="large">
+                    <sp-theme color="light" scale="large" system="spectrum">
                         ${virtualElementV1({
                             ...virtualElementV1.args,
                             offset: 6,
@@ -587,15 +572,10 @@ describe('Overlay - type="modal", v1', () => {
         });
         it('closes the second "contextmenu" when clicking away', async () => {
             const closed = oneEvent(document, 'sp-closed');
-            sendMouse({
-                steps: [
-                    {
-                        type: 'click',
-                        position: [width - width / 8, height - height / 8],
-                    },
-                ],
-            });
+            await mouseClickAway(secondMenu);
             await closed;
+            await elementUpdated(secondMenu);
+            await elementUpdated(firstMenu);
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
         });
@@ -622,21 +602,19 @@ describe('Overlay - type="modal", v1', () => {
 
         const opened = oneEvent(document, 'sp-opened');
         // Right click to open "context menu" overlay.
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [270, 10],
+        await sendMouse([
+            {
+                type: 'move',
+                position: [270, 10],
+            },
+            {
+                type: 'click',
+                options: {
+                    button: 'right',
                 },
-                {
-                    type: 'click',
-                    options: {
-                        button: 'right',
-                    },
-                    position: [270, 10],
-                },
-            ],
-        });
+                position: [270, 10],
+            },
+        ]);
         await opened;
 
         const firstMenu = document.querySelector('sp-menu') as Menu;
@@ -644,9 +622,7 @@ describe('Overlay - type="modal", v1', () => {
         expect(await isInteractive(firstMenu)).to.be.true;
 
         const closed = oneEvent(document, 'sp-closed');
-        sendKeys({
-            press: 'Escape',
-        });
+        sendKeys({ press: 'Escape' });
         await closed;
 
         expect(await isInteractive(firstMenu)).to.be.false;

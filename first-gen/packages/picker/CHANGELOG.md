@@ -1,5 +1,31 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5672](https://github.com/adobe/spectrum-web-components/pull/5672) [`6c2acaf`](https://github.com/adobe/spectrum-web-components/commit/6c2acaf14ca1c210a876bdbd65a273d6a5fc22d0) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** escape key behavior in modal overlays containing picker components. Previously, pressing the Escape key when a picker was open inside a modal overlay would not properly close the modal, instead moving focus to the picker. Now, the escape key correctly closes the picker first (if open), then closes the modal overlay on subsequent escape key presses.
+
+    This fix adds a check for `this.open` in the picker's `handleEscape` method to ensure proper modal overlay closure behavior.
+
+### Patch Changes
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/menu@1.8.0
+    - @spectrum-web-components/button@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/tooltip@1.8.0
+    - @spectrum-web-components/field-label@1.8.0
+    - @spectrum-web-components/icon@1.8.0
+    - @spectrum-web-components/icons-ui@1.8.0
+    - @spectrum-web-components/icons-workflow@1.8.0
+    - @spectrum-web-components/progress-circle@1.8.0
+    - @spectrum-web-components/tray@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
@@ -73,7 +99,6 @@
 ### Minor Changes
 
 - [#5187](https://github.com/adobe/spectrum-web-components/pull/5187) [`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
-
     - Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
     - Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
 
@@ -104,13 +129,11 @@
 ### Minor Changes
 
 - [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
-
     - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
     - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
     - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
 
     See the following APG examples for more information:
-
     - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
     - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 

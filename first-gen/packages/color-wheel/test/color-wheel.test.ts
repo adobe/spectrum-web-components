@@ -21,15 +21,17 @@ import {
     arrowUpEvent,
     arrowUpKeyupEvent,
     ignoreResizeObserverLoopError,
+    sendShiftTabKey,
+    sendTabKey,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
-import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
+import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorTypes } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -72,37 +74,25 @@ describe('ColorWheel', () => {
 
         expect(document.activeElement).to.equal(input1);
 
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         expect(document.activeElement).to.equal(el);
 
         let value = el.value;
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Tab',
-        });
+        await sendTabKey();
 
         expect(document.activeElement).to.equal(input2);
 
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(el);
 
         value = el.value;
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         expect(el.value).to.not.equal(value);
-        await sendKeys({
-            press: 'Shift+Tab',
-        });
+        await sendShiftTabKey();
 
         expect(document.activeElement).to.equal(input1);
     });
@@ -115,7 +105,7 @@ describe('ColorWheel', () => {
 
         expect(el.focused).to.be.false;
 
-        await sendKeys({ press: 'Tab' });
+        await sendTabKey();
         await elementUpdated(el);
 
         expect(el.focused).to.be.true;
@@ -494,51 +484,31 @@ describe('ColorWheel', () => {
         el.focus();
         expect(el.value).to.equal(0);
 
-        await sendKeys({
-            down: 'Shift',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
-        await sendKeys({
-            press: 'ArrowUp',
-        });
+        await sendKeys({ down: 'Shift' });
+        await sendKeys({ press: 'ArrowUp' });
+        await sendKeys({ press: 'ArrowUp' });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(20);
 
-        await sendKeys({
-            press: 'ArrowRight',
-        });
-        await sendKeys({
-            press: 'ArrowRight',
-        });
+        await sendKeys({ press: 'ArrowRight' });
+        await sendKeys({ press: 'ArrowRight' });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(40);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
+        await sendKeys({ press: 'ArrowDown' });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(20);
 
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
-        await sendKeys({
-            press: 'ArrowLeft',
-        });
-        await sendKeys({
-            up: 'Shift',
-        });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ press: 'ArrowLeft' });
+        await sendKeys({ up: 'Shift' });
 
         await elementUpdated(el);
 
@@ -686,31 +656,23 @@ describe('ColorWheel', () => {
 
         expect(el.value).to.equal(0);
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [80, 15],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'move',
-                    position: [80, 160],
-                },
-            ],
-        });
+        await sendMouse([
+            {
+                type: 'move',
+                position: [80, 15],
+            },
+            {
+                type: 'down',
+            },
+            {
+                type: 'move',
+                position: [80, 160],
+            },
+        ]);
 
         await elementUpdated(el);
 
-        await sendMouse({
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
-        });
+        await sendMouse({ type: 'up' });
 
         await elementUpdated(el);
         expect(el.value).to.equal(0);

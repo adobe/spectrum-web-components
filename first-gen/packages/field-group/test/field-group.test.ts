@@ -22,21 +22,7 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 describe('FieldGroup', () => {
     testForLitDevWarnings(
         async () =>
-            await fixture<FieldGroup>(
-                html`
-                    <sp-field-group horizontal>
-                        <sp-checkbox>Checkbox 1</sp-checkbox>
-                        <sp-checkbox>Checkbox 2</sp-checkbox>
-                        <sp-checkbox>Checkbox 3</sp-checkbox>
-                        <sp-checkbox>Checkbox 4</sp-checkbox>
-                        <sp-checkbox>Checkbox 5</sp-checkbox>
-                    </sp-field-group>
-                `
-            )
-    );
-    it('loads default field-group accessibly', async () => {
-        const el = await fixture<FieldGroup>(
-            html`
+            await fixture<FieldGroup>(html`
                 <sp-field-group horizontal>
                     <sp-checkbox>Checkbox 1</sp-checkbox>
                     <sp-checkbox>Checkbox 2</sp-checkbox>
@@ -44,8 +30,18 @@ describe('FieldGroup', () => {
                     <sp-checkbox>Checkbox 4</sp-checkbox>
                     <sp-checkbox>Checkbox 5</sp-checkbox>
                 </sp-field-group>
-            `
-        );
+            `)
+    );
+    it('loads default field-group accessibly', async () => {
+        const el = await fixture<FieldGroup>(html`
+            <sp-field-group horizontal>
+                <sp-checkbox>Checkbox 1</sp-checkbox>
+                <sp-checkbox>Checkbox 2</sp-checkbox>
+                <sp-checkbox>Checkbox 3</sp-checkbox>
+                <sp-checkbox>Checkbox 4</sp-checkbox>
+                <sp-checkbox>Checkbox 5</sp-checkbox>
+            </sp-field-group>
+        `);
 
         await elementUpdated(el);
 

@@ -20,11 +20,9 @@ customElements.define('test-match-media-el', TestEl);
 
 describe('Match Media', () => {
     it('responds to media changes', async () => {
-        const el = await fixture(
-            html`
-                <test-match-media-el></test-match-media-el>
-            `
-        );
+        const el = await fixture(html`
+            <test-match-media-el></test-match-media-el>
+        `);
         const controller = new MatchMediaController(
             el as LitElement & { shadowRoot: ShadowRoot },
             '(min-width: 500px)'

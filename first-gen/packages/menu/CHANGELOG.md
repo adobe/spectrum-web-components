@@ -1,5 +1,26 @@
 # Change Log
 
+## 1.8.0
+
+### Minor Changes
+
+- [#5616](https://github.com/adobe/spectrum-web-components/pull/5616) [`f27ab09`](https://github.com/adobe/spectrum-web-components/commit/f27ab096f4d53543dc53f75ec196c696b78b3baa) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - **Fixed** : Fix iPad scrolling issue in picker dropdown where scrolling through menu items would accidentally select the first touched item and close the picker.
+
+    The fix implements touch gesture detection to distinguish between scrolling and selection. Added `isScrolling` getter for public API access. Test on iPad devices with long menus to validate scrolling behavior and selection accuracy.
+
+### Patch Changes
+
+- Updated dependencies [[`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`ee1bae6`](https://github.com/adobe/spectrum-web-components/commit/ee1bae6f9a7401dc31ebc84e4e27f9d39be692d1), [`14486d6`](https://github.com/adobe/spectrum-web-components/commit/14486d620e88976c794225edb54eaca8392015c7), [`826a2d5`](https://github.com/adobe/spectrum-web-components/commit/826a2d533e46a6f945daefa8999fadca78bd8688)]:
+    - @spectrum-web-components/overlay@1.8.0
+    - @spectrum-web-components/divider@1.8.0
+    - @spectrum-web-components/popover@1.8.0
+    - @spectrum-web-components/action-button@1.8.0
+    - @spectrum-web-components/icon@1.8.0
+    - @spectrum-web-components/icons-ui@1.8.0
+    - @spectrum-web-components/base@1.8.0
+    - @spectrum-web-components/reactive-controllers@1.8.0
+    - @spectrum-web-components/shared@1.8.0
+
 ## 1.7.0
 
 ### Patch Changes
@@ -62,7 +83,6 @@
 ### Minor Changes
 
 - [#5187](https://github.com/adobe/spectrum-web-components/pull/5187) [`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
-
     - Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
     - Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
 
@@ -86,20 +106,17 @@
 ### Minor Changes
 
 - [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
-
     - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
     - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
     - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
 
     See the following APG examples for more information:
-
     - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
     - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 
 ### Patch Changes
 
 - [#5176](https://github.com/adobe/spectrum-web-components/pull/5176) [`468314f`](https://github.com/adobe/spectrum-web-components/commit/468314f45cf5fedb2e9029da210a5886260abca9) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - 1. chore(checkbox): updated to latest css v10.1.1 for s2 fast follow
-
     2. chore(dialog):
        The error property was not properly deprecated with a full migration plan in place. This has caused confusion and false sense of urgency for consumers to migrate. We are removing it to eliminate those pain points for consumers while we take a deep look at our dialogs and patterns.
     3. chore(menu): updated to latest css v9.1.1 for s2 fast follow

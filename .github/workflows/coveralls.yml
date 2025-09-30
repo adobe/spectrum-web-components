@@ -23,7 +23,7 @@ jobs:
               run: cd first-gen && yarn playwright install --with-deps
 
             - name: Run unit tests with coverage
-              run: cd first-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
+              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
               continue-on-error: true
 
             - name: Upload coverage to Coveralls
