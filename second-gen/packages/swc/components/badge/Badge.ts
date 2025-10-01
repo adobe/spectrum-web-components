@@ -10,58 +10,25 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, PropertyValues, TemplateResult } from 'lit';
+import { CSSResultArray, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
-    BADGE_VARIANTS_COLOR as BADGE_VARIANTS_COLOR_BASE,
-    BADGE_VARIANTS_SEMANTIC,
+    BADGE_VARIANTS_COLOR_S2,
+    BADGE_VARIANTS_S2,
     BadgeBase,
+    type BadgeVariantS2 as BadgeVariant,
 } from '@swc/core/components/badge';
-
-export const BADGE_VARIANTS_COLOR = [
-    ...BADGE_VARIANTS_COLOR_BASE,
-    'pink',
-    'turquoise',
-    'brown',
-    'cinnamon',
-    'silver',
-] as const;
-
-export const BADGE_VARIANTS = [
-    ...BADGE_VARIANTS_SEMANTIC,
-    ...BADGE_VARIANTS_COLOR,
-] as const;
-export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
 
 import styles from './badge.css';
-
-// Export types and values to avoid breaking changes
-export {
-    BADGE_VARIANTS_SEMANTIC,
-    FIXED_VALUES,
-} from '@swc/core/components/badge';
-export type { FixedValues } from '@swc/core/components/badge';
 
 /**
  * A badge component that displays short, descriptive information about an element.
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
  * @element swc-badge
- * @since 1.0.0
- * @status stable
- * @github https://github.com/adobe/spectrum-web-components/tree/main/...
- * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=36806-6551
- *
- * @attribute {BadgeVariant} variant - The variant of the badge.
- * @attribute {boolean} subtle - Whether the badge is subtle.
- * @attribute {boolean} outline - Whether the badge is outlined.
- * @attribute {FixedValues} fixed - The fixed position of the badge.
- *
- * @slot - Text label of the badge
- * @slot icon - Optional icon that appears to the left of the label
  *
  * @example
  * <swc-badge variant="positive">New</swc-badge>
@@ -73,11 +40,51 @@ export type { FixedValues } from '@swc/core/components/badge';
  * </swc-badge>
  */
 export class Badge extends BadgeBase {
+    // ────────────────────
+    //     API OVERRIDES
+    // ────────────────────
+
+    /**
+     * @internal
+     */
+    static override readonly VARIANTS_COLOR = BADGE_VARIANTS_COLOR_S2;
+
+    /**
+     * @internal
+     */
+    static override readonly VARIANTS = BADGE_VARIANTS_S2;
+
+    /**
+     * The variant of the badge.
+     */
+    @property({ type: String, reflect: true })
+    public override variant: BadgeVariant = 'informative';
+
+    // ───────────────────
+    //     API ADDITIONS
+    // ───────────────────
+
+    /**
+     * Whether the badge is subtle.
+     *
+     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+     */
     @property({ type: Boolean, reflect: true })
     public subtle: boolean = false;
 
+    /**
+     * Whether the badge is outlined.
+     *
+     * Can only be used with semantic variants.
+     *
+     * @todo This can be moved to the base class once we are no longer maintaining 1st-gen.
+     */
     @property({ type: Boolean, reflect: true })
     public outline: boolean = false;
+
+    // ──────────────────────────────
+    //     RENDERING & STYLING
+    // ──────────────────────────────
 
     public static override get styles(): CSSResultArray {
         return [styles];
@@ -117,24 +124,5 @@ export class Badge extends BadgeBase {
                 </div>
             </div>
         `;
-    }
-
-    protected override update(changedProperties: PropertyValues): void {
-        super.update(changedProperties);
-        if (window.__swc?.DEBUG) {
-            if (
-                this.outline &&
-                !BADGE_VARIANTS_SEMANTIC.includes(this.variant)
-            ) {
-                window.__swc.warn(
-                    this,
-                    `<${this.localName}> element only supports the outline styling if the variant is a semantic color variant.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
-                    {
-                        issues: [...BADGE_VARIANTS_SEMANTIC],
-                    }
-                );
-            }
-        }
     }
 }
