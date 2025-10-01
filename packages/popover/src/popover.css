@@ -17,6 +17,7 @@
     min-width: min-content;
     max-height: 100%;
     max-width: 100%;
+    inline-size: var(--mod-popover-inline-size);
     clip-path: none;
 }
 
@@ -77,8 +78,4 @@
 
 :host([tip][placement]) #tip {
     height: auto;
-}
-
-:host([picker]) {
-    inline-size: var(--mod-picker-inline-size, var(--spectrum-picker-inline-size));
 }
