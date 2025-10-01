@@ -11,10 +11,14 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { ProgressCircleBase } from '@swc/core/components/progress-circle';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    PROGRESS_CIRCLE_STATIC_COLORS_S2,
+    ProgressCircleBase,
+    type ProgressCircleStaticColorS2,
+} from '@swc/core/components/progress-circle';
 
 import progressCircleStyles from './progress-circle.css';
 
@@ -29,12 +33,6 @@ function capitalize(str?: string): string {
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
  *
  * @element swc-progress-circle
- * @since 2.0.0
- * @status stable
- * @github https://github.com/adobe/spectrum-web-components/tree/main/second-gen/packages/swc/components/progress-circle
- * @figma https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2-%2F-Desktop?node-id=13061-181
- *
- * @fires progress-change - Dispatched when the progress value changes
  *
  * @example
  * <swc-progress-circle progress="75" label="Loading progress"></swc-progress-circle>
@@ -43,17 +41,32 @@ function capitalize(str?: string): string {
  * <swc-progress-circle indeterminate label="Loading..."></swc-progress-circle>
  */
 export class ProgressCircle extends ProgressCircleBase {
-    public static override get styles(): CSSResultArray {
-        return [progressCircleStyles];
-    }
+    // ────────────────────
+    //     API OVERRIDES
+    // ────────────────────
+
+    /**
+     * @internal
+     */
+    static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS_S2;
 
     /**
      * Static color variant for use on different backgrounds.
+     *
      * When set to 'white', the component uses white styling for images with a dark tinted background.
+     *
      * When set to 'black', the component uses black styling for images with a light tinted background.
      */
     @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white' | 'black';
+    public staticColor?: ProgressCircleStaticColorS2;
+
+    // ──────────────────────────────
+    //     RENDERING & STYLING
+    // ──────────────────────────────
+
+    public static override get styles(): CSSResultArray {
+        return [progressCircleStyles];
+    }
 
     protected override render(): TemplateResult {
         const strokeWidth = this.size === 's' ? 2 : this.size === 'm' ? 4 : 6;
@@ -72,6 +85,7 @@ export class ProgressCircle extends ProgressCircleBase {
                         typeof this.size !== 'undefined',
                 })}
             >
+                <slot @slotchange=${this.handleSlotchange}></slot>
                 <svg
                     fill="none"
                     width="100%"
