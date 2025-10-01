@@ -431,6 +431,7 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             label="Pick an action"
             icons="only"
             value="2"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
@@ -459,6 +460,7 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             label="Pick an action"
             value="3"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
