@@ -16,7 +16,7 @@ import {
     PendingStateController,
 } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 
-import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 describe('PendingStateController', () => {
@@ -25,7 +25,7 @@ describe('PendingStateController', () => {
 
     beforeEach(async () => {
         host = await fixture<HostWithPendingState>(html`
-            <sp-picker aria-label="clickable" pending></sp-picker>
+            <sp-button aria-label="clickable" pending>Click me</sp-button>
         `);
         controller = host.pendingStateController;
     });
@@ -33,7 +33,7 @@ describe('PendingStateController', () => {
     describe('renderPendingState', () => {
         it('should change aria-label of host when pending and when not pending', async () => {
             host = await fixture<HostWithPendingState>(html`
-                <sp-picker></sp-picker>
+                <sp-button>Click me</sp-button>
             `);
             controller = host.pendingStateController;
 
@@ -83,8 +83,8 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-valuetext=${pendingLabel}
                     class="progress-circle"
+                    role="presentation"
                 ></sp-progress-circle>
             `);
 
@@ -103,7 +103,7 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-valuetext="Pending"
+                    role="presentation"
                     class="progress-circle"
                 ></sp-progress-circle>
             `);
@@ -111,8 +111,9 @@ describe('PendingStateController', () => {
             const renderedAttributes = renderedElement.attributes;
             const expectedAttributes = expectedElement.attributes;
 
-            expect(renderedAttributes.length === expectedAttributes.length).to
-                .be.true;
+            expect(renderedAttributes.length).to.equal(
+                expectedAttributes.length
+            );
 
             for (let i = 0; i < renderedAttributes.length; i++) {
                 const renderedAttr = renderedAttributes[i];
@@ -147,7 +148,7 @@ describe('PendingStateController', () => {
                     id="loader"
                     size="s"
                     indeterminate
-                    aria-valuetext="Pending"
+                    role="presentation"
                     class="progress-circle"
                 ></sp-progress-circle>
             `);
