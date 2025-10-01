@@ -7,29 +7,40 @@
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-Textfield`
-- `.spectrum-Textfield .spectrum-FieldLabel`
-- `.spectrum-Textfield .spectrum-HelpText`
-- `.spectrum-Textfield .spectrum-Textfield-input::placeholder`
+
+**Variants:**
+
+- `.spectrum-Textfield--sideLabel`
 - `.spectrum-Textfield--multiline .spectrum-Textfield-input`
 - `.spectrum-Textfield--multiline .spectrum-Textfield-input:lang(ja)`
 - `.spectrum-Textfield--multiline .spectrum-Textfield-input:lang(ko)`
 - `.spectrum-Textfield--multiline .spectrum-Textfield-input:lang(zh)`
 - `.spectrum-Textfield--multiline.spectrum-Textfield--grows .spectrum-Textfield-input`
 - `.spectrum-Textfield--multiline.spectrum-Textfield--grows.spectrum-Textfield--sideLabel .spectrum-Textfield-input`
-- `.spectrum-Textfield--sideLabel`
-- `.spectrum-Textfield--sideLabel .spectrum-FieldLabel`
-- `.spectrum-Textfield--sideLabel .spectrum-HelpText`
-- `.spectrum-Textfield--sideLabel .spectrum-Textfield-characterCount`
-- `.spectrum-Textfield--sideLabel .spectrum-Textfield-input`
-- `.spectrum-Textfield--sideLabel .spectrum-Textfield-validationIcon`
 - `.spectrum-Textfield--sizeL`
 - `.spectrum-Textfield--sizeS`
 - `.spectrum-Textfield--sizeXL`
+
+**Child elements:**
+
+- `.spectrum-Textfield .spectrum-FieldLabel`
+- `.spectrum-Textfield .spectrum-HelpText`
+- `.spectrum-Textfield--sideLabel .spectrum-FieldLabel`
+- `.spectrum-Textfield--sideLabel .spectrum-HelpText`
+
+**Features:**
+
 - `.spectrum-Textfield-characterCount`
 - `.spectrum-Textfield-characterCount:lang(ja)`
 - `.spectrum-Textfield-characterCount:lang(ko)`
 - `.spectrum-Textfield-characterCount:lang(zh)`
+- `.spectrum-Textfield--sideLabel .spectrum-Textfield-characterCount`
+
+**Input element:**
+
 - `.spectrum-Textfield-input`
 - `.spectrum-Textfield-input:-moz-ui-invalid`
 - `.spectrum-Textfield-input::placeholder`
@@ -46,6 +57,10 @@
 - `.spectrum-Textfield-input[type="number"]`
 - `.spectrum-Textfield-input[type="number"]::-webkit-inner-spin-button`
 - `.spectrum-Textfield-input[type="number"]::-webkit-outer-spin-button`
+- `.spectrum-Textfield--sideLabel .spectrum-Textfield-input`
+
+**States:**
+
 - `.spectrum-Textfield.is-disabled .spectrum-FieldLabel`
 - `.spectrum-Textfield.is-disabled .spectrum-HelpText .spectrum-HelpText-text`
 - `.spectrum-Textfield.is-disabled .spectrum-Textfield-characterCount`

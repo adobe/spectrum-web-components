@@ -7,33 +7,47 @@
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-Search`
-- `.spectrum-Search .spectrum-HelpText`
-- `.spectrum-Search .spectrum-Search-clearButton .spectrum-ClearButton-fill`
-- `.spectrum-Search .spectrum-Search-textfield`
-- `.spectrum-Search .spectrum-Search-textfield .spectrum-Search-input`
+- `.spectrum-Search:lang(ja)`
+- `.spectrum-Search:lang(ko)`
+- `.spectrum-Search:lang(zh)`
+
+**Variants:**
+
 - `.spectrum-Search--sizeL`
 - `.spectrum-Search--sizeS`
 - `.spectrum-Search--sizeXL`
+
+**Child elements:**
+
+- `.spectrum-Search .spectrum-HelpText`
+- `.spectrum-Search .spectrum-Search-textfield`
+- `.spectrum-Search .spectrum-Search-textfield .spectrum-Search-input`
+- `.spectrum-Search .spectrum-Search-clearButton .spectrum-ClearButton-fill`
 - `.spectrum-Search-clearButton`
 - `.spectrum-Search-clearButton .spectrum-ClearButton-fill`
 - `.spectrum-Search-icon`
+- `.spectrum-Search-textfield`
+
+**Input element:**
+
 - `.spectrum-Search-input`
 - `.spectrum-Search-input::-webkit-search-cancel-button`
 - `.spectrum-Search-input::-webkit-search-decoration`
-- `.spectrum-Search-textfield`
+
+**States:**
+
+- `.spectrum-Search.is-collapsed`
+- `.spectrum-Search.is-disabled .spectrum-Search-clearButton`
+- `.spectrum-Search.is-expanded`
 - `.spectrum-Search-textfield.is-disabled .spectrum-Search-icon`
 - `.spectrum-Search-textfield.is-disabled:hover .spectrum-Search-icon`
 - `.spectrum-Search-textfield.is-focused .spectrum-Search-icon`
 - `.spectrum-Search-textfield.is-focused:hover .spectrum-Search-icon`
 - `.spectrum-Search-textfield.is-keyboardFocused .spectrum-Search-icon`
 - `.spectrum-Search-textfield:hover .spectrum-Search-icon`
-- `.spectrum-Search.is-collapsed`
-- `.spectrum-Search.is-disabled .spectrum-Search-clearButton`
-- `.spectrum-Search.is-expanded`
-- `.spectrum-Search:lang(ja)`
-- `.spectrum-Search:lang(ko)`
-- `.spectrum-Search:lang(zh)`
 
 </details>
 

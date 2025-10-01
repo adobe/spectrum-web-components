@@ -7,15 +7,43 @@
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-NumberField`
+- `.spectrum-NumberField:before`
+- `.spectrum-NumberField:lang(ja), .spectrum-NumberField:lang(ko), .spectrum-NumberField:lang(zh)`
+
+**Variants:**
+
+- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper`
+- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield`
+- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield .spectrum-NumberField-input`
+- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon`
+- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield:not(:has(.spectrum-Textfield-validationIcon)) .spectrum-NumberField-input`
+- `.spectrum-NumberField.spectrum-NumberField--sideLabel`
+- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-fieldLabel`
+- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-helpText`
+- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-inputs`
+- `.spectrum-NumberField.spectrum-NumberField--sizeL`
+- `.spectrum-NumberField.spectrum-NumberField--sizeS`
+- `.spectrum-NumberField.spectrum-NumberField--sizeXL`
+
+**Child elements:**
+
 - `.spectrum-NumberField-buttons`
 - `.spectrum-NumberField-fieldLabel`
 - `.spectrum-NumberField-helpText`
-- `.spectrum-NumberField-input`
 - `.spectrum-NumberField-inputs`
 - `.spectrum-NumberField-inputs .spectrum-Textfield .spectrum-Textfield-input`
 - `.spectrum-NumberField-inputs .spectrum-Textfield.is-invalid .spectrum-NumberField-input`
+
+**Input element:**
+
+- `.spectrum-NumberField-input`
 - `.spectrum-NumberField-textfield`
+
+**States:**
+
 - `.spectrum-NumberField-textfield.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon`
 - `.spectrum-NumberField.is-disabled`
 - `.spectrum-NumberField.is-focused.is-hover:not(.is-disabled)`
@@ -41,21 +69,10 @@
 - `.spectrum-NumberField.is-keyboardFocused:not(.is-disabled, .is-readOnly) .spectrum-NumberField-inputs`
 - `.spectrum-NumberField.is-keyboardFocused:not(.is-disabled, .is-readOnly):hover`
 - `.spectrum-NumberField.is-readOnly`
-- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper`
-- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield`
-- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield .spectrum-NumberField-input`
-- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield.spectrum-Textfield.is-invalid .spectrum-Textfield-validationIcon`
-- `.spectrum-NumberField.spectrum-NumberField--hiddenStepper .spectrum-NumberField-textfield:not(:has(.spectrum-Textfield-validationIcon)) .spectrum-NumberField-input`
-- `.spectrum-NumberField.spectrum-NumberField--sideLabel`
-- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-fieldLabel`
-- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-helpText`
-- `.spectrum-NumberField.spectrum-NumberField--sideLabel .spectrum-NumberField-inputs`
-- `.spectrum-NumberField.spectrum-NumberField--sizeL`
-- `.spectrum-NumberField.spectrum-NumberField--sizeS`
-- `.spectrum-NumberField.spectrum-NumberField--sizeXL`
-- `.spectrum-NumberField:before`
+
+**Interactive states:**
+
 - `.spectrum-NumberField:focus-visible .spectrum-NumberField-inputs`
-- `.spectrum-NumberField:lang(ja), .spectrum-NumberField:lang(ko), .spectrum-NumberField:lang(zh)`
 - `.spectrum-NumberField:not(.is-disabled):focus`
 - `.spectrum-NumberField:not(.is-disabled):focus-visible`
 - `.spectrum-NumberField:not(.is-disabled):focus-visible:hover`
