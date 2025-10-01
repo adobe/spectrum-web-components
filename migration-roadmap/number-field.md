@@ -94,7 +94,7 @@
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers (deprecated)</summary>
 
 - `--mod-numberfield-background-color`
 - `--mod-numberfield-background-color-disabled`
@@ -294,12 +294,16 @@
         />
     </div>
     <span class="spectrum-Stepper-buttons">
-        <button class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--top">
+        <button
+            class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--top"
+        >
             <div class="spectrum-InfieldButton-fill">
                 <svg class="spectrum-Icon spectrum-UIIcon-ChevronUp100"></svg>
             </div>
         </button>
-        <button class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--bottom">
+        <button
+            class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--bottom"
+        >
             <div class="spectrum-InfieldButton-fill">
                 <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100"></svg>
             </div>
@@ -361,6 +365,13 @@
 <details>
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
+**Key changes in spectrum-two**:
+
+- Base class changes from `.spectrum-Stepper` to `.spectrum-NumberField`
+- Addition of field label with `.spectrum-NumberField-fieldLabel` class
+- New wrapper div with `.spectrum-NumberField-inputs` class around textfield and buttons
+- Removal of `--top` and `--bottom` modifier classes from infield buttons
+
 ```diff
 --- a/components/stepper/stories/template.js (main branch)
 +++ b/components/stepper/stories/template.js (spectrum-two branch)
@@ -376,11 +387,15 @@
 +    <input type="number" class="spectrum-Textfield-input spectrum-NumberField-input">
    </div>
 -  <span class="spectrum-Stepper-buttons">
--    <button class="spectrum-InfieldButton spectrum-Stepper-button">
--      <svg class="spectrum-Icon spectrum-UIIcon-ChevronUp100"></svg>
+-    <button class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--top">
+-      <div class="spectrum-InfieldButton-fill">
+-        <svg class="spectrum-Icon spectrum-UIIcon-ChevronUp100"></svg>
+-      </div>
 -    </button>
--    <button class="spectrum-InfieldButton spectrum-Stepper-button">
--      <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100"></svg>
+-    <button class="spectrum-InfieldButton spectrum-Stepper-button spectrum-InfieldButton--bottom">
+-      <div class="spectrum-InfieldButton-fill">
+-        <svg class="spectrum-Icon spectrum-UIIcon-ChevronDown100"></svg>
+-      </div>
 -    </button>
 +  <span class="spectrum-NumberField-buttons">
 +    <div class="spectrum-InfieldButton-inline">

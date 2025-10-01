@@ -28,10 +28,11 @@ When engineers begin 2nd generation Spectrum 2 implementation work, this documen
 We extract and document:
 
 - **CSS selectors**: All selectors from `metadata.json` in the spectrum-css `spectrum-two` branch
-- **Passthroughs**: CSS passthrough properties
-- **Modifiers**: CSS modifier classes
-- **SWC attributes**: Properties with `@property` decorators in TypeScript
+- **Passthroughs**: CSS passthrough custom properties
+- **Modifiers**: CSS modifier custom properties (note that `--mod` properties will be deprecated in the 2nd-gen implementation)
+- **SWC attributes**: Properties with `@property` decorators (which use getter/setter patterns) in TypeScript
 - **SWC slots**: Slot patterns from render methods
+- **Nested components**: Child components used within the component
 
 ### DOM structure comparison
 
@@ -74,11 +75,13 @@ Each component follows this format:
 
 ## Component specifications
 
+**Note**: CSS selectors and attributes/slots are often grouped by elements, states, variants, or other logical categories to improve readability.
+
 ### CSS
 
 - CSS selectors (collapsible)
 - Passthroughs (collapsible)
-- Modifiers (collapsible)
+- Modifiers (deprecated) (collapsible)
 
 ### SWC
 
@@ -106,6 +109,8 @@ Each component follows this format:
 
 ### CSS Spectrum 2 changes
 
+**Note**: Some of this information may be summarized in the component's changelog in the spectrum-two branch.
+
 ## Resources
 
 - [CSS migration]()
@@ -123,6 +128,8 @@ Set up a Cursor workspace with both repositories:
 - `spectrum-web-components` (`main` branch)
 
 ### Using the cursor prompt
+
+**Model recommendation**: This type of detailed migration analysis is better handled by slower but more advanced thinking models like Claude or GPT-5, which can provide more thorough analysis and better understand complex component relationships.
 
 1. **Load the prompt**: Reference `migration-roadmap/cursor_prompt.md`
 2. **Specify component**: Replace `[COMPONENT_NAME]` with the target component

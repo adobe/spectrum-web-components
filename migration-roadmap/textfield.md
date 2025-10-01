@@ -108,7 +108,7 @@ None found for this component.
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers (deprecated)</summary>
 
 - `--mod-text-area-min-block-size`
 - `--mod-text-area-min-inline-size`
@@ -311,7 +311,10 @@ None found for this component.
         role="img"
     >
         <title>Alert Triangle</title>
-        <use xlink:href="#spectrum-icon-18-AlertTriangle" href="#spectrum-icon-18-AlertTriangle" />
+        <use
+            xlink:href="#spectrum-icon-18-AlertTriangle"
+            href="#spectrum-icon-18-AlertTriangle"
+        />
     </svg>
     <textarea
         placeholder="placeholder"
@@ -374,7 +377,10 @@ None found for this component.
         role="img"
     >
         <title>Alert Triangle</title>
-        <use xlink:href="#spectrum-icon-18-AlertTriangle" href="#spectrum-icon-18-AlertTriangle" />
+        <use
+            xlink:href="#spectrum-icon-18-AlertTriangle"
+            href="#spectrum-icon-18-AlertTriangle"
+        />
     </svg>
     <textarea
         placeholder="placeholder"
@@ -433,11 +439,10 @@ None found for this component.
 +    Label Text
 +  </label>
    <span class="spectrum-Textfield-characterCount">Character Count</span>
--  <div class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon">
--    <svg class="spectrum-Icon-spectrum" focusable="false" aria-hidden="true">
--      <!-- Icon content -->
--    </svg>
--  </div>
+-  <svg class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon" focusable="false" aria-hidden="true">
+-    <title>Alert</title>
+-    <use xlink:href="#spectrum-icon-18-AlertTriangle" />
+-  </svg>
 +  <svg
 +    class="spectrum-Icon spectrum-Icon--sizeM spectrum-Textfield-validationIcon"
 +    focusable="false"
@@ -532,7 +537,7 @@ None found for this component.
 | `input[allowed-keys]` (custom attribute)                                                                                                     | `allowed-keys`          | Implemented (custom)                                                               |
 | `.spectrum-Textfield--sideLabel`                                                                                                             | `labelPosition` (side)  | Missing from SWC textfield but exists within SWC field label                       |
 | `.spectrum-Textfield-characterCount`                                                                                                         | Character count feature | Missing from SWC (existed in S1 but never implemented in SWC)                      |
-| `.spectrum-Textfield--quiet`                                                                                                                 | `quiet`                 | Deprecated for S2                                                                        |
+| `.spectrum-Textfield--quiet`                                                                                                                 | `quiet`                 | Deprecated for S2                                                                  |
 
 ## Summary of changes
 

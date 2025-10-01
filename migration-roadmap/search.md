@@ -66,7 +66,7 @@
 </details>
 
 <details>
-<summary>Modifiers</summary>
+<summary>Modifiers (Deprecated)</summary>
 
 - `--mod-search-background-color`
 - `--mod-search-background-color-disabled`
@@ -348,7 +348,9 @@
     class="spectrum-Search spectrum-Search--sizeM is-collapsed"
     aria-label="Search"
 >
-    <button class="spectrum-ActionButton spectrum-ActionButton--quiet spectrum-Search-actionButton">
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--quiet spectrum-Search-actionButton"
+    >
         <svg
             class="spectrum-Icon spectrum-ActionButton-icon spectrum-Icon--sizeM"
             focusable="false"
@@ -448,21 +450,21 @@
 
 ### CSS => SWC mapping
 
-| CSS selector                                                                          | Attribute or slot          | Status                       |
-| ------------------------------------------------------------------------------------- | -------------------------- | ---------------------------- |
-| `.spectrum-Search`                                                                    | `:host`                    | Implemented                  |
-| `.spectrum-Search--sizeS`                                                             | `size="s"`                 | Implemented                  |
-| `.spectrum-Search--sizeL`                                                             | `size="l"`                 | Implemented                  |
-| `.spectrum-Search--sizeXL`                                                            | `size="xl"`                | Implemented                  |
-| `.spectrum-Search.is-disabled`                                                        | `disabled`                 | Implemented                  |
-| `.spectrum-Search .spectrum-HelpText`                                                 | `help-text` slot           | Implemented                  |
-| `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling  | Implemented                  |
-| `.spectrum-Search .spectrum-Search-clearButton`                                       | `<sp-clear-button>`        | Implemented                  |
-| `.spectrum-Search .spectrum-Search-textfield`                                         | Textfield functionality    | Implemented                  |
-| `.spectrum-Search .spectrum-Search-icon`                                              | `<sp-icon-search>`         | Implemented                  |
-| `.spectrum-Search .spectrum-Search-input`                                             | Input element              | Implemented                  |
-| `.spectrum-Search.is-collapsed`                                                       |                            | Missing from WC (new for S2) |
-| `.spectrum-Search.is-expanded`                                                        |                            | Missing from WC (new for S2) |
+| CSS selector                                                                          | Attribute or slot         | Status                       |
+| ------------------------------------------------------------------------------------- | ------------------------- | ---------------------------- |
+| `.spectrum-Search`                                                                    | `:host`                   | Implemented                  |
+| `.spectrum-Search--sizeS`                                                             | `size="s"`                | Implemented                  |
+| `.spectrum-Search--sizeL`                                                             | `size="l"`                | Implemented                  |
+| `.spectrum-Search--sizeXL`                                                            | `size="xl"`               | Implemented                  |
+| `.spectrum-Search.is-disabled`                                                        | `disabled`                | Implemented                  |
+| `.spectrum-Search .spectrum-HelpText`                                                 | `help-text` slot          | Implemented                  |
+| `.spectrum-Search:lang(ja)`, `.spectrum-Search:lang(ko)`, `.spectrum-Search:lang(zh)` | Language-specific styling | Implemented                  |
+| `.spectrum-Search .spectrum-Search-clearButton`                                       | `<sp-clear-button>`       | Implemented                  |
+| `.spectrum-Search .spectrum-Search-textfield`                                         | Textfield functionality   | Implemented                  |
+| `.spectrum-Search .spectrum-Search-icon`                                              | `<sp-icon-search>`        | Implemented                  |
+| `.spectrum-Search .spectrum-Search-input`                                             | Input element             | Implemented                  |
+| `.spectrum-Search.is-collapsed`                                                       |                           | Missing from WC (new for S2) |
+| `.spectrum-Search.is-expanded`                                                        |                           | Missing from WC (new for S2) |
 
 ## Summary of changes
 
