@@ -33,6 +33,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -357,13 +358,6 @@ export class Combobox extends Textfield {
         return html`
             ${this.pending
                 ? html`
-                      <sp-progress-circle
-                          id="loader"
-                          size="s"
-                          indeterminate
-                          class="progress-circle"
-                          role="presentation"
-                      ></sp-progress-circle>
                       <span
                           aria-hidden="true"
                           class="visually-hidden"
@@ -391,6 +385,20 @@ export class Combobox extends Textfield {
                 : html`
                       <span hidden id="applied-label">${appliedLabel}</span>
                   `}
+        `;
+    }
+
+    protected renderLoader(): TemplateResult {
+        import(
+            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+        );
+        return html`
+            <sp-progress-circle
+                size="s"
+                indeterminate
+                role="presentation"
+                class="progress-circle"
+            ></sp-progress-circle>
         `;
     }
 
@@ -455,7 +463,7 @@ export class Combobox extends Textfield {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label pending-label"
+                aria-labelledby="applied-label label"
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
@@ -530,6 +538,7 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
+            ${this.renderLoader()}
             ${this.renderVisuallyHiddenLabels()}
             <slot
                 aria-hidden="true"

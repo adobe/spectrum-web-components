@@ -14,7 +14,11 @@ import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
 
 /**
- * Represents a host element with pending state.
+ * Renders a pending state visual element and manages the aria-label of the host element.
+ * 
+ * Currently this is used by Button only since the host element is the interactive element that needs pending state. This pattern does not work for components where the interactive element that needs pending state is in the shadow DOM. i.e. Combobox and Picker.
+ * 
+ * @TODO consider deprecating this controller since it is not used by any other component.
  */
 export interface HostWithPendingState extends LitElement {
     pendingLabel?: string;
@@ -50,7 +54,7 @@ export class PendingStateController<T extends HostWithPendingState>
      * Renders the pending state UI.
      * @returns A TemplateResult representing the pending state UI.
      *
-     * @TODO: [SWC-1119, SWC-1255, SWC-459] Confirm the accessibility warning and a11y dom tree are accurate for the pending state in button, combobox, and picker components.
+     * @TODO [SWC-1119, SWC-1255, SWC-459] Confirm the accessibility warning and a11y dom tree are accurate for the pending state in button, combobox, and picker components.
      */
     public renderPendingState(): TemplateResult {
         return this.host.pending

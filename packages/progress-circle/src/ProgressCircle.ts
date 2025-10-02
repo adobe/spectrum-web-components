@@ -117,12 +117,18 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
             }
         }
 
+        const hasAccessibleName = (): boolean => {
+            return Boolean(
+                this.label ||
+                    this.getAttribute('aria-label') ||
+                    this.getAttribute('aria-labelledby') ||
+                    this.slotEl.assignedNodes().length
+            );
+        };
+
         if (window.__swc.DEBUG) {
             if (
-                (!this.label ||
-                    !this.getAttribute('aria-label') ||
-                    !this.getAttribute('aria-labelledby') ||
-                    !this.slotEl.assignedNodes().length) &&
+                !hasAccessibleName() &&
                 this.getAttribute('role') === 'progressbar'
             ) {
                 window.__swc.warn(
