@@ -33,13 +33,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     public label = '';
 
     /**
-     * Static color variant for use on different backgrounds.
-     * When set to 'white', the component uses white styling for dark backgrounds.
-     */
-    @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white';
-
-    /**
      * Progress value from 0 to 100.
      * Only relevant when indeterminate is false.
      */
