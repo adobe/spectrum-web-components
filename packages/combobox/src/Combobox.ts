@@ -358,6 +358,7 @@ export class Combobox extends Textfield {
         return html`
             ${this.pending
                 ? html`
+                      ${this.renderLoader()}
                       <span
                           aria-hidden="true"
                           class="visually-hidden"
@@ -538,7 +539,6 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
-            ${this.renderLoader()}
             ${this.renderVisuallyHiddenLabels()}
             <slot
                 aria-hidden="true"
