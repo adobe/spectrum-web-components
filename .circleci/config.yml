@@ -22,10 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: bda4f0103f9a18a5667db0f6f6d5b50c9d5ec9ba
-    temp_hcm_golden_images_hash:
-        type: string
-        default: bda4f0103f9a18a5667db0f6f6d5b50c9d5ec9ba
+        default: f403fc2379fca7d5cee96c93298f69d2c4f9ea14
     wireit_cache_name:
         type: string
         default: wireit
@@ -339,7 +336,7 @@ jobs:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-<< pipeline.parameters.temp_hcm_golden_images_hash >>-hcm-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
