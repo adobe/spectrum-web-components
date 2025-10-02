@@ -56,7 +56,7 @@ function buildNavigation(tests, metadata) {
                 ></sp-sidenav-item>
                 <sp-sidenav-item
                     label="Storybook"
-                    href="${metadata.preview}/storybook"
+                    href="${metadata.preview}storybook/"
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
             <sp-sidenav-heading label="Golden Images Hash">
