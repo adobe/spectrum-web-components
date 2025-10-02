@@ -258,7 +258,7 @@
             ]
         },
         "serve": {
-            "command": "wds --config web-dev-server.config.js",
+            "command": "vite --config vite.config.js",
             "dependencies": [
                 {
                     "script": "build:assets"
