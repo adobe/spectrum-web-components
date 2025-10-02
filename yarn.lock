@@ -13409,6 +13409,7 @@ __metadata:
     "@rollup/plugin-commonjs": "npm:25.0.8"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
+    "@rollup/plugin-replace": "npm:^6.0.2"
     "@spectrum-web-components/bundle": "npm:1.8.0"
     "@spectrum-web-components/custom-vars-viewer": "npm:1.8.0"
     "@toycode/markdown-it-class": "npm:1.2.4"
