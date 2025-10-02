@@ -56,7 +56,7 @@ argTypes['static-color'] = {
  * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
  */
 const meta: Meta = {
-    title: 'Components/Progress Circle',
+    title: 'Progress Circle',
     component: 'swc-progress-circle',
     args,
     argTypes,
