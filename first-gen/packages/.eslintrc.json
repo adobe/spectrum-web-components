@@ -9,7 +9,6 @@
         "prettier",
         "plugin:lit-a11y/recommended"
     ],
-
     "overrides": [
         {
             "files": [

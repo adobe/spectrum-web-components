@@ -50,6 +50,7 @@
         "@rollup/plugin-commonjs": "25.0.8",
         "@rollup/plugin-json": "6.1.0",
         "@rollup/plugin-node-resolve": "15.3.1",
+        "@rollup/plugin-replace": "^6.0.2",
         "@toycode/markdown-it-class": "1.2.4",
         "@types/lunr": "2.3.7",
         "@types/prismjs": "1.26.5",
@@ -257,7 +258,7 @@
             ]
         },
         "serve": {
-            "command": "wds --config web-dev-server.config.js",
+            "command": "vite --config vite.config.js",
             "dependencies": [
                 {
                     "script": "build:assets"

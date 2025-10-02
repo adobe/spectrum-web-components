@@ -18,6 +18,7 @@ import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
 import path from 'path';
 import Terser from 'terser';
 
@@ -149,6 +150,10 @@ export default async () => {
 
     mpaConfig.plugins.push(
         json(),
+        replace({
+            preventAssignment: true,
+            'process.env.NODE_ENV': JSON.stringify(mode),
+        }),
         commonjs({
             exclude: [
                 '../../node_modules/focus-visible/**',
@@ -233,6 +238,12 @@ export default async () => {
                 {
                     find: '@swc-packages-internal',
                     replacement: '../../packages/',
+                },
+                {
+                    find: /^@swc\/core\/(.*)$/,
+                    replacement: path.resolve(
+                        '../../../second-gen/packages/core/dist/$1'
+                    ),
                 },
             ],
         })

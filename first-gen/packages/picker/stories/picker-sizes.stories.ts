@@ -17,6 +17,8 @@ import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
+import { isOverlayOpen } from '../../overlay/stories/index.js';
+
 export default {
     title: 'Picker/Sizes',
     component: 'sp-picker',
@@ -99,11 +101,15 @@ export const s = (args: StoryArgs): TemplateResult =>
 export const sOpen = (args: StoryArgs): TemplateResult =>
     picker({ ...args, open: true, size: 's' });
 
+sOpen.decorators = [isOverlayOpen];
+
 export const m = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'm' });
 
 export const mOpen = (args: StoryArgs): TemplateResult =>
     picker({ ...args, open: true, size: 'm' });
+
+mOpen.decorators = [isOverlayOpen];
 
 export const l = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'l' });
@@ -111,8 +117,12 @@ export const l = (args: StoryArgs): TemplateResult =>
 export const lOpen = (args: StoryArgs): TemplateResult =>
     picker({ ...args, open: true, size: 'l' });
 
+lOpen.decorators = [isOverlayOpen];
+
 export const XL = (args: StoryArgs): TemplateResult =>
     picker({ ...args, size: 'xl' });
 
 export const XLOpen = (args: StoryArgs): TemplateResult =>
     picker({ ...args, open: true, size: 'xl' });
+
+XLOpen.decorators = [isOverlayOpen];

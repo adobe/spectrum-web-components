@@ -128,7 +128,9 @@ async function ensureComponentStable(root: Element): Promise<void> {
         console.warn('Error while waiting for animations', error);
     }
 
-    // Additional frame to ensure everything is painted
+    // Additional frames to ensure everything is painted
+    await nextFrame();
+    await nextFrame();
     await nextFrame();
 }
 

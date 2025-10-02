@@ -37,12 +37,10 @@
 a {
     background-color: initial;
     text-decoration-skip: objects;
-    text-decoration-skip: objects;
     transition: color var(--mod-link-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
     cursor: pointer;
     color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--mod-link-text-color-primary-default, var(--spectrum-accent-content-color-default))));
     outline: none;
-    text-decoration: underline;
     text-decoration: underline;
 }
 
@@ -52,14 +50,12 @@ a:active {
 
 :host([quiet]) a {
     text-decoration: none;
-    text-decoration: none;
 }
 
 a:focus-visible,
 :host([quiet]) a:focus-visible {
     --mod-link-text-color: var(--mod-link-text-color-focus, var(--mod-link-text-color-primary-focus, var(--spectrum-accent-content-color-key-focus)));
 
-    text-decoration: underline double;
     text-decoration: underline double;
     text-decoration-color: inherit;
 }
@@ -70,7 +66,6 @@ a:focus-visible,
     }
 
     :host([quiet]) a:hover {
-        text-decoration: underline;
         text-decoration: underline;
     }
 }

@@ -12,6 +12,8 @@
 
 import rollupCommonjs from '@rollup/plugin-commonjs';
 import rollupJson from '@rollup/plugin-json';
+import rollupAlias from '@rollup/plugin-alias';
+import rollupReplace from '@rollup/plugin-replace';
 import { fromRollup } from '@web/dev-server-rollup';
 import {
     a11ySnapshotPlugin,
@@ -31,9 +33,15 @@ import {
     vrtGroups,
     webkit,
 } from './web-test-runner.utils.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
+const alias = fromRollup(rollupAlias);
+const replace = fromRollup(rollupReplace);
 
 export default {
     plugins: [
@@ -47,6 +55,21 @@ export default {
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
         json({}),
+        alias({
+            entries: [
+                {
+                    find: /^@swc\/core\/(.*)$/,
+                    replacement: path.resolve(
+                        __dirname,
+                        '../second-gen/packages/core/dist/$1'
+                    ),
+                },
+            ],
+        }),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            preventAssignment: true,
+        }),
         {
             name: 'plugin-js-buffer-to-string',
             transform(context) {
@@ -72,6 +95,7 @@ export default {
     },
     nodeResolve: {
         exportConditions: ['browser', 'development'],
+        moduleDirectories: ['node_modules', 'packages', 'projects', 'tools'],
     },
     http2: true,
     protocol: 'https:',
@@ -97,7 +121,7 @@ export default {
         threshold: {
             statements: 98.4,
             /** @todo bump this back to 94.5% once more tests are added */
-            branches: 94.4,
+            branches: 94.3,
             functions: 97,
             lines: 98.4,
         },

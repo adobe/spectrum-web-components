@@ -22,7 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: b603e40ceec985d714ea7660266908aa5476ced1
+        default: f403fc2379fca7d5cee96c93298f69d2c4f9ea14
     wireit_cache_name:
         type: string
         default: wireit
@@ -64,7 +64,9 @@ commands:
                       yarn --immutable
             - run:
                   name: Build the project
-                  command: cd first-gen && yarn build
+                  command: |
+                      yarn workspace @swc/core build
+                      yarn workspace @adobe/spectrum-web-components build
 
             - save_cache:
                   paths:
@@ -110,7 +112,7 @@ commands:
                   when: always
                   name: VRT Run
                   command: |
-                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      yarn workspace @adobe/spectrum-web-components test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/first-gen/results/
@@ -221,10 +223,12 @@ jobs:
             - run:
                   name: Run chromium tests
                   command: |
-                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium.js --group unit-ci
+                      TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/first-gen\///')
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/first-gen/results/
+            - store_artifacts:
+                  path: first-gen/coverage
 
     test-chromium-coverage:
         executor: node
@@ -233,9 +237,9 @@ jobs:
             - downstream
             - run:
                   name: Run chromium tests with coverage
-                  command: yarn test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+                  command: yarn workspace @adobe/spectrum-web-components test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/first-gen/results/
 
     test-chromium-memory:
         executor: node
@@ -246,9 +250,9 @@ jobs:
             - run:
                   name: Run memory tests
                   command: |
-                      TEST=$(circleci tests glob "{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings)
+                      TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/first-gen\///')
                       echo $TEST
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -261,8 +265,8 @@ jobs:
             - run:
                   name: Run firefox tests
                   command: |
-                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+                      TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/first-gen\///')
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -275,8 +279,8 @@ jobs:
             - run:
                   name: Run webkit tests
                   command: |
-                      TEST=$(circleci tests glob "{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+                      TEST=$(circleci tests glob "first-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/first-gen\///')
+                      yarn workspace @adobe/spectrum-web-components test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -287,7 +291,7 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: cd first-gen && yarn docs:analyze
+                  command: yarn workspace @adobe/spectrum-web-components docs:analyze
             - run:
                   name: Move CEM to Storybook directory
                   command: cp first-gen/projects/documentation/custom-elements.json first-gen/storybook/
@@ -296,10 +300,10 @@ jobs:
                   command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
             - run:
                   name: Build documentation
-                  command: cd first-gen && yarn docs:build
+                  command: yarn workspace @adobe/spectrum-web-components docs:build
             - run:
                   name: Build Storybook
-                  command: cd first-gen && yarn storybook:build
+                  command: yarn workspace @adobe/spectrum-web-components storybook:build
             - install-azcopy
             - run:
                   name: Deploy Beta Documentation to Azure Blob Storage
@@ -332,7 +336,7 @@ jobs:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v2-golden-images-<< pipeline.parameters.temp_hcm_golden_images_hash >>-hcm-
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
@@ -349,7 +353,7 @@ jobs:
                   when: always
                   name: VRT Run
                   command: |
-                      cd first-gen && yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+                      yarn workspace @adobe/spectrum-web-components test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/first-gen/results/
