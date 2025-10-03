@@ -110,7 +110,7 @@ export const inButton = ({
             margin-block: 0;
         }
     </style>
-    <sp-button static-color="black" style="color: white">
+    <sp-button static-color="black">
         <sp-progress-circle
             progress="53"
             static-color="white"
