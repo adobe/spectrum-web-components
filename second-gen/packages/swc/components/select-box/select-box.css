@@ -1,0 +1,286 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    display: inline-flex;
+}
+
+.spectrum-SelectBox {
+    /* Base token variables */
+    --spectrum-select-box-border-width: var(--spectrum-border-width-200);
+    --spectrum-select-box-border-radius: var(--spectrum-corner-radius-700);
+    --spectrum-select-box-background-color: var(
+        --spectrum-background-layer-2-color
+    );
+    --spectrum-select-box-border-color: var(
+        --spectrum-neutral-subdued-content-color-default
+    );
+    --spectrum-select-box-content-color: var(
+        --spectrum-neutral-content-color-default
+    );
+
+    /* Typography tokens */
+    --spectrum-select-box-font-size: var(--spectrum-font-size-100);
+    --spectrum-select-box-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-select-box-line-height: var(--spectrum-line-height-100);
+
+    /* Shadow tokens */
+    --spectrum-select-box-shadow-x: var(--spectrum-drop-shadow-x-100);
+    --spectrum-select-box-shadow-y: var(--spectrum-drop-shadow-y-100);
+    --spectrum-select-box-shadow-blur: var(--spectrum-drop-shadow-blur-100);
+    --spectrum-select-box-shadow-color: var(--spectrum-drop-shadow-color-100);
+
+    /* Layout tokens - Default (medium) size */
+    --spectrum-select-box-height: var(--spectrum-select-box-vertical-height);
+    --spectrum-select-box-width: var(--spectrum-select-box-horizontal-width);
+    --spectrum-select-box-min-height: var(
+        --spectrum-select-box-horizontal-minimum-height
+    );
+    --spectrum-select-box-padding-vertical: var(
+        --spectrum-select-box-vertical-edge-to-content
+    );
+    --spectrum-select-box-padding-horizontal: var(
+        --spectrum-select-box-horizontal-start-to-content
+    );
+    --spectrum-select-box-illustration-spacing: var(
+        --spectrum-select-box-vertical-illustration-to-label
+    );
+    --spectrum-select-box-label-spacing: var(
+        --spectrum-select-box-horizontal-label-to-description
+    );
+    --spectrum-select-box-checkbox-edge-spacing: var(
+        --spectrum-select-box-edge-to-checkbox
+    );
+    --spectrum-select-box-checkbox-top-spacing: var(
+        --spectrum-select-box-top-to-checkbox
+    );
+}
+
+/* Size variants */
+.spectrum-SelectBox--sizeS {
+    --spectrum-select-box-font-size: var(--spectrum-font-size-75);
+
+    /* Size-specific tokens would be applied here for small size */
+}
+
+.spectrum-SelectBox--sizeL {
+    --spectrum-select-box-font-size: var(--spectrum-font-size-200);
+
+    /* Size-specific tokens would be applied here for large size */
+}
+
+.spectrum-SelectBox--sizeXL {
+    --spectrum-select-box-font-size: var(--spectrum-font-size-300);
+
+    /* Size-specific tokens would be applied here for extra-large size */
+}
+
+/* Base styling */
+.spectrum-SelectBox {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    transition:
+        border-color var(--spectrum-animation-duration-100) ease-in-out,
+        box-shadow var(--spectrum-animation-duration-100) ease-in-out,
+        background-color var(--spectrum-animation-duration-100) ease-in-out;
+
+    /* Apply dimensions and styling */
+    background-color: var(--spectrum-select-box-background-color);
+    border: var(--spectrum-select-box-border-width) solid
+        var(--spectrum-select-box-border-color);
+    border-radius: var(--spectrum-select-box-border-radius);
+    color: var(--spectrum-select-box-content-color);
+    font-size: var(--spectrum-select-box-font-size);
+    font-weight: var(--spectrum-select-box-font-weight);
+    line-height: var(--spectrum-select-box-line-height);
+
+    /* Shadow */
+    box-shadow: var(--spectrum-select-box-shadow-x)
+        var(--spectrum-select-box-shadow-y)
+        var(--spectrum-select-box-shadow-blur)
+        var(--spectrum-select-box-shadow-color);
+}
+
+/* Orientation variants */
+.spectrum-SelectBox--vertical {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--spectrum-select-box-height);
+    min-block-size: var(--spectrum-select-box-height);
+    padding: var(--spectrum-select-box-padding-vertical);
+    gap: var(--spectrum-select-box-illustration-spacing);
+}
+
+.spectrum-SelectBox--horizontal {
+    flex-direction: row;
+    align-items: center;
+    inline-size: var(--spectrum-select-box-width);
+    min-block-size: var(--spectrum-select-box-min-height);
+    padding-block: var(--spectrum-select-box-horizontal-top-to-content);
+    padding-inline-start: var(
+        --spectrum-select-box-horizontal-start-to-content
+    );
+    padding-inline-end: var(--spectrum-select-box-horizontal-end-to-content);
+    gap: var(--spectrum-select-box-horizontal-illustration-to-label);
+}
+
+/* Content container */
+.spectrum-SelectBox-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.spectrum-SelectBox--vertical .spectrum-SelectBox-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spectrum-select-box-illustration-spacing);
+}
+
+.spectrum-SelectBox--horizontal .spectrum-SelectBox-content {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spectrum-select-box-horizontal-illustration-to-label);
+}
+
+/* Illustration */
+.spectrum-SelectBox-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Text frame */
+.spectrum-SelectBox-textFrame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spectrum-select-box-label-spacing);
+}
+
+.spectrum-SelectBox--horizontal .spectrum-SelectBox-textFrame {
+    align-items: flex-start;
+    flex: 1;
+}
+
+/* Label */
+.spectrum-SelectBox-label {
+    font-size: var(--spectrum-select-box-font-size);
+    font-weight: var(--spectrum-select-box-font-weight);
+    line-height: var(--spectrum-select-box-line-height);
+    color: currentcolor;
+}
+
+.spectrum-SelectBox--vertical .spectrum-SelectBox-label {
+    text-align: center;
+}
+
+/* Description */
+.spectrum-SelectBox-description {
+    font-size: var(--spectrum-font-size-75);
+    color: var(--spectrum-neutral-subdued-content-color-default);
+    line-height: var(--spectrum-line-height-100);
+}
+
+.spectrum-SelectBox--vertical .spectrum-SelectBox-description {
+    text-align: center;
+}
+
+/* Checkbox */
+.spectrum-SelectBox-checkbox {
+    position: absolute;
+    inset-block-start: var(--spectrum-select-box-checkbox-top-spacing);
+    inset-inline-start: var(--spectrum-select-box-checkbox-edge-spacing);
+    inline-size: 18px;
+    block-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spectrum-SelectBox-checkmark {
+    inline-size: 100%;
+    block-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--spectrum-select-box-content-color);
+}
+
+/* Interactive states */
+.spectrum-SelectBox:hover {
+    --spectrum-select-box-shadow-color: var(--spectrum-drop-shadow-color-200);
+
+    box-shadow: var(--spectrum-select-box-shadow-x)
+        var(--spectrum-select-box-shadow-y) var(--spectrum-drop-shadow-blur-200)
+        var(--spectrum-select-box-shadow-color);
+}
+
+.spectrum-SelectBox:focus-visible {
+    --spectrum-select-box-border-color: var(--spectrum-focus-indicator-color);
+
+    outline: var(--spectrum-focus-indicator-thickness) solid
+        var(--spectrum-focus-indicator-color);
+    outline-offset: var(--spectrum-focus-indicator-gap);
+}
+
+.spectrum-SelectBox--selected {
+    --spectrum-select-box-border-color: var(
+        --spectrum-select-box-selected-border-color
+    );
+
+    border-width: 2px;
+}
+
+.spectrum-SelectBox--disabled {
+    --spectrum-select-box-background-color: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-select-box-border-color: var(--spectrum-disabled-border-color);
+    --spectrum-select-box-content-color: var(--spectrum-disabled-content-color);
+    --spectrum-select-box-shadow-color: transparent;
+
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.spectrum-SelectBox--disabled .spectrum-SelectBox-description {
+    color: var(--spectrum-disabled-content-color);
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .spectrum-SelectBox {
+        --spectrum-select-box-border-color: CanvasText;
+        --spectrum-select-box-background-color: Canvas;
+        --spectrum-select-box-content-color: CanvasText;
+    }
+
+    .spectrum-SelectBox--selected {
+        --spectrum-select-box-border-color: Highlight;
+        --spectrum-select-box-background-color: Canvas;
+    }
+
+    .spectrum-SelectBox--disabled {
+        --spectrum-select-box-border-color: GrayText;
+        --spectrum-select-box-content-color: GrayText;
+    }
+}

@@ -14,8 +14,8 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { ProgressCircleBase } from '@swc/core/components/progress-circle';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
 
+// import { property } from '@spectrum-web-components/base/src/decorators.js';
 import progressCircleStyles from './progress-circle.css';
 
 function capitalize(str?: string): string {
