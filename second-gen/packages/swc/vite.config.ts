@@ -65,7 +65,12 @@ export default defineConfig({
         },
         rollupOptions: {
             external: (id) => {
-                return id === 'lit' || id.startsWith('@swc/core/');
+                return (
+                    id === 'lit' ||
+                    id.startsWith('lit/') ||
+                    id.startsWith('@lit/') ||
+                    id.startsWith('@swc/core/')
+                );
             },
             output: {
                 preserveModules: true,
