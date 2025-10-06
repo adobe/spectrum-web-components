@@ -20,6 +20,7 @@ export default {
         '**/src/[A-Z]*.ts',
         '**/src/elements/[A-Z]*.ts',
         '**/tools/shared/src/*.ts',
+        '../second-gen/packages/core/components/**/*.ts',
     ],
     exclude: [
         '**/*.d.ts',
