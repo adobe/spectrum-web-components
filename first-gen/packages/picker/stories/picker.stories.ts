@@ -430,8 +430,8 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
-            style="width: 100px"
             value="2"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
@@ -459,8 +459,8 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            style="width: 100px"
             value="3"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
