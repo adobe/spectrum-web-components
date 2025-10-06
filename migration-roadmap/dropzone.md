@@ -252,7 +252,9 @@
 
 - **Built-in UI elements**: The web component doesn't include built-in illustrated message and button components, requiring developers to manually compose these elements in the slot.
 
-- **State-specific styling**: While drag and fill states are tracked, the web component lacks the sophisticated styling capabilities for different state combinations seen in the CSS implementation.
+- **State-specific styling**: While drag and fill states are tracked separately, the web component currently doesn't handle the combination state of dragged and filled. Some missing features include include a button when the drop zone is filled, taking advantage of the custom SVG border options when dragged and filled, and `<sp-drop-zone>` needs to support the background illustration for the filled state.
+
+Also worth consideration is the concept of "filled" vs. "replace." The design file refers to the "filled" state as the "replace" variant, so we should consider an API refactor if we want to align with design intentions more.
 
 ### CSS Spectrum 2 changes
 
