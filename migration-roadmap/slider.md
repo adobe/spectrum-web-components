@@ -462,39 +462,40 @@
 
 ### CSS => SWC mapping
 
-| CSS selector                           | Attribute or slot                         | Status                       |
-| -------------------------------------- | ----------------------------------------- | ---------------------------- |
-| `.spectrum-Slider`                     | `:host`                                   | Implemented                  |
-| `.spectrum-Slider--sizeS`              | `size="s"`                                | Implemented                  |
-| `.spectrum-Slider--sizeL`              | `size="l"`                                | Implemented                  |
-| `.spectrum-Slider--sizeXL`             | `size="xl"`                               | Implemented                  |
-| `.spectrum-Slider--ramp`               | `variant="ramp"`                          | Implemented                  |
-| `.spectrum-Slider--filled`             | `variant="filled"`                        | Implemented                  |
-| `.spectrum-Slider--range`              | `variant="range"`                         | Implemented                  |
-| `.spectrum-Slider--tick`               | `variant="tick"`                          | Implemented                  |
-| `.spectrum-Slider--offset`             | `variant="filled` with `fillStart`        | Implemented                  |
-| `.spectrum-Slider--sideLabel`          | -                                         | Implemented                  |
-| `.spectrum-Slider.is-disabled`         | `disabled` attribute                      | Implemented                  |
-| `.spectrum-Slider-label`               | Label slot/property                       | Implemented                  |
-| `.spectrum-Slider-value`               | Value label                               | Implemented                  |
-| `.spectrum-Slider-labelContainer`      | `#label-container`                        | Implemented                  |
-| `.spectrum-Slider-content--editable`   | `editable` attribute                      | Implemented                  |
-| `.spectrum-Slider-controls`            | `#controls`                               | Implemented                  |
-| `.spectrum-Slider-track`               | `.track` elements                         | Implemented                  |
-| `.spectrum-Slider-fill`                | `.fill` element                           | Implemented                  |
-| `.spectrum-Slider-fill--right`         | Fill direction                            | Implemented                  |
-| `.spectrum-Slider-handle`              | `.handle` element                         | Implemented                  |
-| `.spectrum-Slider-input`               | `.input` element                          | Implemented                  |
-| `.spectrum-Slider-ramp`                | Ramp container                            | Implemented                  |
-| `.spectrum-Slider-ticks`               | `.ticks` container                        | Implemented                  |
-| `.spectrum-Slider-tick`                | Individual `.tick` element                | Implemented                  |
-| `.spectrum-Slider-tickLabel`           | `tickLabels` attribute                    | Implemented                  |
-| `.spectrum-Slider-handleContainer`     | `.handleContainer` in `variant="tick"`    | Implemented                  |
-| `.spectrum-Slider-trackContainer`      | `.trackContainer` in `variant="tick"`     | Implemented                  |
-| `.spectrum-Slider-content`             | Container for controls and editable field | Missing from WC (new for S2) |
-| `.spectrum-Slider--emphasized`         | Emphasized variant                        | Missing from WC (new for S2) |
-| `.spectrum-Slider--track-height-large` | Track height variant                      | Missing from WC (new for S2) |
-| -                                      | `quiet` number field                      | Not supported in S2          |
+| CSS selector                           | Attribute or slot                             | Status                                                           |
+| -------------------------------------- | --------------------------------------------- | ---------------------------------------------------------------- |
+| `.spectrum-Slider`                     | `:host`                                       | Implemented                                                      |
+| `.spectrum-Slider--sizeS`              | `size="s"`                                    | Implemented                                                      |
+| `.spectrum-Slider--sizeL`              | `size="l"`                                    | Implemented                                                      |
+| `.spectrum-Slider--sizeXL`             | `size="xl"`                                   | Implemented                                                      |
+| `.spectrum-Slider--ramp`               | `variant="ramp"`                              | Implemented                                                      |
+| `.spectrum-Slider--filled`             | `variant="filled"`                            | Implemented                                                      |
+| `.spectrum-Slider--range`              | `variant="range"`                             | Implemented                                                      |
+| `.spectrum-Slider--tick`               | `variant="tick"`                              | Implemented                                                      |
+| `.spectrum-Slider--offset`             | `variant="filled` with `fill-start` attribute | Implemented                                                      |
+| `.spectrum-Slider--sideLabel`          | -                                             | Implemented (possible with field label's `side-label` attribute) |
+| `.spectrum-Slider.is-disabled`         | `disabled` attribute                          | Implemented                                                      |
+| `.spectrum-Slider-label`               | Label slot/property                           | Implemented                                                      |
+| `.spectrum-Slider-value`               | Value label                                   | Implemented                                                      |
+| `.spectrum-Slider-labelContainer`      | `#label-container`                            | Implemented                                                      |
+| `.spectrum-Slider-content--editable`   | `editable` attribute                          | Implemented                                                      |
+| `.spectrum-Slider-controls`            | `#controls`                                   | Implemented                                                      |
+| `.spectrum-Slider-track`               | `.track` elements                             | Implemented                                                      |
+| `.spectrum-Slider-fill`                | `.fill` element                               | Implemented                                                      |
+| `.spectrum-Slider-fill--right`         | Fill direction                                | Implemented                                                      |
+| `.spectrum-Slider-handle`              | `.handle` element                             | Implemented                                                      |
+| `.spectrum-Slider-input`               | `.input` element                              | Implemented                                                      |
+| `.spectrum-Slider-ramp`                | Ramp container                                | Implemented                                                      |
+| `.spectrum-Slider-ticks`               | `.ticks` container                            | Implemented                                                      |
+| `.spectrum-Slider-tick`                | Individual `.tick` element                    | Implemented                                                      |
+| `.spectrum-Slider-tickLabel`           | `tickLabels` attribute                        | Implemented                                                      |
+| `.spectrum-Slider-handleContainer`     | `.handleContainer` in `variant="tick"`        | Implemented                                                      |
+| `.spectrum-Slider-trackContainer`      | `.trackContainer` in `variant="tick"`         | Implemented                                                      |
+| `.spectrum-Slider-content`             | Container for controls and editable field     | Missing from WC (new for S2)                                     |
+| `.spectrum-Slider--emphasized`         | Emphasized variant                            | Missing from WC (new for S2)                                     |
+| `.spectrum-Slider--track-height-large` | Track height variant                          | Missing from WC (new for S2)                                     |
+| `.spectrum-Slider--precise`            | -                                             | Missing from WC (new for S2)                                     |
+| -                                      | `quiet` number field                          | Not supported in S2                                              |
 
 ## Summary of changes
 

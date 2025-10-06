@@ -113,6 +113,7 @@ None found for this component.
 <summary>Spectrum Web Components:</summary>
 
 ```html
+<!-- Both field labels are conditionally rendered. -->
 <sp-field-label size="[size]" class="label">
     <slot>[label]</slot>
 </sp-field-label>

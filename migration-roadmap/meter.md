@@ -96,15 +96,21 @@
 
 ```html
 <div
-    class="spectrum-ProgressBar spectrum-Meter spectrum-Meter--sizeL is-positive spectrum-ProgressBar--topLabel"
+    class="spectrum-ProgressBar spectrum-ProgressBar--sizeM spectrum-Meter spectrum-Meter--sizeL is-positive spectrum-ProgressBar--topLabel"
     role="progressbar"
     aria-valuemin="0"
     aria-valuemax="100"
     value="50%"
     aria-valuenow="50%"
 >
-    <label class="spectrum-ProgressBar-label" size="m">Progress</label>
-    <label class="spectrum-ProgressBar-percentage" size="m">50%</label>
+    <label
+        class="spectrum-ProgressBar-label spectrum-FieldLabel spectrum-Field-label--sizeM"
+        >Progress</label
+    >
+    <label
+        class="spectrum-ProgressBar-percentage spectrum-FieldLabel spectrum-Field-label--sizeM"
+        >50%</label
+    >
     <div class="spectrum-ProgressBar-track">
         <div class="spectrum-ProgressBar-fill" style="inline-size: 50%;"></div>
     </div>
@@ -125,8 +131,14 @@
     value="50%"
     aria-valuenow="50%"
 >
-    <label class="spectrum-ProgressBar-label" size="m">Progress</label>
-    <label class="spectrum-ProgressBar-percentage" size="m">50%</label>
+    <label
+        class="spectrum-ProgressBar-label spectrum-FieldLabel spectrum-Field-label--sizeM"
+        >Progress</label
+    >
+    <label
+        class="spectrum-ProgressBar-percentage spectrum-FieldLabel spectrum-Field-label--sizeM"
+        >50%</label
+    >
     <div class="spectrum-ProgressBar-track">
         <div class="spectrum-ProgressBar-fill" style="inline-size: 50%;"></div>
     </div>
@@ -146,12 +158,13 @@
 
 ```diff
 <div class="spectrum-ProgressBar spectrum-Meter
+-    spectrum-ProgressBar--sizeM
 -    spectrum-Meter--sizeL
 +    spectrum-Meter--sizeM
      is-positive spectrum-ProgressBar--topLabel"
      role="progressbar" aria-valuemin="0" aria-valuemax="100" value="50%" aria-valuenow="50%">
-  <label class="spectrum-ProgressBar-label" size="m">Progress</label>
-  <label class="spectrum-ProgressBar-percentage" size="m">50%</label>
+  <label class="spectrum-ProgressBar-label spectrum-FieldLabel spectrum-Field-label--sizeM">Progress</label>
+  <label class="spectrum-ProgressBar-percentage spectrum-FieldLabel spectrum-Field-label--sizeM">50%</label>
   <div class="spectrum-ProgressBar-track">
     <div class="spectrum-ProgressBar-fill" style="inline-size: 50%;"></div>
   </div>
@@ -166,7 +179,7 @@
 
 ### Key Changes in HTML Structure
 
-1. **Size class adjustment**: Changed default size class from `spectrum-Meter--sizeL` to `spectrum-Meter--sizeM`. In S2, size options were expanded (although SWC already supported S/M/L/XL).
+1. **Size class adjustment**: Changed default size class from `spectrum-Meter--sizeL` to `spectrum-Meter--sizeM`. In S2, size options were expanded (although SWC already supported S/M/L/XL). In Spectrum 1, the meter component extended the default medium-sized progress bar with `.spectrum-ProgressBar--sizeM`, as well as set the default meter size to `.spectrum-Meter--sizeL`. In Spectrum 2, you'll notice the `.spectrum-ProgressBar--sizeM` modifier is removed since that t-shirt size is not needed for default progress bars and/or meters.
 
 2. **Help text integration**: Added optional `.spectrum-ProgressBar-helptext` container with `.spectrum-HelpText-text` wrapper for displaying contextual help information below the meter.
 
@@ -199,6 +212,8 @@
 ### CSS => SWC implementation gaps
 
 - **Help text support**: The web component lacks support for conditional help text, which would display help text below the meter.
+
+- **Static black**: The web component lacks support for the new static black styles for the meter.
 
 ### CSS Spectrum 2 changes
 

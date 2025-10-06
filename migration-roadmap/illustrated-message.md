@@ -155,7 +155,8 @@
 <summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
 ```html
-<div class="spectrum-IllustratedMessage spectrum-IllustratedMessage--sizeM">
+<!-- t-shirt size classes and styles are new for S2 -->
+<div class="spectrum-IllustratedMessage spectrum-IllustratedMessage--sizeL">
     <svg
         class="spectrum-IllustratedMessage-illustration"
         xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +196,7 @@
 
 ```diff
 - <div class="spectrum-IllustratedMessage">
-+ <div class="spectrum-IllustratedMessage spectrum-IllustratedMessage--sizeM">
++ <div class="spectrum-IllustratedMessage spectrum-IllustratedMessage--sizeL">
 -   <svg class="spectrum-IllustratedMessage-illustration" width="199" height="98" viewBox="0 0 199 97.7" >
 +   <svg class="spectrum-IllustratedMessage-illustration" width="96" height="96" viewBox="0 0 160 160" preserveAspectRatio="xMinYMid slice">
       <!-- illustration SVG (SVG was updated!) -->

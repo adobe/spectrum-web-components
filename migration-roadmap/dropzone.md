@@ -110,6 +110,7 @@
 <summary>Spectrum Web Components:</summary>
 
 ```html
+<!-- The default slot is intended for `<sp-illustrated-message>`, links, instructive copy, etc. that make up the dropzone content. -->
 <slot></slot>
 ```
 
@@ -245,9 +246,9 @@
 
 ### CSS => SWC implementation gaps
 
-- **Content structure**: The web component will require updating the internal structure including `.spectrum-DropZone-content`, `.spectrum-DropZone-actions`, and associated button elements. The SWC implementation provides only a simple slot-based container. We should consider if this approach is the approach we prefer moving into Spectrum 2 since this approach leaves the option open for lots of potentially unnecessary customization by the consumer (i.e. consumers could freely compose a drop zone with other components that does not follow the design expectations and standards).
+- **Content structure**: The web component will require updating the internal structure including `.spectrum-DropZone-content`, `.spectrum-DropZone-actions`, and associated button elements. The `.spectrum-DropZone-content` and `.spectrum-DropZone-actions` classes are styled based on the Figma design specs. The SWC implementation provides only a simple slot-based container. We should consider if this approach is the approach we prefer moving into Spectrum 2 since the single-slot approach leaves the option open for lots of potentially unnecessary customization by the consumer (i.e. consumers could freely compose a drop zone with other components that does not follow the design expectations and standards).
 
-- **Visual border system**: Missing the SVG-based stroke system (`.spectrum-DropZone-stroke` and `.spectrum-DropZone-strokePath`) which provides enhanced visual feedback with customizable dashed borders.
+- **Visual border system**: Missing the SVG-based stroke system (`.spectrum-DropZone-stroke` and `.spectrum-DropZone-strokePath`) provides enhanced visual feedback with customizable dashed borders. The svg borders were implemented in place of the CSS-only dashed border style to ensure the dashes have the corner rounding as laid out in the design spec.
 
 - **Built-in UI elements**: The web component doesn't include built-in illustrated message and button components, requiring developers to manually compose these elements in the slot.
 
