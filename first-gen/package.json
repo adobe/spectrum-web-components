@@ -45,7 +45,7 @@
         "icons": "wireit",
         "icons:ui": "wireit",
         "icons:workflow": "wireit",
-        "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
+        "lint": "git status --porcelain && git add . && lint-staged --config ../lint-staged.config.js --cwd .. --allow-empty",
         "new-package": "yarn workspace swc-templates plop",
         "postinstall": "husky || true",
         "postpack": "pinst --enable",
