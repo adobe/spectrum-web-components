@@ -59,21 +59,31 @@ export class LongpressController extends InteractionController {
     handlePointerdown(event: PointerEvent): void {
         if (!this.target) return;
         if (event.button !== 0) return;
-        this.longpressState = 'potential';
-        document.addEventListener('pointerup', this.handlePointerup);
-        document.addEventListener('pointercancel', this.handlePointerup);
-        // Only dispatch longpress event if the trigger element isn't doing it for us.
-        const triggerHandlesLongpress = 'holdAffordance' in this.target;
+
+        const triggerHandlesLongpress =
+            'holdAffordance' in this.target &&
+            (this.target as HTMLElement & { holdAffordance: boolean })
+                .holdAffordance === true;
         if (triggerHandlesLongpress) return;
+
+        this.longpressState = 'potential';
+        this.target.addEventListener('pointerup', this.handlePointerup, {
+            once: true,
+        });
+        this.target.addEventListener('pointercancel', this.handlePointerup, {
+            once: true,
+        });
+
         this.timeout = setTimeout(() => {
             if (!this.target) return;
+            (this.target as HTMLElement).releasePointerCapture?.(
+                event.pointerId
+            );
             this.target.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
                     bubbles: true,
                     composed: true,
-                    detail: {
-                        source: 'pointer',
-                    },
+                    detail: { source: 'pointer' },
                 })
             );
         }, LONGPRESS_DURATION);
