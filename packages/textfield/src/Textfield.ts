@@ -34,8 +34,6 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
@@ -46,15 +44,12 @@ export type TextfieldType = (typeof textfieldTypes)[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ObserveSlotText(
-    FieldLabelMixin(
-        ManageHelpText(
-            SizedMixin(Focusable, {
-                noDefaultSize: true,
-            })
-        )
-    ),
-    ''
+export class TextfieldBase extends FieldLabelMixin(
+    ManageHelpText(
+        SizedMixin(Focusable, {
+            noDefaultSize: true,
+        })
+    )
 ) {
     public static override get styles(): CSSResultArray {
         const superStyles = Array.isArray(super.styles)
@@ -304,7 +299,9 @@ export class TextfieldBase extends ObserveSlotText(
             return this.label;
         } else if (this.appliedLabel && this.appliedLabel.length > 0) {
             return this.appliedLabel;
-        } else if (this.slotHasContent) {
+        } else if (
+            this.querySelector('[slot="field-label"]')?.textContent?.trim()
+        ) {
             return undefined;
         } else if (this.placeholder && this.placeholder.length > 0) {
             return this.placeholder;
