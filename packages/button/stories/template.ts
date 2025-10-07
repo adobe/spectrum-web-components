@@ -9,7 +9,6 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
@@ -30,6 +29,7 @@ export interface Properties {
     target?: '_blank' | '_parent' | '_self' | '_top';
     noWrap?: boolean;
     iconOnly?: boolean;
+    label?: string;
 }
 
 export const Template = ({

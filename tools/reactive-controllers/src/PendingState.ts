@@ -10,11 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import { html, LitElement, ReactiveController, TemplateResult } from 'lit';
 
 /**
- * Represents a host element with pending state.
+ * Renders a pending state visual element and manages the aria-label of the host element.
+ * 
+ * Currently this is used by Button only since the host element is the interactive element that needs pending state. This pattern does not work for components where the interactive element that needs pending state is in the shadow DOM. i.e. Combobox and Picker.
+ * 
+ * @TODO consider deprecating this controller since it is not used by any other component.
  */
 export interface HostWithPendingState extends LitElement {
     pendingLabel?: string;
@@ -49,17 +53,18 @@ export class PendingStateController<T extends HostWithPendingState>
     /**
      * Renders the pending state UI.
      * @returns A TemplateResult representing the pending state UI.
+     *
+     * @TODO [SWC-1119, SWC-1255, SWC-459] Confirm the accessibility warning and a11y dom tree are accurate for the pending state in button, combobox, and picker components.
      */
     public renderPendingState(): TemplateResult {
-        const pendingLabel = this.host.pendingLabel || 'Pending';
         return this.host.pending
             ? html`
                   <sp-progress-circle
                       id="loader"
                       size="s"
                       indeterminate
-                      aria-valuetext=${pendingLabel}
                       class="progress-circle"
+                      role="presentation"
                   ></sp-progress-circle>
               `
             : html``;
@@ -73,17 +78,37 @@ export class PendingStateController<T extends HostWithPendingState>
         const { pending, disabled, pendingLabel } = this.host;
         const currentAriaLabel = this.host.getAttribute('aria-label');
 
-        if (pending && !disabled && currentAriaLabel !== pendingLabel) {
-            // Cache the current `aria-label` to be restored when no longer `pending`
+        function shouldCacheAriaLabel(
+            cached: string | null,
+            current: string | null,
+            pending: string | undefined
+        ): boolean {
+            return (
+                (!cached && current !== pending) ||
+                (cached !== current && current !== pending)
+            );
+        }
+
+        // If the current `aria-label` is different from the pending label, cache it
+        // or if the cached `aria-label` is different from the current `aria-label`, cache it
+        if (
+            shouldCacheAriaLabel(
+                this.cachedAriaLabel,
+                currentAriaLabel,
+                pendingLabel
+            )
+        ) {
             this.cachedAriaLabel = currentAriaLabel;
+        }
+
+        if (pending && !disabled) {
             // Since it is pending, we set the aria-label to `pendingLabel` or "Pending"
             this.host.setAttribute('aria-label', pendingLabel || 'Pending');
-        } else if (!pending || disabled) {
+        } else {
             // Restore the cached `aria-label` if it exists
             if (this.cachedAriaLabel) {
                 this.host.setAttribute('aria-label', this.cachedAriaLabel);
-            } else if (!pending) {
-                // If no cached `aria-label` and not `pending`, remove the `aria-label`
+            } else {
                 this.host.removeAttribute('aria-label');
             }
         }

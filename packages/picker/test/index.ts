@@ -2115,14 +2115,13 @@ export function runPickerTests(): void {
             )) as unknown as NamedNode & {
                 children: NamedNode[];
             };
-
             expect(
-                findAccessibilityNode<NamedNode>(
-                    snapshot,
-                    (node) =>
+                findAccessibilityNode<NamedNode>(snapshot, (node) => {
+                    return (
                         node.name ===
-                        'Pending Choose your neighborhood Where do you live?'
-                )
+                        'Choose your neighborhood Where do you live? Pending'
+                    );
+                })
             ).to.not.be.null;
         });
     });

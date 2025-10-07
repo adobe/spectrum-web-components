@@ -22,8 +22,8 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { getLabelFromSlot } from '@spectrum-web-components/shared/src/get-label-from-slot.js';
 
 import progressCircleStyles from './progress-circle.css.js';
 
@@ -117,12 +117,19 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
             }
         }
 
+        const hasAccessibleName = (): boolean => {
+            return Boolean(
+                this.label ||
+                    this.getAttribute('aria-label') ||
+                    this.getAttribute('aria-labelledby') ||
+                    this.slotEl.assignedNodes().length
+            );
+        };
+
         if (window.__swc.DEBUG) {
             if (
-                !this.label &&
-                !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby') &&
-                !this.slotEl.assignedNodes().length
+                !hasAccessibleName() &&
+                this.getAttribute('role') === 'progressbar'
             ) {
                 window.__swc.warn(
                     this,
