@@ -56,29 +56,35 @@ export class LongpressController extends InteractionController {
             this.longpressState === 'potential' ? 'opening' : 'pressed';
     }
 
+    /**
+     * Handles pointer down events to initiate longpress detection.
+     *
+     * This method sets up the longpress interaction by:
+     * 1. Setting the longpress state to 'potential'
+     * 2. Adding document-level event listeners for pointerup and pointercancel
+     * 3. Checking if the target element handles longpress internally (holdAffordance)
+     * 4. Setting a timeout to dispatch the longpress event after LONGPRESS_DURATION
+     *
+     * Note: Document-level listeners are used instead of target-level listeners
+     * to ensure proper event handling across overlay boundaries and to prevent
+     * interference with other pointer interactions.
+     *
+     * @param event - The pointer down event that triggered this handler
+     */
     handlePointerdown(event: PointerEvent): void {
         if (!this.target) return;
         if (event.button !== 0) return;
-
+        this.longpressState = 'potential';
+        document.addEventListener('pointerup', this.handlePointerup);
+        document.addEventListener('pointercancel', this.handlePointerup);
+        // Only dispatch longpress event if the trigger element isn't doing it for us.
         const triggerHandlesLongpress =
             'holdAffordance' in this.target &&
             (this.target as HTMLElement & { holdAffordance: boolean })
                 .holdAffordance === true;
         if (triggerHandlesLongpress) return;
-
-        this.longpressState = 'potential';
-        this.target.addEventListener('pointerup', this.handlePointerup, {
-            once: true,
-        });
-        this.target.addEventListener('pointercancel', this.handlePointerup, {
-            once: true,
-        });
-
         this.timeout = setTimeout(() => {
             if (!this.target) return;
-            (this.target as HTMLElement).releasePointerCapture?.(
-                event.pointerId
-            );
             this.target.dispatchEvent(
                 new CustomEvent<LongpressEvent>('longpress', {
                     bubbles: true,
