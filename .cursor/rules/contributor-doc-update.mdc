@@ -1,0 +1,7 @@
+---
+description: Useful for updating auto-generated content in the contributor docs
+alwaysApply: false
+---
+If the user requests an update to the contributor docs (located in the CONTRIBUTOR_DOCS folder at the repository root), run the update process as described in the agent instructions within that folder.
+
+To locate the instructions, search for "ai-agent-instructions", or fall back to a recursive directory search if needed.
