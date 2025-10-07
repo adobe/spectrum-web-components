@@ -37,7 +37,6 @@ import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
@@ -54,7 +53,7 @@ export type ComboboxOption = {
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
-export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label"], [slot="placeholder"], [slot="label"]') {
+export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
@@ -88,15 +87,6 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
 
-    @query('slot[name="label"]')
-    private deprecatedSlot!: HTMLSlotElement;
-
-    @query('slot[name="field-label"]')
-    private labelSlot!: HTMLSlotElement
-
-    @query('slot[name="placeholder"]')
-    private placeholderSlot!: HTMLSlotElement
-
     @state()
     overlayOpen = false;
 
@@ -120,12 +110,6 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
     private tooltipEl?: Tooltip;
 
     private resizeObserver?: ResizeObserver | undefined;
-
-    private hasDeprecatedContent = false;
-
-    private hasFieldLabelContent = false;
-
-    private hasPlaceholderContent = false;
 
     @state()
     private fieldWidth = 0;
@@ -203,32 +187,6 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
                 childList: true,
             });
         });
-    }
-
-    private hasSlotContent(slot: HTMLSlotElement): boolean {
-        return slot.assignedNodes({
-            flatten: true,
-        }).map((node) => node.textContent).join('').trim().length > 0;;
-    }
-
-    protected override handleFieldLabelSlotchange(): void {
-        this.hasFieldLabelContent = this.hasSlotContent(this.fieldLabelSlot);
-    }
-
-    protected handlePlaceholderSlotchange(): void {
-        this.hasPlaceholderContent = this.hasSlotContent(this.placeholderSlot);
-    }
-
-    protected handleDeprecatedSlotchange(): void {
-        this.hasDeprecatedContent = this.hasSlotContent(this.deprecatedSlot);
-        if (this.hasDeprecatedContent) {
-            window.__swc.warn(
-                this,
-                `The default slot for text label in <${this.localName}> has been deprecated and will be removed in a future release. Use the "field-label" slot for a visible label or the "label" attribute for an visibly hidden label instead. Use the "placeholder" slot for a placeholder text.`,
-                'https://opensource.adobe.com/spectrum-web-components/components/combobox/',
-                { level: 'deprecation' }
-            );
-        }
     }
 
     protected handleTooltipSlotchange(
@@ -390,13 +348,17 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
         super.onBlur(event);
     }
 
-    protected renderVisuallyHiddenLabels(): TemplateResult {
-        /**
-         * appliedLabel corresponds to `<label for="...">`, which is overriden
-         * if user adds the `label` attribute manually to `<sp-combobox>`.
-         **/
-        const appliedLabel = this.label || this.appliedLabel;
+    /**
+     * gets the hidden label for the combobox:
+     * appliedLabel corresponds to `<label for="...">`, which is overriden
+     * if user adds the `label` attribute manually to `<sp-combobox>`.
+     **/
+    protected get visuallyHiddenLabel(): string | undefined {
+        const label = this.label || this.appliedLabel;
+        return label && label.trim().length > 0 ? label : undefined;
+    }
 
+    protected renderVisuallyHiddenLabels(): TemplateResult {
         return html`
             ${this.pending
                 ? html`
@@ -410,26 +372,17 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
                       </span>
                   `
                 : nothing}
-            ${this.value
+            ${this.visuallyHiddenLabel
                 ? html`
                       <span
                           aria-hidden="true"
                           class="visually-hidden"
-                          id="applied-label"
+                          id="visually-hidden-label"
                       >
-                          ${appliedLabel}
+                          ${this.visuallyHiddenLabel}
                       </span>
-                      <slot name="label" id="label" @slotchange=${this.handleLabelSlotchange}>
-                        <slot name="placeholder" id="placeholder" @slotchange=${this.handlePlaceholderSlotchange}>
-                            <span class="visually-hidden" aria-hidden="true">
-                                ${this.value}
-                            </span>
-                        </slot>
-                      </slot>
                   `
-                : html`
-                      <span hidden id="applied-label">${appliedLabel}</span>
-                  `}
+                : nothing}
         `;
     }
 
@@ -446,17 +399,14 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
             ></sp-progress-circle>
         `;
     }
-    protected get hasConditionalSlotContent() {
-        return this.slotContentIsPresent;
-    }
 
     protected override get _ariaLabel(): string | undefined {
-        if (this.label && this.label.length > 0) {
-            return this.label;
-        } else if (this.appliedLabel && this.appliedLabel.length > 0) {
-            return this.appliedLabel;
-        } else if (this.hasConditionalSlotContent) {
-            return undefined;
+        if (this.visuallyHiddenLabel) {
+            return 'visually-hidden-label';
+        } else if (
+            this.querySelector('[slot="field-label"]')?.textContent?.trim()
+        ) {
+            return 'field-label';
         } else {
             window.__swc.warn(
                 this,
@@ -474,7 +424,9 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
         }
     }
 
-    protected override renderField(): TemplateResult {
+    protected override renderField(
+        ariaLabelledby: string = ''
+    ): TemplateResult {
         return html`
             ${this.renderStateIcons()}
             <input
@@ -489,10 +441,9 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
                 aria-controls=${ifDefined(
                     this.open ? 'listbox-menu' : undefined
                 )}
-                aria-describedby="${this.helpTextId} tooltip placeholder"
+                aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
-                aria-label=${ifDefined(this._ariaLabel)}
-                aria-labelledby="label applied-label pending-label"
+                aria-labelledby="${ariaLabelledby || ''} pending-label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -524,22 +475,20 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
     }
 
     protected override render(): TemplateResult {
+        const ariaLabelledby = this._ariaLabel;
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
 
         return html`
-            ${this.hasConditionalSlotContent
-                ? this.renderFieldLabel('input', 'field-label')
-                : nothing}
-            <div id="textfield">${this.renderField()}</div>
+            ${this.renderFieldLabel('input', 'field-label')}
+            <div id="textfield">${this.renderField(ariaLabelledby)}</div>
             ${this.renderHelpText(this.invalid)}
             <sp-picker-button
                 aria-controls="listbox-menu"
-                aria-describedby="${this.helpTextId} tooltip placeholder"
+                aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="input-label applied-label"
+                aria-labelledby="${ariaLabelledby || ''}"
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
@@ -567,7 +516,7 @@ export class Combobox extends ObserveSlotPresence(Textfield, '[slot="field-label
                     <sp-menu
                         @change=${this.handleMenuChange}
                         tabindex="-1"
-                        aria-labelledby="label applied-label"
+                        aria-labelledby="label visually-hidden-label"
                         aria-label=${ifDefined(this.label || this.appliedLabel)}
                         id="listbox-menu"
                         role="listbox"
