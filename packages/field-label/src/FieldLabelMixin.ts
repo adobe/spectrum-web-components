@@ -23,6 +23,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import styles from './field-label.css.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { ObserveSlotText } from '@spectrum-web-components/shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
@@ -45,7 +46,10 @@ export declare class FieldLabelMixinInterface {
 export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
     superClass: T
 ) => {
-    class FieldLabelMixinClass extends superClass {
+    class FieldLabelMixinClass extends ObserveSlotText(
+        superClass,
+        '#field-label-slot'
+    ) {
         public static get styles(): CSSResultArray {
             return [styles, asteriskIconStyles];
         }
@@ -64,10 +68,11 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             slotName?: string
         ): TemplateResult {
             return html`
-                <label id="${fieldId}-label" for="${fieldId}">
+                <label id="${fieldId}-label" for="${fieldId}" hidden>
                     <slot
+                        id="field-label-slot"
                         name="${ifDefined(slotName)}"
-                        @slotchange=${this.handleFieldLabelSlotchange}
+                        @slotchange=${this.manageTextObservedSlot}
                     ></slot>
                     ${this.required
                         ? html`
@@ -79,8 +84,6 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
                 </label>
             `;
         }
-
-        protected handleFieldLabelSlotchange(): void {}
     }
     return FieldLabelMixinClass as unknown as Constructor<FieldLabelMixinInterface> &
         T;
