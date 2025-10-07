@@ -17,7 +17,11 @@ import {
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { ProgressCircleBase } from '@swc/core/components/progress-circle';
+import {
+    PROGRESS_CIRCLE_STATIC_COLORS_S1,
+    ProgressCircleBase,
+    type ProgressCircleStaticColorS1,
+} from '@swc/core/components/progress-circle';
 
 import progressCircleStyles from './progress-circle.css.js';
 
@@ -25,16 +29,30 @@ import progressCircleStyles from './progress-circle.css.js';
  * @element sp-progress-circle
  */
 export class ProgressCircle extends ProgressCircleBase {
-    public static override get styles(): CSSResultArray {
-        return [progressCircleStyles];
-    }
+    // ────────────────────
+    //     API OVERRIDES
+    // ────────────────────
+
+    /**
+     * @internal
+     */
+    static override readonly STATIC_COLORS = PROGRESS_CIRCLE_STATIC_COLORS_S1;
 
     /**
      * Static color variant for use on different backgrounds.
+     *
      * When set to 'white', the component uses white styling for images with a dark tinted background.
      */
-    @property({ reflect: true, attribute: 'static-color' })
-    public staticColor?: 'white';
+    @property({ type: String, reflect: true, attribute: 'static-color' })
+    public override staticColor?: ProgressCircleStaticColorS1;
+
+    // ──────────────────────────────
+    //     RENDERING & STYLING
+    // ──────────────────────────────
+
+    public static override get styles(): CSSResultArray {
+        return [progressCircleStyles];
+    }
 
     protected override render(): TemplateResult {
         const styles = [

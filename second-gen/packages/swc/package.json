@@ -34,11 +34,12 @@
         "dist/"
     ],
     "scripts": {
+        "analyze": "cem analyze --config cem.config.js",
         "build": "vite build",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
-        "storybook": "storybook dev -p 6006",
-        "storybook:build": "storybook build",
+        "storybook": "yarn analyze && storybook dev -p 6006",
+        "storybook:build": "yarn analyze && storybook build",
         "test": "vitest",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui"
@@ -61,6 +62,7 @@
         "@vitest/browser": "^3.2.4",
         "@vitest/coverage-v8": "3.2.4",
         "@vitest/ui": "^3.2.4",
+        "@wc-toolkit/storybook-helpers": "^9.0.1",
         "autoprefixer": "^10.4.21",
         "glob": "^11.0.0",
         "playwright": "^1.55.0",
