@@ -507,6 +507,10 @@
 
 - **Container structure**: Missing structural elements for complex layouts like the side label slider.
 
+- **Precise handle variant**: For Spectrum 2, a new handle variant was introduced called "precise" with `.spectrum-Slider--precise` class. The slider's API will need an additional property to capture the new precise handle option. Discussion with design may be needed to properly update any "precision" behaviors.
+
+**Note about custom track color:** The current `<sp-slider>` has support for inline styles to cascade into the shadow DOM, and apply custom styles to the track element. For Spectrum 2, the design specs suggest that there is a fill more often than not (except perhaps in the offset variant). We should collaborate with design to see if this level of customization is still intended or required for S2, to avoid any design issues when paired with the filled track color (i.e. how do we avoid a custom track color clashing with the specified fill color?).
+
 ### CSS Spectrum 2 changes
 
 The Spectrum 2 migration introduces several key structural enhancements to the slider component:
