@@ -18,6 +18,7 @@
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
         "build": "wireit",
+        "prebuild": "wireit",
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:confirm": "node ./scripts/confirm-build.js",
         "build:css": "wireit",
@@ -221,8 +222,19 @@
     "wireit": {
         "build": {
             "dependencies": [
+                "prebuild",
                 "build:ts",
                 "build:types"
+            ]
+        },
+        "prebuild": {
+            "command": "yarn workspace @swc/core build",
+            "files": [
+                "../second-gen/packages/core/components/**/*",
+                "../second-gen/packages/core/shared/**/*",
+                "../second-gen/packages/core/package.json",
+                "../second-gen/packages/core/vite.config.js",
+                "../second-gen/packages/core/tsconfig.json"
             ]
         },
         "build:css": {

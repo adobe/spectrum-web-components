@@ -15,10 +15,18 @@
     },
     "type": "module",
     "scripts": {
-        "build": "yarn workspace @adobe/spectrum-web-components build",
-        "test": "yarn workspace @adobe/spectrum-web-components test",
-        "start": "yarn workspace @adobe/spectrum-web-components storybook",
-        "lint": "yarn workspace @adobe/spectrum-web-components lint",
+        "build-first-gen": "yarn workspace @adobe/spectrum-web-components build",
+        "build-second-gen": "yarn workspace @adobe/swc build",
+        "build": "yarn build-first-gen && yarn build-second-gen",
+        "test-first-gen": "yarn workspace @adobe/spectrum-web-components test",
+        "test-second-gen": "yarn workspace @adobe/swc test",
+        "test": "yarn test-first-gen && yarn test-second-gen",
+        "start-first-gen": "yarn workspace @adobe/spectrum-web-components start",
+        "start-second-gen": "yarn workspace @adobe/swc start",
+        "start": "yarn start-first-gen & yarn start-second-gen",
+        "lint-first-gen": "yarn workspace @adobe/spectrum-web-components lint",
+        "lint-second-gen": "yarn workspace @adobe/swc lint",
+        "lint": "yarn lint-first-gen & yarn lint-second-gen",
         "postinstall": "husky || true && patch-package"
     },
     "workspaces": [
