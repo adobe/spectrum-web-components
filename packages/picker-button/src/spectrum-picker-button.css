@@ -145,7 +145,6 @@ governing permissions and limitations under the License.
     border-color: var(--mod-picker-button-border-color, var(--spectrum-picker-button-border-color));
     border-width: var(--mod-picker-button-border-width, var(--spectrum-picker-button-border-width));
     padding: calc(var(--mod-picker-button-fill-padding, var(--spectrum-picker-button-fill-padding)) - var(--mod-picker-button-padding, var(--spectrum-picker-button-padding)) - var(--mod-picker-button-border-width, var(--spectrum-picker-button-border-width)));
-    transition: border-color var(--mod-picker-button-background-animation-duration, var(--spectrum-picker-button-background-animation-duration)) ease-in-out;
     border-style: solid;
     border-start-start-radius: var(--mod-picker-button-border-radius, var(--spectrum-picker-button-border-radius));
     border-start-end-radius: var(--mod-picker-button-border-radius, var(--spectrum-picker-button-border-radius));

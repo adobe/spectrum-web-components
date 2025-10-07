@@ -22,11 +22,6 @@ governing permissions and limitations under the License.
     text-transform: none;
     vertical-align: top;
     -webkit-appearance: button;
-    transition:
-        background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
-        box-shadow var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out;
     justify-content: center;
     align-items: center;
     margin: 0;
@@ -174,10 +169,6 @@ governing permissions and limitations under the License.
     block-size: var(--mod-picker-block-size, var(--spectrum-picker-block-size));
     border-width: var(--mod-picker-border-width, var(--spectrum-picker-border-width));
     border-radius: var(--mod-picker-border-radius, var(--spectrum-picker-border-radius));
-    transition:
-        background-color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)),
-        box-shadow var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)),
-        border-color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)) ease-in-out;
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
     background-color: var(--highcontrast-picker-background-color, var(--mod-picker-background-color-default, var(--spectrum-picker-background-color-default)));
     border-style: solid;
@@ -302,7 +293,6 @@ governing permissions and limitations under the License.
 .label.placeholder {
     font-weight: var(--mod-picker-placeholder-font-weight, var(--spectrum-picker-font-weight));
     font-style: var(--mod-picker-placeholder-font-style, var(--spectrum-picker-placeholder-font-style));
-    transition: color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)) ease-in-out;
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-font-color-default, var(--spectrum-picker-font-color-default)));
 }
 
@@ -312,7 +302,6 @@ governing permissions and limitations under the License.
 
 .picker {
     vertical-align: top;
-    transition: color var(--mod-picker-animation-duration, var(--spectrum-picker-animation-duration)) ease-out;
     margin-inline-start: var(--mod-picker-spacing-icon-to-disclosure-icon, var(--spectrum-picker-spacing-icon-to-disclosure-icon));
     margin-block: var(--mod-picker-spacing-top-to-disclosure-icon, var(--spectrum-picker-spacing-top-to-disclosure-icon));
     color: var(--highcontrast-picker-content-color-default, var(--mod-picker-icon-color-default, var(--spectrum-picker-icon-color-default)));

@@ -24,9 +24,6 @@ governing permissions and limitations under the License.
     opacity: 0;
     background-color: var(--spectrum-underlay-background-color);
     z-index: 1;
-    transition:
-        opacity var(--spectrum-underlay-background-exit-animation-duration) var(--spectrum-underlay-background-exit-animation-ease) var(--spectrum-underlay-background-exit-animation-delay),
-        visibility 0s linear calc(var(--spectrum-underlay-background-exit-animation-delay) + var(--spectrum-underlay-background-exit-animation-duration));
     position: fixed;
     inset-block: 0;
     inset-inline: 0;
@@ -37,6 +34,4 @@ governing permissions and limitations under the License.
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
-    transition: opacity var(--spectrum-underlay-background-entry-animation-duration) var(--spectrum-underlay-background-entry-animation-ease) var(--spectrum-underlay-background-entry-animation-delay);
-    transition-delay: var(--spectrum-underlay-background-entry-animation-delay);
 }
