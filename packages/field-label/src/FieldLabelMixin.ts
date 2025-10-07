@@ -65,7 +65,10 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         ): TemplateResult {
             return html`
                 <label id="${fieldId}-label" for="${fieldId}">
-                    <slot name="${ifDefined(slotName)}"></slot>
+                    <slot
+                        name="${ifDefined(slotName)}"
+                        @slotchange=${this.handleFieldLabelSlotchange}
+                    ></slot>
                     ${this.required
                         ? html`
                               <sp-icon-asterisk100
@@ -76,6 +79,8 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
                 </label>
             `;
         }
+
+        protected handleFieldLabelSlotchange(): void {}
     }
     return FieldLabelMixinClass as unknown as Constructor<FieldLabelMixinInterface> &
         T;
