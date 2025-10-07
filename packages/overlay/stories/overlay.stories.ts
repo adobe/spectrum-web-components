@@ -1981,6 +1981,21 @@ export const LongpressModalResponsiveness = (): TemplateResult => {
                 ✓ Fix applied: LongpressController uses capture phase for event
                 listeners
             </div>
+
+            <overlay-trigger triggered-by="longpress" placement="right-start">
+                <sp-action-button slot="trigger" hold-affordance>
+                    Options
+                </sp-action-button>
+                <sp-popover slot="longpress-content">
+                    <sp-menu>
+                        <sp-menu-group selects="single" size="s">
+                            <span slot="header">Orientation</span>
+                            <sp-menu-item>Left/Right</sp-menu-item>
+                            <sp-menu-item>Top/Bottom</sp-menu-item>
+                        </sp-menu-group>
+                    </sp-menu>
+                </sp-popover>
+            </overlay-trigger>
         </div>
     `;
 };
