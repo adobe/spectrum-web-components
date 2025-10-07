@@ -1890,17 +1890,18 @@ export const LongpressModalResponsiveness = (): TemplateResult => {
         <div class="demo-container">
             <div class="instructions">
                 <h3>
-                    Test: Action buttons remain responsive after longpress modal
+                    Test: Action buttons remain responsive after longpress
+                    overlay
                 </h3>
                 <ol>
                     <li>
                         <strong>Long press</strong>
-                        (click and hold for 300ms) the "Trigger Modal" button
+                        (click and hold for 300ms) the "Trigger Overlay" button
                         below
                     </li>
-                    <li>A modal dialog will open</li>
+                    <li>An overlay will open</li>
                     <li>
-                        Close the modal by clicking "Close" or pressing Escape
+                        Close the overlay by clicking "Close" or pressing Escape
                     </li>
                     <li>
                         Click any of the test buttons below - they should all
@@ -1909,19 +1910,19 @@ export const LongpressModalResponsiveness = (): TemplateResult => {
                 </ol>
                 <p>
                     <strong>Expected:</strong>
-                    All buttons remain clickable after the modal closes.
+                    All buttons remain clickable after the overlay closes.
                     <br />
                     <strong>Bug (fixed):</strong>
                     Without the fix, all buttons would become unresponsive after
-                    the longpress modal.
+                    the longpress overlay.
                 </p>
             </div>
 
             <div class="button-group">
-                <div class="button-group-label">Longpress to open modal:</div>
+                <div class="button-group-label">Longpress to open overlay:</div>
                 <sp-action-button id="longpress-trigger" hold-affordance>
                     <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    Trigger Modal (Long Press)
+                    Trigger Overlay (Long Press)
                 </sp-action-button>
                 <sp-overlay
                     trigger="longpress-trigger@longpress"
@@ -1942,7 +1943,7 @@ export const LongpressModalResponsiveness = (): TemplateResult => {
 
             <div class="button-group">
                 <div class="button-group-label">
-                    Test these buttons after closing the modal:
+                    Test these buttons after closing the overlay:
                 </div>
                 <sp-action-button @click=${handleClick} data-clicks="0">
                     Click me
@@ -1984,6 +1985,12 @@ export const LongpressModalResponsiveness = (): TemplateResult => {
     `;
 };
 
+LongpressModalResponsiveness.args = {
+    chromatic: { disableSnapshot: true },
+};
+LongpressModalResponsiveness.parameters = {
+    tags: ['!dev'],
+};
 LongpressModalResponsiveness.swc_vrt = {
     skip: true,
 };
