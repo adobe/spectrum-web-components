@@ -9,5 +9,10 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Divider.base';
-export * from './Divider.types';
+
+import type { ElementSize } from '@swc/core/shared/base';
+
+export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
+export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
+
+export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];

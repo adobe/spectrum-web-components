@@ -10,26 +10,173 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import type { Meta, StoryObj } from '@storybook/web-components';
+import { html, TemplateResult } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { Divider } from '@swc/components/divider';
+import { DIVIDER_VALID_SIZES } from '@swc/core/components/divider';
 
 import '@swc/components/divider';
 
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
+
+/*
+ * @todo This is properly configuring the Select, but the control doesn't
+ * seem to work; need to investigate.
+ */
+
+// argTypes.size = {
+//     ...argTypes.size,
+//     control: { type: 'select' },
+//     options: Divider.VALID_SIZES,
+// };
+
+argTypes['static-color'] = {
+    ...argTypes['static-color'],
+    control: { type: 'select' },
+    options: [undefined, ...Divider.STATIC_COLORS],
+};
+
+/**
+ * Dividers bring clarity to a layout by grouping and dividing content that exists in close proximity. It can also be used to establish rhythm and hierarchy.
+ */
 const meta: Meta = {
     title: 'Divider',
     component: 'swc-divider',
+    args,
+    argTypes,
+    render: (args) => template(args),
+    parameters: {
+        actions: {
+            handles: events,
+        },
+    },
+    tags: ['migrated'],
 };
 
 export default meta;
-type Story = StoryObj;
 
+// ───────────────
+//    STORIES
+// ───────────────
+
+type DividerSize = typeof Divider.prototype.size;
+
+/**
+ * By default, dividers are horizontal and should be used for separating content vertically. The medium divider is the default size.
+ */
 export const Default: Story = {
-    render: () => html`
-        <h4 class="spectrum-Heading spectrum-Heading--sizeXS">Small</h4>
-        <swc-divider></swc-divider>
-        <p class="spectrum-Body">
-            Divide like-elements (tables, tool groups, elements within a panel,
-            etc.)
-        </p>
-    `,
+    args: {
+        size: 'm',
+    },
 };
+
+/**
+ * The small divider is the default size. This is used to divide similar components such as table rows, action button groups, and components within a panel.
+ *
+ * The medium divider is used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
+ *
+ * The large divider should only be used for page titles or section titles.
+ */
+export const Sizes: Story = {
+    render: () => html`
+        <div style="display: flex; flex-direction: row; gap: 16px;">
+            ${DIVIDER_VALID_SIZES.map(
+                (size) => html`
+                    <div>
+                        <h3>
+                            ${size === 's'
+                                ? 'Small'
+                                : size === 'l'
+                                  ? 'Large'
+                                  : 'Medium'}
+                        </h3>
+                        ${template({ size: size as DividerSize })}
+                    </div>
+                `
+            )}
+        </div>
+    `,
+    tags: ['!dev'],
+};
+
+/**
+ * Vertical dividers are used to separate content horizontally.
+ */
+export const Vertical: Story = {
+    args: {
+        vertical: true,
+    },
+    render: (args: Record<string, unknown>) => html`
+        <div style="display: flex; flex-direction: row; gap: 48px;">
+            ${DIVIDER_VALID_SIZES.map((size) =>
+                template({ ...args, size: size as DividerSize })
+            )}
+        </div>
+    `,
+    tags: ['!dev'],
+};
+
+/**
+ * Use the static color options when a divider needs to be placed on top of a color background or visual. Static color dividers are available in black or white regardless of color theme.
+ */
+export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+    },
+    render: (args: Record<string, unknown>) =>
+        STATIC_CONTAINER(
+            DIVIDER_VALID_SIZES.map((size) =>
+                template({ ...args, size: size as DividerSize })
+            ),
+            args['static-color'] as string
+        ),
+    tags: ['!dev'],
+};
+
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+    },
+    render: (args: Record<string, unknown>) =>
+        STATIC_CONTAINER(
+            DIVIDER_VALID_SIZES.map((size) =>
+                template({ ...args, size: size as DividerSize })
+            ),
+            args['static-color'] as string
+        ),
+    tags: ['!dev'],
+};
+
+/* @todo this pattern could be repeated for other static backgrounds and might be pulled into a decorator */
+function STATIC_CONTAINER(
+    content: TemplateResult[],
+    staticColor?: string
+): TemplateResult {
+    let background = '';
+
+    if (staticColor === 'white') {
+        background = 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))';
+    } else if (staticColor === 'black') {
+        background =
+            'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))';
+    }
+
+    return html`<div
+        style=${styleMap({
+            background,
+            padding: '24px',
+            display: 'flex',
+            gap: '24px',
+            'align-items': 'center',
+        })}
+    >
+        ${content}
+    </div>`;
+}
