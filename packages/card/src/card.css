@@ -58,6 +58,7 @@ slot[name="description"] {
 
 :host(:not([variant="gallery"])) #preview ::slotted(*) {
     height: 100%;
+border-radius: calc(var(--spectrum-card-corner-radius) - var(--spectrum-focus-indicator-thickness));
 }
 
 :host([horizontal]) #preview {
@@ -97,23 +98,12 @@ sp-popover {
     pointer-events: none;
 }
 
-:host([variant='quiet']:focus) #preview:after {
-    border: var(
-            --mod-card-focus-indicator-width,
-            var(--spectrum-card-focus-indicator-width)
-        )
-        solid
-        var(
-            --mod-card-focus-indicator-color,
-            var(--spectrum-card-focus-indicator-color)
-        );
+:host([variant="quiet"]:focus) #preview:after {
+    border: var(--mod-card-focus-indicator-width, var(--spectrum-card-focus-indicator-width)) solid var(--mod-card-focus-indicator-color, var(--spectrum-card-focus-indicator-color));
 }
 
-:host([variant='quiet'][selected]:focus) #preview {
-    border-width: var(
-        --mod-card-focus-indicator-width,
-        var(--spectrum-card-focus-indicator-width)
-    );
+:host([variant="quiet"][selected]:focus) #preview {
+    border-width: var(--mod-card-focus-indicator-width, var(--spectrum-card-focus-indicator-width));
 }
 
 /* This ensures that the checkbox is tabbable when the card toggles but is not itself focusable */
