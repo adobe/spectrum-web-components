@@ -28,7 +28,6 @@
 **Variants**:
 
 - **Size**:
-
     - `.spectrum-Thumbnail--size50`
     - `.spectrum-Thumbnail--size75`
     - `.spectrum-Thumbnail--size100`
@@ -83,6 +82,8 @@
 - `cover` (boolean) - Whether the image should cover the entire thumbnail
 - `layer` (boolean) - Whether the thumbnail is in layer mode
 - `size` (string) - Size of the thumbnail (50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
+- `disabled` (boolean) - Whether the thumbnail is disabled
+- `selected` (boolean) - Whether the thumbnail is selected (used for layer variant)
 
 </details>
 
@@ -127,7 +128,7 @@
 ```html
 <!-- Layer variant -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
     <div class="spectrum-Thumbnail-layer-inner">
         <div class="spectrum-Thumbnail-image-wrapper">
@@ -142,7 +143,7 @@
 
 <!-- With background -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
     <div
         class="spectrum-Thumbnail-background"
@@ -159,13 +160,9 @@
 
 <!-- Default -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail spectrum-Thumbnail--cover is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
-    <div
-        class="spectrum-Thumbnail-background"
-        style="background-color: [backgroundColor]"
-    ></div>
-    <div class="spectrum-Thumbnail-image-wrapper">
+    <div class="spectrum-Thumbnail-image-wrapper spectrum-OpacityCheckerboard">
         <img
             class="spectrum-Thumbnail-image"
             src="[imageURL]"
@@ -183,9 +180,9 @@
 ```html
 <!-- Layer variant -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
-    <div class="spectrum-Thumbnail-layer-inner">
+    <div class="spectrum-Thumbnail-layer-inner spectrum-OpacityCheckerboard">
         <div class="spectrum-Thumbnail-image-wrapper">
             <img
                 class="spectrum-Thumbnail-image"
@@ -198,7 +195,7 @@
 
 <!-- With background -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
     <div
         class="spectrum-Thumbnail-background"
@@ -215,13 +212,9 @@
 
 <!-- Default -->
 <div
-    class="spectrum-Thumbnail spectrum-Thumbnail--cover spectrum-Thumbnail-layer is-selected is-disabled is-focused spectrum-Thumbnail--size500"
+    class="spectrum-Thumbnail spectrum-Thumbnail--cover is-selected is-disabled is-focused spectrum-Thumbnail--size500"
 >
-    <div
-        class="spectrum-Thumbnail-background"
-        style="background-color: [backgroundColor]"
-    ></div>
-    <div class="spectrum-Thumbnail-image-wrapper">
+    <div class="spectrum-Thumbnail-image-wrapper spectrum-OpacityCheckerboard">
         <img
             class="spectrum-Thumbnail-image"
             src="[imageURL]"
@@ -242,39 +235,36 @@ No significant structural changes.
 
 ### CSS => SWC mapping
 
-| CSS selector                        | Attribute or slot      | Status          |
-| ----------------------------------- | ---------------------- | --------------- |
-| `.spectrum-Thumbnail--size50`       | `size="50"`            | Implemented     |
-| `.spectrum-Thumbnail--size75`       | `size="75"`            | Implemented     |
-| `.spectrum-Thumbnail--size100`      | `size="100"`           | Implemented     |
-| `.spectrum-Thumbnail--size200`      | `size="200"`           | Implemented     |
-| `.spectrum-Thumbnail--size300`      | `size="300"`           | Implemented     |
-| `.spectrum-Thumbnail--size400`      | `size="400"`           | Implemented     |
-| `.spectrum-Thumbnail--size500`      | `size="500"`           | Implemented     |
-| `.spectrum-Thumbnail--size600`      | `size="600"`           | Implemented     |
-| `.spectrum-Thumbnail--size700`      | `size="700"`           | Implemented     |
-| `.spectrum-Thumbnail--size800`      | `size="800"`           | Implemented     |
-| `.spectrum-Thumbnail--size900`      | `size="900"`           | Implemented     |
-| `.spectrum-Thumbnail--size1000`     | `size="1000"`          | Implemented     |
-| `.spectrum-Thumbnail--cover`        | `cover` attribute      | Implemented     |
-| `.spectrum-Thumbnail-layer`         | `layer` attribute      | Implemented     |
-| `.spectrum-Thumbnail-background`    | `background` attribute | Implemented     |
-| `.spectrum-Thumbnail-image`         | Default slot           | Implemented     |
-| `.spectrum-Thumbnail-image-wrapper` | Internal wrapper       | Implemented     |
-| `.spectrum-Thumbnail-layer-inner`   | Internal wrapper       | Implemented     |
-| `.is-disabled`                      | `disabled` attribute   | Missing from WC |
-| `.is-focused`                       | Focus state            | Missing from WC |
-| `.is-selected`                      | `selected` attribute   | Missing from WC |
+| CSS selector                        | Attribute or slot      | Status      |
+| ----------------------------------- | ---------------------- | ----------- |
+| `.spectrum-Thumbnail--size50`       | `size="50"`            | Implemented |
+| `.spectrum-Thumbnail--size75`       | `size="75"`            | Implemented |
+| `.spectrum-Thumbnail--size100`      | `size="100"`           | Implemented |
+| `.spectrum-Thumbnail--size200`      | `size="200"`           | Implemented |
+| `.spectrum-Thumbnail--size300`      | `size="300"`           | Implemented |
+| `.spectrum-Thumbnail--size400`      | `size="400"`           | Implemented |
+| `.spectrum-Thumbnail--size500`      | `size="500"`           | Implemented |
+| `.spectrum-Thumbnail--size600`      | `size="600"`           | Implemented |
+| `.spectrum-Thumbnail--size700`      | `size="700"`           | Implemented |
+| `.spectrum-Thumbnail--size800`      | `size="800"`           | Implemented |
+| `.spectrum-Thumbnail--size900`      | `size="900"`           | Implemented |
+| `.spectrum-Thumbnail--size1000`     | `size="1000"`          | Implemented |
+| `.spectrum-Thumbnail--cover`        | `cover` attribute      | Implemented |
+| `.spectrum-Thumbnail-layer`         | `layer` attribute      | Implemented |
+| `.spectrum-Thumbnail-background`    | `background` attribute | Implemented |
+| `.spectrum-Thumbnail-image`         | Default slot           | Implemented |
+| `.spectrum-Thumbnail-image-wrapper` | Internal wrapper       | Implemented |
+| `.spectrum-Thumbnail-layer-inner`   | Internal wrapper       | Implemented |
+| `.is-disabled`                      | `disabled` attribute   | Implemented |
+| `.is-focused`                       | Focus state            | Implemented |
+| `.is-selected`                      | `selected` attribute   | Implemented |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
 **CSS features missing from Web Component:**
-
-- Disabled state support (`.is-disabled`)
-- Focus state support (`.is-focused`)
-- Selected state support (`.is-selected`)
+None found for this component.
 
 **Web Component features missing from CSS:**
 None found for this component.

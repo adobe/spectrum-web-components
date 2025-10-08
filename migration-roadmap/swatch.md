@@ -20,8 +20,6 @@
     - `.spectrum-Swatch-disabledIcon path:last-child`
 - `.spectrum-Swatch-fill`
     - `.spectrum-Swatch-fill:before`
-- `.spectrum-Swatch-icon`
-- `.spectrum-Swatch-image`
 
 **Variants**:
 
@@ -229,6 +227,7 @@ No significant structural changes.
 **CSS features missing from Web Component:**
 
 - Add swatch functionality (`.is-addSwatch`)
+- Image functionality (SWC has an image slot, but this may need additional updates to work properly)
 
 **Web Component features missing from CSS:**
 

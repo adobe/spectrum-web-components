@@ -201,7 +201,6 @@ No significant structural changes.
 
 **CSS features missing from Web Component:**
 
-- Disabled state support (`.is-disabled`)
 - Larger size variants (800, 900, 1000, 1100, 1200, 1300, 1400, 1500)
 
 **Web Component features missing from CSS:**
