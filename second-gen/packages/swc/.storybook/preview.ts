@@ -10,6 +10,7 @@ import {
     type Options,
 } from '@wc-toolkit/storybook-helpers';
 import customElements from './custom-elements.json';
+import { withStaticColorBackground } from './decorators/static-color-background';
 
 const options: Options = {
     categoryOrder: [
@@ -31,6 +32,7 @@ setStorybookHelpersConfig(options);
 setCustomElementsManifest(customElements);
 
 const preview = {
+    decorators: [withStaticColorBackground],
     parameters: {
         layout: 'centered',
         controls: {
