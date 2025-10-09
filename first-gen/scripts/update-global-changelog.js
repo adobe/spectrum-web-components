@@ -31,25 +31,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 /**
- * Creates or updates the global CHANGELOG.md file based on changeset files.
- *
- * Reads changeset files, categorizes changes by type (major/minor/patch),
- * and updates both the first-gen and @swc/core changelogs accordingly.
- *
- * Should be run during the release process after prepublishOnly but before
- * changeset version. Automatically called by `yarn changeset-publish`.
- *
- * @returns {Promise<void>}
- * @throws {Error} If there's an issue with git tags or file operations
+ * Validates that the current version exists and has a corresponding git tag
+ * @returns {string} The current git tag
+ * @throws {Error} If validation fails
  */
-async function createGlobalChangelog() {
+function validateCurrentVersion() {
     if (!currentVersion) {
         console.error('Error: currentVersion is undefined or empty');
         process.exit(1);
     }
 
     const currentTag = `v${currentVersion}`;
-    let gitTag;
     try {
         const gitTagOutput = execSync('git tag --sort=-creatordate');
         if (!gitTagOutput) {
@@ -61,21 +53,24 @@ async function createGlobalChangelog() {
             throw new Error('No git tags found in repository');
         }
 
-        gitTag = gitTagList.find((tag) => tag === currentTag);
+        const gitTag = gitTagList.find((tag) => tag === currentTag);
         if (!gitTag) {
             throw new Error(
                 'Could not find a matching tag for the current version'
             );
         }
+        return currentTag;
     } catch (error) {
         console.error(`Failed to get current git tag: ${error.message}`);
         process.exit(1);
     }
+}
 
-    if (!gitTag) {
-        console.error('No current version git tag found.');
-        process.exit(1);
-    }
+/**
+ * Processes changeset files and categorizes changes by type and target
+ * @returns {Object} Object containing categorized changes for both first-gen and core
+ */
+function processChangesets() {
     const changesetDir = path.resolve(__dirname, '../../.changeset');
     const changesetFiles = fs
         .readdirSync(changesetDir)
@@ -84,11 +79,10 @@ async function createGlobalChangelog() {
     const majorChanges = [];
     const minorChanges = [];
     const patchChanges = [];
-
-    // @swc/core-only changes (separate from first-gen global changelog)
     const coreMajorChanges = [];
     const coreMinorChanges = [];
     const corePatchChanges = [];
+
     for (const file of changesetFiles) {
         const filePath = path.join(changesetDir, file);
         const content = fs.readFileSync(filePath, 'utf-8');
@@ -99,7 +93,9 @@ async function createGlobalChangelog() {
         if (frontmatterMatch) {
             const [, frontmatter, description] = frontmatterMatch;
             const cleanDescription = description.trim();
-            // First-gen components go to global changelog
+
+            // "@spectrum-web-components" (first-gen components)
+            // go to first-gen global changelog
             for (const match of frontmatter.matchAll(
                 /['"]@spectrum-web-components\/([^'"]+)['"]:\s*(major|minor|patch)/g
             )) {
@@ -116,6 +112,7 @@ async function createGlobalChangelog() {
                     patchChanges.push(entry);
                 }
             }
+
             // @swc/core changes go to core changelog
             for (const match of frontmatter.matchAll(
                 /['"]@swc\/core['"]:\s*(major|minor|patch)/g
@@ -134,96 +131,208 @@ async function createGlobalChangelog() {
         }
     }
 
+    return {
+        firstGen: { majorChanges, minorChanges, patchChanges },
+        core: {
+            majorChanges: coreMajorChanges,
+            minorChanges: coreMinorChanges,
+            patchChanges: corePatchChanges,
+        },
+    };
+}
+
+/**
+ * Calculates the next version based on change types
+ * @param {string} currentVersion - Current version string
+ * @param {Array} majorChanges - Array of major changes
+ * @param {Array} minorChanges - Array of minor changes
+ * @returns {string} Next version string
+ */
+function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
     const currentVersionParts = currentVersion
         .split('.')
         .map((part) => parseInt(part, 10));
-    let nextVersion;
+
     if (majorChanges.length > 0) {
-        nextVersion = `${currentVersionParts[0] + 1}.0.0`;
+        return `${currentVersionParts[0] + 1}.0.0`;
     } else if (minorChanges.length > 0) {
-        nextVersion = `${currentVersionParts[0]}.${currentVersionParts[1] + 1}.0`;
+        return `${currentVersionParts[0]}.${currentVersionParts[1] + 1}.0`;
     } else {
-        nextVersion = `${currentVersionParts[0]}.${currentVersionParts[1]}.${currentVersionParts[2] + 1}`;
+        return `${currentVersionParts[0]}.${currentVersionParts[1]}.${currentVersionParts[2] + 1}`;
+    }
+}
+
+/**
+ * Extracts and preserves the header from an existing changelog
+ * @param {string} changelogContent - The existing changelog content
+ * @returns {Object} Object with headerText and remaining content
+ */
+function extractChangelogHeader(changelogContent) {
+    let headerText = '';
+    let remainingContent = changelogContent;
+
+    const headerMatch = changelogContent.match(
+        /^(# ChangeLog\n\n[\s\S]+?(?=\n\n# \[))/
+    );
+    if (headerMatch) {
+        headerText = headerMatch[1];
+        remainingContent = changelogContent.substring(headerMatch[0].length);
+    } else if (changelogContent.startsWith('# Change Log')) {
+        const simpleHeaderMatch = changelogContent.match(
+            /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
+        );
+        if (simpleHeaderMatch) {
+            headerText = simpleHeaderMatch[1];
+            remainingContent = changelogContent.substring(headerText.length);
+        }
     }
 
+    return { headerText, remainingContent };
+}
+
+/**
+ * Builds a changelog entry with categorized changes
+ * @param {string} version - Version string
+ * @param {string} compareUrl - URL for comparing versions
+ * @param {string} date - Date string
+ * @param {Object} changes - Object containing major, minor, and patch changes
+ * @param {string} headerLevel - Header level for change sections (## or ###)
+ * @returns {string} Formatted changelog entry
+ */
+function buildChangelogEntry(
+    version,
+    compareUrl,
+    date,
+    changes,
+    headerLevel = '##'
+) {
+    const { majorChanges, minorChanges, patchChanges } = changes;
+    let entry = `# [${version}](${compareUrl}) (${date})\n\n`;
+
+    if (majorChanges.length) {
+        entry += `${headerLevel} Major Changes\n\n${majorChanges.join('\n')}\n\n`;
+    }
+    if (minorChanges.length) {
+        entry += `${headerLevel} Minor Changes\n\n${minorChanges.join('\n')}\n\n`;
+    }
+    if (patchChanges.length) {
+        entry += `${headerLevel} Patch Changes\n\n${patchChanges.join('\n')}\n\n`;
+    }
+
+    return entry;
+}
+
+/**
+ * Updates a changelog file with a new entry
+ * @param {string} changelogPath - Path to the changelog file
+ * @param {string} version - Version string
+ * @param {string} compareUrl - URL for comparing versions
+ * @param {string} date - Date string
+ * @param {Object} changes - Object containing categorized changes
+ * @param {string} headerLevel - Header level for change sections
+ * @param {string} versionPattern - Regex pattern for version entries
+ * @param {string} skipMessage - Message to show when skipping update
+ * @param {string} successMessage - Message to show when update succeeds
+ */
+function updateChangelogFile(
+    changelogPath,
+    version,
+    compareUrl,
+    date,
+    changes,
+    headerLevel = '##',
+    versionPattern,
+    skipMessage,
+    successMessage
+) {
+    let existingChangelog = fs.existsSync(changelogPath)
+        ? fs.readFileSync(changelogPath, 'utf-8')
+        : '';
+
+    const versionEntryPattern = new RegExp(versionPattern);
+    if (versionEntryPattern.test(existingChangelog)) {
+        console.log(skipMessage);
+        return;
+    }
+
+    const { majorChanges, minorChanges, patchChanges } = changes;
+    if (!majorChanges.length && !minorChanges.length && !patchChanges.length) {
+        console.log('🚫 No changes to add to the changelog.');
+        process.exit(0);
+    }
+
+    const newEntry = buildChangelogEntry(
+        version,
+        compareUrl,
+        date,
+        changes,
+        headerLevel
+    );
+    const { headerText, remainingContent } =
+        extractChangelogHeader(existingChangelog);
+
+    fs.writeFileSync(
+        changelogPath,
+        `${headerText}\n\n${newEntry.trim()}\n\n${remainingContent.trim()}`,
+        'utf-8'
+    );
+    console.log(successMessage);
+}
+
+/**
+ * Creates or updates the global CHANGELOG.md file based on changeset files.
+ *
+ * Reads changeset files, categorizes changes by type (major/minor/patch),
+ * and updates both the first-gen and @swc/core changelogs accordingly.
+ *
+ * Should be run during the release process after prepublishOnly but before
+ * changeset version. Automatically called by `yarn changeset-publish`.
+ *
+ * @returns {Promise<void>}
+ * @throws {Error} If there's an issue with git tags or file operations
+ */
+async function createGlobalChangelog() {
+    const currentTag = validateCurrentVersion();
+    const { firstGen, core } = processChangesets();
+
+    const nextVersion = calculateNextVersion(
+        currentVersion,
+        firstGen.majorChanges,
+        firstGen.minorChanges
+    );
     const nextTag = `v${nextVersion}`;
     const date = new Date().toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     });
+
+    // Update first-gen changelog
     const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
-    let existingChangelog = fs.existsSync(changelogPath)
-        ? fs.readFileSync(changelogPath, 'utf-8')
-        : '';
-    const versionEntryPattern = new RegExp(
-        `# \\[${nextVersion.replace(/\./g, '\\.')}\\]`
+    const compareUrl = `${repoUrl}/compare/${currentTag}...${nextTag}`;
+
+    updateChangelogFile(
+        changelogPath,
+        nextVersion,
+        compareUrl,
+        date,
+        firstGen,
+        '##',
+        `# \\[${nextVersion.replace(/\./g, '\\.')}\\]`,
+        `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping global update.`,
+        `✅ CHANGELOG updated for ${nextVersion}`
     );
 
-    if (versionEntryPattern.test(existingChangelog)) {
-        console.log(
-            `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping global update.`
-        );
-    } else {
-        const compareUrl = `${repoUrl}/compare/${currentTag}...${nextTag}`;
-
-        if (
-            !majorChanges.length &&
-            !minorChanges.length &&
-            !patchChanges.length
-        ) {
-            console.log('🚫 No changes to add to the changelog.');
-            process.exit(0);
-        }
-
-        let newEntry = `# [${nextVersion}](${compareUrl}) (${date})\n\n`;
-        if (majorChanges.length) {
-            newEntry += `## Major Changes\n\n${majorChanges.join('\n')}\n\n`;
-        }
-
-        if (minorChanges.length) {
-            newEntry += `## Minor Changes\n\n${minorChanges.join('\n')}\n\n`;
-        }
-
-        if (patchChanges.length) {
-            newEntry += `## Patch Changes\n\n${patchChanges.join('\n')}\n\n`;
-        }
-        let headerText = '';
-        const headerMatch = existingChangelog.match(
-            /^(# ChangeLog\n\n[\s\S]+?(?=\n\n# \[))/
-        );
-        if (headerMatch) {
-            headerText = headerMatch[1];
-            existingChangelog = existingChangelog.substring(
-                headerMatch[0].length
-            );
-        } else if (existingChangelog.startsWith('# Change Log')) {
-            const simpleHeaderMatch = existingChangelog.match(
-                /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
-            );
-            if (simpleHeaderMatch) {
-                headerText = simpleHeaderMatch[1];
-                existingChangelog = existingChangelog.substring(
-                    headerText.length
-                );
-            }
-        }
-        fs.writeFileSync(
-            changelogPath,
-            `${headerText}\n\n${newEntry.trim()}\n\n${existingChangelog.trim()}`,
-            'utf-8'
-        );
-        console.log(`✅ CHANGELOG updated for ${nextVersion}`);
-    }
+    // Update @swc/core changelog if there are core changes
     const coreChangelogPath = path.resolve(
         __dirname,
         '../../second-gen/packages/core/CHANGELOG.md'
     );
 
     if (
-        coreMajorChanges.length ||
-        coreMinorChanges.length ||
-        corePatchChanges.length
+        core.majorChanges.length ||
+        core.minorChanges.length ||
+        core.patchChanges.length
     ) {
         const corePackageJson = JSON.parse(
             fs.readFileSync(
@@ -235,74 +344,27 @@ async function createGlobalChangelog() {
             )
         );
         const coreCurrentVersion = corePackageJson.version;
-        const coreCurrentVersionParts = coreCurrentVersion
-            .split('.')
-            .map((part) => parseInt(part, 10));
-        let coreNextVersion;
-        if (coreMajorChanges.length) {
-            coreNextVersion = `${coreCurrentVersionParts[0] + 1}.0.0`;
-        } else if (coreMinorChanges.length) {
-            coreNextVersion = `${coreCurrentVersionParts[0]}.${coreCurrentVersionParts[1] + 1}.0`;
-        } else {
-            coreNextVersion = `${coreCurrentVersionParts[0]}.${coreCurrentVersionParts[1]}.${coreCurrentVersionParts[2] + 1}`;
-        }
+        const coreNextVersion = calculateNextVersion(
+            coreCurrentVersion,
+            core.majorChanges,
+            core.minorChanges
+        );
 
         const coreCurrentTag = `@swc/core@${coreCurrentVersion}`;
         const coreNextTag = `@swc/core@${coreNextVersion}`;
         const coreCompareUrl = `${repoUrl}/compare/${coreCurrentTag}...${coreNextTag}`;
-        let existingCoreChangelog = fs.existsSync(coreChangelogPath)
-            ? fs.readFileSync(coreChangelogPath, 'utf-8')
-            : '';
 
-        const coreVersionEntryPattern = new RegExp(
-            `## \\[${coreNextVersion.replace(/\\./g, '\\\\.')}\\]`
+        updateChangelogFile(
+            coreChangelogPath,
+            coreNextVersion,
+            coreCompareUrl,
+            date,
+            core,
+            '###',
+            `## \\[${coreNextVersion.replace(/\\./g, '\\\\.')}\\]`,
+            `⚠️ Version ${coreNextVersion} already has an entry in the @swc/core CHANGELOG. Skipping core update.`,
+            `✅ @swc/core CHANGELOG updated for ${coreNextVersion}`
         );
-        if (coreVersionEntryPattern.test(existingCoreChangelog)) {
-            console.log(
-                `⚠️ Version ${coreNextVersion} already has an entry in the @swc/core CHANGELOG. Skipping core update.`
-            );
-        } else {
-            let newCoreEntry = `## [${coreNextVersion}](${coreCompareUrl}) (${date})\n\n`;
-
-            if (coreMajorChanges.length) {
-                newCoreEntry += `### Major Changes\n\n${coreMajorChanges.join('\n')}\n\n`;
-            }
-            if (coreMinorChanges.length) {
-                newCoreEntry += `### Minor Changes\n\n${coreMinorChanges.join('\n')}\n\n`;
-            }
-            if (corePatchChanges.length) {
-                newCoreEntry += `### Patch Changes\n\n${corePatchChanges.join('\n')}\n\n`;
-            }
-            let coreHeaderText = '';
-            const coreHeaderMatch = existingCoreChangelog.match(
-                /^(# ChangeLog\n\n[\s\S]+?(?=\n\n## \[))/
-            );
-            if (coreHeaderMatch) {
-                coreHeaderText = coreHeaderMatch[1];
-                existingCoreChangelog = existingCoreChangelog.substring(
-                    coreHeaderMatch[0].length
-                );
-            } else if (existingCoreChangelog.startsWith('# Change Log')) {
-                const coreSimpleHeaderMatch = existingCoreChangelog.match(
-                    /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
-                );
-                if (coreSimpleHeaderMatch) {
-                    coreHeaderText = coreSimpleHeaderMatch[1];
-                    existingCoreChangelog = existingCoreChangelog.substring(
-                        coreHeaderText.length
-                    );
-                }
-            }
-
-            fs.writeFileSync(
-                coreChangelogPath,
-                `${coreHeaderText}\n\n${newCoreEntry.trim()}\n\n${existingCoreChangelog.trim()}`,
-                'utf-8'
-            );
-            console.log(
-                `✅ @swc/core CHANGELOG updated for ${coreNextVersion}`
-            );
-        }
     } else {
         console.log('ℹ️ No @swc/core changes to add to the core changelog.');
     }
