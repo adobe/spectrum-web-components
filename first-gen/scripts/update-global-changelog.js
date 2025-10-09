@@ -13,12 +13,12 @@
 /**
  * Global Changelog Generator
  *
- * This script generates and updates changelogs for first-gen Spectrum Web Components
- * and @swc/core by processing changeset files. It extracts information about major,
- * minor, and patch changes from individual changesets and organizes them into
- * formatted changelog entries for each target:
- *   - first-gen Spectrum Web Components → first-gen/CHANGELOG.md
- *   - @swc/core                         → second-gen/packages/core/CHANGELOG.md
+ * Processes changeset files to generate and update changelogs for:
+ * - first-gen Spectrum Web Components → first-gen/CHANGELOG.md
+ * - @swc/core → second-gen/packages/core/CHANGELOG.md
+ *
+ * Extracts major, minor, and patch changes from changesets and formats them
+ * into organized changelog entries.
  */
 
 import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
@@ -27,29 +27,22 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Convert ESM __dirname equivalent
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoUrl = 'https://github.com/adobe/spectrum-web-components';
 
 /**
  * Creates or updates the global CHANGELOG.md file based on changeset files.
  *
- * This function:
- * 1. Retrieves the current and previous version tags
- * 2. Checks if an entry for the current version already exists in the changelog
- * 3. Reads all changeset files and categorizes changes as major, minor, or patch
- * 4. Formats a new changelog entry with the categorized changes
- * 5. Updates the CHANGELOG.md file with the new entry
+ * Reads changeset files, categorizes changes by type (major/minor/patch),
+ * and updates both the first-gen and @swc/core changelogs accordingly.
  *
- * This function should be run as part of the release process after prepublishOnly
- * but before changeset version to ensure the global changelog is updated with the latest changes.
- * It is automatically called by the `yarn changeset-publish` command.
+ * Should be run during the release process after prepublishOnly but before
+ * changeset version. Automatically called by `yarn changeset-publish`.
  *
- * @returns {Promise<void>} A promise that resolves when the changelog is updated
+ * @returns {Promise<void>}
  * @throws {Error} If there's an issue with git tags or file operations
  */
 async function createGlobalChangelog() {
-    // Validate the new version exists
     if (!currentVersion) {
         console.error('Error: currentVersion is undefined or empty');
         process.exit(1);
@@ -57,8 +50,6 @@ async function createGlobalChangelog() {
 
     const currentTag = `v${currentVersion}`;
     let gitTag;
-
-    // Confirm the current version has a git tag
     try {
         const gitTagOutput = execSync('git tag --sort=-creatordate');
         if (!gitTagOutput) {
@@ -71,7 +62,6 @@ async function createGlobalChangelog() {
         }
 
         gitTag = gitTagList.find((tag) => tag === currentTag);
-
         if (!gitTag) {
             throw new Error(
                 'Could not find a matching tag for the current version'
@@ -86,8 +76,6 @@ async function createGlobalChangelog() {
         console.error('No current version git tag found.');
         process.exit(1);
     }
-
-    // Read all changesets from the .changeset directory
     const changesetDir = path.resolve(__dirname, '../../.changeset');
     const changesetFiles = fs
         .readdirSync(changesetDir)
@@ -97,28 +85,21 @@ async function createGlobalChangelog() {
     const minorChanges = [];
     const patchChanges = [];
 
-    // Buckets for @swc/core-only changes (not included in first-gen/global)
+    // @swc/core-only changes (separate from first-gen global changelog)
     const coreMajorChanges = [];
     const coreMinorChanges = [];
     const corePatchChanges = [];
-
-    // Process each changeset file to extract change information
     for (const file of changesetFiles) {
         const filePath = path.join(changesetDir, file);
         const content = fs.readFileSync(filePath, 'utf-8');
 
-        // Extract the frontmatter from the changeset
         const frontmatterMatch = content.match(
             /---\n([\s\S]*?)\n---\n([\s\S]*)/
         );
-
         if (frontmatterMatch) {
             const [, frontmatter, description] = frontmatterMatch;
-
-            // Clean up the description text
             const cleanDescription = description.trim();
-
-            // ---- First-gen SWC: only @spectrum-web-components/* go to the global (first-gen) changelog ----
+            // First-gen components go to global changelog
             for (const match of frontmatter.matchAll(
                 /['"]@spectrum-web-components\/([^'"]+)['"]:\s*(major|minor|patch)/g
             )) {
@@ -135,13 +116,12 @@ async function createGlobalChangelog() {
                     patchChanges.push(entry);
                 }
             }
-
-            // ---- Core: only @swc/core goes to the core changelog (included in secon-gen) ----
+            // @swc/core changes go to core changelog
             for (const match of frontmatter.matchAll(
                 /['"]@swc\/core['"]:\s*(major|minor|patch)/g
             )) {
-                const changeType = match[1]; // captured group: major|minor|patch
-                const entry = `${cleanDescription}\n\n`; // no scope prefix in core changelog
+                const changeType = match[1];
+                const entry = `${cleanDescription}\n\n`;
 
                 if (changeType === 'major') {
                     coreMajorChanges.push(entry);
@@ -154,40 +134,28 @@ async function createGlobalChangelog() {
         }
     }
 
-    // Parse version into number array for potential version calculations
     const currentVersionParts = currentVersion
         .split('.')
         .map((part) => parseInt(part, 10));
     let nextVersion;
-
-    // Calculate next version based on changes
     if (majorChanges.length > 0) {
-        // Major version bump
         nextVersion = `${currentVersionParts[0] + 1}.0.0`;
     } else if (minorChanges.length > 0) {
-        // Minor version bump
         nextVersion = `${currentVersionParts[0]}.${currentVersionParts[1] + 1}.0`;
     } else {
-        // Patch version bump
         nextVersion = `${currentVersionParts[0]}.${currentVersionParts[1]}.${currentVersionParts[2] + 1}`;
     }
 
     const nextTag = `v${nextVersion}`;
-
-    // Format date for the changelog entry
     const date = new Date().toLocaleDateString('en-CA', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
     });
-
-    // Read the existing CHANGELOG.md to check for existing entries
     const changelogPath = path.resolve(__dirname, '../CHANGELOG.md');
     let existingChangelog = fs.existsSync(changelogPath)
         ? fs.readFileSync(changelogPath, 'utf-8')
         : '';
-
-    // Check if this version already has an entry in the changelog
     const versionEntryPattern = new RegExp(
         `# \\[${nextVersion.replace(/\./g, '\\.')}\\]`
     );
@@ -196,12 +164,9 @@ async function createGlobalChangelog() {
         console.log(
             `⚠️ Version ${nextVersion} already has an entry in the CHANGELOG. Skipping global update.`
         );
-        // Don't exit here - we still want to check for core changes
     } else {
-        // Create comparison URL for viewing changes between versions
         const compareUrl = `${repoUrl}/compare/${currentTag}...${nextTag}`;
 
-        // Skip if no changes are found
         if (
             !majorChanges.length &&
             !minorChanges.length &&
@@ -211,10 +176,7 @@ async function createGlobalChangelog() {
             process.exit(0);
         }
 
-        // Format new changelog entry with version, date, and comparison link
         let newEntry = `# [${nextVersion}](${compareUrl}) (${date})\n\n`;
-
-        // Add categorized changes to the entry
         if (majorChanges.length) {
             newEntry += `## Major Changes\n\n${majorChanges.join('\n')}\n\n`;
         }
@@ -226,8 +188,6 @@ async function createGlobalChangelog() {
         if (patchChanges.length) {
             newEntry += `## Patch Changes\n\n${patchChanges.join('\n')}\n\n`;
         }
-
-        // Preserve the header if it exists in the current changelog
         let headerText = '';
         const headerMatch = existingChangelog.match(
             /^(# ChangeLog\n\n[\s\S]+?(?=\n\n# \[))/
@@ -238,7 +198,6 @@ async function createGlobalChangelog() {
                 headerMatch[0].length
             );
         } else if (existingChangelog.startsWith('# Change Log')) {
-            // Handle case where there might not be any versions yet
             const simpleHeaderMatch = existingChangelog.match(
                 /^(# Change Log\n\n[\s\S]+?)(?=\n\n|$)/
             );
@@ -249,8 +208,6 @@ async function createGlobalChangelog() {
                 );
             }
         }
-
-        // Write the updated changelog with the new entry
         fs.writeFileSync(
             changelogPath,
             `${headerText}\n\n${newEntry.trim()}\n\n${existingChangelog.trim()}`,
@@ -258,8 +215,6 @@ async function createGlobalChangelog() {
         );
         console.log(`✅ CHANGELOG updated for ${nextVersion}`);
     }
-
-    // Also update the @swc/core individual changelog if there are core changes
     const coreChangelogPath = path.resolve(
         __dirname,
         '../../second-gen/packages/core/CHANGELOG.md'
@@ -270,7 +225,6 @@ async function createGlobalChangelog() {
         coreMinorChanges.length ||
         corePatchChanges.length
     ) {
-        // Get the actual @swc/core package version
         const corePackageJson = JSON.parse(
             fs.readFileSync(
                 path.resolve(
@@ -281,8 +235,6 @@ async function createGlobalChangelog() {
             )
         );
         const coreCurrentVersion = corePackageJson.version;
-
-        // Calculate next version for core package
         const coreCurrentVersionParts = coreCurrentVersion
             .split('.')
             .map((part) => parseInt(part, 10));
@@ -298,8 +250,6 @@ async function createGlobalChangelog() {
         const coreCurrentTag = `@swc/core@${coreCurrentVersion}`;
         const coreNextTag = `@swc/core@${coreNextVersion}`;
         const coreCompareUrl = `${repoUrl}/compare/${coreCurrentTag}...${coreNextTag}`;
-
-        // Check if this version already has an entry in the core changelog
         let existingCoreChangelog = fs.existsSync(coreChangelogPath)
             ? fs.readFileSync(coreChangelogPath, 'utf-8')
             : '';
@@ -312,7 +262,6 @@ async function createGlobalChangelog() {
                 `⚠️ Version ${coreNextVersion} already has an entry in the @swc/core CHANGELOG. Skipping core update.`
             );
         } else {
-            // Build core changelog entry (## version, ### sections)
             let newCoreEntry = `## [${coreNextVersion}](${coreCompareUrl}) (${date})\n\n`;
 
             if (coreMajorChanges.length) {
@@ -324,8 +273,6 @@ async function createGlobalChangelog() {
             if (corePatchChanges.length) {
                 newCoreEntry += `### Patch Changes\n\n${corePatchChanges.join('\n')}\n\n`;
             }
-
-            // Preserve the header if it exists in the current core changelog (reuse same logic)
             let coreHeaderText = '';
             const coreHeaderMatch = existingCoreChangelog.match(
                 /^(# ChangeLog\n\n[\s\S]+?(?=\n\n## \[))/
@@ -360,8 +307,6 @@ async function createGlobalChangelog() {
         console.log('ℹ️ No @swc/core changes to add to the core changelog.');
     }
 }
-
-// Execute the function and handle any errors
 createGlobalChangelog().catch((error) => {
     console.error('Error updating changelog:', error);
     process.exit(1);
