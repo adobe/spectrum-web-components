@@ -70,9 +70,7 @@ describe('Textfield', () => {
     });
     it('labels textfield with slotted label correctly', async () => {
         const el = await litFixture<Textfield>(html`
-            <sp-textfield id="textfield" placeholder="Enter Your Name">
-                Name
-            </sp-textfield>
+            <sp-textfield placeholder="Enter Your Name">Name</sp-textfield>
         `);
 
         await elementUpdated(el);
