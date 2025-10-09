@@ -9,52 +9,115 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 
+import { type StatusLightVariant } from './StatusLight.types';
+
 /**
- * @element sp-status-light
+ * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.
  *
- * @slot - text label of the Status Light
+ * @slot - The text label of the status light.
  */
 export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
     noDefaultSize: true,
 }) {
-    /**
-     * A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.
-     */
-    @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    // ─────────────────────────
+    //     API TO OVERRIDE
+    // ─────────────────────────
 
     /**
-     * The visual variant to apply to this status light.
+     * @internal
+     *
+     * A readonly array of the valid color variants for the status light.
+     *
+     * This is an actual internal property, intended not for customer use
+     * but for use in internal validation logic, stories, tests, etc.
+     *
+     * Because S1 and S2 support different color variants, the value of this
+     * property must be set in each subclass.
      */
-    @property({ reflect: true })
-    public variant:
-        | 'negative'
-        | 'notice'
-        | 'positive'
-        | 'info'
-        | 'neutral'
-        | 'yellow'
-        | 'fuchsia'
-        | 'indigo'
-        | 'seafoam'
-        | 'chartreuse'
-        | 'magenta'
-        | 'celery'
-        | 'purple' = 'info';
+    static readonly VARIANTS_COLOR: readonly string[];
+
+    /**
+     * @internal
+     *
+     * A readonly array of the valid semantic variants for the status light.
+     *
+     * This is an actual internal property, intended not for customer use
+     * but for use in internal validation logic, stories, tests, etc.
+     *
+     * Because S1 and S2 support different semantic variants, the value of this
+     * property must be set in each subclass.
+     */
+    static readonly VARIANTS_SEMANTIC: readonly string[];
+
+    /**
+     * @internal
+     *
+     * A readonly array of all valid variants for the status light.
+     *
+     * This is an actual internal property, intended not for customer use
+     * but for use in internal validation logic, stories, tests, etc.
+     *
+     * Because S1 and S2 support different variants, the value of this
+     * property must be set in each subclass.
+     */
+    static readonly VARIANTS: readonly string[];
+
+    /**
+     * @internal
+     *
+     * The variant of the status light.
+     *
+     * This is a public property, but its valid values vary between S1 and S2,
+     * so the property (and its docs) need to be redefined in each subclass.
+     *
+     * The type declared here is a union of the valid values for S1 and S2,
+     * and should be narrowed in each subclass.
+     */
+    @property({ type: String, reflect: true })
+    public variant: StatusLightVariant = 'info';
+
+    // ──────────────────────
+    //     IMPLEMENTATION
+    // ──────────────────────
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('disabled')) {
-            if (this.disabled) {
-                this.setAttribute('aria-disabled', 'true');
-            } else {
-                this.removeAttribute('aria-disabled');
+        if (window.__swc?.DEBUG) {
+            const constructor = this.constructor as typeof StatusLightBase;
+            if (!constructor.VARIANTS.includes(this.variant)) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/status-light/#variants',
+                    {
+                        issues: [...constructor.VARIANTS],
+                    }
+                );
+            }
+            // Check disabled property if it exists (S1 only)
+            if (this.hasAttribute('disabled') && !('disabled' in this)) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> element does not support the disabled state.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/status-light/#states',
+                    {
+                        issues: [
+                            'disabled is not a supported property in Spectrum 2',
+                        ],
+                    }
+                );
+            } else if (this.hasAttribute('disabled') && 'disabled' in this) {
+                // Set aria-disabled when no warning is shown
+                if (!this.hasAttribute('aria-disabled')) {
+                    this.setAttribute('aria-disabled', 'true');
+                } else {
+                    this.removeAttribute('aria-disabled');
+                }
             }
         }
     }
