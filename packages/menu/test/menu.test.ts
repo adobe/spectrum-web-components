@@ -904,18 +904,18 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(searchInput);
 
-        await sendMouseTo(menuItem1);
+        await mouseMoveOver(menuItem1);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             searchInput,
-            'sp-search should retain focus'
+            'sp-search should retain focus on mouseover'
         );
 
-        await sendMouseTo(menuItem2);
+        await mouseMoveOver(menuItem2);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             searchInput,
-            'sp-search should retain focus'
+            'sp-search should retain focus on mouseover'
         );
 
         // Test with sp-textfield
@@ -923,11 +923,11 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(textfieldInput);
 
-        await sendMouseTo(menuItem1);
+        await mouseMoveOver(menuItem1);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             textfieldInput,
-            'sp-textfield should retain focus'
+            'sp-textfield should retain focus on mouseover'
         );
 
         // Test with sp-number-field
@@ -935,11 +935,11 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(numberInput);
 
-        await sendMouseTo(menuItem2);
+        await mouseMoveOver(menuItem2);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             numberInput,
-            'sp-number-field should retain focus'
+            'sp-number-field should retain focus on mouseover'
         );
 
         // Test with sp-combobox
@@ -947,11 +947,11 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(comboboxInput);
 
-        await sendMouseTo(menuItem3);
+        await mouseMoveOver(menuItem3);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             comboboxInput,
-            'sp-combobox should retain focus'
+            'sp-combobox should retain focus on mouseover'
         );
 
         // Test with sp-color-field
@@ -959,11 +959,11 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(colorInput);
 
-        await sendMouseTo(menuItem1);
+        await mouseMoveOver(menuItem1);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             colorInput,
-            'sp-color-field should retain focus'
+            'sp-color-field should retain focus on mouseover'
         );
 
         // Test with native input
@@ -971,11 +971,11 @@ describe('Menu', () => {
         await elementUpdated(el);
         expect(document.activeElement).to.equal(nativeInput);
 
-        await sendMouseTo(menuItem2);
+        await mouseMoveOver(menuItem2);
         await elementUpdated(el);
         expect(document.activeElement).to.equal(
             nativeInput,
-            'native input should retain focus'
+            'native input should retain focus on mouseover'
         );
     });
 });
