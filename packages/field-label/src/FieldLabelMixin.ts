@@ -23,7 +23,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import styles from './field-label.css.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared';
+import { ObserveSlotText, SlotTextObservingInterface } from '@spectrum-web-components/shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
@@ -46,10 +46,7 @@ export declare class FieldLabelMixinInterface {
 export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
     superClass: T
 ) => {
-    class FieldLabelMixinClass extends ObserveSlotText(
-        superClass,
-        '#field-label-slot'
-    ) {
+    class FieldLabelMixinClass extends ObserveSlotText(superClass, undefined, [':not(#field-label-slot)']) {
         public static get styles(): CSSResultArray {
             return [styles, asteriskIconStyles];
         }
@@ -67,10 +64,9 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             fieldId: string = '',
             slotName?: string
         ): TemplateResult {
-            return html`
-                <label id="${fieldId}-label" for="${fieldId}" hidden>
-                    <slot
-                        id="field-label-slot"
+            return  html`
+                <label id="${fieldId}-label" for="${fieldId}" ?hidden="${!this.slotHasContent}">
+                    <slot id="field-label-slot"
                         name="${ifDefined(slotName)}"
                         @slotchange=${this.manageTextObservedSlot}
                     ></slot>
@@ -85,6 +81,6 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             `;
         }
     }
-    return FieldLabelMixinClass as unknown as Constructor<FieldLabelMixinInterface> &
+    return FieldLabelMixinClass as unknown as Constructor<FieldLabelMixinInterface> & Constructor<SlotTextObservingInterface> &
         T;
 };
