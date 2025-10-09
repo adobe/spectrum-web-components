@@ -25,9 +25,13 @@
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
         },
+        "./shared/base": {
+            "types": "./dist/shared/base/index.d.ts",
+            "import": "./dist/shared/base/index.js"
+        },
         "./shared/*": {
-            "types": "./dist/shared/*/index.d.ts",
-            "import": "./dist/shared/*/index.js"
+            "types": "./dist/shared/*.d.ts",
+            "import": "./dist/shared/*.js"
         }
     },
     "files": [
