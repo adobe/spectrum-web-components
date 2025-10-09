@@ -299,9 +299,7 @@ export class TextfieldBase extends FieldLabelMixin(
             return this.label;
         } else if (this.appliedLabel && this.appliedLabel.length > 0) {
             return this.appliedLabel;
-        } else if (
-            this.querySelector('[slot="field-label"]')?.textContent?.trim()
-        ) {
+        } else if (this.slotHasContent) {
             return undefined;
         } else if (this.placeholder && this.placeholder.length > 0) {
             return this.placeholder;
