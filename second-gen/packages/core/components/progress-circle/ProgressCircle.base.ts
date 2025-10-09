@@ -145,12 +145,19 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
             }
         }
 
-        if (window.__swc?.DEBUG) {
+        const hasAccessibleName = (): boolean => {
+            return Boolean(
+                this.label ||
+                    this.getAttribute('aria-label') ||
+                    this.getAttribute('aria-labelledby') ||
+                    this.slotEl.assignedNodes().length
+            );
+        };
+
+        if (window.__swc.DEBUG) {
             if (
-                !this.label &&
-                !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby') &&
-                !this.slotEl?.assignedNodes()?.length
+                !hasAccessibleName() &&
+                this.getAttribute('role') === 'progressbar'
             ) {
                 window.__swc?.warn(
                     this,

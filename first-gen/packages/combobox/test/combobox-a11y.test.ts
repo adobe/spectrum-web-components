@@ -40,9 +40,6 @@ import { comboboxFixture } from './helpers.js';
 describe('Combobox accessibility', () => {
     it('renders accessibly with `label` attribute', async () => {
         const el = await comboboxFixture();
-        const opened = oneEvent(el, 'sp-opened');
-        el.open = true;
-        await opened;
 
         await elementUpdated(el);
         await expect(el).to.be.accessible();
@@ -299,7 +296,7 @@ describe('Combobox accessibility', () => {
         await elementUpdated(el);
         await nextFrame();
 
-        const name = 'Pending Combobox';
+        const name = 'Combobox Pending';
 
         const snapshot = (await a11ySnapshot(
             {}
