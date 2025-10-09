@@ -394,9 +394,7 @@ describe('Combobox Data', () => {
         el.focus();
         await elementUpdated(el);
 
-        await sendKeys({
-            press: 'ArrowDown',
-        });
+        await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(el);
 
         expect(el.activeDescendant).to.not.be.undefined;
@@ -409,9 +407,7 @@ describe('Combobox Data', () => {
         await nextFrame();
 
         const change = oneEvent(el, 'change');
-        await sendKeys({
-            press: 'Enter',
-        });
+        await sendKeys({ press: 'Enter' });
 
         await change;
         expect(el.open).to.be.false;

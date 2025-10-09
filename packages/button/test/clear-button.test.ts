@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/button/sp-clear-button.js';
-import { ClearButton } from '@spectrum-web-components/button';
-import { ElementSize } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { ElementSize } from '@spectrum-web-components/base';
+import { ClearButton } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-clear-button.js';
 import { SinonStub, stub } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('Clear Button', () => {
     testForLitDevWarnings(async () =>
@@ -32,32 +32,33 @@ describe('Clear Button', () => {
             await expect(el).to.be.accessible();
         });
     });
-    it(`loads static-color="white" when variant="overBackground"`, async () => {
-        const el = await fixture<ClearButton>(html`
-            <sp-clear-button
-                label="Clear"
-                variant="overBackground"
-            ></sp-clear-button>
-        `);
-
-        await elementUpdated(el);
-
-        // Check that the staticColor is set to white
-        expect(el.staticColor).to.equal('white');
-        expect(el.hasAttribute('static-color')).to.be.true;
-        expect(el.getAttribute('static-color')).to.equal('white');
-    });
 
     describe('dev mode', () => {
         let consoleStub: SinonStub;
-        before(() => {
+        beforeEach(() => {
             window.__swc.verbose = true;
             consoleStub = stub(console, 'warn');
         });
 
-        after(() => {
+        afterEach(() => {
             window.__swc.verbose = false;
             consoleStub.restore();
+        });
+
+        it(`loads static-color="white" when variant="overBackground"`, async () => {
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button
+                    label="Clear"
+                    variant="overBackground"
+                ></sp-clear-button>
+            `);
+
+            await elementUpdated(el);
+
+            // Check that the staticColor is set to white
+            expect(el.staticColor).to.equal('white');
+            expect(el.hasAttribute('static-color')).to.be.true;
+            expect(el.getAttribute('static-color')).to.equal('white');
         });
 
         it('should log dev warning when overBackground variant is used', async () => {

@@ -10,11 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import {
-    ActionButton,
-    LONGPRESS_DURATION,
-} from '@spectrum-web-components/action-button';
 import {
     aTimeout,
     elementUpdated,
@@ -23,11 +18,18 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+import {
+    ActionButton,
+    LONGPRESS_DURATION,
+} from '@spectrum-web-components/action-button';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    mouseClickOn,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('ActionButton', () => {
     testForLitDevWarnings(
@@ -132,14 +134,10 @@ describe('ActionButton', () => {
         await elementUpdated(el);
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
 
         expect(longpressSpy.callCount).to.equal(1);
-        await sendKeys({
-            press: 'Alt+ArrowDown',
-        });
+        await sendKeys({ press: 'Alt+ArrowDown' });
 
         expect(longpressSpy.callCount).to.equal(2);
         el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
@@ -224,9 +222,7 @@ describe('ActionButton', () => {
         expect(button.getAttribute('aria-pressed')).to.equal('false');
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
         await elementUpdated(el);
 
         expect(el.toggles).to.be.true;
@@ -262,9 +258,7 @@ describe('ActionButton', () => {
         expect(button).to.have.attribute('aria-expanded', 'false');
 
         el.focus();
-        await sendKeys({
-            press: 'Space',
-        });
+        await sendKeys({ press: 'Space' });
         await elementUpdated(el);
 
         expect(el.toggles).to.be.true;
@@ -313,20 +307,9 @@ describe('ActionButton', () => {
                 event.preventDefault();
                 clicked = true;
             });
-        const rect = el.getBoundingClientRect();
 
         // tests mouse click events, and by extension VoiceOver CRTL+Option+Space click
-        await sendMouse({
-            steps: [
-                {
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                    type: 'click',
-                },
-            ],
-        });
+        await mouseClickOn(el);
         await elementUpdated(el);
         expect(clicked).to.be.true;
     });

@@ -10,8 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { Tooltip } from '@spectrum-web-components/tooltip';
 import {
     elementUpdated,
     expect,
@@ -22,9 +20,11 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
+import { Tooltip } from '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { resetMouse } from '@web/test-runner-commands';
 import { spy, stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Tooltip', () => {
     testForLitDevWarnings(
@@ -43,14 +43,7 @@ describe('Tooltip', () => {
         await expect(el).to.be.accessible();
     });
     it('self manages', async () => {
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [1, 1],
-                },
-            ],
-        });
+        await resetMouse();
         const button = await fixture<Button>(html`
             <sp-button>
                 This is a button.
@@ -285,8 +278,8 @@ describe('Tooltip', () => {
             expect(consoleWarnStub.called).to.be.true;
             const spyCall = consoleWarnStub.getCall(0);
             expect(
-                (spyCall.args.at(0) as string).includes('Self managed'),
-                'confirm self managed-centric message'
+                (spyCall.args.at(0) as string).includes('Self-managed'),
+                'confirm dev warning message includes `Self-managed`'
             ).to.be.true;
             expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
                 data: {

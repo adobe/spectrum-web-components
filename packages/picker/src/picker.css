@@ -14,6 +14,8 @@
 @import url("./picker-overrides.css");
 
 :host {
+    --mod-popover-inline-size: var(--mod-picker-inline-size, var(--spectrum-picker-inline-size));
+
     display: inline-flex;
     vertical-align: top;
 

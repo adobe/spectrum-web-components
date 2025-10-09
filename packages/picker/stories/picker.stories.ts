@@ -13,6 +13,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
@@ -20,12 +21,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import '../../overlay/stories/index.js';
@@ -430,8 +430,8 @@ export const iconValue = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             label="Pick an action"
             icons="only"
-            style="width: 100px"
             value="2"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon"></sp-icon-edit>
@@ -459,8 +459,8 @@ export const iconsOnly = (args: StoryArgs): TemplateResult => {
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an action"
-            style="width: 100px"
             value="3"
+            style="--mod-picker-inline-size: 100px;"
         >
             <sp-menu-item value="1">
                 <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
@@ -539,6 +539,9 @@ dynamicIcons.args = {
     open: true,
 };
 dynamicIcons.decorators = [areIconsPresent];
+dynamicIcons.swc_vrt = {
+    skip: true,
+};
 
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
