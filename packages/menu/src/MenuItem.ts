@@ -482,7 +482,6 @@ export class MenuItem extends LikeAnchor(
     }
 
     private getActiveElementSafely(): HTMLElement | null {
-        // Use a more robust approach to find active element across shadow boundaries
         let root = this.getRootNode() as Document | ShadowRoot;
         let activeElement = root.activeElement as HTMLElement;
 
