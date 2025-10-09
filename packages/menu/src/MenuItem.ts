@@ -481,12 +481,31 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
+    private getActiveElementSafely(): HTMLElement | null {
+        // Use a more robust approach to find active element across shadow boundaries
+        let root = this.getRootNode() as Document | ShadowRoot;
+        let activeElement = root.activeElement as HTMLElement;
+
+        // If no active element in current context and we're in shadow DOM,
+        // traverse up to find the document-level active element
+        if (!activeElement && root !== document) {
+            while (root && root !== document && 'host' in root) {
+                root = (root as ShadowRoot).host.getRootNode() as
+                    | Document
+                    | ShadowRoot;
+                activeElement = root.activeElement as HTMLElement;
+                if (activeElement) break;
+            }
+        }
+
+        return activeElement;
+    }
+
     handleMouseover(event: MouseEvent): void {
         const target = event.target as HTMLElement;
         if (target === this) {
-            // Get the currently focused element within the component's root context
-            const rootNode = this.getRootNode() as Document | ShadowRoot;
-            const activeElement = rootNode.activeElement as HTMLElement;
+            // Check for active input elements across shadow boundaries
+            const activeElement = this.getActiveElementSafely();
 
             // Only focus this menu item if no input element is currently active
             // This prevents interrupting user input in search boxes, text fields, etc.
