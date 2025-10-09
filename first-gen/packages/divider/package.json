@@ -58,6 +58,8 @@
     ],
     "types": "./src/index.d.ts",
     "dependencies": {
+        "@spectrum-web-components/base": "1.8.0",
+        "@spectrum-web-components/shared": "1.8.0",
         "@swc/core": "workspace:*"
     },
     "keywords": [
