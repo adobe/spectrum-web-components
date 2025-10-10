@@ -14,13 +14,6 @@ import { beforeEach, describe, expect, test } from 'vitest';
 
 import '@swc/components/badge';
 
-// Import the Badge type for TypeScript
-declare global {
-    interface HTMLElementTagNameMap {
-        'swc-badge': Badge;
-    }
-}
-
 describe('swc-badge', () => {
     beforeEach(() => {
         document.body.innerHTML = '';
@@ -29,7 +22,7 @@ describe('swc-badge', () => {
     describe('defaults', () => {
         test('should have correct default values', async () => {
             await customElements.whenDefined('swc-badge');
-            const badge = document.createElement('swc-badge') as Badge;
+            const badge = document.createElement('swc-badge');
 
             // Add some content to make the component visible
             badge.textContent = 'Test Badge';
