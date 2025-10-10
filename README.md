@@ -221,13 +221,3 @@ For a list of component waiting to be implemented, visit our [`missing component
 ### IDE Notes
 
 The build process compiles `.css` files using PostCSS and wraps them in the `lit-html` `css` template tag and writes out a `.css.ts` file for easy import into TypeScript files. This file should not be edited, and is ignored by `.gitignore`, but you may also wish to hide the files in your IDE.
-
-<a name="patches"></a>
-
-<details><summary><strong>Active patches</strong></summary>
-
-### lru-cache
-
-The `lru-cache` leveraged by `@web/dev-server` can interact negatively with ARM based macOS machines causing a critical hang in the cache of transpiled file responses. This only effects development time operations and specifically effects the local test passes. To avoid this `lru-cache@6.0` has been patched to make its `set` method a noop, avoiding the caching process all together.
-
-</details>
