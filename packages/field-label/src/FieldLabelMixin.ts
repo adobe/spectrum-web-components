@@ -34,9 +34,7 @@ export declare class FieldLabelMixinInterface {
     sideAligned: 'start' | 'end';
     slotHasContent: boolean;
     manageTextObservedSlot(): void;
-    public renderFieldLabel(
-        fieldId: string
-    ): TemplateResult;
+    public renderFieldLabel(fieldId: string): TemplateResult;
 }
 
 /**
@@ -67,11 +65,11 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         @property({ type: String, reflect: true, attribute: 'side-aligned' })
         public sideAligned?: 'start' | 'end';
 
-        public renderFieldLabel(fieldId: string = ''): TemplateResult {
+        public renderFieldLabel(fieldId?: string): TemplateResult {
             return html`
                 <label
-                    id="${fieldId}-label"
-                    for="${fieldId}"
+                    id="${fieldId ? `${fieldId}-label` : 'field-label'}"
+                    for="${ifDefined(fieldId)}"
                     ?hidden="${!this.slotHasContent}"
                 >
                     <slot
