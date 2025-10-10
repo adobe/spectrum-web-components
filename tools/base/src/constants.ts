@@ -10,7 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
-export * from './Base.js';
-export * from './sizedMixin.js';
-export * from './constants.js';
-export * from 'lit';
+/**
+ * Array of input component tag names for easier iteration and maintenance.
+ */
+export const INPUT_COMPONENT_TAGS = [
+    'SP-SEARCH',
+    'SP-TEXTFIELD',
+    'SP-NUMBER-FIELD',
+    'SP-COMBOBOX',
+    'SP-COLOR-FIELD',
+] as const;
+
+/**
+ * Regular expression pattern to match Spectrum Web Components input elements.
+ * Used to identify components that should maintain focus during menu interactions.
+ */
+export const INPUT_COMPONENT_PATTERN = new RegExp(
+    `^(${INPUT_COMPONENT_TAGS.join('|')})$`
+);
