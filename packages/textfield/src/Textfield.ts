@@ -51,6 +51,8 @@ export class TextfieldBase extends FieldLabelMixin(
         })
     )
 ) {
+    public declare renderFieldLabel: (fieldId: string) => TemplateResult;
+
     public static override get styles(): CSSResultArray {
         const superStyles = Array.isArray(super.styles)
             ? super.styles

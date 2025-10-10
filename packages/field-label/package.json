@@ -39,13 +39,13 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./sp-field-label.js": {
-            "development": "./sp-field-label.dev.js",
-            "default": "./sp-field-label.js"
-        },
         "./sp-field-label-mixin.js": {
             "development": "./sp-field-label-mixin.dev.js",
             "default": "./sp-field-label-mixin.js"
+        },
+        "./sp-field-label.js": {
+            "development": "./sp-field-label.dev.js",
+            "default": "./sp-field-label.js"
         }
     },
     "scripts": {

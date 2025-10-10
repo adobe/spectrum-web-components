@@ -46,6 +46,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import {
     IS_MOBILE,
@@ -440,14 +441,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             return content;
         }
         return html`
-            <slot name="label" id="label">
-                <span
-                    aria-hidden=${ifDefined(
-                        this.appliedLabel ? undefined : 'true'
-                    )}
-                >
-                    ${this.label}
-                </span>
+            <slot name="placeholder" id="placeholder">
+                <slot name="label" id="label">
+                    <span
+                        aria-hidden=${ifDefined(
+                            this.appliedLabel ? undefined : 'true'
+                        )}
+                    >
+                        ${this.label}
+                    </span>
+                </slot>
             </slot>
         `;
     }
@@ -955,7 +958,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class Picker extends PickerBase {
+export class Picker extends FieldLabelMixin(PickerBase) {
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
@@ -966,6 +969,13 @@ export class Picker extends PickerBase {
             styles['min-width'] = `${this.offsetWidth}px`;
         }
         return styles;
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            ${this.renderFieldLabel('field-label', '#label-slot')}
+            ${super.render()}
+        `;
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {

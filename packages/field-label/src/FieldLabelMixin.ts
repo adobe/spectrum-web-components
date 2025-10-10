@@ -23,10 +23,7 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import styles from './field-label.css.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import {
-    ObserveSlotText,
-    SlotTextObservingInterface,
-} from '@spectrum-web-components/shared';
+import { ObserveSlotText } from '@spectrum-web-components/shared';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T> = new (...args: any[]) => T;
@@ -35,9 +32,10 @@ export declare class FieldLabelMixinInterface {
     disabled: boolean;
     required: boolean;
     sideAligned: 'start' | 'end';
-    protected renderFieldLabel(
-        fieldId: string,
-        slotName?: string
+    slotHasContent: boolean;
+    manageTextObservedSlot(): void;
+    public renderFieldLabel(
+        fieldId: string
     ): TemplateResult;
 }
 
@@ -69,7 +67,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         @property({ type: String, reflect: true, attribute: 'side-aligned' })
         public sideAligned?: 'start' | 'end';
 
-        protected renderFieldLabel(fieldId: string = ''): TemplateResult {
+        public renderFieldLabel(fieldId: string = ''): TemplateResult {
             return html`
                 <label
                     id="${fieldId}-label"
@@ -92,7 +90,5 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
             `;
         }
     }
-    return FieldLabelMixinClass as unknown as Constructor<FieldLabelMixinInterface> &
-        Constructor<SlotTextObservingInterface> &
-        T;
+    return FieldLabelMixinClass as Constructor<FieldLabelMixinInterface> & T;
 };
