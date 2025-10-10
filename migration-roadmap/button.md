@@ -184,6 +184,7 @@
 **States:**
 
 - `disabled` - disables the button
+- `active` - indicates button is currently being activated (e.g., Space key pressed)
 - `pending` - places button in pending state with progress indicator
 - `pending-label` - custom label text for pending state
 
@@ -256,7 +257,7 @@
 
     <!-- Progress Circle (when isPending is true) -->
     <div
-        class="spectrum-ProgressCircle spectrum-ProgressCircle--sizeS spectrum-ProgressCircle--indeterminate"
+        class="spectrum-ProgressCircle spectrum-ProgressCircle--small    spectrum-ProgressCircle--indeterminate"
     >
         <!-- ProgressCircle internal structure -->
     </div>
@@ -283,7 +284,7 @@
 
     <!-- InfieldProgressCircle (when isPending is true) -->
     <div
-        class="spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM spectrum-InfieldProgressCircle--indeterminate"
+        class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM"
     >
         <!-- InfieldProgressCircle internal structure -->
     </div>
@@ -296,9 +297,6 @@
 <summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
 ```diff
---- Legacy (CSS main branch)
-+++ Spectrum 2 (CSS spectrum-two branch)
-@@ -1,18 +1,18 @@
  <button
    class="spectrum-Button spectrum-Button--fill spectrum-Button--accent spectrum-Button--sizeM"
    disabled
@@ -315,7 +313,7 @@
 -  <div class="spectrum-ProgressCircle spectrum-ProgressCircle--sizeS spectrum-ProgressCircle--indeterminate">
 -    <!-- ProgressCircle internal structure -->
 +  <!-- InfieldProgressCircle (when isPending is true) -->
-+  <div class="spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM spectrum-InfieldProgressCircle--indeterminate">
++  <div class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM">
 +    <!-- InfieldProgressCircle internal structure -->
    </div>
  </button>
@@ -337,38 +335,33 @@
 
 #### Variants and treatments
 
-| CSS selector                                                                                                                                                                                    | Attribute or slot          | Status      |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- | ----------- |
-| `.spectrum-Button--accent`                                                                                                                                                                      | `variant="accent"`         | Implemented |
-| `.spectrum-Button--primary`                                                                                                                                                                     | `variant="primary"`        | Implemented |
-| `.spectrum-Button--secondary`                                                                                                                                                                   | `variant="secondary"`      | Implemented |
-| `.spectrum-Button--negative`                                                                                                                                                                    | `variant="negative"`       | Implemented |
-| `.spectrum-Button--staticWhite`                                                                                                                                                                 | `static-color="white"`     | Implemented |
-| `.spectrum-Button--staticBlack`                                                                                                                                                                 | `static-color="black"`     | Implemented |
-| `.spectrum-Button--outline`                                                                                                                                                                     | `treatment="outline"`      | Implemented |
-| `.spectrum-Button--primary.spectrum-Button--outline`                                                                                                                                            | Combined variant/treatment | Implemented |
-| `.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                                                          | Combined variant/treatment | Implemented |
-| `.spectrum-Button--staticBlack.spectrum-Button--outline`                                                                                                                                        | Combined static/treatment  | Implemented |
-| `.spectrum-Button--staticWhite.spectrum-Button--outline`                                                                                                                                        | Combined static/treatment  | Implemented |
-| `.spectrum-Button--staticBlack.spectrum-Button--secondary`                                                                                                                                      | Combined static/variant    | Implemented |
-| `.spectrum-Button--staticWhite.spectrum-Button--secondary`                                                                                                                                      | Combined static/variant    | Implemented |
-| `.spectrum-Button--staticBlack.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | Combined modifiers         | Implemented |
-| `.spectrum-Button--staticWhite.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | Combined modifiers         | Implemented |
-| `.spectrum-Button--accent .spectrum-Button-label`                                                                                                                                               | Accent label styling       | Implemented |
-| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite)`                        | Default variant styling    | Implemented |
-| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite) .spectrum-Button-label` | Default label styling      | Implemented |
+| CSS selector                                                                                                                                                                                    | Attribute or slot                                                  | Status      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------- |
+| `.spectrum-Button--accent`                                                                                                                                                                      | `variant="accent"`                                                 | Implemented |
+| `.spectrum-Button--primary`                                                                                                                                                                     | `variant="primary"`                                                | Implemented |
+| `.spectrum-Button--secondary`                                                                                                                                                                   | `variant="secondary"`                                              | Implemented |
+| `.spectrum-Button--negative`                                                                                                                                                                    | `variant="negative"`                                               | Implemented |
+| `.spectrum-Button--staticWhite`                                                                                                                                                                 | `static-color="white"`                                             | Implemented |
+| `.spectrum-Button--staticBlack`                                                                                                                                                                 | `static-color="black"`                                             | Implemented |
+| `.spectrum-Button--outline`                                                                                                                                                                     | `treatment="outline"`                                              | Implemented |
+| `.spectrum-Button--primary.spectrum-Button--outline`                                                                                                                                            | `variant="primary"` `treatment="outline"`                          | Implemented |
+| `.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                                                          | `variant="secondary"` `treatment="outline"`                        | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--outline`                                                                                                                                        | `static-color="black"` `treatment="outline"`                       | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--outline`                                                                                                                                        | `static-color="white"` `treatment="outline"`                       | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--secondary`                                                                                                                                      | `static-color="black"` `variant="secondary"`                       | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--secondary`                                                                                                                                      | `static-color="white"` `variant="secondary"`                       | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | `static-color="black"` `variant="secondary"` `treatment="outline"` | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | `static-color="white"` `variant="secondary"` `treatment="outline"` | Implemented |
+| `.spectrum-Button--accent .spectrum-Button-label`                                                                                                                                               | Accent label styling                                               | Implemented |
+| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite)`                        | Default variant styling                                            | Implemented |
+| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite) .spectrum-Button-label` | Default label styling                                              | Implemented |
 
 #### States
 
-| CSS selector                     | Attribute or slot | Status      |
-| -------------------------------- | ----------------- | ----------- |
-| `.spectrum-Button.is-disabled`   | `disabled`        | Implemented |
-| `.spectrum-Button:disabled`      | `disabled`        | Implemented |
-| `.spectrum-Button.is-focused`    | Pseudo-state      | Implemented |
-| `.spectrum-Button:focus`         | Pseudo-state      | Implemented |
-| `.spectrum-Button:focus-visible` | Pseudo-state      | Implemented |
-| `.spectrum-Button:hover`         | Pseudo-state      | Implemented |
-| `.spectrum-Button:active`        | Pseudo-state      | Implemented |
+| CSS selector                   | Attribute or slot | Status      |
+| ------------------------------ | ----------------- | ----------- |
+| `.spectrum-Button.is-disabled` | `disabled`        | Implemented |
+| `.spectrum-Button:disabled`    | `disabled`        | Implemented |
 
 #### Pending state
 
@@ -384,15 +377,6 @@
 | `.spectrum-Button[pending] .spectrum-Button-label`     | Pending state label         | Implemented |
 | `.spectrum-Button[pending] .spectrum-Icon`             | Pending state icon          | Implemented |
 | `.spectrum-Button[pending] .spectrum-ProgressCircle`   | Pending progress circle     | Implemented |
-
-#### Focus indicators
-
-| CSS selector                           | Attribute or slot     | Status      |
-| -------------------------------------- | --------------------- | ----------- |
-| `.spectrum-Button.is-focused:after`    | Focus ring            | Implemented |
-| `.spectrum-Button:focus-visible:after` | Focus ring            | Implemented |
-| `.spectrum-Button:after`               | Focus ring element    | Implemented |
-| `.spectrum-Button::-moz-focus-inner`   | Firefox focus styling | Implemented |
 
 #### Content and layout
 
@@ -411,36 +395,21 @@
 
 #### WC-only attributes (missing from CSS)
 
-| CSS selector | Attribute or slot          | Status                              |
-| ------------ | -------------------------- | ----------------------------------- |
-|              | `quiet`                    | Missing from CSS (deprecated in S2) |
-|              | `variant="cta"`            | Missing from CSS (deprecated)       |
-|              | `variant="overBackground"` | Missing from CSS (deprecated)       |
-|              | `variant="white"`          | Missing from CSS (deprecated)       |
-|              | `variant="black"`          | Missing from CSS (deprecated)       |
+| CSS selector | Attribute or slot          | Status                                             |
+| ------------ | -------------------------- | -------------------------------------------------- |
+|              | `quiet`                    | Missing from CSS (equivalent to outline treatment) |
+|              | `variant="cta"`            | Missing from CSS (deprecated)                      |
+|              | `variant="overBackground"` | Missing from CSS (deprecated)                      |
+|              | `variant="white"`          | Missing from CSS (deprecated)                      |
+|              | `variant="black"`          | Missing from CSS (deprecated)                      |
 
 ## Summary of changes
 
 ### CSS => SWC implementation gaps
 
-**Missing from WC:**
-**Icon positioning** - CSS templates support `iconAfterLabel` parameter to position icon after the label text, but SWC has a fixed DOM order with icon slot always rendering before the label. There is no attribute or property to control icon positioning in the web component. Note: Icon-after-label is not present in the Spectrum design specifications, so this implementation gap may be safely ignored.
+**Icon positioning** - CSS templates support an `iconAfterLabel` parameter to position icons after label text (trailing icon). SWC has a fixed DOM order where the icon slot always renders before the label, with no attribute or property to control icon positioning. Note: Icon-after-label is not present in the Spectrum design specifications, though there has been discussion about it within the design team. Check with the design team to confirm whether this feature is still needed.
 
-**Missing from CSS:**
-
-- `pending-label` - Custom label text for pending state
-- `quiet` - Deprecated attribute (maps to `treatment="outline"`)
-- `type` - Button type attribute (`button`, `submit`, `reset`)
-- `active` - Active state property
-- `target` - Anchor target attribute (used with `href`)
-- `download` - Anchor download attribute (used with `href`)
-- `label` - ARIA label property
-- `variant="cta"` - Deprecated variant (maps to `accent`)
-- `variant="overBackground"` - Deprecated variant (maps to `static-color="white"` with `treatment="outline"`)
-- `variant="white"` - Deprecated variant (maps to `static-color="white"`)
-- `variant="black"` - Deprecated variant (maps to `static-color="black"`)
-
-These WC-only attributes are either deprecated features, standard HTML/ARIA attributes, or implementation-specific properties that don't require CSS representation.
+**Quiet** - A quiet property can be applied in SWC, but it applies the outline treatment to the button. If the outline treatment alone is sufficient, we might consider removing `quiet`.
 
 ### CSS Spectrum 2 changes
 

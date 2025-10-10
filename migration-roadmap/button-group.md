@@ -27,8 +27,8 @@ None found for this component.
 - `--mod-buttongroup-flex-wrap`
 - `--mod-buttongroup-justify-content`
 - `--mod-buttongroup-spacing`
-- `--mod-buttongroup-spacing-horizontal`
-- `--mod-buttongroup-spacing-vertical`
+- `--mod-buttongroup-spacing-horizontal` (deprecated in favor of --mod-buttongroup-spacing)
+- `--mod-buttongroup-spacing-vertical` (deprecated in favor of --mod-buttongroup-spacing)
 
 </details>
 
@@ -86,6 +86,13 @@ None found for this component.
     <button class="spectrum-Button spectrum-ButtonGroup-item">...</button>
 </div>
 ```
+
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+**No differences found between main and spectrum-two branches.**
 
 </details>
 

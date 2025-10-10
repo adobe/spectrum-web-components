@@ -95,7 +95,7 @@
 
 **Size:**
 
-- `size` (values: `xs`, `s`, `m`, `l`, `xl`) - group size, no default, propagates to child buttons
+- `size` (values: `xs`, `s`, `m`, `l`, `xl`) - group size, no default, propagates to child action buttons
 
 **Layout:**
 
@@ -103,10 +103,10 @@
 - `compact` - buttons appear connected with shared borders (boolean)
 - `justified` - buttons fill available width equally (boolean)
 
-**Child button appearance (propagated to children):**
+**Child action button appearance (propagated to children):**
 
-- `quiet` - applies quiet styling to all child buttons (boolean)
-- `emphasized` - applies emphasized styling to all child buttons (boolean)
+- `quiet` - applies quiet styling to all child action buttons (boolean)
+- `emphasized` - applies emphasized styling to all child action buttons (boolean)
 - `static-color` (values: `white`, `black`) - static color variant, propagates to children
 
 **Selection management:**
@@ -149,9 +149,21 @@
 
 ```html
 <div class="spectrum-ActionGroup spectrum-ActionGroup--sizeM">
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
 </div>
 ```
 
@@ -162,11 +174,30 @@
 
 ```html
 <div class="spectrum-ActionGroup spectrum-ActionGroup--sizeM">
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
-    <button class="spectrum-ActionButton spectrum-ActionGroup-item">...</button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
+    <button
+        class="spectrum-ActionButton spectrum-ActionButton--sizeM spectrum-ActionGroup-item"
+    >
+        ...
+    </button>
 </div>
 ```
+
+</details>
+
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
+
+**No differences found between main and spectrum-two branches.**
 
 </details>
 
@@ -200,7 +231,7 @@
 | `.spectrum-ActionGroup--justified .spectrum-ActionGroup-item`                                                           | Slotted buttons when `justified`       | Implemented |
 | `.spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical, .spectrum-ActionGroup--compact) .spectrum-ActionGroup-item` | Slotted buttons in regular mode        | Implemented |
 
-**Note:** In CSS templates, `.spectrum-ActionGroup-item` is applied as a class to each child button. In SWC, the group uses `::slotted(*)` to style slotted action buttons without adding an additional class.
+**Note:** In CSS templates, `.spectrum-ActionGroup-item` is applied as a class to each child action button. In SWC, the group uses `::slotted(*)` to style slotted action buttons without adding an additional class.
 
 #### Compact mode
 
@@ -231,8 +262,8 @@
 | SWC attribute                           | CSS equivalent | Notes                                                      |
 | --------------------------------------- | -------------- | ---------------------------------------------------------- |
 | `quiet` (propagates to children)        | N/A            | In CSS, `--quiet` class on container affects child styling |
-| `emphasized` (propagates to children)   | N/A            | Propagates to child buttons                                |
-| `static-color` (propagates to children) | N/A            | Propagates to child buttons                                |
+| `emphasized` (propagates to children)   | N/A            | Propagates to child action buttons                         |
+| `static-color` (propagates to children) | N/A            | Propagates to child action buttons                         |
 | `selects`                               | N/A            | Manages single/multiple selection with automatic ARIA      |
 | `selected`                              | N/A            | Tracks selected button values                              |
 | `label`                                 | N/A            | Sets aria-label on the group                               |
@@ -252,7 +283,7 @@ The Action Group template is identical between the main branch (legacy) and spec
 - A `div` wrapper with `spectrum-ActionGroup` class
 - Size classes applied via `--size{size}` modifier pattern
 - Layout modifiers for vertical, compact, and justified layouts
-- Child buttons with `spectrum-ActionGroup-item` class
+- Child action buttons with `spectrum-ActionGroup-item` class
 
 All spacing, border radius, and layout changes are handled through CSS custom properties without requiring DOM structure changes.
 
