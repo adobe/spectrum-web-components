@@ -55,7 +55,7 @@ export const ComboboxMarkup = (args: StoryArgs): TemplateResult => {
             @input=${handleInput(args)}
             ${spreadProps(args)}
         >
-            <span slot="label">Where do you live?</span>
+            <span slot="field-label">Where do you live?</span>
         </sp-combobox>
     `;
 };

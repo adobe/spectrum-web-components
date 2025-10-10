@@ -4317,6 +4317,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.8.0"
     "@spectrum-web-components/base": "npm:1.8.0"
+    "@spectrum-web-components/field-label": "npm:1.8.0"
     "@spectrum-web-components/icon": "npm:1.8.0"
     "@spectrum-web-components/icons-ui": "npm:1.8.0"
     "@spectrum-web-components/menu": "npm:1.8.0"

@@ -121,7 +121,7 @@ mutate() {
 
 ```html
 <sp-combobox quiet>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -141,7 +141,7 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 
 ```html
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -156,7 +156,7 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -171,14 +171,14 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox disabled>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 <br />
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
@@ -191,7 +191,7 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox invalid>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -207,7 +207,7 @@ The popup menu items are filtered to only those completing the currently-input v
 
 ```html
 <sp-combobox pending>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -227,7 +227,7 @@ For exceptional cases, provide an accessible label via the `label` attribute.
 
 ```html
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -246,7 +246,7 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -260,7 +260,7 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox required>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -275,7 +275,7 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 
 ```html
 <sp-combobox>
-    <span slot="label">Color</span>
+    <span slot="field-label">Color</span>
     <sp-tooltip slot="tooltip">
         Color options, such as red, green, or blue.
     </sp-tooltip>

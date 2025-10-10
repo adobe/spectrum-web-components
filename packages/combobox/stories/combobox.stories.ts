@@ -82,7 +82,7 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
         <sp-combobox
             style="min-width: 80px;--spectrum-textfield-m-min-width:0; width:160px;"
         >
-            <span slot="label">Some fruits are disabled (light DOM)</span>
+            <span slot="field-label">Some fruits are disabled (light DOM)</span>
             ${fruits.map(
                 (fruit) => html`
                     <sp-menu-item
@@ -99,7 +99,9 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
             .options=${countriesWithDisabledItems}
             .value=${args.value || ''}
         >
-            <span slot="label">Some countries are disabled (shadow DOM)</span>
+            <span slot="field-label">
+                Some countries are disabled (shadow DOM)
+            </span>
         </sp-combobox>
     `;
 };
@@ -130,14 +132,14 @@ export const noAutocomplete = (): TemplateResult => {
             side-aligned="start"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
-            <span slot="label">Fruit</span>
+            <span slot="field-label">Fruit</span>
         </sp-combobox>
         <sp-combobox
             .options=${countries}
             side-aligned="start"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
-            <span slot="label">Countries</span>
+            <span slot="field-label">Countries</span>
         </sp-combobox>
     `;
 };
@@ -148,7 +150,7 @@ export const lightDOM = (): TemplateResult => {
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
             side-aligned="start"
         >
-            <span slot="label">Fruit</span>
+            <span slot="field-label">Fruit</span>
             ${fruits.map(
                 (fruit) => html`
                     <sp-menu-item id=${fruit.value} value=${fruit.value}>
@@ -161,7 +163,7 @@ export const lightDOM = (): TemplateResult => {
             side-aligned="start"
             style="min-width: 80px;--spectrum-textfield-m-min-width:0;width:100px;"
         >
-            <span slot="label">Countries</span>
+            <span slot="field-label">Countries</span>
             ${countries.map(
                 (country) => html`
                     <sp-menu-item id=${country.value} value=${country.value}>
@@ -196,7 +198,7 @@ export const withTooltip = (): TemplateResult => {
 export const withFieldLabel = (): TemplateResult => {
     return html`
         <sp-combobox id="combobox-7" .options=${fruits}>
-            <span slot="label">Pick something</span>
+            <span slot="field-label">Pick something</span>
         </sp-combobox>
     `;
 };
@@ -239,7 +241,7 @@ class ControlledCombo extends LitElement {
                 .value=${live(this.value.validated)}
                 @change=${this.onChange}
             >
-                <span slot="label">
+                <span slot="field-label">
                     Retirement age (try entering a non-number)
                 </span>
             </sp-combobox>
