@@ -187,7 +187,7 @@ describe('swc-badge', () => {
     // ──────────────────────────────────────────────────────────────
     // TEST: Accessibility
     // ──────────────────────────────────────────────────────────────
-
+    // @TODO: Add accessibility tests with axe-core / playwright
     describe('accessibility', () => {
         test('should be accessible to screen readers', async () => {
             const badge = await fixture(html`<swc-badge>New</swc-badge>`);
