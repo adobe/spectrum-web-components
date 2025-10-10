@@ -170,7 +170,9 @@ export const Sizes: Story = {
         CONTAINER(
             StatusLight.VALID_SIZES.map(
                 (size: StatusLightSize) => html`
-                    <swc-status-light size="${size}">${size}</swc-status-light>
+                    <swc-status-light size="${size}"
+                        >${sizeMap(size)}</swc-status-light
+                    >
                 `
             )
         ),
@@ -187,6 +189,23 @@ function capitalize(str?: string): string {
         return '';
     }
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
+function sizeMap(str?: StatusLightSize): string {
+    const sizeLabels = {
+        labels: {
+            xxs: 'Extra-extra-small',
+            xs: 'Extra-small',
+            s: 'Small',
+            m: 'Medium',
+            l: 'Large',
+            xl: 'Extra-large',
+            xxl: 'Extra-extra-large',
+        },
+    };
+
+    return str ? sizeLabels.labels[str] : '';
 }
 
 /* @todo Pull this up into a decorator for all stories to leverage */
