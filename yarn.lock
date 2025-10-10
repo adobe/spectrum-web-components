@@ -5760,6 +5760,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:first-gen/packages/divider"
   dependencies:
+    "@spectrum-web-components/base": "npm:1.8.0"
+    "@spectrum-web-components/shared": "npm:1.8.0"
     "@swc/core": "workspace:*"
   languageName: unknown
   linkType: soft
