@@ -184,7 +184,7 @@
         "next": "14.2.33",
         "node-fetch": "3.3.2",
         "npm-run-all2": "8.0.4",
-        "patch-package": "8.0.0",
+        "patch-package": "8.0.1",
         "pinst": "3.0.0",
         "prettier": "3.6.2",
         "prettier-plugin-package": "1.4.0",
