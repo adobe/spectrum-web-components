@@ -101,6 +101,33 @@ export const Default = (args: StoryArgs): TemplateResult => {
     `;
 };
 
+export const SlottedLabel = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-picker
+            id="picker-1"
+            @change=${handleChange(args)}
+            ${spreadProps(args)}
+        >
+            <span slot="field-label">Where do you live?</span>
+            <sp-menu-item value="option-1">Deselect</sp-menu-item>
+            <sp-menu-item value="option-2">Select Inverse</sp-menu-item>
+            <sp-menu-item value="option-3">Feather...</sp-menu-item>
+            <sp-menu-item value="option-4">Select and Mask...</sp-menu-item>
+            <sp-menu-item value="option-5">Save Selection</sp-menu-item>
+            <sp-menu-item disabled value="option-6">
+                Make Work Path
+            </sp-menu-item>
+        </sp-picker>
+        <p>This is some text.</p>
+        <p>This is some text.</p>
+        <p>
+            This is a
+            <a href="#anchor">link</a>
+            .
+        </p>
+    `;
+};
+
 export const forcePopoverOnMobile = (args: StoryArgs): TemplateResult => {
     return html`
         <div style="padding: 40px">

@@ -592,6 +592,16 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             </div>
         `;
     }
+
+    /**
+     * The role of the picker button.
+     * @returns The role of the picker button.
+     * Override for roles such as "combobox"
+     */
+    protected get isCombobox(): boolean {
+        return false;
+    }
+
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
@@ -611,6 +621,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                         ? `label-${this.labelAlignment}`
                         : undefined
                 )}
+                role="${ifDefined(this.isCombobox ? 'combobox' : undefined)}"
                 @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
                 @keydown=${{
@@ -958,7 +969,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class Picker extends FieldLabelMixin(PickerBase) {
+export class Picker extends FieldLabelMixin(PickerBase, 'field-label') {
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
@@ -971,10 +982,18 @@ export class Picker extends FieldLabelMixin(PickerBase) {
         return styles;
     }
 
+    /**
+     * The role of the picker button.
+     * @returns The role of the picker button.
+     * A picker is technically a select-only "combobox"
+     */
+    protected override get isCombobox(): boolean {
+        return true;
+    }
+
     protected override render(): TemplateResult {
         return html`
-            ${this.renderFieldLabel('field-label', '#label-slot')}
-            ${super.render()}
+            ${this.renderFieldLabel()} ${super.render()}
         `;
     }
 
