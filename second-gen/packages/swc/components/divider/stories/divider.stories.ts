@@ -16,7 +16,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import '@swc/components/divider';
 
 const meta: Meta = {
-    title: 'Components/Divider',
+    title: 'Divider',
     component: 'swc-divider',
 };
 

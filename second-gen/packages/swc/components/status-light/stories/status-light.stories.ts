@@ -15,7 +15,7 @@ import '@swc/components/status-light';
 
 export default {
     component: 'swc-status-light',
-    title: 'Components/StatusLight',
+    title: 'Status light',
 };
 
 export const s = (): TemplateResult => html`

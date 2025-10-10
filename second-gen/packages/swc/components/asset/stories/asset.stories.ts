@@ -16,7 +16,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import '@swc/components/asset';
 
 const meta: Meta = {
-    title: 'Components/Asset',
+    title: 'Asset',
     component: 'swc-asset',
     argTypes: {
         variant: {

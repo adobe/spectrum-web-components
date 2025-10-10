@@ -2,7 +2,18 @@ import { resolve } from 'path';
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
-    stories: ['../components/**/*.stories.@(js|ts|md|mdx)'],
+    stories: [
+        {
+            directory: 'guides',
+            files: '*.@(md|mdx)',
+            titlePrefix: 'Guides',
+        },
+        {
+            directory: '../components',
+            files: '*/stories/*.stories.ts',
+            titlePrefix: 'Components',
+        },
+    ],
     framework: '@storybook/web-components-vite',
     core: {
         disableTelemetry: true,

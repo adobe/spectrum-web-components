@@ -56,7 +56,7 @@ args['default-slot'] = 'Badge';
  * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
  */
 const meta: Meta = {
-    title: 'Components/Badge',
+    title: 'Badge',
     component: 'swc-badge',
     args,
     argTypes,
