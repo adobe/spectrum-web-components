@@ -10,6 +10,7 @@
         "plugin:prettier/recommended",
         "plugin:lit-a11y/recommended"
     ],
+    "ignorePatterns": ["**/dist/**"],
     "overrides": [
         {
             "extends": ["plugin:jsonc/recommended-with-jsonc"],
