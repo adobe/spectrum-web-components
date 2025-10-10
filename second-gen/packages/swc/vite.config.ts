@@ -87,6 +87,13 @@ export default defineConfig({
         emptyOutDir: true,
         outDir: 'dist',
     },
+    resolve: {
+        // Needed for Storybook to work
+        alias: {
+            '@swc/core': resolve(__dirname, '../core'),
+            '@swc/components': resolve(__dirname, './components'),
+        },
+    },
     esbuild: {
         target: 'es2022',
     },
