@@ -34,7 +34,7 @@ export declare class FieldLabelMixinInterface {
     sideAligned: 'start' | 'end';
     slotHasContent: boolean;
     manageTextObservedSlot(): void;
-    public renderFieldLabel(fieldId: string): TemplateResult;
+    public renderFieldLabel(fieldId?: string): TemplateResult;
 }
 
 /**
