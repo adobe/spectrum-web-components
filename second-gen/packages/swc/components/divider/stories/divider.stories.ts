@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -130,13 +129,13 @@ export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
     },
-    render: (args: Record<string, unknown>) =>
-        STATIC_CONTAINER(
-            DIVIDER_VALID_SIZES.map((size) =>
+    render: (args: Record<string, unknown>) => html`
+        <div style="display: flex; gap: 24px; align-items: center;">
+            ${DIVIDER_VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
-            ),
-            args['static-color'] as string
-        ),
+            )}
+        </div>
+    `,
     tags: ['!dev'],
 };
 
@@ -144,39 +143,12 @@ export const StaticWhite: Story = {
     args: {
         'static-color': 'white',
     },
-    render: (args: Record<string, unknown>) =>
-        STATIC_CONTAINER(
-            DIVIDER_VALID_SIZES.map((size) =>
+    render: (args: Record<string, unknown>) => html`
+        <div style="display: flex; gap: 24px; align-items: center;">
+            ${DIVIDER_VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
-            ),
-            args['static-color'] as string
-        ),
+            )}
+        </div>
+    `,
     tags: ['!dev'],
 };
-
-/* @todo this pattern could be repeated for other static backgrounds and might be pulled into a decorator */
-function STATIC_CONTAINER(
-    content: TemplateResult[],
-    staticColor?: string
-): TemplateResult {
-    let background = '';
-
-    if (staticColor === 'white') {
-        background = 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))';
-    } else if (staticColor === 'black') {
-        background =
-            'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))';
-    }
-
-    return html`<div
-        style=${styleMap({
-            background,
-            padding: '24px',
-            display: 'flex',
-            gap: '24px',
-            'align-items': 'center',
-        })}
-    >
-        ${content}
-    </div>`;
-}
