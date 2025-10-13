@@ -15,10 +15,6 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@swc/components/divider';
-import {
-    DIVIDER_STATIC_COLORS,
-    DIVIDER_VALID_SIZES,
-} from '@swc/core/components/divider';
 
 import '@swc/components/divider';
 
@@ -42,7 +38,7 @@ const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 argTypes['static-color'] = {
     ...argTypes['static-color'],
     control: { type: 'select' },
-    options: [undefined, ...DIVIDER_STATIC_COLORS],
+    options: [undefined, ...Divider.STATIC_COLORS],
 };
 
 /**
@@ -89,7 +85,7 @@ export const Default: Story = {
 export const Sizes: Story = {
     render: () => html`
         <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${DIVIDER_VALID_SIZES.map(
+            ${Divider.VALID_SIZES.map(
                 (size) => html`
                     <div>
                         <h3>
@@ -117,7 +113,7 @@ export const Vertical: Story = {
     },
     render: (args: Record<string, unknown>) => html`
         <div style="display: flex; flex-direction: row; gap: 48px;">
-            ${DIVIDER_VALID_SIZES.map((size) =>
+            ${Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
             )}
         </div>
@@ -134,7 +130,7 @@ export const StaticBlack: Story = {
     },
     render: (args: Record<string, unknown>) => html`
         <div style="display: flex; gap: 24px; align-items: center;">
-            ${DIVIDER_VALID_SIZES.map((size) =>
+            ${Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
             )}
         </div>
@@ -148,7 +144,7 @@ export const StaticWhite: Story = {
     },
     render: (args: Record<string, unknown>) => html`
         <div style="display: flex; gap: 24px; align-items: center;">
-            ${DIVIDER_VALID_SIZES.map((size) =>
+            ${Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
             )}
         </div>
