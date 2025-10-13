@@ -33,9 +33,21 @@ export class HoverController extends InteractionController {
 
     pointerentered = false;
 
+    overlayFocusedin = false;
+
     handleKeyup(event: KeyboardEvent): void {
-        if (event.code === 'Tab' || event.code === 'Escape') {
+        if (event.code === 'Tab') {
             this.open = true;
+        } else if (event.code === 'Escape') {
+            if (this.open) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.open = false;
+                // Return focus to trigger element
+                if (this.target) {
+                    this.target.focus();
+                }
+            }
         }
     }
 
@@ -57,8 +69,10 @@ export class HoverController extends InteractionController {
 
     handleTargetFocusout(): void {
         this.focusedin = false;
+        // Don't close immediately if pointer is over the content
         if (this.pointerentered) return;
-        this.open = false;
+        // Use delay to allow focus to move into overlay content
+        this.doFocusleave();
     }
 
     handleTargetPointerenter(): void {
@@ -86,6 +100,24 @@ export class HoverController extends InteractionController {
 
     handleHostPointerleave(): void {
         this.doPointerleave();
+    }
+
+    handleOverlayFocusin(): void {
+        this.overlayFocusedin = true;
+        // Clear any pending close timeout when focus enters overlay
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            this.hoverTimeout = undefined;
+        }
+    }
+
+    handleOverlayFocusout(): void {
+        this.overlayFocusedin = false;
+        // Don't close immediately if pointer is over the content or trigger has focus
+        if (this.pointerentered) return;
+        if (this.focusedin && this.target.matches(':focus-visible')) return;
+        // Use delay before closing
+        this.doFocusleave();
     }
 
     override prepareDescription(): void {
@@ -142,9 +174,31 @@ export class HoverController extends InteractionController {
         this.pointerentered = false;
         const triggerElement = this.target as HTMLElement;
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
+        // Don't close if focus is within overlay content
+        if (this.overlayFocusedin) return;
 
         this.hoverTimeout = setTimeout(() => {
             this.open = false;
+        }, HOVER_DELAY);
+    }
+
+    protected doFocusleave(): void {
+        // Clear any existing timeout
+        if (this.hoverTimeout) {
+            clearTimeout(this.hoverTimeout);
+            this.hoverTimeout = undefined;
+        }
+
+        // Use same delay as pointer interactions for consistency
+        this.hoverTimeout = setTimeout(() => {
+            // Only close if focus is not in trigger or overlay content
+            if (
+                !this.focusedin &&
+                !this.overlayFocusedin &&
+                !this.pointerentered
+            ) {
+                this.open = false;
+            }
         }, HOVER_DELAY);
     }
 
@@ -196,6 +250,21 @@ export class HoverController extends InteractionController {
         this.overlay.addEventListener(
             'pointerleave',
             () => this.handleHostPointerleave(),
+            { signal }
+        );
+        this.overlay.addEventListener(
+            'focusin',
+            () => this.handleOverlayFocusin(),
+            { signal }
+        );
+        this.overlay.addEventListener(
+            'focusout',
+            () => this.handleOverlayFocusout(),
+            { signal }
+        );
+        this.overlay.addEventListener(
+            'keyup',
+            (event) => this.handleKeyup(event),
             { signal }
         );
     }

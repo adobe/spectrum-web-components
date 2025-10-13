@@ -13,7 +13,6 @@ import {
     elementUpdated,
     expect,
     html,
-    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -125,10 +124,11 @@ describe('Overlay Trigger - Hover', () => {
                     composed: true,
                 })
             );
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
-            await nextFrame();
+            await waitUntil(
+                () => tooltip.open === true,
+                'tooltip should open',
+                { timeout: 500 }
+            );
             expect(tooltip.open).to.be.true;
 
             button.dispatchEvent(
@@ -137,7 +137,7 @@ describe('Overlay Trigger - Hover', () => {
                     composed: true,
                 })
             );
-            await nextFrame();
+            await elementUpdated(tooltip);
 
             button.dispatchEvent(
                 new MouseEvent('pointerenter', {
@@ -145,7 +145,7 @@ describe('Overlay Trigger - Hover', () => {
                     composed: true,
                 })
             );
-            await nextFrame();
+            await elementUpdated(tooltip);
 
             tooltip.dispatchEvent(
                 new MouseEvent('pointerleave', {
@@ -153,7 +153,7 @@ describe('Overlay Trigger - Hover', () => {
                     composed: true,
                 })
             );
-            await nextFrame();
+            await elementUpdated(tooltip);
 
             button.dispatchEvent(
                 new MouseEvent('pointerenter', {
@@ -185,7 +185,7 @@ describe('Overlay Trigger - Hover', () => {
                     composed: true,
                 })
             );
-            await nextFrame();
+            await elementUpdated(tooltip);
             button.dispatchEvent(
                 new MouseEvent('pointerleave', {
                     relatedTarget: tooltip,
@@ -371,5 +371,293 @@ describe('Overlay Trigger - Hover', () => {
         await opened;
 
         expect(button3 === document.activeElement).to.be.true;
+    });
+    describe('keyboard navigation into hover content', () => {
+        it('keeps hover content open when tabbing into interactive overlay content', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger placement="bottom" triggered-by="hover">
+                    <sp-button slot="trigger">
+                        Hover trigger with interactive content
+                    </sp-button>
+                    <sp-popover slot="hover-content">
+                        <sp-button id="button-in-popover">
+                            Interactive button
+                        </sp-button>
+                    </sp-popover>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+            const buttonInPopover = el.querySelector(
+                '#button-in-popover'
+            ) as Button;
+
+            // Focus the trigger element
+            trigger.focus();
+            await elementUpdated(el);
+
+            // Wait for hover content to open
+            await waitUntil(
+                () => el.open === 'hover',
+                'hover content opens on focus',
+                { timeout: 500 }
+            );
+
+            // Hover content should open when trigger receives focus
+            expect(el.open).to.equal('hover');
+
+            // Tab into the popover content
+            await sendTabKey();
+            await elementUpdated(el);
+
+            // Wait for focus to move to button in popover
+            await waitUntil(
+                () =>
+                    buttonInPopover === document.activeElement ||
+                    buttonInPopover.contains(document.activeElement),
+                'focus moved to button in popover',
+                { timeout: 500 }
+            );
+
+            // Verify focus moved to button in popover
+            expect(
+                buttonInPopover === document.activeElement ||
+                    buttonInPopover.contains(document.activeElement)
+            ).to.be.true;
+
+            // Wait beyond the hover delay to ensure content stays open
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(el);
+
+            // Hover content should still be open
+            expect(el.open).to.equal('hover');
+        });
+
+        it('closes hover content after delay when tabbing out of both trigger and content', async () => {
+            const theme = await fixture<Theme>(html`
+                <sp-theme system="spectrum" scale="medium" color="light">
+                    <input id="before-trigger" />
+                    <overlay-trigger placement="bottom" triggered-by="hover">
+                        <sp-button slot="trigger">Hover trigger</sp-button>
+                        <sp-popover slot="hover-content">
+                            <sp-button id="button-in-popover">
+                                Interactive button
+                            </sp-button>
+                        </sp-popover>
+                    </overlay-trigger>
+                    <input id="after-trigger" />
+                </sp-theme>
+            `);
+            await elementUpdated(theme);
+
+            const el = theme.querySelector('overlay-trigger') as OverlayTrigger;
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+            const afterInput = theme.querySelector(
+                '#after-trigger'
+            ) as HTMLInputElement;
+
+            // Focus the trigger element
+            trigger.focus();
+            await elementUpdated(el);
+            await waitUntil(
+                () => el.open === 'hover',
+                'overlay should open on focus',
+                { timeout: 500 }
+            );
+
+            expect(el.open).to.equal('hover');
+
+            // Tab into the popover content
+            await sendTabKey();
+            await elementUpdated(el);
+
+            expect(el.open).to.equal('hover');
+
+            // Tab out of the popover content completely
+            await sendTabKey();
+            await elementUpdated(el);
+
+            // Wait for focus to move out completely
+            await waitUntil(
+                () => afterInput === document.activeElement,
+                'focus moved to input after overlay',
+                { timeout: 500 }
+            );
+
+            // Verify focus moved out
+            expect(afterInput === document.activeElement).to.be.true;
+
+            // Should still be open initially
+            expect(el.open).to.equal('hover');
+
+            // Wait for the hover delay
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(el);
+
+            // Now it should be closed
+            expect(el.open).to.be.undefined;
+        });
+
+        it('closes hover content on Escape and returns focus to trigger', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger placement="bottom" triggered-by="hover">
+                    <sp-button slot="trigger">Hover trigger</sp-button>
+                    <sp-popover slot="hover-content">
+                        <sp-button id="button-in-popover">
+                            Interactive button
+                        </sp-button>
+                    </sp-popover>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+            const buttonInPopover = el.querySelector(
+                '#button-in-popover'
+            ) as Button;
+
+            // Focus the trigger element
+            trigger.focus();
+            await elementUpdated(el);
+            await waitUntil(
+                () => el.open === 'hover',
+                'overlay should open on focus',
+                { timeout: 500 }
+            );
+
+            expect(el.open).to.equal('hover');
+
+            // Tab into the popover content
+            await sendTabKey();
+            await elementUpdated(el);
+
+            expect(el.open).to.equal('hover');
+
+            // Press Escape
+            const escapeEvent = new KeyboardEvent('keyup', {
+                code: 'Escape',
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            });
+            buttonInPopover.dispatchEvent(escapeEvent);
+            await elementUpdated(el);
+
+            // Wait for hover content to close
+            await waitUntil(
+                () => el.open === undefined,
+                'hover content closes on Escape',
+                { timeout: 500 }
+            );
+
+            // Hover content should be closed
+            expect(el.open).to.be.undefined;
+
+            // Focus should return to trigger
+            expect(
+                trigger === document.activeElement ||
+                    trigger.shadowRoot?.activeElement
+            ).to.exist;
+        });
+
+        it('allows keyboard navigation through multiple interactive elements in hover content', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger placement="bottom" triggered-by="hover">
+                    <sp-button slot="trigger">Hover trigger</sp-button>
+                    <sp-popover slot="hover-content">
+                        <sp-button id="button-1">Button 1</sp-button>
+                        <sp-button id="button-2">Button 2</sp-button>
+                        <sp-button id="button-3">Button 3</sp-button>
+                    </sp-popover>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+
+            // Focus the trigger element
+            trigger.focus();
+            await elementUpdated(el);
+
+            // Wait for hover content to open
+            await waitUntil(
+                () => el.open === 'hover',
+                'hover content opens on focus',
+                { timeout: 500 }
+            );
+
+            expect(el.open).to.equal('hover');
+
+            // Tab through all buttons in popover
+            await sendTabKey();
+            await elementUpdated(el);
+            expect(el.open).to.equal('hover');
+
+            await sendTabKey();
+            await elementUpdated(el);
+            expect(el.open).to.equal('hover');
+
+            await sendTabKey();
+            await elementUpdated(el);
+            expect(el.open).to.equal('hover');
+
+            // Content should remain open while navigating through interactive elements
+            expect(el.open).to.equal('hover');
+        });
+
+        it('keeps hover content open when mouse enters after keyboard focus', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger placement="bottom" triggered-by="hover">
+                    <sp-button slot="trigger">Hover trigger</sp-button>
+                    <sp-popover slot="hover-content">
+                        <sp-button id="button-in-popover">
+                            Interactive button
+                        </sp-button>
+                    </sp-popover>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+
+            // Focus the trigger element with keyboard
+            trigger.focus();
+            await elementUpdated(el);
+
+            // Wait for hover content to open
+            await waitUntil(
+                () => el.open === 'hover',
+                'hover content opens on focus',
+                { timeout: 500 }
+            );
+
+            expect(el.open).to.equal('hover');
+
+            // Tab into the popover content
+            await sendTabKey();
+            await elementUpdated(el);
+
+            expect(el.open).to.equal('hover');
+
+            // Mouse enters the trigger
+            trigger.dispatchEvent(
+                new MouseEvent('pointerenter', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            // Content should still be open
+            expect(el.open).to.equal('hover');
+
+            // Tab out of popover
+            await sendTabKey();
+            await elementUpdated(el);
+
+            // Should still be open due to pointer interaction
+            expect(el.open).to.equal('hover');
+        });
     });
 });
