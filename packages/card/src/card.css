@@ -58,7 +58,10 @@ slot[name="description"] {
 
 :host(:not([variant="gallery"])) #preview ::slotted(*) {
     height: 100%;
-border-radius: calc(var(--spectrum-card-corner-radius) - var(--spectrum-focus-indicator-thickness));
+}
+
+:host([variant="quiet"][size="s"]) #preview ::slotted(*) {
+    border-radius: calc(var(--spectrum-card-corner-radius) - var(--spectrum-focus-indicator-thickness));
 }
 
 :host([horizontal]) #preview {
