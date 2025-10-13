@@ -1,38 +1,103 @@
 ## Description
 
-### ColorController
-
-The `ColorController` class is a comprehensive utility for managing and validating color values in various color spaces, including RGB, HSL, HSV, and Hex. It provides a robust set of methods to set, get, and validate colors, as well as convert between different color formats. This class is designed to be used within web components or other reactive elements to handle color-related interactions efficiently.
+The `ColorController` is a comprehensive [reactive controller](https://lit.dev/docs/composition/controllers/) for managing and validating color values in various color spaces, including RGB, HSL, HSV, and Hex. It provides robust methods to set, get, and validate colors, as well as convert between different color formats. This controller is designed to be used within web components or other reactive elements to handle color-related interactions efficiently.
 
 ### Features
 
-- **Color Management**: The `ColorController` allows you to manage color values in multiple formats, including RGB, HSL, HSV, and Hex.
-- **Validation**: It provides methods to validate color strings and ensure they conform to the expected formats.
-- **Conversion**: The class can convert colors between different color spaces, making it versatile for various applications.
-- **State Management**: It maintains the current color state and allows saving and restoring previous color values.
+- **Color management**: Manage color values in multiple formats, including RGB, HSL, HSV, and Hex
+- **Validation**: Validate color strings and ensure they conform to expected formats
+- **Conversion**: Convert colors between different color spaces for versatile applications
+- **State management**: Maintain current color state and save/restore previous color values
+- **Format preservation**: Automatically preserves the format of the original color input when returning values
+
+## API
+
+### Constructor
+
+```typescript
+new ColorController(host: ReactiveElement, options?: { manageAs?: string })
+```
+
+**Parameters:**
+
+- `host` (ReactiveElement): The host element that uses this controller
+- `options.manageAs` (string, optional): Specifies the color space to manage the color as (e.g., 'hsv', 'hsl', 'srgb')
 
 ### Properties
 
-- **`color`**: Gets or sets the current color value. The color can be provided in various formats, including strings, objects, or instances of the `Color` class.
-- **`colorValue`**: Gets the color value in various formats based on the original color input.
-- **`hue`**: Gets or sets the hue value of the current color.
+#### `color`
+
+- **Type**: `Color`
+- **Description**: Gets or sets the current color value. The color can be provided in various formats, including strings, objects, or instances of the `Color` class from [Color.js](https://colorjs.io/).
+- **Settable**: Yes
+
+#### `colorValue`
+
+- **Type**: `ColorTypes`
+- **Description**: Gets the color value in the same format as the original color input. This preserves the format you initially set (e.g., if you set an HSL string, you'll get an HSL string back).
+- **Settable**: No
+
+#### `colorOrigin`
+
+- **Type**: `ColorTypes`
+- **Description**: Gets or sets the original color value provided by the user, before any transformations.
+- **Settable**: Yes
+
+#### `hue`
+
+- **Type**: `number`
+- **Description**: Gets or sets the hue value of the current color in HSL format (0-360 degrees).
+- **Settable**: Yes
 
 ### Methods
 
-- **`validateColorString(color: string): ColorValidationResult`**:  
-  Validates a color string and returns the validation result, including the color space, coordinates, alpha value, and validity.
+#### `validateColorString(color: string): ColorValidationResult`
 
-- **`getColor(format: string | ColorSpace): ColorObject`**:  
-  Converts the current color to the specified format. Throws an error if the format is not valid.
+Validates a color string and returns the validation result.
 
-- **`getHslString(): string`**:  
-  Returns the current color in HSL string format.
+**Parameters:**
 
-- **`savePreviousColor(): void`**:  
-  Saves the current color as the previous color.
+- `color` (string): The color string to validate
 
-- **`restorePreviousColor(): void`**:  
-  Restores the previous color.
+**Returns:** `ColorValidationResult` object with:
+
+- `spaceId` (string | null): The color space identifier ('srgb', 'hsl', or 'hsv')
+- `coords` (number[]): Array of numeric values representing the color coordinates
+- `alpha` (number): The alpha value of the color (0 to 1)
+- `isValid` (boolean): Whether the color string is valid
+
+**Supported formats:**
+
+- RGB: `rgb(r, g, b)`, `rgba(r, g, b, a)`, `rgb r g b`, `rgba r g b a`
+- HSL: `hsl(h, s, l)`, `hsla(h, s, l, a)`, `hsl h s l`, `hsla h s l a`
+- HSV: `hsv(h, s, v)`, `hsva(h, s, v, a)`, `hsv h s v`, `hsva h s v a`
+- HEX: `#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`
+
+#### `getColor(format: string | ColorSpace): ColorObject`
+
+Converts the current color to the specified format.
+
+**Parameters:**
+
+- `format` (string | ColorSpace): The desired color format ('srgb', 'hsva', 'hsv', 'hsl', 'hsla')
+
+**Returns:** `ColorObject` - The color object in the specified format
+
+**Throws:** Error if the format is not valid
+
+#### `getHslString(): string`
+
+Returns the current color in HSL string format.
+
+**Returns:** string - HSL representation of the current color
+
+#### `savePreviousColor(): void`
+
+Saves the current color as the previous color. Useful for implementing undo functionality or color comparison features.
+
+#### `restorePreviousColor(): void`
+
+Restores the previously saved color.
 
 ## Usage
 
@@ -49,18 +114,18 @@ Import the `ColorController` via:
 import {ColorController,} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 ```
 
-## Example
+## Examples
 
-```js
-import { LitElement } from 'lit';
-import {ColorController} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+### Basic usage
 
-class Host extends LitElement {
+```typescript
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
+class ColorPickerElement extends LitElement {
     /**
      * Gets the current color value from the color controller.
-     *
-     * @returns {ColorTypes} The current color value.
      */
     @property({ type: String })
     public get color(): ColorTypes {
@@ -69,65 +134,227 @@ class Host extends LitElement {
 
     /**
      * Sets the color for the color controller.
-     *
-     * @param {ColorTypes} color - The color to be set.
      */
     public set color(color: ColorTypes) {
         this.colorController.color = color;
     }
 
+    // Initialize the controller to manage colors in HSV color space
     private colorController = new ColorController(this, { manageAs: 'hsv' });
 
-
+    render() {
+        return html`
+            <div
+                style="background-color: ${this.color}"
+                role="img"
+                aria-label="Color preview: ${this.color}"
+            >
+                Current color: ${this.color}
+            </div>
+        `;
+    }
 }
 
+customElements.define('color-picker-element', ColorPickerElement);
 ```
 
-The color Controller could also be initialised in the constructor as shown below
+### Constructor initialization
 
-```js
+The color controller can also be initialized in the constructor:
+
+```typescript
 import { LitElement } from 'lit';
-import {ColorController} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 
-class Host extends LitElement {
-
-    /**
-     * Gets the current color value from the color controller.
-     *
-     * @returns {ColorTypes} The current color value.
-     */
+class ColorPickerElement extends LitElement {
     @property({ type: String })
     public get color(): ColorTypes {
         return this.colorController.colorValue;
     }
 
-    /**
-     * Sets the color for the color controller.
-     *
-     * @param {ColorTypes} color - The color to be set.
-     */
     public set color(color: ColorTypes) {
         this.colorController.color = color;
     }
 
-    private colorController: ColorController; ;
+    private colorController: ColorController;
 
     constructor() {
         super();
         this.colorController = new ColorController(this, { manageAs: 'hsv' });
     }
-
 }
 ```
 
-## Supported Color Formats
+### Color validation
+
+Validate color strings before using them:
+
+```typescript
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+
+class ColorInputElement extends LitElement {
+    private colorController = new ColorController(this);
+
+    handleColorInput(event: InputEvent) {
+        const input = event.target as HTMLInputElement;
+        const validation = this.colorController.validateColorString(
+            input.value
+        );
+
+        if (validation.isValid) {
+            this.colorController.color = input.value;
+            // Announce successful color change for screen readers
+            this.setAttribute('aria-live', 'polite');
+            this.setAttribute('aria-label', `Color changed to ${input.value}`);
+        } else {
+            // Provide error feedback
+            input.setAttribute('aria-invalid', 'true');
+            input.setAttribute('aria-describedby', 'color-error');
+        }
+    }
+
+    render() {
+        return html`
+            <label for="color-input">Choose a color</label>
+            <input
+                id="color-input"
+                type="text"
+                @input=${this.handleColorInput}
+                aria-describedby="color-help"
+            />
+            <span id="color-help">
+                Enter a color in hex, RGB, HSL, or HSV format
+            </span>
+            <span id="color-error" role="alert"></span>
+        `;
+    }
+}
+```
+
+### Usage with color components
+
+Example of using `ColorController` within a color picker that works with other Spectrum Web Components:
+
+```typescript
+import { LitElement, html } from 'lit';
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/color-area/sp-color-area.js';
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
+
+class CompleteColorPicker extends LitElement {
+    private colorController = new ColorController(this, { manageAs: 'hsv' });
+
+    @property({ type: String })
+    public get color(): ColorTypes {
+        return this.colorController.colorValue;
+    }
+
+    public set color(color: ColorTypes) {
+        const oldColor = this.color;
+        this.colorController.color = color;
+        this.requestUpdate('color', oldColor);
+    }
+
+    handleColorChange(event: Event) {
+        const target = event.target as any;
+        this.color = target.color;
+    }
+
+    render() {
+        return html`
+            <div role="group" aria-labelledby="picker-label">
+                <sp-field-label id="picker-label" for="color-area">
+                    Color picker
+                </sp-field-label>
+                <sp-help-text>
+                    Choose a color from the picker or enter a value manually
+                </sp-help-text>
+
+                <sp-color-area
+                    id="color-area"
+                    .color=${this.color}
+                    @change=${this.handleColorChange}
+                ></sp-color-area>
+
+                <sp-color-slider
+                    .color=${this.color}
+                    @change=${this.handleColorChange}
+                    aria-label="Hue slider"
+                ></sp-color-slider>
+            </div>
+        `;
+    }
+}
+```
+
+### Saving and restoring colors
+
+Implement undo functionality using `savePreviousColor` and `restorePreviousColor`:
+
+```typescript
+import { LitElement, html } from 'lit';
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+import '@spectrum-web-components/button/sp-button.js';
+
+class ColorPickerWithUndo extends LitElement {
+    private colorController = new ColorController(this, { manageAs: 'hsv' });
+
+    @property({ type: String })
+    public get color(): ColorTypes {
+        return this.colorController.colorValue;
+    }
+
+    public set color(color: ColorTypes) {
+        // Save the current color before changing
+        this.colorController.savePreviousColor();
+        this.colorController.color = color;
+    }
+
+    handleUndo() {
+        this.colorController.restorePreviousColor();
+        this.requestUpdate();
+        // Announce undo action for screen readers
+        this.dispatchEvent(
+            new CustomEvent('color-restored', {
+                detail: { color: this.color },
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
+    render() {
+        return html`
+            <div>
+                <input
+                    type="color"
+                    .value=${this.color}
+                    @change=${(e: Event) =>
+                        (this.color = (e.target as HTMLInputElement).value)}
+                    aria-label="Color picker"
+                />
+                <sp-button
+                    @click=${this.handleUndo}
+                    aria-label="Undo color change"
+                >
+                    Undo
+                </sp-button>
+            </div>
+        `;
+    }
+}
+```
+
+## Supported color formats
 
 The `ColorController` supports a wide range of color formats for input and output:
 
 <sp-table>
     <sp-table-head>
         <sp-table-head-cell>Format</sp-table-head-cell>
-        <sp-table-head-cell>Example Values</sp-table-head-cell>
+        <sp-table-head-cell>Example values</sp-table-head-cell>
         <sp-table-head-cell>Description</sp-table-head-cell>
     </sp-table-head>
     <sp-table-body>
@@ -188,4 +415,66 @@ The `ColorController` supports a wide range of color formats for input and outpu
         </sp-table-row>
     </sp-table-body>
 </sp-table>
-```
+
+## Accessibility
+
+When implementing color pickers or other color-related UI with the `ColorController`, consider these accessibility best practices:
+
+### Color perception
+
+- **Never rely on color alone** to convey information. Always provide alternative text descriptions or patterns.
+- **Provide text alternatives** for color values (e.g., "red", "dark blue", "#FF0000") that are announced by screen readers.
+- Use **ARIA labels** (`aria-label` or `aria-labelledby`) to describe the purpose of color controls.
+
+### Screen reader support
+
+- Announce color changes with `aria-live` regions when colors update dynamically.
+- Provide meaningful labels for all interactive color controls.
+- Include instructions in `aria-describedby` for how to use color inputs.
+
+### Keyboard accessibility
+
+When building color pickers with this controller:
+
+- Ensure all color selection methods are keyboard accessible.
+- Provide visible focus indicators for all interactive elements.
+- Consider implementing keyboard shortcuts for common actions (e.g., arrow keys for fine-tuning).
+
+### Error handling
+
+- Use `aria-invalid` and `aria-describedby` to communicate validation errors.
+- Provide clear error messages when color values are invalid.
+
+### Color contrast
+
+When using colors selected via this controller for text or UI elements, ensure they meet [WCAG 2.1 Level AA contrast requirements](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html):
+
+- **Normal text**: 4.5:1 contrast ratio
+- **Large text** (18pt+ or 14pt+ bold): 3:1 contrast ratio
+- **UI components and graphics**: 3:1 contrast ratio
+
+### References
+
+- [Web Content Accessibility Guidelines (WCAG) 2.1](https://www.w3.org/WAI/WCAG21/Understanding/)
+- [Adobe Accessibility Guidelines](https://www.adobe.com/accessibility/products/spectrum.html)
+- [MDN: Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+
+## Events
+
+The `ColorController` doesn't dispatch custom events directly. Instead, it calls `requestUpdate()` on the host element when the color changes, triggering the host's reactive update cycle. The host element is responsible for dispatching any custom events as needed.
+
+## Related components
+
+The `ColorController` is used by these Spectrum Web Components:
+
+- [`<sp-color-area>`](../../packages/color-area/) - Two-dimensional color picker
+- [`<sp-color-field>`](../../packages/color-field/) - Text input for color values
+- [`<sp-color-slider>`](../../packages/color-slider/) - Slider for selecting color channel values
+- [`<sp-color-wheel>`](../../packages/color-wheel/) - Circular hue selector
+- [`<sp-swatch>`](../../packages/swatch/) - Color preview display
+
+## Resources
+
+- [Lit Reactive Controllers](https://lit.dev/docs/composition/controllers/) - Learn more about reactive controllers
+- [Color.js](https://colorjs.io/) - The underlying color manipulation library
+- [CSS Color Module Level 4](https://www.w3.org/TR/css-color-4/) - Specification for CSS color formats
