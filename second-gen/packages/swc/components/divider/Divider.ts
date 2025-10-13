@@ -30,7 +30,7 @@ function capitalize(str?: string): string {
  */
 export class Divider extends DividerBase {
     // ────────────────────
-    //     API OVERRIDES
+    //     RENDERING & STYLING
     // ────────────────────
 
     public static override styles: CSSResultArray = [styles];
