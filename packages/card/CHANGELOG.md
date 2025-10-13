@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399)]:
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/checkbox@1.9.0
+    - @spectrum-web-components/popover@1.9.0
+    - @spectrum-web-components/asset@1.9.0
+    - @spectrum-web-components/divider@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+    - @spectrum-web-components/styles@1.9.0
+
 ## 1.8.0
 
 ### Minor Changes

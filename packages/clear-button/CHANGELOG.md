@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.9.0
+
 ## 1.8.0
 
 ### Minor Changes
@@ -7,12 +14,10 @@
 - [#5320](https://github.com/adobe/spectrum-web-components/pull/5320) [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba) Thanks [@renovate](https://github.com/apps/renovate)! - Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
 
     This update spans the following additional packages:
-
     - @spectrum-web-components/button
     - @spectrum-web-components/styles
 
     As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
-
     - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
     - `disabled` - when set to true, the button will be rendered as a disabled button.
     - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
