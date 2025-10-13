@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { DIVIDER_STATIC_COLORS } from './Divider.consts';
+import type { ElementSize } from '@swc/core/shared/base';
+
+export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
+export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
 
 export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
