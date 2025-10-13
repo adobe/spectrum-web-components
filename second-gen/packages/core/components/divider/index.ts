@@ -10,4 +10,5 @@
  * governing permissions and limitations under the License.
  */
 export * from './Divider.base';
+export * from './Divider.consts';
 export * from './Divider.types';

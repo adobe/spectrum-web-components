@@ -15,7 +15,8 @@ import { property } from 'lit/decorators.js';
 
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 
-import { DIVIDER_VALID_SIZES, DividerStaticColor } from './Divider.types';
+import { DIVIDER_VALID_SIZES } from './Divider.consts';
+import type { DividerStaticColor } from './Divider.types';
 
 /**
  * @element swc-divider
