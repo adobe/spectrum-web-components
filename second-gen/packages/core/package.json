@@ -1,6 +1,9 @@
 {
-    "name": "@swc/core",
+    "name": "@spectrum-web-components/core-next",
     "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "Abstract base classes for Spectrum Web Components",
     "license": "Apache-2.0",
     "author": "Adobe",

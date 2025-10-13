@@ -15,7 +15,7 @@ import {
     html,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { StatusLightBase } from '@swc/core/components/status-light';
+import { StatusLightBase } from '@spectrum-web-components/core-next/components/status-light';
 import statusLightStyles from './status-light.css.js';
 
 /**

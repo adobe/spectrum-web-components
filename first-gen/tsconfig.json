@@ -16,7 +16,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "paths": {
-            "@swc/*": ["../second-gen/packages/*/dist"]
+            "@spectrum-web-components/*-next": ["../second-gen/packages/*/dist"]
         },
         "resolveJsonModule": true,
         "rootDir": ".",

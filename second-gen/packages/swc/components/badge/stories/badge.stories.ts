@@ -15,9 +15,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Badge } from '@swc/components/badge';
+import { Badge } from '@spectrum-web-components/components-next/badge';
 
-import '@swc/components/badge';
+import '@spectrum-web-components/components-next/badge';
 
 // ────────────────
 //    METADATA

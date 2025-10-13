@@ -16,12 +16,12 @@
     },
     "type": "module",
     "scripts": {
-        "build": "yarn workspaces foreach --from '@swc/*' run build",
-        "clean": "yarn workspaces foreach --from '@swc/*' run clean",
+        "build": "yarn workspaces foreach --from '@spectrum-web-components/*-next' run build",
+        "clean": "yarn workspaces foreach --from '@spectrum-web-components/*-next' run clean",
         "lint": "eslint . --ext .ts,.js,.json",
-        "storybook": "yarn workspace @swc/components storybook",
-        "storybook:build": "yarn workspace @swc/components storybook:build",
-        "test": "yarn workspace @swc/components test"
+        "storybook": "yarn workspace @spectrum-web-components/components-next storybook",
+        "storybook:build": "yarn workspace @spectrum-web-components/components-next storybook:build",
+        "test": "yarn workspace @spectrum-web-components/components-next test"
     },
     "workspaces": [
         "packages/*"

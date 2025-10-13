@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { DividerBase } from '@swc/core/components/divider';
+import { DividerBase } from '@spectrum-web-components/core-next/components/divider';
 
 import styles from './divider.css';
 

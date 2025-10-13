@@ -13,9 +13,9 @@
 import { html } from 'lit';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import type { Badge } from '@swc/components/badge';
+import type { Badge } from '@spectrum-web-components/components-next/badge';
 
-import '@swc/components/badge';
+import '@spectrum-web-components/components-next/badge';
 
 import { fixture } from '../../../utils/test-utils.js';
 

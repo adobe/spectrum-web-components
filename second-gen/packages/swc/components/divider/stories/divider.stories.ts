@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import '@swc/components/divider';
+import '@spectrum-web-components/components-next/divider';
 
 const meta: Meta = {
     title: 'Divider',

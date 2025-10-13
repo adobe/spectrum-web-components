@@ -11,7 +11,7 @@
  */
 import { html, TemplateResult } from 'lit';
 
-import '@swc/components/status-light';
+import '@spectrum-web-components/components-next/status-light';
 
 export default {
     component: 'swc-status-light',

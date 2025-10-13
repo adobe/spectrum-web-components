@@ -11,5 +11,6 @@
  */
 
 export * from './Base.js';
+export * from './define-element.js';
 export * from './sizedMixin.js';
 export * from 'lit';

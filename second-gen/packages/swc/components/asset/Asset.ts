@@ -12,7 +12,7 @@
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
 
-import { AssetBase } from '@swc/core/components/asset';
+import { AssetBase } from '@spectrum-web-components/core-next/components/asset';
 
 import styles from './asset.css';
 

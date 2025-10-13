@@ -5417,8 +5417,8 @@ __metadata:
   resolution: "@spectrum-web-components/badge@workspace:first-gen/packages/badge"
   dependencies:
     "@spectrum-web-components/base": "npm:1.8.0"
+    "@spectrum-web-components/core-next": "workspace:*"
     "@spectrum-web-components/shared": "npm:1.8.0"
-    "@swc/core": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -5686,6 +5686,43 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/components-next@workspace:second-gen/packages/swc":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/components-next@workspace:second-gen/packages/swc"
+  dependencies:
+    "@axe-core/playwright": "npm:^4.10.2"
+    "@custom-elements-manifest/analyzer": "npm:^0.10.5"
+    "@spectrum-web-components/core-next": "workspace:*"
+    "@storybook/addon-a11y": "npm:9.1.10"
+    "@storybook/addon-designs": "npm:10.0.2"
+    "@storybook/addon-docs": "npm:9.1.10"
+    "@storybook/addon-vitest": "npm:^9.1.10"
+    "@storybook/test-runner": "npm:^0.23.0"
+    "@storybook/web-components-vite": "npm:9.1.10"
+    "@types/react": "npm:^19"
+    "@types/react-dom": "npm:^19"
+    "@vitest/browser": "npm:^3.2.4"
+    "@vitest/coverage-v8": "npm:3.2.4"
+    "@vitest/ui": "npm:^3.2.4"
+    "@wc-toolkit/storybook-helpers": "npm:^9.0.1"
+    autoprefixer: "npm:^10.4.21"
+    glob: "npm:^11.0.0"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    playwright: "npm:^1.55.0"
+    postcss: "npm:^8.5.6"
+    postcss-preset-env: "npm:^10.3.1"
+    react: "npm:^19.1.1"
+    react-dom: "npm:^19.1.1"
+    rimraf: "npm:^6.0.1"
+    storybook: "npm:^9.1.10"
+    typescript: "npm:^5.3.3"
+    vite: "npm:^7.1.3"
+    vite-plugin-dts: "npm:^4.3.0"
+    vite-plugin-lit-css: "npm:^2.2.1"
+    vitest: "npm:^3.2.4"
+  languageName: unknown
+  linkType: soft
+
 "@spectrum-web-components/contextual-help@npm:1.8.0, @spectrum-web-components/contextual-help@workspace:first-gen/packages/contextual-help":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/contextual-help@workspace:first-gen/packages/contextual-help"
@@ -5697,6 +5734,19 @@ __metadata:
     "@spectrum-web-components/overlay": "npm:1.8.0"
     "@spectrum-web-components/popover": "npm:1.8.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.8.0"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/core-next@workspace:*, @spectrum-web-components/core-next@workspace:second-gen/packages/core":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/core-next@workspace:second-gen/packages/core"
+  dependencies:
+    glob: "npm:^11.0.0"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    rimraf: "npm:^6.0.1"
+    typescript: "npm:^5.3.3"
+    vite: "npm:^7.1.3"
+    vite-plugin-dts: "npm:^4.3.0"
   languageName: unknown
   linkType: soft
 
@@ -5760,7 +5810,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:first-gen/packages/divider"
   dependencies:
-    "@swc/core": "workspace:*"
+    "@spectrum-web-components/base": "npm:1.8.0"
+    "@spectrum-web-components/core-next": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -7192,43 +7243,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/components@workspace:second-gen/packages/swc":
-  version: 0.0.0-use.local
-  resolution: "@swc/components@workspace:second-gen/packages/swc"
-  dependencies:
-    "@axe-core/playwright": "npm:^4.10.2"
-    "@custom-elements-manifest/analyzer": "npm:^0.10.5"
-    "@storybook/addon-a11y": "npm:9.1.10"
-    "@storybook/addon-designs": "npm:10.0.2"
-    "@storybook/addon-docs": "npm:9.1.10"
-    "@storybook/addon-vitest": "npm:^9.1.10"
-    "@storybook/test-runner": "npm:^0.23.0"
-    "@storybook/web-components-vite": "npm:9.1.10"
-    "@swc/core": "workspace:*"
-    "@types/react": "npm:^19"
-    "@types/react-dom": "npm:^19"
-    "@vitest/browser": "npm:^3.2.4"
-    "@vitest/coverage-v8": "npm:3.2.4"
-    "@vitest/ui": "npm:^3.2.4"
-    "@wc-toolkit/storybook-helpers": "npm:^9.0.1"
-    autoprefixer: "npm:^10.4.21"
-    glob: "npm:^11.0.0"
-    lit: "npm:^2.5.0 || ^3.1.3"
-    playwright: "npm:^1.55.0"
-    postcss: "npm:^8.5.6"
-    postcss-preset-env: "npm:^10.3.1"
-    react: "npm:^19.1.1"
-    react-dom: "npm:^19.1.1"
-    rimraf: "npm:^6.0.1"
-    storybook: "npm:^9.1.10"
-    typescript: "npm:^5.3.3"
-    vite: "npm:^7.1.3"
-    vite-plugin-dts: "npm:^4.3.0"
-    vite-plugin-lit-css: "npm:^2.2.1"
-    vitest: "npm:^3.2.4"
-  languageName: unknown
-  linkType: soft
-
 "@swc/core-darwin-arm64@npm:1.13.20":
   version: 1.13.20
   resolution: "@swc/core-darwin-arm64@npm:1.13.20"
@@ -7344,19 +7358,6 @@ __metadata:
   checksum: 10c0/ef9ed965f20fe8331ef6b279b30ae2421ec9cd4105cfc0ac4645ae716844dfa9998162b132abbd6e8ccfb91deb263861792cf815fdcdcb7a011384e3505e0532
   languageName: node
   linkType: hard
-
-"@swc/core@workspace:*, @swc/core@workspace:second-gen/packages/core":
-  version: 0.0.0-use.local
-  resolution: "@swc/core@workspace:second-gen/packages/core"
-  dependencies:
-    glob: "npm:^11.0.0"
-    lit: "npm:^2.5.0 || ^3.1.3"
-    rimraf: "npm:^6.0.1"
-    typescript: "npm:^5.3.3"
-    vite: "npm:^7.1.3"
-    vite-plugin-dts: "npm:^4.3.0"
-  languageName: unknown
-  linkType: soft
 
 "@swc/counter@npm:^0.1.3":
   version: 0.1.3
