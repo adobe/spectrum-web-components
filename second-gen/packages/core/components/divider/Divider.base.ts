@@ -37,25 +37,13 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
 
     /**
      * The static color variant to use for the divider.
+     *
+     * @todo Add runtime validation separately. When implementing,
+     * access STATIC_COLORS from this.constructor.STATIC_COLORS to ensure
+     * correct values are used.
      */
     @property({ reflect: true, attribute: 'static-color' })
-    public get staticColor(): DividerStaticColor | undefined {
-        return this._staticColor;
-    }
-
-    public set staticColor(value: DividerStaticColor | undefined) {
-        if (
-            value != null &&
-            !(DIVIDER_STATIC_COLORS as readonly string[]).includes(value)
-        ) {
-            // Silently ignore invalid values
-            this._staticColor = undefined;
-            return;
-        }
-        this._staticColor = value;
-    }
-
-    private _staticColor?: DividerStaticColor;
+    public staticColor?: DividerStaticColor;
 
     protected override firstUpdated(changed: PropertyValues<this>): void {
         super.firstUpdated(changed);
