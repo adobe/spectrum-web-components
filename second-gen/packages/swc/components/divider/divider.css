@@ -37,69 +37,47 @@
 /* static white variant colors */
 .spectrum-Divider--staticWhite {
     --spectrum-divider-background-color: var(--spectrum-transparent-white-200);
+}
 
-    &.spectrum-Divider--sizeL {
-        --spectrum-divider-background-color: var(
-            --spectrum-transparent-white-800
-        );
-    }
+.spectrum-Divider--staticWhite.spectrum-Divider--sizeL {
+    --spectrum-divider-background-color: var(--spectrum-transparent-white-800);
 }
 
 /* static black variant colors */
 .spectrum-Divider--staticBlack {
     --spectrum-divider-background-color: var(--spectrum-transparent-black-200);
+}
 
-    &.spectrum-Divider--sizeL {
-        --spectrum-divider-background-color: var(
-            --spectrum-transparent-black-800
-        );
-    }
+.spectrum-Divider--staticBlack.spectrum-Divider--sizeL {
+    --spectrum-divider-background-color: var(--spectrum-transparent-black-800);
 }
 
 .spectrum-Divider {
-    block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    block-size: var(--spectrum-divider-thickness);
     inline-size: 100%;
 
     /* Show the overflow for hr in Edge and IE. */
     overflow: visible;
     border: none;
-    border-width: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    border-radius: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
+    border-width: var(--spectrum-divider-thickness);
+    border-radius: var(--spectrum-divider-thickness);
     background-color: var(
         --highcontrast-divider-background-color,
-        var(
-            --mod-divider-background-color,
-            var(--spectrum-divider-background-color)
-        )
+        var(--spectrum-divider-background-color)
     );
+}
 
-    &:not(&.spectrum-Divider--vertical) {
-        min-inline-size: var(
-            --mod-divider-inline-minimum-size,
-            var(--spectrum-divider-inline-minimum-size)
-        );
-    }
+.spectrum-Divider:not(.spectrum-Divider--vertical) {
+    min-inline-size: var(--spectrum-divider-inline-minimum-size);
 }
 
 /* vertical dividers */
 .spectrum-Divider--vertical {
-    inline-size: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    );
-    min-block-size: var(
-        --mod-divider-block-minimum-size,
-        var(--spectrum-divider-block-minimum-size)
-    );
-    margin-block: var(--mod-divider-vertical-margin, 0);
-    block-size: var(--mod-divider-vertical-height, 100%);
-    align-self: var(--mod-divider-vertical-align, flex-start);
+    inline-size: var(--spectrum-divider-thickness);
+    min-block-size: var(--spectrum-divider-block-minimum-size);
+    margin-block: 0;
+    block-size: 100%;
+    align-self: flex-start;
 }
 
 /* windows high contrast mode */
