@@ -7,7 +7,7 @@
         }
     ],
     "commit": false,
-    "fixed": [["@spectrum-web-components/*"]],
+    "fixed": [["@spectrum-web-components/!(core-next|components-next)"]],
     "linked": [],
     "access": "public",
     "baseBranch": "main",
