@@ -41,9 +41,9 @@ export class Divider extends DividerBase {
                 class=${classMap({
                     ['spectrum-Divider']: true,
                     [`spectrum-Divider--size${this.size?.toUpperCase()}`]:
-                        typeof this.size !== 'undefined',
+                        this.size != null,
                     [`spectrum-Divider--static${capitalize(this.staticColor)}`]:
-                        typeof this.staticColor !== 'undefined',
+                        this.staticColor != null,
                     [`spectrum-Divider--vertical`]: this.vertical,
                 })}
             ></div>
