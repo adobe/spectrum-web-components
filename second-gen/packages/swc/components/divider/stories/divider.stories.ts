@@ -15,7 +15,10 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@swc/components/divider';
-import { DIVIDER_VALID_SIZES } from '@swc/core/components/divider';
+import {
+    DIVIDER_STATIC_COLORS,
+    DIVIDER_VALID_SIZES,
+} from '@swc/core/components/divider';
 
 import '@swc/components/divider';
 
@@ -39,7 +42,7 @@ const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 argTypes['static-color'] = {
     ...argTypes['static-color'],
     control: { type: 'select' },
-    options: [undefined, ...Divider.STATIC_COLORS],
+    options: [undefined, ...DIVIDER_STATIC_COLORS],
 };
 
 /**

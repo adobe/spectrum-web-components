@@ -15,11 +15,7 @@ import { property } from 'lit/decorators.js';
 
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 
-import {
-    DIVIDER_STATIC_COLORS,
-    DIVIDER_VALID_SIZES,
-    DividerStaticColor,
-} from './Divider.types';
+import { DIVIDER_VALID_SIZES, DividerStaticColor } from './Divider.types';
 
 /**
  * @element swc-divider
@@ -28,7 +24,6 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
     validSizes: DIVIDER_VALID_SIZES,
     noDefaultSize: true,
 }) {
-    static readonly STATIC_COLORS = DIVIDER_STATIC_COLORS;
     /**
      * Whether the divider is vertical. If false, the divider is horizontal. The default is false.
      */
