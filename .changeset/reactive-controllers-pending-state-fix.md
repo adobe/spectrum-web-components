@@ -2,7 +2,7 @@
 '@spectrum-web-components/reactive-controllers': patch
 ---
 
-**Fixed** accessibility and caching in `PendingStateController`.
+- **Fixed**: Accessibility and caching in `PendingStateController`.
 
 - **Fixed**: Updated progress circle to use `role="presentation"` for better accessibility compliance
 - **Fixed**: Improved aria-label caching logic to better handle dynamic label changes

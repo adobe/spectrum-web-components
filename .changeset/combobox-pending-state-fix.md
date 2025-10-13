@@ -2,7 +2,7 @@
 '@spectrum-web-components/combobox': patch
 ---
 
-**Fixed** pending state handling and accessibility in `<sp-combobox>` component.
+- **Fixed**: Pending state handling and accessibility in `<sp-combobox>` component.
 
 - **Changed**: Removed dependency on `PendingStateController` and implemented inline pending state handling
 - **Fixed**: Updated aria-labelledby attribute ordering to improve screen reader experience (`label applied-label pending-label`)
