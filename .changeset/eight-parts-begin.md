@@ -2,4 +2,4 @@
 '@spectrum-web-components/alert-dialog': patch
 ---
 
-- **Fixed**: The divider color transparent only for spectrum 2 theme
+- **Fixed**: Make the divider color transparent only for Spectrum 2 theme
