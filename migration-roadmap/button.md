@@ -1,60 +1,102 @@
 # Button migration roadmap
 
+## Component specifications
+
+### CSS
+
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-Button`
+- `a.spectrum-Button`
+
+**Sizes:**
+
+- `.spectrum-Button--sizeS`
+- `.spectrum-Button--sizeL`
+- `.spectrum-Button--sizeXL`
+
+**Variants:**
+
+- `.spectrum-Button.spectrum-Button--accent`
+- `.spectrum-Button.spectrum-Button--primary`
+- `.spectrum-Button.spectrum-Button--secondary`
+- `.spectrum-Button.spectrum-Button--negative`
+- `.spectrum-Button.spectrum-Button--staticBlack`
+- `.spectrum-Button.spectrum-Button--staticWhite`
+
+**Treatments:**
+
+- `.spectrum-Button.spectrum-Button--outline`
+
+**Combined variants and treatments:**
+
+- `.spectrum-Button.spectrum-Button--primary.spectrum-Button--outline`
+- `.spectrum-Button.spectrum-Button--secondary.spectrum-Button--outline`
+- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--outline`
+- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--secondary`
+- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--secondary.spectrum-Button--outline`
+- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--outline`
+- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--secondary`
+- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--secondary.spectrum-Button--outline`
+
+**Default variant:**
+
+- `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite)`
+- `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite) .spectrum-Button-label`
+
+**Icon-only:**
+
+- `.spectrum-Button.spectrum-Button--iconOnly`
+- `.spectrum-Button.spectrum-Button--iconOnly .spectrum-Icon`
+- `.spectrum-Button--sizeS.spectrum-Button--iconOnly`
+
+**Text wrapping:**
+
+- `.spectrum-Button--noWrap .spectrum-Button-label`
+
+**Child elements:**
+
+- `.spectrum-Button-label`
+- `.spectrum-Button-label:empty`
 - `.spectrum-Button .spectrum-Button-label`
 - `.spectrum-Button .spectrum-Icon`
 - `.spectrum-Button .spectrum-Icon + .spectrum-Button-label`
 - `.spectrum-Button .spectrum-ProgressCircle`
-- `.spectrum-Button--noWrap .spectrum-Button-label`
-- `.spectrum-Button--sizeL`
-- `.spectrum-Button--sizeS`
-- `.spectrum-Button--sizeS.spectrum-Button--iconOnly`
-- `.spectrum-Button--sizeXL`
-- `.spectrum-Button-label`
-- `.spectrum-Button-label:empty`
+
+**Variant-specific child elements:**
+
+- `.spectrum-Button.spectrum-Button--accent .spectrum-Button-label`
+
+**States:**
+
 - `.spectrum-Button.is-disabled`
 - `.spectrum-Button.is-focused`
-- `.spectrum-Button.is-focused:after`
 - `.spectrum-Button.is-pending`
+- `.spectrum-Button:disabled`
+- `.spectrum-Button:hover`
+- `.spectrum-Button:active`
+- `.spectrum-Button:focus`
+- `.spectrum-Button:focus-visible`
+
+**State-specific styling:**
+
+- `.spectrum-Button.is-focused:after`
 - `.spectrum-Button.is-pending .spectrum-Button-label`
 - `.spectrum-Button.is-pending .spectrum-Icon`
 - `.spectrum-Button.is-pending .spectrum-ProgressCircle`
-- `.spectrum-Button.spectrum-Button--accent`
-- `.spectrum-Button.spectrum-Button--accent .spectrum-Button-label`
-- `.spectrum-Button.spectrum-Button--iconOnly`
-- `.spectrum-Button.spectrum-Button--iconOnly .spectrum-Icon`
-- `.spectrum-Button.spectrum-Button--negative`
-- `.spectrum-Button.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--primary`
-- `.spectrum-Button.spectrum-Button--primary.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--secondary`
-- `.spectrum-Button.spectrum-Button--secondary.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--staticBlack`
-- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--secondary`
-- `.spectrum-Button.spectrum-Button--staticBlack.spectrum-Button--secondary.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--staticWhite`
-- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--outline`
-- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--secondary`
-- `.spectrum-Button.spectrum-Button--staticWhite.spectrum-Button--secondary.spectrum-Button--outline`
-- `.spectrum-Button::-moz-focus-inner`
-- `.spectrum-Button:active`
-- `.spectrum-Button:after`
-- `.spectrum-Button:disabled`
-- `.spectrum-Button:focus`
-- `.spectrum-Button:focus-visible`
-- `.spectrum-Button:focus-visible:after`
-- `.spectrum-Button:hover`
-- `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite)`
-- `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite) .spectrum-Button-label`
 - `.spectrum-Button[pending]`
 - `.spectrum-Button[pending] .spectrum-Button-label`
 - `.spectrum-Button[pending] .spectrum-Icon`
 - `.spectrum-Button[pending] .spectrum-ProgressCircle`
-- `a.spectrum-Button`
+- `.spectrum-Button:focus-visible:after`
+
+**Focus ring:**
+
+- `.spectrum-Button:after`
+- `.spectrum-Button::-moz-focus-inner`
 
 </details>
 
@@ -65,28 +107,6 @@
 - `--mod-progress-circle-thickness`
 - `--mod-progress-circle-track-border-color`
 - `--mod-progress-circle-track-border-color-over-background`
-
-</details>
-
-<details>
-<summary>Attributes</summary>
-
-- `variant` (String) - The visual variant to apply to this button (`accent`, `primary`, `secondary`, `negative`, `white`, `black`)
-- `static-color` (String) - The static color variant to use for this button (`black`, `white`)
-- `treatment` (String) - The visual treatment to apply to this button (`fill`, `outline`)
-- `pending` (Boolean) - Use this property to set the button into a pending state
-- `pending-label` (String) - Label for pending state (default: "Pending")
-- `no-wrap` (Boolean) - Disables text wrapping within the button component's label
-- `size` (String) - Button size (`s`, `m`, `l`, `xl`)
-- `quiet` (Boolean, deprecated) - Style this button to be less obvious (use `treatment="outline"` instead)
-
-</details>
-
-<details>
-<summary>Slots</summary>
-
-- Default slot - Text label of the Button
-- `icon` - The icon to use for Button
 
 </details>
 
@@ -131,146 +151,277 @@
 - `--mod-button-max-inline-size`
 - `--mod-button-min-width`
 - `--mod-button-padding-label-to-icon`
-- `--mod-button-text-align`
-- `--mod-button-text-align-with-icon`
 - `--mod-button-top-to-icon`
 - `--mod-button-top-to-text`
 
 </details>
 
-## Visual Comparison
+### SWC
 
-**Legacy Component:**
+<details>
+<summary>Attributes</summary>
 
-<!-- Screenshot of legacy component will be added here -->
+**Size:**
 
-**Spectrum 2 Component:**
+- `size` (values: `s`, `m`, `l`, `xl`)
 
-<!-- Screenshot of Spectrum 2 component will be added here -->
+**Variants:**
 
-## DOM Structure Changes
+- `variant` (values: `accent`, `primary`, `secondary`, `negative`, `white`, `black`) - defaults to `accent`
+- `static-color` (values: `white`, `black`) - static color variant for use over backgrounds
 
-**Legacy (main branch):**
+**Treatment:**
 
-```html
-<button
-    class="spectrum-Button spectrum-Button--{variant} spectrum-Button--size{size} spectrum-Button--{treatment}"
->
-    <svg class="spectrum-Icon">[icon]</svg>
-    <span class="spectrum-Button-label">[label]</span>
-    <div
-        class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-ProgressCircle--sizeS"
-    >
-        [pending state]
-    </div>
-</button>
-```
+- `treatment` (values: `fill`, `outline`) - defaults to `fill`
+- `quiet` - boolean property that maps to `treatment` (when true, sets `treatment="outline"`)
 
-**Spectrum 2 (spectrum-two branch):**
+**Content and layout:**
 
-```html
-<button
-    class="spectrum-Button spectrum-Button--{variant} spectrum-Button--size{size} spectrum-Button--{treatment}"
->
-    <svg class="spectrum-Icon">[icon]</svg>
-    <span class="spectrum-Button-label">[label]</span>
-    <div
-        class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-ProgressCircle--sizeS"
-    >
-        [pending state]
-    </div>
-</button>
-```
+- `icon-only` - indicates button contains only an icon without visible label
+- `no-wrap` - prevents text wrapping within the button label
+- `label` - applies `aria-label` for accessibility (especially for icon-only buttons)
+
+**States:**
+
+- `disabled` - disables the button
+- `active` - indicates button is currently being activated (e.g., Space key pressed)
+- `pending` - places button in pending state with progress indicator
+- `pending-label` - custom label text for pending state
+
+**Link behavior:**
+
+- `href` - makes button behave as link (inherited from `LikeAnchor`)
+- `target` (values: `_blank`, `_parent`, `_self`, `_top`) - where to display the linked URL (inherited from `LikeAnchor`)
+- `download` - causes the browser to treat the linked URL as a download (inherited from `LikeAnchor`)
+- `referrerpolicy` - how much of the referrer to send when following the link (inherited from `LikeAnchor`)
+- `rel` - the relationship of the linked URL as space-separated link types (inherited from `LikeAnchor`)
+
+**Form behavior:**
+
+- `type` (values: `button`, `submit`, `reset`) - button type, defaults to `button`
+
+**Deprecated variant values:**
+
+- `variant="cta"` - deprecated, use `variant="accent"` instead
+- `variant="overBackground"` - deprecated, use `static-color="white"` with `treatment="outline"` instead
+- `variant="white"` - deprecated, use `static-color="white"` instead
+- `variant="black"` - deprecated, use `static-color="black"` instead
+
+</details>
+
+<details>
+<summary>Slots</summary>
+
+- Default slot (text label of the Button)
+- `icon` (The icon to use for Button)
+
+</details>
 
 ## Comparison
 
-| CSS selector                    | Attribute or slot             | Status           |
-| ------------------------------- | ----------------------------- | ---------------- |
-| `.spectrum-Button`              | Root element                  | Implemented      |
-| `.spectrum-Button--accent`      | `variant="accent"`            | Implemented      |
-| `.spectrum-Button--primary`     | `variant="primary"`           | Implemented      |
-| `.spectrum-Button--secondary`   | `variant="secondary"`         | Implemented      |
-| `.spectrum-Button--negative`    | `variant="negative"`          | Implemented      |
-| `.spectrum-Button--outline`     | `treatment="outline"`         | Implemented      |
-| `.spectrum-Button--sizeS`       | `size="s"`                    | Implemented      |
-| `.spectrum-Button--sizeL`       | `size="l"`                    | Implemented      |
-| `.spectrum-Button--sizeXL`      | `size="xl"`                   | Implemented      |
-| `.spectrum-Button--staticBlack` | `static-color="black"`        | Implemented      |
-| `.spectrum-Button--staticWhite` | `static-color="white"`        | Implemented      |
-| `.spectrum-Button--noWrap`      | `no-wrap` attribute           | Implemented      |
-| `.spectrum-Button--iconOnly`    | `hideLabel` (internal)        | Implemented      |
-| `.spectrum-Button-label`        | Default slot                  | Implemented      |
-| `.spectrum-Icon`                | `icon` slot                   | Implemented      |
-| `.spectrum-ProgressCircle`      | `pending` state               | Implemented      |
-| `.spectrum-Button.is-pending`   | `pending` attribute           | Implemented      |
-| `.spectrum-Button.is-disabled`  | `disabled` attribute          | Implemented      |
-| `.spectrum-Button.is-focused`   | Focus state                   | Implemented      |
-| `.spectrum-Button[pending]`     | `pending` attribute           | Implemented      |
-| `a.spectrum-Button`             | Link variant                  | Missing from WC  |
-| -                               | `pending-label` attribute     | Missing from CSS |
-| -                               | `quiet` property (deprecated) | Missing from CSS |
+### DOM structure changes
 
-## Key Structural Changes
+<details>
+<summary>Spectrum Web Components:</summary>
 
-**Element Hierarchy Changes:**
+```html
+<!-- Button content -->
+<slot name="icon"></slot>
+<!-- icon-only attribute is conditionally applied to icon slot when no label text is present -->
+<span id="label">
+    <slot></slot>
+</span>
 
-- No significant hierarchy changes between main and spectrum-two branches
-- Maintained consistent structure across versions
+<!-- Pending state (when pending=true) -->
+<!-- Rendered by PendingStateController -->
+<sp-progress-circle indeterminate></sp-progress-circle>
+```
 
-**Class Name Changes:**
+</details>
 
-- No major class name changes
-- Static color classes maintained (staticBlack, staticWhite)
+<details>
+<summary>Legacy (CSS main branch):</summary>
 
-**Attribute Changes:**
+```html
+<button
+    class="spectrum-Button spectrum-Button--fill spectrum-Button--accent spectrum-Button--sizeM"
+    disabled
+>
+    <!-- Icon (when iconName provided) -->
+    <svg class="spectrum-Icon">...</svg>
 
-- Added `pending` and `pending-label` attributes for loading states
-- Added `no-wrap` attribute for text overflow control
-- Added `static-color` attribute to replace variant-based static colors
-- Added `treatment` attribute to replace `quiet` property
+    <!-- Label (when label provided) -->
+    <span class="spectrum-Button-label">Label</span>
 
-**Slot/Content Changes:**
+    <!-- Icon can also appear after label when iconAfterLabel is true -->
 
-- Added dedicated `icon` slot for icon placement
-- Default slot remains for button label
+    <!-- Progress Circle (when isPending is true) -->
+    <div
+        class="spectrum-ProgressCircle spectrum-ProgressCircle--small    spectrum-ProgressCircle--indeterminate"
+    >
+        <!-- ProgressCircle internal structure -->
+    </div>
+</button>
+```
 
-**Migration Impact:**
+</details>
 
-- Static color variants (`white`, `black`) are being deprecated in favor of `static-color` attribute
-- `quiet` property is deprecated in favor of `treatment="outline"`
-- Better semantic structure with icon slot
+<details>
+<summary>Spectrum 2 (CSS spectrum-two branch):</summary>
 
-### Implementation Gaps
+```html
+<button
+    class="spectrum-Button spectrum-Button--fill spectrum-Button--accent spectrum-Button--sizeM"
+    disabled
+>
+    <!-- Icon (when iconName provided) -->
+    <svg class="spectrum-Icon">...</svg>
 
-**CSS Features Missing from Web Component:**
+    <!-- Label (when label provided) -->
+    <span class="spectrum-Button-label">Label</span>
 
-- Link variant support (`a.spectrum-Button`) - web component should support href attribute
+    <!-- Icon can also appear after label when iconAfterLabel is true -->
 
-**Web Component Features Missing from CSS:**
+    <!-- InfieldProgressCircle (when isPending is true) -->
+    <div
+        class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM"
+    >
+        <!-- InfieldProgressCircle internal structure -->
+    </div>
+</button>
+```
 
-- `pending-label` attribute support in CSS
-- `quiet` property (deprecated) - should be removed
+</details>
 
-**Features Being Deprecated/Removed:**
+<details>
+<summary>Diff: Legacy (CSS main) → Spectrum 2 (CSS spectrum-two)</summary>
 
-- `quiet` property - replaced by `treatment="outline"`
-- Static color variants (`white`, `black`) - replaced by `static-color` attribute
-- `cta` variant - replaced by `accent` variant
-- `overBackground` variant - replaced by `static-color="white"` with `treatment="outline"`
+```diff
+ <button
+   class="spectrum-Button spectrum-Button--fill spectrum-Button--accent spectrum-Button--sizeM"
+   disabled
+ >
+   <!-- Icon (when iconName provided) -->
+   <svg class="spectrum-Icon">...</svg>
 
-### Action Items for Web Component Maintainers
+   <!-- Label (when label provided) -->
+   <span class="spectrum-Button-label">Label</span>
 
-**Required Additions:**
+   <!-- Icon can also appear after label when iconAfterLabel is true -->
 
-- Link variant support - implement href attribute handling for anchor button functionality
+-  <!-- Progress Circle (when isPending is true) -->
+-  <div class="spectrum-ProgressCircle spectrum-ProgressCircle--sizeS spectrum-ProgressCircle--indeterminate">
+-    <!-- ProgressCircle internal structure -->
++  <!-- InfieldProgressCircle (when isPending is true) -->
++  <div class="spectrum-ProgressCircle spectrum-ProgressCircle--indeterminate spectrum-InfieldProgressCircle spectrum-InfieldProgressCircle--sizeM">
++    <!-- InfieldProgressCircle internal structure -->
+   </div>
+ </button>
+```
 
-**Required Removals:**
+</details>
 
-- Complete deprecation warnings for `quiet`, static color variants, and deprecated variant values
-- Remove deprecated properties in next major version
+### CSS => SWC mapping
 
-**Breaking Changes:**
+#### Sizes
 
-- Migration from deprecated variants requires updating component usage
-- Link button functionality needs implementation for href support
-- Migration guidance: Replace `quiet` with `treatment="outline"`, replace static color variants with `static-color` attribute
+| CSS selector                                        | Attribute or slot               | Status                                                                                                                  |
+| --------------------------------------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `.spectrum-Button`                                  | Base component (default size M) | Implemented                                                                                                             |
+| `.spectrum-Button--sizeS`                           | `size="s"`                      | Implemented                                                                                                             |
+| `.spectrum-Button--sizeL`                           | `size="l"`                      | Implemented                                                                                                             |
+| `.spectrum-Button--sizeXL`                          | `size="xl"`                     | Implemented                                                                                                             |
+| `.spectrum-Button--sizeS.spectrum-Button--iconOnly` | `size="s"` with icon only       | Implemented (this has a separate selector because the down state implementation is different for this than other sizes) |
+
+#### Variants and treatments
+
+| CSS selector                                                                                                                                                                                    | Attribute or slot                                                  | Status      |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------- |
+| `.spectrum-Button--accent`                                                                                                                                                                      | `variant="accent"`                                                 | Implemented |
+| `.spectrum-Button--primary`                                                                                                                                                                     | `variant="primary"`                                                | Implemented |
+| `.spectrum-Button--secondary`                                                                                                                                                                   | `variant="secondary"`                                              | Implemented |
+| `.spectrum-Button--negative`                                                                                                                                                                    | `variant="negative"`                                               | Implemented |
+| `.spectrum-Button--staticWhite`                                                                                                                                                                 | `static-color="white"`                                             | Implemented |
+| `.spectrum-Button--staticBlack`                                                                                                                                                                 | `static-color="black"`                                             | Implemented |
+| `.spectrum-Button--outline`                                                                                                                                                                     | `treatment="outline"`                                              | Implemented |
+| `.spectrum-Button--primary.spectrum-Button--outline`                                                                                                                                            | `variant="primary"` `treatment="outline"`                          | Implemented |
+| `.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                                                          | `variant="secondary"` `treatment="outline"`                        | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--outline`                                                                                                                                        | `static-color="black"` `treatment="outline"`                       | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--outline`                                                                                                                                        | `static-color="white"` `treatment="outline"`                       | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--secondary`                                                                                                                                      | `static-color="black"` `variant="secondary"`                       | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--secondary`                                                                                                                                      | `static-color="white"` `variant="secondary"`                       | Implemented |
+| `.spectrum-Button--staticBlack.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | `static-color="black"` `variant="secondary"` `treatment="outline"` | Implemented |
+| `.spectrum-Button--staticWhite.spectrum-Button--secondary.spectrum-Button--outline`                                                                                                             | `static-color="white"` `variant="secondary"` `treatment="outline"` | Implemented |
+| `.spectrum-Button--accent .spectrum-Button-label`                                                                                                                                               | Accent label styling                                               | Implemented |
+| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite)`                        | Default variant styling                                            | Implemented |
+| `.spectrum-Button:not(.spectrum-Button--primary, .spectrum-Button--negative, .spectrum-Button--secondary, .spectrum-Button--staticBlack, .spectrum-Button--staticWhite) .spectrum-Button-label` | Default label styling                                              | Implemented |
+
+#### States
+
+| CSS selector                   | Attribute or slot | Status      |
+| ------------------------------ | ----------------- | ----------- |
+| `.spectrum-Button.is-disabled` | `disabled`        | Implemented |
+| `.spectrum-Button:disabled`    | `disabled`        | Implemented |
+
+#### Pending state
+
+**Note:** The progress circle component will change from `ProgressCircle` to `InfieldProgressCircle` in Spectrum 2.
+
+| CSS selector                                           | Attribute or slot           | Status      |
+| ------------------------------------------------------ | --------------------------- | ----------- |
+| `.spectrum-Button.is-pending`                          | `pending`                   | Implemented |
+| `.spectrum-Button[pending]`                            | `pending` attribute         | Implemented |
+| `.spectrum-Button.is-pending .spectrum-Button-label`   | Pending state label styling | Implemented |
+| `.spectrum-Button.is-pending .spectrum-Icon`           | Pending state icon styling  | Implemented |
+| `.spectrum-Button.is-pending .spectrum-ProgressCircle` | Pending state progress      | Implemented |
+| `.spectrum-Button[pending] .spectrum-Button-label`     | Pending state label         | Implemented |
+| `.spectrum-Button[pending] .spectrum-Icon`             | Pending state icon          | Implemented |
+| `.spectrum-Button[pending] .spectrum-ProgressCircle`   | Pending progress circle     | Implemented |
+
+#### Content and layout
+
+| CSS selector                                               | Attribute or slot       | Status      |
+| ---------------------------------------------------------- | ----------------------- | ----------- |
+| `.spectrum-Button-label`                                   | Default slot            | Implemented |
+| `.spectrum-Button-label:empty`                             | Empty label handling    | Implemented |
+| `.spectrum-Button .spectrum-Icon`                          | `icon` slot             | Implemented |
+| `.spectrum-Button .spectrum-Icon + .spectrum-Button-label` | Icon + label spacing    | Implemented |
+| `.spectrum-Button .spectrum-ProgressCircle`                | Rendered when `pending` | Implemented |
+| `.spectrum-Button--iconOnly`                               | Icon slot without label | Implemented |
+| `.spectrum-Button--iconOnly .spectrum-Icon`                | Icon-only icon styling  | Implemented |
+| `.spectrum-Button--noWrap`                                 | `no-wrap`               | Implemented |
+| `.spectrum-Button--noWrap .spectrum-Button-label`          | Text wrapping control   | Implemented |
+| `a.spectrum-Button`                                        | `href` attribute        | Implemented |
+
+#### WC-only attributes (missing from CSS)
+
+| CSS selector | Attribute or slot          | Status                                             |
+| ------------ | -------------------------- | -------------------------------------------------- |
+|              | `quiet`                    | Missing from CSS (equivalent to outline treatment) |
+|              | `variant="cta"`            | Missing from CSS (deprecated)                      |
+|              | `variant="overBackground"` | Missing from CSS (deprecated)                      |
+|              | `variant="white"`          | Missing from CSS (deprecated)                      |
+|              | `variant="black"`          | Missing from CSS (deprecated)                      |
+
+## Summary of changes
+
+### CSS => SWC implementation gaps
+
+**Icon positioning** - CSS templates support an `iconAfterLabel` parameter to position icons after label text (trailing icon). SWC has a fixed DOM order where the icon slot always renders before the label, with no attribute or property to control icon positioning. Note: Icon-after-label is not present in the Spectrum design specifications, though there has been discussion about it within the design team. Check with the design team to confirm whether this feature is still needed.
+
+**Quiet** - A quiet property can be applied in SWC, but it applies the outline treatment to the button. If the outline treatment alone is sufficient, we might consider removing `quiet`.
+
+### CSS Spectrum 2 changes
+
+**Progress indicator component change:**
+
+- Legacy (main branch) uses `ProgressCircle` component with `size="s"` fixed size
+- Spectrum 2 (spectrum-two branch) uses `InfieldProgressCircle` component with dynamic size matching the button size
+- `InfieldProgressCircle` has a simpler DOM structure (single fill element instead of complex mask structure)
+- Spectrum 2 version passes `staticColor` to the progress indicator for proper theming
+
+## Resources
+
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/2600)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-button--docs)
+- [React](https://react-spectrum.adobe.com/s2/index.html?path=/docs/button--docs)
