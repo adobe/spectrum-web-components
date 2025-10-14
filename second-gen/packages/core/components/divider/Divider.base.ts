@@ -28,7 +28,12 @@ export abstract class DividerBase extends SizedMixin(SpectrumElement, {
     validSizes: DIVIDER_VALID_SIZES,
     noDefaultSize: true,
 }) {
-    static readonly STATIC_COLORS = DIVIDER_STATIC_COLORS;
+    /**
+     * @internal
+     *
+     * A readonly array of the valid static color variants for the divider.
+     */
+    static readonly STATIC_COLORS: readonly string[] = DIVIDER_STATIC_COLORS;
     /**
      * Whether the divider is vertical. If false, the divider is horizontal. The default is false.
      */
