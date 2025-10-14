@@ -23,6 +23,15 @@ export { Placement };
 
 export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
 
+// Constant array for runtime use (tests, validation, etc.)
+export const OVERLAY_TYPES = [
+    'auto',
+    'hint',
+    'manual',
+    'modal',
+    'page',
+] as const satisfies readonly OverlayTypes[];
+
 export type TriggerInteraction = 'click' | 'longpress' | 'hover';
 
 export type TriggerInteractions = OverlayTypes;

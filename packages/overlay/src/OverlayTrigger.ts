@@ -26,7 +26,7 @@ import type { Placement } from '@floating-ui/dom';
 
 import type { BeforetoggleOpenEvent } from './events.js';
 import type { Overlay } from './Overlay.js';
-import type { TriggerInteractions } from './overlay-types';
+import type { OverlayTypes } from './overlay-types';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
@@ -91,7 +91,7 @@ export class OverlayTrigger extends SpectrumElement {
     public placement?: Placement;
 
     @property()
-    public type?: TriggerInteractions;
+    public type?: OverlayTypes;
 
     @property({ type: Number })
     public offset = 6;
