@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Accessibility and caching in `PendingStateController`.
+    - **Fixed**: Updated progress circle to use `role="presentation"` for better accessibility compliance
+    - **Fixed**: Improved aria-label caching logic to better handle dynamic label changes
+    - **Added**: Documentation noting the controller is primarily used by `<sp-button>` component
+    - **Fixed**: Enhanced caching mechanism to preserve user-set aria-labels during pending states
+
+    These changes improve accessibility compliance and aria-label management for components using the pending state controller.
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/progress-circle@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
@@ -40,13 +55,11 @@
 ### Minor Changes
 
 - [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
-
     - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
     - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
     - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
 
     See the following APG examples for more information:
-
     - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
     - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 
