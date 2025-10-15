@@ -37,6 +37,7 @@ import {
     ignoreResizeObserverLoopError,
     mouseMoveAway,
     mouseMoveOver,
+    sendShiftTabKey,
     sendTabKey,
 } from '../../../test/testing-helpers.js';
 
@@ -372,6 +373,206 @@ describe('Overlay Trigger - Hover', () => {
 
         expect(button3 === document.activeElement).to.be.true;
     });
+    describe('nested overlays focus management', () => {
+        it('closes nested hover overlay without closing parent modal when focus leaves nested overlay', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger type="modal" triggered-by="click">
+                    <sp-button slot="trigger">Toggle Dialog</sp-button>
+                    <sp-dialog-wrapper
+                        slot="click-content"
+                        headline="Dialog with hover tooltips"
+                        size="s"
+                    >
+                        <overlay-trigger
+                            triggered-by="hover"
+                            id="tooltip-trigger-1"
+                        >
+                            <sp-button slot="trigger" id="button-1">
+                                Button with Tooltip 1
+                            </sp-button>
+                            <sp-tooltip slot="hover-content" id="tooltip-1">
+                                Tooltip content 1
+                            </sp-tooltip>
+                        </overlay-trigger>
+                        <overlay-trigger
+                            triggered-by="hover"
+                            id="tooltip-trigger-2"
+                        >
+                            <sp-button slot="trigger" id="button-2">
+                                Button with Tooltip 2
+                            </sp-button>
+                            <sp-tooltip slot="hover-content" id="tooltip-2">
+                                Tooltip content 2
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    </sp-dialog-wrapper>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const button = el.querySelector('sp-button') as Button;
+            const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
+            const button1 = dialog.querySelector('#button-1') as Button;
+            const button2 = dialog.querySelector('#button-2') as Button;
+            const tooltipTrigger1 = dialog.querySelector(
+                '#tooltip-trigger-1'
+            ) as OverlayTrigger;
+            const tooltipTrigger2 = dialog.querySelector(
+                '#tooltip-trigger-2'
+            ) as OverlayTrigger;
+
+            // Open the modal dialog
+            const opened = oneEvent(button, 'sp-opened');
+            button.dispatchEvent(new Event('click', { bubbles: true }));
+            await opened;
+
+            expect(el.open).to.equal('click');
+
+            // Focus button1 to open its tooltip
+            button1.focus();
+            await elementUpdated(tooltipTrigger1);
+            await waitUntil(
+                () => tooltipTrigger1.open === 'hover',
+                'tooltip 1 opens on focus',
+                { timeout: 500 }
+            );
+
+            expect(tooltipTrigger1.open).to.equal('hover');
+            expect(el.open).to.equal('click'); // Modal should still be open
+
+            // Tab to button2, which should close tooltip1 and open tooltip2
+            await sendTabKey();
+            await elementUpdated(tooltipTrigger1);
+            await elementUpdated(tooltipTrigger2);
+
+            // Wait for tooltip 2 to open
+            await waitUntil(
+                () => tooltipTrigger2.open === 'hover',
+                'tooltip 2 opens on focus',
+                { timeout: 500 }
+            );
+
+            // Verify button2 has focus
+            expect(
+                button2 === document.activeElement ||
+                    button2.contains(document.activeElement)
+            ).to.be.true;
+
+            // Wait for tooltip 1 to close (with delay)
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(tooltipTrigger1);
+
+            expect(tooltipTrigger2.open).to.equal('hover');
+            expect(tooltipTrigger1.open).to.be.undefined; // Tooltip 1 should be closed
+            expect(el.open).to.equal('click'); // Modal should still be open
+
+            // Shift+Tab back to button1
+            await sendShiftTabKey();
+            await elementUpdated(tooltipTrigger1);
+            await elementUpdated(tooltipTrigger2);
+
+            // Wait for tooltip 1 to open
+            await waitUntil(
+                () => tooltipTrigger1.open === 'hover',
+                'tooltip 1 opens on reverse focus',
+                { timeout: 500 }
+            );
+
+            // Verify button1 has focus again
+            expect(
+                button1 === document.activeElement ||
+                    button1.contains(document.activeElement)
+            ).to.be.true;
+
+            // Wait for tooltip 2 to close (with delay)
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(tooltipTrigger2);
+
+            expect(tooltipTrigger1.open).to.equal('hover');
+            expect(tooltipTrigger2.open).to.be.undefined; // Tooltip 2 should be closed
+            expect(el.open).to.equal('click'); // Modal should still be open
+        });
+
+        it('maintains parent modal open when nested hover overlay closes on pointer leave', async () => {
+            const el = await styledFixture<OverlayTrigger>(html`
+                <overlay-trigger type="modal" triggered-by="click">
+                    <sp-button slot="trigger">Toggle Dialog</sp-button>
+                    <sp-dialog-wrapper
+                        slot="click-content"
+                        headline="Dialog with hover content"
+                        size="s"
+                    >
+                        <overlay-trigger
+                            triggered-by="hover"
+                            id="popover-trigger"
+                        >
+                            <sp-button slot="trigger" id="button-with-popover">
+                                Button with Popover
+                            </sp-button>
+                            <sp-popover
+                                slot="hover-content"
+                                id="nested-popover"
+                            >
+                                <sp-button id="button-in-popover">
+                                    Interactive content
+                                </sp-button>
+                            </sp-popover>
+                        </overlay-trigger>
+                    </sp-dialog-wrapper>
+                </overlay-trigger>
+            `);
+            await elementUpdated(el);
+
+            const button = el.querySelector('sp-button') as Button;
+            const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
+            const buttonWithPopover = dialog.querySelector(
+                '#button-with-popover'
+            ) as Button;
+            const popoverTrigger = dialog.querySelector(
+                '#popover-trigger'
+            ) as OverlayTrigger;
+
+            // Open the modal dialog
+            const opened = oneEvent(button, 'sp-opened');
+            button.dispatchEvent(new Event('click', { bubbles: true }));
+            await opened;
+
+            expect(el.open).to.equal('click');
+
+            // Hover over the button to open popover
+            buttonWithPopover.dispatchEvent(
+                new MouseEvent('pointerenter', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(popoverTrigger);
+            await waitUntil(
+                () => popoverTrigger.open === 'hover',
+                'popover opens on hover',
+                { timeout: 500 }
+            );
+
+            expect(popoverTrigger.open).to.equal('hover');
+            expect(el.open).to.equal('click'); // Modal should still be open
+
+            // Move pointer away from button
+            buttonWithPopover.dispatchEvent(
+                new MouseEvent('pointerleave', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(popoverTrigger);
+
+            // Wait for hover delay
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(popoverTrigger);
+
+            expect(popoverTrigger.open).to.be.undefined; // Popover should be closed
+            expect(el.open).to.equal('click'); // Modal should still be open
+        });
+    });
     describe('keyboard navigation into hover content', () => {
         it('keeps hover content open when tabbing into interactive overlay content', async () => {
             const el = await styledFixture<OverlayTrigger>(html`
@@ -487,6 +688,87 @@ describe('Overlay Trigger - Hover', () => {
 
             // Verify focus moved out
             expect(afterInput === document.activeElement).to.be.true;
+
+            // Should still be open initially
+            expect(el.open).to.equal('hover');
+
+            // Wait for the hover delay
+            await new Promise((resolve) => setTimeout(resolve, 400));
+            await elementUpdated(el);
+
+            // Now it should be closed
+            expect(el.open).to.be.undefined;
+        });
+
+        it('closes hover content after delay when using Shift+Tab to exit overlay content backwards', async () => {
+            const theme = await fixture<Theme>(html`
+                <sp-theme system="spectrum" scale="medium" color="light">
+                    <input id="before-trigger" />
+                    <overlay-trigger placement="bottom" triggered-by="hover">
+                        <sp-button slot="trigger">Hover trigger</sp-button>
+                        <sp-popover slot="hover-content">
+                            <sp-button id="button-in-popover">
+                                Interactive button
+                            </sp-button>
+                        </sp-popover>
+                    </overlay-trigger>
+                    <input id="after-trigger" />
+                </sp-theme>
+            `);
+            await elementUpdated(theme);
+
+            const el = theme.querySelector('overlay-trigger') as OverlayTrigger;
+            const trigger = el.querySelector('[slot="trigger"]') as Button;
+            const beforeInput = theme.querySelector(
+                '#before-trigger'
+            ) as HTMLInputElement;
+
+            // Focus the trigger element
+            trigger.focus();
+            await elementUpdated(el);
+            await waitUntil(
+                () => el.open === 'hover',
+                'overlay should open on focus',
+                { timeout: 500 }
+            );
+
+            expect(el.open).to.equal('hover');
+
+            // Tab into the popover content
+            await sendTabKey();
+            await elementUpdated(el);
+
+            expect(el.open).to.equal('hover');
+
+            // Shift+Tab back out of the popover content
+            await sendShiftTabKey();
+            await elementUpdated(el);
+
+            // Wait for focus to return to trigger
+            await waitUntil(
+                () =>
+                    trigger === document.activeElement ||
+                    trigger.contains(document.activeElement),
+                'focus returned to trigger',
+                { timeout: 500 }
+            );
+
+            // Should still be open while trigger has focus
+            expect(el.open).to.equal('hover');
+
+            // Shift+Tab again to move focus before the trigger
+            await sendShiftTabKey();
+            await elementUpdated(el);
+
+            // Wait for focus to move to input before overlay
+            await waitUntil(
+                () => beforeInput === document.activeElement,
+                'focus moved to input before overlay',
+                { timeout: 500 }
+            );
+
+            // Verify focus moved out
+            expect(beforeInput === document.activeElement).to.be.true;
 
             // Should still be open initially
             expect(el.open).to.equal('hover');
