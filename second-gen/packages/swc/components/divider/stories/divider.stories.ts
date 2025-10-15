@@ -76,7 +76,7 @@ export const Default: Story = {
 };
 
 /**
- * The small divider is the default size. This is used to divide similar components such as table rows, action button groups, and components within a panel.
+ * The small divider is used to divide similar components such as table rows, action button groups, and components within a panel.
  *
  * The medium divider is used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
  *
