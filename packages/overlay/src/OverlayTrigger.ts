@@ -226,7 +226,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .placement=${this.clickPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}
                 .triggerInteraction=${'click'}
-                .type=${this.type !== 'modal' ? 'auto' : 'modal'}
+                .type=${this.type || 'auto'}
                 @beforetoggle=${this.handleBeforetoggle}
                 .receivesFocus=${this.receivesFocus}
             >
@@ -259,7 +259,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .placement=${this.hoverPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}
                 .triggerInteraction=${'hover'}
-                .type=${'hint'}
+                .type=${this.type || 'hint'}
                 @beforetoggle=${this.handleBeforetoggle}
                 .receivesFocus=${this.receivesFocus}
             >
@@ -291,7 +291,7 @@ export class OverlayTrigger extends SpectrumElement {
                 .placement=${this.longpressPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}
                 .triggerInteraction=${'longpress'}
-                .type=${'auto'}
+                .type=${this.type || 'auto'}
                 @beforetoggle=${this.handleBeforetoggle}
                 .receivesFocus=${this.receivesFocus}
             >

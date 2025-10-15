@@ -79,6 +79,8 @@ When using the `placement` attribute of an `<overlay-trigger>` (`"top" |"top-sta
 
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
+**Note:** The `type` attribute only affects click-triggered overlays. Hover overlays always use `hint` type behavior, and longpress overlays always use `auto` type behavior. For more control over hover and longpress overlay types, use `<sp-overlay>` directly.
+
 <sp-tabs selected="modal" auto label="Type attribute options">
 <sp-tab value="modal">Modal</sp-tab>
 <sp-tab-panel value="modal">
@@ -148,7 +150,7 @@ This overlay type does not accept focus and does not interfere with the user's i
 ```html
 <overlay-trigger type="hint" triggered-by="hover">
     <sp-button slot="trigger">Open hint</sp-button>
-    <sp-tooltip slot="hover-content">
+    <sp-tooltip slot="click-content">
         I am a hint type overlay. I am not interactive and will close when the
         user interacts with the page.
     </sp-tooltip>
