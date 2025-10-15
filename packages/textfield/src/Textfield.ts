@@ -51,7 +51,7 @@ export class TextfieldBase extends FieldLabelMixin(
         })
     )
 ) {
-    public declare renderFieldLabel: (fieldId: string) => TemplateResult;
+    declare public renderFieldLabel: (fieldId: string) => TemplateResult;
 
     public static override get styles(): CSSResultArray {
         const superStyles = Array.isArray(super.styles)
@@ -308,7 +308,7 @@ export class TextfieldBase extends FieldLabelMixin(
         } else {
             window.__swc.warn(
                 this,
-                '<sp-textfield> elements needs a label:',
+                `<${this.localName}> needs a label:`,
                 'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
                 {
                     type: 'accessibility',
