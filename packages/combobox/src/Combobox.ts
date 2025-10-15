@@ -389,17 +389,15 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
         const pending = this.pending ? this.pendingLabel : undefined;
         if (this.appliedLabel && this.appliedLabel.trim().length > 0) {
             //TODO Deprecate applied label
-            return `${this.appliedLabel}${this.pending ? ` ${this.pendingLabel}`: ''}`;
+            return `${this.appliedLabel}${this.pending ? ` ${this.pendingLabel}` : ''}`;
         } else if (this.label && this.label.trim().length > 0) {
-            return `${this.label}${this.pending ? ` ${this.pendingLabel}`: ''}`;
-        } else if (
-            this.slotHasContent
-        ) {
+            return `${this.label}${this.pending ? ` ${this.pendingLabel}` : ''}`;
+        } else if (this.slotHasContent) {
             return pending;
         } else {
             window.__swc.warn(
                 this,
-                '<sp-textfield> elements needs a label:',
+                `<${this.localName}> needs a label:`,
                 'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
                 {
                     type: 'accessibility',
@@ -413,8 +411,7 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
         }
     }
 
-    protected override renderField(
-    ): TemplateResult {
+    protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
             <input
@@ -430,7 +427,9 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
                     this.open ? 'listbox-menu' : undefined
                 )}
                 aria-label=${ifDefined(this._ariaLabel)}
-                aria-labelledby=${ifDefined(this.slotHasContent ? 'field-label-slot' : undefined)}
+                aria-labelledby=${ifDefined(
+                    this.slotHasContent ? 'field-label-slot' : undefined
+                )}
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
@@ -482,7 +481,9 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-label=${ifDefined(this._ariaLabel)}
-                aria-labelledby=${ifDefined(this.slotHasContent ? 'field-label-slot' : undefined)}
+                aria-labelledby=${ifDefined(
+                    this.slotHasContent ? 'field-label-slot' : undefined
+                )}
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
