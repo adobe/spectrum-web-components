@@ -74,7 +74,7 @@ export class InteractionController implements ReactiveController {
                 this.overlay.open = true;
                 this.target[lastInteractionType] = this.type;
             });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+        import('../sp-overlay.js');
     }
 
     public get overlay(): AbstractOverlay {
@@ -91,7 +91,27 @@ export class InteractionController implements ReactiveController {
         this.overlay.addController(this);
         this.initOverlay();
         this.prepareDescription(this.target);
+
+        // Observe when overlay elements change and call prepareDescription again
+        // This handles the case where content is slotted after the overlay is created
+        this.observeOverlayElements();
+
         this.handleOverlayReady?.(this.overlay);
+    }
+
+    private observeOverlayElements(): void {
+        // Use requestUpdate to be notified when overlay elements change
+        const checkElements = (): void => {
+            if (this.overlay.elements && this.overlay.elements.length > 0) {
+                // Elements are now available, call prepareDescription
+                this.prepareDescription(this.target);
+            }
+        };
+
+        // Listen for the overlay's update cycle
+        this.overlay.updateComplete.then(() => {
+            checkElements();
+        });
     }
 
     private _overlay!: AbstractOverlay;

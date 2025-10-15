@@ -1037,7 +1037,18 @@ export class Overlay extends ComputedOverlayBase {
 
         // If the trigger element has changed, bind the new events.
         if (oldTrigger !== false) {
+            // Release description from the old trigger before binding new events
+            this.strategy?.releaseDescription();
+
             this.bindEvents();
+
+            // Prepare description for new trigger if elements are already present
+            // This ensures screen reader accessibility is maintained after trigger changes
+            if (this.hasNonVirtualTrigger && this.elements.length) {
+                this.strategy?.prepareDescription(
+                    this.triggerElement as HTMLElement
+                );
+            }
         }
     }
 
