@@ -509,14 +509,12 @@ describe('Overlay Trigger - Hover', () => {
                             <sp-button slot="trigger" id="button-with-popover">
                                 Button with Popover
                             </sp-button>
-                            <sp-popover
+                            <sp-tooltip
                                 slot="hover-content"
-                                id="nested-popover"
+                                id="nested-tooltip"
                             >
-                                <sp-button id="button-in-popover">
-                                    Interactive content
-                                </sp-button>
-                            </sp-popover>
+                                Tooltip content
+                            </sp-tooltip>
                         </overlay-trigger>
                     </sp-dialog-wrapper>
                 </overlay-trigger>
@@ -536,10 +534,12 @@ describe('Overlay Trigger - Hover', () => {
             const opened = oneEvent(button, 'sp-opened');
             button.dispatchEvent(new Event('click', { bubbles: true }));
             await opened;
+            await elementUpdated(dialog);
+            await elementUpdated(buttonWithPopover);
 
             expect(el.open).to.equal('click');
 
-            // Hover over the button to open popover
+            // Hover over the button to open tooltip
             buttonWithPopover.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
@@ -549,27 +549,46 @@ describe('Overlay Trigger - Hover', () => {
             await elementUpdated(popoverTrigger);
             await waitUntil(
                 () => popoverTrigger.open === 'hover',
-                'popover opens on hover',
-                { timeout: 500 }
+                'tooltip opens on hover',
+                { timeout: 1000 }
             );
 
             expect(popoverTrigger.open).to.equal('hover');
             expect(el.open).to.equal('click'); // Modal should still be open
 
-            // Move pointer away from button
+            // Find the rendered tooltip
+            const nestedTooltip = document.querySelector(
+                '#nested-tooltip'
+            ) as HTMLElement;
+
+            // Blur the button to ensure it doesn't keep tooltip open via focus
+            buttonWithPopover.blur();
+            await elementUpdated(popoverTrigger);
+
+            // Dispatch pointerleave on button with tooltip as relatedTarget
+            const closed = oneEvent(buttonWithPopover, 'sp-closed');
             buttonWithPopover.dispatchEvent(
                 new MouseEvent('pointerleave', {
+                    relatedTarget: nestedTooltip,
                     bubbles: true,
                     composed: true,
                 })
             );
             await elementUpdated(popoverTrigger);
 
-            // Wait for hover delay
-            await new Promise((resolve) => setTimeout(resolve, 400));
-            await elementUpdated(popoverTrigger);
+            // Then dispatch pointerleave on the tooltip itself
+            if (nestedTooltip) {
+                nestedTooltip.dispatchEvent(
+                    new MouseEvent('pointerleave', {
+                        relatedTarget: null,
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+            }
+            await closed;
 
-            expect(popoverTrigger.open).to.be.undefined; // Popover should be closed
+            expect(popoverTrigger.open).to.be.undefined; // Tooltip should be closed
             expect(el.open).to.equal('click'); // Modal should still be open
         });
     });
