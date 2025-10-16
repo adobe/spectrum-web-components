@@ -44,16 +44,8 @@ argTypes.variant = {
  */
 // argTypes.size = {
 //     ...argTypes.size,
-//     name: 'Size',
-//     type: { name: 'string', required: false },
-//     description: 'The size of the status light dot. The default size is `m`.',
 //     control: { type: 'select' },
 //     options: StatusLight.VALID_SIZES,
-//     table: {
-//         type: { summary: 'string' },
-//         defaultValue: { summary: 'm' },
-//         category: 'Component',
-//     },
 // };
 
 args['default-slot'] = 'Status light';
