@@ -360,27 +360,6 @@ When using `DependencyManagerController` to manage lazy-loaded components, consi
 - Don't trap focus in loading states.
 - Return focus to a logical location after content loads.
 
-#### Error handling
-
-```typescript
-// Example error handling with accessibility
-connectedCallback() {
-    super.connectedCallback();
-    this.dependencyManager.add('sp-button');
-
-    import('@spectrum-web-components/button/sp-button.js')
-        .catch((error) => {
-            console.error('Failed to load component:', error);
-
-            // Announce error to screen readers
-            const errorElement = document.createElement('div');
-            errorElement.setAttribute('role', 'alert');
-            errorElement.textContent = 'Failed to load component. Please refresh the page.';
-            this.shadowRoot?.appendChild(errorElement);
-        });
-}
-```
-
 ### Performance considerations
 
 - **Code splitting**: Use the dependency manager with dynamic imports to split code and reduce initial bundle size.
