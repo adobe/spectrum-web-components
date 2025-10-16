@@ -979,7 +979,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  */
 export class Picker extends ObserveSlotPresence(
     SizedMixin(FieldLabelMixin(PickerBase, 'field-label')),
-    ['[slot="placeholder"]']
+    ['[slot="placeholder"], [slot="field-label"]']
 ) {
     public static override get styles(): CSSResultArray {
         const superStyles = Array.isArray(super.styles)
