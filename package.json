@@ -43,7 +43,8 @@
         "lit-html"
     ],
     "devDependencies": {
-        "@changesets/cli": "2.29.7",
+        "@changesets/changelog-github": "0.5.1",
+        "@changesets/cli": "patch:@changesets/cli@npm%3A2.29.7#~/.yarn/patches/@changesets-cli-npm-2.29.7-d06a80abdb.patch",
         "@commitlint/cli": "19.8.1",
         "@commitlint/config-conventional": "^19.8.1",
         "husky": "9.1.7",
