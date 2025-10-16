@@ -111,13 +111,6 @@ export abstract class StatusLightBase extends SizedMixin(SpectrumElement, {
                         ],
                     }
                 );
-            } else if (this.hasAttribute('disabled') && 'disabled' in this) {
-                // Set aria-disabled when no warning is shown
-                if (!this.hasAttribute('aria-disabled')) {
-                    this.setAttribute('aria-disabled', 'true');
-                } else {
-                    this.removeAttribute('aria-disabled');
-                }
             }
         }
     }
