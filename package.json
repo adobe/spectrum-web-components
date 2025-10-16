@@ -15,19 +15,19 @@
     },
     "type": "module",
     "scripts": {
-        "build-first-gen": "yarn workspace @adobe/spectrum-web-components build",
-        "build-second-gen": "yarn workspace @adobe/swc build",
-        "build": "yarn build-first-gen && yarn build-second-gen",
-        "test-first-gen": "yarn workspace @adobe/spectrum-web-components test",
-        "test-second-gen": "yarn workspace @adobe/swc test",
-        "test": "yarn test-first-gen && yarn test-second-gen",
-        "start-first-gen": "yarn workspace @adobe/spectrum-web-components start",
-        "start-second-gen": "yarn workspace @adobe/swc start",
-        "start": "yarn start-first-gen & yarn start-second-gen",
-        "lint-first-gen": "yarn workspace @adobe/spectrum-web-components lint",
-        "lint-second-gen": "yarn workspace @adobe/swc lint",
-        "lint": "yarn lint-first-gen & yarn lint-second-gen",
-        "postinstall": "husky || true && patch-package"
+        "build": "yarn build:*",
+        "build:first-gen": "yarn workspace @adobe/spectrum-web-components build",
+        "build:second-gen": "yarn workspace @adobe/swc build",
+        "lint": "yarn lint:*",
+        "lint:first-gen": "yarn workspace @adobe/spectrum-web-components lint",
+        "lint:second-gen": "yarn workspace @adobe/swc lint",
+        "postinstall": "husky || true && patch-package",
+        "start": "yarn start:*",
+        "start:first-gen": "yarn workspace @adobe/spectrum-web-components start",
+        "start:second-gen": "yarn workspace @adobe/swc start",
+        "test": "yarn test:*",
+        "test:first-gen": "yarn workspace @adobe/spectrum-web-components test",
+        "test:second-gen": "yarn workspace @adobe/swc test"
     },
     "workspaces": [
         "first-gen",
@@ -40,6 +40,15 @@
     "resolutions": {
         "playwright": "1.53.1"
     },
+    "devDependencies": {
+        "@changesets/cli": "2.29.7",
+        "@commitlint/cli": "19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "husky": "9.1.7",
+        "lint-staged": "^16.1.2",
+        "patch-package": "^8.0.0",
+        "replace-in-file": "^8.3.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -50,15 +59,6 @@
         "lit-element",
         "lit-html"
     ],
-    "devDependencies": {
-        "@changesets/cli": "2.29.7",
-        "@commitlint/cli": "19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
-        "husky": "9.1.7",
-        "lint-staged": "^16.1.2",
-        "patch-package": "^8.0.0",
-        "replace-in-file": "^8.3.0"
-    },
     "engines": {
         "node": ">=20",
         "yarn": ">=4.6.0"
