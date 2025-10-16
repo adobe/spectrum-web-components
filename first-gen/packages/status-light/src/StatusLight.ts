@@ -79,7 +79,8 @@ export class StatusLight extends StatusLightBase {
     // ───────────────────────
 
     /**
-     * @todo This property is deprecated in S2, and can be removed once we are no longer maintaining S1.
+     * @deprecated The `disabled` property is is deprecated and will be removed
+     * in a future release.
      *
      * A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.
      *
