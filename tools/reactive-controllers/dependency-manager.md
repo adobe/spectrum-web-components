@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `DependencyManagerController` is a [reactive controller](https://lit.dev/docs/composition/controllers/) designed to manage the availability of custom element dependencies in your host element. It helps gate rendering and functional behavior before and after the presence of required custom elements, which is especially useful when lazily loading custom element definitions across the lifecycle of your application.
 
@@ -9,63 +9,7 @@ The `DependencyManagerController` is a [reactive controller](https://lit.dev/doc
 - **Reactive loading state**: Automatically updates the host when all dependencies are loaded
 - **Async registration handling**: Works seamlessly with dynamic imports and lazy loading
 
-## API
-
-### Constructor
-
-```typescript
-new DependencyManagerController(host: ReactiveElement)
-```
-
-**Parameters:**
-
-- `host` (ReactiveElement): The host element that uses this controller
-
-### Properties
-
-#### `loaded`
-
-- **Type**: `boolean`
-- **Description**: Whether all of the provided dependencies have been registered. This will be `false` when no dependencies have been listed for management. Changes to this value trigger `requestUpdate()` on the host element.
-- **Settable**: No (read-only, managed by the controller)
-
-### Methods
-
-#### `add(dependency: string, alreadyLoaded?: boolean): void`
-
-Submit a custom element tag name to be managed as a dependency.
-
-**Parameters:**
-
-- `dependency` (string): The custom element tag name to manage (e.g., `'sp-button'`)
-- `alreadyLoaded` (boolean, optional): Force the managed custom element to be listed as loaded
-
-**Behavior:**
-
-- If the element is not yet defined, the method uses `customElements.whenDefined()` to wait for registration
-- When the element becomes defined, the `loaded` property updates automatically
-- The host element is notified via `requestUpdate()` when the loaded state changes
-
-### Symbols
-
-#### `dependencyManagerLoadedSymbol`
-
-- **Type**: `Symbol`
-- **Description**: Exported symbol used as the property key when calling `requestUpdate()` on the host element. This allows the host to track when the loaded state has changed.
-
-**Usage:**
-
-```typescript
-import { dependencyManagerLoadedSymbol } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
-
-protected override willUpdate(changes: PropertyValues): void {
-    if (changes.has(dependencyManagerLoadedSymbol)) {
-        // React to dependency loading state changes
-    }
-}
-```
-
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
@@ -80,9 +24,9 @@ Import the `DependencyManagerController` via:
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 ```
 
-## Examples
+### Examples
 
-### Basic usage with lazy loading
+#### Basic usage with lazy loading
 
 A `Host` element that renders different content depending on the `loaded` state of a heavy dependency:
 
@@ -134,7 +78,7 @@ class LazyHost extends LitElement {
 customElements.define('lazy-host', LazyHost);
 ```
 
-### Multiple dependencies
+#### Multiple dependencies
 
 Manage multiple custom element dependencies:
 
@@ -183,7 +127,7 @@ class MultiDependencyHost extends LitElement {
 customElements.define('multi-dependency-host', MultiDependencyHost);
 ```
 
-### Conditional feature loading
+#### Conditional feature loading
 
 Load features based on user interaction or conditions:
 
@@ -275,8 +219,6 @@ class FeatureLoader extends LitElement {
 customElements.define('feature-loader', FeatureLoader);
 ```
 
-### Route-based lazy loading
-
 Load components based on routing:
 
 ```typescript
@@ -338,93 +280,7 @@ class AppRouter extends LitElement {
 customElements.define('app-router', AppRouter);
 ```
 
-### Progressive enhancement
-
-Enhance basic functionality with advanced components:
-
-```typescript
-import { html, LitElement, css } from 'lit';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
-
-class ProgressiveForm extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
-
-    static styles = css`
-        .enhanced {
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-
-        .loading {
-            opacity: 0.6;
-        }
-    `;
-
-    connectedCallback() {
-        super.connectedCallback();
-
-        // Start loading enhanced components
-        this.dependencyManager.add('sp-textfield');
-        this.dependencyManager.add('sp-picker');
-        this.dependencyManager.add('sp-checkbox');
-
-        Promise.all([
-            import('@spectrum-web-components/textfield/sp-textfield.js'),
-            import('@spectrum-web-components/picker/sp-picker.js'),
-            import('@spectrum-web-components/checkbox/sp-checkbox.js'),
-        ]);
-    }
-
-    renderBasicForm() {
-        return html`
-            <form>
-                <label for="name">Name:</label>
-                <input id="name" type="text" required />
-
-                <label for="email">Email:</label>
-                <input id="email" type="email" required />
-
-                <button type="submit">Submit</button>
-            </form>
-        `;
-    }
-
-    renderEnhancedForm() {
-        return html`
-            <form>
-                <sp-textfield label="Name" required></sp-textfield>
-
-                <sp-textfield
-                    label="Email"
-                    type="email"
-                    required
-                ></sp-textfield>
-
-                <sp-checkbox>Subscribe to newsletter</sp-checkbox>
-
-                <sp-button type="submit">Submit</sp-button>
-            </form>
-        `;
-    }
-
-    render() {
-        const isEnhanced = this.dependencyManager.loaded;
-        const formClass = isEnhanced ? 'enhanced' : 'loading';
-
-        return html`
-            <div class=${formClass} role="form" aria-label="Contact form">
-                ${isEnhanced
-                    ? this.renderEnhancedForm()
-                    : this.renderBasicForm()}
-            </div>
-        `;
-    }
-}
-
-customElements.define('progressive-form', ProgressiveForm);
-```
-
-### Tracking load state changes
+#### Tracking load state changes
 
 Use the `dependencyManagerLoadedSymbol` to react to loading state changes:
 
@@ -482,35 +338,29 @@ class TrackingHost extends LitElement {
 customElements.define('tracking-host', TrackingHost);
 ```
 
-## Accessibility
+### Accessibility
 
 When using `DependencyManagerController` to manage lazy-loaded components, consider these accessibility best practices:
 
-### Loading states
+#### Loading states
 
 - **Provide clear feedback**: Always inform users when content is loading using `role="status"` and `aria-live="polite"`.
 - **Use aria-busy**: Set `aria-busy="true"` on containers while dependencies are loading.
 - **Loading indicators**: Include visible loading indicators (spinners, progress bars) for better user experience.
 
-### Screen reader announcements
+#### Screen reader announcements
 
 - Announce when loading begins: Use `aria-live="polite"` regions to notify screen reader users.
 - Announce when loading completes: Inform users when content has finished loading.
 - Avoid announcement spam: Debounce or throttle announcements if multiple components load in quick succession.
 
-### Keyboard accessibility
+#### Keyboard accessibility
 
 - Ensure keyboard focus is managed correctly when lazy-loaded components appear.
 - Don't trap focus in loading states.
 - Return focus to a logical location after content loads.
 
-### Progressive enhancement
-
-- Provide basic functionality before enhanced components load.
-- Don't block critical features on lazy-loaded dependencies.
-- Ensure the experience degrades gracefully if components fail to load.
-
-### Error handling
+#### Error handling
 
 ```typescript
 // Example error handling with accessibility
@@ -531,33 +381,9 @@ connectedCallback() {
 }
 ```
 
-### References
-
-- [WCAG 2.1 - Status Messages](https://www.w3.org/WAI/WCAG21/Understanding/status-messages.html)
-- [ARIA: status role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/status_role)
-- [ARIA: aria-busy attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy)
-- [Adobe Accessibility Guidelines](https://www.adobe.com/accessibility/products/spectrum.html)
-
-## Events
-
-The `DependencyManagerController` doesn't dispatch custom events directly. Instead, it calls `requestUpdate(dependencyManagerLoadedSymbol, previousLoadedState)` on the host element when the loaded state changes, triggering the host's reactive update cycle.
-
-## Performance considerations
+### Performance considerations
 
 - **Code splitting**: Use the dependency manager with dynamic imports to split code and reduce initial bundle size.
 - **Lazy loading strategy**: Load components just-in-time based on user interaction or route changes.
 - **Preloading**: Consider preloading critical dependencies during idle time using `requestIdleCallback()`.
 - **Caching**: Browsers will cache imported modules, so subsequent loads are fast.
-
-## Related patterns
-
-- [Lazy loading web components](https://web.dev/patterns/components/lazy-loading/)
-- [Code splitting](https://web.dev/reduce-javascript-payloads-with-code-splitting/)
-- [Progressive enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement)
-
-## Resources
-
-- [Lit Reactive Controllers](https://lit.dev/docs/composition/controllers/) - Learn more about reactive controllers
-- [MDN: customElements.whenDefined()](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/whenDefined)
-- [MDN: Dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
-- [Web Components Best Practices](https://web.dev/custom-elements-best-practices/)
