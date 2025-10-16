@@ -27,6 +27,8 @@ export class HoverController extends InteractionController {
 
     private elementIds: string[] = [];
 
+    override releaseDescription = noop;
+
     focusedin = false;
 
     private hoverTimeout?: ReturnType<typeof setTimeout>;
@@ -89,6 +91,9 @@ export class HoverController extends InteractionController {
     }
 
     override prepareDescription(): void {
+        // do not reapply until target is recycled
+        if (this.releaseDescription !== noop) return;
+
         // require "content" to apply relationship
         if (!this.overlay.elements.length) return;
 
