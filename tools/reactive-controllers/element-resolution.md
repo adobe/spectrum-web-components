@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `ElementResolutionController` is a [reactive controller](https://lit.dev/docs/composition/controllers/) that maintains an active reference to another element in the same DOM tree. It automatically observes the DOM tree for changes and ensures that the reference it holds is always up-to-date with the first matched element or `null` if no match is found.
 
@@ -10,66 +10,7 @@ The `ElementResolutionController` is a [reactive controller](https://lit.dev/doc
 - **Reactive updates**: Automatically triggers host updates when the resolved element changes
 - **Scope awareness**: Works within Shadow DOM and regular DOM contexts
 
-## API
-
-### Constructor
-
-```typescript
-new ElementResolutionController(
-    host: ReactiveElement,
-    options?: { selector: string }
-)
-```
-
-**Parameters:**
-
-- `host` (ReactiveElement): The host element that uses this controller
-- `options.selector` (string, optional): The CSS selector to query for (can be set later via the `selector` property)
-
-### Properties
-
-#### `element`
-
-- **Type**: `HTMLElement | null`
-- **Description**: The currently resolved element matching the selector, or `null` if no match is found. Updates automatically when the DOM changes.
-- **Settable**: No (managed by the controller)
-
-#### `selector`
-
-- **Type**: `string`
-- **Description**: The CSS selector used to find the element. When changed, the controller automatically updates the resolved element.
-- **Settable**: Yes
-
-#### `selectorIsId`
-
-- **Type**: `boolean`
-- **Description**: Whether the selector is an ID selector (starts with `#`). Used internally for optimization.
-- **Settable**: No (read-only)
-
-#### `selectorAsId`
-
-- **Type**: `string`
-- **Description**: The ID value (without the `#` prefix) when using an ID selector.
-- **Settable**: No (read-only)
-
-### Methods
-
-#### `hostConnected(): void`
-
-Called when the host element is connected to the DOM. Starts observing DOM changes and resolves the element.
-
-#### `hostDisconnected(): void`
-
-Called when the host element is disconnected from the DOM. Stops observing DOM changes and releases the element reference.
-
-### Symbols
-
-#### `elementResolverUpdatedSymbol`
-
-- **Type**: `Symbol`
-- **Description**: Exported symbol used as the property key when calling `requestUpdate()` on the host element. This allows the host to track when the resolved element has changed.
-
-**Usage:**
+<!-- ### Usage
 
 ```typescript
 import { elementResolverUpdatedSymbol } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
@@ -79,9 +20,9 @@ protected override willUpdate(changes: PropertyValues): void {
         // React to element resolution changes
     }
 }
-```
+``` -->
 
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
@@ -96,9 +37,9 @@ Import the `ElementResolutionController` and/or `elementResolverUpdatedSymbol` v
 import { ElementResolutionController, elementResolverUpdatedSymbol } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 ```
 
-## Examples
+### Examples
 
-### Basic usage
+#### Basic usage
 
 An `ElementResolutionController` can be applied to a host element like the following:
 
@@ -134,8 +75,6 @@ In this example, the selector `'.other-element'` is supplied to the resolver, wh
 <div class="other-element"></div>
 ```
 
-### Multiple matching elements
-
 The resolved reference will always be the first element matching the selector applied, so in the following example the element with content "First!" will be the reference:
 
 ```html
@@ -146,7 +85,7 @@ The resolved reference will always be the first element matching the selector ap
 
 A [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) is leveraged to track mutations to the DOM tree in which the host element resides in order to update the element reference on any changes to the content therein that could change the resolved element.
 
-### Constructor-based selector
+#### Constructor-based selector
 
 You can provide the selector in the constructor options:
 
@@ -169,7 +108,7 @@ class FormController extends LitElement {
 customElements.define('form-controller', FormController);
 ```
 
-### Tracking resolution updates
+#### Tracking resolution updates
 
 Changes to the resolved element reference are reported to the host element via a call to the `requestUpdate()` method. This will be provided the `elementResolverUpdatedSymbol` as the changed key. If your element leverages this value against the changes map, it can react directly to changes in the resolved element:
 
@@ -211,7 +150,7 @@ class RootEl extends LitElement {
 customElements.define('root-el', RootEl);
 ```
 
-### Accessible label resolution
+#### Accessible label resolution
 
 Use `ElementResolutionController` to resolve accessible labeling elements:
 
@@ -251,14 +190,14 @@ class CustomInput extends LitElement {
 customElements.define('custom-input', CustomInput);
 ```
 
-Usage:
+**Usage:**
 
 ```html
 <span class="input-label" id="name-label">Enter your name</span>
 <custom-input></custom-input>
 ```
 
-### Dynamic selector changes
+#### Dynamic selector changes
 
 The selector can be changed dynamically, and the controller will automatically update:
 
@@ -295,7 +234,7 @@ class DynamicResolver extends LitElement {
 customElements.define('dynamic-resolver', DynamicResolver);
 ```
 
-### Modal and overlay management
+#### Modal and overlay management
 
 Use element resolution to manage focus trap elements in modals:
 
@@ -355,7 +294,7 @@ class ModalManager extends LitElement {
 customElements.define('modal-manager', ModalManager);
 ```
 
-### Form validation integration
+#### Form validation integration
 
 Resolve and connect to error message elements:
 
@@ -399,7 +338,7 @@ class ValidatedInput extends LitElement {
 customElements.define('validated-input', ValidatedInput);
 ```
 
-Usage:
+**Usage:**
 
 ```html
 <validated-input invalid></validated-input>
@@ -408,39 +347,45 @@ Usage:
 </span>
 ```
 
-## Accessibility
+### Accessibility
 
 When using `ElementResolutionController` for accessibility-related functionality, consider these best practices:
 
-### Label associations
+#### Label associations
 
 - When resolving label elements, always use proper ARIA attributes (`aria-labelledby`, `aria-describedby`) to create programmatic relationships.
 - Ensure labels have unique IDs that can be referenced.
 - Generate IDs programmatically if they don't exist.
 
-### Error messages
+#### Error messages
 
 - Error message elements should have `role="alert"` for screen reader announcements.
 - Use `aria-describedby` to associate error messages with form controls.
 - Ensure error messages are visible and programmatically associated when validation fails.
 
-### Focus management
+#### Focus management
 
 - When resolving focusable elements, ensure they meet keyboard accessibility requirements.
 - Maintain logical tab order when using resolved elements for focus trapping.
 - Provide clear focus indicators for all resolved interactive elements.
 
-### Dynamic content
+#### Dynamic content
 
 - Use `aria-live` regions when resolved elements change dynamically and users need to be notified.
 - Consider using `aria-live="polite"` for non-critical updates.
 - Use `aria-live="assertive"` sparingly for critical information.
 
-### Element visibility
+#### Element visibility
 
 - Verify that resolved elements are visible and accessible to assistive technologies.
 - Check that resolved elements aren't hidden with `display: none` or `visibility: hidden` unless intentional.
 - Use appropriate ARIA attributes (`aria-hidden`) when hiding decorative resolved elements.
+
+### Performance considerations
+
+- **ID selectors are optimized**: The controller uses `getElementById()` for ID-based selectors (starting with `#`), which is faster than `querySelector()`.
+- **MutationObserver scope**: The observer watches the entire root node (Shadow DOM or document) for changes. For large DOMs, this could have performance implications.
+- **Automatic cleanup**: The controller automatically disconnects the MutationObserver when the host is disconnected from the DOM.
 
 ### References
 
@@ -448,26 +393,3 @@ When using `ElementResolutionController` for accessibility-related functionality
 - [ARIA: aria-labelledby attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
 - [ARIA: aria-describedby attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby)
 - [Adobe Accessibility Guidelines](https://www.adobe.com/accessibility/products/spectrum.html)
-
-## Events
-
-The `ElementResolutionController` doesn't dispatch custom events directly. Instead, it calls `requestUpdate(elementResolverUpdatedSymbol, previousElement)` on the host element when the resolved element changes, triggering the host's reactive update cycle with the symbol as the change key.
-
-## Performance considerations
-
-- **ID selectors are optimized**: The controller uses `getElementById()` for ID-based selectors (starting with `#`), which is faster than `querySelector()`.
-- **MutationObserver scope**: The observer watches the entire root node (Shadow DOM or document) for changes. For large DOMs, this could have performance implications.
-- **Automatic cleanup**: The controller automatically disconnects the MutationObserver when the host is disconnected from the DOM.
-
-## Related patterns
-
-- [ARIA relationships](https://www.w3.org/TR/wai-aria-1.2/#attrs_relationships)
-- [Focus management](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets)
-- [Shadow DOM and accessibility](https://web.dev/shadowdom-v1/#accessibility)
-
-## Resources
-
-- [Lit Reactive Controllers](https://lit.dev/docs/composition/controllers/) - Learn more about reactive controllers
-- [MDN: MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-- [MDN: Element.querySelector()](https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector)
-- [MDN: Document.getElementById()](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)
