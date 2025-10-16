@@ -57,6 +57,7 @@ import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 import pickerStyles from './picker.css.js';
 import { strategies } from './strategies.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -469,6 +470,12 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         `;
     }
 
+    protected renderPlaceholderContent(): TemplateResult {
+        return html`
+            <slot name="label"></slot>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
@@ -496,8 +503,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                               class="visually-hidden"
                               id="applied-label"
                           >
-                              ${appliedLabel}
-                              <slot name="label"></slot>
+                              ${appliedLabel} ${this.renderPlaceholderContent()}
                           </span>
                       `
                     : html`
@@ -961,7 +967,9 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 /**
  * @element sp-picker
  *
- * @slot label - The placeholder content for the Picker
+ * @slot field-label - label that is visibly displayed for the picker
+ * @slot label - the placeholder content for the Picker; @deprecated use placeholder instead
+ * @slot placeholder - The placeholder content for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
@@ -969,7 +977,10 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class Picker extends FieldLabelMixin(PickerBase, 'field-label') {
+export class Picker extends ObserveSlotPresence(
+    SizedMixin(FieldLabelMixin(PickerBase, 'field-label')),
+    ['[slot="placeholder"]']
+) {
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
@@ -991,10 +1002,143 @@ export class Picker extends FieldLabelMixin(PickerBase, 'field-label') {
         return true;
     }
 
+    /*
+     * a combobox is labelled differently than a menu
+     * and since picker base is used by action menu,
+     * we must provide picker, which is a select-only combobox,
+     * with a different accessible label logic and API
+     */
+    protected override hasAccessibleLabel(): boolean {
+        const slotContent =
+            this.querySelector('[slot="field-label"]')?.textContent &&
+            this.querySelector('[slot="field-label"]')?.textContent?.trim() !==
+                '';
+        const slotAlt =
+            this.querySelector('[slot="field-label"]')
+                ?.getAttribute('alt')
+                ?.trim() &&
+            this.querySelector('[slot="field-label"]')
+                ?.getAttribute('alt')
+                ?.trim() !== '';
+        return (
+            !!this.label ||
+            !!this.getAttribute('aria-label') ||
+            !!this.getAttribute('aria-labelledby') ||
+            !!this.appliedLabel ||
+            !!slotContent ||
+            !!slotAlt
+        );
+    }
+
+    /**
+     * adds an accessibility warning if no label is provided
+     */
+    protected override warnNoLabel(): void {
+        window.__swc.warn(
+            this,
+            `<${this.localName}> needs one of the following to be accessible:`,
+            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+            {
+                type: 'accessibility',
+                issues: [
+                    'a value supplied to the "label" attribute, or',
+                    'text content supplied in an element with slot="field-label"',
+                ],
+            }
+        );
+    }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (
+            changes.has('label') &&
+            this.getSlotContentPresence(
+                '[slot="placeholder"], [slot="field-label"]'
+            )
+        ) {
+            // adds a warning if "label" is being used as a placeholder
+            const placeholderContent = this.getSlotContentPresence(
+                '[slot="placeholder"]'
+            );
+            const fieldLabelContent = this.getSlotContentPresence(
+                '[slot="field-label"]'
+            );
+            const slottedLabelContent =
+                this.getSlotContentPresence('[slot="label"]');
+            const appliedLabel = this.appliedLabel;
+            const usedAsPlaceholder =
+                (!placeholderContent && !slottedLabelContent) ||
+                appliedLabel ||
+                fieldLabelContent;
+            if (usedAsPlaceholder)
+                window.__swc.warn(
+                    this,
+                    `Using the <${this.localName}> element's "label" attribute  is intented to be visually hidden for assistive technologies. Using the "label" attribute as a placeholder will be deprecated. \nTo privide a visible field label, use the "field-label" slot instead. \nTo provide visible placeholder text, use the "placeholder" slot instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/picker/',
+                    { level: 'deprecation' }
+                );
+        }
+    }
+
+    /**
+     *
+     * @param content
+     * @returns
+     */
+    protected override renderLabelContent(
+        content: Node[]
+    ): TemplateResult | Node[] {
+        if (this.value && this.selectedItem) {
+            return content;
+        }
+        return this.renderPlaceholderContent('placeholder', true);
+    }
+
+    protected override renderPlaceholderContent(
+        id?: string,
+        includeLabel?: boolean
+    ): TemplateResult {
+        return html`
+            <slot name="placeholder" id="${ifDefined(id)}">
+                <slot
+                    name="label"
+                    @slotchange=${this.handleSlottedLabelSlotchange}
+                >
+                    ${includeLabel
+                        ? html`
+                              <span
+                                  aria-hidden=${ifDefined(
+                                      this.appliedLabel ? undefined : 'true'
+                                  )}
+                              >
+                                  ${this.label}
+                              </span>
+                          `
+                        : nothing}
+                </slot>
+            </slot>
+        `;
+    }
+
     protected override render(): TemplateResult {
         return html`
             ${this.renderFieldLabel()} ${super.render()}
         `;
+    }
+
+    /**
+     * adds a deprecation warning if the "label" slot is used
+     * @deprecated
+     */
+    protected handleSlottedLabelSlotchange(): void {
+        if (this.getSlotContentPresence('[slot="label]')) {
+            window.__swc.warn(
+                this,
+                `The <${this.localName}> element's "label" slot has been deprecated. \nTo privide a visible field label, use the "field-label" slot instead. \nTo provide visible placeholder text, use the "placeholder" slot instead.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/picker/',
+                { level: 'deprecation' }
+            );
+        }
     }
 
     protected override handleKeydown = (event: KeyboardEvent): void => {
