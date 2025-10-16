@@ -57,7 +57,7 @@ export class StatusLight extends StatusLightBase {
     static override readonly VARIANTS = STATUSLIGHT_VARIANTS_S2;
 
     /**
-     * The variant of the status light.
+     * Changes the color of the status dot. The variant list includes both semantic and non-semantic options.
      */
     @property({ type: String, reflect: true })
     public override variant: StatusLightVariant = 'info';

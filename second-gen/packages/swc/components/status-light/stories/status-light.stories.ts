@@ -26,15 +26,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 
 argTypes.variant = {
     ...argTypes.variant,
-    name: 'Variant',
-    description:
-        'Changes the color of the status dot. The variant list includes both semantic and non-semantic options.',
-    type: { name: 'string', required: true },
-    table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'info' },
-        category: 'Component',
-    },
     control: { type: 'select' },
     options: StatusLight.VARIANTS,
 };
