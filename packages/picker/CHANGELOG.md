@@ -1,5 +1,35 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5733](https://github.com/adobe/spectrum-web-components/pull/5733) [`dbba861`](https://github.com/adobe/spectrum-web-components/commit/dbba8617475b9e20b304935ab65ca43f744efe93) Thanks [@iuliauta](https://github.com/iuliauta)! - - **Fixed**: Picker border color should be hidden in S2 theme
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Pending state handling and accessibility in `<sp-picker>` component.
+    - **Changed**: Removed dependency on `PendingStateController` and implemented inline pending state handling
+    - **Fixed**: Updated aria-labelledby attribute ordering to improve screen reader experience (`icon label applied-label pending-label`)
+    - **Fixed**: Updated progress circle implementation to use `role="presentation"` instead of `aria-valuetext`
+    - **Added**: Direct pending state visual rendering with improved accessibility
+
+    These changes improve accessibility for pending states while reducing unnecessary component dependencies.
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`4880da4`](https://github.com/adobe/spectrum-web-components/commit/4880da4f80a25ae1b475f52ce4ba7914cdcd9de4), [`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
+    - @spectrum-web-components/button@1.9.0
+    - @spectrum-web-components/menu@1.9.0
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/progress-circle@1.9.0
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/field-label@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/overlay@1.9.0
+    - @spectrum-web-components/tooltip@1.9.0
+    - @spectrum-web-components/tray@1.9.0
+    - @spectrum-web-components/icons-ui@1.9.0
+    - @spectrum-web-components/popover@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Minor Changes
@@ -99,7 +129,6 @@
 ### Minor Changes
 
 - [#5187](https://github.com/adobe/spectrum-web-components/pull/5187) [`2a0422e`](https://github.com/adobe/spectrum-web-components/commit/2a0422ec1b667a9f236858f8cc9dca261ba27f9f) Thanks [@TarunAdobe](https://github.com/TarunAdobe)! - Disabled drag and select functionality of picker in mobile devices. This is done to prevent click event being captured behind the menu-tray combination because the menu was closing immediately on pointerup.
-
     - Fixed a bug where the picker in a dialog was not closing when clicking outside the dialog. ([#5111](https://github.com/adobe/spectrum-web-components/issues/5111))
     - Fixed another bug where the elements behind the menu were receiving click events. ([#5060](https://github.com/adobe/spectrum-web-components/issues/5060))
 
@@ -130,13 +159,11 @@
 ### Minor Changes
 
 - [#5031](https://github.com/adobe/spectrum-web-components/pull/5031) [`ea38ef0`](https://github.com/adobe/spectrum-web-components/commit/ea38ef0db33b251a054d50abf5cffc04e32f579f) Thanks [@nikkimk](https://github.com/nikkimk)! - Used WAI ARIA Authoring Practices Guide (APG) to make accessibility improvements for `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>`, including:
-
     - Numpad keys now work with `<sp-picker>` and `<sp-action-menu>` -`<sp-action-menu>`'s `<sp-menu-item>` elements can now be read by a screen reader ([#4556](https://github.com/adobe/spectrum-web-components/issues/4556))
     - `<sp-menu-item>` href can now be clicked by a screen reader ([#4997](https://github.com/adobe/spectrum-web-components/issues/4997))
     - Opening a `<sp-action-menu>`, `<sp-menu>`, and `<sp-picker>` with a keyboard now sets focus on an item within the menu. ([#4557](https://github.com/adobe/spectrum-web-components/issues/4557))
 
     See the following APG examples for more information:
-
     - [Navigation Menu Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-navigation/)
     - [Editor Menubar Example](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-editor/)
 

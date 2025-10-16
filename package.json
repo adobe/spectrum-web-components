@@ -217,7 +217,7 @@
         "lit-html"
     ],
     "engines": {
-        "node": ">=20",
+        "node": ">=20.10.0",
         "yarn": ">=4.6.0"
     },
     "wireit": {
