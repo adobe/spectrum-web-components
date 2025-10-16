@@ -29,6 +29,7 @@ import { ObserveSlotText } from '@spectrum-web-components/shared';
 type Constructor<T> = new (...args: any[]) => T;
 
 export declare class FieldLabelMixinInterface {
+    styles: CSSResultArray;
     disabled: boolean;
     required: boolean;
     sideAligned: 'start' | 'end';
@@ -52,6 +53,9 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         slotName,
         excludedSelectors
     ) {
+        public static get labelStyles(): CSSResultArray {
+            return [styles, asteriskIconStyles];
+        }
         public static get styles(): CSSResultArray {
             return [styles, asteriskIconStyles];
         }

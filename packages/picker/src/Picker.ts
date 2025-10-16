@@ -982,7 +982,12 @@ export class Picker extends ObserveSlotPresence(
     ['[slot="placeholder"]']
 ) {
     public static override get styles(): CSSResultArray {
-        return [pickerStyles, chevronStyles];
+        const superStyles = Array.isArray(super.styles)
+            ? super.styles
+            : super.styles
+              ? [super.styles]
+              : [];
+        return [...superStyles, pickerStyles, chevronStyles];
     }
 
     protected override get containerStyles(): StyleInfo {
