@@ -1,4 +1,4 @@
-## Description
+## Overview
 
 The `ColorController` is a comprehensive [reactive controller](https://lit.dev/docs/composition/controllers/) for managing and validating color values in various color spaces, including RGB, HSL, HSV, and Hex. It provides robust methods to set, get, and validate colors, as well as convert between different color formats. This controller is designed to be used within web components or other reactive elements to handle color-related interactions efficiently.
 
@@ -10,96 +10,40 @@ The `ColorController` is a comprehensive [reactive controller](https://lit.dev/d
 - **State management**: Maintain current color state and save/restore previous color values
 - **Format preservation**: Automatically preserves the format of the original color input when returning values
 
-## API
-
-### Constructor
-
-```typescript
-new ColorController(host: ReactiveElement, options?: { manageAs?: string })
-```
-
-**Parameters:**
-
-- `host` (ReactiveElement): The host element that uses this controller
-- `options.manageAs` (string, optional): Specifies the color space to manage the color as (e.g., 'hsv', 'hsl', 'srgb')
-
 ### Properties
 
-#### `color`
-
-- **Type**: `Color`
-- **Description**: Gets or sets the current color value. The color can be provided in various formats, including strings, objects, or instances of the `Color` class from [Color.js](https://colorjs.io/).
-- **Settable**: Yes
-
-#### `colorValue`
-
-- **Type**: `ColorTypes`
-- **Description**: Gets the color value in the same format as the original color input. This preserves the format you initially set (e.g., if you set an HSL string, you'll get an HSL string back).
-- **Settable**: No
-
-#### `colorOrigin`
-
-- **Type**: `ColorTypes`
-- **Description**: Gets or sets the original color value provided by the user, before any transformations.
-- **Settable**: Yes
-
-#### `hue`
-
-- **Type**: `number`
-- **Description**: Gets or sets the hue value of the current color in HSL format (0-360 degrees).
-- **Settable**: Yes
+- **`color`**: Gets or sets the current color value. The color can be provided in various formats, including strings, objects, or instances of the `Color` class.
+- **`colorValue`**: Gets the color value in various formats based on the original color input.
+- **`hue`**: Gets or sets the hue value of the current color.
 
 ### Methods
 
-#### `validateColorString(color: string): ColorValidationResult`
+- **`validateColorString(color: string): ColorValidationResult`**:  
+  Validates a color string and returns the validation result, including the color space, coordinates, alpha value, and validity.
 
-Validates a color string and returns the validation result.
+    **Returns:** `ColorValidationResult` object with:
+    - `spaceId` (string | null): The color space identifier ('srgb', 'hsl', or 'hsv')
+    - `coords` (number[]): Array of numeric values representing the color coordinates
+    - `alpha` (number): The alpha value of the color (0 to 1)
+    - `isValid` (boolean): Whether the color string is valid
 
-**Parameters:**
+- **`getColor(format: string | ColorSpace): ColorObject`**:  
+  Converts the current color to the specified format. Throws an error if the format is not valid.
 
-- `color` (string): The color string to validate
+    **Returns:** `ColorObject` - The color object in the specified format
 
-**Returns:** `ColorValidationResult` object with:
+- **`getHslString(): string`**:  
+  Returns the current color in HSL string format.
 
-- `spaceId` (string | null): The color space identifier ('srgb', 'hsl', or 'hsv')
-- `coords` (number[]): Array of numeric values representing the color coordinates
-- `alpha` (number): The alpha value of the color (0 to 1)
-- `isValid` (boolean): Whether the color string is valid
+    **Returns:** string - HSL representation of the current color
 
-**Supported formats:**
+- **`savePreviousColor(): void`**:  
+  Saves the current color as the previous color.
 
-- RGB: `rgb(r, g, b)`, `rgba(r, g, b, a)`, `rgb r g b`, `rgba r g b a`
-- HSL: `hsl(h, s, l)`, `hsla(h, s, l, a)`, `hsl h s l`, `hsla h s l a`
-- HSV: `hsv(h, s, v)`, `hsva(h, s, v, a)`, `hsv h s v`, `hsva h s v a`
-- HEX: `#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa`
+- **`restorePreviousColor(): void`**:  
+  Restores the previous color.
 
-#### `getColor(format: string | ColorSpace): ColorObject`
-
-Converts the current color to the specified format.
-
-**Parameters:**
-
-- `format` (string | ColorSpace): The desired color format ('srgb', 'hsva', 'hsv', 'hsl', 'hsla')
-
-**Returns:** `ColorObject` - The color object in the specified format
-
-**Throws:** Error if the format is not valid
-
-#### `getHslString(): string`
-
-Returns the current color in HSL string format.
-
-**Returns:** string - HSL representation of the current color
-
-#### `savePreviousColor(): void`
-
-Saves the current color as the previous color. Useful for implementing undo functionality or color comparison features.
-
-#### `restorePreviousColor(): void`
-
-Restores the previously saved color.
-
-## Usage
+### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
@@ -114,9 +58,9 @@ Import the `ColorController` via:
 import {ColorController,} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 ```
 
-## Examples
+### Examples
 
-### Basic usage
+#### Basic usage
 
 ```typescript
 import { LitElement, html } from 'lit';
@@ -158,7 +102,7 @@ class ColorPickerElement extends LitElement {
 customElements.define('color-picker-element', ColorPickerElement);
 ```
 
-### Constructor initialization
+#### Constructor initialization
 
 The color controller can also be initialized in the constructor:
 
@@ -185,7 +129,7 @@ class ColorPickerElement extends LitElement {
 }
 ```
 
-### Color validation
+#### Color validation
 
 Validate color strings before using them:
 
@@ -231,7 +175,7 @@ class ColorInputElement extends LitElement {
 }
 ```
 
-### Usage with color components
+#### Usage with color components
 
 Example of using `ColorController` within a color picker that works with other Spectrum Web Components:
 
@@ -289,7 +233,7 @@ class CompleteColorPicker extends LitElement {
 }
 ```
 
-### Saving and restoring colors
+#### Saving and restoring colors
 
 Implement undo functionality using `savePreviousColor` and `restorePreviousColor`:
 
@@ -347,7 +291,7 @@ class ColorPickerWithUndo extends LitElement {
 }
 ```
 
-## Supported color formats
+### Supported color formats
 
 The `ColorController` supports a wide range of color formats for input and output:
 
@@ -416,23 +360,23 @@ The `ColorController` supports a wide range of color formats for input and outpu
     </sp-table-body>
 </sp-table>
 
-## Accessibility
+### Accessibility
 
 When implementing color pickers or other color-related UI with the `ColorController`, consider these accessibility best practices:
 
-### Color perception
+#### Color perception
 
 - **Never rely on color alone** to convey information. Always provide alternative text descriptions or patterns.
 - **Provide text alternatives** for color values (e.g., "red", "dark blue", "#FF0000") that are announced by screen readers.
 - Use **ARIA labels** (`aria-label` or `aria-labelledby`) to describe the purpose of color controls.
 
-### Screen reader support
+#### Screen reader support
 
 - Announce color changes with `aria-live` regions when colors update dynamically.
 - Provide meaningful labels for all interactive color controls.
 - Include instructions in `aria-describedby` for how to use color inputs.
 
-### Keyboard accessibility
+#### Keyboard accessibility
 
 When building color pickers with this controller:
 
@@ -440,12 +384,12 @@ When building color pickers with this controller:
 - Provide visible focus indicators for all interactive elements.
 - Consider implementing keyboard shortcuts for common actions (e.g., arrow keys for fine-tuning).
 
-### Error handling
+#### Error handling
 
 - Use `aria-invalid` and `aria-describedby` to communicate validation errors.
 - Provide clear error messages when color values are invalid.
 
-### Color contrast
+#### Color contrast
 
 When using colors selected via this controller for text or UI elements, ensure they meet [WCAG 2.1 Level AA contrast requirements](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html):
 
@@ -453,28 +397,12 @@ When using colors selected via this controller for text or UI elements, ensure t
 - **Large text** (18pt+ or 14pt+ bold): 3:1 contrast ratio
 - **UI components and graphics**: 3:1 contrast ratio
 
-### References
-
-- [Web Content Accessibility Guidelines (WCAG) 2.1](https://www.w3.org/WAI/WCAG21/Understanding/)
-- [Adobe Accessibility Guidelines](https://www.adobe.com/accessibility/products/spectrum.html)
-- [MDN: Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
-
-## Events
-
-The `ColorController` doesn't dispatch custom events directly. Instead, it calls `requestUpdate()` on the host element when the color changes, triggering the host's reactive update cycle. The host element is responsible for dispatching any custom events as needed.
-
-## Related components
+### Related components
 
 The `ColorController` is used by these Spectrum Web Components:
 
-- [`<sp-color-area>`](../../packages/color-area/) - Two-dimensional color picker
-- [`<sp-color-field>`](../../packages/color-field/) - Text input for color values
-- [`<sp-color-slider>`](../../packages/color-slider/) - Slider for selecting color channel values
-- [`<sp-color-wheel>`](../../packages/color-wheel/) - Circular hue selector
-- [`<sp-swatch>`](../../packages/swatch/) - Color preview display
-
-## Resources
-
-- [Lit Reactive Controllers](https://lit.dev/docs/composition/controllers/) - Learn more about reactive controllers
-- [Color.js](https://colorjs.io/) - The underlying color manipulation library
-- [CSS Color Module Level 4](https://www.w3.org/TR/css-color-4/) - Specification for CSS color formats
+- [`<sp-color-area>`](../../components/color-area/) - Two-dimensional color picker
+- [`<sp-color-field>`](../../components/color-field/) - Text input for color values
+- [`<sp-color-slider>`](../../components/color-slider/) - Slider for selecting color channel values
+- [`<sp-color-wheel>`](../../components/color-wheel/) - Circular hue selector
+- [`<sp-swatch>`](../../components/swatch/) - Color preview display
