@@ -34,37 +34,37 @@ import {
         </sp-table-head>
         <sp-table-body>
             <sp-table-row>
-                <sp-table-cell>getActiveElement</sp-table-cell>
+                <sp-table-cell><code>getActiveElement()</code></sp-table-cell>
                 <sp-table-cell>Utility</sp-table-cell>
                 <sp-table-cell>Find the active element, including shadow DOM</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>getDeepElementFromPoint</sp-table-cell>
+                <sp-table-cell><code>getDeepElementFromPoint()</code></sp-table-cell>
                 <sp-table-cell>Utility</sp-table-cell>
                 <sp-table-cell>Deepest element at coordinates</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>Focusable</sp-table-cell>
+                <sp-table-cell><code>Focusable</code></sp-table-cell>
                 <sp-table-cell>Base class</sp-table-cell>
                 <sp-table-cell>Focus management for custom elements</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>LikeAnchor</sp-table-cell>
+                <sp-table-cell><code>LikeAnchor</code></sp-table-cell>
                 <sp-table-cell>Mixin</sp-table-cell>
                 <sp-table-cell>Anchor-like properties and rendering</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>FocusVisiblePolyfillMixin</sp-table-cell>
+                <sp-table-cell><code>FocusVisiblePolyfillMixin</code></sp-table-cell>
                 <sp-table-cell>Mixin</sp-table-cell>
                 <sp-table-cell>Polyfill for :focus-visible support</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>ObserveSlotPresence</sp-table-cell>
+                <sp-table-cell><code>ObserveSlotPresence</code></sp-table-cell>
                 <sp-table-cell>Mixin</sp-table-cell>
                 <sp-table-cell>Observe presence of slotted content</sp-table-cell>
             </sp-table-row>
             <sp-table-row>
-                <sp-table-cell>ObserveSlotText</sp-table-cell>
+                <sp-table-cell><code>ObserveSlotText</code></sp-table-cell>
                 <sp-table-cell>Mixin</sp-table-cell>
                 <sp-table-cell>Observe text changes in slots</sp-table-cell>
             </sp-table-row>
@@ -76,7 +76,7 @@ import {
 
 #### getDeepElementFromPoint
 
-The `getDeepElementFromPoint` method allows you to obtain the deepest possible element at a given coordinates on the current page. The method will step into any available `shadowRoot`s until it reaches the first element with no `shadowRoot` or no children available at the given coordinates.
+The `getDeepElementFromPoint` method allows you to obtain the deepest possible element at given coordinates on the current page. The method will step into any available `shadowRoot`s until it reaches the first element with no `shadowRoot` or no children available at the given coordinates.
 
 **When to use:** Use this when you need to find the actual target element at specific coordinates, especially when working with shadow DOM where `document.elementFromPoint()` might not give you the deepest element.
 
@@ -102,7 +102,7 @@ const activeEl = getActiveElement(this);
 
 #### Focusable
 
-The `Focusable` subclass of `SpectrumElement` adds helper methods and lifecycle coverage to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the [aybolit delegate-focus-mixin](https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js).
+The `Focusable` subclass of `SpectrumElement` adds helper methods and lifecycle coverage to support passing focus to a container element inside of a custom element. The `Focusable` base class handles `tabindex` setting into shadowed elements automatically and is based heavily on the [aybolit delegate-focus-mixin](https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js).
 
 **When to use:** Use this base class when creating custom elements that need to delegate focus to an internal element (like a button or input) while maintaining proper tabindex management and accessibility.
 
@@ -118,7 +118,7 @@ class FocusableButton extends Focusable {
     protected override render(): TemplateResult {
         return html`
             <button id="button">
-                Focus for this button is being managed by the focusable base class.
+                Focus for this button is being managed by the `Focusable` base class.
             </button>
         `;
     }
@@ -150,15 +150,15 @@ class MyLinkElement extends LikeAnchor(ReactiveElement) {
 
 #### FocusVisiblePolyfillMixin
 
-This mixin coordinates with the focus-visible polyfill to ensure proper behavior across browsers. [Learn more about the polyfill that powers this.](https://www.npmjs.com/package/focus-visible)
+This mixin coordinates with the focus-visible polyfill to ensure proper behavior across browsers. [Learn more about the polyfill that powers this](https://www.npmjs.com/package/focus-visible).
 
-**When to use:** Use this mixin when you need to leverage `:focus-visible` based selectors in your CSS.
+**When to use:** Use this mixin when you need to leverage `:focus-visible`-based selectors in your CSS.
 
 ```javascript
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 
 class MyElement extends FocusVisiblePolyfillMixin(HTMLElement) {
-    // Your element now supports :focus-visible selectors and coordinates with the polyfill
+    // Your element now supports `:focus-visible` selectors and coordinates with the polyfill
 }
 ```
 
@@ -223,8 +223,7 @@ class ObserveSlotTextElement extends ObserveSlotText(ReactiveElement) {
     }
 
     protected updated(): void {
-        console.log(this.slotHasContent);
-        // => true when <observing-slot-text-element>Text</observing-slot-text-element>
+        console.log(this.slotHasContent); // => true when <observing-slot-text-element>Text</observing-slot-text-element>
     }
 }
 
@@ -237,9 +236,6 @@ For named slots, you can supply the name of the slot as the second argument:
 class ObserveSlotTextElement extends ObserveSlotText(ReactiveElement, 'button-label') {
     protected override render(): TemplateResult {
         return html`
-            <button
-                id="button"
-            >
             <button id="button">
                 <slot
                     id="observing-slot"
