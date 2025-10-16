@@ -56,27 +56,15 @@ argTypes.variant = {
 //     },
 // };
 
-args['default-slot'] = {
-    name: 'Default slot',
-    type: { name: 'string', required: false },
-    description: 'The text label of the status light.',
-    control: { type: 'text' },
-    table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: '' },
-    },
-};
+args['default-slot'] = 'Status light';
+args.size = 'm';
 
 const meta: Meta = {
     title: 'Status light',
     component: 'swc-status-light',
     argTypes,
     parameters: {},
-    args: {
-        ['default-slot']: 'Status light',
-        variant: 'info',
-        size: 'm',
-    },
+    args,
     render: (args) => template(args),
     tags: ['migrated'],
 };
