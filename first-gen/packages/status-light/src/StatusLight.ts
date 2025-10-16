@@ -13,6 +13,7 @@
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
 
@@ -88,6 +89,20 @@ export class StatusLight extends StatusLightBase {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    // ──────────────────────
+    //     IMPLEMENTATION
+    // ──────────────────────
+
+    protected override updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
+    }
     // ──────────────────────────────
     //     RENDERING & STYLING
     // ──────────────────────────────
