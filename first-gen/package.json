@@ -63,7 +63,8 @@
         "process-icons": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag latest --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
-        "start": "yarn storybook",
+        "dev:core": "yarn workspace @swc/core dev",
+        "start": "run-p dev:core storybook",
         "storybook": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
         "storybook:quick": "run-p build:watch storybook:run",
@@ -83,7 +84,7 @@
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
-        "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
+        "test:watch:focus": "yarn dev:core & yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
         "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js"
     },

@@ -35,11 +35,13 @@
     ],
     "scripts": {
         "build": "vite build",
+        "cem:watch": "cem analyze --watch",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
+        "prestorybook": "cem analyze",
         "storybook": "storybook dev -p 6006",
         "storybook:build": "storybook build",
-        "test": "vitest",
+        "test": "yarn workspace @swc/core dev & vitest",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui"
     },
@@ -87,5 +89,5 @@
     "engines": {
         "node": ">=20"
     },
-    "customElements": ".storybook/custom-elements.json"
+    "customElements": "custom-elements.json"
 }
