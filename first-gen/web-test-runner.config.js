@@ -117,6 +117,8 @@ export default {
             'tools/shared/src/focus-visible.*',
             // Deprecated
             'packages/icons/**',
+            // Exclude second-gen files (outside root, causes coverage mapping issues)
+            '**/__wds-outside-root__/**',
         ],
         threshold: {
             statements: 98.4,
