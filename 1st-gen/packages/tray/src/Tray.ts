@@ -81,6 +81,23 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    /**
+     * Returns a visually hidden dismiss button for mobile screen reader accessibility.
+     * This button is placed before and after tray content to allow mobile screen reader
+     * users (particularly VoiceOver on iOS) to easily dismiss the overlay.
+     */
+    protected get dismissHelper(): TemplateResult {
+        return html`
+            <div class="visually-hidden">
+                <button
+                    tabindex="-1"
+                    aria-label="Dismiss"
+                    @click=${this.close}
+                ></button>
+            </div>
+        `;
+    }
+
     private dispatchClosed(): void {
         this.dispatchEvent(
             new Event('close', {
@@ -131,7 +148,9 @@ export class Tray extends SpectrumElement {
                 tabindex="-1"
                 @transitionend=${this.handleTrayTransitionend}
             >
+                ${this.dismissHelper}
                 <slot></slot>
+                ${this.dismissHelper}
             </div>
         `;
     }
