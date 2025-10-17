@@ -239,6 +239,7 @@ class ObserveSlotTextElement extends ObserveSlotText(ReactiveElement, 'button-la
             <button id="button">
                 <slot
                     id="observing-slot"
+                    name="button-label"
                     @slotchange=${this.manageObservedSlot}
                     @slotchange=${this.manageTextObservedSlot}
                 ></slot>
