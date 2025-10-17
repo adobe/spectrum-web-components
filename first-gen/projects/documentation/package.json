@@ -258,7 +258,7 @@
             ]
         },
         "serve": {
-            "command": "vite --config vite.config.js",
+            "command": "web-dev-server --config web-dev-server.config.js",
             "dependencies": [
                 {
                     "script": "build:assets"
