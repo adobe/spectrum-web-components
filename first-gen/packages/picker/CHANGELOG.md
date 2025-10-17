@@ -1,5 +1,35 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5733](https://github.com/adobe/spectrum-web-components/pull/5733) [`dbba861`](https://github.com/adobe/spectrum-web-components/commit/dbba8617475b9e20b304935ab65ca43f744efe93) Thanks [@iuliauta](https://github.com/iuliauta)! - - **Fixed**: Picker border color should be hidden in S2 theme
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Pending state handling and accessibility in `<sp-picker>` component.
+    - **Changed**: Removed dependency on `PendingStateController` and implemented inline pending state handling
+    - **Fixed**: Updated aria-labelledby attribute ordering to improve screen reader experience (`icon label applied-label pending-label`)
+    - **Fixed**: Updated progress circle implementation to use `role="presentation"` instead of `aria-valuetext`
+    - **Added**: Direct pending state visual rendering with improved accessibility
+
+    These changes improve accessibility for pending states while reducing unnecessary component dependencies.
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`4880da4`](https://github.com/adobe/spectrum-web-components/commit/4880da4f80a25ae1b475f52ce4ba7914cdcd9de4), [`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
+    - @spectrum-web-components/button@1.9.0
+    - @spectrum-web-components/menu@1.9.0
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/progress-circle@1.9.0
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/field-label@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/overlay@1.9.0
+    - @spectrum-web-components/tooltip@1.9.0
+    - @spectrum-web-components/tray@1.9.0
+    - @spectrum-web-components/icons-ui@1.9.0
+    - @spectrum-web-components/popover@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Minor Changes

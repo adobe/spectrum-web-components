@@ -78,52 +78,6 @@ export const Default = (args: StoryArgs): TemplateResult => {
 };
 Default.args = {};
 
-export const SmallQuiet = (args: StoryArgs): TemplateResult => {
-    const { onClick } = args;
-    return html`
-        <sp-card
-            heading="Card Heading"
-            subheading="JPG"
-            ?toggles=${args.toggles !== undefined ? args.toggles : true}
-            ?horizontal=${args.horizontal}
-            style="width: 200px;"
-            href="https://opensource.adobe.com/spectrum-web-components"
-            variant="quiet"
-            size="s"
-            @click=${(event: Event) => {
-                const composedTarget = event.composedPath()[0] as HTMLElement;
-                if (composedTarget.id !== 'like-anchor') return;
-                event.stopPropagation();
-                event.preventDefault();
-                onClick && onClick(event);
-            }}
-        >
-            <div slot="footer">
-                Footer with a
-                <sp-link href="https://google.com">link to Google</sp-link>
-            </div>
-            <sp-action-menu
-                label="More Actions"
-                slot="actions"
-                placement="bottom-end"
-                quiet
-            >
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-action-menu>
-            <img slot="cover-photo" src=${portrait} alt="Demo Graphic" />
-        </sp-card>
-    `;
-};
-SmallQuiet.argTypes = {
-    onClick: { action: 'link click' },
-};
-
 export const href = (args: StoryArgs): TemplateResult => {
     const { onClick } = args;
     return html`

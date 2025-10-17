@@ -28,6 +28,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-export.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-share.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/search/sp-search.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@spectrum-web-components/combobox/sp-combobox.js';
+import '@spectrum-web-components/color-field/sp-color-field.js';
 
 export default {
     component: 'sp-menu',
@@ -483,4 +488,106 @@ export const dynamicRemoval = (): TemplateResult => {
             <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-menu>
     `;
+};
+
+export const InputsWithMenu = (): TemplateResult => {
+    return html`
+        <div style="padding: 20px; max-width: 600px;">
+            <h3>Input Focus Demo</h3>
+            <p>
+                Try typing in any input field below, then hover over the menu
+                items. The input should maintain focus and not be interrupted.
+                This demonstrates the fix for focus stealing from all supported
+                input types.
+            </p>
+
+            <div
+                style="display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-bottom: 20px;"
+            >
+                <!-- Search Input -->
+                <div>
+                    <label for="demo-search">Search:</label>
+                    <sp-search
+                        id="demo-search"
+                        placeholder="Search input..."
+                        style="width: 100%; margin-top: 8px;"
+                    ></sp-search>
+                </div>
+
+                <!-- Textfield Input -->
+                <div>
+                    <label for="demo-textfield">Textfield:</label>
+                    <sp-textfield
+                        id="demo-textfield"
+                        placeholder="Textfield input..."
+                        style="width: 100%; margin-top: 8px;"
+                    ></sp-textfield>
+                </div>
+
+                <!-- Number Field Input -->
+                <div>
+                    <label for="demo-number">Number Field:</label>
+                    <sp-number-field
+                        id="demo-number"
+                        placeholder="Number input..."
+                        style="width: 100%; margin-top: 8px;"
+                    ></sp-number-field>
+                </div>
+
+                <!-- Combobox Input -->
+                <div>
+                    <label for="demo-combobox">Combobox:</label>
+                    <sp-combobox
+                        id="demo-combobox"
+                        placeholder="Combobox input..."
+                        style="width: 100%; margin-top: 8px;"
+                    ></sp-combobox>
+                </div>
+
+                <!-- Color Field Input -->
+                <div>
+                    <label for="demo-color">Color Field:</label>
+                    <sp-color-field
+                        id="demo-color"
+                        placeholder="Color input..."
+                        style="width: 100%; margin-top: 8px;"
+                    ></sp-color-field>
+                </div>
+
+                <!-- Native Input -->
+                <div>
+                    <label for="demo-native">Native Input:</label>
+                    <input
+                        id="demo-native"
+                        placeholder="Native input..."
+                        style="width: 100%; margin-top: 8px; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                    />
+                </div>
+            </div>
+
+            <sp-popover open>
+                <sp-menu>
+                    <sp-menu-item>Search Results</sp-menu-item>
+                    <sp-menu-item>Recent Searches</sp-menu-item>
+                    <sp-menu-item>Saved Searches</sp-menu-item>
+                    <sp-menu-item>Advanced Search</sp-menu-item>
+                    <sp-menu-item>Search Settings</sp-menu-item>
+                    <sp-menu-item>Clear History</sp-menu-item>
+                </sp-menu>
+            </sp-popover>
+        </div>
+    `;
+};
+
+InputsWithMenu.parameters = {
+    tags: ['!dev'],
+};
+
+InputsWithMenu.swc_vrt = {
+    skip: true,
+};
+
+InputsWithMenu.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
 };

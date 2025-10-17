@@ -1,5 +1,21 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5721](https://github.com/adobe/spectrum-web-components/pull/5721) [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c) Thanks [@iuliauta](https://github.com/iuliauta)! - - **Fixed**: Update border radius and border width for different t-shirt sizes for textfield component for S2 and Express themes
+
+- [#5756](https://github.com/adobe/spectrum-web-components/pull/5756) [`14ebeb9`](https://github.com/adobe/spectrum-web-components/commit/14ebeb9e8a24de9c9a80e7f3f0babd19a34e8179) Thanks [@castastrophe](https://github.com/castastrophe)! - - **Fixed**: Update border color and block padding inside the textfield and textarea components for S2 and Express themes
+
+- Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/help-text@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/icons-ui@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
