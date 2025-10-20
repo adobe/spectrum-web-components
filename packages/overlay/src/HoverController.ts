@@ -73,7 +73,7 @@ export class HoverController extends InteractionController {
         this.doFocusleave();
     }
 
-    protected clearCloseTimeout(): void {
+    private clearCloseTimeout(): void {
         if (this.hoverTimeout) {
             clearTimeout(this.hoverTimeout);
             this.hoverTimeout = undefined;
@@ -166,13 +166,13 @@ export class HoverController extends InteractionController {
         };
     }
 
-    protected scheduleClose(): void {
+    private scheduleClose(): void {
         this.hoverTimeout = setTimeout(() => {
             this.open = false;
         }, 300);
     }
 
-    protected doPointerleave(): void {
+    private doPointerleave(): void {
         this.hovering = false;
         const triggerElement = this.target as HTMLElement;
         if (this.targetFocused && triggerElement.matches(':focus-visible'))
@@ -183,7 +183,7 @@ export class HoverController extends InteractionController {
         this.scheduleClose();
     }
 
-    protected doFocusleave(): void {
+    private doFocusleave(): void {
         // Clear any existing timeout
         this.clearCloseTimeout();
 
