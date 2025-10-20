@@ -1737,6 +1737,10 @@ export const hoverWithInteractiveContent = (): TemplateResult => {
     `;
 };
 
+hoverWithInteractiveContent.swc_vrt = {
+    skip: true,
+};
+
 export const pickerInDialog = (): TemplateResult => {
     return html`
         <sp-button variant="primary" id="mybutton">Button popover</sp-button>

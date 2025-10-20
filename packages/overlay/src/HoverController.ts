@@ -229,9 +229,9 @@ export class HoverController extends InteractionController {
     }
 
     override initOverlay(): void {
-        // Clean up listeners if they've already been bound
-        this.abortController?.abort();
-        this.abortController = new AbortController();
+        if (!this.abortController) {
+            return;
+        }
         const { signal } = this.abortController;
         this.overlay.addEventListener(
             'pointerenter',
