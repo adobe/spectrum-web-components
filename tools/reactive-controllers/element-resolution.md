@@ -247,7 +247,7 @@ customElements.define('dynamic-resolver', DynamicResolver);
 
 #### Modal and overlay management
 
-Use element resolution to manage focus trap elements in modals:
+Use element resolution to manage focus trap elements in modals. The controller can find elements across shadow DOM boundaries, making it useful for overlays where content might be slotted or projected:
 
 ```typescript
 import { html, LitElement } from 'lit';
@@ -296,7 +296,9 @@ class ModalManager extends LitElement {
         return html`
             <div role="dialog" aria-modal="true" aria-labelledby="dialog-title">
                 <h2 id="dialog-title">Modal Dialog</h2>
-                <p>Content goes here</p>
+                <button data-first-focus>First Action</button>
+                <slot></slot>
+                <button data-last-focus>Cancel</button>
             </div>
         `;
     }
@@ -304,6 +306,22 @@ class ModalManager extends LitElement {
 
 customElements.define('modal-manager', ModalManager);
 ```
+
+**Usage:**
+
+```html
+<!-- Elements with data-first-focus/data-last-focus can be inside shadow root -->
+<modal-manager></modal-manager>
+
+<!-- Or slotted from light DOM - controller finds them regardless -->
+<modal-manager>
+    <button data-first-focus>Custom First Button</button>
+    <p>Modal content...</p>
+    <button data-last-focus>Custom Last Button</button>
+</modal-manager>
+```
+
+The `ElementResolutionController` automatically finds the marked elements whether they're in the shadow DOM or slotted from the light DOM, which is essential for managing focus traps in reusable overlay components.
 
 #### Form validation integration
 
