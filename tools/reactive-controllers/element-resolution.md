@@ -152,7 +152,7 @@ customElements.define('root-el', RootEl);
 
 #### Accessible label resolution
 
-Use `ElementResolutionController` to resolve accessible labeling elements:
+Use `ElementResolutionController` to resolve accessible labeling elements across shadow DOM boundaries:
 
 ```typescript
 import { html, LitElement } from 'lit';
@@ -165,13 +165,24 @@ class CustomInput extends LitElement {
 
     firstUpdated() {
         // Connect input to label for accessibility
-        if (this.labelElement.element) {
-            const labelId = this.labelElement.element.id || this.generateId();
-            this.labelElement.element.id = labelId;
+        // This handles cross-root ARIA relationships
+        const target = this.labelElement.element;
+        const input = this.shadowRoot?.querySelector('input');
 
-            const input = this.shadowRoot?.querySelector('input');
-            if (input) {
+        if (input && target) {
+            const targetParent = target.getRootNode() as HTMLElement;
+
+            if (targetParent === (this.getRootNode() as HTMLElement)) {
+                // Same root: use aria-labelledby with ID reference
+                const labelId = target.id || this.generateId();
+                target.id = labelId;
                 input.setAttribute('aria-labelledby', labelId);
+            } else {
+                // Different root: use aria-label with text content
+                input.setAttribute(
+                    'aria-label',
+                    target.textContent?.trim() || ''
+                );
             }
         }
     }
@@ -182,7 +193,7 @@ class CustomInput extends LitElement {
 
     render() {
         return html`
-            <input type="text" aria-label="Default label" />
+            <input type="text" />
         `;
     }
 }
