@@ -149,7 +149,7 @@ Base controller for managing keyboard focus within groups of elements. Extended 
 - Focus entry points
 - Element enter actions
 
-**Note:** This controller is typically not used directly. Use `RovingTabindexController` instead for most use cases.
+**Note:** This controller is typically not used directly. Use [RovingTabindexController](../roving-tab-index) instead for most use cases.
 
 ---
 
@@ -170,6 +170,8 @@ Resolves and tracks the language/locale context of the host element, responding 
 - Locale change tracking
 - Supports Shadow DOM
 - Bubbles up DOM tree
+
+[Learn more →](../language-resolution)
 
 ---
 
