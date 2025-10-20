@@ -396,27 +396,27 @@ The `RovingTabindexController` provides the following keyboard interactions:
     </sp-table-head>
     <sp-table-body>
         <sp-table-row>
-            <sp-table-cell><strong>Tab</strong></sp-table-cell>
+            <sp-table-cell><kbd>Tab</kbd></sp-table-cell>
             <sp-table-cell>All</sp-table-cell>
             <sp-table-cell>Moves focus into or out of the composite widget</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
-            <sp-table-cell><strong>→ (Right Arrow)</strong></sp-table-cell>
+            <sp-table-cell><kbd>→</kbd> (Right Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the next element</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
-            <sp-table-cell><strong>← (Left Arrow)</strong></sp-table-cell>
+            <sp-table-cell><kbd>←</kbd>(Left Arrow)</sp-table-cell>
             <sp-table-cell>horizontal, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the previous element</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
-            <sp-table-cell><strong>↓ (Down Arrow)</strong></sp-table-cell>
+            <sp-table-cell><kbd>↓</kbd> (Down Arrow)</sp-table-cell>
             <sp-table-cell>vertical, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the next element (or down in grid)</sp-table-cell>
         </sp-table-row>
         <sp-table-row>
-            <sp-table-cell><strong>↑ (Up Arrow)</strong></sp-table-cell>
+            <sp-table-cell><kbd>↑</kbd> (Up Arrow)</sp-table-cell>
             <sp-table-cell>vertical, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the previous element (or up in grid)</sp-table-cell>
         </sp-table-row>
@@ -426,19 +426,37 @@ The `RovingTabindexController` provides the following keyboard interactions:
 
 #### Disabled elements
 
-Use the `isFocusableElement` option to skip disabled elements:
+**Important:** According to [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols), disabled items should remain focusable in these composite widgets:
+
+- Options in a Listbox
+- Menu items in a Menu or menu bar
+- Tab elements in a set of Tabs
+- Tree items in a Tree View
+
+For these widgets, use `aria-disabled="true"` instead of the `disabled` attribute so items can still receive focus and be read in screen readers' forms/interactive mode:
 
 ```typescript
+// For menu items, tabs, listbox options - DO NOT skip disabled items
+rovingTabindexController = new RovingTabindexController<MenuItem>(this, {
+    elements: () => [...this.querySelectorAll('sp-menu-item')],
+    // Disabled items remain focusable for accessibility
+    isFocusableElement: (item) => true,
+});
+```
+
+For other controls like buttons or form inputs where disabled items should be skipped:
+
+```typescript
+// For buttons/forms - skip disabled items
 rovingTabindexController = new RovingTabindexController<Button>(this, {
     elements: () => [...this.querySelectorAll('sp-button')],
     isFocusableElement: (button) => !button.disabled,
 });
 ```
 
-Ensure disabled elements have appropriate ARIA attributes:
-
 ```html
-<sp-button disabled aria-disabled="true">Disabled</sp-button>
+<!-- Buttons can use disabled attribute -->
+<sp-button disabled>Disabled Button</sp-button>
 ```
 
 #### Screen reader announcements
