@@ -459,28 +459,6 @@ rovingTabindexController = new RovingTabindexController<Button>(this, {
 <sp-button disabled>Disabled Button</sp-button>
 ```
 
-#### Screen reader announcements
-
-When selection changes, announce it to screen readers:
-
-```typescript
-elementEnterAction: (element) => {
-    this.selected = element;
-
-    // Update aria-selected
-    this.elements.forEach((el) => {
-        el.setAttribute('aria-selected', String(el === element));
-    });
-
-    // Optional: Announce change
-    const announcement = document.createElement('div');
-    announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.textContent = `Selected: ${element.textContent}`;
-    // ... add to DOM temporarily
-};
-```
-
 ### WCAG compliance
 
 The roving tabindex pattern helps meet several WCAG success criteria:
