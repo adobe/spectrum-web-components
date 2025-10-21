@@ -34,7 +34,7 @@ import { Textfield } from '@spectrum-web-components/textfield';
 
 A text field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
 
-<sp-tabs selected="slotted" auto label="Label usage in textfields">
+<sp-tabs selected="slotted" auto label="Labels">
 <sp-tab value="slotted">Visible slotted label</sp-tab>
 <sp-tab-panel value="slotted">
 
