@@ -468,12 +468,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         `;
     }
 
-    protected renderPlaceholderContent(): TemplateResult {
-        return html`
-            <slot name="label"></slot>
-        `;
-    }
-
     protected get buttonContent(): TemplateResult[] {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
