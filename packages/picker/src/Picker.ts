@@ -960,7 +960,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  *
  * @slot field-label - label that is visibly displayed for the picker
  * @slot label - the placeholder content for the Picker; @deprecated use placeholder instead
- * @slot placeholder - The placeholder content for the Picker
+ * @slot label - The placeholder content for the Picker
  * @slot description - The description content for the Picker
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  * @slot - menu items to be listed in the Picker
