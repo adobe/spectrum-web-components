@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/adobe/spectrum-web-components/compare/v1.8.0...v1.9.0) (2025-10-13)
+
+## Minor Changes
+
+**sp-icons-workflow**: - Upgraded to `@adobe/spectrum-css-workflow-icons@5.0.0`. - Includes changes from previous a4u upstream releases: - Added `S2_Icon_HeartFilled_20_N.svg`, updated `S2_Icon_SpeedFast_20_N.svg`. - Replaced all 22×20px Cloud State icons with 20px variants. - Removed deprecated multi-colored error icon. Added new Cloud State icons (`Disconnected`, `Error`, `InProgress`, `Online`, `Paused`, `Pending`, `SlowConnection`). - Updated several other icons (`CloseCaptions`, `CommentHide`, `Community`, etc.).
+
+- For the full changelog, see: https://github.com/adobe/spectrum-css-workflow-icons/pull/50
+
+## Patch Changes
+
+**sp-button**: - **Fixed**: Aria-label handling in `<sp-button>` component.
+
+- **Fixed**: Moved aria-label updates to occur after slot content changes are processed to prevent timing issues
+- **Added**: Enhanced `label` property support for programmatic aria-label control
+- **Added**: Comprehensive tests for aria-label behavior during content and pending state changes
+- **Fixed**: Removed duplicate aria-label update logic in `update()` method
+
+These changes ensure that aria-labels are properly managed and preserved across component state changes, improving accessibility for screen reader users.
+
+**sp-combobox**: - **Fixed**: Pending state handling and accessibility in `<sp-combobox>` component.
+
+- **Changed**: Removed dependency on `PendingStateController` and implemented inline pending state handling
+- **Fixed**: Updated aria-labelledby attribute ordering to improve screen reader experience (`label applied-label pending-label`)
+- **Fixed**: Updated progress circle implementation to use `role="presentation"` instead of `aria-valuetext`
+- **Added**: Direct pending state visual rendering with improved accessibility
+
+These changes improve accessibility for pending states while reducing unnecessary component dependencies.
+
+**sp-menu**: - **Fixed**: MenuItem focus stealing from input elements on mouseover by enhancing MenuItem's `handleMouseover` method to detect when an input element currently has focus and prevent stealing focus in those cases.
+
+**sp-alert-dialog**: - **Fixed**: Make the divider color transparent only for Spectrum 2 theme
+
+**sp-picker**: - **Fixed**: Picker border color should be hidden in S2 theme
+
+**sp-textfield**: - **Fixed**: Update border radius and border width for different t-shirt sizes for textfield component for S2 and Express themes
+
+**sp-textfield**: - **Fixed**: Update border color and block padding inside the textfield and textarea components for S2 and Express themes
+
+**sp-picker**: - **Fixed**: Pending state handling and accessibility in `<sp-picker>` component.
+
+- **Changed**: Removed dependency on `PendingStateController` and implemented inline pending state handling
+- **Fixed**: Updated aria-labelledby attribute ordering to improve screen reader experience (`icon label applied-label pending-label`)
+- **Fixed**: Updated progress circle implementation to use `role="presentation"` instead of `aria-valuetext`
+- **Added**: Direct pending state visual rendering with improved accessibility
+
+These changes improve accessibility for pending states while reducing unnecessary component dependencies.
+
+**sp-progress-circle**: - **Fixed**: Accessibility warning logic in `<sp-progress-circle>` component.
+
+- **Fixed**: Updated accessibility warning logic to only apply when `role="progressbar"` is explicitly set
+- **Fixed**: Improved label validation for better accessibility compliance
+
+These changes ensure accessibility warnings are only shown when appropriate and improve overall accessibility compliance.
+
+**sp-reactive-controllers**: - **Fixed**: Accessibility and caching in `PendingStateController`.
+
+- **Fixed**: Updated progress circle to use `role="presentation"` for better accessibility compliance
+- **Fixed**: Improved aria-label caching logic to better handle dynamic label changes
+- **Added**: Documentation noting the controller is primarily used by `<sp-button>` component
+- **Fixed**: Enhanced caching mechanism to preserve user-set aria-labels during pending states
+
+These changes improve accessibility compliance and aria-label management for components using the pending state controller.
+
+**sp-help-text**: - **Fixed**: Update block paddings for S2 and Express themes
+
+**sp-field-label**: - **Fixed**: Update block paddings for S2 and Express themes
+
 # [1.8.0](https://github.com/adobe/spectrum-web-components/compare/v1.7.0...v1.8.0) (2025-09-23)
 
 ## Minor Changes

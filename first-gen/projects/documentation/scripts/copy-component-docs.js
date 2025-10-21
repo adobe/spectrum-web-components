@@ -63,8 +63,11 @@ const findDeprecationNotice = async function (filePath) {
     for await (const mdPath of globby.stream(filePath)) {
         const hasDeprecation = fs.existsSync(mdPath);
         if (hasDeprecation) {
+            // Using 'with' syntax for import attributes (required in Node.js 20.10+).
+            // The 'assert' keyword was deprecated and replaced with 'with' per TC39 proposal.
+            // See: https://github.com/tc39/proposal-import-attributes
             const packageJSON = await import(mdPath, {
-                assert: { type: 'json' },
+                with: { type: 'json' },
             }).then((packageDefault) => packageDefault.default);
             return packageJSON.deprecationNotice;
         }
