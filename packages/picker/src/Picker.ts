@@ -56,7 +56,6 @@ import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
 import pickerStyles from './picker.css.js';
 import { strategies } from './strategies.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
