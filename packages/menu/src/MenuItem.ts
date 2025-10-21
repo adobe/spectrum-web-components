@@ -13,6 +13,7 @@
 import {
     CSSResultArray,
     html,
+    INPUT_COMPONENT_PATTERN,
     nothing,
     PropertyValues,
     TemplateResult,
@@ -462,9 +463,105 @@ export class MenuItem extends LikeAnchor(
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
+        this.addEventListener('mouseover', this.handleMouseover);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
+    }
+
+    private getActiveElementSafely(): HTMLElement | null {
+        let root = this.getRootNode() as Document | ShadowRoot;
+        let activeElement = root.activeElement as HTMLElement;
+
+        // If no active element in current context and we're in shadow DOM,
+        // traverse up to find the document-level active element
+        if (!activeElement && root !== document) {
+            while (root && root !== document && 'host' in root) {
+                root = (root as ShadowRoot).host.getRootNode() as
+                    | Document
+                    | ShadowRoot;
+                activeElement = root.activeElement as HTMLElement;
+                if (activeElement) break;
+            }
+        }
+
+        return activeElement;
+    }
+
+    handleMouseover(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (target === this) {
+            // Check for active input elements across shadow boundaries
+            const activeElement = this.getActiveElementSafely();
+
+            // Only focus this menu item if no input element is currently active
+            // This prevents interrupting user input in search boxes, text fields, etc.
+            if (!activeElement || !this.isInputElement(activeElement)) {
+                this.focus();
+            }
+            this.focused = false;
+        }
+    }
+
+    /**
+     * Determines if an element is an input field that should retain focus.
+     * Uses multiple detection strategies to identify input elements generically.
+     */
+    private isInputElement(element: HTMLElement): boolean {
+        // Check for native HTML input elements
+        if (this.isNativeInputElement(element)) {
+            return true;
+        }
+
+        // Check for contenteditable elements (rich text editors)
+        if (element.contentEditable === 'true') {
+            return true;
+        }
+
+        // Check for Spectrum Web Components with input-like behavior
+        if (this.isSpectrumInputComponent(element)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if an element is a native HTML input element.
+     */
+    private isNativeInputElement(element: HTMLElement): boolean {
+        return (
+            element instanceof HTMLInputElement ||
+            element instanceof HTMLTextAreaElement ||
+            element instanceof HTMLSelectElement
+        );
+    }
+
+    /**
+     * Checks if an element is a Spectrum Web Component with input behavior.
+     * Uses ARIA roles and component patterns for generic detection.
+     */
+    private isSpectrumInputComponent(element: HTMLElement): boolean {
+        // Check if it's a Spectrum Web Component
+        if (!element.tagName.startsWith('SP-')) {
+            return false;
+        }
+
+        // Check ARIA role for input-like behavior
+        const role = element.getAttribute('role');
+        const inputRoles = ['textbox', 'searchbox', 'combobox', 'slider'];
+        if (role && inputRoles.includes(role)) {
+            return true;
+        }
+
+        // Check for components that typically contain input elements
+        // This covers components like sp-search, sp-textfield, sp-number-field, etc.
+        const inputComponentPattern = INPUT_COMPONENT_PATTERN;
+        if (inputComponentPattern.test(element.tagName)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -485,11 +582,6 @@ export class MenuItem extends LikeAnchor(
             );
         }
     };
-
-    protected closeOverlaysForRoot(): void {
-        // if (this.open) return;
-        // this.menuData.parentMenu?.closeDescendentOverlays();
-    }
 
     protected handleFocus(event: FocusEvent): void {
         const { target } = event;
@@ -554,7 +646,7 @@ export class MenuItem extends LikeAnchor(
             return;
         }
 
-        // Close other submenus (from closeOverlaysForRoot)
+        // Close other submenus
         if (!this.open) {
             this.menuData.parentMenu?.closeDescendentOverlays();
         }
