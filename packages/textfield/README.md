@@ -36,21 +36,28 @@ A text field must have a label in order to be accessible. A label can be provide
 
 <sp-tabs selected="slotted" auto label="Label usage in textfields">
 <sp-tab value="slotted">Visible slotted label</sp-tab>
-<sp-tab-panel value="self">
+<sp-tab-panel value="slotted">
+
 ```html
 <sp-textfield>Name</sp-textfield>
 ```
+
 </sp-tab-panel>
 <sp-tab value="attribute">Visually hidden label attribute</sp-tab>
 <sp-tab-panel value="attribute">
+
 ```html
 <sp-textfield label="Name"></sp-textfield>
 ```
+
 </sp-tab-panel>
+</sp-tabs>
 
 #### Placeholder
 
-Use the `placeholder` attribute to include placeholder text. **Note**: Placeholder text should not be used as a replacement for a label or help help text.
+Use the `placeholder` attribute to include placeholder text.
+
+**Note**: Placeholder text should not be used as a replacement for a label or help help text.
 
 ```html
 <sp-textfield placeholder="ex., John Doe">Name</sp-textfield>
