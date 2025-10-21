@@ -968,10 +968,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class Picker extends ObserveSlotPresence(
-    SizedMixin(FieldLabelMixin(PickerBase, 'field-label')),
-    ['[slot="placeholder"]']
-) {
+export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
