@@ -618,7 +618,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                         ? `label-${this.labelAlignment}`
                         : undefined
                 )}
-                role="${ifDefined(this.isCombobox ? 'combobox' : undefined)}"
                 @focus=${this.handleButtonFocus}
                 @blur=${this.handleButtonBlur}
                 @keydown=${{
