@@ -112,6 +112,9 @@ first-gen/test/visual/test.js
 test-results
 second-gen/packages/swc/playwright-report
 
+# vitest browser test screenshots
+**/__screenshots__/
+
 # second gen build artifacts
 second-gen/packages/*/dist/
 second-gen/packages/*/custom-elements.json

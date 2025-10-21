@@ -24,7 +24,16 @@ export default defineConfig({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
             outDir: 'dist',
-            insertTypesEntry: true,
+            beforeWriteFile: (filePath, content) => {
+                return {
+                    filePath,
+                    content: content
+                        // @todo: figure out why this is needed (type imports are becoming
+                        // relative instead of targeting the @swc/core package)
+                        // this fixes it e.g. ../../../core/... or ../core/... -> @swc/core/...
+                        .replace(/(\.\.\/)+core\//g, '@swc/core/'),
+                };
+            },
         }),
     ],
     css: {
@@ -39,12 +48,6 @@ export default defineConfig({
                     },
                 }),
             ],
-        },
-    },
-    resolve: {
-        alias: {
-            '@swc/core': resolve(__dirname, '../core'),
-            '@swc/components': resolve(__dirname, './components'),
         },
     },
     build: {
@@ -83,6 +86,13 @@ export default defineConfig({
         sourcemap: true,
         emptyOutDir: true,
         outDir: 'dist',
+    },
+    resolve: {
+        // Needed for Storybook to work
+        alias: {
+            '@swc/core': resolve(__dirname, '../core'),
+            '@swc/components': resolve(__dirname, './components'),
+        },
     },
     esbuild: {
         target: 'es2022',

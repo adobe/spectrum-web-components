@@ -11,18 +11,42 @@
  */
 
 import { CSSResultArray, html, TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 import { DividerBase } from '@swc/core/components/divider';
 
 import styles from './divider.css';
 
+// @todo Pull this up into a utility function for all components to leverage
+function capitalize(str?: string): string {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /**
- * @element sp-divider
+ * @element swc-divider
  */
 export class Divider extends DividerBase {
+    // ────────────────────
+    //     RENDERING & STYLING
+    // ────────────────────
+
     public static override styles: CSSResultArray = [styles];
 
     protected override render(): TemplateResult {
-        return html``;
+        return html`
+            <div
+                class=${classMap({
+                    ['spectrum-Divider']: true,
+                    [`spectrum-Divider--size${this.size?.toUpperCase()}`]:
+                        this.size != null,
+                    [`spectrum-Divider--static${capitalize(this.staticColor)}`]:
+                        this.staticColor != null,
+                    [`spectrum-Divider--vertical`]: this.vertical,
+                })}
+            ></div>
+        `;
     }
 }

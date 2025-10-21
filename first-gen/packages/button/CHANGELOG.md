@@ -1,5 +1,27 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Aria-label handling in `<sp-button>` component.
+    - **Fixed**: Moved aria-label updates to occur after slot content changes are processed to prevent timing issues
+    - **Added**: Enhanced `label` property support for programmatic aria-label control
+    - **Added**: Comprehensive tests for aria-label behavior during content and pending state changes
+    - **Fixed**: Removed duplicate aria-label update logic in `update()` method
+
+    These changes ensure that aria-labels are properly managed and preserved across component state changes, improving accessibility for screen reader users.
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/progress-circle@1.9.0
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/icons-ui@1.9.0
+    - @spectrum-web-components/clear-button@1.9.0
+    - @spectrum-web-components/close-button@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Minor Changes

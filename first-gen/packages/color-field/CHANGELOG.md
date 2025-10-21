@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c), [`14ebeb9`](https://github.com/adobe/spectrum-web-components/commit/14ebeb9e8a24de9c9a80e7f3f0babd19a34e8179)]:
+    - @spectrum-web-components/textfield@1.9.0
+    - @spectrum-web-components/color-handle@1.9.0
+    - @spectrum-web-components/base@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

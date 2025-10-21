@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Accessibility and caching in `PendingStateController`.
+    - **Fixed**: Updated progress circle to use `role="presentation"` for better accessibility compliance
+    - **Fixed**: Improved aria-label caching logic to better handle dynamic label changes
+    - **Added**: Documentation noting the controller is primarily used by `<sp-button>` component
+    - **Fixed**: Enhanced caching mechanism to preserve user-set aria-labels during pending states
+
+    These changes improve accessibility compliance and aria-label management for components using the pending state controller.
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/progress-circle@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
