@@ -194,6 +194,23 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.update(changes);
     }
 
+    /**
+     * Returns a visually hidden dismiss button for mobile screen reader accessibility.
+     * This button is placed before and after dialog content to allow mobile screen reader
+     * users (particularly VoiceOver on iOS) to easily dismiss the overlay.
+     */
+    protected get dismissHelper(): TemplateResult {
+        return html`
+            <div class="visually-hidden">
+                <button
+                    tabindex="-1"
+                    aria-label="Dismiss"
+                    @click=${this.close}
+                ></button>
+            </div>
+        `;
+    }
+
     protected renderDialog(): TemplateResult {
         return html`
             <slot></slot>
