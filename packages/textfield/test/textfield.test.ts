@@ -94,7 +94,7 @@ describe('Textfield', () => {
         expect(warnSpy.called).to.be.true;
         expect(warnSpy.firstCall.args[0]).to.equal(el);
         expect(warnSpy.firstCall.args[1]).to.equal(
-            '<sp-textfield> elements needs a label:'
+            '<sp-textfield> needs a label:'
         );
         window.__swc.warn = originalWarn;
     });
