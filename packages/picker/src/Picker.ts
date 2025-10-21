@@ -501,7 +501,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                               class="visually-hidden"
                               id="applied-label"
                           >
-                              ${appliedLabel} ${this.renderPlaceholderContent()}
+                              ${appliedLabel}
+                              <slot name="label"></slot>
                           </span>
                       `
                     : html`
