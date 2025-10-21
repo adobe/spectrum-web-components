@@ -46,7 +46,6 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import {
     IS_MOBILE,
