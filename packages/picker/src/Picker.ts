@@ -442,16 +442,14 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             return content;
         }
         return html`
-            <slot name="placeholder" id="placeholder">
-                <slot name="label" id="label">
-                    <span
-                        aria-hidden=${ifDefined(
-                            this.appliedLabel ? undefined : 'true'
-                        )}
-                    >
-                        ${this.label}
-                    </span>
-                </slot>
+            <slot name="label" id="label">
+                <span
+                    aria-hidden=${ifDefined(
+                        this.appliedLabel ? undefined : 'true'
+                    )}
+                >
+                    ${this.label}
+                </span>
             </slot>
         `;
     }
