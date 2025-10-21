@@ -40,6 +40,44 @@ A number field consists of an input field for numeric values and optional steppe
 </sp-number-field>
 ```
 
+#### Label
+
+A number field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-number-field
+    format-options='{
+        "style": "unit",
+        "unit": "MPH",
+        "unitDisplay": "long"
+    }'
+>
+    What is the air-speed velocity of an unladen swallow?
+</sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-number-field
+    format-options='{
+        "style": "unit",
+        "unit": "MPH",
+        "unitDisplay": "long"
+    }'
+    label="What is the air-speed velocity of an unladen swallow?"
+></sp-number-field>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ### Options
 
 #### Sizes
