@@ -589,16 +589,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             </div>
         `;
     }
-
-    /**
-     * The role of the picker button.
-     * @returns The role of the picker button.
-     * Override for roles such as "combobox"
-     */
-    protected get isCombobox(): boolean {
-        return false;
-    }
-
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
     protected override render(): TemplateResult {
