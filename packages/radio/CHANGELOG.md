@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8), [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c)]:
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/help-text@1.9.0
+    - @spectrum-web-components/field-group@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

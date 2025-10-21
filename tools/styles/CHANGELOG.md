@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
@@ -11,12 +18,10 @@
 - [#5320](https://github.com/adobe/spectrum-web-components/pull/5320) [`15be17d`](https://github.com/adobe/spectrum-web-components/commit/15be17db91f1140ccf3cad52b1f2ed6c4b9e28ba) Thanks [@renovate](https://github.com/apps/renovate)! - Clear button styles have been updated to the latest Spectrum CSS version of the clear button. This update includes a major reduction in the number of custom property abstractions needed to support the multiple theming layers (as seen in the `styles` package).
 
     This update spans the following additional packages:
-
     - @spectrum-web-components/button
     - @spectrum-web-components/styles
 
     As the updated styles now offer additional styling options, we have added the following API to the clear button component that exists in the `button` package:
-
     - `quiet` - when set to true, the button will be rendered as a quiet button. This is useful for cases where you want to use the clear button in a more subtle way.
     - `disabled` - when set to true, the button will be rendered as a disabled button.
     - `static-color` - currently this only supports the `white` context color. This is useful for cases where the button appears on a dark background texture. This is a replacement for the previously used `variant="overBackground"` attribute which is deprecated.
@@ -46,14 +51,12 @@
     ## Infield Button
 
     ### 6.1.2
-
     - [#3615](https://github.com/adobe/spectrum-css/pull/3615) [`f09c84a`](https://github.com/adobe/spectrum-css/commit/f09c84ae9922d67b6fe237d693afee0fab53fa67) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - ### Infield button fast follows
         - Updated infield button disabled border color to use `-spectrum-gray-300` for spectrum-two theme and `-spectrum-gray-200` for other themes.
 
     ### 6.1.1
 
     📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-
     - S2 Foundations fixes
         - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
             - This corresponds to the background-color updates picker has for S2.
@@ -65,7 +68,6 @@
     📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
     Dependency alignment across the project.
-
     - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
         - @spectrum-css/icon@9.1.0
         - @spectrum-css/tokens@16.0.1
@@ -75,21 +77,17 @@
     Bump @spectrum-css/stepper to 7.1.3
 
     ### 7.1.3
-
     - [#3621](https://github.com/adobe/spectrum-css/pull/3621) [`3aec28a`](https://github.com/adobe/spectrum-css/commit/3aec28aac60bdf32a585fa8ff38559d80b57ff86) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-
         - Updates `-spectrum-stepper-buttons-border-color-keyboard-focus` from `gray-900` to `gray-800` to match the rest of the border color on keyboardFocus.
 
     ### 7.1.2
 
     📝 [#3594](https://github.com/adobe/spectrum-css/pull/3594) [`6200a63`](https://github.com/adobe/spectrum-css/commit/6200a63f2c7dc1d2b0481c33b17c86427726c0bd) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
-
     - Updates Stepper's key-focus border color (`-spectrum-stepper-border-color-keyboard-focus`) to `-spectrum-gray-800`.
 
     ### 7.1.1
 
     📝 [#3536](https://github.com/adobe/spectrum-css/pull/3536) [`f77aa72`](https://github.com/adobe/spectrum-css/commit/f77aa72486f98c7b7d4f449c0d54fb6801881b7e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)!
-
     - S2 Foundations fixes
         - Adjusts the background-color of the infield button components within stepper to use `gray-100` as opposed to `gray-25`.
             - This corresponds to the background-color updates picker has for S2.
@@ -101,7 +99,6 @@
     📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
     Dependency alignment across the project.
-
     - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
         - @spectrum-css/actionbutton@8.0.0
         - @spectrum-css/icon@9.1.0
@@ -114,21 +111,17 @@
     ### 8.1.1
 
     📝 [#3575](https://github.com/adobe/spectrum-css/pull/3575) [`2e17d10`](https://github.com/adobe/spectrum-css/commit/2e17d109ebec3c2745c32a15840af5c636c8dc5d) Thanks [@TarunAdobe](https://github.com/TarunAdobe)!
-
     - Updated border color on keyboard focus state for textfield in spectrum-two theme.
 
     ### 8.1.0
 
     📝 [#3539](https://github.com/adobe/spectrum-css/pull/3539) [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c) Thanks [@rise-erpelding](https://github.com/rise-erpelding)!
-
     - Updates invalid icon spacing to be vertically centered for S2.
 
     📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
-
     - Dependency alignment across the project.
 
     Set component peerDependencies as optional to reduce console warnings on downstream projects.
-
     - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
         - @spectrum-css/helptext@8.0.0
         - @spectrum-css/tokens@16.0.1
@@ -136,7 +129,6 @@
     ## Search
 
     ### 8.1.2
-
     - [#3658](https://github.com/adobe/spectrum-css/pull/3658) [`e9fde67`](https://github.com/adobe/spectrum-css/commit/e9fde67bf341798a6ab34f227b2e7a417d1e5da7) Thanks [@rise-erpelding](https://github.com/rise-erpelding)! - Change S2 theme border color to gray-800 on keyfocus per design request in order to align with text field.
 
     ### 8.1.1
@@ -152,7 +144,6 @@
     📝 [#3541](https://github.com/adobe/spectrum-css/pull/3541) [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d) Thanks [@castastrophe](https://github.com/castastrophe)!
 
     Dependency alignment across the project.
-
     - Updated dependencies [[`205182b`](https://github.com/adobe/spectrum-css/commit/205182bebcbe82813457aa098d8799b0a23423ee), [`9b108f7`](https://github.com/adobe/spectrum-css/commit/9b108f7e05df1f55ab315dad96736d3ff4757f8c), [`1a3245c`](https://github.com/adobe/spectrum-css/commit/1a3245c3a660bc52ed260f18b6cceab5ee81541d)]:
         - @spectrum-css/clearbutton@8.0.0
         - @spectrum-css/icon@9.1.0
@@ -177,7 +168,6 @@
     Adjusts static color buttons to more closely resemble the S2 specifications. There are no expected changes to non-static button variants in S2, and no expected changes to other themes.
 
     This PR includes changes to:
-
     - Static white primary button (outline variant), static white secondary button (fill variant), static black primary button (outline variant), static black secondary button (fill variant)
     - Static white secondary button (outline variant) and static black secondary button (outline variant) border and background colors
     - Static color buttons' content color
@@ -200,7 +190,6 @@
     This patch update fixes support for `--mod-actionbutton-border-radius` to make sure it is accessible by consumers and overwrites the default border radius setting when used.
 
 - [#5202](https://github.com/adobe/spectrum-web-components/pull/5202) [`fa4be70`](https://github.com/adobe/spectrum-web-components/commit/fa4be70e9ab9dbeff26867edd3bdeb3f41c423e3) Thanks [@Rajdeepc](https://github.com/Rajdeepc)! - Updates the combobox component from version 4.0.0-s2-foundations.21 to 4.1.2. This work also addresses the design feedback for combobox in S2 foundations:
-
     - corrects the border colors for several combobox states including focus, keyboardFocus, focus+hover, disabled, read-only for all themes
     - increases the specificity of the `#textfield:hover .input` selector to `#textfield:hover .input:focus` in order to properly render the focus+hover border color styles (within the `combobox.css` file)
     - adds an additional selector for disabled comboboxes that correctly renders the border colors based on theme context

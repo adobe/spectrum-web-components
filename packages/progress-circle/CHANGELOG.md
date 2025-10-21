@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5730](https://github.com/adobe/spectrum-web-components/pull/5730) [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8) Thanks [@caseyisonit](https://github.com/caseyisonit)! - - **Fixed**: Accessibility warning logic in `<sp-progress-circle>` component.
+    - **Fixed**: Updated accessibility warning logic to only apply when `role="progressbar"` is explicitly set
+    - **Fixed**: Improved label validation for better accessibility compliance
+
+    These changes ensure accessibility warnings are only shown when appropriate and improve overall accessibility compliance.
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
