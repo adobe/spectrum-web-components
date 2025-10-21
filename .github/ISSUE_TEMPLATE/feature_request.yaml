@@ -1,7 +1,7 @@
 name: Feature request
 description: Describe the feature you would like added
 title: '[Feat]: '
-labels: [enhancement, triage, needs jira ticket]
+labels: [feature, triage, needs jira ticket]
 # assignees:
 body:
     - type: markdown
