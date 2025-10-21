@@ -19,3 +19,4 @@ export {
     type SizedElementInterface,
 } from './sizedMixin';
 export { defineElement } from './define-element';
+export { version } from './version';

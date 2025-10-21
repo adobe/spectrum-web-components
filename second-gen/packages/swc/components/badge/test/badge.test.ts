@@ -10,80 +10,192 @@
  * governing permissions and limitations under the License.
  */
 
+import { html } from 'lit';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-describe('Badge Component (Simple DOM Test)', () => {
+import type { Badge } from '@swc/components/badge';
+
+import '@swc/components/badge';
+
+import { fixture } from '../../../utils/test-utils.js';
+
+describe('swc-badge', () => {
     beforeEach(() => {
-        // Clean up the DOM before each test
         document.body.innerHTML = '';
     });
 
-    test('should manipulate DOM with hardcoded fixtures', () => {
-        // Create a simple fixture
-        document.body.innerHTML = `
-            <div id="badge-container">
-                <span class="badge" data-variant="informative" data-size="m">
-                    Badge
-                </span>
-            </div>
-        `;
+    // ──────────────────────────────────────────────────────────────
+    // TEST: Defaults
+    // ──────────────────────────────────────────────────────────────
 
-        const container = document.querySelector('#badge-container');
-        const badge = document.querySelector('.badge');
+    describe('defaults', () => {
+        test('should render with shadow root', async () => {
+            const badge = await fixture(html`
+                <swc-badge>Test Badge</swc-badge>
+            `);
 
-        // Verify the elements exist
-        expect(container).toBeTruthy();
-        expect(badge).toBeTruthy();
-        expect(badge?.textContent?.trim()).toBe('Badge');
-
-        // Verify attributes
-        expect(badge?.getAttribute('data-variant')).toBe('informative');
-        expect(badge?.getAttribute('data-size')).toBe('m');
-
-        // Test DOM manipulation
-        badge?.setAttribute('data-variant', 'positive');
-        expect(badge?.getAttribute('data-variant')).toBe('positive');
-    });
-
-    test('should handle multiple elements', () => {
-        document.body.innerHTML = `
-            <div id="badges">
-                <span class="badge" data-variant="positive">Positive</span>
-                <span class="badge" data-variant="negative">Negative</span>
-                <span class="badge" data-variant="informative">Info</span>
-            </div>
-        `;
-
-        const badges = document.querySelectorAll('.badge');
-
-        expect(badges).toHaveLength(3);
-        expect(badges[0]?.getAttribute('data-variant')).toBe('positive');
-        expect(badges[1]?.getAttribute('data-variant')).toBe('negative');
-        expect(badges[2]?.getAttribute('data-variant')).toBe('informative');
-
-        // Test that we can modify all of them
-        badges.forEach((badge, index) => {
-            badge.setAttribute('data-test-id', `badge-${index}`);
+            expect(badge.shadowRoot).toBeTruthy();
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge')
+            ).toBeTruthy();
         });
 
-        expect(badges[0]?.getAttribute('data-test-id')).toBe('badge-0');
-        expect(badges[1]?.getAttribute('data-test-id')).toBe('badge-1');
-        expect(badges[2]?.getAttribute('data-test-id')).toBe('badge-2');
+        test('should have correct default property values', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+
+            expect(badge.variant).toBe('informative');
+            expect(badge.subtle).toBe(false);
+            expect(badge.outline).toBe(false);
+            expect(badge.fixed).toBeUndefined();
+            expect(badge.size).toBe('m');
+        });
     });
 
-    test('should demonstrate browser APIs work', () => {
-        document.body.innerHTML = `<button id="test-btn">Click me</button>`;
+    // ──────────────────────────────────────────────────────────────
+    // TEST: Properties / Attributes
+    // ──────────────────────────────────────────────────────────────
 
-        const button = document.querySelector('#test-btn') as HTMLButtonElement;
-        let clicked = false;
+    describe('properties and attributes', () => {
+        test('should reflect variant property to attribute', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
 
-        button?.addEventListener('click', () => {
-            clicked = true;
+            badge.variant = 'positive';
+            await badge.updateComplete;
+
+            expect(badge.getAttribute('variant')).toBe('positive');
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge--positive')
+            ).toBeTruthy();
         });
 
-        // Simulate click
-        button?.click();
+        test('should set variant via attribute', async () => {
+            const badge = await fixture<Badge>(html`
+                <swc-badge variant="negative"></swc-badge>
+            `);
 
-        expect(clicked).toBe(true);
+            expect(badge.variant).toBe('negative');
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge--negative')
+            ).toBeTruthy();
+        });
+
+        test('should reflect subtle property to attribute', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+
+            badge.subtle = true;
+            await badge.updateComplete;
+
+            expect(badge.hasAttribute('subtle')).toBe(true);
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge--subtle')
+            ).toBeTruthy();
+        });
+
+        test('should set subtle via attribute', async () => {
+            const badge = await fixture<Badge>(html`
+                <swc-badge subtle></swc-badge>
+            `);
+
+            expect(badge.subtle).toBe(true);
+        });
+
+        test('should reflect outline property to attribute', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+
+            badge.outline = true;
+            await badge.updateComplete;
+
+            expect(badge.hasAttribute('outline')).toBe(true);
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge--outline')
+            ).toBeTruthy();
+        });
+
+        test('should set outline via attribute', async () => {
+            const badge = await fixture<Badge>(html`
+                <swc-badge outline></swc-badge>
+            `);
+
+            expect(badge.outline).toBe(true);
+        });
+
+        test('should handle fixed property', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+
+            badge.fixed = 'inline-start';
+            await badge.updateComplete;
+
+            expect(badge.getAttribute('fixed')).toBe('inline-start');
+            expect(
+                badge.shadowRoot?.querySelector(
+                    '.spectrum-Badge--fixed-inline-start'
+                )
+            ).toBeTruthy();
+        });
+
+        test('should handle size property', async () => {
+            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+
+            expect(badge.size).toBe('m');
+
+            badge.size = 'l';
+            await badge.updateComplete;
+
+            expect(badge.getAttribute('size')).toBe('l');
+            expect(
+                badge.shadowRoot?.querySelector('.spectrum-Badge--sizeL')
+            ).toBeTruthy();
+        });
+    });
+
+    // ──────────────────────────────────────────────────────────────
+    // TEST: Slots
+    // ──────────────────────────────────────────────────────────────
+
+    describe('slots', () => {
+        test('should render default slot content', async () => {
+            const badge = await fixture(html`
+                <swc-badge>Badge Label</swc-badge>
+            `);
+
+            expect(badge.textContent).toBe('Badge Label');
+        });
+
+        test('should accept icon slot', async () => {
+            const badge = await fixture(html`
+                <swc-badge>
+                    <div slot="icon">✓</div>
+                    With Icon
+                </swc-badge>
+            `);
+
+            // Verify slotted icon is present in light DOM
+            const slottedIcon = badge.querySelector('[slot="icon"]');
+            expect(slottedIcon).toBeTruthy();
+            expect(slottedIcon?.textContent).toBe('✓');
+        });
+    });
+
+    // ──────────────────────────────────────────────────────────────
+    // TEST: Events
+    // ──────────────────────────────────────────────────────────────
+
+    describe.skip('events', () => {
+        // Badge component does not dispatch custom events
+    });
+
+    // ──────────────────────────────────────────────────────────────
+    // TEST: Accessibility
+    // ──────────────────────────────────────────────────────────────
+    // @TODO: Add accessibility tests with axe-core / playwright
+    describe('accessibility', () => {
+        test('should be accessible to screen readers', async () => {
+            const badge = await fixture(html`<swc-badge>New</swc-badge>`);
+
+            const badgeElement =
+                badge.shadowRoot?.querySelector('.spectrum-Badge');
+            expect(badgeElement).toBeTruthy();
+            expect(badge.textContent).toBe('New');
+        });
     });
 });

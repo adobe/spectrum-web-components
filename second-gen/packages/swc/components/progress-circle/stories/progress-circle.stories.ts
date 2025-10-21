@@ -11,46 +11,69 @@
  */
 
 import { html } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { ProgressCircle } from '@swc/components/progress-circle';
 
 import '@swc/components/progress-circle';
 
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { events, args, argTypes, template } = getStorybookHelpers(
+    'swc-progress-circle'
+);
+
+/*
+ * @todo Blurring the range control seems to cause a catastrophic Storybook
+ * render failure, so disabling for now.
+ */
+// argTypes.progress = {
+//     ...argTypes.progress,
+//     control: { type: 'range', min: 0, max: 100, step: 1 },
+// };
+
+/*
+ * @todo This is properly configuring the Select, but the control doesn't
+ * seem to work; need to investigate.
+ */
+// argTypes.size = {
+//     ...argTypes.size,
+//     control: { type: 'select' },
+//     options: ProgressCircle.VALID_SIZES,
+// };
+
+argTypes['static-color'] = {
+    ...argTypes['static-color'],
+    control: { type: 'select' },
+    options: [undefined, ...ProgressCircle.STATIC_COLORS],
+};
+
+/**
+ * A progress circle component that visually represents the completion progress of a task.
+ * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ */
 const meta: Meta = {
-    title: 'Components/Progress Circle',
+    title: 'Progress circle',
     component: 'swc-progress-circle',
-    argTypes: {
-        indeterminate: {
-            control: { type: 'boolean' },
-            description: 'Whether the progress is indeterminate.',
-        },
-        progress: {
-            control: { type: 'range', min: 0, max: 100, step: 1 },
-            description: 'Progress value from 0 to 100.',
-        },
-        size: {
-            control: { type: 'select' },
-            options: ['s', 'm', 'l'],
-            description: 'Size of the progress circle.',
-        },
-        staticColor: {
-            control: { type: 'select' },
-            options: [undefined, 'white'],
-            description: 'Static color variant.',
-        },
-        label: {
-            control: { type: 'text' },
-            description: 'Accessible label for the progress circle.',
+    args,
+    argTypes,
+    render: (args) => template(args),
+    parameters: {
+        actions: {
+            handles: events,
         },
     },
-    args: {
-        progress: 50,
-        size: 'm',
-    },
+    tags: ['migrated'],
 };
 
 export default meta;
-type Story = StoryObj;
+
+// ───────────────
+//    STORIES
+// ───────────────
 
 export const Default: Story = {
     args: {
@@ -58,15 +81,7 @@ export const Default: Story = {
         size: 'm',
         label: 'Loading progress',
     },
-    render: (args) => html`
-        <swc-progress-circle
-            .progress=${args.progress}
-            size="${args.size}"
-            .label=${args.label}
-            ?indeterminate=${args.indeterminate}
-            static-color="${ifDefined(args.staticColor)}"
-        ></swc-progress-circle>
-    `,
+    render: (args) => template(args),
 };
 
 export const Sizes: Story = {
@@ -89,6 +104,7 @@ export const Sizes: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };
 
 export const ProgressValues: Story = {
@@ -112,6 +128,7 @@ export const ProgressValues: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };
 
 export const Indeterminate: Story = {
@@ -134,6 +151,7 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };
 
 export const StaticWhite: Story = {
@@ -161,6 +179,7 @@ export const StaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };
 
 export const StaticBlack: Story = {
@@ -188,6 +207,7 @@ export const StaticBlack: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };
 
 export const IndeterminateStaticWhite: Story = {
@@ -215,4 +235,5 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
+    tags: ['!dev'],
 };

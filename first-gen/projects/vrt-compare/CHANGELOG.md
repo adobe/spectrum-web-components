@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399)]:
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/action-bar@1.9.0
+    - @spectrum-web-components/action-button@1.9.0
+    - @spectrum-web-components/action-group@1.9.0
+    - @spectrum-web-components/split-view@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+    - @spectrum-web-components/styles@1.9.0
+    - @spectrum-web-components/theme@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

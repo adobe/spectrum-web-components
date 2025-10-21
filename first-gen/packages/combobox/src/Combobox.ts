@@ -28,19 +28,19 @@ import {
     live,
     repeat,
 } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/picker-button/sp-picker-button.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { Textfield } from '@spectrum-web-components/textfield';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
-import styles from './combobox.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import styles from './combobox.css.js';
 
 export type ComboboxOption = {
     value: string;
@@ -93,17 +93,6 @@ export class Combobox extends Textfield {
     /** Defines a string value that labels the Combobox while it is in pending state. */
     @property({ type: String, attribute: 'pending-label' })
     public pendingLabel = 'Pending';
-
-    public pendingStateController: PendingStateController<this>;
-
-    /**
-     * Initializes the `PendingStateController` for the Combobox component.
-     * When the pending state changes to `true`, the `open` property of the Combobox is set to `false`.
-     */
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
-    }
 
     @query('slot:not([name])')
     private optionSlot!: HTMLSlotElement;
@@ -369,7 +358,7 @@ export class Combobox extends Textfield {
         super.onBlur(event);
     }
 
-    protected renderAppliedLabel(): TemplateResult {
+    protected renderVisuallyHiddenLabels(): TemplateResult {
         /**
          * appliedLabel corresponds to `<label for="...">`, which is overriden
          * if user adds the `label` attribute manually to `<sp-combobox>`.
@@ -379,6 +368,7 @@ export class Combobox extends Textfield {
         return html`
             ${this.pending
                 ? html`
+                      ${this.renderLoader()}
                       <span
                           aria-hidden="true"
                           class="visually-hidden"
@@ -417,7 +407,7 @@ export class Combobox extends Textfield {
             <sp-progress-circle
                 size="s"
                 indeterminate
-                aria-hidden="true"
+                role="presentation"
                 class="progress-circle"
             ></sp-progress-circle>
         `;
@@ -441,7 +431,7 @@ export class Combobox extends Textfield {
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
                 aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="pending-label applied-label label"
+                aria-labelledby="label applied-label pending-label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -469,7 +459,6 @@ export class Combobox extends Textfield {
                 ?required=${this.required}
                 ?readonly=${this.readonly}
             />
-            ${this.pendingStateController.renderPendingState()}
         `;
     }
 
@@ -560,7 +549,7 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
-            ${this.renderAppliedLabel()}
+            ${this.renderVisuallyHiddenLabels()}
             <slot
                 aria-hidden="true"
                 name="tooltip"

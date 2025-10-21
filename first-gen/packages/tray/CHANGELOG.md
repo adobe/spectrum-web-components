@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/modal@1.9.0
+    - @spectrum-web-components/underlay@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

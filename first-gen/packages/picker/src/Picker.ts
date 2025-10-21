@@ -32,22 +32,17 @@ import {
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-
+import type { FieldLabel } from '@spectrum-web-components/field-label';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import pickerStyles from './picker.css.js';
-
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import type {
     Menu,
     MenuItem,
     MenuItemChildren,
+    MenuItemKeydownEvent,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
-import type { Tooltip } from '@spectrum-web-components/tooltip';
-
-import type { FieldLabel } from '@spectrum-web-components/field-label';
-import type { MenuItemKeydownEvent } from '@spectrum-web-components/menu';
 import { Placement } from '@spectrum-web-components/overlay';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
@@ -56,10 +51,10 @@ import {
     IS_MOBILE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
-import { PendingStateController } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
-
+import type { Tooltip } from '@spectrum-web-components/tooltip';
 import { DesktopController } from './DesktopController.js';
 import { MobileController } from './MobileController.js';
+import pickerStyles from './picker.css.js';
 import { strategies } from './strategies.js';
 
 const chevronClass = {
@@ -180,17 +175,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     @property({ attribute: false })
     public get selectedItem(): MenuItem | undefined {
         return this._selectedItem;
-    }
-
-    public pendingStateController: PendingStateController<this>;
-
-    /**
-     * Initializes the `PendingStateController` for the Picker component.
-     * The `PendingStateController` manages the pending state of the Picker.
-     */
-    constructor() {
-        super();
-        this.pendingStateController = new PendingStateController(this);
     }
 
     public set selectedItem(selectedItem: MenuItem | undefined) {
@@ -468,6 +452,20 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         `;
     }
 
+    protected renderLoader(): TemplateResult {
+        import(
+            '@spectrum-web-components/progress-circle/sp-progress-circle.js'
+        );
+        return html`
+            <sp-progress-circle
+                size="s"
+                indeterminate
+                role="presentation"
+                class="progress-circle"
+            ></sp-progress-circle>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
@@ -509,7 +507,18 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                           ></sp-icon-alert>
                       `
                     : nothing}
-                ${this.pendingStateController.renderPendingState()}
+                ${this.pending
+                    ? html`
+                          ${this.renderLoader()}
+                          <span
+                              aria-hidden="true"
+                              class="visually-hidden"
+                              id="pending-label"
+                          >
+                              ${this.pendingLabel}
+                          </span>
+                      `
+                    : nothing}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
@@ -592,7 +601,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 aria-describedby="tooltip ${DESCRIPTION_ID}"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="loader icon label applied-label"
+                aria-labelledby="icon label applied-label pending-label"
                 id="button"
                 class=${ifDefined(
                     this.labelAlignment

@@ -15,11 +15,68 @@ import { property, query } from 'lit/decorators.js';
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
 import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
 
+import {
+    PROGRESS_CIRCLE_VALID_SIZES,
+    ProgressCircleStaticColor,
+} from './ProgressCircle.types';
+
+/**
+ * A progress circle component that visually represents the completion progress of a task.
+ * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ *
+ * @attribute {ElementSize} size - The size of the progress circle.
+ *
+ * @todo Why do we support both the slot and the label attribute? Should we deprecate the slot?
+ *
+ * @todo Figure out why our tool chain doesn't respect the line breaks in this slot description.
+ *
+ * @slot - Accessible label for the progress circle.
+ *
+ *   Used to provide context about what is loading or progressing.
+ *
+ * @fires progress-change - Dispatched when the progress value changes
+ */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l'],
+    validSizes: PROGRESS_CIRCLE_VALID_SIZES,
 }) {
+    // ─────────────────────────
+    //     API TO OVERRIDE
+    // ─────────────────────────
+
+    /**
+     * @internal
+     *
+     * A readonly array of the valid static colors for the progress circle.
+     *
+     * This is an actual internal property, intended not for customer use
+     * but for use in internal validation logic, stories, tests, etc.
+     *
+     * Because S1 and S2 support different static colors, the value of this
+     * property must be set in each subclass.
+     */
+    static readonly STATIC_COLORS: readonly string[];
+
+    /**
+     * @internal
+     *
+     * Static color variant for use on different backgrounds.
+     *
+     * This is a public property, but its valid values vary between S1 and S2,
+     * so the property (and its docs) need to be redefined in each subclass.
+     *
+     * The type declared here is a union of the valid values for S1 and S2,
+     * and should be narrowed in each subclass.
+     */
+    @property({ type: String, reflect: true, attribute: 'static-color' })
+    public staticColor?: ProgressCircleStaticColor;
+
+    // ──────────────────
+    //     SHARED API
+    // ──────────────────
+
     /**
      * Whether the progress circle shows indeterminate progress (loading state).
+     *
      * When true, displays an animated loading indicator instead of a specific progress value.
      */
     @property({ type: Boolean, reflect: true })
@@ -27,6 +84,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
 
     /**
      * Accessible label for the progress circle.
+     *
      * Used to provide context about what is loading or progressing.
      */
     @property({ type: String })
@@ -34,11 +92,19 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
 
     /**
      * Progress value from 0 to 100.
+     *
      * Only relevant when indeterminate is false.
      */
     @property({ type: Number })
     public progress = 0;
 
+    // ──────────────────────
+    //     IMPLEMENTATION
+    // ──────────────────────
+
+    /**
+     * @internal
+     */
     @query('slot')
     private slotEl!: HTMLSlotElement;
 
@@ -79,12 +145,19 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
             }
         }
 
-        if (window.__swc?.DEBUG) {
+        const hasAccessibleName = (): boolean => {
+            return Boolean(
+                this.label ||
+                    this.getAttribute('aria-label') ||
+                    this.getAttribute('aria-labelledby') ||
+                    this.slotEl.assignedNodes().length
+            );
+        };
+
+        if (window.__swc.DEBUG) {
             if (
-                !this.label &&
-                !this.getAttribute('aria-label') &&
-                !this.getAttribute('aria-labelledby') &&
-                !this.slotEl?.assignedNodes()?.length
+                !hasAccessibleName() &&
+                this.getAttribute('role') === 'progressbar'
             ) {
                 window.__swc?.warn(
                     this,

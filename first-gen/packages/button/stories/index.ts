@@ -86,6 +86,17 @@ export const argTypes = {
             type: 'boolean',
         },
     },
+    label: {
+        name: 'label',
+        type: { name: 'string', required: false },
+        description: 'The label to apply to the aria-label of the button.',
+        table: {
+            type: { summary: 'string' },
+        },
+        control: {
+            type: 'text',
+        },
+    },
 };
 
 export const makeOverBackground =
@@ -122,6 +133,7 @@ export function renderButton(properties: Properties): TemplateResult {
             treatment=${ifDefined(properties.treatment)}
             variant=${ifDefined(properties.variant)}
             static-color=${ifDefined(properties.staticColor)}
+            label=${ifDefined(properties.label)}
         >
             ${properties.content || 'Click Me'}
         </sp-button>

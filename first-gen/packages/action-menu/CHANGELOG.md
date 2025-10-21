@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399), [`dbba861`](https://github.com/adobe/spectrum-web-components/commit/dbba8617475b9e20b304935ab65ca43f744efe93), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/picker@1.9.0
+    - @spectrum-web-components/action-button@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

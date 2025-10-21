@@ -4,13 +4,35 @@ import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
 import '../tokens/global-vars.css';
 
-// import { setCustomElementsManifest } from '@storybook/web-components';
-// import customElements from './custom-elements.json';
+import { setCustomElementsManifest } from '@storybook/web-components';
+import {
+    setStorybookHelpersConfig,
+    type Options,
+} from '@wc-toolkit/storybook-helpers';
+import customElements from './custom-elements.json';
+import { withStaticColorBackground } from './decorators/static-color-background';
 
-// // Set the Custom Elements Manifest for automatic controls generation
-// setCustomElementsManifest(customElements);
+const options: Options = {
+    categoryOrder: [
+        'attributes',
+        'properties',
+        'slots',
+        'cssProps',
+        'cssParts',
+        'events',
+        'methods',
+    ],
+    hideArgRef: true,
+    renderDefaultValues: true,
+};
+
+setStorybookHelpersConfig(options);
+
+// Set the Custom Elements Manifest for automatic controls generation
+setCustomElementsManifest(customElements);
 
 const preview = {
+    decorators: [withStaticColorBackground],
     parameters: {
         layout: 'centered',
         controls: {
