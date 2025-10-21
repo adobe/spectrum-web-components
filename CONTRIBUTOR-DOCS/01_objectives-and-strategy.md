@@ -93,7 +93,7 @@ Meanwhile, most of the **accessibility improvements** and general **component im
 
 ### Side-by-side development of 1st-gen and 2nd-gen
 
-We have decided to work on 1st-gen and 2nd-gen side-by-side, in the same repository. This gives us two important advantages: **isolation** and **colocation**.
+We have decided to work on 1st-gen and 2nd-gen side-by-side—in the same repository, but in separate workspaces. This gives us two important advantages: **isolation** and **colocation**.
 
 **Isolation** of 1st-gen and 2nd-gen in separate workspaces lets us build 2nd-gen iteratively from the ground up, leaving behind as much structural and technical debt as possible, without needing to worry about breaking 1st-gen. Disruptive changes are confined to the `second-gen` workspace, while the 1st-gen project continues working essentially "as-is."
 

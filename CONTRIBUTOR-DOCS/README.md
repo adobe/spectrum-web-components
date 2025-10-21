@@ -9,7 +9,7 @@
 
 - [About Spectrum Web Components](#about-spectrum-web-components)
 - [About the 1st-gen-to-2nd-gen transition](#about-the-1st-gen-to-2nd-gen-transition)
-- [About these contributor docs](#about-these-contributor-docs)
+- [About these docs](#about-these-docs)
 
 </details>
 
@@ -66,9 +66,11 @@ Reflecting the side-by-side strategy, the repository is organized into two top-l
 
 During this transition, depending on what you're trying to accomplish, you may end up working in `first-gen`, `second-gen`, or both. If you have any questions, please ask—we're happy to help.
 
-## About these contributor docs
+## About these docs
 
-These contributor docs are organized into several sections to help you find the information you need:
+These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
+
+The docs are organized into several sections to help you find the information you need:
 
 **[Objectives and Strategy](./01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach. This explains why we're making this transition and how we're managing the work to advance multiple objectives in parallel while continuing to deliver value to customers.
 
