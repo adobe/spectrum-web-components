@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.9.0
+
+### Minor Changes
+
+- [#5735](https://github.com/adobe/spectrum-web-components/pull/5735) [`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - Upgraded to `@adobe/spectrum-css-workflow-icons@5.0.0`. - Includes changes from previous a4u upstream releases: - Added `S2_Icon_HeartFilled_20_N.svg`, updated `S2_Icon_SpeedFast_20_N.svg`. - Replaced all 22×20px Cloud State icons with 20px variants. - Removed deprecated multi-colored error icon. Added new Cloud State icons (`Disconnected`, `Error`, `InProgress`, `Online`, `Paused`, `Pending`, `SlowConnection`). - Updated several other icons (`CloseCaptions`, `CommentHide`, `Community`, etc.).
+    - For the full changelog, see: https://github.com/adobe/spectrum-css-workflow-icons/pull/50
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/base@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

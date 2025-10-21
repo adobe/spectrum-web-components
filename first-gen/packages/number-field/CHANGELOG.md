@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- Updated dependencies [[`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c), [`14ebeb9`](https://github.com/adobe/spectrum-web-components/commit/14ebeb9e8a24de9c9a80e7f3f0babd19a34e8179), [`7d23140`](https://github.com/adobe/spectrum-web-components/commit/7d23140c21f0006ddea8a5cf39478ff36acbfbb8)]:
+    - @spectrum-web-components/textfield@1.9.0
+    - @spectrum-web-components/reactive-controllers@1.9.0
+    - @spectrum-web-components/infield-button@1.9.0
+    - @spectrum-web-components/icon@1.9.0
+    - @spectrum-web-components/icons-ui@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes

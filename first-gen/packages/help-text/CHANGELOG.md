@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.9.0
+
+### Patch Changes
+
+- [#5721](https://github.com/adobe/spectrum-web-components/pull/5721) [`72d807c`](https://github.com/adobe/spectrum-web-components/commit/72d807c75d04b0fec1794a8d3e68383ca61d9e4c) Thanks [@iuliauta](https://github.com/iuliauta)! - - **Fixed**: Update block paddings for S2 and Express themes
+
+- Updated dependencies [[`bdf54c1`](https://github.com/adobe/spectrum-web-components/commit/bdf54c1bc6d3eb20da1a1bf3b40650e6ab1ba399)]:
+    - @spectrum-web-components/icons-workflow@1.9.0
+    - @spectrum-web-components/base@1.9.0
+    - @spectrum-web-components/shared@1.9.0
+
 ## 1.8.0
 
 ### Patch Changes
