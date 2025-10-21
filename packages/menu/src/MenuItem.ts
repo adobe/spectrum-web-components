@@ -618,26 +618,6 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    protected handleSubmenuFocus(): void {
-        requestAnimationFrame(() => {
-            // Wait till after `closeDescendentOverlays` has happened in Menu
-            // to reopen (keep open) the direct descendent of this Menu Item
-            this.overlayElement.open = this.open;
-            this.focused = false;
-        });
-    }
-
-    protected handleBeforetoggle = (event: Event): void => {
-        if ((event as Event & { newState: string }).newState === 'closed') {
-            this.open = true;
-            this.overlayElement.manuallyKeepOpen();
-            this.overlayElement.removeEventListener(
-                'beforetoggle',
-                this.handleBeforetoggle
-            );
-        }
-    };
-
     protected handlePointerenter(event: PointerEvent): void {
         this._lastPointerType = event.pointerType; // Track pointer type
 
