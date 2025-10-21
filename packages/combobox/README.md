@@ -25,28 +25,111 @@ import { Combobox } from '@spectrum-web-components/combobox';
 
 ### Anatomy
 
-Combobox options are presented as a popup menu.
-Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
+A combobox has the following:
 
-#### Menu items via the `options` property
+- a label
+- a textfield for the user to type in, with optional placeholder text
+- a picker button to open the listbox
+- a listbox of options
+- optional help text
 
-Instead of providing `<sp-menu-item>` children, you can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items:
+```html
+<sp-combobox>
+    <span slot="field-label">Color</span>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
 
-```html-no-demo
+#### Label
+
+A combobox must have a label in order to be accessible. A label can be provided either via the `field-label` slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-combobox>
+    <span slot="field-label">Color</span>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Placeholder
+
+Use the `placeholder` attribute to include placeholder text.
+
+**Note**: Placeholder text should not be used as a replacement for a label or help help text.
+
+```html
+<sp-combobox label="Color" placeholder="Select a color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+#### Listbox options
+
+Litbox options can be added as slotted `sp-menu-item` children or as an array of `ComboboxOptions`. They can also be loaded dynamically.
+
+<sp-tabs selected="slotted" auto label="Listbox options">
+<sp-tab value="slotted">Slotted children</sp-tab>
+<sp-tab-panel value="slotted">
+
+You can use the default slot to provideg `<sp-menu-item>` children.
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="property">Array of options</sp-tab>
+<sp-tab-panel value="property">
+
+You can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items
+
+```html
 <sp-combobox id="color" label="Color"></sp-combobox>
 
 <script>
     document.getElementById('color').options = [
-        { value: "red", itemText: "Red" },
-        { value: "green", itemText: "Green" },
-        { value: "blue", itemText: "Blue" }
+        { value: 'red', itemText: 'Red' },
+        { value: 'green', itemText: 'Green' },
+        { value: 'blue', itemText: 'Blue' },
     ];
 </script>
 ```
 
-#### Menu items via dynamic options
+</sp-tab-panel>
+<sp-tab value="dynamic">Dynamic options</sp-tab>
+<sp-tab-panel value="dynamic">
 
-When you replace the `options` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
+When you replace the `dynamic` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
+
 For example, using [Lit](https://lit.dev/):
 
 ```ts
@@ -61,6 +144,9 @@ mutate() {
     ];
 }
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Options
 
