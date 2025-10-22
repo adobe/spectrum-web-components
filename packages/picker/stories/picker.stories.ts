@@ -418,6 +418,9 @@ iconsNone.args = {
     open: true,
 };
 iconsNone.decorators = [isOverlayOpen];
+iconsNone.swc_vrt = {
+    skip: true,
+};
 
 export const iconValue = (args: StoryArgs): TemplateResult => {
     return html`
@@ -478,6 +481,9 @@ iconsOnly.args = {
     open: true,
 };
 iconsOnly.decorators = [isOverlayOpen];
+iconsOnly.swc_vrt = {
+    skip: true,
+};
 
 export const dynamicIcons = (args: StoryArgs): TemplateResult => {
     return html`

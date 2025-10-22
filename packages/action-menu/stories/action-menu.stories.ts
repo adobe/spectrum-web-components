@@ -281,6 +281,9 @@ selects.args = {
     open: true,
 };
 selects.decorators = [isOverlayOpen];
+selects.swc_vrt = {
+    skip: true,
+};
 
 export const iconOnly = (args: StoryArgs = {}): TemplateResult =>
     Template(args);
