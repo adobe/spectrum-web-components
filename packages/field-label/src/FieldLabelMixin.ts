@@ -40,13 +40,25 @@ export declare class FieldLabelMixinInterface {
 /**
  * @mixin FieldLabelMixin
  *
+ * provides a consistent way to render accessible, visually integrated labels
+ * for form controls within custom elements. It handles label visibility,
+ * required field indicators, disabled states, and label positioning.
+ *
+ * Spectrum Web Components leverages the `FieldLabelMixin` to power elements
+ * like `sp-textfield`, `sp-combobox`, `sp-number-field`, and `sp-color-field`.
+ *
+ * @param superClass - The base class to mixin.
+ * @param slotName - The name of the slot to observe for label content.
+ * @param excludedSelectors - An array of selectors to exclude when observing slot content.
+ * @returns A constructor for the mixin.
+ *
  * @slot field-label - Text content of the label.
  */
 export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
     superClass: T,
     slotName?: string,
     excludedSelectors: string[] = []
-) => {
+): Constructor<FieldLabelMixinInterface> & T => {
     class FieldLabelMixinClass extends ObserveSlotText(
         superClass,
         slotName,
