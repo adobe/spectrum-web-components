@@ -464,6 +464,10 @@ export class MenuItem extends LikeAnchor(
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('mouseover', this.handleMouseover);
+        // Register pointerenter/leave for ALL menu items (not just those with submenus)
+        // so items without submenus can close sibling submenus when hovered
+        this.addEventListener('pointerenter', this.handlePointerenter);
+        this.addEventListener('pointerleave', this.handlePointerleave);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
@@ -626,10 +630,8 @@ export class MenuItem extends LikeAnchor(
             return;
         }
 
-        // Close other submenus
-        if (!this.open) {
-            this.menuData.parentMenu?.closeDescendentOverlays();
-        }
+        // Close sibling submenus before opening this one
+        this.menuData.parentMenu?.closeDescendentOverlays();
 
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
@@ -637,7 +639,12 @@ export class MenuItem extends LikeAnchor(
             this.recentlyLeftChild = false;
             return;
         }
-        this.focus();
+
+        // Only focus items with submenus on hover (to show they're interactive)
+        // Regular items should not show focus styling on hover, only on keyboard navigation
+        if (this.hasSubmenu) {
+            this.focus();
+        }
         this.openOverlay();
     }
 
@@ -780,16 +787,6 @@ export class MenuItem extends LikeAnchor(
                 this.addEventListener(
                     'click',
                     this.handleSubmenuTriggerClick,
-                    options
-                );
-                this.addEventListener(
-                    'pointerenter',
-                    this.handlePointerenter,
-                    options
-                );
-                this.addEventListener(
-                    'pointerleave',
-                    this.handlePointerleave,
                     options
                 );
                 this.addEventListener(
