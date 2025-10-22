@@ -27,6 +27,7 @@ import { ColorField } from '@spectrum-web-components/color-field';
 
 The color field consists of several key parts:
 
+- **Label**: Visual or visually hidden text that describes the color field to the user
 - **Input field**: The main text input area where users can type color values
 - **Color handle**: An optional visual indicator showing the current color (when `view-color` attribute is enabled)
 - **Validation feedback**: Visual indicators for valid and invalid color inputs
@@ -35,6 +36,68 @@ The color field consists of several key parts:
 ```html
 <sp-color-field value="#ffff00">Background color</sp-color-field>
 ```
+
+#### Label
+
+A color field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology. If no label is provided, the component will have a visually hidden label with the text `color`.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-color-field value="#000000">Text color</sp-color-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-color-field value="#000000" label="Text color"></sp-color-field>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Options
+
+#### Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-number-field label="Size" value="1024" size="s"></sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-number-field label="Size" value="1024" size="m"></sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-number-field label="Size" value="1024" size="l"></sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-number-field label="Size" value="1024" size="xl"></sp-number-field>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Options
 
