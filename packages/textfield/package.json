@@ -51,6 +51,16 @@
         "!stories/",
         "!test/"
     ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/field-label": "1.9.0",
+        "@spectrum-web-components/help-text": "1.9.0",
+        "@spectrum-web-components/icon": "1.9.0",
+        "@spectrum-web-components/icons-ui": "1.9.0",
+        "@spectrum-web-components/icons-workflow": "1.9.0",
+        "@spectrum-web-components/shared": "1.9.0"
+    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -63,16 +73,6 @@
         "component",
         "css"
     ],
-    "dependencies": {
-        "@spectrum-web-components/base": "1.9.0",
-        "@spectrum-web-components/field-label": "1.9.0",
-        "@spectrum-web-components/help-text": "1.9.0",
-        "@spectrum-web-components/icon": "1.9.0",
-        "@spectrum-web-components/icons-ui": "1.9.0",
-        "@spectrum-web-components/icons-workflow": "1.9.0",
-        "@spectrum-web-components/shared": "1.9.0"
-    },
-    "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",

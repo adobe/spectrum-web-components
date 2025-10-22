@@ -51,18 +51,7 @@
         "!stories/",
         "!test/"
     ],
-    "keywords": [
-        "design-system",
-        "spectrum",
-        "adobe",
-        "adobe-spectrum",
-        "web components",
-        "web-components",
-        "lit-element",
-        "lit-html",
-        "component",
-        "css"
-    ],
+    "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/action-button": "1.9.0",
         "@spectrum-web-components/base": "1.9.0",
@@ -78,7 +67,18 @@
         "@spectrum-web-components/shared": "1.9.0",
         "@spectrum-web-components/textfield": "1.9.0"
     },
-    "types": "./src/index.d.ts",
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
