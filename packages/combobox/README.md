@@ -78,7 +78,7 @@ A combobox must have a label in order to be accessible. A label can be provided 
 
 Use the `placeholder` attribute to include placeholder text.
 
-**Note**: Placeholder text should not be used as a replacement for a label or help help text.
+**Note**: Placeholder text should not be used as a replacement for a label or help text.
 
 ```html
 <sp-combobox label="Color" placeholder="Select a color">
