@@ -14,5 +14,7 @@
 @import url("./field-label-overrides.css");
 
 label {
-    display: inline-block;
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
 }
