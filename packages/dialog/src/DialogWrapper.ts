@@ -125,7 +125,6 @@ export class DialogWrapper extends DialogBase {
         }
 
         return html`
-            ${this.dismissHelper}
             <sp-dialog
                 ?dismissable=${this.dismissable}
                 dismiss-label=${this.dismissLabel}
@@ -200,7 +199,6 @@ export class DialogWrapper extends DialogBase {
                       `
                     : nothing}
             </sp-dialog>
-            ${!this.dismissable ? this.dismissHelper : nothing}
         `;
     }
 }
