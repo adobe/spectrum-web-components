@@ -7,7 +7,7 @@
             "files": ["**/*.css"],
             "extends": ["stylelint-config-standard"],
             "rules": {
-                "header/header": ["./COPYRIGHT", {}],
+                "header/header": ["./HEADER", {}],
                 "length-zero-no-unit": [
                     true,
                     { "ignore": "custom-properties" }
