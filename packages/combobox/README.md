@@ -96,7 +96,7 @@ Litbox options can be added as slotted `sp-menu-item` children or as an array of
 <sp-tab value="slotted">Slotted children</sp-tab>
 <sp-tab-panel value="slotted">
 
-You can use the default slot to provideg `<sp-menu-item>` children.
+You can use the default slot to provide `<sp-menu-item>` children.
 
 ```html
 <sp-combobox label="Color">
