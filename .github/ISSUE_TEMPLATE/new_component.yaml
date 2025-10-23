@@ -1,7 +1,7 @@
 name: New component
 description: Outline the requirements for a new component
 title: '[NEW]: '
-labels: [missing components, triage, needs jira ticket]
+labels: [new component, triage, needs jira ticket]
 # assignees:
 body:
     - type: markdown
