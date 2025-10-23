@@ -8,7 +8,7 @@ The `@spectrum-web-components/shared` package provides essential base classes, m
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/shared)
 
 ```bash
-npm install @spectrum-web-components/shared
+yarn add @spectrum-web-components/shared
 ```
 
 Individual base classes, mixins, and utilities can be imported as follows:
@@ -24,6 +24,8 @@ import {
     ObserveSlotText,
 } from '@spectrum-web-components/shared';
 ```
+
+#### Exported Classes, Mixins, and Utilities
 
 <div style="margin-block-end: 2rem">
     <sp-table>
@@ -238,7 +240,6 @@ class ObserveSlotTextElement extends ObserveSlotText(ReactiveElement, 'button-la
         return html`
             <button id="button">
                 <slot
-                    id="observing-slot"
                     name="button-label"
                     @slotchange=${this.manageObservedSlot}
                     @slotchange=${this.manageTextObservedSlot}
