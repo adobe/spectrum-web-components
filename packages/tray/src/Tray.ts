@@ -58,7 +58,7 @@ export class Tray extends SpectrumElement {
     private tray!: HTMLDivElement;
 
     @query('slot')
-    private slot!: HTMLSlotElement;
+    private contentSlot!: HTMLSlotElement;
 
     public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
@@ -125,12 +125,14 @@ export class Tray extends SpectrumElement {
      * Looks for buttons in light DOM and checks for known components with built-in dismiss.
      */
     private checkForDismissButtons(): void {
-        if (!this.slot) {
+        if (!this.contentSlot) {
             this.needsDismissHelper = true;
             return;
         }
 
-        const slottedElements = this.slot.assignedElements({ flatten: true });
+        const slottedElements = this.contentSlot.assignedElements({
+            flatten: true,
+        });
 
         if (slottedElements.length === 0) {
             this.needsDismissHelper = true;
