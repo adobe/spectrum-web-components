@@ -231,19 +231,29 @@ describe('Tray', () => {
         });
 
         it('dismiss helper buttons trigger close when clicked', async () => {
-            const el = await fixture<Tray>(html`
-                <sp-tray open>
-                    <p>Content without buttons</p>
-                </sp-tray>
+            const test = await fixture<HTMLElement>(html`
+                <sp-theme system="spectrum" scale="medium" color="dark">
+                    <sp-tray open>
+                        <p>Content without buttons</p>
+                    </sp-tray>
+                </sp-theme>
             `);
-            await elementUpdated(el);
 
+            const el = test.querySelector('sp-tray') as Tray;
+            // Ensure closed styles are set before opening so that
+            // the `transitionend` event will be met below.
+            await nextFrame();
+            await nextFrame();
+            await elementUpdated(el);
             expect(el.open).to.be.true;
 
-            const dismissButton = el.shadowRoot.querySelector(
+            const root = el.shadowRoot ? el.shadowRoot : el;
+            const dismissButton = root.querySelector(
                 '.visually-hidden button'
             ) as HTMLButtonElement;
-            expect(dismissButton).to.exist;
+            expect(dismissButton.getAttribute('aria-label')).to.equal(
+                'Dismiss'
+            );
 
             const closed = oneEvent(el, 'close');
             dismissButton.click();
