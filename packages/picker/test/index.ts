@@ -30,7 +30,6 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import type { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-group.js';
@@ -2380,8 +2379,6 @@ export function runPickerTests(): void {
                 </sp-picker>
             `);
             await elementUpdated(el);
-            await nextFrame();
-            await nextFrame();
 
             const iconSpan = el.shadowRoot.querySelector(
                 '#icon'
@@ -2422,10 +2419,14 @@ export function runPickerTests(): void {
 
             // Verify icons are present in menu items (icons="none" only affects button display)
             const menuItems = el.querySelectorAll('sp-menu-item');
-            menuItems.forEach((item) => {
+            expect(menuItems.length).to.equal(2);
+            menuItems.forEach((item, index) => {
                 const icon = item.querySelector('[slot="icon"]');
                 expect(icon, `menu item ${item.value} should have icon`).to.not
                     .be.null;
+                const expectedTag =
+                    index === 0 ? 'SP-ICON-EDIT' : 'SP-ICON-COPY';
+                expect(icon!.tagName).to.equal(expectedTag);
             });
         });
 
@@ -2443,8 +2444,6 @@ export function runPickerTests(): void {
                 </sp-picker>
             `);
             await elementUpdated(el);
-            await nextFrame();
-            await nextFrame();
 
             const labelSpan = el.shadowRoot.querySelector(
                 '.label'
@@ -2477,8 +2476,6 @@ export function runPickerTests(): void {
                 </sp-picker>
             `);
             await elementUpdated(el);
-            await nextFrame();
-            await nextFrame();
 
             const labelSpan = el.shadowRoot.querySelector(
                 '.label'
@@ -2504,7 +2501,6 @@ export function runPickerTests(): void {
                 </sp-picker>
             `);
             await elementUpdated(el);
-            await nextFrame();
 
             let iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
             expect(iconSpan.hidden, 'icon should be visible initially').to.be
@@ -2513,7 +2509,6 @@ export function runPickerTests(): void {
             // Change to icons="none"
             el.icons = 'none';
             await elementUpdated(el);
-            await nextFrame();
 
             iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
             expect(
@@ -2524,7 +2519,6 @@ export function runPickerTests(): void {
             // Change to icons="only"
             el.icons = 'only';
             await elementUpdated(el);
-            await nextFrame();
 
             iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
             expect(
