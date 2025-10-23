@@ -7,7 +7,7 @@
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tray?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tray)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tray?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tray)
 
-```bash
+```zsh
 yarn add @spectrum-web-components/tray
 ```
 
@@ -71,9 +71,9 @@ A tray has a single default `slot`.
 
 `<sp-tray>` presents a page blocking experience and should be opened with the `Overlay` API using the `modal` interaction to ensure that the content appropriately manages the presence of other content in the tab order of the page and the availability of that content for a screen reader.
 
-#### Mobile screen reader support
+#### Auto-detection behavior
 
-The `<sp-tray>` component automatically includes visually hidden dismiss buttons before and after its content to support mobile screen readers. This is particularly important for VoiceOver on iOS, where users navigate through interactive elements sequentially.
+By default, `<sp-tray>` automatically detects whether its slotted content includes keyboard-accessible dismiss buttons (like `<sp-button>`, `<sp-close-button>`, or HTML `<button>` elements). When no dismiss buttons are found, the tray renders visually hidden dismiss buttons before and after its content to support mobile screen readers, particularly VoiceOver on iOS where users navigate through interactive elements sequentially.
 
 These built-in dismiss buttons:
 
@@ -84,7 +84,11 @@ These built-in dismiss buttons:
 
 This dismiss helper pattern is also implemented in the [`<sp-picker>`](https://opensource.adobe.com/spectrum-web-components/components/picker/) component, which uses the same approach when rendering menu content in a tray on mobile devices.
 
-Simply place your content inside the tray - the dismiss buttons are automatically rendered:
+<sp-tabs selected="auto" auto label="Dismiss helper examples">
+<sp-tab value="auto">Content has no buttons</sp-tab>
+<sp-tab-panel value="auto">
+
+This example shows the default behavior where the tray automatically detects that the menu content lacks dismiss buttons and renders visually hidden helpers. Screen readers will announce them as "Dismiss, button."
 
 ```html
 <overlay-trigger type="modal">
@@ -100,16 +104,47 @@ Simply place your content inside the tray - the dismiss buttons are automaticall
         </sp-menu>
     </sp-tray>
 </overlay-trigger>
+```
 
+</sp-tab-panel>
+<sp-tab value="with-buttons">Content has buttons</sp-tab>
+<sp-tab-panel value="with-buttons">
+
+This example shows auto-detection recognizing that the dialog has its own dismiss functionality, so no additional helpers are rendered.
+
+```html
 <overlay-trigger type="modal">
     <sp-button slot="trigger" variant="secondary">
         Toggle dialog content
     </sp-button>
     <sp-tray slot="click-content">
-        <sp-dialog size="s">
+        <sp-dialog size="s" dismissable>
             <h2 slot="heading">New messages</h2>
             You have 5 new messages.
         </sp-dialog>
     </sp-tray>
 </overlay-trigger>
 ```
+
+</sp-tab-panel>
+<sp-tab value="force-hide">Manual override</sp-tab>
+<sp-tab-panel value="force-hide">
+
+Set `has-keyboard-dismiss` (or `has-keyboard-dismiss="true"`) to prevent the tray from rendering visually hidden dismiss helpers, even when no buttons are detected. You are then responsible for ensuring that your tray content has keyboard-accessible dismiss functionality.
+
+```html
+<overlay-trigger type="modal">
+    <sp-button slot="trigger" variant="secondary">
+        Toggle without helpers
+    </sp-button>
+    <sp-tray slot="click-content" has-keyboard-dismiss>
+        <p>
+            Custom content that should have custom dismiss functionality, even
+            though the tray didn't detect buttons in this slot.
+        </p>
+    </sp-tray>
+</overlay-trigger>
+```
+
+</sp-tab-panel>
+</sp-tabs>
