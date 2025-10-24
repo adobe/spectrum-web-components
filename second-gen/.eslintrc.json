@@ -7,8 +7,9 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "plugin:lit-a11y/recommended"
+        "plugin:lit-a11y/recommended",
+        "plugin:require-extensions/recommended",
+        "plugin:prettier/recommended"
     ],
     "ignorePatterns": ["**/dist/**"],
     "overrides": [
@@ -99,19 +100,35 @@
             "rules": {
                 "@typescript-eslint/no-explicit-any": "off"
             }
+        },
+        {
+            "files": ["**/*.d.ts"],
+            "parserOptions": {
+                "project": null
+            },
+            "rules": {
+                "@typescript-eslint/await-thenable": "off",
+                "@typescript-eslint/no-floating-promises": "off",
+                "@typescript-eslint/no-unnecessary-template-expression": "off",
+                "@typescript-eslint/prefer-nullish-coalescing": "off",
+                "@typescript-eslint/prefer-optional-chain": "off"
+            }
         }
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": true,
+        "tsconfigRootDir": "./"
     },
     "plugins": [
         "@typescript-eslint",
         "notice",
         "@spectrum-web-components",
         "import",
-        "simple-import-sort"
+        "simple-import-sort",
+        "require-extensions"
     ],
     "root": true,
     "rules": {
@@ -119,7 +136,28 @@
             "error",
             ["e", "ev", "evt", "err"]
         ],
+        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            {
+                "prefer": "type-imports"
+            }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true,
+                "allowTypedFunctionExpressions": true,
+                "allowHigherOrderFunctions": true
+            }
+        ],
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-unnecessary-template-expression": "warn",
+        "@typescript-eslint/prefer-nullish-coalescing": "warn",
+        "@typescript-eslint/prefer-optional-chain": "warn",
+        "complexity": ["warn", 10],
         "curly": ["error", "all"],
+        "eqeqeq": ["error", "always"],
         "import/prefer-default-export": "off",
         "lit-a11y/click-events-have-key-events": [
             "error",
@@ -136,6 +174,23 @@
                 ]
             }
         ],
+        "max-depth": ["warn", 4],
+        "max-lines": [
+            "warn",
+            {
+                "max": 300,
+                "skipBlankLines": true,
+                "skipComments": true
+            }
+        ],
+        "max-lines-per-function": [
+            "warn",
+            {
+                "max": 50,
+                "skipBlankLines": true,
+                "skipComments": true
+            }
+        ],
         "no-console": [
             "error",
             {
@@ -143,6 +198,15 @@
             }
         ],
         "no-debugger": 2,
+        "no-var": "error",
+        "notice/notice": [
+            "error",
+            {
+                "templateFile": "../COPYRIGHT",
+                "mustMatch": "Copyright [0-9]{4}"
+            }
+        ],
+        "prefer-const": "error",
         "simple-import-sort/imports": [
             "error",
             {

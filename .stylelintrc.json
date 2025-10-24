@@ -5,7 +5,10 @@
     "overrides": [
         {
             "files": ["**/*.css"],
-            "extends": ["stylelint-config-standard"],
+            "extends": [
+                "stylelint-config-standard",
+                "stylelint-config-prettier"
+            ],
             "rules": {
                 "header/header": ["./COPYRIGHT", {}],
                 "length-zero-no-unit": [
@@ -18,9 +21,12 @@
                 ],
                 "selector-pseudo-element-colon-notation": ["single", {}],
                 "custom-property-pattern": "^_?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
-                "no-duplicate-selectors": null,
+                "no-duplicate-selectors": [
+                    true,
+                    { "ignore": ["keyframe-blocks"] }
+                ],
                 "selector-class-pattern": null,
-                "no-descending-specificity": null,
+                "no-descending-specificity": "warn",
                 "declaration-block-no-redundant-longhand-properties": null
             }
         }

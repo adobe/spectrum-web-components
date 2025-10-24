@@ -2,7 +2,9 @@
     "compilerOptions": {
         "allowImportingTsExtensions": true,
         "allowSyntheticDefaultImports": true,
+        "composite": true,
         "declaration": true,
+        "declarationMap": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,

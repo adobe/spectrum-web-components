@@ -1,35 +1,15 @@
 {
-    "files.exclude": {
-        "**/*.css.ts": {
-            "when": "$(basename)"
-        },
-        "first-gen/packages/**/*.js.map": true,
-        "first-gen/packages/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "first-gen/packages/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "first-gen/packages/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
-        "first-gen/tools/**/*.js.map": true,
-        "first-gen/tools/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "first-gen/tools/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "first-gen/tools/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
-        "**/*.test-vrt.ts": true,
-        "projects/**": true,
-        "tools/**": true,
-        "test/**": true,
-        "packages/**": true
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.stylelint": "explicit"
     },
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "lit-plugin.strict": true,
-    "cSpell.words": ["activedescendant", "coachmark", "valuetext"]
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "stylelint.validate": ["css", "scss"]
 }

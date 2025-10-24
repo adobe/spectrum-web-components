@@ -94,9 +94,11 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "monorepo"],
     "root": true,
     "rules": {
+        "monorepo/no-internal-import": "error",
+        "monorepo/no-relative-import": "error",
         "no-console": [
             "error",
             {
