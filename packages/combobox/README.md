@@ -308,7 +308,7 @@ The popup menu items are filtered to only those completing the currently-input v
 #### Provide a label
 
 A combobox must be labeled.
-Typically, you should render a visible label via the `label` slot.
+Typically, you should render a visible label via the `field-label` slot.
 For exceptional cases, provide an accessible label via the `label` attribute.
 
 ```html
