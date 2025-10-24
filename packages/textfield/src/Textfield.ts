@@ -377,9 +377,7 @@ export class TextfieldBase extends FieldLabelMixin(
                     this.minlength > -1 ? this.minlength : undefined
                 )}
                 pattern=${ifDefined(this.pattern)}
-                placeholder=${ifDefined(
-                    this.placeholder?.length > 0 ? this.placeholder : undefined
-                )}
+                placeholder=${ifDefined(this.placeholder)}
                 .value=${live(this.displayValue)}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
