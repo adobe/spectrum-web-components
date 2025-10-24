@@ -69,7 +69,7 @@ A color field must have a label in order to be accessible. A label can be provid
 <sp-tab-panel value="s">
 
 ```html
-<sp-number-field label="Size" value="1024" size="s"></sp-number-field>
+<sp-color-field label="Size" value="1024" size="s"></sp-color-field>
 ```
 
 </sp-tab-panel>
