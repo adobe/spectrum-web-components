@@ -583,10 +583,9 @@ export class MenuItem extends LikeAnchor(
         const openSubmenuKey =
             this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
         if (target === this) {
-            if (
-                ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
-                openSubmenuKey
-            )
+            // Only prevent default for arrow keys and submenu-related keys.
+            // Don't prevent Escape - let it bubble to close overlays.
+            if (['ArrowLeft', 'ArrowRight'].includes(key) || openSubmenuKey)
                 event.preventDefault();
             this.dispatchEvent(
                 new MenuItemKeydownEvent({ root: this, event: event })
