@@ -78,7 +78,6 @@ By default, `<sp-tray>` automatically detects whether its slotted content includ
 These built-in dismiss buttons:
 
 - Are visually hidden but accessible to screen readers
-- Use `tabindex="-1"` to prevent keyboard tab navigation interference
 - Allow mobile screen reader users to easily dismiss the tray from either the beginning or end of the content
 - Are labeled "Dismiss" for clear screen reader announcements
 
@@ -88,7 +87,7 @@ This dismiss helper pattern is also implemented in the [`<sp-picker>`](https://o
 <sp-tab value="auto">Content has no buttons</sp-tab>
 <sp-tab-panel value="auto">
 
-This example shows the default behavior where the tray automatically detects that the menu content lacks dismiss buttons and renders visually hidden helpers. Screen readers will announce them as "Dismiss, button."
+This example shows the default behavior where the tray automatically detects that the menu content lacks dismiss buttons and renders visually hidden helpers. Screen readers will announce them as "Dismiss, button" and these helpers are keyboard accessible.
 
 ```html
 <overlay-trigger type="modal">
