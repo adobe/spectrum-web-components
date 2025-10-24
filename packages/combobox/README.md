@@ -236,7 +236,7 @@ For exceptional cases, provide an accessible label via the `label` attribute.
 
 #### Provide help text and tooltips in the correct location
 
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"` and tooltips must be included via the `slot="tooltip"`.
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="negative-help-text"` and tooltips must be included via the `slot="tooltip"`.
 
 See [help text](../help-text) and [tooltip](../tooltip) for more information.
 

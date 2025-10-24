@@ -263,6 +263,6 @@ Radio groups and radio items should always have labels.
 
 Radio groups should use help text for error messaging and descriptions. Descriptions are valuable for giving context behind why a selection is required, or for clarifying the options.
 
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"`.
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="negative-help-text"`.
 
 See [help text](../help-text) for more information.
