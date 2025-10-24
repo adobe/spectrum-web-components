@@ -38,7 +38,7 @@ The mixin accepts optional parameters:
 
 #### Default slotted label
 
-To add a field label to your custom element, apply the mixin and call `renderFieldLabel()` in your render method:
+To add a field label to your custom element, apply the mixin and call `renderFieldLabel()` in your render method. Pass the ID of your form control element as the argument to ensure proper accessibility association:
 
 ```js
 import { SpectrumElement, html } from '@spectrum-web-components/base';
