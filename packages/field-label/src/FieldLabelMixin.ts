@@ -31,7 +31,7 @@ type Constructor<T> = new (...args: any[]) => T;
 export declare class FieldLabelMixinInterface {
     disabled: boolean;
     required: boolean;
-    sideAligned: 'start' | 'end';
+    sideAligned?: 'start' | 'end';
     slotHasContent: boolean;
     manageTextObservedSlot(): void;
     public renderFieldLabel(fieldId?: string): TemplateResult;
