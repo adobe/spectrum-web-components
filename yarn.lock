@@ -224,7 +224,7 @@ __metadata:
     "@yarnpkg/types": "npm:4.0.1"
     alex: "npm:11.0.1"
     cem-plugin-module-file-extensions: "npm:0.0.5"
-    chromatic: "npm:13.2.0"
+    chromatic: "npm:13.3.2"
     chromedriver: "npm:140.0.3"
     colors: "npm:1.4.0"
     common-tags: "npm:1.8.2"
@@ -9319,9 +9319,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:13.2.0":
-  version: 13.2.0
-  resolution: "chromatic@npm:13.2.0"
+"chromatic@npm:13.3.2":
+  version: 13.3.2
+  resolution: "chromatic@npm:13.3.2"
   peerDependencies:
     "@chromatic-com/cypress": ^0.*.* || ^1.0.0
     "@chromatic-com/playwright": ^0.*.* || ^1.0.0
@@ -9334,7 +9334,7 @@ __metadata:
     chroma: dist/bin.js
     chromatic: dist/bin.js
     chromatic-cli: dist/bin.js
-  checksum: 10c0/0f3419b45c648746ce4bb332a8c00548a41d0981a83c44f259fccced83245109448f1f713dd0379af4f386f0e614b11a52be5c0693ec71a99edc8aaed477c5bc
+  checksum: 10c0/4801ed674d8fe79565b5642de439981e204ccde6f7bc31cf59332ce4ad5d69d008d5dab3a10a9f027c348936e8e5b6b778cad82c707900c7a9457be6904ce748
   languageName: node
   linkType: hard
 

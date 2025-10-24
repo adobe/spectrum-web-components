@@ -146,7 +146,7 @@
         "@yarnpkg/types": "4.0.1",
         "alex": "11.0.1",
         "cem-plugin-module-file-extensions": "0.0.5",
-        "chromatic": "13.2.0",
+        "chromatic": "13.3.2",
         "chromedriver": "140.0.3",
         "colors": "1.4.0",
         "common-tags": "1.8.2",
