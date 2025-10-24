@@ -104,11 +104,7 @@ export class Tray extends SpectrumElement {
     protected get dismissHelper(): TemplateResult {
         return html`
             <div class="visually-hidden">
-                <button
-                    tabindex="-1"
-                    aria-label="Dismiss"
-                    @click=${this.close}
-                ></button>
+                <button aria-label="Dismiss" @click=${this.close}></button>
             </div>
         `;
     }
