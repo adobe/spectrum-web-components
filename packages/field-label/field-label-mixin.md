@@ -27,7 +27,7 @@ import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldL
 - `required`: whether to display a required indicator (asterisk icon)
 - `sideAligned`: controls label positioning (`'start'` | `'end'` | `undefined`)
 - `slotHasContent`: whether the label slot contains content (inherited from `ObserveSlotText`)
-- `renderFieldLabel(fieldId?: string)`: a method that returns a `TemplateResult` with the label element
+- `renderFieldLabel(fieldId?: string)`: a method that returns a `TemplateResult` with the label element. The `fieldId` parameter must match the `id` attribute of your form control element to ensure proper label association for accessibility
 
 The mixin accepts optional parameters:
 
