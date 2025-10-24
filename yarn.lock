@@ -205,7 +205,7 @@ __metadata:
     "@types/common-tags": "npm:1.8.4"
     "@types/mocha": "npm:10.0.10"
     "@types/node": "npm:20.19.17"
-    "@types/react": "npm:18.3.24"
+    "@types/react": "npm:18.3.26"
     "@types/sinon": "npm:17.0.4"
     "@types/webpack": "npm:5.28.5"
     "@types/webpack-env": "npm:1.18.8"
@@ -6590,13 +6590,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.3.24":
-  version: 18.3.24
-  resolution: "@types/react@npm:18.3.24"
+"@types/react@npm:18.3.26":
+  version: 18.3.26
+  resolution: "@types/react@npm:18.3.26"
   dependencies:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/9e188fa8e50f172cf647fc48fea2e04d88602afff47190b697de281a8ac88df9ee059864757a2a438ff599eaf9276d9a9e0e60585e88f7d57f01a2e4877d37ec
+  checksum: 10c0/7b62d91c33758f14637311921c92db6045b6328e2300666a35ef8130d06385e39acada005eaf317eee93228edc10ea5f0cd34a0385654d2014d24699a65bfeef
   languageName: node
   linkType: hard
 
