@@ -65,7 +65,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         excludedSelectors
     ) {
         public static get styles(): CSSResultArray {
-            return [styles, asteriskIconStyles];
+            return [...super.styles, styles, asteriskIconStyles];
         }
 
         @property({ type: Boolean, reflect: true })
