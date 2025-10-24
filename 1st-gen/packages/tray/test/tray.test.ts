@@ -106,7 +106,7 @@ describe('Tray', () => {
     });
 
     describe('Dismiss helpers', () => {
-        it('renders visually-hidden, keyboard-accessible dismiss helpers when no buttons detected', async () => {
+        it('renders visually-hidden dismiss helpers when no buttons detected', async () => {
             const el = await fixture<Tray>(html`
                 <sp-tray open>
                     <sp-menu style="width: 100%">
@@ -126,6 +126,66 @@ describe('Tray', () => {
             expect(buttons.length).to.equal(2);
             expect(buttons[0].getAttribute('aria-label')).to.equal('Dismiss');
             expect(buttons[0].getAttribute('tabindex')).to.be.null;
+        });
+
+        it('allows focusing dismiss helper buttons', async () => {
+            const el = await fixture<Tray>(html`
+                <sp-tray open>
+                    <p>Content without buttons</p>
+                </sp-tray>
+            `);
+            await elementUpdated(el);
+
+            const dismissButton = el.shadowRoot.querySelector(
+                '.visually-hidden button'
+            ) as HTMLButtonElement;
+            expect(dismissButton).to.exist;
+
+            dismissButton.focus();
+            await elementUpdated(el);
+
+            expect(document.activeElement).to.equal(el);
+            expect(
+                el.shadowRoot.activeElement,
+                'dismiss button is focused in shadow root'
+            ).to.equal(dismissButton);
+        });
+
+        it('closes tray when Enter key is pressed on dismiss button', async () => {
+            const test = await fixture<HTMLElement>(html`
+                <sp-theme system="spectrum" scale="medium" color="dark">
+                    <sp-tray open>
+                        <p>Content without buttons</p>
+                    </sp-tray>
+                </sp-theme>
+            `);
+
+            const el = test.querySelector('sp-tray') as Tray;
+            await nextFrame(); // allows for animation to complete
+            await nextFrame();
+            await elementUpdated(el);
+            expect(el.open).to.be.true;
+
+            const dismissButton = el.shadowRoot.querySelector(
+                '.visually-hidden button'
+            ) as HTMLButtonElement;
+
+            dismissButton.focus();
+            await elementUpdated(el);
+
+            const closed = oneEvent(el, 'close');
+            const enterEvent = new KeyboardEvent('keydown', {
+                key: 'Enter',
+                code: 'Enter',
+                bubbles: true,
+                cancelable: true,
+            });
+            dismissButton.dispatchEvent(enterEvent);
+            // Trigger the default button behavior
+            dismissButton.click();
+            await closed;
+
+            expect(el.open).to.be.false;
         });
 
         it('does not render dismiss helpers when sp-button is detected', async () => {
