@@ -279,7 +279,7 @@ __metadata:
     tachometer: "npm:0.7.2"
     tar-stream: "npm:3.1.7"
     terser: "npm:4.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.3"
     webpack-merge: "npm:6.0.1"
     wireit: "npm:0.14.12"
     yargs: "npm:17.7.2"
@@ -4379,7 +4379,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     storybook: "npm:8.6.14"
     tslib: "npm:2.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -12501,7 +12501,7 @@ __metadata:
     rollup-plugin-styles: "npm:4.0.0"
     rollup-plugin-visualizer: "npm:5.14.0"
     tslib: "npm:2.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
 
@@ -24959,13 +24959,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
+"typescript@npm:5.9.3":
+  version: 5.9.3
+  resolution: "typescript@npm:5.9.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/e33cef99d82573624fc0f854a2980322714986bc35b9cb4d1ce736ed182aeab78e2cb32b385efa493b2a976ef52c53e20d6c6918312353a91850e2b76f1ea44f
+  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
   languageName: node
   linkType: hard
 
@@ -24999,13 +24999,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
+"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>":
+  version: 5.9.3
+  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
+  checksum: 10c0/ad09fdf7a756814dce65bc60c1657b40d44451346858eea230e10f2e95a289d9183b6e32e5c11e95acc0ccc214b4f36289dcad4bf1886b0adb84d711d336a430
   languageName: node
   linkType: hard
 
