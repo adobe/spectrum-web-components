@@ -96,6 +96,7 @@ export const hasDisabledItems = (args: StoryArgs): TemplateResult => {
             )}
         </sp-combobox>
         <sp-combobox
+            side-aligned="start"
             .options=${countriesWithDisabledItems}
             .value=${args.value || ''}
         >
