@@ -192,7 +192,7 @@
         "re-template-tag": "2.0.1",
         "replace-in-file": "8.3.0",
         "rimraf": "6.0.1",
-        "rollup": "4.52.2",
+        "rollup": "4.52.5",
         "sinon": "17.0.2",
         "storybook": "8.6.14",
         "stylelint": "16.24.0",
