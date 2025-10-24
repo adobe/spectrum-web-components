@@ -8,7 +8,7 @@ The `ColorController` is a comprehensive [reactive controller](https://lit.dev/d
 - **Validation**: Validate color strings and ensure they conform to expected formats
 - **Conversion**: Convert colors between different color spaces for versatile applications
 - **State management**: Maintain current color state and save/restore previous color values
-- **Format preservation**: Automatically preserves the format of the original color input when returning values
+- **Format preservation**: Automatically preserve the format of the original color input when returning values
 
 ### Properties
 
@@ -48,14 +48,14 @@ The `ColorController` is a comprehensive [reactive controller](https://lit.dev/d
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `ColorController` via:
 
-```
-import {ColorController,} from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
+```typescript
+import { ColorController } from '@spectrum-web-components/reactive-controllers/src/ColorController.js';
 ```
 
 ### Examples

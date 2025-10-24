@@ -4,8 +4,8 @@ The `DependencyManagerController` is a [reactive controller](https://lit.dev/doc
 
 ### Features
 
-- **Lazy loading support**: Delay functionality until required custom elements are registered
-- **Multiple dependency tracking**: Manage any number of custom element dependencies
+- **Lazy loading support**: Delays functionality until required custom elements are registered
+- **Multiple dependency tracking**: Manages any number of custom element dependencies
 - **Reactive loading state**: Automatically updates the host when all dependencies are loaded
 - **Async registration handling**: Works seamlessly with dynamic imports and lazy loading
 
@@ -14,13 +14,13 @@ The `DependencyManagerController` is a [reactive controller](https://lit.dev/doc
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `DependencyManagerController` via:
 
-```
+```typescript
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 ```
 
@@ -217,67 +217,6 @@ class FeatureLoader extends LitElement {
 }
 
 customElements.define('feature-loader', FeatureLoader);
-```
-
-Load components based on routing:
-
-```typescript
-import { html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
-
-class AppRouter extends LitElement {
-    dependencyManager = new DependencyManagerController(this);
-
-    @property({ type: String })
-    currentRoute = 'home';
-
-    private routeComponents = new Map([
-        ['home', 'home-page'],
-        ['dashboard', 'dashboard-page'],
-        ['settings', 'settings-page'],
-    ]);
-
-    updated(changedProperties: Map<string, any>) {
-        if (changedProperties.has('currentRoute')) {
-            const component = this.routeComponents.get(this.currentRoute);
-
-            if (component) {
-                this.dependencyManager.add(component);
-                import(`./pages/${component}.js`).catch((error) => {
-                    console.error(`Failed to load ${component}:`, error);
-                });
-            }
-        }
-    }
-
-    renderRoute() {
-        if (!this.dependencyManager.loaded) {
-            return html`
-                <div
-                    role="progressbar"
-                    aria-label="Loading page"
-                    aria-busy="true"
-                >
-                    Loading page...
-                </div>
-            `;
-        }
-
-        const component = this.routeComponents.get(this.currentRoute);
-        return html`
-            ${component ? html`<${component}></${component}>` : html``}
-        `;
-    }
-
-    render() {
-        return html`
-            <main role="main">${this.renderRoute()}</main>
-        `;
-    }
-}
-
-customElements.define('app-router', AppRouter);
 ```
 
 #### Tracking load state changes

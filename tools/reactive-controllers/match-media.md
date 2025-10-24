@@ -9,57 +9,18 @@ The `MatchMediaController` is a [reactive controller](https://lit.dev/docs/compo
 - **Multiple instances**: Support multiple controllers on a single host for complex responsive layouts
 - **Performance optimized**: Uses native browser APIs for efficient media query observation
 
-<!-- ## API
-
-### Constructor
-
-```typescript
-new MatchMediaController(host: ReactiveElement, query: string)
-```
-
-**Parameters:**
-
-- `host` (ReactiveElement): The host element that uses this controller
-- `query` (string): The CSS media query to monitor (e.g., `'(min-width: 768px)'`)
-
-### Properties
-
-#### `matches`
-
-- **Type**: `boolean`
-- **Description**: Whether the media query currently matches. This property updates automatically when the media query state changes.
-- **Settable**: No (read-only)
-
-#### `key`
-
-- **Type**: `Symbol`
-- **Description**: A unique symbol used to identify this controller when requesting updates from the host element.
-- **Settable**: No (read-only)
-
-### Methods
-
-The `MatchMediaController` implements the `ReactiveController` interface with the following lifecycle methods:
-
-#### `hostConnected(): void`
-
-Called when the host element is connected to the DOM. Starts listening for media query changes.
-
-#### `hostDisconnected(): void`
-
-Called when the host element is disconnected from the DOM. Stops listening for media query changes. -->
-
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `MatchMediaController` via:
 
-```
+```typescript
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 ```
 

@@ -20,19 +20,24 @@ The `PendingStateController` is a [reactive controller](https://lit.dev/docs/com
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `PendingStateController` via:
 
-```
-import { PendingStateController, HostWithPendingState } from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
+```typescript
+import {
+    PendingStateController,
+    HostWithPendingState,
+} from '@spectrum-web-components/reactive-controllers/src/PendingState.js';
 ```
 
 ### Examples
 
 #### Basic usage
+
+A simple button component that displays a loading state with an accessible progress indicator.
 
 ```typescript
 import { html, LitElement, TemplateResult } from 'lit';
@@ -80,6 +85,18 @@ class AsyncButton extends LitElement implements HostWithPendingState {
 
 customElements.define('async-button', AsyncButton);
 ```
+
+Usage:
+
+```html-no-demo
+<async-button pending pending-label="Saving...">
+    Save
+</async-button>
+```
+
+#### Async operation handling
+
+Handle asynchronous operations with proper pending state management and success/error event dispatching.
 
 ```typescript
 import { html, LitElement, css } from 'lit';
@@ -178,6 +195,8 @@ customElements.define('save-button', SaveButton);
 ```
 
 #### Multiple pending states
+
+Dynamically update the pending label based on different actions being performed.
 
 ```typescript
 import { html, LitElement, css } from 'lit';

@@ -247,20 +247,24 @@ Implements the W3C ARIA roving tabindex pattern for keyboard navigation in compo
 
 ---
 
-#### SystemContextResolutionController
+### [SystemContextResolutionController](./system-context-resolution.md)
 
 Resolves and tracks system-level context like color scheme and scale preferences from Spectrum theme providers.
 
 **Use cases:**
 
 - Theme integration
-- Scale-aware components
-- System preference detection
-- Spectrum theme consumption
+- Design system variant detection (Spectrum Classic, Express, Spectrum 2)
+- System-specific asset loading
+- Adaptive UI rendering
 
 **Key features:**
 
 - Automatic theme context resolution
-- Color scheme tracking
-- Scale preference tracking
-- Works with Spectrum theme providers
+- Reactive system variant updates
+- Event-based communication with `<sp-theme>`
+- Automatic cleanup on disconnect
+
+**Note:** Private Beta API - subject to changes.
+
+[Learn more →](../system-context-resolution)

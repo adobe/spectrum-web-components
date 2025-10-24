@@ -7,13 +7,13 @@ The `LanguageResolutionController` is a Lit reactive controller that automatical
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `LanguageResolutionController` via:
 
-```
+```typescript
 import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 ```
 
@@ -71,6 +71,16 @@ class LocalizedGreeting extends LitElement {
 }
 
 customElements.define('localized-greeting', LocalizedGreeting);
+```
+
+Usage:
+
+```html-no-demo
+<!-- Spanish context -->
+<div lang="es-ES">
+    <localized-greeting></localized-greeting>
+    <!-- Renders: Hola, World! (es-ES) -->
+</div>
 ```
 
 #### Locale change tracking
@@ -145,7 +155,7 @@ customElements.define('localized-card', LocalizedCard);
 
 The controller searches up through parent elements to find language context:
 
-```html
+```html-no-demo
 <!-- Finds lang attribute several levels up -->
 <article lang="ja-JP">
     <section>

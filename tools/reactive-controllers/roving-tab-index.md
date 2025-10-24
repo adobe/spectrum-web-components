@@ -15,13 +15,13 @@ The `RovingTabindexController` is a [reactive controller](https://lit.dev/docs/c
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `RovingTabindexController` via:
 
-```
+```typescript
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 ```
 
@@ -151,7 +151,7 @@ class SelectableGroup extends LitElement {
 customElements.define('selectable-group', SelectableGroup);
 ```
 
-This usage pattern is similar to what's seen in [`<sp-radio-group>`](../../packages/radio/).
+This usage pattern is similar to what's seen in [`<sp-radio-group>`](../../components/radio/).
 
 #### Vertical menu navigation
 
@@ -193,7 +193,7 @@ customElements.define('vertical-menu', VerticalMenu);
 
 #### Grid navigation
 
-Implement 2D grid navigation:
+Implements a 2D grid navigation:
 
 ```typescript
 import { html, LitElement, css } from 'lit';
@@ -254,7 +254,7 @@ customElements.define('grid-navigator', GridNavigator);
 
 #### Tab panel navigation
 
-Implement keyboard navigation for tabs:
+Implements keyboard navigation for tabs:
 
 ```typescript
 import { html, LitElement, css } from 'lit';
@@ -331,7 +331,7 @@ When using the `RovingTabindexController`, ensure you apply appropriate ARIA rol
 <sp-tab value="toolbars">For toolbars</sp-tab>
 <sp-tab-panel value="toolbars">
 
-```typescript
+```html-no-demo
 <div role="toolbar" aria-label="Formatting tools" aria-orientation="horizontal">
     <!-- Managed elements -->
 </div>
@@ -341,7 +341,7 @@ When using the `RovingTabindexController`, ensure you apply appropriate ARIA rol
 <sp-tab value="tablist">For tab lists</sp-tab>
 <sp-tab-panel value="tablist">
 
-```typescript
+```html-no-demo
 <div role="tablist" aria-label="Content sections">
     <button role="tab" aria-selected="true">Tab 1</button>
     <button role="tab" aria-selected="false">Tab 2</button>
@@ -352,7 +352,7 @@ When using the `RovingTabindexController`, ensure you apply appropriate ARIA rol
 <sp-tab value="listboxes">For listboxes</sp-tab>
 <sp-tab-panel value="listboxes">
 
-```typescript
+```html-no-demo
 <div role="listbox" aria-label="Options">
     <div role="option" aria-selected="false">Option 1</div>
     <div role="option" aria-selected="false">Option 2</div>
@@ -363,7 +363,7 @@ When using the `RovingTabindexController`, ensure you apply appropriate ARIA rol
 <sp-tab value="radiogroups">For Radiogroups</sp-tab>
 <sp-tab-panel value="radiogroups">
 
-```typescript
+```html-no-demo
 <div role="radiogroup" aria-label="Choices">
     <button role="radio" aria-checked="true">Choice 1</button>
     <button role="radio" aria-checked="false">Choice 2</button>
@@ -374,7 +374,7 @@ When using the `RovingTabindexController`, ensure you apply appropriate ARIA rol
 <sp-tab value="menus">For menus</sp-tab>
 <sp-tab-panel value="menus">
 
-```typescript
+```html-no-demo
 <div role="menu" aria-label="Actions" aria-orientation="vertical">
     <div role="menuitem">New</div>
     <div role="menuitem">Open</div>
@@ -420,7 +420,6 @@ The `RovingTabindexController` provides the following keyboard interactions:
             <sp-table-cell>vertical, both, grid</sp-table-cell>
             <sp-table-cell>Moves focus to the previous element (or up in grid)</sp-table-cell>
         </sp-table-row>
-        
     </sp-table-body>
 </sp-table>
 
@@ -454,7 +453,7 @@ rovingTabindexController = new RovingTabindexController<Button>(this, {
 });
 ```
 
-```html
+```html-no-demo
 <!-- Buttons can use disabled attribute -->
 <sp-button disabled>Disabled Button</sp-button>
 ```

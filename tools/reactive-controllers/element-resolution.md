@@ -10,31 +10,22 @@ The `ElementResolutionController` is a [reactive controller](https://lit.dev/doc
 - **Reactive updates**: Automatically triggers host updates when the resolved element changes
 - **Scope awareness**: Works within Shadow DOM and regular DOM contexts
 
-<!-- ### Usage
-
-```typescript
-import { elementResolverUpdatedSymbol } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-
-protected override willUpdate(changes: PropertyValues): void {
-    if (changes.has(elementResolverUpdatedSymbol)) {
-        // React to element resolution changes
-    }
-}
-``` -->
-
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/reactive-controllers)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/reactive-controllers?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/reactive-controllers)
 
-```
+```bash
 yarn add @spectrum-web-components/reactive-controllers
 ```
 
 Import the `ElementResolutionController` and/or `elementResolverUpdatedSymbol` via:
 
-```
-import { ElementResolutionController, elementResolverUpdatedSymbol } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
+```typescript
+import {
+    ElementResolutionController,
+    elementResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 ```
 
 ### Examples
@@ -70,14 +61,14 @@ customElements.define('root-el', RootEl);
 
 In this example, the selector `'.other-element'` is supplied to the resolver, which means in the following example, `this.resolvedElement.element` will maintain a reference to the sibling `<div>` element:
 
-```html
+```html-no-demo
 <root-el></root-el>
 <div class="other-element"></div>
 ```
 
 The resolved reference will always be the first element matching the selector applied, so in the following example the element with content "First!" will be the reference:
 
-```html
+```html-no-demo
 <root-el></root-el>
 <div class="other-element">First!</div>
 <div class="other-element">Last.</div>
@@ -201,9 +192,9 @@ class CustomInput extends LitElement {
 customElements.define('custom-input', CustomInput);
 ```
 
-**Usage:**
+Usage:
 
-```html
+```html-no-demo
 <span class="input-label" id="name-label">Enter your name</span>
 <custom-input></custom-input>
 ```
@@ -307,9 +298,9 @@ class ModalManager extends LitElement {
 customElements.define('modal-manager', ModalManager);
 ```
 
-**Usage:**
+Usage:
 
-```html
+```html-no-demo
 <!-- Elements with data-first-focus/data-last-focus can be inside shadow root -->
 <modal-manager></modal-manager>
 
@@ -319,61 +310,6 @@ customElements.define('modal-manager', ModalManager);
     <p>Modal content...</p>
     <button data-last-focus>Custom Last Button</button>
 </modal-manager>
-```
-
-The `ElementResolutionController` automatically finds the marked elements whether they're in the shadow DOM or slotted from the light DOM, which is essential for managing focus traps in reusable overlay components.
-
-#### Form validation integration
-
-Resolve and connect to error message elements:
-
-```typescript
-import { html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
-import { ElementResolutionController } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-
-class ValidatedInput extends LitElement {
-    errorElement = new ElementResolutionController(this, {
-        selector: '.error-message',
-    });
-
-    @property({ type: Boolean })
-    invalid = false;
-
-    updated() {
-        const input = this.shadowRoot?.querySelector('input');
-
-        if (input && this.errorElement.element) {
-            input.setAttribute('aria-invalid', String(this.invalid));
-
-            if (this.invalid) {
-                input.setAttribute(
-                    'aria-describedby',
-                    this.errorElement.element.id
-                );
-            } else {
-                input.removeAttribute('aria-describedby');
-            }
-        }
-    }
-
-    render() {
-        return html`
-            <input type="text" aria-label="Validated input" />
-        `;
-    }
-}
-
-customElements.define('validated-input', ValidatedInput);
-```
-
-**Usage:**
-
-```html
-<validated-input invalid></validated-input>
-<span class="error-message" id="error-1" role="alert">
-    This field is required
-</span>
 ```
 
 ### Accessibility
@@ -421,4 +357,3 @@ When using `ElementResolutionController` for accessibility-related functionality
 - [WCAG 2.1 - Name, Role, Value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html)
 - [ARIA: aria-labelledby attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby)
 - [ARIA: aria-describedby attribute](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby)
-- [Adobe Accessibility Guidelines](https://www.adobe.com/accessibility/products/spectrum.html)
