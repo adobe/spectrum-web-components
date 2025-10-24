@@ -351,7 +351,7 @@ export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
 
     /**
      * gets the hidden label for the combobox:
-     * appliedLabel corresponds to `<label for="...">`, which is overriden
+     * appliedLabel corresponds to `<label for="...">`, which is overridden
      * if user adds the `label` attribute manually to `<sp-combobox>`.
      **/
     protected get visuallyHiddenLabel(): string | undefined {
