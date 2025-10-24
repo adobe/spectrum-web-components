@@ -77,6 +77,10 @@ projects/**/*.css.ts
 tools/**/*.css.ts
 styles/**/*.css.ts
 
+# barebones assets
+first-gen/*
+second-gen/*
+
 # test assets
 TESTS.xml
 test-results.xml
