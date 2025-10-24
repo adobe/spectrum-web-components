@@ -2,7 +2,7 @@
 
 The `FieldLabelMixin` provides a consistent way to render accessible, visually integrated labels for form controls within custom elements. It handles label visibility, required field indicators, disabled states, and label positioning.
 
-Spectrum Web Components leverages the `FieldLabelMixin` to power elements like `sp-textfield`, `sp-combobox`, `sp-number-field`, and `sp-color-field`.
+Spectrum Web Components leverages the `FieldLabelMixin` to power elements like `[sp-textfield](./textfield)`, `[sp-combobox](./combobox)`, `[sp-number-field](./number-field)`, and `[sp-color-field](./color-field)`.
 
 ### Usage
 
