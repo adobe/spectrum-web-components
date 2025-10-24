@@ -15,7 +15,7 @@ yarn add @spectrum-web-components/field-label
 
 Import `FieldLabelMixin` via:
 
-```
+```js
 import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 ```
 
