@@ -23,7 +23,11 @@
         "first-gen/tools/**/*.d.ts": {
             "when": "$(basename).ts"
         },
-        "**/*.test-vrt.ts": true
+        "**/*.test-vrt.ts": true,
+        "projects/**": true,
+        "tools/**": true,
+        "test/**": true,
+        "packages/**": true
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
