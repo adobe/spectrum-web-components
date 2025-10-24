@@ -64,7 +64,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         slotName,
         excludedSelectors
     ) {
-        public static get styles(): CSSResultArray {
+        public static override get styles(): CSSResultArray {
             return [...super.styles, styles, asteriskIconStyles];
         }
 
