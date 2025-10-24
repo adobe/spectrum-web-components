@@ -178,7 +178,7 @@ __metadata:
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
-    "@custom-elements-manifest/analyzer": "npm:0.10.6"
+    "@custom-elements-manifest/analyzer": "npm:0.10.10"
     "@geometricpanda/storybook-addon-badges": "npm:2.0.5"
     "@lit/react": "npm:1.0.8"
     "@open-wc/dev-server-hmr": "npm:0.2.0"
@@ -2007,9 +2007,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@custom-elements-manifest/analyzer@npm:0.10.6":
-  version: 0.10.6
-  resolution: "@custom-elements-manifest/analyzer@npm:0.10.6"
+"@custom-elements-manifest/analyzer@npm:0.10.10":
+  version: 0.10.10
+  resolution: "@custom-elements-manifest/analyzer@npm:0.10.10"
   dependencies:
     "@custom-elements-manifest/find-dependencies": "npm:^0.0.6"
     "@github/catalyst": "npm:^1.6.0"
@@ -2024,7 +2024,7 @@ __metadata:
   bin:
     cem: cem.js
     custom-elements-manifest: cem.js
-  checksum: 10c0/6f51d75dea6b1686581342491b8ace10d0d902f5e228c1c0691cc807ba49d80a885a2e5eb3825cf16c1c1c8c4bc5df8b8c60cbd5f1c12ca339b79c0bda834944
+  checksum: 10c0/2fdc51f3f1b67a390650e75088e7113b1b30b2e232f0be323b44aae202ecb7539d3b9d4632afb5344614aae292620c6f9295cdad0e1a6f546d97f3a20e1aa2a0
   languageName: node
   linkType: hard
 
@@ -4347,7 +4347,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/custom-vars-viewer@workspace:projects/css-custom-vars-viewer"
   dependencies:
-    "@custom-elements-manifest/analyzer": "npm:0.10.6"
+    "@custom-elements-manifest/analyzer": "npm:0.10.10"
     "@open-wc/eslint-config": "npm:12.0.3"
     "@open-wc/testing": "npm:4.0.0"
     "@rollup/plugin-json": "npm:6.1.0"
