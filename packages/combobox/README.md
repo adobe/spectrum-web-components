@@ -90,7 +90,7 @@ Use the `placeholder` attribute to include placeholder text.
 
 #### Listbox options
 
-Litbox options can be added as slotted `sp-menu-item` children or as an array of `ComboboxOptions`. They can also be loaded dynamically.
+Listbox options can be added as slotted `sp-menu-item` children or as an array of `ComboboxOptions`. They can also be loaded dynamically.
 
 <sp-tabs selected="slotted" auto label="Listbox options">
 <sp-tab value="slotted">Slotted children</sp-tab>
