@@ -34,8 +34,8 @@
     ],
     "scripts": {
         "analyze": "cem analyze --config cem.config.js",
+        "analyze:watch": "cem analyze --config cem.config.js --watch",
         "build": "vite build",
-        "cem:watch": "cem analyze --watch",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
         "storybook": "yarn analyze && storybook dev -p 6006",

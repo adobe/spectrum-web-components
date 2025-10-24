@@ -19,7 +19,7 @@
         "build": "yarn workspaces foreach --from '@swc/*' --recursive run build",
         "clean": "yarn workspaces foreach --from '@swc/*' --recursive run clean",
         "lint": "eslint . --ext .ts,.js,.json",
-        "start": "yarn workspace @swc/core dev & yarn workspace @swc/components cem:watch & yarn workspace @swc/components storybook",
+        "start": "yarn workspace @swc/core dev & yarn workspace @swc/components analyze:watch & yarn workspace @swc/components storybook",
         "storybook:build": "yarn workspace @swc/components storybook:build",
         "test": "yarn workspace @swc/components test"
     },
