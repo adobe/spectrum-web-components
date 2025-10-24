@@ -106,7 +106,7 @@ describe('Tray', () => {
     });
 
     describe('Dismiss helpers', () => {
-        it('renders visually-hidden dismiss helpers when no buttons detected', async () => {
+        it('renders visually-hidden, keyboard-accessible dismiss helpers when no buttons detected', async () => {
             const el = await fixture<Tray>(html`
                 <sp-tray open>
                     <sp-menu style="width: 100%">
@@ -125,7 +125,7 @@ describe('Tray', () => {
             );
             expect(buttons.length).to.equal(2);
             expect(buttons[0].getAttribute('aria-label')).to.equal('Dismiss');
-            expect(buttons[0].getAttribute('tabindex')).to.equal('-1');
+            expect(buttons[0].getAttribute('tabindex')).to.be.null;
         });
 
         it('does not render dismiss helpers when sp-button is detected', async () => {
