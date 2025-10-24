@@ -247,7 +247,7 @@ Implements the W3C ARIA roving tabindex pattern for keyboard navigation in compo
 
 ---
 
-### [SystemContextResolutionController](./system-context-resolution.md)
+#### SystemContextResolutionController
 
 Resolves and tracks system-level context like color scheme and scale preferences from Spectrum theme providers.
 
