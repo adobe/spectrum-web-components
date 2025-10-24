@@ -53,7 +53,8 @@ export class TextfieldBase extends FieldLabelMixin(
     )
 ) {
     public static override get styles(): CSSResultArray {
-        return [super.styles || [], textfieldStyles, checkmarkStyles];
+        const styles = (super.styles || []) as CSSResultArray;
+        return [...styles, textfieldStyles, checkmarkStyles];
     }
 
     @state()
