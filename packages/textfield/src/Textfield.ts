@@ -52,7 +52,6 @@ export class TextfieldBase extends FieldLabelMixin(
         })
     )
 ) {
-    declare public renderFieldLabel: (fieldId: string) => TemplateResult;
 
     public static override get styles(): CSSResultArray {
         return [...(super.styles || []), textfieldStyles, checkmarkStyles];
