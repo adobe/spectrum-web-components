@@ -112,6 +112,12 @@ first-gen/test/visual/test.js
 test-results
 second-gen/packages/swc/playwright-report
 
+# lingering directories from before monorepo
+packages/*
+projects/*
+tools/*
+test/*
+
 # vitest browser test screenshots
 **/__screenshots__/
 

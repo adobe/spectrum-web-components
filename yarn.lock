@@ -305,7 +305,7 @@ __metadata:
   resolution: "@adobe/swc@workspace:second-gen"
   dependencies:
     eslint: "npm:8.57.1"
-    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    eslint-plugin-simple-import-sort: "npm:12.1.1"
   languageName: unknown
   linkType: soft
 
@@ -332,7 +332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:^4.10.2":
+"@axe-core/playwright@npm:4.10.2":
   version: 4.10.2
   resolution: "@axe-core/playwright@npm:4.10.2"
   dependencies:
@@ -2744,7 +2744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@custom-elements-manifest/analyzer@npm:^0.10.5":
+"@custom-elements-manifest/analyzer@npm:0.10.8":
   version: 0.10.8
   resolution: "@custom-elements-manifest/analyzer@npm:0.10.8"
   dependencies:
@@ -6591,7 +6591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-vitest@npm:^9.1.10":
+"@storybook/addon-vitest@npm:9.1.10":
   version: 9.1.10
   resolution: "@storybook/addon-vitest@npm:9.1.10"
   dependencies:
@@ -7014,7 +7014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/test-runner@npm:^0.23.0":
+"@storybook/test-runner@npm:0.23.0":
   version: 0.23.0
   resolution: "@storybook/test-runner@npm:0.23.0"
   dependencies:
@@ -7198,35 +7198,35 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@swc/components@workspace:second-gen/packages/swc"
   dependencies:
-    "@axe-core/playwright": "npm:^4.10.2"
-    "@custom-elements-manifest/analyzer": "npm:^0.10.5"
+    "@axe-core/playwright": "npm:4.10.2"
+    "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@storybook/addon-a11y": "npm:9.1.10"
     "@storybook/addon-designs": "npm:10.0.2"
     "@storybook/addon-docs": "npm:9.1.10"
-    "@storybook/addon-vitest": "npm:^9.1.10"
-    "@storybook/test-runner": "npm:^0.23.0"
+    "@storybook/addon-vitest": "npm:9.1.10"
+    "@storybook/test-runner": "npm:0.23.0"
     "@storybook/web-components-vite": "npm:9.1.10"
     "@swc/core": "workspace:*"
-    "@types/react": "npm:^19"
-    "@types/react-dom": "npm:^19"
-    "@vitest/browser": "npm:^3.2.4"
+    "@types/react": "npm:19.1.16"
+    "@types/react-dom": "npm:19.1.9"
+    "@vitest/browser": "npm:3.2.4"
     "@vitest/coverage-v8": "npm:3.2.4"
-    "@vitest/ui": "npm:^3.2.4"
-    "@wc-toolkit/storybook-helpers": "npm:^9.0.1"
-    autoprefixer: "npm:^10.4.21"
-    glob: "npm:^11.0.0"
+    "@vitest/ui": "npm:3.2.4"
+    "@wc-toolkit/storybook-helpers": "npm:9.0.1"
+    autoprefixer: "npm:10.4.21"
+    glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
-    playwright: "npm:^1.55.0"
-    postcss: "npm:^8.5.6"
-    postcss-preset-env: "npm:^10.3.1"
-    react: "npm:^19.1.1"
-    react-dom: "npm:^19.1.1"
-    rimraf: "npm:^6.0.1"
-    storybook: "npm:^9.1.10"
-    typescript: "npm:^5.3.3"
-    vite: "npm:^7.1.3"
-    vite-plugin-dts: "npm:^4.3.0"
-    vite-plugin-lit-css: "npm:^2.2.1"
+    playwright: "npm:1.53.1"
+    postcss: "npm:8.5.6"
+    postcss-preset-env: "npm:10.4.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
+    rimraf: "npm:6.0.1"
+    storybook: "npm:9.1.10"
+    typescript: "npm:5.9.2"
+    vite: "npm:7.1.7"
+    vite-plugin-dts: "npm:4.5.4"
+    vite-plugin-lit-css: "npm:2.2.1"
     vitest: "npm:3.2.4"
   languageName: unknown
   linkType: soft
@@ -7351,12 +7351,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@swc/core@workspace:second-gen/packages/core"
   dependencies:
-    glob: "npm:^11.0.0"
+    glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
-    rimraf: "npm:^6.0.1"
-    typescript: "npm:^5.3.3"
-    vite: "npm:^7.1.3"
-    vite-plugin-dts: "npm:^4.3.0"
+    rimraf: "npm:6.0.1"
+    typescript: "npm:5.9.2"
+    vite: "npm:7.1.7"
+    vite-plugin-dts: "npm:4.5.4"
   languageName: unknown
   linkType: soft
 
@@ -8357,7 +8357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^19":
+"@types/react-dom@npm:19.1.9":
   version: 19.1.9
   resolution: "@types/react-dom@npm:19.1.9"
   peerDependencies:
@@ -8376,7 +8376,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19":
+"@types/react@npm:19.1.16":
   version: 19.1.16
   resolution: "@types/react@npm:19.1.16"
   dependencies:
@@ -8802,7 +8802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/browser@npm:^3.2.4":
+"@vitest/browser@npm:3.2.4":
   version: 3.2.4
   resolution: "@vitest/browser@npm:3.2.4"
   dependencies:
@@ -8967,7 +8967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/ui@npm:^3.2.4":
+"@vitest/ui@npm:3.2.4":
   version: 3.2.4
   resolution: "@vitest/ui@npm:3.2.4"
   dependencies:
@@ -9113,7 +9113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wc-toolkit/storybook-helpers@npm:^9.0.1":
+"@wc-toolkit/storybook-helpers@npm:9.0.1":
   version: 9.0.1
   resolution: "@wc-toolkit/storybook-helpers@npm:9.0.1"
   peerDependencies:
@@ -10572,7 +10572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.21":
+"autoprefixer@npm:10.4.21, autoprefixer@npm:^10.4.21":
   version: 10.4.21
   resolution: "autoprefixer@npm:10.4.21"
   dependencies:
@@ -14675,7 +14675,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-simple-import-sort@npm:^12.1.1":
+"eslint-plugin-simple-import-sort@npm:12.1.1":
   version: 12.1.1
   resolution: "eslint-plugin-simple-import-sort@npm:12.1.1"
   peerDependencies:
@@ -16295,6 +16295,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:11.0.3, glob@npm:^11.0.0":
+  version: 11.0.3
+  resolution: "glob@npm:11.0.3"
+  dependencies:
+    foreground-child: "npm:^3.3.1"
+    jackspeak: "npm:^4.1.1"
+    minimatch: "npm:^10.0.3"
+    minipass: "npm:^7.1.2"
+    package-json-from-dist: "npm:^1.0.0"
+    path-scurry: "npm:^2.0.0"
+  bin:
+    glob: dist/esm/bin.mjs
+  checksum: 10c0/7d24457549ec2903920dfa3d8e76850e7c02aa709122f0164b240c712f5455c0b457e6f2a1eee39344c6148e39895be8094ae8cfef7ccc3296ed30bce250c661
+  languageName: node
+  linkType: hard
+
 "glob@npm:^10.0.0, glob@npm:^10.2.2, glob@npm:^10.4.1, glob@npm:^10.4.2":
   version: 10.4.5
   resolution: "glob@npm:10.4.5"
@@ -16308,22 +16324,6 @@ __metadata:
   bin:
     glob: dist/esm/bin.mjs
   checksum: 10c0/19a9759ea77b8e3ca0a43c2f07ecddc2ad46216b786bb8f993c445aee80d345925a21e5280c7b7c6c59e860a0154b84e4b2b60321fea92cd3c56b4a7489f160e
-  languageName: node
-  linkType: hard
-
-"glob@npm:^11.0.0":
-  version: 11.0.3
-  resolution: "glob@npm:11.0.3"
-  dependencies:
-    foreground-child: "npm:^3.3.1"
-    jackspeak: "npm:^4.1.1"
-    minimatch: "npm:^10.0.3"
-    minipass: "npm:^7.1.2"
-    package-json-from-dist: "npm:^1.0.0"
-    path-scurry: "npm:^2.0.0"
-  bin:
-    glob: dist/esm/bin.mjs
-  checksum: 10c0/7d24457549ec2903920dfa3d8e76850e7c02aa709122f0164b240c712f5455c0b457e6f2a1eee39344c6148e39895be8094ae8cfef7ccc3296ed30bce250c661
   languageName: node
   linkType: hard
 
@@ -24854,7 +24854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-preset-env@npm:^10.3.1":
+"postcss-preset-env@npm:10.4.0":
   version: 10.4.0
   resolution: "postcss-preset-env@npm:10.4.0"
   dependencies:
@@ -25108,7 +25108,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8, postcss@npm:^8.4.33, postcss@npm:^8.4.5, postcss@npm:^8.5.6":
+"postcss@npm:8.5.6, postcss@npm:^8, postcss@npm:^8.4.33, postcss@npm:^8.4.5, postcss@npm:^8.5.6":
   version: 8.5.6
   resolution: "postcss@npm:8.5.6"
   dependencies:
@@ -25646,7 +25646,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react-dom@npm:^19.1.1":
+"react-dom@npm:19.1.1, react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.1.1
   resolution: "react-dom@npm:19.1.1"
   dependencies:
@@ -25680,7 +25680,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0, react@npm:^19.1.1":
+"react@npm:19.1.1, react@npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version: 19.1.1
   resolution: "react@npm:19.1.1"
   checksum: 10c0/8c9769a2dfd02e603af6445058325e6c8a24b47b185d0e461f66a6454765ddcaecb3f0a90184836c68bb509f3c38248359edbc42f0d07c23eb500a5c30c87b4e
@@ -26493,7 +26493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:6.0.1, rimraf@npm:^6.0.1":
+"rimraf@npm:6.0.1":
   version: 6.0.1
   resolution: "rimraf@npm:6.0.1"
   dependencies:
@@ -27825,7 +27825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook@npm:^9.1.10":
+"storybook@npm:9.1.10":
   version: 9.1.10
   resolution: "storybook@npm:9.1.10"
   dependencies:
@@ -29256,6 +29256,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:5.9.2":
+  version: 5.9.2
+  resolution: "typescript@npm:5.9.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
+  languageName: node
+  linkType: hard
+
 "typescript@npm:^2.9.2 || ^3.0.0 || ^4.0.0":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
@@ -29263,16 +29273,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/5f6cad2e728a8a063521328e612d7876e12f0d8a8390d3b3aaa452a6a65e24e9ac8ea22beb72a924fd96ea0a49ea63bb4e251fb922b12eedfb7f7a26475e5c56
-  languageName: node
-  linkType: hard
-
-"typescript@npm:^5.3.3":
-  version: 5.9.2
-  resolution: "typescript@npm:5.9.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
   languageName: node
   linkType: hard
 
@@ -29316,6 +29316,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>":
+  version: 5.9.2
+  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/34d2a8e23eb8e0d1875072064d5e1d9c102e0bdce56a10a25c0b917b8aa9001a9cf5c225df12497e99da107dc379360bc138163c66b55b95f5b105b50578067e
+  languageName: node
+  linkType: hard
+
 "typescript@patch:typescript@npm%3A^2.9.2 || ^3.0.0 || ^4.0.0#optional!builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#optional!builtin<compat/typescript>::version=4.9.5&hash=289587"
@@ -29323,16 +29333,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/e3333f887c6829dfe0ab6c1dbe0dd1e3e2aeb56c66460cb85c5440c566f900c833d370ca34eb47558c0c69e78ced4bfe09b8f4f98b6de7afed9b84b8d1dd06a1
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
-  version: 5.9.2
-  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/34d2a8e23eb8e0d1875072064d5e1d9c102e0bdce56a10a25c0b917b8aa9001a9cf5c225df12497e99da107dc379360bc138163c66b55b95f5b105b50578067e
   languageName: node
   linkType: hard
 
@@ -30190,7 +30190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-dts@npm:^4.3.0":
+"vite-plugin-dts@npm:4.5.4":
   version: 4.5.4
   resolution: "vite-plugin-dts@npm:4.5.4"
   dependencies:
@@ -30213,7 +30213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-lit-css@npm:^2.2.1":
+"vite-plugin-lit-css@npm:2.2.1":
   version: 2.2.1
   resolution: "vite-plugin-lit-css@npm:2.2.1"
   peerDependencies:
@@ -30223,7 +30223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0-0, vite@npm:^7.1.3":
+"vite@npm:7.1.7, vite@npm:^5.0.0 || ^6.0.0 || ^7.0.0-0":
   version: 7.1.7
   resolution: "vite@npm:7.1.7"
   dependencies:
