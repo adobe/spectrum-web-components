@@ -20,6 +20,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
+import '@spectrum-web-components/link/sp-link.js';
 import {
     openOverlay,
     Overlay,
@@ -1652,6 +1653,92 @@ export const triggeredByOptimization = (): TemplateResult => {
             </overlay-trigger>
         </div>
     `;
+};
+
+export const hoverWithInteractiveContent = (): TemplateResult => {
+    return html`
+        <div
+            style="display: flex; gap: 20px; flex-direction: column; padding: 40px;"
+        >
+            <!-- Hover with interactive buttons -->
+            <overlay-trigger triggered-by="hover" placement="right">
+                <sp-button slot="trigger">
+                    Hover for interactive buttons
+                </sp-button>
+                <sp-popover slot="hover-content" tip>
+                    <sp-dialog size="s" no-divider>
+                        <h3 style="margin-top: 0;">Interactive content</h3>
+                        <p>Tab into these buttons:</p>
+                        <div
+                            style="display: flex; gap: 8px; flex-direction: column;"
+                        >
+                            <sp-button>Action 1</sp-button>
+                            <sp-button>Action 2</sp-button>
+                            <sp-button>Action 3</sp-button>
+                        </div>
+                    </sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+
+            <!-- Hover with links -->
+            <overlay-trigger triggered-by="hover" placement="right">
+                <sp-button slot="trigger">
+                    Hover for interactive links
+                </sp-button>
+                <sp-popover slot="hover-content" tip>
+                    <sp-dialog size="s" no-divider>
+                        <h3 style="margin-top: 0;">Quick links</h3>
+                        <ul>
+                            <li>
+                                <sp-link href="#example1">
+                                    Example link 1
+                                </sp-link>
+                            </li>
+                            <li>
+                                <sp-link href="#example2">
+                                    Example link 2
+                                </sp-link>
+                            </li>
+                            <li>
+                                <sp-link href="#example3">
+                                    Example link 3
+                                </sp-link>
+                            </li>
+                        </ul>
+                    </sp-dialog>
+                </sp-popover>
+            </overlay-trigger>
+
+            <!-- Hover with action group (like Arrange icon example) -->
+            <overlay-trigger triggered-by="hover" placement="right">
+                <sp-button slot="trigger">Hover for action group</sp-button>
+                <sp-popover slot="hover-content" tip>
+                    <sp-action-group
+                        selects="single"
+                        vertical
+                        style="margin: var(--spectrum-spacing-200);"
+                    >
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            Send to Front
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            Send to Back
+                        </sp-action-button>
+                        <sp-action-button>
+                            <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            Align Center
+                        </sp-action-button>
+                    </sp-action-group>
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `;
+};
+
+hoverWithInteractiveContent.swc_vrt = {
+    skip: true,
 };
 
 export const pickerInDialog = (): TemplateResult => {
