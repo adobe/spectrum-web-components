@@ -23,7 +23,14 @@
     "javascript.validate.enable": true,
     "typescript.validate.enable": true,
     "problems.showCurrentInStatus": true,
-    "cSpell.words": ["deque", "labelledby", "valuemax", "valuenow", "wcag"],
+    "cSpell.words": [
+        "checkmark",
+        "deque",
+        "labelledby",
+        "valuemax",
+        "valuenow",
+        "wcag"
+    ],
     "markdownlint.config": {
         "extends": ".markdownlint.json"
     }

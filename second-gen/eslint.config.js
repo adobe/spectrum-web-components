@@ -283,6 +283,14 @@ export default [
         },
     },
 
+    // Test files - disable max-lines-per-function
+    {
+        files: ['**/*.test.ts'],
+        rules: {
+            'max-lines-per-function': 'off',
+        },
+    },
+
     // React wrapper files - allow any
     {
         files: ['react/**/*.ts'],
