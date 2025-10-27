@@ -4391,7 +4391,6 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
     "@spectrum-web-components/button-group": "npm:1.9.0"
-    "@spectrum-web-components/divider": "npm:1.9.0"
     "@spectrum-web-components/icons-workflow": "npm:1.9.0"
     "@spectrum-web-components/modal": "npm:1.9.0"
     "@spectrum-web-components/shared": "npm:1.9.0"

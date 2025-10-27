@@ -84,7 +84,6 @@
         "@spectrum-web-components/base": "1.9.0",
         "@spectrum-web-components/button": "1.9.0",
         "@spectrum-web-components/button-group": "1.9.0",
-        "@spectrum-web-components/divider": "1.9.0",
         "@spectrum-web-components/icons-workflow": "1.9.0",
         "@spectrum-web-components/modal": "1.9.0",
         "@spectrum-web-components/shared": "1.9.0",
