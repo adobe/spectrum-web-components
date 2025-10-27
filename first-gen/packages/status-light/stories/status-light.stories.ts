@@ -19,6 +19,7 @@ export default {
 };
 
 export const s = (): TemplateResult => html`
+    <sp-status-light size="s" variant="accent">accent</sp-status-light>
     <sp-status-light size="s" variant="positive">positive</sp-status-light>
     <sp-status-light size="s" variant="negative">negative</sp-status-light>
     <sp-status-light size="s" variant="notice">notice</sp-status-light>
@@ -32,9 +33,11 @@ export const s = (): TemplateResult => html`
     <sp-status-light size="s" variant="magenta">magenta</sp-status-light>
     <sp-status-light size="s" variant="celery">celery</sp-status-light>
     <sp-status-light size="s" variant="purple">purple</sp-status-light>
+    <sp-status-light size="s" variant="cyan">cyan</sp-status-light>
 `;
 
 export const m = (): TemplateResult => html`
+    <sp-status-light size="m" variant="accent">accent</sp-status-light>
     <sp-status-light size="m" variant="positive">positive</sp-status-light>
     <sp-status-light size="m" variant="negative">negative</sp-status-light>
     <sp-status-light size="m" variant="notice">notice</sp-status-light>
@@ -48,9 +51,11 @@ export const m = (): TemplateResult => html`
     <sp-status-light size="m" variant="magenta">magenta</sp-status-light>
     <sp-status-light size="m" variant="celery">celery</sp-status-light>
     <sp-status-light size="m" variant="purple">purple</sp-status-light>
+    <sp-status-light size="m" variant="cyan">cyan</sp-status-light>
 `;
 
 export const l = (): TemplateResult => html`
+    <sp-status-light size="l" variant="accent">accent</sp-status-light>
     <sp-status-light size="l" variant="positive">positive</sp-status-light>
     <sp-status-light size="l" variant="negative">negative</sp-status-light>
     <sp-status-light size="l" variant="notice">notice</sp-status-light>
@@ -64,9 +69,11 @@ export const l = (): TemplateResult => html`
     <sp-status-light size="l" variant="magenta">magenta</sp-status-light>
     <sp-status-light size="l" variant="celery">celery</sp-status-light>
     <sp-status-light size="l" variant="purple">purple</sp-status-light>
+    <sp-status-light size="l" variant="cyan">cyan</sp-status-light>
 `;
 
 export const XL = (): TemplateResult => html`
+    <sp-status-light size="xl" variant="accent">accent</sp-status-light>
     <sp-status-light size="xl" variant="positive">positive</sp-status-light>
     <sp-status-light size="xl" variant="negative">negative</sp-status-light>
     <sp-status-light size="xl" variant="notice">notice</sp-status-light>
@@ -80,6 +87,7 @@ export const XL = (): TemplateResult => html`
     <sp-status-light size="xl" variant="magenta">magenta</sp-status-light>
     <sp-status-light size="xl" variant="celery">celery</sp-status-light>
     <sp-status-light size="xl" variant="purple">purple</sp-status-light>
+    <sp-status-light size="xl" variant="cyan">cyan</sp-status-light>
 `;
 
 export const disabledTrue = (): TemplateResult => html`

@@ -185,7 +185,7 @@ Use the following labels to categorize tickets appropriately:
 - `s2foundations`: Spectrum 2 Foundations related work
 - `spectrum2`: Spectrum 2 platform specific tasks
 - `team-processes`: Internal team workflow improvements
-- `testing`: Test implementation or testing infrastructure work
+- `test`: Test implementation or testing infrastructure work
 - `triage`: New tickets requiring team assessment and prioritization
 - `VoiceOver`: VoiceOver screen reader specific issues
 

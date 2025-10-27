@@ -29,6 +29,8 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { FieldLabel } from '@spectrum-web-components/field-label/src/FieldLabel.js';
 import type { Icon } from '@spectrum-web-components/icon';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -2360,6 +2362,177 @@ export function runPickerTests(): void {
                 firstItemOffsetAfter,
                 'after: first item offset'
             ).to.be.greaterThan(-1);
+        });
+    });
+    describe('icons attribute', () => {
+        it('hides icon in button when icons="none"', async () => {
+            const el = await fixture<Picker>(html`
+                <sp-picker label="Choose an action" value="1" icons="none">
+                    <sp-menu-item value="1">
+                        <sp-icon-edit slot="icon"></sp-icon-edit>
+                        Edit
+                    </sp-menu-item>
+                    <sp-menu-item value="2">
+                        <sp-icon-copy slot="icon"></sp-icon-copy>
+                        Copy
+                    </sp-menu-item>
+                </sp-picker>
+            `);
+            await elementUpdated(el);
+
+            const iconSpan = el.shadowRoot.querySelector(
+                '#icon'
+            ) as HTMLElement;
+            expect(iconSpan).to.not.be.null;
+            expect(iconSpan.hidden, 'icon span should be hidden').to.be.true;
+
+            // Verify the label is still visible
+            const labelSpan = el.shadowRoot.querySelector(
+                '.label'
+            ) as HTMLElement;
+            expect(labelSpan).to.not.be.null;
+            expect(
+                labelSpan.classList.contains('visually-hidden'),
+                'label should be visible'
+            ).to.be.false;
+        });
+
+        it('preserves icon elements in menu items when icons="none"', async () => {
+            const el = await fixture<Picker>(html`
+                <sp-picker label="Choose an action" value="1" icons="none">
+                    <sp-menu-item value="1">
+                        <sp-icon-edit slot="icon"></sp-icon-edit>
+                        Edit
+                    </sp-menu-item>
+                    <sp-menu-item value="2">
+                        <sp-icon-copy slot="icon"></sp-icon-copy>
+                        Copy
+                    </sp-menu-item>
+                </sp-picker>
+            `);
+            await elementUpdated(el);
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+            await elementUpdated(el);
+
+            // Verify icons are present in menu items (icons="none" only affects button display)
+            const menuItems = el.querySelectorAll('sp-menu-item');
+            expect(menuItems.length).to.equal(2);
+            menuItems.forEach((item, index) => {
+                const icon = item.querySelector('[slot="icon"]');
+                expect(icon, `menu item ${item.value} should have icon`).to.not
+                    .be.null;
+                const expectedTag =
+                    index === 0 ? 'SP-ICON-EDIT' : 'SP-ICON-COPY';
+                expect(icon!.tagName).to.equal(expectedTag);
+            });
+        });
+
+        it('hides label text when icons="only" and has value', async () => {
+            const el = await fixture<Picker>(html`
+                <sp-picker label="Choose an action" value="1" icons="only">
+                    <sp-menu-item value="1">
+                        <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+                        Edit
+                    </sp-menu-item>
+                    <sp-menu-item value="2">
+                        <sp-icon-copy slot="icon" label="Copy"></sp-icon-copy>
+                        Copy
+                    </sp-menu-item>
+                </sp-picker>
+            `);
+            await elementUpdated(el);
+
+            const labelSpan = el.shadowRoot.querySelector(
+                '.label'
+            ) as HTMLElement;
+            expect(labelSpan).to.not.be.null;
+            expect(
+                labelSpan.classList.contains('visually-hidden'),
+                'label should be visually hidden when icons="only" and has value'
+            ).to.be.true;
+
+            // Verify icon is still visible
+            const iconSpan = el.shadowRoot.querySelector(
+                '#icon'
+            ) as HTMLElement;
+            expect(iconSpan).to.not.be.null;
+            expect(iconSpan.hidden, 'icon should be visible').to.be.false;
+        });
+
+        it('shows label text when icons="only" but no value selected', async () => {
+            const el = await fixture<Picker>(html`
+                <sp-picker label="Choose an action" icons="only">
+                    <sp-menu-item value="1">
+                        <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+                        Edit
+                    </sp-menu-item>
+                    <sp-menu-item value="2">
+                        <sp-icon-copy slot="icon" label="Copy"></sp-icon-copy>
+                        Copy
+                    </sp-menu-item>
+                </sp-picker>
+            `);
+            await elementUpdated(el);
+
+            const labelSpan = el.shadowRoot.querySelector(
+                '.label'
+            ) as HTMLElement;
+            expect(labelSpan).to.not.be.null;
+            expect(
+                labelSpan.classList.contains('visually-hidden'),
+                'label should be visible when no value selected'
+            ).to.be.false;
+            expect(
+                labelSpan.classList.contains('placeholder'),
+                'label should have placeholder class'
+            ).to.be.true;
+        });
+
+        it('updates icon visibility when icons attribute changes', async () => {
+            const el = await fixture<Picker>(html`
+                <sp-picker label="Choose an action" value="1">
+                    <sp-menu-item value="1">
+                        <sp-icon-edit slot="icon"></sp-icon-edit>
+                        Edit
+                    </sp-menu-item>
+                </sp-picker>
+            `);
+            await elementUpdated(el);
+
+            let iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
+            expect(iconSpan.hidden, 'icon should be visible initially').to.be
+                .false;
+
+            // Change to icons="none"
+            el.icons = 'none';
+            await elementUpdated(el);
+
+            iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
+            expect(
+                iconSpan.hidden,
+                'icon should be hidden after setting icons="none"'
+            ).to.be.true;
+
+            // Change to icons="only"
+            el.icons = 'only';
+            await elementUpdated(el);
+
+            iconSpan = el.shadowRoot.querySelector('#icon') as HTMLElement;
+            expect(
+                iconSpan.hidden,
+                'icon should be visible after setting icons="only"'
+            ).to.be.false;
+
+            const labelSpan = el.shadowRoot.querySelector(
+                '.label'
+            ) as HTMLElement;
+            expect(
+                labelSpan.classList.contains('visually-hidden'),
+                'label should be hidden with icons="only"'
+            ).to.be.true;
         });
     });
 }
