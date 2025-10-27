@@ -79,6 +79,7 @@
     --spectrum-statuslight-nonsemantic-purple-color: var(--spectrum-purple-visual-color);
     --spectrum-statuslight-nonsemantic-fuchsia-color: var(--spectrum-fuchsia-visual-color);
     --spectrum-statuslight-nonsemantic-magenta-color: var(--spectrum-magenta-visual-color);
+
     min-block-size: var(--mod-statuslight-height, var(--spectrum-statuslight-height));
     box-sizing: border-box;
     font-size: var(--mod-statuslight-font-size, var(--spectrum-statuslight-font-size));
@@ -102,6 +103,7 @@
 
 :host:before {
     --spectrum-statuslight-spacing-computed-top-to-dot: calc(var(--mod-statuslight-spacing-top-to-dot, var(--spectrum-statuslight-spacing-top-to-dot)) - var(--mod-statuslight-spacing-top-to-label, var(--spectrum-statuslight-spacing-top-to-label)));
+
     content: "";
     inline-size: var(--mod-statuslight-dot-size, var(--spectrum-statuslight-dot-size));
     block-size: var(--mod-statuslight-dot-size, var(--spectrum-statuslight-dot-size));
@@ -122,7 +124,7 @@
     background-color: var(--mod-statuslight-semantic-neutral-color, var(--spectrum-statuslight-semantic-neutral-color));
 }
 
-.spectrum-StatusLight--accent:before {
+:host([variant="accent"]):before {
     background-color: var(--mod-statuslight-semantic-accent-color, var(--spectrum-statuslight-semantic-accent-color));
 }
 
@@ -174,7 +176,7 @@
     background-color: var(--mod-statuslight-nonsemantic-seafoam-color, var(--spectrum-statuslight-nonsemantic-seafoam-color));
 }
 
-.spectrum-StatusLight--cyan:before {
+:host([variant="cyan"]):before {
     background-color: var(--mod-statuslight-nonsemantic-cyan-color, var(--spectrum-statuslight-nonsemantic-cyan-color));
 }
 
@@ -202,6 +204,7 @@
     :host([dir]) {
         --highcontrast-statuslight-content-color-default: CanvasText;
         --highcontrast-statuslight-subdued-content-color-default: CanvasText;
+
         forced-color-adjust: none;
     }
 
