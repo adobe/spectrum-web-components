@@ -7,18 +7,15 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "plugin:lit-a11y/recommended"
+        "plugin:prettier/recommended"
     ],
-    "ignorePatterns": ["**/dist/**"],
     "overrides": [
         {
             "extends": ["plugin:jsonc/recommended-with-jsonc"],
             "files": ["*.json"],
             "parser": "jsonc-eslint-parser",
             "rules": {
-                "jsonc/sort-keys": ["warn"],
-                "notice/notice": "off"
+                "jsonc/sort-keys": ["warn"]
             }
         },
         {
@@ -74,30 +71,39 @@
                             "cpu",
                             "publishConfig"
                         ],
-                        "pathPattern": "^$" // Top-level properties
+                        "pathPattern": "^$"
                     },
                     {
-                        /*
-                         * This rule excludes export conditions from alphabetical sorting.
-                         * Since node.js processes export conditions in order and chooses the
-                         * first match, they need to be ordered logically, not alphabetically.
-                         */
                         "order": { "type": "asc" },
-                        "pathPattern": "^(?!exports\\[).*" // All properties except export conditions
+                        "pathPattern": "^(?!exports\\[).*"
                     }
                 ]
             }
         },
         {
-            "files": ["scripts/*"],
+            "extends": ["./first-gen/.eslintrc.json"],
+            "files": ["first-gen/**/*"],
             "rules": {
-                "no-console": ["off"]
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "config/license.js"
+                    }
+                ]
             }
         },
         {
-            "files": ["react/**/*.ts"],
+            "extends": ["./second-gen/.eslintrc.json"],
+            "files": ["second-gen/**/*"],
             "rules": {
-                "@typescript-eslint/no-explicit-any": "off"
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "../../../config/license.js"
+                    }
+                ]
             }
         }
     ],
@@ -106,43 +112,15 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "notice",
-        "@spectrum-web-components",
-        "import",
-        "simple-import-sort"
-    ],
+    "plugins": ["@typescript-eslint"],
+    "root": true,
     "rules": {
-        "@spectrum-web-components/prevent-argument-names": [
-            "error",
-            ["e", "ev", "evt", "err"]
-        ],
-        "curly": ["error", "all"],
-        "import/prefer-default-export": "off",
-        "lit-a11y/click-events-have-key-events": ["error"],
         "no-console": [
             "error",
             {
                 "allow": ["warn", "error"]
             }
         ],
-        "no-debugger": 2,
-        "simple-import-sort/imports": [
-            "error",
-            {
-                "groups": [
-                    [
-                        "^lit",
-                        "^@lit",
-                        "^(?!@swc|@spectrum-web-components)@?\\w"
-                    ],
-                    ["^@swc", "^@spectrum-web-components"],
-                    ["^\\u0000"],
-                    ["^\\."],
-                    ["^.+\\.(css|scss|sass|less|styl)$"]
-                ]
-            }
-        ]
+        "no-debugger": 2
     }
 }

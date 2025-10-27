@@ -6,16 +6,14 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
+        "directory": "second-gen/packages/swc",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "second-gen/packages/swc"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "type": "module",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -30,20 +28,24 @@
             "import": "./dist/components/*/index.js"
         }
     },
+    "main": "./dist/index.js",
     "files": [
         "dist/"
     ],
     "scripts": {
         "analyze": "cem analyze --config cem.config.js",
+        "analyze:watch": "cem analyze --config cem.config.js --watch",
         "build": "vite build",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
-        "test": "vitest",
+        "test": "vitest --run",
         "test:coverage": "vitest --coverage",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "test:watch": "yarn workspace @swc/core dev & vitest"
     },
+    "types": "./dist/index.d.ts",
     "dependencies": {
         "@swc/core": "workspace:*",
         "lit": "^2.5.0 || ^3.1.3"

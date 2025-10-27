@@ -122,4 +122,4 @@ jobs:
                   level: error
                   reporter: github-pr-review
                   filter_mode: diff_context
-                  eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
+                  eslint_flags: '--config .eslintrc.json ${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'

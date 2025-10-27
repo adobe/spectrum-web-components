@@ -170,14 +170,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/spectrum-web-components-2nd-gen@workspace:second-gen":
-  version: 0.0.0-use.local
-  resolution: "@adobe/spectrum-web-components-2nd-gen@workspace:second-gen"
-  dependencies:
-    eslint-plugin-simple-import-sort: "npm:12.1.1"
-  languageName: unknown
-  linkType: soft
-
 "@adobe/spectrum-web-components-monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-web-components-monorepo@workspace:."
@@ -305,6 +297,15 @@ __metadata:
     webpack-merge: "npm:6.0.1"
     wireit: "npm:0.14.12"
     yargs: "npm:17.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@adobe/swc@workspace:second-gen":
+  version: 0.0.0-use.local
+  resolution: "@adobe/swc@workspace:second-gen"
+  dependencies:
+    eslint: "npm:8.57.1"
+    eslint-plugin-simple-import-sort: "npm:12.1.1"
   languageName: unknown
   linkType: soft
 
