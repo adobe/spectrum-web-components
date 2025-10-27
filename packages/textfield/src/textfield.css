@@ -124,3 +124,14 @@ textarea {
     resize: none;
     overflow: hidden;
 }
+
+form.input,
+#form-container {
+    display: flex;
+    padding: 0 !important;
+    border: 0;
+}
+
+#form-wrapper.input {
+    -webkit-text-fill-color: initial;
+}

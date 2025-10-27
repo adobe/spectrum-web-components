@@ -27,6 +27,7 @@ import {
     query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 
 import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -55,6 +56,14 @@ export class TextfieldBase extends ManageHelpText(
     @state()
     protected appliedLabel?: string;
 
+    private _firstUpdateAfterConnected = true;
+
+    private _inputRef?: HTMLInputElement | HTMLTextAreaElement;
+    private _formRef?: HTMLFormElement;
+
+    @query('#form-wrapper')
+    protected formElement!: HTMLFormElement;
+
     /**
      * A regular expression outlining the keys that will be allowed to update the value of the form control.
      */
@@ -67,7 +76,7 @@ export class TextfieldBase extends ManageHelpText(
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @query('.input:not(#sizer)')
+    @query('input, input.input:not(#sizer), textarea.input:not(#sizer)')
     protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
     /**
@@ -203,6 +212,9 @@ export class TextfieldBase extends ManageHelpText(
         | HTMLTextAreaElement['autocomplete'];
 
     public override get focusElement(): HTMLInputElement | HTMLTextAreaElement {
+        if (isWebKit()) {
+            return this._inputRef ?? this.inputElement;
+        }
         return this.inputElement;
     }
 
@@ -272,6 +284,104 @@ export class TextfieldBase extends ManageHelpText(
 
     protected handleInputElementPointerdown(): void {}
 
+    protected handleInputSubmit(event: Event): void {
+        this.dispatchEvent(
+            new Event('submit', {
+                cancelable: true,
+                bubbles: true,
+            })
+        );
+        event.preventDefault();
+    }
+
+    private _eventHandlers = {
+        input: this.handleInput.bind(this),
+        change: this.handleChange.bind(this),
+        focus: this.onFocus.bind(this),
+        blur: this.onBlur.bind(this),
+        submit: this.handleInputSubmit.bind(this),
+    };
+
+    protected firstUpdateAfterConnected(): void {
+        this._inputRef = this.inputElement;
+        if (this.formElement) {
+            this._formRef = this.formElement;
+            this.formElement.addEventListener(
+                'submit',
+                this._eventHandlers.submit
+            );
+            this.inputElement.addEventListener(
+                'change',
+                this._eventHandlers['change']
+            );
+            this.inputElement.addEventListener(
+                'input',
+                this._eventHandlers['input']
+            );
+            this.inputElement.addEventListener(
+                'focus',
+                this._eventHandlers['focus']
+            );
+            this.inputElement.addEventListener(
+                'blur',
+                this._eventHandlers['blur'] as EventListener
+            );
+        }
+    }
+
+    protected override updated(changes: PropertyValues): void {
+        super.updated(changes);
+        if (isWebKit() && this._firstUpdateAfterConnected) {
+            this._firstUpdateAfterConnected = false;
+            this.firstUpdateAfterConnected();
+        }
+    }
+
+    override connectedCallback(): void {
+        super.connectedCallback();
+        if (isWebKit()) {
+            this._firstUpdateAfterConnected = true;
+            if (this._formRef) {
+                const formContainer =
+                    this.shadowRoot.querySelector('#form-container');
+                if (formContainer) {
+                    formContainer.appendChild(this._formRef);
+                    this.requestUpdate();
+                }
+                this._formRef = undefined;
+            }
+        }
+    }
+
+    override disconnectedCallback(): void {
+        if (isWebKit()) {
+            this._inputRef?.removeEventListener(
+                'change',
+                this._eventHandlers['change']
+            );
+            this._inputRef?.removeEventListener(
+                'input',
+                this._eventHandlers['input']
+            );
+            this._inputRef?.removeEventListener(
+                'focus',
+                this._eventHandlers['focus']
+            );
+            this._inputRef?.removeEventListener(
+                'blur',
+                this._eventHandlers['blur'] as EventListener
+            );
+            if (this._formRef) {
+                this._formRef.remove();
+                this._formRef.removeEventListener(
+                    'submit',
+                    this._eventHandlers.submit
+                );
+            }
+        }
+        super.disconnectedCallback();
+    }
+
     protected renderStateIcons(): TemplateResult | typeof nothing {
         if (this.invalid) {
             return html`
@@ -334,6 +444,36 @@ export class TextfieldBase extends ManageHelpText(
     }
 
     private get renderInput(): TemplateResult {
+        if (isWebKit()) {
+            return html`
+                <!-- @ts-ignore -->
+                <div id="form-container" class="input">
+                    <form id="form-wrapper" class="input">
+                        <input
+                            name=${ifDefined(this.name || undefined)}
+                            type=${this.type}
+                            aria-describedby=${this.helpTextId}
+                            aria-label=${this.label || this.placeholder}
+                            aria-invalid=${ifDefined(this.invalid || undefined)}
+                            class="input"
+                            maxlength=${ifDefined(
+                                this.maxlength > -1 ? this.maxlength : undefined
+                            )}
+                            minlength=${ifDefined(
+                                this.minlength > -1 ? this.minlength : undefined
+                            )}
+                            pattern=${ifDefined(this.pattern)}
+                            placeholder=${this.placeholder}
+                            .value=${live(this.displayValue)}
+                            ?disabled=${this.disabled}
+                            ?required=${this.required}
+                            ?readonly=${this.readonly}
+                            autocomplete=${ifDefined(this.autocomplete)}
+                        />
+                    </form>
+                </div>
+            `;
+        }
         return html`
             <!-- @ts-ignore -->
             <input

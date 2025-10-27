@@ -817,6 +817,7 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
         if (!this.inputElement || !this.isConnected) {
             // Prevent race conditions if inputElement is removed from DOM while a queued update is still running.
             return;
