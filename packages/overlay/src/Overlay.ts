@@ -79,7 +79,6 @@ if (!browserSupportsPopover) {
  * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
  * @attr {boolean} delayed - Whether the overlay should wait for a warm-up period before opening
  * @attr {boolean} open - Whether the overlay is currently open
- * @attr {boolean} allow-outside-click - @deprecated Whether clicks outside the overlay should close it (not recommended for accessibility)
  */
 export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
@@ -291,18 +290,6 @@ export class Overlay extends ComputedOverlayBase {
     override receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
     /**
-     * @deprecated This property will be removed in a future version.
-     * We do not recommend using this property for accessibility reasons.
-     * It allows clicks outside the overlay to close it, which can cause
-     * unexpected behavior and accessibility issues.
-     *
-     * @type {boolean}
-     * @default false
-     */
-    @property({ type: Boolean, attribute: 'allow-outside-click' })
-    allowOutsideClick = false;
-
-    /**
      * A reference to the slot element within the overlay.
      *
      * This element is used to manage the content slotted into the overlay.
@@ -508,6 +495,7 @@ export class Overlay extends ComputedOverlayBase {
      *
      * This method handles the necessary steps to open the popover, including managing delays,
      * ensuring the popover is in the DOM, making transitions, and applying focus.
+     *
      * @protected
      * @override
      * @returns {Promise<void>} A promise that resolves when the popover has been fully opened.
@@ -564,7 +552,6 @@ export class Overlay extends ComputedOverlayBase {
                 },
                 // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
                 escapeDeactivates: false,
-                allowOutsideClick: this.allowOutsideClick,
             });
 
             if (this.type === 'modal' || this.type === 'page') {
@@ -983,23 +970,6 @@ export class Overlay extends ComputedOverlayBase {
                 'id',
                 `${this.tagName.toLowerCase()}-${randomID()}`
             );
-        }
-
-        // Warn about deprecated allowOutsideClick property
-        if (changes.has('allowOutsideClick') && this.allowOutsideClick) {
-            if (window.__swc?.DEBUG) {
-                window.__swc.warn(
-                    this,
-                    `The "allow-outside-click" attribute on <${this.localName}> has been deprecated and will be removed in a future release. We do not recommend using this attribute for accessibility reasons. It allows clicks outside the overlay to close it, which can cause unexpected behavior and accessibility issues.`,
-                    'https://opensource.adobe.com/spectrum-web-components/components/overlay/',
-                    { level: 'deprecation' }
-                );
-            } else {
-                // Fallback for testing environments or when SWC is not available
-                console.warn(
-                    `[${this.localName}] The "allow-outside-click" attribute has been deprecated and will be removed in a future release. We do not recommend using this attribute for accessibility reasons. It allows clicks outside the overlay to close it, which can cause unexpected behavior and accessibility issues.`
-                );
-            }
         }
 
         // Manage the open state if the 'open' property has changed.

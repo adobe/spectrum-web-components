@@ -1138,38 +1138,3 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(input);
     });
 });
-
-describe('Overlay - Deprecated Properties', () => {
-    it('should support allowOutsideClick property with deprecation warning', async () => {
-        const consoleSpy = spy(console, 'warn');
-
-        const el = await fixture<HTMLDivElement>(html`
-            <div>
-                <sp-button id="trigger">Open Overlay</sp-button>
-                <sp-overlay
-                    trigger="trigger@click"
-                    type="auto"
-                    ?allow-outside-click=${true}
-                >
-                    <sp-popover dialog>
-                        <p>Overlay content</p>
-                    </sp-popover>
-                </sp-overlay>
-            </div>
-        `);
-
-        const overlay = el.querySelector('sp-overlay') as Overlay;
-        await elementUpdated(overlay);
-
-        // Verify the property is set correctly
-        expect(overlay.allowOutsideClick).to.be.true;
-        expect(overlay.hasAttribute('allow-outside-click')).to.be.true;
-
-        // Verify the deprecation warning is shown (either via SWC or console.warn fallback)
-        expect(consoleSpy.calledOnce).to.be.true;
-        expect(consoleSpy.firstCall.args[0]).to.include('allow-outside-click');
-        expect(consoleSpy.firstCall.args[0]).to.include('deprecated');
-
-        consoleSpy.restore();
-    });
-});

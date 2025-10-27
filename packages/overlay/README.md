@@ -269,7 +269,7 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 
 The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
 
-- You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+-   You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
 
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
@@ -408,8 +408,8 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 
 "Fully" in this context means that all CSS transitions that have dispatched `transitionrun` events on the direct children of the `<sp-overlay>` element have successfully dispatched their `transitionend` or `transitioncancel` event. Keep in mind the following:
 
-- `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
-- `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
+-   `transition*` events bubble; this means that while transition events on light DOM content of those direct children will be heard, those events will not be taken into account
+-   `transition*` events are not composed; this means that transition events on shadow DOM content of the direct children will not propagate to a level in the DOM where they can be heard
 
 This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to re-dispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
@@ -532,7 +532,6 @@ This means that in both cases, if the transition is meant to be a part of the op
     .triggerElement=${HTMLElement}
     .triggerInteraction=${'click' | 'longpress' | 'hover'}
     type=${'auto' | 'hint' | 'manual' | 'modal' | 'page'}
-    ?allow-outside-click=${boolean}
 ></sp-overlay>
 ```
 
@@ -573,23 +572,6 @@ Common in `modal`/`page` overlays for full-screen content</sp-table-cell>
 </sp-table-row>
 </sp-table-body>
 </sp-table>
-
-##### Deprecated Properties
-
-> **⚠️ Deprecation Notice**: The `allow-outside-click` property is deprecated and will be removed in a future version.
-
-The `allow-outside-click` property allows clicks outside the overlay to close it. **We do not recommend using this property for accessibility reasons** as it can cause unexpected behavior and accessibility issues. When set to `true`, it configures the focus trap to allow outside clicks, which may interfere with proper focus management and user expectations.
-
-```html
-<!-- @deprecated Not recommended for accessibility reasons -->
-<sp-overlay trigger="trigger@click" allow-outside-click="true">
-    <sp-popover>
-        <p>This overlay can be closed by clicking outside</p>
-    </sp-popover>
-</sp-overlay>
-```
-
-**Alternative approaches**: Instead of using `allow-outside-click`, consider implementing explicit close buttons or using the `type="modal"` or `type="page"` overlay types which provide better accessibility and user experience.
 
 #### Styling
 
@@ -790,9 +772,9 @@ When nesting multiple overlays, it is important to ensure that the nested overla
 
 The overlay manages focus based on its type:
 
-- For `modal` and `page` types, focus is always trapped within the overlay
-- For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
-- For `hint` type, focus remains on the trigger element
+-   For `modal` and `page` types, focus is always trapped within the overlay
+-   For `auto` and `manual` types, focus behavior is controlled by the `receives-focus` attribute
+-   For `hint` type, focus remains on the trigger element
 
 Example of proper focus management:
 
@@ -858,10 +840,10 @@ Example of proper focus management:
 
 #### Screen reader considerations
 
-- Use `aria-haspopup` on trigger elements to indicate the type of overlay
-- Provide descriptive labels using `aria-label` or `aria-labelledby`
-- Use proper heading structure within overlays
-- Ensure error messages are announced using `aria-live`
+-   Use `aria-haspopup` on trigger elements to indicate the type of overlay
+-   Provide descriptive labels using `aria-label` or `aria-labelledby`
+-   Use proper heading structure within overlays
+-   Ensure error messages are announced using `aria-live`
 
 Example of a tooltip with proper screen reader support:
 
