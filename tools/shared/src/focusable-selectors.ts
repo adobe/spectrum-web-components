@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-// Inspired from https://github.com/focus-trap/tabbable/blob/8acf516c29da42c928753950210b07ac32efc724/src/index.js#L6
 const focusables = [
     'input:not([inert])',
     'select:not([inert])',

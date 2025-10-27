@@ -13,7 +13,6 @@
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -27,16 +26,6 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/table/sp-table.js';
-import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
-import '@spectrum-web-components/table/sp-table-head.js';
-import '@spectrum-web-components/table/sp-table-head-cell.js';
-import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-row.js';
-import '@spectrum-web-components/table/sp-table-cell.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
 import { Placement } from '@floating-ui/dom';
 import { OverlayTypes } from '../src/overlay-types.js';
@@ -929,54 +918,5 @@ lazyElements.swc_vrt = {
 
 lazyElements.parameters = {
     // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const nestedModalOverlays = (): TemplateResult => html`
-    <div style="padding: 20px;">
-        <sp-button id="outerTrigger" variant="primary">
-            Open Outer Modal
-        </sp-button>
-
-        <sp-overlay
-            id="outerOverlay"
-            type="auto"
-            .triggerInteraction=${'click'}
-            trigger="outerTrigger@click"
-        >
-            <sp-popover>
-                <sp-dialog>
-                    <p>
-                        This is the outer modal content. Press ESC to close it.
-                    </p>
-                    <sp-button id="innerTrigger" variant="primary">
-                        Open Inner Modal
-                    </sp-button>
-                    <sp-overlay
-                        id="innerOverlay"
-                        type="auto"
-                        .triggerInteraction=${'click'}
-                        trigger="innerTrigger@click"
-                    >
-                        <sp-popover>
-                            <sp-dialog>
-                                <p>
-                                    This is the inner modal content. Press ESC
-                                    to close this first, then the outer modal.
-                                </p>
-                            </sp-dialog>
-                        </sp-popover>
-                    </sp-overlay>
-                </sp-dialog>
-            </sp-popover>
-        </sp-overlay>
-    </div>
-`;
-
-nestedModalOverlays.swc_vrt = {
-    skip: true,
-};
-
-nestedModalOverlays.parameters = {
     chromatic: { disableSnapshot: true },
 };

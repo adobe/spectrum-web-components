@@ -1241,6 +1241,15 @@ export function runPickerTests(): void {
                 await sendTabKey();
                 await focused;
 
+                expect(el.focused, 'focused').to.be.true;
+                expect(!el.open, 'closed').to.be.true;
+                expect(document.activeElement === el, 'focuses el').to.be.true;
+
+                // tab through the picker to input2
+                focused = oneEvent(input2, 'focus');
+                await sendTabKey();
+                await focused;
+
                 expect(document.activeElement === input2, 'focuses input 2').to
                     .be.true;
             });

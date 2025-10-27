@@ -170,8 +170,7 @@
         "@spectrum-web-components/base": "1.9.0",
         "@spectrum-web-components/reactive-controllers": "1.9.0",
         "@spectrum-web-components/shared": "1.9.0",
-        "@spectrum-web-components/theme": "1.9.0",
-        "focus-trap": "7.6.5"
+        "@spectrum-web-components/theme": "1.9.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

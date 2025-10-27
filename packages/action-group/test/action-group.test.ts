@@ -260,7 +260,7 @@ describe('ActionGroup', () => {
         expect(el.children[3]).to.equal(document.activeElement);
     });
 
-    it.skip('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
+    it('action-group with action-menu manages tabIndex correctly while using mouse', async () => {
         const el = await fixture<ActionGroup>(
             HasActionMenuAsChild({ label: 'Action Group' })
         );

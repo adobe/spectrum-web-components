@@ -162,6 +162,10 @@ export class AbstractOverlay extends SpectrumElement {
         return;
     }
     /* c8 ignore next 3 */
+    protected async manageDialogOpen(): Promise<void> {
+        return;
+    }
+    /* c8 ignore next 3 */
     protected async managePopoverOpen(): Promise<void> {
         return;
     }

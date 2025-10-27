@@ -10,20 +10,20 @@
  * governing permissions and limitations under the License.
  */
 import '@spectrum-web-components/button/sp-button.js';
-import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { Dialog } from '@spectrum-web-components/dialog';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { Popover } from '@spectrum-web-components/popover';
+import { setViewport } from '@web/test-runner-commands';
 import {
     Overlay,
     OverlayTrigger,
     Placement,
     VirtualTrigger,
 } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { setViewport } from '@web/test-runner-commands';
 
 import {
     elementUpdated,
@@ -32,29 +32,26 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { render, TemplateResult } from '@spectrum-web-components/base';
-import { Button } from '@spectrum-web-components/button';
-import { Menu } from '@spectrum-web-components/menu';
-import { Theme } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { spy } from 'sinon';
-import { sendMouse } from '../../../test/plugins/browser.js';
-import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
-import {
-    fixture,
-    isInteractive,
-    isOnTopLayer,
-    sendShiftTabKey,
-    sendTabKey,
-} from '../../../test/testing-helpers.js';
-import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
     clickAndHoverTarget,
     definedOverlayElement,
     virtualElement,
 } from '../stories/overlay.stories';
+import { PopoverContent } from '../stories/overlay-story-components.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { spy } from 'sinon';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { render, TemplateResult } from '@spectrum-web-components/base';
+import {
+    fixture,
+    isInteractive,
+    isOnTopLayer,
+} from '../../../test/testing-helpers.js';
+import { Menu } from '@spectrum-web-components/menu';
+import { Button } from '@spectrum-web-components/button';
 // import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
@@ -155,10 +152,7 @@ describe('Overlays', () => {
                     clickSpy();
                 });
 
-                expect(
-                    await isInteractive(outerPopover),
-                    'outside popover is not interactive'
-                ).to.be.false;
+                expect(await isInteractive(outerPopover)).to.be.false;
                 expect(button).to.exist;
 
                 const opened = oneEvent(outerPopover, 'sp-opened');
@@ -215,22 +209,32 @@ describe('Overlays', () => {
              * that triggered the dialog and is outside of the modal. A test that was able to cycle would be better.
              */
 
-            await sendTabKey();
+            await sendKeys({
+                press: 'Tab',
+            });
 
             expect(document.activeElement === button).to.be.false;
-            await sendTabKey();
-
-            expect(document.activeElement === button).to.be.false;
-
-            await sendShiftTabKey();
-
-            expect(document.activeElement === button).to.be.false;
-
-            await sendShiftTabKey();
+            await sendKeys({
+                press: 'Tab',
+            });
 
             expect(document.activeElement === button).to.be.false;
 
-            await sendShiftTabKey();
+            await sendKeys({
+                press: 'Shift+Tab',
+            });
+
+            expect(document.activeElement === button).to.be.false;
+
+            await sendKeys({
+                press: 'Shift+Tab',
+            });
+
+            expect(document.activeElement === button).to.be.false;
+
+            await sendKeys({
+                press: 'Shift+Tab',
+            });
 
             expect(document.activeElement === button).to.be.false;
         });
@@ -519,12 +523,16 @@ describe('Overlays', () => {
         expect(document.activeElement).to.equal(input);
 
         const closed = oneEvent(content, 'sp-closed');
-        await sendShiftTabKey();
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
         await closed;
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(after);
         expect(await isInteractive(content)).to.be.false;
     });
@@ -563,11 +571,15 @@ describe('Overlays', () => {
 
         expect(document.activeElement).to.equal(input);
 
-        await sendShiftTabKey();
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
 
         expect(document.activeElement).to.equal(trigger);
 
-        await sendShiftTabKey();
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
 
         expect(document.activeElement).to.equal(before);
     });
@@ -612,7 +624,7 @@ describe('Overlay - type="modal"', () => {
         before(async () => {
             render(
                 html`
-                    <sp-theme color="light" scale="large" system="spectrum">
+                    <sp-theme color="light" scale="large">
                         ${virtualElement({
                             ...virtualElement.args,
                             offset: 6,
@@ -687,13 +699,15 @@ describe('Overlay - type="modal"', () => {
         });
         it('closes the second "contextmenu" when clicking away', async () => {
             const closed = oneEvent(document, 'sp-closed');
-            await sendMouse({
-                type: 'click',
-                position: [width - width / 8, height - height / 8],
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [width - width / 8, height - height / 8],
+                    },
+                ],
             });
             await closed;
-            await elementUpdated(firstMenu);
-            await elementUpdated(secondMenu);
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
         });
@@ -720,19 +734,21 @@ describe('Overlay - type="modal"', () => {
 
         const opened = oneEvent(document, 'sp-opened');
         // Right click to open "context menu" overlay.
-        await sendMouse([
-            {
-                type: 'move',
-                position: [270, 10],
-            },
-            {
-                type: 'click',
-                options: {
-                    button: 'right',
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [270, 10],
                 },
-                position: [270, 10],
-            },
-        ]);
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [270, 10],
+                },
+            ],
+        });
         await opened;
 
         const firstMenu = document.querySelector('sp-menu') as Menu;
@@ -740,7 +756,9 @@ describe('Overlay - type="modal"', () => {
         expect(await isInteractive(firstMenu)).to.be.true;
 
         const closed = oneEvent(document, 'sp-closed');
-        sendKeys({ press: 'Escape' });
+        sendKeys({
+            press: 'Escape',
+        });
         await closed;
 
         expect(await isInteractive(firstMenu)).to.be.false;
@@ -791,9 +809,13 @@ describe('Overlay - type="modal"', () => {
         expect(overlayTrigger.open).to.equal('click');
 
         const closed = oneEvent(trigger, 'sp-closed');
-        await sendMouse({
-            type: 'click',
-            position: [1, 1],
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [1, 1],
+                },
+            ],
         });
         await closed;
 
@@ -803,8 +825,6 @@ describe('Overlay - type="modal"', () => {
     });
 
     it('should not open hover overlay right after closing the click overlay using the keyboard', async () => {
-        // @TODO: skipping on Firefox due to flakiness. Will review in the migration to Spectrum 2.
-        if (isFirefox()) return;
         const overlayTrigger = await fixture<OverlayTrigger>(
             clickAndHoverTarget()
         );
@@ -820,9 +840,10 @@ describe('Overlay - type="modal"', () => {
         expect(overlayTrigger.open).to.equal('click');
 
         const closed = oneEvent(trigger, 'sp-closed');
-        sendKeys({ press: 'Escape' });
+        sendKeys({
+            press: 'Escape',
+        });
         await closed;
-        await elementUpdated(overlayTrigger);
 
         expect(overlayTrigger.open).to.be.undefined;
         expect(document.activeElement === trigger, 'trigger focused').to.be
@@ -833,21 +854,13 @@ describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
-                <overlay-trigger
-                    id="test-1"
-                    placement="bottom"
-                    triggered-by="hover"
-                >
+                <overlay-trigger id="test-1" placement="bottom">
                     <sp-button slot="trigger">Trigger 1</sp-button>
                     <sp-popover slot="hover-content">
                         <p>Hover contentent for "Trigger 1".</p>
                     </sp-popover>
                 </overlay-trigger>
-                <overlay-trigger
-                    id="test-2"
-                    placement="right"
-                    triggered-by="click hover"
-                >
+                <overlay-trigger id="test-2" placement="right">
                     <sp-button slot="trigger">Trigger 2</sp-button>
                     <sp-popover slot="click-content">
                         <p>Click contentent for "Trigger 2".</p>
@@ -885,23 +898,35 @@ describe('Overlay - timing', () => {
 
         // Move pointer over "Trigger 1", should _start_ to open "hover" content.
         await sendMouse({
-            type: 'move',
-            position: trigger1Position,
+            steps: [
+                {
+                    type: 'move',
+                    position: trigger1Position,
+                },
+            ],
         });
         await nextFrame();
         await nextFrame();
 
         // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
         await sendMouse({
-            type: 'move',
-            position: outsideTriggers,
+            steps: [
+                {
+                    type: 'move',
+                    position: outsideTriggers,
+                },
+            ],
         });
         await nextFrame();
         await nextFrame();
         // Move pointer over "Trigger 2", should _start_ to open "hover" content.
         await sendMouse({
-            type: 'move',
-            position: trigger2Position,
+            steps: [
+                {
+                    type: 'move',
+                    position: trigger2Position,
+                },
+            ],
         });
         await nextFrame();
         await nextFrame();
@@ -909,8 +934,12 @@ describe('Overlay - timing', () => {
         const opened = oneEvent(trigger2, 'sp-opened');
         // Click "Trigger 2", should _start_ to open "click" content and _start_ to close "hover" content.
         await sendMouse({
-            type: 'click',
-            position: trigger2Position,
+            steps: [
+                {
+                    type: 'click',
+                    position: trigger2Position,
+                },
+            ],
         });
         await opened;
         await nextFrame();
@@ -923,8 +952,12 @@ describe('Overlay - timing', () => {
 
         const closed = oneEvent(overlayTrigger2, 'sp-closed');
         await sendMouse({
-            type: 'click',
-            position: outsideTriggers,
+            steps: [
+                {
+                    type: 'click',
+                    position: outsideTriggers,
+                },
+            ],
         });
         await closed;
 
@@ -950,10 +983,14 @@ describe('maintains focus consistency in all browsers', () => {
 
         const opened = oneEvent(trigger, 'sp-opened');
         await sendMouse({
-            type: 'click',
-            position: [
-                boundingRect.left + boundingRect.width / 2,
-                boundingRect.top + boundingRect.height / 2,
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        boundingRect.left + boundingRect.width / 2,
+                        boundingRect.top + boundingRect.height / 2,
+                    ],
+                },
             ],
         });
         await opened;
@@ -962,8 +999,12 @@ describe('maintains focus consistency in all browsers', () => {
 
         const closed = oneEvent(trigger, 'sp-closed');
         await sendMouse({
-            type: 'click',
-            position: [0, 0],
+            steps: [
+                {
+                    type: 'click',
+                    position: [0, 0],
+                },
+            ],
         });
         await closed;
 
@@ -1041,7 +1082,9 @@ describe('Overlay should correctly trap focus', () => {
         const opened = oneEvent(overlay, 'sp-opened');
         // use keyboard to open the overlay
         trigger.focus();
-        await sendKeys({ press: 'Enter' });
+        await sendKeys({
+            press: 'Enter',
+        });
         await opened;
 
         expect(overlay.open).to.be.true;
@@ -1053,15 +1096,21 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button2);
 
         // press tab to focus on button1
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button2);
     });
     it('should trap focus when the overlay type is page', async () => {
@@ -1096,15 +1145,21 @@ describe('Overlay should correctly trap focus', () => {
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button2);
 
         // press tab to focus on button1
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button1);
 
         // press tab to focus on button2
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
         expect(document.activeElement).to.equal(button2);
     });
     it('should not trap focus when the overlay type is auto', async () => {
@@ -1132,9 +1187,12 @@ describe('Overlay should correctly trap focus', () => {
 
         expect(overlay.open).to.be.true;
 
-        await sendTabKey();
+        await sendKeys({
+            press: 'Tab',
+        });
 
         const input = el.querySelector('#input') as HTMLInputElement;
         expect(document.activeElement).to.equal(input);
     });
 });
+
