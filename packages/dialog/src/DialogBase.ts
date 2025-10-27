@@ -24,7 +24,8 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-import '@spectrum-web-components/dialog/sp-dialog.js';
+// Get around lint error by importing locally for now. Not required for actual change.
+import '../sp-dialog.js';
 import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
@@ -155,41 +156,18 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.handleTransitionEvent(event);
     }
 
-    private get hasTransitionDuration(): boolean {
-        const modal = this.shadowRoot.querySelector('.modal') as HTMLElement;
-
-        const modalTransitionDurations =
-            window.getComputedStyle(modal).transitionDuration;
-        for (const duration of modalTransitionDurations.split(','))
-            if (parseFloat(duration) > 0) return true;
-
-        const underlay = this.shadowRoot.querySelector(
-            'sp-underlay'
-        ) as HTMLElement;
-
-        if (underlay) {
-            const underlayTransitionDurations =
-                window.getComputedStyle(underlay).transitionDuration;
-            for (const duration of underlayTransitionDurations.split(','))
-                if (parseFloat(duration) > 0) return true;
-        }
-
-        return false;
-    }
-
     protected override update(changes: PropertyValues<this>): void {
         if (changes.has('open') && changes.get('open') !== undefined) {
-            const hasTransitionDuration = this.hasTransitionDuration;
             this.animating = true;
             this.transitionPromise = new Promise((res) => {
                 this.resolveTransitionPromise = () => {
                     this.animating = false;
-                    if (!this.open && hasTransitionDuration)
-                        this.dispatchClosed();
                     res();
                 };
             });
-            if (!this.open && !hasTransitionDuration) this.dispatchClosed();
+            if (!this.open) {
+                this.dispatchClosed();
+            }
         }
         super.update(changes);
     }
