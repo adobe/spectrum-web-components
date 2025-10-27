@@ -142,34 +142,11 @@
         "@spectrum-web-components",
         "import"
     ],
-    "root": true,
     "rules": {
-        "import/no-extraneous-dependencies": [
-            "error",
-            {
-                "devDependencies": false,
-                "optionalDependencies": false,
-                "peerDependencies": false
-            }
-        ],
-        "no-debugger": 2,
-        "no-console": [
-            "error",
-            {
-                "allow": ["warn", "error"]
-            }
-        ],
+        "@spectrum-web-components/document-active-element": ["error"],
         "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
-        ],
-        "@spectrum-web-components/document-active-element": ["error"],
-        "notice/notice": [
-            "error",
-            {
-                "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-                "templateFile": "first-gen/config/license.js"
-            }
         ],
         "@typescript-eslint/explicit-function-return-type": [
             1,
@@ -177,13 +154,18 @@
                 "allowExpressions": true
             }
         ],
-        "sort-imports": [
+        "@typescript-eslint/no-unused-vars": [
             "error",
             {
-                "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false,
-                "allowSeparatedGroups": false
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": false
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -201,10 +183,27 @@
                 ]
             }
         ],
-        "@typescript-eslint/no-unused-vars": [
+        "no-console": [
             "error",
             {
-                "argsIgnorePattern": "^_"
+                "allow": ["warn", "error"]
+            }
+        ],
+        "no-debugger": 2,
+        "notice/notice": [
+            "error",
+            {
+                "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                "templateFile": "config/license.js"
+            }
+        ],
+        "sort-imports": [
+            "error",
+            {
+                "allowSeparatedGroups": false,
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false
             }
         ]
     }

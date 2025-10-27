@@ -108,7 +108,6 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "notice",
         "@spectrum-web-components",
         "import",
         "require-extensions"
@@ -150,13 +149,6 @@
             }
         ],
         "no-debugger": 2,
-        "notice/notice": [
-            "error",
-            {
-                "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-                "templateFile": "first-gen/config/license.js"
-            }
-        ],
         "sort-imports": [
             "error",
             {

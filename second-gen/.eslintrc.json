@@ -113,7 +113,6 @@
         "import",
         "simple-import-sort"
     ],
-    "root": true,
     "rules": {
         "@spectrum-web-components/prevent-argument-names": [
             "error",
@@ -121,21 +120,7 @@
         ],
         "curly": ["error", "all"],
         "import/prefer-default-export": "off",
-        "lit-a11y/click-events-have-key-events": [
-            "error",
-            {
-                "allowList": [
-                    "sp-button",
-                    "sp-action-button",
-                    "sp-checkbox",
-                    "sp-radio",
-                    "sp-switch",
-                    "sp-menu-item",
-                    "sp-clear-button",
-                    "sp-underlay"
-                ]
-            }
-        ],
+        "lit-a11y/click-events-have-key-events": ["error"],
         "no-console": [
             "error",
             {

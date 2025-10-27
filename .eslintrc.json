@@ -82,11 +82,29 @@
         },
         {
             "extends": ["./first-gen/.eslintrc.json"],
-            "files": ["first-gen/**/*"]
+            "files": ["first-gen/**/*"],
+            "rules": {
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "config/license.js"
+                    }
+                ]
+            }
         },
         {
             "extends": ["./second-gen/.eslintrc.json"],
-            "files": ["second-gen/**/*"]
+            "files": ["second-gen/**/*"],
+            "rules": {
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "../../../config/license.js"
+                    }
+                ]
+            }
         }
     ],
     "parser": "@typescript-eslint/parser",
