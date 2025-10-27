@@ -29,9 +29,61 @@
             "types": "./dist/shared/base/index.d.ts",
             "import": "./dist/shared/base/index.js"
         },
-        "./shared/*": {
-            "types": "./dist/shared/*.d.ts",
-            "import": "./dist/shared/*.js"
+        "./shared/base/Base": {
+            "types": "./dist/shared/base/Base.d.ts",
+            "import": "./dist/shared/base/Base.js"
+        },
+        "./shared/base/Base.js": {
+            "types": "./dist/shared/base/Base.d.ts",
+            "import": "./dist/shared/base/Base.js"
+        },
+        "./shared/base/sizedMixin": {
+            "types": "./dist/shared/base/sizedMixin.d.ts",
+            "import": "./dist/shared/base/sizedMixin.js"
+        },
+        "./shared/base/sizedMixin.js": {
+            "types": "./dist/shared/base/sizedMixin.d.ts",
+            "import": "./dist/shared/base/sizedMixin.js"
+        },
+        "./shared/base/define-element": {
+            "types": "./dist/shared/base/define-element.d.ts",
+            "import": "./dist/shared/base/define-element.js"
+        },
+        "./shared/base/define-element.js": {
+            "types": "./dist/shared/base/define-element.d.ts",
+            "import": "./dist/shared/base/define-element.js"
+        },
+        "./shared/base/version": {
+            "types": "./dist/shared/base/version.d.ts",
+            "import": "./dist/shared/base/version.js"
+        },
+        "./shared/base/version.js": {
+            "types": "./dist/shared/base/version.d.ts",
+            "import": "./dist/shared/base/version.js"
+        },
+        "./shared/get-label-from-slot": {
+            "types": "./dist/shared/get-label-from-slot.d.ts",
+            "import": "./dist/shared/get-label-from-slot.js"
+        },
+        "./shared/get-label-from-slot.js": {
+            "types": "./dist/shared/get-label-from-slot.d.ts",
+            "import": "./dist/shared/get-label-from-slot.js"
+        },
+        "./shared/observe-slot-presence": {
+            "types": "./dist/shared/observe-slot-presence.d.ts",
+            "import": "./dist/shared/observe-slot-presence.js"
+        },
+        "./shared/observe-slot-presence.js": {
+            "types": "./dist/shared/observe-slot-presence.d.ts",
+            "import": "./dist/shared/observe-slot-presence.js"
+        },
+        "./shared/observe-slot-text": {
+            "types": "./dist/shared/observe-slot-text.d.ts",
+            "import": "./dist/shared/observe-slot-text.js"
+        },
+        "./shared/observe-slot-text.js": {
+            "types": "./dist/shared/observe-slot-text.d.ts",
+            "import": "./dist/shared/observe-slot-text.js"
         }
     },
     "files": [

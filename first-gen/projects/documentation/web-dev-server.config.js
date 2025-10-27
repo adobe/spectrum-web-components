@@ -17,6 +17,21 @@ import rollupJson from '@rollup/plugin-json';
 const alias = fromRollup(rollupAlias);
 const json = fromRollup(rollupJson);
 
+// Custom plugin to replace process.env.NODE_ENV in all files
+const replaceProcessEnv = () => ({
+    name: 'replace-process-env',
+    transform(context) {
+        if (context.response.is('js')) {
+            return {
+                body: context.body.replace(
+                    /process\.env\.NODE_ENV/g,
+                    '"development"'
+                ),
+            };
+        }
+    },
+});
+
 export default {
     open: false,
     watch: true,
@@ -31,6 +46,7 @@ export default {
     rootDir: '_site',
     plugins: [
         json(),
+        replaceProcessEnv(),
         alias({
             entries: [
                 {
