@@ -1,0 +1,108 @@
+# axe DevTools Linter Configuration
+# https://docs.deque.com/linter/4.0.0/en/axe-linter-configuration
+
+# Exclude patterns - prevent linting of these files
+exclude:
+    - '**/*.tmp'
+    - '**/node_modules/**'
+    - '**/dist/**'
+    - '**/.git/**'
+    - '**/coverage/**'
+    - '**/build/**'
+    - 'first-gen/**'
+    - 'CHANGELOG.md'
+
+# Tags - Use WCAG 2.1 Level A, AA, and best practices
+tags:
+    - wcag21a
+    - wcag21aa
+    - best-practice
+
+# Global component libraries - enable built-in support
+global-libraries:
+    - '@deque/cauldron-react'
+
+# Global components - map custom web components to native HTML elements
+# This allows axe-linter to validate custom components as if they were native HTML.
+#
+# HOW TO ADD A NEW COMPONENT MAPPING:
+# 1. Identify the custom element tag name (e.g., "swc-badge", "sp-button")
+# 2. Determine which native HTML element it semantically represents
+#    - Interactive elements: button, input, select, a, etc.
+#    - Containers: div, section, article, etc.
+#    - Content: span, p, h1-h6, etc.
+# 3. List only accessibility-relevant attributes:
+#    - Always include: role, aria-* (for ARIA attributes)
+#    - Include interactive states: disabled, checked, selected, etc.
+#    - Map component-specific attributes to HTML equivalents using "attr: native"
+#    - Use <text> to map an attribute's value to the element's text content
+#    - Use <element> to allow an attribute to change the emitted element type
+#
+# WHEN TO ADD A MAPPING:
+# - You create a new custom element that needs accessibility validation
+# - axe-linter shows false positives on valid accessible custom elements
+# - You want to enforce accessibility standards on custom components
+#
+# EXAMPLES:
+#   swc-button:
+#       element: button              # Maps to <button>
+#       attributes:
+#           - role                   # Pass through role attribute
+#           - aria-*                 # Pass through all aria-* attributes
+#           - disabled               # Pass through disabled state
+#           - label: <text>          # Map label="Hi" to <button>Hi</button>
+#
+global-components:
+    # Second-gen Spectrum Web Components (swc-*)
+    # Only components that currently exist in second-gen/packages/swc/components/
+
+    swc-asset:
+        element: div
+        attributes:
+            - role
+            - aria-*
+            - variant
+            - label: aria-label
+
+    swc-badge:
+        element: span
+        attributes:
+            - role
+            - aria-*
+            - variant
+
+    swc-divider:
+        element: hr
+        attributes:
+            - role
+            - aria-*
+            - size
+            - vertical
+
+    swc-progress-circle:
+        element: div
+        attributes:
+            - role
+            - aria-*
+            - indeterminate
+            - label: aria-label
+            - value: aria-valuenow
+            - max: aria-valuemax
+
+    swc-status-light:
+        element: span
+        attributes:
+            - role
+            - aria-*
+            - variant
+
+# Rules - customize specific rule behavior if needed
+# Set to false to disable a rule, true to enable
+rules:
+    # All rules enabled by default via tags above
+    # Uncomment to override specific rules:
+    # heading-order: true  # Markdown heading hierarchy check
+    # html-has-lang: true
+    # button-name: true
+    # link-name: true
+    # image-alt: true

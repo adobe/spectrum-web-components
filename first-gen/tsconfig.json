@@ -5,6 +5,7 @@
         "declaration": true,
         "emitDeclarationOnly": true,
         "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
         "importHelpers": true,
         "inlineSources": true,
         "isolatedModules": true,

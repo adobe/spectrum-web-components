@@ -4,3 +4,4 @@ tools/**/*.d.ts
 tools/*/node_modules/**/*
 config/*
 tools/base/src/version.js
+**/CHANGELOG.md

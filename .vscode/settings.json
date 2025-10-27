@@ -11,5 +11,20 @@
         "typescript",
         "typescriptreact"
     ],
-    "stylelint.validate": ["css", "scss"]
+    "eslint.enable": true,
+    "eslint.run": "onType",
+    "eslint.workingDirectories": [
+        { "directory": "./second-gen", "changeProcessCWD": true },
+        { "directory": "./first-gen", "changeProcessCWD": true }
+    ],
+    "stylelint.validate": ["css", "scss"],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "javascript.validate.enable": true,
+    "typescript.validate.enable": true,
+    "problems.showCurrentInStatus": true,
+    "cSpell.words": ["deque", "labelledby", "valuemax", "valuenow", "wcag"],
+    "markdownlint.config": {
+        "extends": ".markdownlint.json"
+    }
 }
