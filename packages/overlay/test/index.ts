@@ -24,8 +24,8 @@ import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
+    OVERLAY_TYPES,
     OverlayTrigger,
-    TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -113,10 +113,10 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'
-                ) as OverlayTrigger;
+                )! as OverlayTrigger;
                 this.outerTrigger = this.testDiv.querySelector(
                     '#trigger'
-                ) as OverlayTrigger;
+                )! as OverlayTrigger;
                 this.innerButton = this.testDiv.querySelector(
                     '#inner-button'
                 ) as Button;
@@ -213,20 +213,19 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
             });
 
-            ['modal', 'replace', 'inline'].map((type: string) => {
+            OVERLAY_TYPES.map((type) => {
                 it(`opens a popover - [type="${type}"]`, async function () {
-                    this.outerTrigger.type = type as Extract<
-                        TriggerInteractions,
-                        'inline' | 'modal' | 'replace'
-                    >;
-                    await elementUpdated(this.outerTrigger);
+                    const outerTrigger = this.outerTrigger as OverlayTrigger;
+
+                    outerTrigger.type = type;
+                    await elementUpdated(outerTrigger);
                     expect(
                         await isOnTopLayer(this.outerClickContent),
                         'popover not available at point'
                     ).to.be.false;
 
                     expect(this.outerButton).to.exist;
-                    const opened = oneEvent(this.outerTrigger, 'sp-opened');
+                    const opened = oneEvent(outerTrigger, 'sp-opened');
                     this.outerButton.click();
                     await opened;
                     expect(
