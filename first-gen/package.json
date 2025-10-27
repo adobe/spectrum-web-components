@@ -70,6 +70,10 @@
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
         "test": "yarn test:focus unit",
+        "test:a11y": "playwright test",
+        "test:a11y:ui": "playwright test --ui",
+        "test:a11y:1st": "playwright test --project=1st-gen",
+        "test:a11y:2nd": "playwright test --project=2nd-gen",
         "test:bench": "yarn build:tests && node test/benchmark/cli.js",
         "test:changed": "node ./scripts/test-changes.js",
         "test:ci": "yarn test:start",
@@ -96,6 +100,7 @@
         "react/*"
     ],
     "devDependencies": {
+        "@axe-core/playwright": "^4.11.0",
         "@changesets/changelog-github": "0.5.1",
         "@changesets/cli": "2.29.7",
         "@commitlint/cli": "19.8.1",

@@ -27,7 +27,11 @@
         "start:second-gen": "yarn workspace @adobe/swc start",
         "test": "yarn test:first-gen & yarn test:second-gen",
         "test:first-gen": "yarn workspace @adobe/spectrum-web-components test",
-        "test:second-gen": "yarn workspace @adobe/swc test"
+        "test:second-gen": "yarn workspace @adobe/swc test",
+        "test:a11y": "yarn workspace @adobe/spectrum-web-components test:a11y",
+        "test:a11y:ui": "yarn workspace @adobe/spectrum-web-components test:a11y:ui",
+        "test:a11y:1st": "yarn workspace @adobe/spectrum-web-components test:a11y:1st",
+        "test:a11y:2nd": "yarn workspace @adobe/spectrum-web-components test:a11y:2nd"
     },
     "workspaces": [
         "first-gen",
