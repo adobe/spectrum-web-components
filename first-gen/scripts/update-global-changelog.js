@@ -24,7 +24,9 @@
 import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
+import semver from 'semver';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -67,78 +69,86 @@ function validateCurrentVersion() {
 }
 
 /**
- * Processes changeset files and categorizes changes by type and target
- * @returns {Object} Object containing categorized changes for both first-gen and core
+ * Extracts changes from frontmatter using a pattern and categorizes by type
+ * @param {string} frontmatter - The frontmatter content to parse
+ * @param {string} description - The description of the change
+ * @param {RegExp} pattern - The regex pattern to match package changes
+ * @param {string} prefix - Optional prefix to add to the entry (e.g., 'sp-')
+ * @returns {Object} Object containing major, minor, and patch changes
  */
-function processChangesets() {
+function extractChanges(frontmatter, description, pattern, prefix = '') {
+    const changes = { major: [], minor: [], patch: [] };
+    for (const match of frontmatter.matchAll(pattern)) {
+        const [, name, type] = match;
+        const entry = prefix
+            ? `**${prefix}${name}**: ${description.trim()}\n\n`
+            : `${description.trim()}\n\n`;
+        changes[type].push(entry);
+    }
+    return changes;
+}
+
+/**
+ * Processes changeset files and categorizes changes by type and target
+ * @returns {Promise<Object>} Object containing categorized changes for both first-gen and core
+ */
+async function processChangesets() {
     const changesetDir = path.resolve(__dirname, '../../.changeset');
-    const changesetFiles = fs
-        .readdirSync(changesetDir)
-        .filter((file) => file.endsWith('.md') && file !== 'README.md');
 
-    const majorChanges = [];
-    const minorChanges = [];
-    const patchChanges = [];
-    const coreMajorChanges = [];
-    const coreMinorChanges = [];
-    const corePatchChanges = [];
+    // Use non-blocking I/O for directory read
+    const files = await fsPromises.readdir(changesetDir);
+    const markdownFiles = files.filter(
+        (f) => f.endsWith('.md') && f !== 'README.md'
+    );
 
-    for (const file of changesetFiles) {
-        const filePath = path.join(changesetDir, file);
-        const content = fs.readFileSync(filePath, 'utf-8');
+    // Read all files concurrently
+    const fileContents = await Promise.all(
+        markdownFiles.map((file) =>
+            fsPromises.readFile(path.join(changesetDir, file), 'utf8')
+        )
+    );
 
+    // Prepare change containers
+    const firstGen = { majorChanges: [], minorChanges: [], patchChanges: [] };
+    const core = { majorChanges: [], minorChanges: [], patchChanges: [] };
+
+    for (const content of fileContents) {
         const frontmatterMatch = content.match(
             /---\n([\s\S]*?)\n---\n([\s\S]*)/
         );
-        if (frontmatterMatch) {
-            const [, frontmatter, description] = frontmatterMatch;
-            const cleanDescription = description.trim();
-
-            // "@spectrum-web-components" (first-gen components)
-            // go to first-gen global changelog
-            for (const match of frontmatter.matchAll(
-                /['"]@spectrum-web-components\/([^'"]+)['"]:\s*(major|minor|patch)/g
-            )) {
-                const componentName = match[1];
-                const changeType = match[2];
-                const scope = `sp-${componentName}`;
-                const entry = `**${scope}**: ${cleanDescription}\n\n`;
-
-                if (changeType === 'major') {
-                    majorChanges.push(entry);
-                } else if (changeType === 'minor') {
-                    minorChanges.push(entry);
-                } else {
-                    patchChanges.push(entry);
-                }
-            }
-
-            // @swc/core changes go to core changelog
-            for (const match of frontmatter.matchAll(
-                /['"]@swc\/core['"]:\s*(major|minor|patch)/g
-            )) {
-                const changeType = match[1];
-                const entry = `${cleanDescription}\n\n`;
-
-                if (changeType === 'major') {
-                    coreMajorChanges.push(entry);
-                } else if (changeType === 'minor') {
-                    coreMinorChanges.push(entry);
-                } else {
-                    corePatchChanges.push(entry);
-                }
-            }
+        if (!frontmatterMatch) {
+            continue;
         }
+
+        const [, frontmatter, description] = frontmatterMatch;
+        const cleanDescription = description.trim();
+
+        // Extract first-gen (@spectrum-web-components/*) changes
+        const swcChanges = extractChanges(
+            frontmatter,
+            cleanDescription,
+            /['"]@spectrum-web-components\/([^'"]+)['"]:\s*(major|minor|patch)/g,
+            'sp-'
+        );
+
+        // Extract @swc/core changes
+        const coreChanges = extractChanges(
+            frontmatter,
+            cleanDescription,
+            /['"]@swc\/core['"]:\s*(major|minor|patch)/g
+        );
+
+        // Merge results into categorized buckets
+        firstGen.majorChanges.push(...swcChanges.major);
+        firstGen.minorChanges.push(...swcChanges.minor);
+        firstGen.patchChanges.push(...swcChanges.patch);
+
+        core.majorChanges.push(...coreChanges.major);
+        core.minorChanges.push(...coreChanges.minor);
+        core.patchChanges.push(...coreChanges.patch);
     }
 
-    return {
-        firstGen: { majorChanges, minorChanges, patchChanges },
-        core: {
-            majorChanges: coreMajorChanges,
-            minorChanges: coreMinorChanges,
-            patchChanges: corePatchChanges,
-        },
-    };
+    return { firstGen, core };
 }
 
 /**
@@ -149,17 +159,13 @@ function processChangesets() {
  * @returns {string} Next version string
  */
 function calculateNextVersion(currentVersion, majorChanges, minorChanges) {
-    const currentVersionParts = currentVersion
-        .split('.')
-        .map((part) => parseInt(part, 10));
-
     if (majorChanges.length > 0) {
-        return `${currentVersionParts[0] + 1}.0.0`;
-    } else if (minorChanges.length > 0) {
-        return `${currentVersionParts[0]}.${currentVersionParts[1] + 1}.0`;
-    } else {
-        return `${currentVersionParts[0]}.${currentVersionParts[1]}.${currentVersionParts[2] + 1}`;
+        return semver.inc(currentVersion, 'major');
     }
+    if (minorChanges.length > 0) {
+        return semver.inc(currentVersion, 'minor');
+    }
+    return semver.inc(currentVersion, 'patch');
 }
 
 /**
@@ -293,7 +299,22 @@ function updateChangelogFile(
  */
 async function createGlobalChangelog() {
     const currentTag = validateCurrentVersion();
-    const { firstGen, core } = processChangesets();
+    const { firstGen, core } = await processChangesets();
+
+    // Early exit if no changes detected
+    if (
+        !firstGen.majorChanges.length &&
+        !firstGen.minorChanges.length &&
+        !firstGen.patchChanges.length &&
+        !core.majorChanges.length &&
+        !core.minorChanges.length &&
+        !core.patchChanges.length
+    ) {
+        console.log(
+            '🚫 No new changesets detected. Skipping changelog generation.'
+        );
+        return;
+    }
 
     const nextVersion = calculateNextVersion(
         currentVersion,
@@ -369,7 +390,11 @@ async function createGlobalChangelog() {
         console.log('ℹ️ No @swc/core changes to add to the core changelog.');
     }
 }
-createGlobalChangelog().catch((error) => {
-    console.error('Error updating changelog:', error);
-    process.exit(1);
-});
+(async () => {
+    try {
+        await createGlobalChangelog();
+    } catch (error) {
+        console.error('Error updating changelog:', error);
+        process.exit(1);
+    }
+})();
