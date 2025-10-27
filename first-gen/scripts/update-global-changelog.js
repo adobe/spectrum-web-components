@@ -79,10 +79,18 @@ function validateCurrentVersion() {
 function extractChanges(frontmatter, description, pattern, prefix = '') {
     const changes = { major: [], minor: [], patch: [] };
     for (const match of frontmatter.matchAll(pattern)) {
-        const [, name, type] = match;
-        const entry = prefix
-            ? `**${prefix}${name}**: ${description.trim()}\n\n`
-            : `${description.trim()}\n\n`;
+        // Handle two different regex patterns:
+        // 1. @spectrum-web-components/button: patch
+        //    → match: [full, 'button', 'patch'] (has component name)
+        // 2. @swc/core: minor
+        //    → match: [full, 'minor'] (no component name)
+        const hasName = match.length > 2;
+        const name = hasName ? match[1] : null;
+        const type = hasName ? match[2] : match[1];
+        const entry =
+            prefix && name
+                ? `**${prefix}${name}**: ${description.trim()}\n\n`
+                : `${description.trim()}\n\n`;
         changes[type].push(entry);
     }
     return changes;
