@@ -24,7 +24,7 @@ import {
 
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-close-button.js';
-import '@spectrum-web-components/divider/sp-divider.js';
+// NOTE: sp-divider is already imported by AlertDialog (parent class)
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 
