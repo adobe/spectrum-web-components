@@ -27,10 +27,6 @@ class OverlayStack {
 
     stack: Overlay[] = [];
 
-    private originalBodyOverflow = '';
-
-    private bodyScrollBlocked = false;
-
     constructor() {
         this.bindEvents();
     }
@@ -83,25 +79,6 @@ class OverlayStack {
             this.stack.splice(overlayIndex, 1);
         }
         overlay.open = false;
-
-        this.manageBodyScroll();
-    }
-
-    /**
-     * Manage body scroll blocking based on modal/page overlays
-     */
-    private manageBodyScroll(): void {
-        const shouldBlock = this.stack.some(
-            (overlay) => overlay.type === 'modal' || overlay.type === 'page'
-        );
-        if (shouldBlock && !this.bodyScrollBlocked) {
-            this.originalBodyOverflow = document.body.style.overflow || '';
-            document.body.style.overflow = 'hidden';
-            this.bodyScrollBlocked = true;
-        } else if (!shouldBlock && this.bodyScrollBlocked) {
-            document.body.style.overflow = this.originalBodyOverflow;
-            this.bodyScrollBlocked = false;
-        }
     }
 
     /**
@@ -271,7 +248,6 @@ class OverlayStack {
             overlay.addEventListener('beforetoggle', this.handleBeforetoggle, {
                 once: true,
             });
-            this.manageBodyScroll();
         });
     }
 
