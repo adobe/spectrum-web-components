@@ -188,6 +188,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/spectrum-web-components@workspace:first-gen"
   dependencies:
+    "@axe-core/playwright": "npm:^4.11.0"
     "@changesets/changelog-github": "npm:0.5.1"
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
@@ -340,6 +341,17 @@ __metadata:
   peerDependencies:
     playwright-core: ">= 1.0.0"
   checksum: 10c0/3dc02d177eb1b4865bbef05df993a5ad94268cb862e7095a273d7c7191174855f9f5a444cd8ad3ccea4991fab884083d6fdc661d471515af0d6c571958162043
+  languageName: node
+  linkType: hard
+
+"@axe-core/playwright@npm:^4.11.0":
+  version: 4.11.0
+  resolution: "@axe-core/playwright@npm:4.11.0"
+  dependencies:
+    axe-core: "npm:~4.11.0"
+  peerDependencies:
+    playwright-core: ">= 1.0.0"
+  checksum: 10c0/73f93cbe510b2399986aa14e4b07bff79fb757b7205240a6ed59b39f3c252014beeb6e6ce0850c1d392fe1f3f3f04c4e5ff860cbcdeaaf7b6dc1598c3209e539
   languageName: node
   linkType: hard
 
@@ -10603,6 +10615,13 @@ __metadata:
   version: 4.10.3
   resolution: "axe-core@npm:4.10.3"
   checksum: 10c0/1b1c24f435b2ffe89d76eca0001cbfff42dbf012ad9bd37398b70b11f0d614281a38a28bc3069e8972e3c90ec929a8937994bd24b0ebcbaab87b8d1e241ab0c7
+  languageName: node
+  linkType: hard
+
+"axe-core@npm:~4.11.0":
+  version: 4.11.0
+  resolution: "axe-core@npm:4.11.0"
+  checksum: 10c0/7d7020a568a824c303711858c2fcfe56d001d27e46c0c2ff75dc31b436cfddfd4857a301e70536cc9e64829d25338f7fb782102d23497ebdc66801e9900fc895
   languageName: node
   linkType: hard
 

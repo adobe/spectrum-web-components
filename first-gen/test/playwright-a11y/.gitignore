@@ -1,0 +1,9 @@
+# Playwright test artifacts
+test-results/
+playwright-report/
+report/
+playwright/.cache/
+
+# ARIA snapshots
+*.aria-snapshot.txt
+
