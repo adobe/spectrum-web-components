@@ -267,9 +267,41 @@ Some Overlays will always be passed focus (e.g. modal or page Overlays). When th
 
 #### trigger
 
-The `trigger` option accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
+The `trigger` attribute accepts a string ID reference for the trigger element combined with the interaction type.
+
+The format is `"elementId@interaction"`, where:
+
+- `elementId` is the ID of the HTML element to use as the trigger
+- `interaction` is required and can be `click`, `hover`, or `longpress`
+
+Examples:
+
+```html
+<sp-button id="my-button">Open Overlay</sp-button>
+
+<!-- Explicit click interaction -->
+<sp-overlay trigger="my-button@click" placement="top-start">
+    <sp-popover>Click popover</sp-popover>
+</sp-overlay>
+
+<!-- Explicit hover interaction -->
+<sp-overlay trigger="my-button@hover" placement="right-start">
+    <sp-popover>Hover popover</sp-popover>
+</sp-overlay>
+
+<!-- Explicit longpress interaction -->
+<sp-overlay trigger="my-button@longpress" placement="bottom-start">
+    <sp-popover>Longpress popover</sp-popover>
+</sp-overlay>
+```
+
+#### triggerElement
+
+The `triggerElement` property accepts an `HTMLElement` or a `VirtualTrigger` from which to position the Overlay.
 
 - You can import the `VirtualTrigger` class from the overlay package to create a virtual trigger that can be used to position an Overlay. This is useful when you want to position an Overlay relative to a point on the screen that is not an element in the DOM, like the mouse cursor.
+
+#### type
 
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
@@ -529,7 +561,7 @@ This means that in both cases, if the transition is meant to be a part of the op
     placement=${Placement}
     receives-focus=${'true' | 'false' | 'auto' (default)
     trigger=${string | ${string}@${string}}
-    .triggerElement=${HTMLElement}
+    .triggerElement=${HTMLElement | VirtualTrigger}
     .triggerInteraction=${'click' | 'longpress' | 'hover'}
     type=${'auto' | 'hint' | 'manual' | 'modal' | 'page'}
     ?allow-outside-click=${boolean}
