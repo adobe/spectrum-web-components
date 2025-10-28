@@ -1,99 +1,28 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Participating in pull requests
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Participating in PR reviews
 
 <!-- Document title (editable) -->
 
-# Participating in pull requests
+# Participating in PR reviews
 
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Pull request creation](#pull-request-creation)
-    - [Branch naming](#branch-naming)
-    - [Changeset requirements](#changeset-requirements)
-    - [Conventional commits](#conventional-commits)
-- [Pull request template](#pull-request-template)
 - [Labels and their meanings](#labels-and-their-meanings)
 - [Pull request review process](#pull-request-review-process)
     - [Review timing](#review-timing)
     - [Review expectations](#review-expectations)
     - [Review etiquette](#review-etiquette)
 - [Merge criteria](#merge-criteria)
-- [Specific requirements by element type](#specific-requirements-by-element-type)
-    - [New components](#new-components)
 
 </details>
 
 <!-- Document content (editable) -->
 
-This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
-
-## Pull request creation
-
-### Branch naming
-
-We use a straightforward branch naming convention:
-
-- `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`)
-- If referencing a known issue, incorporate the issue number (e.g., `alex/123-fix-dropdown-bug`)
-
-### Changeset requirements
-
-For PRs that add or update a component:
-
-- Must include a changeset to trigger the release train and update the CHANGELOG
-- Changeset type should be one of:
-    - `patch` - for bug fixes only
-    - `minor` - for new components or new APIs in an existing component
-    - `major` - for breaking changes to a component or public library API
-
-### Conventional commits
-
-We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification to make change tracking predictable:
-
-Format: `type(component?): subject`
-
-The component is optional but should reference the package you are updating.
-
-Types include:
-
-- `feat`: New features or enhancements
-- `fix`: Bug fixes
-- `docs`: Documentation changes
-- `style`: Formatting, linting (not CSS changes)
-- `chore`: Build tooling, repo management, dependency updates
-- `perf`: Performance improvements
-- `test`: Adding or updating tests
-
-Examples:
-
-- `feat(sp-card): add shadow styles for theme consistency`
-- `fix(sp-action-menu): correct arrow key navigation in nested menus`
-- `docs: clarify how to submit bug reports`
-
-For breaking changes, add a `!` after the type/scope:
-
-- `feat(sp-button)!: change API for icon placement`
-
----
-
-## Pull request template
-
-When creating a pull request, you'll be presented with our template. Complete all sections to the best of your ability, including:
-
-- Description of the changes
-- Related issues (using proper [GitHub keywords](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests#linking-a-pull-request-to-an-issue) to auto-close issues i.e. `fixes`, `resolves`, or `closes`)
-- Type of change in the PR title (bug fix, feature, breaking change)
-- Steps you took to test your changes that reviewers can follow to also test them
-- Checklist of items completed
-- Screenshots/videos for visual changes
-
-Incomplete templates may delay the review process.
-
----
+This document outlines our team's expectations and best practices for reviewing pull requests and participating in the PR review process for Spectrum Web Components.
 
 ## Labels and their meanings
 
@@ -190,35 +119,3 @@ A PR is ready to merge when:
 4. PR follows conventional commit standards
 5. Includes proper changeset (when applicable)
 6. Documentation has been updated as needed
-
----
-
-## Specific requirements by element type
-
-### New components
-
-When creating or reviewing new components, ensure:
-
-#### Documentation
-
-- README contains a clear description and minimal example
-- Inline documentation for all public APIs
-- Accessibility documentation that aligns with WCAG patterns
-
-See [Documenting a component](https://opensource.adobe.com/spectrum-web-components/guides/adding-component/#documenting-the-component) for more information on our documentation standards and structure.
-
-#### API documentation utilizing JSDocs
-
-- **Slots**: All slots documented in the element class docblock
-- **Events**: All dispatched events documented with `@fires` docblock
-- **Class fields**: All public/protected fields have proper docblocks
-- **Methods**: All public/protected methods have docblocks with parameters and return types
-- **CSS custom properties**: All public CSS custom properties documented
-- **CSS shadow parts**: All shadow parts documented
-
-#### Technical requirements
-
-- Component follows established patterns and conventions
-- Accessibility is thoroughly considered
-- Responsive design best practices are followed
-- Supported cross-browser compatibility is verified

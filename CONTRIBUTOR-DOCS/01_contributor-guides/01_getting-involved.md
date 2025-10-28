@@ -18,15 +18,7 @@
 - [How you can contribute](#how-you-can-contribute)
 - [Contributor license agreement](#contributor-license-agreement)
 - [Code of conduct](#code-of-conduct)
-- [Pull requests](#pull-requests)
-- [Branches](#branches)
 - [Developing locally](#developing-locally)
-- [Testing](#testing)
-- [Documentation](#documentation)
-- [Best practices & guidelines](#best-practices--guidelines)
-    - [Code formatting](#code-formatting)
-    - [Accessibility](#accessibility)
-    - [Commit guidelines](#commit-guidelines)
 - [Thank you](#thank-you)
 
 </details>
@@ -86,86 +78,11 @@ Should any behavior fall short of these expectations, please report it to <Grp-o
 
 ---
 
-## Pull requests
-
-If you plan to fix a bug, create a feature, or improve documentation, follow the [Pull Request Guide](PULL_REQUESTS.md) to ensure you're contribution meets expectations for getting reviewed.
-
----
-
-## Branches
-
-We keep things organized with a branch naming strategy:
-
-- `[username]/[short-description]` (e.g., `alex/fix-dropdown-bug`) is often all you need.
-- If your work references a known issue, you could also incorporate the issue number (e.g., `alex/123-bug-fix`).
-
-Avoid editing distribution files (if present). Make changes to the source files, then allow the build system to generate any bundled or output files automatically.
-
----
-
 ## Developing locally
 
-Read the steps outlined in the [README.md](README.md) to get your environment set up.
+Read the steps outlined in the [README.md](../../README.md) to get your environment set up.
 
 If you encounter hurdles, feel free to ask for help in your pull request or in the community forum.
-
----
-
-## Testing
-
-Quality and stability are important. We require writing tests for any fixes or features you introduce. This helps ensure:
-
-- Bugs don't resurface later.
-- New features work as intended for all users.
-- Overall library reliability remains high.
-
-Read about our testing guidance in the [README.md](README.md).
-
-If you're unsure how to write tests for certain parts of the library, don't hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
-
----
-
-## Documentation
-
-In addition to well-tested code, documentation is crucial. Whenever you add or change a feature,include documentation for it in the relevant areas:
-
-- **README.md**: Each component has a README within its directory. Ensure your changes are included here. This file is used in our generated documentation site.
-- **Comment annotations**: We use comment-based documentation ([JSDocs](https://jsdoc.app/)) so that references are generated automatically where possible.
-
-Accessible, helpful docs are a huge win for everyone, especially newcomers.
-
----
-
-## Best practices & guidelines
-
-### Code formatting
-
-We rely on automated tools like Prettier, ESLint, and Stylelint to enforce style preferences. Setting up these tools in your editor saves time and prevents minor style conflicts from slowing down reviews.
-
-### Accessibility
-
-Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
-
-- The use of semantic markup.
-- Labeled interactive elements with appropriate accordance's.
-- Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
-
-If you're unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
-
-### Commit guidelines
-
-As mentioned previously, we use [Conventional Commit](https://www.conventionalcommits.org) syntax:
-
-    type(component?): subject
-    //component is optional, but should reference the package you are updating
-
-Examples:
-
-- `feat(sp-card): add shadow styles for theme consistency`
-- `fix(sp-action-menu): correct arrow key navigation in nested menus`
-- `docs: clarify how to submit bug reports`
-
-This helps us track changes in a predictable way and automate versioning.
 
 ---
 
