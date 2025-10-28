@@ -18,7 +18,6 @@
 - [Authoring contributor docs](05_authoring-contributor-docs/README.md)
     - [AI agent instructions](05_authoring-contributor-docs/01_ai-agent-instructions.md)
 - [Patching dependencies](05_patching-dependencies.md)
-- [Style guide](99_style-guide/README.md)
 
 </details>
 

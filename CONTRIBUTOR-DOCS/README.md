@@ -23,12 +23,12 @@
     - [Releasing SWC](01_contributor-guides/04_releasing-swc.md)
     - [Authoring contributor docs](01_contributor-guides/05_authoring-contributor-docs/README.md)
     - [Patching dependencies](01_contributor-guides/05_patching-dependencies.md)
-    - [Style guide](01_contributor-guides/99_style-guide/README.md)
-- [Project planning](02_project-planning/README.md)
-    - [Objectives and strategy](02_project-planning/01_objectives-and-strategy.md)
-    - [Workstreams](02_project-planning/02_workstreams/README.md)
-    - [Components](02_project-planning/03_components/README.md)
-    - [Milestones](02_project-planning/04_milestones/README.md)
+- [Style guide](02_style-guide/README.md)
+- [Project planning](03_project-planning/README.md)
+    - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)
+    - [Workstreams](03_project-planning/02_workstreams/README.md)
+    - [Components](03_project-planning/03_components/README.md)
+    - [Milestones](03_project-planning/04_milestones/README.md)
 
 </details>
 
@@ -46,7 +46,7 @@ SWC is developed by a core team in Adobe Design Engineering, but we welcome cont
 
 Spectrum Web Components is currently in transition from its first generation (1st-gen) to its second generation (2nd-gen).
 
-> This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](./02_project-planning/01_objectives-and-strategy.md).
+> This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md).
 
 Instead of creating a separate branch or repo for 2nd-gen, we are working on the 1st-gen and 2nd-gen projects side-by-side in this repository, with some core functionality being shared between 1st- and 2nd-gen components. This strategy makes it easier for us to continue actively improving and supporting 1st-gen even as we devote much of our attention to defining and building 2nd-gen.
 
@@ -69,18 +69,20 @@ During this transition, depending on what you're trying to accomplish, you may e
 
 These docs contain essential information about the SWC project for both maintainers (members of the core team) and contributors from outside the core team.
 
-The docs are organized into two main sections to help you find the information you need:
+The docs are organized into three main sections to help you find the information you need:
 
-**[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes the style guide, code of conduct, guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves.
+**[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves.
 
-**[Project Planning](./02_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
+**[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
 
-- **[Objectives and Strategy](./02_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
+**[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
-- **[Workstreams](./02_project-planning/02_workstreams/README.md)** - Workstream-centric view of cross-cutting work affecting many or all components, helping us work toward specific objectives and coordinate efforts.
+- **[Objectives and Strategy](./03_project-planning/01_objectives-and-strategy.md)** - Strategic context for the 1st-gen-to-2nd-gen transition, including our goals and approach.
 
-- **[Components](./02_project-planning/03_components/README.md)** - Component-centric view of individual components and how they're affected by multiple workstreams, useful for understanding each component's roadmap and status.
+- **[Workstreams](./03_project-planning/02_workstreams/README.md)** - Workstream-centric view of cross-cutting work affecting many or all components, helping us work toward specific objectives and coordinate efforts.
 
-- **[Milestones](./02_project-planning/04_milestones/README.md)** - Information about project milestones and their goals.
+- **[Components](./03_project-planning/03_components/README.md)** - Component-centric view of individual components and how they're affected by multiple workstreams, useful for understanding each component's roadmap and status.
+
+- **[Milestones](./03_project-planning/04_milestones/README.md)** - Information about project milestones and their goals.
 
 Together, the Workstreams and Components views help us manage the project roadmap, ensuring we make progress on strategic objectives while maintaining clarity about the state and evolution of individual components.
