@@ -1,17 +1,17 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Project Planning](README.md) / Objectives and Strategy
+[CONTRIBUTOR-DOCS](../README.md) / [Project planning](README.md) / Objectives and strategy
 
 <!-- Document title (editable) -->
 
-# Objectives and Strategy
+# Objectives and strategy
 
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Current Objectives](#current-objectives)
+- [Current objectives](#current-objectives)
     - [Unify Spectrum CSS & Spectrum Web Components](#unify-spectrum-css--spectrum-web-components)
     - [Build a clean foundation for future work](#build-a-clean-foundation-for-future-work)
     - [Enable Spectrum 2 adoption](#enable-spectrum-2-adoption)
@@ -25,7 +25,7 @@
 
 <!-- Document content (editable) -->
 
-## Current Objectives
+## Current objectives
 
 The SWC project is currently focused on a relatively small set of strategic objectives:
 

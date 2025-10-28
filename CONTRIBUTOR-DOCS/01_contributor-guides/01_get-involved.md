@@ -1,10 +1,18 @@
-# Contributing best practices <!-- omit from toc -->
+<!-- Generated breadcrumbs - DO NOT EDIT -->
 
-Welcome! We're excited you're interested in improving Spectrum Web Components. Whether you're reporting bugs, adding new features, writing documentation, or helping other users, your contributions make this project better for everyone.
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Getting involved
 
-Here you'll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we're all on the same page.
+<!-- Document title (editable) -->
 
-- [Community \& support](#community--support)
+# Getting involved
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Welcome](#welcome)
+- [Community & support](#community--support)
     - [External contributors](#external-contributors)
     - [Internal contributors](#internal-contributors)
 - [How you can contribute](#how-you-can-contribute)
@@ -25,13 +33,21 @@ Here you'll find a broad overview of how you can get involved. Please read throu
     - [Updating existing patches](#updating-existing-patches)
     - [Best practices](#best-practices)
 - [Documentation](#documentation)
-- [Best practices \& guidelines](#best-practices--guidelines)
+- [Best practices & guidelines](#best-practices--guidelines)
     - [Code formatting](#code-formatting)
     - [Accessibility](#accessibility)
     - [Commit guidelines](#commit-guidelines)
 - [Thank you](#thank-you)
 
----
+</details>
+
+<!-- Document content (editable) -->
+
+## Welcome
+
+Welcome! We're excited you're interested in improving Spectrum Web Components. Whether you're reporting bugs, adding new features, writing documentation, or helping other users, your contributions make this project better for everyone.
+
+Here you'll find a broad overview of how you can get involved. Please read through these guidelines to help keep the contribution process smooth and to ensure we're all on the same page.
 
 ## Community & support
 

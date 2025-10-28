@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Contributor Guides](../README.md) / Style Guide
+[CONTRIBUTOR-DOCS](../../README.md) / [Contributor guides](../README.md) / Style guide
 
 <!-- Document title (editable) -->
 
-# Style Guide
+# Style guide
 
 <!-- Document content (editable) -->
 

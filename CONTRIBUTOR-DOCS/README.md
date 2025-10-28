@@ -16,12 +16,14 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [Contributor Guides](01_contributor-guides/README.md)
-    - [Adobe Code of Conduct](01_contributor-guides/01_code-of-conduct.md)
-    - [Style Guide](01_contributor-guides/02_style-guide/README.md)
-    - [Authoring contributor docs](01_contributor-guides/03_authoring-contributor-docs/README.md)
-- [Project Planning](02_project-planning/README.md)
-    - [Objectives and Strategy](02_project-planning/01_objectives-and-strategy.md)
+- [Contributor guides](01_contributor-guides/README.md)
+    - [Getting involved](01_contributor-guides/01_get-involved.md)
+    - [Style guide](01_contributor-guides/02_style-guide/README.md)
+    - [Participating in pull requests](01_contributor-guides/03_pull-requests.md)
+    - [Releasing SWC](01_contributor-guides/04_releasing.md)
+    - [Authoring contributor docs](01_contributor-guides/05_authoring-contributor-docs/README.md)
+- [Project planning](02_project-planning/README.md)
+    - [Objectives and strategy](02_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](02_project-planning/02_workstreams/README.md)
     - [Components](02_project-planning/03_components/README.md)
     - [Milestones](02_project-planning/04_milestones/README.md)

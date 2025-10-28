@@ -1,20 +1,22 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Contributor Guides
+[CONTRIBUTOR-DOCS](../README.md) / Contributor guides
 
 <!-- Document title (editable) -->
 
-# Contributor Guides
+# Contributor guides
 
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [Adobe Code of Conduct](01_code-of-conduct.md)
-- [Style Guide](02_style-guide/README.md)
-- [Authoring contributor docs](03_authoring-contributor-docs/README.md)
-    - [AI agent instructions](03_authoring-contributor-docs/01_ai-agent-instructions.md)
+- [Getting involved](01_get-involved.md)
+- [Style guide](02_style-guide/README.md)
+- [Participating in pull requests](03_pull-requests.md)
+- [Releasing SWC](04_releasing.md)
+- [Authoring contributor docs](05_authoring-contributor-docs/README.md)
+    - [AI agent instructions](05_authoring-contributor-docs/01_ai-agent-instructions.md)
 
 </details>
 

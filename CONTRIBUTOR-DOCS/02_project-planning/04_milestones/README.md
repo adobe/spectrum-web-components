@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Project Planning](../README.md) / Milestones
+[CONTRIBUTOR-DOCS](../../README.md) / [Project planning](../README.md) / Milestones
 
 <!-- Document title (editable) -->
 

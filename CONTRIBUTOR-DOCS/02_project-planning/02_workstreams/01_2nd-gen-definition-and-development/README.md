@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project Planning](../../README.md) / [Workstreams](../README.md) / 2nd-gen Definition and Development
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / 2nd-gen Definition and Development
 
 <!-- Document title (editable) -->
 

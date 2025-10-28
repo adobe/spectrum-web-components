@@ -1,6 +1,15 @@
-# Pull request best practices <!-- omit from toc -->
+<!-- Generated breadcrumbs - DO NOT EDIT -->
 
-This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Participating in pull requests
+
+<!-- Document title (editable) -->
+
+# Participating in pull requests
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
 
 - [Pull request creation](#pull-request-creation)
     - [Branch naming](#branch-naming)
@@ -12,17 +21,15 @@ This document outlines our team's expectations and best practices for creating, 
     - [Review timing](#review-timing)
     - [Review expectations](#review-expectations)
     - [Review etiquette](#review-etiquette)
-        - [For reviewers](#for-reviewers)
-        - [For PR authors](#for-pr-authors)
-        - [Resolving disagreements](#resolving-disagreements)
 - [Merge criteria](#merge-criteria)
 - [Specific requirements by element type](#specific-requirements-by-element-type)
     - [New components](#new-components)
-        - [Documentation](#documentation)
-        - [API documentation utilizing JSDocs](#api-documentation-utilizing-jsdocs)
-        - [Technical requirements](#technical-requirements)
 
----
+</details>
+
+<!-- Document content (editable) -->
+
+This document outlines our team's expectations and best practices for creating, reviewing, and merging pull requests for Spectrum Web Components.
 
 ## Pull request creation
 

@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project Planning](../../README.md) / [Workstreams](../README.md) / 1st-gen Spectrum 2 Enhancements
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / 1st-gen Spectrum 2 Enhancements
 
 <!-- Document title (editable) -->
 

@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Project Planning
+[CONTRIBUTOR-DOCS](../README.md) / Project planning
 
 <!-- Document title (editable) -->
 
-# Project Planning
+# Project planning
 
 <!-- Generated TOC - DO NOT EDIT -->
 
@@ -18,7 +18,7 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [Objectives and Strategy](01_objectives-and-strategy.md)
+- [Objectives and strategy](01_objectives-and-strategy.md)
 - [Workstreams](02_workstreams/README.md)
     - [2nd-gen Definition and Development](02_workstreams/01_2nd-gen-definition-and-development/README.md)
     - [2nd-gen Component Migration](02_workstreams/02_2nd-gen-component-migration/README.md)

@@ -1,23 +1,34 @@
-# Releasing a new version of Spectrum Web Components <!-- omit from toc -->
+<!-- Generated breadcrumbs - DO NOT EDIT -->
 
-Users with permissions in the `@spectrum-web-components` organization on NPM can follow these steps to create and publish a new version.
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Releasing SWC
+
+<!-- Document title (editable) -->
+
+# Releasing SWC
+
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
 
 - [Prerequisites](#prerequisites)
     - [Main successfully builds](#main-successfully-builds)
     - [The correct version of Node is installed](#the-correct-version-of-node-is-installed)
-        - [Using Node Version Manager](#using-node-version-manager)
-        - [Manually checking](#manually-checking)
-        - [Troubleshooting](#troubleshooting)
     - [Github Token is set up](#github-token-is-set-up)
-        - [Generate a Github token](#generate-a-github-token)
     - [Logged in to NPM](#logged-in-to-npm)
     - [NPM 2FA authenticator app](#npm-2fa-authenticator-app)
 - [Releasing to NPM — the good stuff](#releasing-to-npm--the-good-stuff)
-    - [Troubleshooting](#troubleshooting-1)
+    - [Troubleshooting](#troubleshooting)
 - [Publishing the documentation site manually](#publishing-the-documentation-site-manually)
     - [From GitHub](#from-github)
     - [From the terminal](#from-the-terminal)
     - [References](#references)
+
+</details>
+
+<!-- Document content (editable) -->
+
+Users with permissions in the `@spectrum-web-components` organization on NPM can follow these steps to create and publish a new version.
 
 ## Prerequisites
 

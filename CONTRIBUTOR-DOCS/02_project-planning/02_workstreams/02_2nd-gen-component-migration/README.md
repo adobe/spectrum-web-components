@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Project Planning](../../README.md) / [Workstreams](../README.md) / 2nd-gen Component Migration
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project planning](../../README.md) / [Workstreams](../README.md) / 2nd-gen Component Migration
 
 <!-- Document title (editable) -->
 

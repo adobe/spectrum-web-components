@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Contributor Guides](../README.md) / [Authoring contributor docs](README.md) / AI agent instructions
+[CONTRIBUTOR-DOCS](../../README.md) / [Contributor guides](../README.md) / [Authoring contributor docs](README.md) / AI agent instructions
 
 <!-- Document title (editable) -->
 
