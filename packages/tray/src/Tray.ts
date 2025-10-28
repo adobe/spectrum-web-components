@@ -13,6 +13,7 @@
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -20,6 +21,7 @@ import {
 import {
     property,
     query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
@@ -55,6 +57,9 @@ export class Tray extends SpectrumElement {
     @query('.tray')
     private tray!: HTMLDivElement;
 
+    @query('slot')
+    private contentSlot!: HTMLSlotElement;
+
     public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
@@ -81,6 +86,99 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    /**
+     * When set, prevents the tray from rendering visually-hidden dismiss helpers.
+     * Use this if your slotted content has custom keyboard-accessible dismiss functionality
+     * that the auto-detection doesn't recognize.
+     *
+     * By default, the tray automatically detects buttons in slotted content.
+     */
+    @property({ type: Boolean, attribute: 'has-keyboard-dismiss' })
+    public hasKeyboardDismissButton = false;
+
+    /**
+     * Returns a visually hidden dismiss button for mobile screen reader accessibility.
+     * This button is placed before and after tray content to allow mobile screen reader
+     * users (particularly VoiceOver on iOS) to easily dismiss the overlay.
+     */
+    protected get dismissHelper(): TemplateResult {
+        return html`
+            <div class="visually-hidden">
+                <button aria-label="Dismiss" @click=${this.close}></button>
+            </div>
+        `;
+    }
+
+    /**
+     * Internal state tracking whether dismiss helpers are needed.
+     * Automatically updated when slotted content changes.
+     */
+    @state()
+    private needsDismissHelper = true;
+
+    /**
+     * Check if slotted content has keyboard-accessible dismiss buttons.
+     * Looks for buttons in light DOM and checks for known components with built-in dismiss.
+     */
+    private checkForDismissButtons(): void {
+        if (!this.contentSlot) {
+            this.needsDismissHelper = true;
+            return;
+        }
+
+        const slottedElements = this.contentSlot.assignedElements({
+            flatten: true,
+        });
+
+        if (slottedElements.length === 0) {
+            this.needsDismissHelper = true;
+            return;
+        }
+
+        const hasDismissButton = slottedElements.some((element) => {
+            // Check if element is a button itself
+            if (
+                element.tagName === 'SP-BUTTON' ||
+                element.tagName === 'SP-CLOSE-BUTTON' ||
+                element.tagName === 'BUTTON'
+            ) {
+                return true;
+            }
+
+            // Check for dismissable dialog (has built-in dismiss button in shadow DOM)
+            if (
+                element.tagName === 'SP-DIALOG' &&
+                element.hasAttribute('dismissable')
+            ) {
+                return true;
+            }
+
+            // Check for dismissable dialog-wrapper
+            if (
+                element.tagName === 'SP-DIALOG-WRAPPER' &&
+                element.hasAttribute('dismissable')
+            ) {
+                return true;
+            }
+
+            // Check for buttons in light DOM (won't see shadow DOM)
+            const buttons = element.querySelectorAll(
+                'sp-button, sp-close-button, button'
+            );
+            if (buttons.length > 0) {
+                return true;
+            }
+
+            return false;
+        });
+
+        this.needsDismissHelper = !hasDismissButton;
+    }
+
+    private handleSlotChange(): void {
+        this.checkForDismissButtons();
+    }
+
     private dispatchClosed(): void {
         this.dispatchEvent(
             new Event('close', {
@@ -100,6 +198,12 @@ export class Tray extends SpectrumElement {
         if (this.open) {
             this.resolveTransitionPromise();
         }
+    }
+
+    protected override firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
+        // Run initial button detection
+        this.checkForDismissButtons();
     }
 
     protected override update(changes: PropertyValues<this>): void {
@@ -131,7 +235,13 @@ export class Tray extends SpectrumElement {
                 tabindex="-1"
                 @transitionend=${this.handleTrayTransitionend}
             >
-                <slot></slot>
+                ${!this.hasKeyboardDismissButton && this.needsDismissHelper
+                    ? this.dismissHelper
+                    : nothing}
+                <slot @slotchange=${this.handleSlotChange}></slot>
+                ${!this.hasKeyboardDismissButton && this.needsDismissHelper
+                    ? this.dismissHelper
+                    : nothing}
             </div>
         `;
     }
