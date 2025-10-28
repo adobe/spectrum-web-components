@@ -591,3 +591,162 @@ InputsWithMenu.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+export const menuWithMultipleSelection = (): TemplateResult => {
+    import('@spectrum-web-components/picker-button/sp-picker-button.js');
+    import('@spectrum-web-components/overlay/sp-overlay.js');
+    import('@spectrum-web-components/popover/sp-popover.js');
+
+    function handleKeydown(event: KeyboardEvent): void {
+        const logEl = document.querySelector('.debug-log');
+        if (logEl) {
+            const time = new Date().toLocaleTimeString();
+            const info = `[${time}] Key: "${event.key}", Target: ${(event.target as HTMLElement).tagName}, defaultPrevented: ${event.defaultPrevented}`;
+            logEl.textContent = info + '\n' + logEl.textContent;
+        }
+    }
+
+    setTimeout(() => {
+        const menu = document.querySelector(
+            'sp-menu[selects="multiple"]'
+        ) as Menu;
+        const overlay = document.querySelector('sp-overlay');
+        if (menu && overlay) {
+            menu.addEventListener('keydown', handleKeydown, { capture: true });
+            console.log('Debug: Menu found, attaching keydown listener');
+            console.log('Debug: Menu selects=', menu.getAttribute('selects'));
+            console.log('Debug: Menu childItems=', menu.childItems);
+
+            // Log focus changes
+            menu.addEventListener('focusin', () => {
+                console.log(
+                    '🎯 FOCUSIN on menu, activeElement:',
+                    document.activeElement
+                );
+            });
+
+            // Also listen on document for all keydown events
+            document.addEventListener(
+                'keydown',
+                (event: KeyboardEvent) => {
+                    if (event.key === ' ' || event.key === 'Enter') {
+                        console.log(
+                            '⌨️ Space/Enter pressed, activeElement:',
+                            document.activeElement?.tagName
+                        );
+                    }
+                    if (event.key === 'Escape') {
+                        console.log(
+                            '🚪 Escape pressed, overlay open:',
+                            overlay.open,
+                            'activeElement:',
+                            document.activeElement?.tagName
+                        );
+                    }
+                },
+                { capture: true }
+            );
+
+            // Listen for overlay events
+            overlay.addEventListener('sp-opened', () => {
+                console.log('✅ Overlay opened');
+            });
+            overlay.addEventListener('sp-closed', () => {
+                console.log('❌ Overlay closed');
+            });
+        }
+    }, 1000);
+
+    return html`
+        <style>
+            .multi-select-demo {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 20px;
+            }
+            .status {
+                padding: 12px;
+                background: var(--spectrum-gray-100);
+                border-radius: 4px;
+                font-family: monospace;
+                font-size: 12px;
+            }
+            .instructions {
+                padding: 12px;
+                background: var(--spectrum-blue-100);
+                border-radius: 4px;
+                font-size: 14px;
+            }
+            .debug-log {
+                padding: 12px;
+                background: var(--spectrum-yellow-100);
+                border-radius: 4px;
+                font-family: monospace;
+                font-size: 11px;
+                max-height: 150px;
+                overflow-y: auto;
+                white-space: pre-wrap;
+            }
+        </style>
+        <div class="multi-select-demo">
+            <div class="instructions">
+                <strong>Instructions:</strong>
+                <br />
+                1. Click the picker button below to open the menu
+                <br />
+                2. Use
+                <kbd>Arrow Up/Down</kbd>
+                to navigate
+                <br />
+                3. Press
+                <kbd>Space</kbd>
+                or
+                <kbd>Enter</kbd>
+                to toggle selection
+                <br />
+                4. Press
+                <kbd>Escape</kbd>
+                to close
+                <br />
+                5. Watch the debug log below for keyboard events
+            </div>
+
+            <sp-picker-button id="multi-select-button">
+                <span slot="label">Select multiple options</span>
+            </sp-picker-button>
+
+            <sp-overlay
+                trigger="multi-select-button@click"
+                placement="bottom-start"
+            >
+                <sp-popover>
+                    <sp-menu
+                        selects="multiple"
+                        label="Select options"
+                        @change=${(event: Event) => {
+                            console.log(
+                                'Selected:',
+                                (event.target as Menu).selected
+                            );
+                        }}
+                    >
+                        <sp-menu-item value="option1">Option 1</sp-menu-item>
+                        <sp-menu-item value="option2">Option 2</sp-menu-item>
+                        <sp-menu-item value="option3">Option 3</sp-menu-item>
+                    </sp-menu>
+                </sp-popover>
+            </sp-overlay>
+
+            <div class="debug-log">Debug log will appear here...</div>
+        </div>
+    `;
+};
+
+menuWithMultipleSelection.parameters = {
+    chromatic: { disableSnapshot: true },
+};
+
+menuWithMultipleSelection.story = {
+    name: 'Picker Button with Multiple Selection',
+};

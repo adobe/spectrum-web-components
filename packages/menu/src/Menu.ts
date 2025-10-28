@@ -103,30 +103,30 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     /**
      * Minimum vertical movement (in pixels) required to trigger scrolling detection.
-     * 
+     *
      * This threshold is consistent with other components in the design system:
      * - Card component uses 10px for click vs. drag detection
      * - Menu component uses 10px for scroll vs. selection detection
-     * 
+     *
      * The 10px threshold is carefully chosen to:
      * - Allow for natural finger tremor and accidental touches
      * - Distinguish between intentional scroll gestures and taps
      * - Provide consistent behavior across the platform
-     * 
+     *
      * @see {@link packages/card/src/Card.ts} for similar threshold usage
      */
     private scrollThreshold = 10; // pixels
 
     /**
      * Maximum time (in milliseconds) for a movement to be considered scrolling.
-     * 
+     *
      * This threshold is consistent with other timing values in the design system:
      * - Longpress duration: 300ms (ActionButton, LongpressController)
      * - Scroll detection: 300ms (Menu component)
-     * 
+     *
      * Quick movements within this timeframe are likely intentional scrolls,
      * while slower movements are more likely taps or selections.
-     * 
+     *
      * @see {@link packages/action-button/src/ActionButton.ts} for longpress duration
      * @see {@link packages/overlay/src/LongpressController.ts} for longpress duration
      */
@@ -576,7 +576,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Resets the scrolling state after a short delay (100ms) to allow for
      * any final touch events to be processed. This delay prevents immediate
      * state changes that could interfere with the selection logic.
-     * 
+     *
      * The 100ms delay is consistent with the design system's approach to
      * touch event handling and ensures that any final touch events or
      * gesture recognition can complete before the scrolling state is reset.
@@ -886,8 +886,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
         if (key === ' ' || key === 'Enter') {
             event.preventDefault();
+            // The click() method already triggers selection via handlePointerBasedSelection
+            // so we don't need to call selectOrToggleItem again here.
             root?.focusElement?.click();
-            if (root) this.selectOrToggleItem(root);
             return;
         }
         this.navigateBetweenRelatedMenus(event as MenuItemKeydownEvent);
