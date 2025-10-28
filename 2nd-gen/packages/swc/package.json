@@ -1,6 +1,7 @@
 {
     "name": "@adobe/swc",
     "version": "0.0.1",
+    "private": true,
     "description": "Spectrum Web Components 2nd generation - rendering implementations",
     "license": "Apache-2.0",
     "author": "Adobe",
