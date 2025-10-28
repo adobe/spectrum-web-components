@@ -17,11 +17,13 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Contributor guides](01_contributor-guides/README.md)
-    - [Getting involved](01_contributor-guides/01_get-involved.md)
-    - [Style guide](01_contributor-guides/02_style-guide/README.md)
-    - [Participating in pull requests](01_contributor-guides/03_pull-requests.md)
-    - [Releasing SWC](01_contributor-guides/04_releasing.md)
+    - [Getting involved](01_contributor-guides/01_getting-involved.md)
+    - [Using the issue tracker](01_contributor-guides/02_using-the-issue-tracker.md)
+    - [Participating in pull requests](01_contributor-guides/03_participating-in-pull-requests.md)
+    - [Releasing SWC](01_contributor-guides/04_releasing-swc.md)
     - [Authoring contributor docs](01_contributor-guides/05_authoring-contributor-docs/README.md)
+    - [Patching dependencies](01_contributor-guides/05_patching-dependencies.md)
+    - [Style guide](01_contributor-guides/99_style-guide/README.md)
 - [Project planning](02_project-planning/README.md)
     - [Objectives and strategy](02_project-planning/01_objectives-and-strategy.md)
     - [Workstreams](02_project-planning/02_workstreams/README.md)
