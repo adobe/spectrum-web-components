@@ -326,7 +326,7 @@ Received: [
 
 ### Playwright config
 
-`first-gen/playwright.config.ts` defines two projects:
+`first-gen/playwright.a11y.config.ts` defines two projects:
 
 ```typescript
 projects: [
@@ -370,7 +370,7 @@ webServer: [
 spectrum-web-components/
 ├── ACCESSIBILITY_TESTING.md              # This guide
 ├── first-gen/
-│   ├── playwright.config.ts              # Playwright config (both gens)
+│   ├── playwright.a11y.config.ts         # Playwright config (both gens)
 │   ├── package.json                      # Test scripts
 │   ├── test/
 │   │   └── a11y-helpers.ts               # Shared helpers (both gens)
