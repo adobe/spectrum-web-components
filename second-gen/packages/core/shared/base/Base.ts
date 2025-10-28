@@ -12,7 +12,7 @@
 
 import { LitElement, ReactiveElement } from 'lit';
 
-import { version } from './version';
+import { version } from './version.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;

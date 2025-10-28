@@ -9,5 +9,5 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Divider.base';
-export * from './Divider.types';
+export * from './Divider.base.js';
+export * from './Divider.types.js';

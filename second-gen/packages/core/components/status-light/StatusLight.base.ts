@@ -17,7 +17,7 @@ import {
     SpectrumElement,
 } from '@spectrum-web-components/core/shared/base';
 
-import { type StatusLightVariant } from './StatusLight.types';
+import { type StatusLightVariant } from './StatusLight.types.js';
 
 /**
  * A status light is a great way to convey semantic meaning and the condition of an entity, such as statuses and categories. It provides visual indicators through colored dots accompanied by descriptive text.

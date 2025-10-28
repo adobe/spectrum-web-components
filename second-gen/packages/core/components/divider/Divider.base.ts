@@ -16,13 +16,13 @@ import { property } from 'lit/decorators.js';
 import {
     SizedMixin,
     SpectrumElement,
-} from '@spectrum-web-components/core/shared/base';
+} from '@spectrum-web-components/core/shared/base/index.js';
 
 import {
     DIVIDER_STATIC_COLORS,
     DIVIDER_VALID_SIZES,
     type DividerStaticColor,
-} from './Divider.types';
+} from './Divider.types.js';
 
 /**
  * @element swc-divider

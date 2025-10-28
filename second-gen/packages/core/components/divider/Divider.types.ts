@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/shared/base';
+import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
 
 export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
 export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;

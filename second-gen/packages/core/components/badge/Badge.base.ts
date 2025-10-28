@@ -15,16 +15,16 @@ import { property } from 'lit/decorators.js';
 import {
     SizedMixin,
     SpectrumElement,
-} from '@spectrum-web-components/core/shared/base';
-import { ObserveSlotPresence } from '@spectrum-web-components/core/shared/observe-slot-presence';
-import { ObserveSlotText } from '@spectrum-web-components/core/shared/observe-slot-text';
+} from '@spectrum-web-components/core/shared/base/index.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/core/shared/observe-slot-presence.js';
+import { ObserveSlotText } from '@spectrum-web-components/core/shared/observe-slot-text.js';
 
 import {
     BADGE_VARIANTS_SEMANTIC,
     type BadgeVariant,
     FIXED_VALUES,
     type FixedValues,
-} from './Badge.types';
+} from './Badge.types.js';
 
 /**
  * A badge component that displays short, descriptive information about an element.

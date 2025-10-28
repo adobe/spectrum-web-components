@@ -11,9 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-import { ProgressCircle } from './ProgressCircle';
+import { ProgressCircle } from './ProgressCircle.js';
 
-export * from './ProgressCircle';
+export * from './ProgressCircle.js';
 declare global {
     interface HTMLElementTagNameMap {
         'swc-progress-circle': ProgressCircle;

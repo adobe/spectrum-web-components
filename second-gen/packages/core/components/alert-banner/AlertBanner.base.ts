@@ -12,7 +12,7 @@
 import { CSSResultArray, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/shared/base';
+import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
 
 const VALID_VARIANTS = ['neutral', 'info', 'negative'];
 export type AlertBannerVariants = (typeof VALID_VARIANTS)[number];

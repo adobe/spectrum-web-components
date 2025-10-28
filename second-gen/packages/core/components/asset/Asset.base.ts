@@ -12,7 +12,7 @@
 
 import { property } from 'lit/decorators.js';
 
-import { SpectrumElement } from '@spectrum-web-components/core/shared/base';
+import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index.js';
 
 export abstract class AssetBase extends SpectrumElement {
     @property({ type: String, reflect: true })

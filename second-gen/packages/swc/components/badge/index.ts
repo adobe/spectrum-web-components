@@ -11,9 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-import { Badge } from './Badge';
+import { Badge } from './Badge.js';
 
-export * from './Badge';
+export * from './Badge.js';
 declare global {
     interface HTMLElementTagNameMap {
         'swc-badge': Badge;

@@ -11,9 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-import { Divider } from './Divider';
+import { Divider } from './Divider.js';
 
-export * from './Divider';
+export * from './Divider.js';
 declare global {
     interface HTMLElementTagNameMap {
         'swc-divider': Divider;

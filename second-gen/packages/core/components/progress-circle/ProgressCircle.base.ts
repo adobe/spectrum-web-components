@@ -15,13 +15,13 @@ import { property, query } from 'lit/decorators.js';
 import {
     SizedMixin,
     SpectrumElement,
-} from '@spectrum-web-components/core/shared/base';
-import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot';
+} from '@spectrum-web-components/core/shared/base/index.js';
+import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,
     ProgressCircleStaticColor,
-} from './ProgressCircle.types';
+} from './ProgressCircle.types.js';
 
 /**
  * A progress circle component that visually represents the completion progress of a task.

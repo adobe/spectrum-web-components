@@ -119,6 +119,14 @@
             ["e", "ev", "evt", "err"]
         ],
         "curly": ["error", "all"],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "always",
+                "ts": "never"
+            }
+        ],
         "import/prefer-default-export": "off",
         "lit-a11y/click-events-have-key-events": ["error"],
         "no-console": [
@@ -135,9 +143,9 @@
                     [
                         "^lit",
                         "^@lit",
-                        "^(?!@swc|@spectrum-web-components)@?\\w"
+                        "^(?!@adobe/swc|@spectrum-web-components)@?\\w"
                     ],
-                    ["^@swc", "^@spectrum-web-components"],
+                    ["^@adobe/swc", "^@spectrum-web-components"],
                     ["^\\u0000"],
                     ["^\\."],
                     ["^.+\\.(css|scss|sass|less|styl)$"]

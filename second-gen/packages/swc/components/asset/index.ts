@@ -11,9 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-import { Asset } from './Asset';
+import { Asset } from './Asset.js';
 
-export * from './Asset';
+export * from './Asset.js';
 declare global {
     interface HTMLElementTagNameMap {
         'swc-asset': Asset;

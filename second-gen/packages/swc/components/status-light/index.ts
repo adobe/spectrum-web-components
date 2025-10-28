@@ -11,9 +11,9 @@
  */
 import { defineElement } from '@spectrum-web-components/core/shared/base';
 
-import { StatusLight } from './StatusLight';
+import { StatusLight } from './StatusLight.js';
 
-export * from './StatusLight';
+export * from './StatusLight.js';
 declare global {
     interface HTMLElementTagNameMap {
         'swc-status-light': StatusLight;
