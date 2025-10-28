@@ -44,18 +44,18 @@ Inside the CSS directory, you can expect to find the following files:
 Next, we need to copy the styles from the Spectrum CSS component to the 2nd-generation component.
 
 ```bash
-cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-components/second-gen/packages/swc/components/<component-name>/<component-name>.css
+cp -r spectrum-css/components/<component-name>/dist/index.css spectrum-web-components/2nd-gen/packages/swc/components/<component-name>/<component-name>.css
 ```
 
 ## Update styles in the 2nd-generation component
 
-Now that we have the base styles in place, we need to check the first-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `first-gen/packages/components/<component-name>/<component-name>.css` file.
+Now that we have the base styles in place, we need to check the 1st-gen implementation for any unique web component-specific styles that would not exist in the vanilla CSS implementation. This information will most likely be found in the `1st-gen/packages/components/<component-name>/<component-name>.css` file.
 
 For example, look for styles specific to slots, such as `::slotted([name="icon"]) {}`.
 
-If these styles are found, we need to confirm if they are needed in the 2nd-generation component. Not all first-gen overrides or component-specific styles are needed in the 2nd-generation components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
+If these styles are found, we need to confirm if they are needed in the 2nd-generation component. Not all 1st-gen overrides or component-specific styles are needed in the 2nd-generation components and sometimes there are other ways to source those styles using the original classes provided by the Spectrum CSS asset.
 
-It might be helpful, at this point, to define the render function for the second-gen component so you can spin up Storybook and start seeing these new styles in action. A quick way to kick this off is to copy the `spectrum-css/components/<component-name>/stories/template.js` file into a render function on your new 2nd-generation component.
+It might be helpful, at this point, to define the render function for the 2nd-gen component so you can spin up Storybook and start seeing these new styles in action. A quick way to kick this off is to copy the `spectrum-css/components/<component-name>/stories/template.js` file into a render function on your new 2nd-generation component.
 
 Let's use the `Badge` component as an example. First, we need to add the styles to the component.
 

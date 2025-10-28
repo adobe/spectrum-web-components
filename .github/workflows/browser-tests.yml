@@ -1,99 +1,99 @@
 name: Browser Performance Tests
 
 on:
-    pull_request:
-        types: [opened, synchronize, reopened]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
-    contents: read
-    pull-requests: write
+  contents: read
+  pull-requests: write
 
 jobs:
-    test-changed-packages:
-        strategy:
-            matrix:
-                browser: [firefox, chrome]
-        name: Compare performance to latest release on ${{ matrix.browser }}
+  test-changed-packages:
+    strategy:
+      matrix:
+        browser: [firefox, chrome]
+    name: Compare performance to latest release on ${{ matrix.browser }}
 
-        # The job will only run if the pull request is from the same repository.
-        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
+    # The job will only run if the pull request is from the same repository.
+    # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0 # Get full history
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Get full history
 
-            - name: Fetch main branch
-              run: |
-                  git fetch origin main:main
+      - name: Fetch main branch
+        run: |
+          git fetch origin main:main
 
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
+      - name: Setup Job and Install Dependencies
+        uses: ./.github/actions/setup-job
 
-            - name: Check ChromeDriver Version
-              if: matrix.browser == 'chrome'
-              run: |
-                  echo "Checking ChromeDriver version..."
-                  npx chromedriver --version
-                  echo "Checking Chrome version..."
-                  google-chrome --version
-                  echo "Checking tachometer chromedriver version..."
-                  cd first-gen && yarn tachometer --version
+      - name: Check ChromeDriver Version
+        if: matrix.browser == 'chrome'
+        run: |
+          echo "Checking ChromeDriver version..."
+          npx chromedriver --version
+          echo "Checking Chrome version..."
+          google-chrome --version
+          echo "Checking tachometer chromedriver version..."
+          cd 1st-gen && yarn tachometer --version
 
-            - name: Tachometer the changed packages
-              run: cd first-gen && yarn test:changed --browser=${{ matrix.browser }}
+      - name: Tachometer the changed packages
+        run: cd 1st-gen && yarn test:changed --browser=${{ matrix.browser }}
 
-            - name: Create a dummy file to ensure at least one results file exists
-              run: touch first-gen/tachometer.${{ matrix.browser }}-ran.txt
+      - name: Create a dummy file to ensure at least one results file exists
+        run: touch 1st-gen/tachometer.${{ matrix.browser }}-ran.txt
 
-            - name: Archive ${{ matrix.browser }} tachometer results
-              id: upload-artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: tachometer-results-${{ matrix.browser }}
-                  path: |
-                      first-gen/tach-results.${{ matrix.browser }}.*.json
-                      first-gen/tachometer.${{ matrix.browser }}-ran.txt
+      - name: Archive ${{ matrix.browser }} tachometer results
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tachometer-results-${{ matrix.browser }}
+          path: |
+            1st-gen/tach-results.${{ matrix.browser }}.*.json
+            1st-gen/tachometer.${{ matrix.browser }}-ran.txt
 
-    comment-performance:
-        name: Comment tachometer performance results
-        needs: [test-changed-packages]
+  comment-performance:
+    name: Comment tachometer performance results
+    needs: [test-changed-packages]
 
-        # The job will only run if the pull request is from the same repository.
-        # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
-        if: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  ref: main
+    # The job will only run if the pull request is from the same repository.
+    # Benchmarks can't run on PRs from forked repos due to comment posting restrictions without a GitHub token.
+    if: ${{ github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
-            - name: Checkout PR branch
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 2
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
-            - name: Setup Job and Install Dependencies
-              uses: ./.github/actions/setup-job
+      - name: Setup Job and Install Dependencies
+        uses: ./.github/actions/setup-job
 
-            - uses: actions/download-artifact@v4
-              with:
-                  pattern: tachometer-results-*
-                  merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: tachometer-results-*
+          merge-multiple: true
 
-            - name: Post Tachometer Performance Comment
-              uses: actions/github-script@v7
-              with:
-                  script: |
-                      const { buildTachometerComment } = await import('${{ github.workspace }}/.github/scripts/build-tachometer-comment.js');
-                      const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
-                      const body = buildTachometerComment();
-                      commentOrUpdate(github, context, '## Tachometer results', body);
+      - name: Post Tachometer Performance Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { buildTachometerComment } = await import('${{ github.workspace }}/.github/scripts/build-tachometer-comment.js');
+            const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
+            const body = buildTachometerComment();
+            commentOrUpdate(github, context, '## Tachometer results', body);

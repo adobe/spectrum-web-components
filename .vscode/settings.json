@@ -3,24 +3,24 @@
         "**/*.css.ts": {
             "when": "$(basename)"
         },
-        "first-gen/packages/**/*.js.map": true,
-        "first-gen/packages/**/*.js": {
+        "1st-gen/packages/**/*.js.map": true,
+        "1st-gen/packages/**/*.js": {
             "when": "$(basename).ts"
         },
-        "first-gen/packages/**/*.dev.js": {
+        "1st-gen/packages/**/*.dev.js": {
             "when": "$(basename).js"
         },
-        "first-gen/packages/**/*.d.ts": {
+        "1st-gen/packages/**/*.d.ts": {
             "when": "$(basename).ts"
         },
-        "first-gen/tools/**/*.js.map": true,
-        "first-gen/tools/**/*.js": {
+        "1st-gen/tools/**/*.js.map": true,
+        "1st-gen/tools/**/*.js": {
             "when": "$(basename).ts"
         },
-        "first-gen/tools/**/*.dev.js": {
+        "1st-gen/tools/**/*.dev.js": {
             "when": "$(basename).js"
         },
-        "first-gen/tools/**/*.d.ts": {
+        "1st-gen/tools/**/*.d.ts": {
             "when": "$(basename).ts"
         },
         "**/*.test-vrt.ts": true,

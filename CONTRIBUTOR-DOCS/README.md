@@ -53,18 +53,18 @@ Instead of creating a separate branch or repo for 2nd-gen, we are working on the
 
 Reflecting the side-by-side strategy, the repository is organized into two top-level workspaces:
 
-- **`first-gen/`** contains all of the 1st-gen packages, tooling, and supporting materials.
+- **`1st-gen/`** contains all of the 1st-gen packages, tooling, and supporting materials.
 
-    Most of what lives here will be left behind in the transition to 2nd-gen; the core component functionality we'll carry forward is gradually being moved into the `second-gen` workspace.
+    Most of what lives here will be left behind in the transition to 2nd-gen; the core component functionality we'll carry forward is gradually being moved into the `2nd-gen` workspace.
 
-    While we'll continue doing work in `first-gen` as needed to accomplish our goals, we expect this work to decrease steadily toward none.
+    While we'll continue doing work in `1st-gen` as needed to accomplish our goals, we expect this work to decrease steadily toward none.
 
-- **`second-gen/`** is a new workspace that we're building from the ground up to serve as a clean foundation for our future work. It includes:
+- **`2nd-gen/`** is a new workspace that we're building from the ground up to serve as a clean foundation for our future work. It includes:
     - A Core library (`packages/core/`), which contains the functionality shared between 1st- and 2nd-gen
 
     - The 2nd-gen SWC library (`packages/swc/`).
 
-During this transition, depending on what you're trying to accomplish, you may end up working in `first-gen`, `second-gen`, or both. If you have any questions, please ask—we're happy to help.
+During this transition, depending on what you're trying to accomplish, you may end up working in `1st-gen`, `2nd-gen`, or both. If you have any questions, please ask—we're happy to help.
 
 ## About these docs
 

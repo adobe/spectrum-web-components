@@ -8,7 +8,7 @@
 
 <!-- Document content (editable) -->
 
-- Create directory structure: `second-gen/packages/swc/components/[component]/`
+- Create directory structure: `2nd-gen/packages/swc/components/[component]/`
 - Create `[Component].ts` file extending from `[Component]Base`
 - Import S2-specific types and constants from `[Component].types.ts`
 - Add section headers: API OVERRIDES, API ADDITIONS (if needed), RENDERING & STYLING

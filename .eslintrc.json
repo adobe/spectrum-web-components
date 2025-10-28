@@ -81,8 +81,8 @@
             }
         },
         {
-            "extends": ["./first-gen/.eslintrc.json"],
-            "files": ["first-gen/**/*"],
+            "extends": ["./1st-gen/.eslintrc.json"],
+            "files": ["1st-gen/**/*"],
             "rules": {
                 "notice/notice": [
                     "error",
@@ -94,8 +94,8 @@
             }
         },
         {
-            "extends": ["./second-gen/.eslintrc.json"],
-            "files": ["second-gen/**/*"],
+            "extends": ["./2nd-gen/.eslintrc.json"],
+            "files": ["2nd-gen/**/*"],
             "rules": {
                 "notice/notice": [
                     "error",
