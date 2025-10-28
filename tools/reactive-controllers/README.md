@@ -4,11 +4,11 @@
 
 ### Reactive controllers
 
--   [ColorController](../color-controller)
--   [ElementResolutionController](../element-resolution)
--   FocusGroupController
--   LanguageResolutionController
--   [MatchMediaController](../match-media)
--   [RovingTabindexController](../roving-tab-index)
--   [PendingStateController](../pending-state)
--   SystemContextResolutionController
+- [ColorController](../color-controller)
+- [ElementResolutionController](../element-resolution)
+- FocusGroupController
+- LanguageResolutionController
+- [MatchMediaController](../match-media)
+- [RovingTabindexController](../roving-tab-index)
+- [PendingStateController](../pending-state)
+- [SystemContextResolutionController](../system-context-resolution)
