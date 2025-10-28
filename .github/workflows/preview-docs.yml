@@ -70,7 +70,7 @@ jobs:
               run: yarn workspace @spectrum-web-components/core build
 
             - name: Build second-gen swc
-              run: yarn workspace @adobe/swc/components build
+              run: yarn workspace @adobe/swc build
 
             - name: Generate Custom Elements Manifest
               run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
