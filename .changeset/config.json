@@ -7,12 +7,22 @@
         }
     ],
     "commit": false,
-    "fixed": [["@spectrum-web-components/*"]],
+    "fixed": [
+        [
+            "@spectrum-web-components/*",
+            "!@spectrum-web-components/core",
+            "!@spectrum-web-components/1st-gen",
+            "!@spectrum-web-components/2nd-gen"
+        ]
+    ],
     "linked": [["@adobe/swc", "@spectrum-web-components/core"]],
     "access": "public",
     "baseBranch": "main",
     "updateInternalDependencies": "patch",
-    "ignore": [],
+    "ignore": [
+        "@spectrum-web-components/1st-gen",
+        "@spectrum-web-components/2nd-gen"
+    ],
     "snapshot": {
         "useCalculatedVersion": true,
         "prereleaseTemplate": "{tag}.{datetime}"
