@@ -54,8 +54,8 @@ Execute the script when:
 ### How to run
 
 ```bash
-cd CONTRIBUTOR-DOCS/02_contributor-guides/authoring-contributor-docs
-node update-nav.js
+cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
+node update-nav.js ../../
 ```
 
 **Expected time:** ~15-20ms for entire CONTRIBUTOR-DOCS tree

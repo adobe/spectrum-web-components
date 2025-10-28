@@ -13,12 +13,13 @@
 
 - [Getting involved](01_getting-involved.md)
 - [Using the issue tracker](02_using-the-issue-tracker.md)
-- [Making a pull request](03_making-a-pull-request.md)
-- [Participating in PR reviews](04_participating-in-pr-reviews.md)
-- [Releasing SWC](05_releasing-swc.md)
-- [Authoring contributor docs](06_authoring-contributor-docs/README.md)
-    - [AI agent instructions](06_authoring-contributor-docs/01_ai-agent-instructions.md)
-- [Patching dependencies](07_patching-dependencies.md)
+- [Working in the SWC repo](03_working-in-the-swc-repo.md)
+- [Making a pull request](04_making-a-pull-request.md)
+- [Participating in PR reviews](05_participating-in-pr-reviews.md)
+- [Releasing SWC](06_releasing-swc.md)
+- [Authoring contributor docs](07_authoring-contributor-docs/README.md)
+    - [AI agent instructions](07_authoring-contributor-docs/01_ai-agent-instructions.md)
+- [Patching dependencies](08_patching-dependencies.md)
 
 </details>
 

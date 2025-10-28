@@ -146,7 +146,7 @@ As a PR author, you can use these labels to communicate the status of your pull 
 - `breaking-change`: PR contains changes that break backward compatibility
 - `Component: [Name]`: PR affects this component
 
-For a complete list of labels and their meanings, including reviewer-specific labels, see [Participating in PR reviews](04_participating-in-pr-reviews.md#labels-and-their-meanings).
+For a complete list of labels and their meanings, including reviewer-specific labels, see [Participating in PR reviews](05_participating-in-pr-reviews.md#labels-and-their-meanings).
 
 ---
 

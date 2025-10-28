@@ -112,8 +112,8 @@ Each doc file has the following structure, with markers clearly separating auto-
 
 - When linking to other doc files, use relative links
 - Always link to files, not folders:
-    - Correct: `[Workstreams](../../02_project-planning/02_workstreams/README.md)`
-    - Incorrect: `[Workstreams](../../02_project-planning/02_workstreams/)`
+    - Correct: `[Workstreams](../../03_project-planning/02_workstreams/README.md)`
+    - Incorrect: `[Workstreams](../../03_project-planning/02_workstreams/)`
 
 ## Organizing docs
 
