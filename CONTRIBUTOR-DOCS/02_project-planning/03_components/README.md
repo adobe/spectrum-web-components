@@ -1,10 +1,10 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Component Info
+[CONTRIBUTOR-DOCS](../../README.md) / [Project Planning](../README.md) / Components
 
 <!-- Document title (editable) -->
 
-# Component Info
+# Components
 
 <!-- Generated TOC - DO NOT EDIT -->
 

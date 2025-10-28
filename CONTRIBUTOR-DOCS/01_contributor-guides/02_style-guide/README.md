@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Style Guide
+[CONTRIBUTOR-DOCS](../../README.md) / [Contributor Guides](../README.md) / Style Guide
 
 <!-- Document title (editable) -->
 

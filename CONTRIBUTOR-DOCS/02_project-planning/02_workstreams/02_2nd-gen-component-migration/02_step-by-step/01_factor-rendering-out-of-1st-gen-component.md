@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../../README.md) / [Workstream Info](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Factor rendering out of 1st-gen component
+[CONTRIBUTOR-DOCS](../../../../README.md) / [Project Planning](../../../README.md) / [Workstreams](../../README.md) / [2nd-gen Component Migration](../README.md) / Step By Step / Factor rendering out of 1st-gen component
 
 <!-- Document title (editable) -->
 

@@ -285,8 +285,8 @@ For each file:
 
 **For folders without README:** Derive from folder name
 
-1. Remove number prefix: `04_workstream-info` → `workstream-info`
-2. Replace hyphens with spaces: `workstream-info` → `workstream info`
+1. Remove number prefix: `02_project-planning` → `project-planning`
+2. Replace hyphens with spaces: `project-planning` → `project planning`
 3. Apply title case: `workstream info` → `Workstream Info`
 
 ---

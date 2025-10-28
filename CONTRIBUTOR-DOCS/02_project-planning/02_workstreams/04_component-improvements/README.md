@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../../README.md) / [Workstream Info](../README.md) / Component Improvements
+[CONTRIBUTOR-DOCS](../../../README.md) / [Project Planning](../../README.md) / [Workstreams](../README.md) / Component Improvements
 
 <!-- Document title (editable) -->
 

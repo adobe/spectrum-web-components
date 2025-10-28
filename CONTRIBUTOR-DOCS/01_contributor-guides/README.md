@@ -12,8 +12,9 @@
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Adobe Code of Conduct](01_code-of-conduct.md)
-- [Authoring contributor docs](authoring-contributor-docs/README.md)
-    - [AI agent instructions](authoring-contributor-docs/01_ai-agent-instructions.md)
+- [Style Guide](02_style-guide/README.md)
+- [Authoring contributor docs](03_authoring-contributor-docs/README.md)
+    - [AI agent instructions](03_authoring-contributor-docs/01_ai-agent-instructions.md)
 
 </details>
 
