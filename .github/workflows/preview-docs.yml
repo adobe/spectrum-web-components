@@ -64,7 +64,7 @@ jobs:
               run: yarn install --immutable
 
             - name: Build first-gen
-              run: yarn workspace @adobe/spectrum-web-components build
+              run: yarn workspace @spectrum-web-components/1st-gen build
 
             - name: Build second-gen core
               run: yarn workspace @spectrum-web-components/core build
@@ -73,7 +73,7 @@ jobs:
               run: yarn workspace @adobe/swc/components build
 
             - name: Generate Custom Elements Manifest
-              run: yarn workspace @adobe/spectrum-web-components docs:analyze
+              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
             - name: Move CEM to Storybook directory
               run: cp first-gen/projects/documentation/custom-elements.json first-gen/storybook/
@@ -82,10 +82,10 @@ jobs:
               env:
                   SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
               run: |
-                  yarn workspace @adobe/spectrum-web-components docs:build
+                  yarn workspace @spectrum-web-components/1st-gen docs:build
 
             - name: Build Storybook
-              run: yarn workspace @adobe/spectrum-web-components storybook:build
+              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
             - name: Setup AzCopy
