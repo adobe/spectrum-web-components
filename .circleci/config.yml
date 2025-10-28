@@ -65,7 +65,7 @@ commands:
             - run:
                   name: Build the project
                   command: |
-                      yarn workspace @swc/core build
+                      yarn workspace @spectrum-web-components/core build
                       yarn workspace @adobe/spectrum-web-components build
 
             - save_cache:

@@ -12,7 +12,10 @@
 import { PropertyValues } from 'lit';
 import { property } from 'lit/decorators.js';
 
-import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
+import {
+    SizedMixin,
+    SpectrumElement,
+} from '@spectrum-web-components/core/shared/base';
 
 import { type StatusLightVariant } from './StatusLight.types';
 

@@ -8,7 +8,7 @@
     ],
     "commit": false,
     "fixed": [["@spectrum-web-components/*"]],
-    "linked": [["@swc/components", "@swc/core"]],
+    "linked": [["@adobe/swc/components", "@spectrum-web-components/core"]],
     "access": "public",
     "baseBranch": "main",
     "updateInternalDependencies": "patch",

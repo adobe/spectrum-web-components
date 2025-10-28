@@ -20,7 +20,7 @@ export default {
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
     'first-gen/{packages,tools}/*/src/**/!(*.css).ts': [
-        'yarn workspace @adobe/spectrum-web-components lit-analyzer',
+        'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
     ],
     'package.json': () => [
         'cd first-gen && genversion --es6 --semi tools/base/src/version.js',

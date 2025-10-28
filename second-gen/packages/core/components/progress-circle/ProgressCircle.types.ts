@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@swc/core/shared/base';
+import type { ElementSize } from '@spectrum-web-components/core/shared/base';
 
 export const PROGRESS_CIRCLE_VALID_SIZES: ElementSize[] = [
     's',

@@ -65,8 +65,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "1.9.0",
-        "@spectrum-web-components/shared": "1.9.0",
-        "@swc/core": "workspace:*"
+        "@spectrum-web-components/core": "workspace:*",
+        "@spectrum-web-components/shared": "1.9.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

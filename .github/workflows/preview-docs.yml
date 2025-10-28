@@ -66,11 +66,11 @@ jobs:
             - name: Build first-gen
               run: yarn workspace @adobe/spectrum-web-components build
 
-            - name: Build second-gen core  
-              run: yarn workspace @swc/core build
+            - name: Build second-gen core
+              run: yarn workspace @spectrum-web-components/core build
 
             - name: Build second-gen swc
-              run: yarn workspace @swc/components build
+              run: yarn workspace @adobe/swc/components build
 
             - name: Generate Custom Elements Manifest
               run: yarn workspace @adobe/spectrum-web-components docs:analyze

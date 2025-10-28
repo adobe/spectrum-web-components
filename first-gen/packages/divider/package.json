@@ -59,7 +59,7 @@
     "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/base": "1.9.0",
-        "@swc/core": "workspace:*"
+        "@spectrum-web-components/core": "workspace:*"
     },
     "keywords": [
         "design-system",

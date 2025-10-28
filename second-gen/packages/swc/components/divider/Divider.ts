@@ -13,7 +13,7 @@
 import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { DividerBase } from '@swc/core/components/divider';
+import { DividerBase } from '@spectrum-web-components/core/components/divider';
 
 import styles from './divider.css';
 

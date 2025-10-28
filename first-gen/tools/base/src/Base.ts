@@ -10,4 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-export * from '@swc/core/shared/base/Base.js';
+export * from '@spectrum-web-components/core/shared/base/Base.js';

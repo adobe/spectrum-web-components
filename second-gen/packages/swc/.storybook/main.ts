@@ -28,7 +28,7 @@ const config = {
         config.resolve = config.resolve || {};
         config.resolve.alias = {
             ...config.resolve.alias,
-            '@swc/core': resolve(__dirname, '../../core'),
+            '@spectrum-web-components/core': resolve(__dirname, '../../core'),
         };
 
         return config;

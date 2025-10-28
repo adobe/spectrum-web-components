@@ -15,7 +15,7 @@
  *
  * Processes changeset files to generate and update changelogs for:
  * - first-gen Spectrum Web Components → first-gen/CHANGELOG.md
- * - @swc/core → second-gen/packages/core/CHANGELOG.md
+ * - @spectrum-web-components/core → second-gen/packages/core/CHANGELOG.md
  *
  * Extracts major, minor, and patch changes from changesets and formats them
  * into organized changelog entries.
@@ -82,7 +82,7 @@ function extractChanges(frontmatter, description, pattern, prefix = '') {
         // Handle two different regex patterns:
         // 1. @spectrum-web-components/button: patch
         //    → match: [full, 'button', 'patch'] (has component name)
-        // 2. @swc/core: minor
+        // 2. @spectrum-web-components/core: minor
         //    → match: [full, 'minor'] (no component name)
         const hasName = match.length > 2;
         const name = hasName ? match[1] : null;
@@ -139,7 +139,7 @@ async function processChangesets() {
             'sp-'
         );
 
-        // Extract @swc/core changes
+        // Extract @spectrum-web-components/core changes
         const coreChanges = extractChanges(
             frontmatter,
             cleanDescription,
@@ -297,7 +297,7 @@ function updateChangelogFile(
  * Creates or updates the global CHANGELOG.md file based on changeset files.
  *
  * Reads changeset files, categorizes changes by type (major/minor/patch),
- * and updates both the first-gen and @swc/core changelogs accordingly.
+ * and updates both the first-gen and @spectrum-web-components/core changelogs accordingly.
  *
  * Should be run during the release process after prepublishOnly but before
  * changeset version. Automatically called by `yarn changeset-publish`.
@@ -352,7 +352,7 @@ async function createGlobalChangelog() {
         `✅ CHANGELOG updated for ${nextVersion}`
     );
 
-    // Update @swc/core changelog if there are core changes
+    // Update @spectrum-web-components/core changelog if there are core changes
     const coreChangelogPath = path.resolve(
         __dirname,
         '../../second-gen/packages/core/CHANGELOG.md'
@@ -379,8 +379,8 @@ async function createGlobalChangelog() {
             core.minorChanges
         );
 
-        const coreCurrentTag = `@swc/core@${coreCurrentVersion}`;
-        const coreNextTag = `@swc/core@${coreNextVersion}`;
+        const coreCurrentTag = `@spectrum-web-components/core@${coreCurrentVersion}`;
+        const coreNextTag = `@spectrum-web-components/core@${coreNextVersion}`;
         const coreCompareUrl = `${repoUrl}/compare/${coreCurrentTag}...${coreNextTag}`;
 
         updateChangelogFile(
@@ -391,11 +391,13 @@ async function createGlobalChangelog() {
             core,
             '###',
             `## \\[${coreNextVersion.replace(/\\./g, '\\\\.')}\\]`,
-            `⚠️ Version ${coreNextVersion} already has an entry in the @swc/core CHANGELOG. Skipping core update.`,
-            `✅ @swc/core CHANGELOG updated for ${coreNextVersion}`
+            `⚠️ Version ${coreNextVersion} already has an entry in the @spectrum-web-components/core CHANGELOG. Skipping core update.`,
+            `✅ @spectrum-web-components/core CHANGELOG updated for ${coreNextVersion}`
         );
     } else {
-        console.log('ℹ️ No @swc/core changes to add to the core changelog.');
+        console.log(
+            'ℹ️ No @spectrum-web-components/core changes to add to the core changelog.'
+        );
     }
 }
 (async () => {

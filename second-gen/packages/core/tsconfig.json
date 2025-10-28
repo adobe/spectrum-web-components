@@ -7,8 +7,8 @@
         "noEmit": false,
         "allowImportingTsExtensions": false,
         "paths": {
-            "@swc/core/shared/*": ["./shared/*"],
-            "@swc/core/*": ["./*"]
+            "@spectrum-web-components/core/shared/*": ["./shared/*"],
+            "@spectrum-web-components/core/*": ["./*"]
         }
     },
     "include": ["**/*.ts"],

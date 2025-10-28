@@ -51,10 +51,10 @@ export default {
                     '../second-gen/packages',
                 ],
                 alias: {
-                    '@swc/core': resolve('../second-gen/packages/core/dist'),
-                    '@swc/components': resolve(
-                        '../second-gen/packages/swc/dist'
+                    '@spectrum-web-components/core': resolve(
+                        '../second-gen/packages/core/dist'
                     ),
+                    '@adobe/swc': resolve('../second-gen/packages/swc/dist'),
                 },
             },
         });

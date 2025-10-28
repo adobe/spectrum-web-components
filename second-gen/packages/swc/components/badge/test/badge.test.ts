@@ -11,11 +11,10 @@
  */
 
 import { html } from 'lit';
+import type { Badge } from '@adobe/swc/badge';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import type { Badge } from '@swc/components/badge';
-
-import '@swc/components/badge';
+import '@adobe/swc/badge';
 
 import { fixture } from '../../../utils/test-utils.js';
 

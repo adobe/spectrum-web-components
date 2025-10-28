@@ -1,5 +1,5 @@
 {
-    "name": "@adobe/spectrum-web-components",
+    "name": "@spectrum-web-components/1st-gen",
     "version": "0.0.9",
     "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
@@ -63,7 +63,7 @@
         "process-icons": "wireit",
         "publish:react": "yarn changeset publish --no-git-tag --tag latest --no-push",
         "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
-        "dev:core": "yarn workspace @swc/core dev",
+        "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "start": "run-p dev:core storybook",
         "storybook": "wireit",
         "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
@@ -229,7 +229,7 @@
             ]
         },
         "prebuild": {
-            "command": "yarn workspace @swc/core build",
+            "command": "yarn workspace @spectrum-web-components/core build",
             "files": [
                 "../second-gen/packages/core/components/**/*",
                 "../second-gen/packages/core/shared/**/*",

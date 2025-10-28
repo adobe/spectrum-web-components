@@ -5,8 +5,8 @@
         "noEmit": false,
         "outDir": "./dist",
         "paths": {
-            "@swc/components/*": ["./components/*"],
-            "@swc/core/*": ["../core/*"]
+            "@adobe/swc/*": ["./components/*"],
+            "@spectrum-web-components/core/*": ["../core/*"]
         },
         "rootDir": "./",
         "types": ["@vitest/browser/providers/playwright"]

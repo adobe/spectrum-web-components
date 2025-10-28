@@ -1,5 +1,5 @@
 {
-    "name": "@swc/components",
+    "name": "@adobe/swc",
     "version": "0.0.1",
     "description": "Spectrum Web Components 2nd generation - rendering implementations",
     "license": "Apache-2.0",
@@ -43,11 +43,11 @@
         "test": "vitest --run",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui",
-        "test:watch": "yarn workspace @swc/core dev & vitest"
+        "test:watch": "yarn workspace @spectrum-web-components/core dev & vitest"
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
-        "@swc/core": "workspace:*",
+        "@spectrum-web-components/core": "workspace:*",
         "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {

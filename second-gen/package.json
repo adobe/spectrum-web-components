@@ -1,5 +1,5 @@
 {
-    "name": "@adobe/swc",
+    "name": "@spectrum-web-components/2nd-gen",
     "version": "0.0.1",
     "private": true,
     "description": "Second generation Spectrum Web Components with modern tooling and architecture",
@@ -16,12 +16,12 @@
     },
     "type": "module",
     "scripts": {
-        "build": "yarn workspaces foreach --from '@swc/*' --recursive run build",
-        "clean": "yarn workspaces foreach --from '@swc/*' --recursive run clean",
+        "build": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run build",
+        "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
         "lint": "eslint . --ext .ts,.js,.json",
-        "start": "yarn workspace @swc/core dev & yarn workspace @swc/components analyze:watch & yarn workspace @swc/components storybook",
-        "storybook:build": "yarn workspace @swc/components storybook:build",
-        "test": "yarn workspace @swc/components test"
+        "start": "yarn workspace @spectrum-web-components/core dev & yarn workspace @adobe/swc analyze:watch & yarn workspace @adobe/swc storybook",
+        "storybook:build": "yarn workspace @adobe/swc storybook:build",
+        "test": "yarn workspace @adobe/swc test"
     },
     "workspaces": [
         "packages/*"

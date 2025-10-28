@@ -12,8 +12,11 @@
 import { PropertyValues } from 'lit';
 import { property, query } from 'lit/decorators.js';
 
-import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';
-import { getLabelFromSlot } from '@swc/core/shared/get-label-from-slot';
+import {
+    SizedMixin,
+    SpectrumElement,
+} from '@spectrum-web-components/core/shared/base';
+import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot';
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,

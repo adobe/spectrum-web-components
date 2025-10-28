@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 
-import { DividerBase } from '@swc/core/components/divider';
+import { DividerBase } from '@spectrum-web-components/core/components/divider';
 import styles from './divider.css.js';
 
 /**

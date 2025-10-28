@@ -20,7 +20,7 @@ import {
     BADGE_VARIANTS_S2,
     BadgeBase,
     type BadgeVariantS2 as BadgeVariant,
-} from '@swc/core/components/badge';
+} from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
 

@@ -99,7 +99,7 @@ export default defineConfig({
                     id === 'lit' ||
                     id.startsWith('lit/') ||
                     id.startsWith('@lit/') ||
-                    id.startsWith('@swc/core/')
+                    id.startsWith('@spectrum-web-components/core/')
                 );
             },
             output: {

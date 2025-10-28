@@ -75,7 +75,7 @@ export function getWorkspacePackages(
         .filter(
             (pkg) =>
                 !ignoredPackages.includes(pkg.name) &&
-                pkg.name !== '@adobe/spectrum-web-components'
+                pkg.name !== '@spectrum-web-components/1st-gen'
         )
         .map((pkg) => ({
             name: pkg.name,

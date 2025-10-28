@@ -13,7 +13,7 @@
 import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 
-import '@swc/components/asset';
+import '@adobe/swc/asset';
 
 const meta: Meta = {
     title: 'Asset',

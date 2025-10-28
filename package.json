@@ -1,5 +1,4 @@
 {
-    "name": "@adobe/spectrum-web-components-monorepo",
     "version": "0.0.9",
     "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
@@ -16,18 +15,18 @@
     "type": "module",
     "scripts": {
         "build": "yarn build:first-gen && yarn build:second-gen",
-        "build:first-gen": "yarn workspace @adobe/spectrum-web-components build",
-        "build:second-gen": "yarn workspace @adobe/swc build",
+        "build:first-gen": "yarn workspace @spectrum-web-components/1st-gen build",
+        "build:second-gen": "yarn workspace @spectrum-web-components/2nd-gen build",
         "lint": "yarn lint:first-gen && yarn lint:second-gen",
-        "lint:first-gen": "yarn workspace @adobe/spectrum-web-components lint",
-        "lint:second-gen": "yarn workspace @adobe/swc lint",
+        "lint:first-gen": "yarn workspace @spectrum-web-components/1st-gen lint",
+        "lint:second-gen": "yarn workspace @spectrum-web-components/2nd-gen lint",
         "postinstall": "husky || true && patch-package",
         "start": "yarn start:first-gen & yarn start:second-gen",
-        "start:first-gen": "yarn workspace @adobe/spectrum-web-components start",
-        "start:second-gen": "yarn workspace @adobe/swc start",
+        "start:first-gen": "yarn workspace @spectrum-web-components/1st-gen start",
+        "start:second-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
         "test": "yarn test:first-gen & yarn test:second-gen",
-        "test:first-gen": "yarn workspace @adobe/spectrum-web-components test",
-        "test:second-gen": "yarn workspace @adobe/swc test"
+        "test:first-gen": "yarn workspace @spectrum-web-components/1st-gen test",
+        "test:second-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
     },
     "workspaces": [
         "first-gen",

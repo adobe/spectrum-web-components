@@ -26,7 +26,7 @@ import {
     type BadgeVariantS1,
     FIXED_VALUES as FIXED_VALUES_BASE,
     type FixedValues as FixedValuesBase,
-} from '@swc/core/components/badge';
+} from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css.js';
 

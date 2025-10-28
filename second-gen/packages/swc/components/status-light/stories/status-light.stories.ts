@@ -11,12 +11,11 @@
  */
 import { html, TemplateResult } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+import { StatusLight } from '@adobe/swc/status-light';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { StatusLight } from '@swc/components/status-light';
-
-import '@swc/components/status-light';
+import '@adobe/swc/status-light';
 
 // ────────────────
 //    METADATA

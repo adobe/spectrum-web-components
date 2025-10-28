@@ -21,7 +21,7 @@ import styles from './alert-banner.css.js';
 import {
     AlertBannerBase,
     AlertBannerVariants,
-} from '@swc/core/components/alert-banner';
+} from '@spectrum-web-components/core/components/alert-banner';
 
 export type { AlertBannerVariants };
 

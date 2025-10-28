@@ -11,11 +11,10 @@
  */
 
 import { html } from 'lit';
+import type { StatusLight } from '@adobe/swc/status-light';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import type { StatusLight } from '@swc/components/status-light';
-
-import '@swc/components/status-light';
+import '@adobe/swc/status-light';
 
 import { fixture } from '../../../utils/test-utils.js';
 

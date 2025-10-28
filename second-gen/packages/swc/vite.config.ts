@@ -29,9 +29,12 @@ export default defineConfig({
                     filePath,
                     content: content
                         // @todo: figure out why this is needed (type imports are becoming
-                        // relative instead of targeting the @swc/core package)
-                        // this fixes it e.g. ../../../core/... or ../core/... -> @swc/core/...
-                        .replace(/(\.\.\/)+core\//g, '@swc/core/'),
+                        // relative instead of targeting the @spectrum-web-components/core package)
+                        // this fixes it e.g. ../../../core/... or ../core/... -> @spectrum-web-components/core/...
+                        .replace(
+                            /(\.\.\/)+core\//g,
+                            '@spectrum-web-components/core/'
+                        ),
                 };
             },
         }),
@@ -72,7 +75,7 @@ export default defineConfig({
                     id === 'lit' ||
                     id.startsWith('lit/') ||
                     id.startsWith('@lit/') ||
-                    id.startsWith('@swc/core/')
+                    id.startsWith('@spectrum-web-components/core/')
                 );
             },
             output: {
@@ -90,8 +93,8 @@ export default defineConfig({
     resolve: {
         // Needed for Storybook to work
         alias: {
-            '@swc/core': resolve(__dirname, '../core'),
-            '@swc/components': resolve(__dirname, './components'),
+            '@spectrum-web-components/core': resolve(__dirname, '../core'),
+            '@adobe/swc': resolve(__dirname, './components'),
         },
     },
     esbuild: {

@@ -18,7 +18,7 @@ import {
     PROGRESS_CIRCLE_STATIC_COLORS_S2,
     ProgressCircleBase,
     type ProgressCircleStaticColorS2,
-} from '@swc/core/components/progress-circle';
+} from '@spectrum-web-components/core/components/progress-circle';
 
 import progressCircleStyles from './progress-circle.css';
 
