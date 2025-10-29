@@ -175,7 +175,7 @@ __metadata:
   resolution: "@adobe/spectrum-web-components@workspace:."
   dependencies:
     "@changesets/changelog-github": "npm:0.5.1"
-    "@changesets/cli": "npm:2.29.7"
+    "@changesets/cli": "npm:^2.29.7"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.6"
@@ -1581,7 +1581,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/cli@npm:2.29.7":
+"@changesets/cli@npm:^2.29.7":
   version: 2.29.7
   resolution: "@changesets/cli@npm:2.29.7"
   dependencies:
