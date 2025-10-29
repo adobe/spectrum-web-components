@@ -391,6 +391,9 @@
         },
         "prestorybook": {
             "command": "cem analyze --outdir storybook/",
+            "dependencies": [
+                "build:ts"
+            ],
             "files": [
                 "packages/**/*.ts",
                 "tools/**/*.ts"
@@ -409,9 +412,8 @@
         "storybook": {
             "command": "storybook dev -p 8080 -c storybook",
             "dependencies": [
-                "build:ts",
-                "build:watch",
-                "prestorybook"
+                "prestorybook",
+                "build:watch"
             ],
             "service": true
         },
