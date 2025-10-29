@@ -32,7 +32,7 @@ If you're having a usage issue or need support, do not open an issue. Instead, r
 1. Check the [Open Issues](https://github.com/adobe/spectrum-web-components/issues) to see if the problem has already been reported.
     - TIP: Apply the component label to make your search process more straightforward.
 2. If it has and the issue is still open, add a comment to the existing issue instead of opening a new one.
-3. Check if you can reproduce the problem in the latest version of Spectrum Web Components.
+3. Check if you can reproduce the problem in the latest version of Spectrum Web Components by forking a code example in [Stackblitz](https://stackblitz.com/orgs/custom/SWC-Team/collections/spectrum-web-components). 
 4. If there are no related open issues and it is reproducible in isolation, then open a [Bug Report](https://github.com/adobe/spectrum-web-components/issues/new?template=bug_report.yaml).
 
 ## Filing a bug report
