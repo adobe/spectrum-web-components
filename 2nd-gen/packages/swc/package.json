@@ -48,7 +48,7 @@
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
-        "@spectrum-web-components/core": "workspace:*",
+        "@spectrum-web-components/core": "0.0.1",
         "lit": "^2.5.0 || ^3.1.3"
     },
     "devDependencies": {
