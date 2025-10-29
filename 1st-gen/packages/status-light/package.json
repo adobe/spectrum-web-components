@@ -64,7 +64,8 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.9.0"
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/core": "0.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
