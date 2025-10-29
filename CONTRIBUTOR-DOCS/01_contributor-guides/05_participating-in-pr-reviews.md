@@ -26,20 +26,19 @@ This document outlines our team's expectations and best practices for reviewing 
 
 ## Labels and their meanings
 
-- `ready-for-review`: PR is ready for maintainer review
-- `ready-for-merge`: PR has two approvals and all tests pass. This label will keep the base of the PR up-to-date with main until it's merged.
-- `WIP`: PR is still being worked on, not ready for review
-- `blocked`: PR is blocked for some reason i.e. another PR needs to go in first
-- `needs-tests`: PR is missing necessary tests
-- `needs-docs`: PR requires documentation updates
-- `needs-self-review`: PR requires that the author does a self-review of code to answer preliminary questions
-- `needs-style-review`: PR needs to be checked by a CSS expert
-- `needs-design-review`: PR needs to be checked by the Spectrum Design team
-- `breaking-change`: PR contains changes that break backward compatibility
-- `help-wanted`: Extra attention is needed on this PR
-- `on-hold`: PR needs more discussion.
-- `Component: [Name]`: PR effects this component
-- `auto-update`: Keep the base of the PR up-to-date with main automatically if there are no conflicts.
+[See the complete list of labels on Github. ](https://github.com/adobe/spectrum-web-components/labels)
+
+- `Contribution`: This label denotes the PR is from someone other than the maintainers of SWC.
+- `Status: Ready for review`: PR is ready for maintainer review
+- `Status: Ready for merge`: PR has two approvals and all tests pass. 
+- `Status: WIP`: PR is still being worked on, not ready for review
+- `Status: Blocked`: PR is blocked for some reason, eg another PR needs to go in first
+- `Status: On hold`: PR on hold pending more discussion.
+- `Status: Addressing feedback`: PR owner is addressing review comments and will request re-review when ready.
+- `Status: Ready for design review`: PR needs to be checked by the Spectrum Design team
+- `Breaking`: PR contains changes that break backward compatibility
+- `High priority PR review`: PR is related to a SEV 1 issue or other critical work
+- `Component: [Name]`: PR affects this component
 
 Apply labels promptly to help maintainers prioritize and manage the review queue.
 
@@ -84,8 +83,7 @@ Both reviewers and PR authors should follow these guidelines:
 
 #### For PR authors
 
-- **Self review your PR**: Authors should take a first pass as reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answer questions they may have.
-- **Be receptive to feedback**: Approach review comments with an open mind. The goal is better code, not personal criticism.
+- **Self review your PR**: Authors should take a first pass at reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answers questions they may have.
 - **Resolve/respond to all comments**: Address each review comment, either with code changes or explanations of your approach.
 - **Ask for clarification**: If review feedback is unclear, ask questions to understand the concern.
 - **Notify when ready**: After addressing feedback, notify reviewers that the PR is ready for another look either in Slack or by requesting a new review in GitHub.

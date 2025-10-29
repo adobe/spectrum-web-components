@@ -42,7 +42,7 @@ Quality and stability are important. We require writing tests for any fixes or f
 - New features work as intended for all users.
 - Overall library reliability remains high.
 
-Read about our testing guidance in the [README.md](../README.md).
+For 1st-gen testing guidance, see the [1st-gen README.md](../../1st-gen/README.md). Testing guidance for 2nd-gen is forthcoming.
 
 If you're unsure how to write tests for certain parts of the library, don't hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
 
@@ -139,11 +139,11 @@ Incomplete templates may delay the review process.
 
 As a PR author, you can use these labels to communicate the status of your pull request:
 
-- `ready-for-review`: PR is ready for maintainer review
-- `WIP`: PR is still being worked on, not ready for review
-- `needs-self-review`: You plan to do a self-review before requesting maintainer review
-- `help-wanted`: You need extra attention or assistance on this PR
-- `breaking-change`: PR contains changes that break backward compatibility
+- `Status: Ready for review`: PR is ready for maintainer review or re-review
+- `Status: WIP`: PR is still being worked on, not ready for review
+
+`Status: Addressing feedback`: PR owner is addressing review comments. 
+
 - `Component: [Name]`: PR affects this component
 
 For a complete list of labels and their meanings, including reviewer-specific labels, see [Participating in PR reviews](05_participating-in-pr-reviews.md#labels-and-their-meanings).
