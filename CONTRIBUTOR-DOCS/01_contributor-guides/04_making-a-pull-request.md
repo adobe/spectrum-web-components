@@ -141,9 +141,7 @@ As a PR author, you can use these labels to communicate the status of your pull 
 
 - `Status: Ready for review`: PR is ready for maintainer review or re-review
 - `Status: WIP`: PR is still being worked on, not ready for review
-
-`Status: Addressing feedback`: PR owner is addressing review comments. 
-
+- `Status: Addressing feedback`: PR owner is addressing review comments. 
 - `Component: [Name]`: PR affects this component
 
 For a complete list of labels and their meanings, including reviewer-specific labels, see [Participating in PR reviews](05_participating-in-pr-reviews.md#labels-and-their-meanings).
