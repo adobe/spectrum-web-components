@@ -19,16 +19,16 @@ export default {
         'eslint --fix --format pretty --cache --no-error-on-unmatched-pattern --quiet',
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],
-    'first-gen/{packages,tools}/*/src/**/!(*.css).ts': [
-        'yarn workspace @adobe/spectrum-web-components lit-analyzer',
+    '1st-gen/{packages,tools}/*/src/**/!(*.css).ts': [
+        'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
     ],
     'package.json': () => [
-        'cd first-gen && genversion --es6 --semi tools/base/src/version.js',
+        'cd 1st-gen && genversion --es6 --semi tools/base/src/version.js',
         'yarn constraints --fix',
         'yarn install --refresh-lockfile',
-        'git add first-gen/tools/base/src/version.js yarn.lock',
+        'git add 1st-gen/tools/base/src/version.js yarn.lock',
     ],
-    '.changeset/*.md': ['node first-gen/scripts/escape-changelog-tags.js'],
+    '.changeset/*.md': ['node 1st-gen/scripts/escape-changelog-tags.js'],
     '!(*.css|*.ts)': [
         'prettier --cache --no-error-on-unmatched-pattern --ignore-unknown --log-level silent --write',
     ],

@@ -29,9 +29,9 @@ Changesets are a way to manage versions and changelogs for monorepos. Each chang
 
 The command will create a new markdown file in the `.changeset` directory with your changes.
 
-## Important: @swc/core and component updates
+## Important: @spectrum-web-components/core and component updates
 
-When making changes to `@swc/core`, you **must** also include the corresponding `@spectrum-web-components` component in the same changeset to ensure the changes appear in the component's changelog. This is because `@swc/core` changes are internal and don't automatically propagate to the component changelogs.
+When making changes to `@spectrum-web-components/core`, you **must** also include the corresponding `@spectrum-web-components` component in the same changeset to ensure the changes appear in the component's changelog. This is because `@spectrum-web-components/core` changes are internal and don't automatically propagate to the component changelogs.
 
 **Best practice**: Create a single changeset that includes both packages when updating core functionality that affects a specific component.
 
@@ -41,7 +41,7 @@ A typical changeset file looks like this:
 
 ```markdown
 ---
-'@swc/core': patch
+'@spectrum-web-components/core': patch
 '@spectrum-web-components/button': minor
 '@spectrum-web-components/theme': patch
 ---

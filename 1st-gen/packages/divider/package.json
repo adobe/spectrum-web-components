@@ -1,0 +1,77 @@
+{
+    "name": "@spectrum-web-components/divider",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/divider",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/divider"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "exports": {
+        ".": {
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
+        },
+        "./package.json": "./package.json",
+        "./sp-divider.js": {
+            "default": "./sp-divider.js",
+            "development": "./sp-divider.dev.js"
+        },
+        "./src/Divider.js": {
+            "default": "./src/Divider.js",
+            "development": "./src/Divider.dev.js"
+        },
+        "./src/divider-overrides.css.js": "./src/divider-overrides.css.js",
+        "./src/divider.css.js": "./src/divider.css.js",
+        "./src/index.js": {
+            "default": "./src/index.js",
+            "development": "./src/index.dev.js"
+        }
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./stories/typography-decorator.js"
+    ],
+    "types": "./src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/core": "workspace:*"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "customElements": "custom-elements.json"
+}

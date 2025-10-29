@@ -137,15 +137,15 @@ module.exports = defineConfig({
          * This function enforces consistent dependencies within each generation separately
          */
         function enforceConsistentDependenciesWithinGenerations({ Yarn }) {
-            // Enforce consistency within first-gen only
+            // Enforce consistency within 1st-gen only
             enforceConsistencyForWorkspaceGroup(
                 { Yarn },
-                (workspace) => !workspace.cwd.startsWith('second-gen/')
+                (workspace) => !workspace.cwd.startsWith('2nd-gen/')
             );
 
-            // Enforce consistency within second-gen only
+            // Enforce consistency within 2nd-gen only
             enforceConsistencyForWorkspaceGroup({ Yarn }, (workspace) =>
-                workspace.cwd.startsWith('second-gen/')
+                workspace.cwd.startsWith('2nd-gen/')
             );
         }
 
