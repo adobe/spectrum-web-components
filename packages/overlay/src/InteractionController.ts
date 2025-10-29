@@ -75,7 +75,8 @@ export class InteractionController implements ReactiveController {
                 this.overlay.open = true;
                 this.target[lastInteractionType] = this.type;
             });
-        import('../sp-overlay.js');
+        // eslint-disable-next-line import/no-extraneous-dependencies
+        import('@spectrum-web-components/overlay/sp-overlay.js');
     }
 
     public get overlay(): AbstractOverlay {

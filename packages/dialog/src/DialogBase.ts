@@ -24,8 +24,8 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
-// Get around lint error by importing locally for now. Not required for actual change.
-import '../sp-dialog.js';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
