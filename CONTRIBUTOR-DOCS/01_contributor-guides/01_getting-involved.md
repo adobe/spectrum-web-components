@@ -61,7 +61,7 @@ There's a common misconception that you need to code in order to contribute. In 
 - Helping other users on GitHub Discussions.
 - Advocating for the project on social media or at meetups.
 
-Of course, contributing code is also welcome from fixing a bug to building a brand-new component. All types of contributions help keep Spectrum Web Components thriving.
+Of course, contributing code is also welcome, from fixing a bug to building a brand-new component. All types of contributions help keep Spectrum Web Components thriving.
 
 ---
 
