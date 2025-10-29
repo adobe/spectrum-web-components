@@ -73,7 +73,7 @@ We require all external contributors to sign our Contributor License Agreement (
 
 ## Code of conduct
 
-Spectrum Web Components abides by the Adobe Code of Conduct. By participating, you agree to treat all community members kindly and respectfully. We're committed to fostering a welcoming, inclusive environment.
+Spectrum Web Components abides by the [Adobe Code of Conduct](../../CODE_OF_CONDUCT.md). By participating, you agree to treat all community members kindly and respectfully. We're committed to fostering a welcoming, inclusive environment.
 Should any behavior fall short of these expectations, please report it to <Grp-opensourceoffice@adobe.com>.
 
 ---
