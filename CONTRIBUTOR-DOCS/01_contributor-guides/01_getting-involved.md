@@ -67,7 +67,7 @@ Of course, contributing code is also welcome from fixing a bug to building a bra
 
 ## Contributor license agreement
 
-We require all external contributors to sign our Contributor License Agreement (CLA). If you haven't signed it before making your first contribution, please do so—otherwise, we can't merge your changes.
+We require all external contributors to sign our [Contributor License Agreement](https://opensource.adobe.com/cla.html) (CLA). If you haven't signed it before making your first contribution, please do so—otherwise, we can't merge your changes.
 
 ---
 
