@@ -9,6 +9,7 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
+    "ignorePatterns": ["CONTRIBUTOR-DOCS/**/*"],
     "overrides": [
         {
             "extends": ["plugin:jsonc/recommended-with-jsonc"],

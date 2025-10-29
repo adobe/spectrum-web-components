@@ -42,7 +42,7 @@ Quality and stability are important. We require writing tests for any fixes or f
 - New features work as intended for all users.
 - Overall library reliability remains high.
 
-Read about our testing guidance in the [README.md](../../README.md).
+Read about our testing guidance in the [README.md](../README.md).
 
 If you're unsure how to write tests for certain parts of the library, don't hesitate to ask maintainers for guidance. We appreciate every effort to keep the code solid!
 

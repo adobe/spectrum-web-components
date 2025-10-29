@@ -60,7 +60,7 @@ yarn install
 
 SWC is currently in transition from its first generation (**1st-gen**) to its second generation (**2nd-gen**).
 
-> This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](../../03_project-planning/01_objectives-and-strategy.md).
+> This transition is motivated by some important strategic goals. For more information, see [Objectives and Strategy](../03_project-planning/01_objectives-and-strategy.md).
 
 Instead of creating a separate branch or repo for 2nd-gen, we are working on the 1st-gen and 2nd-gen projects side-by-side in this repository, with some core functionality being shared between 1st- and 2nd-gen components. This strategy makes it easier for us to continue actively improving and supporting 1st-gen even as we devote much of our attention to defining and building 2nd-gen.
 

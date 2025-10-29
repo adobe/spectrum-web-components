@@ -11,7 +11,7 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [[TODO: Integrate this content]](#-todo-integrate-this-content-)
+- [[ TODO: Integrate this content ]](#-todo-integrate-this-content-)
 - [Bring over styles from Spectrum CSS](#bring-over-styles-from-spectrum-css)
 - [Update styles in the 2nd-generation component](#update-styles-in-the-2nd-generation-component)
 

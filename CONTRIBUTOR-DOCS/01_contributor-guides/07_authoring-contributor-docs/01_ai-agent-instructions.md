@@ -17,7 +17,7 @@
     - [Responsibilities](#responsibilities)
     - [Debugging errors](#debugging-errors)
     - [Debugging output issues](#debugging-output-issues)
-    - [Verifying links](#verifying-links)
+    - [Handling link verification errors](#handling-link-verification-errors)
 - [Role 2: Maintainer](#role-2-maintainer)
     - [Requirements and specifications](#requirements-and-specifications)
     - [When to maintain](#when-to-maintain)
@@ -58,7 +58,7 @@ cd CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs
 node update-nav.js ../../
 ```
 
-**Expected time:** ~15-20ms for entire CONTRIBUTOR-DOCS tree
+**Expected time:** ~20-200ms for entire CONTRIBUTOR-DOCS tree (includes automatic link verification)
 
 ### Responsibilities
 
@@ -97,37 +97,40 @@ When the auto-generated navigation appears incorrect or malformed:
 
 **Philosophy:** The script should adapt to reasonable document structures, not the other way around.
 
-### Verifying links
+### Handling link verification errors
 
-Link verification takes significantly longer than nav regeneration (~40-50 seconds vs. ~15ms). **Only perform link verification when explicitly requested by a maintainer.**
+The script automatically verifies all internal markdown links after updating navigation. When broken links are found, they are reported in the script output with structured error details.
 
-**How to verify links:**
+**Your role as an AI agent:**
 
-**Inter-document links** (links between files):
+1. **Analyze each error** - Review the error details provided by the script
+2. **Fix straightforward cases automatically** - Don't ask for human input when the fix is clear:
+    - File was renamed/moved → Find new location in metadata and update link
+    - Anchor was renamed → Find matching or similar anchor in target file
+    - Wrong relative path depth → Recalculate correct relative path
+    - Case sensitivity issues → Fix capitalization
+    - Missing or incorrect file extension → Add `.md` extension if needed
 
-1. Search for relative links to other markdown files: `\]\([^\)]*\.md\)`
-2. For each link found in document content (not auto-generated navigation):
-    - Verify the target file exists at the specified path
-    - Confirm the relative path is correct from the source file's location
+3. **Consult human for ambiguous cases** - Ask for guidance when:
+    - Target file was completely removed (need decision on alternative link target)
+    - Multiple possible anchor matches exist with similar names
+    - Link intent is unclear or may need conceptual rethinking
+    - You cannot determine the correct fix with high confidence
 
-**Internal anchor links** (links to section headings):
+4. **Report fixes clearly** - After fixing, summarize:
+    - How many links were broken
+    - What fixes were applied
+    - Any remaining issues that need human review
 
-1. Search for anchor links within the same document: `\]\(#[a-z0-9-]+\)`
-2. Search for anchor links to other documents: `\]\([^\)]*\.md#[a-z0-9-]+\)`
-3. For each anchor link found in document content (not auto-generated TOCs):
-    - Extract the heading anchor (e.g., `#current-objectives`)
-    - Search for the corresponding heading in the target document
-    - Verify the heading exists and the anchor matches GitHub's anchor format:
-        - Lowercase all text
-        - Replace spaces with hyphens
-        - Remove special characters except hyphens
-        - Example: `## Current Objectives` → `#current-objectives`
+**Example workflow:**
 
-**Report findings:**
-
-- List all manually authored links found
-- Confirm which links are valid
-- Report any broken links with specific details about what's missing or incorrect
+```
+Script reports: "File not found: ../migration/overview.md"
+→ Search metadata for files matching "migration" or "overview"
+→ Find: "03_project-planning/01_migration-status.md"
+→ Update link with correct relative path
+→ Report: "Fixed broken link: updated path to migration status doc"
+```
 
 ---
 
@@ -236,6 +239,13 @@ For each file:
 - Preserves all content below the marker
 - Handles edge cases (duplicate markers in code blocks)
 
+**Step 4: Verify links** (~10-150ms)
+
+- Extracts all markdown links from document content (excluding auto-generated sections and code blocks)
+- Validates that target files exist
+- Validates that anchor references point to existing headings
+- Reports any broken links with detailed error information
+
 ### Breadcrumb format
 
 ```markdown
@@ -297,6 +307,7 @@ After running or modifying the script:
 
 - [ ] Script completed without errors
 - [ ] All files were updated (check the count in output)
+- [ ] Link verification completed (check counts of valid/broken links)
 - [ ] Spot-check breadcrumbs are correct and links work
 - [ ] Spot-check TOCs reflect current structure
 - [ ] Display names are human-readable (from H1 headings)
@@ -304,3 +315,4 @@ After running or modifying the script:
 - [ ] Collapsible TOC sections work properly
 - [ ] Manual content below `` is preserved
 - [ ] No trailing spaces or formatting issues
+- [ ] Any broken links reported have been addressed

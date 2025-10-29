@@ -80,7 +80,7 @@ Should any behavior fall short of these expectations, please report it to <Grp-o
 
 ## Developing locally
 
-Read the steps outlined in the [README.md](../../README.md) to get your environment set up.
+Read the steps outlined in the [README.md](../README.md) to get your environment set up.
 
 If you encounter hurdles, feel free to ask for help in your pull request or in the community forum.
 

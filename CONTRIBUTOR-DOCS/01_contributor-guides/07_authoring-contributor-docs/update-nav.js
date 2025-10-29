@@ -13,6 +13,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { verifyAllLinks } from './verify-links.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -646,14 +647,49 @@ function main() {
         }
     }
 
-    const totalTime = Date.now() - startTime;
+    const navTime = Date.now() - startTime;
 
-    console.log(`\n✅ Complete!`);
+    console.log(`\n✅ Navigation updated!`);
     console.log(`   Updated: ${updateCount} files`);
     if (skipCount > 0) {
         console.log(`   Skipped: ${skipCount} files`);
     }
-    console.log(`   Total time: ${totalTime}ms\n`);
+    console.log(`   Time: ${navTime}ms\n`);
+
+    // Step 3: Verify all links
+    console.log('🔗 Verifying links...');
+    const verifyStartTime = Date.now();
+    const verification = verifyAllLinks(metadata, docsPath);
+    const verifyTime = Date.now() - verifyStartTime;
+
+    console.log(`   ✓ ${verification.summary.validLinks} links verified`);
+    if (verification.errorCount > 0) {
+        console.log(`   ✗ ${verification.errorCount} broken links found`);
+        console.log(`   Time: ${verifyTime}ms\n`);
+
+        // Output detailed error information for AI agents
+        console.log('❌ Broken link details:\n');
+        for (const error of verification.errors) {
+            console.log(`📄 ${error.sourceFile}:${error.line}`);
+            console.log(`   Link: [${error.linkText}](${error.linkHref})`);
+            console.log(`   Issue: ${error.details}`);
+            if (error.suggestions && error.suggestions.length > 0) {
+                console.log(`   Suggestions: ${error.suggestions.join(', ')}`);
+            }
+            console.log('');
+        }
+
+        // Output JSON for programmatic parsing by AI agents
+        console.log('\n📋 JSON output for AI agent parsing:');
+        console.log(JSON.stringify(verification, null, 2));
+        console.log('');
+    } else {
+        console.log(`   Time: ${verifyTime}ms`);
+        console.log('\n✅ All links valid!\n');
+    }
+
+    const totalTime = Date.now() - startTime;
+    console.log(`⏱️  Total time: ${totalTime}ms\n`);
 }
 
 // Run if called directly

@@ -161,6 +161,8 @@ Request generation of breadcrumbs and TOC when you:
 - Add, remove, or rename section headings in a document
 - Change the organizational structure
 
+The script also automatically verifies all internal markdown links and reports any broken links, which an AI agent will typically fix automatically.
+
 You can request an update by asking an AI Agent, pointing it to the [AI Agent Instructions](./01_ai-agent-instructions.md).
 
 > If you're using Cursor, you can just ask an agent to "update the contributor docs"; a project-level Cursor rule will help the agent find the applicable instructions.
@@ -170,6 +172,8 @@ You can request an update by asking an AI Agent, pointing it to the [AI Agent In
 ### Verifying and troubleshooting
 
 The logic for generating navigational elements is quite simple, so it's unlikely that things will go wrong, but it's a good idea to do a quick spot-check to ensure that breadcrumbs and TOCs look correct, especially in areas of the docs that you have edited.
+
+**Link verification:** The script automatically checks all internal markdown links and reports any broken links. When working with an AI agent, broken links are typically fixed automatically without human intervention. The agent will only ask for guidance if the fix is ambiguous (e.g., when a target file has been completely removed).
 
 If you encounter any issues, try asking an AI agent to help you troubleshoot, pointing the agent to the [AI Agent Instructions](./01_ai-agent-instructions.md).
 
