@@ -83,7 +83,7 @@ Both reviewers and PR authors should follow these guidelines:
 
 #### For PR authors
 
-- **Self review your PR**: Authors should take a first pass at reviewing and commenting on their submission. This provides reviewers faster context for the thinking that went in to the code and preemptively answers questions they may have.
+- **Self review your PR**: Take a first pass at reviewing and commenting on your own submission. This gives reviewers valuable context and may pre-emptively answer questions that might otherwise arise.
 - **Resolve/respond to all comments**: Address each review comment, either with code changes or explanations of your approach.
 - **Ask for clarification**: If review feedback is unclear, ask questions to understand the concern.
 - **Notify when ready**: After addressing feedback, notify reviewers that the PR is ready for another look either in Slack or by requesting a new review in GitHub.
