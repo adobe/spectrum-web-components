@@ -43,7 +43,7 @@ When you file a bug, please use the `Bug Report` template provided in GitHub. In
 - Relevant components involved in the issue.
 - Issue Severity based on our classifications defined below.
 - What you expected vs. what actually happened, along with any errors logged in the console.
-- Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from. (e.g., webcomponents.dev or CodePen). Be detailed if you write out the steps!
+- Steps to reproduce the issue, preferably in an isolated environment, so that we can narrow down where the bug is originating from, preferably by forking an example from our [Stackblitz project](https://stackblitz.com/orgs/custom/SWC-Team/collections/spectrum-web-components). Be detailed if you write out the steps!
 - Relevant environment details (OS, browser, library version).
 
 Clear bug reports speed up the triage process, help us replicate the issue, and keep the project robust.
