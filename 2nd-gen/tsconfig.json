@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "./dist",
+        "resolveJsonModule": true,
+        "rootDir": "./",
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2022",
+        "useDefineForClassFields": false
+    },
+    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+    "include": ["packages/**/*.ts", "**/*.d.ts"],
+    "references": [
+        {
+            "path": "./packages/core"
+        },
+        {
+            "path": "./packages/swc"
+        }
+    ]
+}

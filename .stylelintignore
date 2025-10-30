@@ -1,7 +1,11 @@
 node_modules
-task
+HEADER
+1st-gen/node_modules
+2nd-gen/node_modules
+1st-gen/task
+2nd-gen/task
 *.*
 !*.css
-projects/example-project/dist
-tools/styles
-spectrum-*.css
+1st-gen/projects/example-project/dist
+1st-gen/tools/styles
+1st-gen/spectrum-*.css

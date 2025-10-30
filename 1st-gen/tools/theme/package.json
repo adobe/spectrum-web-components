@@ -1,0 +1,320 @@
+{
+    "name": "@spectrum-web-components/theme",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/tools/theme"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/theme",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Theme.js": {
+            "development": "./src/Theme.dev.js",
+            "default": "./src/Theme.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/scale-large-core-tokens.css.js": "./src/scale-large-core-tokens.css.js",
+        "./src/scale-large.css.js": "./src/scale-large.css.js",
+        "./src/scale-medium-core-tokens.css.js": "./src/scale-medium-core-tokens.css.js",
+        "./src/scale-medium.css.js": "./src/scale-medium.css.js",
+        "./src/theme-core-tokens.css.js": "./src/theme-core-tokens.css.js",
+        "./src/theme-dark-core-tokens.css.js": "./src/theme-dark-core-tokens.css.js",
+        "./src/theme-dark.css.js": "./src/theme-dark.css.js",
+        "./src/theme-darkest-core-tokens.css.js": "./src/theme-darkest-core-tokens.css.js",
+        "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
+        "./src/theme-interfaces.js": {
+            "development": "./src/theme-interfaces.dev.js",
+            "default": "./src/theme-interfaces.js"
+        },
+        "./src/theme-light-core-tokens.css.js": "./src/theme-light-core-tokens.css.js",
+        "./src/theme-light.css.js": "./src/theme-light.css.js",
+        "./src/theme-lightest-core-tokens.css.js": "./src/theme-lightest-core-tokens.css.js",
+        "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
+        "./src/theme.css.js": "./src/theme.css.js",
+        "./src/themes-core-tokens.js": {
+            "development": "./src/themes-core-tokens.dev.js",
+            "default": "./src/themes-core-tokens.js"
+        },
+        "./src/themes.js": {
+            "development": "./src/themes.dev.js",
+            "default": "./src/themes.js"
+        },
+        "./src/typography.css.js": "./src/typography.css.js",
+        "./express/scale-large-core-tokens.js": {
+            "development": "./express/scale-large-core-tokens.dev.js",
+            "default": "./express/scale-large-core-tokens.js"
+        },
+        "./express/scale-large.js": {
+            "development": "./express/scale-large.dev.js",
+            "default": "./express/scale-large.js"
+        },
+        "./express/scale-medium-core-tokens.js": {
+            "development": "./express/scale-medium-core-tokens.dev.js",
+            "default": "./express/scale-medium-core-tokens.js"
+        },
+        "./express/scale-medium.js": {
+            "development": "./express/scale-medium.dev.js",
+            "default": "./express/scale-medium.js"
+        },
+        "./express/theme-dark-core-tokens.js": {
+            "development": "./express/theme-dark-core-tokens.dev.js",
+            "default": "./express/theme-dark-core-tokens.js"
+        },
+        "./express/theme-dark.js": {
+            "development": "./express/theme-dark.dev.js",
+            "default": "./express/theme-dark.js"
+        },
+        "./express/theme-darkest-core-tokens.js": {
+            "development": "./express/theme-darkest-core-tokens.dev.js",
+            "default": "./express/theme-darkest-core-tokens.js"
+        },
+        "./express/theme-darkest.js": {
+            "development": "./express/theme-darkest.dev.js",
+            "default": "./express/theme-darkest.js"
+        },
+        "./express/theme-light-core-tokens.js": {
+            "development": "./express/theme-light-core-tokens.dev.js",
+            "default": "./express/theme-light-core-tokens.js"
+        },
+        "./express/theme-light.js": {
+            "development": "./express/theme-light.dev.js",
+            "default": "./express/theme-light.js"
+        },
+        "./express/theme-lightest-core-tokens.js": {
+            "development": "./express/theme-lightest-core-tokens.dev.js",
+            "default": "./express/theme-lightest-core-tokens.js"
+        },
+        "./express/theme-lightest.js": {
+            "development": "./express/theme-lightest.dev.js",
+            "default": "./express/theme-lightest.js"
+        },
+        "./spectrum-two/scale-large-core-tokens.js": {
+            "development": "./spectrum-two/scale-large-core-tokens.dev.js",
+            "default": "./spectrum-two/scale-large-core-tokens.js"
+        },
+        "./spectrum-two/scale-large.js": {
+            "development": "./spectrum-two/scale-large.dev.js",
+            "default": "./spectrum-two/scale-large.js"
+        },
+        "./spectrum-two/scale-medium-core-tokens.js": {
+            "development": "./spectrum-two/scale-medium-core-tokens.dev.js",
+            "default": "./spectrum-two/scale-medium-core-tokens.js"
+        },
+        "./spectrum-two/scale-medium.js": {
+            "development": "./spectrum-two/scale-medium.dev.js",
+            "default": "./spectrum-two/scale-medium.js"
+        },
+        "./spectrum-two/theme-dark-core-tokens.js": {
+            "development": "./spectrum-two/theme-dark-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-dark-core-tokens.js"
+        },
+        "./spectrum-two/theme-dark.js": {
+            "development": "./spectrum-two/theme-dark.dev.js",
+            "default": "./spectrum-two/theme-dark.js"
+        },
+        "./spectrum-two/theme-darkest-core-tokens.js": {
+            "development": "./spectrum-two/theme-darkest-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-darkest-core-tokens.js"
+        },
+        "./spectrum-two/theme-darkest.js": {
+            "development": "./spectrum-two/theme-darkest.dev.js",
+            "default": "./spectrum-two/theme-darkest.js"
+        },
+        "./spectrum-two/theme-light-core-tokens.js": {
+            "development": "./spectrum-two/theme-light-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-light-core-tokens.js"
+        },
+        "./spectrum-two/theme-light.js": {
+            "development": "./spectrum-two/theme-light.dev.js",
+            "default": "./spectrum-two/theme-light.js"
+        },
+        "./spectrum-two/theme-lightest-core-tokens.js": {
+            "development": "./spectrum-two/theme-lightest-core-tokens.dev.js",
+            "default": "./spectrum-two/theme-lightest-core-tokens.js"
+        },
+        "./spectrum-two/theme-lightest.js": {
+            "development": "./spectrum-two/theme-lightest.dev.js",
+            "default": "./spectrum-two/theme-lightest.js"
+        },
+        "./src/express/core-tokens.js": {
+            "development": "./src/express/core-tokens.dev.js",
+            "default": "./src/express/core-tokens.js"
+        },
+        "./src/express/core.js": {
+            "development": "./src/express/core.dev.js",
+            "default": "./src/express/core.js"
+        },
+        "./src/express/scale-large-core-tokens.css.js": "./src/express/scale-large-core-tokens.css.js",
+        "./src/express/scale-large.css.js": "./src/express/scale-large.css.js",
+        "./src/express/scale-medium-core-tokens.css.js": "./src/express/scale-medium-core-tokens.css.js",
+        "./src/express/scale-medium.css.js": "./src/express/scale-medium.css.js",
+        "./src/express/theme-core-tokens.css.js": "./src/express/theme-core-tokens.css.js",
+        "./src/express/theme-dark-core-tokens.css.js": "./src/express/theme-dark-core-tokens.css.js",
+        "./src/express/theme-dark.css.js": "./src/express/theme-dark.css.js",
+        "./src/express/theme-light-core-tokens.css.js": "./src/express/theme-light-core-tokens.css.js",
+        "./src/express/theme-light.css.js": "./src/express/theme-light.css.js",
+        "./src/express/theme.css.js": "./src/express/theme.css.js",
+        "./src/express/themes-core-tokens.js": {
+            "development": "./src/express/themes-core-tokens.dev.js",
+            "default": "./src/express/themes-core-tokens.js"
+        },
+        "./src/express/themes.js": {
+            "development": "./src/express/themes.dev.js",
+            "default": "./src/express/themes.js"
+        },
+        "./src/spectrum-two/core-tokens.js": {
+            "development": "./src/spectrum-two/core-tokens.dev.js",
+            "default": "./src/spectrum-two/core-tokens.js"
+        },
+        "./src/spectrum-two/core.js": {
+            "development": "./src/spectrum-two/core.dev.js",
+            "default": "./src/spectrum-two/core.js"
+        },
+        "./src/spectrum-two/scale-large-core-tokens.css.js": "./src/spectrum-two/scale-large-core-tokens.css.js",
+        "./src/spectrum-two/scale-large.css.js": "./src/spectrum-two/scale-large.css.js",
+        "./src/spectrum-two/scale-medium-core-tokens.css.js": "./src/spectrum-two/scale-medium-core-tokens.css.js",
+        "./src/spectrum-two/scale-medium.css.js": "./src/spectrum-two/scale-medium.css.js",
+        "./src/spectrum-two/theme-core-tokens.css.js": "./src/spectrum-two/theme-core-tokens.css.js",
+        "./src/spectrum-two/theme-dark-core-tokens.css.js": "./src/spectrum-two/theme-dark-core-tokens.css.js",
+        "./src/spectrum-two/theme-dark.css.js": "./src/spectrum-two/theme-dark.css.js",
+        "./src/spectrum-two/theme-light-core-tokens.css.js": "./src/spectrum-two/theme-light-core-tokens.css.js",
+        "./src/spectrum-two/theme-light.css.js": "./src/spectrum-two/theme-light.css.js",
+        "./src/spectrum-two/theme.css.js": "./src/spectrum-two/theme.css.js",
+        "./src/spectrum-two/themes-core-tokens.js": {
+            "development": "./src/spectrum-two/themes-core-tokens.dev.js",
+            "default": "./src/spectrum-two/themes-core-tokens.js"
+        },
+        "./src/spectrum-two/themes.js": {
+            "development": "./src/spectrum-two/themes.dev.js",
+            "default": "./src/spectrum-two/themes.js"
+        },
+        "./core.js": {
+            "development": "./core.dev.js",
+            "default": "./core.js"
+        },
+        "./sp-theme.js": {
+            "development": "./sp-theme.dev.js",
+            "default": "./sp-theme.js"
+        },
+        "./scale-medium.js": {
+            "development": "./scale-medium.dev.js",
+            "default": "./scale-medium.js"
+        },
+        "./scale-medium-core-tokens.js": {
+            "development": "./scale-medium-core-tokens.dev.js",
+            "default": "./scale-medium-core-tokens.js"
+        },
+        "./scale-large.js": {
+            "development": "./scale-large.dev.js",
+            "default": "./scale-large.js"
+        },
+        "./scale-large-core-tokens.js": {
+            "development": "./scale-large-core-tokens.dev.js",
+            "default": "./scale-large-core-tokens.js"
+        },
+        "./theme-lightest.js": {
+            "development": "./theme-lightest.dev.js",
+            "default": "./theme-lightest.js"
+        },
+        "./theme-lightest-core-tokens.js": {
+            "development": "./theme-lightest-core-tokens.dev.js",
+            "default": "./theme-lightest-core-tokens.js"
+        },
+        "./theme-light.js": {
+            "development": "./theme-light.dev.js",
+            "default": "./theme-light.js"
+        },
+        "./theme-light-core-tokens.js": {
+            "development": "./theme-light-core-tokens.dev.js",
+            "default": "./theme-light-core-tokens.js"
+        },
+        "./theme-dark.js": {
+            "development": "./theme-dark.dev.js",
+            "default": "./theme-dark.js"
+        },
+        "./theme-dark-core-tokens.js": {
+            "development": "./theme-dark-core-tokens.dev.js",
+            "default": "./theme-dark-core-tokens.js"
+        },
+        "./theme-darkest.js": {
+            "development": "./theme-darkest.dev.js",
+            "default": "./theme-darkest.js"
+        },
+        "./theme-darkest-core-tokens.js": {
+            "development": "./theme-darkest-core-tokens.dev.js",
+            "default": "./theme-darkest-core-tokens.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/styles": "1.9.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "deprecationNotice": "Color 'lightest' and 'darkest' are deprecated. The 'theme' attribute has been deprecated in favor of 'system'. These deprecations will be removed in a future release.",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./core.js",
+        "./core-*.js",
+        "./theme-*.js",
+        "./scale-*.js",
+        "./spectrum-two/theme-*.js",
+        "./spectrum-two/scale-*.js",
+        "./express/theme-*.js",
+        "./express/scale-*.js",
+        "./src/themes.js",
+        "./src/themes-*.js",
+        "./src/express/core.js",
+        "./src/express/core-*.js",
+        "./src/express/themes.js",
+        "./src/express/themes-*.js",
+        "./src/spectrum-two/core.js",
+        "./src/spectrum-two/core-*.js",
+        "./src/spectrum-two/themes.js",
+        "./src/spectrum-two/themes-*.js"
+    ]
+}

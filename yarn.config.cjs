@@ -134,55 +134,72 @@ module.exports = defineConfig({
         }
 
         /**
+         * This function enforces consistent dependencies within each generation separately
+         */
+        function enforceConsistentDependenciesWithinGenerations({ Yarn }) {
+            // Enforce consistency within 1st-gen only
+            enforceConsistencyForWorkspaceGroup(
+                { Yarn },
+                (workspace) => !workspace.cwd.startsWith('2nd-gen/')
+            );
+
+            // Enforce consistency within 2nd-gen only
+            enforceConsistencyForWorkspaceGroup({ Yarn }, (workspace) =>
+                workspace.cwd.startsWith('2nd-gen/')
+            );
+        }
+
+        /**
          * This rule will enforce that a workspace MUST depend on the same version of
          * a dependency as the one used by the other workspaces.
          *
          * @param {import('@yarnpkg/types').Context} context
          */
-        function enforceConsistentDependenciesAcrossTheProject({ Yarn }) {
+        function enforceConsistencyForWorkspaceGroup({ Yarn }, filterFn) {
             const workspaceVersions = new Map();
 
-            // Iterate over all external dependencies and ensure that the version is consistent across all workspaces
             for (const dependency of Yarn.dependencies()) {
-                for (const workspace of Yarn.workspaces()) {
-                    const version =
-                        workspace.manifest.dependencies?.[dependency.ident] ??
-                        workspace.manifest.devDependencies?.[dependency.ident];
-
-                    if (version) {
-                        workspaceVersions.set(
-                            dependency.ident,
-                            workspaceVersions.has(dependency.ident)
-                                ? workspaceVersions
-                                      .get(dependency.ident)
-                                      .add(version)
-                                : new Set([version])
-                        );
-                    }
-                }
-            }
-
-            // Iterate over the dependencies in the map and ensure that the versions are consistent across all workspaces
-            for (const [dependencyName, versions] of workspaceVersions) {
-                // We only need to continue if there are multiple versions of the dependency
-                if (versions.size <= 1) {
+                if (!filterFn(dependency.workspace)) {
                     continue;
                 }
 
-                // Use semver to determine the highest version of the dependencies in the versions list and use that as the version
+                const version =
+                    dependency.workspace.manifest.dependencies?.[
+                        dependency.ident
+                    ] ||
+                    dependency.workspace.manifest.devDependencies?.[
+                        dependency.ident
+                    ];
+
+                if (version) {
+                    workspaceVersions.set(
+                        dependency.ident,
+                        workspaceVersions.has(dependency.ident)
+                            ? workspaceVersions
+                                  .get(dependency.ident)
+                                  .add(version)
+                            : new Set([version])
+                    );
+                }
+            }
+
+            // Apply consistency within the filtered group
+            for (const [dependencyName, versions] of workspaceVersions) {
+                if (versions.size <= 1) continue;
+
                 const highestVersion = Array.from(versions)
                     .sort(semverSort)
                     .shift();
 
-                // Update all the workspaces with the highest version
                 for (const dep of Yarn.dependencies({
                     ident: dependencyName,
                 })) {
-                    dep.update(highestVersion);
+                    if (filterFn(dep.workspace)) {
+                        dep.update(highestVersion);
+                    }
                 }
             }
         }
-
         /**
          * This function rolls up all the package.json requirements
          * for all workspaces into a single function to simplify
@@ -255,7 +272,7 @@ module.exports = defineConfig({
          */
         for (const workspace of Yarn.workspaces()) {
             validatePackageJson(workspace);
-            enforceConsistentDependenciesAcrossTheProject({ Yarn });
+            enforceConsistentDependenciesWithinGenerations({ Yarn });
         }
     },
 });

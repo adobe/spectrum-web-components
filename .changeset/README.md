@@ -8,9 +8,9 @@ find the full documentation for it [in our repository](https://github.com/change
 
 Changesets are a way to manage versions and changelogs for monorepos. Each changeset:
 
--   Describes changes made in one or more packages
--   Indicates the type of change (major, minor, patch)
--   Contains a brief markdown summary of the changes
+- Describes changes made in one or more packages
+- Indicates the type of change (major, minor, patch)
+- Contains a brief markdown summary of the changes
 
 ## How to Add a Changeset
 
@@ -29,18 +29,25 @@ Changesets are a way to manage versions and changelogs for monorepos. Each chang
 
 The command will create a new markdown file in the `.changeset` directory with your changes.
 
+## Important: @spectrum-web-components/core and component updates
+
+When making changes to `@spectrum-web-components/core`, you **must** also include the corresponding `@spectrum-web-components` component in the same changeset to ensure the changes appear in the component's changelog. This is because `@spectrum-web-components/core` changes are internal and don't automatically propagate to the component changelogs.
+
+**Best practice**: Create a single changeset that includes both packages when updating core functionality that affects a specific component.
+
 ## Example Changeset
 
 A typical changeset file looks like this:
 
 ```markdown
 ---
+'@spectrum-web-components/core': patch
 '@spectrum-web-components/button': minor
 '@spectrum-web-components/theme': patch
 ---
 
--   **Added**: Added new variant `tertiary` to `<sp-button>` component [#9999](https://github.com/adobe/spectrum-web-components/pull/9999)
--   **Fixed**: Fixed `<sp-theme>` theme compatibility issues [#10000](https://github.com/adobe/spectrum-web-components/pull/10000)
+- **Added**: Added new variant `tertiary` to `<sp-button>` component [#9999](https://github.com/adobe/spectrum-web-components/pull/9999)
+- **Fixed**: Fixed `<sp-theme>` theme compatibility issues [#10000](https://github.com/adobe/spectrum-web-components/pull/10000)
 ```
 
 For our guidelines on writing changesets, see [our writing changesets guide](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/).
@@ -61,6 +68,6 @@ We have a quick list of common questions to get you started engaging with this p
 
 ## Additional Resources
 
--   [Changesets Documentation](https://github.com/changesets/changesets)
--   [Common Questions](https://github.com/changesets/changesets/blob/main/docs/common-questions.md)
--   [Detailed Release Process](https://github.com/changesets/changesets/blob/main/docs/detailed-explanation.md)
+- [Changesets Documentation](https://github.com/changesets/changesets)
+- [Common Questions](https://github.com/changesets/changesets/blob/main/docs/common-questions.md)
+- [Detailed Release Process](https://github.com/changesets/changesets/blob/main/docs/detailed-explanation.md)

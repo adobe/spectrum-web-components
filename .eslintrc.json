@@ -7,18 +7,16 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "plugin:lit-a11y/recommended",
-        "plugin:require-extensions/recommended"
+        "plugin:prettier/recommended"
     ],
+    "ignorePatterns": ["CONTRIBUTOR-DOCS/**/*"],
     "overrides": [
         {
             "extends": ["plugin:jsonc/recommended-with-jsonc"],
             "files": ["*.json"],
             "parser": "jsonc-eslint-parser",
             "rules": {
-                "jsonc/sort-keys": ["warn"],
-                "notice/notice": "off"
+                "jsonc/sort-keys": ["warn"]
             }
         },
         {
@@ -74,97 +72,56 @@
                             "cpu",
                             "publishConfig"
                         ],
-                        "pathPattern": "^$" // Top-level properties
+                        "pathPattern": "^$"
                     },
                     {
-                        /*
-                         * This rule excludes export conditions from alphabetical sorting.
-                         * Since node.js processes export conditions in order and chooses the
-                         * first match, they need to be ordered logically, not alphabetically.
-                         */
                         "order": { "type": "asc" },
-                        "pathPattern": "^(?!exports\\[).*" // All properties except export conditions
+                        "pathPattern": "^(?!exports\\[).*"
                     }
                 ]
             }
         },
         {
-            "files": ["scripts/*"],
+            "extends": ["./1st-gen/.eslintrc.json"],
+            "files": ["1st-gen/**/*"],
             "rules": {
-                "no-console": ["off"]
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "config/license.js"
+                    }
+                ]
             }
         },
         {
-            "files": ["react/**/*.ts"],
+            "extends": ["./2nd-gen/.eslintrc.json"],
+            "files": ["2nd-gen/**/*"],
             "rules": {
-                "@typescript-eslint/no-explicit-any": "off"
+                "notice/notice": [
+                    "error",
+                    {
+                        "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
+                        "templateFile": "../../../config/license.js"
+                    }
+                ]
             }
         }
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2020,
+        "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "notice",
-        "@spectrum-web-components",
-        "import",
-        "require-extensions"
-    ],
+    "plugins": ["@typescript-eslint"],
     "root": true,
     "rules": {
-        "@spectrum-web-components/prevent-argument-names": [
-            "error",
-            ["e", "ev", "evt", "err"]
-        ],
-        "curly": ["error", "all"],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never"
-            }
-        ],
-        "import/prefer-default-export": "off",
-        "lit-a11y/click-events-have-key-events": [
-            "error",
-            {
-                "allowList": [
-                    "sp-button",
-                    "sp-action-button",
-                    "sp-checkbox",
-                    "sp-radio",
-                    "sp-switch",
-                    "sp-menu-item",
-                    "sp-clear-button",
-                    "sp-underlay"
-                ]
-            }
-        ],
         "no-console": [
             "error",
             {
                 "allow": ["warn", "error"]
             }
         ],
-        "no-debugger": 2,
-        "notice/notice": [
-            "error",
-            {
-                "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
-                "templateFile": "config/license.js"
-            }
-        ],
-        "sort-imports": [
-            "error",
-            {
-                "allowSeparatedGroups": false,
-                "ignoreCase": true,
-                "ignoreDeclarationSort": true,
-                "ignoreMemberSort": false
-            }
-        ]
+        "no-debugger": 2
     }
 }

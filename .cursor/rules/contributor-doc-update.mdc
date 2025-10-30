@@ -1,0 +1,52 @@
+---
+description: Useful for updating auto-generated navigation and validating links in the contributor docs
+alwaysApply: false
+---
+
+# Contributor docs navigation and link validation
+
+## When to apply this rule
+
+Recognize and apply this rule when the user requests any of the following:
+- Update contributor docs navigation
+- Update nav / TOC / breadcrumbs in contributor docs
+- Regenerate contributor docs
+- Validate/verify links in contributor docs
+- Fix broken links in contributor docs
+- Any mention of "CONTRIBUTOR-DOCS" or "contributor docs" with "update", "nav", "links", or "verify"
+
+## Instructions location
+
+**Primary path:** `CONTRIBUTOR-DOCS/01_contributor-guides/07_authoring-contributor-docs/01_ai-agent-instructions.md`
+
+## What to do
+
+1. **Verify the instructions file exists** at the path above
+   - If the file exists, read it and follow the instructions for "Role 1: Operator"
+   - If the file does NOT exist, see "Self-correction procedure" below
+
+2. **Follow the AI agent instructions** to:
+   - Run the nav update script (which automatically validates links)
+   - Handle any broken links that are reported
+   - Report results to the user
+
+## Self-correction procedure
+
+If the instructions file is not found at the expected path:
+
+1. Search for the file using: `glob_file_search` with pattern `**/ai-agent-instructions.md`
+2. Filter results to find the one in `CONTRIBUTOR-DOCS/` folder
+3. Read the found file to confirm it contains the nav update instructions
+4. **Update this rule file** with the new path by modifying the "Primary path" line above
+5. Inform the user that you've updated the rule with the new location
+6. Continue with the nav update process
+
+## Quick reference
+
+The nav update process typically involves:
+- Running a Node.js script in the authoring-contributor-docs folder
+- The script automatically updates breadcrumbs, TOC, and validates all links
+- If broken links are found, fix straightforward issues automatically
+- Only consult the user for ambiguous cases
+
+Execution time is typically 20-200ms for the entire CONTRIBUTOR-DOCS tree.
