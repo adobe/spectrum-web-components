@@ -168,60 +168,6 @@ When text is copied to the clipboard, a custom success message can be displayed:
 </div>
 ```
 
-#### In tables
-
-Display truncated content in table cells to maintain consistent row heights:
-
-```html demo
-<sp-table>
-    <sp-table-head>
-        <sp-table-head-cell>Name</sp-table-head-cell>
-        <sp-table-head-cell>Email</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>
-                <sp-truncated>John Smith</sp-truncated>
-            </sp-table-cell>
-            <sp-table-cell>
-                <sp-truncated>
-                    john.smith@verylongdomainname.example.com
-                </sp-truncated>
-            </sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>
-                <sp-truncated>Jane Doe</sp-truncated>
-            </sp-table-cell>
-            <sp-table-cell>
-                <sp-truncated>
-                    jane.doe@anotherverylongdomainname.example.com
-                </sp-truncated>
-            </sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
-</sp-table>
-```
-
-#### With breadcrumbs
-
-Truncate long breadcrumb items to maintain navigation clarity:
-
-```html demo
-<sp-breadcrumbs>
-    <sp-breadcrumb>Home</sp-breadcrumb>
-    <sp-breadcrumb>Documents</sp-breadcrumb>
-    <sp-breadcrumb>
-        <sp-truncated>
-            Very Long Project Name That Needs Truncation
-        </sp-truncated>
-    </sp-breadcrumb>
-    <sp-breadcrumb>
-        <sp-truncated>Another Very Long Folder Name</sp-truncated>
-    </sp-breadcrumb>
-</sp-breadcrumbs>
-```
-
 #### In popovers
 
 For use within overlays, ensure the popover has appropriate width constraints:
@@ -285,57 +231,6 @@ For more information on accessibility best practices for truncated text, refer t
 
 - [Spectrum Design System - Text Overflow Guidelines](https://spectrum.adobe.com/page/text-field/#Text-overflow)
 - [WCAG 2.1 Success Criterion 1.4.8 - Visual Presentation](https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html)
-
-### Behaviors
-
-#### Overflow detection
-
-The component uses a `ResizeObserver` to automatically detect when content overflows its container. When overflow is detected:
-
-1. The visible text is truncated with an ellipsis (`…`)
-2. A tooltip is created containing the full content
-3. The tooltip appears on hover
-4. Clicking the truncated text copies the full content to the clipboard
-
-When content does not overflow, no tooltip is created and clicking has no effect.
-
-#### Copy to clipboard
-
-When truncated (overflowing) text is clicked:
-
-1. The full text content is copied to the clipboard using the Clipboard API (`navigator.clipboard.writeText()`)
-2. The tooltip immediately displays the success message (default: "Copied to clipboard")
-3. After 6 seconds, the tooltip reverts to showing the full text content
-
-#### Content observation
-
-The component uses a `MutationObserver` to watch for changes to the default slot content. When content changes, the component automatically updates the tooltip text to reflect the new content.
-
-This observation is disabled when custom overflow content is provided via the `overflow` slot, as the custom content takes precedence.
-
-### Technical notes
-
-#### Browser compatibility
-
-The component requires support for:
-
-- **Clipboard API**: Modern browsers support `navigator.clipboard.writeText()`
-- **ResizeObserver**: Widely supported in modern browsers
-- **MutationObserver**: Standard in all modern browsers
-
-For older browsers that don't support the Clipboard API, the copy functionality will not work, but the tooltip will still display correctly.
-
-#### Performance considerations
-
-The component is optimized for performance:
-
-- ResizeObserver efficiently detects layout changes without constant polling
-- MutationObserver is only active when using automatic overflow content
-- The component avoids duplicating DOM content by using textContent for tooltips
-
-#### Safari rendering note
-
-The overflow detection adds 1px to the comparison calculation to account for Safari's sub-pixel rounding differences. This ensures consistent behavior across browsers.
 
 ### Design reference
 
