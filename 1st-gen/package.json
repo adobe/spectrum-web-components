@@ -19,7 +19,7 @@
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
         "build": "wireit",
         "prebuild": "wireit",
-        "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
+        "build:clear-cache": "rimraf .wireit && rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:confirm": "node ./scripts/confirm-build.js",
         "build:css": "wireit",
         "build:css:watch": "wireit",

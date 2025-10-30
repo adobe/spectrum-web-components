@@ -91,8 +91,12 @@ async function publish() {
         run('yarn changeset version', 'Versioning packages');
     }
 
-    // Step 3: Update lockfile, rebuild (versions changed), and update version file
+    // Step 3: Update lockfile, clear cache, rebuild (versions changed), and update version file
     run('yarn install --refresh-lockfile', 'Updating lockfile');
+    run(
+        'yarn workspace @spectrum-web-components/1st-gen build:clear-cache',
+        'Clearing build cache before rebuild'
+    );
     run('yarn build:1st-gen', 'Rebuilding 1st-gen packages after versioning');
     run(
         'genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
