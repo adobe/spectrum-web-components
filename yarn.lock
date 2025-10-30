@@ -6374,6 +6374,7 @@ __metadata:
   resolution: "@spectrum-web-components/theme@workspace:1st-gen/tools/theme"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/styles": "npm:1.9.0"
   languageName: unknown
   linkType: soft
