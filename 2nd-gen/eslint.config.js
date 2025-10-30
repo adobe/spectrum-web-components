@@ -164,8 +164,9 @@ export default [
             'notice/notice': [
                 'error',
                 {
-                    mustMatch: 'Copyright [0-9]{4}',
-                    templateFile: '../HEADER',
+                    mustMatch:
+                        'Copyright [0-9]{0,4} Adobe. All rights reserved.',
+                    templateFile: 'HEADER',
                     nonMatchingTolerance: 0.9,
                     onNonMatchingHeader: 'prepend',
                 },

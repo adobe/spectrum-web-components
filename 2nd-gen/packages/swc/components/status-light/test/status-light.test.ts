@@ -10,10 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
-import '@adobe/swc/status-light';
 import type { StatusLight } from '@adobe/swc/status-light';
+
 import { html } from 'lit';
+
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+
+import '@adobe/swc/status-light';
+
 import { fixture } from '../../../utils/test-utils.js';
 
 describe('swc-status-light', () => {

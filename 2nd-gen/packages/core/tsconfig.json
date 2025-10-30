@@ -5,8 +5,8 @@
         "noEmit": false,
         "outDir": "./dist",
         "paths": {
-            "@spectrum-web-components/core/shared/*": ["./shared/*"],
-            "@spectrum-web-components/core/*": ["./*"]
+            "@spectrum-web-components/core/*": ["./*"],
+            "@spectrum-web-components/core/shared/*": ["./shared/*"]
         },
         "rootDir": "./"
     },

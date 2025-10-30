@@ -10,13 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import '@adobe/swc/status-light';
-import { StatusLight } from '@adobe/swc/status-light';
-import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import type { TemplateResult } from 'lit';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
 import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
+
+import { StatusLight } from '@adobe/swc/status-light';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import '@adobe/swc/status-light';
 
 // ────────────────
 //    METADATA

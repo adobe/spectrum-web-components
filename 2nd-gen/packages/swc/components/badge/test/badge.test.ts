@@ -11,7 +11,9 @@
  */
 
 import type { Badge } from '@adobe/swc/badge';
+
 import { html } from 'lit';
+
 import { beforeEach, describe, expect, test } from 'vitest';
 
 import '@adobe/swc/badge';
