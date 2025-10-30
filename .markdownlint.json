@@ -1,0 +1,30 @@
+{
+    "default": true,
+    "MD003": {
+        "style": "consistent"
+    },
+    "MD004": {
+        "style": "consistent"
+    },
+    "MD007": {
+        "indent": 4
+    },
+    "MD013": false,
+    "MD024": {
+        "siblings_only": true
+    },
+    "MD033": {
+        "allowed_elements": [
+            "sp-action-button",
+            "sp-button",
+            "sp-menu",
+            "details",
+            "summary",
+            "br",
+            "img"
+        ]
+    },
+    "MD041": false,
+    "no-hard-tabs": true,
+    "whitespace": true
+}

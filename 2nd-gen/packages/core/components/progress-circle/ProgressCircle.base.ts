@@ -9,7 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { PropertyValues } from 'lit';
+
+import type { PropertyValues } from 'lit';
+
 import { property, query } from 'lit/decorators.js';
 
 import {
@@ -18,10 +20,9 @@ import {
 } from '@spectrum-web-components/core/shared/base/index.js';
 import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label-from-slot.js';
 
-import {
-    PROGRESS_CIRCLE_VALID_SIZES,
-    ProgressCircleStaticColor,
-} from './ProgressCircle.types.js';
+import type { ProgressCircleStaticColor } from './ProgressCircle.types.js';
+
+import { PROGRESS_CIRCLE_VALID_SIZES } from './ProgressCircle.types.js';
 
 /**
  * A progress circle component that visually represents the completion progress of a task.
@@ -150,9 +151,9 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
 
         const hasAccessibleName = (): boolean => {
             return Boolean(
-                this.label ||
-                    this.getAttribute('aria-label') ||
-                    this.getAttribute('aria-labelledby') ||
+                this.label ??
+                    this.getAttribute('aria-label') ??
+                    this.getAttribute('aria-labelledby') ??
                     this.slotEl.assignedNodes().length
             );
         };

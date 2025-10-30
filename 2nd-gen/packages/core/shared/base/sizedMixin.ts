@@ -9,7 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { PropertyValues, ReactiveElement } from 'lit';
+
+import type { PropertyValues, ReactiveElement } from 'lit';
+
 import { property } from 'lit/decorators.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -58,7 +60,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
 
         @property({ type: String })
         public get size(): ElementSize {
-            return this._size || defaultSize;
+            return this._size ?? defaultSize;
         }
 
         public set size(value: ElementSize) {

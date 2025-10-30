@@ -10,9 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
+import type { Decorator } from '@storybook/web-components';
+
 import { html } from 'lit';
+
 import { makeDecorator } from '@storybook/preview-api';
-import type { DecoratorFunction } from '@storybook/types';
 
 /**
  * Static color background settings - matching spectrum-css gradients
@@ -26,7 +28,7 @@ const staticColorSettings = {
  * Decorator that applies background colors based on static-color arg.
  * Wraps the story in a div with the appropriate background when static-color is set.
  */
-export const withStaticColorBackground: DecoratorFunction = makeDecorator({
+export const withStaticColorBackground: Decorator = makeDecorator({
     name: 'withStaticColorBackground',
     parameterName: 'staticColorBackground',
     wrapper: (StoryFn, context) => {

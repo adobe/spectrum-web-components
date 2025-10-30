@@ -18,7 +18,7 @@
     "scripts": {
         "build": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run build",
         "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
-        "lint": "eslint . --ext .ts,.js,.json",
+        "lint": "eslint .",
         "start": "yarn workspace @spectrum-web-components/core dev & yarn workspace @adobe/swc analyze:watch & yarn workspace @adobe/swc storybook",
         "storybook:build": "yarn workspace @adobe/swc storybook:build",
         "test": "yarn workspace @adobe/swc test"

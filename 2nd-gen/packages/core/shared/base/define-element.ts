@@ -18,7 +18,7 @@ export function defineElement(
     name: string,
     constructor: CustomElementConstructor
 ): void {
-    if (window.__swc && window.__swc.DEBUG) {
+    if (window.__swc?.DEBUG) {
         if (customElements.get(name)) {
             window.__swc.warn(
                 undefined,

@@ -11,28 +11,10 @@
  */
 
 :host {
-    --spectrum-asset-folder-background: var(
-        --highcontrast-asset-icon-background-color,
-        var(
-            --mod-asset-folder-background-color,
-            var(--spectrum-asset-folder-background-color)
-        )
-    );
-    --spectrum-asset-file-background: var(
-        --highcontrast-asset-icon-background-color,
-        var(
-            --mod-asset-file-background-color,
-            var(--spectrum-asset-file-background-color)
-        )
-    );
-    --spectrum-asset-folder-outline: var(
-        --mod-asset-icon-outline-color,
-        var(--spectrum-asset-icon-outline-color)
-    );
-    --spectrum-asset-file-outline: var(
-        --mod-asset-icon-outline-color,
-        var(--spectrum-asset-icon-outline-color)
-    );
+    --spectrum-asset-folder-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-folder-background-color, var(--spectrum-asset-folder-background-color)));
+    --spectrum-asset-file-background: var(--highcontrast-asset-icon-background-color, var(--mod-asset-file-background-color, var(--spectrum-asset-file-background-color)));
+    --spectrum-asset-folder-outline: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));
+    --spectrum-asset-file-outline: var(--mod-asset-icon-outline-color, var(--spectrum-asset-icon-outline-color));
 
     inline-size: 100%;
     block-size: 100%;
@@ -40,12 +22,8 @@
     align-items: center;
     display: flex;
 
-    --spectrum-asset-folder-background-color: var(
-        --system-asset-folder-background-color
-    );
-    --spectrum-asset-file-background-color: var(
-        --system-asset-file-background-color
-    );
+    --spectrum-asset-folder-background-color: var(--system-asset-folder-background-color);
+    --spectrum-asset-file-background-color: var(--system-asset-file-background-color);
     --spectrum-asset-icon-outline-color: var(--system-asset-icon-outline-color);
 }
 
@@ -59,10 +37,7 @@
 .file,
 .folder {
     inline-size: max(48px, min(100%, 80px));
-    inline-size: max(
-        var(--mod-asset-icon-min-width, 48px),
-        min(100%, var(--mod-asset-icon-max-width, 80px))
-    );
+    inline-size: max(var(--mod-asset-icon-min-width, 48px), min(100%, var(--mod-asset-icon-max-width, 80px)));
     block-size: 100%;
     margin: 20px;
     margin: var(--mod-asset-icon-margin, 20px);

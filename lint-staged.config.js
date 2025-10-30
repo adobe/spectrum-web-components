@@ -22,6 +22,12 @@ export default {
     '1st-gen/{packages,tools}/*/src/**/!(*.css).ts': [
         'yarn workspace @spectrum-web-components/1st-gen lit-analyzer',
     ],
+    'second-gen/**/*.ts': [
+        'eslint --fix',
+        'prettier --write',
+        'lit-analyzer --strict',
+    ],
+    'second-gen/**/*.css': ['stylelint --fix', 'prettier --write'],
     'package.json': () => [
         'cd 1st-gen && genversion --es6 --semi tools/base/src/version.js',
         'yarn constraints --fix',

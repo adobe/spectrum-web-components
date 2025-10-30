@@ -9,10 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
-import { StatusLight } from '@adobe/swc/status-light';
+
+import type { TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { html } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
+
+import { StatusLight } from '@adobe/swc/status-light';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import '@adobe/swc/status-light';
@@ -35,7 +39,7 @@ argTypes.variant = {
  *
  * We may have to explicitly bind the args to the component (particularly
  * helpful for the size property) so the Storybook controls work as expected.
- * 
+ *
  * i.e. render: (args) =>
         html`<swc-status-light .size=${args.size} variant=${args.variant}
             >${args['default-slot']}</swc-status-light
@@ -77,11 +81,12 @@ export const Default: Story = {};
 
 /** When the text is too long for the horizontal space available, it wraps to form another line. */
 export const TextWrapping: Story = {
-    render: () =>
-        html` <swc-status-light style="max-inline-size: 200px">
+    render: () => html`
+        <swc-status-light style="max-inline-size: 200px">
             This is a very long status light label that wraps when it reaches
             its max inline size
-        </swc-status-light>`,
+        </swc-status-light>
+    `,
     tags: ['!dev'],
 };
 TextWrapping.storyName = 'Text wrapping';
@@ -101,9 +106,11 @@ export const SemanticVariants: Story = {
         CONTAINER(
             StatusLight.VARIANTS_SEMANTIC.map(
                 (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
+                    <swc-status-light
+                        variant="${variant as StatusLightVariant}"
                     >
+                        ${capitalize(variant)}
+                    </swc-status-light>
                 `
             )
         ),
@@ -120,9 +127,11 @@ export const NonsemanticVariants: Story = {
         CONTAINER(
             StatusLight.VARIANTS_COLOR.map(
                 (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
+                    <swc-status-light
+                        variant="${variant as StatusLightVariant}"
                     >
+                        ${capitalize(variant)}
+                    </swc-status-light>
                 `
             )
         ),
@@ -140,9 +149,9 @@ export const Sizes: Story = {
         CONTAINER(
             StatusLight.VALID_SIZES.map(
                 (size: StatusLightSize) => html`
-                    <swc-status-light size="${size}"
-                        >${sizeMap(size)}</swc-status-light
-                    >
+                    <swc-status-light size="${size}">
+                        ${sizeMap(size)}
+                    </swc-status-light>
                 `
             )
         ),
@@ -180,16 +189,18 @@ function sizeMap(str?: StatusLightSize): string {
 
 /* @todo Pull this up into a decorator for all stories to leverage */
 function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
+    return html`
+        <div
+            style=${styleMap({
+                display: 'flex',
+                gap: 'var(--spectrum-spacing-200)',
+                'flex-wrap': 'wrap',
+                'justify-content': 'center',
+                // Used 80ch because that's generally considered the maximum readable width for text in a web page.
+                'max-inline-size': '80ch',
+            })}
+        >
+            ${content}
+        </div>
+    `;
 }

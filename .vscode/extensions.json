@@ -1,3 +1,11 @@
 {
-    "recommendations": ["runem.lit-plugin"]
+    "recommendations": [
+        "runem.lit-plugin",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "editorconfig.editorconfig",
+        "stylelint.vscode-stylelint",
+        "DavidAnson.vscode-markdownlint",
+        "deque-systems.vscode-axe-linter"
+    ]
 }

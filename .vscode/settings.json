@@ -1,35 +1,73 @@
 {
     "files.exclude": {
-        "**/*.css.ts": {
-            "when": "$(basename)"
-        },
+        "1st-gen/**/*.css.ts": { "when": "$(basename)" },
         "1st-gen/packages/**/*.js.map": true,
-        "1st-gen/packages/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "1st-gen/packages/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "1st-gen/packages/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
+        "1st-gen/packages/**/*.js": { "when": "$(basename).ts" },
+        "1st-gen/packages/**/*.dev.js": { "when": "$(basename).js" },
+        "1st-gen/packages/**/*.d.ts": { "when": "$(basename).ts" },
         "1st-gen/tools/**/*.js.map": true,
-        "1st-gen/tools/**/*.js": {
-            "when": "$(basename).ts"
-        },
-        "1st-gen/tools/**/*.dev.js": {
-            "when": "$(basename).js"
-        },
-        "1st-gen/tools/**/*.d.ts": {
-            "when": "$(basename).ts"
-        },
-        "**/*.test-vrt.ts": true,
-        "projects/**": true,
-        "tools/**": true,
-        "test/**": true,
-        "packages/**": true
+        "1st-gen/tools/**/*.js": { "when": "$(basename).ts" },
+        "1st-gen/tools/**/*.dev.js": { "when": "$(basename).js" },
+        "1st-gen/tools/**/*.d.ts": { "when": "$(basename).ts" },
+        "1st-gen/**/*.test-vrt.ts": true
     },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always",
+        "source.fixAll.stylelint": "explicit"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "explicit"
+        }
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always",
+            // "source.organizeImports": "never"
+        }
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always",
+            "source.organizeImports": "never"
+        }
+    },
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "eslint.enable": true,
+    "eslint.run": "onType",
+    "eslint.workingDirectories": [
+        { "directory": "./2nd-gen", "changeProcessCWD": true },
+        { "directory": "./1st-gen", "changeProcessCWD": true }
+    ],
+    "stylelint.validate": ["css", "scss"],
     "typescript.tsdk": "node_modules/typescript/lib",
-    "lit-plugin.strict": true,
-    "cSpell.words": ["activedescendant", "coachmark", "valuetext"]
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "javascript.validate.enable": true,
+    "typescript.validate.enable": true,
+    "problems.showCurrentInStatus": true,
+    "cSpell.words": [
+        "checkmark",
+        "deque",
+        "labelledby",
+        "statuslight",
+        "valuemax",
+        "valuenow",
+        "wcag"
+    ],
+    "markdownlint.config": {
+        "extends": ".markdownlint.json"
+    },
+    "[postcss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

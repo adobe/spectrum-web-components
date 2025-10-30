@@ -10,12 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import { Divider } from '@adobe/swc/divider';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
-import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/swc/divider';
+import { html } from 'lit';
+
+import { Divider } from '@adobe/swc/divider';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 // ────────────────
 //    METADATA
