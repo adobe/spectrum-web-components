@@ -1085,11 +1085,9 @@ export function runPickerTests(): void {
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
-            if (!isWebKit()) {
-                await sendTabKey();
-                expect(document.activeElement).to.equal(input);
-                await sendShiftTabKey();
-            }
+            await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendShiftTabKey();
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ press: 'Enter' });
@@ -1124,11 +1122,9 @@ export function runPickerTests(): void {
             el.insertAdjacentElement('afterend', input);
 
             el.focus();
-            if (!isWebKit()) {
-                await sendTabKey();
-                expect(document.activeElement).to.equal(input);
-                await sendKeys({ press: 'Shift+Tab' });
-            }
+            await sendTabKey();
+            expect(document.activeElement).to.equal(input);
+            await sendKeys({ press: 'Shift+Tab' });
             expect(document.activeElement).to.equal(el);
             const opened = oneEvent(el, 'sp-opened');
             await sendKeys({ down: 'Enter' });
