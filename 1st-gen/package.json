@@ -85,15 +85,13 @@
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
         "test:watch:focus": "yarn dev:core & yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
-        "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
         "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js"
     },
     "workspaces": [
         "linters/*",
         "packages/*",
         "projects/*",
-        "tools/*",
-        "react/*"
+        "tools/*"
     ],
     "devDependencies": {
         "@changesets/changelog-github": "0.5.1",

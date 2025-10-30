@@ -91,11 +91,12 @@ async function publish() {
         run('yarn changeset version', 'Versioning packages');
     }
 
-    // Step 3: Update lockfile and version file
+    // Step 3: Update lockfile, rebuild (versions changed), and update version file
     run('yarn install --refresh-lockfile', 'Updating lockfile');
+    run('yarn build:1st-gen', 'Rebuilding 1st-gen packages after versioning');
     run(
-        'yarn workspace @spectrum-web-components/1st-gen version:update',
-        'Updating version.js'
+        'genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
+        'Updating 2nd-gen version.ts from 1st-gen'
     );
 
     // Step 4: Publish to npm
@@ -118,10 +119,26 @@ async function publish() {
         );
     }
 
-    // Step 6: Postpublish - React wrappers
+    // Step 6: Postpublish - React wrappers (clean, build, and publish with same tag)
     run(
-        'yarn workspace @spectrum-web-components/1st-gen postpublish',
-        'Publishing React wrappers'
+        'yarn workspace @spectrum-web-components/1st-gen build:clear-cache',
+        'Clearing build cache for React wrappers'
+    );
+    run(
+        'yarn workspace @spectrum-web-components/1st-gen build:react',
+        'Building React wrappers'
+    );
+    run(
+        `cd 1st-gen && sed -i "" "s/react/# react/g" .gitignore && git commit -am "Commit React Wrappers" --no-verify`,
+        'Committing React wrappers'
+    );
+    run(
+        `cd 1st-gen && yarn changeset publish --no-git-tag --tag ${publishTag} --no-push`,
+        `Publishing React wrappers (tag: ${publishTag})`
+    );
+    run(
+        'cd 1st-gen && git reset --hard HEAD^ && git prune && rimraf react',
+        'Cleaning up React wrappers'
     );
 
     console.log('\n✅ Publish workflow completed successfully!\n');

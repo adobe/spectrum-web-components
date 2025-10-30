@@ -27155,6 +27155,7 @@ __metadata:
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
     "@commitlint/config-conventional": "npm:19.8.1"
+    genversion: "npm:3.2.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:16.2.6"
     replace-in-file: "npm:8.3.0"

@@ -76,11 +76,15 @@ export function getWorkspacePackages(
             (pkg) =>
                 !ignoredPackages.includes(pkg.name) &&
                 pkg.name !== '@spectrum-web-components/1st-gen' &&
-                pkg.name !== '@spectrum-web-components/2nd-gen'
+                pkg.name !== '@spectrum-web-components/2nd-gen' &&
+                // Only include packages in 1st-gen packages/ and tools/ directories
+                (pkg.location.startsWith('1st-gen/packages/') ||
+                    pkg.location.startsWith('1st-gen/tools/'))
         )
         .map((pkg) => ({
             name: pkg.name,
-            path: pkg.location,
+            // Remove '1st-gen/' prefix since rootDir is already set to 1st-gen
+            path: pkg.location.replace(/^1st-gen\//, ''),
         }));
 }
 
@@ -113,14 +117,15 @@ export async function customElementJson(
     })
         .then(async () => {
             const outdir = options.outdir ?? pkg.path;
+            const packageName = pkg.name || pkg.path || 'unknown';
             // Check if the custom-elements.json file exists
             if (fs.existsSync(path.join(outdir, 'custom-elements.json'))) {
                 console.log(
-                    `${'✓'.green}  ${pkg.name.cyan} has a custom-elements.json file`
+                    `${'✓'.green}  ${packageName.cyan} has a custom-elements.json file`
                 );
             } else {
                 console.log(
-                    `${'❌'.red}  ${pkg.name.cyan} does not have a custom-elements.json file`
+                    `${'❌'.red}  ${packageName.cyan} does not have a custom-elements.json file`
                 );
             }
         })
