@@ -138,7 +138,11 @@ async function publish() {
         'Building React wrappers'
     );
     run(
-        `cd 1st-gen && sed -i "" "s/react/# react/g" .gitignore && git commit -am "Commit React Wrappers" --no-verify`,
+        'sed -i "" "/react$/s/^/# /" .gitignore',
+        'Updating .gitignore to track React wrappers'
+    );
+    run(
+        'git commit -am "Commit React Wrappers" --no-verify',
         'Committing React wrappers'
     );
     run(
@@ -146,7 +150,7 @@ async function publish() {
         `Publishing React wrappers (tag: ${publishTag})`
     );
     run(
-        'cd 1st-gen && git reset --hard HEAD^ && git prune && rimraf react',
+        'git reset --hard HEAD^ && rimraf 1st-gen/react',
         'Cleaning up React wrappers'
     );
 
