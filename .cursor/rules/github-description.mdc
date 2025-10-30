@@ -93,6 +93,7 @@ Use the following labels to categorize pull requests. Only use labels that exist
 - `Browser: Edge (Legacy)`: Issue with pre-chromium Edge
 - `Browser: FireFox`: Firefox browser issues
 - `Browser: Safari`: Safari browser issues
+- `iOS`: iOS-specific issues and bugs
 
 ### Development and process labels
 
@@ -107,11 +108,9 @@ Common additional labels include:
 
 - `chore`: Routine tasks, maintenance, or non-feature changes
 - `dependencies`: Updates or changes to project dependencies
-- `docs`: Documentation updates or improvements
-- `enhancement`: Improvements to existing features
-- `feature`: New feature implementations
+- `Documentation`: Documentation updates or improvements
+- `feature`: New feature implementations or improvements to existing features
 - `i18n`: Internationalization and localization work
-- `iOS`: iOS-specific issues and bugs
 - `mobile`: Mobile platform issues and responsive design
 - `performance`: Performance-related improvements or regressions
 - `refactor`: Code restructuring and refactoring work

@@ -44,6 +44,7 @@ export class StatusLight extends SizedMixin(SpectrumElement, {
      */
     @property({ reflect: true })
     public variant:
+        | 'accent'
         | 'negative'
         | 'notice'
         | 'positive'
@@ -56,7 +57,8 @@ export class StatusLight extends SizedMixin(SpectrumElement, {
         | 'chartreuse'
         | 'magenta'
         | 'celery'
-        | 'purple' = 'info';
+        | 'purple'
+        | 'cyan' = 'info';
 
     protected override render(): TemplateResult {
         return html`

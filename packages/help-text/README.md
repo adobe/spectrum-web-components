@@ -100,7 +100,7 @@ For help text, usually the error is related to something that needs to be fixed 
     <sp-help-text slot="help-text">
         Create a password with at least 8 characters.
     </sp-help-text>
-    <sp-help-text variant="negative" slot="help-text-negative">
+    <sp-help-text variant="negative" slot="negative-help-text">
         Passwords must be at least 8 characters
     </sp-help-text>
 </sp-textfield>
@@ -149,12 +149,12 @@ When the content associated to the element is disabled, use the `disabled` attri
 
 Good, descriptive help text includes 1-2 short sentences of information such as:
 
--   An overall description of an input field or controls
--   Hints for what kind of information needs to be inputted or selected
--   Specific formatting examples or requirements
+- An overall description of an input field or controls
+- Hints for what kind of information needs to be inputted or selected
+- Specific formatting examples or requirements
 
 #### Ensure help text and field share the same root
 
-It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="help-text-negative"` in an `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
+It is [not currently possible](https://w3c.github.io/webcomponents-cg/#cross-root-aria) to provide accessible ARIA references between elements in different shadow roots. To ensure proper association between elements, help text must be included via the `slot="help-text"` or `slot="negative-help-text"` in an `<sp-text-field>`, `<sp-field-group>`, `<sp-combobox>` or `<sp-picker>`.
 
 To add help text to your own custom element, see [Help Text Mixin](./help-text-mixin/).
