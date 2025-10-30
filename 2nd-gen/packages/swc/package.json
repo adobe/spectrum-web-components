@@ -55,7 +55,7 @@
         "@axe-core/playwright": "4.10.2",
         "@custom-elements-manifest/analyzer": "0.10.8",
         "@storybook/addon-a11y": "10.0.1",
-        "@storybook/addon-designs": "10.0.2",
+        "@storybook/addon-designs": "11.0.1",
         "@storybook/addon-docs": "10.0.1",
         "@storybook/addon-vitest": "10.0.1",
         "@storybook/test-runner": "0.23.0",
