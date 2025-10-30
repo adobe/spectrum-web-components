@@ -1,0 +1,79 @@
+{
+    "name": "@spectrum-web-components/meter",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/meter"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/meter",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Meter.js": {
+            "development": "./src/Meter.dev.js",
+            "default": "./src/Meter.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/meter-overrides.css.js": "./src/meter-overrides.css.js",
+        "./src/meter.css.js": "./src/meter.css.js",
+        "./src/progress-bar-overrides.css.js": "./src/progress-bar-overrides.css.js",
+        "./sp-meter.js": {
+            "development": "./sp-meter.dev.js",
+            "default": "./sp-meter.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/field-label": "1.9.0",
+        "@spectrum-web-components/reactive-controllers": "1.9.0",
+        "@spectrum-web-components/shared": "1.9.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

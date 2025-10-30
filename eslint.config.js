@@ -8,7 +8,7 @@ import prettierConfig from 'eslint-plugin-prettier/recommended';
 import jsoncParser from 'jsonc-eslint-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import secondGenConfig from './second-gen/eslint.config.js';
+import secondGenConfig from './2nd-gen/eslint.config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -152,21 +152,21 @@ export default [
         },
     },
 
-    // Load first-gen configuration using compatibility layer
-    ...compat.extends('./first-gen/.eslintrc.json').map((config) => ({
+    // Load 1st-gen configuration using compatibility layer
+    ...compat.extends('./1st-gen/.eslintrc.json').map((config) => ({
         ...config,
-        files: ['first-gen/**/*'],
+        files: ['1st-gen/**/*'],
     })),
 
-    // Load second-gen flat configuration
+    // Load 2nd-gen flat configuration
     ...secondGenConfig.map((config) => ({
         ...config,
         files: config.files
-            ? config.files.map((f) => `second-gen/${f}`)
-            : ['second-gen/**/*'],
+            ? config.files.map((f) => `2nd-gen/${f}`)
+            : ['2nd-gen/**/*'],
         rules: {
             ...config.rules,
-            // Disable monorepo rules for second-gen - it has its own internal package structure
+            // Disable monorepo rules for 2nd-gen - it has its own internal package structure
             'monorepo/no-internal-import': 'off',
             'monorepo/no-relative-import': 'off',
         },

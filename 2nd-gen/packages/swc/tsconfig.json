@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": false,
+        "composite": true,
+        "noEmit": false,
+        "outDir": "./dist",
+        "paths": {
+            "@adobe/swc/*": ["./components/*"],
+            "@spectrum-web-components/core/*": ["../core/*"]
+        },
+        "rootDir": "./",
+        "types": ["@vitest/browser/providers/playwright"]
+    },
+    "exclude": ["node_modules", "dist"],
+    "extends": "../../tsconfig.json",
+    "include": [
+        "**/*.ts",
+        "vite-env.d.ts",
+        ".storybook/**/*.ts",
+        ".storybook/**/*.json"
+    ],
+    "references": [
+        {
+            "path": "../core"
+        }
+    ]
+}

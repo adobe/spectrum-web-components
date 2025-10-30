@@ -1,0 +1,222 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@media (forced-colors: active) {
+    #list ::slotted([slot="icon"]) {
+        forced-color-adjust: preserve-parent-color;
+    }
+
+    :host {
+        --highcontrast-sidenav-content-disabled-color: GrayText;
+        --highcontrast-sidenav-focus-ring-color: Highlight;
+        --highcontrast-sidenav-content-color-default-selected: SelectedItemText;
+        --highcontrast-sidenav-item-background-default-selected: SelectedItem;
+        --highcontrast-sidenav-background-key-focus-selected: Highlight;
+        --highcontrast-sidenav-background-hover-selected: Highlight;
+        --highcontrast-sidenav-item-background-down-selected: Highlight;
+        --highcontrast-sidenav-item-background-down: Highlight;
+        --highcontrast-sidenav-background-hover: Highlight;
+        --highcontrast-sidenav-content-color-hover: HighlightText;
+        --highcontrast-sidenav-background-key-focus: Highlight;
+        --highcontrast-sidenav-top-level-font-color: ButtonText;
+        --highcontrast-sidenav-content-color-default: ButtonText;
+        --highcontrast-sidenav-content-color-down: HighlightText;
+
+        forced-color-adjust: none;
+    }
+}
+
+#list {
+    --spectrum-sidenav-focus-ring-size: var(--spectrum-focus-indicator-thickness);
+    --spectrum-sidenav-focus-ring-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-sidenav-focus-ring-color: var(--spectrum-focus-indicator-color);
+    --spectrum-sidenav-min-height: var(--spectrum-component-height-100);
+    --spectrum-sidenav-width: 100%;
+    --spectrum-sidenav-min-width: var(--spectrum-side-navigation-minimum-width);
+    --spectrum-sidenav-max-width: var(--spectrum-side-navigation-maximum-width);
+    --spectrum-sidenav-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-sidenav-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-sidenav-icon-spacing: var(--spectrum-text-to-visual-100);
+    --spectrum-sidenav-inline-padding: var(--spectrum-component-edge-to-text-100);
+    --spectrum-sidenav-gap: var(--spectrum-side-navigation-item-to-item);
+    --spectrum-sidenav-top-to-icon: var(--spectrum-component-top-to-workflow-icon-100);
+    --spectrum-sidenav-top-to-label: var(--spectrum-component-top-to-text-100);
+    --spectrum-sidenav-bottom-to-label: var(--spectrum-side-navigation-bottom-to-text);
+    --spectrum-sidenav-start-to-content-second-level: var(--spectrum-side-navigation-second-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-third-level: var(--spectrum-side-navigation-third-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-with-icon-second-level: var(--spectrum-side-navigation-with-icon-second-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-with-icon-third-level: var(--spectrum-side-navigation-with-icon-third-level-edge-to-text);
+    --spectrum-sidenav-heading-top-margin: var(--spectrum-side-navigation-item-to-header);
+    --spectrum-sidenav-heading-bottom-margin: var(--spectrum-side-navigation-header-to-item);
+    --spectrum-sidenav-background-disabled: transparent;
+    --spectrum-sidenav-background-default: transparent;
+    --spectrum-sidenav-header-color: var(--spectrum-gray-600);
+    --spectrum-sidenav-content-disabled-color: var(--spectrum-disabled-content-color);
+    --spectrum-sidenav-content-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-sidenav-content-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-sidenav-content-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-sidenav-content-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-sidenav-content-color-default-selected: var(--spectrum-neutral-content-color-default);
+    --spectrum-sidenav-content-color-hover-selected: var(--spectrum-neutral-content-color-hover);
+    --spectrum-sidenav-content-color-down-selected: var(--spectrum-neutral-content-color-down);
+    --spectrum-sidenav-content-color-key-focus-selected: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-sidenav-text-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-sidenav-text-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
+    --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
+    --spectrum-sidenav-top-level-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-sidenav-top-level-font-weight: var(--spectrum-bold-font-weight);
+    --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
+    --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
+    --spectrum-sidenav-header-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
+    --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
+    --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
+    --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
+
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+}
+
+#list:lang(ja),
+#list:lang(ko),
+#list:lang(zh) {
+    --spectrum-sidenav-text-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-sidenav-top-level-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-sidenav-header-line-height: var(--spectrum-cjk-line-height-100);
+}
+
+:host {
+    margin-inline: 0;
+    list-style-type: none;
+}
+
+:host([disabled]) #item-link {
+    background-color: var(--mod-sidenav-background-disabled, var(--spectrum-sidenav-background-disabled));
+    color: var(--highcontrast-sidenav-content-disabled-color, var(--mod-sidenav-content-disabled-color, var(--spectrum-sidenav-content-disabled-color)));
+    cursor: default;
+    pointer-events: none;
+}
+
+:host([selected]) #item-link {
+    background-color: var(--highcontrast-sidenav-item-background-default-selected, var(--mod-sidenav-item-background-default-selected, var(--spectrum-sidenav-item-background-default-selected)));
+    color: var(--highcontrast-sidenav-content-color-default-selected, var(--mod-sidenav-content-color-default-selected, var(--spectrum-sidenav-content-color-default-selected)));
+}
+
+:host([selected]) #item-link:active {
+    background-color: var(--highcontrast-sidenav-item-background-down-selected, var(--mod-sidenav-item-background-down-selected, var(--spectrum-sidenav-item-background-down-selected)));
+    color: var(--mod-sidenav-content-color-down-selected, var(--spectrum-sidenav-content-color-down-selected));
+}
+
+:host([selected]) #item-link.is-keyboardFocused,
+:host([selected]) #item-link:focus-visible {
+    background-color: var(--highcontrast-sidenav-background-key-focus-selected, var(--mod-sidenav-background-key-focus-selected, var(--spectrum-sidenav-background-key-focus-selected)));
+    color: var(--mod-sidenav-content-color-key-focus-selected, var(--spectrum-sidenav-content-color-key-focus-selected));
+}
+
+#item-link {
+    padding-inline: var(--mod-sidenav-inline-padding, var(--spectrum-sidenav-inline-padding));
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    cursor: pointer;
+    transition:
+        background-color var(--spectrum-animation-duration-100) ease-out,
+        color var(--spectrum-animation-duration-100) ease-out;
+    border-radius: var(--mod-sidenav-border-radius, var(--spectrum-sidenav-border-radius));
+    background-color: var(--mod-sidenav-background-default, var(--spectrum-sidenav-background-default));
+    color: var(--highcontrast-sidenav-content-color-default, var(--mod-sidenav-content-color-default, var(--spectrum-sidenav-content-color-default)));
+    inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
+    min-inline-size: var(--mod-sidenav-min-width, var(--spectrum-sidenav-min-width));
+    max-inline-size: var(--mod-sidenav-max-width, var(--spectrum-sidenav-max-width));
+    min-block-size: var(--mod-sidenav-min-height, var(--spectrum-sidenav-min-height));
+    font-family: var(--mod-sidenav-text-font-family, var(--spectrum-sidenav-text-font-family));
+    font-size: var(--mod-sidenav-text-font-size, var(--spectrum-sidenav-text-font-size));
+    font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
+    font-style: var(--mod-sidenav-text-font-style, var(--spectrum-sidenav-text-font-style));
+    line-height: var(--mod-sidenav-text-line-height, var(--spectrum-sidenav-text-line-height));
+    justify-content: start;
+    margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
+    text-decoration: none;
+    text-decoration: none;
+    display: inline-flex;
+    position: relative;
+}
+
+#item-link #link-text {
+    margin-block-start: var(--mod-sidenav-top-to-label, var(--spectrum-sidenav-top-to-label));
+    margin-block-end: var(--mod-sidenav-bottom-to-label, var(--spectrum-sidenav-bottom-to-label));
+}
+
+#item-link ::slotted([slot="icon"]) {
+    inline-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
+    block-size: var(--mod-sidenav-icon-size, var(--spectrum-sidenav-icon-size));
+    flex-shrink: 0;
+    margin-block-start: var(--mod-sidenav-top-to-icon, var(--spectrum-sidenav-top-to-icon));
+    margin-inline-end: var(--mod-sidenav-icon-spacing, var(--spectrum-sidenav-icon-spacing));
+}
+
+@media (hover: hover) {
+    :host([selected]) #item-link:hover {
+        background-color: var(--highcontrast-sidenav-background-hover-selected, var(--mod-sidenav-background-hover-selected, var(--spectrum-sidenav-background-hover-selected)));
+        color: var(--mod-sidenav-content-color-hover-selected, var(--spectrum-sidenav-content-color-hover-selected));
+    }
+
+    #item-link:hover {
+        background-color: var(--highcontrast-sidenav-background-hover, var(--mod-sidenav-background-hover, var(--spectrum-sidenav-background-hover)));
+        color: var(--highcontrast-sidenav-content-color-hover, var(--mod-sidenav-content-color-hover, var(--spectrum-sidenav-content-color-hover)));
+    }
+}
+
+#item-link:active {
+    background-color: var(--highcontrast-sidenav-item-background-down, var(--mod-sidenav-item-background-down, var(--spectrum-sidenav-item-background-down)));
+    color: var(--highcontrast-sidenav-content-color-down, var(--mod-sidenav-content-color-down, var(--spectrum-sidenav-content-color-down)));
+}
+
+#item-link.is-keyboardFocused,
+#item-link:focus-visible {
+    outline: var(--highcontrast-sidenav-focus-ring-color, var(--mod-sidenav-focus-ring-color, var(--spectrum-sidenav-focus-ring-color))) solid var(--mod-sidenav-focus-ring-size, var(--spectrum-sidenav-focus-ring-size));
+    outline-offset: var(--mod-sidenav-focus-ring-gap, var(--spectrum-sidenav-focus-ring-gap));
+    background-color: var(--highcontrast-sidenav-background-key-focus, var(--mod-sidenav-background-key-focus, var(--spectrum-sidenav-background-key-focus)));
+    color: var(--mod-sidenav-content-color-key-focus, var(--spectrum-sidenav-content-color-key-focus));
+}
+
+#item-link[data-level] {
+    color: var(--highcontrast-sidenav-top-level-font-color);
+    font-family: var(--mod-sidenav-top-level-font-family, var(--spectrum-sidenav-top-level-font-family));
+    font-weight: var(--mod-sidenav-top-level-font-weight, var(--spectrum-sidenav-top-level-font-weight));
+    font-style: var(--mod-sidenav-top-level-font-style, var(--spectrum-sidenav-top-level-font-style));
+    font-size: var(--mod-sidenav-top-level-font-size, var(--spectrum-sidenav-top-level-font-size));
+    line-height: var(--mod-sidenav-top-level-line-height, var(--spectrum-sidenav-top-level-line-height));
+}
+
+#item-link:not([data-level="0"]) {
+    font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
+    padding-inline-start: var(--mod-sidenav-start-to-content-second-level, var(--spectrum-sidenav-start-to-content-second-level));
+}
+
+#item-link[data-level="2"] {
+    padding-inline-start: var(--mod-sidenav-start-to-content-third-level, var(--spectrum-sidenav-start-to-content-third-level));
+}
+
+.spectrum-SideNav--hasIcon#item-link:not([data-level="0"]) {
+    padding-inline-start: var(--mod-sidenav-start-to-content-with-icon-second-level, var(--spectrum-sidenav-start-to-content-with-icon-second-level));
+}
+
+.spectrum-SideNav--hasIcon#item-link[data-level="2"] {
+    padding-inline-start: var(--mod-sidenav-start-to-content-with-icon-third-level, var(--spectrum-sidenav-start-to-content-with-icon-third-level));
+}
