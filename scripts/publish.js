@@ -66,8 +66,15 @@ function run(command, description) {
 async function publish() {
     console.log('\n🚀 Starting publish workflow...\n');
 
+    // Step 0: Clean stale published packages from previous publish to prevent TypeScript conflicts
+    run(
+        'rm -rf node_modules/@spectrum-web-components',
+        'Removing stale published packages from node_modules'
+    );
+    run('yarn install', 'Reinstalling workspace dependencies');
+
     // Step 1: Prepublish - Build everything and generate manifests
-    run('yarn build:2nd-gen && yarn build:1st-gen', 'Building all packages');
+    run('yarn build', 'Building all packages');
     run(
         'yarn workspace @spectrum-web-components/1st-gen custom-element-json',
         'Generating custom elements manifests'
@@ -90,18 +97,16 @@ async function publish() {
     } else {
         run('yarn changeset version', 'Versioning packages');
     }
-
-    // Step 3: Update lockfile, clear cache, rebuild (versions changed), and update version file
-    run('yarn install --refresh-lockfile', 'Updating lockfile');
-    run(
-        'yarn workspace @spectrum-web-components/1st-gen build:clear-cache',
-        'Clearing build cache before rebuild'
-    );
-    run('yarn build:1st-gen', 'Rebuilding 1st-gen packages after versioning');
+    // Step 3: Rebuild with new versions and update version file
     run(
         'genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
         'Updating 2nd-gen version.ts from 1st-gen'
     );
+
+    // Note: We don't remove node_modules because workspace symlinks are already correct
+    // Removing them would cause Yarn to re-download from npm since package.json has version numbers
+    run('yarn constraints --fix', 'Running constraints --fix');
+    run('yarn build', 'Rebuilding packages after versioning');
 
     // Step 4: Publish to npm
     const publishTag = args.snapshot ? args.tag : 'latest';
