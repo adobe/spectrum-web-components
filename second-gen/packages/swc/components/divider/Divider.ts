@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import type { CSSResultArray, TemplateResult } from 'lit';
+
+import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { DividerBase } from '@swc/core/components/divider';
@@ -41,9 +43,9 @@ export class Divider extends DividerBase {
                 class=${classMap({
                     ['spectrum-Divider']: true,
                     [`spectrum-Divider--size${this.size?.toUpperCase()}`]:
-                        this.size != null,
+                        this.size !== null,
                     [`spectrum-Divider--static${capitalize(this.staticColor)}`]:
-                        this.staticColor != null,
+                        this.staticColor !== null,
                     [`spectrum-Divider--vertical`]: this.vertical,
                 })}
             ></div>

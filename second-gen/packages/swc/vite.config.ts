@@ -9,6 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 import autoprefixer from 'autoprefixer';
 import { glob } from 'glob';
 import { resolve } from 'path';
@@ -22,7 +23,7 @@ export default defineConfig({
         litCss({ exclude: ['./tokens/*.css'] }),
         dts({
             include: ['**/*.ts'],
-            exclude: ['**/*.test.ts', '**/*.stories.ts'],
+            exclude: ['**/*.test.ts', '**/*.stories.ts', '.storybook/**/*.ts'],
             outDir: 'dist',
             beforeWriteFile: (filePath, content) => {
                 return {
@@ -72,6 +73,7 @@ export default defineConfig({
                     id === 'lit' ||
                     id.startsWith('lit/') ||
                     id.startsWith('@lit/') ||
+                    id.startsWith('@lit-labs/') ||
                     id.startsWith('@swc/core/')
                 );
             },

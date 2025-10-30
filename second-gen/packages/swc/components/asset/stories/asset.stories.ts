@@ -10,8 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
+
+import { html } from 'lit';
 
 import '@swc/components/asset';
 
@@ -34,7 +35,9 @@ type Story = StoryObj;
 // };
 
 export const Default: Story = {
-    render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
+    render: (args) => html`
+        <swc-asset variant="${args.variant}"></swc-asset>
+    `,
 
     // render: () => html`
     //     <swc-asset style="height: 128px">

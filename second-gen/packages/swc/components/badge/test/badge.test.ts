@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import { beforeEach, describe, expect, test } from 'vitest';
-
 import type { Badge } from '@swc/components/badge';
+
+import { html } from 'lit';
+
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import '@swc/components/badge';
 
@@ -41,7 +42,9 @@ describe('swc-badge', () => {
         });
 
         test('should have correct default property values', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             expect(badge.variant).toBe('informative');
             expect(badge.subtle).toBe(false);
@@ -57,7 +60,9 @@ describe('swc-badge', () => {
 
     describe('properties and attributes', () => {
         test('should reflect variant property to attribute', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             badge.variant = 'positive';
             await badge.updateComplete;
@@ -80,7 +85,9 @@ describe('swc-badge', () => {
         });
 
         test('should reflect subtle property to attribute', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             badge.subtle = true;
             await badge.updateComplete;
@@ -100,7 +107,9 @@ describe('swc-badge', () => {
         });
 
         test('should reflect outline property to attribute', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             badge.outline = true;
             await badge.updateComplete;
@@ -120,7 +129,9 @@ describe('swc-badge', () => {
         });
 
         test('should handle fixed property', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             badge.fixed = 'inline-start';
             await badge.updateComplete;
@@ -134,7 +145,9 @@ describe('swc-badge', () => {
         });
 
         test('should handle size property', async () => {
-            const badge = await fixture<Badge>(html`<swc-badge></swc-badge>`);
+            const badge = await fixture<Badge>(html`
+                <swc-badge></swc-badge>
+            `);
 
             expect(badge.size).toBe('m');
 
@@ -190,7 +203,9 @@ describe('swc-badge', () => {
     // @TODO: Add accessibility tests with axe-core / playwright
     describe('accessibility', () => {
         test('should be accessible to screen readers', async () => {
-            const badge = await fixture(html`<swc-badge>New</swc-badge>`);
+            const badge = await fixture(html`
+                <swc-badge>New</swc-badge>
+            `);
 
             const badgeElement =
                 badge.shadowRoot?.querySelector('.spectrum-Badge');

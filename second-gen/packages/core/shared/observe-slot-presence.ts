@@ -9,7 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { ReactiveElement } from 'lit';
+
+import type { ReactiveElement } from 'lit';
+
 import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 const slotContentIsPresent = Symbol('slotContentIsPresent');
@@ -26,13 +28,34 @@ export interface SlotPresenceObservingInterface {
     managePresenceObservedSlot(): void;
 }
 
-export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
+function createManagePresenceHandler(
+    element: ReactiveElement,
+    lightDomSelectors: string[],
+    presenceMap: Map<string, boolean>
+): () => void {
+    return () => {
+        let changes = false;
+        lightDomSelectors.forEach((selector) => {
+            const nextValue = !!element.querySelector(`:scope > ${selector}`);
+            const previousValue = presenceMap.get(selector) ?? false;
+            changes = changes || previousValue !== nextValue;
+            presenceMap.set(
+                selector,
+                !!element.querySelector(`:scope > ${selector}`)
+            );
+        });
+        if (changes) {
+            void element.updateComplete.then(() => {
+                element.requestUpdate();
+            });
+        }
+    };
+}
+
+function createSlotPresenceObserver<T extends Constructor<ReactiveElement>>(
     constructor: T,
-    lightDomSelector: string | string[]
+    lightDomSelectors: string[]
 ): T & Constructor<SlotPresenceObservingInterface> {
-    const lightDomSelectors = Array.isArray(lightDomSelector)
-        ? lightDomSelector
-        : [lightDomSelector];
     class SlotPresenceObservingElement
         extends constructor
         implements SlotPresenceObservingInterface
@@ -60,7 +83,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         public get slotContentIsPresent(): boolean {
             if (lightDomSelectors.length === 1) {
                 return (
-                    this[slotContentIsPresent].get(lightDomSelectors[0]) ||
+                    this[slotContentIsPresent].get(lightDomSelectors[0]) ??
                     false
                 );
             } else {
@@ -73,31 +96,28 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
 
         public getSlotContentPresence(selector: string): boolean {
             if (this[slotContentIsPresent].has(selector)) {
-                return this[slotContentIsPresent].get(selector) || false;
+                return this[slotContentIsPresent].get(selector) ?? false;
             }
             throw new Error(
                 `The provided selector \`${selector}\` is not being observed.`
             );
         }
 
-        public managePresenceObservedSlot = (): void => {
-            let changes = false;
-            lightDomSelectors.forEach((selector) => {
-                const nextValue = !!this.querySelector(`:scope > ${selector}`);
-                const previousValue =
-                    this[slotContentIsPresent].get(selector) || false;
-                changes = changes || previousValue !== nextValue;
-                this[slotContentIsPresent].set(
-                    selector,
-                    !!this.querySelector(`:scope > ${selector}`)
-                );
-            });
-            if (changes) {
-                this.updateComplete.then(() => {
-                    this.requestUpdate();
-                });
-            }
-        };
+        public managePresenceObservedSlot = createManagePresenceHandler(
+            this,
+            lightDomSelectors,
+            this[slotContentIsPresent]
+        );
     }
     return SlotPresenceObservingElement;
+}
+
+export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
+    constructor: T,
+    lightDomSelector: string | string[]
+): T & Constructor<SlotPresenceObservingInterface> {
+    const lightDomSelectors = Array.isArray(lightDomSelector)
+        ? lightDomSelector
+        : [lightDomSelector];
+    return createSlotPresenceObserver(constructor, lightDomSelectors);
 }

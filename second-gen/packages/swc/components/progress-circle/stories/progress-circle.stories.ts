@@ -10,8 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { html } from 'lit';
+
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { ProgressCircle } from '@swc/components/progress-circle';

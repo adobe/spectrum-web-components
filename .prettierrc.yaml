@@ -10,5 +10,5 @@ htmlWhitespaceSensitivity: ignore
 overrides:
     - files: '*.css'
       options:
-          printWidth: 500
+          printWidth: 250
           singleQuote: false

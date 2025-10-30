@@ -1,9 +1,41 @@
 {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.exclude": {
+        "first-gen/**/*.css.ts": { "when": "$(basename)" },
+        "first-gen/packages/**/*.js.map": true,
+        "first-gen/packages/**/*.js": { "when": "$(basename).ts" },
+        "first-gen/packages/**/*.dev.js": { "when": "$(basename).js" },
+        "first-gen/packages/**/*.d.ts": { "when": "$(basename).ts" },
+        "first-gen/tools/**/*.js.map": true,
+        "first-gen/tools/**/*.js": { "when": "$(basename).ts" },
+        "first-gen/tools/**/*.dev.js": { "when": "$(basename).js" },
+        "first-gen/tools/**/*.d.ts": { "when": "$(basename).ts" },
+        "first-gen/**/*.test-vrt.ts": true
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
+        "source.fixAll.eslint": "always",
         "source.fixAll.stylelint": "explicit"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "explicit"
+        }
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always",
+            "source.organizeImports": "never"
+        }
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always",
+            "source.organizeImports": "never"
+        }
     },
     "eslint.validate": [
         "javascript",
@@ -27,11 +59,15 @@
         "checkmark",
         "deque",
         "labelledby",
+        "statuslight",
         "valuemax",
         "valuenow",
         "wcag"
     ],
     "markdownlint.config": {
         "extends": ".markdownlint.json"
+    },
+    "[postcss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

@@ -99,6 +99,7 @@ export default defineConfig({
                     id === 'lit' ||
                     id.startsWith('lit/') ||
                     id.startsWith('@lit/') ||
+                    id.startsWith('@lit-labs/') ||
                     id.startsWith('@swc/core/')
                 );
             },

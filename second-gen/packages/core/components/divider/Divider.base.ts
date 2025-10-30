@@ -10,7 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { PropertyValues } from 'lit';
+import type { PropertyValues } from 'lit';
+
 import { property } from 'lit/decorators.js';
 
 import { SizedMixin, SpectrumElement } from '@swc/core/shared/base';

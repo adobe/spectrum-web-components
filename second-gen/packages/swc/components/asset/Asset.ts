@@ -10,7 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, html, TemplateResult } from 'lit';
+import type { CSSResultArray, TemplateResult } from 'lit';
+
+import { html } from 'lit';
 
 import { AssetBase } from '@swc/core/components/asset';
 
@@ -67,6 +69,8 @@ export class Asset extends AssetBase {
         } else if (this.variant === 'folder') {
             return folder(this.label);
         }
-        return html` <slot></slot> `;
+        return html`
+            <slot></slot>
+        `;
     }
 }

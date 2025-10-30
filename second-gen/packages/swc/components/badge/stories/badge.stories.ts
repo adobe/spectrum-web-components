@@ -10,9 +10,12 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import type { TemplateResult } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
+
+import { html } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
+
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@swc/components/badge';
@@ -106,9 +109,9 @@ export const SemanticVariants: Story = {
         CONTAINER(
             Badge.VARIANTS_SEMANTIC.map(
                 (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
+                    <swc-badge variant=${variant as BadgeVariant}></swc-badge>
+                        ${capitalize(variant)}
+                    </swc-badge>
                 `
             )
         ),
@@ -129,9 +132,9 @@ export const Outline: Story = {
         CONTAINER(
             Badge.VARIANTS_SEMANTIC.map(
                 (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} outline
-                        >${capitalize(variant)}</swc-badge
-                    >
+                    <swc-badge variant=${variant as BadgeVariant} outline>
+                        ${capitalize(variant)}
+                    </swc-badge>
                 `
             )
         ),
@@ -146,9 +149,9 @@ export const ColorVariants: Story = {
         CONTAINER(
             Badge.VARIANTS_COLOR.map(
                 (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
+                    <swc-badge variant=${variant as BadgeVariant}>
+                        ${capitalize(variant)}
+                    </swc-badge>
                 `
             )
         ),
@@ -160,9 +163,9 @@ export const Sizes: Story = {
         CONTAINER(
             Badge.VALID_SIZES.map(
                 (size) => html`
-                    <swc-badge size=${size as BadgeSize}
-                        >${capitalize(size)}</swc-badge
-                    >
+                    <swc-badge size=${size as BadgeSize}>
+                        ${capitalize(size)}
+                    </swc-badge>
                 `
             )
         ),
@@ -177,9 +180,9 @@ export const Subtle: Story = {
         CONTAINER(
             Badge.VARIANTS.map(
                 (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} subtle
-                        >${capitalize(variant)}</swc-badge
-                    >
+                    <swc-badge variant=${variant as BadgeVariant} subtle>
+                        ${capitalize(variant)}
+                    </swc-badge>
                 `
             )
         ),
@@ -200,16 +203,18 @@ function capitalize(str?: string): string {
 
 /* @todo Pull this up into a decorator for all stories to leverage */
 function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
+    return html`
+        <div
+            style=${styleMap({
+                display: 'flex',
+                gap: 'var(--spectrum-spacing-200)',
+                'flex-wrap': 'wrap',
+                'justify-content': 'center',
+                // Used 80ch because that's generally considered the maximum readable width for text in a web page.
+                'max-inline-size': '80ch',
+            })}
+        >
+            ${content}
+        </div>
+    `;
 }

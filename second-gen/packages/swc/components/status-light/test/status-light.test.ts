@@ -10,10 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-
 import type { StatusLight } from '@swc/components/status-light';
+
+import { html } from 'lit';
+
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import '@swc/components/status-light';
 
@@ -41,9 +42,9 @@ describe('swc-status-light', () => {
         });
 
         test('should have correct default property values', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+            const statusLight = await fixture<StatusLight>(html`
+                <swc-status-light></swc-status-light>
+            `);
 
             expect(statusLight.variant).toBe('info');
             expect(statusLight.size).toBe('m');
@@ -56,9 +57,9 @@ describe('swc-status-light', () => {
 
     describe('properties and attributes', () => {
         test('should reflect variant property to attribute', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+            const statusLight = await fixture<StatusLight>(html`
+                <swc-status-light></swc-status-light>
+            `);
 
             statusLight.variant = 'positive';
             await statusLight.updateComplete;
@@ -140,9 +141,9 @@ describe('swc-status-light', () => {
         });
 
         test('should handle size property', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+            const statusLight = await fixture<StatusLight>(html`
+                <swc-status-light></swc-status-light>
+            `);
 
             expect(statusLight.size).toBe('m');
 

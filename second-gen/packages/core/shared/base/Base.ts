@@ -10,9 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { LitElement, ReactiveElement } from 'lit';
+import type { ReactiveElement } from 'lit';
+
+import { LitElement } from 'lit';
 
 import { version } from './version';
+
+type ElementLocalName = string;
+type WarningType = 'default' | 'accessibility' | 'api';
+type WarningLevel = 'default' | 'low' | 'medium' | 'high' | 'deprecation';
+type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
+
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -58,6 +66,71 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
+function findDirectionParent(element: HTMLElement): HTMLElement {
+    let dirParent = ((element as HTMLElement).assignedSlot ??
+        element.parentNode) as HTMLElement;
+    while (
+        dirParent !== document.documentElement &&
+        !canManageContentDirection(dirParent as ContentDirectionManager)
+    ) {
+        dirParent = ((dirParent as HTMLElement).assignedSlot ?? // step into the shadow DOM of the parent of a slotted node
+            dirParent.parentNode ?? // DOM Element detected
+            (dirParent as unknown as ShadowRoot).host) as HTMLElement;
+    }
+    return dirParent;
+}
+
+function setupDirectionManagement(
+    element: HTMLElement,
+    dirParent: HTMLElement
+): void {
+    if (dirParent === document.documentElement) {
+        observedForElements.add(element);
+    } else {
+        const { localName } = dirParent;
+        if (localName.search('-') > -1 && !customElements.get(localName)) {
+            /* c8 ignore next 5 */
+            void customElements.whenDefined(localName).then(() => {
+                (dirParent as ThemeRoot).startManagingContentDirection(element);
+            });
+        } else {
+            (dirParent as ThemeRoot).startManagingContentDirection(element);
+        }
+    }
+}
+
+function getAncestors(root: Document = document): HTMLElement[] {
+    // eslint-disable-next-line @spectrum-web-components/document-active-element
+    let currentNode = root.activeElement as HTMLElement;
+    while (currentNode?.shadowRoot?.activeElement) {
+        currentNode = currentNode.shadowRoot.activeElement as HTMLElement;
+    }
+    const ancestors: HTMLElement[] = currentNode ? [currentNode] : [];
+    while (currentNode) {
+        const ancestor =
+            currentNode.assignedSlot ??
+            currentNode.parentElement ??
+            (currentNode.getRootNode() as ShadowRoot)?.host;
+        if (ancestor) {
+            ancestors.push(ancestor as HTMLElement);
+        }
+        currentNode = ancestor as HTMLElement;
+    }
+    return ancestors;
+}
+
+function cleanupDirectionManagement(
+    element: HTMLElement,
+    dirParent: HTMLElement
+): void {
+    if (dirParent === document.documentElement) {
+        observedForElements.delete(element);
+    } else {
+        (dirParent as ThemeRoot).stopManagingContentDirection(element);
+    }
+    element.removeAttribute('dir');
+}
+
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
@@ -81,31 +154,6 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         }
 
         public hasVisibleFocusInTree(): boolean {
-            const getAncestors = (root: Document = document): HTMLElement[] => {
-                // eslint-disable-next-line @spectrum-web-components/document-active-element
-                let currentNode = root.activeElement as HTMLElement;
-                while (
-                    currentNode?.shadowRoot &&
-                    currentNode.shadowRoot.activeElement
-                ) {
-                    currentNode = currentNode.shadowRoot
-                        .activeElement as HTMLElement;
-                }
-                const ancestors: HTMLElement[] = currentNode
-                    ? [currentNode]
-                    : [];
-                while (currentNode) {
-                    const ancestor =
-                        currentNode.assignedSlot ||
-                        currentNode.parentElement ||
-                        (currentNode.getRootNode() as ShadowRoot)?.host;
-                    if (ancestor) {
-                        ancestors.push(ancestor as HTMLElement);
-                    }
-                    currentNode = ancestor as HTMLElement;
-                }
-                return ancestors;
-            };
             const activeElement = getAncestors(
                 this.getRootNode() as Document
             )[0];
@@ -129,42 +177,11 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 
         public override connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
-                let dirParent = ((this as HTMLElement).assignedSlot ||
-                    this.parentNode) as HTMLElement;
-                while (
-                    dirParent !== document.documentElement &&
-                    !canManageContentDirection(
-                        dirParent as ContentDirectionManager
-                    )
-                ) {
-                    dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                        dirParent.parentNode || // DOM Element detected
-                        (dirParent as unknown as ShadowRoot)
-                            .host) as HTMLElement;
-                }
+                const dirParent = findDirectionParent(this as HTMLElement);
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
-                if (dirParent === document.documentElement) {
-                    observedForElements.add(this);
-                } else {
-                    const { localName } = dirParent;
-                    if (
-                        localName.search('-') > -1 &&
-                        !customElements.get(localName)
-                    ) {
-                        /* c8 ignore next 5 */
-                        customElements.whenDefined(localName).then(() => {
-                            (
-                                dirParent as ThemeRoot
-                            ).startManagingContentDirection(this);
-                        });
-                    } else {
-                        (dirParent as ThemeRoot).startManagingContentDirection(
-                            this
-                        );
-                    }
-                }
-                this._dirParent = dirParent as HTMLElement;
+                setupDirectionManagement(this as HTMLElement, dirParent);
+                this._dirParent = dirParent;
             }
             super.connectedCallback();
         }
@@ -172,14 +189,10 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         public override disconnectedCallback(): void {
             super.disconnectedCallback();
             if (this._dirParent) {
-                if (this._dirParent === document.documentElement) {
-                    observedForElements.delete(this);
-                } else {
-                    (this._dirParent as ThemeRoot).stopManagingContentDirection(
-                        this
-                    );
-                }
-                this.removeAttribute('dir');
+                cleanupDirectionManagement(
+                    this as HTMLElement,
+                    this._dirParent
+                );
             }
         }
     }
@@ -203,6 +216,27 @@ if (process.env.NODE_ENV === 'development') {
         high: false,
         deprecation: false,
     };
+
+    const shouldSuppressWarning = (
+        localName: ElementLocalName,
+        type: WarningType,
+        level: WarningLevel,
+        id: BrandedSWCWarningID
+    ): boolean => {
+        if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
+            return true;
+        }
+        if (window.__swc.ignoreWarningLocalNames[localName]) {
+            return true;
+        }
+        if (window.__swc.ignoreWarningTypes[type]) {
+            return true;
+        }
+        if (window.__swc.ignoreWarningLevels[level]) {
+            return true;
+        }
+        return false;
+    };
     window.__swc = {
         ...window.__swc,
         DEBUG: true,
@@ -224,23 +258,14 @@ if (process.env.NODE_ENV === 'development') {
             url,
             { type = 'api', level = 'default', issues } = {}
         ): void => {
-            const { localName = 'base' } = element || {};
+            const { localName = 'base' } = element ?? {};
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
-            if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id)) {
-                return;
-            }
-            if (window.__swc.ignoreWarningLocalNames[localName]) {
-                return;
-            }
-            if (window.__swc.ignoreWarningTypes[type]) {
-                return;
-            }
-            if (window.__swc.ignoreWarningLevels[level]) {
+            if (shouldSuppressWarning(localName, type, level, id)) {
                 return;
             }
             window.__swc.issuedWarnings.add(id);
             let listedIssues = '';
-            if (issues && issues.length) {
+            if (issues?.length) {
                 issues.unshift('');
                 listedIssues = issues.join('\n    - ') + '\n';
             }

@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import spectrumWebComponentsPlugin from '@spectrum-web-components/eslint-plugin';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
 import jsoncPlugin from 'eslint-plugin-jsonc';
 import litA11yPlugin from 'eslint-plugin-lit-a11y';
 import noticePlugin from 'eslint-plugin-notice';
@@ -82,7 +81,6 @@ export default [
             '@typescript-eslint': typescriptPlugin,
             '@spectrum-web-components': spectrumWebComponentsPlugin,
             notice: noticePlugin,
-            import: importPlugin,
             'simple-import-sort': simpleImportSortPlugin,
             'lit-a11y': litA11yPlugin,
         },
@@ -123,7 +121,6 @@ export default [
             complexity: ['warn', 10],
             curly: ['error', 'all'],
             eqeqeq: ['error', 'always'],
-            'import/prefer-default-export': 'off',
             'lit-a11y/click-events-have-key-events': [
                 'error',
                 {
@@ -168,7 +165,9 @@ export default [
                 'error',
                 {
                     mustMatch: 'Copyright [0-9]{4}',
-                    templateFile: '../COPYRIGHT',
+                    templateFile: './COPYRIGHT',
+                    nonMatchingTolerance: 0.9,
+                    onNonMatchingHeader: 'prepend',
                 },
             ],
             'prefer-const': 'error',
@@ -176,14 +175,25 @@ export default [
                 'error',
                 {
                     groups: [
+                        // Type imports - all external packages
                         [
-                            '^lit',
-                            '^@lit',
-                            '^(?!@swc|@spectrum-web-components)@?\\w',
+                            '^lit.*\\u0000$',
+                            '^@lit.*\\u0000$',
+                            '^@?\\w.*\\u0000$',
                         ],
+                        // Regular imports from lit and @lit
+                        ['^lit', '^@lit'],
+                        // Regular imports from other external packages (excluding internal)
+                        ['^(?!@swc|@spectrum-web-components)@?\\w'],
+                        // Regular imports from @swc and @spectrum-web-components
                         ['^@swc', '^@spectrum-web-components'],
+                        // Side effect imports
                         ['^\\u0000'],
+                        // Type imports from relative paths
+                        ['^\\..*\\u0000$'],
+                        // Regular relative imports
                         ['^\\.'],
+                        // CSS imports
                         ['^.+\\.(css|scss|sass|less|styl)$'],
                     ],
                 },

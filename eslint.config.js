@@ -164,10 +164,16 @@ export default [
         files: config.files
             ? config.files.map((f) => `second-gen/${f}`)
             : ['second-gen/**/*'],
+        rules: {
+            ...config.rules,
+            // Disable monorepo rules for second-gen - it has its own internal package structure
+            'monorepo/no-internal-import': 'off',
+            'monorepo/no-relative-import': 'off',
+        },
     })),
 
     // Ignore auto-generated files
     {
-        ignores: ['**/custom-elements.json'],
+        ignores: ['**/custom-elements.json', '**/CHANGELOG.md'],
     },
 ];
