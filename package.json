@@ -63,7 +63,7 @@
         "lit-html"
     ],
     "engines": {
-        "node": ">=20.10.0",
+        "node": ">=20.19.0",
         "yarn": ">=4.6.0"
     },
     "packageManager": "yarn@4.9.2"

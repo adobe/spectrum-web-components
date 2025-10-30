@@ -214,10 +214,6 @@
         "lit-element",
         "lit-html"
     ],
-    "engines": {
-        "node": ">=20",
-        "yarn": ">=4.6.0"
-    },
     "wireit": {
         "build": {
             "dependencies": [

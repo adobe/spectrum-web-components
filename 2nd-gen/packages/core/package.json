@@ -64,8 +64,5 @@
         "web components",
         "base-classes",
         "abstract"
-    ],
-    "engines": {
-        "node": ">=20"
-    }
+    ]
 }

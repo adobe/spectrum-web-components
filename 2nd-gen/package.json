@@ -21,8 +21,7 @@
         "lint": "eslint . --ext .ts,.js,.json",
         "start": "yarn workspace @spectrum-web-components/core dev & yarn workspace @adobe/swc analyze:watch & yarn workspace @adobe/swc storybook",
         "storybook:build": "yarn workspace @adobe/swc storybook:build",
-        "test": "yarn workspace @adobe/swc test",
-        "version:update": "node ../scripts/update-versions.js"
+        "test": "yarn workspace @adobe/swc test"
     },
     "workspaces": [
         "packages/*"
@@ -42,9 +41,5 @@
         "lit-html",
         "2nd-gen"
     ],
-    "engines": {
-        "node": ">=20",
-        "yarn": ">=4.6.0"
-    },
     "packageManager": "yarn@4.9.2"
 }
