@@ -85,9 +85,17 @@
         "design-system",
         "spectrum",
         "adobe",
+        "adobe-spectrum",
         "web components",
-        "lit",
-        "components"
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
     ],
-    "customElements": ".storybook/custom-elements.json"
+    "customElements": ".storybook/custom-elements.json",
+    "publishConfig": {
+        "access": "public"
+    },
+    "module": "./dist/index.js"
 }
