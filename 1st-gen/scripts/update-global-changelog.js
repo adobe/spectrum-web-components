@@ -143,7 +143,7 @@ async function processChangesets() {
         const coreChanges = extractChanges(
             frontmatter,
             cleanDescription,
-            /['"]@swc\/core['"]:\s*(major|minor|patch)/g
+            /['"]@spectrum-web-components\/core['"]:\s*(major|minor|patch)/g
         );
 
         // Merge results into categorized buckets
