@@ -5390,7 +5390,7 @@ __metadata:
     mocha-junit-reporter: "npm:2.2.1"
     next: "npm:14.2.33"
     node-fetch: "npm:3.3.2"
-    npm-run-all2: "npm:8.0.4"
+    npm-run-all2: "npm:7.0.2"
     patch-package: "npm:^8.0.0"
     pinst: "npm:3.0.0"
     prettier: "npm:3.6.2"
@@ -5421,6 +5421,7 @@ __metadata:
   dependencies:
     eslint: "npm:8.57.1"
     eslint-plugin-simple-import-sort: "npm:12.1.1"
+    npm-run-all2: "npm:7.0.2"
   languageName: unknown
   linkType: soft
 
@@ -23052,14 +23053,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-run-all2@npm:8.0.4":
-  version: 8.0.4
-  resolution: "npm-run-all2@npm:8.0.4"
+"npm-run-all2@npm:7.0.2":
+  version: 7.0.2
+  resolution: "npm-run-all2@npm:7.0.2"
   dependencies:
     ansi-styles: "npm:^6.2.1"
     cross-spawn: "npm:^7.0.6"
     memorystream: "npm:^0.3.1"
-    picomatch: "npm:^4.0.2"
+    minimatch: "npm:^9.0.0"
     pidtree: "npm:^0.6.0"
     read-package-json-fast: "npm:^4.0.0"
     shell-quote: "npm:^1.7.3"
@@ -23069,7 +23070,7 @@ __metadata:
     npm-run-all2: bin/npm-run-all/index.js
     run-p: bin/run-p/index.js
     run-s: bin/run-s/index.js
-  checksum: 10c0/cfc2987df224e55456629301991b5fa6980cc644d1836fe3c22d74a4508512737d30389795b759bb5d659103e54281c59741ecdc0241cfd2615cb9bffbf7cceb
+  checksum: 10c0/4606c0cdaad9dc7dbe5a6ae432b1aabea25e2ffd541f959307e5c34247d0658952f98352b8ce45f925241af304c6718b2198b425f234e0e9fbc30b342cedb121
   languageName: node
   linkType: hard
 
@@ -27159,6 +27160,7 @@ __metadata:
     genversion: "npm:3.2.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:16.2.6"
+    npm-run-all2: "npm:7.0.2"
     replace-in-file: "npm:8.3.0"
     yargs: "npm:17.7.2"
   languageName: unknown

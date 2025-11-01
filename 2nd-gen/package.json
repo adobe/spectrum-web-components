@@ -18,8 +18,11 @@
     "scripts": {
         "build": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run build",
         "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
+        "dev:analyze": "yarn workspace @adobe/swc analyze:watch",
+        "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "lint": "eslint . --ext .ts,.js,.json",
-        "start": "yarn workspace @spectrum-web-components/core dev & yarn workspace @adobe/swc analyze:watch & yarn workspace @adobe/swc storybook",
+        "start": "run-p dev:core dev:analyze storybook",
+        "storybook": "yarn workspace @adobe/swc storybook",
         "storybook:build": "yarn workspace @adobe/swc storybook:build",
         "test": "yarn workspace @adobe/swc test"
     },
@@ -28,7 +31,8 @@
     ],
     "devDependencies": {
         "eslint": "8.57.1",
-        "eslint-plugin-simple-import-sort": "12.1.1"
+        "eslint-plugin-simple-import-sort": "12.1.1",
+        "npm-run-all2": "7.0.2"
     },
     "keywords": [
         "design-system",

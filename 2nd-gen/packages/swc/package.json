@@ -30,6 +30,7 @@
         }
     },
     "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "files": [
         "dist/"
     ],
@@ -39,12 +40,13 @@
         "build": "vite build",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
+        "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
         "test": "vitest --run",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui",
-        "test:watch": "yarn workspace @spectrum-web-components/core dev & vitest"
+        "test:watch": "run-p dev:core vitest"
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
@@ -96,6 +98,5 @@
     "customElements": ".storybook/custom-elements.json",
     "publishConfig": {
         "access": "public"
-    },
-    "module": "./dist/index.js"
+    }
 }
