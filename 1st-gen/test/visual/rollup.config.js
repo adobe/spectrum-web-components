@@ -27,7 +27,7 @@ export default {
         alias({
             entries: [
                 {
-                    find: /^@swc\/core\/(.*)$/,
+                    find: /^@spectrum-web-components\/core\/(.*)$/,
                     replacement: path.resolve(
                         process.cwd(),
                         '../2nd-gen/packages/core/dist/$1'

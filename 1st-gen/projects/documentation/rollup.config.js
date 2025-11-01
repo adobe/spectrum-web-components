@@ -240,7 +240,7 @@ export default async () => {
                     replacement: '../../packages/',
                 },
                 {
-                    find: /^@swc\/core\/(.*)$/,
+                    find: /^@spectrum-web-components\/core\/(.*)$/,
                     replacement: path.resolve(
                         '../../../2nd-gen/packages/core/dist/$1'
                     ),

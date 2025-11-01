@@ -178,7 +178,7 @@ __metadata:
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@spectrum-web-components/core": "npm:0.0.1"
     "@storybook/addon-a11y": "npm:10.0.1"
-    "@storybook/addon-designs": "npm:10.0.2"
+    "@storybook/addon-designs": "npm:11.0.1"
     "@storybook/addon-docs": "npm:10.0.1"
     "@storybook/addon-vitest": "npm:10.0.1"
     "@storybook/test-runner": "npm:0.23.0"
@@ -1971,7 +1971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^19.8.1":
+"@commitlint/config-conventional@npm:19.8.1":
   version: 19.8.1
   resolution: "@commitlint/config-conventional@npm:19.8.1"
   dependencies:
@@ -5306,7 +5306,7 @@ __metadata:
     "@changesets/changelog-github": "npm:0.5.1"
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@commitlint/config-conventional": "npm:19.8.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.6"
     "@geometricpanda/storybook-addon-badges": "npm:2.0.5"
     "@lit/react": "npm:1.0.8"
@@ -5383,7 +5383,7 @@ __metadata:
     jsonc-eslint-parser: "npm:2.4.1"
     latest-version: "npm:9.0.0"
     lightningcss: "npm:1.30.1"
-    lint-staged: "npm:^16.1.2"
+    lint-staged: "npm:16.2.6"
     lit: "npm:^2.5.0 || ^3.1.3"
     lit-analyzer: "npm:2.0.3"
     lit-html: "npm:^2.4.0 || ^3.1.3"
@@ -5397,7 +5397,7 @@ __metadata:
     prettier-plugin-package: "npm:1.4.0"
     pretty-bytes: "npm:7.1.0"
     re-template-tag: "npm:2.0.1"
-    replace-in-file: "npm:^8.3.0"
+    replace-in-file: "npm:8.3.0"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.52.2"
     sinon: "npm:17.0.2"
@@ -5421,6 +5421,7 @@ __metadata:
   dependencies:
     eslint: "npm:8.57.1"
     eslint-plugin-simple-import-sort: "npm:12.1.1"
+    npm-run-all2: "npm:8.0.4"
   languageName: unknown
   linkType: soft
 
@@ -6374,6 +6375,7 @@ __metadata:
   resolution: "@spectrum-web-components/theme@workspace:1st-gen/tools/theme"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/styles": "npm:1.9.0"
   languageName: unknown
   linkType: soft
@@ -6535,16 +6537,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-designs@npm:10.0.2":
-  version: 10.0.2
-  resolution: "@storybook/addon-designs@npm:10.0.2"
+"@storybook/addon-designs@npm:11.0.1":
+  version: 11.0.1
+  resolution: "@storybook/addon-designs@npm:11.0.1"
   dependencies:
     "@figspec/react": "npm:^1.0.0"
   peerDependencies:
-    "@storybook/addon-docs": ^0.0.0-0 || ^9.0.0 || ^9.1.0-0
+    "@storybook/addon-docs": ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    storybook: ^0.0.0-0 || ^9.0.0 || ^9.1.0-0
+    storybook: ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0
   peerDependenciesMeta:
     "@storybook/addon-docs":
       optional: true
@@ -6552,7 +6554,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/8d02487ad337570eabc7962131ee933bf3995fe4700211dc734958d3a59c31f981214c0bc651b574b76f6e97abf259603bd277b30693b45eea2abf64899aab74
+  checksum: 10c0/69aca21c9be81345c91c782a72d7b2d90633581ef28be582836af1d9a7ddcc7515816391020b0ae947058bc59fd56c439a4b957a46ece6439cfbf8bfd1e0e2e7
   languageName: node
   linkType: hard
 
@@ -20188,7 +20190,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^16.1.2":
+"lint-staged@npm:16.2.6":
   version: 16.2.6
   resolution: "lint-staged@npm:16.2.6"
   dependencies:
@@ -26565,7 +26567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"replace-in-file@npm:^8.3.0":
+"replace-in-file@npm:8.3.0":
   version: 8.3.0
   resolution: "replace-in-file@npm:8.3.0"
   dependencies:
@@ -27154,11 +27156,13 @@ __metadata:
   dependencies:
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@commitlint/config-conventional": "npm:19.8.1"
+    genversion: "npm:3.2.0"
     husky: "npm:9.1.7"
-    lint-staged: "npm:^16.1.2"
-    patch-package: "npm:^8.0.0"
-    replace-in-file: "npm:^8.3.0"
+    lint-staged: "npm:16.2.6"
+    npm-run-all2: "npm:8.0.4"
+    replace-in-file: "npm:8.3.0"
+    yargs: "npm:17.7.2"
   languageName: unknown
   linkType: soft
 

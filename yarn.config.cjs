@@ -27,10 +27,13 @@ module.exports = defineConfig({
          * Fetch a list of all the component workspaces using a glob pattern
          * @type {string[]} components
          */
-        const components = fg.sync('{packages,tools}/*', {
-            cwd: __dirname,
-            onlyDirectories: true,
-        });
+        const components = fg.sync(
+            '{1st-gen/{packages,tools},2nd-gen/packages}/*',
+            {
+                cwd: __dirname,
+                onlyDirectories: true,
+            }
+        );
 
         /**
          * This function checks the workspace for any local package references
@@ -101,9 +104,14 @@ module.exports = defineConfig({
          * to simplify into a readable set of operations
          * @param {Workspace} workspace
          * @param {string} folderName
+         * @param {boolean} is2ndGen
          * @returns {void}
          */
-        function validateComponentPackageJson(workspace, folderName) {
+        function validateComponentPackageJson(
+            workspace,
+            folderName,
+            is2ndGen = false
+        ) {
             // Only update the homepage if it does not already exist
             if (!workspace.manifest.homepage) {
                 workspace.set(
@@ -112,24 +120,32 @@ module.exports = defineConfig({
                 );
             }
 
-            workspace.set('publishConfig.access', 'public');
             workspace.set('type', 'module');
+            workspace.set('publishConfig.access', 'public');
             workspace.set('keywords', keywords(['component', 'css']));
 
-            // A subset of components have a different entry point than the default
-            if (
-                [
-                    'clear-button',
-                    'close-button',
-                    'modal',
-                    'opacity-checkerboard',
-                ].includes(folderName)
-            ) {
-                workspace.set('main', `./src/${folderName}.css.js`);
-                workspace.set('module', `./src/${folderName}.css.js`);
+            // 2nd-gen packages use different entry points
+            if (is2ndGen) {
+                // 2nd-gen uses dist folder for builds
+                workspace.set('main', './dist/index.js');
+                workspace.set('module', './dist/index.js');
             } else {
-                workspace.set('main', './src/index.js');
-                workspace.set('module', './src/index.js');
+                // 1st-gen packages use src folder
+                // A subset of components have a different entry point than the default
+                if (
+                    [
+                        'clear-button',
+                        'close-button',
+                        'modal',
+                        'opacity-checkerboard',
+                    ].includes(folderName)
+                ) {
+                    workspace.set('main', `./src/${folderName}.css.js`);
+                    workspace.set('module', `./src/${folderName}.css.js`);
+                } else {
+                    workspace.set('main', './src/index.js');
+                    workspace.set('module', './src/index.js');
+                }
             }
         }
 
@@ -245,8 +261,10 @@ module.exports = defineConfig({
              * Process the components workspaces with component-specific configuration
              */
             if (isComponent) {
-                const folderName = workspace.cwd?.split('/')?.[1];
-                validateComponentPackageJson(workspace, folderName);
+                // Get the last part of the path (e.g., 'button' from '1st-gen/packages/button')
+                const folderName = workspace.cwd?.split('/').pop();
+                const is2ndGen = workspace.cwd.startsWith('2nd-gen/');
+                validateComponentPackageJson(workspace, folderName, is2ndGen);
                 validateLocalPackages(workspace);
             } else {
                 /**

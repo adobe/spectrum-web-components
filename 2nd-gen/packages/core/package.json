@@ -61,11 +61,16 @@
         "design-system",
         "spectrum",
         "adobe",
+        "adobe-spectrum",
         "web components",
-        "base-classes",
-        "abstract"
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
     ],
-    "engines": {
-        "node": ">=20"
-    }
+    "publishConfig": {
+        "access": "public"
+    },
+    "module": "./dist/index.js"
 }

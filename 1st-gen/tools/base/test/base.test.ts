@@ -11,7 +11,7 @@
  */
 import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { version } from '@spectrum-web-components/base/src/version.js';
+import { version } from '@spectrum-web-components/core/shared/base/version.js';
 
 class DirElement extends SpectrumElement {}
 
