@@ -66,12 +66,9 @@ function run(command, description) {
 async function publish() {
     console.log('\n🚀 Starting publish workflow...\n');
 
-    // Step 0: Clean stale published packages from previous publish to prevent TypeScript conflicts
-    run(
-        'rm -rf node_modules/@spectrum-web-components',
-        'Removing stale published packages from node_modules'
-    );
-    run('yarn install', 'Reinstalling workspace dependencies');
+    // Step 0: Clean slate - remove all git-ignored files and reinstall dependencies
+    run('git clean -dfX', 'Cleaning all git-ignored files');
+    run('yarn install', 'Installing fresh dependencies');
 
     // Step 1: Prepublish - Build everything and generate manifests
     run('yarn build', 'Building all packages');
@@ -97,16 +94,11 @@ async function publish() {
     } else {
         run('yarn changeset version', 'Versioning packages');
     }
-    // Step 3: Rebuild with new versions and update version file
+    // Step 3: Update version file for 2nd-gen
     run(
         'genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
         'Updating 2nd-gen version.ts from 1st-gen'
     );
-
-    // Note: We don't remove node_modules because workspace symlinks are already correct
-    // Removing them would cause Yarn to re-download from npm since package.json has version numbers
-    run('yarn constraints --fix', 'Running constraints --fix');
-    run('yarn build', 'Rebuilding packages after versioning');
 
     // Step 4: Publish to npm
     const publishTag = args.snapshot ? args.tag : 'latest';
@@ -128,17 +120,13 @@ async function publish() {
         );
     }
 
-    // Step 6: Postpublish - React wrappers (clean, build, and publish with same tag)
-    run(
-        'yarn workspace @spectrum-web-components/1st-gen build:clear-cache',
-        'Clearing build cache for React wrappers'
-    );
+    // Step 6: Postpublish - React wrappers (build, and publish with same tag)
     run(
         'yarn workspace @spectrum-web-components/1st-gen build:react',
         'Building React wrappers'
     );
     run(
-        'sed -i "" "/react$/s/^/# /" .gitignore',
+        'sed -i "" "s/^react/# react/g" .gitignore',
         'Updating .gitignore to track React wrappers'
     );
     run(
@@ -146,7 +134,7 @@ async function publish() {
         'Committing React wrappers'
     );
     run(
-        `cd 1st-gen && yarn changeset publish --no-git-tag --tag ${publishTag} --no-push`,
+        `yarn changeset publish --no-git-tag --tag ${publishTag}`,
         `Publishing React wrappers (tag: ${publishTag})`
     );
     run(
