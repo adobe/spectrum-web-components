@@ -80,10 +80,6 @@ async function publish() {
         'yarn workspace @spectrum-web-components/1st-gen build:confirm',
         'Confirming build artifacts'
     );
-    run(
-        'yarn workspace @spectrum-web-components/1st-gen changelog:global',
-        'Updating global changelog'
-    );
 
     // Step 2: Version bump with changesets
     if (args.snapshot) {
@@ -92,6 +88,11 @@ async function publish() {
             `Versioning packages (snapshot: ${args.tag})`
         );
     } else {
+        // Update changelog before versioning and only for regular releases
+        run(
+            'yarn workspace @spectrum-web-components/1st-gen changelog:global',
+            'Updating global changelog'
+        );
         run('yarn changeset version', 'Versioning packages');
     }
     // Step 3: Update version file for 2nd-gen
