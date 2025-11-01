@@ -120,27 +120,23 @@ async function publish() {
         );
     }
 
-    // Step 6: Postpublish - React wrappers (build, and publish with same tag)
+    // Step 6: Postpublish - React wrappers (build and publish directly with npm)
     run(
         'yarn workspace @spectrum-web-components/1st-gen build:react',
         'Building React wrappers'
     );
+
+    // Publish each React package directly using npm
+    const publishCmd = args.snapshot
+        ? `npm publish --tag ${publishTag} --access public`
+        : `npm publish --access public`;
+
     run(
-        'sed -i "" "s/^react/# react/g" .gitignore',
-        'Updating .gitignore to track React wrappers'
-    );
-    run(
-        'git commit -am "Commit React Wrappers" --no-verify',
-        'Committing React wrappers'
-    );
-    run(
-        `yarn changeset publish --no-git-tag --tag ${publishTag}`,
+        `cd 1st-gen/react && for dir in */; do (cd "$dir" && ${publishCmd}) || exit 1; done`,
         `Publishing React wrappers (tag: ${publishTag})`
     );
-    run(
-        'git reset --hard HEAD^ && rimraf 1st-gen/react',
-        'Cleaning up React wrappers'
-    );
+
+    run('rm -rf 1st-gen/react', 'Removing React wrappers');
 
     console.log('\n✅ Publish workflow completed successfully!\n');
 }
