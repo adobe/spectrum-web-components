@@ -1,5 +1,0 @@
-/* @deprecated these assets should not be used; the custom override values exist in express/global-vars.css */
-:host,
-:root {
-    --system: express;
-}
