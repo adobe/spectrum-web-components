@@ -1,0 +1,37 @@
+---
+layout: layout.njk
+---
+<docs-page class="spectrum-Typography">
+    {% include "partials/logo.njk" %}
+    <main role="main">
+      <div id="title-header">
+        <h1 class="spectrum-Heading spectrum-Heading--sizeXXL spectrum-Heading--serif" id="component-name">{{ componentHeading }}</h1>
+      </div>
+        {{ content | safe }}
+        {% for part in collections[componentName] %}
+          {% if part.data.partType === "overview" %}
+            <sp-tab-panel class="section" value="overview">
+            {{ part.templateContent | safe }}
+          </sp-tab-panel>
+           {% endif %}
+          {% endfor %}
+          {% for part in collections[componentName] %}
+          {% if part.data.partType !== "overview" %}
+            <sp-tab-panel class="section" value="{{ part.data.partType }}">
+              {% if part.data.partType === "api" %}
+              <h2 class="visually-hidden">API</h2>
+              {% elseif part.data.partType === "changelog" %}
+              <h2 class="visually-hidden">Changelog</h2>
+              {% else  %}
+              <h2 class="visually-hidden">{{ part.data.partType }}</h2>
+              {% endif %}
+              {{ part.templateContent | safe }}
+            </sp-tab-panel>
+          {% endif %}
+        {% endfor %}
+      </sp-tabs>
+    </main>
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="../../../src/index.js"></script>
+<script type="module" src="../../../src/components.js"></script>

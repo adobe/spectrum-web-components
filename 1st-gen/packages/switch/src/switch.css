@@ -1,0 +1,42 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@import url("./spectrum-switch.css");
+@import url("./switch-overrides.css");
+
+:host([disabled]) {
+    pointer-events: none;
+}
+
+/* the handle's border in the down/active state remains the same if a user moves their cursor 
+while still activating/pressing the switch. Read-only switches should not have this behavior. */
+:host(:hover:active) #input + #switch:before,
+:host([emphasized]:hover:active) #input + #switch:before {
+    border-color: var(--highcontrast-switch-handle-border-color-down, var(--mod-switch-handle-border-color-down, var(--spectrum-switch-handle-border-color-down)));
+}
+
+:host(:active[checked]) #input:enabled + #switch:before {
+    border-color: var(--highcontrast-switch-handle-border-color-selelcted-down, var(--mod-switch-handle-border-color-selected-down, var(--spectrum-switch-handle-border-color-selected-down)));
+}
+
+:host(:active[checked]) #input:enabled + #switch {
+    background-color: var(--highcontrast-switch-background-color-selected-down, var(--mod-switch-background-color-selected-down, var(--spectrum-switch-background-color-selected-down)));
+}
+
+/* Ensure read-only switches don't show interaction styles */
+:host([readonly]) #input + #switch:before {
+    border-color: var(--highcontrast-switch-handle-border-color-default, var(--mod-switch-handle-border-color-default, var(--spectrum-switch-handle-border-color-default))) !important;
+}
+
+:host([readonly][checked]) #input + #switch:before {
+    border-color: var(--highcontrast-switch-handle-border-color-selected-default, var(--mod-switch-handle-border-color-selected-default, var(--spectrum-switch-handle-border-color-selected-default))) !important;
+}

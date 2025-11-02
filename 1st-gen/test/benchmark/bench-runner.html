@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link
+            rel="shortcut icon"
+            href="data:image/x-icon;,"
+            type="image/x-icon"
+        />
+        <style>
+            body {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="module">
+            const params = new URLSearchParams(window.location.search);
+            const pack = params.get('package');
+            const bench = params.get('bench');
+            const dir = params.get('dir');
+            window.tachometerStart = params.get('start');
+            window.tachometerEnd = params.get('end');
+            import(`../../${dir}/${pack}/test/benchmark/${bench}.js`);
+        </script>
+    </body>
+</html>

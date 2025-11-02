@@ -1,0 +1,37 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-meter-min-width: var(--system-meter-min-width);
+    --spectrum-meter-max-width: var(--system-meter-max-width);
+    --spectrum-meter-inline-size: var(--system-meter-inline-size);
+    --spectrum-meter-top-to-text: var(--system-meter-top-to-text);
+    --spectrum-meter-fill-color-positive: var(--system-meter-fill-color-positive);
+    --spectrum-meter-fill-color-notice: var(--system-meter-fill-color-notice);
+    --spectrum-meter-fill-color-negative: var(--system-meter-fill-color-negative);
+    --spectrum-meter-thickness: var(--system-meter-thickness);
+    --spectrum-meter-font-size: var(--system-meter-font-size);
+}
+
+:host([size="s"]) {
+    --spectrum-meter-thickness: var(--system-meter-size-s-thickness);
+    --spectrum-meter-inline-size: var(--system-meter-size-s-inline-size);
+    --spectrum-meter-font-size: var(--system-meter-size-s-font-size);
+    --spectrum-meter-top-to-text: var(--system-meter-size-s-top-to-text);
+}
+
+:host([size="l"]) {
+    --spectrum-meter-thickness: var(--system-meter-size-l-thickness);
+    --spectrum-meter-inline-size: var(--system-meter-size-l-inline-size);
+    --spectrum-meter-font-size: var(--system-meter-size-l-font-size);
+    --spectrum-meter-top-to-text: var(--system-meter-size-l-top-to-text);
+}

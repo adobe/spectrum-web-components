@@ -1,0 +1,14 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "emitDeclarationOnly": false,
+        "outDir": "../",
+        "rootDir": "../"
+    },
+    "include": [
+        "../packages/*/test/benchmark/**/*.ts",
+        "../tools/*/test/benchmark/**/*.ts",
+        "./benchmark/helpers.ts"
+    ],
+    "exclude": ["benchmark/cli.ts"]
+}

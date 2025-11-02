@@ -1,0 +1,123 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+#separator {
+    margin-block: var(--mod-breadcrumbs-icon-spacing-block, var(--spectrum-breadcrumbs-icon-spacing-block));
+    margin-inline: var(--mod-breadcrumbs-separator-spacing-inline, var(--spectrum-breadcrumbs-separator-spacing-inline));
+    opacity: 1;
+    color: var(--highcontrast-breadcrumbs-separator-color, var(--mod-breadcrumbs-separator-color, var(--spectrum-breadcrumbs-separator-color)));
+    position: relative;
+}
+
+#separator:dir(rtl),
+:host([dir="rtl"]) #separator {
+    transform: scaleX(-1);
+}
+
+:host {
+    box-sizing: border-box;
+    white-space: nowrap;
+    font-family: var(--mod-breadcrumbs-font-family, var(--spectrum-breadcrumbs-font-family));
+    font-size: var(--mod-breadcrumbs-font-size, var(--spectrum-breadcrumbs-font-size));
+    font-weight: var(--mod-breadcrumbs-font-weight, var(--spectrum-breadcrumbs-font-weight));
+    line-height: var(--mod-breadcrumbs-line-height, var(--spectrum-breadcrumbs-line-height));
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+}
+
+:host(:not(.is-menu):last-of-type) {
+    font-family: var(--mod-breadcrumbs-font-family-current, var(--spectrum-breadcrumbs-font-family-current));
+    font-size: var(--mod-breadcrumbs-font-size-current, var(--spectrum-breadcrumbs-font-size-current));
+    font-weight: var(--mod-breadcrumbs-font-weight-current, var(--spectrum-breadcrumbs-font-weight-current));
+}
+
+:host(:not(.is-menu):last-of-type) #separator {
+    display: none;
+}
+
+::slotted(sp-action-menu) {
+    margin-inline: var(--mod-breadcrumbs-action-button-spacing-inline, var(--spectrum-breadcrumbs-action-button-spacing-inline));
+    margin-block: var(--mod-breadcrumbs-action-button-spacing-block, var(--spectrum-breadcrumbs-action-button-spacing-block));
+    color: var(--highcontrast-breadcrumbs-action-button-color, var(--mod-breadcrumbs-action-button-color, var(--spectrum-breadcrumbs-action-button-color)));
+}
+
+::slotted(sp-action-menu[disabled]) {
+    color: var(--highcontrast-breadcrumbs-action-button-color-disabled, var(--mod-breadcrumbs-action-button-color-disabled, var(--spectrum-breadcrumbs-action-button-color-disabled)));
+}
+
+:host(:first-of-type) > ::slotted(sp-action-menu) {
+    margin-inline-start: var(--mod-breadcrumbs-action-button-spacing-inline-start, var(--spectrum-breadcrumbs-action-button-spacing-inline-start));
+}
+
+#item-link {
+    cursor: default;
+    box-sizing: border-box;
+    border-radius: var(--mod-breadcrumbs-item-link-border-radius, var(--spectrum-breadcrumbs-item-link-border-radius));
+    color: var(--highcontrast-breadcrumbs-text-color, var(--mod-breadcrumbs-text-color, var(--spectrum-breadcrumbs-text-color)));
+    outline: none;
+    margin-block-start: var(--mod-breadcrumbs-text-spacing-block-start, var(--spectrum-breadcrumbs-text-spacing-block-start));
+    margin-block-end: var(--mod-breadcrumbs-text-spacing-block-end, var(--spectrum-breadcrumbs-text-spacing-block-end));
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    display: block;
+    position: relative;
+}
+
+#item-link.is-disabled,
+:host([aria-disabled="true"]) #item-link {
+    color: var(--highcontrast-breadcrumbs-text-color-disabled, var(--mod-breadcrumbs-text-color-disabled, var(--spectrum-breadcrumbs-text-color-disabled)));
+}
+
+:host(:not(.is-menu):last-of-type) #item-link {
+    color: var(--highcontrast-breadcrumbs-text-color-current, var(--mod-breadcrumbs-text-color-current, var(--spectrum-breadcrumbs-text-color-current)));
+}
+
+#item-link[href],
+#item-link[tabindex] {
+    cursor: pointer;
+}
+
+#item-link[href]:focus-visible,
+#item-link[tabindex]:focus-visible {
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-thickness: var(--mod-breadcrumbs-text-decoration-thickness, var(--spectrum-breadcrumbs-text-decoration-thickness));
+    text-underline-offset: var(--mod-breadcrumbs-text-decoration-gap, var(--spectrum-breadcrumbs-text-decoration-gap));
+}
+
+@media (hover: hover) {
+    #item-link[href]:hover,
+    #item-link[tabindex]:hover {
+        -webkit-text-decoration: underline;
+        text-decoration: underline;
+        text-decoration-thickness: var(--mod-breadcrumbs-text-decoration-thickness, var(--spectrum-breadcrumbs-text-decoration-thickness));
+        text-underline-offset: var(--mod-breadcrumbs-text-decoration-gap, var(--spectrum-breadcrumbs-text-decoration-gap));
+    }
+}
+
+:host .is-dragged #item-link:before,
+#item-link:focus-visible:before {
+    box-sizing: border-box;
+    inline-size: calc(100% + var(--mod-breadcrumbs-focus-indicator-gap, var(--spectrum-breadcrumbs-focus-indicator-gap)) * 2 + var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness)) * 2);
+    block-size: calc(100% + var(--mod-breadcrumbs-focus-indicator-gap, var(--spectrum-breadcrumbs-focus-indicator-gap)) * 2 + var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness)) * 2);
+    border-width: var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness));
+    border-radius: var(--mod-breadcrumbs-item-link-border-radius, var(--spectrum-breadcrumbs-item-link-border-radius));
+    content: "";
+    pointer-events: none;
+    border-style: solid;
+    border-color: var(--highcontrast-breadcrumbs-focus-indicator-color, var(--mod-breadcrumbs-focus-indicator-color, var(--spectrum-breadcrumbs-focus-indicator-color)));
+    margin-block-start: calc((var(--mod-breadcrumbs-focus-indicator-gap, var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness))) * -1);
+    margin-inline-start: calc((var(--mod-breadcrumbs-focus-indicator-gap, var(--spectrum-breadcrumbs-focus-indicator-gap)) + var(--mod-breadcrumbs-focus-indicator-thickness, var(--spectrum-breadcrumbs-focus-indicator-thickness))) * -1);
+    display: block;
+    position: absolute;
+}

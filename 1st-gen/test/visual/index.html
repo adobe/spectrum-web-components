@@ -1,0 +1,52 @@
+<script type="module">
+    import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
+    import { html, render } from 'lit';
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const packageName = urlParams.get('p') || 'action-bar';
+    const file = urlParams.get('f') || 'action-bar';
+    const storyName = urlParams.get('s') || 'Default';
+    const [story, defaultArgs, defaultDecorators] = await import(
+        `../../packages/${packageName}/stories/${file}.stories.js`
+    ).then((stories) => {
+        return [
+            stories[storyName],
+            stories.default.args,
+            stories.default.decorators,
+        ];
+    });
+
+    const args = {
+        ...(defaultArgs || {}),
+        ...(story.args || {}),
+    };
+    const decorators = [
+        ...(story.decorators || []),
+        ...(defaultDecorators || []),
+    ];
+    let decoratedStory = () =>
+        html`
+            ${story(args)}
+        `;
+    const decorate = (story, decorator) => {
+        return () => decorator(story, { args });
+    };
+
+    while (decorators.length) {
+        const decorator = decorators.shift();
+        decoratedStory = decorate(decoratedStory, decorator);
+    }
+
+    const decorator = document.createElement('sp-story-decorator');
+    decorator.reduceMotion = true;
+    decorator.screenshot = true;
+    document.body.append(decorator);
+    render(decoratedStory(), decorator);
+</script>
+<style>
+    body {
+        margin: 0 !important;
+    }
+</style>

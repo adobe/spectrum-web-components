@@ -1,0 +1,27 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    background: repeating-conic-gradient(var(--mod-opacity-checkerboard-light, var(--spectrum-opacity-checkerboard-square-light)) 0 25%, var(--mod-opacity-checkerboard-dark, var(--spectrum-opacity-checkerboard-square-dark)) 0 50%) 0 0 / calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2) calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2);
+}
+
+@supports (background: repeating-conic-gradient(from 0deg, red 0deg, red 0deg 1deg, red 2deg)) {
+    :host {
+        background: repeating-conic-gradient(var(--mod-opacity-checkerboard-light, var(--spectrum-opacity-checkerboard-square-light)) 0 25%, var(--mod-opacity-checkerboard-dark, var(--spectrum-opacity-checkerboard-square-dark)) 0 50%) var(--mod-opacity-checkerboard-position, left top) / calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2) calc(var(--mod-opacity-checkerboard-size, var(--spectrum-opacity-checkerboard-square-size)) * 2);
+    }
+}
+
+@media (forced-colors: active) {
+    :host {
+        forced-color-adjust: none;
+    }
+}

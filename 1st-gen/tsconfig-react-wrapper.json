@@ -1,0 +1,212 @@
+{
+    "extends": "./tsconfig-all.json",
+    "compilerOptions": {
+        "rootDir": "./",
+        "noEmit": true,
+        "emitDeclarationOnly": false
+    },
+    "include": ["react/**/*.ts"],
+    "references": [
+        {
+            "path": "react/accordion"
+        },
+        {
+            "path": "react/action-bar"
+        },
+        {
+            "path": "react/action-button"
+        },
+        {
+            "path": "react/action-group"
+        },
+        {
+            "path": "react/action-menu"
+        },
+        {
+            "path": "react/alert-banner"
+        },
+        {
+            "path": "react/alert-dialog"
+        },
+        {
+            "path": "react/asset"
+        },
+        {
+            "path": "react/avatar"
+        },
+        {
+            "path": "react/badge"
+        },
+        {
+            "path": "react/breadcrumbs"
+        },
+        {
+            "path": "react/button"
+        },
+        {
+            "path": "react/button-group"
+        },
+        {
+            "path": "react/card"
+        },
+        {
+            "path": "react/checkbox"
+        },
+        {
+            "path": "react/coachmark"
+        },
+        {
+            "path": "react/color-area"
+        },
+        {
+            "path": "react/color-field"
+        },
+        {
+            "path": "react/color-handle"
+        },
+        {
+            "path": "react/color-loupe"
+        },
+        {
+            "path": "react/color-slider"
+        },
+        {
+            "path": "react/color-wheel"
+        },
+        {
+            "path": "react/combobox"
+        },
+        {
+            "path": "react/contextual-help"
+        },
+        {
+            "path": "react/dialog"
+        },
+        {
+            "path": "react/divider"
+        },
+        {
+            "path": "react/dropzone"
+        },
+        {
+            "path": "react/field-group"
+        },
+        {
+            "path": "react/field-label"
+        },
+        {
+            "path": "react/grid"
+        },
+        {
+            "path": "react/help-text"
+        },
+        {
+            "path": "react/icon"
+        },
+        {
+            "path": "react/icons"
+        },
+        {
+            "path": "react/icons-ui"
+        },
+        {
+            "path": "react/icons-workflow"
+        },
+        {
+            "path": "react/illustrated-message"
+        },
+        {
+            "path": "react/infield-button"
+        },
+        {
+            "path": "react/link"
+        },
+        {
+            "path": "react/menu"
+        },
+        {
+            "path": "react/meter"
+        },
+        {
+            "path": "react/number-field"
+        },
+        {
+            "path": "react/overlay"
+        },
+        {
+            "path": "react/picker"
+        },
+        {
+            "path": "react/picker-button"
+        },
+        {
+            "path": "react/popover"
+        },
+        {
+            "path": "react/progress-bar"
+        },
+        {
+            "path": "react/progress-circle"
+        },
+        {
+            "path": "react/radio"
+        },
+        {
+            "path": "react/search"
+        },
+        {
+            "path": "react/sidenav"
+        },
+        {
+            "path": "react/slider"
+        },
+        {
+            "path": "react/split-view"
+        },
+        {
+            "path": "react/status-light"
+        },
+        {
+            "path": "react/swatch"
+        },
+        {
+            "path": "react/switch"
+        },
+        {
+            "path": "react/table"
+        },
+        {
+            "path": "react/tabs"
+        },
+        {
+            "path": "react/tags"
+        },
+        {
+            "path": "react/textfield"
+        },
+        {
+            "path": "react/theme"
+        },
+        {
+            "path": "react/thumbnail"
+        },
+        {
+            "path": "react/toast"
+        },
+        {
+            "path": "react/tooltip"
+        },
+        {
+            "path": "react/top-nav"
+        },
+        {
+            "path": "react/tray"
+        },
+        {
+            "path": "react/truncated"
+        },
+        {
+            "path": "react/underlay"
+        }
+    ]
+}

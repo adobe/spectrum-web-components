@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="Description" content="Put your description here." />
+    <link rel="stylesheet" href="src/styles.css" />
+    <base href="/" />
+
+    <title>example-app</title>
+  </head>
+
+  <body>
+    <sp-theme system="express" color="light" scale="medium">
+      <sp-button variant="primary">Primary</sp-button>
+      <br /><br />
+      <sp-button variant="secondary" quiet>secondary</sp-button>
+      <br /><br />
+      <sp-field-label for="picker">Where do you live?</sp-field-label>
+      <sp-picker id="picker">
+        <span slot="label">
+          Select a Country with a very long label, too long in fact
+        </span>
+        <sp-menu-item> Deselect </sp-menu-item>
+        <sp-menu-item> Select Inverse </sp-menu-item>
+        <sp-menu-item> Feather... </sp-menu-item>
+        <sp-menu-item> Select and Mask... </sp-menu-item>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-item> Save Selection </sp-menu-item>
+        <sp-menu-item disabled> Make Work Path </sp-menu-item>
+      </sp-picker>
+
+      <sp-picker dir="rtl">
+        <span slot="label">
+          Select a Country with a very long label, too long in fact
+        </span>
+        <sp-menu dir="rtl">
+          <sp-menu-item dir="rtl"> Deselect </sp-menu-item>
+          <sp-menu-item dir="rtl"> Select Inverse </sp-menu-item>
+          <sp-menu-item dir="rtl"> Feather... </sp-menu-item>
+          <sp-menu-item dir="rtl"> Select and Mask... </sp-menu-item>
+          <sp-menu-divider></sp-menu-divider>
+          <sp-menu-item dir="rtl"> Save Selection </sp-menu-item>
+          <sp-menu-item disabled dir="rtl"> Make Work Path </sp-menu-item>
+        </sp-menu>
+      </sp-picker>
+    </sp-theme>
+
+    <script type="module" src="./out-tsc/src/example-app.js"></script>
+  </body>
+</html>

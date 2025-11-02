@@ -1,0 +1,61 @@
+{
+    "name": "@spectrum-web-components/opacity-checkerboard",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/tools/opacity-checkerboard"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/opacity-checkerboard",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/opacity-checkerboard.css.js",
+    "module": "./src/opacity-checkerboard.css.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/opacity-checkerboard.css.js",
+        "./package.json": "./package.json",
+        "./src/is-opacity-checkerboard-overrides.css.js": "./src/is-opacity-checkerboard-overrides.css.js",
+        "./src/is-opacity-checkerboard.css.js": "./src/is-opacity-checkerboard.css.js",
+        "./src/opacity-checkerboard-overrides.css.js": "./src/opacity-checkerboard-overrides.css.js",
+        "./src/opacity-checkerboard.css.js": "./src/opacity-checkerboard.css.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0"
+    },
+    "types": "./src/opacity-checkerboard.d.ts",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

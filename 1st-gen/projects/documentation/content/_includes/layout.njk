@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/medium.css" media="screen and (min-width: 701px) and (min-height: 701px), (hover: hover), (pointer: fine)">
+    <link rel="stylesheet" href="/large.css" media="screen and (max-width: 700px) and (hover: none) and (pointer: coarse), (max-height: 700px) and (hover: none) and (pointer: coarse)">
+    <link rel="stylesheet" href="/dark.css" media="screen and (prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="/light.css" media="screen and (prefers-color-scheme: light)">
+    <link rel="preload" href="/styles.css" as="style">
+    <!-- inject module preload entries -->
+    {% block head %}
+    {% endblock %}
+    {% include "partials/meta-info.njk" %}
+  </head>
+  <body>
+    {% block content %}
+      {{ content | safe }}
+    {% endblock %}
+    {% if site.WATCH_MODE !== 'true' %}
+    <script async defer>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js');
+          });
+        }
+    </script>
+    {% endif %}
+  </body>
+</html>

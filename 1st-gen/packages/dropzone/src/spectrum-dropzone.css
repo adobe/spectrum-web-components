@@ -1,0 +1,122 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-drop-zone-border-width: var(--spectrum-border-width-200);
+    --spectrum-drop-zone-background-color: var(--spectrum-drop-zone-background-color-rgb);
+    --spectrum-drop-zone-border-color-hover: var(--spectrum-accent-visual-color);
+    --spectrum-drop-zone-illustration-color: var(--spectrum-neutral-visual-color);
+    --spectrum-drop-zone-content-background-color: var(--spectrum-accent-visual-color);
+    --mod-illustrated-message-content-maximum-width: var(--mod-drop-zone-content-maximum-width, var(--spectrum-drop-zone-content-maximum-width));
+    --mod-illustrated-message-illustration-color: var(--mod-drop-zone-illustration-color, var(--spectrum-drop-zone-illustration-color));
+    --mod-illustrated-message-title-to-heading: var(--mod-drop-zone-illustration-to-heading, var(--spectrum-spacing-400));
+    --mod-illustrated-message-heading-to-body: var(--mod-drop-zone-heading-to-body, var(--spectrum-spacing-75));
+    --mod-illustrated-message-title-font-family: var(--mod-drop-zone-heading-font-family, var(--spectrum-sans-font-family-stack));
+    --mod-illustrated-message-title-font-weight: var(--mod-drop-zone-heading-font-weight, var(--spectrum-heading-sans-serif-font-weight));
+    --mod-illustrated-message-title-font-style: var(--mod-drop-zone-heading-font-style, var(--spectrum-heading-sans-serif-font-style));
+    --mod-illustrated-message-title-font-size: var(--mod-drop-zone-heading-font-size, var(--spectrum-drop-zone-title-size));
+    --mod-illustrated-message-title-line-height: var(--mod-drop-zone-heading-line-height, var(--spectrum-heading-line-height));
+    --mod-illustrated-message-title-color: var(--mod-drop-zone-heading-color, var(--spectrum-heading-color));
+    --mod-illustrated-message-description-position: relative;
+    --mod-illustrated-message-description-z-index: 1;
+    --mod-illustrated-message-heading-to-description: 0;
+    --mod-illustrated-message-description-font-family: var(--mod-drop-zone-body-font-family, var(--spectrum-sans-font-family-stack));
+    --mod-illustrated-message-description-font-weight: var(--mod-drop-zone-body-font-weight, var(--spectrum-body-sans-serif-font-weight));
+    --mod-illustrated-message-description-font-style: var(--mod-drop-zone-body-font-style, var(--spectrum-body-sans-serif-font-style));
+    --mod-illustrated-message-description-font-size: var(--mod-drop-zone-body-font-size, var(--spectrum-drop-zone-body-size));
+    --mod-illustrated-message-description-line-height: var(--mod-drop-zone-body-line-height, var(--spectrum-body-line-height));
+    --mod-illustrated-message-description-color: var(--mod-drop-zone-body-color, var(--spectrum-body-color));
+    --mod-actionbutton-font-size: var(--mod-drop-zone-content-font-size, var(--spectrum-font-size-300));
+    --mod-actionbutton-label-color: var(--mod-drop-zone-content-color, var(--spectrum-white));
+    --mod-actionbutton-edge-to-text: var(--mod-drop-zone-content-edge-to-text, var(--spectrum-component-edge-to-text-300));
+    box-sizing: border-box;
+    inline-size: var(--mod-drop-zone-width, var(--spectrum-drop-zone-width));
+    padding: calc(var(--mod-drop-zone-padding, var(--spectrum-spacing-400)) - var(--mod-drop-zone-border-width, var(--spectrum-drop-zone-border-width)));
+    text-align: center;
+    border-color: var(--mod-drop-zone-border-color, var(--spectrum-drop-zone-border-color));
+    border-width: var(--mod-drop-zone-border-width, var(--spectrum-drop-zone-border-width));
+    border-radius: var(--mod-drop-zone-corner-radius, var(--spectrum-corner-radius-100));
+    border-style: dashed;
+    border-style: var(--mod-drop-zone-border-style, dashed);
+    background-color: var(--mod-drop-zone-background-color, var(--spectrum-drop-zone-background-color));
+    background-size: cover;
+}
+
+:host:lang(ja),
+:host:lang(ko),
+:host:lang(zh) {
+    --mod-illustrated-message-title-font-size: var(--spectrum-drop-zone-cjk-title-size);
+}
+
+:host([dragged]) {
+    --mod-drop-zone-border-style: var(--mod-drop-zone-border-style-dragged, solid);
+    --mod-drop-zone-background-color: rgba(var(--spectrum-drop-zone-background-color), var(--mod-drop-zone-background-color-opacity, var(--spectrum-drop-zone-background-color-opacity)));
+    --mod-drop-zone-border-color: var(--highcontrast-drop-zone-border-color-hover, var(--mod-drop-zone-border-color-hover, var(--spectrum-drop-zone-border-color-hover)));
+    --mod-illustrated-message-illustration-color: var(--mod-drop-zone-illustration-color-hover, var(--spectrum-accent-visual-color));
+}
+
+:host([filled]) {
+    --mod-drop-zone-background-color: rgba(var(--spectrum-drop-zone-background-color), var(--mod-drop-zone-background-color-opacity-filled, var(--spectrum-drop-zone-background-color-opacity-filled)));
+    --mod-illustrated-message-display: none;
+}
+
+:host([filled][dragged]) {
+    --mod-drop-zone-content-display: flex;
+}
+
+:host(:focus-visible) {
+    --mod-drop-zone-border-style: solid;
+    --mod-drop-zone-border-color: var(--highcontrast-drop-zone-border-color-hover, var(--mod-drop-zone-border-color-hover, var(--spectrum-drop-zone-border-color-hover)));
+    outline: 0;
+}
+
+.spectrum-DropZone-content {
+    display: none;
+    display: var(--mod-drop-zone-content-display, none);
+    block-size: 100%;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.spectrum-DropZone-button {
+    box-sizing: border-box;
+    block-size: var(--mod-drop-zone-content-height, var(--spectrum-component-height-300));
+    max-inline-size: var(--mod-drop-zone-content-max-width, var(--spectrum-drop-zone-content-maximum-width));
+    font-family: var(--mod-drop-zone-content-font-family, var(--spectrum-sans-font-family-stack));
+    font-weight: var(--mod-drop-zone-content-font-weight, var(--spectrum-bold-font-weight));
+    font-style: var(--mod-drop-zone-content-font-style, var(--spectrum-default-font-style));
+    line-height: var(--mod-drop-zone-content-line-height, var(--spectrum-line-height-100));
+    border: none;
+    padding-block-start: var(--mod-drop-zone-content-top-to-text, var(--spectrum-component-top-to-text-300));
+    padding-block-end: var(--mod-drop-zone-content-bottom-to-text, var(--spectrum-component-bottom-to-text-300));
+}
+
+.spectrum-DropZone-button,
+.spectrum-DropZone-button:focus {
+    background-color: var(--mod-drop-zone-content-background-color, var(--spectrum-drop-zone-content-background-color));
+}
+
+@media (hover: hover) {
+    .spectrum-DropZone-button:hover {
+        background-color: var(--mod-drop-zone-content-background-color, var(--spectrum-drop-zone-content-background-color));
+    }
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-drop-zone-illustration-color: CanvasText;
+        --highcontrast-drop-zone-border-color-hover: Highlight;
+        --highcontrast-illustrated-message-illustration-color: var(--highcontrast-drop-zone-illustration-color);
+    }
+}

@@ -1,0 +1,132 @@
+{
+    "name": "@spectrum-web-components/styles",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/tools/styles"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/styles",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/spectrum-base.css.js",
+        "./package.json": "./package.json",
+        "./all-large-dark.css": "./all-large-dark.css",
+        "./all-large-darkest.css": "./all-large-darkest.css",
+        "./all-large-light.css": "./all-large-light.css",
+        "./all-large-lightest.css": "./all-large-lightest.css",
+        "./all-medium-dark.css": "./all-medium-dark.css",
+        "./all-medium-darkest.css": "./all-medium-darkest.css",
+        "./all-medium-light.css": "./all-medium-light.css",
+        "./all-medium-lightest.css": "./all-medium-lightest.css",
+        "./core-global.css": "./core-global.css",
+        "./express/core-global.css": "./express/core-global.css",
+        "./scale-large.css": "./scale-large.css",
+        "./express/scale-large.css": "./express/scale-large.css",
+        "./scale-medium.css": "./scale-medium.css",
+        "./express/scale-medium.css": "./express/scale-medium.css",
+        "./theme-dark.css": "./theme-dark.css",
+        "./express/theme-dark.css": "./express/theme-dark.css",
+        "./theme-darkest.css": "./theme-darkest.css",
+        "./express/theme-darkest.css": "./express/theme-darkest.css",
+        "./theme-light.css": "./theme-light.css",
+        "./express/theme-light.css": "./express/theme-light.css",
+        "./theme-lightest.css": "./theme-lightest.css",
+        "./express/theme-lightest.css": "./express/theme-lightest.css",
+        "./typography.css": "./typography.css",
+        "./body.js": {
+            "development": "./body.dev.js",
+            "default": "./body.js"
+        },
+        "./code.js": {
+            "development": "./code.dev.js",
+            "default": "./code.js"
+        },
+        "./detail.js": {
+            "development": "./detail.dev.js",
+            "default": "./detail.js"
+        },
+        "./heading.js": {
+            "development": "./heading.dev.js",
+            "default": "./heading.js"
+        },
+        "./typography.js": {
+            "development": "./typography.dev.js",
+            "default": "./typography.js"
+        },
+        "./src/body-overrides.css.js": "./src/body-overrides.css.js",
+        "./src/code-overrides.css.js": "./src/code-overrides.css.js",
+        "./src/detail-overrides.css.js": "./src/detail-overrides.css.js",
+        "./src/heading-overrides.css.js": "./src/heading-overrides.css.js",
+        "./src/lang-overrides.css.js": "./src/lang-overrides.css.js",
+        "./src/spectrum-base.css": "./src/spectrum-base.css",
+        "./src/spectrum-body.css": "./src/spectrum-body.css",
+        "./src/body-overrides.css": "./src/body-overrides.css",
+        "./src/spectrum-code.css": "./src/spectrum-code.css",
+        "./src/code-overrides.css": "./src/code-overrides.css",
+        "./src/spectrum-detail.css": "./src/spectrum-code.css",
+        "./src/detail-overrides.css": "./src/detail-overrides.css",
+        "./src/spectrum-heading.css": "./src/spectrum-heading.css",
+        "./src/heading-overrides.css": "./src/heading-overrides.css",
+        "./src/spectrum-lang.css": "./src/spectrum-lang.css",
+        "./src/lang-overrides.css": "./src/lang-overrides.css",
+        "./src/spectrum-typography.css": "./src/spectrum-typography.css",
+        "./tokens/*": "./tokens/*",
+        "./tokens-v2/*": "./tokens-v2/*",
+        "./tokens/express/custom-large-vars.css": "./tokens/express/large-vars.css",
+        "./tokens/express/custom-medium-vars.css": "./tokens/express/medium-vars.css",
+        "./tokens/express/custom-vars.css": "./tokens/express/global-vars.css",
+        "./tokens/spectrum/custom-large-vars.css": "./tokens/spectrum/large-vars.css",
+        "./tokens/spectrum/custom-medium-vars.css": "./tokens/spectrum/medium-vars.css",
+        "./tokens/spectrum/custom-vars.css": "./tokens/spectrum/global-vars.css",
+        "./tokens-v2/spectrum/custom-large-vars.css": "./tokens-v2/large-vars.css",
+        "./tokens-v2/spectrum/custom-medium-vars.css": "./tokens-v2/medium-vars.css",
+        "./tokens-v2/spectrum/custom-vars.css": "./tokens-v2/global-vars.css",
+        "./tokens-v2/spectrum/custom-dark-vars.css": "./tokens-v2/dark-vars.css",
+        "./tokens-v2/spectrum/custom-light-vars.css": "./tokens-v2/light-vars.css"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.css",
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.0",
+        "lit": "^2.5.0 || ^3.1.3"
+    },
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./**/*.css"
+    ],
+    "style": "all-medium-lightest.css"
+}
