@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts", "src/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
+    "references": [
+        { "path": "../../tools/base" },
+        { "path": "../button" },
+        { "path": "../icon" },
+        { "path": "../icons-ui" },
+        { "path": "../../tools/shared" }
+    ]
+}

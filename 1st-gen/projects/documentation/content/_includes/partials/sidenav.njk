@@ -1,0 +1,183 @@
+{% set value = slug %}
+{% if componentName %}
+  {% set value = componentName %}
+{% endif %}
+<sp-sidenav manage-tab-index variant="multilevel" slot="side-nav" value="{{ value }}" label="Spectrum Web Components">
+    <sp-sidenav-item
+        label="Introduction"
+        value="introduction"
+        expanded
+    >
+        <sp-sidenav-item
+            label="Getting started"
+            href="/getting-started"
+            value="getting-started"
+        >
+            <a href="/getting-started" slot="no-js">Getting started</a>
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Migrating to Spectrum 2"
+            href="/migrating-to-spectrum2"
+            value="migrating-to-spectrum2"
+        >
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Dev mode"
+            href="/dev-mode"
+            value="dev-mode"
+        >
+            <a href="/dev-mode" slot="no-js">Dev mode</a>
+        </sp-sidenav-item>
+        <sp-sidenav-item
+            label="Registry conflicts"
+            href="/registry-conflicts"
+            value="registry-conflicts"
+        >
+        <a href="/registry-conflicts" slot="no-js">Registry conflicts</a>
+    </sp-sidenav-item>
+     <sp-sidenav-item
+            label="What is a theme"
+            href="/what-is-a-theme"
+            value="what-is-a-theme"
+        >
+    </sp-sidenav-item>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Components"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Components</span>
+        {% for componentRoot in collections['component-root'] %}
+            <sp-sidenav-item
+                label="{{ componentRoot.data.displayName }}"
+                href="{{ componentRoot.url }}"
+                value="{{ componentRoot.data.componentName }}"
+                {% if componentPackage === componentRoot.data.componentName %}expanded{% endif %}
+                {% if value === componentRoot.data.componentName %}autofocus{% endif %}
+            >
+                <a href="{{ componentRoot.url }}" slot="no-js">{{ componentRoot.data.displayName }}</a>
+                {% for componentChild in collections[componentRoot.data.componentName + '-children'] %}
+                    <sp-sidenav-item
+                        label="{{ componentChild.data.displayName }}"
+                        href="{{ componentChild.url }}"
+                        value="{{ componentChild.data.componentName }}"
+                        {% if value === componentChild.data.componentName %}autofocus{% endif %}
+                    >
+                        <a href="{{ componentChild.url }}" slot="no-js">{{ componentChild.data.displayName }}</a>
+                    </sp-sidenav-item>
+                {% endfor %}
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Tools"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Tools</span>
+        {% for toolRoot in collections['tool-root'] %}
+            <sp-sidenav-item
+                label="{{ toolRoot.data.displayName }}"
+                href="{{ toolRoot.url }}"
+                value="{{ toolRoot.data.componentName }}"
+                {% if componentPackage === toolRoot.data.componentName %}expanded{% endif %}
+                {% if value === toolRoot.data.componentName %}autofocus{% endif %}
+            >
+                <a href="{{ toolRoot.url }}" slot="no-js">{{ toolRoot.data.displayName }}</a>
+                {% for componentChild in collections[toolRoot.data.componentName + '-children'] %}
+                    <sp-sidenav-item
+                        label="{{ componentChild.data.displayName }}"
+                        href="{{ componentChild.url }}"
+                        value="{{ componentChild.data.componentName }}"
+                        {% if value === componentChild.data.componentName %}autofocus{% endif %}
+                    >
+                        <a href="{{ componentChild.url }}" slot="no-js">{{ componentChild.data.displayName }}</a>
+                    </sp-sidenav-item>
+                {% endfor %}
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Contributing"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Contributing</span>
+        {% for guide in collections.guides %}
+            <sp-sidenav-item
+                label="{{ guide.data.displayName }}"
+                href="{{ guide.url }}"
+                value="{{ guide.data.slug }}"
+            >
+                <a href="{{ guide.url }}" slot="no-js">{{ guide.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Guides and policies"
+        expanded
+        multiLevel
+    >
+     <sp-sidenav-item
+        label="Support and compatibility"
+        href="/support-and-compatibility"
+        value="/support-and-compatibility"
+    >
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Migration Guides"
+        multiLevel
+    >
+        <span slot="no-js">Migration Guides</span>
+        {% for migration in collections.migrations %}
+            <sp-sidenav-item
+                label="{{ migration.data.displayName }}"
+                href="{{ migration.url }}"
+                value="{{ migration.data.slug }}"
+            >
+                <a href="{{ migration.url }}" slot="no-js">{{ migration.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Deprecation Guide"
+        href="/deprecation"
+        value="deprecation"
+    >
+        <a href="/deprecation" slot="no-js">Deprecation Guide</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Using swc-react"
+        href="/using-swc-react"
+        value="using-swc-react"
+    >
+        <a href="/using-swc-react" slot="no-js">Using swc-react</a>
+    </sp-sidenav-item>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        class="spectrum-web"
+        label="GitHub"
+        href="https://github.com/adobe/spectrum-web-components"
+    >
+        <a href="storybook/index.html" slot="no-js">Storybook</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Storybook"
+        href="/storybook/index.html"
+    >
+        <a href="storybook/index.html" slot="no-js">Storybook</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Spectrum"
+        href="https://spectrum.adobe.com/"
+    >
+        <a href="https://spectrum.adobe.com/" slot="no-js">Spectrum</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Spectrum CSS"
+        href="https://opensource.adobe.com/spectrum-css/"
+    >
+        <a href="https://opensource.adobe.com/spectrum-css/" slot="no-js">Spectrum CSS</a>
+    </sp-sidenav-item>
+</sp-sidenav>

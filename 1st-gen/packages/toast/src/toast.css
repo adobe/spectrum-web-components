@@ -1,0 +1,46 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@import url("./spectrum-toast.css");
+@import url("./toast-overrides.css");
+
+:host {
+    --spectrum-overlay-animation-distance: var(--spectrum-spacing-100);
+    --spectrum-overlay-animation-duration: var(--spectrum-animation-duration-100);
+
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        transform var(--spectrum-overlay-animation-duration) ease-in-out,
+        opacity var(--spectrum-overlay-animation-duration) ease-in-out,
+        visibility 0s linear var(--spectrum-overlay-animation-duration);
+    visibility: hidden;
+}
+
+:host([open]) {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0s;
+    visibility: visible;
+}
+
+:host([variant="error"]),
+:host([variant="warning"]) {
+    background-color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
+}
+
+:host([variant="negative"]),
+:host([variant="negative"]) .closeButton:focus-visible:not(:active),
+:host([variant="warning"]),
+:host([variant="warning"]) .closeButton:focus-visible:not(:active) {
+    color: var(--highcontrast-toast-negative-background-color-default, var(--mod-toast-negative-background-color-default, var(--spectrum-toast-negative-background-color-default)));
+}

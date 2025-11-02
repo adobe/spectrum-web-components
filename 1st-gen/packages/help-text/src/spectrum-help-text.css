@@ -1,0 +1,142 @@
+/*!
+ * Copyright 2025 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License./
+ * 
+ *  Override divider background color when used inside alert-dialog/
+ * .divider {
+ *     --spectrum-divider-background-color: var(--system-alert-dialog-divider-background-color);
+ *     --spectrum-divider-background-color-static-white: var(--spectrum-alert-dialog-divider-background-color-static-white);
+ *     --spectrum-divider-background-color-static-black: var(--spectrum-alert-dialog-divider-background-color-static-black);
+ * }
+ */
+
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-helptext-content-color-default: CanvasText;
+        --highcontrast-helptext-icon-color-default: CanvasText;
+    }
+
+    :host,
+    .text,
+    .icon {
+        forced-color-adjust: none;
+    }
+}
+
+:host {
+    --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
+
+    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
+    font-size: var(--mod-helptext-font-size, var(--spectrum-helptext-font-size));
+    min-block-size: var(--mod-helptext-min-height, var(--spectrum-helptext-min-height));
+    display: flex;
+}
+
+:host([size="s"]) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-75);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
+    --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-small);
+    --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
+}
+
+:host,
+:host {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-75);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
+    --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-medium);
+    --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
+}
+
+:host([size="l"]) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-100);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-100);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-100);
+    --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-large);
+    --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
+}
+
+:host([size="xl"]) {
+    --spectrum-helptext-min-height: var(--spectrum-component-height-200);
+    --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-300);
+    --spectrum-helptext-font-size: var(--spectrum-font-size-200);
+    --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-200);
+    --spectrum-helptext-top-to-workflow-icon: var(--spectrum-help-text-top-to-workflow-icon-extra-large);
+    --spectrum-helptext-bottom-to-workflow-icon: var(--spectrum-helptext-top-to-workflow-icon);
+}
+
+:host([variant="neutral"]) {
+    --spectrum-helptext-content-color-default: var(--spectrum-neutral-subdued-content-color-default);
+    --spectrum-helptext-icon-color-default: var(--spectrum-neutral-subdued-content-color-default);
+}
+
+:host([variant="negative"]) {
+    --spectrum-helptext-content-color-default: var(--spectrum-negative-color-900);
+    --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
+}
+
+:host([disabled]) {
+    --spectrum-helptext-content-color-default: var(--spectrum-disabled-content-color);
+    --spectrum-helptext-icon-color-default: var(--spectrum-disabled-content-color);
+}
+
+:host(:lang(ja)),
+:host(:lang(ko)),
+:host(:lang(zh)) {
+    --mod-helptext-line-height: var(--mod-helptext-line-height-cjk, var(--spectrum-cjk-line-height-100));
+}
+
+.icon {
+    block-size: var(--mod-helptext-icon-size, var(--spectrum-helptext-icon-size));
+    inline-size: var(--mod-helptext-icon-size, var(--spectrum-helptext-icon-size));
+    flex-shrink: 0;
+    margin-inline-end: var(--mod-helptext-text-to-visual, var(--spectrum-helptext-text-to-visual));
+    padding-block-start: var(--mod-helptext-top-to-workflow-icon, var(--spectrum-helptext-top-to-workflow-icon));
+    padding-block-end: var(--mod-helptext-bottom-to-workflow-icon, var(--spectrum-helptext-bottom-to-workflow-icon));
+}
+
+.text {
+    line-height: var(--mod-helptext-line-height, var(--spectrum-line-height-100));
+    padding-block-start: var(--mod-helptext-top-to-text, var(--spectrum-helptext-top-to-text));
+    padding-block-end: var(--mod-helptext-bottom-to-text, var(--spectrum-helptext-bottom-to-text));
+}
+
+:host([variant="neutral"]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
+}
+
+:host([variant="neutral"]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--mod-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default)));
+}
+
+:host([variant="negative"]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
+}
+
+:host([variant="negative"]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--mod-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default)));
+}
+
+:host([disabled]) .text {
+    color: var(--highcontrast-helptext-content-color-default, var(--mod-helptext-content-color-default, var(--spectrum-helptext-content-color-default)));
+}
+
+:host([disabled]) .icon {
+    color: var(--highcontrast-helptext-icon-color-default, var(--mod-helptext-icon-color-default, var(--spectrum-helptext-icon-color-default)));
+}

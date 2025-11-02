@@ -1,0 +1,117 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-avatar-color-opacity: 1;
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
+    --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
+    --spectrum-avatar-focus-indicator-thickness: var(--spectrum-focus-indicator-thickness);
+    --spectrum-avatar-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-avatar-focus-indicator-color: var(--spectrum-focus-indicator-color);
+    --spectrum-avatar-color-opacity-disabled: var(--spectrum-avatar-opacity-disabled);
+}
+
+:host([size="50"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-50);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-50);
+}
+
+:host([size="75"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-75);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-75);
+}
+
+:host([size="100"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
+}
+
+:host([size="200"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-200);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-200);
+}
+
+:host([size="300"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-300);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-300);
+}
+
+:host([size="400"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-400);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-400);
+}
+
+:host([size="500"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-500);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-500);
+}
+
+:host([size="600"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-600);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-600);
+}
+
+:host([size="700"]) {
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-700);
+    --spectrum-avatar-block-size: var(--spectrum-avatar-size-700);
+}
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-avatar-focus-indicator-color: CanvasText;
+    }
+}
+
+:host {
+    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
+    block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+    opacity: var(--mod-avatar-color-opacity, var(--spectrum-avatar-color-opacity));
+    border-width: 0;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    overflow: visible;
+}
+
+:host([disabled]) {
+    opacity: var(--mod-avatar-color-opacity-disabled, var(--spectrum-avatar-color-opacity-disabled));
+}
+
+:host(:not([disabled])) .is-focused:after,
+:host(:not([disabled])) .link:focus-visible:after {
+    pointer-events: none;
+    content: "";
+    inline-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
+    block-size: calc(var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size)) + var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) * 2);
+    border-style: solid;
+    border-width: var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness));
+    border-color: var(--highcontrast-avatar-focus-indicator-color, var(--mod-avatar-focus-indicator-color, var(--spectrum-avatar-focus-indicator-color)));
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+    position: absolute;
+    inset-block-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
+    inset-inline-start: calc((var(--mod-avatar-focus-indicator-gap, var(--spectrum-avatar-focus-indicator-gap)) + var(--mod-avatar-focus-indicator-thickness, var(--spectrum-avatar-focus-indicator-thickness))) * -1);
+}
+
+.link {
+    outline: 0;
+}
+
+.image {
+    inline-size: var(--mod-avatar-inline-size, var(--spectrum-avatar-inline-size));
+    block-size: var(--mod-avatar-block-size, var(--spectrum-avatar-block-size));
+    border-radius: var(--mod-avatar-border-radius, var(--spectrum-avatar-border-radius));
+}

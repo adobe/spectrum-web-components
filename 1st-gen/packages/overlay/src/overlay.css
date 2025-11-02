@@ -1,0 +1,202 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    display: contents;
+    pointer-events: none;
+
+    /**
+     * Duplicate --spectrum-overlay-animation-distance, which is out of scope.
+     * Currently is is statically `--spectrum-spacing-100` across a number of places
+     * so that is leveraged here as the default.
+     **/
+    --swc-overlay-animation-distance: var(--spectrum-spacing-100);
+}
+
+/**
+ * :host(:has(...)) {} currently only work in Firefox and Safari
+ * Chromium will resolve to the default of 6px above. Tooltip leverages a scale custom
+ * value for this measurement, this adopts it where we can.
+ **/
+
+:host(:has(> sp-tooltip)) {
+    --swc-overlay-animation-distance: var(--spectrum-tooltip-animation-distance);
+}
+
+.dialog {
+    margin: 0;
+    border: 0;
+    background: none;
+    padding: 0;
+    position: fixed;
+    overflow: visible;
+    opacity: 1 !important;
+    box-sizing: border-box;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    max-width: calc(100vw - 16px);
+    height: auto;
+    inset: auto;
+    top: 0;
+    left: 0;
+    display: flex;
+
+    --sp-overlay-open: true;
+}
+
+.dialog:not([is-visible]) {
+    display: none;
+}
+
+.dialog:focus {
+    outline: none;
+}
+
+dialog:modal {
+    --mod-popover-filter: var(--spectrum-popover-filter);
+}
+
+:host(:not([open])) .dialog {
+    --sp-overlay-open: false;
+}
+
+.dialog::backdrop {
+    display: none;
+}
+
+.dialog:before {
+    position: absolute;
+    inset: -999em;
+    content: "";
+    pointer-events: auto !important;
+}
+
+.dialog:not(.not-immediately-closable):before {
+    display: none;
+}
+
+.dialog > div {
+    width: 100%;
+}
+
+::slotted(*) {
+    pointer-events: auto;
+    visibility: visible !important;
+}
+
+::slotted(sp-popover) {
+    position: static;
+}
+
+/**
+ * Offset the transition displacement from the trigger edge by
+ * padding the equivelent distance off of the opposite edge.
+ *
+ * <HACK>
+ * Prepare for Context Menus with [popover] by adding margin/border
+ * that _should_ still be under the pointer when `pointerup` is dispatched.
+ * </HACK>
+ **/
+.dialog:not([actual-placement])[placement*="top"] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: var(--swc-overlay-animation-distance);
+}
+
+.dialog:not([actual-placement])[placement*="right"] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog:not([actual-placement])[placement*="bottom"] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog:not([actual-placement])[placement*="left"] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: var(--swc-overlay-animation-distance);
+}
+
+.dialog[actual-placement*="top"] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: var(--swc-overlay-animation-distance);
+}
+
+.dialog[actual-placement*="right"] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog[actual-placement*="bottom"] {
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: calc(-1 * var(--swc-overlay-animation-distance));
+}
+
+.dialog[actual-placement*="left"] {
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: var(--swc-overlay-animation-distance);
+}
+
+slot[name="longpress-describedby-descriptor"] {
+    display: none;
+}
+
+/* stylelint-disable */
+@supports selector(:open) {
+    .dialog {
+        opacity: 0;
+    }
+
+    .dialog:open {
+        opacity: 1;
+
+        --mod-popover-filter: var(--spectrum-popover-filter);
+    }
+}
+
+@supports selector(:popover-open) {
+    .dialog {
+        opacity: 0;
+    }
+
+    .dialog:popover-open {
+        opacity: 1;
+
+        --mod-popover-filter: var(--spectrum-popover-filter);
+    }
+}
+
+@supports (overlay: auto) {
+    .dialog {
+        display: none;
+        transition:
+            all var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s)),
+            translate 0s,
+            display var(--mod-overlay-animation-duration, var(--spectrum-animation-duration-100, 0.13s));
+        transition-behavior: allow-discrete;
+    }
+
+    .dialog:popover-open {
+        display: flex;
+    }
+}
+
+@supports (not selector(:open)) and (not selector(:popover-open)) {
+    :host:not([open]) .dialog {
+        pointer-events: none;
+    }
+
+    .dialog[actual-placement] {
+        z-index: calc(var(--swc-overlay-z-index-base, 1000) + var(--swc-overlay-open-count));
+    }
+}
+/* stylelint-enable */

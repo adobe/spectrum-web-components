@@ -1,0 +1,72 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-divider-background-color: CanvasText;
+    }
+}
+
+:host {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
+}
+
+:host([size="s"]) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
+}
+
+:host([size="l"]) {
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
+    --spectrum-divider-background-color: var(--spectrum-gray-800);
+}
+
+:host([static-color="white"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-medium-static-white, var(--spectrum-divider-background-color-static-white));
+}
+
+:host([static-color="white"][size="s"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-small-static-white, var(--spectrum-divider-background-color-static-white));
+}
+
+:host([static-color="white"][size="l"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-large-static-white, var(--spectrum-transparent-white-800));
+}
+
+:host([static-color="black"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-medium-static-black, var(--spectrum-divider-background-color-static-black));
+}
+
+:host([static-color="black"][size="s"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-small-static-black, var(--spectrum-divider-background-color-static-black));
+}
+
+:host([static-color="black"][size="l"]) {
+    --mod-divider-background-color: var(--mod-divider-background-color-large-static-black, var(--spectrum-transparent-black-800));
+}
+
+:host {
+    block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    inline-size: 100%;
+    border: none;
+    border-width: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    border-radius: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    background-color: var(--highcontrast-divider-background-color, var(--mod-divider-background-color, var(--spectrum-divider-background-color)));
+    overflow: visible;
+}
+
+:host([vertical]) {
+    inline-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
+    block-size: 100%;
+    block-size: var(--mod-divider-vertical-height, 100%);
+    margin-block: var(--mod-divider-vertical-margin);
+    align-self: var(--mod-divider-vertical-align);
+}

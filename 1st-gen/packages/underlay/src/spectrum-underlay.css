@@ -1,0 +1,41 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-underlay-background-exit-animation-duration: var(--mod-underlay-background-exit-animation-duration, var(--spectrum-animation-duration-300));
+    --spectrum-underlay-background-exit-animation-ease: var(--mod-underlay-background-exit-animation-ease, var(--spectrum-animation-ease-in));
+    --spectrum-underlay-background-exit-animation-delay: var(--mod-underlay-background-exit-animation-delay, var(--spectrum-animation-duration-200));
+    --spectrum-underlay-background-entry-animation-duration: var(--mod-underlay-background-entry-animation-duration, var(--spectrum-animation-duration-600));
+    --spectrum-underlay-background-entry-animation-ease: var(--mod-underlay-background-entry-animation-ease, var(--spectrum-animation-ease-out));
+    --spectrum-underlay-background-entry-animation-delay: var(--mod-underlay-background-entry-animation-delay, var(--mod-overlay-animation-duration-opened, var(--spectrum-animation-duration-0)));
+    --spectrum-underlay-background-color: var(--mod-underlay-background-color, rgba(var(--spectrum-black-rgb), var(--spectrum-overlay-opacity)));
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--spectrum-underlay-background-color);
+    z-index: 1;
+    transition:
+        opacity var(--spectrum-underlay-background-exit-animation-duration) var(--spectrum-underlay-background-exit-animation-ease) var(--spectrum-underlay-background-exit-animation-delay),
+        visibility 0s linear calc(var(--spectrum-underlay-background-exit-animation-delay) + var(--spectrum-underlay-background-exit-animation-duration));
+    position: fixed;
+    inset-block: 0;
+    inset-inline: 0;
+    overflow: hidden;
+}
+
+:host([open]) {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity var(--spectrum-underlay-background-entry-animation-duration) var(--spectrum-underlay-background-entry-animation-ease) var(--spectrum-underlay-background-entry-animation-delay);
+    transition-delay: var(--spectrum-underlay-background-entry-animation-delay);
+}

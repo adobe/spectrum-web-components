@@ -1,0 +1,82 @@
+{
+    "name": "@spectrum-web-components/vrt-compare",
+    "version": "1.9.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/projects/vrt-compare"
+    },
+    "author": "Adobe",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/OnionSkinner.js": {
+            "development": "./src/OnionSkinner.dev.js",
+            "default": "./src/OnionSkinner.js"
+        },
+        "./src/VrtCompare.js": {
+            "development": "./src/VrtCompare.dev.js",
+            "default": "./src/VrtCompare.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./vrt-compare": "./vrt-compare.js",
+        "./vrt-compare.js": {
+            "development": "./vrt-compare.dev.js",
+            "default": "./vrt-compare.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/action-bar": "1.9.0",
+        "@spectrum-web-components/action-button": "1.9.0",
+        "@spectrum-web-components/action-group": "1.9.0",
+        "@spectrum-web-components/base": "1.9.0",
+        "@spectrum-web-components/icons-workflow": "1.9.0",
+        "@spectrum-web-components/shared": "1.9.0",
+        "@spectrum-web-components/split-view": "1.9.0",
+        "@spectrum-web-components/styles": "1.9.0",
+        "@spectrum-web-components/theme": "1.9.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./onion-skinner.js",
+        "./onion-skinner.ts",
+        "./vrt-compare.js",
+        "./vrt-compare.ts"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

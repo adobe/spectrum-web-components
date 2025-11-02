@@ -1,0 +1,106 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    margin: var(--mod-coach-indicator-gap, var(--spectrum-coach-indicator-gap));
+    min-inline-size: var(--mod-coach-indicator-min-inline-size, var(--spectrum-coach-indicator-min-inline-size));
+    min-block-size: var(--mod-coach-indicator-min-block-size, var(--spectrum-coach-indicator-min-block-size));
+    inline-size: var(--mod-coach-indicator-inline-size, var(--spectrum-coach-indicator-inline-size));
+    block-size: var(--mod-coach-indicator-block-size, var(--spectrum-coach-indicator-block-size));
+    position: relative;
+}
+
+:host([quiet]) {
+    --mod-coach-indicator-min-inline-size: calc(var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size)) * 2.75);
+    --mod-coach-indicator-min-block-size: calc(var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size)) * 2.75);
+    --mod-coach-indicator-inline-size: calc(var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size)) * 2.75);
+    --mod-coach-indicator-block-size: calc(var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size)) * 2.75);
+    --mod-coach-indicator-ring-inline-size: var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size));
+    --mod-coach-indicator-ring-block-size: var(--mod-coach-indicator-quiet-ring-diameter, var(--spectrum-coach-indicator-quiet-ring-diameter-size));
+    --mod-coach-indicator-top: calc(var(--mod-coach-indicator-min-inline-size) / 3 - var(--spectrum-coach-indicator-ring-border-size));
+    --mod-coach-indicator-left: calc(var(--mod-coach-indicator-min-inline-size) / 3 - var(--spectrum-coach-indicator-ring-border-size));
+    --mod-coach-indicator-inner-animation-delay-multiple: var(--mod-coach-indicator-quiet-animation-ring-inner-delay-multiple, var(--spectrum-coach-indicator-quiet-animation-ring-inner-delay-multiple));
+}
+
+.ring {
+    border-style: solid;
+    border-width: var(--mod-coach-indicator-ring-border-size, var(--spectrum-coach-indicator-ring-border-size));
+    border-color: var(--mod-coach-indicator-ring-default-color, var(--spectrum-coach-indicator-ring-default-color));
+    inline-size: var(--mod-coach-indicator-ring-inline-size, var(--spectrum-coach-indicator-ring-inline-size));
+    block-size: var(--mod-coach-indicator-ring-block-size, var(--spectrum-coach-indicator-ring-block-size));
+    animation: var(--mod-coach-indicator-animation-name, var(--spectrum-coach-indicator-animation-name)) var(--mod-coach-animation-indicator-ring-duration, var(--spectrum-coach-animation-indicator-ring-duration)) linear infinite;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    inset-block-start: var(--mod-coach-indicator-top, var(--spectrum-coach-indicator-top));
+    inset-inline-start: var(--mod-coach-indicator-left, var(--spectrum-coach-indicator-left));
+}
+
+.ring:first-child {
+    animation-delay: calc(var(--mod-coach-animation-indicator-ring-duration, var(--spectrum-coach-animation-indicator-ring-duration)) * var(--mod-coach-indicator-inner-animation-delay-multiple, var(--spectrum-coach-indicator-inner-animation-delay-multiple)));
+}
+
+.ring:nth-child(2) {
+    animation-delay: calc(var(--mod-coach-animation-indicator-ring-duration, var(--spectrum-coach-animation-indicator-ring-duration)) * var(--mod-coach-animation-indicator-ring-center-delay-multiple, var(--spectrum-coach-animation-indicator-ring-center-delay-multiple)));
+}
+
+.ring:nth-child(3) {
+    animation-delay: calc(var(--mod-coach-animation-indicator-ring-duration, var(--spectrum-coach-animation-indicator-ring-duration)) * var(--mod-coach-animation-indicator-ring-outer-delay-multiple, var(--spectrum-coach-animation-indicator-ring-outer-delay-multiple)));
+}
+
+:host([static-color="white"]) .ring {
+    border-color: var(--mod-coach-indicator-ring-light-color, var(--spectrum-coach-indicator-ring-light-color));
+}
+
+:host([static-color="black"]) .ring {
+    border-color: var(--mod-coach-indicator-ring-dark-color, var(--spectrum-coach-indicator-ring-dark-color));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ring {
+        animation: none;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(var(--spectrum-coach-indicator-animation-keyframe-0-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
+    }
+
+    50% {
+        transform: scale(var(--spectrum-coach-indicator-animation-keyframe-50-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
+    }
+
+    to {
+        transform: scale(var(--spectrum-coach-indicator-animation-keyframe-100-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
+    }
+}
+
+@keyframes pulse-quiet {
+    0% {
+        transform: scale(var(--spectrum-coach-indicator-quiet-animation-keyframe-0-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-0-opacity);
+    }
+
+    50% {
+        transform: scale(var(--spectrum-coach-indicator-animation-keyframe-50-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-50-opacity);
+    }
+
+    to {
+        transform: scale(var(--spectrum-coach-indicator-animation-keyframe-100-scale));
+        opacity: var(--spectrum-coach-indicator-animation-keyframe-100-opacity);
+    }
+}

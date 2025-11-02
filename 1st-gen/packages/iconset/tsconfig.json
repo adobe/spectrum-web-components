@@ -1,0 +1,11 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./",
+        "resolveJsonModule": true
+    },
+    "include": ["*.ts", "src/*.ts"],
+    "exclude": ["test/*.ts", "stories/*.ts"],
+    "references": [{ "path": "../../tools/base" }]
+}

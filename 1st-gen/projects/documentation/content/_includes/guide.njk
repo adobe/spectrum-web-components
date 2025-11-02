@@ -1,0 +1,11 @@
+---
+layout: layout.njk
+---
+<docs-page class="spectrum-Typography">
+    {% include "partials/logo.njk" %}
+    <main role="main">
+        {{ content | safe }}
+    </main>
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="../../src/index.js"></script>

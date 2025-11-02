@@ -1,0 +1,93 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@media (forced-colors: active) {
+    :host(:not([head-cell])) {
+        forced-color-adjust: none;
+    }
+}
+
+:host([head-cell]) {
+    --spectrum-table-icon-color: var(--highcontrast-table-icon-color, var(--mod-table-icon-color-default, var(--spectrum-table-icon-color-default)));
+    box-sizing: border-box;
+    text-align: start;
+    vertical-align: var(--mod-table-header-vertical-align, var(--spectrum-table-header-vertical-align));
+    font-family: var(--mod-table-header-font-family, var(--spectrum-table-row-font-family));
+    font-size: var(--mod-table-header-font-size, var(--spectrum-table-row-font-size));
+    font-weight: var(--mod-table-header-font-weight, var(--spectrum-table-header-font-weight));
+    line-height: var(--mod-table-header-line-height, var(--spectrum-table-row-line-height));
+    text-transform: none;
+    text-transform: var(--mod-table-header-text-transform, none);
+    block-size: var(--mod-table-min-header-height, var(--spectrum-table-min-header-height));
+    padding-block: var(--mod-table-header-top-to-text, var(--spectrum-table-header-top-to-text)) var(--mod-table-header-bottom-to-text, var(--spectrum-table-header-bottom-to-text));
+    padding-inline: var(--mod-table-cell-inline-space, var(--spectrum-table-cell-inline-space));
+    color: var(--mod-table-header-text-color, var(--spectrum-table-header-text-color));
+    background-color: var(--mod-table-header-background-color, var(--spectrum-table-header-background-color));
+    transition: color var(--highcontrast-table-transition-duration, var(--mod-table-transition-duration, var(--spectrum-table-transition-duration))) ease-in-out;
+    cursor: auto;
+    cursor: var(--mod-table-cursor-header-default, initial);
+    border-radius: 0;
+    outline: 0;
+}
+
+:host(:not([head-cell])) {
+    border-block-start: var(--mod-table-border-width, var(--spectrum-table-border-width)) solid var(--highcontrast-table-divider-color, var(--mod-table-divider-color, var(--spectrum-table-divider-color)));
+    box-sizing: border-box;
+    font-size: var(--mod-table-row-font-size, var(--spectrum-table-row-font-size));
+    font-weight: var(--mod-table-row-font-weight, var(--spectrum-table-row-font-weight));
+    line-height: var(--mod-table-row-line-height, var(--spectrum-table-row-line-height));
+    vertical-align: var(--mod-table-default-vertical-align, var(--spectrum-table-default-vertical-align));
+    color: var(--highcontrast-table-row-text-color, var(--mod-table-row-text-color, var(--spectrum-table-row-text-color)));
+    background-color: var(--spectrum-table-cell-background-color);
+    block-size: var(--mod-table-min-row-height, var(--spectrum-table-min-row-height));
+    padding-block-start: calc(var(--mod-table-row-top-to-text, var(--spectrum-table-row-top-to-text)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    padding-block-end: var(--mod-table-row-bottom-to-text, var(--spectrum-table-row-bottom-to-text));
+    padding-inline: calc(var(--mod-table-edge-to-content, var(--spectrum-table-edge-to-content)) - var(--mod-table-outer-border-inline-width, var(--spectrum-table-outer-border-inline-width)));
+}
+
+:host(:not([head-cell])),
+:host([head-cell]) {
+    display: table-cell;
+    position: relative;
+}
+
+:host(:not([head-cell])[focused]),
+:host(:not([head-cell]):focus-visible),
+:host([head-cell][focused]),
+:host([head-cell]:focus-visible) {
+    outline-width: var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness));
+    outline-style: solid;
+    outline-color: var(--highcontrast-table-cell-focus-indicator-color, var(--highcontrast-table-focus-indicator-color, var(--mod-table-focus-indicator-color, var(--spectrum-table-focus-indicator-color))));
+    outline-offset: calc(var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness)) * -1);
+    outline-offset: calc(var(--mod-table-focus-indicator-thickness, var(--spectrum-table-focus-indicator-thickness)) * -1 - var(--highcontrast-table-cell-focus-extra-offset, 0px));
+}
+
+:host(:host) {
+    inline-size: var(--spectrum-checkbox-control-size-small);
+    padding-block: 0;
+    padding-inline-end: calc(var(--mod-table-checkbox-to-text, var(--spectrum-table-checkbox-to-text)) - var(--mod-table-edge-to-content, var(--spectrum-table-edge-to-content)));
+}
+
+:host(:host) sp-checkbox {
+    --mod-checkbox-spacing: 0px;
+    min-block-size: 0;
+}
+
+:host(:host:not([head-cell])) sp-checkbox {
+    margin-block-start: calc(var(--mod-table-row-checkbox-block-spacing, var(--spectrum-table-row-checkbox-block-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    margin-block-end: var(--mod-table-row-checkbox-block-spacing, var(--spectrum-table-row-checkbox-block-spacing));
+}
+
+:host(:host[head-cell]) sp-checkbox {
+    margin-block-start: calc(var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing)) - var(--mod-table-border-width, var(--spectrum-table-border-width)));
+    margin-block-end: var(--mod-table-header-checkbox-block-spacing, var(--spectrum-table-header-checkbox-block-spacing));
+}

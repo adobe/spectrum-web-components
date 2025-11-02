@@ -1,0 +1,76 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@import url("./spectrum-tabs.css");
+@import url("./tabs-overrides.css");
+
+:host {
+    display: grid;
+    grid-template-columns: 100%;
+    position: relative;
+}
+
+:host(:not([direction^="vertical"])) {
+    grid-template-rows: auto 1fr;
+}
+
+:host([direction^="vertical"]) {
+    grid-template-columns: auto 1fr;
+}
+
+:host([dir="rtl"]) #selection-indicator {
+    left: 0;
+    right: auto;
+}
+
+:host([direction="vertical-right"]) #list #selection-indicator {
+    inset-inline: auto 0;
+}
+
+#list {
+    justify-content: var(--swc-tabs-list-justify-content);
+}
+
+:host([disabled]) #list {
+    pointer-events: none;
+}
+
+:host([disabled]) #list #selection-indicator {
+    background-color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+}
+
+:host([disabled]) ::slotted(sp-tab) {
+    color: var(--mod-tabs-color-disabled, var(--spectrum-tabs-color-disabled));
+}
+
+/*
+ * TODO remove after next tabs release
+ * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
+ * then we'll need to place this at `top: 0;` ourselves.
+ */
+:host([direction="vertical-right"]) #list #selection-indicator,
+:host([direction="vertical"]) #list #selection-indicator {
+    inset-block-start: 0;
+}
+
+#selection-indicator.first-position {
+    transition: none;
+}
+
+:host([dir][direction="horizontal"]) #list.scroll {
+    scrollbar-width: none;
+    overflow: auto hidden;
+}
+
+:host([dir][direction="horizontal"]) #list.scroll::-webkit-scrollbar {
+    display: none;
+}

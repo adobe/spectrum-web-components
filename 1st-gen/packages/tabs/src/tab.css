@@ -1,0 +1,71 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@import url("./spectrum-tab.css");
+
+:host {
+    scroll-margin-inline: var(--mod-tabs-item-horizontal-spacing, var(--spectrum-tabs-item-horizontal-spacing));
+}
+
+:host([disabled]) {
+    pointer-events: none;
+}
+
+#item-label[hidden] {
+    display: none;
+}
+
+@media (forced-colors: active) {
+    :host:before {
+        background-color: ButtonFace;
+    }
+
+    :host ::slotted([slot="icon"]) {
+        z-index: 1;
+        position: relative;
+        color: inherit;
+    }
+
+    #item-label {
+        position: relative;
+        z-index: 1;
+    }
+
+    :host([selected]) {
+        color: HighlightText;
+    }
+
+    :host([selected]) ::slotted([slot="icon"]) {
+        color: HighlightText;
+    }
+
+    :host([selected]) #item-label {
+        color: HighlightText;
+    }
+}
+
+:host([vertical]) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+:host([dir][vertical]) slot[name="icon"] + #item-label {
+    margin-inline-start: 0;
+    margin-block: calc(var(--mod-tabs-top-to-text, var(--spectrum-tabs-top-to-text)) / 2) calc(var(--mod-tabs-bottom-to-text, var(--spectrum-tabs-bottom-to-text)) / 2);
+}
+
+:host([vertical]) ::slotted([slot="icon"]) {
+    margin-block-start: calc(var(--mod-tabs-top-to-icon, var(--spectrum-tabs-top-to-icon)) / 2);
+}
