@@ -21,7 +21,7 @@
  * into organized changelog entries.
  */
 
-import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
+import { version as currentVersion } from '@spectrum-web-components/core/shared/base/version.js';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import { promises as fsPromises } from 'fs';
@@ -143,7 +143,7 @@ async function processChangesets() {
         const coreChanges = extractChanges(
             frontmatter,
             cleanDescription,
-            /['"]@swc\/core['"]:\s*(major|minor|patch)/g
+            /['"]@spectrum-web-components\/core['"]:\s*(major|minor|patch)/g
         );
 
         // Merge results into categorized buckets
@@ -299,8 +299,8 @@ function updateChangelogFile(
  * Reads changeset files, categorizes changes by type (major/minor/patch),
  * and updates both the 1st-gen and @spectrum-web-components/core changelogs accordingly.
  *
- * Should be run during the release process after prepublishOnly but before
- * changeset version. Automatically called by `yarn changeset-publish`.
+ * Should be run during the release process before changeset version.
+ * Automatically called by the unified publish script for regular releases.
  *
  * @returns {Promise<void>}
  * @throws {Error} If there's an issue with git tags or file operations

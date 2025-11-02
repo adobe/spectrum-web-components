@@ -30,6 +30,7 @@
         }
     },
     "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "files": [
         "dist/"
     ],
@@ -39,12 +40,13 @@
         "build": "vite build",
         "clean": "rimraf dist",
         "dev": "vite build --watch",
+        "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
         "test": "vitest --run",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui",
-        "test:watch": "yarn workspace @spectrum-web-components/core dev & vitest"
+        "test:watch": "run-p dev:core vitest"
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
@@ -55,7 +57,7 @@
         "@axe-core/playwright": "4.10.2",
         "@custom-elements-manifest/analyzer": "0.10.8",
         "@storybook/addon-a11y": "10.0.1",
-        "@storybook/addon-designs": "10.0.2",
+        "@storybook/addon-designs": "11.0.1",
         "@storybook/addon-docs": "10.0.1",
         "@storybook/addon-vitest": "10.0.1",
         "@storybook/test-runner": "0.23.0",
@@ -85,12 +87,16 @@
         "design-system",
         "spectrum",
         "adobe",
+        "adobe-spectrum",
         "web components",
-        "lit",
-        "components"
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
     ],
-    "engines": {
-        "node": ">=20"
-    },
-    "customElements": ".storybook/custom-elements.json"
+    "customElements": ".storybook/custom-elements.json",
+    "publishConfig": {
+        "access": "public"
+    }
 }
