@@ -1,137 +1,142 @@
 name: Preview Documentation (Azure Blob Storage)
 
 on:
-    pull_request:
-        types: [opened, synchronize, reopened, closed]
-        branches:
-            - '**'
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - "**"
 
 permissions:
-    contents: read
-    pull-requests: write
+  contents: read
+  pull-requests: write
 
 env:
-    AZCOPY_AUTO_LOGIN_TYPE: SPN
-    AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
-    AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-    AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  AZCOPY_AUTO_LOGIN_TYPE: SPN
+  AZCOPY_SPA_APPLICATION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZCOPY_SPA_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZCOPY_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 jobs:
-    build_and_deploy_job:
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        runs-on: ubuntu-latest
-        name: Build and Deploy Job
-        outputs:
-            doc_url: ${{ steps.deploy.outputs.docs_url }}
-        steps:
-            ## --- SETUP --- ##
-            - name: Check out code
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  build_and_deploy_job:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    outputs:
+      doc_url: ${{ steps.deploy.outputs.docs_url }}
+    steps:
+      ## --- SETUP --- ##
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Use Node LTS version
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 20
-                  cache: yarn
+      - name: Use Node LTS version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
 
-            - name: Enable Corepack
-              run: corepack enable
+      - name: Enable Corepack
+        run: corepack enable
 
-            - name: Generate PR hash
-              id: pr_hash
-              run: |
-                  # Use just PR number so each commit overwrites the previous deployment
-                  pr_hash="pr-${{ github.event.pull_request.number }}"
-                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
-                  echo "Generated PR hash: ${pr_hash}"
+      - name: Generate PR hash
+        id: pr_hash
+        run: |
+          # Use just PR number so each commit overwrites the previous deployment
+          pr_hash="pr-${{ github.event.pull_request.number }}"
+          echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
+          echo "Generated PR hash: ${pr_hash}"
 
-            ## --- YARN CACHE --- ##
-            - name: Check for cached dependencies
-              continue-on-error: true
-              id: cache-dependencies
-              uses: actions/cache@v4
-              with:
-                  path: |
-                      .cache/yarn
-                      node_modules
-                  key: ubuntu-latest-node20-${{ hashFiles('yarn.lock', 'package.json') }}
+      ## --- YARN CACHE --- ##
+      - name: Check for cached dependencies
+        continue-on-error: true
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/yarn
+            node_modules
+          key: ubuntu-latest-node20-${{ hashFiles('yarn.lock', 'package.json') }}
 
-            ## --- INSTALL & BUILD --- ##
-            - name: Install dependencies
-              shell: bash
-              run: yarn install --immutable
+      ## --- INSTALL & BUILD --- ##
+      - name: Install dependencies
+        shell: bash
+        run: yarn install --immutable
 
-            - name: Build
-              run: yarn build
+      - name: Build 1st-gen
+        run: yarn workspace @spectrum-web-components/1st-gen build
 
-            - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+      - name: Build 2nd-gen core
+        run: yarn workspace @spectrum-web-components/core build
 
-            - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+      - name: Build 2nd-gen swc
+        run: yarn workspace @adobe/swc build
 
-            - name: Build documentation with path prefix
-              env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
-              run: |
-                  cd projects/documentation
-                  yarn build
+      - name: Generate Custom Elements Manifest
+        run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
-            - name: Build Storybook
-              run: yarn storybook:build
+      - name: Move CEM to Storybook directory
+        run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
-            ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
-            - name: Setup AzCopy
-              uses: ./.github/actions/setup-azcopy
+      - name: Build documentation with path prefix
+        env:
+          SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
+        run: |
+          yarn workspace @spectrum-web-components/1st-gen docs:build
 
-            - name: Deploy to Azure Blob Storage
-              id: deploy
-              env:
-                  PR_HASH: ${{ steps.pr_hash.outputs.hash }}
-              run: |
-                  # Upload documentation
-                  echo "Uploading documentation to ${PR_HASH}/docs/"
-                  azcopy copy "projects/documentation/dist/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/" \
-                    --recursive \
-                    --from-to LocalBlob
+      - name: Build Storybook
+        run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
-                  # Upload Storybook
-                  echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
-                  azcopy copy "storybook-static/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/" \
-                    --recursive \
-                    --from-to LocalBlob
+      ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
 
-                  # Set output URLs
-                  docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/"
-                  storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/storybook/"
-                  echo "docs_url=${docs_url}" >> "$GITHUB_OUTPUT"
-                  echo "storybook_url=${storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "Deployed to: ${docs_url}"
+      - name: Deploy to Azure Blob Storage
+        id: deploy
+        env:
+          PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+        run: |
+          # Upload documentation
+          echo "Uploading documentation to ${PR_HASH}/docs/"
+          azcopy copy "1st-gen/projects/documentation/dist/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/" \
+            --recursive \
+            --from-to LocalBlob
 
-    close_pull_request_job:
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        runs-on: ubuntu-latest
-        name: Clean up PR deployment
-        steps:
-            - name: Generate PR hash
-              id: pr_hash
-              run: |
-                  # Create the same hash as in the deploy job
-                  pr_hash="pr-${{ github.event.pull_request.number }}"
-                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
+          # Upload Storybook
+          echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
+          azcopy copy "1st-gen/storybook-static/*" \
+            "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/" \
+            --recursive \
+            --from-to LocalBlob
 
-            - name: Setup AzCopy
-              uses: ./.github/actions/setup-azcopy
+          # Set output URLs
+          docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/"
+          storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/storybook/"
+          echo "docs_url=${docs_url}" >> "$GITHUB_OUTPUT"
+          echo "storybook_url=${storybook_url}" >> "$GITHUB_OUTPUT"
+          echo "Deployed to: ${docs_url}"
 
-            - name: Clean up PR deployment
-              env:
-                  PR_HASH: ${{ steps.pr_hash.outputs.hash }}
-              run: |
-                  echo "Cleaning up deployment: ${PR_HASH}/"
-                  azcopy remove "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/" \
-                    --recursive || echo "Cleanup completed (some files may not exist)"
-                  echo "Cleanup completed for PR deployment: ${PR_HASH}/"
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Clean up PR deployment
+    steps:
+      - name: Generate PR hash
+        id: pr_hash
+        run: |
+          # Create the same hash as in the deploy job
+          pr_hash="pr-${{ github.event.pull_request.number }}"
+          echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
+
+      - name: Setup AzCopy
+        uses: ./.github/actions/setup-azcopy
+
+      - name: Clean up PR deployment
+        env:
+          PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+        run: |
+          echo "Cleaning up deployment: ${PR_HASH}/"
+          azcopy remove "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/" \
+            --recursive || echo "Cleanup completed (some files may not exist)"
+          echo "Cleanup completed for PR deployment: ${PR_HASH}/"

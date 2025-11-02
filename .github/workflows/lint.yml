@@ -103,7 +103,7 @@ jobs:
               run: yarn install --immutable
 
             - name: Lint styles
-              if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
+              # if: ${{ needs.changed_files.outputs.styles_added_files != '' || needs.changed_files.outputs.styles_modified_files != '' }}
               uses: reviewdog/action-stylelint@v1.30.2
               with:
                   fail_level: error
@@ -116,10 +116,10 @@ jobs:
 
             - name: ESLint
               uses: reviewdog/action-eslint@v1.33.2
-              if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
+              # if: ${{ needs.changed_files.outputs.eslint_added_files != '' || needs.changed_files.outputs.eslint_modified_files != '' }}
               with:
                   fail_level: error
                   level: error
                   reporter: github-pr-review
                   filter_mode: diff_context
-                  eslint_flags: '${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
+                  eslint_flags: '--config .eslintrc.json ${{ needs.changed_files.outputs.eslint_added_files }} ${{ needs.changed_files.outputs.eslint_modified_files }}'
