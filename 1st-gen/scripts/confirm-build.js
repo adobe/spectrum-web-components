@@ -14,9 +14,15 @@
 
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 import glob from 'fast-glob';
 import 'colors';
+import { version } from '@spectrum-web-components/base/src/version.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const rootDir = path.join(__dirname, '..');
 
 async function verifyCustomElementsJson() {
     // Components that don't need their own custom-elements.json manifest
@@ -27,13 +33,20 @@ async function verifyCustomElementsJson() {
         'packages/close-button',
     ]);
 
-    const packages = glob.sync('packages/*/', { onlyDirectories: true });
+    const packages = glob.sync('packages/*/', {
+        onlyDirectories: true,
+        cwd: rootDir,
+    });
     const checks = packages.map(async (pkg) => {
         const pkgPath = pkg.replace(/\/$/, '');
         if (customElementsIgnoreList.has(pkgPath)) {
             return;
         }
-        const customElementsPath = path.join(pkg, 'custom-elements.json');
+        const customElementsPath = path.join(
+            rootDir,
+            pkg,
+            'custom-elements.json'
+        );
         if (!fs.existsSync(customElementsPath)) {
             throw new Error(`Missing custom-elements.json in ${pkg}`);
         }
@@ -42,38 +55,31 @@ async function verifyCustomElementsJson() {
     return Promise.all(checks);
 }
 
-function verifyVersionJs() {
+function verifyVersionSync() {
     let basePackageJson;
     try {
         basePackageJson = JSON.parse(
-            fs.readFileSync('tools/base/package.json', 'utf8')
+            fs.readFileSync(
+                path.join(rootDir, 'tools/base/package.json'),
+                'utf8'
+            )
         );
     } catch (error) {
         throw new Error('Failed to read tools/base/package.json');
     }
-    const versionJsPath = 'tools/base/src/version.js';
 
-    if (!fs.existsSync(versionJsPath)) {
-        throw new Error('version.js file is missing');
-    }
-
-    const versionContent = fs.readFileSync(versionJsPath, 'utf8');
-    const versionMatch = versionContent.match(/version = ['"]([^'"]+)['"]/);
-
-    if (!versionMatch) {
-        throw new Error('Could not find version in version.js');
-    }
-
-    const versionJs = versionMatch[1];
-    if (versionJs !== basePackageJson.version) {
+    if (version !== basePackageJson.version) {
         throw new Error(
-            `Version mismatch: version.js (${versionJs}) does not match tools/base/package.json (${basePackageJson.version})`
+            `Version mismatch: version.js (${version}) does not match tools/base/package.json (${basePackageJson.version})`
         );
     }
 }
 
 async function verifyBuildArtifacts() {
-    const packages = glob.sync('packages/*/', { onlyDirectories: true });
+    const packages = glob.sync('packages/*/', {
+        onlyDirectories: true,
+        cwd: rootDir,
+    });
     const requiredFilesIgnoreList = new Set([
         'packages/clear-button', // extends button
         'packages/close-button', // extends button
@@ -97,7 +103,7 @@ async function verifyBuildArtifacts() {
     const checks = packages.map(async (pkg) => {
         const pkgPath = pkg.replace(/\/$/, '');
 
-        const srcPath = path.join(pkg, 'src');
+        const srcPath = path.join(rootDir, pkg, 'src');
         if (!fs.existsSync(srcPath)) {
             throw new Error(`Missing src directory in ${pkg}`);
         }
@@ -114,7 +120,7 @@ async function verifyBuildArtifacts() {
 
         // Verify all required files exist for this package
         for (const [filePattern, description] of requiredFiles) {
-            const pattern = path.join(pkg, filePattern);
+            const pattern = path.join(rootDir, pkg, filePattern);
             const files = glob.sync(pattern);
             if (files.length === 0) {
                 throw new Error(
@@ -131,8 +137,8 @@ async function main() {
         console.log('Verifying custom-elements.json files...'.cyan);
         await verifyCustomElementsJson();
 
-        console.log('Verifying version.js...'.cyan);
-        verifyVersionJs();
+        console.log('Verifying version synchronization...'.cyan);
+        verifyVersionSync();
 
         console.log('Verifying build artifacts...'.cyan);
         await verifyBuildArtifacts();

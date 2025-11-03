@@ -14,17 +14,19 @@
     },
     "type": "module",
     "scripts": {
-        "build": "yarn build:2nd-gen && yarn build:1st-gen ",
+        "build": "run-s build:2nd-gen build:1st-gen",
         "build:1st-gen": "yarn workspace @spectrum-web-components/1st-gen build",
         "build:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen build",
-        "lint": "yarn lint:1st-gen && yarn lint:2nd-gen",
+        "lint": "run-s lint:2nd-gen lint:1st-gen",
         "lint:1st-gen": "yarn workspace @spectrum-web-components/1st-gen lint",
         "lint:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen lint",
-        "postinstall": "husky || true && patch-package",
-        "start": "yarn start:2nd-gen & yarn start:1st-gen",
+        "postinstall": "husky || true",
+        "publish": "node ./scripts/publish.js",
+        "publish:snapshot": "node ./scripts/publish.js --tag snapshot",
+        "start": "run-p start:2nd-gen start:1st-gen",
         "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
         "start:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
-        "test": "yarn test:1st-gen & yarn test:2nd-gen",
+        "test": "run-p test:2nd-gen test:1st-gen",
         "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
         "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
     },
@@ -42,11 +44,13 @@
     "devDependencies": {
         "@changesets/cli": "2.29.7",
         "@commitlint/cli": "19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
+        "@commitlint/config-conventional": "19.8.1",
+        "genversion": "3.2.0",
         "husky": "9.1.7",
-        "lint-staged": "^16.1.2",
-        "patch-package": "^8.0.0",
-        "replace-in-file": "^8.3.0"
+        "lint-staged": "16.2.6",
+        "npm-run-all2": "8.0.4",
+        "replace-in-file": "8.3.0",
+        "yargs": "17.7.2"
     },
     "keywords": [
         "design-system",
@@ -59,7 +63,7 @@
         "lit-html"
     ],
     "engines": {
-        "node": ">=20.10.0",
+        "node": ">=20.19.0",
         "yarn": ">=4.6.0"
     },
     "packageManager": "yarn@4.9.2"

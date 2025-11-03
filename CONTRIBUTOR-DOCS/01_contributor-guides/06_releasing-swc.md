@@ -98,29 +98,82 @@ If not logged in, run `npm login` to sign in to your account.
 
 ## Releasing to NPM — the good stuff
 
-1. Run `git checkout main && git fetch && git pull && git clean -dfX` to ensure you are working with the latest code
-2. Run `yarn install && yarn build` to install all dependencies and build the pre-processed assets for publication.
-    1. Confirm no files were updated or modified
-3. Scan the version summary for any unexpected changes
-    1. In your IDE search `': major` , `': minor`, `': patch` , based on the results in the order of this search list, the highest level takes precedence
-        1. exclude files: `.changeset/README.md`
-4. Open your authenticator app to have it ready
-5. Run`yarn changeset-publish`
-6. Enter the one-time password from your authenticator for NPM.
-    1. Wait for a fresh password; a stale timer might cause issues.
-7. After the SWC packages are released, the React Wrapper packages will be generated.
-    1. This multi-phase approach ensures that the wrapped packages share the same version as the standard packages.
-8. Enter a new one-time password from your authenticator for NPM.
-9. The `yarn publish:changeset` command will automatically commit the changes to main with a commit message of `chore: release new versions #publish`
-    1. The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
-10. Confirm the build on `main` passes
+The publishing workflow is handled by a single unified script (`scripts/publish.js`) that automates the entire process: cleaning, building, versioning, publishing, and git operations.
+
+1. **Prepare your workspace:**
+    - Run `git checkout main && git fetch && git pull` to ensure you have the latest code
+    - Confirm the working directory is clean with `git status`
+2. **Review changesets:**
+    - Scan the `.changeset` directory for pending changes
+    - In your IDE search `': major`, `': minor`, `': patch` to verify the release impact
+        - Exclude files: `.changeset/README.md`
+        - The highest level takes precedence (major > minor > patch)
+    - Confirm the changes match your expectations
+3. **Prepare for publishing:**
+    - Open your authenticator app to have it ready
+    - You'll need to enter a one-time password twice during the process:
+        1. Once for the main SWC packages
+        2. Once for the React wrapper packages
+4. **Run the publish command:**
+    - **Regular release:** `yarn publish`
+        - Creates git tags
+        - Publishes to npm with `latest` tag
+        - Commits changes to `main`
+    - **Snapshot release:** `yarn publish:snapshot`
+        - No git tags
+        - Publishes to npm with `snapshot` tag
+        - No git commits
+    - **Custom tag release:** `node ./scripts/publish.js --tag beta`
+        - No git tags
+        - Publishes to npm with custom tag (e.g., `beta`, `alpha`, `rc`, `nightly`)
+        - No git commits
+5. **What happens during publishing:**
+    1. The script cleans all build artifacts and reinstalls dependencies
+    2. Builds all packages (1st-gen and 2nd-gen)
+    3. Generates custom elements manifests
+    4. Versions packages with changesets
+    5. Publishes to npm (you'll enter your first OTP here)
+    6. Builds React wrapper packages
+    7. Publishes React wrappers to npm (you'll enter your second OTP here)
+    8. For regular releases: commits changes and creates git tags
+6. **Verify the release:**
+    - For regular releases, confirm the build on `main` passes
+    - Check the [tags page](https://github.com/adobe/spectrum-web-components/tags) to verify new tags were created
+    - The docs site will publish automatically if the commit message includes `#publish` and checks pass
 
 ### Troubleshooting
 
 If publishing fails with an error:
 
 - Check the [list of tags](https://github.com/adobe/spectrum-web-components/tags) to see if new tags have been released for your publishing attempt.
-- If they were, run `yarn publish:changeset` again.
+- If they were, run `yarn publish` again (or the appropriate command for your release type).
+
+### Custom npm tags
+
+For special releases like beta, alpha, nightly, or release candidates, you can use custom npm tags with the `--tag` flag:
+
+```bash
+# Beta release
+node ./scripts/publish.js --tag beta
+
+# Alpha release
+node ./scripts/publish.js --tag alpha
+
+# Nightly release
+node ./scripts/publish.js --tag nightly
+
+# Release candidate
+node ./scripts/publish.js --tag rc
+```
+
+Users can then install these versions with:
+
+```bash
+yarn add @spectrum-web-components/button@beta
+yarn add @spectrum-web-components/button@alpha
+yarn add @spectrum-web-components/button@nightly
+yarn add @spectrum-web-components/button@rc
+```
 
 ---
 
