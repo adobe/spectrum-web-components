@@ -19,6 +19,7 @@ import { dirname } from 'path';
 
 import glob from 'fast-glob';
 import 'colors';
+import { version } from '@spectrum-web-components/base/src/version.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
@@ -54,7 +55,7 @@ async function verifyCustomElementsJson() {
     return Promise.all(checks);
 }
 
-function verifyVersionTs() {
+function verifyVersionSync() {
     let basePackageJson;
     try {
         basePackageJson = JSON.parse(
@@ -66,26 +67,10 @@ function verifyVersionTs() {
     } catch (error) {
         throw new Error('Failed to read tools/base/package.json');
     }
-    const versionTsPath = path.join(
-        rootDir,
-        '../2nd-gen/packages/core/shared/base/version.ts'
-    );
 
-    if (!fs.existsSync(versionTsPath)) {
-        throw new Error('2nd-gen version.ts file is missing');
-    }
-
-    const versionContent = fs.readFileSync(versionTsPath, 'utf8');
-    const versionMatch = versionContent.match(/version = ['"]([^'"]+)['"]/);
-
-    if (!versionMatch) {
-        throw new Error('Could not find version in 2nd-gen version.ts');
-    }
-
-    const versionTs = versionMatch[1];
-    if (versionTs !== basePackageJson.version) {
+    if (version !== basePackageJson.version) {
         throw new Error(
-            `Version mismatch: 2nd-gen version.ts (${versionTs}) does not match 1st-gen tools/base/package.json (${basePackageJson.version})`
+            `Version mismatch: version.js (${version}) does not match tools/base/package.json (${basePackageJson.version})`
         );
     }
 }
@@ -152,8 +137,8 @@ async function main() {
         console.log('Verifying custom-elements.json files...'.cyan);
         await verifyCustomElementsJson();
 
-        console.log('Verifying 2nd-gen version.ts synced with 1st-gen...'.cyan);
-        verifyVersionTs();
+        console.log('Verifying version synchronization...'.cyan);
+        verifyVersionSync();
 
         console.log('Verifying build artifacts...'.cyan);
         await verifyBuildArtifacts();

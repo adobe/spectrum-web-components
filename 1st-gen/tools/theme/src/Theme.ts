@@ -11,7 +11,7 @@
  */
 
 import { CSSResult, CSSResultGroup } from '@spectrum-web-components/base';
-import { version } from '@spectrum-web-components/core/shared/base/version.js';
+import { version } from '@spectrum-web-components/base/src/version.js';
 import {
     Color,
     COLOR_VALUES,

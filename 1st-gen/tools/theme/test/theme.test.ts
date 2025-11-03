@@ -11,7 +11,7 @@
  */
 import { Theme } from '@spectrum-web-components/theme';
 import { expect } from '@open-wc/testing';
-import { version } from '@spectrum-web-components/core/shared/base/version.js';
+import { version } from '@spectrum-web-components/base/src/version.js';
 
 class DirElement extends Theme {}
 

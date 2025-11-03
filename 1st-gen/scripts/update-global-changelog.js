@@ -21,7 +21,7 @@
  * into organized changelog entries.
  */
 
-import { version as currentVersion } from '@spectrum-web-components/core/shared/base/version.js';
+import { version as currentVersion } from '@spectrum-web-components/base/src/version.js';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import { promises as fsPromises } from 'fs';
