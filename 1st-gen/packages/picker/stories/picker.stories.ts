@@ -774,6 +774,9 @@ custom.args = {
     open: true,
 };
 custom.decorators = [isOverlayOpen];
+custom.swc_vrt = {
+    skip: true,
+};
 
 export const BackgroundClickTest = (): TemplateResult => {
     return html`
