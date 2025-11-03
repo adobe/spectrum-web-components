@@ -123,7 +123,7 @@ The publishing workflow is handled by a single unified script (`scripts/publish.
         - No git tags
         - Publishes to npm with `snapshot` tag
         - No git commits
-    - **Custom tag release:** `node ./scripts/publish.js --snapshot --tag beta`
+    - **Custom tag release:** `node ./scripts/publish.js --tag beta`
         - No git tags
         - Publishes to npm with custom tag (e.g., `beta`, `alpha`, `rc`, `nightly`)
         - No git commits
@@ -150,20 +150,20 @@ If publishing fails with an error:
 
 ### Custom npm tags
 
-For special releases like beta, alpha, nightly, or release candidates, you can use custom npm tags with the `--snapshot` and `--tag` flags:
+For special releases like beta, alpha, nightly, or release candidates, you can use custom npm tags with the `--tag` flag:
 
 ```bash
 # Beta release
-node ./scripts/publish.js --snapshot --tag beta
+node ./scripts/publish.js --tag beta
 
 # Alpha release
-node ./scripts/publish.js --snapshot --tag alpha
+node ./scripts/publish.js --tag alpha
 
 # Nightly release
-node ./scripts/publish.js --snapshot --tag nightly
+node ./scripts/publish.js --tag nightly
 
 # Release candidate
-node ./scripts/publish.js --snapshot --tag rc
+node ./scripts/publish.js --tag rc
 ```
 
 Users can then install these versions with:
