@@ -11,4 +11,4 @@
 - [MatchMediaController](../match-media)
 - [RovingTabindexController](../roving-tab-index)
 - [PendingStateController](../pending-state)
-- [SystemContextResolutionController](../system-context-resolution)
+- SystemContextResolutionController
