@@ -19,17 +19,17 @@
  * Handles the complete release workflow including build, versioning, and publishing.
  *
  * @example
- * # Regular release with git tags
+ * # Regular release with git tags (uses "latest" tag)
  * yarn publish
  *
- * # Snapshot release with default "snapshot" tag
- * yarn publish:snapshot
+ * # Snapshot release with custom tag
+ * node ./scripts/publish.js --tag snapshot
  *
  * # Nightly release
- * yarn publish:nightly
+ * node ./scripts/publish.js --tag nightly
  *
- * # Custom tag (e.g., beta)
- * node ./scripts/publish.js --snapshot --tag beta
+ * # Beta release
+ * node ./scripts/publish.js --tag beta
  */
 
 import { execSync } from 'child_process';
@@ -37,19 +37,17 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 const args = yargs(hideBin(process.argv))
-    .option('snapshot', {
-        type: 'boolean',
-        description: 'Publish a snapshot release',
-        default: false,
-    })
     .option('tag', {
         type: 'string',
         description:
-            'NPM dist-tag to publish under (e.g., "nightly", "snapshot", "beta")',
-        default: 'snapshot',
+            'NPM dist-tag to publish under. Use "latest" for regular releases, or any other tag (e.g., "nightly", "snapshot", "beta") for snapshot releases',
+        default: 'latest',
     })
     .help()
     .parse();
+
+// Infer snapshot mode from tag
+const isSnapshot = args.tag !== 'latest';
 
 function run(command, description) {
     if (description) {
@@ -82,7 +80,7 @@ async function publish() {
     );
 
     // Step 2: Version bump with changesets
-    if (args.snapshot) {
+    if (isSnapshot) {
         run(
             `yarn changeset version --snapshot ${args.tag}`,
             `Versioning packages (snapshot: ${args.tag})`
@@ -102,14 +100,13 @@ async function publish() {
     );
 
     // Step 4: Publish to npm
-    const publishTag = args.snapshot ? args.tag : 'latest';
     run(
-        `yarn changeset publish --no-git-tag --tag ${publishTag}`,
-        `Publishing to npm (tag: ${publishTag})`
+        `yarn changeset publish --no-git-tag --tag ${args.tag}`,
+        `Publishing to npm (tag: ${args.tag})`
     );
 
     // Step 5: Git operations (skip for snapshots)
-    if (!args.snapshot) {
+    if (!isSnapshot) {
         run(
             'git add . && git commit -m "chore: release new versions #publish"',
             'Committing release'
@@ -128,13 +125,13 @@ async function publish() {
     );
 
     // Publish each React package directly using npm
-    const publishCmd = args.snapshot
-        ? `npm publish --tag ${publishTag} --access public`
+    const publishCmd = isSnapshot
+        ? `npm publish --tag ${args.tag} --access public`
         : `npm publish --access public`;
 
     run(
         `cd 1st-gen/react && for dir in */; do (cd "$dir" && ${publishCmd}) || exit 1; done`,
-        `Publishing React wrappers (tag: ${publishTag})`
+        `Publishing React wrappers (tag: ${args.tag})`
     );
 
     run('rm -rf 1st-gen/react', 'Removing React wrappers');

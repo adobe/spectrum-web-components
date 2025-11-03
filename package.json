@@ -22,7 +22,7 @@
         "lint:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen lint",
         "postinstall": "husky || true",
         "publish": "node ./scripts/publish.js",
-        "publish:snapshot": "node ./scripts/publish.js --snapshot --tag snapshot",
+        "publish:snapshot": "node ./scripts/publish.js --tag snapshot",
         "start": "run-p start:2nd-gen start:1st-gen",
         "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
         "start:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
