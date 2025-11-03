@@ -184,129 +184,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@adobe/spectrum-web-components@workspace:first-gen":
+"@adobe/swc@workspace:2nd-gen/packages/swc":
   version: 0.0.0-use.local
-  resolution: "@adobe/spectrum-web-components@workspace:first-gen"
+  resolution: "@adobe/swc@workspace:2nd-gen/packages/swc"
   dependencies:
-    "@axe-core/playwright": "npm:^4.11.0"
-    "@changesets/changelog-github": "npm:0.5.1"
-    "@changesets/cli": "npm:2.29.7"
-    "@commitlint/cli": "npm:19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
-    "@custom-elements-manifest/analyzer": "npm:0.10.6"
-    "@geometricpanda/storybook-addon-badges": "npm:2.0.5"
-    "@lit/react": "npm:1.0.8"
-    "@open-wc/dev-server-hmr": "npm:0.2.0"
-    "@open-wc/testing": "npm:4.0.0"
-    "@playwright/test": "npm:1.53.1"
-    "@rollup/plugin-commonjs": "npm:25.0.8"
-    "@rollup/plugin-json": "npm:6.1.0"
-    "@rollup/plugin-node-resolve": "npm:15.3.1"
-    "@sindresorhus/slugify": "npm:2.2.1"
-    "@spectrum-web-components/eslint-plugin": "file:./linters/eslint"
-    "@storybook/addon-a11y": "npm:8.6.14"
-    "@storybook/addon-designs": "npm:8.2.1"
-    "@storybook/addon-essentials": "npm:8.6.14"
-    "@storybook/addon-interactions": "npm:8.6.14"
-    "@storybook/addon-links": "npm:8.6.14"
-    "@storybook/blocks": "npm:8.6.14"
-    "@storybook/manager-api": "npm:8.6.14"
-    "@storybook/theming": "npm:8.6.14"
-    "@storybook/types": "npm:8.6.14"
-    "@storybook/web-components-webpack5": "npm:8.6.14"
-    "@types/chai": "npm:4.3.20"
-    "@types/command-line-args": "npm:5.2.3"
-    "@types/command-line-usage": "npm:5.0.4"
-    "@types/common-tags": "npm:1.8.4"
-    "@types/mocha": "npm:10.0.10"
-    "@types/node": "npm:20.19.17"
-    "@types/react": "npm:18.3.24"
-    "@types/sinon": "npm:17.0.4"
-    "@types/webpack": "npm:5.28.5"
-    "@types/webpack-env": "npm:1.18.8"
-    "@typescript-eslint/eslint-plugin": "npm:7.18.0"
-    "@typescript-eslint/parser": "npm:7.18.0"
-    "@web/dev-server": "npm:0.4.6"
-    "@web/dev-server-rollup": "npm:0.6.4"
-    "@web/rollup-plugin-copy": "npm:0.5.1"
-    "@web/rollup-plugin-html": "npm:2.3.0"
-    "@web/test-runner": "npm:0.20.2"
-    "@web/test-runner-commands": "npm:0.9.0"
-    "@web/test-runner-junit-reporter": "npm:0.8.0"
-    "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch"
-    "@web/test-runner-visual-regression": "patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch"
-    "@webcomponents/webcomponentsjs": "npm:2.8.0"
-    "@yarnpkg/types": "npm:4.0.1"
-    alex: "npm:11.0.1"
-    cem-plugin-module-file-extensions: "npm:0.0.5"
-    chromatic: "npm:13.2.0"
-    chromedriver: "npm:140.0.3"
-    colors: "npm:1.4.0"
-    common-tags: "npm:1.8.2"
-    crypto: "npm:1.0.1"
-    custom-elements-manifest: "npm:2.1.0"
-    debounce: "npm:2.2.0"
-    deepmerge: "npm:4.3.1"
-    esbuild: "npm:0.21.5"
-    eslint: "npm:8.57.1"
-    eslint-config-prettier: "npm:9.1.2"
-    eslint-formatter-pretty: "npm:5.0.0"
-    eslint-plugin-import: "npm:2.32.0"
-    eslint-plugin-jsonc: "npm:2.20.1"
-    eslint-plugin-lit-a11y: "npm:2.4.1"
-    eslint-plugin-notice: "npm:0.9.10"
-    eslint-plugin-prettier: "npm:5.5.4"
-    eslint-plugin-require-extensions: "npm:0.1.3"
-    eslint-plugin-storybook: "npm:0.8.0"
-    express: "npm:4.21.2"
-    fast-glob: "npm:3.3.3"
-    fs-extra: "npm:11.3.2"
-    geckodriver: "npm:4.4.0"
-    genversion: "npm:3.2.0"
-    gh-pages: "npm:6.3.0"
-    gunzip-maybe: "npm:1.4.2"
-    husky: "npm:9.1.7"
-    jsonc-eslint-parser: "npm:2.4.1"
-    latest-version: "npm:9.0.0"
-    lightningcss: "npm:1.30.1"
-    lint-staged: "npm:^16.1.2"
+    "@axe-core/playwright": "npm:4.10.2"
+    "@custom-elements-manifest/analyzer": "npm:0.10.8"
+    "@spectrum-web-components/core": "npm:0.0.1"
+    "@storybook/addon-a11y": "npm:10.0.3"
+    "@storybook/addon-designs": "npm:11.0.1"
+    "@storybook/addon-docs": "npm:10.0.3"
+    "@storybook/addon-vitest": "npm:10.0.3"
+    "@storybook/test-runner": "npm:0.23.0"
+    "@storybook/web-components-vite": "npm:10.0.3"
+    "@types/react": "npm:19.1.16"
+    "@types/react-dom": "npm:19.1.9"
+    "@vitest/browser": "npm:3.2.4"
+    "@vitest/coverage-v8": "npm:3.2.4"
+    "@vitest/ui": "npm:3.2.4"
+    "@wc-toolkit/storybook-helpers": "npm:10.0.0"
+    autoprefixer: "npm:10.4.21"
+    glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
-    lit-analyzer: "npm:2.0.3"
-    lit-html: "npm:^2.4.0 || ^3.1.3"
-    mocha-junit-reporter: "npm:2.2.1"
-    next: "npm:14.2.33"
-    node-fetch: "npm:3.3.2"
-    npm-run-all2: "npm:8.0.4"
-    patch-package: "npm:^8.0.0"
-    pinst: "npm:3.0.0"
-    prettier: "npm:3.6.2"
-    prettier-plugin-package: "npm:1.4.0"
-    pretty-bytes: "npm:7.1.0"
-    re-template-tag: "npm:2.0.1"
-    replace-in-file: "npm:^8.3.0"
+    playwright: "npm:1.53.1"
+    postcss: "npm:8.5.6"
+    postcss-preset-env: "npm:10.4.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     rimraf: "npm:6.0.1"
-    rollup: "npm:4.52.2"
-    sinon: "npm:17.0.2"
-    storybook: "npm:8.6.14"
-    stylelint: "npm:16.24.0"
-    stylelint-config-standard: "npm:38.0.0"
-    stylelint-header: "npm:3.0.0"
-    tachometer: "npm:0.7.2"
-    tar-stream: "npm:3.1.7"
-    terser: "npm:4.8.1"
-    typescript: "npm:5.3.3"
-    webpack-merge: "npm:6.0.1"
-    wireit: "npm:0.14.12"
-    yargs: "npm:17.7.2"
-  languageName: unknown
-  linkType: soft
-
-"@adobe/swc@workspace:second-gen":
-  version: 0.0.0-use.local
-  resolution: "@adobe/swc@workspace:second-gen"
-  dependencies:
-    eslint: "npm:8.57.1"
-    eslint-plugin-simple-import-sort: "npm:12.1.1"
+    storybook: "npm:10.0.3"
+    typescript: "npm:5.9.2"
+    vite: "npm:7.1.7"
+    vite-plugin-dts: "npm:4.5.4"
+    vite-plugin-lit-css: "npm:2.2.1"
+    vitest: "npm:3.2.4"
   languageName: unknown
   linkType: soft
 
@@ -5323,9 +5234,136 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spectrum-web-components/accordion@npm:1.9.0, @spectrum-web-components/accordion@workspace:first-gen/packages/accordion":
+"@spectrum-web-components/1st-gen@workspace:1st-gen":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/accordion@workspace:first-gen/packages/accordion"
+  resolution: "@spectrum-web-components/1st-gen@workspace:1st-gen"
+  dependencies:
+    "@axe-core/playwright": "npm:^4.11.0"
+    "@changesets/changelog-github": "npm:0.5.1"
+    "@changesets/cli": "npm:2.29.7"
+    "@commitlint/cli": "npm:19.8.1"
+    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@custom-elements-manifest/analyzer": "npm:0.10.6"
+    "@geometricpanda/storybook-addon-badges": "npm:2.0.5"
+    "@lit/react": "npm:1.0.8"
+    "@open-wc/dev-server-hmr": "npm:0.2.0"
+    "@open-wc/testing": "npm:4.0.0"
+    "@playwright/test": "npm:1.53.1"
+    "@rollup/plugin-commonjs": "npm:25.0.8"
+    "@rollup/plugin-json": "npm:6.1.0"
+    "@rollup/plugin-node-resolve": "npm:15.3.1"
+    "@sindresorhus/slugify": "npm:2.2.1"
+    "@spectrum-web-components/eslint-plugin": "file:./linters/eslint"
+    "@storybook/addon-a11y": "npm:8.6.14"
+    "@storybook/addon-designs": "npm:8.2.1"
+    "@storybook/addon-essentials": "npm:8.6.14"
+    "@storybook/addon-interactions": "npm:8.6.14"
+    "@storybook/addon-links": "npm:8.6.14"
+    "@storybook/blocks": "npm:8.6.14"
+    "@storybook/manager-api": "npm:8.6.14"
+    "@storybook/theming": "npm:8.6.14"
+    "@storybook/types": "npm:8.6.14"
+    "@storybook/web-components-webpack5": "npm:8.6.14"
+    "@types/chai": "npm:4.3.20"
+    "@types/command-line-args": "npm:5.2.3"
+    "@types/command-line-usage": "npm:5.0.4"
+    "@types/common-tags": "npm:1.8.4"
+    "@types/mocha": "npm:10.0.10"
+    "@types/node": "npm:20.19.17"
+    "@types/react": "npm:18.3.24"
+    "@types/sinon": "npm:17.0.4"
+    "@types/webpack": "npm:5.28.5"
+    "@types/webpack-env": "npm:1.18.8"
+    "@typescript-eslint/eslint-plugin": "npm:7.18.0"
+    "@typescript-eslint/parser": "npm:7.18.0"
+    "@web/dev-server": "npm:0.4.6"
+    "@web/dev-server-rollup": "npm:0.6.4"
+    "@web/rollup-plugin-copy": "npm:0.5.1"
+    "@web/rollup-plugin-html": "npm:2.3.0"
+    "@web/test-runner": "npm:0.20.2"
+    "@web/test-runner-commands": "npm:0.9.0"
+    "@web/test-runner-junit-reporter": "npm:0.8.0"
+    "@web/test-runner-playwright": "patch:@web/test-runner-playwright@npm%3A0.11.1#~/.yarn/patches/@web-test-runner-playwright-npm-0.11.1-280696080b.patch"
+    "@web/test-runner-visual-regression": "patch:@web/test-runner-visual-regression@npm%3A0.10.0#~/.yarn/patches/@web-test-runner-visual-regression-npm-0.10.0-00f19f4c70.patch"
+    "@webcomponents/webcomponentsjs": "npm:2.8.0"
+    "@yarnpkg/types": "npm:4.0.1"
+    alex: "npm:11.0.1"
+    cem-plugin-module-file-extensions: "npm:0.0.5"
+    chromatic: "npm:13.2.0"
+    chromedriver: "npm:140.0.3"
+    colors: "npm:1.4.0"
+    common-tags: "npm:1.8.2"
+    crypto: "npm:1.0.1"
+    custom-elements-manifest: "npm:2.1.0"
+    debounce: "npm:2.2.0"
+    deepmerge: "npm:4.3.1"
+    esbuild: "npm:0.21.5"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:9.1.2"
+    eslint-formatter-pretty: "npm:5.0.0"
+    eslint-plugin-import: "npm:2.32.0"
+    eslint-plugin-jsonc: "npm:2.20.1"
+    eslint-plugin-lit-a11y: "npm:2.4.1"
+    eslint-plugin-notice: "npm:0.9.10"
+    eslint-plugin-prettier: "npm:5.5.4"
+    eslint-plugin-require-extensions: "npm:0.1.3"
+    eslint-plugin-storybook: "npm:0.8.0"
+    express: "npm:4.21.2"
+    fast-glob: "npm:3.3.3"
+    fs-extra: "npm:11.3.2"
+    geckodriver: "npm:4.4.0"
+    genversion: "npm:3.2.0"
+    gh-pages: "npm:6.3.0"
+    gunzip-maybe: "npm:1.4.2"
+    husky: "npm:9.1.7"
+    jsonc-eslint-parser: "npm:2.4.1"
+    latest-version: "npm:9.0.0"
+    lightningcss: "npm:1.30.1"
+    lint-staged: "npm:^16.1.2"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    lit-analyzer: "npm:2.0.3"
+    lit-html: "npm:^2.4.0 || ^3.1.3"
+    mocha-junit-reporter: "npm:2.2.1"
+    next: "npm:14.2.33"
+    node-fetch: "npm:3.3.2"
+    npm-run-all2: "npm:8.0.4"
+    patch-package: "npm:^8.0.0"
+    pinst: "npm:3.0.0"
+    prettier: "npm:3.6.2"
+    prettier-plugin-package: "npm:1.4.0"
+    pretty-bytes: "npm:7.1.0"
+    re-template-tag: "npm:2.0.1"
+    replace-in-file: "npm:^8.3.0"
+    rimraf: "npm:6.0.1"
+    rollup: "npm:4.52.2"
+    sinon: "npm:17.0.2"
+    storybook: "npm:8.6.14"
+    stylelint: "npm:16.24.0"
+    stylelint-config-standard: "npm:38.0.0"
+    stylelint-header: "npm:3.0.0"
+    tachometer: "npm:0.7.2"
+    tar-stream: "npm:3.1.7"
+    terser: "npm:4.8.1"
+    typescript: "npm:5.3.3"
+    webpack-merge: "npm:6.0.1"
+    wireit: "npm:0.14.12"
+    yargs: "npm:17.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/2nd-gen@workspace:2nd-gen":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/2nd-gen@workspace:2nd-gen"
+  dependencies:
+    eslint: "npm:8.57.1"
+    eslint-plugin-simple-import-sort: "npm:12.1.1"
+    npm-run-all2: "npm:8.0.4"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/accordion@npm:1.9.0, @spectrum-web-components/accordion@workspace:1st-gen/packages/accordion":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/accordion@workspace:1st-gen/packages/accordion"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/icon": "npm:1.9.0"
@@ -5335,9 +5373,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-bar@npm:1.9.0, @spectrum-web-components/action-bar@workspace:first-gen/packages/action-bar":
+"@spectrum-web-components/action-bar@npm:1.9.0, @spectrum-web-components/action-bar@workspace:1st-gen/packages/action-bar":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/action-bar@workspace:first-gen/packages/action-bar"
+  resolution: "@spectrum-web-components/action-bar@workspace:1st-gen/packages/action-bar"
   dependencies:
     "@spectrum-web-components/action-group": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5347,9 +5385,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-button@npm:1.9.0, @spectrum-web-components/action-button@workspace:first-gen/packages/action-button":
+"@spectrum-web-components/action-button@npm:1.9.0, @spectrum-web-components/action-button@workspace:1st-gen/packages/action-button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/action-button@workspace:first-gen/packages/action-button"
+  resolution: "@spectrum-web-components/action-button@workspace:1st-gen/packages/action-button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -5359,9 +5397,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-group@npm:1.9.0, @spectrum-web-components/action-group@workspace:first-gen/packages/action-group":
+"@spectrum-web-components/action-group@npm:1.9.0, @spectrum-web-components/action-group@workspace:1st-gen/packages/action-group":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/action-group@workspace:first-gen/packages/action-group"
+  resolution: "@spectrum-web-components/action-group@workspace:1st-gen/packages/action-group"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/action-button": "npm:1.9.0"
@@ -5371,9 +5409,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-menu@npm:1.9.0, @spectrum-web-components/action-menu@workspace:first-gen/packages/action-menu":
+"@spectrum-web-components/action-menu@npm:1.9.0, @spectrum-web-components/action-menu@workspace:1st-gen/packages/action-menu":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/action-menu@workspace:first-gen/packages/action-menu"
+  resolution: "@spectrum-web-components/action-menu@workspace:1st-gen/packages/action-menu"
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5384,19 +5422,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/alert-banner@npm:1.9.0, @spectrum-web-components/alert-banner@workspace:first-gen/packages/alert-banner":
+"@spectrum-web-components/alert-banner@npm:1.9.0, @spectrum-web-components/alert-banner@workspace:1st-gen/packages/alert-banner":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/alert-banner@workspace:first-gen/packages/alert-banner"
+  resolution: "@spectrum-web-components/alert-banner@workspace:1st-gen/packages/alert-banner"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/icons-workflow": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/alert-dialog@npm:1.9.0, @spectrum-web-components/alert-dialog@workspace:first-gen/packages/alert-dialog":
+"@spectrum-web-components/alert-dialog@npm:1.9.0, @spectrum-web-components/alert-dialog@workspace:1st-gen/packages/alert-dialog":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/alert-dialog@workspace:first-gen/packages/alert-dialog"
+  resolution: "@spectrum-web-components/alert-dialog@workspace:1st-gen/packages/alert-dialog"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5408,45 +5447,46 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/asset@npm:1.9.0, @spectrum-web-components/asset@workspace:first-gen/packages/asset":
+"@spectrum-web-components/asset@npm:1.9.0, @spectrum-web-components/asset@workspace:1st-gen/packages/asset":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/asset@workspace:first-gen/packages/asset"
+  resolution: "@spectrum-web-components/asset@workspace:1st-gen/packages/asset"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/avatar@npm:1.9.0, @spectrum-web-components/avatar@workspace:first-gen/packages/avatar":
+"@spectrum-web-components/avatar@npm:1.9.0, @spectrum-web-components/avatar@workspace:1st-gen/packages/avatar":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/avatar@workspace:first-gen/packages/avatar"
+  resolution: "@spectrum-web-components/avatar@workspace:1st-gen/packages/avatar"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/shared": "npm:1.9.0"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/badge@npm:1.9.0, @spectrum-web-components/badge@workspace:1st-gen/packages/badge":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/badge@workspace:1st-gen/packages/badge"
+  dependencies:
+    "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/shared": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/badge@npm:1.9.0, @spectrum-web-components/badge@workspace:first-gen/packages/badge":
+"@spectrum-web-components/base@npm:1.9.0, @spectrum-web-components/base@workspace:1st-gen/tools/base":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/badge@workspace:first-gen/packages/badge"
+  resolution: "@spectrum-web-components/base@workspace:1st-gen/tools/base"
   dependencies:
-    "@spectrum-web-components/base": "npm:1.9.0"
-    "@spectrum-web-components/shared": "npm:1.9.0"
-    "@swc/core": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@spectrum-web-components/base@npm:1.9.0, @spectrum-web-components/base@workspace:first-gen/tools/base":
-  version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/base@workspace:first-gen/tools/base"
-  dependencies:
-    "@swc/core": "workspace:*"
+    "@spectrum-web-components/core": "npm:0.0.1"
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/breadcrumbs@npm:1.9.0, @spectrum-web-components/breadcrumbs@workspace:first-gen/packages/breadcrumbs":
+"@spectrum-web-components/breadcrumbs@npm:1.9.0, @spectrum-web-components/breadcrumbs@workspace:1st-gen/packages/breadcrumbs":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/breadcrumbs@workspace:first-gen/packages/breadcrumbs"
+  resolution: "@spectrum-web-components/breadcrumbs@workspace:1st-gen/packages/breadcrumbs"
   dependencies:
     "@spectrum-web-components/action-menu": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5456,9 +5496,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/bundle@npm:1.9.0, @spectrum-web-components/bundle@workspace:first-gen/tools/bundle":
+"@spectrum-web-components/bundle@npm:1.9.0, @spectrum-web-components/bundle@workspace:1st-gen/tools/bundle":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/bundle@workspace:first-gen/tools/bundle"
+  resolution: "@spectrum-web-components/bundle@workspace:1st-gen/tools/bundle"
   dependencies:
     "@spectrum-web-components/accordion": "npm:1.9.0"
     "@spectrum-web-components/action-bar": "npm:1.9.0"
@@ -5537,18 +5577,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/button-group@npm:1.9.0, @spectrum-web-components/button-group@workspace:first-gen/packages/button-group":
+"@spectrum-web-components/button-group@npm:1.9.0, @spectrum-web-components/button-group@workspace:1st-gen/packages/button-group":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/button-group@workspace:first-gen/packages/button-group"
+  resolution: "@spectrum-web-components/button-group@workspace:1st-gen/packages/button-group"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/button@npm:1.9.0, @spectrum-web-components/button@workspace:first-gen/packages/button":
+"@spectrum-web-components/button@npm:1.9.0, @spectrum-web-components/button@workspace:1st-gen/packages/button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/button@workspace:first-gen/packages/button"
+  resolution: "@spectrum-web-components/button@workspace:1st-gen/packages/button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/clear-button": "npm:1.9.0"
@@ -5561,9 +5601,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/card@npm:1.9.0, @spectrum-web-components/card@workspace:first-gen/packages/card":
+"@spectrum-web-components/card@npm:1.9.0, @spectrum-web-components/card@workspace:1st-gen/packages/card":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/card@workspace:first-gen/packages/card"
+  resolution: "@spectrum-web-components/card@workspace:1st-gen/packages/card"
   dependencies:
     "@spectrum-web-components/asset": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5576,9 +5616,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/checkbox@npm:1.9.0, @spectrum-web-components/checkbox@workspace:first-gen/packages/checkbox":
+"@spectrum-web-components/checkbox@npm:1.9.0, @spectrum-web-components/checkbox@workspace:1st-gen/packages/checkbox":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/checkbox@workspace:first-gen/packages/checkbox"
+  resolution: "@spectrum-web-components/checkbox@workspace:1st-gen/packages/checkbox"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/icon": "npm:1.9.0"
@@ -5587,25 +5627,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/clear-button@npm:1.9.0, @spectrum-web-components/clear-button@workspace:first-gen/packages/clear-button":
+"@spectrum-web-components/clear-button@npm:1.9.0, @spectrum-web-components/clear-button@workspace:1st-gen/packages/clear-button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/clear-button@workspace:first-gen/packages/clear-button"
+  resolution: "@spectrum-web-components/clear-button@workspace:1st-gen/packages/clear-button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/close-button@npm:1.9.0, @spectrum-web-components/close-button@workspace:first-gen/packages/close-button":
+"@spectrum-web-components/close-button@npm:1.9.0, @spectrum-web-components/close-button@workspace:1st-gen/packages/close-button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/close-button@workspace:first-gen/packages/close-button"
+  resolution: "@spectrum-web-components/close-button@workspace:1st-gen/packages/close-button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/coachmark@npm:1.9.0, @spectrum-web-components/coachmark@workspace:first-gen/packages/coachmark":
+"@spectrum-web-components/coachmark@npm:1.9.0, @spectrum-web-components/coachmark@workspace:1st-gen/packages/coachmark":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/coachmark@workspace:first-gen/packages/coachmark"
+  resolution: "@spectrum-web-components/coachmark@workspace:1st-gen/packages/coachmark"
   dependencies:
     "@spectrum-web-components/asset": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5618,9 +5658,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-area@npm:1.9.0, @spectrum-web-components/color-area@workspace:first-gen/packages/color-area":
+"@spectrum-web-components/color-area@npm:1.9.0, @spectrum-web-components/color-area@workspace:1st-gen/packages/color-area":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-area@workspace:first-gen/packages/color-area"
+  resolution: "@spectrum-web-components/color-area@workspace:1st-gen/packages/color-area"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/color-handle": "npm:1.9.0"
@@ -5630,9 +5670,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-field@npm:1.9.0, @spectrum-web-components/color-field@workspace:first-gen/packages/color-field":
+"@spectrum-web-components/color-field@npm:1.9.0, @spectrum-web-components/color-field@workspace:1st-gen/packages/color-field":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-field@workspace:first-gen/packages/color-field"
+  resolution: "@spectrum-web-components/color-field@workspace:1st-gen/packages/color-field"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/color-handle": "npm:1.9.0"
@@ -5640,9 +5680,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-handle@npm:1.9.0, @spectrum-web-components/color-handle@workspace:first-gen/packages/color-handle":
+"@spectrum-web-components/color-handle@npm:1.9.0, @spectrum-web-components/color-handle@workspace:1st-gen/packages/color-handle":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-handle@workspace:first-gen/packages/color-handle"
+  resolution: "@spectrum-web-components/color-handle@workspace:1st-gen/packages/color-handle"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/color-loupe": "npm:1.9.0"
@@ -5650,18 +5690,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-loupe@npm:1.9.0, @spectrum-web-components/color-loupe@workspace:first-gen/packages/color-loupe":
+"@spectrum-web-components/color-loupe@npm:1.9.0, @spectrum-web-components/color-loupe@workspace:1st-gen/packages/color-loupe":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-loupe@workspace:first-gen/packages/color-loupe"
+  resolution: "@spectrum-web-components/color-loupe@workspace:1st-gen/packages/color-loupe"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-slider@npm:1.9.0, @spectrum-web-components/color-slider@workspace:first-gen/packages/color-slider":
+"@spectrum-web-components/color-slider@npm:1.9.0, @spectrum-web-components/color-slider@workspace:1st-gen/packages/color-slider":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-slider@workspace:first-gen/packages/color-slider"
+  resolution: "@spectrum-web-components/color-slider@workspace:1st-gen/packages/color-slider"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/color-handle": "npm:1.9.0"
@@ -5671,9 +5711,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-wheel@npm:1.9.0, @spectrum-web-components/color-wheel@workspace:first-gen/packages/color-wheel":
+"@spectrum-web-components/color-wheel@npm:1.9.0, @spectrum-web-components/color-wheel@workspace:1st-gen/packages/color-wheel":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/color-wheel@workspace:first-gen/packages/color-wheel"
+  resolution: "@spectrum-web-components/color-wheel@workspace:1st-gen/packages/color-wheel"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/color-handle": "npm:1.9.0"
@@ -5682,9 +5722,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/combobox@npm:1.9.0, @spectrum-web-components/combobox@workspace:first-gen/packages/combobox":
+"@spectrum-web-components/combobox@npm:1.9.0, @spectrum-web-components/combobox@workspace:1st-gen/packages/combobox":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/combobox@workspace:first-gen/packages/combobox"
+  resolution: "@spectrum-web-components/combobox@workspace:1st-gen/packages/combobox"
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5700,9 +5740,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/contextual-help@npm:1.9.0, @spectrum-web-components/contextual-help@workspace:first-gen/packages/contextual-help":
+"@spectrum-web-components/contextual-help@npm:1.9.0, @spectrum-web-components/contextual-help@workspace:1st-gen/packages/contextual-help":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/contextual-help@workspace:first-gen/packages/contextual-help"
+  resolution: "@spectrum-web-components/contextual-help@workspace:1st-gen/packages/contextual-help"
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5714,9 +5754,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/custom-vars-viewer@npm:1.9.0, @spectrum-web-components/custom-vars-viewer@workspace:first-gen/projects/css-custom-vars-viewer":
+"@spectrum-web-components/core@npm:0.0.1, @spectrum-web-components/core@workspace:2nd-gen/packages/core":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/custom-vars-viewer@workspace:first-gen/projects/css-custom-vars-viewer"
+  resolution: "@spectrum-web-components/core@workspace:2nd-gen/packages/core"
+  dependencies:
+    glob: "npm:11.0.3"
+    lit: "npm:^2.5.0 || ^3.1.3"
+    rimraf: "npm:6.0.1"
+    typescript: "npm:5.9.2"
+    vite: "npm:7.1.7"
+    vite-plugin-dts: "npm:4.5.4"
+  languageName: unknown
+  linkType: soft
+
+"@spectrum-web-components/custom-vars-viewer@npm:1.9.0, @spectrum-web-components/custom-vars-viewer@workspace:1st-gen/projects/css-custom-vars-viewer":
+  version: 0.0.0-use.local
+  resolution: "@spectrum-web-components/custom-vars-viewer@workspace:1st-gen/projects/css-custom-vars-viewer"
   dependencies:
     "@custom-elements-manifest/analyzer": "npm:0.10.6"
     "@open-wc/eslint-config": "npm:12.0.3"
@@ -5754,9 +5807,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/dialog@npm:1.9.0, @spectrum-web-components/dialog@workspace:first-gen/packages/dialog":
+"@spectrum-web-components/dialog@npm:1.9.0, @spectrum-web-components/dialog@workspace:1st-gen/packages/dialog":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/dialog@workspace:first-gen/packages/dialog"
+  resolution: "@spectrum-web-components/dialog@workspace:1st-gen/packages/dialog"
   dependencies:
     "@spectrum-web-components/alert-dialog": "npm:1.9.0"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -5770,48 +5823,48 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/divider@npm:1.9.0, @spectrum-web-components/divider@workspace:first-gen/packages/divider":
+"@spectrum-web-components/divider@npm:1.9.0, @spectrum-web-components/divider@workspace:1st-gen/packages/divider":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/divider@workspace:first-gen/packages/divider"
+  resolution: "@spectrum-web-components/divider@workspace:1st-gen/packages/divider"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
-    "@swc/core": "workspace:*"
+    "@spectrum-web-components/core": "npm:0.0.1"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/dropzone@npm:1.9.0, @spectrum-web-components/dropzone@workspace:first-gen/packages/dropzone":
+"@spectrum-web-components/dropzone@npm:1.9.0, @spectrum-web-components/dropzone@workspace:1st-gen/packages/dropzone":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/dropzone@workspace:first-gen/packages/dropzone"
+  resolution: "@spectrum-web-components/dropzone@workspace:1st-gen/packages/dropzone"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40adobe%2Fspectrum-web-components%40workspace%3Afirst-gen":
+"@spectrum-web-components/eslint-plugin@file:./linters/eslint::locator=%40spectrum-web-components%2F1st-gen%40workspace%3A1st-gen":
   version: 1.9.0
-  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=17dfd5&locator=%40adobe%2Fspectrum-web-components%40workspace%3Afirst-gen"
-  checksum: 10c0/2229f0912467c43623c2c251138c8079f83d3278eee4f4d4b477a9f58e76c6bf389c8b47fa28a69ff3f99efd71aac995c5824dbf729759c58f022525d944eb65
+  resolution: "@spectrum-web-components/eslint-plugin@file:./linters/eslint#./linters/eslint::hash=6e3405&locator=%40spectrum-web-components%2F1st-gen%40workspace%3A1st-gen"
+  checksum: 10c0/8b32322a7f38b9760ed44d1d3424152a224d8ea2effdd8e6ec7c0194814fc3d1700c23198aefeaaa0a76c612348d6e6545faad63b7c1c21690f3736fc3841133
   languageName: node
   linkType: hard
 
-"@spectrum-web-components/eslint-plugin@workspace:first-gen/linters/eslint":
+"@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/eslint-plugin@workspace:first-gen/linters/eslint"
+  resolution: "@spectrum-web-components/eslint-plugin@workspace:1st-gen/linters/eslint"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/field-group@npm:1.9.0, @spectrum-web-components/field-group@workspace:first-gen/packages/field-group":
+"@spectrum-web-components/field-group@npm:1.9.0, @spectrum-web-components/field-group@workspace:1st-gen/packages/field-group":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/field-group@workspace:first-gen/packages/field-group"
+  resolution: "@spectrum-web-components/field-group@workspace:1st-gen/packages/field-group"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/help-text": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/field-label@npm:1.9.0, @spectrum-web-components/field-label@workspace:first-gen/packages/field-label":
+"@spectrum-web-components/field-label@npm:1.9.0, @spectrum-web-components/field-label@workspace:1st-gen/packages/field-label":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/field-label@workspace:first-gen/packages/field-label"
+  resolution: "@spectrum-web-components/field-label@workspace:1st-gen/packages/field-label"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/icon": "npm:1.9.0"
@@ -5821,9 +5874,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/grid@npm:1.9.0, @spectrum-web-components/grid@workspace:first-gen/tools/grid":
+"@spectrum-web-components/grid@npm:1.9.0, @spectrum-web-components/grid@workspace:1st-gen/tools/grid":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/grid@workspace:first-gen/tools/grid"
+  resolution: "@spectrum-web-components/grid@workspace:1st-gen/tools/grid"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@lit-labs/virtualizer": "npm:2.0.12"
@@ -5833,9 +5886,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/help-text@npm:1.9.0, @spectrum-web-components/help-text@workspace:first-gen/packages/help-text":
+"@spectrum-web-components/help-text@npm:1.9.0, @spectrum-web-components/help-text@workspace:1st-gen/packages/help-text":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/help-text@workspace:first-gen/packages/help-text"
+  resolution: "@spectrum-web-components/help-text@workspace:1st-gen/packages/help-text"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/icons-workflow": "npm:1.9.0"
@@ -5843,9 +5896,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icon@npm:1.9.0, @spectrum-web-components/icon@workspace:first-gen/packages/icon":
+"@spectrum-web-components/icon@npm:1.9.0, @spectrum-web-components/icon@workspace:1st-gen/packages/icon":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/icon@workspace:first-gen/packages/icon"
+  resolution: "@spectrum-web-components/icon@workspace:1st-gen/packages/icon"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/iconset": "npm:1.9.0"
@@ -5853,9 +5906,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons-ui@npm:1.9.0, @spectrum-web-components/icons-ui@workspace:first-gen/packages/icons-ui":
+"@spectrum-web-components/icons-ui@npm:1.9.0, @spectrum-web-components/icons-ui@workspace:1st-gen/packages/icons-ui":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/icons-ui@workspace:first-gen/packages/icons-ui"
+  resolution: "@spectrum-web-components/icons-ui@workspace:1st-gen/packages/icons-ui"
   dependencies:
     "@spectrum-css/ui-icons": "npm:1.1.2"
     "@spectrum-css/ui-icons-s2": "npm:@spectrum-css/ui-icons@2.0.0-s2-foundations.10"
@@ -5869,9 +5922,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons-workflow@npm:1.9.0, @spectrum-web-components/icons-workflow@workspace:first-gen/packages/icons-workflow":
+"@spectrum-web-components/icons-workflow@npm:1.9.0, @spectrum-web-components/icons-workflow@workspace:1st-gen/packages/icons-workflow":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/icons-workflow@workspace:first-gen/packages/icons-workflow"
+  resolution: "@spectrum-web-components/icons-workflow@workspace:1st-gen/packages/icons-workflow"
   dependencies:
     "@adobe/spectrum-css-workflow-icons": "npm:1.7.0"
     "@adobe/spectrum-css-workflow-icons-s2": "npm:@adobe/spectrum-css-workflow-icons@5.0.0"
@@ -5884,53 +5937,53 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons@npm:1.9.0, @spectrum-web-components/icons@workspace:first-gen/packages/icons":
+"@spectrum-web-components/icons@npm:1.9.0, @spectrum-web-components/icons@workspace:1st-gen/packages/icons":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/icons@workspace:first-gen/packages/icons"
+  resolution: "@spectrum-web-components/icons@workspace:1st-gen/packages/icons"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/iconset": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/iconset@npm:1.9.0, @spectrum-web-components/iconset@workspace:first-gen/packages/iconset":
+"@spectrum-web-components/iconset@npm:1.9.0, @spectrum-web-components/iconset@workspace:1st-gen/packages/iconset":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/iconset@workspace:first-gen/packages/iconset"
+  resolution: "@spectrum-web-components/iconset@workspace:1st-gen/packages/iconset"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/illustrated-message@npm:1.9.0, @spectrum-web-components/illustrated-message@workspace:first-gen/packages/illustrated-message":
+"@spectrum-web-components/illustrated-message@npm:1.9.0, @spectrum-web-components/illustrated-message@workspace:1st-gen/packages/illustrated-message":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/illustrated-message@workspace:first-gen/packages/illustrated-message"
+  resolution: "@spectrum-web-components/illustrated-message@workspace:1st-gen/packages/illustrated-message"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/styles": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/infield-button@npm:1.9.0, @spectrum-web-components/infield-button@workspace:first-gen/packages/infield-button":
+"@spectrum-web-components/infield-button@npm:1.9.0, @spectrum-web-components/infield-button@workspace:1st-gen/packages/infield-button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/infield-button@workspace:first-gen/packages/infield-button"
+  resolution: "@spectrum-web-components/infield-button@workspace:1st-gen/packages/infield-button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/link@npm:1.9.0, @spectrum-web-components/link@workspace:first-gen/packages/link":
+"@spectrum-web-components/link@npm:1.9.0, @spectrum-web-components/link@workspace:1st-gen/packages/link":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/link@workspace:first-gen/packages/link"
+  resolution: "@spectrum-web-components/link@workspace:1st-gen/packages/link"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/shared": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/menu@npm:1.9.0, @spectrum-web-components/menu@workspace:first-gen/packages/menu":
+"@spectrum-web-components/menu@npm:1.9.0, @spectrum-web-components/menu@workspace:1st-gen/packages/menu":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/menu@workspace:first-gen/packages/menu"
+  resolution: "@spectrum-web-components/menu@workspace:1st-gen/packages/menu"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/action-button": "npm:1.9.0"
@@ -5945,9 +5998,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/meter@npm:1.9.0, @spectrum-web-components/meter@workspace:first-gen/packages/meter":
+"@spectrum-web-components/meter@npm:1.9.0, @spectrum-web-components/meter@workspace:1st-gen/packages/meter":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/meter@workspace:first-gen/packages/meter"
+  resolution: "@spectrum-web-components/meter@workspace:1st-gen/packages/meter"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/field-label": "npm:1.9.0"
@@ -5956,17 +6009,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/modal@npm:1.9.0, @spectrum-web-components/modal@workspace:first-gen/packages/modal":
+"@spectrum-web-components/modal@npm:1.9.0, @spectrum-web-components/modal@workspace:1st-gen/packages/modal":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/modal@workspace:first-gen/packages/modal"
+  resolution: "@spectrum-web-components/modal@workspace:1st-gen/packages/modal"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/number-field@npm:1.9.0, @spectrum-web-components/number-field@workspace:first-gen/packages/number-field":
+"@spectrum-web-components/number-field@npm:1.9.0, @spectrum-web-components/number-field@workspace:1st-gen/packages/number-field":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/number-field@workspace:first-gen/packages/number-field"
+  resolution: "@spectrum-web-components/number-field@workspace:1st-gen/packages/number-field"
   dependencies:
     "@formatjs/intl-numberformat": "npm:8.15.4"
     "@internationalized/number": "npm:3.6.5"
@@ -5980,17 +6033,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/opacity-checkerboard@npm:1.9.0, @spectrum-web-components/opacity-checkerboard@workspace:first-gen/tools/opacity-checkerboard":
+"@spectrum-web-components/opacity-checkerboard@npm:1.9.0, @spectrum-web-components/opacity-checkerboard@workspace:1st-gen/tools/opacity-checkerboard":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/opacity-checkerboard@workspace:first-gen/tools/opacity-checkerboard"
+  resolution: "@spectrum-web-components/opacity-checkerboard@workspace:1st-gen/tools/opacity-checkerboard"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/overlay@npm:1.9.0, @spectrum-web-components/overlay@workspace:first-gen/packages/overlay":
+"@spectrum-web-components/overlay@npm:1.9.0, @spectrum-web-components/overlay@workspace:1st-gen/packages/overlay":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/overlay@workspace:first-gen/packages/overlay"
+  resolution: "@spectrum-web-components/overlay@workspace:1st-gen/packages/overlay"
   dependencies:
     "@floating-ui/dom": "npm:1.7.4"
     "@floating-ui/utils": "npm:0.2.10"
@@ -6003,9 +6056,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/picker-button@npm:1.9.0, @spectrum-web-components/picker-button@workspace:first-gen/packages/picker-button":
+"@spectrum-web-components/picker-button@npm:1.9.0, @spectrum-web-components/picker-button@workspace:1st-gen/packages/picker-button":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/picker-button@workspace:first-gen/packages/picker-button"
+  resolution: "@spectrum-web-components/picker-button@workspace:1st-gen/packages/picker-button"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -6015,9 +6068,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/picker@npm:1.9.0, @spectrum-web-components/picker@workspace:first-gen/packages/picker":
+"@spectrum-web-components/picker@npm:1.9.0, @spectrum-web-components/picker@workspace:1st-gen/packages/picker":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/picker@workspace:first-gen/packages/picker"
+  resolution: "@spectrum-web-components/picker@workspace:1st-gen/packages/picker"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -6036,18 +6089,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/popover@npm:1.9.0, @spectrum-web-components/popover@workspace:first-gen/packages/popover":
+"@spectrum-web-components/popover@npm:1.9.0, @spectrum-web-components/popover@workspace:1st-gen/packages/popover":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/popover@workspace:first-gen/packages/popover"
+  resolution: "@spectrum-web-components/popover@workspace:1st-gen/packages/popover"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/overlay": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/progress-bar@npm:1.9.0, @spectrum-web-components/progress-bar@workspace:first-gen/packages/progress-bar":
+"@spectrum-web-components/progress-bar@npm:1.9.0, @spectrum-web-components/progress-bar@workspace:1st-gen/packages/progress-bar":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/progress-bar@workspace:first-gen/packages/progress-bar"
+  resolution: "@spectrum-web-components/progress-bar@workspace:1st-gen/packages/progress-bar"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/field-label": "npm:1.9.0"
@@ -6056,18 +6109,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/progress-circle@npm:1.9.0, @spectrum-web-components/progress-circle@workspace:first-gen/packages/progress-circle":
+"@spectrum-web-components/progress-circle@npm:1.9.0, @spectrum-web-components/progress-circle@workspace:1st-gen/packages/progress-circle":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/progress-circle@workspace:first-gen/packages/progress-circle"
+  resolution: "@spectrum-web-components/progress-circle@workspace:1st-gen/packages/progress-circle"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/shared": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/radio@npm:1.9.0, @spectrum-web-components/radio@workspace:first-gen/packages/radio":
+"@spectrum-web-components/radio@npm:1.9.0, @spectrum-web-components/radio@workspace:1st-gen/packages/radio":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/radio@workspace:first-gen/packages/radio"
+  resolution: "@spectrum-web-components/radio@workspace:1st-gen/packages/radio"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/field-group": "npm:1.9.0"
@@ -6077,9 +6131,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/reactive-controllers@npm:1.9.0, @spectrum-web-components/reactive-controllers@workspace:first-gen/tools/reactive-controllers":
+"@spectrum-web-components/reactive-controllers@npm:1.9.0, @spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/reactive-controllers@workspace:first-gen/tools/reactive-controllers"
+  resolution: "@spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers"
   dependencies:
     "@spectrum-web-components/progress-circle": "npm:1.9.0"
     colorjs.io: "npm:0.5.2"
@@ -6087,9 +6141,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/search@npm:1.9.0, @spectrum-web-components/search@workspace:first-gen/packages/search":
+"@spectrum-web-components/search@npm:1.9.0, @spectrum-web-components/search@workspace:1st-gen/packages/search":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/search@workspace:first-gen/packages/search"
+  resolution: "@spectrum-web-components/search@workspace:1st-gen/packages/search"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -6099,9 +6153,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/shared@npm:1.9.0, @spectrum-web-components/shared@workspace:first-gen/tools/shared":
+"@spectrum-web-components/shared@npm:1.9.0, @spectrum-web-components/shared@workspace:1st-gen/tools/shared":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/shared@workspace:first-gen/tools/shared"
+  resolution: "@spectrum-web-components/shared@workspace:1st-gen/tools/shared"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -6109,9 +6163,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/sidenav@npm:1.9.0, @spectrum-web-components/sidenav@workspace:first-gen/packages/sidenav":
+"@spectrum-web-components/sidenav@npm:1.9.0, @spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/sidenav@workspace:first-gen/packages/sidenav"
+  resolution: "@spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.9.0"
@@ -6119,9 +6173,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/slider@npm:1.9.0, @spectrum-web-components/slider@workspace:first-gen/packages/slider":
+"@spectrum-web-components/slider@npm:1.9.0, @spectrum-web-components/slider@workspace:1st-gen/packages/slider":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/slider@workspace:first-gen/packages/slider"
+  resolution: "@spectrum-web-components/slider@workspace:1st-gen/packages/slider"
   dependencies:
     "@internationalized/number": "npm:3.6.5"
     "@lit-labs/observers": "npm:2.0.2"
@@ -6134,26 +6188,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/split-view@npm:1.9.0, @spectrum-web-components/split-view@workspace:first-gen/packages/split-view":
+"@spectrum-web-components/split-view@npm:1.9.0, @spectrum-web-components/split-view@workspace:1st-gen/packages/split-view":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/split-view@workspace:first-gen/packages/split-view"
+  resolution: "@spectrum-web-components/split-view@workspace:1st-gen/packages/split-view"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/shared": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/status-light@npm:1.9.0, @spectrum-web-components/status-light@workspace:first-gen/packages/status-light":
+"@spectrum-web-components/status-light@npm:1.9.0, @spectrum-web-components/status-light@workspace:1st-gen/packages/status-light":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/status-light@workspace:first-gen/packages/status-light"
+  resolution: "@spectrum-web-components/status-light@workspace:1st-gen/packages/status-light"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/story-decorator@npm:1.9.0, @spectrum-web-components/story-decorator@workspace:first-gen/projects/story-decorator":
+"@spectrum-web-components/story-decorator@npm:1.9.0, @spectrum-web-components/story-decorator@workspace:1st-gen/projects/story-decorator":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/story-decorator@workspace:first-gen/projects/story-decorator"
+  resolution: "@spectrum-web-components/story-decorator@workspace:1st-gen/projects/story-decorator"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/field-label": "npm:1.9.0"
@@ -6168,18 +6223,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/styles@npm:1.9.0, @spectrum-web-components/styles@workspace:first-gen/tools/styles":
+"@spectrum-web-components/styles@npm:1.9.0, @spectrum-web-components/styles@workspace:1st-gen/tools/styles":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/styles@workspace:first-gen/tools/styles"
+  resolution: "@spectrum-web-components/styles@workspace:1st-gen/tools/styles"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/swatch@npm:1.9.0, @spectrum-web-components/swatch@workspace:first-gen/packages/swatch":
+"@spectrum-web-components/swatch@npm:1.9.0, @spectrum-web-components/swatch@workspace:1st-gen/packages/swatch":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/swatch@workspace:first-gen/packages/swatch"
+  resolution: "@spectrum-web-components/swatch@workspace:1st-gen/packages/swatch"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -6191,18 +6246,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/switch@npm:1.9.0, @spectrum-web-components/switch@workspace:first-gen/packages/switch":
+"@spectrum-web-components/switch@npm:1.9.0, @spectrum-web-components/switch@workspace:1st-gen/packages/switch":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/switch@workspace:first-gen/packages/switch"
+  resolution: "@spectrum-web-components/switch@workspace:1st-gen/packages/switch"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/checkbox": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/table@npm:1.9.0, @spectrum-web-components/table@workspace:first-gen/packages/table":
+"@spectrum-web-components/table@npm:1.9.0, @spectrum-web-components/table@workspace:1st-gen/packages/table":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/table@workspace:first-gen/packages/table"
+  resolution: "@spectrum-web-components/table@workspace:1st-gen/packages/table"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@lit-labs/virtualizer": "npm:2.0.12"
@@ -6213,9 +6268,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tabs@npm:1.9.0, @spectrum-web-components/tabs@workspace:first-gen/packages/tabs":
+"@spectrum-web-components/tabs@npm:1.9.0, @spectrum-web-components/tabs@workspace:1st-gen/packages/tabs":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/tabs@workspace:first-gen/packages/tabs"
+  resolution: "@spectrum-web-components/tabs@workspace:1st-gen/packages/tabs"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/action-button": "npm:1.9.0"
@@ -6227,9 +6282,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tags@npm:1.9.0, @spectrum-web-components/tags@workspace:first-gen/packages/tags":
+"@spectrum-web-components/tags@npm:1.9.0, @spectrum-web-components/tags@workspace:1st-gen/packages/tags":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/tags@workspace:first-gen/packages/tags"
+  resolution: "@spectrum-web-components/tags@workspace:1st-gen/packages/tags"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -6238,9 +6293,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/textfield@npm:1.9.0, @spectrum-web-components/textfield@workspace:first-gen/packages/textfield":
+"@spectrum-web-components/textfield@npm:1.9.0, @spectrum-web-components/textfield@workspace:1st-gen/packages/textfield":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/textfield@workspace:first-gen/packages/textfield"
+  resolution: "@spectrum-web-components/textfield@workspace:1st-gen/packages/textfield"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/help-text": "npm:1.9.0"
@@ -6251,27 +6306,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/theme@npm:1.9.0, @spectrum-web-components/theme@workspace:first-gen/tools/theme":
+"@spectrum-web-components/theme@npm:1.9.0, @spectrum-web-components/theme@workspace:1st-gen/tools/theme":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/theme@workspace:first-gen/tools/theme"
+  resolution: "@spectrum-web-components/theme@workspace:1st-gen/tools/theme"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
+    "@spectrum-web-components/core": "npm:0.0.1"
     "@spectrum-web-components/styles": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/thumbnail@npm:1.9.0, @spectrum-web-components/thumbnail@workspace:first-gen/packages/thumbnail":
+"@spectrum-web-components/thumbnail@npm:1.9.0, @spectrum-web-components/thumbnail@workspace:1st-gen/packages/thumbnail":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/thumbnail@workspace:first-gen/packages/thumbnail"
+  resolution: "@spectrum-web-components/thumbnail@workspace:1st-gen/packages/thumbnail"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/opacity-checkerboard": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/toast@npm:1.9.0, @spectrum-web-components/toast@workspace:first-gen/packages/toast":
+"@spectrum-web-components/toast@npm:1.9.0, @spectrum-web-components/toast@workspace:1st-gen/packages/toast":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/toast@workspace:first-gen/packages/toast"
+  resolution: "@spectrum-web-components/toast@workspace:1st-gen/packages/toast"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/button": "npm:1.9.0"
@@ -6281,9 +6337,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tooltip@npm:1.9.0, @spectrum-web-components/tooltip@workspace:first-gen/packages/tooltip":
+"@spectrum-web-components/tooltip@npm:1.9.0, @spectrum-web-components/tooltip@workspace:1st-gen/packages/tooltip":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/tooltip@workspace:first-gen/packages/tooltip"
+  resolution: "@spectrum-web-components/tooltip@workspace:1st-gen/packages/tooltip"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/overlay": "npm:1.9.0"
@@ -6292,9 +6348,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/top-nav@npm:1.9.0, @spectrum-web-components/top-nav@workspace:first-gen/packages/top-nav":
+"@spectrum-web-components/top-nav@npm:1.9.0, @spectrum-web-components/top-nav@workspace:1st-gen/packages/top-nav":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/top-nav@workspace:first-gen/packages/top-nav"
+  resolution: "@spectrum-web-components/top-nav@workspace:1st-gen/packages/top-nav"
   dependencies:
     "@lit-labs/observers": "npm:2.0.2"
     "@spectrum-web-components/base": "npm:1.9.0"
@@ -6303,9 +6359,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tray@npm:1.9.0, @spectrum-web-components/tray@workspace:first-gen/packages/tray":
+"@spectrum-web-components/tray@npm:1.9.0, @spectrum-web-components/tray@workspace:1st-gen/packages/tray":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/tray@workspace:first-gen/packages/tray"
+  resolution: "@spectrum-web-components/tray@workspace:1st-gen/packages/tray"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/modal": "npm:1.9.0"
@@ -6315,9 +6371,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/truncated@npm:1.9.0, @spectrum-web-components/truncated@workspace:first-gen/tools/truncated":
+"@spectrum-web-components/truncated@npm:1.9.0, @spectrum-web-components/truncated@workspace:1st-gen/tools/truncated":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/truncated@workspace:first-gen/tools/truncated"
+  resolution: "@spectrum-web-components/truncated@workspace:1st-gen/tools/truncated"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
     "@spectrum-web-components/overlay": "npm:1.9.0"
@@ -6326,17 +6382,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/underlay@npm:1.9.0, @spectrum-web-components/underlay@workspace:first-gen/packages/underlay":
+"@spectrum-web-components/underlay@npm:1.9.0, @spectrum-web-components/underlay@workspace:1st-gen/packages/underlay":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/underlay@workspace:first-gen/packages/underlay"
+  resolution: "@spectrum-web-components/underlay@workspace:1st-gen/packages/underlay"
   dependencies:
     "@spectrum-web-components/base": "npm:1.9.0"
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/vrt-compare@workspace:first-gen/projects/vrt-compare":
+"@spectrum-web-components/vrt-compare@workspace:1st-gen/projects/vrt-compare":
   version: 0.0.0-use.local
-  resolution: "@spectrum-web-components/vrt-compare@workspace:first-gen/projects/vrt-compare"
+  resolution: "@spectrum-web-components/vrt-compare@workspace:1st-gen/projects/vrt-compare"
   dependencies:
     "@spectrum-web-components/action-bar": "npm:1.9.0"
     "@spectrum-web-components/action-button": "npm:1.9.0"
@@ -6350,6 +6406,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@storybook/addon-a11y@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/addon-a11y@npm:10.0.3"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    axe-core: "npm:^4.2.0"
+  peerDependencies:
+    storybook: ^10.0.3
+  checksum: 10c0/7ef09ebced76fd262273bdb147255dc83cca645b7a847be42757d044d9f70117f2f1ab9d6ca4f238dc25c00a66ca25f4ebfc94bb62afac38a740ff1cf3f42479
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-a11y@npm:8.6.14":
   version: 8.6.14
   resolution: "@storybook/addon-a11y@npm:8.6.14"
@@ -6361,18 +6429,6 @@ __metadata:
   peerDependencies:
     storybook: ^8.6.14
   checksum: 10c0/bc1ea6bc4f4229f2a88f40a1fc768628cad7744ca39676228a99656211942d96783d1d20aa475ac03bc653c29ed896a6179b3b17c8226effb598111cd8c8d146
-  languageName: node
-  linkType: hard
-
-"@storybook/addon-a11y@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/addon-a11y@npm:9.1.10"
-  dependencies:
-    "@storybook/global": "npm:^5.0.0"
-    axe-core: "npm:^4.2.0"
-  peerDependencies:
-    storybook: ^9.1.10
-  checksum: 10c0/b7f3cef7ad4cf090864bab16f1745fd96b293dbdd5f0897388278cc09b228e703fd745f0c5a349592ed1216165a25e6b6c0dced246f27322f91e5d42457dc2b5
   languageName: node
   linkType: hard
 
@@ -6417,16 +6473,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-designs@npm:10.0.2":
-  version: 10.0.2
-  resolution: "@storybook/addon-designs@npm:10.0.2"
+"@storybook/addon-designs@npm:11.0.1":
+  version: 11.0.1
+  resolution: "@storybook/addon-designs@npm:11.0.1"
   dependencies:
     "@figspec/react": "npm:^1.0.0"
   peerDependencies:
-    "@storybook/addon-docs": ^0.0.0-0 || ^9.0.0 || ^9.1.0-0
+    "@storybook/addon-docs": ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    storybook: ^0.0.0-0 || ^9.0.0 || ^9.1.0-0
+    storybook: ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0
   peerDependenciesMeta:
     "@storybook/addon-docs":
       optional: true
@@ -6434,7 +6490,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/8d02487ad337570eabc7962131ee933bf3995fe4700211dc734958d3a59c31f981214c0bc651b574b76f6e97abf259603bd277b30693b45eea2abf64899aab74
+  checksum: 10c0/69aca21c9be81345c91c782a72d7b2d90633581ef28be582836af1d9a7ddcc7515816391020b0ae947058bc59fd56c439a4b957a46ece6439cfbf8bfd1e0e2e7
   languageName: node
   linkType: hard
 
@@ -6464,6 +6520,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-docs@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/addon-docs@npm:10.0.3"
+  dependencies:
+    "@mdx-js/react": "npm:^3.0.0"
+    "@storybook/csf-plugin": "npm:10.0.3"
+    "@storybook/icons": "npm:^1.6.0"
+    "@storybook/react-dom-shim": "npm:10.0.3"
+    react: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    react-dom: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    ts-dedent: "npm:^2.0.0"
+  peerDependencies:
+    storybook: ^10.0.3
+  checksum: 10c0/58336d63d0faf470ecb810a0bebf3cf14001acf10c3c6427b4b03cd8f506e56a3df176d35404a95c0af60f872822d5ee60bc4cdea7d91f68e43ef18f8654554e
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-docs@npm:8.6.14":
   version: 8.6.14
   resolution: "@storybook/addon-docs@npm:8.6.14"
@@ -6478,23 +6551,6 @@ __metadata:
   peerDependencies:
     storybook: ^8.6.14
   checksum: 10c0/1668d40977624e3495b0cd3f009957994db04cec6de39645311e892cc1de99bf5a98bea9e9783d8063627c27b9545d222b1fdc490c23c6fadeead42ce0605fcb
-  languageName: node
-  linkType: hard
-
-"@storybook/addon-docs@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/addon-docs@npm:9.1.10"
-  dependencies:
-    "@mdx-js/react": "npm:^3.0.0"
-    "@storybook/csf-plugin": "npm:9.1.10"
-    "@storybook/icons": "npm:^1.4.0"
-    "@storybook/react-dom-shim": "npm:9.1.10"
-    react: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
-    react-dom: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
-    ts-dedent: "npm:^2.0.0"
-  peerDependencies:
-    storybook: ^9.1.10
-  checksum: 10c0/331cf0e05ec81b67b4307bbef322a3da6ff291a03727c7ee92537ba4c674052181fbae5a59bd0486277f403b22f25fc149b2576a806423c84ef35f2ca499d0e4
   languageName: node
   linkType: hard
 
@@ -6604,27 +6660,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-vitest@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/addon-vitest@npm:9.1.10"
+"@storybook/addon-vitest@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/addon-vitest@npm:10.0.3"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
-    "@storybook/icons": "npm:^1.4.0"
+    "@storybook/icons": "npm:^1.6.0"
     prompts: "npm:^2.4.0"
     ts-dedent: "npm:^2.2.0"
   peerDependencies:
-    "@vitest/browser": ^3.0.0
-    "@vitest/runner": ^3.0.0
-    storybook: ^9.1.10
-    vitest: ^3.0.0
+    "@vitest/browser": ^3.0.0 || ^4.0.0
+    "@vitest/browser-playwright": ^4.0.0
+    "@vitest/runner": ^3.0.0 || ^4.0.0
+    storybook: ^10.0.3
+    vitest: ^3.0.0 || ^4.0.0
   peerDependenciesMeta:
     "@vitest/browser":
+      optional: true
+    "@vitest/browser-playwright":
       optional: true
     "@vitest/runner":
       optional: true
     vitest:
       optional: true
-  checksum: 10c0/b5d7a9489ace9fcf489252c48bab23ba0bf9c3681cdd76e50a57176c301918cf2812ce3eee842f536183143fe851351b458c9cbd6b904009426b080eee11986a
+  checksum: 10c0/f52d813493012a40cfaceba963df2db4827d2f40052e1c77b31adad67bf094e6b3df5272b3220f41d0881da505ea309b45766f2ee61ac2df0c39eb3b88dadbb7
   languageName: node
   linkType: hard
 
@@ -6647,16 +6706,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/builder-vite@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/builder-vite@npm:9.1.10"
+"@storybook/builder-vite@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/builder-vite@npm:10.0.3"
   dependencies:
-    "@storybook/csf-plugin": "npm:9.1.10"
+    "@storybook/csf-plugin": "npm:10.0.3"
     ts-dedent: "npm:^2.0.0"
   peerDependencies:
-    storybook: ^9.1.10
+    storybook: ^10.0.3
     vite: ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: 10c0/96ffce92448b5bf2c6d0c1f3c71e57f5093bd7b80492b24c14c1277d15a7f9cf4153bfc15fbbc6d30c21a5ac2605f5fa02cdb0ae7fc1abe28a30e64afd9ba210
+  checksum: 10c0/3b72d04ea4681e15efcf691b402c280240b9cd0a95cec4bc54105aa69be4bfaf362f4259773049f3b90f531172d84a2a67044e02a50d88e88ea5de7a6938ac4c
   languageName: node
   linkType: hard
 
@@ -6823,6 +6882,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/csf-plugin@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/csf-plugin@npm:10.0.3"
+  dependencies:
+    unplugin: "npm:^2.3.5"
+  peerDependencies:
+    esbuild: "*"
+    rollup: "*"
+    storybook: ^10.0.3
+    vite: "*"
+    webpack: "*"
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10c0/d12e7b714761f5e8b9cc23e4aac361264746bfed53161bdd6bb91290325b1a0ef07a482b03bbd0a3a49262e52cddaa33e391dd92f4d6d988bf41af0c6a8913b8
+  languageName: node
+  linkType: hard
+
 "@storybook/csf-plugin@npm:8.6.14":
   version: 8.6.14
   resolution: "@storybook/csf-plugin@npm:8.6.14"
@@ -6831,17 +6914,6 @@ __metadata:
   peerDependencies:
     storybook: ^8.6.14
   checksum: 10c0/3f2cebd6046aea554d2e740c4d262005c580018dfcbcca8d9a589f9e893d407da405ace235595b3e110fb6ed21b840ff1645508a98764017ca5d1d4c56027172
-  languageName: node
-  linkType: hard
-
-"@storybook/csf-plugin@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/csf-plugin@npm:9.1.10"
-  dependencies:
-    unplugin: "npm:^1.3.1"
-  peerDependencies:
-    storybook: ^9.1.10
-  checksum: 10c0/1608ee463a5cc606266cf71498fe045ebe634a0d85880272a6d3aee6a039bad46f9bca8a3c21b3cfb6e8e9b306191785daa4aff94f02f4cfc6ec65275a695864
   languageName: node
   linkType: hard
 
@@ -6885,7 +6957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/icons@npm:^1.2.12, @storybook/icons@npm:^1.4.0":
+"@storybook/icons@npm:^1.2.12, @storybook/icons@npm:^1.6.0":
   version: 1.6.0
   resolution: "@storybook/icons@npm:1.6.0"
   peerDependencies:
@@ -6994,6 +7066,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/react-dom-shim@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/react-dom-shim@npm:10.0.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    storybook: ^10.0.3
+  checksum: 10c0/bfdfa2c5e5f931f903c98d42b61389bc77b7b62012e631a4c592f0034bec28d54df52e26a6871b3bd6e97e3dcb503e8cce9d3770318d0ca08217f7bbeef09244
+  languageName: node
+  linkType: hard
+
 "@storybook/react-dom-shim@npm:8.6.14":
   version: 8.6.14
   resolution: "@storybook/react-dom-shim@npm:8.6.14"
@@ -7002,17 +7085,6 @@ __metadata:
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
     storybook: ^8.6.14
   checksum: 10c0/6e54c05ab19be1c34084e8acd133d8d358c3b6824db01b4aff159be3f818bd12c3a17217fe1947244c4576d7d02875b486578f011edb0e2290cb62541a263c5f
-  languageName: node
-  linkType: hard
-
-"@storybook/react-dom-shim@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/react-dom-shim@npm:9.1.10"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-    storybook: ^9.1.10
-  checksum: 10c0/00a54dedda008857d6478c2dcbf24612e3681958c48bad2831882bd467dc89c7ffc6939a8ee013d72d989ab248017017b335cfe6efd12fcfed9647518c59e0ce
   languageName: node
   linkType: hard
 
@@ -7119,15 +7191,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/web-components-vite@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/web-components-vite@npm:9.1.10"
+"@storybook/web-components-vite@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/web-components-vite@npm:10.0.3"
   dependencies:
-    "@storybook/builder-vite": "npm:9.1.10"
-    "@storybook/web-components": "npm:9.1.10"
+    "@storybook/builder-vite": "npm:10.0.3"
+    "@storybook/web-components": "npm:10.0.3"
   peerDependencies:
-    storybook: ^9.1.10
-  checksum: 10c0/f3c2079126a4cbf11a1bcb579f2e4cb486a85c780e09c4734b255c9063ad671baa04e29d0dd9094a6592ff6a945c08a306ed178de92409372115cacde4774468
+    storybook: ^10.0.3
+  checksum: 10c0/9e193efbede22512e52811fab888d5a0997af239ac09ad2c38c9e290baaef51280625c6c5b4e78f4f9c979c39e6dbeb52ccbc200fb589fc963ced7787b075f12
   languageName: node
   linkType: hard
 
@@ -7141,6 +7213,20 @@ __metadata:
     lit: ^2.0.0 || ^3.0.0
     storybook: ^8.6.14
   checksum: 10c0/538ef22aa54379d955cc6c09e46a73922ef7a9e2a4fa7fb0a30069ba5dcc6cec7e15aa4b9e2c9396e1b6146fc07816a06f157a47e3d76a61d564d98f32e6c5c3
+  languageName: node
+  linkType: hard
+
+"@storybook/web-components@npm:10.0.3":
+  version: 10.0.3
+  resolution: "@storybook/web-components@npm:10.0.3"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    tiny-invariant: "npm:^1.3.1"
+    ts-dedent: "npm:^2.0.0"
+  peerDependencies:
+    lit: ^2.0.0 || ^3.0.0
+    storybook: ^10.0.3
+  checksum: 10c0/889c09f97ffb47c04e20e303baaf875d0713aa8e4cd4da6c6a0bcffd070fbbdfee1c7ce66bc7ca4455cf56cbb9ceb4a580bb66c1dc7c489936ebcb76c73047d3
   languageName: node
   linkType: hard
 
@@ -7181,20 +7267,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/web-components@npm:9.1.10":
-  version: 9.1.10
-  resolution: "@storybook/web-components@npm:9.1.10"
-  dependencies:
-    "@storybook/global": "npm:^5.0.0"
-    tiny-invariant: "npm:^1.3.1"
-    ts-dedent: "npm:^2.0.0"
-  peerDependencies:
-    lit: ^2.0.0 || ^3.0.0
-    storybook: ^9.1.10
-  checksum: 10c0/ca6c16809ef593f42a4d6309af28add0390ca24b7f2e73647ff92cdb7b7cfddd794fb8259c3c890235799cbbfb8c88bbb6081e4557a36216408f92df8caba25a
-  languageName: node
-  linkType: hard
-
 "@surma/rollup-plugin-off-main-thread@npm:^2.2.3":
   version: 2.2.3
   resolution: "@surma/rollup-plugin-off-main-thread@npm:2.2.3"
@@ -7206,43 +7278,6 @@ __metadata:
   checksum: 10c0/4f36a7488cdae2907053a48231430e8e9aa8f1903a96131bf8325786afba3224011f9120164cae75043558bd051881050b071958388fe477927d340b1cc1a066
   languageName: node
   linkType: hard
-
-"@swc/components@workspace:second-gen/packages/swc":
-  version: 0.0.0-use.local
-  resolution: "@swc/components@workspace:second-gen/packages/swc"
-  dependencies:
-    "@axe-core/playwright": "npm:4.10.2"
-    "@custom-elements-manifest/analyzer": "npm:0.10.8"
-    "@storybook/addon-a11y": "npm:9.1.10"
-    "@storybook/addon-designs": "npm:10.0.2"
-    "@storybook/addon-docs": "npm:9.1.10"
-    "@storybook/addon-vitest": "npm:9.1.10"
-    "@storybook/test-runner": "npm:0.23.0"
-    "@storybook/web-components-vite": "npm:9.1.10"
-    "@swc/core": "workspace:*"
-    "@types/react": "npm:19.1.16"
-    "@types/react-dom": "npm:19.1.9"
-    "@vitest/browser": "npm:3.2.4"
-    "@vitest/coverage-v8": "npm:3.2.4"
-    "@vitest/ui": "npm:3.2.4"
-    "@wc-toolkit/storybook-helpers": "npm:9.0.1"
-    autoprefixer: "npm:10.4.21"
-    glob: "npm:11.0.3"
-    lit: "npm:^2.5.0 || ^3.1.3"
-    playwright: "npm:1.53.1"
-    postcss: "npm:8.5.6"
-    postcss-preset-env: "npm:10.4.0"
-    react: "npm:19.1.1"
-    react-dom: "npm:19.1.1"
-    rimraf: "npm:6.0.1"
-    storybook: "npm:9.1.10"
-    typescript: "npm:5.9.2"
-    vite: "npm:7.1.7"
-    vite-plugin-dts: "npm:4.5.4"
-    vite-plugin-lit-css: "npm:2.2.1"
-    vitest: "npm:3.2.4"
-  languageName: unknown
-  linkType: soft
 
 "@swc/core-darwin-arm64@npm:1.13.20":
   version: 1.13.20
@@ -7359,19 +7394,6 @@ __metadata:
   checksum: 10c0/ef9ed965f20fe8331ef6b279b30ae2421ec9cd4105cfc0ac4645ae716844dfa9998162b132abbd6e8ccfb91deb263861792cf815fdcdcb7a011384e3505e0532
   languageName: node
   linkType: hard
-
-"@swc/core@workspace:*, @swc/core@workspace:second-gen/packages/core":
-  version: 0.0.0-use.local
-  resolution: "@swc/core@workspace:second-gen/packages/core"
-  dependencies:
-    glob: "npm:11.0.3"
-    lit: "npm:^2.5.0 || ^3.1.3"
-    rimraf: "npm:6.0.1"
-    typescript: "npm:5.9.2"
-    vite: "npm:7.1.7"
-    vite-plugin-dts: "npm:4.5.4"
-  languageName: unknown
-  linkType: soft
 
 "@swc/counter@npm:^0.1.3":
   version: 0.1.3
@@ -8505,9 +8527,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/swc@workspace:first-gen/projects/types":
+"@types/swc@workspace:1st-gen/projects/types":
   version: 0.0.0-use.local
-  resolution: "@types/swc@workspace:first-gen/projects/types"
+  resolution: "@types/swc@workspace:1st-gen/projects/types"
   languageName: unknown
   linkType: soft
 
@@ -9126,13 +9148,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wc-toolkit/storybook-helpers@npm:9.0.1":
-  version: 9.0.1
-  resolution: "@wc-toolkit/storybook-helpers@npm:9.0.1"
+"@wc-toolkit/storybook-helpers@npm:10.0.0":
+  version: 10.0.0
+  resolution: "@wc-toolkit/storybook-helpers@npm:10.0.0"
   peerDependencies:
     lit: ^2.0.0 || ^3.0.0
-    storybook: ">=9.0.0-0 <10.0.0-0"
-  checksum: 10c0/70f57c869c1d58f9eaf09d1cdc841784ceb01f7154452808d736431d79ba8757817320668e703a5136fe0b64428bdae386cd5b4b9cbabcfe75321eb234695673
+    storybook: ">=10.0.0-0 <11.0.0-0"
+  checksum: 10c0/b35cd84e6888277057a5309d605f787d0794cf6fcd5db2a877fb59a0f89b6fe82311c9a6dd2a369a27e574cc07adbba59dda393287da44bfd247d77d9828db7c
   languageName: node
   linkType: hard
 
@@ -13431,9 +13453,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"documentation@workspace:first-gen/projects/documentation":
+"documentation@workspace:1st-gen/projects/documentation":
   version: 0.0.0-use.local
-  resolution: "documentation@workspace:first-gen/projects/documentation"
+  resolution: "documentation@workspace:1st-gen/projects/documentation"
   dependencies:
     "@11ty/eleventy": "npm:3.1.2"
     "@11ty/eleventy-plugin-syntaxhighlight": "npm:5.0.2"
@@ -15078,9 +15100,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"example-project-rollup@workspace:first-gen/projects/example-project-rollup":
+"example-project-rollup@workspace:1st-gen/projects/example-project-rollup":
   version: 0.0.0-use.local
-  resolution: "example-project-rollup@workspace:first-gen/projects/example-project-rollup"
+  resolution: "example-project-rollup@workspace:1st-gen/projects/example-project-rollup"
   dependencies:
     "@open-wc/building-rollup": "npm:3.0.2"
     "@open-wc/eslint-config": "npm:12.0.3"
@@ -15107,9 +15129,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"example-project-webpack@workspace:first-gen/projects/example-project-webpack":
+"example-project-webpack@workspace:1st-gen/projects/example-project-webpack":
   version: 0.0.0-use.local
-  resolution: "example-project-webpack@workspace:first-gen/projects/example-project-webpack"
+  resolution: "example-project-webpack@workspace:1st-gen/projects/example-project-webpack"
   dependencies:
     "@spectrum-web-components/button": "npm:1.9.0"
     "@spectrum-web-components/field-label": "npm:1.9.0"
@@ -27827,6 +27849,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"storybook@npm:10.0.3":
+  version: 10.0.3
+  resolution: "storybook@npm:10.0.3"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    "@storybook/icons": "npm:^1.6.0"
+    "@testing-library/jest-dom": "npm:^6.6.3"
+    "@testing-library/user-event": "npm:^14.6.1"
+    "@vitest/expect": "npm:3.2.4"
+    "@vitest/mocker": "npm:3.2.4"
+    "@vitest/spy": "npm:3.2.4"
+    esbuild: "npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0"
+    recast: "npm:^0.23.5"
+    semver: "npm:^7.6.2"
+    ws: "npm:^8.18.0"
+  peerDependencies:
+    prettier: ^2 || ^3
+  peerDependenciesMeta:
+    prettier:
+      optional: true
+  bin:
+    storybook: ./dist/bin/dispatcher.js
+  checksum: 10c0/48c432f8db5bfe7c5c0101c176a65bfa1bff8b9d365bcee8acf5ba3b6b3d6b10d2f96976e08169cc4057566fb63848d3800ea9f20a640800e23cfd791093699e
+  languageName: node
+  linkType: hard
+
 "storybook@npm:8.6.14":
   version: 8.6.14
   resolution: "storybook@npm:8.6.14"
@@ -27842,33 +27890,6 @@ __metadata:
     sb: ./bin/index.cjs
     storybook: ./bin/index.cjs
   checksum: 10c0/a39d5ca1c3fecb4e6d5b7867d510e9a31524b48053dcea485afffbeaf7fe8ced883fd2d44e1b5076a2f3044eeb095fe49282793f1041124a9aa2b47fa675c956
-  languageName: node
-  linkType: hard
-
-"storybook@npm:9.1.10":
-  version: 9.1.10
-  resolution: "storybook@npm:9.1.10"
-  dependencies:
-    "@storybook/global": "npm:^5.0.0"
-    "@testing-library/jest-dom": "npm:^6.6.3"
-    "@testing-library/user-event": "npm:^14.6.1"
-    "@vitest/expect": "npm:3.2.4"
-    "@vitest/mocker": "npm:3.2.4"
-    "@vitest/spy": "npm:3.2.4"
-    better-opn: "npm:^3.0.2"
-    esbuild: "npm:^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0 || ^0.25.0"
-    esbuild-register: "npm:^3.5.0"
-    recast: "npm:^0.23.5"
-    semver: "npm:^7.6.2"
-    ws: "npm:^8.18.0"
-  peerDependencies:
-    prettier: ^2 || ^3
-  peerDependenciesMeta:
-    prettier:
-      optional: true
-  bin:
-    storybook: ./bin/index.cjs
-  checksum: 10c0/e44ced87d5ed1c3260c65824d5e1c5d09d4f58731ba63371bb5b52f68f5b73d52062d79c17c63ad85a4ffa69774b26b51210bbc22ffa495bb44d4fe5c87d95a7
   languageName: node
   linkType: hard
 
@@ -28461,9 +28482,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swc-templates@workspace:first-gen/projects/templates":
+"swc-templates@workspace:1st-gen/projects/templates":
   version: 0.0.0-use.local
-  resolution: "swc-templates@workspace:first-gen/projects/templates"
+  resolution: "swc-templates@workspace:1st-gen/projects/templates"
   dependencies:
     plop: "npm:4.0.3"
   languageName: unknown
@@ -29874,6 +29895,18 @@ __metadata:
     acorn: "npm:^8.14.0"
     webpack-virtual-modules: "npm:^0.6.2"
   checksum: 10c0/dd5f8c5727d0135847da73cf03fb199107f1acf458167034886fda3405737dab871ad3926431b4f70e1e82cdac482ac1383cea4019d782a68515c8e3e611b6cc
+  languageName: node
+  linkType: hard
+
+"unplugin@npm:^2.3.5":
+  version: 2.3.10
+  resolution: "unplugin@npm:2.3.10"
+  dependencies:
+    "@jridgewell/remapping": "npm:^2.3.5"
+    acorn: "npm:^8.15.0"
+    picomatch: "npm:^4.0.3"
+    webpack-virtual-modules: "npm:^0.6.2"
+  checksum: 10c0/29dcd738772aeff91c6f0154f156c95c58a37a4674fcb7cc34d6868af763834f0f447a1c3af074818c0c5602baead49bd3b9399a13f0425d69a00a527e58ddda
   languageName: node
   linkType: hard
 
