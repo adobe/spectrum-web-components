@@ -113,7 +113,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "notice"],
     "root": true,
     "rules": {
         "no-console": [

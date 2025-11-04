@@ -20,7 +20,7 @@
         "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
         "dev:analyze": "yarn workspace @adobe/swc analyze:watch",
         "dev:core": "yarn workspace @spectrum-web-components/core dev",
-        "lint": "eslint . --ext .ts,.js,.json",
+        "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",
         "start": "run-p dev:core dev:analyze storybook",
         "storybook": "yarn workspace @adobe/swc storybook",
         "storybook:build": "yarn workspace @adobe/swc storybook:build",
