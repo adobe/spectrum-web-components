@@ -8,6 +8,49 @@ Spectrum offers multiple variants:
 - **Color**: `light`, `dark` (legacy: `lightest`, `darkest` – deprecated)
 - **Scale**: `medium`, `large`
 
+By default, `<sp-theme>` uses the `spectrum` system, `light` color, and `medium` scale.
+
+### How sp-theme works
+
+Visually, all Spectrum Web Components are an expression of the design tokens specified by Spectrum, Adobe's design system. On the web, these tokens are made available as CSS Custom Properties. Using `sp-theme` as a parent element for your components ensures that those CSS Custom Properties can be leveraged by the elements within your application. This ensures consistent delivery of not only the color and scale you've specified in your particular instance, but for _all_ the other color, scale, and content direction specifications across Spectrum.
+
+Additionally, the `sp-theme` element manages the content direction applied to the elements in its DOM scope. By default, an `sp-theme` element resolves its initial content direction from the value specified by its first `sp-theme` or `document` ancestor; otherwise, it uses the value `dir="ltr"` if a content direction isn't present in those elements. When a value for `dir` is manually supplied to `sp-theme`, the default value is overridden. In all cases, though, `sp-theme` manages the `dir` value of its `SpectrumElement` descendents, unless another `sp-theme` element is placed into its scope and overrides that management.
+
+To make the above concepts a little more concrete, take a look at the table below. Try selecting another `color` in the picker, and notice how that changes the values of the colors. The token names for the variables persist, but the RGB values under the hood change! Considering that `sp-theme` also manages all the other theme and size options, `sp-theme` reveals itself to be a pretty powerful component.
+
+<custom-vars-viewer id="color-tokens"></custom-vars-viewer>
+
+<script type="module">
+    const varsViewer = document.querySelector('custom-vars-viewer');
+    const options = {
+        rootMargin: '20px'
+    }
+    const callback = async (entries, observer) => {
+        if (entries[0].intersectionRatio === 0) return;
+        import('@spectrum-web-components/custom-vars-viewer/custom-vars-viewer.js').then(() => {
+            const queryThemeEvent = new CustomEvent('sp-track-theme', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    callback: (color) => {
+                        varsViewer.themeColor = color.startsWith('light')
+                            ? 'light'
+                            : color;
+                    },
+                },
+                cancelable: true,
+            });
+            varsViewer.dispatchEvent(queryThemeEvent);
+        });
+        observer.disconnect();
+    }
+
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(varsViewer);
+</script>
+
+When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the [`@spectrum-web-components/styles`](https://opensource.adobe.com/spectrum-web-components/tools/styles/) package.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/theme?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/theme)
@@ -20,6 +63,7 @@ yarn add @spectrum-web-components/theme
 Register the element and load the theme fragments you intend to use:
 
 ```js
+// Registers the <sp-theme> custom element
 import '@spectrum-web-components/theme/sp-theme.js';
 
 // Load the specific variants you will use (recommended)
@@ -41,7 +85,7 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-
 
 ## Examples
 
-### Light theme, medium scale
+### Light color, medium scale
 
 ```html
 <style type="text/css">
@@ -69,7 +113,7 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-
 </sp-theme>
 ```
 
-### Dark theme, large scale
+### Dark color, large scale
 
 The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Platform Scale.
 
@@ -85,15 +129,15 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Pl
 <sp-theme system="spectrum" color="dark" scale="large">
     <div id="outer">
         <sp-field-label for="volume">Volume</sp-field-label>
-        <sp-slider id="volume" label="Volume" value="50"></sp-slider>
+        <sp-slider id="volume" value="50"></sp-slider>
         <sp-switch>Overdrive</sp-switch>
     </div>
 </sp-theme>
 ```
 
-### Embedded themes and directional content
+### Embedded color systems and directional content
 
-There are a few cases where it is necessary to embed one theme within another. For example, if you have an application that is using a dark theme with a left to right text direction that is previewing or editing content that will be displayed in a light theme with a right to left text direction.
+There are a few cases where it is necessary to embed one theme within another. For example, if you have an application that is using a dark color system with a left to right text direction that is previewing or editing content that will be displayed in a light color system with a right to left text direction.
 
 ```html
 <style type="text/css">
@@ -156,47 +200,6 @@ There are a few cases where it is necessary to embed one theme within another. F
 ```
 
 ## Advanced usage
-
-### What it does
-
-Visually, all Spectrum Web Components are an expression of the design tokens specified by Spectrum, Adobe's design system. On the web, these tokens are made available as CSS Custom Properties. Using `sp-theme` as a parent element for your components ensures that those CSS Custom Properties can be leveraged by the elements within your application. This ensures consistent delivery of not only the color and scale you've specified in your particular instance, but for _all_ the other color, scale, and content direction specifications across Spectrum.
-
-Additionally, the `sp-theme` element manages the content direction applied to the elements in its DOM scope. By default, an `sp-theme` element resolves its initial content direction from the value specified by its first `sp-theme` or `document` ancestor; otherwise, it uses the value `dir="ltr"` if a content direction isn't present in those elements. When a value for `dir` is manually supplied to `sp-theme`, the default value is overridden. In all cases, though, `sp-theme` manages the `dir` value of its `SpectrumElement` descendents, unless another `sp-theme` element is placed into its scope and overrides that management.
-
-To make the above concepts a little more concrete, take a look at the table below. Try selecting another `color` in the picker, and notice how that changes the values of the colors. The token names for the variables persist, but the RGB values under the hood change! Considering that `sp-theme` also manages all the other theme and size options, `sp-theme` reveals itself to be a pretty powerful component.
-
-<custom-vars-viewer id="color-tokens"></custom-vars-viewer>
-
-<script type="module">
-    const varsViewer = document.querySelector('custom-vars-viewer');
-    const options = {
-        rootMargin: '20px'
-    }
-    const callback = async (entries, observer) => {
-        if (entries[0].intersectionRatio === 0) return;
-        import('@spectrum-web-components/custom-vars-viewer/custom-vars-viewer.js').then(() => {
-            const queryThemeEvent = new CustomEvent('sp-track-theme', {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (color) => {
-                        varsViewer.themeColor = color.startsWith('light')
-                            ? 'light'
-                            : color;
-                    },
-                },
-                cancelable: true,
-            });
-            varsViewer.dispatchEvent(queryThemeEvent);
-        });
-        observer.disconnect();
-    }
-
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(varsViewer);
-</script>
-
-When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@spectrum-web-components/styles` package.
 
 ### Lazy loading themes
 
