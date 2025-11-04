@@ -58,10 +58,10 @@ const wrapCSSResult = (content) => {
     `;
 };
 
-const licensePath = path.resolve(__dirname, '..', 'config', 'license.js');
+const headerPath = path.resolve(__dirname, '..', 'config', 'HEADER.js');
 let header = '';
-if (fs.existsSync(licensePath)) {
-    header = fs.readFileSync(licensePath, 'utf8');
+if (fs.existsSync(headerPath)) {
+    header = fs.readFileSync(headerPath, 'utf8');
     header = header.replace('<%= YEAR %>', new Date().getFullYear());
 }
 
