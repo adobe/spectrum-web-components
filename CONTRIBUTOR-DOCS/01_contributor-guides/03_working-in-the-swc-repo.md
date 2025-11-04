@@ -77,7 +77,7 @@ Reflecting the side-by-side strategy, the repository is organized into two top-l
 
     - The 2nd-gen SWC library (`packages/swc/`).
 
-During this transition, depending on what you're trying to accomplish, you may end up working in `1st-gen`, `2nd-gen`, or both. If you have any questions, [please ask](./01_getting-involved.md#community--support)—we're happy to help.
+During this transition, depending on what you're trying to accomplish, you may end up working in `[1st-gen](/1st-gen/README.md)`, `[2nd-gen](/2nd-gen/README.md)`, or both. If you have any questions, [please ask](./01_getting-involved.md#community--support)—we're happy to help.
 
 ## Development workflow
 
