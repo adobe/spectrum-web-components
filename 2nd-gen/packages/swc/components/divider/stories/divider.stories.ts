@@ -11,9 +11,10 @@
  */
 
 import { html } from 'lit';
-import { Divider } from '@adobe/swc/divider';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
