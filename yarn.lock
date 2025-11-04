@@ -5354,7 +5354,7 @@ __metadata:
     alex: "npm:11.0.1"
     cem-plugin-module-file-extensions: "npm:0.0.5"
     chromatic: "npm:13.2.0"
-    chromedriver: "npm:142.0.0"
+    chromedriver: "npm:140.0.3"
     colors: "npm:1.4.0"
     common-tags: "npm:1.8.2"
     crypto: "npm:1.0.1"
@@ -11842,9 +11842,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromedriver@npm:142.0.0":
-  version: 142.0.0
-  resolution: "chromedriver@npm:142.0.0"
+"chromedriver@npm:140.0.3":
+  version: 140.0.3
+  resolution: "chromedriver@npm:140.0.3"
   dependencies:
     "@testim/chrome-version": "npm:^1.1.4"
     axios: "npm:^1.12.0"
@@ -11855,7 +11855,7 @@ __metadata:
     tcp-port-used: "npm:^1.0.2"
   bin:
     chromedriver: bin/chromedriver
-  checksum: 10c0/e453c571f426fb3dc4eff70dee695ae648952e3a119e5e5b88d6760a9445f193b3fd5dccfc817efbfcb5d8590cd4d9c3ac7f97d37416d79d738ab438aaf35e01
+  checksum: 10c0/828614a9f87eb0dde3462d570ff2a09815f791f2ecbcab6ce3a84baae4f9b4bb74c671a8496b5135eaa692342782546e74cb6e7826be2b1fea6cc3f610729a1c
   languageName: node
   linkType: hard
 
