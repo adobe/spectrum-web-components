@@ -27,16 +27,16 @@ import { Textfield } from '@spectrum-web-components/textfield';
 ### Anatomy
 
 ```html
-<sp-textfield id="basic" label="Name"></sp-textfield>
+<sp-textfield label="Name"></sp-textfield>
 ```
 
 #### Label
 
-A text field must have a label in order to be accessible. A label can be provided either via the `label` attribute, like the previous example or with an `<sp-field-label>` element.
+A text field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
 
 ```html
-<sp-field-label for="with-field-label">Name</sp-field-label>
-<sp-textfield id="with-field-label"></sp-textfield>
+<sp-textfield>Name</sp-textfield>
+<sp-textfield label="Name"></sp-textfield>
 ```
 
 #### Placeholder
@@ -44,8 +44,7 @@ A text field must have a label in order to be accessible. A label can be provide
 Use the `placeholder` attribute to include placeholder text. **Note**: Placeholder text should not be used as a replacement for a label or help help text.
 
 ```html
-<sp-field-label for="has-placeholder">Name</sp-field-label>
-<sp-textfield id="has-placeholder" placeholder="ex., John Doe"></sp-textfield>
+<sp-textfield placeholder="ex., John Doe">Name</sp-textfield>
 ```
 
 #### Help text
@@ -59,8 +58,8 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="self">
 
 ```html
-<sp-field-label for="self">Stay "Positive"</sp-field-label>
-<sp-textfield id="self" pattern="[P][o][s][i][t][i][v][e]" value="Positive">
+<sp-textfield pattern="[P][o][s][i][t][i][v][e]" value="Positive">
+    Stay "Positive"
     <sp-help-text slot="help-text">
         Tell us how you are feeling today.
     </sp-help-text>
@@ -73,9 +72,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="above">
 
 ```html
-<sp-field-label for="managed">Stay "Positive"</sp-field-label>
 <sp-textfield
-    id="managed"
     pattern="[P][o][s][i][t][i][v][e]"
     value="Positive"
     oninput='
@@ -84,6 +81,7 @@ See [help text](../help-text) for more information.
         helpText.variant = this.invalid ? `negative` : `neutral`;
     '
 >
+    Stay "Positive"
     <sp-help-text slot="neutral-text">
         Tell us how you're feeling today.
     </sp-help-text>
@@ -103,12 +101,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="s">
 
 ```html
-<sp-field-label size="s" for="name-0-s">Name</sp-field-label>
-<sp-textfield
-    size="s"
-    id="name-0-s"
-    placeholder="Enter your name"
-></sp-textfield>
+<sp-textfield size="s" placeholder="Enter your name">Name</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -116,8 +109,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="m">
 
 ```html
-<sp-field-label for="name-0-m">Name</sp-field-label>
-<sp-textfield id="name-0-m" placeholder="Enter your name"></sp-textfield>
+<sp-textfield placeholder="Enter your name">Name</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -125,12 +117,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="l">
 
 ```html
-<sp-field-label size="l" for="name-0-l">Name</sp-field-label>
-<sp-textfield
-    size="l"
-    id="name-0-l"
-    placeholder="Enter your name"
-></sp-textfield>
+<sp-textfield size="l" placeholder="Enter your name">Name</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -138,12 +125,7 @@ See [help text](../help-text) for more information.
 <sp-tab-panel value="xl">
 
 ```html
-<sp-field-label size="xl" for="name-0-xl">Name</sp-field-label>
-<sp-textfield
-    size="xl"
-    id="name-0-xl"
-    placeholder="Enter your name"
-></sp-textfield>
+<sp-textfield size="xl" placeholder="Enter your name">Name</sp-textfield>
 ```
 
 </sp-tab-panel>
@@ -161,14 +143,10 @@ user affordances like mobile keyboards and obscured characters:
 - `text` (default)
 
 ```html
-<sp-field-label for="tel-1">Telephone</sp-field-label>
-<sp-textfield
-    id="tel-1"
-    type="tel"
-    placeholder="Enter your phone number"
-></sp-textfield>
-<sp-field-label for="password-1">Password</sp-field-label>
-<sp-textfield id="password-1" type="password"></sp-textfield>
+<sp-textfield type="tel" placeholder="Enter your phone number">
+    Telephone
+</sp-textfield>
+<sp-textfield type="password">Password</sp-textfield>
 ```
 
 If the `type` attribute is not specified, or if it does not match any of these values, the default type adopted is "text."
@@ -178,8 +156,7 @@ If the `type` attribute is not specified, or if it does not match any of these v
 The quiet style works best when a clear layout (vertical stack, table, grid) assists in a user's ability to parse the element. Too many quiet components in a small space can be hard to read.
 
 ```html
-<sp-field-label for="name-3">Name (quietly)</sp-field-label>
-<sp-textfield id="name-3" placeholder="Enter your name" quiet></sp-textfield>
+<sp-textfield placeholder="Enter your name" quiet>Name (quietly)</sp-textfield>
 ```
 
 ### States
@@ -187,16 +164,11 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 Use the `required` attribute to indicate a textfield value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
 
 ```html
-<sp-field-label for="name-1" required>Name</sp-field-label>
-<sp-textfield
-    id="name-1"
-    placeholder="Enter your name"
-    valid
-    value="My Name"
-></sp-textfield>
+<sp-textfield placeholder="Enter your name" valid value="My Name">
+    Name
+</sp-textfield>
 <br />
-<sp-field-label for="name-2" required>Name</sp-field-label>
-<sp-textfield id="name-2" invalid placeholder="Enter your name"></sp-textfield>
+<sp-textfield invalid placeholder="Enter your name">Name</sp-textfield>
 ```
 
 ### Accessibility
