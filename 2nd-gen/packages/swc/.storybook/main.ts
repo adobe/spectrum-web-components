@@ -1,4 +1,5 @@
 import { resolve, dirname } from 'path';
+import { mergeConfig } from 'vite';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -28,13 +29,38 @@ const config = {
         '@storybook/addon-vitest',
     ],
     viteFinal: async (config) => {
-        config.resolve = config.resolve || {};
-        config.resolve.alias = {
-            ...config.resolve.alias,
-            '@spectrum-web-components/core': resolve(__dirname, '../../core'),
-        };
+        return mergeConfig(config, {
+            plugins: [
+                {
+                    name: 'css-hmr',
+                    handleHotUpdate({ file, modules, server }) {
+                        if (!file.endsWith('.css') || file.includes('tokens'))
+                            return;
 
-        return config;
+                        const affected = new Set(modules);
+
+                        for (const mod of modules) {
+                            for (const importer of mod.importers)
+                                affected.add(importer);
+                        }
+
+                        for (const mod of affected)
+                            server.moduleGraph.invalidateModule(mod);
+
+                        return [...affected];
+                    },
+                },
+            ],
+            resolve: {
+                alias: {
+                    '@spectrum-web-components/core': resolve(
+                        __dirname,
+                        '../../core'
+                    ),
+                    '@adobe/swc': resolve(__dirname, '../components'),
+                },
+            },
+        });
     },
     typescript: {
         check: true,

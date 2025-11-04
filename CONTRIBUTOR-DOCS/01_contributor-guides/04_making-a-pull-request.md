@@ -64,8 +64,10 @@ We rely on automated tools like Prettier, ESLint, and Stylelint to enforce style
 Since this project is used by a diverse audience, the accessibility of our product is of utmost importance. Features will be evaluated for inclusivity by:
 
 - The use of semantic markup.
-- Labeled interactive elements with appropriate accordance's.
-- Accounting for appropriate states, such as focus and keyboard navigation, according to [standards](https://www.w3.org/WAI/perspective-videos/keyboard/).
+- The appropriate [ARIA roles, properties, and states](https://www.w3.org/WAI/ARIA/apg/example-index/) to indicate affordances that are not already indicated via semantic HTML.
+- Applying [descriptive labels](https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/).
+- The use of the expected [keyboard navigation](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/).
+- Sufficient color contrast as recommended in the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/).
 
 If you're unsure about an accessibility detail, the [Web Accessibility Initiative (WAI) ARIA Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/patterns/) is a good place to start. You can also open a discussion or ask in your PR.
 
@@ -82,13 +84,39 @@ We use a straightforward branch naming convention:
 
 ### Changeset requirements
 
-For PRs that add or update a component:
+For PRs that add or update a component, you must include a changeset to trigger the release train and update the CHANGELOG.
 
-- Must include a changeset to trigger the release train and update the CHANGELOG
-- Changeset type should be one of:
-    - `patch` - for bug fixes only
-    - `minor` - for new components or new APIs in an existing component
-    - `major` - for breaking changes to a component or public library API
+#### What are changesets?
+
+Each changeset represents changes that have enough significance to warrant a new version. A changelog represents a single release. A changelog may contain several changesets.
+
+There are three levels of releases that a changeset can describe, which are described by semantic versioning:
+
+- **Patch** (1.0.0 → 1.0.1): Bug fixes and non-breaking changes
+- **Minor** (1.0.0 → 1.1.0): New features, backwards-compatible
+- **Major** (1.0.0 → 2.0.0): Breaking changes requiring user update
+
+Each change should be categorized under one of these types:
+
+- **Added**: New features or capabilities
+- **Changed**: Changes in existing functionality
+- **Deprecated**: Soon-to-be removed features
+- **Removed**: Features that have been removed
+- **Fixed**: Bug fixes
+
+#### Writing changesets
+
+Changesets are different from commit messages. **Commit messages** are used to document the changes for _contributors_. **Changesets** are used to communicate the changes to the _consumers_ of the design system.
+
+When writing changesets:
+
+- **Be specific and component-focused**: Reference components by their tag names, include links to the PR, and specify what changed, why, and how users should update their code (if applicable)
+- **Document breaking changes**: Clearly mark breaking changes with migration guidance, listing each change on its own line
+- **Focus on user impact**: Describe changes from the user's perspective, not implementation details
+- **Use past tense**: Write changes in past tense to describe what has been modified
+
+For detailed examples and best practices, see the [Writing Changesets guide](https://opensource.adobe.com/spectrum-web-components/guides/writing-changesets/#writing-changesets).
+
 
 ### Conventional commits
 

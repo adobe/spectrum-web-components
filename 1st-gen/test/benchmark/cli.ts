@@ -178,7 +178,7 @@ $ node test/benchmark/cli -n 20
     for (const packageName of packages) {
         const runCommands: string[] = [];
         const config: Partial<ConfigFile> = {
-            root: '../..',
+            root: '../../..',
             $schema:
                 'https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json',
             timeout: parseFloat(opts.timeout) || 0,

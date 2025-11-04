@@ -27,7 +27,7 @@ const { browser = 'chrome' } = yargs(hideBin(process.argv)).argv;
  */
 export const getChangedPackages = () => {
     let changedPackages = [];
-    const changesetDir = '.changeset';
+    const changesetDir = '../.changeset';
 
     try {
         // Check if .changeset directory exists

@@ -6,16 +6,14 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
+        "directory": "2nd-gen/packages/core",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "2nd-gen/packages/core"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "type": "module",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -38,6 +36,8 @@
             "import": "./dist/shared/base/*.js"
         }
     },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "files": [
         "dist/"
     ],
@@ -47,6 +47,7 @@
         "dev": "vite build --watch",
         "prepublishOnly": "yarn build"
     },
+    "types": "./dist/index.d.ts",
     "dependencies": {
         "lit": "^2.5.0 || ^3.1.3"
     },
@@ -71,6 +72,5 @@
     ],
     "publishConfig": {
         "access": "public"
-    },
-    "module": "./dist/index.js"
+    }
 }
