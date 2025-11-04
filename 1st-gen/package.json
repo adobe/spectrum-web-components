@@ -7,9 +7,9 @@
     "author": "Adobe",
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
+        "directory": "1st-gen",
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen"
+        "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
@@ -215,16 +215,6 @@
                 "build:types"
             ]
         },
-        "prebuild": {
-            "command": "yarn workspace @spectrum-web-components/core build",
-            "files": [
-                "../2nd-gen/packages/core/components/**/*",
-                "../2nd-gen/packages/core/shared/**/*",
-                "../2nd-gen/packages/core/package.json",
-                "../2nd-gen/packages/core/vite.config.js",
-                "../2nd-gen/packages/core/tsconfig.json"
-            ]
-        },
         "build:css": {
             "clean": "if-file-deleted",
             "command": "node ./scripts/build-css.js",
@@ -292,6 +282,16 @@
                 "!test/visual/src/index.html",
                 "!test/visual/wds-vrt.config.js",
                 "!tools/base/src/version.js"
+            ]
+        },
+        "prebuild": {
+            "command": "yarn workspace @spectrum-web-components/core build",
+            "files": [
+                "../2nd-gen/packages/core/components/**/*",
+                "../2nd-gen/packages/core/shared/**/*",
+                "../2nd-gen/packages/core/package.json",
+                "../2nd-gen/packages/core/vite.config.js",
+                "../2nd-gen/packages/core/tsconfig.json"
             ]
         },
         "build:ts:watch": {

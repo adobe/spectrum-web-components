@@ -9,7 +9,10 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended"
     ],
-    "ignorePatterns": ["CONTRIBUTOR-DOCS/**/*"],
+    "ignorePatterns": [
+        "CONTRIBUTOR-DOCS/**/*",
+        "1st-gen/packages/icons/src/icons-*.svg.ts"
+    ],
     "overrides": [
         {
             "extends": ["plugin:jsonc/recommended-with-jsonc"],
