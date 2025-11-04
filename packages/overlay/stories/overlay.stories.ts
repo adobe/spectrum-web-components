@@ -1907,3 +1907,192 @@ export const WithInteractiveContent = (): TemplateResult => {
         </div>
     `;
 };
+
+export const LongpressModalResponsiveness = (): TemplateResult => {
+    const handleClick = (event: Event): void => {
+        const button = event.target as HTMLElement;
+        const clickCount = parseInt(button.getAttribute('data-clicks') || '0');
+        button.setAttribute('data-clicks', String(clickCount + 1));
+        button.textContent = `Clicked ${clickCount + 1} time${clickCount === 0 ? '' : 's'}`;
+    };
+
+    return html`
+        ${storyStyles}
+        <style>
+            .demo-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+                max-width: 600px;
+            }
+
+            .instructions {
+                background: var(--spectrum-gray-100);
+                padding: 16px;
+                border-radius: 4px;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .instructions h3 {
+                margin-top: 0;
+                color: var(--spectrum-heading-color);
+            }
+
+            .instructions ol {
+                margin: 8px 0;
+                padding-left: 20px;
+            }
+
+            .instructions li {
+                margin: 4px 0;
+            }
+
+            .button-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 16px;
+                background: var(--spectrum-gray-50);
+                border-radius: 4px;
+            }
+
+            .button-group-label {
+                width: 100%;
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: var(--spectrum-heading-color);
+            }
+
+            .status {
+                padding: 12px;
+                background: var(--spectrum-positive-background-color-default);
+                color: var(--spectrum-positive-content-color-default);
+                border-radius: 4px;
+                font-weight: 500;
+            }
+        </style>
+
+        <div class="demo-container">
+            <div class="instructions">
+                <h3>
+                    Test: Action buttons remain responsive after longpress
+                    overlay
+                </h3>
+                <ol>
+                    <li>
+                        <strong>Long press</strong>
+                        (click and hold for 300ms) the "Trigger Overlay" button
+                        below
+                    </li>
+                    <li>An overlay will open</li>
+                    <li>
+                        Close the overlay by clicking "Close" or pressing Escape
+                    </li>
+                    <li>
+                        Click any of the test buttons below - they should all
+                        respond normally
+                    </li>
+                </ol>
+                <p>
+                    <strong>Expected:</strong>
+                    All buttons remain clickable after the overlay closes.
+                    <br />
+                    <strong>Bug (fixed):</strong>
+                    Without the fix, all buttons would become unresponsive after
+                    the longpress overlay.
+                </p>
+            </div>
+
+            <div class="button-group">
+                <div class="button-group-label">Longpress to open overlay:</div>
+                <sp-action-button id="longpress-trigger" hold-affordance>
+                    <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    Trigger Overlay (Long Press)
+                </sp-action-button>
+                <sp-overlay
+                    trigger="longpress-trigger@longpress"
+                    type="modal"
+                    placement="right-start"
+                >
+                    <sp-popover>
+                        <sp-menu>
+                            <sp-menu-group selects="single" size="s">
+                                <span slot="header">Orientation</span>
+                                <sp-menu-item>Left/Right</sp-menu-item>
+                                <sp-menu-item>Top/Bottom</sp-menu-item>
+                            </sp-menu-group>
+                        </sp-menu>
+                    </sp-popover>
+                </sp-overlay>
+            </div>
+
+            <div class="button-group">
+                <div class="button-group-label">
+                    Test these buttons after closing the overlay:
+                </div>
+                <sp-action-button @click=${handleClick} data-clicks="0">
+                    Click me
+                </sp-action-button>
+                <sp-action-button @click=${handleClick} data-clicks="0" quiet>
+                    Quiet button
+                </sp-action-button>
+                <sp-action-button
+                    @click=${handleClick}
+                    data-clicks="0"
+                    emphasized
+                >
+                    Emphasized button
+                </sp-action-button>
+                <sp-action-button
+                    @click=${handleClick}
+                    data-clicks="0"
+                    selected
+                >
+                    Selected button
+                </sp-action-button>
+                <sp-button @click=${handleClick} data-clicks="0">
+                    Regular button
+                </sp-button>
+                <sp-button
+                    @click=${handleClick}
+                    data-clicks="0"
+                    variant="accent"
+                >
+                    Accent button
+                </sp-button>
+            </div>
+
+            <div class="status">
+                ✓ Fix applied: LongpressController uses capture phase for event
+                listeners
+            </div>
+
+            <overlay-trigger triggered-by="longpress" placement="right-start">
+                <sp-action-button slot="trigger" hold-affordance>
+                    Options
+                </sp-action-button>
+                <sp-popover slot="longpress-content">
+                    <sp-menu>
+                        <sp-menu-group selects="single" size="s">
+                            <span slot="header">Orientation</span>
+                            <sp-menu-item>Left/Right</sp-menu-item>
+                            <sp-menu-item>Top/Bottom</sp-menu-item>
+                        </sp-menu-group>
+                    </sp-menu>
+                </sp-popover>
+            </overlay-trigger>
+        </div>
+    `;
+};
+
+LongpressModalResponsiveness.args = {
+    chromatic: { disableSnapshot: true },
+};
+LongpressModalResponsiveness.parameters = {
+    tags: ['!dev'],
+};
+LongpressModalResponsiveness.swc_vrt = {
+    skip: true,
+};

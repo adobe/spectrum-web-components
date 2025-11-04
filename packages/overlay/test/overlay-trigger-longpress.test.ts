@@ -23,8 +23,11 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import {
     LONGPRESS_INSTRUCTIONS,
+    Overlay,
     OverlayTrigger,
 } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
@@ -556,5 +559,52 @@ describe('Overlay Trigger - Longpress', () => {
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
+    });
+    it('keeps other buttons responsive after longpress overlay opens', async () => {
+        const el = await fixture(html`
+            <div>
+                <sp-action-button id="trigger" hold-affordance>
+                    Trigger Modal (Long Press)
+                </sp-action-button>
+                <sp-overlay
+                    id="overlay"
+                    trigger="trigger@longpress"
+                    type="modal"
+                >
+                    <sp-popover>
+                        <sp-menu>
+                            <sp-menu-item>Option 1</sp-menu-item>
+                        </sp-menu>
+                    </sp-popover>
+                </sp-overlay>
+                <sp-action-button id="other">Another Button</sp-action-button>
+            </div>
+        `);
+
+        const trigger = el.querySelector('#trigger') as ActionButton;
+        const otherButton = el.querySelector('#other') as ActionButton;
+        const overlay = el.querySelector('#overlay') as Overlay;
+
+        // Simulate long press on trigger
+        const { x, y } = trigger.getBoundingClientRect();
+        await sendMouse({ type: 'move', position: [x + 5, y + 5] });
+        await sendMouse({ type: 'down' });
+        await new Promise((r) => setTimeout(r, 350)); // > LONGPRESS_DURATION (300ms)
+        await sendMouse({ type: 'up' });
+
+        // Wait for overlay to open
+        await oneEvent(overlay, 'sp-opened');
+
+        // Try clicking the other button after overlay open
+        let clicked = false;
+        otherButton.addEventListener('click', () => (clicked = true));
+
+        const { x: bx, y: by } = otherButton.getBoundingClientRect();
+        await sendMouse({ type: 'move', position: [bx + 5, by + 5] });
+        await sendMouse({ type: 'down' });
+        await sendMouse({ type: 'up' });
+
+        // ✅ Assert that the other button is still clickable
+        expect(clicked).to.be.true;
     });
 });
