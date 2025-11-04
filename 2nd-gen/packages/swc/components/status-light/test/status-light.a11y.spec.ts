@@ -13,7 +13,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '../../../../../../1st-gen/test/a11y-helpers.js';
+import { gotoStory } from '../../../../../test/a11y-helpers.js';
 
 /**
  * Accessibility tests for Status Light component (2nd Generation)

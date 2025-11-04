@@ -1,11 +1,59 @@
+<!-- Generated breadcrumbs - DO NOT EDIT -->
+
+[CONTRIBUTOR-DOCS](../README.md) / [Contributor guides](README.md) / Accessibility testing
+
+<!-- Document title (editable) -->
+
 # Accessibility testing
 
-Automated accessibility testing for Spectrum Web Components using Playwright.
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [About this guide](#about-this-guide)
+- [Quick start](#quick-start)
+- [What we test](#what-we-test)
+    - [1. ARIA snapshots](#1-aria-snapshots)
+    - [2. aXe-core validation](#2-axe-core-validation)
+- [Adding tests to a component](#adding-tests-to-a-component)
+    - [1st generation components](#1st-generation-components)
+    - [2nd generation components](#2nd-generation-components)
+- [Test helper reference](#test-helper-reference)
+    - [`gotoStory(page, storyId, elementSelector)`](#gotostorypage-storyid-elementselector)
+    - [`waitForCustomElement(page, tagName)`](#waitforcustomelementpage-tagname)
+    - [`waitForStoryReady(page, elementSelector)`](#waitforstoryreadypage-elementselector)
+- [Finding story IDs](#finding-story-ids)
+- [Running tests](#running-tests)
+    - [From project root](#from-project-root)
+    - [From generation directories](#from-generation-directories)
+    - [Updating snapshots](#updating-snapshots)
+- [Test results](#test-results)
+    - [ARIA snapshot files](#aria-snapshot-files)
+    - [aXe violations](#axe-violations)
+- [Best practices](#best-practices)
+    - [Test coverage](#test-coverage)
+    - [When tests fail](#when-tests-fail)
+    - [Tips](#tips)
+- [Configuration](#configuration)
+    - [Playwright config](#playwright-config)
+    - [Auto-starting Storybook](#auto-starting-storybook)
+- [File structure](#file-structure)
+- [Resources](#resources)
+- [Benefits](#benefits)
+
+</details>
+
+<!-- Document content (editable) -->
+
+## About this guide
+
+This guide covers automated accessibility testing for Spectrum Web Components using Playwright. You'll learn how to write, run, and maintain accessibility tests for both 1st-gen and 2nd-gen components.
 
 ## Quick start
 
-```zsh
-# From project root
+```bash
+# From project root, 1st-gen, or 2nd-gen directory
 yarn test:a11y              # Run all tests (both generations)
 yarn test:a11y:1st          # Run only 1st generation tests
 yarn test:a11y:2nd          # Run only 2nd generation tests
@@ -54,7 +102,7 @@ Create `<component>.a11y.spec.ts` in your component's `test/` directory:
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../test/a11y-helpers.js';
+import { gotoStory } from '../../../../2nd-gen/test/a11y-helpers.js';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -80,7 +128,7 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'badge--default'` (check Storybook URL at `localhost:8080`)
 - Element name: `'sp-badge'` (the custom element tag name)
-- Helper import: `'../../../test/a11y-helpers.js'` (shared helpers)
+- Helper import: `'../../../../2nd-gen/test/a11y-helpers.js'` (shared helpers in 2nd-gen)
 
 ### 2nd generation components
 
@@ -91,7 +139,7 @@ Same pattern, different details:
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../../../../1st-gen/test/a11y-helpers.js';
+import { gotoStory } from '../../../../../test/a11y-helpers.js';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -121,11 +169,12 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'components-badge--default'` (check Storybook URL at `localhost:6006`)
 - Element name: `'swc-badge'` (instead of `sp-badge`)
+- Helper import: `'../../../../../test/a11y-helpers.js'` (relative to 2nd-gen root)
 - Storybook port: 6006 (vs 8080 for 1st gen) - automatically handled by Playwright
 
 ## Test helper reference
 
-Shared helpers live in `1st-gen/test/a11y-helpers.ts` and work for both generations.
+Shared helpers live in `2nd-gen/test/a11y-helpers.ts` and work for both generations.
 
 ### `gotoStory(page, storyId, elementSelector)`
 
@@ -199,23 +248,30 @@ http://localhost:6006/?path=/story/components-badge--default
 
 ### From project root
 
-```zsh
+```bash
 yarn test:a11y              # All tests (both generations)
 yarn test:a11y:1st          # Only 1st generation
 yarn test:a11y:2nd          # Only 2nd generation
 yarn test:a11y:ui           # Interactive UI mode
 ```
 
-### From 1st-gen directory
+### From generation directories
 
-```zsh
+```bash
+# From 1st-gen
 cd 1st-gen
-
-yarn test:a11y                           # All tests
+yarn test:a11y                           # All tests (both generations)
 yarn test:a11y badge                     # Specific component
-yarn test:a11y --project=1st-gen         # Only 1st gen
-yarn test:a11y --project=2nd-gen         # Only 2nd gen
+yarn test:a11y:1st                       # Only 1st gen
+yarn test:a11y:2nd                       # Only 2nd gen
 yarn test:a11y badge --update-snapshots  # Update ARIA baselines
+yarn test:a11y:ui                        # UI mode
+
+# From 2nd-gen (new home for shared infrastructure)
+cd 2nd-gen
+yarn test:a11y                           # All tests (both generations)
+yarn test:a11y:1st                       # Only 1st gen
+yarn test:a11y:2nd                       # Only 2nd gen
 yarn test:a11y:ui                        # UI mode
 ```
 
@@ -223,7 +279,7 @@ yarn test:a11y:ui                        # UI mode
 
 When you intentionally change a component's accessibility tree:
 
-```zsh
+```bash
 yarn test:a11y <component> --update-snapshots
 ```
 
@@ -326,7 +382,7 @@ Received: [
 
 ### Playwright config
 
-`1st-gen/playwright.a11y.config.ts` defines two projects:
+`2nd-gen/playwright.a11y.config.ts` defines two projects:
 
 ```typescript
 projects: [
@@ -352,12 +408,12 @@ Tests automatically start Storybook when needed:
 ```typescript
 webServer: [
     {
-        command: 'yarn storybook',
+        command: 'cd ../1st-gen && yarn storybook',
         port: 8080,
         reuseExistingServer: !process.env.CI,
     },
     {
-        command: 'cd ../2nd-gen/packages/swc && yarn storybook',
+        command: 'cd packages/swc && yarn storybook',
         port: 6006,
         reuseExistingServer: !process.env.CI,
     },
@@ -368,26 +424,30 @@ webServer: [
 
 ```
 spectrum-web-components/
-├── ACCESSIBILITY_TESTING.md              # This guide
+├── CONTRIBUTOR-DOCS/
+│   └── 01_contributor-guides/
+│       └── 09_accessibility-testing.md    # This guide
 ├── 1st-gen/
-│   ├── playwright.a11y.config.ts         # Playwright config (both gens)
-│   ├── package.json                      # Test scripts
-│   ├── test/
-│   │   └── a11y-helpers.ts               # Shared helpers (both gens)
+│   ├── package.json                       # Test scripts (points to 2nd-gen config)
 │   └── packages/
 │       ├── badge/test/
-│       │   ├── badge.a11y.spec.ts                  # Tests
-│       │   └── badge.a11y.spec.ts-snapshots/       # ARIA baselines
+│       │   ├── badge.a11y.spec.ts         # Tests
+│       │   └── badge.a11y.spec.ts-snapshots/  # ARIA baselines
 │       └── status-light/test/
 │           ├── status-light.a11y.spec.ts
 │           └── status-light.a11y.spec.ts-snapshots/
-└── 2nd-gen/packages/swc/components/
-    ├── badge/test/
-    │   ├── badge.a11y.spec.ts
-    │   └── badge.a11y.spec.ts-snapshots/
-    └── status-light/test/
-        ├── status-light.a11y.spec.ts
-        └── status-light.a11y.spec.ts-snapshots/
+└── 2nd-gen/
+    ├── playwright.a11y.config.ts          # Playwright config (both gens)
+    ├── package.json                       # Test scripts
+    ├── test/
+    │   └── a11y-helpers.ts                # Shared helpers (both gens)
+    └── packages/swc/components/
+        ├── badge/test/
+        │   ├── badge.a11y.spec.ts
+        │   └── badge.a11y.spec.ts-snapshots/
+        └── status-light/test/
+            ├── status-light.a11y.spec.ts
+            └── status-light.a11y.spec.ts-snapshots/
 ```
 
 ## Resources

@@ -32,7 +32,7 @@ const config: PlaywrightTestConfig = {
     projects: [
         {
             name: '1st-gen',
-            testDir: './',
+            testDir: '../1st-gen/',
             testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
             use: {
                 ...devices['Desktop Chrome'],
@@ -41,7 +41,7 @@ const config: PlaywrightTestConfig = {
         },
         {
             name: '2nd-gen',
-            testDir: '../2nd-gen/',
+            testDir: './',
             testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
             use: {
                 ...devices['Desktop Chrome'],
@@ -52,13 +52,13 @@ const config: PlaywrightTestConfig = {
 
     webServer: [
         {
-            command: 'yarn storybook',
+            command: 'cd ../1st-gen && yarn storybook',
             port: 8080,
             reuseExistingServer: !process.env.CI,
             timeout: 120 * 1000,
         },
         {
-            command: 'cd ../2nd-gen/packages/swc && yarn storybook',
+            command: 'cd packages/swc && yarn storybook',
             port: 6006,
             reuseExistingServer: !process.env.CI,
             timeout: 120 * 1000,
