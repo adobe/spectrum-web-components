@@ -1,0 +1,85 @@
+/*!
+ * Copyright 2025 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License./
+ * 
+ *  Override divider background color when used inside alert-dialog/
+ * .divider {
+ *     --spectrum-divider-background-color: var(--system-alert-dialog-divider-background-color);
+ *     --spectrum-divider-background-color-static-white: var(--spectrum-alert-dialog-divider-background-color-static-white);
+ *     --spectrum-divider-background-color-static-black: var(--spectrum-alert-dialog-divider-background-color-static-black);
+ * }
+ */
+
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-link-text-color: LinkText;
+    }
+}
+
+:host([variant="secondary"]) a {
+    --mod-link-text-color: var(--mod-link-text-color-secondary-default, var(--spectrum-neutral-content-color-default));
+    --mod-link-text-color-hover: var(--mod-link-text-color-secondary-hover, var(--spectrum-neutral-content-color-hover));
+    --mod-link-text-color-active: var(--mod-link-text-color-secondary-active, var(--spectrum-neutral-content-color-down));
+    --mod-link-text-color-focus: var(--mod-link-text-color-secondary-focus, var(--spectrum-neutral-content-color-key-focus));
+}
+
+a {
+    background-color: initial;
+    text-decoration-skip: objects;
+    transition: color var(--mod-link-animation-duration, var(--spectrum-animation-duration-100)) ease-in-out;
+    cursor: pointer;
+    color: var(--highcontrast-link-text-color, var(--mod-link-text-color, var(--mod-link-text-color-primary-default, var(--spectrum-accent-content-color-default))));
+    outline: none;
+    text-decoration: underline;
+}
+
+a:active {
+    --mod-link-text-color: var(--mod-link-text-color-active, var(--mod-link-text-color-primary-active, var(--spectrum-accent-content-color-down)));
+}
+
+:host([quiet]) a {
+    text-decoration: none;
+}
+
+a:focus-visible,
+:host([quiet]) a:focus-visible {
+    --mod-link-text-color: var(--mod-link-text-color-focus, var(--mod-link-text-color-primary-focus, var(--spectrum-accent-content-color-key-focus)));
+
+    text-decoration: underline double;
+    text-decoration-color: inherit;
+}
+
+@media (hover: hover) {
+    a:hover {
+        --mod-link-text-color: var(--mod-link-text-color-hover, var(--mod-link-text-color-primary-hover, var(--spectrum-accent-content-color-hover)));
+    }
+
+    :host([quiet]) a:hover {
+        text-decoration: underline;
+    }
+}
+
+:host([static-color="white"]) a {
+    --mod-link-text-color: var(--mod-link-text-color-white, var(--spectrum-white));
+    --mod-link-text-color-hover: var(--mod-link-text-color-white, var(--spectrum-white));
+    --mod-link-text-color-active: var(--mod-link-text-color-white, var(--spectrum-white));
+    --mod-link-text-color-focus: var(--mod-link-text-color-white, var(--spectrum-white));
+}
+
+:host([static-color="black"]) a {
+    --mod-link-text-color: var(--mod-link-text-color-black, var(--spectrum-black));
+    --mod-link-text-color-hover: var(--mod-link-text-color-black, var(--spectrum-black));
+    --mod-link-text-color-active: var(--mod-link-text-color-black, var(--spectrum-black));
+    --mod-link-text-color-focus: var(--mod-link-text-color-black, var(--spectrum-black));
+}

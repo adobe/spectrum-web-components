@@ -1,0 +1,92 @@
+{
+    "name": "@spectrum-web-components/story-decorator",
+    "version": "1.9.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/projects/story-decorator"
+    },
+    "author": "Adobe",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/StoryDecorator.js": {
+            "development": "./src/StoryDecorator.dev.js",
+            "default": "./src/StoryDecorator.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/locales.js": {
+            "development": "./src/locales.dev.js",
+            "default": "./src/locales.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./decorator": "./decorator.js",
+        "./decorator.js": {
+            "development": "./decorator.dev.js",
+            "default": "./decorator.js"
+        },
+        "./sp-story-decorator": "./sp-story-decorator.js",
+        "./sp-story-decorator.js": {
+            "development": "./sp-story-decorator.dev.js",
+            "default": "./sp-story-decorator.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/field-label": "1.9.1",
+        "@spectrum-web-components/menu": "1.9.1",
+        "@spectrum-web-components/overlay": "1.9.1",
+        "@spectrum-web-components/picker": "1.9.1",
+        "@spectrum-web-components/reactive-controllers": "1.9.1",
+        "@spectrum-web-components/switch": "1.9.1",
+        "@spectrum-web-components/theme": "1.9.1"
+    },
+    "peerDependencies": {
+        "@storybook/preview-api": ">=8"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./sp-*.ts"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

@@ -1,0 +1,73 @@
+{
+  "name": "example-project-rollup",
+  "version": "1.2.8",
+  "private": true,
+  "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
+  "license": "Apache-2.0",
+  "author": "Adobe",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rimraf dist && yarn build:tsc && rollup -c rollup.config.js",
+    "build:tsc": "tsc && cp src/styles.css out-tsc/src",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
+    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
+    "postbuild": "mv dist/*.css dist/styles.css",
+    "start": "concurrently --kill-others --names tsc,wds \"npm run tsc:watch\" \"wds --config wds.config.js\"",
+    "start:build": "npm run build && wds --root-dir dist --app-index index.html --open --compatibility none",
+    "tsc:watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@spectrum-web-components/button": "1.9.1",
+    "@spectrum-web-components/field-label": "1.9.1",
+    "@spectrum-web-components/menu": "1.9.1",
+    "@spectrum-web-components/picker": "1.9.1",
+    "@spectrum-web-components/styles": "1.9.1"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "3.0.2",
+    "@open-wc/eslint-config": "12.0.3",
+    "@rollup/plugin-commonjs": "25.0.8",
+    "@types/node": "20.19.17",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "@web/dev-server": "0.4.6",
+    "concurrently": "8.2.2",
+    "eslint": "8.57.1",
+    "eslint-config-prettier": "9.1.2",
+    "prettier": "3.6.2",
+    "rimraf": "6.0.1",
+    "rollup": "4.52.2",
+    "rollup-plugin-styles": "4.0.0",
+    "rollup-plugin-visualizer": "5.14.0",
+    "tslib": "2.8.1",
+    "typescript": "5.3.3"
+  },
+  "customElements": "custom-elements.json",
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/spectrum-web-components.git",
+    "directory": "1st-gen/projects/example-project-rollup"
+  },
+  "bugs": {
+    "url": "https://github.com/adobe/spectrum-web-components/issues"
+  },
+  "keywords": [
+    "design-system",
+    "spectrum",
+    "adobe",
+    "adobe-spectrum",
+    "web components",
+    "web-components",
+    "lit-element",
+    "lit-html"
+  ],
+  "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

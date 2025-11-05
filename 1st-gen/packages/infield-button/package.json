@@ -1,0 +1,77 @@
+{
+    "name": "@spectrum-web-components/infield-button",
+    "version": "1.9.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design InfieldButton",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/infield-button"
+    },
+    "author": "Adobe",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/infield-button",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/InfieldButton.js": {
+            "development": "./src/InfieldButton.dev.js",
+            "default": "./src/InfieldButton.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/infield-button-overrides.css.js": "./src/infield-button-overrides.css.js",
+        "./src/infield-button.css.js": "./src/infield-button.css.js",
+        "./sp-infield-button.js": {
+            "development": "./sp-infield-button.dev.js",
+            "default": "./sp-infield-button.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/button": "1.9.1"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./**/*.dev.js"
+    ]
+}

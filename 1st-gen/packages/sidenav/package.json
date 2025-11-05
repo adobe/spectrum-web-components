@@ -1,0 +1,97 @@
+{
+    "name": "@spectrum-web-components/sidenav",
+    "version": "1.9.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/sidenav"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/sidenav",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Sidenav.js": {
+            "development": "./src/Sidenav.dev.js",
+            "default": "./src/Sidenav.js"
+        },
+        "./src/SidenavHeading.js": {
+            "development": "./src/SidenavHeading.dev.js",
+            "default": "./src/SidenavHeading.js"
+        },
+        "./src/SidenavItem.js": {
+            "development": "./src/SidenavItem.dev.js",
+            "default": "./src/SidenavItem.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/sidenav-heading-overrides.css.js": "./src/sidenav-heading-overrides.css.js",
+        "./src/sidenav-heading.css.js": "./src/sidenav-heading.css.js",
+        "./src/sidenav-item-overrides.css.js": "./src/sidenav-item-overrides.css.js",
+        "./src/sidenav-item.css.js": "./src/sidenav-item.css.js",
+        "./src/sidenav-overrides.css.js": "./src/sidenav-overrides.css.js",
+        "./src/sidenav.css.js": "./src/sidenav.css.js",
+        "./sp-sidenav.js": {
+            "development": "./sp-sidenav.dev.js",
+            "default": "./sp-sidenav.js"
+        },
+        "./sp-sidenav-heading.js": {
+            "development": "./sp-sidenav-heading.dev.js",
+            "default": "./sp-sidenav-heading.js"
+        },
+        "./sp-sidenav-item.js": {
+            "development": "./sp-sidenav-item.dev.js",
+            "default": "./sp-sidenav-item.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/reactive-controllers": "1.9.1",
+        "@spectrum-web-components/shared": "1.9.1"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

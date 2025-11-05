@@ -1,0 +1,86 @@
+{
+    "name": "@spectrum-web-components/checkbox",
+    "version": "1.9.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/checkbox"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/checkbox",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Checkbox.js": {
+            "development": "./src/Checkbox.dev.js",
+            "default": "./src/Checkbox.js"
+        },
+        "./src/CheckboxBase.js": {
+            "development": "./src/CheckboxBase.dev.js",
+            "default": "./src/CheckboxBase.js"
+        },
+        "./src/CheckboxMixin.js": {
+            "development": "./src/CheckboxMixin.dev.js",
+            "default": "./src/CheckboxMixin.js"
+        },
+        "./src/checkbox-overrides.css.js": "./src/checkbox-overrides.css.js",
+        "./src/checkbox.css.js": "./src/checkbox.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-checkbox.js": {
+            "development": "./sp-checkbox.dev.js",
+            "default": "./sp-checkbox.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/icon": "1.9.1",
+        "@spectrum-web-components/icons-ui": "1.9.1",
+        "@spectrum-web-components/shared": "1.9.1"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}
