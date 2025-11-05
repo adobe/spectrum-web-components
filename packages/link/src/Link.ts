@@ -10,7 +10,11 @@
  * governing permissions and limitations under the License.
  */
 
-import { CSSResultArray, TemplateResult } from '@spectrum-web-components/base';
+import {
+    CSSResultArray,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 import {
     property,
     query,
@@ -22,6 +26,7 @@ import linkStyles from './link.css.js';
 
 /**
  * @element sp-link
+ *
  */
 export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
@@ -48,6 +53,17 @@ export class Link extends LikeAnchor(Focusable) {
     }
 
     protected override render(): TemplateResult {
-        return this.renderAnchor({ id: 'anchor' });
+        return this.renderAnchor({
+            id: 'anchor',
+            tabindex: 0,
+        });
     }
+    /**
+     * Static property to configure shadow root options
+     * This enables delegatesFocus for Safari compatibility
+     */
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
 }
