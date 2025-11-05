@@ -284,16 +284,6 @@
                 "!tools/base/src/version.js"
             ]
         },
-        "prebuild": {
-            "command": "yarn workspace @spectrum-web-components/core build",
-            "files": [
-                "../2nd-gen/packages/core/components/**/*",
-                "../2nd-gen/packages/core/shared/**/*",
-                "../2nd-gen/packages/core/package.json",
-                "../2nd-gen/packages/core/vite.config.js",
-                "../2nd-gen/packages/core/tsconfig.json"
-            ]
-        },
         "build:ts:watch": {
             "command": "node ./scripts/watch-ts.js",
             "service": true
@@ -374,6 +364,16 @@
                 "!packages/icons-workflow/src/custom-tag.ts",
                 "!packages/icons-workflow/src/DefaultIcon.ts",
                 "!packages/icons-workflow/bin/icons-mapping.json"
+            ]
+        },
+        "prebuild": {
+            "command": "yarn workspace @spectrum-web-components/core build",
+            "files": [
+                "../2nd-gen/packages/core/components/**/*",
+                "../2nd-gen/packages/core/shared/**/*",
+                "../2nd-gen/packages/core/package.json",
+                "../2nd-gen/packages/core/vite.config.js",
+                "../2nd-gen/packages/core/tsconfig.json"
             ]
         },
         "prestorybook": {
