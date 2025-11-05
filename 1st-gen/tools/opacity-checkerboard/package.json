@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/opacity-checkerboard",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "publishConfig": {
         "access": "public"
     },
@@ -51,7 +51,7 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.9.0"
+        "@spectrum-web-components/base": "1.9.1"
     },
     "types": "./src/opacity-checkerboard.d.ts",
     "sideEffects": [

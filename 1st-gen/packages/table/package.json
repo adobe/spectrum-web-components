@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/table",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "publishConfig": {
         "access": "public"
     },
@@ -129,10 +129,10 @@
     "dependencies": {
         "@lit-labs/observers": "2.0.2",
         "@lit-labs/virtualizer": "2.0.12",
-        "@spectrum-web-components/base": "1.9.0",
-        "@spectrum-web-components/checkbox": "1.9.0",
-        "@spectrum-web-components/icon": "1.9.0",
-        "@spectrum-web-components/icons-ui": "1.9.0"
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/checkbox": "1.9.1",
+        "@spectrum-web-components/icon": "1.9.1",
+        "@spectrum-web-components/icons-ui": "1.9.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

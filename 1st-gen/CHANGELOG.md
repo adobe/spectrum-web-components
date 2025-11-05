@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.1](https://github.com/adobe/spectrum-web-components/compare/v1.9.0...v1.9.1) (2025-11-05)
+
+## Patch Changes
+
+**sp-status-light**: **Fixed**: Added missing `accent` and `cyan` variant to status light.
+
+**sp-overlay**: - **Fixed**: Expanded `<overlay-trigger>` `type` property to accept all overlay types ('auto', 'hint', 'manual', 'modal', 'page') instead of the incorrect, previous restricted subset.
+
 # [1.9.0](https://github.com/adobe/spectrum-web-components/compare/v1.8.0...v1.9.0) (2025-10-13)
 
 ## Minor Changes

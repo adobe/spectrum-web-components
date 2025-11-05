@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "publishConfig": {
         "access": "public"
     },
@@ -89,7 +89,7 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/progress-circle": "1.9.0",
+        "@spectrum-web-components/progress-circle": "1.9.1",
         "colorjs.io": "0.5.2",
         "lit": "^2.5.0 || ^3.1.3"
     },

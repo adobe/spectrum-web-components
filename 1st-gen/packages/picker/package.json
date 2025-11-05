@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "publishConfig": {
         "access": "public"
     },
@@ -88,20 +88,20 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.9.0",
-        "@spectrum-web-components/button": "1.9.0",
-        "@spectrum-web-components/field-label": "1.9.0",
-        "@spectrum-web-components/icon": "1.9.0",
-        "@spectrum-web-components/icons-ui": "1.9.0",
-        "@spectrum-web-components/icons-workflow": "1.9.0",
-        "@spectrum-web-components/menu": "1.9.0",
-        "@spectrum-web-components/overlay": "1.9.0",
-        "@spectrum-web-components/popover": "1.9.0",
-        "@spectrum-web-components/progress-circle": "1.9.0",
-        "@spectrum-web-components/reactive-controllers": "1.9.0",
-        "@spectrum-web-components/shared": "1.9.0",
-        "@spectrum-web-components/tooltip": "1.9.0",
-        "@spectrum-web-components/tray": "1.9.0"
+        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/button": "1.9.1",
+        "@spectrum-web-components/field-label": "1.9.1",
+        "@spectrum-web-components/icon": "1.9.1",
+        "@spectrum-web-components/icons-ui": "1.9.1",
+        "@spectrum-web-components/icons-workflow": "1.9.1",
+        "@spectrum-web-components/menu": "1.9.1",
+        "@spectrum-web-components/overlay": "1.9.1",
+        "@spectrum-web-components/popover": "1.9.1",
+        "@spectrum-web-components/progress-circle": "1.9.1",
+        "@spectrum-web-components/reactive-controllers": "1.9.1",
+        "@spectrum-web-components/shared": "1.9.1",
+        "@spectrum-web-components/tooltip": "1.9.1",
+        "@spectrum-web-components/tray": "1.9.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
