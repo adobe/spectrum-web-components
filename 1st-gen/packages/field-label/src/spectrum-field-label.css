@@ -86,7 +86,6 @@
 .required-icon {
     color: inherit;
     margin-block: 0;
-    margin-inline: var(--mod-field-label-text-to-asterisk, var(--spectrum-field-label-text-to-asterisk)) 0;
     vertical-align: initial;
     vertical-align: var(--mod-field-label-asterisk-vertical-align, baseline);
 }
