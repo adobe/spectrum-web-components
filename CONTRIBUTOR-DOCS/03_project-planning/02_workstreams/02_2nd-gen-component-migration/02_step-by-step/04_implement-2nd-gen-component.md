@@ -17,4 +17,4 @@
     - Override properties that need type narrowing with S2-specific types
 - In API ADDITIONS section (if applicable):
     - Add any S2-only properties (e.g., `subtle`, `outline` for Badge)
-- Re-export any S2-specific types and constants as needed for backward compatibility, marking them as deprecated
+- Re-export any S1-specific types and constants as needed for backward compatibility, marking them as deprecated
