@@ -13,8 +13,16 @@
  */
 
 import { execSync } from 'child_process';
-import pkg from '@spectrum-web-components/button/package.json' with { type: 'json' };
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Read package.json directly to avoid caching issues
+const pkgPath = join(__dirname, '../packages/button/package.json');
+const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 const version = pkg.version;
 
 try {

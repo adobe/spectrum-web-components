@@ -113,7 +113,7 @@ async function publish() {
         );
         run('git push', 'Pushing to remote');
         run(
-            'node --no-warnings ./1st-gen/scripts/create-git-tag.js',
+            'node ./1st-gen/scripts/create-git-tag.js',
             'Creating and pushing git tag'
         );
     }
