@@ -11,7 +11,59 @@
  */
 
 import type { PlaywrightTestConfig } from '@playwright/test';
+import { devices } from '@playwright/test';
+
 const config: PlaywrightTestConfig = {
+    timeout: 30 * 1000,
+    fullyParallel: true,
+    forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
+    reporter: [
+        ['html', { outputFolder: 'test/playwright-a11y/report' }],
+        ['list'],
+    ],
+
+    use: {
+        trace: 'on-first-retry',
+        screenshot: 'only-on-failure',
+        reducedMotion: 'reduce',
+    },
+
+    projects: [
+        {
+            name: '1st-gen',
+            testDir: './',
+            testMatch: '**/packages/*/test/**/*.a11y.spec.ts',
+            use: {
+                ...devices['Desktop Chrome'],
+                baseURL: 'http://localhost:8080',
+            },
+        },
+        {
+            name: '2nd-gen',
+            testDir: '../second-gen/',
+            testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
+            use: {
+                ...devices['Desktop Chrome'],
+                baseURL: 'http://localhost:6006',
+            },
+        },
+    ],
+
+    webServer: [
+        {
+            command: 'yarn storybook',
+            port: 8080,
+            reuseExistingServer: !process.env.CI,
+            timeout: 120 * 1000,
+        },
+        {
+            command: 'cd ../second-gen/packages/swc && yarn storybook',
+            port: 6006,
+            reuseExistingServer: !process.env.CI,
+            timeout: 120 * 1000,
+        },
+    ],
 };
+
 export default config;
