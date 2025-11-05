@@ -25,28 +25,111 @@ import { Combobox } from '@spectrum-web-components/combobox';
 
 ### Anatomy
 
-Combobox options are presented as a popup menu.
-Menu items can be provided via markup as `<sp-menu-item>` children, or by assigning an array to the `options` property of an `<sp-combobox>`.
+A combobox has the following:
 
-#### Menu items via the `options` property
+- a label
+- a textfield for the user to type in, with optional placeholder text
+- a picker button to open the listbox
+- a listbox of options
+- optional help text
 
-Instead of providing `<sp-menu-item>` children, you can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items:
+```html
+<sp-combobox>
+    <span slot="field-label">Color</span>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
 
-```html-no-demo
+#### Label
+
+A combobox must have a label in order to be accessible. A label can be provided either via the `field-label` slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-combobox>
+    <span slot="field-label">Color</span>
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+#### Placeholder
+
+Use the `placeholder` attribute to include placeholder text.
+
+**Note**: Placeholder text should not be used as a replacement for a label or help text.
+
+```html
+<sp-combobox label="Color" placeholder="Select a color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+#### Listbox options
+
+Listbox options can be added as slotted `sp-menu-item` children or as an array of `ComboboxOptions`. They can also be loaded dynamically.
+
+<sp-tabs selected="slotted" auto label="Listbox options">
+<sp-tab value="slotted">Slotted children</sp-tab>
+<sp-tab-panel value="slotted">
+
+You can use the default slot to provide `<sp-menu-item>` children.
+
+```html
+<sp-combobox label="Color">
+    <sp-menu-item value="red">Red</sp-menu-item>
+    <sp-menu-item value="green">Green</sp-menu-item>
+    <sp-menu-item value="blue">Blue</sp-menu-item>
+</sp-combobox>
+```
+
+</sp-tab-panel>
+<sp-tab value="property">Array of options</sp-tab>
+<sp-tab-panel value="property">
+
+You can assign an array of `ComboboxOptions` to the `options` property, and `<sp-combobox>` will create matching menu items
+
+```html
 <sp-combobox id="color" label="Color"></sp-combobox>
 
 <script>
     document.getElementById('color').options = [
-        { value: "red", itemText: "Red" },
-        { value: "green", itemText: "Green" },
-        { value: "blue", itemText: "Blue" }
+        { value: 'red', itemText: 'Red' },
+        { value: 'green', itemText: 'Green' },
+        { value: 'blue', itemText: 'Blue' },
     ];
 </script>
 ```
 
-#### Menu items via dynamic options
+</sp-tab-panel>
+<sp-tab value="dynamic">Dynamic options</sp-tab>
+<sp-tab-panel value="dynamic">
 
-When you replace the `options` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
+When you replace the `dynamic` Array, or add/remove `<sp-menu-item>` children, the `<sp-combobox>` will detect that change and update its popup menu contents.
+
 For example, using [Lit](https://lit.dev/):
 
 ```ts
@@ -61,6 +144,9 @@ mutate() {
     ];
 }
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Options
 
@@ -120,8 +206,8 @@ mutate() {
 ### Quiet
 
 ```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color" quiet>
+<sp-combobox quiet>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -140,8 +226,8 @@ The suggested popup menu items will remain the same regardless of the currently-
 Whenever the currently-typed input exactly matches the `value` of a popup menu item, that item is automatically selected.
 
 ```html
-<sp-field-label for="color-none" autocomplete="none">Color</sp-field-label>
-<sp-combobox id="color-none">
+<sp-combobox autocomplete="none">
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -155,8 +241,8 @@ Whenever the currently-typed input exactly matches the `value` of a popup menu i
 The popup menu items are filtered to only those completing the currently-input value.
 
 ```html
-<sp-field-label for="color-list" autocomplete="list">Color</sp-field-label>
-<sp-combobox id="color-list">
+<sp-combobox autocomplete="list">
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -170,15 +256,15 @@ The popup menu items are filtered to only those completing the currently-input v
 <sp-tab-panel value="disabled">
 
 ```html
-<sp-field-label for="color-disabled">Color</sp-field-label>
-<sp-combobox id="color-disabled" disabled>
+<sp-combobox disabled>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
 </sp-combobox>
 <br />
-<sp-field-label for="color-disabled-item">Color</sp-field-label>
-<sp-combobox id="color">
+<sp-combobox>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue" disabled>Blue</sp-menu-item>
@@ -190,8 +276,8 @@ The popup menu items are filtered to only those completing the currently-input v
 <sp-tab-panel value="invalid">
 
 ```html
-<sp-field-label for="color-invalid">Color</sp-field-label>
-<sp-combobox id="color-invalid" invalid>
+<sp-combobox invalid>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -206,8 +292,8 @@ The popup menu items are filtered to only those completing the currently-input v
 <sp-tab-panel value="pending">
 
 ```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color" pending>
+<sp-combobox pending>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -222,12 +308,12 @@ The popup menu items are filtered to only those completing the currently-input v
 #### Provide a label
 
 A combobox must be labeled.
-Typically, you should render a visible label via `<sp-field-label>`.
+Typically, you should render a visible label via the `field-label` slot.
 For exceptional cases, provide an accessible label via the `label` attribute.
 
 ```html
-<sp-field-label for="color">Color</sp-field-label>
-<sp-combobox id="color">
+<sp-combobox>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -245,8 +331,8 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 <sp-tab-panel value="help-text">
 
 ```html
-<sp-field-label for="color1">Color</sp-field-label>
-<sp-combobox id="color1">
+<sp-combobox>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -259,8 +345,8 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 <sp-tab-panel value="negative-help-text">
 
 ```html
-<sp-field-label for="color2">Color</sp-field-label>
-<sp-combobox id="color2" required>
+<sp-combobox required>
+    <span slot="field-label">Color</span>
     <sp-menu-item value="red">Red</sp-menu-item>
     <sp-menu-item value="green">Green</sp-menu-item>
     <sp-menu-item value="blue">Blue</sp-menu-item>
@@ -274,8 +360,8 @@ See [help text](../help-text) and [tooltip](../tooltip) for more information.
 <sp-tab-panel value="tooltip">
 
 ```html
-<sp-field-label for="color3">Color</sp-field-label>
-<sp-combobox id="color3">
+<sp-combobox>
+    <span slot="field-label">Color</span>
     <sp-tooltip slot="tooltip">
         Color options, such as red, green, or blue.
     </sp-tooltip>

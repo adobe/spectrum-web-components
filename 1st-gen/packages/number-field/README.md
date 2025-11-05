@@ -29,18 +29,54 @@ import { NumberField } from '@spectrum-web-components/number-field';
 A number field consists of an input field for numeric values and optional stepper buttons for incrementing and decrementing the value. The stepper UI can be hidden using the `hide-stepper` attribute.
 
 ```html
-<sp-field-label>
-    What is the air-speed velocity of an unladen swallow?
-</sp-field-label>
 <sp-number-field
-    id="anatomy"
     format-options='{
         "style": "unit",
         "unit": "MPH",
         "unitDisplay": "long"
     }'
+>
+    What is the air-speed velocity of an unladen swallow?
+</sp-number-field>
+```
+
+#### Label
+
+A number field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-number-field
+    format-options='{
+        "style": "unit",
+        "unit": "MPH",
+        "unitDisplay": "long"
+    }'
+>
+    What is the air-speed velocity of an unladen swallow?
+</sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-number-field
+    format-options='{
+        "style": "unit",
+        "unit": "MPH",
+        "unitDisplay": "long"
+    }'
+    label="What is the air-speed velocity of an unladen swallow?"
 ></sp-number-field>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Options
 
@@ -94,16 +130,16 @@ An `<sp-number-field>` element will process its numeric value with `new Intl.Num
 The following example uses the `signDisplay` option to include the plus sign for positive numbers, for example to display an offset from some value. In addition, it always displays a minimum of 1 digit after the decimal point, and allows up to 2 fraction digits. If the user enters more than 2 fraction digits, the result will be rounded.
 
 ```html
-<sp-field-label for="decimals">Adjust exposure</sp-field-label>
 <sp-number-field
-    id="decimals"
     value="0"
     format-options='{
         "signDisplay": "exceptZero",
         "minimumFractionDigits": 1,
         "maximumFractionDigits": 2
     }'
-></sp-number-field>
+>
+    Adjust exposure
+</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -113,14 +149,14 @@ The following example uses the `signDisplay` option to include the plus sign for
 The `style: 'percent'` option can be passed to the `formatOptions` property to treat the value as a percentage. In this mode, the value is multiplied by 100 before it is displayed, i.e. `0.45` is displayed as "45%". The reverse is also true: when the user enters a value, the `change` event will be triggered with the entered value divided by 100. When the percent option is enabled, the default step automatically changes to 0.01 such that incrementing and decrementing occurs by 1%. This can be overridden with the step property.
 
 ```html
-<sp-field-label for="percents">Sales tax</sp-field-label>
 <sp-number-field
-    id="percents"
     value="0.05"
     format-options='{
         "style": "percent"
     }'
-></sp-number-field>
+>
+    Sales tax
+</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -132,9 +168,7 @@ The `style: 'currency'` option can be passed to the `formatOptions` property to 
 If you need to allow the user to change the currency, you should include a separate dropdown next to the `sp-number-field`. The `sp-number-field` itself will not determine the currency from the user input.
 
 ```html
-<sp-field-label for="currency">Transaction amount</sp-field-label>
 <sp-number-field
-    id="currency"
     value="45"
     format-options='{
         "style": "currency",
@@ -142,7 +176,9 @@ If you need to allow the user to change the currency, you should include a separ
         "currencyDisplay": "code",
         "currencySign": "accounting"
     }'
-></sp-number-field>
+>
+    Transaction amount
+</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -156,16 +192,16 @@ If you need to allow the user to change the unit, you should include a separate 
 Note: The unit style is not currently supported in Safari. A [polyfill](https://formatjs.io/docs/polyfills/intl-numberformat/) may be necessary.
 
 ```html
-<sp-field-label for="units">Package width</sp-field-label>
 <sp-number-field
-    id="units"
     value="4"
     format-options='{
         "style": "unit",
         "unit": "inch",
         "unitDisplay": "long"
     }'
-></sp-number-field>
+>
+    Package width
+</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -175,15 +211,15 @@ Note: The unit style is not currently supported in Safari. A [polyfill](https://
 While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier), it is possible to encounter units (e.g. the graphics units of `pixel`, `pixels`, `points`, etc.) that are not supported therein. When this occurs, an `<sp-number-field>` element will attempt to polyfill support for this unit. See the following example delivering `{ style: "unit", unit: "px" }` below:
 
 ```html
-<sp-field-label for="units">Document width in pixels</sp-field-label>
 <sp-number-field
-    id="units"
     value="500"
     format-options='{
         "style": "unit",
         "unit": "px"
     }'
-></sp-number-field>
+>
+    Document width in pixels
+</sp-number-field>
 ```
 
 Note: the polyfilling done here is very simplistic and is triggered by supplying options that would otherwise cause the `Intl.NumberFormat()` call to throw an error. Once the unsupporting unit of `px` causes the construction of the object to throw, a back up formatter/parser pair will be created without the supplied unit data. When the `style` is set to `unit`, the `unit` value of will be adopted as the _static_ unit display. This means that neither pluralization or translation will be handled within the `<sp-number-field>` element itself. If pluralization or translation is important to the delivered interface, please be sure to handle passing those strings into to element via the `formatOptions` property reactively to the value of the element or locale of that page in question.
@@ -197,8 +233,7 @@ The `min` and `max` properties can be used to limit the entered value to a speci
 If a valid range is known ahead of time, it is a good idea to provide it to `<sp-number-field>` so it can optimize the experience. For example, when the minimum value is greater than or equal to zero, it is possible to use a numeric keyboard on iOS rather than a full text keyboard (necessary to enter a minus sign).
 
 ```html
-<sp-field-label for="red">Red value</sp-field-label>
-<sp-number-field id="red" value="4" min="0" max="255"></sp-number-field>
+<sp-number-field value="4" min="0" max="255">Red value</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -211,32 +246,9 @@ If the user types a value that is between two steps and blurs the input, the val
 
 <!-- prettier-ignore -->
 ```html
-<sp-field-label
-    for="step"
->Step</sp-field-label>
-<sp-number-field
-    id="step"
-    step="10"
-></sp-number-field>
-
-<sp-field-label
-    for="step-min"
->Step + min</sp-field-label>
-<sp-number-field
-    id="step-min"
-    min="2"
-    step="3"
-></sp-number-field>
-
-<sp-field-label
-    for="step-min-max"
->Step + min + max</sp-field-label>
-<sp-number-field
-    id="step-min-max"
-    min="2"
-    max="21"
-    step="3"
-></sp-number-field>
+<sp-number-field step="10">Step</sp-number-field>
+<sp-number-field min="2" step="3">Step + min</sp-number-field>
+<sp-number-field min="2"  max="21" step="3">Step + min + max</sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -249,11 +261,7 @@ If the user types a value that is between two steps and blurs the input, the val
 The `invalid` attribute indicates that the number field's value is invalid. When set, appropriate ARIA attributes will be automatically applied.
 
 ```html
-<sp-field-label for="invalid">
-    It's one banana, Michael, how much could it cost?
-</sp-field-label>
 <sp-number-field
-    id="invalid"
     invalid
     style="width: 130px"
     value="10"
@@ -268,10 +276,12 @@ The `invalid` attribute indicates that the number field's value is invalid. When
         "minimumFractionDigits": 2,
         "maximumFractionDigits": 2
     }'
-></sp-number-field>
-<sp-help-text variant="negative">
-    Value should be between $0 and $0.3.
-</sp-help-text>
+>
+    It's one banana, Michael, how much could it cost?
+    <sp-help-text variant="negative" slot="help-text-negative">
+        Value should be between $0 and $0.3.
+    </sp-help-text>
+</sp-number-field>
 ```
 
 #### Valid
@@ -279,11 +289,7 @@ The `invalid` attribute indicates that the number field's value is invalid. When
 The `valid` attribute indicates that the number field's value is valid.
 
 ```html
-<sp-field-label for="valid">
-    It's one banana, Michael, how much could it cost?
-</sp-field-label>
 <sp-number-field
-    id="valid"
     valid
     style="width: 130px"
     value="0.23"
@@ -298,7 +304,9 @@ The `valid` attribute indicates that the number field's value is valid.
         "minimumFractionDigits": 2,
         "maximumFractionDigits": 2
     }'
-></sp-number-field>
+>
+    It's one banana, Michael, how much could it cost?
+</sp-number-field>
 ```
 
 #### Required
@@ -306,10 +314,9 @@ The `valid` attribute indicates that the number field's value is valid.
 Use the `required` attribute to indicate a number field value is required. Dictate the validity or invalidity state of the text entry with the `valid` or `invalid` attributes.
 
 ```html
-<sp-field-label for="number-1" required>Count</sp-field-label>
-<sp-number-field id="number-1" valid value="123"></sp-number-field>
-<sp-field-label for="number-2" required>Size</sp-field-label>
-<sp-number-field id="number-2" invalid value="152"></sp-number-field>
+<sp-number-field required>Count</sp-number-field>
+<sp-number-field required valid value="123">Count</sp-number-field>
+<sp-number-field required invalid>Size</sp-number-field>
 ```
 
 #### Disabled
@@ -317,8 +324,7 @@ Use the `required` attribute to indicate a number field value is required. Dicta
 The `disabled` attribute prevents the number field from receiving focus or events. The number field will appear faded.
 
 ```html
-<sp-field-label for="disabled" disabled>Number of tickets</sp-field-label>
-<sp-number-field id="disabled" disabled value="0"></sp-number-field>
+<sp-number-field disabled value="0">Number of tickets</sp-number-field>
 ```
 
 #### Read-only
@@ -326,8 +332,7 @@ The `disabled` attribute prevents the number field from receiving focus or event
 Number fields have a `readonly` attribute for when they’re in the disabled state but still need their labels to be shown. This allows for content to be copied, but not interacted with or changed.
 
 ```html
-<sp-field-label for="readonly">Number of tickets</sp-field-label>
-<sp-number-field id="readonly" readonly value="0"></sp-number-field>
+<sp-number-field readonly value="0">Number of tickets</sp-number-field>
 ```
 
 ### Behaviors
@@ -346,10 +351,9 @@ The input value incrementally increases or decreases by the value of the `step` 
 The `<sp-number-field>` component doesn't manage a default value by itself. This means that consumers can set the value of the number-field as an empty string by clearing the input. If we want the number-field to reset to a `default-value` when the user clears the input, we can listen for the `change` event on the number-field component and set its value to the desired `default-value` if the input is empty.
 
 ```html
-<sp-field-label for="default">
+<sp-number-field id="default" value="20">
     Default value of this number field is 42
-</sp-field-label>
-<sp-number-field id="default" value="20"></sp-number-field>
+</sp-number-field>
 
 <script type="module">
     const numberField = document.querySelector('#default');
@@ -368,7 +372,10 @@ The `<sp-number-field>` component doesn't manage a default value by itself. This
 
 #### Labels
 
-Every number field must have a label that clearly describes its purpose. The label can be provided either via the `label` attribute or with an associated `<sp-field-label>` element.
+Every number field must have a label that clearly describes its purpose. Typically this label should be a visible label via the default slot. When a visible label is not required, the `label` attribute can be used to provide a hidden label for assistive technology.
+
+<sp-number-field>Quantity</sp-number-field>
+<sp-number-field label="Quantity"></sp-number-field>
 
 #### Keyboard Navigation
 

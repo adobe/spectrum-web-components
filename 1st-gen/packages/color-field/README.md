@@ -27,14 +27,38 @@ import { ColorField } from '@spectrum-web-components/color-field';
 
 The color field consists of several key parts:
 
+- **Label**: Visual or visually hidden text that describes the color field to the user
 - **Input field**: The main text input area where users can type color values
 - **Color handle**: An optional visual indicator showing the current color (when `view-color` attribute is enabled)
 - **Validation feedback**: Visual indicators for valid and invalid color inputs
 - **Size variations**: Different size options to match your design requirements
 
 ```html
-<sp-color-field value="#ffff00"></sp-color-field>
+<sp-color-field value="#ffff00">Background color</sp-color-field>
 ```
+
+#### Label
+
+A color field must have a label in order to be accessible. A label can be provided either via the default slot, or via the `label` attribute, for a hidden label that can be read by assistive technology. If no label is provided, the component will have a visually hidden label with the text `color`.
+
+<sp-tabs selected="slotted" auto label="Labels">
+<sp-tab value="slotted">Visible slotted label</sp-tab>
+<sp-tab-panel value="slotted">
+
+```html
+<sp-color-field value="#000000">Text color</sp-color-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="attribute">Visually hidden label attribute</sp-tab>
+<sp-tab-panel value="attribute">
+
+```html
+<sp-color-field value="#000000" label="Text color"></sp-color-field>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Options
 
@@ -45,7 +69,7 @@ The color field consists of several key parts:
 <sp-tab-panel value="s">
 
 ```html
-<sp-color-field size="s" value="#ffff00"></sp-color-field>
+<sp-color-field label="Size" value="1024" size="s"></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -53,25 +77,23 @@ The color field consists of several key parts:
 <sp-tab-panel value="m">
 
 ```html
-<sp-color-field size="m" value="#ffff00"></sp-color-field>
+<sp-number-field label="Size" value="1024" size="m"></sp-number-field>
 ```
 
 </sp-tab-panel>
 <sp-tab value="l">Large</sp-tab>
-
 <sp-tab-panel value="l">
 
 ```html
-<sp-color-field size="l" value="#ffff00"></sp-color-field>
+<sp-number-field label="Size" value="1024" size="l"></sp-number-field>
 ```
 
 </sp-tab-panel>
-<sp-tab value="xl">Xtra Large</sp-tab>
-
+<sp-tab value="xl">Extra Large</sp-tab>
 <sp-tab-panel value="xl">
 
 ```html
-<sp-color-field size="xl" value="#ffff00"></sp-color-field>
+<sp-number-field label="Size" value="1024" size="xl"></sp-number-field>
 ```
 
 </sp-tab-panel>
@@ -82,7 +104,7 @@ The color field consists of several key parts:
 When `view-color` is true, the color handle will be rendered. This is useful for development and debugging purposes.
 
 ```html
-<sp-color-field view-color value="#f00"></sp-color-field>
+<sp-color-field view-color value="#f00">Icon color</sp-color-field>
 ```
 
 #### Quiet
@@ -90,7 +112,7 @@ When `view-color` is true, the color handle will be rendered. This is useful for
 A quiet color field provides a more subtle appearance:
 
 ```html
-<sp-color-field quiet value="#e6e600"></sp-color-field>
+<sp-color-field quiet value="#e6e600">Icon color</sp-color-field>
 ```
 
 ### States
@@ -100,7 +122,7 @@ A quiet color field provides a more subtle appearance:
 The default state of the color field, ready for user input:
 
 ```html
-<sp-color-field value="#ffff00"></sp-color-field>
+<sp-color-field value="#ffff00">Icon color</sp-color-field>
 ```
 
 #### Read Only
@@ -108,7 +130,7 @@ The default state of the color field, ready for user input:
 A readonly color field that displays the color value but prevents user modification:
 
 ```html
-<sp-color-field readonly value="#ffff00"></sp-color-field>
+<sp-color-field readonly value="#ffff00">Icon color</sp-color-field>
 ```
 
 #### Invalid Input
@@ -116,7 +138,7 @@ A readonly color field that displays the color value but prevents user modificat
 If the input value is not a valid color, `<sp-color-field>` will not accept it and may show validation feedback:
 
 ```html
-<sp-color-field value="not a color"></sp-color-field>
+<sp-color-field value="not a color">Icon color</sp-color-field>
 ```
 
 ### Behaviors
@@ -134,7 +156,7 @@ For a complete list of supported color formats, see the [ColorController documen
 A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `BB` (blue) are hexadecimal integers between `00` and `FF` specifying the intensity of the color.
 
 ```html
-<sp-color-field view-color value="#ff0000"></sp-color-field>
+<sp-color-field view-color value="#ff0000" label="Text color"></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -144,7 +166,7 @@ A hexadecimal color is specified with: `#RRGGBB`. `RR` (red), `GG` (green) and `
 Shorthand hexadecimal color values are also supported. `#RGB` is a shorthand for `#RRGGBB`. In the shorthand form, `R` (red), `G` (green), and `B` (blue) are hexadecimal characters between `0` and `F`. Each character is repeated to create the full 6-digit color code. For example, `#123` would expand to `#112233`.
 
 ```html
-<sp-color-field view-color value="#f00"></sp-color-field>
+<sp-color-field view-color value="#f00" label="Text color"></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -154,7 +176,11 @@ Shorthand hexadecimal color values are also supported. `#RGB` is a shorthand for
 An RGB color value is specified with: rgb(red, green, blue). Each parameter defines the intensity of the color with a value between 0 and 255.
 
 ```html
-<sp-color-field view-color value="rgb(255,0,0)"></sp-color-field>
+<sp-color-field
+    view-color
+    value="rgb(255,0,0)"
+    label="Text color"
+></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -164,7 +190,11 @@ An RGB color value is specified with: rgb(red, green, blue). Each parameter defi
 An RGBA color value is specified with: `rgba(red, green, blue, alpha)`. The `alpha` parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
 
 ```html
-<sp-color-field view-color value="rgba(0,255,0,0.3)"></sp-color-field>
+<sp-color-field
+    view-color
+    value="rgba(0,255,0,0.3)"
+    label="Text color"
+></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -174,7 +204,11 @@ An RGBA color value is specified with: `rgba(red, green, blue, alpha)`. The `alp
 An HSL color value is specified with: hsl(hue, saturation, lightness). Hue is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue. Saturation and lightness are percentages.
 
 ```html
-<sp-color-field view-color value="hsl(234, 70%, 50%)"></sp-color-field>
+<sp-color-field
+    view-color
+    value="hsl(234, 70%, 50%)"
+    label="Text color"
+></sp-color-field>
 ```
 
 </sp-tab-panel>
@@ -184,7 +218,11 @@ An HSL color value is specified with: hsl(hue, saturation, lightness). Hue is a 
 An HSV color value is specified with: hsv(hue, saturation, value). Hue is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue. Saturation and value are percentages.
 
 ```html
-<sp-color-field view-color value="hsv(0, 70%, 50%)"></sp-color-field>
+<sp-color-field
+    view-color
+    value="hsv(0, 70%, 50%)"
+    label="Text color"
+></sp-color-field>
 ```
 
 </sp-tab-panel>

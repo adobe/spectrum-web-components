@@ -5803,6 +5803,7 @@ __metadata:
   dependencies:
     "@spectrum-web-components/action-button": "npm:1.10.0"
     "@spectrum-web-components/base": "npm:1.10.0"
+    "@spectrum-web-components/field-label": "npm:1.10.0"
     "@spectrum-web-components/icon": "npm:1.10.0"
     "@spectrum-web-components/icons-ui": "npm:1.10.0"
     "@spectrum-web-components/menu": "npm:1.10.0"
@@ -5811,6 +5812,7 @@ __metadata:
     "@spectrum-web-components/popover": "npm:1.10.0"
     "@spectrum-web-components/progress-circle": "npm:1.10.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
+    "@spectrum-web-components/shared": "npm:1.10.0"
     "@spectrum-web-components/textfield": "npm:1.10.0"
   languageName: unknown
   linkType: soft

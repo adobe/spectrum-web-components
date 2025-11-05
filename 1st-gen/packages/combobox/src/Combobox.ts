@@ -36,6 +36,7 @@ import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Textfield } from '@spectrum-web-components/textfield';
+import { FieldLabelMixin } from '@spectrum-web-components/field-label/src/FieldLabelMixin.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
 
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -53,7 +54,7 @@ export type ComboboxOption = {
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
  */
-export class Combobox extends Textfield {
+export class Combobox extends FieldLabelMixin(Textfield, 'field-label') {
     public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
@@ -358,44 +359,25 @@ export class Combobox extends Textfield {
         super.onBlur(event);
     }
 
-    protected renderVisuallyHiddenLabels(): TemplateResult {
-        /**
-         * appliedLabel corresponds to `<label for="...">`, which is overriden
-         * if user adds the `label` attribute manually to `<sp-combobox>`.
-         **/
-        const appliedLabel = this.label || this.appliedLabel;
+    /**
+     * gets the hidden label for the combobox:
+     * appliedLabel corresponds to `<label for="...">`, which is overridden
+     * if user adds the `label` attribute manually to `<sp-combobox>`.
+     **/
+    protected get visuallyHiddenLabel(): string | undefined {
+        //TODO Deprecate applied label
+        const label = this.label || this.appliedLabel;
+        return label && label.trim().length > 0 ? label : undefined;
+    }
 
+    protected renderVisuallyHiddenLabels(): TemplateResult {
+        //TODO Deprecate applied label
         return html`
             ${this.pending
                 ? html`
                       ${this.renderLoader()}
-                      <span
-                          aria-hidden="true"
-                          class="visually-hidden"
-                          id="pending-label"
-                      >
-                          ${this.pendingLabel}
-                      </span>
                   `
                 : nothing}
-            ${this.value
-                ? html`
-                      <span
-                          aria-hidden="true"
-                          class="visually-hidden"
-                          id="applied-label"
-                      >
-                          ${appliedLabel}
-                      </span>
-                      <slot name="label" id="label">
-                          <span class="visually-hidden" aria-hidden="true">
-                              ${this.value}
-                          </span>
-                      </slot>
-                  `
-                : html`
-                      <span hidden id="applied-label">${appliedLabel}</span>
-                  `}
         `;
     }
 
@@ -413,6 +395,32 @@ export class Combobox extends Textfield {
         `;
     }
 
+    protected override get _ariaLabel(): string | undefined {
+        const pending = this.pending ? this.pendingLabel : undefined;
+        if (this.appliedLabel && this.appliedLabel.trim().length > 0) {
+            //TODO Deprecate applied label
+            return `${this.appliedLabel}${this.pending ? ` ${this.pendingLabel}` : ''}`;
+        } else if (this.label && this.label.trim().length > 0) {
+            return `${this.label}${this.pending ? ` ${this.pendingLabel}` : ''}`;
+        } else if (this.slotHasContent) {
+            return pending;
+        } else {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> needs a label:`,
+                'https://opensource.adobe.com/spectrum-web-components/components/textfield/#accessibility',
+                {
+                    type: 'accessibility',
+                    issues: [
+                        'value supplied to the default slot, which will be displayed visually as part of the element, or',
+                        'value supplied to the "label" attribute, which will read by assistive technologies',
+                    ],
+                }
+            );
+            return pending;
+        }
+    }
+
     protected override renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
@@ -428,10 +436,12 @@ export class Combobox extends Textfield {
                 aria-controls=${ifDefined(
                     this.open ? 'listbox-menu' : undefined
                 )}
+                aria-label=${ifDefined(this._ariaLabel)}
+                aria-labelledby=${ifDefined(
+                    this.slotHasContent ? 'field-label-slot' : undefined
+                )}
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded="${this.open ? 'true' : 'false'}"
-                aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="label applied-label pending-label"
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 autocomplete="off"
                 @click=${this.toggleOpen}
@@ -451,6 +461,11 @@ export class Combobox extends Textfield {
                     this.minlength > -1 ? this.minlength : undefined
                 )}
                 pattern=${ifDefined(this.pattern)}
+                placeholder=${ifDefined(
+                    this.placeholder?.length > 0 && !this.pending
+                        ? this.placeholder
+                        : undefined
+                )}
                 @change=${this.handleChange}
                 @input=${this.handleInput}
                 @focus=${this.onFocus}
@@ -468,13 +483,17 @@ export class Combobox extends Textfield {
         }
 
         return html`
-            ${super.render()}
+            ${this.renderFieldLabel('input')}
+            <div id="textfield">${this.renderField()}</div>
+            ${this.renderHelpText(this.invalid)}
             <sp-picker-button
                 aria-controls="listbox-menu"
                 aria-describedby="${this.helpTextId} tooltip"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-label=${ifDefined(this.label || this.appliedLabel)}
-                aria-labelledby="applied-label label"
+                aria-label=${ifDefined(this._ariaLabel)}
+                aria-labelledby=${ifDefined(
+                    this.slotHasContent ? 'field-label-slot' : undefined
+                )}
                 @click=${this.toggleOpen}
                 tabindex="-1"
                 class="button ${this.focused
@@ -502,7 +521,7 @@ export class Combobox extends Textfield {
                     <sp-menu
                         @change=${this.handleMenuChange}
                         tabindex="-1"
-                        aria-labelledby="label applied-label"
+                        aria-labelledby="label visually-hidden-label"
                         aria-label=${ifDefined(this.label || this.appliedLabel)}
                         id="listbox-menu"
                         role="listbox"
@@ -549,7 +568,11 @@ export class Combobox extends Textfield {
                     </sp-menu>
                 </sp-popover>
             </sp-overlay>
-            ${this.renderVisuallyHiddenLabels()}
+            ${this.pending
+                ? html`
+                      ${this.renderLoader()}
+                  `
+                : nothing}
             <slot
                 aria-hidden="true"
                 name="tooltip"
