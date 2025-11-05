@@ -39,8 +39,8 @@
         "src/**/*.ts"
     ],
     "dependencies": {
-        "@spectrum-web-components/bundle": "1.9.1",
-        "@spectrum-web-components/custom-vars-viewer": "1.9.1"
+        "@spectrum-web-components/bundle": "1.10.0",
+        "@spectrum-web-components/custom-vars-viewer": "1.10.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "3.1.2",
