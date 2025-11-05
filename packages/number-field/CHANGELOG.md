@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/icon@1.9.1
+    - @spectrum-web-components/icons-ui@1.9.1
+    - @spectrum-web-components/infield-button@1.9.1
+    - @spectrum-web-components/textfield@1.9.1
+    - @spectrum-web-components/base@1.9.1
+    - @spectrum-web-components/reactive-controllers@1.9.1
+    - @spectrum-web-components/shared@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

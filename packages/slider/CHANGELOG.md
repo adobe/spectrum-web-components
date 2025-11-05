@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/field-label@1.9.1
+    - @spectrum-web-components/number-field@1.9.1
+    - @spectrum-web-components/base@1.9.1
+    - @spectrum-web-components/reactive-controllers@1.9.1
+    - @spectrum-web-components/shared@1.9.1
+    - @spectrum-web-components/theme@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

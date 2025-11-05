@@ -1,5 +1,20 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- Updated dependencies [[`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
+    - @spectrum-web-components/overlay@1.9.1
+    - @spectrum-web-components/popover@1.9.1
+    - @spectrum-web-components/action-button@1.9.1
+    - @spectrum-web-components/divider@1.9.1
+    - @spectrum-web-components/icon@1.9.1
+    - @spectrum-web-components/icons-ui@1.9.1
+    - @spectrum-web-components/base@1.9.1
+    - @spectrum-web-components/reactive-controllers@1.9.1
+    - @spectrum-web-components/shared@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

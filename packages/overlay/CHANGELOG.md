@@ -1,5 +1,18 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- [#5806](https://github.com/adobe/spectrum-web-components/pull/5806) [`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - - **Fixed**: Expanded `<overlay-trigger>` `type` property to accept all overlay types ('auto', 'hint', 'manual', 'modal', 'page') instead of the incorrect, previous restricted subset.
+
+- Updated dependencies []:
+    - @spectrum-web-components/action-button@1.9.1
+    - @spectrum-web-components/base@1.9.1
+    - @spectrum-web-components/reactive-controllers@1.9.1
+    - @spectrum-web-components/shared@1.9.1
+    - @spectrum-web-components/theme@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

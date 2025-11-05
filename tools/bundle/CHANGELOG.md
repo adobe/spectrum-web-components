@@ -1,5 +1,85 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- Updated dependencies [[`2811b9e`](https://github.com/adobe/spectrum-web-components/commit/2811b9e1e4d0b254b78bb9273dadab0933247473), [`a19cbe3`](https://github.com/adobe/spectrum-web-components/commit/a19cbe3e8b4690d8abd1530e3930e5d48ae43618)]:
+    - @spectrum-web-components/status-light@1.9.1
+    - @spectrum-web-components/overlay@1.9.1
+    - @spectrum-web-components/combobox@1.9.1
+    - @spectrum-web-components/contextual-help@1.9.1
+    - @spectrum-web-components/menu@1.9.1
+    - @spectrum-web-components/picker@1.9.1
+    - @spectrum-web-components/popover@1.9.1
+    - @spectrum-web-components/tooltip@1.9.1
+    - @spectrum-web-components/truncated@1.9.1
+    - @spectrum-web-components/breadcrumbs@1.9.1
+    - @spectrum-web-components/action-menu@1.9.1
+    - @spectrum-web-components/action-bar@1.9.1
+    - @spectrum-web-components/card@1.9.1
+    - @spectrum-web-components/accordion@1.9.1
+    - @spectrum-web-components/action-button@1.9.1
+    - @spectrum-web-components/action-group@1.9.1
+    - @spectrum-web-components/alert-banner@1.9.1
+    - @spectrum-web-components/asset@1.9.1
+    - @spectrum-web-components/avatar@1.9.1
+    - @spectrum-web-components/badge@1.9.1
+    - @spectrum-web-components/button@1.9.1
+    - @spectrum-web-components/button-group@1.9.1
+    - @spectrum-web-components/checkbox@1.9.1
+    - @spectrum-web-components/clear-button@1.9.1
+    - @spectrum-web-components/close-button@1.9.1
+    - @spectrum-web-components/coachmark@1.9.1
+    - @spectrum-web-components/color-area@1.9.1
+    - @spectrum-web-components/color-field@1.9.1
+    - @spectrum-web-components/color-handle@1.9.1
+    - @spectrum-web-components/color-loupe@1.9.1
+    - @spectrum-web-components/color-slider@1.9.1
+    - @spectrum-web-components/color-wheel@1.9.1
+    - @spectrum-web-components/dialog@1.9.1
+    - @spectrum-web-components/divider@1.9.1
+    - @spectrum-web-components/dropzone@1.9.1
+    - @spectrum-web-components/field-group@1.9.1
+    - @spectrum-web-components/field-label@1.9.1
+    - @spectrum-web-components/help-text@1.9.1
+    - @spectrum-web-components/icon@1.9.1
+    - @spectrum-web-components/icons@1.9.1
+    - @spectrum-web-components/icons-ui@1.9.1
+    - @spectrum-web-components/icons-workflow@1.9.1
+    - @spectrum-web-components/iconset@1.9.1
+    - @spectrum-web-components/illustrated-message@1.9.1
+    - @spectrum-web-components/infield-button@1.9.1
+    - @spectrum-web-components/link@1.9.1
+    - @spectrum-web-components/meter@1.9.1
+    - @spectrum-web-components/modal@1.9.1
+    - @spectrum-web-components/number-field@1.9.1
+    - @spectrum-web-components/picker-button@1.9.1
+    - @spectrum-web-components/progress-bar@1.9.1
+    - @spectrum-web-components/progress-circle@1.9.1
+    - @spectrum-web-components/radio@1.9.1
+    - @spectrum-web-components/search@1.9.1
+    - @spectrum-web-components/sidenav@1.9.1
+    - @spectrum-web-components/slider@1.9.1
+    - @spectrum-web-components/split-view@1.9.1
+    - @spectrum-web-components/swatch@1.9.1
+    - @spectrum-web-components/switch@1.9.1
+    - @spectrum-web-components/table@1.9.1
+    - @spectrum-web-components/tabs@1.9.1
+    - @spectrum-web-components/tags@1.9.1
+    - @spectrum-web-components/textfield@1.9.1
+    - @spectrum-web-components/thumbnail@1.9.1
+    - @spectrum-web-components/toast@1.9.1
+    - @spectrum-web-components/top-nav@1.9.1
+    - @spectrum-web-components/tray@1.9.1
+    - @spectrum-web-components/underlay@1.9.1
+    - @spectrum-web-components/base@1.9.1
+    - @spectrum-web-components/grid@1.9.1
+    - @spectrum-web-components/reactive-controllers@1.9.1
+    - @spectrum-web-components/shared@1.9.1
+    - @spectrum-web-components/styles@1.9.1
+    - @spectrum-web-components/theme@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes

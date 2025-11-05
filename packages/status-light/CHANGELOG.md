@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.9.1
+
+### Patch Changes
+
+- [#5813](https://github.com/adobe/spectrum-web-components/pull/5813) [`2811b9e`](https://github.com/adobe/spectrum-web-components/commit/2811b9e1e4d0b254b78bb9273dadab0933247473) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - **Fixed**: Added missing `accent` and `cyan` variant to status light.
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.9.1
+
 ## 1.9.0
 
 ### Patch Changes
