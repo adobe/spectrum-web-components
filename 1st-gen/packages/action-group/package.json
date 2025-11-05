@@ -65,10 +65,10 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "2.0.2",
-        "@spectrum-web-components/action-button": "1.9.1",
-        "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/icons-workflow": "1.9.1",
-        "@spectrum-web-components/reactive-controllers": "1.9.1"
+        "@spectrum-web-components/action-button": "1.10.0",
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/icons-workflow": "1.10.0",
+        "@spectrum-web-components/reactive-controllers": "1.10.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

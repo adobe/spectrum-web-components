@@ -74,10 +74,10 @@
     ],
     "dependencies": {
         "@spectrum-web-components/action-menu": "1.10.0",
-        "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/icons-workflow": "1.9.1",
-        "@spectrum-web-components/link": "1.9.1",
-        "@spectrum-web-components/menu": "1.9.1"
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/icons-workflow": "1.10.0",
+        "@spectrum-web-components/link": "1.10.0",
+        "@spectrum-web-components/menu": "1.10.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

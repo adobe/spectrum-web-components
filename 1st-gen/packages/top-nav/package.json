@@ -72,8 +72,8 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "2.0.2",
-        "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/shared": "1.9.1",
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/shared": "1.10.0",
         "@spectrum-web-components/tabs": "1.10.0"
     },
     "types": "./src/index.d.ts",

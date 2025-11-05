@@ -55,13 +55,13 @@
     ],
     "types": "./src/index.d.ts",
     "dependencies": {
-        "@spectrum-web-components/action-button": "1.9.1",
-        "@spectrum-web-components/base": "1.9.1",
+        "@spectrum-web-components/action-button": "1.10.0",
+        "@spectrum-web-components/base": "1.10.0",
         "@spectrum-web-components/dialog": "1.10.0",
-        "@spectrum-web-components/icons-workflow": "1.9.1",
-        "@spectrum-web-components/overlay": "1.9.1",
+        "@spectrum-web-components/icons-workflow": "1.10.0",
+        "@spectrum-web-components/overlay": "1.10.0",
         "@spectrum-web-components/popover": "1.10.0",
-        "@spectrum-web-components/reactive-controllers": "1.9.1"
+        "@spectrum-web-components/reactive-controllers": "1.10.0"
     },
     "keywords": [
         "design-system",

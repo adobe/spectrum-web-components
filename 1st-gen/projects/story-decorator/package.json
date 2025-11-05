@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "1.9.1",
+    "version": "1.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -69,14 +69,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/field-label": "1.9.1",
-        "@spectrum-web-components/menu": "1.9.1",
-        "@spectrum-web-components/overlay": "1.9.1",
-        "@spectrum-web-components/picker": "1.9.1",
-        "@spectrum-web-components/reactive-controllers": "1.9.1",
-        "@spectrum-web-components/switch": "1.9.1",
-        "@spectrum-web-components/theme": "1.9.1"
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/field-label": "1.10.0",
+        "@spectrum-web-components/menu": "1.10.0",
+        "@spectrum-web-components/overlay": "1.10.0",
+        "@spectrum-web-components/picker": "1.10.0",
+        "@spectrum-web-components/reactive-controllers": "1.10.0",
+        "@spectrum-web-components/switch": "1.10.0",
+        "@spectrum-web-components/theme": "1.10.0"
     },
     "peerDependencies": {
         "@storybook/preview-api": ">=8"
