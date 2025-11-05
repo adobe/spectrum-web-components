@@ -25,6 +25,7 @@
     - [Releasing SWC](01_contributor-guides/06_releasing-swc.md)
     - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
     - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
+    - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
 - [Style guide](02_style-guide/README.md)
 - [Project planning](03_project-planning/README.md)
     - [Objectives and strategy](03_project-planning/01_objectives-and-strategy.md)

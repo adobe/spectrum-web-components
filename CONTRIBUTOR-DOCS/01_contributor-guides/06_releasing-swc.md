@@ -19,6 +19,7 @@
     - [NPM 2FA authenticator app](#npm-2fa-authenticator-app)
 - [Releasing to NPM — the good stuff](#releasing-to-npm--the-good-stuff)
     - [Troubleshooting](#troubleshooting)
+    - [Custom npm tags](#custom-npm-tags)
 - [Publishing the documentation site manually](#publishing-the-documentation-site-manually)
     - [From GitHub](#from-github)
     - [From the terminal](#from-the-terminal)
