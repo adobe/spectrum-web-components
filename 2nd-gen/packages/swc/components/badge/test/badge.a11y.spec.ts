@@ -13,7 +13,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
-import { gotoStory } from '../../../../../../first-gen/test/a11y-helpers.js';
+import { gotoStory } from '../../../../../../1st-gen/test/a11y-helpers.js';
 
 /**
  * Accessibility tests for Badge component (2nd Generation)
@@ -74,6 +74,9 @@ test.describe('Badge - aXe Validation', () => {
             'components-badge--semantic-variants',
             'swc-badge'
         );
+
+        // Wait for any ongoing axe runs to complete
+        await page.waitForLoadState('networkidle');
 
         const results = await new AxeBuilder({ page })
             .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

@@ -50,7 +50,7 @@ Automatically checks ~50+ WCAG 2.0/2.1 Level A/AA rules:
 Create `<component>.a11y.spec.ts` in your component's `test/` directory:
 
 ```typescript
-// first-gen/packages/badge/test/badge.a11y.spec.ts
+// 1st-gen/packages/badge/test/badge.a11y.spec.ts
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
@@ -87,11 +87,11 @@ test.describe('Badge - aXe Validation', () => {
 Same pattern, different details:
 
 ```typescript
-// second-gen/packages/swc/components/badge/test/badge.a11y.spec.ts
+// 2nd-gen/packages/swc/components/badge/test/badge.a11y.spec.ts
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../../../../first-gen/test/a11y-helpers.js';
+import { gotoStory } from '../../../../../../1st-gen/test/a11y-helpers.js';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -125,7 +125,7 @@ test.describe('Badge - aXe Validation', () => {
 
 ## Test helper reference
 
-Shared helpers live in `first-gen/test/a11y-helpers.ts` and work for both generations.
+Shared helpers live in `1st-gen/test/a11y-helpers.ts` and work for both generations.
 
 ### `gotoStory(page, storyId, elementSelector)`
 
@@ -206,10 +206,10 @@ yarn test:a11y:2nd          # Only 2nd generation
 yarn test:a11y:ui           # Interactive UI mode
 ```
 
-### From first-gen directory
+### From 1st-gen directory
 
 ```zsh
-cd first-gen
+cd 1st-gen
 
 yarn test:a11y                           # All tests
 yarn test:a11y badge                     # Specific component
@@ -326,7 +326,7 @@ Received: [
 
 ### Playwright config
 
-`first-gen/playwright.a11y.config.ts` defines two projects:
+`1st-gen/playwright.a11y.config.ts` defines two projects:
 
 ```typescript
 projects: [
@@ -357,7 +357,7 @@ webServer: [
         reuseExistingServer: !process.env.CI,
     },
     {
-        command: 'cd ../second-gen/packages/swc && yarn storybook',
+        command: 'cd ../2nd-gen/packages/swc && yarn storybook',
         port: 6006,
         reuseExistingServer: !process.env.CI,
     },
@@ -369,7 +369,7 @@ webServer: [
 ```
 spectrum-web-components/
 ├── ACCESSIBILITY_TESTING.md              # This guide
-├── first-gen/
+├── 1st-gen/
 │   ├── playwright.a11y.config.ts         # Playwright config (both gens)
 │   ├── package.json                      # Test scripts
 │   ├── test/
@@ -381,7 +381,7 @@ spectrum-web-components/
 │       └── status-light/test/
 │           ├── status-light.a11y.spec.ts
 │           └── status-light.a11y.spec.ts-snapshots/
-└── second-gen/packages/swc/components/
+└── 2nd-gen/packages/swc/components/
     ├── badge/test/
     │   ├── badge.a11y.spec.ts
     │   └── badge.a11y.spec.ts-snapshots/

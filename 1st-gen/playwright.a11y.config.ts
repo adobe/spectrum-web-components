@@ -41,7 +41,7 @@ const config: PlaywrightTestConfig = {
         },
         {
             name: '2nd-gen',
-            testDir: '../second-gen/',
+            testDir: '../2nd-gen/',
             testMatch: '**/packages/swc/components/*/test/**/*.a11y.spec.ts',
             use: {
                 ...devices['Desktop Chrome'],
@@ -58,7 +58,7 @@ const config: PlaywrightTestConfig = {
             timeout: 120 * 1000,
         },
         {
-            command: 'cd ../second-gen/packages/swc && yarn storybook',
+            command: 'cd ../2nd-gen/packages/swc && yarn storybook',
             port: 6006,
             reuseExistingServer: !process.env.CI,
             timeout: 120 * 1000,
