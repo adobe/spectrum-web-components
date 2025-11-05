@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.10.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.10.0
+    - @spectrum-web-components/asset@1.10.0
+    - @spectrum-web-components/button@1.10.0
+    - @spectrum-web-components/button-group@1.10.0
+    - @spectrum-web-components/icon@1.10.0
+    - @spectrum-web-components/icons-ui@1.10.0
+    - @spectrum-web-components/shared@1.10.0
+    - @spectrum-web-components/reactive-controllers@1.10.0
+
 ## 1.9.1
 
 ### Patch Changes

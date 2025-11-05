@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "1.9.1",
+    "version": "1.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -80,15 +80,15 @@
         "css"
     ],
     "dependencies": {
-        "@spectrum-web-components/alert-dialog": "1.9.1",
+        "@spectrum-web-components/alert-dialog": "1.10.0",
         "@spectrum-web-components/base": "1.9.1",
         "@spectrum-web-components/button": "1.9.1",
-        "@spectrum-web-components/button-group": "1.9.1",
-        "@spectrum-web-components/divider": "1.9.1",
+        "@spectrum-web-components/button-group": "1.10.0",
+        "@spectrum-web-components/divider": "1.10.0",
         "@spectrum-web-components/icons-workflow": "1.9.1",
-        "@spectrum-web-components/modal": "1.9.1",
+        "@spectrum-web-components/modal": "1.10.0",
         "@spectrum-web-components/shared": "1.9.1",
-        "@spectrum-web-components/underlay": "1.9.1"
+        "@spectrum-web-components/underlay": "1.10.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "1.9.1",
+    "version": "1.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -68,7 +68,7 @@
         "@spectrum-web-components/base": "1.9.1",
         "@spectrum-web-components/button": "1.9.1",
         "@spectrum-web-components/field-label": "1.9.1",
-        "@spectrum-web-components/popover": "1.9.1"
+        "@spectrum-web-components/popover": "1.10.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

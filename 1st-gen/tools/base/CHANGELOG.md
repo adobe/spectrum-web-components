@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.10.0
+
+### Minor Changes
+
+- No customer-facing changes.
+
+    Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+
 ## 1.9.1
 
 ## 1.9.0

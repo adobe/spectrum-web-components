@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/adobe/spectrum-web-components/compare/v1.9.1...v1.10.0) (2025-11-05)
+
+## Minor Changes
+
+**sp-base**: No customer-facing changes.
+
+Introduced architectural changes to support side-by-side development of 1st-gen and 2nd-gen components.
+
 # [1.9.1](https://github.com/adobe/spectrum-web-components/compare/v1.9.0...v1.9.1) (2025-11-05)
 
 ## Patch Changes

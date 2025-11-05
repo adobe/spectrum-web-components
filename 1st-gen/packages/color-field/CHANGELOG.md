@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.10.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.10.0
+    - @spectrum-web-components/color-handle@1.10.0
+    - @spectrum-web-components/textfield@1.10.0
+
 ## 1.9.1
 
 ### Patch Changes

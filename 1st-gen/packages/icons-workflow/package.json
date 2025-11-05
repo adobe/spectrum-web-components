@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
-    "version": "1.9.1",
+    "version": "1.10.0",
     "description": "",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -42,7 +42,7 @@
     "types": "./src/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/icon": "1.9.1"
+        "@spectrum-web-components/icon": "1.10.0"
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "1.7.0",

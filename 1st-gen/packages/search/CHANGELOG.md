@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.10.0
+
+### Patch Changes
+
+- Updated dependencies []:
+    - @spectrum-web-components/base@1.10.0
+    - @spectrum-web-components/button@1.10.0
+    - @spectrum-web-components/icon@1.10.0
+    - @spectrum-web-components/icons-workflow@1.10.0
+    - @spectrum-web-components/textfield@1.10.0
+
 ## 1.9.1
 
 ### Patch Changes

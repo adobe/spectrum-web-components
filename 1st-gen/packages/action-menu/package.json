@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-menu",
-    "version": "1.9.1",
+    "version": "1.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -69,7 +69,7 @@
     "dependencies": {
         "@spectrum-web-components/action-button": "1.9.1",
         "@spectrum-web-components/base": "1.9.1",
-        "@spectrum-web-components/icon": "1.9.1",
+        "@spectrum-web-components/icon": "1.10.0",
         "@spectrum-web-components/icons-workflow": "1.9.1",
         "@spectrum-web-components/picker": "1.9.1",
         "@spectrum-web-components/shared": "1.9.1"
