@@ -99,6 +99,12 @@ async function publish() {
         'Updating 2nd-gen version.ts from 1st-gen'
     );
 
+    // Step 3.5: Refresh lockfile after version changes
+    run(
+        'yarn install --refresh-lockfile',
+        'Refreshing lockfile with new versions'
+    );
+
     // Step 4: Publish to npm
     run(
         `yarn changeset publish --no-git-tag --tag ${args.tag}`,
