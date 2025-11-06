@@ -154,7 +154,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
                 ${this.required
                     ? html`
                           <span>
-                              &nbsp;
+                              &hairsp;
                               <sp-icon-asterisk100
                                   class="required-icon spectrum-UIIcon-Asterisk100"
                               ></sp-icon-asterisk100>
