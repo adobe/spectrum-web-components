@@ -24,7 +24,7 @@
         "postinstall": "husky || true && patch-package",
         "start": "yarn start:1st-gen & yarn start:2nd-gen",
         "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
-        "start:2nd-gen": "yarn workspace @adobe/swc start",
+        "start:2nd-gen": "yarn workspace @adobe/swc storybook",
         "test": "yarn test:1st-gen & yarn test:2nd-gen",
         "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
         "test:2nd-gen": "yarn workspace @adobe/swc test",

@@ -11,34 +11,78 @@
  */
 
 import { html } from 'lit';
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { Asset } from '@adobe/swc/asset';
 
 import '@adobe/swc/asset';
+
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
+
+argTypes.variant = {
+    ...argTypes.variant,
+    control: { type: 'select' },
+    options: [undefined, ...Asset.VARIANTS],
+};
 
 const meta: Meta = {
     title: 'Asset',
     component: 'swc-asset',
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: ['file', 'folder', undefined],
+    args,
+    argTypes,
+    parameters: {
+        actions: {
+            handles: events,
         },
     },
+    tags: ['migrated'],
 };
 
 export default meta;
-type Story = StoryObj;
 
-// export const Default: Story = {
-//     render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
-// };
+// ───────────────
+//    STORIES
+// ───────────────
+
+args['default-slot'] = IMAGE_PLACEHOLDER_STRING();
 
 export const Default: Story = {
-    render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
-
-    // render: () => html`
-    //     <swc-asset style="height: 128px">
-    //         <img src=${portrait} alt="Demo Graphic" />
-    //     </swc-asset>
-    // `,
+    render: (args) => template(args),
 };
+
+export const File: Story = {
+    args: {
+        variant: 'file',
+    },
+    render: (args) =>
+        html`<swc-asset
+            style="min-inline-size: 150px; block-size: 128px"
+            variant=${args.variant as 'file'}
+        ></swc-asset>`,
+    tags: ['!dev'],
+};
+
+export const Folder: Story = {
+    args: {
+        variant: 'folder',
+    },
+    render: (args) =>
+        html`<swc-asset
+            style="min-inline-size: 150px; block-size: 128px"
+            variant=${args.variant as 'folder'}
+        ></swc-asset>`,
+    tags: ['!dev'],
+};
+
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+
+function IMAGE_PLACEHOLDER_STRING(): string {
+    return `<img class="spectrum-Asset-image" alt="Example image" src="https://cdn2.thecatapi.com/images/d4i.jpg" height="128">`;
+}
