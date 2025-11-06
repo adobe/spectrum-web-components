@@ -9,5 +9,3 @@ HEADER
 1st-gen/projects/example-project/dist
 1st-gen/tools/styles
 1st-gen/spectrum-*.css
-1st-gen/test/playwright-a11y/report/
-2nd-gen/test/playwright-a11y/report/

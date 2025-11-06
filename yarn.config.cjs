@@ -90,12 +90,14 @@ module.exports = defineConfig({
         const semverSort = (a, b) => {
             // Push latest & * to the bottom because we want to use the highest *specified* version
             if (['latest', '*'].includes(a)) {
-                return 0;
-            }
-            if (['latest', '*'].includes(b)) {
                 return 1;
             }
-            return semver.gt(semver.coerce(a), semver.coerce(b));
+            if (['latest', '*'].includes(b)) {
+                return -1;
+            }
+            // Return proper sort comparator values: negative if b > a, 0 if equal, positive if a > b
+            // This sorts in descending order (highest version first)
+            return semver.compare(semver.coerce(b), semver.coerce(a));
         };
 
         /**

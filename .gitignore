@@ -137,14 +137,6 @@ chromatic-build-*.xml
 chromatic-diagnostics*.json
 chromatic.config.json
 
-# Playwright test reports (generated)
-1st-gen/test/playwright-a11y/report/
-2nd-gen/test/playwright-a11y/report/
-
-# Playwright test results (generated)
-playwright-report/
-test-results/
-
 # yarn
 .pnp.*
 .yarn/*
