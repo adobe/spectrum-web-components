@@ -83,9 +83,9 @@ import '@spectrum-web-components/theme/src/express/themes.js'; // express
 import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-two
 ```
 
-## Examples
+### Examples
 
-### Light color, medium scale
+#### Light color, medium scale
 
 ```html
 <style type="text/css">
@@ -113,7 +113,7 @@ import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-
 </sp-theme>
 ```
 
-### Dark color, large scale
+#### Dark color, large scale
 
 The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Platform Scale.
 
@@ -135,7 +135,7 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Pl
 </sp-theme>
 ```
 
-### Embedded color systems and directional content
+#### Embedded color systems and directional content
 
 There are a few cases where it is necessary to embed one theme within another. For example, if you have an application that is using a dark color system with a left to right text direction that is previewing or editing content that will be displayed in a light color system with a right to left text direction.
 
@@ -201,7 +201,7 @@ There are a few cases where it is necessary to embed one theme within another. F
 
 ### Advanced usage
 
-### Lazy loading themes
+#### Lazy loading themes
 
 Load only what you need by importing the specific fragments, then lazy-load others as your user changes theme settings.
 
@@ -224,7 +224,7 @@ updateTheme('spectrum', 'light', 'medium');
 
 When bundling your application, be sure to consult the documentation of your bundler for the correct way to ensure proper packaging of the programatic dependency graph that this will create.
 
-### Language context
+#### Language context
 
 Descendants can request the current language by dispatching `sp-language-context` with a callback. The callback is re-invoked when the theme’s `lang` changes. This way, you can control the resolved language in `<sp-number-field>`, `<sp-slider>`, and other elements in one centralized place.
 
@@ -244,7 +244,7 @@ this.dispatchEvent(
 );
 ```
 
-## Accessibility
+### Accessibility
 
 - **Color and contrast**: Ensure sufficient contrast for any backgrounds you apply when consuming tokens (WCAG 2.1 AA). Components themselves meet Spectrum guidance when themed correctly.
 - **Language**: Set `lang` on `<sp-theme>` to inform number/date formatting and other locale-aware components.
