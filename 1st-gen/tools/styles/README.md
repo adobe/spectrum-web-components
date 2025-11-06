@@ -1,124 +1,240 @@
-## Description
+## Overview
 
-Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project.org)-powered web component library of patterns built on top of the [Spectrum CSS](https://opensource.adobe.com/spectrum-css) specification. Styles for these components are made available (and, in some cases, customizable) via CSS Custom Properties, e.g. `var(--spectrum-black)`. In this package, you will find the CSS Custom Properties that power the various color and size themes defined by Spectrum CSS.
+Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project.org)-powered web component library implementing Adobe's Spectrum design system. This package defines the CSS custom properties that implement design tokens from [Spectrum Tokens](https://github.com/adobe/spectrum-tokens). Spectrum Web Components consume these properties in their styles. These include colors, spacing, typography, and sizing values like `--spectrum-gray-100`, `--spectrum-component-height-200`, and `--spectrum-font-size-100`. In this package, you will find the CSS custom properties that Spectrum Web Components reference in their stylesheets, with values that vary across different system variants, color options, and scales.
 
-The easiest way to consume these values is via the `<sp-theme>` element. However, in some cases, it can be useful to have direct access to the files outlining the CSS Custom Properties, on top of which the rest of the component system is built.
+### Relationship to `<sp-theme>`
+
+The `<sp-theme>` element is built on top of this styles package. It consumes the CSS custom properties provided here and wraps them in a Web Component that manages theme switching, directionality, and other runtime behaviors.
+
+**For most applications**, we recommend using `<sp-theme>` rather than directly importing these CSS files. The theme element provides a more flexible and maintainable way to manage systems, colors, and scales using attributes like `system="spectrum"`, `color="dark"`, and `scale="medium"` (e.g., `<sp-theme system="spectrum" color="dark" scale="medium">`).
+
+**Use this styles package directly** when you need:
+
+- Fine-grained control over which CSS files are loaded
+- To integrate Spectrum styles into non-web component contexts
+- To build custom components outside the `<sp-theme>` wrapper
+- Direct access to unthemed design tokens for advanced use cases
+
+See the `@spectrum-web-components/theme` [documentation](../theme) for more information about using the theme element.
 
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/styles?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/styles)
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/styles)
 
-```
+```zsh
 yarn add @spectrum-web-components/styles
 ```
 
-## Theme packages
+## System variants
 
-```
-@import '@spectrum-web-components/styles/all-medium-darkest.css';
-```
+This package provides styles for three Adobe design system variants (referred to as "systems"). Each system has different available color options:
 
-This file brings together the global variables and font settings with the "Darkest" color set and "Medium" scale system specification.
+- **Spectrum Legacy** (system: `spectrum`) - The original Spectrum design system with four color options: `dark`, `light`, and deprecated `darkest` and `lightest`
+- **Express** (system: `express`) - The Adobe Express design system with two color options: `dark` and `light`
+- **Spectrum 2** (system: `spectrum-two`) - The next generation Spectrum design system with two color options: `dark` and `light`
 
-```
+## Combined theme packages (Spectrum Legacy)
+
+If you're not using `<sp-theme>`, the styles package provides convenience bundles for Spectrum Legacy that combine everything you need in a single import. Each `all-*` file combines core global styles, typography, a color option, and a scale specification. Express and Spectrum 2 do not have equivalent combined packages; use manual theme composition instead (see below).
+
+> **Note:** The `darkest` and `lightest` colors are deprecated and will be removed in a future release. Use `dark` or `light` instead.
+
+```ts
 @import '@spectrum-web-components/styles/all-medium-dark.css';
 ```
 
 This file brings together the global variables and font settings with the "Dark" color set and "Medium" scale system specification.
 
-```
+```ts
 @import '@spectrum-web-components/styles/all-medium-light.css';
 ```
 
 This file brings together the global variables and font settings with the "Light" color set and "Medium" scale system specification.
 
-```
-@import '@spectrum-web-components/styles/all-medium-lightest.css';
-```
+Other available combinations: `all-large-dark.css`, `all-large-light.css`, and the deprecated `all-medium-darkest.css`, `all-medium-lightest.css`, `all-large-darkest.css`, `all-large-lightest.css`.
 
-This file brings together the global variables and font settings with the "Lightest" color set and "Medium" scale system specification.
+## Manual theme composition (Express and Spectrum 2)
 
-```
-@import '@spectrum-web-components/styles/all-large-darkest.css';
-```
+If you're not using `<sp-theme>`, you can manually compose a complete theme for Express or Spectrum 2 (equivalent to the `all-*` convenience packages for Spectrum Legacy) by importing four files: core global styles, typography, a color option, and a scale.
 
-This file brings together the global variables and font settings with the "Darkest" color set and "Large" scale system specification.
+**Express example (large, dark):**
 
-```
-@import '@spectrum-web-components/styles/all-large-dark.css';
-```
-
-This file brings together the global variables and font settings with the "Dark" color set and "Large" scale system specification.
-
-```
-@import '@spectrum-web-components/styles/all-large-light.css';
+```css
+@import '@spectrum-web-components/styles/express/core-global.css';
+@import '@spectrum-web-components/styles/typography.css';
+@import '@spectrum-web-components/styles/express/theme-dark.css';
+@import '@spectrum-web-components/styles/express/scale-large.css';
 ```
 
-This file brings together the global variables and font settings with the "Light" color set and "Large" scale system specification.
+**Spectrum 2 example (medium, light):**
 
-```
-@import '@spectrum-web-components/styles/all-large-lightest.css';
-```
-
-This file brings together the global variables and font settings with the "Lightest" color set and "Large" scale system specification.
-
-## Color sets
-
-### Darkest
-
-```
-@import '@spectrum-web-components/styles/theme-darkest.css';
+```css
+@import '@spectrum-web-components/styles/spectrum-two/core-global.css';
+@import '@spectrum-web-components/styles/typography.css';
+@import '@spectrum-web-components/styles/spectrum-two/theme-light.css';
+@import '@spectrum-web-components/styles/spectrum-two/scale-medium.css';
 ```
 
-This file provides only the variables needed to power a color palette featuring colors found in the "Darkest" theme.
+> **Note:** For most use cases, we recommend using `<sp-theme>` instead of manually managing these imports. The theme element handles composition and switching automatically.
 
-### Dark
+## Individual theme and scale files
 
-```
-@import '@spectrum-web-components/styles/theme-dark.css';
-```
+For more control over bundle size or to manually compose themes, you can import color and scale files individually. These provide only the CSS custom properties specific to color or scale, without the combined overhead of the `all-*` packages.
 
-This file provides only the variables needed to power a color palette featuring colors found in the "Dark" theme.
+### Color
 
-### Light
+Import a single color option to set color values:
 
-```
+```css
+/* Spectrum Legacy */
 @import '@spectrum-web-components/styles/theme-light.css';
+
+/* Express */
+@import '@spectrum-web-components/styles/express/theme-dark.css';
+
+/* Spectrum 2 */
+@import '@spectrum-web-components/styles/spectrum-two/theme-light.css';
 ```
 
-This file provides only the variables needed to power a color palette featuring colors found in the "Light" theme.
+**Available color options:**
 
-### Lightest
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>System</sp-table-head-cell>
+        <sp-table-head-cell>Available colors</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><strong>Spectrum Legacy</strong></sp-table-cell>
+            <sp-table-cell><code>theme-dark.css</code>, <code>theme-light.css</code>, <code>theme-darkest.css</code> (deprecated), <code>theme-lightest.css</code> (deprecated)</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><strong>Express</strong></sp-table-cell>
+            <sp-table-cell><code>express/theme-dark.css</code>, <code>express/theme-light.css</code></sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><strong>Spectrum 2</strong></sp-table-cell>
+            <sp-table-cell><code>spectrum-two/theme-dark.css</code>, <code>spectrum-two/theme-light.css</code></sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
 
-```
-@import '@spectrum-web-components/styles/theme-lightest.css';
-```
+> **Note:** All color theme files automatically set the CSS `color-scheme` property (`light` or `dark`) for accessibility. This helps browsers render native form controls appropriately, adjusts scrollbar colors to match the theme, and improves compatibility with system UI elements.
 
-This file provides only the variables needed to power a color palette featuring colors found in the "Lightest" theme.
+### Scale
 
-## Scale
+Import a single scale to set sizing values:
 
-### Medium
-
-```
+```css
+/* Spectrum Legacy */
 @import '@spectrum-web-components/styles/scale-medium.css';
+
+/* Express */
+@import '@spectrum-web-components/styles/express/scale-medium.css';
+
+/* Spectrum 2 */
+@import '@spectrum-web-components/styles/spectrum-two/scale-large.css';
 ```
 
-This file provides only the variables needed to power the "Medium" scale system specification.
+**Available scales:**
 
-### Large
-
-```
-@import '@spectrum-web-components/styles/scale-large.css';
-```
-
-This file provides only the variables needed to power the "Large" scale system specification.
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>System</sp-table-head-cell>
+        <sp-table-head-cell>Available scales</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell><strong>Spectrum Legacy</strong></sp-table-cell>
+            <sp-table-cell><code>scale-medium.css</code>, <code>scale-large.css</code></sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><strong>Express</strong></sp-table-cell>
+            <sp-table-cell><code>express/scale-medium.css</code>, <code>express/scale-large.css</code></sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell><strong>Spectrum 2</strong></sp-table-cell>
+            <sp-table-cell><code>spectrum-two/scale-medium.css</code>, <code>spectrum-two/scale-large.css</code></sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
 
 ## Typography
 
-```
+```ts
 @import '@spectrum-web-components/styles/typography.css';
 ```
 
-This file provides a `lit-html` compliant version of the [Spectrum Typography classes](https://opensource.adobe.com/spectrum-css/?path=/docs/components-typography--docs).
+This file provides the complete [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path=/docs/components-typography--docs). The typography system is shared across all design systems (Spectrum Legacy, Express, and Spectrum 2).
+
+**What's included:**
+
+- **Heading** styles (`.spectrum-Heading`) - Multiple sizes from XXS to XXXL with weight variants (light, regular, heavy) and serif options
+- **Body** styles (`.spectrum-Body`) - Multiple sizes from XS to XXXL with serif options for body copy and longer text
+- **Detail** styles (`.spectrum-Detail`) - Uppercase labels and metadata text in sizes S through XL with light weight option
+- **Code** styles (`.spectrum-Code`) - Monospace inline code snippets in sizes XS through XL
+- **Language support** - Automatic font family selection for Arabic (`:lang(ar)`), Hebrew (`:lang(he)`), and CJK languages (Chinese, Japanese, Korean)
+- **Emphasis and strong** - Proper italic and bold styling for `<em>` and `<strong>` elements within each typography class
+- **High contrast mode support** - Ensures text remains readable when Windows High Contrast Mode is enabled
+
+### TypeScript/JavaScript exports for Lit components
+
+For use in Lit-based components, you can import typography styles as JavaScript modules:
+
+```ts
+import typographyStyles from '@spectrum-web-components/styles/typography.js';
+import bodyStyles from '@spectrum-web-components/styles/body.js';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+import detailStyles from '@spectrum-web-components/styles/detail.js';
+import codeStyles from '@spectrum-web-components/styles/code.js';
+
+// Use in your component's static styles
+static styles = [typographyStyles];
+```
+
+- **`typography.js`** - Complete typography system with all classes
+- **`body.js`** - Body text styles only (base + lang + body classes)
+- **`heading.js`** - Heading styles only (base + lang + heading classes)
+- **`detail.js`** - Detail/label styles only (base + lang + detail classes)
+- **`code.js`** - Code styles only (base + lang + code classes)
+
+Import individual exports when you only need specific typography components to reduce bundle size.
+
+## Design tokens
+
+For advanced use cases where you need direct access to design token CSS custom properties, this package exposes token files:
+
+### Spectrum Legacy tokens
+
+```ts
+@import '@spectrum-web-components/styles/tokens/global-vars.css';
+@import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/large-vars.css';
+```
+
+### Express tokens
+
+```ts
+@import '@spectrum-web-components/styles/tokens/express/global-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/large-vars.css';
+```
+
+### Spectrum 2 tokens
+
+```ts
+@import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/light-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/large-vars.css';
+```
+
+## Migrating to Spectrum 2
+
+If you're migrating to Spectrum 2, see the [Spectrum 2 migration guide](../../migrating-to-spectrum2/) for detailed instructions.
