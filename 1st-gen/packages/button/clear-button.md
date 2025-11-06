@@ -25,34 +25,21 @@ import { ClearButton } from '@spectrum-web-components/button';
 
 ### Anatomy
 
-The clear button is a button with only close icon.
+The clear button is a button with only a close icon.
 
 ```html
-<sp-clear-button>Reset</sp-clear-button>
+<sp-clear-button label="Reset"></sp-clear-button>
 ```
 
 #### Label
 
-The label for an `<sp-clear-button>` element can be set via it's default slot or with the `label` attribute. With either method, the label will not be visible but still read by screen readers.
-
-<sp-tabs selected="attribute" auto label="Labelling a button">
-<sp-tab value="slot">Default slot</sp-tab>
-<sp-tab-panel value="slot">
+An accessible label for an `<sp-clear-button>` must be provided using the `label` attribute. This sets the `aria-label` for screen readers. Unlike other button types, the clear button only displays an icon and does not render slot content, so the `label` attribute is the only way to provide an accessible name.
 
 ```html demo
-<sp-clear-button>Clear</sp-clear-button>
+<sp-clear-button label="Clear"></sp-clear-button>
 ```
 
-</sp-tab-panel>
-<sp-tab value="attribute">Label attribute</sp-tab>
-<sp-tab-panel value="attribute">
-
-```html demo
-<sp-clear-button label="Clear">Clear</sp-clear-button>
-```
-
-</sp-tab-panel>
-</sp-tabs>
+The `label` attribute is required and will be set as the `aria-label` on the element.
 
 ### Options
 
@@ -63,7 +50,7 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-clear-button size="s">Small</sp-clear-button>
+<sp-clear-button size="s" label="Clear"></sp-clear-button>
 ```
 
 </sp-tab-panel>
@@ -71,7 +58,7 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-clear-button size="m">Medium</sp-clear-button>
+<sp-clear-button size="m" label="Clear"></sp-clear-button>
 ```
 
 </sp-tab-panel>
@@ -79,7 +66,7 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-clear-button size="l">Large</sp-clear-button>
+<sp-clear-button size="l" label="Clear"></sp-clear-button>
 ```
 
 </sp-tab-panel>
@@ -87,7 +74,7 @@ The label for an `<sp-clear-button>` element can be set via it's default slot or
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-clear-button size="xl">Extra Large</sp-clear-button>
+<sp-clear-button size="xl" label="Clear"></sp-clear-button>
 ```
 
 </sp-tab-panel>
@@ -119,8 +106,8 @@ While disabled, the `<sp-clear-button>` element will not respond to click events
 
 ```html
 <sp-button-group>
-    <sp-clear-button>Normal</sp-clear-button>
-    <sp-clear-button disabled>Disabled</sp-clear-button>
+    <sp-clear-button label="Clear"></sp-clear-button>
+    <sp-clear-button label="Clear" disabled></sp-clear-button>
 </sp-button-group>
 ```
 
@@ -132,9 +119,10 @@ Events handlers for clicks and other user actions can be registered on a
 `<sp-clear-button>` as one would on a standard HTML `<button>` element.
 
 ```html
-<sp-clear-button onclick="spAlert(this, '<sp-clear-button> clicked!')">
-    Click me
-</sp-clear-button>
+<sp-clear-button
+    label="Click me"
+    onclick="spAlert(this, '<sp-clear-button> clicked!')"
+></sp-clear-button>
 ```
 
 #### Autofocus
@@ -148,7 +136,7 @@ popover or dialog opens.
 <sp-overlay trigger="trigger@click" placement="bottom">
     <sp-popover>
         <!-- Button will autofocus when open -->
-        <sp-clear-button autofocus>Clear</sp-clear-button>
+        <sp-clear-button label="Clear" autofocus></sp-clear-button>
     </sp-popover>
 </sp-overlay>
 ```
@@ -157,4 +145,4 @@ popover or dialog opens.
 
 #### Include a label
 
-A button is required to have either text in the default slot or a `label` attribute on the `<sp-clear-button>`.
+A button is required to have a `label` attribute on the `<sp-clear-button>` to provide an accessible name for screen readers. The `label` attribute sets the `aria-label` property, ensuring the button is properly announced to assistive technologies.

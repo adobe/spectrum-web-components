@@ -15,7 +15,7 @@ import { ElementSize } from '@spectrum-web-components/base';
 import { ClearButton } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import { SinonStub, stub } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Clear Button', () => {
     testForLitDevWarnings(async () =>
@@ -31,6 +31,40 @@ describe('Clear Button', () => {
 
             await expect(el).to.be.accessible();
         });
+    });
+
+    it('has accessible name when label attribute is provided', async () => {
+        const el = await fixture<ClearButton>(html`
+            <sp-clear-button label="Clear field"></sp-clear-button>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Clear field');
+        await expect(el).to.be.accessible();
+    });
+
+    it('sets aria-label from label property', async () => {
+        const el = await fixture<ClearButton>(html`
+            <sp-clear-button></sp-clear-button>
+        `);
+
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-label')).to.be.false;
+
+        el.label = 'Remove item';
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Remove item');
+    });
+
+    it('maintains accessible name in disabled state', async () => {
+        const el = await fixture<ClearButton>(html`
+            <sp-clear-button label="Clear" disabled></sp-clear-button>
+        `);
+
+        await elementUpdated(el);
+        expect(el.getAttribute('aria-label')).to.equal('Clear');
+        expect(el.hasAttribute('aria-disabled')).to.be.true;
+        await expect(el).to.be.accessible();
     });
 
     describe('dev mode', () => {
