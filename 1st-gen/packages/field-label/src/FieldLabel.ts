@@ -148,16 +148,26 @@ export class FieldLabel extends SizedMixin(SpectrumElement, {
     }
 
     protected override render(): TemplateResult {
+        const isRtl = this.dir === 'rtl';
         return html`
             <label>
                 <slot></slot>
                 ${this.required
                     ? html`
                           <span>
-                              &hairsp;
+                              ${isRtl
+                                  ? nothing
+                                  : html`
+                                        &hairsp;
+                                    `}
                               <sp-icon-asterisk100
                                   class="required-icon spectrum-UIIcon-Asterisk100"
                               ></sp-icon-asterisk100>
+                              ${isRtl
+                                  ? html`
+                                        &hairsp;
+                                    `
+                                  : nothing}
                           </span>
                       `
                     : nothing}
