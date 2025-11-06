@@ -27,9 +27,9 @@ import { ActionButton } from '@spectrum-web-components/bundle';
 
 The bundle consists of several key parts:
 
-- All Spectrum Web Component element registrations
+- All Spectrum Web Component elements registrations
 - Base classes for all components available for type checking and extension
-- Namespaced icon exports for UI and workflow icons
+- Namespaced icon exports for UI and workflow icons (e.g., `UIIcons`, `WorkflowIcons`)
 
 ### Options
 
@@ -48,9 +48,7 @@ This registers all available Spectrum Web Components for use in your application
 Import individual component classes for type checking and extension purposes:
 
 ```javascript
-import { ActionButton } from '@spectrum-web-components/bundle';
-import { Button } from '@spectrum-web-components/bundle';
-import { Tooltip } from '@spectrum-web-components/bundle';
+import { ActionButton, Button, Tooltip } from '@spectrum-web-components/bundle';
 ```
 
 ### Behaviors
@@ -75,12 +73,12 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 
 ##### Workflow Icons
 
-`@spectrum-web-components/icons-workflow` is namespaced to `IconsWorkflow` when leveraging the bundle. This means that you can use workflow icons in your code by importing them from `@spectrum-web-components/bundle/icons.js`:
+`@spectrum-web-components/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your code by importing them from `@spectrum-web-components/bundle/icons.js`:
 
 ```javascript
-import { IconsWorkflow } from '@spectrum-web-components/bundle/icons.js';
+import { WorkflowIcons } from '@spectrum-web-components/bundle/icons.js';
 
-console.log(IconsWorkflow.CircleIcon());
+console.log(WorkflowIcons.CircleIcon());
 
 /***
 TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: DefaultTemplateProcessor, constructor: Object}
