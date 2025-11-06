@@ -5323,6 +5323,7 @@ __metadata:
     "@lit/react": "npm:1.0.8"
     "@open-wc/dev-server-hmr": "npm:0.2.0"
     "@open-wc/testing": "npm:4.0.0"
+    "@playwright/test": "npm:1.53.1"
     "@rollup/plugin-commonjs": "npm:25.0.8"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"

@@ -59,10 +59,10 @@ export async function waitForStoryReady(
     await element.waitFor({ state: 'visible' });
 
     // Step 4: Wait for Web Component to be fully upgraded (has shadow root if applicable)
-    await element.evaluate((el) => {
+    await element.evaluate(async (el) => {
         // If it's a custom element, wait for it to be fully upgraded
         if (el.tagName.includes('-')) {
-            return customElements.whenDefined(el.tagName.toLowerCase());
+            await customElements.whenDefined(el.tagName.toLowerCase());
         }
     });
 
