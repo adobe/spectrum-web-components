@@ -48,14 +48,14 @@
     "devDependencies": {
         "@changesets/cli": "2.29.7",
         "@commitlint/cli": "19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
+        "@commitlint/config-conventional": "19.8.1",
         "eslint": "8.57.1",
         "genversion": "3.2.0",
         "husky": "9.1.7",
-        "lint-staged": "^16.1.2",
-        "patch-package": "^8.0.0",
+        "lint-staged": "16.2.3",
+        "patch-package": "8.0.1",
         "prettier": "3.6.2",
-        "replace-in-file": "^8.3.0",
+        "replace-in-file": "8.3.0",
         "stylelint": "16.24.0"
     },
     "keywords": [

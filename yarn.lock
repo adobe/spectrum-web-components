@@ -176,14 +176,14 @@ __metadata:
   dependencies:
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@commitlint/config-conventional": "npm:19.8.1"
     eslint: "npm:8.57.1"
     genversion: "npm:3.2.0"
     husky: "npm:9.1.7"
-    lint-staged: "npm:^16.1.2"
-    patch-package: "npm:^8.0.0"
+    lint-staged: "npm:16.2.3"
+    patch-package: "npm:8.0.1"
     prettier: "npm:3.6.2"
-    replace-in-file: "npm:^8.3.0"
+    replace-in-file: "npm:8.3.0"
     stylelint: "npm:16.24.0"
   languageName: unknown
   linkType: soft
@@ -259,7 +259,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@axe-core/playwright@npm:^4.11.0":
+"@axe-core/playwright@npm:4.11.0":
   version: 4.11.0
   resolution: "@axe-core/playwright@npm:4.11.0"
   dependencies:
@@ -1926,7 +1926,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^19.8.1":
+"@commitlint/config-conventional@npm:19.8.1":
   version: 19.8.1
   resolution: "@commitlint/config-conventional@npm:19.8.1"
   dependencies:
@@ -4655,19 +4655,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-replace@npm:^2.4.1":
-  version: 2.4.2
-  resolution: "@rollup/plugin-replace@npm:2.4.2"
-  dependencies:
-    "@rollup/pluginutils": "npm:^3.1.0"
-    magic-string: "npm:^0.25.7"
-  peerDependencies:
-    rollup: ^1.20.0 || ^2.0.0
-  checksum: 10c0/ea3d27291c791661638b91809d0247dde1ee71be0b16fa7060078c2700db3669eada2c3978ea979b917b29ebe06f3fddc8797feae554da966264a22142b5771a
-  languageName: node
-  linkType: hard
-
-"@rollup/plugin-replace@npm:^6.0.2":
+"@rollup/plugin-replace@npm:6.0.2, @rollup/plugin-replace@npm:^6.0.2":
   version: 6.0.2
   resolution: "@rollup/plugin-replace@npm:6.0.2"
   dependencies:
@@ -4679,6 +4667,18 @@ __metadata:
     rollup:
       optional: true
   checksum: 10c0/71c0dea46f560c8dff59853446d43fa0e8258139a74d2af09fce5790d0540ff3d874c8fd9962cb049577d25327262bfc97485ef90b2a0a21bf28a9d3bd8c6d44
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-replace@npm:^2.4.1":
+  version: 2.4.2
+  resolution: "@rollup/plugin-replace@npm:2.4.2"
+  dependencies:
+    "@rollup/pluginutils": "npm:^3.1.0"
+    magic-string: "npm:^0.25.7"
+  peerDependencies:
+    rollup: ^1.20.0 || ^2.0.0
+  checksum: 10c0/ea3d27291c791661638b91809d0247dde1ee71be0b16fa7060078c2700db3669eada2c3978ea979b917b29ebe06f3fddc8797feae554da966264a22142b5771a
   languageName: node
   linkType: hard
 
@@ -5242,11 +5242,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/1st-gen@workspace:1st-gen"
   dependencies:
-    "@axe-core/playwright": "npm:^4.11.0"
+    "@axe-core/playwright": "npm:4.11.0"
     "@changesets/changelog-github": "npm:0.5.1"
     "@changesets/cli": "npm:2.29.7"
     "@commitlint/cli": "npm:19.8.1"
-    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@commitlint/config-conventional": "npm:19.8.1"
     "@custom-elements-manifest/analyzer": "npm:0.10.6"
     "@geometricpanda/storybook-addon-badges": "npm:2.0.5"
     "@lit/react": "npm:1.0.8"
@@ -5323,7 +5323,7 @@ __metadata:
     jsonc-eslint-parser: "npm:2.4.1"
     latest-version: "npm:9.0.0"
     lightningcss: "npm:1.30.1"
-    lint-staged: "npm:^16.1.2"
+    lint-staged: "npm:16.2.3"
     lit: "npm:^2.5.0 || ^3.1.3"
     lit-analyzer: "npm:2.0.3"
     lit-html: "npm:^2.4.0 || ^3.1.3"
@@ -5331,13 +5331,13 @@ __metadata:
     next: "npm:14.2.33"
     node-fetch: "npm:3.3.2"
     npm-run-all2: "npm:8.0.4"
-    patch-package: "npm:^8.0.0"
+    patch-package: "npm:8.0.1"
     pinst: "npm:3.0.0"
     prettier: "npm:3.6.2"
     prettier-plugin-package: "npm:1.4.0"
     pretty-bytes: "npm:7.1.0"
     re-template-tag: "npm:2.0.1"
-    replace-in-file: "npm:^8.3.0"
+    replace-in-file: "npm:8.3.0"
     rimraf: "npm:6.0.1"
     rollup: "npm:4.52.2"
     sinon: "npm:17.0.2"
@@ -5359,7 +5359,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/2nd-gen@workspace:2nd-gen"
   dependencies:
-    "@axe-core/playwright": "npm:^4.11.0"
+    "@axe-core/playwright": "npm:4.11.0"
     "@playwright/test": "npm:1.53.1"
     eslint: "npm:8.57.1"
     eslint-plugin-simple-import-sort: "npm:12.1.1"
@@ -13470,7 +13470,7 @@ __metadata:
     "@rollup/plugin-commonjs": "npm:25.0.8"
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
-    "@rollup/plugin-replace": "npm:^6.0.2"
+    "@rollup/plugin-replace": "npm:6.0.2"
     "@spectrum-web-components/bundle": "npm:1.10.0"
     "@spectrum-web-components/custom-vars-viewer": "npm:1.10.0"
     "@toycode/markdown-it-class": "npm:1.2.4"
@@ -19940,7 +19940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^16.1.2":
+"lint-staged@npm:16.2.3":
   version: 16.2.3
   resolution: "lint-staged@npm:16.2.3"
   dependencies:
@@ -23617,7 +23617,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patch-package@npm:^8.0.0":
+"patch-package@npm:8.0.1":
   version: 8.0.1
   resolution: "patch-package@npm:8.0.1"
   dependencies:
@@ -26263,7 +26263,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"replace-in-file@npm:^8.3.0":
+"replace-in-file@npm:8.3.0":
   version: 8.3.0
   resolution: "replace-in-file@npm:8.3.0"
   dependencies:
