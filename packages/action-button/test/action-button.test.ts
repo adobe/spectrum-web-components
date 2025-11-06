@@ -313,4 +313,73 @@ describe('ActionButton', () => {
         await elementUpdated(el);
         expect(clicked).to.be.true;
     });
+    it('dispatches only one click event per user interaction', async () => {
+        let clickCount = 0;
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button
+                href="https://example.com/test.pdf"
+                download="test.pdf"
+            >
+                Download
+            </sp-action-button>
+        `);
+
+        await elementUpdated(el);
+
+        // Track all click events on the action button
+        el.addEventListener('click', () => {
+            clickCount++;
+        });
+
+        // Prevent the anchor from actually navigating
+        el.shadowRoot
+            ?.querySelector('.anchor')
+            ?.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+            });
+
+        // Simulate a user click
+        await mouseClickOn(el);
+        await elementUpdated(el);
+
+        // Should only have one click event, not two
+        expect(clickCount).to.equal(1);
+    });
+    it('allows keyboard activation with href', async () => {
+        let clickCount = 0;
+        const el = await fixture<ActionButton>(html`
+            <sp-action-button
+                href="https://example.com/test.pdf"
+                download="test.pdf"
+            >
+                Download
+            </sp-action-button>
+        `);
+
+        await elementUpdated(el);
+
+        // Track all click events on the action button
+        el.addEventListener('click', () => {
+            clickCount++;
+        });
+
+        // Prevent the anchor from actually navigating
+        el.shadowRoot
+            ?.querySelector('.anchor')
+            ?.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+            });
+
+        // Test Enter key
+        el.focus();
+        await sendKeys({ press: 'Enter' });
+        await elementUpdated(el);
+        expect(clickCount).to.equal(1);
+
+        // Test Space key
+        clickCount = 0;
+        await sendKeys({ press: 'Space' });
+        await elementUpdated(el);
+        expect(clickCount).to.equal(1);
+    });
 });

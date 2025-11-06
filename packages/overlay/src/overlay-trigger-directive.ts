@@ -90,6 +90,9 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             this.target = part.element as HTMLElement;
             newTarget = true;
         }
+        // Set listenerHost to target as a fallback, matching parent class behavior.
+        // This ensures reconnected() hook can safely call init() before overlay is ready.
+        this.listenerHost = this.target;
         if (newTarget || newStrategy) {
             this.strategy?.abort();
             this.strategy = new strategies[

@@ -57,3 +57,14 @@ export const hrefWithTarget = (): TemplateResult => html`
         Click me
     </sp-action-button>
 `;
+
+export const singleClick = (): TemplateResult => html`
+    <sp-action-button
+        @click=${(event: MouseEvent) =>
+            console.log(`click handler, event is trusted: ${event.isTrusted}`)}
+        href="https://partners.adobe.com/channelpartnerassets/assets/public/public_1/aem_assets_dynamic_media_capability_spotlight_ue.pdf"
+        download="Adobe Experience Manager Assets Dynamic Media Capability Spotlight.pdf"
+    >
+        Icon Download
+    </sp-action-button>
+`;

@@ -328,6 +328,22 @@ export class MenuItem extends LikeAnchor(
             return false;
         }
 
+        // If this is a synthetic click (isTrusted: false) bubbling up from our
+        // anchor element proxy, stop it to prevent duplicate click events.
+        // However, allow synthetic clicks that originate from the menu item itself
+        // (e.g., from keyboard interactions or programmatic clicks).
+        // We check composedPath() because event.target gets retargeted across
+        // shadow boundaries.
+        const mouseEvent = event as MouseEvent;
+        if (
+            !mouseEvent.isTrusted &&
+            this.anchorElement &&
+            event.composedPath()[0] === this.anchorElement
+        ) {
+            event.stopPropagation();
+            return false;
+        }
+
         if (this.shouldProxyClick()) {
             return;
         }
