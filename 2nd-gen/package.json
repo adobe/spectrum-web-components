@@ -24,12 +24,19 @@
         "start": "run-p dev:core dev:analyze storybook",
         "storybook": "yarn workspace @adobe/swc storybook",
         "storybook:build": "yarn workspace @adobe/swc storybook:build",
-        "test": "yarn workspace @adobe/swc test"
+        "test": "yarn workspace @adobe/swc test",
+        "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+        "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
+        "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
+        "test:a11y:report": "playwright show-report test/playwright-a11y/report",
+        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui"
     },
     "workspaces": [
         "packages/*"
     ],
     "devDependencies": {
+        "@axe-core/playwright": "4.11.0",
+        "@playwright/test": "1.53.1",
         "eslint": "8.57.1",
         "eslint-plugin-simple-import-sort": "12.1.1",
         "npm-run-all2": "8.0.4"
