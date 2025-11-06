@@ -1,0 +1,28 @@
+# eleventy build directory
+_site
+!.eleventy.js
+!content/_data/site.js
+
+# extracted component docs
+content/components
+content/tools
+custom-elements.json
+
+# scripting
+!/scripts/*.js
+
+# typescript build artifacts
+src/*.js
+src/*.js.map
+src/components/*.js
+src/components/*.js.map
+src/util/tempaltes.js
+src/util/tempaltes.js.map
+src/custom-elements.json
+!src/utils/*.js
+
+# rollup build directory and artifacts
+dist/
+!web-dev-server.config.js
+stats.html
+searchIndex.json

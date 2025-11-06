@@ -1,0 +1,63 @@
+/*!
+ * Copyright 2025 Adobe. All rights reserved. This file is licensed to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License./
+ * 
+ *  Override divider background color when used inside alert-dialog/
+ * .divider {
+ *     --spectrum-divider-background-color: var(--system-alert-dialog-divider-background-color);
+ *     --spectrum-divider-background-color-static-white: var(--spectrum-alert-dialog-divider-background-color-static-white);
+ *     --spectrum-divider-background-color-static-black: var(--spectrum-alert-dialog-divider-background-color-static-black);
+ * }
+ */
+
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-textfield-background-color: var(--system-textfield-background-color);
+    --spectrum-textfield-background-color-disabled: var(--system-textfield-background-color-disabled);
+    --spectrum-textfield-border-color: var(--system-textfield-border-color);
+    --spectrum-textfield-border-color-hover: var(--system-textfield-border-color-hover);
+    --spectrum-textfield-border-color-focus: var(--system-textfield-border-color-focus);
+    --spectrum-textfield-border-color-focus-hover: var(--system-textfield-border-color-focus-hover);
+    --spectrum-textfield-border-color-keyboard-focus: var(--system-textfield-border-color-keyboard-focus);
+    --spectrum-textfield-border-color-disabled: var(--system-textfield-border-color-disabled);
+    --spectrum-textfield-border-width: var(--system-textfield-border-width);
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start);
+    --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius);
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-icon-spacing-block-invalid);
+}
+
+:host([size="s"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-small);
+    --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-small);
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-s-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-small);
+}
+
+:host([size="l"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-large);
+    --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-large);
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-l-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-large);
+}
+
+:host([size="xl"]) #textfield#textfield {
+    --spectrum-textfield-spacing-block-start: var(--system-textfield-spacing-block-start-extra-large);
+    --spectrum-textfield-spacing-block-end: var(--system-textfield-spacing-block-end-extra-large);
+    --spectrum-textfield-icon-spacing-block-invalid: var(--system-textfield-size-xl-icon-spacing-block-invalid);
+    --spectrum-textfield-corner-radius: var(--system-textfield-corner-radius-extra-large);
+}
+
+:host([quiet]) #textfield {
+    --spectrum-textfield-border-color-disabled: var(--system-textfield-quiet-border-color-disabled);
+}
