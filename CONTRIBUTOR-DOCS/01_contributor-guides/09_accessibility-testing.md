@@ -384,7 +384,7 @@ Received: [
 
 ### Playwright config
 
-`2nd-gen/playwright.a11y.config.ts` defines two projects:
+`playwright.a11y.config.ts` (at the root) defines two projects:
 
 ```typescript
 projects: [
@@ -426,11 +426,12 @@ webServer: [
 
 ```
 spectrum-web-components/
+├── playwright.a11y.config.ts              # Playwright config (both gens)
 ├── CONTRIBUTOR-DOCS/
 │   └── 01_contributor-guides/
 │       └── 09_accessibility-testing.md    # This guide
 ├── 1st-gen/
-│   ├── package.json                       # Test scripts (points to 2nd-gen config)
+│   ├── package.json                       # Test scripts (points to root config)
 │   ├── test/
 │   │   └── a11y-helpers.ts                # 1st gen test helpers
 │   └── packages/
@@ -441,8 +442,7 @@ spectrum-web-components/
 │           ├── status-light.a11y.spec.ts
 │           └── status-light.a11y.spec.ts-snapshots/
 └── 2nd-gen/
-    ├── playwright.a11y.config.ts          # Playwright config (both gens)
-    ├── package.json                       # Test scripts
+    ├── package.json                       # Test scripts (points to root config)
     └── packages/swc/
         ├── utils/
         │   └── a11y-helpers.ts            # 2nd gen test helpers

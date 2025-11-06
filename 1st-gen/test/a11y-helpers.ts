@@ -84,7 +84,9 @@ export async function gotoStory(
     elementSelector: string
 ): Promise<Locator> {
     // Navigate to story (baseURL is set by Playwright project config)
-    await page.goto(`/iframe.html?id=${storyId}&viewMode=story`);
+    await page.goto(`/iframe.html?id=${storyId}&viewMode=story`, {
+        waitUntil: 'domcontentloaded',
+    });
 
     // Wait for story to be ready
     return waitForStoryReady(page, elementSelector);

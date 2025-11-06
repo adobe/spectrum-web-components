@@ -96,7 +96,6 @@
         "@lit/react": "1.0.8",
         "@open-wc/dev-server-hmr": "0.2.0",
         "@open-wc/testing": "4.0.0",
-        "@playwright/test": "1.53.1",
         "@rollup/plugin-commonjs": "25.0.8",
         "@rollup/plugin-json": "6.1.0",
         "@rollup/plugin-node-resolve": "15.3.1",
