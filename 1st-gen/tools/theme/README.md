@@ -199,7 +199,7 @@ There are a few cases where it is necessary to embed one theme within another. F
 </sp-theme>
 ```
 
-## Advanced usage
+### Advanced usage
 
 ### Lazy loading themes
 
