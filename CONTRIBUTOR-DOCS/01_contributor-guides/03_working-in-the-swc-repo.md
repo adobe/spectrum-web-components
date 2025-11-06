@@ -11,18 +11,17 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Working in the SWC repo](#working-in-the-swc-repo)
-  - [About this guide](#about-this-guide)
-  - [Getting started](#getting-started)
+- [About this guide](#about-this-guide)
+- [Getting started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-  - [Repository structure](#repository-structure)
-  - [Development workflow](#development-workflow)
+- [Repository structure](#repository-structure)
+- [Development workflow](#development-workflow)
     - [Developing](#developing)
     - [Testing](#testing)
     - [Linting](#linting)
     - [Building](#building)
-  - [Command reference](#command-reference)
+- [Command reference](#command-reference)
 
 </details>
 
@@ -130,23 +129,19 @@ yarn build
 
 Here are the most frequently used commands available from the repository root:
 
-| Command                | Description                                  |
-| ---------------------- | -------------------------------------------- |
-| `yarn start`           | Start Storybook for both 1st-gen and 2nd-gen |
-| `yarn start:1st-gen`   | Start Storybook for 1st-gen only             |
-| `yarn start:2nd-gen`   | Start Storybook for 2nd-gen only             |
-| `yarn test`            | Run tests for both 1st-gen and 2nd-gen       |
-| `yarn test:1st-gen`    | Run tests for 1st-gen only                   |
-| `yarn test:2nd-gen`    | Run tests for 2nd-gen only                   |
-| `yarn test:a11y`       | Run accessibility tests (both generations)   |
-| `yarn test:a11y:1st`   | Run accessibility tests for 1st-gen only     |
-| `yarn test:a11y:2nd`   | Run accessibility tests for 2nd-gen only     |
-| `yarn test:a11y:ui`    | Interactive accessibility test UI            |
-| `yarn lint`            | Check for linting issues (staged files)      |
-| `yarn lint:1st-gen`    | Check for linting issues in 1st-gen only     |
-| `yarn lint:2nd-gen`    | Check for linting issues in 2nd-gen only     |
-| `yarn build`           | Build all packages (2nd-gen then 1st-gen)    |
-| `yarn build:1st-gen`   | Build 1st-gen packages only                  |
-| `yarn build:2nd-gen`   | Build 2nd-gen packages only                  |
+| Command              | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `yarn start`         | Start Storybook for both 1st-gen and 2nd-gen |
+| `yarn start:1st-gen` | Start Storybook for 1st-gen only             |
+| `yarn start:2nd-gen` | Start Storybook for 2nd-gen only             |
+| `yarn test`          | Run tests for both 1st-gen and 2nd-gen       |
+| `yarn test:1st-gen`  | Run tests for 1st-gen only                   |
+| `yarn test:2nd-gen`  | Run tests for 2nd-gen only                   |
+| `yarn lint`          | Check for linting issues (staged files)      |
+| `yarn lint:1st-gen`  | Check for linting issues in 1st-gen only     |
+| `yarn lint:2nd-gen`  | Check for linting issues in 2nd-gen only     |
+| `yarn build`         | Build all packages (2nd-gen then 1st-gen)    |
+| `yarn build:1st-gen` | Build 1st-gen packages only                  |
+| `yarn build:2nd-gen` | Build 2nd-gen packages only                  |
 
-For more specific workflows and advanced topics, refer to the other contributor guides, especially [Accessibility testing](./09_accessibility-testing.md) for detailed information about writing and running accessibility tests.
+For more specific workflows and advanced topics, refer to the other contributor guides.

@@ -20,7 +20,6 @@
 - [Authoring contributor docs](07_authoring-contributor-docs/README.md)
     - [AI agent instructions](07_authoring-contributor-docs/01_ai-agent-instructions.md)
 - [Patching dependencies](08_patching-dependencies.md)
-- [Accessibility testing](09_accessibility-testing.md)
 
 </details>
 
