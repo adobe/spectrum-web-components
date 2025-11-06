@@ -1,0 +1,83 @@
+{
+    "name": "@spectrum-web-components/grid",
+    "version": "1.10.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design Grid",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/tools/grid"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/grid",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Grid.js": {
+            "development": "./src/Grid.dev.js",
+            "default": "./src/Grid.js"
+        },
+        "./src/GridController.js": {
+            "development": "./src/GridController.dev.js",
+            "default": "./src/GridController.js"
+        },
+        "./src/grid.css.js": "./src/grid.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-grid": "./sp-grid.js",
+        "./sp-grid.js": {
+            "development": "./sp-grid.dev.js",
+            "default": "./sp-grid.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@lit-labs/observers": "2.0.2",
+        "@lit-labs/virtualizer": "2.0.12",
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/reactive-controllers": "1.10.0",
+        "lit": "^2.5.0 || ^3.1.3"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

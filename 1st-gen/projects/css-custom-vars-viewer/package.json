@@ -1,0 +1,86 @@
+{
+    "name": "@spectrum-web-components/custom-vars-viewer",
+    "version": "1.10.0",
+    "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "main": "dist/src/index.js",
+    "module": "dist/src/index.js",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./dist/src/index.js",
+        "./sp-css-table.js": "./dist/src/sp-css-table.js",
+        "./custom-vars-viewer.js": "./dist/src/custom-vars-viewer.js"
+    },
+    "scripts": {
+        "analyze": "cem analyze --litelement",
+        "build": "yarn parse-json && tsc && npm run analyze -- --exclude dist",
+        "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
+        "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
+        "parse-json": "node ./scripts/parse-json.js",
+        "prepublish": "tsc && npm run analyze -- --exclude dist",
+        "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
+        "storybook": "tsc && npm run analyze -- --exclude dist && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"storybook dev -p 8080 -c .storybook\"",
+        "storybook:build": "tsc && npm run analyze -- --exclude dist && build-storybook",
+        "test": "tsc && wtr --coverage",
+        "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\""
+    },
+    "dependencies": {
+        "@rollup/plugin-json": "6.1.0",
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/field-label": "1.10.0",
+        "@spectrum-web-components/link": "1.10.0",
+        "@spectrum-web-components/menu": "1.10.0",
+        "@spectrum-web-components/picker": "1.10.0",
+        "@spectrum-web-components/story-decorator": "1.10.0",
+        "@spectrum-web-components/styles": "1.10.0",
+        "@spectrum-web-components/swatch": "1.10.0",
+        "@spectrum-web-components/table": "1.10.0",
+        "@spectrum-web-components/theme": "1.10.0",
+        "@spectrum-web-components/toast": "1.10.0",
+        "@web/dev-server-rollup": "0.6.4",
+        "lit": "^2.5.0 || ^3.1.3"
+    },
+    "devDependencies": {
+        "@custom-elements-manifest/analyzer": "0.10.6",
+        "@open-wc/eslint-config": "12.0.3",
+        "@open-wc/testing": "4.0.0",
+        "@storybook/addon-a11y": "8.6.14",
+        "@storybook/addon-essentials": "8.6.14",
+        "@storybook/addon-links": "8.6.14",
+        "@storybook/web-components": "7.6.20",
+        "@typescript-eslint/eslint-plugin": "7.18.0",
+        "@typescript-eslint/parser": "7.18.0",
+        "@web/dev-server": "0.4.6",
+        "@web/storybook-builder": "0.2.3",
+        "@web/storybook-framework-web-components": "0.2.1",
+        "@web/test-runner": "0.20.2",
+        "concurrently": "8.2.2",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "storybook": "8.6.14",
+        "tslib": "2.8.1",
+        "typescript": "5.3.3"
+    },
+    "customElements": "custom-elements.json",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/projects/css-custom-vars-viewer"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}
