@@ -1,0 +1,96 @@
+{
+    "name": "@spectrum-web-components/coachmark",
+    "version": "1.10.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/coachmark"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/coachmark",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/CoachIndicator.js": {
+            "development": "./src/CoachIndicator.dev.js",
+            "default": "./src/CoachIndicator.js"
+        },
+        "./src/Coachmark.js": {
+            "development": "./src/Coachmark.dev.js",
+            "default": "./src/Coachmark.js"
+        },
+        "./src/CoachmarkItem.js": {
+            "development": "./src/CoachmarkItem.dev.js",
+            "default": "./src/CoachmarkItem.js"
+        },
+        "./src/coach-indicator-overrides.css.js": "./src/coach-indicator-overrides.css.js",
+        "./src/coach-indicator.css.js": "./src/coach-indicator.css.js",
+        "./src/coachmark-overrides.css.js": "./src/coachmark-overrides.css.js",
+        "./src/coachmark.css.js": "./src/coachmark.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-coachmark.js": {
+            "development": "./sp-coachmark.dev.js",
+            "default": "./sp-coachmark.js"
+        },
+        "./sp-coach-indicator.js": {
+            "development": "./sp-coach-indicator.dev.js",
+            "default": "./sp-coach-indicator.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/asset": "1.10.0",
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/button": "1.10.0",
+        "@spectrum-web-components/button-group": "1.10.0",
+        "@spectrum-web-components/icon": "1.10.0",
+        "@spectrum-web-components/icons-ui": "1.10.0",
+        "@spectrum-web-components/reactive-controllers": "1.10.0",
+        "@spectrum-web-components/shared": "1.10.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}

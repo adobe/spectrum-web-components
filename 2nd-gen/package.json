@@ -1,0 +1,56 @@
+{
+    "name": "@spectrum-web-components/2nd-gen",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Second generation Spectrum Web Components with modern tooling and architecture",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "directory": "2nd-gen",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "type": "module",
+    "scripts": {
+        "build": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run build",
+        "clean": "yarn workspaces foreach --from '{@spectrum-web-components/core,@adobe/swc}' --recursive run clean",
+        "dev:analyze": "yarn workspace @adobe/swc analyze:watch",
+        "dev:core": "yarn workspace @spectrum-web-components/core dev",
+        "lint": "cd .. && eslint 2nd-gen --ext .ts,.js,.json",
+        "start": "run-p dev:core dev:analyze storybook",
+        "storybook": "yarn workspace @adobe/swc storybook",
+        "storybook:build": "yarn workspace @adobe/swc storybook:build",
+        "test": "yarn workspace @adobe/swc test",
+        "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+        "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
+        "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
+        "test:a11y:report": "playwright show-report test/playwright-a11y/report",
+        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "devDependencies": {
+        "@axe-core/playwright": "^4.11.0",
+        "@playwright/test": "1.53.1",
+        "eslint": "8.57.1",
+        "eslint-plugin-simple-import-sort": "12.1.1",
+        "npm-run-all2": "8.0.4"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "2nd-gen"
+    ],
+    "packageManager": "yarn@4.9.2"
+}

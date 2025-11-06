@@ -1,0 +1,83 @@
+{
+    "name": "@spectrum-web-components/color-area",
+    "version": "1.10.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/packages/color-area"
+    },
+    "author": "Adobe",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/color-area",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/ColorArea.js": {
+            "development": "./src/ColorArea.dev.js",
+            "default": "./src/ColorArea.js"
+        },
+        "./src/color-area-overrides.css.js": "./src/color-area-overrides.css.js",
+        "./src/color-area.css.js": "./src/color-area.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-color-area.js": {
+            "development": "./sp-color-area.dev.js",
+            "default": "./sp-color-area.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html",
+        "component",
+        "css"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "1.10.0",
+        "@spectrum-web-components/color-handle": "1.10.0",
+        "@spectrum-web-components/opacity-checkerboard": "1.10.0",
+        "@spectrum-web-components/reactive-controllers": "1.10.0",
+        "@spectrum-web-components/shared": "1.10.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js"
+    ]
+}
