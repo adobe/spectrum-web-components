@@ -48,6 +48,19 @@
         "prepublishOnly": "yarn build"
     },
     "types": "./dist/index.d.ts",
+    "typesVersions": {
+        "*": {
+            "shared/base/*": [
+                "dist/shared/base/*"
+            ],
+            "shared/*": [
+                "dist/shared/*"
+            ],
+            "components/*": [
+                "dist/components/*"
+            ]
+        }
+    },
     "dependencies": {
         "lit": "^2.5.0 || ^3.1.3"
     },
