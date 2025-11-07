@@ -6375,6 +6375,7 @@ __metadata:
   resolution: "@spectrum-web-components/textfield@workspace:1st-gen/packages/textfield"
   dependencies:
     "@spectrum-web-components/base": "npm:1.10.0"
+    "@spectrum-web-components/field-label": "npm:1.10.0"
     "@spectrum-web-components/help-text": "npm:1.10.0"
     "@spectrum-web-components/icon": "npm:1.10.0"
     "@spectrum-web-components/icons-ui": "npm:1.10.0"
