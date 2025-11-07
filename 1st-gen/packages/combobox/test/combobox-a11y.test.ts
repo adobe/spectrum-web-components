@@ -83,7 +83,7 @@ describe('Combobox accessibility', () => {
         const a11yNode = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pick something' &&
+                node.name === 'Pick a fruit' &&
                 !node.value &&
                 node.role === 'combobox'
         );
@@ -101,7 +101,7 @@ describe('Combobox accessibility', () => {
         const node = findAccessibilityNode<AccessibleNamedNode>(
             snapshot,
             (node) =>
-                node.name === 'Pick something' &&
+                node.name === 'Pick a fruit' &&
                 node.value === 'Banana' &&
                 node.role === 'combobox'
         );
