@@ -278,13 +278,25 @@ export class PlacementController implements ReactiveController {
         // Wait for document fonts to be ready before computing placement.
         await (document.fonts ? document.fonts.ready : Promise.resolve());
 
-        // Additional frame delay to allow content (like menus) to fully render
-        // and settle, especially after scrollIntoView operations
-        await new Promise((resolve) =>
-            requestAnimationFrame(() => {
-                requestAnimationFrame(resolve);
-            })
+        // Check if this is a submenu overlay (slot="submenu")
+        // Submenus need immediate positioning for hover interactions
+        const isSubmenu = Array.from(this.host.elements).some(
+            (el) => el.getAttribute?.('slot') === 'submenu'
         );
+
+        // Additional frame delay to allow content (like picker menus) to fully render
+        // and settle, especially after scrollIntoView operations.
+        // This is critical for Safari/WebKit which has slower layout timing.
+        // Chrome's Blink engine completes layout faster and typically doesn't need this delay,
+        // but it's harmless and ensures consistent behavior across browsers.
+        // Skip for submenus to maintain hover responsiveness.
+        if (!isSubmenu) {
+            await new Promise((resolve) =>
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(resolve);
+                })
+            );
+        }
 
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
