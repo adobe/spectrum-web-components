@@ -1213,3 +1213,12 @@ export const PickerIniPadSafari = (): TemplateResult => {
 PickerIniPadSafari.swc_vrt = {
     skip: true,
 };
+
+PickerIniPadSafari.parameters = {
+    tags: ['!dev'],
+};
+
+PickerIniPadSafari.parameters = {
+    // Disables Chromatic's snapshotting on a global level
+    chromatic: { disableSnapshot: true },
+};
