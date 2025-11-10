@@ -148,7 +148,7 @@ When text is copied to the clipboard, a custom success message can be displayed:
     style="width: 200px; border: 1px solid var(--spectrum-gray-300); padding: 8px;"
 >
     <sp-truncated success-message="Email copied successfully!">
-        user.name@example.com
+        iamaverylongusernametoshowthecustom.message.text@example.com
     </sp-truncated>
 </div>
 ```
