@@ -1,18 +1,27 @@
 {
     "name": "@spectrum-web-components/custom-vars-viewer",
     "version": "1.10.0",
+    "private": true,
     "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
     "license": "Apache-2.0",
     "author": "Adobe",
-    "main": "dist/src/index.js",
-    "module": "dist/src/index.js",
-    "private": true,
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "directory": "1st-gen/projects/css-custom-vars-viewer",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
     "type": "module",
     "exports": {
         ".": "./dist/src/index.js",
-        "./sp-css-table.js": "./dist/src/sp-css-table.js",
-        "./custom-vars-viewer.js": "./dist/src/custom-vars-viewer.js"
+        "./custom-vars-viewer.js": "./dist/src/custom-vars-viewer.js",
+        "./sp-css-table.js": "./dist/src/sp-css-table.js"
     },
+    "main": "dist/src/index.js",
+    "module": "dist/src/index.js",
     "scripts": {
         "analyze": "cem analyze --litelement",
         "build": "yarn parse-json && tsc && npm run analyze -- --exclude dist",
@@ -64,14 +73,6 @@
         "typescript": "5.9.2"
     },
     "customElements": "custom-elements.json",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "1st-gen/projects/css-custom-vars-viewer"
-    },
-    "bugs": {
-        "url": "https://github.com/adobe/spectrum-web-components/issues"
-    },
     "keywords": [
         "design-system",
         "spectrum",
@@ -81,6 +82,5 @@
         "web-components",
         "lit-element",
         "lit-html"
-    ],
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+    ]
 }
