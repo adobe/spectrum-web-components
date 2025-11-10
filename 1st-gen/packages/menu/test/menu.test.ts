@@ -841,6 +841,207 @@ describe('Menu', () => {
         el.remove();
     });
 
+    it('detects scrolling via scrollTop changes', async () => {
+        const menuItems = Array.from(
+            { length: 50 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 150px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => el.childItems.length === 50,
+            'expected menu to manage 50 items'
+        );
+
+        const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+        const lastItem = el.querySelector(
+            'sp-menu-item:nth-child(50)'
+        ) as MenuItem;
+
+        // Select first item
+        firstItem.click();
+        await elementUpdated(el);
+        expect(firstItem.selected).to.be.true;
+        expect(el.value).to.equal('1');
+
+        // Simulate scrolling by changing scrollTop
+        el.scrollTop = 100;
+        await elementUpdated(el);
+
+        // Simulate touch events with scroll position changed
+        const touchStart = new TouchEvent('touchstart', {
+            touches: [{ clientY: 100 } as Touch],
+        });
+        el.dispatchEvent(touchStart);
+        await aTimeout(10);
+
+        // Simulate touch move - scrollTop already changed
+        const touchMove = new TouchEvent('touchmove', {
+            touches: [{ clientY: 90 } as Touch],
+        });
+        el.dispatchEvent(touchMove);
+        await aTimeout(10);
+
+        // isScrolling should be true due to scrollTop change detection
+        expect(el.isScrolling).to.be.true;
+
+        // Try to select an item while scrolling
+        lastItem.click();
+        await elementUpdated(el);
+        await elementUpdated(lastItem);
+
+        // Selection should be prevented
+        expect(lastItem.selected).to.be.false;
+        expect(el.value).to.equal('1'); // Should still be the first item
+
+        // Trigger touchend to reset state
+        const touchEnd = new TouchEvent('touchend');
+        el.dispatchEvent(touchEnd);
+
+        // Wait for the 150ms timeout to complete
+        await aTimeout(200);
+
+        // Now selection should work
+        lastItem.click();
+        await elementUpdated(el);
+        await elementUpdated(lastItem);
+        expect(lastItem.selected).to.be.true;
+        expect(el.value).to.equal('50');
+
+        el.remove();
+    });
+
+    it('resets scroll detection after 150ms delay', async () => {
+        const menuItems = Array.from(
+            { length: 20 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 200px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => el.childItems.length === 20,
+            'expected menu to manage 20 items'
+        );
+
+        const item = el.querySelector('sp-menu-item:nth-child(10)') as MenuItem;
+
+        // Simulate scroll detection
+        el.isScrolling = true;
+        expect(el.isScrolling).to.be.true;
+
+        // Simulate touchend
+        const touchEnd = new TouchEvent('touchend');
+        el.dispatchEvent(touchEnd);
+
+        // Should still be scrolling immediately after touchend
+        expect(el.isScrolling).to.be.true;
+
+        // Wait 100ms - should still be scrolling (delay is 150ms)
+        await aTimeout(100);
+        expect(el.isScrolling).to.be.true;
+
+        // Wait another 60ms (total 160ms) - should be reset now
+        await aTimeout(60);
+        expect(el.isScrolling).to.be.false;
+
+        // Selection should now work
+        item.click();
+        await elementUpdated(el);
+        await elementUpdated(item);
+        expect(item.selected).to.be.true;
+        expect(el.value).to.equal('10');
+
+        el.remove();
+    });
+
+    it('handles rapid touch-scroll-tap sequence', async () => {
+        const menuItems = Array.from(
+            { length: 30 },
+            (_, i) => html`
+                <sp-menu-item value="${i + 1}">Item ${i + 1}</sp-menu-item>
+            `
+        );
+
+        const el = await fixture<Menu>(html`
+            <sp-menu
+                selects="single"
+                style="max-height: 200px; overflow-y: auto;"
+            >
+                ${menuItems}
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        await waitUntil(
+            () => el.childItems.length === 30,
+            'expected menu to manage 30 items'
+        );
+
+        const item = el.querySelector('sp-menu-item:nth-child(15)') as MenuItem;
+
+        // Simulate rapid scroll
+        const touchStart = new TouchEvent('touchstart', {
+            touches: [{ clientY: 150 } as Touch],
+        });
+        el.dispatchEvent(touchStart);
+        await aTimeout(5);
+
+        // Quick move (within 300ms threshold)
+        const touchMove = new TouchEvent('touchmove', {
+            touches: [{ clientY: 130 } as Touch],
+        });
+        el.dispatchEvent(touchMove);
+        await aTimeout(5);
+
+        // Touchend
+        const touchEnd = new TouchEvent('touchend');
+        el.dispatchEvent(touchEnd);
+        await aTimeout(5);
+
+        // Immediate tap attempt (should be blocked)
+        item.click();
+        await elementUpdated(el);
+        await elementUpdated(item);
+
+        // Should not be selected due to recent scroll
+        expect(item.selected).to.be.false;
+        expect(el.value).to.equal('');
+
+        // Wait for reset
+        await aTimeout(160);
+
+        // Now tap should work
+        item.click();
+        await elementUpdated(el);
+        await elementUpdated(item);
+        expect(item.selected).to.be.true;
+        expect(el.value).to.equal('15');
+
+        el.remove();
+    });
+
     it('does not steal focus from input elements on mouseover', async () => {
         const el = await fixture<Menu>(html`
             <div>

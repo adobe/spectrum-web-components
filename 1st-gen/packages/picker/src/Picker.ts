@@ -248,6 +248,17 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             this.strategy.preventNextToggle = 'no';
         }
         const target = event.target as Menu;
+
+        // Secondary check: Verify the menu isn't currently scrolling.
+        // This provides an additional layer of defense against accidental
+        // selection during scroll, particularly on iPad where event timing
+        // can be inconsistent.
+        if (target.isScrolling) {
+            event.stopPropagation();
+            event.preventDefault();
+            return;
+        }
+
         const [selected] = target.selectedItems;
         event.stopPropagation();
         if (event.cancelable) {
@@ -1000,7 +1011,7 @@ export class Picker extends PickerBase {
         );
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-            if (!!nextItem) this.setValueFromItem(nextItem as MenuItem);
+            if (nextItem) this.setValueFromItem(nextItem as MenuItem);
         }
     };
 }

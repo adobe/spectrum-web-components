@@ -91,7 +91,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Threshold Values:
      * - Movement threshold: 10px (consistent with Card component click vs. drag detection)
      * - Time threshold: 300ms (consistent with longpress duration across the design system)
-     * - Reset delay: 100ms (allows final touch events to be processed)
+     * - Reset delay: 150ms (increased from 100ms to provide more buffer for iPad Safari's event timing)
      *
      * These values are carefully chosen to balance preventing accidental triggers
      * while allowing intentional scroll gestures. They represent a common UX pattern
@@ -100,33 +100,34 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private touchStartY: number | undefined = undefined;
     private touchStartTime: number | undefined = undefined;
     private isCurrentlyScrolling = false;
+    private lastScrollTop = 0;
 
     /**
      * Minimum vertical movement (in pixels) required to trigger scrolling detection.
-     * 
+     *
      * This threshold is consistent with other components in the design system:
      * - Card component uses 10px for click vs. drag detection
      * - Menu component uses 10px for scroll vs. selection detection
-     * 
+     *
      * The 10px threshold is carefully chosen to:
      * - Allow for natural finger tremor and accidental touches
      * - Distinguish between intentional scroll gestures and taps
      * - Provide consistent behavior across the platform
-     * 
+     *
      * @see {@link packages/card/src/Card.ts} for similar threshold usage
      */
     private scrollThreshold = 10; // pixels
 
     /**
      * Maximum time (in milliseconds) for a movement to be considered scrolling.
-     * 
+     *
      * This threshold is consistent with other timing values in the design system:
      * - Longpress duration: 300ms (ActionButton, LongpressController)
      * - Scroll detection: 300ms (Menu component)
-     * 
+     *
      * Quick movements within this timeframe are likely intentional scrolls,
      * while slower movements are more likely taps or selections.
-     * 
+     *
      * @see {@link packages/action-button/src/ActionButton.ts} for longpress duration
      * @see {@link packages/overlay/src/LongpressController.ts} for longpress duration
      */
@@ -527,7 +528,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     /**
      * Handles touchstart events for iPad scroll detection.
      *
-     * Records the initial touch position and timestamp to establish a baseline
+     * Records the initial touch position, timestamp, and scroll position to establish a baseline
      * for detecting scroll gestures. Only processes single-touch events to
      * avoid interference with multi-touch gestures.
      *
@@ -537,6 +538,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (event.touches.length === 1) {
             this.touchStartY = event.touches[0].clientY;
             this.touchStartTime = Date.now();
+            this.lastScrollTop = this.scrollTop;
             this.isCurrentlyScrolling = false;
         }
     }
@@ -545,9 +547,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Handles touchmove events for iPad scroll detection.
      *
      * Calculates the vertical movement distance and time elapsed since touchstart.
+     * Also checks if the scroll position has changed to detect actual scrolling.
      * If the movement exceeds the threshold (10px) and happens within the time
-     * threshold (300ms), it marks the interaction as scrolling. This helps
-     * distinguish between intentional scroll gestures and accidental touches.
+     * threshold (300ms), or if scroll position changed, it marks the interaction as scrolling.
+     * This helps distinguish between intentional scroll gestures and accidental touches.
      *
      * @param event - The TouchEvent from the touchmove event
      */
@@ -561,10 +564,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             const deltaY = Math.abs(currentY - this.touchStartY);
             const deltaTime = Date.now() - this.touchStartTime;
 
+            // Detect scrolling by touch gesture
             if (
                 deltaY > this.scrollThreshold &&
                 deltaTime < this.scrollTimeThreshold
             ) {
+                this.isCurrentlyScrolling = true;
+            }
+
+            // Also detect scrolling by checking if scrollTop changed
+            if (Math.abs(this.scrollTop - this.lastScrollTop) > 1) {
                 this.isCurrentlyScrolling = true;
             }
         }
@@ -573,13 +582,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     /**
      * Handles touchend events for iPad scroll detection.
      *
-     * Resets the scrolling state after a short delay (100ms) to allow for
+     * Resets the scrolling state after a short delay (150ms) to allow for
      * any final touch events to be processed. This delay prevents immediate
      * state changes that could interfere with the selection logic.
-     * 
-     * The 100ms delay is consistent with the design system's approach to
+     *
+     * The 150ms delay (increased from 100ms) is consistent with the design system's approach to
      * touch event handling and ensures that any final touch events or
      * gesture recognition can complete before the scrolling state is reset.
+     * This longer delay provides more buffer for iPad Safari's event timing.
      */
     private handleTouchEnd(): void {
         // Reset scrolling state after a short delay
@@ -587,7 +597,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.isCurrentlyScrolling = false;
             this.touchStartY = undefined;
             this.touchStartTime = undefined;
-        }, 100);
+        }, 150);
     }
 
     // if the click and pointerup events are on the same target, we should not
@@ -720,7 +730,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     ): MenuItem {
         const diff = before ? -1 : 1;
         const elements = this.rovingTabindexController?.elements || [];
-        const index = !!menuItem ? elements.indexOf(menuItem) : -1;
+        const index = menuItem ? elements.indexOf(menuItem) : -1;
         let newIndex = Math.min(Math.max(0, index + diff), elements.length - 1);
         while (
             !this.isFocusableElement(elements[newIndex]) &&
@@ -729,7 +739,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         ) {
             newIndex += diff;
         }
-        return !!this.isFocusableElement(elements[newIndex])
+        return this.isFocusableElement(elements[newIndex])
             ? (elements[newIndex] as MenuItem)
             : menuItem || elements[0];
     }
@@ -1010,7 +1020,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 }
             });
         }
-        if (!!this._updateFocus) {
+        if (this._updateFocus) {
             this.rovingTabindexController?.focusOnItem(this._updateFocus);
             this._updateFocus = undefined;
         }
