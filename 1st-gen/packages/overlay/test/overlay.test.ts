@@ -477,9 +477,6 @@ describe('Overlays', () => {
         const initial = el.getBoundingClientRect();
         trigger.updateBoundingClientRect(500, 500);
         // Wait for placement computation to complete
-        // computePlacement now includes a 2-frame delay for content settling
-        await nextFrame();
-        await nextFrame();
         await nextFrame();
         await nextFrame();
         const final = el.getBoundingClientRect();
