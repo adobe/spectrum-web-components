@@ -157,17 +157,21 @@ ${
     tag.members.length &&
     tag.attributes.filter((attribute) => {
         const member = tag.members.find((member) => {
-            return member.name === attribute.name;
+            const attrName = attribute.fieldName || attribute.name;
+            return member.name === attrName;
         });
-        return member?.privacy === 'public';
+        // Treat missing privacy as public; skip only explicit private
+        return member && member.privacy !== 'private';
     }).length
         ? buildTable(
               'Attributes and Properties',
               tag.attributes.filter((attribute) => {
                   const member = tag.members.find((member) => {
-                      return member.name === attribute.fieldName;
+                      const attrName = attribute.fieldName || attribute.name;
+                      return member.name === attrName;
                   });
-                  return member?.privacy === 'public';
+                  // Treat missing privacy as public; skip only explicit private
+                  return !!member && member.privacy !== 'private';
               }),
               ['Property', 'Attribute', 'Type', 'Default', 'Description'],
               [
