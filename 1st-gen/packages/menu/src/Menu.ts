@@ -91,7 +91,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Threshold Values:
      * - Movement threshold: 10px (consistent with Card component click vs. drag detection)
      * - Time threshold: 300ms (consistent with longpress duration across the design system)
-     * - Reset delay: 150ms (increased from 100ms to provide more buffer for iPad Safari's event timing)
+     * - Reset delay: 100ms (allows final touch events to be processed)
      *
      * These values are carefully chosen to balance preventing accidental triggers
      * while allowing intentional scroll gestures. They represent a common UX pattern
@@ -100,7 +100,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     private touchStartY: number | undefined = undefined;
     private touchStartTime: number | undefined = undefined;
     private isCurrentlyScrolling = false;
-    private lastScrollTop = 0;
 
     /**
      * Minimum vertical movement (in pixels) required to trigger scrolling detection.
@@ -528,7 +527,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     /**
      * Handles touchstart events for iPad scroll detection.
      *
-     * Records the initial touch position, timestamp, and scroll position to establish a baseline
+     * Records the initial touch position and timestamp to establish a baseline
      * for detecting scroll gestures. Only processes single-touch events to
      * avoid interference with multi-touch gestures.
      *
@@ -538,7 +537,6 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         if (event.touches.length === 1) {
             this.touchStartY = event.touches[0].clientY;
             this.touchStartTime = Date.now();
-            this.lastScrollTop = this.scrollTop;
             this.isCurrentlyScrolling = false;
         }
     }
@@ -547,10 +545,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
      * Handles touchmove events for iPad scroll detection.
      *
      * Calculates the vertical movement distance and time elapsed since touchstart.
-     * Also checks if the scroll position has changed to detect actual scrolling.
      * If the movement exceeds the threshold (10px) and happens within the time
-     * threshold (300ms), or if scroll position changed, it marks the interaction as scrolling.
-     * This helps distinguish between intentional scroll gestures and accidental touches.
+     * threshold (300ms), it marks the interaction as scrolling. This helps
+     * distinguish between intentional scroll gestures and accidental touches.
      *
      * @param event - The TouchEvent from the touchmove event
      */
@@ -564,16 +561,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             const deltaY = Math.abs(currentY - this.touchStartY);
             const deltaTime = Date.now() - this.touchStartTime;
 
-            // Detect scrolling by touch gesture
             if (
                 deltaY > this.scrollThreshold &&
                 deltaTime < this.scrollTimeThreshold
             ) {
-                this.isCurrentlyScrolling = true;
-            }
-
-            // Also detect scrolling by checking if scrollTop changed
-            if (Math.abs(this.scrollTop - this.lastScrollTop) > 1) {
                 this.isCurrentlyScrolling = true;
             }
         }
@@ -582,14 +573,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     /**
      * Handles touchend events for iPad scroll detection.
      *
-     * Resets the scrolling state after a short delay (150ms) to allow for
+     * Resets the scrolling state after a short delay (100ms) to allow for
      * any final touch events to be processed. This delay prevents immediate
      * state changes that could interfere with the selection logic.
      *
-     * The 150ms delay (increased from 100ms) is consistent with the design system's approach to
+     * The 100ms delay is consistent with the design system's approach to
      * touch event handling and ensures that any final touch events or
      * gesture recognition can complete before the scrolling state is reset.
-     * This longer delay provides more buffer for iPad Safari's event timing.
      */
     private handleTouchEnd(): void {
         // Reset scrolling state after a short delay
@@ -597,7 +587,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             this.isCurrentlyScrolling = false;
             this.touchStartY = undefined;
             this.touchStartTime = undefined;
-        }, 150);
+        }, 100);
     }
 
     // if the click and pointerup events are on the same target, we should not

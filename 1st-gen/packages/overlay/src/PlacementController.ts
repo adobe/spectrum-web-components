@@ -278,6 +278,14 @@ export class PlacementController implements ReactiveController {
         // Wait for document fonts to be ready before computing placement.
         await (document.fonts ? document.fonts.ready : Promise.resolve());
 
+        // Additional frame delay to allow content (like menus) to fully render
+        // and settle, especially after scrollIntoView operations
+        await new Promise((resolve) =>
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            })
+        );
+
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
             ? flip({
