@@ -50,14 +50,14 @@
     "types": "./dist/index.d.ts",
     "typesVersions": {
         "*": {
-            "shared/base/*": [
-                "dist/shared/base/*"
+            "components/*": [
+                "dist/components/*"
             ],
             "shared/*": [
                 "dist/shared/*"
             ],
-            "components/*": [
-                "dist/components/*"
+            "shared/base/*": [
+                "dist/shared/base/*"
             ]
         }
     },
