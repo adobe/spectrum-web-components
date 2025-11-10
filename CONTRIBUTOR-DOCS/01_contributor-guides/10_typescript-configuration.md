@@ -162,53 +162,61 @@ The top-level `yarn build` command handles this automatically.
 
 ### Current version
 
-**TypeScript version**: 5.9.2 (aligned across all workspaces as of November 7, 2025)
+**TypeScript version**: 5.9.2 (managed at root level as of November 2025)
 
-All three locations use the same version:
+TypeScript is installed in:
 
-- `1st-gen/package.json`
-- `1st-gen/projects/css-custom-vars-viewer/package.json`
-- `1st-gen/projects/example-project-rollup/package.json`
+- Root `package.json` (primary dependency for all workspaces via hoisting)
+- `1st-gen/projects/css-custom-vars-viewer/package.json` (example project)
+- `1st-gen/projects/example-project-rollup/package.json` (example project)
+
+Example projects maintain their own TypeScript dependency to simulate external consumer environments.
 
 ### Upgrading TypeScript
 
-When updating TypeScript versions, follow these steps to ensure consistency:
+When updating TypeScript versions:
 
-**1. Update all three package.json files:**
+**1. Update the root package.json:**
 
 ```bash
-# Update version in all three locations
-# 1st-gen/package.json
-# 1st-gen/projects/css-custom-vars-viewer/package.json
-# 1st-gen/projects/example-project-rollup/package.json
+# Edit package.json at root and update typescript version
 ```
 
-**2. Install the new version:**
+**2. Update example projects (optional):**
+
+Example projects can update independently, but should generally stay aligned:
+
+- `1st-gen/projects/css-custom-vars-viewer/package.json`
+- `1st-gen/projects/example-project-rollup/package.json`
+
+**3. Install the new version:**
 
 ```bash
 yarn install
 ```
 
-**3. Verify TypeScript version:**
+**4. Verify TypeScript version:**
 
 ```bash
-cd 1st-gen && yarn tsc --version
+yarn tsc --version  # Check hoisted version
+cd 1st-gen && yarn tsc --version  # Verify in 1st-gen
+cd 2nd-gen && yarn tsc --version  # Verify in 2nd-gen
 ```
 
-**4. Clean and rebuild:**
+**5. Clean and rebuild:**
 
 ```bash
 yarn workspace @spectrum-web-components/1st-gen build:clear-cache
 yarn build
 ```
 
-**5. Run the test suite:**
+**6. Run the test suite:**
 
 ```bash
 yarn test
 ```
 
-**6. Check for breaking changes:**
+**7. Check for breaking changes:**
 
 - Review the [TypeScript release notes](https://www.typescriptlang.org/docs/handbook/release-notes/overview.html)
 - Pay special attention to `lib.d.ts` changes (DOM types)
