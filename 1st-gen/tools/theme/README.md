@@ -1,63 +1,16 @@
-## Description
+## Overview
 
-`sp-theme` applies a Spectrum theme by using CSS custom properties to set default sizes & colors for all of the components in its scope. The Spectrum design system provides four color themes (`lightest`, `light`, `dark`, and `darkest`) and two different scales (`medium` and `large`) to support desktop & mobile UI.
+`<sp-theme>` provides Spectrum design tokens (CSS custom properties) to everything in its DOM scope. Components inside a theme use these tokens to render correctly. The element itself does not visually “apply” styles to your app; it exposes the tokens so your components (and any of your CSS) can consume them.
 
-### Usage
+Spectrum offers multiple variants:
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/theme?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/theme)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/theme?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/theme)
+- **System**: `spectrum`, `express`, `spectrum-two`
+- **Color**: `light`, `dark` (legacy: `lightest`, `darkest` – deprecated)
+- **Scale**: `medium`, `large`
 
-```
-yarn add @spectrum-web-components/theme
-```
+By default, `<sp-theme>` uses the `spectrum` system, `light` color, and `medium` scale.
 
-#### Quick start
-
-```
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-```
-
-The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
-
-Below are more ways to import the different scale and color options individually, in case you didn't want to import all of them as we did above. You'll use these statements in combination with the side effectful registration import statement `import '@spectrum-web-components/theme/sp-theme.js'`.
-
-The various Classic themes can be imported en masse, as in the example above:
-
-```
-import '@spectrum-web-components/theme/src/themes.js';
-```
-
-The various Spectrum Express themes can also be imported en masse:
-
-```
-import '@spectrum-web-components/theme/src/express/themes.js';
-```
-
-Or you can import the themes and scales individually:
-
-```
-import '@spectrum-web-components/theme/theme-darkest.js';
-import '@spectrum-web-components/theme/theme-dark.js';
-import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/scale-large.js';
-import '@spectrum-web-components/theme/express/theme-darkest.js';
-import '@spectrum-web-components/theme/express/theme-dark.js';
-import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/theme-lightest.js';
-import '@spectrum-web-components/theme/express/scale-medium.js';
-import '@spectrum-web-components/theme/express/scale-large.js';
-```
-
-When looking to leverage the `Theme` base class as a type and/or for extension purposes, do so via:
-
-```
-import { Theme } from '@spectrum-web-components/theme';
-```
-
-## What it's doing
+### How sp-theme works
 
 Visually, all Spectrum Web Components are an expression of the design tokens specified by Spectrum, Adobe's design system. On the web, these tokens are made available as CSS Custom Properties. Using `sp-theme` as a parent element for your components ensures that those CSS Custom Properties can be leveraged by the elements within your application. This ensures consistent delivery of not only the color and scale you've specified in your particular instance, but for _all_ the other color, scale, and content direction specifications across Spectrum.
 
@@ -96,176 +49,95 @@ To make the above concepts a little more concrete, take a look at the table belo
     observer.observe(varsViewer);
 </script>
 
-When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@spectrum-web-components/styles` package.
+When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the [`@spectrum-web-components/styles`](https://opensource.adobe.com/spectrum-web-components/tools/styles/) package.
 
-## Example
+### Usage
 
-An `<sp-theme>` element expects a value for each of its `color` and `scale` attributes to be provided on the element. While not required, you can also use the `system` attribute to specify whether the theme you're using is Spectrum Classic (the default), Spectrum 2 (upcoming release) or Spectrum Express.
+[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/theme?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/theme)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/theme?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/theme)
+
+```bash
+yarn add @spectrum-web-components/theme
+```
+
+Register the element and load the theme fragments you intend to use:
+
+```js
+// Registers the <sp-theme> custom element
+import '@spectrum-web-components/theme/sp-theme.js';
+
+// Load the specific variants you will use (recommended)
+import '@spectrum-web-components/theme/theme-light.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+// Optionally choose a different system
+// import '@spectrum-web-components/theme/express/theme-light.js';
+// import '@spectrum-web-components/theme/express/scale-medium.js';
+```
+
+If you’re prototyping and want everything available:
+
+```js
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js'; // spectrum
+import '@spectrum-web-components/theme/src/express/themes.js'; // express
+import '@spectrum-web-components/theme/src/spectrum-two/themes.js'; // spectrum-two
+```
+
+### Examples
+
+#### Light color, medium scale
 
 ```html
-<sp-theme
-    system="spectrum"
-    color="light"
-    scale="medium"
-    style="background-color: var(--spectrum-gray-100)"
->
-    <sp-button onclick="spAlert(this, 'Themed <sp-button> clicked!')">
-        Click me!
-    </sp-button>
-</sp-theme>
-```
-
-## Advanced usage
-
-Once you've moved beyond the prototype phase of an application, it is likely that you will only use one combination of `color` and `scale` in your application, and even if not, you'll likely benefit from lazily loading the variants you don't leverage by default. For single combination applications, or to power a _default_ theme, the following imports can be used to ensure only the code your application requires is loaded:
-
-### Classic
-
-```js
-/**
- * Power a site using
- *
- * <sp-theme
- *      system="spectrum"
- *      color="darkest"
- *      scale="large"
- * >
- **/
-import '@spectrum-web-components/theme/theme-darkest.js';
-import '@spectrum-web-components/theme/scale-large.js';
-
-import '@spectrum-web-components/theme/sp-theme.js';
-```
-
-### Express
-
-```js
-/**
- * Power a site using
- *
- * <sp-theme
- *      system="express"
- *      color="light"
- *      scale="medium"
- * >
- **/
-import '@spectrum-web-components/theme/express/theme-light.js';
-import '@spectrum-web-components/theme/express/scale-medium.js';
-
-import '@spectrum-web-components/theme/sp-theme.js';
-```
-
-When subsequent theme variants are needed, you can ensure those are lazily loaded by leveraging dynamic imports via something like:
-
-```js
-const themeElement = document.querySelector('sp-theme');
-
-const updateTheme = async (color, scale) => {
-    Promise.all([
-        import(`@spectrum-web-components/theme/theme-${color}.js`),
-        import(`@spectrum-web-components/theme/scale-${scale}.js`),
-    ]).then(() => {
-        themeElement.color = color;
-        themeElement.scale = scale;
-    });
-};
-
-updateTheme('light', 'medium');
-```
-
-When bundling your application, be sure to consult the documentation of your bundler for the correct way to ensure proper packaging of the programatic dependency graph that this will create.
-
-## Light theme
-
-```html demo
 <style type="text/css">
-    #example {
-        max-width: 500px;
-        padding: 3em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
-
-    #buttons {
-        margin-top: 2em;
-    }
-</style>
-<sp-theme system="express" color="light" scale="medium">
-    <hzn-app-stuff></hzn-app-stuff>
-</sp-theme>
-
-<express-app>
-    <hzn-app-stuff></hzn-app-stuff>
-</express-app>
-```
-
-## Dark theme
-
-```html demo
-<style type="text/css">
-    #example {
-        max-width: 500px;
-        padding: 3em;
-        background-color: var(--spectrum-gray-100);
-        color: var(--spectrum-gray-800);
-    }
-
-    #buttons {
-        margin-top: 2em;
-    }
-</style>
-<sp-theme system="express" color="dark" scale="large">
-    <hzn-app-stuff></hzn-app-stuff>
-</sp-theme>
-
-<express-app>
-    <hzn-app-stuff></hzn-app-stuff>
-</express-app>
-```
-
-## Large scale
-
-The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [Platform Scale](https://spectrum.adobe.com/page/platform-scale/)
-
-```html demo
-<style type="text/css">
-    #example {
+    #outer {
         max-width: 500px;
         padding: 1em;
         background-color: var(--spectrum-gray-100);
         color: var(--spectrum-gray-800);
     }
-
-    #buttons {
-        margin-top: 2em;
-    }
 </style>
-<sp-theme color="darkest" scale="large">
-    <div id="example">
-        <div>
-            <sp-slider
-                value="5"
-                step="1"
-                min="1"
-                max="11"
-                label="Volume"
-                id="volume-slider"
-            ></sp-slider>
-        </div>
-        <div><sp-switch>Overdrive</sp-switch></div>
-        <sp-button-group id="buttons">
-            <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="accent">Continue</sp-button>
+<sp-theme system="spectrum" color="light" scale="medium">
+    <div id="outer">
+        <sp-field-label for="email">Email</sp-field-label>
+        <sp-textfield
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+        ></sp-textfield>
+        <sp-help-text>We’ll only use this to send a receipt.</sp-help-text>
+        <sp-button-group style="margin-top: var(--spectrum-spacing-400)">
+            <sp-button variant="primary">Submit</sp-button>
+            <sp-button variant="secondary">Cancel</sp-button>
         </sp-button-group>
     </div>
 </sp-theme>
 ```
 
-## Embedding themes
+#### Dark color, large scale
 
-There are a few cases where it is necessary to embed one theme within another.
-For example, if you have an application that is using a dark theme with a left to right text direction that is
-previewing or editing content that will be displayed in a light theme with a right to left text direction.
+The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile Platform Scale.
+
+```html
+<style type="text/css">
+    #outer {
+        max-width: 500px;
+        padding: 1em;
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
+    }
+</style>
+<sp-theme system="spectrum" color="dark" scale="large">
+    <div id="outer">
+        <sp-field-label for="volume">Volume</sp-field-label>
+        <sp-slider id="volume" value="50"></sp-slider>
+        <sp-switch>Overdrive</sp-switch>
+    </div>
+</sp-theme>
+```
+
+#### Embedded color systems and directional content
+
+There are a few cases where it is necessary to embed one theme within another. For example, if you have an application that is using a dark color system with a left to right text direction that is previewing or editing content that will be displayed in a light color system with a right to left text direction.
 
 ```html
 <style type="text/css">
@@ -327,78 +199,53 @@ previewing or editing content that will be displayed in a light theme with a rig
 </sp-theme>
 ```
 
-## Language Context
+### Advanced usage
 
-The `<sp-theme>` element provides a language context for its descendents in the DOM. Descendents can resolve this context by dispatching an `sp-language-context` DOM event and supplying a `callback(lang: string) => void` method in the `detail` entry of the Custom Event. These callbacks will be reactively envoked when the `lang` attribute on the `<sp-theme>` element is updated. This way, you can control the resolved language in [`<sp-number-field>`](../components/number-field), [`<sp-slider>`](./components/slider), and other elements in one centralized place.
+#### Lazy loading themes
 
-## System Context (private Beta API - subject to changes)
+Load only what you need by importing the specific fragments, then lazy-load others as your user changes theme settings.
 
-The <sp-theme> element provides a "system" context to its descendants in the DOM. This context indicates the Spectrum design system variant currently in use (e.g., 'spectrum', 'express', or 'spectrum-two').
+```js
+const themeEl = document.querySelector('sp-theme');
 
-#### Consuming the System Context in Components
-
-Components can consume the system context by using the `SystemResolutionController`. This controller encapsulates the logic for resolving the system context, allowing it to be integrated into any component in few steps.
-
-#### Steps to Consume the System Context:
-
-1. Import the `SystemResolutionController` and the necessary types:
-
-```ts
-import {
-    SystemResolutionController,
-    systemResolverUpdatedSymbol,
-} from './SystemResolutionController.js';
-import type { SystemVariant } from '@spectrum-web-components/theme';
-```
-
-2. Instantiate the `SystemResolutionController`:
-
-    In your component class, create an instance of SystemResolutionController, passing `this` as the host element.
-
-```ts
-export class MyComponent extends LitElement {
-    private systemResolver = new SystemResolutionController(this);
-
-    // Rest of your component code...
+async function updateTheme(system, color, scale) {
+    const systemBase = system === 'spectrum' ? '' : `${system}/`;
+    await Promise.all([
+        import(`@spectrum-web-components/theme/${systemBase}theme-${color}.js`),
+        import(`@spectrum-web-components/theme/${systemBase}scale-${scale}.js`),
+    ]);
+    themeEl.system = system;
+    themeEl.color = color;
+    themeEl.scale = scale;
 }
+
+updateTheme('spectrum', 'light', 'medium');
 ```
 
-3. Respond to system context changes:
+When bundling your application, be sure to consult the documentation of your bundler for the correct way to ensure proper packaging of the programatic dependency graph that this will create.
 
-    Override the `update` lifecycle method to detect changes in the system context using the `systemResolverUpdatedSymbol`.
+#### Language context
+
+Descendants can request the current language by dispatching `sp-language-context` with a callback. The callback is re-invoked when the theme’s `lang` changes. This way, you can control the resolved language in `<sp-number-field>`, `<sp-slider>`, and other elements in one centralized place.
 
 ```ts
-protected update(changes: Map<PropertyKey, unknown>): void {
-  super.update(changes);
-  if (changes.has(systemResolverUpdatedSymbol)) {
-    this.handleSystemChange();
-  }
-}
+// in a descendant component
+this.dispatchEvent(
+    new CustomEvent('sp-language-context', {
+        bubbles: true,
+        composed: true,
+        detail: {
+            callback: (lang, unsubscribe) => {
+                this.lang = lang; // use the language value
+                // call unsubscribe() when you no longer need updates
+            },
+        },
+    })
+);
 ```
 
-4. Implement the handler for system changes:
+### Accessibility
 
-    Create a method that will be called whenever the system context changes. Use `this.systemResolver.system` to access the current system variant.
-
-```ts
-private handleSystemChange(): void {
-  const currentSystem: SystemVariant = this.systemResolver.system;
-  // Implement logic based on the current system variant.
-  // For example, update styles, states or re-render parts of the component.
-}
-```
-
-5. Use the system context in other parts of your component logic and/or template:
-
-    You can now use `this.systemResolver.system` anywhere in your component to adjust behavior or rendering based on the system variant.
-
-```ts
-render() {
-  return html`
-    <div>
-      <!-- Use the system context in your rendering logic -->
-      Current system variant: ${this.systemResolver.system}
-    </div>
-  `;
-}
-```
+- **Color and contrast**: Ensure sufficient contrast for any backgrounds you apply when consuming tokens (WCAG 2.1 AA). Components themselves meet Spectrum guidance when themed correctly.
+- **Language**: Set `lang` on `<sp-theme>` to inform number/date formatting and other locale-aware components.
+- **Directionality**: Use `dir` to deliver correct LTR/RTL behavior; embedded themes allow mixing contexts.
