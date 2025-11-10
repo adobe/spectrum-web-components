@@ -459,15 +459,53 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
+    private handlePointerdown(event: PointerEvent): void {
+        // Track pointer type for touch detection
+        this._lastPointerType = event.pointerType;
+
+        // For touch devices with submenus, handle on pointerup instead of click
+        // Only if the touch is directly on this menu item (not on overlay or child elements)
+        if (
+            event.pointerType === 'touch' &&
+            this.hasSubmenu &&
+            event.target === this
+        ) {
+            event.preventDefault(); // Prevent click suppression
+            event.stopPropagation(); // Prevent bubbling to parent menu items
+            this.addEventListener('pointerup', this.handleTouchSubmenuToggle, {
+                once: true,
+            });
+        }
+
+        if (event.target === this && this.hasSubmenu && this.open) {
+            this.addEventListener('focus', this.handleSubmenuFocus, {
+                once: true,
+            });
+            this.overlayElement.addEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
+    }
+
+    private handleTouchSubmenuToggle = (event: PointerEvent): void => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.open) {
+            this.open = false;
+        } else {
+            this.openOverlay(true);
+        }
+    };
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('mouseover', this.handleMouseover);
-        // Register pointerenter/leave for ALL menu items (not just those with submenus)
-        // so items without submenus can close sibling submenus when hovered
-        this.addEventListener('pointerenter', this.handlePointerenter);
-        this.addEventListener('pointerleave', this.handlePointerleave);
+        this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
@@ -567,7 +605,6 @@ export class MenuItem extends LikeAnchor(
 
         return false;
     }
-
     /**
      * forward key info from keydown event to parent menu
      */
@@ -587,6 +624,11 @@ export class MenuItem extends LikeAnchor(
         }
     };
 
+    protected closeOverlaysForRoot(): void {
+        if (this.open) return;
+        this.menuData.parentMenu?.closeDescendentOverlays();
+    }
+
     protected handleFocus(event: FocusEvent): void {
         const { target } = event;
         if (target === this) {
@@ -601,37 +643,57 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    protected handleSubmenuTriggerClick(event: Event): void {
+    protected handleSubmenuClick(event: Event): void {
+        const pointerEvent = event as PointerEvent;
+
+        // Check if this is a touch event
+        const isTouchEvent =
+            pointerEvent.pointerType === 'touch' ||
+            this._lastPointerType === 'touch';
+
+        // For touch events, we handle EVERYTHING via pointerup, so completely ignore click
+        if (isTouchEvent) {
+            event.stopPropagation();
+            event.preventDefault();
+            return;
+        }
+
+        // For non-touch (mouse) events, ignore clicks inside the overlay (on child items)
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
 
-        // If submenu is already open, toggle it closed
-        if (this.open && this._lastPointerType === 'touch') {
-            event.preventDefault();
-            event.stopPropagation(); // Don't let parent menu handle this
-            this.open = false;
-            return;
-        }
-
-        // All: open if closed
-        if (!this.open) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            this.openOverlay(true);
-        }
+        // For mouse: just open (close is handled by pointerleave)
+        this.openOverlay(true);
     }
 
-    protected handlePointerenter(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType; // Track pointer type
+    protected handleSubmenuFocus(): void {
+        requestAnimationFrame(() => {
+            // Wait till after `closeDescendentOverlays` has happened in Menu
+            // to reopen (keep open) the direct descendent of this Menu Item
+            this.overlayElement.open = this.open;
+            this.focused = false;
+        });
+    }
 
-        // For touch: don't handle pointerenter, let click handle it
+    protected handleBeforetoggle = (event: Event): void => {
+        if ((event as Event & { newState: string }).newState === 'closed') {
+            this.open = true;
+            this.overlayElement.manuallyKeepOpen();
+            this.overlayElement.removeEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
+    };
+
+    protected handlePointerenter(event: PointerEvent): void {
+        this._lastPointerType = event.pointerType;
+
+        // For touch devices, don't open on pointerenter - let click handle it
         if (event.pointerType === 'touch') {
             return;
         }
-
-        // Close sibling submenus before opening this one
-        this.menuData.parentMenu?.closeDescendentOverlays();
 
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
@@ -639,12 +701,7 @@ export class MenuItem extends LikeAnchor(
             this.recentlyLeftChild = false;
             return;
         }
-
-        // Only focus items with submenus on hover (to show they're interactive)
-        // Regular items should not show focus styling on hover, only on keyboard navigation
-        if (this.hasSubmenu) {
-            this.focus();
-        }
+        this.focus();
         this.openOverlay();
     }
 
@@ -652,9 +709,9 @@ export class MenuItem extends LikeAnchor(
     protected recentlyLeftChild = false;
 
     protected handlePointerleave(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType; // Update on leave too
+        this._lastPointerType = event.pointerType;
 
-        // For touch: don't handle pointerleave, let click handle it
+        // For touch devices, don't close on pointerleave - let click handle it
         if (event.pointerType === 'touch') {
             return;
         }
@@ -786,7 +843,17 @@ export class MenuItem extends LikeAnchor(
                 const options = { signal: this.abortControllerSubmenu.signal };
                 this.addEventListener(
                     'click',
-                    this.handleSubmenuTriggerClick,
+                    this.handleSubmenuClick,
+                    options
+                );
+                this.addEventListener(
+                    'pointerenter',
+                    this.handlePointerenter,
+                    options
+                );
+                this.addEventListener(
+                    'pointerleave',
+                    this.handlePointerleave,
                     options
                 );
                 this.addEventListener(
