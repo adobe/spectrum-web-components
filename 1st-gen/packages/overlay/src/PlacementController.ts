@@ -279,28 +279,41 @@ export class PlacementController implements ReactiveController {
         await (document.fonts ? document.fonts.ready : Promise.resolve());
 
         // Safari/iOS-specific fix: Add small delay for picker menus to allow scrollIntoView to complete
-        const isWebKit =
-            /WebKit/.test(navigator.userAgent) &&
-            !/Chrome/.test(navigator.userAgent);
-        const isSubmenu = Array.from(this.host.elements).some(
-            (el) => el.getAttribute?.('slot') === 'submenu'
-        );
+        // const isSafari =
+        //     /WebKit/.test(navigator.userAgent) &&
+        //     !/Chrome/.test(navigator.userAgent);
 
-        if (isWebKit && !isSubmenu) {
-            const hasMenu = Array.from(this.host.elements).some(
-                (el) =>
-                    el.tagName === 'SP-MENU' || el.querySelector?.('sp-menu')
-            );
+        // // Check if this is a submenu overlay (slot="submenu")
+        // // Submenus need immediate positioning for hover responsiveness
+        // const isSubmenu = Array.from(this.host.elements).some(
+        //     (el) => el.getAttribute?.('slot') === 'submenu'
+        // );
 
-            if (hasMenu) {
-                // Wait 2 frames for Safari layout to settle after scrollIntoView
-                await new Promise((resolve) => {
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(resolve);
-                    });
-                });
-            }
-        }
+        // // Debug logging for Azure
+        // if (isSafari) {
+        //     /* c8 ignore next 3 */
+        //     console.log('[PlacementController]', {
+        //         isSafari,
+        //         isSubmenu,
+        //         elements: Array.from(this.host.elements).map((el) => ({
+        //             tag: el.tagName,
+        //             slot: el.getAttribute?.('slot'),
+        //         })),
+        //         userAgent: navigator.userAgent,
+        //     });
+        // }
+
+        // if (isSafari && !isSubmenu) {
+        //     const hasMenu = Array.from(this.host.elements).some(
+        //         (el) =>
+        //             el.tagName === 'SP-MENU' || el.querySelector?.('sp-menu')
+        //     );
+
+        //     if (hasMenu) {
+        //         // Wait 1 frame for Safari layout to settle after scrollIntoView
+        //         await new Promise((resolve) => requestAnimationFrame(resolve));
+        //     }
+        // }
 
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
