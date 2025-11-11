@@ -74,7 +74,7 @@ jobs:
 
             - name: Build documentation with path prefix
               env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
+                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
               run: |
                   yarn workspace @spectrum-web-components/1st-gen docs:build
 
@@ -102,7 +102,7 @@ jobs:
 
                   # Upload first-gen Storybook
                   echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
-                  azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
+                  azcopy copy "1st-gen/storybook-static/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
@@ -115,9 +115,9 @@ jobs:
                     --from-to LocalBlob
 
                   # Set output URLs
-                  first-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs/"
-                  first-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook/"
-                  second-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook/"
+                  first-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs"
+                  first-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook"
+                  second-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook"
                   echo "first-gen-docs_url=${first-gen-docs_url}" >> "$GITHUB_OUTPUT"
                   echo "first-gen-storybook_url=${first-gen-storybook_url}" >> "$GITHUB_OUTPUT"
                   echo "second-gen-storybook_url=${second-gen-storybook_url}" >> "$GITHUB_OUTPUT"

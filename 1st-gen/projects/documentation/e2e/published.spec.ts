@@ -33,7 +33,7 @@ test.describe('search and go', () => {
             : `/${formattedSearchString}`;
 
         // add the SWC_DIR to the href
-        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs` : ''}${href}`;
+        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs` : ''}${href}`;
 
         const menuItem = page.locator(menuItemSelector(href));
 
