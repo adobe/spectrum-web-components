@@ -92,7 +92,7 @@ export const buildPreviewURLComment = (prNumber) => {
 - [Storybook (1st-gen)](${storybook1stGenUrl})
 - [Storybook (2nd-gen)](${storybook2ndGenUrl})
 
-<h3><strong>🔍 First GenerationVisual Regression Test Results</strong></h3>
+<h3><strong>🔍 First Generation Visual Regression Test Results</strong></h3>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
