@@ -82,15 +82,15 @@ export const buildPreviewURLComment = (prNumber) => {
 - [High Contrast Mode | Medium | LTR](${hcmUrl})`);
 
     // Documentation and Storybook URLs
-    const docs1stGenUrl = `${baseUrl}/${prHash}/docs/1st-gen-docs/`;
-    const storybook1stGenUrl = `${baseUrl}/${prHash}/docs/1st-gen-storybook/`;
-    const storybook2ndGenUrl = `${baseUrl}/${prHash}/docs/2nd-gen-storybook/`;
+    const docsFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-docs/`;
+    const storybookFirstGenUrl = `${baseUrl}/${prHash}/docs/first-gen-storybook/`;
+    const storybookSecondGenUrl = `${baseUrl}/${prHash}/docs/second-gen-storybook/`;
 
     let comment = `## 📚 Branch Preview Links
 
-- [Documentation Site (1st-gen)](${docs1stGenUrl})
-- [Storybook (1st-gen)](${storybook1stGenUrl})
-- [Storybook (2nd-gen)](${storybook2ndGenUrl})
+- [Documentation Site (first-gen)](${docsFirstGenUrl})
+- [Storybook (first-gen)](${storybookFirstGenUrl})
+- [Storybook (second-gen)](${storybookSecondGenUrl})
 
 <h3><strong>🔍 First Generation Visual Regression Test Results</strong></h3>
 

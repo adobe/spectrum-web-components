@@ -22,7 +22,7 @@ jobs:
         runs-on: ubuntu-latest
         name: Build and Deploy Job
         outputs:
-            doc_url: ${{ steps.deploy.outputs.docs_url }}
+            doc_url: ${{ steps.deploy.outputs.first-gen-docs_url }}
         steps:
             ## --- SETUP --- ##
             - name: Check out code
@@ -67,22 +67,22 @@ jobs:
               run: yarn build
 
             - name: Generate Custom Elements Manifest
-              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
+              run: yarn workspace @spectrum-web-components/first-gen docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+              run: cp first-gen/projects/documentation/custom-elements.json first-gen/storybook/
 
             - name: Build documentation with path prefix
               env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/1st-gen-docs
+                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
               run: |
-                  yarn workspace @spectrum-web-components/1st-gen docs:build
+                  yarn workspace @spectrum-web-components/first-gen docs:build
 
-            - name: Build 1st-gen Storybook
-              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
+            - name: Build first-gen Storybook
+              run: yarn workspace @spectrum-web-components/first-gen storybook:build
 
-            - name: Build 2nd-gen Storybook
-              run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
+            - name: Build second-gen Storybook
+              run: yarn workspace @spectrum-web-components/second-gen storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
             - name: Setup AzCopy
@@ -94,36 +94,36 @@ jobs:
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
                   # Upload documentation
-                  echo "Uploading 1st-gen documentation to ${PR_HASH}/docs/1st-gen-docs/"
-                  azcopy copy "1st-gen/projects/documentation/dist/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/1st-gen-docs/" \
+                  echo "Uploading first-gen documentation to ${PR_HASH}/docs/first-gen-docs/"
+                  azcopy copy "first-gen/projects/documentation/dist/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-docs/" \
                     --recursive \
                     --from-to LocalBlob
 
-                  # Upload 1st-gen Storybook
-                  echo "Uploading 1st-gen Storybook to ${PR_HASH}/docs/1st-gen-storybook/"
-                  azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/1st-gen-storybook/" \
+                  # Upload first-gen Storybook
+                  echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
+                  azcopy copy "first-gen/projects/documentation/dist/storybook/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
 
-                  # Upload 2nd-gen Storybook
-                  echo "Uploading 2nd-gen Storybook to ${PR_HASH}/docs/2nd-gen-storybook/"
-                  azcopy copy "2nd-gen/packages/swc/storybook-static/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/2nd-gen-storybook/" \
+                  # Upload second-gen Storybook
+                  echo "Uploading second-gen Storybook to ${PR_HASH}/docs/second-gen-storybook/"
+                  azcopy copy "second-gen/packages/swc/storybook-static/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/second-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Set output URLs
-                  1st-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/1st-gen-docs/"
-                  1st-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/1st-gen-storybook/"
-                  2nd-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/2nd-gen-storybook/"
-                  echo "1st-gen-docs_url=${1st-gen-docs_url}" >> "$GITHUB_OUTPUT"
-                  echo "1st-gen-storybook_url=${1st-gen-storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "2nd-gen-storybook_url=${2nd-gen-storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "Deployed to: ${1st-gen-docs_url}"
-                  echo "Deployed to: ${1st-gen-storybook_url}"
-                  echo "Deployed to: ${2nd-gen-storybook_url}"
+                  first-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs/"
+                  first-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook/"
+                  second-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook/"
+                  echo "first-gen-docs_url=${first-gen-docs_url}" >> "$GITHUB_OUTPUT"
+                  echo "first-gen-storybook_url=${first-gen-storybook_url}" >> "$GITHUB_OUTPUT"
+                  echo "second-gen-storybook_url=${second-gen-storybook_url}" >> "$GITHUB_OUTPUT"
+                  echo "Deployed to: ${first-gen-docs_url}"
+                  echo "Deployed to: ${first-gen-storybook_url}"
+                  echo "Deployed to: ${second-gen-storybook_url}"
 
     close_pull_request_job:
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
