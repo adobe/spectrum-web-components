@@ -213,8 +213,9 @@ The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path
 For stylesheet use, import the complete typography system, with tokens:
 
 ```css
-@import '@spectrum-web-components/styles/tokens/index.css'; /* import base tokens */
-@import '@spectrum-web-components/styles/tokens/dark-vars.css'; /* import any theme tokens */
+@import '@spectrum-web-components/styles/tokens-v2/dark-vars.css'; /* import color tokens */
+@import '@spectrum-web-components/styles/tokens-v2/large-vars.css'; /* import scale tokens */
+@import '@spectrum-web-components/styles/tokens-v2/global-vars.css'; /* import global tokens */
 @import '@spectrum-web-components/styles/typography.css';
 ```
 
