@@ -459,6 +459,8 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
+    private _touchListenerActive = false;
+
     private handlePointerdown(event: PointerEvent): void {
         // Track pointer type for touch detection
         this._lastPointerType = event.pointerType;
@@ -468,16 +470,23 @@ export class MenuItem extends LikeAnchor(
         if (
             event.pointerType === 'touch' &&
             this.hasSubmenu &&
-            event.target === this
+            event.target === this &&
+            !this._touchListenerActive
         ) {
             event.preventDefault(); // Prevent click suppression
             event.stopPropagation(); // Prevent bubbling to parent menu items
+            this._touchListenerActive = true;
             this.addEventListener('pointerup', this.handleTouchSubmenuToggle, {
                 once: true,
             });
         }
 
-        if (event.target === this && this.hasSubmenu && this.open) {
+        if (
+            event.target === this &&
+            this.hasSubmenu &&
+            this.open &&
+            event.pointerType !== 'touch'
+        ) {
             this.addEventListener('focus', this.handleSubmenuFocus, {
                 once: true,
             });
@@ -492,6 +501,10 @@ export class MenuItem extends LikeAnchor(
         event.preventDefault();
         event.stopPropagation();
 
+        // Reset the listener flag
+        this._touchListenerActive = false;
+
+        // Toggle the submenu
         if (this.open) {
             this.open = false;
         } else {
@@ -646,24 +659,21 @@ export class MenuItem extends LikeAnchor(
     protected handleSubmenuClick(event: Event): void {
         const pointerEvent = event as PointerEvent;
 
-        // Check if this is a touch event
         const isTouchEvent =
             pointerEvent.pointerType === 'touch' ||
             this._lastPointerType === 'touch';
 
-        // For touch events, we handle EVERYTHING via pointerup, so completely ignore click
+        // For touch events, completely ignore click
         if (isTouchEvent) {
             event.stopPropagation();
             event.preventDefault();
             return;
         }
 
-        // For non-touch (mouse) events, ignore clicks inside the overlay (on child items)
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
 
-        // For mouse: just open (close is handled by pointerleave)
         this.openOverlay(true);
     }
 
