@@ -46,7 +46,7 @@ jobs:
                       const body = buildPreviewURLComment(prNumber);
 
                       console.log(`Posting comment to PR #${prNumber}`);
-                      commentOrUpdate(github, context, '## 📚 Branch Preview', body);
+                      commentOrUpdate(github, context, '## 📚 Branch Preview Links', body);
 
             - name: Wait for deployment
               run: |
