@@ -82,15 +82,17 @@ export const buildPreviewURLComment = (prNumber) => {
 - [High Contrast Mode | Medium | LTR](${hcmUrl})`);
 
     // Documentation and Storybook URLs
-    const docsUrl = `${baseUrl}/${prHash}/docs/`;
-    const storybookUrl = `${baseUrl}/${prHash}/docs/storybook/`;
+    const docs1stGenUrl = `${baseUrl}/${prHash}/docs/1st-gen-docs/`;
+    const storybook1stGenUrl = `${baseUrl}/${prHash}/docs/1st-gen-storybook/`;
+    const storybook2ndGenUrl = `${baseUrl}/${prHash}/docs/2nd-gen-storybook/`;
 
-    let comment = `## 📚 Branch Preview
+    let comment = `## 📚 Branch Preview Links
 
-- [Documentation Site](${docsUrl})
-- [Storybook](${storybookUrl})
+- [Documentation Site (1st-gen)](${docs1stGenUrl})
+- [Storybook (1st-gen)](${storybook1stGenUrl})
+- [Storybook (2nd-gen)](${storybook2ndGenUrl})
 
-<h3><strong>🔍 Visual Regression Test Results</strong></h3>
+<h3><strong>🔍 First GenerationVisual Regression Test Results</strong></h3>
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
 
