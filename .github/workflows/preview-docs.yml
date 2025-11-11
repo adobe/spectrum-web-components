@@ -102,7 +102,7 @@ jobs:
 
                   # Upload 1st-gen Storybook
                   echo "Uploading 1st-gen Storybook to ${PR_HASH}/docs/1st-gen-storybook/"
-                  azcopy copy "1st-gen/storybook-static/*" \
+                  azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/1st-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
