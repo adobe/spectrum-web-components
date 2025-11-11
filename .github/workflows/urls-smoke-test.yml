@@ -1,104 +1,104 @@
 name: Review URLs and Smoke Tests
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - "**"
+    pull_request:
+        types: [opened, synchronize, reopened, closed]
+        branches:
+            - '**'
 
 permissions:
-  contents: read
-  pull-requests: write
+    contents: read
+    pull-requests: write
 
 jobs:
-  wait-for-deployment:
-    name: Wait for deployment to complete
-    runs-on: ubuntu-latest
-    outputs:
-      doc_url: ${{ steps.extract_doc_url.outputs.DOC_URL }}
-      swc_dir: ${{ steps.pr_hash.outputs.hash }}
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
+    wait-for-deployment:
+        name: Wait for deployment to complete
+        runs-on: ubuntu-latest
+        outputs:
+            doc_url: ${{ steps.extract_doc_url.outputs.DOC_URL }}
+            swc_dir: ${{ steps.pr_hash.outputs.hash }}
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-      - name: Generate PR hash
-        id: pr_hash
-        run: |
-          pr_hash="pr-${{ github.event.pull_request.number }}"
-          echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
-          echo "Generated PR hash: ${pr_hash}"
+            - name: Generate PR hash
+              id: pr_hash
+              run: |
+                  pr_hash="pr-${{ github.event.pull_request.number }}"
+                  echo "hash=${pr_hash}" >> "$GITHUB_OUTPUT"
+                  echo "Generated PR hash: ${pr_hash}"
 
-      - name: Extract doc preview url
-        run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/" >> "$GITHUB_OUTPUT"
-        id: extract_doc_url
+            - name: Extract doc preview url
+              run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/1st-gen-docs/" >> "$GITHUB_OUTPUT"
+              id: extract_doc_url
 
-      - name: Post Previews Comment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
-            const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
+            - name: Post Previews Comment
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
 
-            const prNumber = context.payload.pull_request.number;
-            const body = buildPreviewURLComment(prNumber);
+                      const prNumber = context.payload.pull_request.number;
+                      const body = buildPreviewURLComment(prNumber);
 
-            console.log(`Posting comment to PR #${prNumber}`);
-            commentOrUpdate(github, context, '## 📚 Branch Preview', body);
+                      console.log(`Posting comment to PR #${prNumber}`);
+                      commentOrUpdate(github, context, '## 📚 Branch Preview', body);
 
-      - name: Wait for deployment
-        run: |
-          echo "Waiting for deployment to be available at: ${{ steps.extract_doc_url.outputs.DOC_URL }}"
+            - name: Wait for deployment
+              run: |
+                  echo "Waiting for deployment to be available at: ${{ steps.extract_doc_url.outputs.DOC_URL }}"
 
-          # Wait up to 10 minutes for the deployment to be available
-          max_attempts=60
-          attempt=1
+                  # Wait up to 10 minutes for the deployment to be available
+                  max_attempts=60
+                  attempt=1
 
-          while [ $attempt -le $max_attempts ]; do
-            echo "Attempt $attempt/$max_attempts: Checking if site is available..."
-            
-            if curl -f -s --max-time 10 "${{ steps.extract_doc_url.outputs.DOC_URL }}" > /dev/null; then
-              echo "✅ Site is now available!"
-              break
-            else
-              echo "❌ Site not ready yet, waiting 10 seconds..."
-              sleep 10
-              attempt=$((attempt + 1))
-            fi
-          done
+                  while [ $attempt -le $max_attempts ]; do
+                    echo "Attempt $attempt/$max_attempts: Checking if site is available..."
+                    
+                    if curl -f -s --max-time 10 "${{ steps.extract_doc_url.outputs.DOC_URL }}" > /dev/null; then
+                      echo "✅ Site is now available!"
+                      break
+                    else
+                      echo "❌ Site not ready yet, waiting 10 seconds..."
+                      sleep 10
+                      attempt=$((attempt + 1))
+                    fi
+                  done
 
-          if [ $attempt -gt $max_attempts ]; then
-            echo "❌ Timeout: Site was not available after 10 minutes"
-            exit 1
-          fi
+                  if [ $attempt -gt $max_attempts ]; then
+                    echo "❌ Timeout: Site was not available after 10 minutes"
+                    exit 1
+                  fi
 
-  playwright-smoke-tests:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    needs: wait-for-deployment
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
+    playwright-smoke-tests:
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        needs: wait-for-deployment
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-      - name: Install Playwright Browsers
-        run: cd 1st-gen && yarn playwright install --with-deps
+            - name: Install Playwright Browsers
+              run: cd 1st-gen && yarn playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
-        env:
-          DOC_PREVIEW_URL: ${{ needs.wait-for-deployment.outputs.doc_url }}
-          SWC_DIR: ${{ needs.wait-for-deployment.outputs.swc_dir }}
-          NODE_ENV: CI
+            - name: Run Playwright tests
+              run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
+              env:
+                  DOC_PREVIEW_URL: ${{ needs.wait-for-deployment.outputs.doc_url }}
+                  SWC_DIR: ${{ needs.wait-for-deployment.outputs.swc_dir }}
+                  NODE_ENV: CI
 
-      - name: Upload Playwright Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30

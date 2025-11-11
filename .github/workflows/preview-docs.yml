@@ -63,14 +63,8 @@ jobs:
               shell: bash
               run: yarn install --immutable
 
-            - name: Build 1st-gen
-              run: yarn workspace @spectrum-web-components/1st-gen build
-
-            - name: Build 2nd-gen core
-              run: yarn workspace @spectrum-web-components/core build
-
-            - name: Build 2nd-gen swc
-              run: yarn workspace @adobe/swc build
+            - name: Build all generations
+              run: yarn build
 
             - name: Generate Custom Elements Manifest
               run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
@@ -80,7 +74,7 @@ jobs:
 
             - name: Build documentation with path prefix
               env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
+                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/1st-gen-docs
               run: |
                   yarn workspace @spectrum-web-components/1st-gen docs:build
 
@@ -121,7 +115,7 @@ jobs:
                     --from-to LocalBlob
 
                   # Set output URLs
-                  1st-gendocs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/1st-gen-docs/"
+                  1st-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/1st-gen-docs/"
                   1st-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/1st-gen-storybook/"
                   2nd-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/2nd-gen-storybook/"
                   echo "1st-gen-docs_url=${1st-gen-docs_url}" >> "$GITHUB_OUTPUT"
