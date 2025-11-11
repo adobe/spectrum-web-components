@@ -176,9 +176,11 @@ The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path
 
 #### CSS imports
 
-For stylesheet use, import the complete typography system:
+For stylesheet use, import the complete typography system, with tokens:
 
 ```css
+@import '@spectrum-web-components/styles/tokens/index.css'; /* import base tokens */
+@import '@spectrum-web-components/styles/tokens/dark-vars.css'; /* import any theme tokens */
 @import '@spectrum-web-components/styles/typography.css';
 ```
 
@@ -189,6 +191,7 @@ For use in Lit-based components, you can import typography styles as JavaScript 
 ##### Import everything
 
 ```js
+// tokens also need to be imported to define CSS custom properties
 import typographyStyles from '@spectrum-web-components/styles/typography.js';
 
 static styles = [typographyStyles];
