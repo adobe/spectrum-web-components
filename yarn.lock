@@ -199,6 +199,7 @@ __metadata:
     react-dom: "npm:19.1.1"
     rimraf: "npm:6.0.1"
     storybook: "npm:10.0.3"
+    typescript: "npm:5.9.2"
     vite: "npm:7.1.7"
     vite-plugin-dts: "npm:4.5.4"
     vite-plugin-lit-css: "npm:2.2.1"
@@ -5418,6 +5419,7 @@ __metadata:
     tachometer: "npm:0.7.2"
     tar-stream: "npm:3.1.7"
     terser: "npm:4.8.1"
+    typescript: "npm:5.9.2"
     webpack-merge: "npm:6.0.1"
     wireit: "npm:0.14.12"
     yargs: "npm:17.7.2"
@@ -5834,6 +5836,7 @@ __metadata:
     glob: "npm:11.0.3"
     lit: "npm:^2.5.0 || ^3.1.3"
     rimraf: "npm:6.0.1"
+    typescript: "npm:5.9.2"
     vite: "npm:7.1.7"
     vite-plugin-dts: "npm:4.5.4"
   languageName: unknown
@@ -27172,7 +27175,6 @@ __metadata:
     lint-staged: "npm:16.2.6"
     npm-run-all2: "npm:8.0.4"
     replace-in-file: "npm:8.3.0"
-    typescript: "npm:5.9.2"
     yargs: "npm:17.7.2"
   languageName: unknown
   linkType: soft

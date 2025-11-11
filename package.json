@@ -27,13 +27,13 @@
         "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
         "start:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
         "test": "run-p test:2nd-gen test:1st-gen",
-        "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
-        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test",
         "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
         "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
         "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
         "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
-        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui"
+        "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
+        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
     },
     "workspaces": [
         "1st-gen",
@@ -57,7 +57,6 @@
         "lint-staged": "16.2.6",
         "npm-run-all2": "8.0.4",
         "replace-in-file": "8.3.0",
-        "typescript": "5.9.2",
         "yargs": "17.7.2"
     },
     "keywords": [

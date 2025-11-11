@@ -192,6 +192,7 @@
         "tachometer": "0.7.2",
         "tar-stream": "3.1.7",
         "terser": "4.8.1",
+        "typescript": "5.9.2",
         "webpack-merge": "6.0.1",
         "wireit": "0.14.12",
         "yargs": "17.7.2"
