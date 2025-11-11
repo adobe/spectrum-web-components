@@ -79,7 +79,7 @@ jobs:
                   yarn workspace @spectrum-web-components/1st-gen docs:build
 
             - name: Build first-gen Storybook
-              run: yarn workspace @spectrum-web-components/first-gen storybook:build
+              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
             - name: Build second-gen Storybook
               run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
