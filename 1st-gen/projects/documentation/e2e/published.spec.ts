@@ -33,7 +33,7 @@ test.describe('search and go', () => {
             : `/${formattedSearchString}`;
 
         // add the SWC_DIR to the href
-        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs` : ''}${href}`;
+        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs/` : ''}${href}`;
 
         const menuItem = page.locator(menuItemSelector(href));
 
@@ -54,6 +54,7 @@ test.describe('search and go', () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto(startURL as string);
+        expect(page, `to have URL ${startURL}`).toHaveURL(/first-gen-docs/);
         await page.waitForLoadState('networkidle', { timeout: 30000 });
 
         // Wait for any dynamic content to load

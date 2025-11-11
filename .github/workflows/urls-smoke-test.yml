@@ -32,7 +32,7 @@ jobs:
                   echo "Generated PR hash: ${pr_hash}"
 
             - name: Extract doc preview url
-              run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs" >> "$GITHUB_OUTPUT"
+              run: echo "DOC_URL=https://swcpreviews.z13.web.core.windows.net/${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs/" >> "$GITHUB_OUTPUT"
               id: extract_doc_url
 
             - name: Post Previews Comment
