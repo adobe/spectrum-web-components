@@ -125,6 +125,7 @@
         "lit": "^2.5.0 || ^3.1.3"
     },
     "customElements": "custom-elements.json",
+    "deprecationNotice": "Color 'lightest' and 'darkest' are deprecated. Spectrum Vars token files (all-*.css, theme-*.css, scale-*.css, core-global.css) are deprecated in favor of Spectrum Core tokens. These deprecations will be removed in a future release. See the Spectrum Core tokens migration guide for help migrating.",
     "sideEffects": [
         "./**/*.css"
     ],
