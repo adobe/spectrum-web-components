@@ -90,6 +90,7 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             this.target = part.element as HTMLElement;
             newTarget = true;
         }
+        this.listenerHost = this.target;
         if (newTarget || newStrategy) {
             this.strategy?.abort();
             this.strategy = new strategies[
