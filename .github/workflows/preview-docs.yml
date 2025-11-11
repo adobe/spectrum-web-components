@@ -67,22 +67,22 @@ jobs:
               run: yarn build
 
             - name: Generate Custom Elements Manifest
-              run: yarn workspace @spectrum-web-components/first-gen docs:analyze
+              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp first-gen/projects/documentation/custom-elements.json first-gen/storybook/
+              run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
             - name: Build documentation with path prefix
               env:
                   SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
               run: |
-                  yarn workspace @spectrum-web-components/first-gen docs:build
+                  yarn workspace @spectrum-web-components/1st-gen docs:build
 
             - name: Build first-gen Storybook
               run: yarn workspace @spectrum-web-components/first-gen storybook:build
 
             - name: Build second-gen Storybook
-              run: yarn workspace @spectrum-web-components/second-gen storybook:build
+              run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
             - name: Setup AzCopy
@@ -95,21 +95,21 @@ jobs:
               run: |
                   # Upload documentation
                   echo "Uploading first-gen documentation to ${PR_HASH}/docs/first-gen-docs/"
-                  azcopy copy "first-gen/projects/documentation/dist/*" \
+                  azcopy copy "1st-gen/projects/documentation/dist/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-docs/" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Upload first-gen Storybook
                   echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
-                  azcopy copy "first-gen/projects/documentation/dist/storybook/*" \
+                  azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
 
                   # Upload second-gen Storybook
                   echo "Uploading second-gen Storybook to ${PR_HASH}/docs/second-gen-storybook/"
-                  azcopy copy "second-gen/packages/swc/storybook-static/*" \
+                  azcopy copy "2nd-gen/packages/swc/storybook-static/*" \
                     "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/second-gen-storybook/" \
                     --recursive \
                     --from-to LocalBlob
