@@ -74,7 +74,7 @@ jobs:
 
             - name: Build documentation with path prefix
               env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
+                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
               run: |
                   yarn workspace @spectrum-web-components/1st-gen docs:build
 
@@ -115,15 +115,21 @@ jobs:
                     --from-to LocalBlob
 
                   # Set output URLs
-                  first-gen-docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs"
-                  first-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook"
-                  second-gen-storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook"
-                  echo "first-gen-docs_url=${first-gen-docs_url}" >> "$GITHUB_OUTPUT"
-                  echo "first-gen-storybook_url=${first-gen-storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "second-gen-storybook_url=${second-gen-storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "Deployed to: ${first-gen-docs_url}"
-                  echo "Deployed to: ${first-gen-storybook_url}"
-                  echo "Deployed to: ${second-gen-storybook_url}"
+                  echo "Setting first_gen_docs_url..."
+                  first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs"
+                  echo "first_gen_docs_url=${first_gen_docs_url}" >> "$GITHUB_OUTPUT"
+
+                  echo "Setting first_gen_storybook_url..."
+                  first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook"
+                  echo "first_gen_storybook_url=${first_gen_storybook_url}" >> "$GITHUB_OUTPUT"
+
+                  echo "Setting second_gen_storybook_url..."
+                  second_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook"
+                  echo "second_gen_storybook_url=${second_gen_storybook_url}" >> "$GITHUB_OUTPUT"
+
+                  echo "Deployed to: ${first_gen_docs_url}"
+                  echo "Deployed to: ${first_gen_storybook_url}"
+                  echo "Deployed to: ${second_gen_storybook_url}"
 
     close_pull_request_job:
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
