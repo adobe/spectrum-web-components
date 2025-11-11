@@ -160,6 +160,40 @@ Import a single scale to set sizing values:
     </sp-table-body>
 </sp-table>
 
+### Design tokens
+
+For advanced use cases where you need direct access to design token CSS custom properties, this package exposes token files:
+
+#### Spectrum tokens
+
+```css
+@import '@spectrum-web-components/styles/tokens/global-vars.css';
+@import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/large-vars.css';
+```
+
+#### Express tokens
+
+```css
+@import '@spectrum-web-components/styles/tokens/express/global-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/large-vars.css';
+```
+
+#### Spectrum 2 tokens
+
+```css
+@import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/light-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/large-vars.css';
+```
+
 ### Typography
 
 The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path=/docs/components-typography--docs) provides a complete set of text styles. The typography system is shared across all design systems (Spectrum, Express, and Spectrum 2).
@@ -216,40 +250,6 @@ static styles = [headingStyles];
 - **`code.js`** - Code styles only (includes base + lang + code)
 
 Each individual export (`body.js`, `heading.js`, etc.) includes the necessary base and language support styles, so you don't need to import them separately. Import `typography.js` for the complete system, or import individual exports to reduce bundle size.
-
-### Design tokens
-
-For advanced use cases where you need direct access to design token CSS custom properties, this package exposes token files:
-
-#### Spectrum tokens
-
-```css
-@import '@spectrum-web-components/styles/tokens/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/light-vars.css';
-@import '@spectrum-web-components/styles/tokens/dark-vars.css';
-@import '@spectrum-web-components/styles/tokens/medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/large-vars.css';
-```
-
-#### Express tokens
-
-```css
-@import '@spectrum-web-components/styles/tokens/express/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/light-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/dark-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/express/large-vars.css';
-```
-
-#### Spectrum 2 tokens
-
-```css
-@import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
-@import '@spectrum-web-components/styles/tokens-v2/light-vars.css';
-@import '@spectrum-web-components/styles/tokens-v2/dark-vars.css';
-@import '@spectrum-web-components/styles/tokens-v2/medium-vars.css';
-@import '@spectrum-web-components/styles/tokens-v2/large-vars.css';
-```
 
 ### Migrating to Spectrum 2
 
