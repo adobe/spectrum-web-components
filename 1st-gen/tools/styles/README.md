@@ -95,7 +95,9 @@ Express also uses a base + override pattern (same as Spectrum above, but with `e
 
 Which tokens files you import will depend on which tokens you want to use.
 
-##### Spectrum 2 tokens (tokens-v2)
+<sp-tabs selected="spectrum-2-tokens" auto label="Tokens usage examples">
+<sp-tab value="spectrum-2-tokens">Spectrum 2 tokens (tokens-v2)</sp-tab>
+<sp-tab-panel value="spectrum-2-tokens">
 
 Generally speaking, `light-vars` and `dark-vars` files contain raw color custom property definitions (such as `--spectrum-red-500`), as well as semantic custom property definitions that change depending on which color option you use. For instance, in Spectrum 2 tokens, `--spectrum-neutral-subdued-background-color-default` uses different values per theme. It resolves to `--spectrum-gray-700` for light and `--spectrum-gray-500` for dark.
 
@@ -132,9 +134,11 @@ Here's one example of tokens usage in a non-web-component context, showing how c
 }
 ```
 
-##### Tokens (base + system overrides pattern)
+</sp-tab-panel>
+<sp-tab value="base-system-overrides-tokens">Tokens (base + system overrides pattern)</sp-tab>
+<sp-tab-panel value="base-system-overrides-tokens">
 
-These tokens are generally similar to the V2 tokens, but use a base layer plus system-specific overrides that must both be imported.
+These tokens are generally similar to the Spectrum 2 tokens, but use a base layer plus system-specific overrides that must both be imported.
 
 ```css
 /* import base tokens files */
@@ -171,6 +175,9 @@ These tokens are generally similar to the V2 tokens, but use a base layer plus s
 }
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 ### Typography
 
 The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path=/docs/components-typography--docs) provides a complete set of text styles. The typography system is shared across all design systems (Spectrum, Express, and Spectrum 2).
@@ -187,6 +194,10 @@ The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path
 
 #### CSS imports
 
+<sp-tabs selected="import-all-typography-css" auto label="Import options">
+<sp-tab value="import-all-typography-css">Import everything</sp-tab>
+<sp-tab-panel value="import-all-typography-css">
+
 For stylesheet use, import the complete typography system, with tokens:
 
 ```css
@@ -196,30 +207,25 @@ For stylesheet use, import the complete typography system, with tokens:
 @import '@spectrum-web-components/styles/typography.css';
 ```
 
-#### TypeScript/JavaScript exports for Lit components
+</sp-tab-panel>
+<sp-tab value="import-selectively-css">Import only what you need</sp-tab>
+<sp-tab-panel value="import-selectively-css">
 
-For use in Lit-based components, you can import typography styles as JavaScript modules. Import the complete system or individual components depending on your needs:
+You can also import only the typography elements that you need:
 
-##### Import everything
-
-```js
-// tokens also need to be imported to define CSS custom properties
-import typographyStyles from '@spectrum-web-components/styles/typography.js';
-
-static styles = [typographyStyles];
+```css
+/* tokens also need to be imported to define CSS custom properties */
+@import '@spectrum-web-components/styles/src/spectrum-heading.css';
 ```
 
-##### Import only what you need
+</sp-tab-panel>
+</sp-tabs>
 
-For smaller bundle sizes, import individual components:
+#### TypeScript/JavaScript imports for Lit components
 
-```js
-import headingStyles from '@spectrum-web-components/styles/heading.js';
+For use in Lit-based components, you can import typography styles as JavaScript modules.
 
-static styles = [headingStyles];
-```
-
-##### Available JavaScript exports
+Available JavaScript exports include:
 
 - **`typography.js`** - Complete typography system with all styles (heading, body, detail, code)
 - **`body.js`** - Body text styles only (includes base + lang + body)
@@ -228,6 +234,37 @@ static styles = [headingStyles];
 - **`code.js`** - Code styles only (includes base + lang + code)
 
 Each individual export (`body.js`, `heading.js`, etc.) includes the necessary base and language support styles, so you don't need to import them separately. Import `typography.js` for the complete system, or import individual exports to reduce bundle size.
+
+Import the complete system or individual components depending on your needs:
+
+<sp-tabs selected="import-all-typography-js" auto label="Import options">
+<sp-tab value="import-all-typography-js">Import everything</sp-tab>
+<sp-tab-panel value="import-all-typography-js">
+
+To import the full typography system:
+
+```js
+// tokens also need to be imported to define CSS custom properties
+import typographyStyles from '@spectrum-web-components/styles/typography.js';
+
+static styles = [typographyStyles];
+```
+
+</sp-tab-panel>
+<sp-tab value="import-selectively-js">Import only what you need</sp-tab>
+<sp-tab-panel value="import-selectively-js">
+
+For smaller bundle sizes, import individual components:
+
+```js
+// tokens also need to be imported to define CSS custom properties
+import headingStyles from '@spectrum-web-components/styles/heading.js';
+
+static styles = [headingStyles];
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Spectrum Vars tokens (deprecated)
 
