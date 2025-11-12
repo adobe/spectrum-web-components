@@ -299,7 +299,7 @@ jobs:
                   name: Build documentation with path prefix
                   env:
                       SWC_DIR: beta/docs
-                  run: |
+                  command: |
                       yarn workspace @spectrum-web-components/1st-gen docs:build
             - run:
                   name: Build Storybook
@@ -478,16 +478,12 @@ workflows:
             - test-firefox
             - test-webkit
             - test-chromium-coverage
+            - beta-docs
             - hcm-visual:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - beta-docs:
-                  filters:
-                      branches:
-                          # Beta docs are only published from main
-                          only: main
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
