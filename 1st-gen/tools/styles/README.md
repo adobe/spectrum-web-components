@@ -95,9 +95,9 @@ Express also uses a base + override pattern (same as Spectrum above, but with `e
 
 Which tokens files you import will depend on which tokens you want to use.
 
-##### V2 tokens
+##### Spectrum 2 tokens (tokens-v2)
 
-Generally speaking, `light-vars` and `dark-vars` files contain raw color custom property definitions (such as `--spectrum-red-500`), as well as semantic custom property definitions that change depending on which color option you use. For instance, in the v2-tokens, `--spectrum-neutral-subdued-background-color-default` uses different values per theme. It resolves to `--spectrum-gray-700` for light and `--spectrum-gray-500` for dark.
+Generally speaking, `light-vars` and `dark-vars` files contain raw color custom property definitions (such as `--spectrum-red-500`), as well as semantic custom property definitions that change depending on which color option you use. For instance, in Spectrum 2 tokens, `--spectrum-neutral-subdued-background-color-default` uses different values per theme. It resolves to `--spectrum-gray-700` for light and `--spectrum-gray-500` for dark.
 
 For color, `global-vars` files contain semantic custom property definitions that stay consistent regardless of color option. For instance, `--spectrum-neutral-background-color-default` is always `--spectrum-gray-800`, but `--spectrum-gray-800` is defined differently depending on whether dark or light custom properties have been imported. Component-specific custom properties are split across these files. Some are in `global-vars` (e.g., `--spectrum-swatch-border-color`), while others are in `light-vars`/`dark-vars` (e.g., `--spectrum-assetcard-border-color-selected`).
 
@@ -139,6 +139,7 @@ These tokens are generally similar to the V2 tokens, but use a base layer plus s
 ```css
 /* import base tokens files */
 @import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/medium-vars.css';
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 
 /* import express-specific tokens files (replace express/ with spectrum/ for Spectrum system) */
@@ -149,8 +150,10 @@ These tokens are generally similar to the V2 tokens, but use a base layer plus s
     /* defined in express medium-vars.css */
     border-radius: var(--spectrum-corner-radius-100);
 
-    /* defined in base global-vars.css */
+    /* defined in express global-vars.css */
     border-width: var(--spectrum-border-width-100);
+
+    /* defined in base global-vars.css */
     color: var(
         --spectrum-neutral-subdued-content-color-default
     ); /* uses --spectrum-gray-700, which is defined differently depending whether light or dark vars are loaded */
@@ -234,7 +237,7 @@ This package includes some deprecated files that use the older Spectrum Vars tok
 
 - Use `<sp-theme>` for automatic theme management (recommended)
 - Import Spectrum Core tokens directly for granular control (see "Design tokens" section above)
-- See the [Spectrum Core tokens migration guide](../theme/core-tokens.md) for help migrating from Spectrum Vars to Spectrum Core tokens
+- See the [Spectrum Core tokens migration guide](../core-tokens) for help migrating from Spectrum Vars to Spectrum Core tokens
 
 ### Migrating to Spectrum 2
 
