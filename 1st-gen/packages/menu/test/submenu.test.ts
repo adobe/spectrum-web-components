@@ -291,6 +291,37 @@ describe('Submenu', () => {
 
             expect(this.rootItem.open).to.be.false;
         });
+        it('handles mouse pointerdown on open submenu followed by focus', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Open the submenu with mouse hover
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            await mouseMoveOver(this.rootItem);
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Dispatch pointerdown on the already-open submenu (non-touch)
+            // This sets up the focus listener and beforetoggle listener
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+
+            // Dispatch focus event to trigger handleSubmenuFocus
+            this.rootItem.dispatchEvent(
+                new FocusEvent('focus', {
+                    bubbles: true,
+                })
+            );
+
+            await elementUpdated(this.rootItem);
+
+            // Submenu should remain open after focus handling
+            expect(this.rootItem.open).to.be.true;
+        });
     }
     function persistsThroughMouseLeaveAndReturn(): void {
         it('stays open when mousing off menu item and back again', async function () {
@@ -928,6 +959,17 @@ describe('Submenu', () => {
             await aTimeout(150);
 
             expect(this.rootItem.open).to.be.false;
+
+            // Also test that touch pointerleave doesn't affect closed state
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerleave', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            await elementUpdated(this.rootItem);
+            expect(this.rootItem.open).to.be.false;
         });
 
         it('opens submenu on touch tap when closed', async function () {
@@ -950,6 +992,18 @@ describe('Submenu', () => {
             );
             await opened;
 
+            expect(this.rootItem.open).to.be.true;
+
+            // Dispatch click event (browsers do this after touch)
+            // This should be prevented/stopped by handleSubmenuClick
+            this.rootItem.dispatchEvent(
+                new MouseEvent('click', {
+                    bubbles: true,
+                })
+            );
+
+            // Verify submenu remains open (click was handled properly)
+            await elementUpdated(this.rootItem);
             expect(this.rootItem.open).to.be.true;
         });
 
