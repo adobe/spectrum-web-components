@@ -485,11 +485,11 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - beta-docs:
-                  filters:
-                      branches:
-                          # Beta docs are only published from main
-                          only: main
+            - beta-docs
+              #   filters:
+              #       branches:
+              #           # Beta docs are only published from main
+              #           only: main
             - visual:
                   name: << matrix.system >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
