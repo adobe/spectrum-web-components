@@ -112,5 +112,45 @@ describe('Clear Button', () => {
             expect(consoleStub).to.be.calledOnce;
             expect(warning.includes(expectedContent)).to.be.true;
         });
+
+        it('should log deprecation warning when slot content is provided', async () => {
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button label="Clear">Clear</sp-clear-button>
+            `);
+
+            await elementUpdated(el);
+
+            const warning = consoleStub.getCall(0).args.at(0);
+            const expectedContent =
+                'The default slot for text content in <sp-clear-button> has been deprecated';
+
+            expect(consoleStub).to.be.calledOnce;
+            expect(warning.includes(expectedContent)).to.be.true;
+        });
+
+        it('should log warning when label attribute is missing', async () => {
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button></sp-clear-button>
+            `);
+
+            await elementUpdated(el);
+
+            const warning = consoleStub.getCall(0).args.at(0);
+            const expectedContent =
+                'The "label" attribute is required on <sp-clear-button>';
+
+            expect(consoleStub).to.be.calledOnce;
+            expect(warning.includes(expectedContent)).to.be.true;
+        });
+
+        it('should not log warning when label attribute is provided without slot content', async () => {
+            const el = await fixture<ClearButton>(html`
+                <sp-clear-button label="Clear"></sp-clear-button>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleStub).to.not.be.called;
+        });
     });
 });
