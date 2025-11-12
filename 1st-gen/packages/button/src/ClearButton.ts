@@ -64,6 +64,14 @@ export class ClearButton extends SizedMixin(StyledButton, {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }
 
+    /**
+     * An accessible label that describes the component.
+     * It will be applied to aria-label, but not visually rendered.
+     * This attribute is required for clear buttons.
+     */
+    @property()
+    public override label!: string;
+
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
@@ -120,5 +128,29 @@ export class ClearButton extends SizedMixin(StyledButton, {
         return html`
             <div class="fill">${super.render()}</div>
         `;
+    }
+
+    public override connectedCallback(): void {
+        super.connectedCallback();
+
+        // Deprecation warning for default slot when content is provided
+        if (window.__swc.DEBUG && this.textContent?.trim()) {
+            window.__swc.warn(
+                this,
+                `The default slot for text content in <${this.localName}> has been deprecated and will be removed in a future release. The clear button is icon-only and does not render slot content. Use the "label" attribute instead to provide an accessible name.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/button/#clear-button',
+                { level: 'deprecation' }
+            );
+        }
+
+        // Warning for missing label attribute
+        if (window.__swc.DEBUG && !this.label) {
+            window.__swc.warn(
+                this,
+                `The "label" attribute is required on <${this.localName}> to provide an accessible name for screen readers. Please add a label attribute, e.g., <${this.localName} label="Clear">.`,
+                'https://opensource.adobe.com/spectrum-web-components/components/button/#clear-button',
+                { level: 'high' }
+            );
+        }
     }
 }
