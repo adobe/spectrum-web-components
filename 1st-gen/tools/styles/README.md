@@ -184,6 +184,7 @@ The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path
 
 #### What's included
 
+- **Typography wrapper** (`.spectrum-Typography`) - Wrap your content with this class to apply proper spacing, margins, and base font settings to typography elements
 - **Heading** styles (`.spectrum-Heading`) - Multiple sizes from XXS to XXXL with weight variants (light, regular, heavy) and serif options
 - **Body** styles (`.spectrum-Body`) - Multiple sizes from XS to XXXL with serif options for body copy and longer text
 - **Detail** styles (`.spectrum-Detail`) - Uppercase labels and metadata text in sizes S through XL with light weight option
@@ -194,11 +195,7 @@ The [Spectrum Typography system](https://opensource.adobe.com/spectrum-css/?path
 
 #### CSS imports
 
-<sp-tabs selected="import-all-typography-css" auto label="Import options">
-<sp-tab value="import-all-typography-css">Import everything</sp-tab>
-<sp-tab-panel value="import-all-typography-css">
-
-For stylesheet use, import the complete typography system, with tokens:
+For stylesheet use, the recommended approach is to import the complete typography system, with tokens. This ensures that all required files are included.
 
 ```css
 @import '@spectrum-web-components/styles/tokens-v2/dark-vars.css'; /* import color tokens */
@@ -206,20 +203,6 @@ For stylesheet use, import the complete typography system, with tokens:
 @import '@spectrum-web-components/styles/tokens-v2/global-vars.css'; /* import global tokens */
 @import '@spectrum-web-components/styles/typography.css';
 ```
-
-</sp-tab-panel>
-<sp-tab value="import-selectively-css">Import only what you need</sp-tab>
-<sp-tab-panel value="import-selectively-css">
-
-You can also import only the typography elements that you need:
-
-```css
-/* tokens also need to be imported to define CSS custom properties */
-@import '@spectrum-web-components/styles/src/spectrum-heading.css';
-```
-
-</sp-tab-panel>
-</sp-tabs>
 
 #### TypeScript/JavaScript imports for Lit components
 
