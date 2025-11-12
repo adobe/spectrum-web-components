@@ -297,10 +297,10 @@ jobs:
                   command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
             - run:
                   name: Build documentation with path prefix
-                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
-            - run:
-                  name: Build documentation
-                  command: yarn workspace @spectrum-web-components/1st-gen docs:build
+                  env:
+                      SWC_DIR: beta/docs
+                  run: |
+                      yarn workspace @spectrum-web-components/1st-gen docs:build
             - run:
                   name: Build Storybook
                   command: yarn workspace @spectrum-web-components/1st-gen storybook:build
