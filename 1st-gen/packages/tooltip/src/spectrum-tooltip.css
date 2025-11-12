@@ -92,7 +92,6 @@
     font-weight: var(--mod-tooltip-font-weight, var(--spectrum-tooltip-font-weight));
     line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
     overflow-wrap: break-word;
-    hyphens: auto;
     -webkit-font-smoothing: antialiased;
     cursor: default;
     -webkit-user-select: none;
@@ -322,6 +321,9 @@
     line-height: var(--mod-tooltip-line-height, var(--spectrum-tooltip-line-height));
     margin-block-start: var(--mod-tooltip-spacing-block-start, var(--spectrum-tooltip-spacing-block-start));
     margin-block-end: var(--mod-tooltip-spacing-block-end, var(--spectrum-tooltip-spacing-block-end));
+
+    /* Allow overflow-wrap to work and prevent text overflow */
+    inline-size: 100%;
 }
 
 #tooltip,
