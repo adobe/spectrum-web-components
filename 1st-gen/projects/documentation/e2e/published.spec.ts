@@ -33,7 +33,7 @@ test.describe('search and go', () => {
             : `/${formattedSearchString}`;
 
         // add the SWC_DIR to the href
-        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs/` : ''}${href}`;
+        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs` : ''}${href}`;
 
         const menuItem = page.locator(menuItemSelector(href));
 
@@ -64,8 +64,14 @@ test.describe('search and go', () => {
         const searchField = await page.getByRole('searchbox', {
             name: 'Search',
         });
-
+        await searchField.waitFor();
+        await expect(searchField, 'Search field should be visible').toBeVisible(
+            { timeout: 10000 }
+        );
         await searchField.focus();
+        await expect(searchField, 'Search field should be focused').toBeFocused(
+            { timeout: 10000 }
+        );
         await page.waitForTimeout(500); // Ensure focus is set
     });
 
