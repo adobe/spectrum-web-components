@@ -29,8 +29,8 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 Field labels can be associated with form elements by using the `for` attribute, which should reference the `id` of the related input element.
 
 ```html demo
-<sp-field-label for="email">Email address</sp-field-label>
-<sp-textfield id="email" placeholder="user@adobe.com"></sp-textfield>
+<sp-field-label for="product-name">Product name</sp-field-label>
+<sp-textfield id="product-name" placeholder="Enter product name"></sp-textfield>
 ```
 
 Field labels can also be used to label a group of related inputs:
