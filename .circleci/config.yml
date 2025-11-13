@@ -22,7 +22,7 @@ parameters:
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: 89cb380330cef18d34c0d4cf893790d9c7167b08
+        default: b88c1b90e553e4f212ad60a5d96abc4dc9ed6be0
     wireit_cache_name:
         type: string
         default: wireit
@@ -297,7 +297,9 @@ jobs:
                   command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
             - run:
                   name: Build documentation with path prefix
-                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
+                  command: |
+                      echo "export SWC_DIR=beta/docs" >> $BASH_ENV
+                      source $BASH_ENV
             - run:
                   name: Build documentation
                   command: yarn workspace @spectrum-web-components/1st-gen docs:build

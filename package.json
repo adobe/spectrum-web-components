@@ -1,5 +1,4 @@
 {
-    "name": "@adobe/spectrum-web-components-monorepo",
     "version": "0.0.9",
     "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
@@ -15,24 +14,26 @@
     },
     "type": "module",
     "scripts": {
-        "build": "yarn build:1st-gen && yarn build:2nd-gen",
+        "build": "run-s build:2nd-gen build:1st-gen",
         "build:1st-gen": "yarn workspace @spectrum-web-components/1st-gen build",
         "build:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen build",
-        "lint": "yarn lint:1st-gen && yarn lint:2nd-gen",
+        "lint": "run-s lint:2nd-gen lint:1st-gen",
         "lint:1st-gen": "yarn workspace @spectrum-web-components/1st-gen lint",
         "lint:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen lint",
-        "postinstall": "husky || true && patch-package",
-        "start": "yarn start:1st-gen & yarn start:2nd-gen",
+        "postinstall": "husky || true",
+        "publish": "node ./scripts/publish.js",
+        "publish:snapshot": "node ./scripts/publish.js --tag snapshot",
+        "start": "run-p start:2nd-gen start:1st-gen",
         "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
         "start:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
-        "test": "yarn test:1st-gen & yarn test:2nd-gen",
+        "test": "run-p test:2nd-gen test:1st-gen",
+        "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
+        "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
+        "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
+        "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
         "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
-        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test",
-        "test:a11y": "yarn workspace @spectrum-web-components/1st-gen test:a11y",
-        "test:a11y:1st": "yarn workspace @spectrum-web-components/1st-gen test:a11y:1st",
-        "test:a11y:2nd": "yarn workspace @spectrum-web-components/1st-gen test:a11y:2nd",
-        "test:a11y:report": "yarn workspace @spectrum-web-components/1st-gen test:a11y:report",
-        "test:a11y:ui": "yarn workspace @spectrum-web-components/1st-gen test:a11y:ui"
+        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
     },
     "workspaces": [
         "1st-gen",
@@ -46,17 +47,17 @@
         "playwright": "1.53.1"
     },
     "devDependencies": {
+        "@axe-core/playwright": "4.11.0",
         "@changesets/cli": "2.29.7",
         "@commitlint/cli": "19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
-        "eslint": "8.57.1",
+        "@commitlint/config-conventional": "19.8.1",
+        "@playwright/test": "1.53.1",
         "genversion": "3.2.0",
         "husky": "9.1.7",
-        "lint-staged": "^16.1.2",
-        "patch-package": "^8.0.0",
-        "prettier": "3.6.2",
-        "replace-in-file": "^8.3.0",
-        "stylelint": "16.24.0"
+        "lint-staged": "16.2.6",
+        "npm-run-all2": "8.0.4",
+        "replace-in-file": "8.3.0",
+        "yargs": "17.7.2"
     },
     "keywords": [
         "design-system",
@@ -69,7 +70,7 @@
         "lit-html"
     ],
     "engines": {
-        "node": ">=20.10.0",
+        "node": ">=20.19.0",
         "yarn": ">=4.6.0"
     },
     "packageManager": "yarn@4.9.2"

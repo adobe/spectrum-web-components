@@ -102,7 +102,7 @@ Create `<component>.a11y.spec.ts` in your component's `test/` directory:
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../../2nd-gen/test/a11y-helpers.js';
+import { gotoStory } from '../../../test/a11y-helpers.js';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -128,7 +128,7 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'badge--default'` (check Storybook URL at `localhost:8080`)
 - Element name: `'sp-badge'` (the custom element tag name)
-- Helper import: `'../../../../2nd-gen/test/a11y-helpers.js'` (shared helpers in 2nd-gen)
+- Helper import: `'../../../test/a11y-helpers.js'` (1st-gen test helpers)
 
 ### 2nd generation components
 
@@ -139,7 +139,7 @@ Same pattern, different details:
 
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { gotoStory } from '../../../../../test/a11y-helpers.js';
+import { gotoStory } from '../../../utils/a11y-helpers.js';
 
 test.describe('Badge - ARIA Snapshots', () => {
     test('should have correct accessibility tree', async ({ page }) => {
@@ -169,12 +169,14 @@ test.describe('Badge - aXe Validation', () => {
 
 - Story ID: `'components-badge--default'` (check Storybook URL at `localhost:6006`)
 - Element name: `'swc-badge'` (instead of `sp-badge`)
-- Helper import: `'../../../../../test/a11y-helpers.js'` (relative to 2nd-gen root)
+- Helper import: `'../../../utils/a11y-helpers.js'` (from swc utils directory)
 - Storybook port: 6006 (vs 8080 for 1st gen) - automatically handled by Playwright
 
 ## Test helper reference
 
-Shared helpers live in `2nd-gen/test/a11y-helpers.ts` and work for both generations.
+Test helpers are available in each generation:
+- 1st gen: `1st-gen/test/a11y-helpers.ts`
+- 2nd gen: `2nd-gen/packages/swc/utils/a11y-helpers.ts`
 
 ### `gotoStory(page, storyId, elementSelector)`
 
@@ -382,7 +384,7 @@ Received: [
 
 ### Playwright config
 
-`2nd-gen/playwright.a11y.config.ts` defines two projects:
+`playwright.a11y.config.ts` (at the root) defines two projects:
 
 ```typescript
 projects: [
@@ -424,11 +426,14 @@ webServer: [
 
 ```
 spectrum-web-components/
+├── playwright.a11y.config.ts              # Playwright config (both gens)
 ├── CONTRIBUTOR-DOCS/
 │   └── 01_contributor-guides/
 │       └── 09_accessibility-testing.md    # This guide
 ├── 1st-gen/
-│   ├── package.json                       # Test scripts (points to 2nd-gen config)
+│   ├── package.json                       # Test scripts (points to root config)
+│   ├── test/
+│   │   └── a11y-helpers.ts                # 1st gen test helpers
 │   └── packages/
 │       ├── badge/test/
 │       │   ├── badge.a11y.spec.ts         # Tests
@@ -437,17 +442,17 @@ spectrum-web-components/
 │           ├── status-light.a11y.spec.ts
 │           └── status-light.a11y.spec.ts-snapshots/
 └── 2nd-gen/
-    ├── playwright.a11y.config.ts          # Playwright config (both gens)
-    ├── package.json                       # Test scripts
-    ├── test/
-    │   └── a11y-helpers.ts                # Shared helpers (both gens)
-    └── packages/swc/components/
-        ├── badge/test/
-        │   ├── badge.a11y.spec.ts
-        │   └── badge.a11y.spec.ts-snapshots/
-        └── status-light/test/
-            ├── status-light.a11y.spec.ts
-            └── status-light.a11y.spec.ts-snapshots/
+    ├── package.json                       # Test scripts (points to root config)
+    └── packages/swc/
+        ├── utils/
+        │   └── a11y-helpers.ts            # 2nd gen test helpers
+        └── components/
+            ├── badge/test/
+            │   ├── badge.a11y.spec.ts
+            │   └── badge.a11y.spec.ts-snapshots/
+            └── status-light/test/
+                ├── status-light.a11y.spec.ts
+                └── status-light.a11y.spec.ts-snapshots/
 ```
 
 ## Resources
