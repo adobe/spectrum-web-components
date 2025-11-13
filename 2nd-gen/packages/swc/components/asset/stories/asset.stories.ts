@@ -30,6 +30,11 @@ argTypes.variant = {
     options: [undefined, ...Asset.VARIANTS],
 };
 
+/**
+ * Use an asset element to visually represent a file, folder, or image.
+ * File and folder representations center themselves within the available space.
+ * Images are contained to the element’s size and centered.
+ */
 const meta: Meta = {
     title: 'Asset',
     component: 'swc-asset',

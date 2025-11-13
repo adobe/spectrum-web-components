@@ -45,7 +45,7 @@ export abstract class AssetBase extends SpectrumElement {
     public variant: AssetVariant | undefined;
 
     /**
-     * Accessible label for the asset’s SVG variant.
+     * Accessible label for the asset’s file or folder variant.
      */
     @property()
     public label = '';

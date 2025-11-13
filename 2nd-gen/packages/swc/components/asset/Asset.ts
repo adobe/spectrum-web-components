@@ -54,12 +54,8 @@ const folder = (label: string): TemplateResult => html`
 `;
 
 /**
- * Use an asset element to visually represent a file, folder, or image.
- * File and folder representations center themselves within the available space.
- * Images are contained to the element’s size and centered.
- *
  * @element swc-asset
- * @slot - content to be displayed when no `variant` is set (typically an <img>)
+ * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
  *
  * @example
  * <swc-asset style="block-size: 128px">
