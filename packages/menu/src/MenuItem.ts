@@ -195,8 +195,6 @@ export class MenuItem extends LikeAnchor(
 
     private _value = '';
 
-    private _lastPointerType?: string;
-
     /**
      * @private
      * text content of the menu item minus whitespace
@@ -459,15 +457,25 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
+    private handlePointerdown(event: PointerEvent): void {
+        if (event.target === this && this.hasSubmenu && this.open) {
+            this.addEventListener('focus', this.handleSubmenuFocus, {
+                once: true,
+            });
+            this.overlayElement.addEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
+        }
+    }
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('mouseover', this.handleMouseover);
-        // Register pointerenter/leave for ALL menu items (not just those with submenus)
-        // so items without submenus can close sibling submenus when hovered
-        this.addEventListener('pointerenter', this.handlePointerenter);
-        this.addEventListener('pointerleave', this.handlePointerleave);
+        this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${randomID()}`;
         }
@@ -586,6 +594,11 @@ export class MenuItem extends LikeAnchor(
         }
     };
 
+    protected closeOverlaysForRoot(): void {
+        if (this.open) return;
+        this.menuData.parentMenu?.closeDescendentOverlays();
+    }
+
     protected handleFocus(event: FocusEvent): void {
         const { target } = event;
         if (target === this) {
@@ -600,64 +613,48 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    protected handleSubmenuTriggerClick(event: Event): void {
+    protected handleSubmenuClick(event: Event): void {
         if (event.composedPath().includes(this.overlayElement)) {
             return;
         }
-
-        // If submenu is already open, toggle it closed
-        if (this.open && this._lastPointerType === 'touch') {
-            event.preventDefault();
-            event.stopPropagation(); // Don't let parent menu handle this
-            this.open = false;
-            return;
-        }
-
-        // All: open if closed
-        if (!this.open) {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            this.openOverlay(true);
-        }
+        this.openOverlay(true);
     }
 
-    protected handlePointerenter(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType; // Track pointer type
+    protected handleSubmenuFocus(): void {
+        requestAnimationFrame(() => {
+            // Wait till after `closeDescendentOverlays` has happened in Menu
+            // to reopen (keep open) the direct descendent of this Menu Item
+            this.overlayElement.open = this.open;
+            this.focused = false;
+        });
+    }
 
-        // For touch: don't handle pointerenter, let click handle it
-        if (event.pointerType === 'touch') {
-            return;
+    protected handleBeforetoggle = (event: Event): void => {
+        if ((event as Event & { newState: string }).newState === 'closed') {
+            this.open = true;
+            this.overlayElement.manuallyKeepOpen();
+            this.overlayElement.removeEventListener(
+                'beforetoggle',
+                this.handleBeforetoggle
+            );
         }
+    };
 
-        // Close sibling submenus before opening this one
-        this.menuData.parentMenu?.closeDescendentOverlays();
-
+    protected handlePointerenter(): void {
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
             delete this.leaveTimeout;
             this.recentlyLeftChild = false;
             return;
         }
-
-        // Only focus items with submenus on hover (to show they're interactive)
-        // Regular items should not show focus styling on hover, only on keyboard navigation
-        if (this.hasSubmenu) {
-            this.focus();
-        }
+        this.focus();
         this.openOverlay();
     }
 
     protected leaveTimeout?: ReturnType<typeof setTimeout>;
     protected recentlyLeftChild = false;
 
-    protected handlePointerleave(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType; // Update on leave too
-
-        // For touch: don't handle pointerleave, let click handle it
-        if (event.pointerType === 'touch') {
-            return;
-        }
-
+    protected handlePointerleave(): void {
         this._closedViaPointer = true;
         if (this.open && !this.recentlyLeftChild) {
             this.leaveTimeout = setTimeout(() => {
@@ -785,7 +782,17 @@ export class MenuItem extends LikeAnchor(
                 const options = { signal: this.abortControllerSubmenu.signal };
                 this.addEventListener(
                     'click',
-                    this.handleSubmenuTriggerClick,
+                    this.handleSubmenuClick,
+                    options
+                );
+                this.addEventListener(
+                    'pointerenter',
+                    this.handlePointerenter,
+                    options
+                );
+                this.addEventListener(
+                    'pointerleave',
+                    this.handlePointerleave,
                     options
                 );
                 this.addEventListener(
