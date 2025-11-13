@@ -74,7 +74,7 @@ export class SlottableRequestDirective extends AsyncDirective {
             { signal }
         );
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG && window.__swc?.warn) {
             window.__swc.warn(
                 undefined,
                 `⚠️  WARNING ⚠️ : The Overlay Trigger Directive is experimental and there is no guarantees behind its usage in an application!! Its API and presence within the library could be changed at anytime. See "sp-overlay" or "Overlay.open()" for a stable API for overlaying content on your application.`,
