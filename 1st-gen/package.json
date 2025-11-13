@@ -210,7 +210,6 @@
     "wireit": {
         "build": {
             "dependencies": [
-                "prebuild",
                 "build:ts",
                 "build:types"
             ]
@@ -237,6 +236,7 @@
             "clean": "if-file-deleted",
             "command": "node ./scripts/build-ts.js",
             "dependencies": [
+                "prebuild",
                 "process-icons",
                 "test:create",
                 "build:css"
@@ -292,6 +292,7 @@
             "clean": "if-file-deleted",
             "command": "tsc --build tsconfig-all.json --pretty",
             "dependencies": [
+                "prebuild",
                 "process-icons",
                 "test:create",
                 "build:css"
@@ -374,7 +375,8 @@
                 "../2nd-gen/packages/core/package.json",
                 "../2nd-gen/packages/core/vite.config.js",
                 "../2nd-gen/packages/core/tsconfig.json"
-            ]
+            ],
+            "output": []
         },
         "prestorybook": {
             "command": "cem analyze --outdir storybook/",
