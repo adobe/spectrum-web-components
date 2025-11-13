@@ -20,16 +20,16 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
             - name: Move CEM to Storybook directory
               run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
             - name: Build documentation
-              run: yarn docs:production
+              run: yarn workspace @spectrum-web-components/1st-gen docs:production
 
             - name: Build Storybook
-              run: yarn storybook:build
+              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
             - name: Add redirects to documentation
               run: echo '/*    /index.html   200' > 1st-gen/projects/documentation/dist/_redirects
