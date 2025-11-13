@@ -374,6 +374,9 @@
                 "../2nd-gen/packages/core/package.json",
                 "../2nd-gen/packages/core/vite.config.js",
                 "../2nd-gen/packages/core/tsconfig.json"
+            ],
+            "output": [
+                "../2nd-gen/packages/core/dist/**/*"
             ]
         },
         "prestorybook": {
