@@ -31,5 +31,8 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
-    "cSpell.words": ["activedescendant", "coachmark", "valuetext"]
+    "cSpell.words": ["activedescendant", "coachmark", "valuetext"],
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
 }
