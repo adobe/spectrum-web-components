@@ -624,6 +624,32 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
             });
 
+            it('Escape key closes a hover popover', async function () {
+                expect(await isOnTopLayer(this.hoverContent)).to.be.false;
+
+                const rect = this.outerTrigger.getBoundingClientRect();
+                const open = oneEvent(this.outerTrigger, 'sp-opened');
+                await sendMouse({
+                    type: 'move',
+                    position: [
+                        rect.left + rect.width / 2,
+                        rect.top + rect.height / 2,
+                    ],
+                });
+                await open;
+                const close = oneEvent(this.outerTrigger, 'sp-closed');
+                expect(
+                    await isOnTopLayer(this.hoverContent),
+                    'hover content is available at point'
+                ).to.be.true;
+                await sendKeys({ press: 'Escape' });
+                await close;
+                expect(
+                    await isOnTopLayer(this.hoverContent),
+                    'hover content is not available at point'
+                ).to.be.false;
+            });
+
             it('dispatches events on open/close', async function () {
                 const opened = oneEvent(this.outerButton, 'sp-opened');
                 this.outerButton.click();
