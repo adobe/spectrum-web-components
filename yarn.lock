@@ -6127,7 +6127,7 @@ __metadata:
     "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
     "@spectrum-web-components/shared": "npm:1.10.0"
     "@spectrum-web-components/theme": "npm:1.10.0"
-    focus-trap: "npm:7.6.5"
+    focus-trap: "npm:7.6.6"
   languageName: unknown
   linkType: soft
 
@@ -15882,12 +15882,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-trap@npm:7.6.5":
-  version: 7.6.5
-  resolution: "focus-trap@npm:7.6.5"
+"focus-trap@npm:7.6.6":
+  version: 7.6.6
+  resolution: "focus-trap@npm:7.6.6"
   dependencies:
-    tabbable: "npm:^6.2.0"
-  checksum: 10c0/36cac0d9b05fe5824733675bb49792842dae4704286ef7e17c736ee0c9c14701e874e6821449e78b70c17e42ba1b2c98ef10434bfe644b9d7654d8ef7f1c8faf
+    tabbable: "npm:^6.3.0"
+  checksum: 10c0/61ccb0c4d990a03dfbb0878ff3f79cadfb84e36f39bb138fbf4ae88edbfecd42d0f02152f928c338185324cf4cde307c8d4889b6bf19876e4bfc84ea29f40bee
   languageName: node
   linkType: hard
 
@@ -28869,7 +28869,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabbable@npm:^6.2.0":
+"tabbable@npm:^6.3.0":
   version: 6.3.0
   resolution: "tabbable@npm:6.3.0"
   checksum: 10c0/57ba019d29b5cfa0c862248883bcec0e6d29d8f156ba52a1f425e7cfeca4a0fc701ab8d035c4c86ddf74ecdbd0e9f454a88d9b55d924a51f444038e9cd14d7a0
