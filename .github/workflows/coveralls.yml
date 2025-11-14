@@ -1,32 +1,32 @@
 name: Coveralls Code Coverage
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
 
 jobs:
-  code-coverage-report:
-    name: Generate and upload coverage report
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
+    code-coverage-report:
+        name: Generate and upload coverage report
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-      - name: Install Playwright
-        run: cd 1st-gen && yarn playwright install --with-deps
+            - name: Install Playwright
+              run: cd 1st-gen && yarn playwright install --with-deps
 
-      - name: Run unit tests with coverage
-        run: cd 1st-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
-        continue-on-error: true
+            - name: Run unit tests with coverage
+              run: cd 1st-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
+              continue-on-error: true
 
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          allow-empty: true
+            - name: Upload coverage to Coveralls
+              uses: coverallsapp/github-action@v2
+              with:
+                  allow-empty: true

@@ -9,17 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { copy } from '@web/rollup-plugin-copy';
 import { createBasicConfig } from '@open-wc/building-rollup';
-import { injectManifest } from 'rollup-plugin-workbox';
-import { minify } from 'html-minifier-terser';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import { copy } from '@web/rollup-plugin-copy';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+import { minify } from 'html-minifier-terser';
 import path from 'path';
+import { injectManifest } from 'rollup-plugin-workbox';
 import Terser from 'terser';
 
 const stringReplaceHtml = (source) => {
@@ -237,7 +237,7 @@ export default async () => {
             entries: [
                 {
                     find: '@swc-packages-internal',
-                    replacement: '../../packages/',
+                    replacement: path.resolve('../../packages'),
                 },
                 {
                     find: /^@spectrum-web-components\/core\/(.*)$/,
