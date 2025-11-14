@@ -1,2 +1,2 @@
 const e=(e,t,r)=>(r.configurable=!0,r.enumerable=!0,Reflect.decorate&&"object"!=typeof t&&Object.defineProperty(e,t,r),r);function t(t,r){return(n,o,s)=>{const c=e=>e.renderRoot?.querySelector(t)??null;if(r){const{get:t,set:r}="object"==typeof o?n:s??(()=>{const e=Symbol();return{get(){return this[e]},set(t){this[e]=t}}})();return e(n,o,{get(){let e=t.call(this);return void 0===e&&(e=c(this),(null!==e||this.hasUpdated)&&r.call(this,e)),e}})}return e(n,o,{get(){return c(this)}})}}export{t as a,e};
-//# sourceMappingURL=swc.eeEBWCNN.js.map
+//# sourceMappingURL=swc.DhzQEO20.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"swc.B_r0cPOP.js","sources":["../../../../2nd-gen/packages/core/dist/shared/base/version.js"],"sourcesContent":["const o = \"1.10.0\";\nexport {\n  o as version\n};\n//# sourceMappingURL=version.js.map\n"],"names":["o"],"mappings":"AACa,MAAAA,EAAU"}

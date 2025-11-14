@@ -1,9 +1,0 @@
-"use strict";(self.webpackChunk_adobe_spectrum_web_components=self.webpackChunk_adobe_spectrum_web_components||[]).push([[6566],{"./packages/illustrated-message/stories/illustrated-message.stories.js":function(__unused_webpack_module,__webpack_exports__,__webpack_require__){__webpack_require__.r(__webpack_exports__),__webpack_require__.d(__webpack_exports__,{Default:function(){return Default},__namedExportsOrder:function(){return __namedExportsOrder}});var _spectrum_web_components_base__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__("./tools/base/src/index.dev.js"),_dropzone_test_test_svg_js__WEBPACK_IMPORTED_MODULE_2__=(__webpack_require__("./packages/illustrated-message/sp-illustrated-message.dev.js"),__webpack_require__("./packages/dropzone/test/test-svg.js"));__webpack_exports__.default={component:"sp-illustrated-message",title:"IllustratedMessage"};const Default=()=>_spectrum_web_components_base__WEBPACK_IMPORTED_MODULE_0__.qy`
-        <sp-illustrated-message
-            heading="Drag and Drop Your File"
-            description="Additional descriptive text"
-        >
-            ${_dropzone_test_test_svg_js__WEBPACK_IMPORTED_MODULE_2__.b}
-        </sp-illustrated-message>
-    `,__namedExportsOrder=["Default"];Default.parameters={...Default.parameters,docs:{...Default.parameters?.docs,source:{originalSource:'() => {\n  return html`\n        <sp-illustrated-message\n            heading="Drag and Drop Your File"\n            description="Additional descriptive text"\n        >\n            ${illustration}\n        </sp-illustrated-message>\n    `;\n}',...Default.parameters?.docs?.source}}}}}]);
-//# sourceMappingURL=illustrated-message-stories-illustrated-message-stories.0aa45f69.iframe.bundle.js.map

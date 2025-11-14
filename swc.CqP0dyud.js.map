@@ -1,1 +1,0 @@
-{"version":3,"file":"swc.JlveB6nj.js","sources":["../../../tools/base/src/define-element.js"],"sourcesContent":["\"use strict\";export function defineElement(e,n){window.__swc,customElements.define(e,n)}\n//# sourceMappingURL=define-element.js.map\n"],"names":["defineElement","e","n","customElements","define"],"mappings":"AAgBO,SAASA,EACZC,EACAC,GAWAC,eAAeC,OAAOH,EAAMC,EAChC"}
