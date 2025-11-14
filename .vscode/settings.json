@@ -32,7 +32,15 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
     "cSpell.words": ["activedescendant", "coachmark", "valuetext"],
+    "editor.detectIndentation": false,
     "[yaml]": {
-        "editor.defaultFormatter": "redhat.vscode-yaml"
-    }
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+    "yaml.format.enable": true,
+    "yaml.format.singleQuote": false,
+    "yaml.format.bracketSpacing": true,
+    "yaml.format.printWidth": 80
 }
