@@ -37,6 +37,6 @@ jobs:
             - name: Deploy to GitHub Pages
               run: |
                   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-                  yarn gh-pages -d 1st-gen/projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
+                  cd 1st-gen && npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
