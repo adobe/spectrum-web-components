@@ -286,6 +286,8 @@ export class PlacementController implements ReactiveController {
             (el) => el.getAttribute?.('slot') === 'submenu'
         );
 
+        // Safari-specific timing fix covered by cross-browser integration tests
+        /* c8 ignore start */
         if (isWebKit() && !isSubmenu) {
             const hasMenu = Array.from(this.host.elements).some(
                 (el) =>
@@ -297,6 +299,7 @@ export class PlacementController implements ReactiveController {
                 await new Promise((resolve) => requestAnimationFrame(resolve));
             }
         }
+        /* c8 ignore stop */
 
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
