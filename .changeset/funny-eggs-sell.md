@@ -1,6 +1,6 @@
 ---
-'@spectrum-web-components/overlay': minor
-'@spectrum-web-components/core': minor
+'@spectrum-web-components/overlay': patch
+'@spectrum-web-components/core': patch
 ---
 
 hover overlays should close with the Esc key when trigger is not focus
