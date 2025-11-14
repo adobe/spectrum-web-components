@@ -1,28 +1,28 @@
 name: Update PRs
 
 on:
-  pull_request:
-    types: [labeled, auto_merge_enabled]
+    pull_request:
+        types: [labeled, auto_merge_enabled]
 
 jobs:
-  autoupdate:
-    name: Auto-update PRs
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
+    autoupdate:
+        name: Auto-update PRs
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: write
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-        # README: https://github.com/castastrophe/actions-pr-auto-update#auto-update-pull-requests
-      - uses: castastrophe/actions-pr-auto-update@v1.1.0
-        with:
-          token: ${{ secrets.USER_TOKEN }}
-          include_drafts: false
-          limit: 50
-          exclude_labels: blocked,wip
-          include_labels: auto-update,ready-for-merge
+              # README: https://github.com/castastrophe/actions-pr-auto-update#auto-update-pull-requests
+            - uses: castastrophe/actions-pr-auto-update@v1.1.0
+              with:
+                  token: ${{ secrets.USER_TOKEN }}
+                  include_drafts: false
+                  limit: 50
+                  exclude_labels: blocked,wip
+                  include_labels: auto-update,ready-for-merge

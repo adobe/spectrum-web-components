@@ -1,50 +1,50 @@
 name: Preview Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    env:
-      YARN_ENABLE_IMMUTABLE_INSTALLS: false
-    # Run the job if manually triggered or if the commit message includes a commit type of fix or feat or breaking change
-    if: contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'fix(') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'feat(') || contains(github.event.head_commit.message, '!:')
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
-
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
-
-      - name: Set Git identity
-        run: |
-          git config --global user.email "support+actions@github.com"
-          git config --global user.name "github-actions-bot"
-
-      - name: Update package versions for preview snapshot release
+    release:
+        runs-on: ubuntu-latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          yarn changeset version --snapshot preview-${GITHUB_SHA::8}
-          yarn constraints --fix
-          yarn version:update
-          yarn install --refresh-lockfile
+            YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        # Run the job if manually triggered or if the commit message includes a commit type of fix or feat or breaking change
+        if: contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'fix(') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'feat(') || contains(github.event.head_commit.message, '!:')
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
 
-      - name: Configure NPM for changeset publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-      - name: Publish preview snapshot release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          git add .
-          git commit -am "chore: publish preview snapshot version"
-          yarn prepublishOnly
-          yarn changeset publish --no-git-tag --tag preview
-          git reset --hard HEAD^
+            - name: Set Git identity
+              run: |
+                  git config --global user.email "support+actions@github.com"
+                  git config --global user.name "github-actions-bot"
+
+            - name: Update package versions for preview snapshot release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  yarn changeset version --snapshot preview-${GITHUB_SHA::8}
+                  yarn constraints --fix
+                  yarn version:update
+                  yarn install --refresh-lockfile
+
+            - name: Configure NPM for changeset publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+            - name: Publish preview snapshot release
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  git add .
+                  git commit -am "chore: publish preview snapshot version"
+                  yarn prepublishOnly
+                  yarn changeset publish --no-git-tag --tag preview
+                  git reset --hard HEAD^

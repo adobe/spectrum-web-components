@@ -1,57 +1,57 @@
 name: Visual regression testing with Chromatic
 
 on:
-  workflow_dispatch:
-  workflow_call:
-    inputs:
-      skip:
-        description: 'Skip running VRT'
-        required: false
-        type: boolean
-        default: false
-    outputs:
-      storybook-url:
-        description: 'URL of the published Storybook'
-        value: ${{ jobs.vrt.outputs.storybook-url }}
+    workflow_dispatch:
+    workflow_call:
+        inputs:
+            skip:
+                description: 'Skip running VRT'
+                required: false
+                type: boolean
+                default: false
+        outputs:
+            storybook-url:
+                description: 'URL of the published Storybook'
+                value: ${{ jobs.vrt.outputs.storybook-url }}
 
 permissions:
-  contents: read
-  pull-requests: write
+    contents: read
+    pull-requests: write
 
 jobs:
-  vrt:
-    name: Chromatic
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    outputs:
-      storybook-url: ${{ steps.chromatic.outputs.storybookUrl != 'undefined' && steps.chromatic.outputs.storybookUrl || '' }}
+    vrt:
+        name: Chromatic
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        outputs:
+            storybook-url: ${{ steps.chromatic.outputs.storybookUrl != 'undefined' && steps.chromatic.outputs.storybookUrl || '' }}
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - name: Setup Job and Install Dependencies
-        uses: ./.github/actions/setup-job
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
 
-      - name: Generate Custom Elements Manifest
-        run: yarn docs:analyze
+            - name: Generate Custom Elements Manifest
+              run: yarn docs:analyze
 
-      - name: Move CEM to Storybook directory
-        run: cp projects/documentation/custom-elements.json storybook/
+            - name: Move CEM to Storybook directory
+              run: cp projects/documentation/custom-elements.json storybook/
 
-      - name: Publish to Chromatic
-        id: chromatic
-        uses: chromaui/action@v11
-        with:
-          projectToken: ${{ secrets.CHROMATIC_TOKEN }}
-          buildScriptName: storybook:build
-          storybookConfigDir: storybook
-          exitOnceUploaded: true
-          onlyChanged: true
-          traceChanged: true
-          untraced: '.github/actions/*/package.json'
-          diagnostics: true
-          # Lets VRT pass without running so as not to waste snapshots
-          skip: ${{ inputs.skip }}
+            - name: Publish to Chromatic
+              id: chromatic
+              uses: chromaui/action@v11
+              with:
+                  projectToken: ${{ secrets.CHROMATIC_TOKEN }}
+                  buildScriptName: storybook:build
+                  storybookConfigDir: storybook
+                  exitOnceUploaded: true
+                  onlyChanged: true
+                  traceChanged: true
+                  untraced: '.github/actions/*/package.json'
+                  diagnostics: true
+                  # Lets VRT pass without running so as not to waste snapshots
+                  skip: ${{ inputs.skip }}
