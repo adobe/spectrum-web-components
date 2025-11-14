@@ -1000,7 +1000,7 @@ export class Picker extends PickerBase {
         );
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-            if (!!nextItem) this.setValueFromItem(nextItem as MenuItem);
+            if (nextItem) this.setValueFromItem(nextItem as MenuItem);
         }
     };
 }
