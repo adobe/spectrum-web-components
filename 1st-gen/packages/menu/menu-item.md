@@ -308,6 +308,14 @@ Note: While `sp-menu-item` can accommodate any custom content in the `submenu` s
 
 Review the accessibility guidelines for the parent [menu](../menu#accessibility-guidelines) and [menu-group](../menu-group#accessibility-guidelines).
 
+#### Roles and ARIA attributes
+
+When a menu item with `role="menuitem"` is selected, the `aria-current="true"` attribute is automatically applied to indicate the current item to screen reader users. This ensures assistive technology properly announces the selected state of menu items.
+
+Menu items with `role="menuitemradio"` or `role="menuitemcheckbox"` use `aria-checked` instead of `aria-current` to communicate their selection state.
+
+Menu items with `role="option"` (used when the parent `<sp-menu>` has `role="listbox"`) use `aria-selected` to communicate their selection state. This pattern is commonly used in components like `<sp-picker>` where the menu functions as a selection list rather than a navigation menu.
+
 #### Include a label
 
 Either place visible text in the component's slot or use `label` attribute to ensure menu items can be read by assistive technology.

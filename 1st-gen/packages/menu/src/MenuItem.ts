@@ -719,6 +719,13 @@ export class MenuItem extends LikeAnchor(
 
     updateAriaSelected(): void {
         const role = this.getAttribute('role');
+        if (role === 'menuitem') {
+            if (this.selected) {
+                this.setAttribute('aria-current', 'true');
+            } else {
+                this.removeAttribute('aria-current');
+            }
+        }
         if (role === 'option') {
             this.setAttribute(
                 'aria-selected',

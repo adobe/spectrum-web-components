@@ -199,7 +199,7 @@ describe('Menu item', () => {
         const descriptionElement = el.querySelector('span') as HTMLElement;
         expect(descriptionElement.assignedSlot).to.not.be.null;
     });
-    it('acualizes a submenu', async () => {
+    it('actualizes a submenu', async () => {
         const test = await fixture<Menu>(html`
             <sp-menu>
                 <sp-menu-item selected>Selected</sp-menu-item>
@@ -255,5 +255,75 @@ describe('Menu item', () => {
 
         for (const menuItem of menuItems)
             expect(getComputedStyle(menuItem).textAlign).to.equal('start');
+    });
+    it('sets aria-current to true if the item has selected property', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        const selectedItem = el.querySelector(
+            'sp-menu-item[selected]'
+        ) as MenuItem;
+        const unselectedItem = el.querySelector(
+            'sp-menu-item:not([selected])'
+        ) as MenuItem;
+
+        expect(selectedItem?.hasAttribute('aria-current')).to.be.true;
+        expect(selectedItem?.getAttribute('aria-current')).to.equal('true');
+        expect(unselectedItem?.hasAttribute('aria-current')).to.be.false;
+        expect(unselectedItem?.getAttribute('aria-current')).to.be.null;
+    });
+    it('removes aria-current if the item is deselected', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>Selected Text</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+        const item = el.querySelector('sp-menu-item') as MenuItem;
+
+        expect(item.hasAttribute('aria-current')).to.be.true;
+        expect(item.getAttribute('aria-current')).to.equal('true');
+
+        item.selected = false;
+        await elementUpdated(item);
+
+        expect(item.hasAttribute('aria-current')).to.be.false;
+        expect(item.getAttribute('aria-current')).to.be.null;
+    });
+    it('updates aria-current when the selected item changes', async () => {
+        const el = await fixture<Menu>(html`
+            <sp-menu>
+                <sp-menu-item selected>First</sp-menu-item>
+                <sp-menu-item>Second</sp-menu-item>
+            </sp-menu>
+        `);
+        await elementUpdated(el);
+
+        const selectedItem = el.querySelector(
+            'sp-menu-item[selected]'
+        ) as MenuItem;
+        const unselectedItem = el.querySelector(
+            'sp-menu-item:not([selected])'
+        ) as MenuItem;
+
+        expect(selectedItem?.hasAttribute('aria-current')).to.be.true;
+        expect(selectedItem?.getAttribute('aria-current')).to.equal('true');
+        expect(unselectedItem?.hasAttribute('aria-current')).to.be.false;
+        expect(unselectedItem?.getAttribute('aria-current')).to.be.null;
+
+        selectedItem.selected = false;
+        unselectedItem.selected = true;
+        await elementUpdated(selectedItem);
+        await elementUpdated(unselectedItem);
+
+        expect(selectedItem?.hasAttribute('aria-current')).to.be.false;
+        expect(selectedItem?.getAttribute('aria-current')).to.be.null;
+        expect(unselectedItem?.hasAttribute('aria-current')).to.be.true;
+        expect(unselectedItem?.getAttribute('aria-current')).to.equal('true');
     });
 });
