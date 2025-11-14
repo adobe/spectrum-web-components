@@ -5419,7 +5419,7 @@ __metadata:
     tachometer: "npm:0.7.2"
     tar-stream: "npm:3.1.7"
     terser: "npm:4.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.2"
     webpack-merge: "npm:6.0.1"
     wireit: "npm:0.14.12"
     yargs: "npm:17.7.2"
@@ -5878,7 +5878,7 @@ __metadata:
     react-dom: "npm:18.3.1"
     storybook: "npm:8.6.14"
     tslib: "npm:2.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -15261,7 +15261,7 @@ __metadata:
     rollup-plugin-styles: "npm:4.0.0"
     rollup-plugin-visualizer: "npm:5.14.0"
     tslib: "npm:2.8.1"
-    typescript: "npm:5.3.3"
+    typescript: "npm:5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -29623,16 +29623,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/e33cef99d82573624fc0f854a2980322714986bc35b9cb4d1ce736ed182aeab78e2cb32b385efa493b2a976ef52c53e20d6c6918312353a91850e2b76f1ea44f
-  languageName: node
-  linkType: hard
-
 "typescript@npm:5.8.2":
   version: 5.8.2
   resolution: "typescript@npm:5.8.2"
@@ -29680,16 +29670,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/2954022ada340fd3d6a9e2b8e534f65d57c92d5f3989a263754a78aba549f7e6529acc1921913560a4b816c46dce7df4a4d29f9f11a3dc0d4213bb76d043251e
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/1d0a5f4ce496c42caa9a30e659c467c5686eae15d54b027ee7866744952547f1be1262f2d40de911618c242b510029d51d43ff605dba8fb740ec85ca2d3f9500
   languageName: node
   linkType: hard
 

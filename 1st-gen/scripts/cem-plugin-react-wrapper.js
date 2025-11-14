@@ -85,8 +85,8 @@ function genPackageJson(
             "${dependencyPkgName}"
         ],
         "dependencies": {
-            "@lit/react": "^1.0.2",
-            "${dependencyPkgName}": "^${dependencyPkgVersion}"
+            "@lit/react": "1.0.8",
+            "${dependencyPkgName}": "${dependencyPkgVersion}"
         },
         "peerDependencies": {
             "next": "~13.4 || ~14",
