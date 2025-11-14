@@ -140,13 +140,14 @@ describe('Overlay Trigger - Hover', () => {
             );
             await elementUpdated(tooltip);
 
-            button.dispatchEvent(
+            tooltip.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
                     composed: true,
                 })
             );
             await elementUpdated(tooltip);
+            expect(tooltip.open).to.be.true;
 
             tooltip.dispatchEvent(
                 new MouseEvent('pointerleave', {
@@ -226,19 +227,6 @@ describe('Overlay Trigger - Hover', () => {
             expect(tooltip.open).to.be.true;
 
             button.dispatchEvent(
-                new MouseEvent('pointerenter', {
-                    bubbles: true,
-                    composed: true,
-                })
-            );
-            await waitUntil(
-                () => tooltip.open === true,
-                'tooltip should open',
-                { timeout: 500 }
-            );
-            expect(tooltip.open).to.be.true;
-
-            button.dispatchEvent(
                 new MouseEvent('pointerleave', {
                     bubbles: true,
                     composed: true,
@@ -246,7 +234,7 @@ describe('Overlay Trigger - Hover', () => {
             );
             await elementUpdated(tooltip);
 
-            button.dispatchEvent(
+            tooltip.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
                     composed: true,
@@ -278,11 +266,13 @@ describe('Overlay Trigger - Hover', () => {
             const closed = oneEvent(button, 'sp-closed');
             const escapeKeyup = new KeyboardEvent('keyup', {
                 key: 'Escape',
+                code: 'Escape',
                 bubbles: true,
                 composed: true,
             });
             body.dispatchEvent(escapeKeyup);
             await closed;
+            expect(tooltip.open).to.be.false;
             expect(el.open).to.be.undefined;
         });
     });
