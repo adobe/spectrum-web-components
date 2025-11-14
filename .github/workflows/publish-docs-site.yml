@@ -20,23 +20,23 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+              run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
             - name: Build documentation
-              run: yarn docs:production
+              run: yarn workspace @spectrum-web-components/1st-gen docs:production
 
             - name: Build Storybook
-              run: yarn storybook:build
+              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
 
             - name: Add redirects to documentation
-              run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
+              run: echo '/*    /index.html   200' > 1st-gen/projects/documentation/dist/_redirects
 
             - name: Deploy to GitHub Pages
               run: |
                   git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-                  yarn gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
+                  yarn gh-pages -d 1st-gen/projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>" --nojekyll
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
