@@ -29,8 +29,8 @@ test.describe('search and go', () => {
 
         const formattedSearchString = searchString.replace(/\s+/g, '-');
         let href = category
-            ? `/${category}/${formattedSearchString}`
-            : `/${formattedSearchString}`;
+            ? `/${category}/${formattedSearchString}/`
+            : `/${formattedSearchString}/`;
 
         // add the SWC_DIR to the href
         href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs` : ''}${href}`;
@@ -64,7 +64,6 @@ test.describe('search and go', () => {
         const searchField = await page.getByRole('searchbox', {
             name: 'Search',
         });
-        await searchField.waitFor();
         await expect(searchField, 'Search field should be visible').toBeVisible(
             { timeout: 10000 }
         );
