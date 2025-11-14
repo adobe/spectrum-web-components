@@ -65,8 +65,7 @@ commands:
             - run:
                   name: Build the project
                   command: |
-                      yarn workspace @spectrum-web-components/core build
-                      yarn workspace @spectrum-web-components/1st-gen build
+                      yarn build
 
             - save_cache:
                   paths:
