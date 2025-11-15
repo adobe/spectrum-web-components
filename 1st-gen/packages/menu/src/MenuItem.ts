@@ -181,8 +181,6 @@ export class MenuItem extends LikeAnchor(
         return this._value || this.itemText;
     }
 
-    private _lastPointerType?: string;
-
     public set value(value: string) {
         if (value === this._value) {
             return;
@@ -322,6 +320,13 @@ export class MenuItem extends LikeAnchor(
      */
     private _closedViaPointer = false;
 
+    /**
+     * Touch interaction state for submenu toggling
+     */
+    private _activePointerId?: number;
+    private _touchHandledViaPointerup = false;
+    private _touchAbortController?: AbortController;
+
     private handleClickCapture(event: Event): void | boolean {
         if (this.disabled) {
             event.preventDefault();
@@ -459,30 +464,33 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    private _touchListenerActive = false;
-
     private handlePointerdown(event: PointerEvent): void {
-        // Track pointer type for touch detection
-        this._lastPointerType = event.pointerType;
+        const path = event.composedPath();
+        const targetIsInOverlay =
+            this.overlayElement && path.includes(this.overlayElement);
 
-        // For touch devices with submenus, handle on pointerup instead of click
-        // Only if the touch is directly on this menu item (not on overlay or child elements)
         if (
             event.pointerType === 'touch' &&
             this.hasSubmenu &&
-            event.target === this &&
-            !this._touchListenerActive
+            !targetIsInOverlay &&
+            this._activePointerId === undefined
         ) {
-            event.preventDefault(); // Prevent click suppression
-            event.stopPropagation(); // Prevent bubbling to parent menu items
-            this._touchListenerActive = true;
-            this.addEventListener('pointerup', this.handleTouchSubmenuToggle, {
+            this._activePointerId = event.pointerId;
+            this._touchAbortController = new AbortController();
+
+            window.addEventListener(
+                'pointerup',
+                this.handleTouchSubmenuToggle,
+                { once: true, signal: this._touchAbortController.signal }
+            );
+            window.addEventListener('pointercancel', this.handleTouchCleanup, {
                 once: true,
+                signal: this._touchAbortController.signal,
             });
         }
 
         if (
-            event.target === this &&
+            !targetIsInOverlay &&
             this.hasSubmenu &&
             this.open &&
             event.pointerType !== 'touch'
@@ -490,7 +498,7 @@ export class MenuItem extends LikeAnchor(
             this.addEventListener('focus', this.handleSubmenuFocus, {
                 once: true,
             });
-            this.overlayElement.addEventListener(
+            this.overlayElement?.addEventListener(
                 'beforetoggle',
                 this.handleBeforetoggle
             );
@@ -498,18 +506,32 @@ export class MenuItem extends LikeAnchor(
     }
 
     private handleTouchSubmenuToggle = (event: PointerEvent): void => {
-        event.preventDefault();
-        event.stopPropagation();
+        if (event.pointerId !== this._activePointerId) {
+            return;
+        }
 
-        // Reset the listener flag
-        this._touchListenerActive = false;
+        this._touchAbortController?.abort();
+        this._touchHandledViaPointerup = true;
+        this._activePointerId = undefined;
 
-        // Toggle the submenu
         if (this.open) {
             this.open = false;
         } else {
-            this.openOverlay(true);
+            this.openOverlay();
         }
+
+        setTimeout(() => {
+            this._touchHandledViaPointerup = false;
+        }, 0);
+    };
+
+    private handleTouchCleanup = (event: PointerEvent): void => {
+        if (event.pointerId !== this._activePointerId) {
+            return;
+        }
+        this._touchAbortController?.abort();
+        this._activePointerId = undefined;
+        this._touchHandledViaPointerup = false;
     };
 
     protected override firstUpdated(changes: PropertyValues): void {
@@ -657,14 +679,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected handleSubmenuClick(event: Event): void {
-        const pointerEvent = event as PointerEvent;
-
-        const isTouchEvent =
-            pointerEvent.pointerType === 'touch' ||
-            this._lastPointerType === 'touch';
-
-        // For touch events, completely ignore click
-        if (isTouchEvent) {
+        if (this._touchHandledViaPointerup) {
             event.stopPropagation();
             event.preventDefault();
             return;
@@ -698,8 +713,6 @@ export class MenuItem extends LikeAnchor(
     };
 
     protected handlePointerenter(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType;
-
         // For touch devices, don't open on pointerenter - let click handle it
         if (event.pointerType === 'touch') {
             return;
@@ -719,8 +732,6 @@ export class MenuItem extends LikeAnchor(
     protected recentlyLeftChild = false;
 
     protected handlePointerleave(event: PointerEvent): void {
-        this._lastPointerType = event.pointerType;
-
         // For touch devices, don't close on pointerleave - let click handle it
         if (event.pointerType === 'touch') {
             return;
@@ -892,6 +903,12 @@ export class MenuItem extends LikeAnchor(
             selectionRoot: undefined,
             cleanupSteps: [],
         };
+
+        // Clean up any active touch listeners
+        this._touchAbortController?.abort();
+        this._activePointerId = undefined;
+        this._touchHandledViaPointerup = false;
+
         super.disconnectedCallback();
     }
 

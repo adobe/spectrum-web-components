@@ -1123,6 +1123,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerdown', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 1,
                 })
             );
             const parentOpened = oneEvent(rootItem, 'sp-opened');
@@ -1130,6 +1131,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerup', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 1,
                 })
             );
             await parentOpened;
@@ -1140,6 +1142,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerdown', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 2,
                 })
             );
             const childOpened = oneEvent(childItem, 'sp-opened');
@@ -1147,6 +1150,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerup', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 2,
                 })
             );
             await childOpened;
@@ -1158,6 +1162,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerdown', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 2,
                 })
             );
             const childClosed = oneEvent(childItem, 'sp-closed');
@@ -1165,6 +1170,7 @@ describe('Submenu', () => {
                 new PointerEvent('pointerup', {
                     bubbles: true,
                     pointerType: 'touch',
+                    pointerId: 2,
                 })
             );
             await childClosed;
