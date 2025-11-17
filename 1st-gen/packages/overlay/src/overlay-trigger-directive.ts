@@ -90,7 +90,6 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             this.target = part.element as HTMLElement;
             newTarget = true;
         }
-        this.listenerHost = this.target;
         if (newTarget || newStrategy) {
             this.strategy?.abort();
             this.strategy = new strategies[
@@ -135,6 +134,15 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
             const { where = 'afterend' } = this.insertionOptions || {};
             insertionEl.insertAdjacentElement(where, this.overlay);
         }
+    }
+
+    override reconnected(): void {
+        // Do not re-initialize until an overlay instance exists.
+        // The overlay-ready callback is responsible for wiring the initial listener.
+        if (!this.overlay) {
+            return;
+        }
+        this.init();
     }
 }
 
