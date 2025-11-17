@@ -131,9 +131,9 @@ jobs:
               env:
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
-                  first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs"
-                  first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook"
-                  second_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook"
+                  first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs/"
+                  first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook/"
+                  second_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook/"
 
                   echo "first_gen_docs_url=${first_gen_docs_url}" >> "$GITHUB_OUTPUT"
                   echo "first_gen_storybook_url=${first_gen_storybook_url}" >> "$GITHUB_OUTPUT"
