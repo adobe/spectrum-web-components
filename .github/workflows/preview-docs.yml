@@ -181,7 +181,7 @@ jobs:
                     echo "Attempt $attempt/$max_attempts: Checking if site is available..."
                     
                     if curl -f -s --max-time 10 "${DOC_URL}" > /dev/null; then
-                      echo "✅ Site is now available!"
+                      echo "✅ ${DOC_URL} is now available!"
                       break
                     else
                       echo "❌ Site not ready yet, waiting 10 seconds..."

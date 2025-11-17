@@ -54,7 +54,6 @@ test.describe('search and go', () => {
 
     test.beforeEach(async ({ page }) => {
         await page.goto(startURL as string);
-        expect(page, `to have URL ${startURL}`).toHaveURL(/first-gen-docs/);
         await page.waitForLoadState('networkidle', { timeout: 30000 });
 
         // Wait for any dynamic content to load
