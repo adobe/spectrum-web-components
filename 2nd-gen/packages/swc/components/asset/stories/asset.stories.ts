@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -46,6 +45,7 @@ const meta: Meta = {
         },
     },
     tags: ['migrated'],
+    render: (args) => template(args),
 };
 
 export default meta;
@@ -57,18 +57,15 @@ export default meta;
 args['default-slot'] = IMAGE_PLACEHOLDER_STRING();
 
 export const Default: Story = {
-    render: (args) => template(args),
+    args: {
+        variant: undefined,
+    },
 };
 
 export const File: Story = {
     args: {
         variant: 'file',
     },
-    render: (args) =>
-        html`<swc-asset
-            style="min-inline-size: 150px; block-size: 128px"
-            variant=${args.variant as 'file'}
-        ></swc-asset>`,
     tags: ['!dev'],
 };
 
@@ -76,11 +73,6 @@ export const Folder: Story = {
     args: {
         variant: 'folder',
     },
-    render: (args) =>
-        html`<swc-asset
-            style="min-inline-size: 150px; block-size: 128px"
-            variant=${args.variant as 'folder'}
-        ></swc-asset>`,
     tags: ['!dev'],
 };
 

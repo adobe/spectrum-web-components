@@ -17,9 +17,6 @@ import { SpectrumElement } from '@spectrum-web-components/core/shared/base/index
 
 import { ASSET_VARIANTS, type AssetVariant } from './Asset.types.js';
 
-/**
- * @slot - The content to render when no `variant` is provided (typically an <img> element)
- */
 export abstract class AssetBase extends SpectrumElement {
     // ─────────────────────────
     //     API TO OVERRIDE

@@ -58,15 +58,15 @@ const folder = (label: string): TemplateResult => html`
  * @slot - content to be displayed when no `variant` is set (typically an `<img>` element)
  *
  * @example
- * <swc-asset style="block-size: 128px">
+ * <swc-asset>
  *   <img class="spectrum-Asset-image" src="example.png" alt="Example image" />
  * </swc-asset>
  *
  * @example
- * <swc-asset variant="file" style="min-inline-size: 150px; block-size: 128px"></swc-asset>
+ * <swc-asset variant="file"></swc-asset>
  *
  * @example
- * <swc-asset variant="folder" style="min-inline-size: 150px; block-size: 128px"></swc-asset>
+ * <swc-asset variant="folder"></swc-asset>
  */
 export class Asset extends AssetBase {
     // ──────────────────────────────
