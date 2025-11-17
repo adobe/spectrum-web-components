@@ -291,6 +291,37 @@ describe('Submenu', () => {
 
             expect(this.rootItem.open).to.be.false;
         });
+        it('handles mouse pointerdown on open submenu followed by focus', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Open the submenu with mouse hover
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            await mouseMoveOver(this.rootItem);
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Dispatch pointerdown on the already-open submenu (non-touch)
+            // This sets up the focus listener and beforetoggle listener
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+
+            // Dispatch focus event to trigger handleSubmenuFocus
+            this.rootItem.dispatchEvent(
+                new FocusEvent('focus', {
+                    bubbles: true,
+                })
+            );
+
+            await elementUpdated(this.rootItem);
+
+            // Submenu should remain open after focus handling
+            expect(this.rootItem.open).to.be.true;
+        });
     }
     function persistsThroughMouseLeaveAndReturn(): void {
         it('stays open when mousing off menu item and back again', async function () {
@@ -886,5 +917,232 @@ describe('Submenu', () => {
         await elementUpdated(submenu);
         expect(submenu.scrollTop).to.equal(50);
         expect(submenu.scrollTop).to.not.equal(initialScrollTop);
+    });
+    describe('touch interactions', () => {
+        beforeEach(async function () {
+            this.el = await fixture<Menu>(html`
+                <sp-menu>
+                    <sp-menu-item>No submenu</sp-menu-item>
+                    <sp-menu-item class="root">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `);
+            await elementUpdated(this.el);
+            this.rootItem = this.el.querySelector('.root') as MenuItem;
+            await elementUpdated(this.rootItem);
+        });
+
+        it('does not open submenu on touch pointerenter', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Simulate touch pointerenter event
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            // Wait to ensure submenu doesn't open
+            await aTimeout(150);
+
+            expect(this.rootItem.open).to.be.false;
+
+            // Also test that touch pointerleave doesn't affect closed state
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerleave', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            await elementUpdated(this.rootItem);
+            expect(this.rootItem.open).to.be.false;
+        });
+
+        it('opens submenu on touch tap when closed', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Simulate touch tap: pointerdown followed by pointerup
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Dispatch click event (browsers do this after touch)
+            // This should be prevented/stopped by handleSubmenuClick
+            this.rootItem.dispatchEvent(
+                new MouseEvent('click', {
+                    bubbles: true,
+                })
+            );
+
+            // Verify submenu remains open (click was handled properly)
+            await elementUpdated(this.rootItem);
+            expect(this.rootItem.open).to.be.true;
+        });
+
+        it('closes submenu on touch tap when open', async function () {
+            // First open the submenu
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Tap again to close
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await closed;
+
+            expect(this.rootItem.open).to.be.false;
+        });
+
+        it('does not reopen submenu after touch close due to focus event', async function () {
+            // Open the submenu with touch
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await opened;
+            expect(this.rootItem.open).to.be.true;
+
+            // Close the submenu with touch
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await closed;
+            expect(this.rootItem.open).to.be.false;
+
+            // Simulate focus event that might occur after touch
+            this.rootItem.dispatchEvent(new Event('focus', { bubbles: true }));
+
+            // Wait to ensure submenu doesn't reopen
+            await aTimeout(100);
+
+            expect(this.rootItem.open, 'submenu should stay closed').to.be
+                .false;
+        });
+
+        it('prevents duplicate listeners from multiple pointerdown events', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Dispatch multiple pointerdown events rapidly
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            // Only one pointerup should open it
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Now close it
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerdown', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerup', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+            await closed;
+
+            // Verify it closed and didn't immediately reopen
+            expect(this.rootItem.open).to.be.false;
+            await aTimeout(100);
+            expect(this.rootItem.open, 'should stay closed').to.be.false;
+        });
     });
 });
