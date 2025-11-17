@@ -13,17 +13,39 @@ When prompted to create a Jira ticket, output the following:
 
 Output results in the chat window in a way that can be copied and pasted into Jira.
 
-## Jira syntax formatting rules
+## Jira syntax quick reference
 
-Use these syntax rules when writing Jira tickets:
+Based on [official Jira documentation](https://jira.atlassian.com/secure/WikiRendererHelpAction.jspa?section=all).
 
-- `h2.` through `h6.` - Headings (use `h2.` for main, `h3.` for secondary, etc. - avoid `h1.` in descriptions)
-- `{*}{*}` - Bold text
-- `{code}{code}` - Inline code
-- `{code:language}{code}` - Language-specific code blocks
-- `[text|url]` - Links
-- ` - ` - Bullet points
-- `#` - Numbered list items
+**Essential formatting:**
+
+- `h2.` for section headings (avoid `h1.` in descriptions)
+- `{*}text{*}` for bold text
+- `{code}text{code}` for inline code
+- `{code:language}code block{code}` for code blocks with syntax highlighting
+- `[text|url]` for links
+- `- ` for bullet points (dash + space) <!-- markdownlint-disable MD038 -->
+- `# ` for numbered list items (hash + space) <!-- markdownlint-disable MD038 -->
+- `{color:red}text{color}` for colored text
+- `{quote}text{quote}` for block quotes
+- `||heading||` for table headers, `|cell|` for table data
+
+**Critical rules for ticket descriptions:**
+
+- ❌ **Don't** use `##` for sub-items (renders as heading, not nested list)
+- ❌ **Don't** try to nest bullets under numbered items  
+- ❌ **Don't** mix list types on the same line
+- ✅ **Do** keep QA checklists flat (one item per line)
+- ✅ **Do** add details inline with dashes or parentheses
+- ✅ **Do** use `h2.` for all main sections
+
+**List formatting example:**
+
+```jira
+# First step - additional context here
+# Second step with inline details
+# Third step (include expected result)
+```
 
 ## Title format
 
@@ -56,11 +78,36 @@ Examples:
 - [S2]:
 - [Test(component)]:
 
+## Choosing the right template
+
+Use this decision tree to select the appropriate template:
+
+**Bug reporting template** - Use when:
+
+- Reporting unexpected behavior or errors
+- Something is broken or not working as designed
+- You can provide reproduction steps
+
+**RFC or feature ticket template** - Use when:
+
+- Proposing new features or components
+- Requesting architectural changes
+- Conducting research or discovery work
+- Creating design proposals
+
+**General ticket template** - Use when:
+
+- Making documentation updates
+- Performing refactoring work
+- Making chore or maintenance changes
+- Improving tests or CI/CD
+- The work doesn't fit other categories
+
 ## More specific templates
 
 ### General Jira ticket template
 
-```
+```jira
 h2. Acceptance criteria
 (how we ensure that the work is complete)
 
@@ -71,7 +118,7 @@ h2. Technical notes/resources
 (any technical notes/links/etc)
 
 h2. QA
-(steps someone will use to be sure that the work fulfills the ticket's request and that everything's working properly)
+(checklist steps someone will use to be sure that the work fulfills the ticket's request and that everything's working properly)
 
 h2. Design specs
 (are there any design specs/files/mock-ups we can include here? Any other design notes?)
@@ -79,7 +126,7 @@ h2. Design specs
 
 ### Bug reporting template
 
-```
+```jira
 {*}Link to original issue:{*} (Add a link to the original issue in GitHub if applicable)
 
 h2. Expected behavior
@@ -112,7 +159,7 @@ This ticket template is for tracking work for RFCs, new features, new components
 
 Items with an asterisk are optional depending on the context.
 
-```
+```jira
 h2. Link to original issue
 (Add a link to the original issue in GitHub if applicable)
 
@@ -143,26 +190,87 @@ h2. Additional context
 
 ## Severity classification
 
-- SEV1: Critical - System down, data loss, security breach
-- SEV2: High - Major feature broken, significant user impact
-- SEV3: Medium - Feature partially broken, moderate impact
-- SEV4: Low - Minor issues, minimal user impact
-- SEV5: Trivial - Cosmetic issues, no functional impact
+Use this guide to determine the appropriate severity level:
+
+**SEV1 (Critical)** - Immediate action required:
+
+- Production system is down
+- Data loss or corruption
+- Security vulnerability or breach
+- Complete feature failure affecting all users
+
+**SEV2 (High)** - Action required within 24-48 hours:
+
+- Major feature is broken for most users
+- Significant performance degradation
+- Workaround exists but is impractical
+- Blocking progress on dependent work
+
+**SEV3 (Medium)** - Action required within 1-2 weeks:
+
+- Feature partially broken or unreliable
+- Affects subset of users
+- Reasonable workaround available
+- Non-critical functionality impaired
+
+**SEV4 (Low)** - Action required within a month:
+
+- Minor bugs with minimal impact
+- Edge case issues
+- Nice-to-have improvements
+- Non-blocking technical debt
+
+**SEV5 (Trivial)** - No urgency:
+
+- Cosmetic issues only
+- Documentation typos
+- Code formatting
+- Optional optimizations
 
 ## Best practices
 
-- Link to relevant GitHub issues or pull requests using the format: `GH-{number}`
-- Include component name in brackets if applicable: `[sp-button]`
-- Add relevant labels for easier filtering
-- Attach screenshots or videos for visual changes
-- Reference design specs or documentation when available
+- Link to GitHub using plain text format: `GitHub Issue #123` or full URLs
+- Include component name in brackets: `[sp-button]`
+- Add relevant labels for filtering
+- Attach screenshots for visual changes
+- Write acceptance criteria in testable format
+- Reference design specs when available
+- Do NOT use Jira's smart links for GitHub (Adobe policy)
 
-## Acceptance criteria
+## QA checklist guidelines
 
-- Write criteria in "Given/When/Then" format
-- Make criteria specific and testable
-- Include edge cases and error scenarios
-- Consider accessibility requirements
+- Use simple numbered list format (`# item`)
+- Start with action verbs (Verify, Test, Check, Confirm, Navigate, Click)
+- Keep items concise and verifiable
+- Add details inline with dashes or parentheses
+- Aim for 5-10 checklist items
+- Keep lists flat (no sub-items using `##`)
+
+**Example:**
+
+```jira
+h2. QA
+
+# Create a test PR and verify the workflow runs successfully
+# Navigate to the PR comments and verify it includes all three preview URLs
+# Click each preview URL and confirm correct content loads
+# Test search functionality in the documentation preview
+# Verify smoke tests pass in workflow logs
+```
+
+## Common mistakes to avoid
+
+❌ **Vague titles**: "Fix bug" → ✅ "[Button] Fix focus ring in high contrast mode"
+
+❌ **Missing context**: "This doesn't work" → ✅ "Hover state fails when disabled in dark theme"
+
+❌ **Implementation in title**: "Change line 45 to useEffect" → ✅ "[Button] Fix memory leak when unmounting"
+
+❌ **Multiple changes**: "Update docs, fix bug, refactor" → ✅ Separate tickets for each
+
+❌ **Implementation-focused criteria**: "Add handleClick function" → ✅ "When clicked, dialog closes and form resets"
+
+❌ **Incomplete QA steps**: "Click button" → ✅ "Click button and verify modal opens with correct content"
 
 ## Labels
 
@@ -197,3 +305,107 @@ Jira includes the following issue types:
 - Epic: For tickets that are larger than 8 story points and need to be broken up into multiple issues.
 - Story: For tickets that tie to code deliverables. Whether that's research, an RFC, or a pull request, it counts! If you don't know what your issue type should be, this is a safe bet.
 - Task: For work that doesn't relate to a code deliverable.
+
+## Complete ticket examples
+
+### Example 1: Bug ticket
+
+**Title:** [Picker] Keyboard navigation fails in Safari when menu contains icons
+
+**Labels:** bug, a11y, Browser: Safari, SEV3
+
+**Severity:** SEV3
+
+**Issue Type:** Bug
+
+---
+
+```jira
+{*}Link to original issue:{*} GitHub Issue #1234
+
+h2. Expected behavior
+
+When using arrow keys to navigate the Picker menu in Safari, focus should move between menu items regardless of whether they contain icons.
+
+h2. Actual behavior
+
+Arrow key navigation stops working after the first icon-containing menu item. Focus becomes trapped and further keyboard input is ignored.
+
+h2. How can we reproduce the issue?
+
+# Open Safari browser (version 16.0+)
+# Navigate to the Picker component page in Storybook
+# Open the "With Icons" example
+# Click the Picker to open the menu
+# Press the down arrow key repeatedly
+# Observe that focus stops after the second item
+
+h2. Screenshots
+
+[Attach screenshot showing focus stuck on second menu item]
+
+h2. Sample code
+
+{code:html}
+<sp-picker>
+  <sp-menu-item>Option 1</sp-menu-item>
+  <sp-menu-item><sp-icon-checkmark></sp-icon-checkmark> Option 2</sp-menu-item>
+  <sp-menu-item><sp-icon-star></sp-icon-star> Option 3</sp-menu-item>
+</sp-picker>
+{code}
+
+h2. Severity
+
+SEV3 - Affects keyboard users on Safari, but mouse/touch users unaffected. Workaround: use Chrome or Firefox.
+```
+
+### Example 2: Feature ticket
+
+**Title:** [Docs] Add multi-generation preview deployment support to CI/CD
+
+**Labels:** docs, ci, refactor, spectrum2
+
+**Severity:** SEV4
+
+**Issue Type:** Story
+
+---
+
+```jira
+h2. Link to original issue
+
+GitHub PR: https://github.com/adobe/spectrum-web-components/pull/5678
+
+h2. Overview
+
+Restructure preview deployment workflow to support separate first-generation and second-generation artifacts, providing clearer preview links for reviewers.
+
+h2. Acceptance criteria
+
+- First-gen documentation deploys to {{/docs/first-gen-docs/}} path
+- First-gen Storybook deploys to {{/docs/first-gen-storybook/}} path
+- Second-gen Storybook deploys to {{/docs/second-gen-storybook/}} path
+- Preview comment displays all three URLs with clear labels
+- Smoke tests validate deployed artifacts
+- Workflow completes within 30 minutes
+
+h2. Technical notes/resources
+
+{*}Files modified:{*}
+- {{.github/workflows/preview-docs.yml}} - Main workflow
+- {{.github/scripts/build-preview-urls-comment.js}} - URL generation
+
+{*}Consolidates:{*} Merges review-urls-smoke-tests.yml into preview-docs.yml
+
+h2. QA
+
+# Create a test PR and verify the workflow completes successfully
+# Check the automated PR comment includes all three preview URLs
+# Click each URL and verify correct content loads
+# Verify smoke tests pass in the workflow logs
+# Test concurrent PR pushes properly cancel previous deployments
+
+h2. Design specs
+
+N/A - Infrastructure change with no visual components
+```
