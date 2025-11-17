@@ -122,6 +122,8 @@
         return args;
     }
     const renderDemo = (args = {}) => {
+        // Pass componentName to Template for variant detection
+        args.componentName = '{{ componentName }}';
         render(Template(args), demo);
     };
     if (config) {
