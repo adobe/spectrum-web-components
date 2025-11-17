@@ -11,6 +11,10 @@
  * governing permissions and limitations under the License.
  */
 
+:host {
+    display: flex;
+}
+
 .spectrum-Asset {
     display: flex;
     align-items: center;
