@@ -91,7 +91,7 @@ async function main() {
                 name: title,
                 url: `/${
                     process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
-                }components/${componentName}`,
+                }components/${componentName}/`,
             }),
         });
     }
@@ -120,7 +120,7 @@ async function main() {
                 name: title,
                 url: `/${
                     process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
-                }tools/${componentName}`,
+                }tools/${componentName}/`,
             }),
         });
     }
@@ -154,7 +154,7 @@ async function main() {
                 name: title,
                 url: `/${process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''}${
                     guideDir !== 'content' ? `${guideDir}/` : ''
-                }${guideName}`,
+                }${guideName}/`,
             }),
         });
     }

@@ -75,6 +75,13 @@ export class CloseButton extends SizedMixin(StyledButton, {
     public staticColor?: 'black' | 'white';
 
     protected override get buttonContent(): TemplateResult[] {
-        return [crossIcon[this.size]()];
+        return [
+            crossIcon[this.size](),
+            html`
+                <span id="label" class="visually-hidden">
+                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
+                </span>
+            `,
+        ];
     }
 }
