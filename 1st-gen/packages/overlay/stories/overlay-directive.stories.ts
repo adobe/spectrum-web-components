@@ -53,6 +53,7 @@ import './overlay-story-components.js';
 import { tooltip } from '@spectrum-web-components/tooltip/src/tooltip-directive.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { state } from '@spectrum-web-components/base/src/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 
 const storyStyles = html`
     <style>
@@ -314,7 +315,7 @@ class ManagedOverlayTrigger extends LitElement {
                 Create Overlay Render Button And Open Overlay
             </sp-button>
 
-            ${this.isRenderOverlay ? this.renderOverlayButton() : html``}
+            ${cache(this.isRenderOverlay ? this.renderOverlayButton() : html``)}
         `;
     }
 
