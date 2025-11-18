@@ -228,7 +228,7 @@ Line 5"
         placeholder="Enter your life story"
         rows="3"
     >
-        Enter your life story...
+        Enter your life story with very long words...
     </sp-textfield>
 `;
 
@@ -240,6 +240,6 @@ export const with1Row = (): TemplateResult => html`
         placeholder="Enter your life story"
         rows="1"
     >
-        Enter your life story... Enter your life story with very long words...
+        Enter your life story with very long words...
     </sp-textfield>
 `;
