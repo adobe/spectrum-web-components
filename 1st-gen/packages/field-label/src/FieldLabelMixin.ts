@@ -80,7 +80,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         public renderFieldLabel(fieldId: string): TemplateResult {
             return html`
                 <label
-                    id="${fieldId}-label}"
+                    id="${fieldId}-label"
                     for="${fieldId}"
                     ?hidden="${!this.slotHasContent}"
                 >
