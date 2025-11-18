@@ -65,7 +65,10 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         excludedSelectors
     ) {
         public static get styles(): CSSResultArray {
-            return [styles, asteriskIconStyles];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const parent = Object.getPrototypeOf(this) as any;
+            const parentStyles = (parent.styles || []) as CSSResultArray;
+            return [...parentStyles, styles, asteriskIconStyles];
         }
 
         @property({ type: Boolean, reflect: true })
