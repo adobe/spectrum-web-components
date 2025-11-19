@@ -1071,3 +1071,70 @@ IntegrationActionGroup.parameters = {
         },
     },
 };
+
+// ====================
+// TEST HELPERS
+// ====================
+// Legacy exports for test compatibility
+
+export const click = (args: Properties): TemplateResult => Template(args);
+click.args = {
+    interaction: 'click',
+    placement: 'right',
+    style: 'container-type' as WrapperStyleType,
+    type: 'auto',
+};
+
+export const receivesFocus = ({
+    interaction,
+    open,
+    placement,
+    receivesFocus,
+    type,
+}: Properties & { receivesFocus?: string }): TemplateResult => html`
+    <sp-action-button id="trigger">
+        Open the overlay (with focus)
+    </sp-action-button>
+    <sp-overlay
+        ?open=${open}
+        trigger="trigger@${interaction}"
+        type=${ifDefined(type)}
+        placement=${ifDefined(placement)}
+        .receivesFocus=${receivesFocus}
+    >
+        <sp-popover>
+            <sp-dialog size="s" no-divider>
+                <a href="https://example.com">Click Content</a>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+receivesFocus.args = {
+    interaction: 'click',
+    placement: 'bottom-start',
+    type: 'auto',
+    receivesFocus: 'true',
+} as Properties & { receivesFocus?: string };
+
+export const withSlider = (): TemplateResult => html`
+    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+    <sp-overlay trigger="triggerEl@click" placement="bottom">
+        <sp-popover tip>
+            <sp-dialog no-divider class="options-popover-content">
+                <p>Try clicking the slider after popover opens</p>
+                <p>It shouldn't close the popover</p>
+                <sp-slider
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Awesomeness"
+                ></sp-slider>
+                <sp-button>Press me</sp-button>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+withSlider.swc_vrt = {
+    skip: true,
+};

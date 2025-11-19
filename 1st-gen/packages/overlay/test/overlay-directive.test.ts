@@ -21,9 +21,9 @@ import {
 import { Button } from '@spectrum-web-components/button';
 import { Overlay } from '@spectrum-web-components/overlay';
 import {
-    Default,
-    insertionOptions,
-} from '../stories/overlay-directive.stories.js';
+    BasicPopover as Default,
+    CustomInsertion as insertionOptions,
+} from '../stories/overlay-trigger-directive.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import {
     fixture,
@@ -117,7 +117,7 @@ describe('Overlay Directive', () => {
             <div
                 style="width: 100%; height: 100vh; display: grid; place-content: center;"
             >
-                ${insertionOptions(insertionOptions.args)}
+                ${insertionOptions()}
             </div>
         `);
 
