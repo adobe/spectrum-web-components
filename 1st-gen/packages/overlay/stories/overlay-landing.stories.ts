@@ -19,23 +19,9 @@ export default {
     component: 'sp-overlay',
     parameters: {
         docs: {
-            description: {
-                component: `
-A comprehensive overlay system for creating tooltips, popovers, dialogs, and menus. 
-
-## Getting Started
-
-Choose from multiple APIs based on your needs:
-- **\`<sp-overlay>\`** - Simple declarative overlays
-- **\`<overlay-trigger>\`** - Multiple interactions (hover + click)
-- **\`trigger()\` directive** - Lit framework integration
-- **Imperative API** - Advanced programmatic control
-
-Start with the Overview story below to explore the system.
-                `,
-            },
+            page: null, // Disable auto-generated docs page
         },
-        viewMode: 'docs',
+        viewMode: 'story', // Show story view instead of docs
     },
 };
 
@@ -232,9 +218,18 @@ export const Overview = (): TemplateResult => {
             <div class="quick-links">
                 <div
                     class="quick-link-card"
+                    role="button"
+                    tabindex="0"
                     @click=${() => {
                         window.location.hash =
                             '#overlay-getting-started-decision-tree--interactive';
+                    }}
+                    @keydown=${(event: KeyboardEvent) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            window.location.hash =
+                                '#overlay-getting-started-decision-tree--interactive';
+                        }
                     }}
                 >
                     <h3>🧭 Decision Tree</h3>
@@ -247,9 +242,42 @@ export const Overview = (): TemplateResult => {
 
                 <div
                     class="quick-link-card"
+                    role="button"
+                    tabindex="0"
+                    @click=${() => {
+                        window.location.hash =
+                            '#overlay-getting-started-api-comparison--side-by-side';
+                    }}
+                    @keydown=${(event: KeyboardEvent) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            window.location.hash =
+                                '#overlay-getting-started-api-comparison--side-by-side';
+                        }
+                    }}
+                >
+                    <h3>⚖️ API Comparison</h3>
+                    <p>
+                        Side-by-side comparison of all overlay APIs with live
+                        examples and feature matrix.
+                    </p>
+                    <sp-link>Compare APIs →</sp-link>
+                </div>
+
+                <div
+                    class="quick-link-card"
+                    role="button"
+                    tabindex="0"
                     @click=${() => {
                         window.location.hash =
                             '#overlay-patterns-examples-common-patterns--tooltip-pattern';
+                    }}
+                    @keydown=${(event: KeyboardEvent) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            window.location.hash =
+                                '#overlay-patterns-examples-common-patterns--tooltip-pattern';
+                        }
                     }}
                 >
                     <h3>📚 Common Patterns</h3>
@@ -262,9 +290,18 @@ export const Overview = (): TemplateResult => {
 
                 <div
                     class="quick-link-card"
+                    role="button"
+                    tabindex="0"
                     @click=${() => {
                         window.location.hash =
-                            '#overlay-api-reference-sp-overlay--modal';
+                            '#overlay-api-reference-sp-overlay--click-interaction';
+                    }}
+                    @keydown=${(event: KeyboardEvent) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            window.location.hash =
+                                '#overlay-api-reference-sp-overlay--click-interaction';
+                        }
                     }}
                 >
                     <h3>⚙️ API Reference</h3>
@@ -273,21 +310,6 @@ export const Overview = (): TemplateResult => {
                         the trigger() directive.
                     </p>
                     <sp-link>View API docs →</sp-link>
-                </div>
-
-                <div
-                    class="quick-link-card"
-                    @click=${() => {
-                        window.location.hash =
-                            '#overlay-edge-cases-troubleshooting-troubleshooting--wont-open';
-                    }}
-                >
-                    <h3>🔧 Troubleshooting</h3>
-                    <p>
-                        Common issues and solutions with side-by-side
-                        comparisons of broken vs. fixed code.
-                    </p>
-                    <sp-link>Fix problems →</sp-link>
                 </div>
             </div>
 
@@ -470,8 +492,18 @@ document.body.appendChild(overlay);</code></pre>
                     variant="accent"
                     @click=${() => {
                         window.location.hash =
+                            '#overlay-getting-started-api-comparison--side-by-side';
+                    }}
+                >
+                    Compare APIs
+                </sp-button>
+                <sp-button
+                    variant="primary"
+                    @click=${() => {
+                        window.location.hash =
                             '#overlay-getting-started-decision-tree--interactive';
                     }}
+                    style="margin-left: 10px;"
                 >
                     Find your solution
                 </sp-button>

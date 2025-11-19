@@ -10,38 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
+import { Placement } from '@floating-ui/dom';
+import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import '@spectrum-web-components/overlay/sp-overlay.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/table/sp-table.js';
-import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
-import '@spectrum-web-components/table/sp-table-head.js';
-import '@spectrum-web-components/table/sp-table-head-cell.js';
-import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-row.js';
-import '@spectrum-web-components/table/sp-table-cell.js';
-
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
-import { Placement } from '@floating-ui/dom';
-import { OverlayTypes } from '../src/overlay-types.js';
+import '@spectrum-web-components/link/sp-link.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
-import './overlay-story-components.js';
+import { OverlayTypes } from '../src/overlay-types.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
@@ -66,7 +52,7 @@ export default {
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
-            description: 'Whether the second accordion item is open.',
+            description: 'Whether the overlay is initially open.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
@@ -156,287 +142,106 @@ const Template = ({
     </div>
 `;
 
-/**
- * Modal overlay - blocks page interaction
- * 
- * **Key features:**
- * - type="modal" blocks interaction with page content
- * - User must interact with overlay or press ESC to close
- * - Automatically manages focus and keyboard navigation
- * 
- * 📖 [Overlay Types Guide](./overlay-types.md#modal)
- */
-export const modal = (args: Properties): TemplateResult => Template(args);
-modal.args = {
-    interaction: 'click',
-    placement: 'right',
-    style: 'will-change',
-    type: 'modal',
-};
-
-export const page = ({
-    interaction,
-    open,
-    placement,
-    type,
-}: Properties): TemplateResult => html`
-    <sp-action-button id="trigger">Open the overlay</sp-action-button>
-    <sp-overlay
-        ?open=${open}
-        trigger="trigger@${interaction}"
-        type=${ifDefined(type)}
-        placement=${ifDefined(placement)}
-    >
-        ${notAgain()}
-    </sp-overlay>
-`;
-page.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'page',
-};
-
-export const complexSlowPage = (): TemplateResult => html`
-    <div style="padding: 20px;">
-
-            <p>
-                This is a complex slow page. It has a lot of content. Even with a lot of content on the page,
-                the overlay should still be able to open and close without extreme delay.
-            </p>
-
-            <div
-                style="display: flex; flex-direction: column; align-items: center; justify-content: center;"
-            >
-                <sp-button style="margin: 20px;" id="trigger">
-                    open modal
-                </sp-button>
-                <sp-overlay trigger="trigger@click" type="modal">
-                    <sp-dialog-wrapper headline="Signin form" dismissable underlay>
-                        <p>I am a modal type overlay.</p>
-                        <sp-field-label>Enter your email</sp-field-label>
-                        <sp-textfield placeholder="test@gmail.com"></sp-textfield>
-                        <sp-action-button
-                            onClick="
-                                this.dispatchEvent(
-                                    new Event('close', {
-                                        bubbles: true,
-                                        composed: true,
-                                    })
-                                );
-                            "
-                        >
-                            Sign in
-                        </sp-action-button>
-                    </sp-dialog-wrapper>
-                </sp-overlay>
-
-                <sp-button id="pageTrigger" style="margin: 20px;">open page</sp-button>
-                <sp-overlay trigger="pageTrigger@click" type="page">
-                    <sp-dialog-wrapper
-                        headline="Full screen menu"
-                        mode="fullscreenTakeover"
-                        cancel-label="Close"
-                    >
-                        <p>I am a page type overlay.</p>
-                    </sp-dialog-wrapper>
-                </sp-overlay>
-                <style>
-                    .chat-container {
-                        position: fixed;
-                        bottom: 1em;
-                        left: 1em;
-                    }
-                </style>
-
-                <sp-button id="manualTrigger" style="margin: 20px;">open manual</sp-button>
-                <sp-overlay trigger="manualTrigger@click" type="manual">
-                    <sp-popover class="chat-container">
-                        <sp-dialog dismissable>
-                            <span slot="heading">Chat Window</span>
-                            <sp-textfield
-                                placeholder="Enter your message"
-                            ></sp-textfield>
-                            <sp-action-button>Send</sp-action-button>
-                        </sp-dialog>
-                    </sp-popover>
-                </sp-overlay>
-
-            </div>
-        </span>
-
-        ${Array(30)
-            .fill(0)
-            .map(
-                () => html`
-                    <div style="margin-bottom: 20px;">
-                        <sp-table>
-                            <sp-table-head>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                                <sp-table-head-cell>
-                                    Column Title
-                                </sp-table-head-cell>
-                            </sp-table-head>
-                            <sp-table-body style="height: 200px">
-                                <sp-table-row value="row1" class="row1">
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Alpha
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row2" class="row2">
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Bravo
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row3" class="row3">
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Charlie
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row4" class="row4">
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                    <sp-table-cell>
-                                        Row Item Delta
-                                    </sp-table-cell>
-                                </sp-table-row>
-                                <sp-table-row value="row5" class="row5">
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                    <sp-table-cell>Row Item Echo</sp-table-cell>
-                                </sp-table-row>
-                            </sp-table-body>
-                        </sp-table>
-                        <sp-action-group>
-                            <sp-action-button>
-                                <sp-icon-anchor-select
-                                    slot="icon"
-                                ></sp-icon-anchor-select>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-polygon-select
-                                    slot="icon"
-                                ></sp-icon-polygon-select>
-                            </sp-action-button>
-                            <sp-slider
-                                value="5"
-                                step="0.5"
-                                min="0"
-                                max="20"
-                                label="Control"
-                            ></sp-slider>
-                        </sp-action-group>
-                        <sp-menu-group>
-                            <span slot="header">Menu Group</span>
-                            <sp-menu-item>Option 1</sp-menu-item>
-                            <sp-menu-item>Option 2</sp-menu-item>
-                            <sp-menu-divider></sp-menu-divider>
-                            <sp-menu-item>Option 3</sp-menu-item>
-                        </sp-menu-group>
-                    </div>
-                `
-            )}
-    </div>
-`;
-
-complexSlowPage.swc_vrt = {
-    skip: true,
-};
-
-complexSlowPage.parameters = {
-    chromatic: { disableSnapshot: true },
-};
+// ====================
+// BASIC USAGE
+// ====================
 
 /**
  * Click interaction - overlay opens on button click
- * 
+ *
+ * **Use case:** Display additional content when user clicks a trigger element
+ *
  * **Key features:**
  * - trigger="id@click" binds click event to trigger element
  * - type="auto" closes when clicking outside
  * - Keyboard accessible (Enter/Space to trigger)
- * 
- * 📖 [Interactions Guide](./interactions.md#click)
+ *
+ * 📖 [Interactions Guide](./README.md#interactions)
  */
-export const click = (args: Properties): TemplateResult => Template(args);
-click.args = {
+export const ClickInteraction = (args: Properties): TemplateResult =>
+    Template(args);
+ClickInteraction.args = {
     interaction: 'click',
     placement: 'right',
     style: 'container-type' as WrapperStyleType,
     type: 'auto',
 };
-
-export const withSlider = (): TemplateResult => html`
-    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
-    <sp-overlay trigger="triggerEl@click" placement="bottom">
-        <sp-popover tip>
-            <sp-dialog no-divider class="options-popover-content">
-                <p>Try clicking the slider after popover opens</p>
-                <p>It shouldn't close the popover</p>
-                <sp-slider
-                    value="5"
-                    step="0.5"
-                    min="0"
-                    max="20"
-                    label="Awesomeness"
-                ></sp-slider>
-                <sp-button>Press me</sp-button>
-            </sp-dialog>
-        </sp-popover>
-    </sp-overlay>
-`;
-withSlider.swc_vrt = {
-    skip: true,
-};
-
-withSlider.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
+ClickInteraction.parameters = {
+    docs: {
+        description: {
+            story: 'Basic click interaction showing popover on button click. Closes when clicking outside or pressing Escape.',
+        },
+    },
 };
 
 /**
  * Hover interaction - overlay opens on mouse hover
- * 
+ *
+ * **Use case:** Show contextual information when user hovers over an element
+ *
  * **Key features:**
  * - trigger="id@hover" binds hover event to trigger element
  * - Typically used with tooltips (type="hint")
  * - Supports delayed attribute for better UX
- * 
- * 📖 [Interactions Guide](./interactions.md#hover)
+ *
+ * 📖 [Interactions Guide](./README.md#interactions)
  */
-export const hover = (args: Properties): TemplateResult => Template(args);
-hover.args = {
+export const HoverInteraction = (args: Properties): TemplateResult =>
+    Template(args);
+HoverInteraction.args = {
     interaction: 'hover',
     placement: 'right',
     style: 'will-change',
 };
+HoverInteraction.parameters = {
+    docs: {
+        description: {
+            story: 'Hover interaction showing overlay when mouse enters trigger element. Useful for tooltips and contextual help.',
+        },
+    },
+};
 
-export const hoverTooltip = ({
+/**
+ * Longpress interaction - overlay opens on long press
+ *
+ * **Use case:** Advanced options revealed on 300ms hold (useful for mobile)
+ *
+ * **Key features:**
+ * - trigger="id@longpress" binds longpress event
+ * - Useful for touch interfaces and mobile
+ * - Hold affordance can be added to trigger button
+ *
+ * 📖 [Interactions Guide](./README.md#interactions)
+ */
+export const LongpressInteraction = (args: Properties): TemplateResult =>
+    Template(args);
+LongpressInteraction.args = {
+    interaction: 'longpress',
+    placement: 'right',
+    style: 'container-type',
+    type: 'auto',
+};
+LongpressInteraction.parameters = {
+    docs: {
+        description: {
+            story: 'Longpress gesture (300ms hold) opens overlay. Works with touch, mouse, and keyboard (Space or Alt+Down).',
+        },
+    },
+};
+
+/**
+ * Tooltip variant - simple hover tooltip
+ *
+ * **Use case:** Quick help text or labels for icons
+ *
+ * **Key features:**
+ * - Uses sp-tooltip instead of sp-popover
+ * - type="hint" for non-blocking behavior
+ * - delayed attribute prevents immediate show
+ *
+ * 📖 [Tooltip Component](../../tooltip/README.md)
+ */
+export const TooltipVariant = ({
     interaction,
     open,
     placement,
@@ -460,107 +265,488 @@ export const hoverTooltip = ({
         </sp-overlay>
     </div>
 `;
-hoverTooltip.args = {
+TooltipVariant.args = {
     interaction: 'hover',
     placement: 'right',
 };
+TooltipVariant.parameters = {
+    docs: {
+        description: {
+            story: 'Simple tooltip example using sp-tooltip component. Best for brief help text and icon labels.',
+        },
+    },
+};
+
+// ====================
+// OVERLAY TYPES
+// ====================
 
 /**
- * Longpress interaction - overlay opens on long press
- * 
+ * Modal type - blocks page interaction
+ *
+ * **Use case:** Require user attention before proceeding
+ *
  * **Key features:**
- * - trigger="id@longpress" binds longpress event
- * - Useful for touch interfaces and mobile
- * - Hold affordance can be added to trigger button
- * 
- * 📖 [Interactions Guide](./interactions.md#longpress)
+ * - type="modal" blocks interaction with page content
+ * - User must interact with overlay or press ESC to close
+ * - Automatically manages focus and keyboard navigation
+ * - Use with sp-dialog-wrapper for consistent modal dialogs
+ *
+ * 📖 [Overlay Types Guide](./README.md#overlay-types)
  */
-export const longpress = (args: Properties): TemplateResult => Template(args);
-longpress.args = {
-    interaction: 'longpress',
+export const ModalType = (args: Properties): TemplateResult => Template(args);
+ModalType.args = {
+    interaction: 'click',
     placement: 'right',
-    style: 'container-type',
-    type: 'auto',
+    style: 'will-change',
+    type: 'modal',
+};
+ModalType.parameters = {
+    docs: {
+        description: {
+            story: 'Modal overlay blocks page interaction until user closes it. Use for important decisions or required input.',
+        },
+    },
 };
 
 /**
- * Proxy for fully encapsulated overlay containers that need to
- * pass `focus` into a shadow child element.
+ * Page type - full page takeover
+ *
+ * **Use case:** Full-screen modals, wizards, or complex forms
+ *
+ * **Key features:**
+ * - type="page" for full-screen overlays
+ * - Often used with sp-dialog-wrapper mode="fullscreenTakeover"
+ * - Manages focus and prevents page scrolling
+ * - Typically has its own close button
+ *
+ * 📖 [Overlay Types Guide](./README.md#overlay-types)
  */
-export const receivesFocus = ({
+export const PageType = ({
     interaction,
     open,
     placement,
-    receivesFocus,
     type,
 }: Properties): TemplateResult => html`
-    <sp-action-button id="trigger">
-        Open the overlay (with focus)
-    </sp-action-button>
+    <sp-action-button id="trigger">Open the overlay</sp-action-button>
     <sp-overlay
         ?open=${open}
         trigger="trigger@${interaction}"
         type=${ifDefined(type)}
         placement=${ifDefined(placement)}
-        .receivesFocus=${receivesFocus}
     >
-        <sp-popover>
-            <sp-dialog size="s" no-divider>
-                <a href="https://example.com">Click Content</a>
-            </sp-dialog>
-        </sp-popover>
+        ${notAgain()}
     </sp-overlay>
 `;
-receivesFocus.args = {
+PageType.args = {
     interaction: 'click',
-    placement: 'bottom-start',
-    type: 'auto',
-    receivesFocus: 'true',
-} as Properties;
+    placement: 'right',
+    type: 'page',
+};
+PageType.parameters = {
+    docs: {
+        description: {
+            story: 'Page type overlay takes over the entire viewport. Use for complex workflows, wizards, or full-screen modals.',
+        },
+    },
+};
 
-export const transformed = (args: Properties): TemplateResult => html`
+/**
+ * Auto type - smart non-modal behavior
+ *
+ * **Use case:** Most common type for popovers and dropdowns
+ *
+ * **Key features:**
+ * - type="auto" closes when clicking outside
+ * - Allows interaction with page if overlay doesn't have focus
+ * - Good default for most use cases
+ * - Automatically manages light dismiss behavior
+ *
+ * 📖 [Overlay Types Guide](./README.md#overlay-types)
+ */
+export const AutoType = (args: Properties): TemplateResult => Template(args);
+AutoType.args = {
+    interaction: 'click',
+    placement: 'right',
+    style: 'container-type',
+    type: 'auto',
+};
+AutoType.parameters = {
+    docs: {
+        description: {
+            story: 'Auto type is the most common choice. Closes when clicking outside, allows normal page interaction.',
+        },
+    },
+};
+
+/**
+ * Hint type - non-blocking tooltips
+ *
+ * **Use case:** Tooltips and non-interactive help text
+ *
+ * **Key features:**
+ * - type="hint" never blocks page interaction
+ * - Use with sp-tooltip for consistency
+ * - Automatically closes on mouse leave or focus change
+ * - Best for brief contextual help
+ *
+ * 📖 [Overlay Types Guide](./README.md#overlay-types)
+ */
+export const HintType = ({
+    interaction,
+    open,
+    placement,
+    delayed,
+}: Properties): TemplateResult => html`
+    <sp-action-button id="trigger">Hover me</sp-action-button>
+    <sp-overlay
+        ?open=${open}
+        ?delayed=${delayed}
+        trigger="trigger@${interaction}"
+        type="hint"
+        placement=${ifDefined(placement)}
+    >
+        <sp-tooltip>This is a hint that doesn't block interaction</sp-tooltip>
+    </sp-overlay>
+`;
+HintType.args = {
+    interaction: 'hover',
+    placement: 'top',
+    delayed: true,
+};
+HintType.parameters = {
+    docs: {
+        description: {
+            story: 'Hint type never blocks page interaction. Perfect for tooltips and brief contextual information.',
+        },
+    },
+};
+
+/**
+ * Type comparison - visual comparison of all overlay types
+ *
+ * **Use case:** Understand differences between overlay types
+ *
+ * **Key features:**
+ * - Side-by-side comparison of all types
+ * - Shows behavior differences
+ * - Helps choose the right type
+ *
+ * 📖 [Overlay Types Guide](./README.md#overlay-types)
+ */
+export const TypeComparison = (): TemplateResult => html`
     <style>
-        .transformed {
+        .type-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .type-card {
+            padding: 20px;
+            background: var(--spectrum-gray-100);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .type-card h3 {
+            margin-top: 0;
+            font-size: 14px;
+            color: var(--spectrum-gray-900);
+        }
+        .type-card p {
+            font-size: 12px;
+            color: var(--spectrum-gray-700);
+            margin: 10px 0;
+        }
+    </style>
+    <div class="type-comparison">
+        <div class="type-card">
+            <h3>modal</h3>
+            <sp-button id="modal-trigger">Open</sp-button>
+            <sp-overlay trigger="modal-trigger@click" type="modal">
+                <sp-popover>
+                    <sp-dialog size="s" no-divider>
+                        Modal - blocks page
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>Blocks all page interaction</p>
+        </div>
+        <div class="type-card">
+            <h3>auto</h3>
+            <sp-button id="auto-trigger">Open</sp-button>
+            <sp-overlay trigger="auto-trigger@click" type="auto">
+                <sp-popover>
+                    <sp-dialog size="s" no-divider>
+                        Auto - light dismiss
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>Closes when clicking outside</p>
+        </div>
+        <div class="type-card">
+            <h3>hint</h3>
+            <sp-button id="hint-trigger">Hover</sp-button>
+            <sp-overlay trigger="hint-trigger@hover" type="hint" delayed>
+                <sp-tooltip>Hint - never blocks</sp-tooltip>
+            </sp-overlay>
+            <p>Never blocks interaction</p>
+        </div>
+        <div class="type-card">
+            <h3>manual</h3>
+            <sp-button id="manual-trigger">Open</sp-button>
+            <sp-overlay trigger="manual-trigger@click" type="manual">
+                <sp-popover
+                    style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);"
+                >
+                    <sp-dialog size="s" no-divider>
+                        Manual - you control position
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>You control positioning</p>
+        </div>
+    </div>
+`;
+TypeComparison.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: 'Compare all overlay types side by side to understand their different behaviors.',
+        },
+    },
+};
+
+// ====================
+// POSITIONING
+// ====================
+
+/**
+ * Placement demo - interactive placement options
+ *
+ * **Use case:** Understand all placement options
+ *
+ * **Key features:**
+ * - Shows all 12 placement options
+ * - Demonstrates auto-adjustment at viewport edges
+ * - Includes offset and transformed container examples
+ *
+ * 📖 [Positioning Guide](./README.md#positioning)
+ */
+export const PlacementDemo = (): TemplateResult => html`
+    <style>
+        .placement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .placement-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .placement-item span {
+            font-size: 12px;
+            color: var(--spectrum-gray-700);
+        }
+        .transformed-demo {
             transform: translateX(-50%);
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 100px;
-            block-size: 50px;
+            position: relative;
+            left: 50%;
+            margin: 40px 0;
+            padding: 20px;
+            background: var(--spectrum-gray-100);
+            border-radius: 8px;
         }
     </style>
-    <div class="transformed">${Template(args)}</div>
+    <h3 style="text-align: center;">Standard Placements</h3>
+    <div class="placement-grid">
+        ${[
+            'top',
+            'top-start',
+            'top-end',
+            'right',
+            'right-start',
+            'right-end',
+            'bottom',
+            'bottom-start',
+            'bottom-end',
+            'left',
+            'left-start',
+            'left-end',
+        ].map(
+            (placement) => html`
+                <div class="placement-item">
+                    <sp-button id="${placement}-trigger">
+                        ${placement}
+                    </sp-button>
+                    <sp-overlay
+                        trigger="${placement}-trigger@click"
+                        type="auto"
+                        placement="${placement as Placement}"
+                    >
+                        <sp-popover>
+                            <sp-dialog size="s" no-divider>
+                                Placement: ${placement}
+                            </sp-dialog>
+                        </sp-popover>
+                    </sp-overlay>
+                </div>
+            `
+        )}
+    </div>
+    <h3 style="text-align: center; margin-top: 40px;">Transformed Container</h3>
+    <div class="transformed-demo">
+        <p style="margin: 0 0 10px 0; text-align: center;">
+            Overlay positioning works correctly even in transformed containers
+        </p>
+        <sp-button
+            id="transformed-trigger"
+            style="display: block; margin: 0 auto;"
+        >
+            Open Overlay
+        </sp-button>
+        <sp-overlay
+            trigger="transformed-trigger@click"
+            type="auto"
+            placement="bottom"
+        >
+            <sp-popover>
+                <sp-dialog size="s" no-divider>
+                    Works in transformed containers!
+                </sp-dialog>
+            </sp-popover>
+        </sp-overlay>
+    </div>
 `;
-transformed.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'auto',
+PlacementDemo.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: 'Comprehensive demo of all placement options, including behavior in transformed containers.',
+        },
+    },
 };
 
-export const contained = (args: Properties): TemplateResult => html`
+/**
+ * Focus management - control focus behavior
+ *
+ * **Use case:** Control how focus is managed when overlay opens
+ *
+ * **Key features:**
+ * - receivesFocus="auto" - Smart focus management (default)
+ * - receivesFocus="true" - Always move focus to overlay
+ * - receivesFocus="false" - Never move focus
+ *
+ * 📖 [Accessibility Guide](./ACCESSIBILITY.md#focus-management)
+ */
+export const FocusManagement = (): TemplateResult => html`
     <style>
-        .contained {
-            contain: strict;
-            position: absolute;
-            inset: auto;
-            inset-inline-start: 200px;
-            inset-block-start: 200px;
-            inline-size: 200px;
-            block-size: 50px;
-            padding-block: 75px;
-            padding-inline-start: 300px;
+        .focus-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .focus-card {
+            padding: 20px;
+            background: var(--spectrum-gray-100);
+            border-radius: 8px;
+        }
+        .focus-card h3 {
+            margin-top: 0;
+            font-size: 14px;
+        }
+        .focus-card p {
+            font-size: 12px;
+            color: var(--spectrum-gray-700);
         }
     </style>
-    <div class="contained">${Template(args)}</div>
+    <div class="focus-demo">
+        <div class="focus-card">
+            <h3>receivesFocus="auto" (default)</h3>
+            <sp-button id="auto-focus-trigger">Open</sp-button>
+            <sp-overlay
+                trigger="auto-focus-trigger@click"
+                type="auto"
+                .receivesFocus=${'auto'}
+            >
+                <sp-popover>
+                    <sp-dialog size="s" no-divider>
+                        <a href="#test">Focusable link</a>
+                        <p>Focus moves here automatically</p>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>Focus moves to overlay if it has focusable elements</p>
+        </div>
+        <div class="focus-card">
+            <h3>receivesFocus="true"</h3>
+            <sp-button id="true-focus-trigger">Open</sp-button>
+            <sp-overlay
+                trigger="true-focus-trigger@click"
+                type="auto"
+                .receivesFocus=${'true'}
+            >
+                <sp-popover>
+                    <sp-dialog size="s" no-divider>
+                        <p>Focus always moves here</p>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>Focus always moves to overlay</p>
+        </div>
+        <div class="focus-card">
+            <h3>receivesFocus="false"</h3>
+            <sp-button id="false-focus-trigger">Open</sp-button>
+            <sp-overlay
+                trigger="false-focus-trigger@click"
+                type="auto"
+                .receivesFocus=${'false'}
+            >
+                <sp-popover>
+                    <sp-dialog size="s" no-divider>
+                        <a href="#test">This won't get focus</a>
+                        <p>Focus stays on trigger</p>
+                    </sp-dialog>
+                </sp-popover>
+            </sp-overlay>
+            <p>Focus stays on trigger button</p>
+        </div>
+    </div>
 `;
-contained.args = {
-    interaction: 'click',
-    placement: 'right',
-    type: 'auto',
+FocusManagement.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: 'Demonstrates the three focus management modes: auto, true, and false. Use auto for most cases.',
+        },
+    },
 };
 
-export const all = ({ delayed }: Properties): TemplateResult => html`
+// ====================
+// ADVANCED FEATURES
+// ====================
+
+/**
+ * Multiple overlays per trigger
+ *
+ * **Use case:** Different overlays for different interactions
+ *
+ * **Key features:**
+ * - Multiple sp-overlay elements can share same trigger
+ * - Different interaction types (click, hover, longpress)
+ * - Each overlay can have different content and behavior
+ *
+ * 📖 [Advanced Patterns](./README.md#multiple-overlays-per-trigger)
+ */
+export const MultipleOverlaysPerTrigger = ({
+    delayed,
+}: Properties): TemplateResult => html`
     <sp-action-button id="trigger" hold-affordance>
         Open the overlay
     </sp-action-button>
@@ -578,8 +764,181 @@ export const all = ({ delayed }: Properties): TemplateResult => html`
         </sp-popover>
     </sp-overlay>
 `;
+MultipleOverlaysPerTrigger.parameters = {
+    docs: {
+        description: {
+            story: 'Multiple overlay elements targeting the same trigger with different interactions. Useful for progressive disclosure.',
+        },
+    },
+};
 
-export const actionGroup = ({ delayed }: Properties): TemplateResult => {
+/**
+ * Nested modal overlays
+ *
+ * **Use case:** Modals that open other modals
+ *
+ * **Key features:**
+ * - Proper stacking and z-index management
+ * - Focus management across modal stack
+ * - ESC key closes innermost modal first
+ *
+ * 📖 [Advanced Patterns](./README.md#nested-overlays)
+ */
+export const NestedModalOverlays = (): TemplateResult => html`
+    <div style="padding: 20px;">
+        <sp-button id="outerTrigger" variant="primary">
+            Open Outer Modal
+        </sp-button>
+
+        <sp-overlay id="outerOverlay" type="auto" trigger="outerTrigger@click">
+            <sp-popover>
+                <sp-dialog>
+                    <p>
+                        This is the outer modal content. Press ESC to close it.
+                    </p>
+                    <sp-button id="innerTrigger" variant="primary">
+                        Open Inner Modal
+                    </sp-button>
+                    <sp-overlay
+                        id="innerOverlay"
+                        type="auto"
+                        trigger="innerTrigger@click"
+                    >
+                        <sp-popover>
+                            <sp-dialog>
+                                <p>
+                                    This is the inner modal content. Press ESC
+                                    to close this first, then the outer modal.
+                                </p>
+                            </sp-dialog>
+                        </sp-popover>
+                    </sp-overlay>
+                </sp-dialog>
+            </sp-popover>
+        </sp-overlay>
+    </div>
+`;
+NestedModalOverlays.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: 'Demonstrates nested modal overlays with proper stacking, focus management, and keyboard navigation.',
+        },
+    },
+};
+
+/**
+ * Lazy loading pattern with slottable-request
+ *
+ * **Use case:** Performance optimization for heavy or numerous overlays
+ *
+ * **Key features:**
+ * - Content created only when overlay opens
+ * - Reduces initial DOM size
+ * - slottable-request event for on-demand rendering
+ * - Content removed when overlay closes
+ *
+ * 📖 [Performance Guide](./PERFORMANCE.md#lazy-loading)
+ */
+export const LazyLoadingPattern = (): TemplateResult => {
+    const handleSlottableRequest = (event: SlottableRequestEvent): void => {
+        const template =
+            event.data === removeSlottableRequest
+                ? undefined
+                : html`
+                      <sp-popover>
+                          <sp-dialog no-divider>
+                              <sp-slider
+                                  value="5"
+                                  step="0.5"
+                                  min="0"
+                                  max="20"
+                                  label="Awesomeness"
+                              ></sp-slider>
+                              <div>
+                                  This content was lazily loaded when the
+                                  overlay opened!
+                              </div>
+                              <sp-button>Press Me</sp-button>
+                          </sp-dialog>
+                      </sp-popover>
+                  `;
+        render(template, event.target as HTMLElement);
+    };
+    return html`
+        <sp-button id="button">Trigger</sp-button>
+        <sp-overlay
+            placement="bottom"
+            type="auto"
+            trigger="button@click"
+            @slottable-request=${handleSlottableRequest}
+        ></sp-overlay>
+    `;
+};
+LazyLoadingPattern.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: 'Lazy loading pattern using slottable-request event to create content on demand, improving initial page load performance.',
+        },
+    },
+};
+
+/**
+ * With interactive content
+ *
+ * **Use case:** Overlays containing interactive elements like sliders or forms
+ *
+ * **Key features:**
+ * - Interactive elements work correctly in overlays
+ * - Focus management for form elements
+ * - Click events don't close overlay prematurely
+ *
+ * 📖 [Forms Integration](./FORMS-INTEGRATION.md)
+ */
+export const WithInteractiveContent = (): TemplateResult => html`
+    <sp-button id="triggerEl" variant="primary">Button popover</sp-button>
+    <sp-overlay trigger="triggerEl@click" placement="bottom">
+        <sp-popover tip>
+            <sp-dialog no-divider class="options-popover-content">
+                <p>Try clicking the slider after popover opens</p>
+                <p>It shouldn't close the popover</p>
+                <sp-slider
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Awesomeness"
+                ></sp-slider>
+                <sp-button>Press me</sp-button>
+            </sp-dialog>
+        </sp-popover>
+    </sp-overlay>
+`;
+WithInteractiveContent.parameters = {
+    chromatic: { disableSnapshot: true },
+    docs: {
+        description: {
+            story: "Overlay containing interactive elements like sliders and buttons. Clicks on interactive content don't close the overlay.",
+        },
+    },
+};
+
+/**
+ * Integration with action groups
+ *
+ * **Use case:** Tool palettes or action groups with hover/longpress overlays
+ *
+ * **Key features:**
+ * - Multiple action buttons with individual overlays
+ * - Hover tooltips + longpress expanded options
+ * - Efficient with triggered-by optimization
+ *
+ * 📖 [Integration Examples](./README.md#action-groups)
+ */
+export const IntegrationActionGroup = ({
+    delayed,
+}: Properties): TemplateResult => {
     const popoverOffset = [6, -13] as [number, number];
     return html`
         <style>
@@ -597,8 +956,7 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 inset-block-start: 3em;
                 padding-block-end: 3em;
             }
-            .root > sp-action-group > sp-action-button,
-            .root > sp-action-group > sp-action-menu {
+            .root > sp-action-group > sp-action-button {
                 top: 3em;
                 position: relative;
             }
@@ -616,41 +974,6 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
                 <sp-action-button id="trigger-3" hold-affordance>
                     <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
                 </sp-action-button>
-                <sp-action-menu label="More Actions" placement="left">
-                    <sp-menu-group id="cms">
-                        <span slot="header">cms</span>
-                        <sp-menu-item value="updateAllSiteContent">
-                            Update All Content
-                        </sp-menu-item>
-                        <sp-menu-item value="refreshAllXDs">
-                            Refresh All XDs
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="ssg">
-                        <span slot="header">ssg</span>
-                        <sp-menu-item value="clearCache">
-                            Clear Cache
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="vrt">
-                        <span slot="header">vrt</span>
-                        <sp-menu-item value="vrt-contributions">
-                            Contributions
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-internal">
-                            Internal
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
-                        <sp-menu-item value="vrt-patterns">
-                            Patterns
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt">All</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-group id="misc">
-                        <sp-menu-item value="logout">Logout</sp-menu-item>
-                    </sp-menu-group>
-                </sp-action-menu>
             </sp-action-group>
         </sp-popover>
         <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover" type="hint">
@@ -741,290 +1064,10 @@ export const actionGroup = ({ delayed }: Properties): TemplateResult => {
         </sp-overlay>
     `;
 };
-
-export const actionGroupWithFilters = ({
-    delayed,
-}: Properties): TemplateResult => {
-    const popoverOffset = [6, -13] as [number, number];
-    return html`
-        <style>
-            sp-popover sp-action-group {
-                padding: calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) *
-                            0.75
-                    )
-                    calc(
-                        var(--spectrum-actiongroup-vertical-spacing-regular) / 2
-                    );
-            }
-            .root {
-                inset-inline-end: 0em;
-                inset-block-start: 3em;
-                padding-block-end: 3em;
-                overflow: hidden;
-            }
-            .root > sp-action-group > sp-action-button,
-            .root > sp-action-group > sp-action-menu {
-                top: 3em;
-                position: relative;
-            }
-            sp-action-button,
-            sp-action-menu {
-                background-image: linear-gradient(
-                    rgba(125, 125, 125, 0.2),
-                    rgba(125, 125, 125, 0.2)
-                );
-                background-blend-mode: multiply;
-                filter: brightness(1) saturate(1);
-            }
-        </style>
-        <p>
-            This story outlines some CSS usage that is not yet covered by the
-            placement calculations within the Overlay API.
-        </p>
-        <sp-popover open class="root">
-            <sp-action-group vertical quiet emphasized selects="single">
-                <sp-action-button id="trigger-1" hold-affordance>
-                    <sp-icon-anchor-select slot="icon"></sp-icon-anchor-select>
-                    <sp-tooltip ?delayed=${delayed} self-managed>
-                        Hover
-                    </sp-tooltip>
-                    <sp-overlay
-                        trigger="trigger-1@longpress"
-                        type="auto"
-                        placement="right-start"
-                        .offset=${popoverOffset}
-                    >
-                        <sp-popover tip>
-                            <sp-action-group vertical quiet>
-                                <sp-action-button>
-                                    <sp-icon-anchor-select
-                                        slot="icon"
-                                    ></sp-icon-anchor-select>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-polygon-select
-                                        slot="icon"
-                                    ></sp-icon-polygon-select>
-                                </sp-action-button>
-                                <sp-action-button>
-                                    <sp-icon-rect-select
-                                        slot="icon"
-                                    ></sp-icon-rect-select>
-                                </sp-action-button>
-                            </sp-action-group>
-                        </sp-popover>
-                    </sp-overlay>
-                </sp-action-button>
-                <sp-action-button id="trigger-2" hold-affordance>
-                    <sp-icon-polygon-select
-                        slot="icon"
-                    ></sp-icon-polygon-select>
-                </sp-action-button>
-                <sp-action-button id="trigger-3" hold-affordance>
-                    <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    <sp-tooltip ?delayed=${delayed} self-managed>
-                        Hover
-                    </sp-tooltip>
-                </sp-action-button>
-                <sp-action-menu label="More Actions">
-                    <sp-menu-group id="cms">
-                        <span slot="header">cms</span>
-                        <sp-menu-item value="updateAllSiteContent">
-                            Update All Content
-                        </sp-menu-item>
-                        <sp-menu-item value="refreshAllXDs">
-                            Refresh All XDs
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="ssg">
-                        <span slot="header">ssg</span>
-                        <sp-menu-item value="clearCache">
-                            Clear Cache
-                        </sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-group id="vrt">
-                        <span slot="header">vrt</span>
-                        <sp-menu-item value="vrt-contributions">
-                            Contributions
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-internal">
-                            Internal
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt-public">Public</sp-menu-item>
-                        <sp-menu-item value="vrt-patterns">
-                            Patterns
-                        </sp-menu-item>
-                        <sp-menu-item value="vrt">All</sp-menu-item>
-                    </sp-menu-group>
-                    <sp-menu-divider></sp-menu-divider>
-                    <sp-menu-group id="misc">
-                        <sp-menu-item value="logout">Logout</sp-menu-item>
-                    </sp-menu-group>
-                </sp-action-menu>
-            </sp-action-group>
-        </sp-popover>
-        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover" type="hint">
-            <sp-tooltip>Hover</sp-tooltip>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-2@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-        <sp-overlay
-            trigger="trigger-3@longpress"
-            type="auto"
-            placement="right-start"
-            .offset=${popoverOffset}
-        >
-            <sp-popover tip>
-                <sp-action-group vertical quiet>
-                    <sp-action-button>
-                        <sp-icon-anchor-select
-                            slot="icon"
-                        ></sp-icon-anchor-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-polygon-select
-                            slot="icon"
-                        ></sp-icon-polygon-select>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-rect-select slot="icon"></sp-icon-rect-select>
-                    </sp-action-button>
-                </sp-action-group>
-            </sp-popover>
-        </sp-overlay>
-    `;
-};
-
-// Test #3795 in browser
-export const transientHover = (): TemplateResult => html`
-    <transient-hover></transient-hover>
-`;
-transientHover.swc_vrt = {
-    skip: true,
-};
-
-transientHover.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const lazyElements = (): TemplateResult => {
-    const handleSlottableRequest = (event: SlottableRequestEvent): void => {
-        const template =
-            event.data === removeSlottableRequest
-                ? undefined
-                : html`
-                      <sp-popover>
-                          <sp-dialog no-divider>
-                              <sp-slider
-                                  value="5"
-                                  step="0.5"
-                                  min="0"
-                                  max="20"
-                                  label="Awesomeness"
-                              ></sp-slider>
-                              <div id="styled-div">
-                                  The background of this div should be blue
-                              </div>
-                              <sp-button>
-                                  Press Me
-                                  <sp-tooltip self-managed delayed>
-                                      Click to open another popover.
-                                  </sp-tooltip>
-                              </sp-button>
-                          </sp-dialog>
-                      </sp-popover>
-                  `;
-        render(template, event.target as HTMLElement);
-    };
-    return html`
-        <sp-button id="button">Trigger</sp-button>
-        <sp-overlay
-            placement="bottom"
-            type="auto"
-            trigger="button@click"
-            @slottable-request=${handleSlottableRequest}
-        ></sp-overlay>
-    `;
-};
-
-lazyElements.swc_vrt = {
-    skip: true,
-};
-
-lazyElements.parameters = {
-    // Disables Chromatic's snapshotting on a global level
-    chromatic: { disableSnapshot: true },
-};
-
-export const nestedModalOverlays = (): TemplateResult => html`
-    <div style="padding: 20px;">
-        <sp-button id="outerTrigger" variant="primary">
-            Open Outer Modal
-        </sp-button>
-
-        <sp-overlay
-            id="outerOverlay"
-            type="auto"
-            .triggerInteraction=${'click'}
-            trigger="outerTrigger@click"
-        >
-            <sp-popover>
-                <sp-dialog>
-                    <p>
-                        This is the outer modal content. Press ESC to close it.
-                    </p>
-                    <sp-button id="innerTrigger" variant="primary">
-                        Open Inner Modal
-                    </sp-button>
-                    <sp-overlay
-                        id="innerOverlay"
-                        type="auto"
-                        .triggerInteraction=${'click'}
-                        trigger="innerTrigger@click"
-                    >
-                        <sp-popover>
-                            <sp-dialog>
-                                <p>
-                                    This is the inner modal content. Press ESC
-                                    to close this first, then the outer modal.
-                                </p>
-                            </sp-dialog>
-                        </sp-popover>
-                    </sp-overlay>
-                </sp-dialog>
-            </sp-popover>
-        </sp-overlay>
-    </div>
-`;
-
-nestedModalOverlays.swc_vrt = {
-    skip: true,
-};
-
-nestedModalOverlays.parameters = {
-    chromatic: { disableSnapshot: true },
+IntegrationActionGroup.parameters = {
+    docs: {
+        description: {
+            story: 'Integration example showing action groups with hover tooltips and longpress expanded options. Common pattern in tool palettes.',
+        },
+    },
 };
