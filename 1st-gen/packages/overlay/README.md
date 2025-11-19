@@ -1,27 +1,87 @@
-## Documentation index
+## 📚 Documentation
 
 **New to overlays?** Start with the [Getting Started Guide](./GETTING-STARTED.md) to choose the right approach for your use case.
 
-### Core documentation
+### 🚀 Getting started
 
-- [Getting Started Guide](./GETTING-STARTED.md) - Choose the right overlay entry point
-- [Architecture Documentation](./ARCHITECTURE.md) - Deep dive into how the overlay system works
-- [Troubleshooting Guide](./TROUBLESHOOTING.md) - Solutions to common problems
+- **[Getting Started Guide](./GETTING-STARTED.md)** 📘 - Interactive decision tree to choose the right overlay approach
+- **[README](./README.md)** 📄 - Component overview and basic usage (this document)
 
-### Entry points
+### 📖 Learn more
 
-- **`<sp-overlay>`** - This document (below)
-- [`<overlay-trigger>`](./overlay-trigger.md) - Multiple interactions per trigger
-- [Imperative API](./imperative-api.md) - Programmatic overlay control
-- [Trigger directive](./trigger-directive.md) - Lit template integration
-- [Slottable request](./slottable-request.md) - Lazy content loading
+- **[Architecture](./ARCHITECTURE.md)** 🏗️ - How the overlay system works internally
+  - Overlay stack management
+  - Interaction controllers (Click, Hover, Longpress)
+  - Placement engine and collision detection
+  - Event lifecycle
+- **[Accessibility](./ACCESSIBILITY.md)** ♿ - Focus management and ARIA patterns
+  - Focus trapping and restoration
+  - Keyboard navigation
+  - Screen reader support
+  - WCAG compliance
+- **[Performance](./PERFORMANCE.md)** ⚡ - Optimization strategies and benchmarks
+  - Lazy loading with slottable-request
+  - triggered-by optimization
+  - Memory management
+  - Performance metrics
 
-### Integration guides
+### 🔧 Entry points
 
-- [Forms Integration](./FORMS-INTEGRATION.md) - Validation popovers and field helpers
-- [Menus Integration](./MENUS-INTEGRATION.md) - Action menus and dropdown patterns
-- [Accessibility](./ACCESSIBILITY.md) - Focus management and ARIA patterns
-- [Performance](./PERFORMANCE.md) - Optimization strategies
+Choose the right API for your use case:
+
+- **[`<sp-overlay>`](./README.md#usage)** 🎯 - Declarative overlay element (this document)
+  - Single interaction per trigger
+  - Fine-grained control
+  - Virtual positioning support
+- **[`<overlay-trigger>`](./overlay-trigger.md)** 🎭 - Multiple interactions per trigger
+  - Combined hover + click patterns
+  - Slot-based API
+  - Automatic lifecycle management
+- **[Imperative API](./imperative-api.md)** ⚙️ - Programmatic overlay control
+  - Dynamic overlay creation
+  - VirtualTrigger for cursor positioning
+  - Full lifecycle control
+- **[Trigger Directive](./trigger-directive.md)** 🔗 - Lit template integration
+  - Lit framework specific
+  - Reactive content updates
+  - TypeScript integration
+- **[Slottable Request](./slottable-request.md)** 🚀 - Lazy content loading
+  - Performance optimization
+  - Reduce initial DOM size
+  - On-demand content creation
+
+### 🎯 Integration guides
+
+Real-world patterns and best practices:
+
+- **[Forms Integration](./FORMS-INTEGRATION.md)** 📝 - Validation and field helpers
+  - Validation popovers
+  - Field error display
+  - Picker integration
+  - Form field helpers
+- **[Menus Integration](./MENUS-INTEGRATION.md)** 📋 - Action menus and dropdowns
+  - Context menus
+  - Action menus
+  - Dropdown patterns
+  - Menu positioning
+
+### 🔍 Troubleshooting
+
+- **[Troubleshooting Guide](./TROUBLESHOOTING.md)** 🔧 - Symptom-based problem diagnosis
+  - Overlay won't open
+  - Overlay won't close
+  - Positioning issues
+  - Focus management problems
+  - Performance issues
+  - Accessibility issues
+
+### 📊 Additional resources
+
+- **[Storybook Examples](https://opensource.adobe.com/spectrum-web-components/storybook)** - Interactive examples and demos
+- **[GitHub Discussions](https://github.com/adobe/spectrum-web-components/discussions)** - Ask questions and share feedback
+- **[GitHub Issues](https://github.com/adobe/spectrum-web-components/issues)** - Report bugs and request features
+
+---
 
 ## Overview
 

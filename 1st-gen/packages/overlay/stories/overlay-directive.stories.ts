@@ -92,7 +92,15 @@ const storyStyles = html`
 `;
 
 export default {
-    title: 'Overlay Directive',
+    title: 'Overlay/API Reference/trigger() Directive',
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    'The `trigger()` directive provides a Lit-specific API for creating overlays with excellent TypeScript support and template-based development. Use this when working with Lit framework for the most ergonomic developer experience.',
+            },
+        },
+    },
     argTypes: {
         offset: { control: 'number' },
         placement: {

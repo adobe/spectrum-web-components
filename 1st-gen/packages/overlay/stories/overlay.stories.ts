@@ -97,7 +97,16 @@ const storyStyles = html`
 `;
 
 export default {
-    title: 'Overlay',
+    title: 'Overlay/API Reference/overlay-trigger',
+    component: 'overlay-trigger',
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    'The `<overlay-trigger>` element enables multiple interaction types (hover + click) on the same trigger element. Use this when you need different content for different interactions, like a tooltip on hover and a popover on click.',
+            },
+        },
+    },
     argTypes: {
         offset: { control: 'number' },
         placement: {
@@ -223,7 +232,25 @@ function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
 
+/**
+ * Default overlay-trigger with hover and click interactions
+ * 
+ * **Features:**
+ * - Combined hover tooltip and click popover
+ * - Nested overlay support
+ * - Configurable placement and offset
+ * 
+ * 📖 [overlay-trigger Documentation](./overlay-trigger.md)
+ */
 export const Default = (args: Properties): TemplateResult => template(args);
+
+Default.parameters = {
+    docs: {
+        description: {
+            story: 'Basic overlay-trigger example with both hover and click interactions on the same trigger.',
+        },
+    },
+};
 
 export const accordion = (): TemplateResult => {
     return html`
@@ -313,6 +340,18 @@ accordion.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
+/**
+ * Click and hover on same trigger
+ * 
+ * **Use case:** Button that shows tooltip on hover and popover on click
+ * 
+ * **Key features:**
+ * - triggered-by="click hover" enables both interactions
+ * - Different content for each interaction type
+ * - Modal type prevents click-outside on page
+ * 
+ * 📖 [overlay-trigger Documentation](./overlay-trigger.md#multiple-interactions)
+ */
 export const clickAndHoverTarget = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal" triggered-by="click hover">
@@ -330,7 +369,11 @@ clickAndHoverTarget.swc_vrt = {
     skip: true,
 };
 clickAndHoverTarget.parameters = {
-    // Disables Chromatic's snapshotting on a global level
+    docs: {
+        description: {
+            story: 'Demonstrates using both click and hover interactions on a single trigger element.',
+        },
+    },
     chromatic: { disableSnapshot: true },
 };
 
@@ -945,6 +988,18 @@ export const inline = (): TemplateResult => {
     `;
 };
 
+/**
+ * Longpress interaction pattern
+ * 
+ * **Use case:** Advanced options revealed on long press (300ms hold)
+ * 
+ * **Key features:**
+ * - hold-affordance attribute shows visual indicator
+ * - Works with touch, mouse, and keyboard (Space or Alt+Down)
+ * - Automatically adds aria-describedby for accessibility
+ * 
+ * 📖 [LongpressController Documentation](./ARCHITECTURE.md#longpresscontroller)
+ */
 export const longpress = (): TemplateResult => {
     return html`
         <overlay-trigger triggered-by="longpress" placement="right-start">
@@ -975,6 +1030,14 @@ export const longpress = (): TemplateResult => {
             </sp-popover>
         </overlay-trigger>
     `;
+};
+
+longpress.parameters = {
+    docs: {
+        description: {
+            story: 'Longpress gesture opens additional options after 300ms hold.',
+        },
+    },
 };
 
 export const modalLoose = (): TemplateResult => {
@@ -1444,6 +1507,18 @@ virtualElementV1.args = {
     placement: 'right-start' as Placement,
 };
 
+/**
+ * Virtual trigger for context menus
+ * 
+ * **Use case:** Position overlay at specific coordinates (e.g., right-click menu)
+ * 
+ * **Key features:**
+ * - VirtualTrigger positions at clientX/clientY coordinates
+ * - Imperative API (Overlay.open) for dynamic creation
+ * - notImmediatelyClosable prevents instant dismiss from mouseup
+ * 
+ * 📖 [Imperative API - VirtualTrigger](./imperative-api.md#virtualtrigger-patterns)
+ */
 export const virtualElement = (args: Properties): TemplateResult => {
     const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
@@ -1512,6 +1587,14 @@ export const virtualElement = (args: Properties): TemplateResult => {
 
 virtualElement.args = {
     placement: 'right-start' as Placement,
+};
+
+virtualElement.parameters = {
+    docs: {
+        description: {
+            story: 'Context menu positioned at cursor coordinates using VirtualTrigger.',
+        },
+    },
 };
 
 export const virtualElementDeclaratively = (
@@ -1597,6 +1680,19 @@ virtualElementDeclaratively.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
+/**
+ * triggered-by optimization
+ * 
+ * **Performance feature:** Only requested interaction controllers are initialized
+ * 
+ * **Key benefits:**
+ * - Reduced memory footprint
+ * - Fewer event listeners
+ * - Faster initialization
+ * - Prevents race conditions
+ * 
+ * 📖 [Performance Guide](./PERFORMANCE.md#triggered-by-optimization)
+ */
 export const triggeredByOptimization = (): TemplateResult => {
     return html`
         <h2>"triggered-by" attribute optimization</h2>
@@ -1614,7 +1710,7 @@ export const triggeredByOptimization = (): TemplateResult => {
         </p>
         <p>
             Unused interaction types aren't rendered. This improves performance,
-            reduces the number of unecessary DOM nodes and avoids race
+            reduces the number of unnecessary DOM nodes and avoids race
             conditions in slot reparenting.
         </p>
         <div style="display: flex; gap: 20px; flex-direction: column;">
@@ -1655,6 +1751,27 @@ export const triggeredByOptimization = (): TemplateResult => {
     `;
 };
 
+triggeredByOptimization.parameters = {
+    docs: {
+        description: {
+            story: 'Demonstrates how triggered-by optimizes DOM by only rendering needed interaction types.',
+        },
+    },
+};
+
+/**
+ * Hover with interactive content
+ * 
+ * **Advanced pattern:** Hover tooltips with focusable interactive elements
+ * 
+ * **Key features:**
+ * - 300ms hover delay before close
+ * - Mouse can move into overlay content
+ * - Tab navigation supported
+ * - Escape key closes overlay
+ * 
+ * 📖 [HoverController Documentation](./ARCHITECTURE.md#hovercontroller)
+ */
 export const hoverWithInteractiveContent = (): TemplateResult => {
     return html`
         <div
@@ -1739,6 +1856,14 @@ export const hoverWithInteractiveContent = (): TemplateResult => {
 
 hoverWithInteractiveContent.swc_vrt = {
     skip: true,
+};
+
+hoverWithInteractiveContent.parameters = {
+    docs: {
+        description: {
+            story: 'Hover overlay with interactive content like buttons and links. Content remains open as user moves mouse into overlay.',
+        },
+    },
 };
 
 export const pickerInDialog = (): TemplateResult => {

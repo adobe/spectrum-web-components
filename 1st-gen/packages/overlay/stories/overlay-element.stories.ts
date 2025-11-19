@@ -48,8 +48,16 @@ import {
 } from '../src/slottable-request-event.js';
 
 export default {
-    title: 'Overlay Element',
+    title: 'Overlay/API Reference/sp-overlay',
     component: 'sp-overlay',
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    'The `<sp-overlay>` element provides declarative overlay functionality. This is the base element API for creating tooltips, popovers, and other floating UI elements with a single interaction type.',
+            },
+        },
+    },
     args: {
         open: true,
         delayed: false,
@@ -148,6 +156,16 @@ const Template = ({
     </div>
 `;
 
+/**
+ * Modal overlay - blocks page interaction
+ * 
+ * **Key features:**
+ * - type="modal" blocks interaction with page content
+ * - User must interact with overlay or press ESC to close
+ * - Automatically manages focus and keyboard navigation
+ * 
+ * 📖 [Overlay Types Guide](./overlay-types.md#modal)
+ */
 export const modal = (args: Properties): TemplateResult => Template(args);
 modal.args = {
     interaction: 'click',
@@ -355,6 +373,16 @@ complexSlowPage.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
+/**
+ * Click interaction - overlay opens on button click
+ * 
+ * **Key features:**
+ * - trigger="id@click" binds click event to trigger element
+ * - type="auto" closes when clicking outside
+ * - Keyboard accessible (Enter/Space to trigger)
+ * 
+ * 📖 [Interactions Guide](./interactions.md#click)
+ */
 export const click = (args: Properties): TemplateResult => Template(args);
 click.args = {
     interaction: 'click',
@@ -391,6 +419,16 @@ withSlider.parameters = {
     chromatic: { disableSnapshot: true },
 };
 
+/**
+ * Hover interaction - overlay opens on mouse hover
+ * 
+ * **Key features:**
+ * - trigger="id@hover" binds hover event to trigger element
+ * - Typically used with tooltips (type="hint")
+ * - Supports delayed attribute for better UX
+ * 
+ * 📖 [Interactions Guide](./interactions.md#hover)
+ */
 export const hover = (args: Properties): TemplateResult => Template(args);
 hover.args = {
     interaction: 'hover',
@@ -427,6 +465,16 @@ hoverTooltip.args = {
     placement: 'right',
 };
 
+/**
+ * Longpress interaction - overlay opens on long press
+ * 
+ * **Key features:**
+ * - trigger="id@longpress" binds longpress event
+ * - Useful for touch interfaces and mobile
+ * - Hold affordance can be added to trigger button
+ * 
+ * 📖 [Interactions Guide](./interactions.md#longpress)
+ */
 export const longpress = (args: Properties): TemplateResult => Template(args);
 longpress.args = {
     interaction: 'longpress',
