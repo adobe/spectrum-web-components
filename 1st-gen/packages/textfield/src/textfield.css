@@ -16,7 +16,7 @@
 :host {
     display: inline-flex;
     flex-direction: column;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    inline-size: auto;
 }
 
 :host([multiline]) {
@@ -32,7 +32,7 @@
 }
 
 #textfield {
-    inline-size: 100%;
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
 }
 
 #textfield,
