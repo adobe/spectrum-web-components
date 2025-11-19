@@ -49,6 +49,7 @@ import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import {
     IS_MOBILE,
+    IS_TOUCH_DEVICE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -84,6 +85,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     public isMobile = new MatchMediaController(this, IS_MOBILE);
+
+    public isTouchDevice = new MatchMediaController(this, IS_TOUCH_DEVICE);
 
     public strategy!: DesktopController | MobileController;
 
@@ -774,6 +777,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 role=${this.listRole}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
+                .shouldSupportDragAndSelect=${!this.isTouchDevice.matches}
                 size=${this.size}
                 @sp-menu-item-keydown=${this.handleEscape}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}

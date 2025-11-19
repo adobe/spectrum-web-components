@@ -15,16 +15,19 @@ import {
     expect,
     fixture,
     html,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import type { MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sync/sp-picker.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { Tray } from '@spectrum-web-components/tray/src/Tray.js';
+import { spy } from 'sinon';
 
 describe('Picker, responsive', () => {
     let el: Picker;
@@ -170,6 +173,132 @@ describe('Picker, responsive', () => {
 
             expect(tray, 'tray').to.be.null;
             expect(popover, 'popover').to.not.be.null;
+        });
+    });
+
+    describe('touch device detection', () => {
+        afterEach(() => {
+            // Reset touch device simulation.
+            if (el && el.isTouchDevice) {
+                el.isTouchDevice.matches = false;
+            }
+        });
+
+        it('sets shouldSupportDragAndSelect to false on touch devices', async () => {
+            el = await pickerFixture();
+            await elementUpdated(el);
+            /**
+             * This is a hack to set the `isTouchDevice` property to true
+             * so that we can test the touch device behavior.
+             */
+            el.isTouchDevice.matches = true;
+            el.bindEvents();
+            await elementUpdated(el);
+
+            // Open the picker to initialize the menu.
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            // Wait for menu to be ready.
+            await waitUntil(
+                () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+                'Menu should be initialized'
+            );
+
+            // Check that shouldSupportDragAndSelect is false.
+            expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
+        });
+
+        it('sets shouldSupportDragAndSelect to true on desktop devices', async () => {
+            el = await pickerFixture();
+            await elementUpdated(el);
+
+            // Ensure we're not on a touch device.
+            el.isTouchDevice.matches = false;
+            el.bindEvents();
+            await elementUpdated(el);
+
+            // Open the picker to initialize the menu.
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            // Wait for menu to be ready.
+            await waitUntil(
+                () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+                'Menu should be initialized'
+            );
+
+            // Check that shouldSupportDragAndSelect is true.
+            expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.true;
+        });
+
+        it('dispatches change event when menu item is clicked on touch device', async () => {
+            el = await pickerFixture();
+            await elementUpdated(el);
+
+            const changeSpy = spy();
+            el.addEventListener('change', changeSpy);
+
+            /**
+             * This is a hack to set the `isTouchDevice` property to true
+             * so that we can test the iPad/tablet behavior.
+             */
+            el.isTouchDevice.matches = true;
+            el.bindEvents();
+            await elementUpdated(el);
+
+            // Open the picker.
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            // Wait for menu to be ready.
+            await waitUntil(
+                () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+                'Menu should be initialized'
+            );
+
+            // Get the first menu item.
+            const menuItem = el.querySelector(
+                'sp-menu-item[value="option-2"]'
+            ) as MenuItem;
+            expect(menuItem).to.not.be.null;
+
+            // Click the menu item.
+            const closed = oneEvent(el, 'sp-closed');
+            menuItem.click();
+            await closed;
+
+            // Verify the change event was dispatched.
+            expect(changeSpy.callCount).to.equal(1);
+            expect(el.value).to.equal('option-2');
+        });
+
+        it('uses isTouchDevice instead of isMobile for shouldSupportDragAndSelect', async () => {
+            el = await pickerFixture();
+            await elementUpdated(el);
+
+            // Simulate iPad: isMobile is false but isTouchDevice is true.
+            el.isMobile.matches = false;
+            el.isTouchDevice.matches = true;
+            el.bindEvents();
+            await elementUpdated(el);
+
+            // Open the picker.
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+
+            // Wait for menu to be ready.
+            await waitUntil(
+                () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
+                'Menu should be initialized'
+            );
+
+            // The fix: shouldSupportDragAndSelect should be false based on isTouchDevice.
+            expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
         });
     });
 });
