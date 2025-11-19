@@ -1,0 +1,88 @@
+---
+'@spectrum-web-components/styles': minor
+---
+
+Manually adds the s2 static color values from [Spectrum Tokens](https://github.com/adobe/spectrum-tokens/blob/04cf6eb95ece7f3320e0e2babd6a51db8edfc950/packages/tokens/src/color-palette.json#L6491)
+
+### Added
+
+- `--spectrum-static-blue-900-rgb: 59 99 251;`
+- `--spectrum-static-blue-900: rgb(var(--spectrum-static-blue-900-rgb));`
+- `--spectrum-static-blue-1000-rgb: 39 77 234;`
+- `--spectrum-static-blue-1000: rgb(var(--spectrum-static-blue-1000-rgb));`
+- `--spectrum-static-fuchsia-400-rgb: 247 181 255;`
+- `--spectrum-static-fuchsia-400: rgb(var(--spectrum-static-fuchsia-400-rgb));`
+- `--spectrum-static-fuchsia-600-rgb: 236 105 255;`
+- `--spectrum-static-fuchsia-600: rgb(var(--spectrum-static-fuchsia-600-rgb));`
+- `--spectrum-static-fuchsia-800-rgb: 200 68 220;`
+- `--spectrum-static-fuchsia-800: rgb(var(--spectrum-static-fuchsia-800-rgb));`
+- `--spectrum-static-fuchsia-900-rgb: 181 57 200;`
+- `--spectrum-static-fuchsia-900: rgb(var(--spectrum-static-fuchsia-900-rgb));`
+- `--spectrum-static-fuchsia-1000-rgb: 156 40 175;`
+- `--spectrum-static-fuchsia-1000: rgb(var(--spectrum-static-fuchsia-1000-rgb));`
+- `--spectrum-static-indigo-400-rgb: 192 201 255;`
+- `--spectrum-static-indigo-400: rgb(var(--spectrum-static-indigo-400-rgb));`
+- `--spectrum-static-indigo-600-rgb: 145 151 254;`
+- `--spectrum-static-indigo-600: rgb(var(--spectrum-static-indigo-600-rgb));`
+- `--spectrum-static-indigo-800-rgb: 122 106 253;`
+- `--spectrum-static-indigo-800: rgb(var(--spectrum-static-indigo-800-rgb));`
+- `--spectrum-static-indigo-900-rgb: 113 85 250;`
+- `--spectrum-static-indigo-900: rgb(var(--spectrum-static-indigo-900-rgb));`
+- `--spectrum-static-indigo-1000-rgb: 99 56 238;`
+- `--spectrum-static-indigo-1000: rgb(var(--spectrum-static-indigo-1000-rgb));`
+- `--spectrum-static-magenta-400-rgb: 255 185 208;`
+- `--spectrum-static-magenta-400: rgb(var(--spectrum-static-magenta-400-rgb));`
+- `--spectrum-static-magenta-600-rgb: 255 112 159;`
+- `--spectrum-static-magenta-600: rgb(var(--spectrum-static-magenta-600-rgb));`
+- `--spectrum-static-magenta-800-rgb: 240 45 110;`
+- `--spectrum-static-magenta-800: rgb(var(--spectrum-static-magenta-800-rgb));`
+- `--spectrum-static-magenta-900-rgb: 217 35 97;`
+- `--spectrum-static-magenta-900: rgb(var(--spectrum-static-magenta-900-rgb));`
+- `--spectrum-static-magenta-1000-rgb: 186 22 80;`
+- `--spectrum-static-magenta-1000: rgb(var(--spectrum-static-magenta-1000-rgb));`
+- `--spectrum-static-red-400-rgb: 255 188 180;`
+- `--spectrum-static-red-400: rgb(var(--spectrum-static-red-400-rgb));`
+- `--spectrum-static-red-600-rgb: 255 118 101;`
+- `--spectrum-static-red-600: rgb(var(--spectrum-static-red-600-rgb));`
+- `--spectrum-static-red-800-rgb: 240 56 35;`
+- `--spectrum-static-red-800: rgb(var(--spectrum-static-red-800-rgb));`
+- `--spectrum-static-red-900-rgb: 215 50 32;`
+- `--spectrum-static-red-900: rgb(var(--spectrum-static-red-900-rgb));`
+- `--spectrum-static-red-1000-rgb: 183 40 24;`
+- `--spectrum-static-red-1000: rgb(var(--spectrum-static-red-1000-rgb));`
+- `--spectrum-static-cyan-400-rgb: 138 213 255;`
+- `--spectrum-static-cyan-400: rgb(var(--spectrum-static-cyan-400-rgb));`
+- `--spectrum-static-cyan-600-rgb: 48 167 254;`
+- `--spectrum-static-cyan-600: rgb(var(--spectrum-static-cyan-600-rgb));`
+- `--spectrum-static-cyan-800-rgb: 18 134 205;`
+- `--spectrum-static-cyan-800: rgb(var(--spectrum-static-cyan-800-rgb));`
+- `--spectrum-static-chartreuse-400-rgb: 182 219 0;`
+- `--spectrum-static-chartreuse-400: rgb(var(--spectrum-static-chartreuse-400-rgb));`
+- `--spectrum-static-chartreuse-600-rgb: 143 172 0;`
+- `--spectrum-static-chartreuse-600: rgb(var(--spectrum-static-chartreuse-600-rgb));`
+- `--spectrum-static-chartreuse-800-rgb: 114 137 0;`
+- `--spectrum-static-chartreuse-800: rgb(var(--spectrum-static-chartreuse-800-rgb));`
+- `--spectrum-static-green-400-rgb: 107 227 162;`
+- `--spectrum-static-green-400: rgb(var(--spectrum-static-green-400-rgb));`
+- `--spectrum-static-green-600-rgb: 18 184 103;`
+- `--spectrum-static-green-600: rgb(var(--spectrum-static-green-600-rgb));`
+- `--spectrum-static-green-800-rgb: 7 147 85;`
+- `--spectrum-static-green-800: rgb(var(--spectrum-static-green-800-rgb));`
+- `--spectrum-static-orange-400-rgb: 255 193 94;`
+- `--spectrum-static-orange-400: rgb(var(--spectrum-static-orange-400-rgb));`
+- `--spectrum-static-orange-600-rgb: 252 125 0;`
+- `--spectrum-static-orange-600: rgb(var(--spectrum-static-orange-600-rgb));`
+- `--spectrum-static-orange-800-rgb: 212 91 0;`
+- `--spectrum-static-orange-800: rgb(var(--spectrum-static-orange-800-rgb));`
+- `--spectrum-static-purple-400-rgb: 221 193 246;`
+- `--spectrum-static-purple-400: rgb(var(--spectrum-static-purple-400-rgb));`
+- `--spectrum-static-purple-600-rgb: 191 138 238;`
+- `--spectrum-static-purple-600: rgb(var(--spectrum-static-purple-600-rgb));`
+- `--spectrum-static-purple-800-rgb: 166 92 231;`
+- `--spectrum-static-purple-800: rgb(var(--spectrum-static-purple-800-rgb));`
+- `--spectrum-static-turquoise-400-rgb: 111 221 228;`
+- `--spectrum-static-turquoise-400: rgb(var(--spectrum-static-turquoise-400-rgb));`
+- `--spectrum-static-turquoise-600-rgb: 15 177 192;`
+- `--spectrum-static-turquoise-600: rgb(var(--spectrum-static-turquoise-600-rgb));`
+- `--spectrum-static-turquoise-800-rgb: 10 141 153;`
+- `--spectrum-static-turquoise-800: rgb(var(--spectrum-static-turquoise-800-rgb));`
