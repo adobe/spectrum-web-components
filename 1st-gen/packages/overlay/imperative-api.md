@@ -1,3 +1,21 @@
+## When to use imperative API
+
+Use the imperative API when you need **programmatic control** over overlay creation and lifecycle. This approach excels at:
+
+- **Dynamic overlays**: Create overlays based on runtime conditions
+- **Virtual positioning**: Use `VirtualTrigger` for cursor-based or coordinate positioning
+- **Context menus**: Right-click menus, dropdown actions
+- **Complex lifecycle**: Fine-grained control over when overlays are created and destroyed
+- **Component libraries**: Building reusable components that manage their own overlays
+
+**Don't use imperative API when:**
+
+- **Static overlays**: Declarative [`<sp-overlay>`](./README.md) or [`<overlay-trigger>`](./overlay-trigger.md) are simpler
+- **Multiple interactions**: Use [`<overlay-trigger>`](./overlay-trigger.md) for hover + click on same element
+- **Lit templates**: Use the [trigger directive](./trigger-directive.md) for better integration
+
+See the [Getting Started Guide](./GETTING-STARTED.md) for a complete comparison of entry points.
+
 ## Overview
 
 While an `<sp-overlay>` element is the recommended entry point to the Spectrum Web Components Overlay API, you can also interact with this set of features via an imperative API, `Overlay.open`.
@@ -60,6 +78,262 @@ type OverlayOptions = {
     trigger?: HTMLElement | VirtualTrigger;
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
+```
+
+## VirtualTrigger patterns
+
+`VirtualTrigger` enables positioning overlays at specific coordinates without a DOM element.
+
+### Basic usage
+
+Create a `VirtualTrigger` with x/y coordinates:
+
+```typescript
+import { VirtualTrigger } from '@spectrum-web-components/overlay';
+
+const virtualTrigger = new VirtualTrigger(100, 200);
+```
+
+### Context menu pattern
+
+Right-click menus are the most common use case:
+
+```typescript
+import { VirtualTrigger, openOverlay } from '@spectrum-web-components/overlay';
+
+element.addEventListener('contextmenu', async (event) => {
+    event.preventDefault();
+
+    // Create trigger at mouse position
+    const trigger = new VirtualTrigger(event.clientX, event.clientY);
+
+    // Create menu content
+    const menu = document.createElement('sp-popover');
+    menu.innerHTML = `
+        <sp-menu>
+            <sp-menu-item>Cut</sp-menu-item>
+            <sp-menu-item>Copy</sp-menu-item>
+            <sp-menu-item>Paste</sp-menu-item>
+        </sp-menu>
+    `;
+
+    // Open overlay
+    const overlay = await openOverlay(menu, {
+        trigger,
+        placement: 'right-start',
+        type: 'auto',
+        notImmediatelyClosable: true, // Prevent instant close from mouseup
+    });
+
+    // Add to DOM
+    document.body.appendChild(overlay);
+
+    // Clean up when closed
+    overlay.addEventListener(
+        'sp-closed',
+        () => {
+            overlay.remove();
+        },
+        { once: true }
+    );
+});
+```
+
+### Following the cursor
+
+Update the trigger position as the mouse moves:
+
+```typescript
+const trigger = new VirtualTrigger(0, 0);
+let overlay;
+
+element.addEventListener('mouseenter', async () => {
+    const tooltip = document.createElement('sp-tooltip');
+    tooltip.textContent = 'Follows cursor';
+
+    overlay = await openOverlay(tooltip, {
+        trigger,
+        placement: 'right',
+        type: 'hint',
+    });
+
+    document.body.appendChild(overlay);
+});
+
+element.addEventListener('mousemove', (event) => {
+    if (overlay?.open) {
+        // Update trigger position
+        trigger.updateBoundingClientRect(event.clientX, event.clientY);
+    }
+});
+
+element.addEventListener('mouseleave', () => {
+    if (overlay) {
+        overlay.open = false;
+    }
+});
+```
+
+### Drag-and-drop preview
+
+Show preview at drop target position:
+
+```typescript
+element.addEventListener('dragover', (event) => {
+    event.preventDefault();
+
+    const trigger = new VirtualTrigger(event.clientX, event.clientY);
+
+    // Show drop preview
+    showDropPreview(trigger);
+});
+```
+
+### Touch gesture response
+
+Position overlay at touch point:
+
+```typescript
+element.addEventListener('touchstart', async (event) => {
+    const touch = event.touches[0];
+    const trigger = new VirtualTrigger(touch.clientX, touch.clientY);
+
+    const overlay = await openOverlay(content, {
+        trigger,
+        placement: 'top',
+        type: 'auto',
+    });
+
+    document.body.appendChild(overlay);
+});
+```
+
+## Lifecycle management
+
+### Creating overlays on demand
+
+The imperative API is ideal for creating overlays only when needed:
+
+```typescript
+async function showUserMenu(user, triggerElement) {
+    // Fetch user data if needed
+    const userData = await fetchUserData(user.id);
+
+    // Create content with fresh data
+    const menu = document.createElement('sp-popover');
+    menu.innerHTML = `
+        <sp-menu>
+            <sp-menu-item>${userData.name}</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Profile</sp-menu-item>
+            <sp-menu-item>Settings</sp-menu-item>
+            <sp-menu-item>Logout</sp-menu-item>
+        </sp-menu>
+    `;
+
+    const overlay = await openOverlay(menu, {
+        trigger: triggerElement,
+        placement: 'bottom-start',
+        type: 'auto',
+    });
+
+    document.body.appendChild(overlay);
+
+    return overlay;
+}
+```
+
+### Managing overlay references
+
+Store references for later control:
+
+```typescript
+class ContextMenuManager {
+    private currentOverlay?: HTMLElement;
+
+    async show(x: number, y: number, items: MenuItem[]) {
+        // Close existing overlay
+        this.close();
+
+        const trigger = new VirtualTrigger(x, y);
+        const menu = this.createMenu(items);
+
+        this.currentOverlay = await openOverlay(menu, {
+            trigger,
+            placement: 'right-start',
+            type: 'auto',
+        });
+
+        document.body.appendChild(this.currentOverlay);
+
+        // Auto-cleanup
+        this.currentOverlay.addEventListener(
+            'sp-closed',
+            () => {
+                this.cleanup();
+            },
+            { once: true }
+        );
+    }
+
+    close() {
+        if (this.currentOverlay) {
+            this.currentOverlay.open = false;
+        }
+    }
+
+    private cleanup() {
+        if (this.currentOverlay) {
+            this.currentOverlay.remove();
+            this.currentOverlay = undefined;
+        }
+    }
+}
+```
+
+### Cleanup patterns
+
+Always clean up overlays when done:
+
+```typescript
+const overlay = await openOverlay(content, options);
+document.body.appendChild(overlay);
+
+// Method 1: Remove on close
+overlay.addEventListener(
+    'sp-closed',
+    () => {
+        overlay.remove();
+    },
+    { once: true }
+);
+
+// Method 2: Manual cleanup
+function cleanup() {
+    overlay.open = false;
+    // Wait for close animation
+    overlay.addEventListener(
+        'sp-closed',
+        () => {
+            overlay.remove();
+        },
+        { once: true }
+    );
+}
+
+// Method 3: Use AbortController for automatic cleanup
+const controller = new AbortController();
+
+overlay.addEventListener(
+    'sp-closed',
+    () => {
+        overlay.remove();
+    },
+    { signal: controller.signal, once: true }
+);
+
+// Later: cleanup all listeners
+controller.abort();
 ```
 
 ### Advanced topics
