@@ -1,1 +1,0 @@
-{"version":3,"file":"swc.nXVG7emT.js","sources":["../../../tools/theme/sp-theme.js"],"sourcesContent":["\"use strict\";import{Theme as e}from\"./src/Theme.js\";customElements.define(\"sp-theme\",e);\n//# sourceMappingURL=sp-theme.js.map\n"],"names":["customElements","define","e"],"mappings":"sCAaAA,eAAeC,OAAO,WAAYC"}

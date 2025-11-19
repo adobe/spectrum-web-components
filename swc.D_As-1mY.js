@@ -1,2 +1,2 @@
 function n(n){return"undefined"!=typeof window&&null!=window.navigator&&n.test(window.navigator.userAgent)}function t(n){return"undefined"!=typeof window&&null!=window.navigator&&n.test(window.navigator.platform)}function o(){return t(/^iPhone/)}function i(){return t(/^iPad/)||t(/^Mac/)&&navigator.maxTouchPoints>1}function r(){return o()||i()}function e(){return n(/AppleWebKit/)&&!n(/Chrome/)}function u(){return n(/Android/)}export{r as a,u as b,o as c,e as i};
-//# sourceMappingURL=swc.A6GvdMKK.js.map
+//# sourceMappingURL=swc.CRlYSNBU.js.map

@@ -1,2 +1,2 @@
 const e=Symbol("dependency manager loaded");class d{constructor(e){this.dependencies={},this._loaded=!1,this.host=e}get loaded(){return this._loaded}set loaded(d){d!==this.loaded&&(this._loaded=d,this.host.requestUpdate(e,!this.loaded))}add(e,d){const s=!!d||!!customElements.get(e)||this.dependencies[e];s||customElements.whenDefined(e).then(()=>{this.add(e,!0)}),this.dependencies={...this.dependencies,[e]:s},this.loaded=Object.values(this.dependencies).every(e=>e)}}export{d as D};
-//# sourceMappingURL=swc.D4IfThrC.js.map
+//# sourceMappingURL=swc.g857OPUI.js.map

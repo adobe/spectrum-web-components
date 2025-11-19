@@ -1,2 +1,0 @@
-import{T as e}from"./swc.CSgWoAZ9.js";import{B as o}from"./swc.DWYvVEd1.js";import"./swc.Chxt1mTH.js";import"./swc.CRBjbaNr.js";const t=document.querySelector(".demo-preview"),c=document.querySelector(".demo-config");function r(){const e={};if(!c)return e;return c.querySelectorAll(".demo-control").forEach(o=>{e[o.id]="false"!==o.value&&o.value}),e}const n=(c={})=>{o(e(c),t)};c&&c.addEventListener("change",()=>{n(r())}),customElements.whenDefined("sp-picker").then(()=>{const e=r();console.log(e),n(e)});
-//# sourceMappingURL=swc.BteHN3M3.js.map

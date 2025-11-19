@@ -1,1 +1,0 @@
-{"version":3,"file":"swc.CQfAh0i5.js","sources":["../../../packages/overlay/sp-overlay.js"],"sourcesContent":["\"use strict\";import{defineElement as e}from\"@spectrum-web-components/base/src/define-element.js\";import{Overlay as a}from\"./src/Overlay.js\";e(\"sp-overlay\",a);\n//# sourceMappingURL=sp-overlay.js.map\n"],"names":["e","a"],"mappings":"onBAcAA,EAAc,aAAcC"}
