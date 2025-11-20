@@ -4,7 +4,7 @@
 
 <!-- Document title (editable) -->
 
-# Accessbility Guide
+# Accessibility Guide
 
 <!-- Generated TOC - DO NOT EDIT -->
 
