@@ -16,6 +16,25 @@ import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js
 import DocumentationTemplate from './DocumentationTemplate.mdx';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
+/**
+ * Ensure that window.__swc is defined in the storybook runtime.
+ *
+ * This prevents debug-only calls like `window.__swc.warn(...)` from throwing
+ * when the debug flag is inlined to `true` by the dev build configuration.
+ */
+if (typeof window !== 'undefined') {
+    window.__swc = window.__swc || {};
+    if (typeof window.__swc.DEBUG === 'undefined') {
+        window.__swc.DEBUG = true;
+    }
+    if (typeof window.__swc.warn !== 'function') {
+        window.__swc.warn = (...args) => {
+            // Forward warnings to the console for visibility in storybook.
+            console.warn('[SWC]', ...args);
+        };
+    }
+}
+
 // const cem = await import('./custom-elements.json', {
 //     assert: { type: 'json' },
 // });

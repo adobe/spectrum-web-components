@@ -140,13 +140,14 @@ describe('Overlay Trigger - Hover', () => {
             );
             await elementUpdated(tooltip);
 
-            button.dispatchEvent(
+            tooltip.dispatchEvent(
                 new MouseEvent('pointerenter', {
                     bubbles: true,
                     composed: true,
                 })
             );
             await elementUpdated(tooltip);
+            expect(tooltip.open).to.be.true;
 
             tooltip.dispatchEvent(
                 new MouseEvent('pointerleave', {
@@ -208,6 +209,36 @@ describe('Overlay Trigger - Hover', () => {
             );
             await closed;
 
+            expect(el.open).to.be.undefined;
+        });
+        it('closes the "tooltip" on "escape" keydown', async () => {
+            // Open the tooltip
+            const opened = oneEvent(button, 'sp-opened');
+            button.dispatchEvent(
+                new MouseEvent('pointerenter', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await waitUntil(
+                () => tooltip.open === true,
+                'tooltip should open',
+                { timeout: 500 }
+            );
+            await opened;
+            expect(el.open).to.equal('hover');
+
+            // Test escape key closes tooltip when focus is not on trigger
+            const body = el.ownerDocument.body;
+            body.focus();
+            const closed = oneEvent(button, 'sp-closed');
+            const escapeKeydown = new KeyboardEvent('keydown', {
+                code: 'Escape',
+                bubbles: true,
+                composed: true,
+            });
+            body.dispatchEvent(escapeKeydown);
+            await closed;
             expect(el.open).to.be.undefined;
         });
     });

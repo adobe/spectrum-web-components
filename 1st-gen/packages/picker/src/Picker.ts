@@ -556,19 +556,21 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     protected warnNoLabel(): void {
-        window.__swc.warn(
-            this,
-            `<${this.localName}> needs one of the following to be accessible:`,
-            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-            {
-                type: 'accessibility',
-                issues: [
-                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                ],
-            }
-        );
+        if (window.__swc?.DEBUG) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> needs one of the following to be accessible:`,
+                'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                {
+                    type: 'accessibility',
+                    issues: [
+                        `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                        'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                        'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                    ],
+                }
+            );
+        }
     }
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
