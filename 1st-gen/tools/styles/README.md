@@ -82,36 +82,7 @@ Each system has two scale sizes available: `medium` (default) and `large`. The `
     - `--spectrum-breadcrumbs-height-multiline` is `72px` in medium, but `84px` in large
     - Component-specific measurements like button heights, field widths, and icon positioning
 
-#### Available systems
-
-Here is a summary of each system and the options available on each:
-
-<sp-table>
-    <sp-table-head>
-        <sp-table-head-cell>System</sp-table-head-cell>
-        <sp-table-head-cell>Scales</sp-table-head-cell>
-        <sp-table-head-cell>Color options</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Spectrum</sp-table-cell>
-            <sp-table-cell>medium, large</sp-table-cell>
-            <sp-table-cell>light, dark, lightest, darkest</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Express</sp-table-cell>
-            <sp-table-cell>medium, large</sp-table-cell>
-            <sp-table-cell>light, dark</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Spectrum 2</sp-table-cell>
-            <sp-table-cell>medium, large</sp-table-cell>
-            <sp-table-cell>light, dark</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
-</sp-table>
-
-#### Tokens imports
+#### Token imports
 
 Here are some examples of CSS token imports for each of the three systems:
 
@@ -122,10 +93,14 @@ Here are some examples of CSS token imports for each of the three systems:
 Spectrum 2 uses standalone token files (in contrast to Spectrum and Express's base + override pattern). Pick one color option and one scale option:
 
 ```css
-/* pick a color option */
+/* pick a color option from: */
 @import '@spectrum-web-components/styles/tokens-v2/light-vars.css';
-/* pick a scale option */
+@import '@spectrum-web-components/styles/tokens-v2/dark-vars.css';
+
+/* pick a scale option from: */
 @import '@spectrum-web-components/styles/tokens-v2/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens-v2/large-vars.css';
+
 /* import global custom properties last */
 @import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
 ```
@@ -137,14 +112,30 @@ Spectrum 2 uses standalone token files (in contrast to Spectrum and Express's ba
 Spectrum uses a base + override pattern. Import base tokens first, then system-specific overrides:
 
 ```css
-/* import base tokens */
+/* import a color option from base tokens: */
 @import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/lightest-vars.css';
+@import '@spectrum-web-components/styles/tokens/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/darkest-vars.css';
+
+/* import a scale option from base tokens: */
 @import '@spectrum-web-components/styles/tokens/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/large-vars.css';
+
+/* import global base tokens: */
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 
-/* import spectrum-specific overrides */
+/* import a color option from spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/spectrum/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/lightest-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/darkest-vars.css';
+
+/* import a scale option from spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/spectrum/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/large-vars.css';
+
+/* import global spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 ```
 
@@ -155,29 +146,43 @@ Spectrum uses a base + override pattern. Import base tokens first, then system-s
 Express also uses a base + override pattern (same as Spectrum, but with `express/` paths):
 
 ```css
-/* import base tokens */
+/* import a color option from base tokens: */
 @import '@spectrum-web-components/styles/tokens/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/lightest-vars.css';
+@import '@spectrum-web-components/styles/tokens/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/darkest-vars.css';
+
+/* import a scale option from base tokens: */
 @import '@spectrum-web-components/styles/tokens/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/large-vars.css';
+
+/* import global base tokens: */
 @import '@spectrum-web-components/styles/tokens/global-vars.css';
 
-/* import express-specific overrides */
+/* import a color option from spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/express/light-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/lightest-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/dark-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/darkest-vars.css';
+
+/* import a scale option from spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/express/medium-vars.css';
+@import '@spectrum-web-components/styles/tokens/express/large-vars.css';
+
+/* import global spectrum-specific overrides: */
 @import '@spectrum-web-components/styles/tokens/express/global-vars.css';
 ```
 
 </sp-tab-panel>
 </sp-tabs>
 
-#### Tokens usage
+#### Token usage example
 
-Which tokens files you import will depend on which tokens you want to use.
+Which tokens files you import will depend on which tokens you want to use. Here's one example of tokens usage in a non-web-component context, showing how custom properties from each file work together. This will vary slightly depending on which system's tokens are being used.
 
 <sp-tabs selected="spectrum-2-tokens" auto label="Tokens usage examples">
 <sp-tab value="spectrum-2-tokens">Spectrum 2 tokens (tokens-v2)</sp-tab>
 <sp-tab-panel value="spectrum-2-tokens">
-
-Here's one example of tokens usage in a non-web-component context, showing how custom properties from each file work together:
 
 ```css
 /* import appropriate tokens files */
