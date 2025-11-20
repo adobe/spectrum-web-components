@@ -28,27 +28,98 @@ yarn add @spectrum-web-components/styles
 
 ### Design tokens
 
-This package provides design token CSS custom properties for three Adobe design system variants (referred to as "systems").
+This package provides design token CSS custom properties for three Adobe design system variants (referred to as "systems"). These tokens are organized by system, as well as color option and scale. There is also a set of global tokens for each system that do not vary with color option or scale.
 
-**Color options:** Each system has different available color options, but in the future, each will have only `dark` and `light` available.
+#### Global tokens
 
-**Scales:** Each system has two scale sizes available: `medium` (default) and `large`. The `medium` scale is designed for desktop environments with slightly smaller components and spacing, while the `large` scale is optimized for mobile and touch devices with larger touch targets and spacing.
+Global token files (`global-vars.css`) define design values that remain constant across color options and scales, as well as semantic tokens that reference color- or scale-specific values:
 
-**Available systems:**
+- **Fixed constants** - Values that never change regardless of color or scale:
+    - Opacity values (e.g., `--spectrum-opacity-disabled: 0.3`)
+    - Font families (Adobe Clean, for instance)
+    - Font weights (300, 400, 500, 700, 800, 900)
+    - Line heights and font styles
+    - Transparent white and black color definitions
+    - Base spacing scale (`--spectrum-spacing-50` through `--spectrum-spacing-1000`)
+    - Semantically-named component constants (e.g., `--spectrum-swatch-border-color`, `--spectrum-button-minimum-width-multiplier`)
 
-- **Spectrum** (system: `spectrum`) - The original Spectrum design system
-    - **Colors:** `dark`, `light`, and deprecated `darkest` and `lightest`
-    - **Scales:** `medium`, `large`
-- **Express** (system: `express`) - The Adobe Express design system
-    - **Colors:** `dark`, `light`
-    - **Scales:** `medium`, `large`
-- **Spectrum 2** (system: `spectrum-two`) - The next generation Spectrum design system
-    - **Colors:** `dark`, `light`
-    - **Scales:** `medium`, `large`
+- **Semantic color aliases** - Named by purpose, referencing values that change depending on the color option:
+    - `--spectrum-disabled-background-color` (in tokens-v2, references `--spectrum-gray-100`, which has different values for light and dark)
+    - `--spectrum-focus-indicator-color`
+    - `--spectrum-neutral-content-color-default`
 
-#### Spectrum 2 tokens
+- **Semantic component tokens** - Named by purpose, referencing scale-specific values:
+    - `--spectrum-breadcrumbs-height: var(--spectrum-component-height-300)` (where `component-height-300` is 48px in medium, 60px in large)
+    - `--spectrum-meter-default-width: var(--spectrum-meter-width)` (where `meter-width` is 192px in medium, 240px in large)
 
-Spectrum 2 uses standalone token files. Pick one color option and one scale option:
+#### Color options
+
+Each system makes a `dark` and `light` color option available. Currently, the Spectrum system also offers `darkest` and `lightest` color options, but these will be deprecated in the future.
+
+Color option files (`light-vars.css` and `dark-vars.css`) contain raw color definitions that differ between themes, as well as semantic color mappings that reference different colors based on the selected theme:
+
+- **Raw color definitions** - Color scale values that differ between light and dark themes:
+    - `--spectrum-gray-50` is white (`255, 255, 255`) in light theme, but dark gray (`29, 29, 29`) in dark theme
+    - `--spectrum-gray-900` is black (`0, 0, 0`) in light theme, but white (`255, 255, 255`) in dark theme
+    - Full color scales for gray, blue, red, orange, yellow, green, and other semantic color families
+
+- **Semantic color mappings** - Named by purpose, referencing different raw colors based on theme:
+    - `--spectrum-background-base-color` references `--spectrum-gray-200` in light, but `--spectrum-gray-50` in dark
+    - `--spectrum-neutral-subdued-background-color-default` references `--spectrum-gray-600` in light, but `--spectrum-gray-400` in dark
+    - Component-specific colors like `--spectrum-neutral-visual-color`, background colors, and visual indicators
+
+#### Scales
+
+Each system has two scale sizes available: `medium` (default) and `large`. The `medium` scale is designed for desktop environments, while `large` is optimized for mobile and touch devices with larger touch targets. Scale files (`medium-vars.css` and `large-vars.css`) contain raw size and spacing definitions that differ between scales, as well as component-specific sizing values:
+
+- **Raw size and spacing definitions** - Values that differ between medium and large scales:
+    - `--spectrum-font-size-200` is `16px` in medium, but `19px` in large
+    - `--spectrum-component-height-100` is `32px` in medium, but `40px` in large
+    - Icon sizes, spacing values, and other dimensional tokens that scale up for larger/touch interfaces
+
+- **Component-specific sizing** - Tokens for component dimensions that vary by scale:
+    - `--spectrum-meter-width` is `192px` in medium, but `240px` in large
+    - `--spectrum-breadcrumbs-height-multiline` is `72px` in medium, but `84px` in large
+    - Component-specific measurements like button heights, field widths, and icon positioning
+
+#### Available systems
+
+Here is a summary of each system and the options available on each:
+
+<sp-table>
+    <sp-table-head>
+        <sp-table-head-cell>System</sp-table-head-cell>
+        <sp-table-head-cell>Scales</sp-table-head-cell>
+        <sp-table-head-cell>Color options</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>Spectrum</sp-table-cell>
+            <sp-table-cell>medium, large</sp-table-cell>
+            <sp-table-cell>light, dark, lightest, darkest</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Express</sp-table-cell>
+            <sp-table-cell>medium, large</sp-table-cell>
+            <sp-table-cell>light, dark</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Spectrum 2</sp-table-cell>
+            <sp-table-cell>medium, large</sp-table-cell>
+            <sp-table-cell>light, dark</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+
+#### Tokens imports
+
+Here are some examples of CSS token imports for each of the three systems:
+
+<sp-tabs selected="spectrum-2-tokens" auto label="Tokens usage examples">
+<sp-tab value="spectrum-2-tokens">Spectrum 2 tokens (tokens-v2)</sp-tab>
+<sp-tab-panel value="spectrum-2-tokens">
+
+Spectrum 2 uses standalone token files (in contrast to Spectrum and Express's base + override pattern). Pick one color option and one scale option:
 
 ```css
 /* pick a color option */
@@ -59,7 +130,9 @@ Spectrum 2 uses standalone token files. Pick one color option and one scale opti
 @import '@spectrum-web-components/styles/tokens-v2/global-vars.css';
 ```
 
-#### Spectrum tokens
+</sp-tab-panel>
+<sp-tab value="spectrum-tokens">Spectrum tokens</sp-tab>
+<sp-tab-panel value="spectrum-tokens">
 
 Spectrum uses a base + override pattern. Import base tokens first, then system-specific overrides:
 
@@ -75,9 +148,11 @@ Spectrum uses a base + override pattern. Import base tokens first, then system-s
 @import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
 ```
 
-#### Express tokens
+</sp-tab-panel>
+<sp-tab value="express-tokens">Express tokens</sp-tab>
+<sp-tab-panel value="express-tokens">
 
-Express also uses a base + override pattern (same as Spectrum above, but with `express/` paths):
+Express also uses a base + override pattern (same as Spectrum, but with `express/` paths):
 
 ```css
 /* import base tokens */
@@ -91,6 +166,9 @@ Express also uses a base + override pattern (same as Spectrum above, but with `e
 @import '@spectrum-web-components/styles/tokens/express/global-vars.css';
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 #### Tokens usage
 
 Which tokens files you import will depend on which tokens you want to use.
@@ -98,12 +176,6 @@ Which tokens files you import will depend on which tokens you want to use.
 <sp-tabs selected="spectrum-2-tokens" auto label="Tokens usage examples">
 <sp-tab value="spectrum-2-tokens">Spectrum 2 tokens (tokens-v2)</sp-tab>
 <sp-tab-panel value="spectrum-2-tokens">
-
-Generally speaking, `light-vars` and `dark-vars` files contain raw color custom property definitions (such as `--spectrum-red-500`), as well as semantic custom property definitions that change depending on which color option you use. For instance, in Spectrum 2 tokens, `--spectrum-neutral-subdued-background-color-default` uses different values per theme. It resolves to `--spectrum-gray-700` for light and `--spectrum-gray-500` for dark.
-
-For color, `global-vars` files contain semantic custom property definitions that stay consistent regardless of color option. For instance, `--spectrum-neutral-background-color-default` is always `--spectrum-gray-800`, but `--spectrum-gray-800` is defined differently depending on whether dark or light custom properties have been imported. Component-specific custom properties are split across these files. Some are in `global-vars` (e.g., `--spectrum-swatch-border-color`), while others are in `light-vars`/`dark-vars` (e.g., `--spectrum-assetcard-border-color-selected`).
-
-Similarly, `medium-vars` and `large-vars` files contain custom property definitions for raw spacings and sizes that differ between the two scales, such as `--spectrum-font-size-200` and `--spectrum-component-height-100`. They also contain component-specific custom property definitions that differ between scales, for instance `--spectrum-meter-width`. The `global-vars` file defines custom properties related to sizing or spacing that are consistent regardless of scale (e.g., `--spectrum-corner-radius-100`), or uses custom properties defined in `medium-vars`/`large-vars` (e.g., `--spectrum-meter-default-width: var(--spectrum-meter-width);`).
 
 Here's one example of tokens usage in a non-web-component context, showing how custom properties from each file work together:
 
