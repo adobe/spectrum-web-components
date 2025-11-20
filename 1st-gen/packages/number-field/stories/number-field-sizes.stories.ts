@@ -12,7 +12,6 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/number-field/sp-number-field.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
@@ -26,14 +25,9 @@ const template = ({
     size?: 's' | 'm' | 'l' | 'xl';
 } = {}): TemplateResult => {
     return html`
-        <sp-field-label for="name" size=${ifDefined(size)}>
+        <sp-number-field size=${ifDefined(size)} value="100">
             Pick a number
-        </sp-field-label>
-        <sp-number-field
-            id="name"
-            size=${ifDefined(size)}
-            value="100"
-        ></sp-number-field>
+        </sp-number-field>
     `;
 };
 
