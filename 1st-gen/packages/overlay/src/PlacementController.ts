@@ -24,6 +24,7 @@ import {
     shift,
     size,
 } from '@floating-ui/dom';
+import { isWebKit } from '@spectrum-web-components/shared';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import type { OpenableElement } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
@@ -277,6 +278,28 @@ export class PlacementController implements ReactiveController {
 
         // Wait for document fonts to be ready before computing placement.
         await (document.fonts ? document.fonts.ready : Promise.resolve());
+
+        // Safari/iOS-specific fix: Add small delay for picker menus to allow scrollIntoView to complete
+        // Check if this is a submenu overlay (slot="submenu")
+        // Submenus need immediate positioning for hover responsiveness
+        const isSubmenu = Array.from(this.host.elements).some(
+            (el) => el.getAttribute?.('slot') === 'submenu'
+        );
+
+        // Safari-specific timing fix covered by cross-browser integration tests
+        /* c8 ignore start */
+        if (isWebKit() && !isSubmenu) {
+            const hasMenu = Array.from(this.host.elements).some(
+                (el) =>
+                    el.tagName === 'SP-MENU' || el.querySelector?.('sp-menu')
+            );
+
+            if (hasMenu) {
+                // Wait 1 frame for Safari layout to settle after scrollIntoView
+                await new Promise((resolve) => requestAnimationFrame(resolve));
+            }
+        }
+        /* c8 ignore stop */
 
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)
