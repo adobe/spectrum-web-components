@@ -64,7 +64,7 @@
         "./src/spectrum-base.css": "./src/spectrum-base.css",
         "./src/spectrum-body.css": "./src/spectrum-body.css",
         "./src/spectrum-code.css": "./src/spectrum-code.css",
-        "./src/spectrum-detail.css": "./src/spectrum-code.css",
+        "./src/spectrum-detail.css": "./src/spectrum-detail.css",
         "./src/spectrum-heading.css": "./src/spectrum-heading.css",
         "./src/spectrum-lang.css": "./src/spectrum-lang.css",
         "./src/spectrum-typography.css": "./src/spectrum-typography.css",
