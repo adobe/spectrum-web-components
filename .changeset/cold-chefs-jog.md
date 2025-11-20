@@ -2,7 +2,7 @@
 '@spectrum-web-components/reactive-controllers': patch
 ---
 
-Add IS_TOUCH_DEVICE media query constant
+**Added**: IS_TOUCH_DEVICE media query constant
 
 - Added IS_TOUCH_DEVICE constant: '(hover: none) and (pointer: coarse)'
 - Detects any touch-capable device regardless of screen size
