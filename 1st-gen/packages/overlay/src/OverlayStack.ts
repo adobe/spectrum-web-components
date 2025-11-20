@@ -176,6 +176,13 @@ class OverlayStack {
         if (event.code !== 'Escape') return;
         if (!this.stack.length) return;
         const last = this.stack[this.stack.length - 1];
+        if (last?.type === 'hint') {
+            // Close hint/tooltip overlays on "Escape" key and prevent further handling of the event.
+            event.preventDefault();
+            event.stopPropagation();
+            this.closeOverlay(last);
+            return;
+        }
         if (last?.type === 'page') {
             event.preventDefault();
             return;

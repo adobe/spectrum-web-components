@@ -31,7 +31,7 @@ import {
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { StyleInfo } from 'lit/directives/style-map.js';
+import type { StyleInfo } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
@@ -232,7 +232,7 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         this.handleController.hostConnected();
 
         // Deprecation warning for default slot when content is provided
-        if (window.__swc.DEBUG && this.textContent?.trim()) {
+        if (window.__swc?.DEBUG && this.textContent?.trim()) {
             window.__swc.warn(
                 this,
                 `The default slot for text label in <${this.localName}> has been deprecated and will be removed in a future release. Use the "label" property instead.`,
