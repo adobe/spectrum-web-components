@@ -9,6 +9,38 @@
 <!-- Generated TOC - DO NOT EDIT -->
 
 <details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+- [What is accessibility?](#what-is-accessibility)
+- [Why accessibility matters](#why-accessibility-matters)
+    - [User inclusion](#user-inclusion)
+    - [Ethical considerations](#ethical-considerations)
+    - [Business benefits](#business-benefits)
+    - [Legal requirements](#legal-requirements)
+- [Types of disabilities](#types-of-disabilities)
+    - [Visual disabilities](#visual-disabilities)
+    - [Auditory disabilities](#auditory-disabilities)
+    - [Motor disabilities](#motor-disabilities)
+    - [Cognitive, learning, and neurological disabilities](#cognitive-learning-and-neurological-disabilities)
+    - [Temporary and situational disabilities](#temporary-and-situational-disabilities)
+- [Assistive technologies](#assistive-technologies)
+    - [Screen readers](#screen-readers)
+    - [Alternative input methods](#alternative-input-methods)
+    - [Visual assistance tools](#visual-assistance-tools)
+- [Web Content Accessibility Guidelines (WCAG)](#web-content-accessibility-guidelines-wcag)
+    - [Purpose](#purpose)
+    - [Organization](#organization)
+    - [Conformance levels](#conformance-levels)
+- [Authoring Tool Accessibility Guidelines (ATAG)](#authoring-tool-accessibility-guidelines-atag)
+    - [Why ATAG matters for component libraries](#why-atag-matters-for-component-libraries)
+    - [ATAG principles](#atag-principles)
+- [Resources](#resources)
+- [Next steps](#next-steps)
+
+</details>
+
+<details open>
 <summary><strong>Beneath this doc</strong></summary>
 
 - [Semantic HTML and ARIA](01_semantic_html_aria.md)
