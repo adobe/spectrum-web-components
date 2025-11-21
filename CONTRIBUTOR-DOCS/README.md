@@ -32,6 +32,13 @@
     - [Workstreams](03_project-planning/02_workstreams/README.md)
     - [Components](03_project-planning/03_components/README.md)
     - [Milestones](03_project-planning/04_milestones/README.md)
+- [Accessbility Guide](04_accessibility_guides/README.md)
+    - [Semantic HTML and ARIA](04_accessibility_guides/01_semantic_html_aria.md)
+    - [Accessible pattern libraries](04_accessibility_guides/02_accessible_pattern_libraries.md)
+    - [Keyboard testing](04_accessibility_guides/03_keyboard_testing.md)
+    - [Screen reader testing](04_accessibility_guides/04_screen_reader_testing.md)
+    - [Wave toolbar testing](04_accessibility_guides/05_wave_toolbar_testing.md)
+    - [Accessibility resources](04_accessibility_guides/06_accessibility_resources.md)
 
 </details>
 
@@ -61,6 +68,8 @@ The docs are organized into three main sections to help you find the information
 **[Contributor Guides](./01_contributor-guides/README.md)** - Topical guides for working on the project. This section includes guides for getting started, understanding processes, and accomplishing specific tasks like adding new components or editing these contributor docs themselves.
 
 **[Style Guide](./02_style-guide/README.md)** - Comprehensive style guide covering project-wide conventions and area-specific rules. This section is useful for human reference and for AI-assisted work, documenting our approaches to linting, JSDoc conventions, component structure, and other coding standards.
+
+**[Accessbility Guide](./04_accessbility_guides/README.md)** - Accessibility guide covering essential accessibility knowledge and practices for customers and contributors to Spectrum Web Components.
 
 **[Project Planning](./03_project-planning/README.md)** - Strategic planning documentation including objectives, workstreams, component roadmaps, and milestones. This section contains:
 
