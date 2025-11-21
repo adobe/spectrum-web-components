@@ -1,11 +1,9 @@
 name: Preview Release
 
 on:
-    # push:
-    #     branches:
-    #         - main
-    pull_request:
-        types: [opened, synchronize]
+    push:
+        branches:
+            - main
 
 jobs:
     release:
@@ -13,7 +11,7 @@ jobs:
         env:
             YARN_ENABLE_IMMUTABLE_INSTALLS: false
         # Run the job if manually triggered or if the commit message includes a commit type of fix or feat or breaking change
-        # if: contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'fix(') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'feat(') || contains(github.event.head_commit.message, '!:')
+        if: contains(github.event.head_commit.message, 'fix:') || contains(github.event.head_commit.message, 'fix(') || contains(github.event.head_commit.message, 'feat:') || contains(github.event.head_commit.message, 'feat(') || contains(github.event.head_commit.message, '!:')
         steps:
             - name: Checkout PR branch
               uses: actions/checkout@v4
