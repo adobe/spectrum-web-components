@@ -35,6 +35,8 @@ import {
 import { render, TemplateResult } from '@spectrum-web-components/base';
 import { Button } from '@spectrum-web-components/button';
 import { Menu } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -54,7 +56,7 @@ import {
     clickAndHoverTarget,
     definedOverlayElement,
     virtualElement,
-} from '../stories/overlay.stories';
+} from '../stories/overlay.stories.js';
 // import { isWebKit } from '@spectrum-web-components/shared';
 
 async function styledFixture<T extends Element>(
@@ -476,6 +478,7 @@ describe('Overlays', () => {
 
         const initial = el.getBoundingClientRect();
         trigger.updateBoundingClientRect(500, 500);
+        // Wait for placement computation to complete
         await nextFrame();
         await nextFrame();
         const final = el.getBoundingClientRect();
