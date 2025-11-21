@@ -887,4 +887,203 @@ describe('Submenu', () => {
         expect(submenu.scrollTop).to.equal(50);
         expect(submenu.scrollTop).to.not.equal(initialScrollTop);
     });
+    describe('touch interactions', () => {
+        beforeEach(async function () {
+            this.el = await fixture<Menu>(html`
+                <sp-menu>
+                    <sp-menu-item>No submenu</sp-menu-item>
+                    <sp-menu-item class="root">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `);
+            await elementUpdated(this.el);
+            this.rootItem = this.el.querySelector('.root') as MenuItem;
+            await elementUpdated(this.rootItem);
+        });
+
+        it('does not open submenu on touch pointerenter', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Simulate touch pointerenter event
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            // Wait to ensure submenu doesn't open
+            await aTimeout(150);
+
+            expect(this.rootItem.open).to.be.false;
+        });
+
+        it('does not close submenu on touch pointerleave', async function () {
+            // First open the submenu via click
+            expect(this.rootItem.open).to.be.false;
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.click();
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Simulate touch pointerleave event
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerleave', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            // Wait to ensure submenu doesn't close
+            await aTimeout(150);
+
+            expect(this.rootItem.open).to.be.true;
+        });
+
+        it('opens submenu on touch click when closed', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            // Track pointer type by dispatching pointerenter first
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.click();
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+        });
+
+        it('closes submenu on touch click when open', async function () {
+            // First open the submenu
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'touch',
+                })
+            );
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.click();
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Click again to close
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            this.rootItem.click();
+            await closed;
+
+            expect(this.rootItem.open).to.be.false;
+        });
+
+        it('mouse pointerenter still opens submenu', async function () {
+            expect(this.rootItem.open).to.be.false;
+
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+        });
+
+        it('mouse pointerleave still closes submenu', async function () {
+            // First open via mouse
+            const opened = oneEvent(this.rootItem, 'sp-opened');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+            await opened;
+
+            expect(this.rootItem.open).to.be.true;
+
+            // Leave with mouse
+            const closed = oneEvent(this.rootItem, 'sp-closed');
+            this.rootItem.dispatchEvent(
+                new PointerEvent('pointerleave', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+            await closed;
+
+            expect(this.rootItem.open).to.be.false;
+        });
+
+        it('closes sibling submenus on touch pointerenter', async function () {
+            // Create a second menu item with submenu
+            const el = await fixture<Menu>(html`
+                <sp-menu>
+                    <sp-menu-item class="root-1">
+                        First submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>Item A</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item class="root-2">
+                        Second submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>Item B</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `);
+            await elementUpdated(el);
+            const rootItem1 = el.querySelector('.root-1') as MenuItem;
+            const rootItem2 = el.querySelector('.root-2') as MenuItem;
+            await elementUpdated(rootItem1);
+            await elementUpdated(rootItem2);
+
+            // Open first submenu with mouse
+            const opened1 = oneEvent(rootItem1, 'sp-opened');
+            rootItem1.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+            await opened1;
+
+            expect(rootItem1.open).to.be.true;
+            expect(rootItem2.open).to.be.false;
+
+            // Hover second item with mouse should close first
+            const closed1 = oneEvent(rootItem1, 'sp-closed');
+            rootItem2.dispatchEvent(
+                new PointerEvent('pointerenter', {
+                    bubbles: true,
+                    pointerType: 'mouse',
+                })
+            );
+            await closed1;
+
+            expect(rootItem1.open).to.be.false;
+        });
+    });
 });
