@@ -253,6 +253,7 @@ describe('Picker, responsive', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await elementUpdated(el);
 
             // Wait for menu to be ready.
             await waitUntil(
@@ -260,11 +261,25 @@ describe('Picker, responsive', () => {
                 'Menu should be initialized'
             );
 
-            // Get the first menu item.
+            // Wait for menu to be fully updated.
+            await el.optionsMenu.updateComplete;
+            await elementUpdated(el.optionsMenu);
+
+            // Verify shouldSupportDragAndSelect is false on touch devices.
+            expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
+
+            // Get the menu item.
             const menuItem = el.querySelector(
                 'sp-menu-item[value="option-2"]'
             ) as MenuItem;
             expect(menuItem).to.not.be.null;
+            await elementUpdated(menuItem);
+
+            // Ensure menu item is in the menu's childItems.
+            expect(el.optionsMenu.childItems).to.include(menuItem);
+
+            // Ensure menu is not in scrolling state (which would prevent selection).
+            el.optionsMenu.isScrolling = false;
 
             // Click the menu item.
             const closed = oneEvent(el, 'sp-closed');
