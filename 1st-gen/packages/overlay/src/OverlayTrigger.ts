@@ -42,26 +42,88 @@ type Combinations<T extends string, U extends string = T> = T extends string
 export type TriggeredByType = Combinations<OverlayContentTypes>;
 
 /**
+ * The `<overlay-trigger>` element supports multiple overlay interactions on a single trigger element.
+ * Unlike `<sp-overlay>`, this component can show different content for click, hover, and longpress
+ * interactions simultaneously.
+ *
  * @element overlay-trigger
  *
- * A component that manages overlay content triggered by different interactions.
- * Supports click, hover, and longpress triggered overlays with configurable
- * placement and behavior.
+ * @slot trigger - The interactive element that triggers the overlays (e.g., `<sp-button>`, `<sp-action-button>`). Must be keyboard accessible.
+ * @slot hover-content - Content displayed on hover/focus. **Always non-interactive** (uses `hint` type). Best for tooltips and brief informational content.
+ * @slot click-content - Content displayed on click. Interactive (uses `type` attribute). Best for menus, dialogs, and interactive popovers.
+ * @slot longpress-content - Content displayed on longpress gesture (300ms hold) or Space/Alt+Down keys. Interactive (uses `auto` type). Best for contextual actions.
+ * @slot longpress-describedby-descriptor - Automatically managed description text for longpress affordance (e.g., "Double tap and long press for additional options")
  *
- * @slot trigger - The content that will trigger the various overlays
- * @slot hover-content - The content that will be displayed on hover
- * @slot click-content - The content that will be displayed on click
- * @slot longpress-content - The content that will be displayed on longpress
- * @slot longpress-describedby-descriptor - Description for longpress content
+ * @fires sp-opened - Announces that an overlay has completed any entry animations and is fully visible
+ * @fires sp-closed - Announces that an overlay has completed any exit animations and is fully closed
  *
- * @fires sp-opened - Announces that the overlay has been opened
- * @fires sp-closed - Announces that the overlay has been closed
+ * @attr {string} placement - The placement of the overlay relative to the trigger. Same options as `<sp-overlay>`: `"top"`, `"bottom"`, `"left"`, `"right"`, with `-start` and `-end` variants
+ * @attr {number} offset - The distance (in pixels) between the overlay and the trigger. Default: `6`
+ * @attr {boolean} disabled - Whether the overlay trigger is disabled. When `true`, overlays cannot be opened
+ * @attr {string} receives-focus - How focus should be handled when overlay opens. Options: `"true"` (always focus), `"false"` (never focus), `"auto"` (based on overlay type). Only affects `click-content`
+ * @attr {string} type - Configures behavior of `click-content` overlay. Options: `"auto"`, `"modal"`, `"manual"`, `"page"`. **Note:** Hover uses `hint`, longpress uses `auto`
+ * @attr {string} triggered-by - Performance optimization to declare which interaction types are used. Space-separated list: `"click"`, `"hover"`, `"longpress"`, or combinations like `"click hover"`
  *
- * @attr {string} placement - The placement of the overlay relative to the trigger
- * @attr {number} offset - The distance between the overlay and the trigger
- * @attr {boolean} disabled - Whether the overlay trigger is disabled
- * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
- * @attr {string} triggered-by - The type of interaction that will trigger the overlay ('click'|'hover'|'longpress')
+ * @example Basic tooltip + dialog combination
+ * ```html
+ * <overlay-trigger placement="top">
+ *   <sp-button slot="trigger">Help</sp-button>
+ *
+ *   <!-- Tooltip on hover - always non-interactive -->
+ *   <sp-tooltip slot="hover-content">
+ *     Click for more information
+ *   </sp-tooltip>
+ *
+ *   <!-- Dialog on click - interactive -->
+ *   <sp-popover slot="click-content">
+ *     <sp-dialog size="s">
+ *       <h2 slot="heading">Help</h2>
+ *       <p>Detailed help content...</p>
+ *     </sp-dialog>
+ *   </sp-popover>
+ * </overlay-trigger>
+ * ```
+ *
+ * @example All three interactions
+ * ```html
+ * <overlay-trigger triggered-by="click hover longpress">
+ *   <sp-action-button slot="trigger" hold-affordance>
+ *     <sp-icon-more slot="icon"></sp-icon-more>
+ *   </sp-action-button>
+ *
+ *   <sp-tooltip slot="hover-content">Quick actions</sp-tooltip>
+ *
+ *   <sp-popover slot="click-content">
+ *     <sp-menu>
+ *       <sp-menu-item>Copy</sp-menu-item>
+ *       <sp-menu-item>Paste</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ *
+ *   <sp-popover slot="longpress-content">
+ *     <sp-menu>
+ *       <sp-menu-item>Advanced Option 1</sp-menu-item>
+ *       <sp-menu-item>Advanced Option 2</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ * </overlay-trigger>
+ * ```
+ *
+ * @example Performance optimization with triggered-by
+ * ```html
+ * <!-- Only click and hover, skip longpress detection -->
+ * <overlay-trigger triggered-by="click hover" placement="bottom">
+ *   <sp-button slot="trigger">Actions</sp-button>
+ *   <sp-tooltip slot="hover-content">Actions menu</sp-tooltip>
+ *   <sp-popover slot="click-content">
+ *     <sp-menu>...</sp-menu>
+ *   </sp-popover>
+ * </overlay-trigger>
+ * ```
+ *
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/overlay-trigger.md | Overlay Trigger Documentation}
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ | Overlay System Overview}
+ * @see Use `<sp-overlay>` for single interaction type or advanced features like {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md#virtualtrigger-patterns | VirtualTrigger}
  */
 export class OverlayTrigger extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -69,16 +131,51 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     /**
-     * Optional property to optimize performance and prevent race conditions.
+     * Performance optimization that explicitly declares which interaction types are used.
      *
-     * By explicitly declaring which content types are used (e.g. "click", "longpress hover"),
-     * we can avoid:
-     * 1. Extra renders from unnecessary slot reparenting
-     * 2. Potential infinite render loops during content detection
-     * 3. Race conditions during slot assignment
+     * **Benefits of declaring `triggered-by`:**
+     * 1. **Prevents extra renders** - Avoids unnecessary slot reparenting
+     * 2. **Eliminates race conditions** - Prevents infinite render loops during content detection
+     * 3. **Reduces DOM nodes** - Only creates overlays for declared content types
+     * 4. **Improves initial load** - Skips detection cycles for unused interaction types
      *
-     * By only returning overlay wrappers for explicitly declared content types,
-     * we minimize unecessary DOM nodes, operations and ensure a more stable rendering behavior.
+     * **When to use:**
+     * - Applications with many `<overlay-trigger>` elements (10+)
+     * - Performance-critical pages
+     * - Mobile applications
+     *
+     * **Format:** Space-separated list of interaction types
+     *
+     * @type {string}
+     *
+     * @example Single interaction (click only)
+     * ```html
+     * <overlay-trigger triggered-by="click">
+     *   <sp-button slot="trigger">Menu</sp-button>
+     *   <sp-popover slot="click-content">...</sp-popover>
+     * </overlay-trigger>
+     * ```
+     *
+     * @example Multiple interactions (hover + click)
+     * ```html
+     * <overlay-trigger triggered-by="hover click">
+     *   <sp-button slot="trigger">Help</sp-button>
+     *   <sp-tooltip slot="hover-content">Click for details</sp-tooltip>
+     *   <sp-popover slot="click-content">...</sp-popover>
+     * </overlay-trigger>
+     * ```
+     *
+     * @example All interactions
+     * ```html
+     * <overlay-trigger triggered-by="click hover longpress">
+     *   <sp-action-button slot="trigger" hold-affordance>Actions</sp-action-button>
+     *   <sp-tooltip slot="hover-content">Actions menu</sp-tooltip>
+     *   <sp-popover slot="click-content">...</sp-popover>
+     *   <sp-popover slot="longpress-content">...</sp-popover>
+     * </overlay-trigger>
+     * ```
+     *
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/PERFORMANCE.md | Performance Optimization Guide}
      */
     @property({ attribute: 'triggered-by' })
     public triggeredBy?: TriggeredByType;

@@ -217,10 +217,112 @@ export class AbstractOverlay extends SpectrumElement {
 
     // @TODO remove this long standing legacy API
     /**
-     * Overloaded imperative API entry point that allows for both the pre-0.37.0
-     * argument signature as well as the post-0.37.0 signature. This allows for
-     * consumers to continue to leverage it as they had been in previous releases
-     * while also surfacing the more feature-rich API that has been made available.
+     * Imperative API for programmatically creating and opening overlays.
+     *
+     * This method supports two signatures:
+     * - **V2 (Current)**: `Overlay.open(content, options)` - Returns an `Overlay` element
+     * - **V1 (Deprecated)**: `Overlay.open(trigger, interaction, content, options)` - Returns a cleanup function
+     *
+     * **Use the imperative API when you need:**
+     * - Dynamic overlay creation based on runtime conditions
+     * - Virtual positioning at specific coordinates (e.g., context menus)
+     * - Programmatic control over overlay lifecycle
+     *
+     * **When to use declarative `<sp-overlay>` instead:**
+     * - Static overlays defined in HTML
+     * - Overlays that don't change based on runtime conditions
+     * - When you prefer template-based development
+     *
+     * @param {HTMLElement} content - The content to display in the overlay (V2), or trigger element (V1)
+     * @param {OverlayOptions} [options] - Configuration options for the overlay (V2), or interaction type (V1)
+     * @returns {Promise<Overlay>} A promise that resolves to the Overlay element (V2)
+     *
+     * @example Basic usage (V2 - recommended)
+     * ```javascript
+     * import { openOverlay } from '@spectrum-web-components/overlay';
+     *
+     * // Create content
+     * const popover = document.createElement('sp-popover');
+     * popover.innerHTML = '<sp-menu>...</sp-menu>';
+     *
+     * // Open overlay
+     * const overlay = await openOverlay(popover, {
+     *   trigger: document.querySelector('#trigger-btn'),
+     *   placement: 'bottom',
+     *   type: 'auto'
+     * });
+     *
+     * // Add to DOM
+     * document.body.appendChild(overlay);
+     *
+     * // Later: close programmatically
+     * overlay.open = false;
+     * ```
+     *
+     * @example Context menu with VirtualTrigger
+     * ```javascript
+     * import { openOverlay, VirtualTrigger } from '@spectrum-web-components/overlay';
+     *
+     * element.addEventListener('contextmenu', async (event) => {
+     *   event.preventDefault();
+     *
+     *   // Create menu
+     *   const menu = document.createElement('sp-popover');
+     *   menu.innerHTML = '<sp-menu>...</sp-menu>';
+     *
+     *   // Position at cursor
+     *   const trigger = new VirtualTrigger(event.clientX, event.clientY);
+     *
+     *   // Open overlay
+     *   const overlay = await openOverlay(menu, {
+     *     trigger,
+     *     placement: 'right-start',
+     *     type: 'auto',
+     *     notImmediatelyClosable: true  // Prevent immediate close from mouseup
+     *   });
+     *
+     *   document.body.appendChild(overlay);
+     *
+     *   // Cleanup when closed
+     *   overlay.addEventListener('sp-closed', () => {
+     *     overlay.remove();
+     *   }, { once: true });
+     * });
+     * ```
+     *
+     * @example Dynamic overlay with data
+     * ```javascript
+     * async function showUserDetails(userId, triggerElement) {
+     *   // Fetch user data
+     *   const user = await fetchUser(userId);
+     *
+     *   // Create content
+     *   const popover = document.createElement('sp-popover');
+     *   popover.innerHTML = `
+     *     <sp-dialog>
+     *       <h2 slot="heading">${user.name}</h2>
+     *       <p>${user.bio}</p>
+     *     </sp-dialog>
+     *   `;
+     *
+     *   // Open overlay
+     *   const overlay = await openOverlay(popover, {
+     *     trigger: triggerElement,
+     *     placement: 'bottom-start',
+     *     type: 'auto'
+     *   });
+     *
+     *   document.body.appendChild(overlay);
+     *   return overlay;
+     * }
+     * ```
+     *
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md | Imperative API Documentation}
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md#virtualtrigger-patterns | VirtualTrigger Patterns}
+     * @see {@link OverlayOptions} for all configuration options
+     * @see {@link VirtualTrigger} for coordinate-based positioning
+     *
+     * @deprecated V1 signature with 4 arguments is deprecated. Use V2 signature: `Overlay.open(content, options)`
      */
     public static async open(
         trigger: HTMLElement,

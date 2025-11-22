@@ -21,15 +21,19 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
-    ElementResolutionController,
-    elementResolverUpdatedSymbol,
-} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-import {
     ifDefined,
     StyleInfo,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
+import {
+    ElementResolutionController,
+    elementResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
+import type { ClickController } from './ClickController.js';
+import type { HoverController } from './HoverController.js';
+import type { LongpressController } from './LongpressController.js';
 import type {
     OpenableElement,
     OverlayState,
@@ -37,24 +41,20 @@ import type {
     Placement,
     TriggerInteraction,
 } from './overlay-types.js';
-import { AbstractOverlay, nextFrame } from './AbstractOverlay.js';
-import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
+import { OverlayPopover } from './OverlayPopover.js';
 import { overlayStack } from './OverlayStack.js';
-import { VirtualTrigger } from './VirtualTrigger.js';
 import { PlacementController } from './PlacementController.js';
-import type { ClickController } from './ClickController.js';
-import type { HoverController } from './HoverController.js';
-import type { LongpressController } from './LongpressController.js';
-export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
-import { strategies } from './strategies.js';
 import {
     removeSlottableRequest,
     SlottableRequestEvent,
 } from './slottable-request-event.js';
+import { strategies } from './strategies.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
+export { LONGPRESS_INSTRUCTIONS } from './LongpressController.js';
 
-import styles from './overlay.css.js';
 import { FocusTrap } from 'focus-trap';
+import styles from './overlay.css.js';
 
 const browserSupportsPopover = 'showPopover' in document.createElement('div');
 
@@ -65,21 +65,58 @@ if (!browserSupportsPopover) {
 }
 
 /**
+ * The `<sp-overlay>` element is used to display content that overlays the rest of the application,
+ * including tooltips, dialogs, popovers, modals, and context menus.
+ *
  * @element sp-overlay
  *
- * @slot default - The content that will be displayed in the overlay
+ * @slot default - The content that will be displayed in the overlay (e.g., `<sp-popover>`, `<sp-dialog>`, `<sp-tooltip>`)
  *
- * @fires sp-opened - announces that an overlay has completed any entry animations
- * @fires sp-closed - announce that an overlay has compelted any exit animations
- * @fires slottable-request - requests to add or remove slottable content
+ * @fires sp-opened - Announces that an overlay has completed any entry animations and is fully visible
+ * @fires sp-closed - Announces that an overlay has completed any exit animations and is fully closed
+ * @fires slottable-request - Requests to add or remove slottable content for performance optimization. See {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/slottable-request.md | Slottable Request documentation}
  *
- * @attr {string} placement - The placement of the overlay relative to the trigger
- * @attr {number} offset - The distance between the overlay and the trigger
- * @attr {boolean} disabled - Whether the overlay trigger is disabled
- * @attr {string} receives-focus - How focus should be handled ('true'|'false'|'auto')
- * @attr {boolean} delayed - Whether the overlay should wait for a warm-up period before opening
- * @attr {boolean} open - Whether the overlay is currently open
+ * @attr {string} placement - The placement of the overlay relative to the trigger. Options: `"top"`, `"top-start"`, `"top-end"`, `"right"`, `"right-start"`, `"right-end"`, `"bottom"`, `"bottom-start"`, `"bottom-end"`, `"left"`, `"left-start"`, `"left-end"`
+ * @attr {number|string} offset - The distance (in pixels) between the overlay and the trigger. Can be a single number for main axis or `"[x, y]"` for both axes
+ * @attr {boolean} disabled - Whether the overlay trigger is disabled. When `true`, the overlay cannot be opened
+ * @attr {string} receives-focus - How focus should be handled when overlay opens. Options: `"true"` (always focus), `"false"` (never focus), `"auto"` (based on overlay type)
+ * @attr {boolean} delayed - Whether the overlay should wait for a 1000ms warm-up period before opening. Useful for hover tooltips to prevent flickering
+ * @attr {boolean} open - Whether the overlay is currently open. Can be set programmatically to control overlay state
+ * @attr {string} trigger - ID reference and interaction type for the trigger element. Format: `"elementId@interaction"` where interaction is `"click"`, `"hover"`, or `"longpress"`
+ * @attr {string} type - Configures open/close behavior. Options: `"auto"` (closes on outside click), `"hint"` (non-interactive), `"manual"` (only closes on ESC), `"modal"` (focus trap, explicit close), `"page"` (fullscreen, focus trap)
  * @attr {boolean} allow-outside-click - @deprecated Whether clicks outside the overlay should close it (not recommended for accessibility)
+ *
+ * @example Basic tooltip
+ * ```html
+ * <sp-button id="help-btn">Help</sp-button>
+ * <sp-overlay trigger="help-btn@hover" type="hint" placement="top">
+ *   <sp-tooltip>This is a helpful tooltip</sp-tooltip>
+ * </sp-overlay>
+ * ```
+ *
+ * @example Modal dialog
+ * ```html
+ * <sp-button id="open-dialog">Open Dialog</sp-button>
+ * <sp-overlay trigger="open-dialog@click" type="modal" placement="bottom">
+ *   <sp-popover>
+ *     <sp-dialog>
+ *       <h2 slot="heading">Dialog Title</h2>
+ *       <p>Dialog content here...</p>
+ *     </sp-dialog>
+ *   </sp-popover>
+ * </sp-overlay>
+ * ```
+ *
+ * @example Programmatic control
+ * ```javascript
+ * const overlay = document.querySelector('sp-overlay');
+ * overlay.open = true;  // Open the overlay
+ * overlay.open = false; // Close the overlay
+ * ```
+ *
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ | Overlay Documentation}
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/overlay-trigger.md | Overlay Trigger} for multiple interactions
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md | Imperative API} for programmatic control
  */
 export class Overlay extends ComputedOverlayBase {
     static override styles = [styles];
@@ -262,9 +299,34 @@ export class Overlay extends ComputedOverlayBase {
     static openCount = 1;
 
     /**
-     * Instruct the Overlay where to place itself in relationship to the trigger element.
+     * Instructs the overlay where to place itself in relation to the trigger element.
+     *
+     * The placement system uses Floating UI to calculate optimal positioning
+     * and automatically falls back to alternative placements when space is constrained.
+     *
+     * **Available placements:**
+     * - Base: `"top"`, `"right"`, `"bottom"`, `"left"`
+     * - Start: `"top-start"`, `"right-start"`, `"bottom-start"`, `"left-start"`
+     * - End: `"top-end"`, `"right-end"`, `"bottom-end"`, `"left-end"`
      *
      * @type {"top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end"}
+     *
+     * @example Tooltip above button
+     * ```html
+     * <sp-overlay trigger="btn@hover" type="hint" placement="top">
+     *   <sp-tooltip>Appears above the button</sp-tooltip>
+     * </sp-overlay>
+     * ```
+     *
+     * @example Menu aligned to start
+     * ```html
+     * <sp-overlay trigger="menu-btn@click" type="auto" placement="bottom-start">
+     *   <sp-popover><sp-menu>...</sp-menu></sp-popover>
+     * </sp-overlay>
+     * ```
+     *
+     * @see Use {@link offset} property to adjust distance from trigger
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#placement-system | Architecture: Placement System}
      */
     @property()
     override placement?: Placement;
@@ -363,10 +425,43 @@ export class Overlay extends ComputedOverlayBase {
     /**
      * An optional ID reference for the trigger element combined with the optional
      * interaction (click | hover | longpress) by which the overlay should open.
-     * The format is `trigger@interaction`, e.g., `trigger@click` opens the overlay
-     * when an element with the ID "trigger" is clicked.
+     *
+     * **Format:** `"elementId@interaction"`
+     *
+     * **Interactions:**
+     * - `click` - Opens on click/tap
+     * - `hover` - Opens on mouseenter/focus
+     * - `longpress` - Opens on long press (300ms) or Space/Alt+Down
      *
      * @type {string}
+     *
+     * @example Click interaction
+     * ```html
+     * <sp-button id="menu-trigger">Menu</sp-button>
+     * <sp-overlay trigger="menu-trigger@click" type="auto">
+     *   <sp-popover><sp-menu>...</sp-menu></sp-popover>
+     * </sp-overlay>
+     * ```
+     *
+     * @example Hover tooltip
+     * ```html
+     * <sp-button id="help-btn">Help</sp-button>
+     * <sp-overlay trigger="help-btn@hover" type="hint" placement="top" delayed>
+     *   <sp-tooltip>Helpful information</sp-tooltip>
+     * </sp-overlay>
+     * ```
+     *
+     * @example Longpress menu
+     * ```html
+     * <sp-action-button id="actions-btn" hold-affordance>
+     *   <sp-icon-more slot="icon"></sp-icon-more>
+     * </sp-action-button>
+     * <sp-overlay trigger="actions-btn@longpress" type="auto">
+     *   <sp-popover><sp-menu>...</sp-menu></sp-popover>
+     * </sp-overlay>
+     * ```
+     *
+     * @see Use {@link triggerElement} property for programmatic trigger references or {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md#virtualtrigger-patterns | VirtualTrigger} for coordinate-based positioning
      */
     @property()
     trigger?: string;
@@ -375,7 +470,34 @@ export class Overlay extends ComputedOverlayBase {
      * An element reference for the trigger element that the overlay should relate to.
      * This property is not reflected as an attribute.
      *
+     * Use this property when you need:
+     * - Programmatic trigger assignment (instead of `trigger` attribute)
+     * - Virtual positioning at specific coordinates using {@link VirtualTrigger}
+     * - Dynamic trigger element changes
+     *
      * @type {HTMLElement | VirtualTrigger | null}
+     *
+     * @example Programmatic trigger
+     * ```javascript
+     * const overlay = document.querySelector('sp-overlay');
+     * const button = document.querySelector('#my-button');
+     * overlay.triggerElement = button;
+     * overlay.triggerInteraction = 'click';
+     * ```
+     *
+     * @example Virtual trigger for context menu
+     * ```javascript
+     * import { VirtualTrigger } from '@spectrum-web-components/overlay';
+     *
+     * element.addEventListener('contextmenu', (event) => {
+     *   event.preventDefault();
+     *   const overlay = document.querySelector('sp-overlay');
+     *   overlay.triggerElement = new VirtualTrigger(event.clientX, event.clientY);
+     *   overlay.open = true;
+     * });
+     * ```
+     *
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/imperative-api.md#virtualtrigger-patterns | VirtualTrigger patterns}
      */
     @property({ attribute: false })
     override triggerElement: HTMLElement | VirtualTrigger | null = null;
@@ -390,10 +512,47 @@ export class Overlay extends ComputedOverlayBase {
     triggerInteraction?: TriggerInteraction;
 
     /**
-     * Configures the open/close heuristics of the Overlay.
+     * Configures the open/close behavior and focus management of the overlay.
+     *
+     * **Type Options:**
+     *
+     * - **`auto`** (default): Closes on outside click or focus loss. Accepts focus. Best for dropdown menus and pickers.
+     * - **`hint`**: Non-interactive, no focus management. Closes on any user interaction. Best for tooltips.
+     * - **`manual`**: Accepts focus, only closes on ESC key or programmatic close. Best for persistent popovers.
+     * - **`modal`**: Focus trap, prevents ESC close, requires explicit dismissal. Best for critical dialogs.
+     * - **`page`**: Fullscreen with focus trap. Best for wizards or fullscreen takeovers.
      *
      * @type {"auto" | "hint" | "manual" | "modal" | "page"}
      * @default "auto"
+     *
+     * @example Auto - Dropdown menu
+     * ```html
+     * <sp-overlay trigger="button@click" type="auto">
+     *   <sp-popover><sp-menu>...</sp-menu></sp-popover>
+     * </sp-overlay>
+     * ```
+     *
+     * @example Hint - Tooltip
+     * ```html
+     * <sp-overlay trigger="button@hover" type="hint" delayed>
+     *   <sp-tooltip>Non-interactive tooltip</sp-tooltip>
+     * </sp-overlay>
+     * ```
+     *
+     * @example Modal - Confirmation dialog
+     * ```html
+     * <sp-overlay trigger="delete-btn@click" type="modal">
+     *   <sp-popover>
+     *     <sp-dialog>
+     *       <h2 slot="heading">Confirm Delete</h2>
+     *       <p>Are you sure?</p>
+     *       <sp-button slot="button" variant="accent">Confirm</sp-button>
+     *     </sp-dialog>
+     *   </sp-popover>
+     * </sp-overlay>
+     * ```
+     *
+     * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#overlay-types-and-focus-behavior | Architecture: Overlay Types}
      */
     @property()
     override type: OverlayTypes = 'auto';

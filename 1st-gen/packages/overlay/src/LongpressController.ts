@@ -23,7 +23,18 @@ import {
     InteractionTypes,
 } from './InteractionController.js';
 
+/**
+ * Duration (in milliseconds) to hold pointer before triggering longpress.
+ * @constant {number}
+ */
 const LONGPRESS_DURATION = 300;
+
+/**
+ * Instructional text for longpress affordance, displayed via `aria-describedby`.
+ * Different messages for touch, keyboard, and mouse interactions.
+ *
+ * @constant {Object}
+ */
 export const LONGPRESS_INSTRUCTIONS = {
     touch: 'Double tap and long press for additional options',
     keyboard: 'Press Space or Alt+Down Arrow for additional options',
@@ -34,9 +45,89 @@ type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
 
+/**
+ * Manages longpress gesture interactions for overlay triggers.
+ *
+ * The LongpressController handles opening overlays after a 300ms hold gesture,
+ * or via keyboard shortcuts (Space or Alt+Down Arrow). It implements special
+ * "shadow state" logic to prevent immediate closing after the overlay opens.
+ *
+ * **Behavior:**
+ * - Opens on 300ms pointer hold or Space/Alt+Down keyboard shortcut
+ * - Prevents immediate closing from `pointerup` event (shadow state)
+ * - Automatically adds `aria-describedby` with platform-appropriate instructions
+ * - Works with `hold-affordance` attribute on trigger elements
+ *
+ * **Longpress States:**
+ * - `null` - No longpress in progress
+ * - `potential` - Pointer down, timer started (before 300ms)
+ * - `opening` - Overlay opening animation in progress
+ * - `pressed` - User released pointer while overlay opening
+ *
+ * **Keyboard Shortcuts:**
+ * - **Space** - Opens longpress overlay
+ * - **Alt+Down Arrow** - Opens longpress overlay
+ *
+ * **Event Handling:**
+ * - Trigger: `longpress` custom event, `pointerdown`, `keydown`, `keyup`
+ * - Document: `pointerup`, `pointercancel` (for cleanup)
+ *
+ * **Used by:**
+ * - `<sp-overlay trigger="id@longpress">`
+ * - `<overlay-trigger>` with `longpress-content` slot
+ * - Elements with `hold-affordance` attribute (e.g., `<sp-action-button>`)
+ *
+ * @extends {InteractionController}
+ *
+ * @example Basic longpress menu
+ * ```html
+ * <sp-action-button id="actions-btn" hold-affordance>
+ *   <sp-icon-more slot="icon"></sp-icon-more>
+ * </sp-action-button>
+ * <sp-overlay trigger="actions-btn@longpress" type="auto">
+ *   <sp-popover>
+ *     <sp-menu>
+ *       <sp-menu-item>Advanced Option 1</sp-menu-item>
+ *       <sp-menu-item>Advanced Option 2</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ * </sp-overlay>
+ * ```
+ *
+ * @example Combined with hover and click
+ * ```html
+ * <overlay-trigger triggered-by="click hover longpress">
+ *   <sp-action-button slot="trigger" hold-affordance>Actions</sp-action-button>
+ *   <sp-tooltip slot="hover-content">Quick actions</sp-tooltip>
+ *   <sp-popover slot="click-content">
+ *     <sp-menu>
+ *       <sp-menu-item>Copy</sp-menu-item>
+ *       <sp-menu-item>Paste</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ *   <sp-popover slot="longpress-content">
+ *     <sp-menu>
+ *       <sp-menu-item>Advanced Options...</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ * </overlay-trigger>
+ * ```
+ *
+ * @see {@link ClickController} for click interactions
+ * @see {@link HoverController} for hover interactions
+ * @see {@link LONGPRESS_INSTRUCTIONS} for accessibility messages
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#interaction-controllers | Architecture Documentation}
+ */
 export class LongpressController extends InteractionController {
     override type = InteractionTypes.longpress;
 
+    /**
+     * Indicates whether the overlay is in the process of opening.
+     * During this state, attempts to close the overlay are prevented
+     * to avoid immediate dismissal from the `pointerup` event.
+     *
+     * @returns {boolean} True if longpressState is 'opening' or 'pressed'
+     */
     override get activelyOpening(): boolean {
         return (
             this.longpressState === 'opening' ||
@@ -44,10 +135,29 @@ export class LongpressController extends InteractionController {
         );
     }
 
+    /**
+     * Tracks the current state of the longpress gesture.
+     *
+     * **States:**
+     * - `null` - No longpress in progress
+     * - `potential` - Pointer is down, timer started
+     * - `opening` - Overlay is opening (triggered after 300ms)
+     * - `pressed` - User released pointer during opening animation
+     *
+     * @protected
+     */
     protected longpressState: null | 'potential' | 'opening' | 'pressed' = null;
 
+    /**
+     * Function to release `aria-describedby` relationship.
+     * @override
+     */
     override releaseDescription = noop;
 
+    /**
+     * Timeout handle for 300ms longpress detection.
+     * @private
+     */
     private timeout!: ReturnType<typeof setTimeout>;
 
     handleLongpress(): void {
