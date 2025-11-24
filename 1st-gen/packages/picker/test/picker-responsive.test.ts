@@ -178,9 +178,12 @@ describe('Picker, responsive', () => {
 
     describe('touch device detection', () => {
         afterEach(() => {
-            // Reset touch device simulation.
+            // Reset touch device and mobile simulation.
             if (el && el.isTouchDevice) {
                 el.isTouchDevice.matches = false;
+            }
+            if (el && el.isMobile) {
+                el.isMobile.matches = false;
             }
         });
 
@@ -192,7 +195,6 @@ describe('Picker, responsive', () => {
              * so that we can test the touch device behavior.
              */
             el.isTouchDevice.matches = true;
-            el.bindEvents();
             await elementUpdated(el);
 
             // Open the picker to initialize the menu.
@@ -216,7 +218,6 @@ describe('Picker, responsive', () => {
 
             // Ensure we're not on a touch device.
             el.isTouchDevice.matches = false;
-            el.bindEvents();
             await elementUpdated(el);
 
             // Open the picker to initialize the menu.
@@ -246,7 +247,6 @@ describe('Picker, responsive', () => {
              * so that we can test the iPad/tablet behavior.
              */
             el.isTouchDevice.matches = true;
-            el.bindEvents();
             await elementUpdated(el);
 
             // Open the picker.
@@ -268,8 +268,8 @@ describe('Picker, responsive', () => {
             // Verify shouldSupportDragAndSelect is false on touch devices.
             expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
 
-            // Get the menu item.
-            const menuItem = el.querySelector(
+            // Get the menu item through the optionsMenu to avoid shadow DOM issues.
+            const menuItem = el.optionsMenu.querySelector(
                 'sp-menu-item[value="option-2"]'
             ) as MenuItem;
             expect(menuItem).to.not.be.null;
@@ -298,7 +298,6 @@ describe('Picker, responsive', () => {
             // Simulate iPad: isMobile is false but isTouchDevice is true.
             el.isMobile.matches = false;
             el.isTouchDevice.matches = true;
-            el.bindEvents();
             await elementUpdated(el);
 
             // Open the picker.
