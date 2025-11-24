@@ -39,14 +39,18 @@
     /* TODO: added stepper-button-width multiplied by 2 just to give extra space to the input field.
     That "2" is a magic number and should be removed when we are able (possibly after S2 migration). */
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) * 2 + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
+
+    /* resets the inline-size of sp-number-field to the newly defined stepper-width */
+    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
 :host([hide-stepper]) {
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
 }
 
+/* keeps the textfield 100% of the width of the sp-number-field so there isn't a gap between the containers */
 #textfield {
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+    inline-size: 100%;
 }
 
 .input {
