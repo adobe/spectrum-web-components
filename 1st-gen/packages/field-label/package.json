@@ -33,6 +33,7 @@
             "development": "./src/FieldLabelMixin.dev.js",
             "default": "./src/FieldLabelMixin.js"
         },
+        "./src/field-label-mixin.css.js": "./src/field-label-mixin.css.js",
         "./src/field-label-overrides.css.js": "./src/field-label-overrides.css.js",
         "./src/field-label.css.js": "./src/field-label.css.js",
         "./sp-field-label-mixin.js": {
