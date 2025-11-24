@@ -66,6 +66,7 @@ export const growsOnly = (): TemplateResult => {
             grows
             id="grows-only"
             placeholder="Does not grow or display incorrectly"
+            style="--mod-field-label-width: 400px;"
         >
             This Textfield has the "grows" attribute without the "multiline"
             attribute
