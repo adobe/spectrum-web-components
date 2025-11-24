@@ -11,18 +11,17 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Working in the SWC repo](#working-in-the-swc-repo)
-  - [About this guide](#about-this-guide)
-  - [Getting started](#getting-started)
+- [About this guide](#about-this-guide)
+- [Getting started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
-  - [Repository structure](#repository-structure)
-  - [Development workflow](#development-workflow)
+- [Repository structure](#repository-structure)
+- [Development workflow](#development-workflow)
     - [Developing](#developing)
     - [Testing](#testing)
     - [Linting](#linting)
     - [Building](#building)
-  - [Command reference](#command-reference)
+- [Command reference](#command-reference)
 
 </details>
 
