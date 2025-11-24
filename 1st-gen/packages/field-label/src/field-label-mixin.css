@@ -46,6 +46,11 @@
 }
 
 label {
+    --spectrum-field-label-width: 100%;
+}
+
+label {
+    inline-size: var(--mod-field-label-width, var(--spectrum-field-label-width));
     box-sizing: border-box;
     min-block-size: var(--mod-fieldlabel-min-height, var(--spectrum-field-label-min-height));
     padding-block: var(--mod-fieldlabel-padding-block, var(--mod-field-label-top-to-text, var(--spectrum-field-label-top-to-text)) var(--mod-field-label-bottom-to-text, var(--spectrum-field-label-bottom-to-text)));
