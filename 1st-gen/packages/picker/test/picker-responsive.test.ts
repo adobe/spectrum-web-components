@@ -268,15 +268,12 @@ describe('Picker, responsive', () => {
             // Verify shouldSupportDragAndSelect is false on touch devices.
             expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
 
-            // Get the menu item through the optionsMenu to avoid shadow DOM issues.
-            const menuItem = el.optionsMenu.querySelector(
-                'sp-menu-item[value="option-2"]'
+            // Get the menu item through childItems array.
+            const menuItem = el.optionsMenu.childItems.find(
+                (item) => item.value === 'option-2'
             ) as MenuItem;
-            expect(menuItem).to.not.be.null;
+            expect(menuItem).to.not.be.undefined;
             await elementUpdated(menuItem);
-
-            // Ensure menu item is in the menu's childItems.
-            expect(el.optionsMenu.childItems).to.include(menuItem);
 
             // Ensure menu is not in scrolling state (which would prevent selection).
             el.optionsMenu.isScrolling = false;
