@@ -213,6 +213,10 @@
     margin-block-start: var(--mod-textfield-helptext-spacing-block, var(--spectrum-textfield-helptext-spacing-block));
 }
 
+::slotted([slot="help-text"]) {
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+}
+
 .spectrum-Textfield-characterCount {
     inline-size: auto;
     font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
