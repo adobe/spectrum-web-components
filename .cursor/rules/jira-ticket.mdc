@@ -314,13 +314,13 @@ h2. Tasks
 
  # Update RFC document based from scheduled SWC office hours:
 
- * Key discussion points, concerns, and consensus
+## Key discussion points, concerns, and consensus
 
- * Final decisions from discussion
+ ## Final decisions from discussion
 
- * Implementation approach
+ ## Implementation approach
 
- * Timeline considerations
+ ## Timeline considerations
 
  # Create follow-up tickets for implementation work
 
@@ -328,13 +328,13 @@ h2. Tasks
 
  # Update Decisions and RFCs wiki with:
 
- * RFC status (Accepted/Rejected/Modified)
+ ## RFC status (Accepted/Rejected/Modified)
 
- * Final decision and rationale
+ ## Final decision and rationale
 
- * Implementation plan
+ ## Implementation plan
 
- * Link to follow-up tickets
+ ## Link to follow-up tickets
 
 h2. Discussion facilitation notes
 
