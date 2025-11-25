@@ -13,10 +13,16 @@
 @import url("./spectrum-textfield.css");
 @import url("./textfield-overrides.css");
 
+/* styles from .spectrum-Textfield */
 :host {
-    display: inline-flex;
-    flex-direction: column;
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
     inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: visible;
+    margin: 0;
 }
 
 :host([multiline]) {
@@ -33,6 +39,7 @@
 
 #textfield {
     inline-size: 100%;
+    display: inline-grid;
 }
 
 #textfield,

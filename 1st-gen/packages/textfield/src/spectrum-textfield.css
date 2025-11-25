@@ -138,27 +138,18 @@
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-300);
 }
 
-#textfield {
-    text-overflow: ellipsis;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto;
-    margin: 0;
-    display: inline-grid;
-    position: relative;
-    overflow: visible;
-}
-
+/* styles from .spectrum-Textfield-validationIcon */
 :host([invalid]) #textfield .icon,
 :host([valid]) #textfield .icon {
     pointer-events: all;
-    grid-area: 2 / 2;
+    grid-area: 1 / 2 / auto / auto;
     margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
 }
 
-#textfield.spectrum-Textfield--sideLabel .icon {
+:host([side-aligned="start"]) #textfield .icon,
+:host([side-aligned="end"]) #textfield .icon {
     grid-area: 1 / 2 / span 1 / span 1;
 }
 
@@ -195,6 +186,7 @@
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-quiet-invalid, var(--spectrum-textfield-icon-spacing-inline-end-quiet-invalid));
 }
 
+/* TODO: does this do anything? */
 #textfield .spectrum-FieldLabel {
     grid-area: 1 / 1 / auto / span 1;
     margin-block-end: var(--mod-textfield-label-spacing-block, var(--spectrum-textfield-label-spacing-block));
@@ -208,11 +200,16 @@
     color: var(--spectrum-textfield-text-color-disabled);
 }
 
-#textfield .spectrum-HelpText {
+div[aria-live="assertive"] {
+    display: contents; /* Makes the div transparent to the grid */
+}
+
+::slotted(sp-help-text) {
     grid-area: 3 / 1 / auto / span 2;
     margin-block-start: var(--mod-textfield-helptext-spacing-block, var(--spectrum-textfield-helptext-spacing-block));
 }
 
+/* TODO: these styles need updating when char count is implemented */
 .spectrum-Textfield-characterCount {
     inline-size: auto;
     font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
