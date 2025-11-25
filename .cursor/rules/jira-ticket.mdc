@@ -157,20 +157,20 @@ h2. Additional context
 
 #### Second ticket: Internal discussion shepherding
 
-Title format: `Research: Shepard {RFC name} RFC through SWC Team Sync discussion`
+Title format: `Research: Shepard [RFC name] RFC through SWC Team Sync discussion`
 
 **Note:** This ticket must be completed after the first RFC authoring ticket.
 
 ```
 h2. Link to RFC
 
- * RFC authoring Jira Ticket: {ticket URL}
+ * RFC authoring Jira Ticket: [ticket URL]
 
  * Decisions and RFCs wiki: [https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs] 
 
 h2. Overview
 
-This ticket tracks the work required to shepherd the {*}{RFC name} RFC{*} through the internal discussion process and prepare it for external community review. This includes facilitating internal review, updating the RFC based on feedback, scheduling community comment periods, and ensuring proper communication across all relevant channels.
+This ticket tracks the work required to shepherd the *[RFC name] RFC* through the internal discussion process and prepare it for external community review. This includes facilitating internal review, updating the RFC based on feedback, scheduling community comment periods, and ensuring proper communication across all relevant channels.
 
 h2. Acceptance criteria
 
@@ -264,7 +264,7 @@ h2. Timeline considerations
 
 h2. Resources
 
- - {link to RFC}
+ - [link to RFC]
 
  - [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
 
@@ -275,20 +275,20 @@ h2. Resources
 
 #### Third ticket: External community discussion shepherding
 
-Title format: `Research: Shepard {RFC name} RFC through Office Hours discussion`
+Title format: `Research: Shepard [RFC name] RFC through Office Hours discussion`
 
 **Note:** This ticket must be completed after the second internal discussion shepherding ticket.
 
 ```
 h2. Link to RFC
 
- * RFC authoring Jira Ticket: {link to RFC ticket}
+ * RFC authoring Jira Ticket: [link to RFC ticket]
 
  * Decisions and RFCs wiki: [https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs] 
 
 h2. Overview
 
-This ticket tracks the work required to shepherd the {*}{RFC name} RFC{*} through the community discussion process and to finalize the decision. This includes monitoring and responding to community feedback during the comment period, facilitating discussion during office hours, documenting the final decision, and creating follow-up implementation tickets.
+This ticket tracks the work required to shepherd the *[RFC name] RFC* through the community discussion process and to finalize the decision. This includes monitoring and responding to community feedback during the comment period, facilitating discussion during office hours, documenting the final decision, and creating follow-up implementation tickets.
 
 h2. Acceptance criteria
 
@@ -398,7 +398,7 @@ h3. Implementation tickets:
 
 h2. Resources
 
- * {link to RFC}
+ * [link to RFC]
 
  * [Decisions and RFCs wiki|https://wiki.corp.adobe.com/display/AdobeDesign/Decisions+and+RFCs]
 
