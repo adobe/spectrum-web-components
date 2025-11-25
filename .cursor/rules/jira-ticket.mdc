@@ -228,7 +228,7 @@ h2. Tasks
 
 h2. Communication checklist
 
-{*}SWC Team channels:{*}
+h3. SWC Team channels:
 
  - Slack: {{spectrum-web-reviews}}
 
@@ -238,7 +238,7 @@ h2. Communication checklist
 
  - SWC Team RFC comment responses
 
-{*}External channels:{*}
+h3. External channels:
 
  - Slack: {{spectrum-web-components}}
 
@@ -246,7 +246,7 @@ h2. Communication checklist
 
  - Individual consumer outreach
 
-{*}Documentation:{*}
+h3. Documentation:
 
  - RFC wiki updated with timeline
 
