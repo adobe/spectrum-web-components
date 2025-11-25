@@ -9,7 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-@import url('./markup.css');
+
+@import url("@spectrum-web-components/styles/global-elements.css");
+@import url("./markup.css");
 
 :host {
     display: flex;
@@ -29,10 +31,8 @@
     max-width: 100%;
     overflow: auto;
     flex: 1;
-    padding: calc(var(--swc-scale-factor) * 32px)
-        calc(var(--swc-scale-factor) * 40px);
-    border-radius: var(--code-example-border-radius)
-        var(--code-example-border-radius) 0 0;
+    padding: calc(var(--swc-scale-factor) * 32px) calc(var(--swc-scale-factor) * 40px);
+    border-radius: var(--code-example-border-radius) var(--code-example-border-radius) 0 0;
     background: var(--spectrum-gray-100);
 }
 
@@ -40,10 +40,9 @@
     display: flex;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .demo-example {
-        padding: calc(var(--swc-scale-factor) * 16px)
-            calc(var(--swc-scale-factor) * 16px);
+        padding: calc(var(--swc-scale-factor) * 16px);
     }
 }
 
@@ -84,10 +83,7 @@ pre {
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
     font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
     line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
-    color: var(
-        --highcontrast-code-font-color,
-        var(--mod-code-font-color, var(--spectrum-code-font-color))
-    );
+    color: var(--highcontrast-code-font-color, var(--mod-code-font-color, var(--spectrum-code-font-color)));
 }
 
 .copy {

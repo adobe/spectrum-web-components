@@ -16,6 +16,9 @@ import { Locales } from '@spectrum-web-components/story-decorator/src/locales.js
 import DocumentationTemplate from './DocumentationTemplate.mdx';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 
+// Supports global element class-based styles, ex. .spectrum-Button
+import '@spectrum-web-components/styles/global-elements.css';
+
 // const cem = await import('./custom-elements.json', {
 //     assert: { type: 'json' },
 // });

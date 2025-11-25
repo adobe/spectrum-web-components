@@ -13,7 +13,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
 
-const variant = 'white';
+const staticColor = 'white';
 const treatment = 'fill';
 const pending = true;
 
@@ -22,7 +22,7 @@ export default {
     title: 'Button/White/Fill/Pending',
     args: {
         ...args,
-        variant,
+        staticColor,
         treatment,
         pending,
     },

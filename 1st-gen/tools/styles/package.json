@@ -31,6 +31,8 @@
         "./all-medium-light.css": "./all-medium-light.css",
         "./all-medium-lightest.css": "./all-medium-lightest.css",
         "./core-global.css": "./core-global.css",
+        "./global-elements.css": "./global-elements.css",
+        "./global-button.css": "./global-button.css",
         "./express/core-global.css": "./express/core-global.css",
         "./scale-large.css": "./scale-large.css",
         "./express/scale-large.css": "./express/scale-large.css",

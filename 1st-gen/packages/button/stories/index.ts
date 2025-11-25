@@ -15,9 +15,29 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import {
+    ButtonTreatments,
+    ButtonVariants,
+} from '@spectrum-web-components/button/src/Button.js';
 
-import type { Properties } from './template.js';
-export type { Properties };
+import { classMap } from 'lit/directives/class-map.js';
+
+export interface Properties {
+    staticColor?: 'white' | 'black';
+    variant?: ButtonVariants;
+    treatment?: ButtonTreatments;
+    quiet?: boolean;
+    pending?: boolean;
+    content?: TemplateResult;
+    disabled?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
+    href?: string;
+    target?: '_blank' | '_parent' | '_self' | '_top';
+    noWrap?: boolean;
+    iconOnly?: boolean;
+    label?: string;
+    minWidth?: string;
+}
 
 export const args = {
     disabled: false,
@@ -97,6 +117,18 @@ export const argTypes = {
             type: 'text',
         },
     },
+    href: {
+        name: 'href',
+        type: { name: 'string', required: false },
+        description:
+            'If provided, will render a native link with button styling',
+        table: {
+            type: { summary: 'string' },
+        },
+        control: {
+            type: 'text',
+        },
+    },
 };
 
 export const makeOverBackground =
@@ -120,24 +152,68 @@ export const makeOverBackground =
     };
 
 export function renderButton(properties: Properties): TemplateResult {
-    return html`
-        <sp-button
-            ?disabled=${!!properties.disabled}
-            href=${ifDefined(properties.href)}
-            ?icon-only=${properties.iconOnly}
-            ?pending=${!!properties.pending}
-            ?quiet="${!!properties.quiet}"
-            ?no-wrap="${!!properties.noWrap}"
-            size=${ifDefined(properties.size)}
-            target=${ifDefined(properties.target)}
-            treatment=${ifDefined(properties.treatment)}
-            variant=${ifDefined(properties.variant)}
-            static-color=${ifDefined(properties.staticColor)}
-            label=${ifDefined(properties.label)}
-        >
-            ${properties.content || 'Click Me'}
-        </sp-button>
-    `;
+    const minWidth = properties.minWidth
+        ? `min-inline-size: ${properties.minWidth}`
+        : undefined;
+
+    if (properties.href) {
+        // Not supported by static links
+        if (properties.disabled || properties.noWrap || properties.pending)
+            return html``;
+
+        const variant =
+            properties.variant && properties.variant === 'cta'
+                ? 'accent'
+                : properties.variant;
+
+        const staticColor =
+            properties.staticColor &&
+            properties.staticColor?.charAt(0).toUpperCase() +
+                properties.staticColor?.slice(1);
+
+        return html`
+            <a
+                class="${classMap({
+                    ['spectrum-Button']: true,
+                    [`spectrum-Button--size${properties.size?.toUpperCase()}`]:
+                        typeof properties.size !== 'undefined',
+                    [`spectrum-Button--${variant}`]:
+                        typeof properties.variant !== 'undefined',
+                    [`spectrum-Button--${properties.treatment}`]:
+                        typeof properties.treatment !== 'undefined',
+                    [`spectrum-Button--static${staticColor}`]:
+                        typeof properties.staticColor !== 'undefined',
+                    [`spectrum-Button--iconOnly`]:
+                        typeof properties.iconOnly !== 'undefined',
+                })}"
+                href="${properties.href}"
+                target=${ifDefined(properties.target)}
+                style=${ifDefined(minWidth)}
+            >
+                ${properties.content || 'Link as Button'}
+            </a>
+        `;
+    } else {
+        return html`
+            <sp-button
+                ?disabled=${!!properties.disabled}
+                href=${ifDefined(properties.href)}
+                ?icon-only=${properties.iconOnly}
+                ?pending=${!!properties.pending}
+                ?quiet="${!!properties.quiet}"
+                ?no-wrap="${!!properties.noWrap}"
+                size=${ifDefined(properties.size)}
+                target=${ifDefined(properties.target)}
+                treatment=${ifDefined(properties.treatment)}
+                variant=${ifDefined(properties.variant)}
+                static-color=${ifDefined(properties.staticColor)}
+                label=${ifDefined(properties.label)}
+                style=${ifDefined(minWidth)}
+            >
+                ${properties.content || 'Click Me'}
+            </sp-button>
+        `;
+    }
 }
 
 export function renderButtonSet(properties: Properties): TemplateResult {
@@ -218,12 +294,7 @@ export const renderWithIconOnly = (props: Properties): TemplateResult => {
 
 export const renderMinWidthButton = (props: Properties): TemplateResult => {
     return html`
-        <style>
-            sp-button {
-                min-width: 300px;
-            }
-        </style>
-        ${renderButtonSet(props)}
+        ${renderButtonSet({ ...props, minWidth: '300px' })}
     `;
 };
 

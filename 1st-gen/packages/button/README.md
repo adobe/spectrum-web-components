@@ -376,6 +376,43 @@ or on an `<sp-icon*>` element child.
 
 Do not use custom colors for buttons. The colors of different button variations have been designed to be consistent and accessible.
 
+#### Use a static button-styled native link if including href
+
+You may use a native link with classes to style it like a button. Refer to [the Storybook examples](https://opensource.adobe.com/spectrum-web-components/storybook/index.html?path=/story/button/) that include `href` for the appropriate classes to use.
+
+For styles to be fully available to slotted links, you must include the stylesheet for `@spectrum-web-components/styles/global-elements.css`.
+
+To successfully receive button styling, the link must be one of the following:
+
+- a direct child of `<sp-theme>`
+- a slotted child of a component within `<sp-theme>`
+
+To allow button-styled native links in the shadow DOM of extended components, ensure their stylesheet also imports `@spectrum-web-components/styles/global-elements.css`.
+
+**Note**: native button-styled links do not support disabled or pending states.
+
+```html
+<!--
+ Include in your own application stylesheet and extended component styles:
+ @import '@spectrum-web-components/styles/global-elements.css';
+ -->
+
+<a
+    class="spectrum-Button spectrum-Button--accent"
+    href="https://github.com/adobe/spectrum-web-components"
+>
+    Accent Link Button
+</a>
+<a
+    class="spectrum-Button spectrum-Button--secondary spectrum-Button--outline"
+    href="https://github.com/adobe/spectrum-web-components"
+>
+    <!-- Use icon components and continue to define slot="icon" for the best styling support -->
+    <sp-icon-help slot="icon"></sp-icon-help>
+    Secondary Outline Link Button
+</a>
+```
+
 #### Don't mix href and non-href buttons in a set of buttons
 
 A screen reader user will not encounter href buttons when navigating by buttons or form controls. While they can both be used in the same page problems could occur if mixing the types in close proximity to each other.

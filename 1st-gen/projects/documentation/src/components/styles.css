@@ -10,26 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
-@import '@spectrum-web-components/styles/tokens/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/global-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css';
-@import '@spectrum-web-components/styles/src/spectrum-heading.css';
-@import '@spectrum-web-components/styles/src/spectrum-body.css';
-@import '@spectrum-web-components/styles/src/spectrum-code.css';
-@import '@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css';
-@import './inline-alert.css';
-@import './fonts.css';
+@import url("@spectrum-web-components/styles/tokens/global-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/global-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/custom-vars.css");
+@import url("@spectrum-web-components/styles/tokens/spectrum/system-theme-bridge.css");
+@import url("@spectrum-web-components/styles/src/spectrum-heading.css");
+@import url("@spectrum-web-components/styles/src/spectrum-body.css");
+@import url("@spectrum-web-components/styles/src/spectrum-code.css");
+@import url("@spectrum-web-components/opacity-checkerboard/src/spectrum-opacity-checkerboard.css");
+
+/* Supports global element class-based styles, ex. .spectrum-Button */
+@import url("@spectrum-web-components/styles/global-elements.css");
+@import url("./inline-alert.css");
+@import url("./fonts.css");
 
 :root,
 :host {
-    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
-        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
-        'Trebuchet MS', 'Lucida Grande', sans-serif;
-
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, "Source Sans Pro", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, "Source Sans Pro", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif;
     --spectrum-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-font-style: var(--spectrum-default-font-style);
     --spectrum-font-size: var(--spectrum-font-size-100);
@@ -44,7 +42,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-@media screen and (min-width: 961px) {
+@media screen and (width >= 961px) {
     docs-page:not(:defined) {
         position: absolute;
         left: 0;
@@ -52,13 +50,7 @@ body {
         min-height: 100vh;
         box-sizing: border-box;
         padding: 92px 0 24px calc(var(--swc-scale-factor) * 192px + 48px);
-        background: linear-gradient(
-            to right,
-            var(--spectrum-gray-75) 0,
-            var(--spectrum-gray-75) calc(var(--swc-scale-factor) * 192px + 48px),
-            transparent calc(var(--swc-scale-factor) * 192px + 48px),
-            transparent
-        );
+        background: linear-gradient(to right, var(--spectrum-gray-75) 0, var(--spectrum-gray-75) calc(var(--swc-scale-factor) * 192px + 48px), transparent calc(var(--swc-scale-factor) * 192px + 48px), transparent);
         overflow: hidden;
     }
 
@@ -67,7 +59,7 @@ body {
         max-width: 1080px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 calc(var(--swc-scale-factor) * 56px) 0;
+        padding: 0 calc(var(--swc-scale-factor) * 56px);
     }
 
     docs-page:not(:defined) > main {
@@ -98,7 +90,7 @@ body {
     }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     docs-page:not(:defined) {
         display: block;
         padding: 71px calc(var(--swc-scale-factor) * 24px) 24px;
@@ -106,7 +98,7 @@ body {
     }
 
     docs-page:not(:defined):before {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         top: 60px;
@@ -131,19 +123,19 @@ body {
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (width <= 750px) {
     sp-sidenav:not(:defined) {
         column-count: 3;
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (width <= 500px) {
     sp-sidenav:not(:defined) {
         column-count: 2;
     }
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (width <= 350px) {
     sp-sidenav:not(:defined) {
         column-count: 1;
     }
@@ -162,8 +154,7 @@ body {
 #logo {
     outline: none;
     margin-bottom: -11px;
-    padding: calc(var(--swc-scale-factor) * 28px)
-        calc(var(--swc-scale-factor) * 24px);
+    padding: calc(var(--swc-scale-factor) * 28px) calc(var(--swc-scale-factor) * 24px);
     border-radius: 4px;
     display: flex;
     flex-direction: row;
@@ -191,21 +182,17 @@ body {
     font-style: normal;
     letter-spacing: 0;
     margin: -3px 0 0;
-    font-family: var(
-        --spectrum-alias-body-text-font-family,
-        var(--spectrum-font-family)
-    );
+    font-family: var(--spectrum-alias-body-text-font-family, var(--spectrum-font-family));
 }
 
-#logo:focus-visible::before {
-    content: '';
+#logo:focus-visible:before {
+    content: "";
     position: absolute;
     top: calc((var(--swc-scale-factor) * 28px) - 4px);
     right: calc((var(--swc-scale-factor) * 24px) - 4px);
     bottom: calc((var(--swc-scale-factor) * 28px) - 4px);
     left: calc((var(--swc-scale-factor) * 24px) - 4px);
-    border: 2px solid
-        var(--spectrum-alias-focus-color, var(--spectrum-blue-400));
+    border: 2px solid var(--spectrum-alias-focus-color, var(--spectrum-blue-400));
     border-radius: 4px;
 }
 
@@ -220,33 +207,16 @@ sp-tabs:not(:defined) {
 }
 
 sp-tabs:not(:defined) {
-    margin-top: calc(
-        -1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top))
-    );
+    margin-top: calc(-1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top)));
 }
 
 sp-tab:not(:defined) {
-    color: var(
-        --highcontrast-heading-font-color,
-        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
-    );
-    font-family: var(
-        --mod-heading-sans-serif-font-family,
-        var(--spectrum-heading-sans-serif-font-family)
-    );
+    color: var(--highcontrast-heading-font-color, var(--mod-heading-font-color, var(--spectrum-heading-font-color)));
+    font-family: var(--mod-heading-sans-serif-font-family, var(--spectrum-heading-sans-serif-font-family));
     font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
-    font-style: var(
-        --mod-heading-sans-serif-font-style,
-        var(--spectrum-heading-sans-serif-font-style)
-    );
-    font-weight: var(
-        --mod-heading-sans-serif-font-weight,
-        var(--spectrum-heading-sans-serif-font-weight)
-    );
-    line-height: var(
-        --mod-heading-line-height,
-        var(--spectrum-heading-line-height)
-    );
+    font-style: var(--mod-heading-sans-serif-font-style, var(--spectrum-heading-sans-serif-font-style));
+    font-weight: var(--mod-heading-sans-serif-font-weight, var(--spectrum-heading-sans-serif-font-weight));
+    line-height: var(--mod-heading-line-height, var(--spectrum-heading-line-height));
 
     --spectrum-heading-font-size: var(--spectrum-heading-size-s);
     --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
@@ -254,8 +224,7 @@ sp-tab:not(:defined) {
 
 docs-page sp-button:not(:defined) {
     visibility: hidden;
-    padding: calc(var(--swc-scale-factor) * 10px) 0
-        calc(var(--swc-scale-factor) * 12px);
+    padding: calc(var(--swc-scale-factor) * 10px) 0 calc(var(--swc-scale-factor) * 12px);
     line-height: calc(var(--swc-scale-factor) * 23px);
     border: 2px solid;
     display: inline-block;
@@ -287,9 +256,7 @@ sp-sidenav > sp-sidenav-item.spectrum-web {
 
 sp-sidenav-item:not(:defined) a,
 sp-sidenav-item:not(:defined) span {
-    --spectrum-sidenav-focus-ring-size: var(
-        --spectrum-focus-indicator-thickness
-    );
+    --spectrum-sidenav-focus-ring-size: var(--spectrum-focus-indicator-thickness);
     --spectrum-sidenav-focus-ring-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-sidenav-focus-ring-color: var(--spectrum-focus-indicator-color);
     --spectrum-sidenav-min-height: var(--spectrum-component-height-100);
@@ -299,164 +266,77 @@ sp-sidenav-item:not(:defined) span {
     --spectrum-sidenav-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-sidenav-icon-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-sidenav-icon-spacing: var(--spectrum-text-to-visual-100);
-    --spectrum-sidenav-inline-padding: var(
-        --spectrum-component-edge-to-text-100
-    );
+    --spectrum-sidenav-inline-padding: var(--spectrum-component-edge-to-text-100);
     --spectrum-sidenav-gap: var(--spectrum-side-navigation-item-to-item);
-    --spectrum-sidenav-top-to-icon: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
+    --spectrum-sidenav-top-to-icon: var(--spectrum-component-top-to-workflow-icon-100);
     --spectrum-sidenav-top-to-label: var(--spectrum-component-top-to-text-100);
-    --spectrum-sidenav-bottom-to-label: var(
-        --spectrum-side-navigation-bottom-to-text
-    );
-    --spectrum-sidenav-start-to-content-second-level: var(
-        --spectrum-side-navigation-second-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-third-level: var(
-        --spectrum-side-navigation-third-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-with-icon-second-level: var(
-        --spectrum-side-navigation-with-icon-second-level-edge-to-text
-    );
-    --spectrum-sidenav-start-to-content-with-icon-third-level: var(
-        --spectrum-side-navigation-with-icon-third-level-edge-to-text
-    );
-    --spectrum-sidenav-heading-top-margin: var(
-        --spectrum-side-navigation-item-to-header
-    );
-    --spectrum-sidenav-heading-bottom-margin: var(
-        --spectrum-side-navigation-header-to-item
-    );
+    --spectrum-sidenav-bottom-to-label: var(--spectrum-side-navigation-bottom-to-text);
+    --spectrum-sidenav-start-to-content-second-level: var(--spectrum-side-navigation-second-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-third-level: var(--spectrum-side-navigation-third-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-with-icon-second-level: var(--spectrum-side-navigation-with-icon-second-level-edge-to-text);
+    --spectrum-sidenav-start-to-content-with-icon-third-level: var(--spectrum-side-navigation-with-icon-third-level-edge-to-text);
+    --spectrum-sidenav-heading-top-margin: var(--spectrum-side-navigation-item-to-header);
+    --spectrum-sidenav-heading-bottom-margin: var(--spectrum-side-navigation-header-to-item);
     --spectrum-sidenav-background-disabled: transparent;
     --spectrum-sidenav-background-default: transparent;
     --spectrum-sidenav-background-hover: var(--spectrum-gray-200);
     --spectrum-sidenav-item-background-down: var(--spectrum-gray-300);
     --spectrum-sidenav-background-key-focus: var(--spectrum-gray-200);
-    --spectrum-sidenav-item-background-default-selected: var(
-        --spectrum-gray-200
-    );
+    --spectrum-sidenav-item-background-default-selected: var(--spectrum-gray-200);
     --spectrum-sidenav-background-hover-selected: var(--spectrum-gray-300);
     --spectrum-sidenav-item-background-down-selected: var(--spectrum-gray-300);
     --spectrum-sidenav-background-key-focus-selected: var(--spectrum-gray-200);
     --spectrum-sidenav-header-color: var(--spectrum-gray-600);
-    --spectrum-sidenav-content-disabled-color: var(
-        --spectrum-disabled-content-color
-    );
-    --spectrum-sidenav-content-color-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-sidenav-content-color-hover: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-sidenav-content-color-down: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-sidenav-content-color-key-focus: var(
-        --spectrum-neutral-content-color-key-focus
-    );
-    --spectrum-sidenav-content-color-default-selected: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-sidenav-content-color-hover-selected: var(
-        --spectrum-neutral-content-color-hover
-    );
-    --spectrum-sidenav-content-color-down-selected: var(
-        --spectrum-neutral-content-color-down
-    );
-    --spectrum-sidenav-content-color-key-focus-selected: var(
-        --spectrum-neutral-content-color-key-focus
-    );
+    --spectrum-sidenav-content-disabled-color: var(--spectrum-disabled-content-color);
+    --spectrum-sidenav-content-color-default: var(--spectrum-neutral-content-color-default);
+    --spectrum-sidenav-content-color-hover: var(--spectrum-neutral-content-color-hover);
+    --spectrum-sidenav-content-color-down: var(--spectrum-neutral-content-color-down);
+    --spectrum-sidenav-content-color-key-focus: var(--spectrum-neutral-content-color-key-focus);
+    --spectrum-sidenav-content-color-default-selected: var(--spectrum-neutral-content-color-default);
+    --spectrum-sidenav-content-color-hover-selected: var(--spectrum-neutral-content-color-hover);
+    --spectrum-sidenav-content-color-down-selected: var(--spectrum-neutral-content-color-down);
+    --spectrum-sidenav-content-color-key-focus-selected: var(--spectrum-neutral-content-color-key-focus);
     --spectrum-sidenav-text-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-sidenav-text-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-sidenav-text-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-text-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-text-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-top-level-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
+    --spectrum-sidenav-top-level-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-sidenav-top-level-font-weight: var(--spectrum-bold-font-weight);
     --spectrum-sidenav-top-level-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-top-level-font-size: var(--spectrum-font-size-100);
     --spectrum-sidenav-top-level-line-height: var(--spectrum-line-height-100);
-    --spectrum-sidenav-header-font-family: var(
-        --spectrum-sans-font-family-stack
-    );
+    --spectrum-sidenav-header-font-family: var(--spectrum-sans-font-family-stack);
     --spectrum-sidenav-header-font-weight: var(--spectrum-medium-font-weight);
     --spectrum-sidenav-header-font-style: var(--spectrum-default-font-style);
     --spectrum-sidenav-header-font-size: var(--spectrum-font-size-75);
     --spectrum-sidenav-header-line-height: var(--spectrum-line-height-100);
 
-    padding-top: var(
-        --mod-sidenav-top-to-label,
-        var(--spectrum-sidenav-top-to-label)
-    );
-    background-color: var(
-        --highcontrast-sidenav-background-default,
-        var(
-            --mod-sidenav-background-default,
-            var(--spectrum-sidenav-background-default)
-        )
-    );
-    border-radius: var(
-        --mod-sidenav-border-radius,
-        var(--spectrum-sidenav-border-radius)
-    );
+    padding-top: var(--mod-sidenav-top-to-label, var(--spectrum-sidenav-top-to-label));
+    background-color: var(--highcontrast-sidenav-background-default, var(--mod-sidenav-background-default, var(--spectrum-sidenav-background-default)));
+    border-radius: var(--mod-sidenav-border-radius, var(--spectrum-sidenav-border-radius));
     box-sizing: border-box;
-    color: var(
-        --highcontrast-sidenav-content-color-default,
-        var(
-            --mod-sidenav-content-color-default,
-            var(--spectrum-sidenav-content-color-default)
-        )
-    );
+    color: var(--highcontrast-sidenav-content-color-default, var(--mod-sidenav-content-color-default, var(--spectrum-sidenav-content-color-default)));
     cursor: pointer;
     display: inline-flex;
-    font-family: var(
-        --mod-sidenav-text-font-family,
-        var(--spectrum-sidenav-text-font-family)
-    );
-    font-size: var(
-        --mod-sidenav-text-font-size,
-        var(--spectrum-sidenav-text-font-size)
-    );
-    font-style: var(
-        --mod-sidenav-text-font-style,
-        var(--spectrum-sidenav-text-font-style)
-    );
-    font-weight: var(
-        --mod-sidenav-text-font-weight,
-        var(--spectrum-sidenav-text-font-weight)
-    );
+    font-family: var(--mod-sidenav-text-font-family, var(--spectrum-sidenav-text-font-family));
+    font-size: var(--mod-sidenav-text-font-size, var(--spectrum-sidenav-text-font-size));
+    font-style: var(--mod-sidenav-text-font-style, var(--spectrum-sidenav-text-font-style));
+    font-weight: var(--mod-sidenav-text-font-weight, var(--spectrum-sidenav-text-font-weight));
     hyphens: auto;
     inline-size: var(--mod-sidenav-width, var(--spectrum-sidenav-width));
-    line-height: var(
-        --mod-sidenav-text-line-height,
-        var(--spectrum-sidenav-text-line-height)
-    );
+    line-height: var(--mod-sidenav-text-line-height, var(--spectrum-sidenav-text-line-height));
     margin-block-end: var(--mod-sidenav-gap, var(--spectrum-sidenav-gap));
-    max-inline-size: var(
-        --mod-sidenav-max-width,
-        var(--spectrum-sidenav-max-width)
-    );
-    min-block-size: var(
-        --mod-sidenav-min-height,
-        var(--spectrum-sidenav-min-height)
-    );
-    min-inline-size: var(
-        --mod-sidenav-min-width,
-        var(--spectrum-sidenav-min-width)
-    );
-    padding-inline: var(
-        --mod-sidenav-inline-padding,
-        var(--spectrum-sidenav-inline-padding)
-    );
+    max-inline-size: var(--mod-sidenav-max-width, var(--spectrum-sidenav-max-width));
+    min-block-size: var(--mod-sidenav-min-height, var(--spectrum-sidenav-min-height));
+    min-inline-size: var(--mod-sidenav-min-width, var(--spectrum-sidenav-min-width));
+    padding-inline: var(--mod-sidenav-inline-padding, var(--spectrum-sidenav-inline-padding));
     position: relative;
     text-decoration: none;
     transition:
         background-color var(--spectrum-animation-duration-100) ease-out,
         color var(--spectrum-animation-duration-100) ease-out;
-    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 sp-sidenav-item:not(:defined) span,
@@ -466,26 +346,11 @@ sp-sidenav > sp-sidenav-item[multilevel]:not(:defined) > a {
 
 sp-sidenav-item:not(:defined) span,
 sp-sidenav > sp-sidenav-item:not(:defined) > a {
-    padding-left: var(
-        --spectrum-sidenav-item-padding-x,
-        calc(var(--swc-scale-factor) * 12px)
-    );
+    padding-left: var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px));
 }
 
-sp-sidenav-item[expanded]
-    > sp-sidenav-item[expanded]
-    > sp-sidenav-item:not(:defined)
-    > a {
-    padding-left: calc(
-        var(
-                --spectrum-sidenav-multilevel-item-indentation-level2,
-                calc(var(--swc-scale-factor) * 24px)
-            ) +
-            var(
-                --spectrum-sidenav-item-padding-x,
-                calc(var(--swc-scale-factor) * 12px)
-            )
-    );
+sp-sidenav-item[expanded] > sp-sidenav-item[expanded] > sp-sidenav-item:not(:defined) > a {
+    padding-left: calc(var(--spectrum-sidenav-multilevel-item-indentation-level2, calc(var(--swc-scale-factor) * 24px)) + var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px)));
 }
 
 sp-sidenav-item:not([expanded], :defined) > sp-sidenav-item {
@@ -493,33 +358,24 @@ sp-sidenav-item:not([expanded], :defined) > sp-sidenav-item {
 }
 
 sp-sidenav-item:not(:defined) a {
-    padding-left: calc(
-        var(
-                --spectrum-sidenav-multilevel-item-indentation-level1,
-                calc(var(--swc-scale-factor) * 12px)
-            ) +
-            var(
-                --spectrum-sidenav-item-padding-x,
-                calc(var(--swc-scale-factor) * 12px)
-            )
-    );
+    padding-left: calc(var(--spectrum-sidenav-multilevel-item-indentation-level1, calc(var(--swc-scale-factor) * 12px)) + var(--spectrum-sidenav-item-padding-x, calc(var(--swc-scale-factor) * 12px)));
 }
 
 docs-page:not(:defined) .header-anchor {
     display: none;
 }
 
-sp-divider[size='l']:not(:defined) {
+sp-divider[size="l"]:not(:defined) {
     display: block;
     height: 4px;
 }
 
-sp-divider[size='m']:not(:defined) {
+sp-divider[size="m"]:not(:defined) {
     display: block;
     height: 2px;
 }
 
-sp-divider[size='s']:not(:defined) {
+sp-divider[size="s"]:not(:defined) {
     display: block;
     height: 2px;
 }
@@ -529,8 +385,7 @@ sp-divider[size='s']:not(:defined) {
 }
 
 .hero .spectrum-Heading {
-    margin: calc(var(--swc-scale-factor) * 8px) 0
-        calc(var(--swc-scale-factor) * 16px) 0;
+    margin: calc(var(--swc-scale-factor) * 8px) 0 calc(var(--swc-scale-factor) * 16px);
 }
 
 #hero-buttons {
@@ -550,7 +405,7 @@ sp-divider[size='s']:not(:defined) {
     box-sizing: border-box;
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (width <= 1100px) {
     .feature {
         flex: 0 1 calc(50% - 30px);
     }
@@ -560,7 +415,7 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     .feature {
         flex: 0 1 calc(33.33% - 30px);
     }
@@ -570,7 +425,7 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 725px) {
+@media screen and (width <= 725px) {
     .feature {
         flex: 0 1 calc(50% - 30px);
     }
@@ -580,7 +435,7 @@ sp-divider[size='s']:not(:defined) {
     }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (width <= 525px) {
     .feature {
         flex: 0 1 100%;
     }
@@ -603,7 +458,7 @@ sp-divider[size='s']:not(:defined) {
     margin: calc(var(--swc-scale-factor) * 8px) 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
     #title-header h1,
     .hero h1 {
         font-size: 44px;
@@ -663,7 +518,7 @@ article {
 .table-container sp-table-cell,
 .table-container sp-table-head-cell {
     box-sizing: border-box;
-    word-break: break-word;
+    overflow-wrap: break-word;
     min-width: calc(var(--swc-scale-factor) * 100px);
 }
 
@@ -689,7 +544,7 @@ sp-table.events .description {
     flex: 0 1 40%;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (width <= 960px) {
     .table-container {
         overflow: auto;
         margin: 0 -16px;
@@ -700,19 +555,19 @@ sp-table.events .description {
     }
 }
 
-.headerContainer > sp-divider[size='l'] {
+.headerContainer > sp-divider[size="l"] {
     margin-bottom: calc(var(--swc-scale-factor) * 24px);
 }
 
-.headerContainer:first-child > sp-divider[size='l'] {
+.headerContainer:first-child > sp-divider[size="l"] {
     margin-bottom: calc(var(--swc-scale-factor) * 24px);
 }
 
-.headerContainer > sp-divider[size='m'] {
+.headerContainer > sp-divider[size="m"] {
     margin-bottom: calc(var(--swc-scale-factor) * 16px);
 }
 
-.headerContainer > sp-divider[size='s'] {
+.headerContainer > sp-divider[size="s"] {
     margin-bottom: calc(var(--swc-scale-factor) * 12px);
 }
 
@@ -742,19 +597,11 @@ sp-link img {
 }
 
 sp-link.focus-visible img {
-    box-shadow: 0 2px 0 0
-        var(
-            --spectrum-fieldbutton-border-color-key-focus,
-            var(--spectrum-alias-border-color-focus)
-        );
+    box-shadow: 0 2px 0 0 var(--spectrum-fieldbutton-border-color-key-focus, var(--spectrum-alias-border-color-focus));
 }
 
 sp-link:hover img {
-    box-shadow: 0 2px 0 0
-        var(
-            --spectrum-fieldbutton-text-color-hover,
-            var(--spectrum-alias-text-color-hover)
-        );
+    box-shadow: 0 2px 0 0 var(--spectrum-fieldbutton-text-color-hover, var(--spectrum-alias-text-color-hover));
 }
 
 img[src^="https://img.shields.io"]
@@ -785,7 +632,7 @@ code-example:not(:defined) {
     min-height: 86px;
 }
 
-code-example[class^='language']:not(:defined) {
+code-example[class^="language"]:not(:defined) {
     min-height: 164px;
 }
 
@@ -800,12 +647,12 @@ code-example {
     box-sizing: border-box;
 }
 
-docs-page:not(:defined) [aria-labelledby='component-name'] {
+docs-page:not(:defined) [aria-labelledby="component-name"] {
     display: flex;
     flex-direction: column;
 }
 
-docs-page:defined [aria-labelledby='component-name'] {
+docs-page:defined [aria-labelledby="component-name"] {
     display: grid;
     grid-template-columns: 100%;
 }
@@ -825,12 +672,7 @@ docs-page:defined .section:not([selected]) {
     height: 0;
     display: flex;
     pointer-events: none;
-    transform: translateY(
-        var(
-            --spectrum-dropdown-flyout-menu-offset-y,
-            calc(var(--swc-scale-factor) * 6px)
-        )
-    );
+    transform: translateY(var(--spectrum-dropdown-flyout-menu-offset-y, calc(var(--swc-scale-factor) * 6px)));
     transition:
         opacity var(--spectrum-animation-duration-300) ease-in-out,
         transform var(--spectrum-animation-duration-300) ease-in-out,
@@ -838,18 +680,18 @@ docs-page:defined .section:not([selected]) {
 }
 
 docs-page:not(:defined) .section,
-sp-tabs[selected='overview'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='overview']:not(:defined),
-sp-tabs[selected='overview'] sp-tab-panel[value='api'],
-sp-tabs[selected='api'] sp-tab-panel[value='overview'] {
+sp-tabs[selected="overview"] sp-tab[value="api"]:not(:defined),
+sp-tabs[selected="api"] sp-tab[value="overview"]:not(:defined),
+sp-tabs[selected="overview"] sp-tab-panel[value="api"],
+sp-tabs[selected="api"] sp-tab-panel[value="overview"] {
     order: 2;
 }
 
 docs-page:not(:defined) .section[selected],
-sp-tabs[selected='overview'] sp-tab[value='overview']:not(:defined),
-sp-tabs[selected='api'] sp-tab[value='api']:not(:defined),
-sp-tabs[selected='overview'] sp-tab-panel[value='overview'],
-sp-tabs[selected='api'] sp-tab-panel[value='api'] {
+sp-tabs[selected="overview"] sp-tab[value="overview"]:not(:defined),
+sp-tabs[selected="api"] sp-tab[value="api"]:not(:defined),
+sp-tabs[selected="overview"] sp-tab-panel[value="overview"],
+sp-tabs[selected="api"] sp-tab-panel[value="api"] {
     order: 1;
 }
 
@@ -889,15 +731,14 @@ sp-tab-panel:not(.section):focus code-example {
 }
 
 sp-tab-panel:not(.section):focus code-example:after {
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
     pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
-    border-left: calc(var(--swc-scale-factor) * 2px) solid
-        var(--spectrum-blue-600);
+    border-left: calc(var(--swc-scale-factor) * 2px) solid var(--spectrum-blue-600);
 }
 
 sp-tab-panel.section {
@@ -957,7 +798,7 @@ sp-link {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 16px;
-    border: 1px solid rgb(63, 63, 63);
+    border: 1px solid rgb(63 63 63);
     border-radius: 6px;
 }
 
@@ -1003,7 +844,7 @@ sp-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-left: 1px solid rgb(63, 63, 63);
+    border-left: 1px solid rgb(63 63 63);
     padding: 16px;
     max-height: 215px;
     overflow: auto;
@@ -1024,11 +865,11 @@ sp-link {
     flex-wrap: wrap;
     gap: 16px;
     border-radius: 6px;
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 0;
     container-type: inline-size;
 }
 
-.usage-links :is([slot='heading']) {
+.usage-links :is([slot="heading"]) {
     all: unset;
 }
 
@@ -1043,7 +884,7 @@ sp-link {
     height: 36px;
 }
 
-p:has([alt='See it on NPM!']) {
+p:has([alt="See it on NPM!"]) {
     display: none;
 }
 
@@ -1053,7 +894,7 @@ p:has([alt='See it on NPM!']) {
     }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (width >= 600px) {
     .usage-links {
         flex-direction: row;
     }
@@ -1063,11 +904,10 @@ p:has([alt='See it on NPM!']) {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
     .demo-container {
         grid-template-columns: 1fr;
     }
-   }
 
     .demo-config {
         display: none;

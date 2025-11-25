@@ -68,6 +68,12 @@ export default () =>
                 selector: 'a',
                 fn: (node) => {
                     if (
+                        node.attrs &&
+                        node.attrs.class &&
+                        node.attrs.class.includes('spectrum-Button')
+                    ) {
+                        return node;
+                    } else if (
                         node.attrs.slot &&
                         (node.attrs.slot === 'no-js' ||
                             node.attrs.slot === 'logo')
