@@ -157,7 +157,7 @@ h2. Additional context
 
 #### Second ticket: Internal discussion shepherding
 
-Title format: `Research: Shepard [RFC name] RFC through SWC Team Sync discussion`
+Title format: `Research: Shepherd [RFC name] RFC through SWC Team Sync discussion`
 
 **Note:** This ticket must be completed after the first RFC authoring ticket.
 
