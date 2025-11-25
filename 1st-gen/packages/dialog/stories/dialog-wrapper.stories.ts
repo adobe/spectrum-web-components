@@ -219,26 +219,24 @@ export const form = (
                     }
                 </style>
                 <div>
-                    <sp-field-label side-aligned="end" for="street">
+                    <sp-textfield id="street" side-aligned="end" autofocus>
                         Street:
-                    </sp-field-label>
-                    <sp-textfield id="street" autofocus></sp-textfield>
-                    <sp-field-label side-aligned="end" for="city">
+                    </sp-textfield>
+                    <sp-textfield id="city" side-aligned="end">
                         City:
-                    </sp-field-label>
-                    <sp-textfield id="city"></sp-textfield>
-                    <sp-field-label side-aligned="end" for="state">
+                    </sp-textfield>
+                    <sp-textfield id="state" side-aligned="end">
                         State:
-                    </sp-field-label>
-                    <sp-textfield id="state"></sp-textfield>
-                    <sp-field-label side-aligned="end" for="zip">
+                    </sp-textfield>
+                    <sp-textfield id="zip" side-aligned="end">
                         Zip:
-                    </sp-field-label>
-                    <sp-textfield id="zip"></sp-textfield>
-                    <sp-field-label side-aligned="end" for="instructions">
+                    </sp-textfield>
+                    <sp-textfield
+                        id="instructions"
+                        side-aligned="end"
+                        multiline
+                    >
                         Special instructions:
-                    </sp-field-label>
-                    <sp-textfield id="instructions" multiline>
                         <sp-help-text slot="help-text">
                             For example, gate code or other information to help
                             the driver find you
