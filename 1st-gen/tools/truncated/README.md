@@ -155,16 +155,24 @@ When text is copied to the clipboard, a custom success message can be displayed:
 
 ### Usage in patterns
 
-#### With field labels
+#### Displaying form values
 
-`<sp-truncated>` is commonly used with form fields to display long values that might overflow:
+`<sp-truncated>` is commonly used to display long values that might overflow, such as saved form data:
 
 ```html demo
-<sp-field-label for="email-field">Email address</sp-field-label>
-<div
-    style="width: 250px; border: 1px solid var(--spectrum-gray-300); padding: 8px; border-radius: 4px;"
->
-    <sp-truncated>very.long.email.address@subdomain.example.com</sp-truncated>
+<div style="width: 250px;">
+    <p
+        style="margin: 0 0 8px 0; font-size: 12px; color: var(--spectrum-gray-700);"
+    >
+        Email address
+    </p>
+    <div
+        style="border: 1px solid var(--spectrum-gray-300); padding: 8px; border-radius: 4px;"
+    >
+        <sp-truncated>
+            very.long.email.address@subdomain.example.com
+        </sp-truncated>
+    </div>
 </div>
 ```
 
@@ -192,20 +200,17 @@ For use within overlays, ensure the popover has appropriate width constraints:
 
 #### Keyboard navigation
 
-The `<sp-truncated>` component does not receive keyboard focus by itself, as it functions as inline content. However, the tooltip that appears on hover follows standard Spectrum tooltip accessibility patterns:
+The `<sp-truncated>` component does not receive keyboard focus by itself, as it functions as inline content. The tooltip only appears on mouse hover, not on keyboard focus. This means keyboard-only users (who are not using screen readers) cannot access the tooltip to view the full content.
 
-- The tooltip appears on hover and focus
-- The tooltip is dismissed when the user moves away or presses the Escape key
+**Important accessibility limitation:** Since `<sp-truncated>` does not receive keyboard focus, keyboard-only users cannot trigger the tooltip hover interaction. Additionally, the click handler does not include keyboard event handlers (`/* eslint-disable lit-a11y/click-events-have-key-events */`), so keyboard users cannot copy the full content via keyboard alone. This is a known accessibility limitation.
 
 #### Click to copy
 
-When truncated text is clicked, the full text content is copied to the clipboard. This interaction provides a quick way for users to access the complete content.
-
-**Important accessibility note:** The click handler on the truncated text does not include keyboard event handlers (`/* eslint-disable lit-a11y/click-events-have-key-events */`). This is a known limitation. Users who rely on keyboard navigation will need to use the tooltip hover interaction to view the full content, but cannot copy it via keyboard alone.
+When truncated text is clicked, the full text content is copied to the clipboard. This interaction provides a quick way for mouse users to access the complete content. Keyboard users cannot trigger this interaction.
 
 #### Screen readers
 
-Screen readers will announce the visible truncated text. When the tooltip appears on hover, screen readers will announce the full content if it differs from the visible text.
+Screen readers will announce the full text content directly from the DOM, so screen reader users do not need the tooltip to access the complete content. Note that screen reader users are often but not always keyboard users, and keyboard-only users who are not using screen readers will not be able to access the tooltip content.
 
 For custom overflow content, ensure that the slotted content is semantically meaningful and properly structured for screen readers.
 
