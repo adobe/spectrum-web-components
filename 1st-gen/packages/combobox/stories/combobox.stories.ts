@@ -284,3 +284,86 @@ controlled.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+class SelectedValueDemo extends LitElement {
+    // Options with duplicate itemText to demonstrate the need for selectedValue
+    static duplicateOptions: ComboboxOption[] = [
+        { value: 'city-nyc', itemText: 'New York' },
+        { value: 'state-ny', itemText: 'New York' },
+        { value: 'city-la', itemText: 'Los Angeles' },
+        { value: 'state-la', itemText: 'Los Angeles' },
+        { value: 'city-chi', itemText: 'Chicago' },
+        { value: 'state-il', itemText: 'Illinois' },
+    ];
+
+    @state()
+    private selectedItemText = '';
+
+    @state()
+    private selectedValue = '';
+
+    @query('#combobox-selected-value')
+    private combobox!: Combobox;
+
+    override render(): TemplateResult {
+        return html`
+            <sp-field-label for="combobox-selected-value">
+                Select a location (some have duplicate names)
+            </sp-field-label>
+            <sp-combobox
+                id="combobox-selected-value"
+                .options=${SelectedValueDemo.duplicateOptions}
+                @change=${this.onChange}
+            ></sp-combobox>
+            <div
+                style="margin-top: 16px; padding: 12px; background: var(--spectrum-global-color-gray-100); border-radius: 4px;"
+            >
+                <p style="margin: 0 0 8px 0; font-weight: bold;">
+                    Selected values:
+                </p>
+                <p style="margin: 4px 0;">
+                    <strong>itemText (value property):</strong>
+                    <code
+                        style="margin-left: 8px; padding: 2px 6px; background: white; border-radius: 2px;"
+                    >
+                        ${this.selectedItemText || '(none)'}
+                    </code>
+                </p>
+                <p style="margin: 4px 0;">
+                    <strong>selectedValue (option value):</strong>
+                    <code
+                        style="margin-left: 8px; padding: 2px 6px; background: white; border-radius: 2px;"
+                    >
+                        ${this.selectedValue || '(none)'}
+                    </code>
+                </p>
+                <p
+                    style="margin: 8px 0 0 0; font-size: 12px; color: var(--spectrum-global-color-gray-700);"
+                >
+                    Notice how both "New York" options have the same itemText
+                    but different values. The selectedValue property allows you
+                    to distinguish between them.
+                </p>
+            </div>
+        `;
+    }
+
+    private onChange(): void {
+        this.selectedItemText = this.combobox.value;
+        this.selectedValue = this.combobox.selectedValue;
+    }
+}
+defineElement('selected-value-demo', SelectedValueDemo);
+
+export const selectedValue = (): TemplateResult => {
+    return html`
+        <selected-value-demo></selected-value-demo>
+    `;
+};
+selectedValue.swc_vrt = {
+    skip: true,
+};
+
+selectedValue.parameters = {
+    chromatic: { disableSnapshot: true },
+};

@@ -103,6 +103,13 @@ export class Combobox extends Textfield {
     @query('#input')
     private input!: HTMLInputElement;
 
+    /**
+     * The value of the currently selected option.
+     * This differs from `value` which contains the `itemText` displayed in the input.
+     */
+    @property({ type: String, attribute: 'selected-value', reflect: true })
+    public selectedValue = '';
+
     private itemValue = '';
 
     /**
@@ -164,6 +171,8 @@ export class Combobox extends Textfield {
         } else if (event.code === 'Escape') {
             if (!this.open) {
                 this.value = '';
+                this.selectedValue = '';
+                this.itemValue = '';
             }
             this.open = false;
         } else if (event.code === 'Enter') {
@@ -303,6 +312,8 @@ export class Combobox extends Textfield {
             (item) => item.value === target?.value
         );
         this.value = selected?.itemText || '';
+        this.selectedValue = selected?.value || '';
+        this.itemValue = selected?.value || '';
         event.preventDefault();
         this.open = false;
         this._returnItems();
@@ -339,10 +350,11 @@ export class Combobox extends Textfield {
         }
         if (changed.has('value')) {
             this.filterAvailableOptions();
-            this.itemValue =
-                this.availableOptions.find(
-                    (option) => option.itemText === this.value
-                )?.value ?? '';
+            const foundOption = this.availableOptions.find(
+                (option) => option.itemText === this.value
+            );
+            this.itemValue = foundOption?.value ?? '';
+            this.selectedValue = foundOption?.value ?? '';
         }
         return super.shouldUpdate(changed);
     }
