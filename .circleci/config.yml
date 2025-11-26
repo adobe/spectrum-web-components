@@ -1,33 +1,62 @@
 version: 2.1
 
 executors:
+    default:
+        docker:
+            - image: cimg/base:current
+        resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.44.0
+            - image: mcr.microsoft.com/playwright:v1.53.1-noble
         resource_class: xlarge
         environment:
             NODE_ENV: development
+            AZCOPY_AUTO_LOGIN_TYPE: SPN
+            AZCOPY_SPA_APPLICATION_ID: $AZURE_CLIENT_ID
+            AZCOPY_SPA_CLIENT_SECRET: $AZURE_CLIENT_SECRET
+            AZCOPY_TENANT_ID: $AZURE_TENANT_ID
 parameters:
     # In order to update the VRT baseline images:
-    # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
+    # 1. Copy the hash of the latest golden images hash from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
     # 2. Paste the hash in the current_golden_images_hash default parameter below.
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: c128578f6599fde71774dae5f1ebe047423aed95
+        default: b88c1b90e553e4f212ad60a5d96abc4dc9ed6be0
     wireit_cache_name:
         type: string
         default: wireit
 commands:
+    install-azcopy:
+        description: 'Install AzCopy and set up authentication'
+        steps:
+            - run:
+                  when: always
+                  name: Install AzCopy
+                  command: |
+                      # Create a bin directory in the home folder
+                      mkdir -p ~/bin
+                      cd ~/bin
+                      wget -O azcopy.tar.gz https://github.com/Azure/azure-storage-azcopy/releases/download/v10.29.1/azcopy_linux_amd64_10.29.1.tar.gz
+                      tar -xf azcopy.tar.gz --strip-components=1
+                      chmod +x azcopy
+                      # Add to PATH and set environment variables
+                      echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
+                      echo 'export AZCOPY_AUTO_LOGIN_TYPE="SPN"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_APPLICATION_ID="$AZURE_CLIENT_ID"' >> $BASH_ENV
+                      echo 'export AZCOPY_SPA_CLIENT_SECRET="$AZURE_CLIENT_SECRET"' >> $BASH_ENV
+                      echo 'export AZCOPY_TENANT_ID="$AZURE_TENANT_ID"' >> $BASH_ENV
+                      source $BASH_ENV
+                      azcopy --version
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -35,7 +64,8 @@ commands:
                       yarn --immutable
             - run:
                   name: Build the project
-                  command: yarn build
+                  command: |
+                      yarn build
 
             - save_cache:
                   paths:
@@ -44,8 +74,8 @@ commands:
                   key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
-                      - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                      - 1st-gen/.wireit
+                  key: v4b-wireit-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
@@ -68,19 +98,27 @@ commands:
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      mkdir -p 1st-gen/test/visual/screenshots-baseline
+                      baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                  #   if [ $baseline_count -eq 0 ]; then
+                  #       echo "ERROR: No baseline images found!"
+                  #       exit 1
+                  #   fi
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -95,75 +133,125 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
+                      cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy VRT Results to Azure Blob Storage
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                      # Set deployment path based on branch
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          PR_HASH="main"
+                          echo "Deploying VRT for main branch to main path"
+                      else
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///')
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
 
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping VRT deployment"
+                                  exit 0
+                              fi
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "⏭️  No PR detected - skipping VRT deployment"
+                              exit 0
                           fi
-                      done
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                          PR_HASH="pr-${PR_NUMBER}"
+                      fi
+
+                      # VRT combination for subdirectory
+                      combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
+
+                      # Prepare files for deployment
+                      cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/ || echo "Failed to copy favicon"
+
+                      # Upload VRT results to Azure Blob Storage
+                      echo "Uploading VRT results to ${PR_HASH}/${combination}/"
+                      azcopy copy "1st-gen/test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/${combination}/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "VRT URL for ${combination}: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf 1st-gen/test/visual/screenshots-baseline
+                      cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     test-chromium:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
-                  name: Run unit tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+                  name: Run chromium tests
+                  command: |
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - store_artifacts:
-                  path: coverage
+                  path: 1st-gen/coverage
 
-    test-chromium-memory:
+    test-chromium-coverage:
         executor: node
 
         steps:
             - downstream
             - run:
+                  name: Run chromium tests with coverage
+                  command: yarn workspace @spectrum-web-components/1st-gen test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+            - store_test_results:
+                  path: /root/project/1st-gen/results/
+
+    test-chromium-memory:
+        executor: node
+        parallelism: 5
+
+        steps:
+            - downstream
+            - run:
                   name: Run memory tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+                  command: |
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      echo $TEST
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -174,10 +262,10 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
+                  name: Run firefox tests
                   command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -188,34 +276,12 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
+                  name: Run webkit tests
                   command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-
-    preview-docs:
-        executor: node
-        steps:
-            - downstream
-            - run:
-                  name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
-            - run:
-                  name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
-            - run:
-                  name: Build documentation
-                  command: yarn docs:build
-            - run:
-                  name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=$branch --cwd projects/documentation
 
     beta-docs:
         executor: node
@@ -224,21 +290,44 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  command: yarn workspace @spectrum-web-components/1st-gen docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
+            - run:
+                  name: Build documentation with path prefix
+                  command: |
+                      echo "export SWC_DIR=beta/docs" >> $BASH_ENV
+                      source $BASH_ENV
             - run:
                   name: Build documentation
-                  command: yarn docs:build
+                  command: yarn workspace @spectrum-web-components/1st-gen docs:build
             - run:
                   name: Build Storybook
-                  command: yarn storybook:build
-            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
-            - run: |
-                  branch=$(git symbolic-ref --short HEAD)
-                  branch=$(npx slugify-cli $branch)
-                  yarn netlify deploy --alias=beta --cwd projects/documentation
+                  command: yarn workspace @spectrum-web-components/1st-gen storybook:build
+            - install-azcopy
+            - run:
+                  name: Deploy Beta Documentation to Azure Blob Storage
+                  command: |
+                      # Upload documentation to beta path
+                      echo "Uploading documentation to beta/docs/"
+                      azcopy copy "1st-gen/projects/documentation/dist/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Upload Storybook to beta path
+                      echo "Uploading Storybook to beta/docs/storybook/"
+                      azcopy copy "1st-gen/storybook-static/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URLs
+                      DOCS_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/"
+                      STORYBOOK_URL="https://swcpreviews.z13.web.core.windows.net/beta/docs/storybook/"
+                      echo "Beta Documentation URL: $DOCS_URL"
+                      echo "Beta Storybook URL: $STORYBOOK_URL"
 
     hcm-visual:
         executor: node
@@ -252,19 +341,27 @@ jobs:
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      mkdir -p 1st-gen/test/visual/screenshots-baseline
+                      baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                  #   if [ $baseline_count -eq 0 ]; then
+                  #       echo "ERROR: No baseline images found!"
+                  #       exit 1
+                  #   fi
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+                      yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -279,51 +376,80 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
-                      yarn rollup -c test/visual/rollup.config.js
+                      cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
+            - install-azcopy
             - run:
                   when: always
-                  name: Publish review site
+                  name: Deploy Visual Tests to Azure Blob Storage
                   command: |
-                      cp projects/documentation/content/favicon.ico test/visual
-                      branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
-                      echo "Netlify alias hash: $hash"
-                      echo "Deploying from test/visual directory..."
+                      # Set deployment path based on branch
+                      if [ "$CIRCLE_BRANCH" = "main" ]; then
+                          PR_HASH="main"
+                          echo "Deploying HCM VRT for main branch to main path"
+                      else
+                          # Get PR number from CircleCI environment
+                          PR_NUMBER=""
+                          if [ -n "$CIRCLE_PULL_REQUEST" ]; then
+                              PR_NUMBER=$(echo $CIRCLE_PULL_REQUEST | sed 's/.*\/pull\///')
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [ -n "$CIRCLE_PR_NUMBER" ]; then
+                              PR_NUMBER="$CIRCLE_PR_NUMBER"
+                              echo "Deploying HCM VRT for PR #$PR_NUMBER"
+                          elif [[ "$CIRCLE_BRANCH" =~ ^pull/[0-9]+$ ]]; then
+                              PR_NUMBER=$(echo "$CIRCLE_BRANCH" | sed 's/pull\///')
+                              echo "Deploying HCM VRT for forked PR #$PR_NUMBER"
+                          elif [ -n "$GITHUB_TOKEN" ]; then
+                              # GitHub API fallback
+                              PR_NUMBER=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+                                  -H "Accept: application/vnd.github+json" \
+                                  "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
+                                  | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
 
-                      max_attempts=3
-                      attempt=0
-
-                      while [ $attempt -lt $max_attempts ]; do
-                          if yarn netlify deploy --alias=$hash --cwd test/visual; then
-                              echo "Deployment successful!"
-                              exit 0
+                              if [ -n "$PR_NUMBER" ]; then
+                                  echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
+                              else
+                                  echo "⏭️  No PR found - skipping HCM VRT deployment"
+                                  exit 0
+                              fi
                           else
-                              attempt=$((attempt + 1))
-                              echo "Deploy failed, retrying ($attempt/$max_attempts)..."
-                              sleep 10  # Adjust delay if needed
+                              echo "⏭️  No PR detected - skipping HCM VRT deployment"
+                              exit 0
                           fi
-                      done
 
-                      echo "Deployment failed after $max_attempts attempts."
-                      exit 1
+                          PR_HASH="pr-${PR_NUMBER}"
+                      fi
+
+                      # Prepare files for deployment
+                      cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/
+
+                      # Upload HCM VRT results to Azure Blob Storage
+                      echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
+                      azcopy copy "1st-gen/test/visual/*" \
+                        "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
+                        --recursive \
+                        --from-to LocalBlob
+
+                      # Generate the deployment URL
+                      VRT_URL="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/hcm/"
+                      echo "$VRT_URL" > vrt_url.txt
+                      echo "HCM Visual Test URL: $VRT_URL"
 
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf 1st-gen/test/visual/screenshots-baseline
+                      cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
 
     visual:
@@ -352,12 +478,8 @@ workflows:
             - test-chromium-memory
             - test-firefox
             - test-webkit
+            - test-chromium-coverage
             - hcm-visual:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - preview-docs:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX

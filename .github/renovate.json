@@ -41,6 +41,10 @@
         {
             "groupName": "stylelint ecosystem",
             "matchPackageNames": ["stylelint", "stylelint-**"]
+        },
+        {
+            "groupName": "chromedriver",
+            "matchPackageNames": ["chromedriver"]
         }
     ],
     "rebaseWhen": "behind-base-branch",

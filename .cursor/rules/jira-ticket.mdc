@@ -1,0 +1,199 @@
+---
+description:  Guidelines for drafting and formatting Jira tickets
+alwaysApply: false
+---
+# Jira ticket guidelines
+
+When prompted to create a Jira ticket, output the following:
+
+- Title
+- Labels
+- Severity
+- Description
+
+Output results in the chat window in a way that can be copied and pasted into Jira.
+
+## Jira syntax formatting rules
+
+Use these syntax rules when writing Jira tickets:
+
+- `h2.` through `h6.` - Headings (use `h2.` for main, `h3.` for secondary, etc. - avoid `h1.` in descriptions)
+- `{*}{*}` - Bold text
+- `{code}{code}` - Inline code
+- `{code:language}{code}` - Language-specific code blocks
+- `[text|url]` - Links
+- ` - ` - Bullet points
+- `#` - Numbered list items
+
+## Title format
+
+- Use the format: `[Component] Brief description of change or issue`
+- Keep titles concise but descriptive (under 80 characters)
+- Use present tense for the description (e.g., "Add" not "Added")
+
+## Description structure
+
+- Present title, labels, and severity before description content
+- Include links to GitHub pull requests or RFCs when applicable (prompt if not provided)
+- All tickets must include acceptance criteria
+- Provide enough context so anyone can understand the objective
+- Use prefixes in titles: [Bug], [Fix], [Docs], [Refactor], [Research], [S2], [Test]
+
+Examples:
+
+- [Bug(component)]:
+- [bug]:
+- [Fix(component)]:
+- [fix]:
+- [Docs(component)]:
+- [docs]:
+- [Documentation]:
+- [Refactor(component)]:
+- [Research(component)]:
+- [discovery]:
+- [RFC(component)]:
+- [S2 Foundations]:
+- [S2]:
+- [Test(component)]:
+
+## More specific templates
+
+### General Jira ticket template
+
+```
+h2. Acceptance criteria
+(how we ensure that the work is complete)
+
+h2. Overview
+(plain language explaining the ticket)
+
+h2. Technical notes/resources
+(any technical notes/links/etc)
+
+h2. QA
+(steps someone will use to be sure that the work fulfills the ticket's request and that everything's working properly)
+
+h2. Design specs
+(are there any design specs/files/mock-ups we can include here? Any other design notes?)
+```
+
+### Bug reporting template
+
+```
+{*}Link to original issue:{*} (Add a link to the original issue in GitHub if applicable)
+
+h2. Expected behavior
+(Description of what the user would expect to happen)
+
+h2. Actual behavior
+(The actual behavior observed by the user)
+
+h2. Screenshots
+(Screenshots of the problem if applicable)
+
+h2. How can we reproduce the issue?
+
+# Go to '...'
+# Click on '....'
+# Scroll to '....'
+# Check console
+# See error
+
+h2. Sample code or abstract reproduction which illustrates the problem
+(are there any design specs/files/mock-ups we can include here? Any other design notes?)
+
+h2. Severity
+(The severity of the issue according to the [documentation|https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md#issue-severity-classification])
+```
+
+### RFC or feature ticket template
+
+This ticket template is for tracking work for RFCs, new features, new components, or research tickets. This template is not a substitute for the deliverable itself; rather, it's setting expectations for what the deliverable might look like and gives a high-level overview of the problem being tackled so that others can understand what is being worked on.
+
+Items with an asterisk are optional depending on the context.
+
+```
+h2. Link to original issue
+(Add a link to the original issue in GitHub if applicable)
+
+h2. Overview
+(The problem you're looking to explore solutions for or do research on)
+
+h2. Acceptance criteria
+(What is the desired outcome of this RFC or research process? What would make this ticket "done"? What follow-up work would be required? Refer to the RFC guide for examples.)
+
+h2. Estimated internal impact
+(If implemented, what impact would this work have on other APIs, other components, the project structure, or team initiatives? Refer to the impact diagram for details.)
+
+h2. Estimated external impact
+(If implemented, what impact would this work have on consumers or downstream/upstream dependencies?)
+
+h2. Anticipated reviewing audience
+(Who would you like to provide feedback on your RFC/research? Your immediate team, your partners, or a wider consumer audience? What are their roles?)
+
+h2. Proposed solutions
+(Pseudocode or short description that outlines what the solution might look like. You may not have any solutions yet.)
+
+h2. Supplementary documentation
+(Has this feature or component been implemented in existing design specs or in another project? Share those here to paint a bigger picture of the end result. For architectural changes, have you seen this done in other libraries? Are there any tools you're looking at trying out to solve your problem?)
+
+h2. Additional context
+(Add any other context, drafts, etc. if you have them)
+```
+
+## Severity classification
+
+- SEV1: Critical - System down, data loss, security breach
+- SEV2: High - Major feature broken, significant user impact
+- SEV3: Medium - Feature partially broken, moderate impact
+- SEV4: Low - Minor issues, minimal user impact
+- SEV5: Trivial - Cosmetic issues, no functional impact
+
+## Best practices
+
+- Link to relevant GitHub issues or pull requests using the format: `GH-{number}`
+- Include component name in brackets if applicable: `[sp-button]`
+- Add relevant labels for easier filtering
+- Attach screenshots or videos for visual changes
+- Reference design specs or documentation when available
+
+## Acceptance criteria
+
+- Write criteria in "Given/When/Then" format
+- Make criteria specific and testable
+- Include edge cases and error scenarios
+- Consider accessibility requirements
+
+## Labels
+
+Use the following labels to categorize tickets appropriately:
+
+- `a11y`: Accessibility-related issues and improvements
+- `API`: Changes to component APIs or interfaces
+- `docs`: Documentation updates or docs site changes
+- `engineering-processes`: Engineering workflow and process improvements
+- `feature`: New feature implementations
+- `hold`: Tickets temporarily suspended or blocked
+- `i18n`: Internationalization and localization work
+- `iOS`: iOS-specific issues and bugs
+- `mobile`: Mobile platform issues and responsive design
+- `necromancy`: Backlog tickets older than 2 years requiring revival
+- `product-processes`: Process improvements for product team collaboration
+- `refactor`: Code restructuring and refactoring work
+- `research`: Tasks requiring investigation or research
+- `RFC`: Request for Comments documentation
+- `s2foundations`: Spectrum 2 Foundations related work
+- `spectrum2`: Spectrum 2 platform specific tasks
+- `team-processes`: Internal team workflow improvements
+- `test`: Test implementation or testing infrastructure work
+- `triage`: New tickets requiring team assessment and prioritization
+- `VoiceOver`: VoiceOver screen reader specific issues
+
+## Issue type
+
+Jira includes the following issue types:
+
+- Bug: For something in the code that needs to be fixed.
+- Epic: For tickets that are larger than 8 story points and need to be broken up into multiple issues.
+- Story: For tickets that tie to code deliverables. Whether that's research, an RFC, or a pull request, it counts! If you don't know what your issue type should be, this is a safe bet.
+- Task: For work that doesn't relate to a code deliverable.

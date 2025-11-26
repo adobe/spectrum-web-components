@@ -1,0 +1,149 @@
+{
+    "text_formatting": {
+        "headings": {
+            "case": "sentence",
+            "files": ["**/*.md", "**/*.txt", "**/*.mdx"],
+            "message": "Use sentence case (capitalize only the first word and proper nouns/acronyms)",
+            "inline": true
+        },
+        "patterns": ["**/*.md", "**/*.txt", "**/*.mdx"]
+    },
+    "jira_tickets": {
+        "title_format": {
+            "pattern": "^\\[?[A-Za-z0-9-]+\\]?\\s.+$",
+            "max_length": 80
+        },
+        "required_sections": ["Acceptance case", "Overview"],
+        "labels": {
+            "a11y": "Accessibility issues",
+            "API": "Component API changes",
+            "docs": "Documentation updates",
+            "engineering-processes": "Engineering workflow improvements",
+            "feature": "New features",
+            "hold": "Suspended tickets",
+            "i18n": "Internationalization work",
+            "iOS": "iOS-specific issues",
+            "mobile": "Mobile platform issues",
+            "necromancy": "Old backlog tickets (>2 years)",
+            "product-processes": "Product team process improvements",
+            "refactor": "Code restructuring",
+            "research": "Investigation tasks",
+            "RFC": "Request for Comments",
+            "s2foundations": "S2 Foundations work",
+            "spectrum2": "Spectrum 2 tasks",
+            "team-processes": "Team workflow improvements",
+            "testing": "Test implementation",
+            "triage": "Needs assessment",
+            "VoiceOver": "VoiceOver specific issues"
+        },
+        "issue_types": ["Bug", "Epic", "Story", "Task"],
+        "templates": {
+            "bug": {
+                "required_fields": [
+                    "Expected behaviour",
+                    "Actual behaviour",
+                    "Reproduction steps",
+                    "Severity"
+                ]
+            },
+            "feature": {
+                "required_fields": ["Overview", "Acceptance criteria"],
+                "optional_fields": [
+                    "Estimated internal impact",
+                    "Estimated external impact",
+                    "Anticipated reviewing audience",
+                    "Proposed solutions",
+                    "Supplementary documentation"
+                ]
+            }
+        }
+    },
+    "git": {
+        "branchNameTemplate": "{username}/{type}-{description}{?-{issue}}",
+        "types": [
+            "feat",
+            "fix",
+            "docs",
+            "style",
+            "refactor",
+            "perf",
+            "test",
+            "build",
+            "ci",
+            "chore",
+            "revert"
+        ],
+        "promptForIssueNumber": true,
+        "allowEmptyIssueNumber": true,
+        "transformDescription": "lowercase-dashed",
+        "validationPattern": "^[a-z0-9]+\\/(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)-[a-z0-9-]+(-swc-[0-9]+)?$",
+        "validationMessage": "Branch name should follow format: username/type-description[-swc-issue]"
+    },
+    "editor": {
+        "formatOnSave": true,
+        "defaultFormatter": "prettier",
+        "tabSize": 4,
+        "insertSpaces": true,
+        "endOfLine": "auto",
+        "charset": "utf-8"
+    },
+    "language": {
+        "typescript": {
+            "formatOnSave": true,
+            "organizeImportsOnSave": true,
+            "addMissingImports": "prompt",
+            "defaultFormatter": "eslint"
+        },
+        "javascript": {
+            "formatOnSave": true,
+            "defaultFormatter": "eslint",
+            "organizeImportsOnSave": true,
+            "addMissingImports": "prompt",
+            "moduleResolution": "auto",
+            "snippets": {
+                "newScript": {
+                    "detectModuleFormat": true,
+                    "preferESM": true
+                }
+            }
+        },
+        "css": {
+            "formatOnSave": true,
+            "defaultFormatter": "stylelint"
+        }
+    },
+    "terminal": {
+        "defaultProfile": "${os.shell}",
+        "integrated": {
+            "fontFamily": "${os.monospace}",
+            "fontSize": 12,
+            "shell": {
+                "windows": "powershell.exe",
+                "linux": "bash",
+                "osx": "bash"
+            }
+        }
+    },
+    "search": {
+        "exclude": {
+            "**/node_modules": true,
+            "**/dist": true,
+            "**/.git": true,
+            "**/.vs": true,
+            "**/.idea": true,
+            "**/*.css.js": true,
+            "**/*.css.ts": true,
+            "**/*.d.ts": true,
+            "**/coverage": true,
+            "**/.wireit": true,
+            "**/*.tsbuildinfo": true,
+            "**/custom-elements.json": true,
+            "**/test/benchmark/results": true,
+            "**/storybook-static": true,
+            "**/*.min.*": true,
+            "**/*.map": true
+        },
+        "useGitIgnore": true,
+        "followSymlinks": false
+    }
+}

@@ -1,6 +1,0 @@
-@import '@spectrum-web-components/styles/tokens/medium-vars.css';
-@import '@spectrum-web-components/styles/tokens/spectrum/medium-vars.css';
-
-:root {
-    --swc-scale-factor: 1;
-}

@@ -23,6 +23,13 @@ body:
           description: Please list the component(s) impacted by this issue.
       validations:
           required: true
+    - type: input
+      id: version
+      attributes:
+          label: Library version
+          description: Please provide the version of `@spectrum-web-components/*` you were using when this issue occurred (e.g., 1.8.0).
+      validations:
+          required: false
     - type: textarea
       id: expected-behavior
       attributes:

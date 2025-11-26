@@ -1,7 +1,6 @@
 {
-    "private": true,
-    "name": "@adobe/spectrum-web-components",
     "version": "0.0.9",
+    "private": true,
     "description": "Spectrum Web Components are a set of reusable, accessible, and customizable web components following the design language of Adobe Spectrum.",
     "license": "Apache-2.0",
     "author": "Adobe",
@@ -15,194 +14,50 @@
     },
     "type": "module",
     "scripts": {
-        "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
-        "build": "wireit",
-        "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
-        "build:confirm": "node ./scripts/confirm-build.js",
-        "build:css": "wireit",
-        "build:css:watch": "wireit",
-        "build:react": "rimraf react && node ./scripts/build-react.js && tsc --build tsconfig-react-wrapper.json",
-        "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
-        "build:ts": "wireit",
-        "build:ts:watch": "wireit",
-        "build:types": "wireit",
-        "build:watch": "wireit",
-        "changeset-snapshot-publish": "yarn prepublishOnly && yarn changeset version --snapshot snapshot && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag --tag snapshot",
-        "changeset-publish": "yarn prepublishOnly && yarn changeset version && yarn constraints --fix && yarn install --refresh-lockfile && yarn version:update && yarn changeset publish --no-git-tag && yarn push-to-remote && yarn create-git-tag && yarn postpublish",
-        "changelog:global": "node ./scripts/update-global-changelog.js",
-        "chromatic": "chromatic --build-script-name storybook:build # note that --project-token must be set in your env variables",
-        "custom-element-json": "node ./scripts/custom-element-json.js",
-        "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
-        "docs:build": "yarn workspace documentation build",
-        "docs:ci": "yarn docs:analyze && run-p docs:production storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
-        "docs:preview": "yarn docs:analyze && run-p docs:build storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
-        "docs:production": "yarn workspace documentation build:production",
-        "docs:review": "alex packages/**/*.md",
-        "docs:start": "yarn workspace documentation serve --watch",
-        "find": "test -f custom-elements.json",
-        "icons": "wireit",
-        "icons:ui": "wireit",
-        "icons:workflow": "wireit",
-        "lint": "git status --porcelain && git add . && lint-staged --allow-empty",
-        "new-package": "yarn workspace swc-templates plop",
-        "postinstall": "husky || true && patch-package",
-        "postpack": "pinst --enable",
-        "postpublish": "yarn prepublish:react && yarn publish:react && yarn postpublish:react",
-        "postpublish:react": "git reset --hard HEAD^ && git prune && rimraf react",
-        "preeleventy": "yarn docs:analyze",
-        "prepack": "pinst --disable",
-        "prepublish:react": "yarn build:react && sed -i \"\" \"s/react/# react/g\" .gitignore && git commit -am \"Commit React Wrappers\" --no-verify",
-        "prepublishOnly": "rimraf react && yarn build && yarn custom-element-json && yarn build:confirm",
-        "prestorybook": "wireit",
-        "prestorybook:build": "cem analyze --outdir storybook/",
-        "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
-        "pretest:visual": "yarn build && yarn build",
-        "process-icons": "wireit",
-        "publish:react": "yarn changeset publish --no-git-tag --tag snapshot --no-push",
-        "push-to-remote": "git add . && git commit -m \"chore: release new versions #publish\" && git push",
-        "start": "yarn storybook",
-        "storybook": "wireit",
-        "storybook:build": "NODE_ENV=production storybook build -o projects/documentation/dist/storybook -c storybook",
-        "storybook:quick": "run-p build:watch storybook:run",
-        "storybook:run": "web-dev-server --config wds-storybook.config.js",
-        "test": "yarn test:focus unit",
-        "test:bench": "yarn build:tests && node test/benchmark/cli.js",
-        "test:changed": "node ./scripts/test-changes.js",
-        "test:ci": "yarn test:start",
-        "test:create": "wireit",
-        "test:errors": "yarn test | grep -A 32 ❌",
-        "test:focus": "yarn build && yarn test:ci --group",
-        "test:start": "web-test-runner",
-        "test:visual": "yarn test:visual:ci",
-        "test:visual:ci": "yarn test:start --group",
-        "test:visual:clean": "yarn test:visual:clean:baseline && yarn test:visual:clean:current",
-        "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
-        "test:visual:clean:current": "rimraf test/visual/screenshots-current",
-        "test:watch": "yarn test:watch:focus unit",
-        "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
-        "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
-        "version:update": "genversion --verbose --semi --esm ./tools/base/src/version.js",
-        "vrt:preview": "yarn wds --config test/visual/wds-vrt.config.js",
-        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link"
+        "build": "run-s build:2nd-gen build:1st-gen",
+        "build:1st-gen": "yarn workspace @spectrum-web-components/1st-gen build",
+        "build:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen build",
+        "lint": "run-s lint:2nd-gen lint:1st-gen",
+        "lint:1st-gen": "yarn workspace @spectrum-web-components/1st-gen lint",
+        "lint:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen lint",
+        "postinstall": "husky || true",
+        "publish": "node ./scripts/publish.js",
+        "publish:snapshot": "node ./scripts/publish.js --tag snapshot",
+        "start": "run-p start:2nd-gen start:1st-gen",
+        "start:1st-gen": "yarn workspace @spectrum-web-components/1st-gen start",
+        "start:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen start",
+        "test": "run-p test:2nd-gen test:1st-gen",
+        "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+        "test:a11y:ui": "playwright test --config=playwright.a11y.config.ts --ui",
+        "test:a11y:1st": "playwright test --config=playwright.a11y.config.ts --project=1st-gen",
+        "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
+        "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
+        "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
+        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
     },
     "workspaces": [
-        "linters/*",
-        "packages/*",
-        "projects/*",
-        "tools/*",
-        "react/*"
+        "1st-gen",
+        "1st-gen/packages/*",
+        "1st-gen/tools/*",
+        "1st-gen/linters/*",
+        "2nd-gen",
+        "2nd-gen/packages/*"
     ],
+    "resolutions": {
+        "playwright": "1.53.1"
+    },
     "devDependencies": {
-        "@changesets/changelog-github": "^0.5.0",
-        "@changesets/cli": "^2.27.5",
-        "@commitlint/cli": "^19.8.0",
-        "@commitlint/config-conventional": "^19.8.0",
-        "@custom-elements-manifest/analyzer": "^0.9.0",
-        "@geometricpanda/storybook-addon-badges": "^2.0.2",
-        "@lit/react": "^1.0.4",
-        "@netlify/build": "^29.17.3",
-        "@open-wc/dev-server-hmr": "^0.2.0",
-        "@open-wc/testing": "^4.0.0",
-        "@playwright/test": "^1.44.0",
-        "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-json": "^6.0.1",
-        "@rollup/plugin-node-resolve": "^15.2.3",
-        "@sindresorhus/slugify": "^2.2.1",
-        "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
-        "@storybook/addon-a11y": "^8.6.12",
-        "@storybook/addon-designs": "^8.2.1",
-        "@storybook/addon-essentials": "^8.6.12",
-        "@storybook/addon-interactions": "^8.6.12",
-        "@storybook/addon-links": "^8.6.12",
-        "@storybook/blocks": "^8.6.12",
-        "@storybook/manager-api": "^8.6.12",
-        "@storybook/theming": "^8.6.12",
-        "@storybook/types": "^8.6.12",
-        "@storybook/web-components-webpack5": "^8.6.12",
-        "@types/chai": "^4.1.7",
-        "@types/command-line-args": "^5.0.0",
-        "@types/command-line-usage": "^5.0.1",
-        "@types/common-tags": "^1.4.0",
-        "@types/mocha": "^10.0.6",
-        "@types/node": "^20.11.11",
-        "@types/react": "^18.3.20",
-        "@types/sinon": "^17.0.3",
-        "@types/webpack": "^5.28.5",
-        "@types/webpack-env": "^1.18.8",
-        "@typescript-eslint/eslint-plugin": "^7.0.2",
-        "@typescript-eslint/parser": "^7.0.2",
-        "@web/dev-server": "^0.4.6",
-        "@web/dev-server-rollup": "^0.6.4",
-        "@web/rollup-plugin-copy": "^0.5.1",
-        "@web/rollup-plugin-html": "^2.3.0",
-        "@web/test-runner": "^0.18.3",
-        "@web/test-runner-commands": "^0.9.0",
-        "@web/test-runner-junit-reporter": "^0.7.2",
-        "@web/test-runner-playwright": "^0.11.0",
-        "@web/test-runner-visual-regression": "^0.9.0",
-        "@webcomponents/webcomponentsjs": "^2.8.0",
-        "@yarnpkg/types": "^4.0.1",
-        "alex": "^11.0.1",
-        "cem-plugin-module-file-extensions": "^0.0.5",
-        "chromatic": "^11.20.0",
-        "chromedriver": "^136.0.0",
-        "colors": "^1.4.0",
-        "common-tags": "^1.8.2",
-        "crypto": "^1.0.1",
-        "custom-elements-manifest": "^2.0.0",
-        "debounce": "^2.0.0",
-        "deepmerge": "^4.2.2",
-        "esbuild": "^0.21.0",
-        "eslint": "^8.23.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-formatter-pretty": "^5.0.0",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-jsonc": "^2.20.1",
-        "eslint-plugin-lit-a11y": "^2.2.2",
-        "eslint-plugin-notice": "^0.9.10",
-        "eslint-plugin-prettier": "^5.1.3",
-        "eslint-plugin-require-extensions": "^0.1.3",
-        "eslint-plugin-storybook": "^0.8.0",
-        "express": "^4.16.4",
-        "fast-glob": "^3.3.3",
-        "fs-extra": "^11.1.1",
-        "geckodriver": "^4.3.0",
-        "genversion": "^3.1.1",
-        "gh-pages": "^6.0.0",
-        "gunzip-maybe": "^1.4.2",
-        "husky": "^9.0.10",
-        "jsonc-eslint-parser": "^2.4.0",
-        "latest-version": "^9.0.0",
-        "lightningcss": "1.19.0",
-        "lint-staged": "^15.5.1",
-        "lit": "^2.5.0 || ^3.1.3",
-        "lit-analyzer": "^2.0.3",
-        "lit-html": "^2.4.0 || ^3.1.3",
-        "mocha-junit-reporter": "^2.0.2",
-        "netlify-cli": "^17.38.0",
-        "next": "^14.2.26",
-        "node-fetch": "^3.1.0",
-        "npm-run-all2": "^8.0.1",
-        "patch-package": "^8.0.0",
-        "pinst": "^3.0.0",
-        "prettier": "^3.5.3",
-        "prettier-plugin-package": "^1.3.0",
-        "pretty-bytes": "^7.0.0",
-        "re-template-tag": "^2.0.1",
-        "rimraf": "^6.0.1",
-        "rollup": "^4.12.0",
-        "sinon": "^17.0.1",
-        "storybook": "^8.6.12",
-        "stylelint": "^16.19.1",
-        "stylelint-config-standard": "^38.0.0",
-        "stylelint-header": "^3.0.0",
-        "tachometer": "^0.7.1",
-        "tar-stream": "^3.0.0",
-        "terser": "^4.8.1",
-        "typescript": "^5.3.3",
-        "webpack-merge": "^6.0.1",
-        "wireit": "^0.14.3",
-        "yargs": "^17.2.1"
+        "@axe-core/playwright": "4.11.0",
+        "@changesets/cli": "2.29.7",
+        "@commitlint/cli": "19.8.1",
+        "@commitlint/config-conventional": "19.8.1",
+        "@playwright/test": "1.53.1",
+        "genversion": "3.2.0",
+        "husky": "9.1.7",
+        "lint-staged": "16.2.6",
+        "npm-run-all2": "8.0.4",
+        "replace-in-file": "8.3.0",
+        "yargs": "17.7.2"
     },
     "keywords": [
         "design-system",
@@ -215,203 +70,8 @@
         "lit-html"
     ],
     "engines": {
-        "node": ">=20",
+        "node": ">=20.19.0",
         "yarn": ">=4.6.0"
     },
-    "wireit": {
-        "build": {
-            "dependencies": [
-                "build:ts",
-                "build:types"
-            ]
-        },
-        "build:css": {
-            "clean": "if-file-deleted",
-            "command": "node ./scripts/build-css.js",
-            "files": [
-                "packages/**/*.css",
-                "tools/**/*.css",
-                "scripts/build-css.js",
-                "scripts/css-tools.js"
-            ],
-            "output": [
-                "packages/**/*.css.ts",
-                "tools/**/*.css.ts"
-            ]
-        },
-        "build:css:watch": {
-            "command": "node ./scripts/watch-css.js",
-            "service": true
-        },
-        "build:ts": {
-            "clean": "if-file-deleted",
-            "command": "node ./scripts/build-ts.js",
-            "dependencies": [
-                "process-icons",
-                "test:create",
-                "build:css"
-            ],
-            "files": [
-                "packages/**/*.ts",
-                "!packages/**/*.d.ts",
-                "projects/**/*.ts",
-                "!projects/**/*.d.ts",
-                "!projects/documentation/**/*",
-                "!projects/css-custom-vars-viewer/**/*",
-                "!projects/example-project-rollup/**/*",
-                "!projects/example-project-webpack/**/*",
-                "!projects/templates/**/*",
-                "tools/**/*.ts",
-                "!tools/**/*.d.ts",
-                "scripts/build-ts.js",
-                "packages/**/exports.json",
-                "tools/**/exports.json"
-            ],
-            "output": [
-                "packages/**/*.js",
-                "packages/**/*.dev.js",
-                "projects/**/*.js",
-                "packages/**/*.js.map",
-                "projects/**/*.js.map",
-                "!projects/documentation/**/*.js",
-                "!projects/css-custom-vars-viewer/**/*",
-                "!projects/example-project-rollup",
-                "!projects/example-project-webpack",
-                "!projects/templates",
-                "tools/**/*.js",
-                "tools/**/*.js.map",
-                "!**/build.js",
-                "!**/build-icons-mapping.js",
-                "test/**/*.js",
-                "test/**/*.js.map",
-                "!test/visual/create.js",
-                "!test/visual/review.js",
-                "!test/visual/rollup.config.js",
-                "!test/visual/src/review.js",
-                "!test/visual/src/index.html",
-                "!test/visual/wds-vrt.config.js",
-                "!tools/base/src/version.js"
-            ]
-        },
-        "build:ts:watch": {
-            "command": "node ./scripts/watch-ts.js",
-            "service": true
-        },
-        "build:types": {
-            "clean": "if-file-deleted",
-            "command": "tsc --build tsconfig-all.json --pretty",
-            "dependencies": [
-                "process-icons",
-                "test:create",
-                "build:css"
-            ],
-            "files": [
-                "tsconfig-all.json",
-                "packages/**/*.ts",
-                "packages/**/tsconfig.json",
-                "tools/**/*.ts",
-                "tools/**/tsconfig.json"
-            ],
-            "output": [
-                "packages/**/*.d.ts",
-                "packages/**/tsconfig.tsbuildinfo",
-                "tools/**/*.d.ts",
-                "tools/**/tsconfig.tsbuildinfo",
-                "!**/local.d.ts",
-                "!tools/base/src/version.d.ts"
-            ]
-        },
-        "build:watch": {
-            "dependencies": [
-                "build:css:watch",
-                "build:ts:watch"
-            ]
-        },
-        "icons": {
-            "command": "node ./scripts/process-icons.js && yarn lint",
-            "files": [
-                "scripts/process-icons.js"
-            ],
-            "output": [
-                "packages/**/*.svg.ts"
-            ]
-        },
-        "icons:ui": {
-            "clean": "if-file-deleted",
-            "command": "yarn workspace @spectrum-web-components/icons-ui build",
-            "files": [
-                "packages/icons-ui/bin/build.js",
-                "packages/icons-ui/packages.json",
-                "node_modules/@spectrum-css/ui-icons/dist/medium/**.svg",
-                "node_modules/@spectrum-css/ui-icons-s2/dist/medium/**.svg"
-            ],
-            "output": [
-                "packages/icons-ui/**/*.ts",
-                "!packages/icons-ui/**/*.d.ts",
-                "!packages/icons-ui/stories/**/*.ts",
-                "packages/icons-ui/stories/icon-manifest.ts",
-                "!packages/icons-ui/test/**/*.ts",
-                "!packages/icons-ui/src/index.ts",
-                "!packages/icons-ui/src/custom-tag.ts",
-                "!packages/icons-workflow/src/DefaultIcon.ts"
-            ]
-        },
-        "icons:workflow": {
-            "clean": "if-file-deleted",
-            "command": "yarn workspace @spectrum-web-components/icons-workflow build",
-            "files": [
-                "!packages/icons-workflow/bin/build.js",
-                "packages/icons-workflow/bin/build-icons-mapping.js"
-            ],
-            "output": [
-                "packages/icons-workflow/**/*.ts",
-                "!packages/icons-workflow/**/*.d.ts",
-                "!packages/icons-workflow/stories/**/*.ts",
-                "packages/icons-workflow/stories/icon-manifest.ts",
-                "!packages/icons-workflow/test/**/*.ts",
-                "!packages/icons-workflow/src/index.ts",
-                "!packages/icons-workflow/src/custom-tag.ts",
-                "!packages/icons-workflow/src/DefaultIcon.ts",
-                "!packages/icons-workflow/bin/icons-mapping.json"
-            ]
-        },
-        "prestorybook": {
-            "command": "cem analyze --outdir storybook/",
-            "files": [
-                "packages/**/*.ts",
-                "tools/**/*.ts"
-            ],
-            "output": [
-                "storybook/custom-elements.json"
-            ]
-        },
-        "process-icons": {
-            "dependencies": [
-                "icons",
-                "icons:ui",
-                "icons:workflow"
-            ]
-        },
-        "storybook": {
-            "command": "storybook dev -p 8080 -c storybook",
-            "dependencies": [
-                "build:watch",
-                "prestorybook"
-            ],
-            "service": true
-        },
-        "test:create": {
-            "clean": "if-file-deleted",
-            "command": "node test/visual/create.js",
-            "files": [
-                "packages/*/stories/*.stories.ts",
-                "tools/*/stories/*.stories.ts"
-            ],
-            "output": [
-                "packages/*/test/*.test-vrt.ts",
-                "tools/*/test/*.test-vrt.ts"
-            ]
-        }
-    },
-    "packageManager": "yarn@4.9.1"
+    "packageManager": "yarn@4.9.2"
 }

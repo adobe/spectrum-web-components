@@ -1,0 +1,40 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-stepper-border-width: var(--system-stepper-border-width);
+    --spectrum-stepper-border-color-default: var(--system-stepper-border-color-default);
+    --spectrum-stepper-border-color-hover: var(--system-stepper-border-color-hover);
+    --spectrum-stepper-border-color-focus: var(--system-stepper-border-color-focus);
+    --spectrum-stepper-border-color-focus-hover: var(--system-stepper-border-color-focus-hover);
+    --spectrum-stepper-border-color-keyboard-focus: var(--system-stepper-border-color-keyboard-focus);
+    --spectrum-stepper-buttons-border-style: var(--system-stepper-buttons-border-style);
+    --spectrum-stepper-buttons-border-width: var(--system-stepper-buttons-border-width);
+    --spectrum-stepper-buttons-border-color: var(--system-stepper-buttons-border-color);
+    --spectrum-stepper-buttons-background-color: var(--system-stepper-buttons-background-color);
+    --spectrum-stepper-buttons-border-color-hover: var(--system-stepper-buttons-border-color-hover);
+    --spectrum-stepper-buttons-border-color-focus: var(--system-stepper-buttons-border-color-focus);
+    --spectrum-stepper-buttons-border-color-keyboard-focus: var(--system-stepper-buttons-border-color-keyboard-focus);
+    --spectrum-stepper-button-border-width: var(--system-stepper-button-border-width);
+    --spectrum-stepper-border-color-invalid: var(--system-stepper-border-color-invalid);
+    --spectrum-stepper-border-color-focus-invalid: var(--system-stepper-border-color-focus-invalid);
+    --spectrum-stepper-border-color-focus-hover-invalid: var(--system-stepper-border-color-focus-hover-invalid);
+    --spectrum-stepper-border-color-keyboard-focus-invalid: var(--system-stepper-border-color-keyboard-focus-invalid);
+    --spectrum-stepper-border-color-disabled: var(--system-stepper-border-color-disabled);
+    --spectrum-stepper-button-border-width-disabled: var(--system-stepper-button-border-width-disabled);
+    --spectrum-stepper-buttons-background-color-disabled: var(--system-stepper-buttons-background-color-disabled);
+}
+
+:host([quiet]) #textfield {
+    --spectrum-stepper-buttons-border-style: var(--system-stepper-quiet-buttons-border-style);
+    --spectrum-stepper-button-edge-to-fill: var(--system-stepper-quiet-button-edge-to-fill);
+}

@@ -1,0 +1,217 @@
+# GitHub description guidelines
+
+Note for Cursor: If a ticket (GitHub issue or Jira ticket) is not provided by the prompt, prompt the user to supply one before generating the description or pull request content.
+
+When prompted to create a GitHub description, output the following:
+
+- Title
+- Labels
+- Description
+
+Output results in the chat window in a way that can be copied and pasted into GitHub.
+
+## GitHub markdown formatting rules
+
+Use these syntax rules when writing GitHub descriptions:
+
+- `##` through `######` - Headings (use `##` for main, `###` for secondary, etc.)
+- `**text**` - Bold text
+- `` `code` `` - Inline code
+- ```` ```language` ``` - Language-specific code blocks
+- `[text](url)` - Links
+- `-` - Bullet points
+- `1.` - Numbered list items
+- `>` - Blockquotes for important notes
+- `~~text~~` - Strikethrough for deprecated content
+
+## Title format
+
+- Use the format: `[Component] Brief description of change or issue`
+- Keep titles concise but descriptive (under 80 characters)
+- Use present tense for the description (e.g., "Add" not "Added")
+- For PRs, include the component name in brackets if applicable
+
+## Description structure
+
+- Present title, labels, and type before description content
+- Description format and structure should follow the pull request template in the Templates section below
+- Include links to related issues, RFCs, or documentation when applicable
+- All descriptions must include clear acceptance criteria or expected outcomes
+- Provide enough context so anyone can understand the objective
+- Use prefixes in titles: [Bug], [Fix], [Docs], [Refactor], [Research], [S2], [Test]
+
+Examples:
+
+- [bug]:
+- [Bug(component)]:
+- [fix]:
+- [Fix(component)]:
+- [docs]:
+- [Docs(component)]:
+
+## Severity classification
+
+- SEV1: Critical - System down, data loss, security breach
+- SEV2: High - Major feature broken, significant user impact
+- SEV3: Medium - Feature partially broken, moderate impact
+- SEV4: Low - Minor issues, minimal user impact
+- SEV5: Trivial - Cosmetic issues, no functional impact
+
+## Best practices
+
+- Link to relevant issues using the format: `#issue-number`
+- Include component name in brackets if applicable: `[sp-button]`
+- Add relevant labels for easier filtering
+- Attach screenshots or videos for visual changes
+- Reference design specs or documentation when available
+- Use descriptive commit messages when linking to PRs
+- Include reproduction steps for bugs
+- Add environment information when relevant
+
+## Acceptance criteria
+
+- Write criteria in "Given/When/Then" format
+- Make criteria specific and testable
+- Include edge cases and error scenarios
+- Consider accessibility requirements
+- Include performance considerations when relevant
+
+## Labels
+
+Use the following labels to categorize pull requests. Only use labels that exist in the repository:
+
+### Priority and release labels
+
+- `1.0.0`: Issues that should be addressed for a 1.0 release
+- `2.0.0`: Issues for 2.0 release
+- `Breaking`: Breaking changes
+
+### Platform and browser labels
+
+- `Android`: Android-specific issues
+- `Browser: Chrome`: Chrome browser issues
+- `Browser: Edge (Legacy)`: Issue with pre-chromium Edge
+- `Browser: FireFox`: Firefox browser issues
+- `Browser: Safari`: Safari browser issues
+- `iOS`: iOS-specific issues and bugs
+
+### Development and process labels
+
+- `a11y`: Issues related to accessibility
+- `API`: Changes to component APIs or interfaces
+
+### Additional labels (partial list)
+
+Note: The repository has 160 labels total. For a complete list, visit [https://github.com/adobe/spectrum-web-components/labels](https://github.com/adobe/spectrum-web-components/labels)
+
+Common additional labels include:
+
+- `chore`: Routine tasks, maintenance, or non-feature changes
+- `dependencies`: Updates or changes to project dependencies
+- `Documentation`: Documentation updates or improvements
+- `feature`: New feature implementations or improvements to existing features
+- `i18n`: Internationalization and localization work
+- `mobile`: Mobile platform issues and responsive design
+- `performance`: Performance-related improvements or regressions
+- `refactor`: Code restructuring and refactoring work
+- `regression`: Previously working functionality that is now broken
+- `release`: Release process or versioning changes
+- `research`: Tasks requiring investigation or research
+- `RFC`: Request for Comments or design discussions
+- `testing`: Test implementation or testing infrastructure work
+
+## Pull request guidelines
+
+- Use conventional commit messages
+- Keep PRs focused and small when possible
+- Include tests for new features
+- Update documentation when APIs change
+- Add screenshots for visual changes
+- Link to related issues using keywords like "Fixes #123" or "Closes #456"
+- Request reviews from appropriate team members
+- Use draft PRs for work in progress
+
+## Templates
+
+### Pull request template
+
+**Note:** All pull requests should include the `ready-for-review` label.
+
+**When returning the template, check off the author requirements in the Author's checklist section. Do not check off the Manual review test cases or Device review sections as these are for reviewers to complete.**
+
+```markdown
+<!---
+    - Following conventional commit format, provide a general summary of your changes in the title above.
+    - Acceptable commit types in order of severity (high to low): feat, fix, docs, style, chore, perf, and test. Commit types are defined in PULL_REQUESTS.md.
+    - For example,`type(component): general summary`
+-->
+
+## Description
+
+<!--- Describe your changes in detail -->
+
+## Motivation and context
+
+<!--- Why is this change required? What problem does it solve? -->
+
+## Related issue(s)
+
+<!---
+    - If suggesting a new feature or change, please discuss it in an issue first.
+    - If fixing a bug, include the issue number where the reviewers can find a description of the bug with steps to reproduce.
+    - If you're an Adobe employee, add a Jira ticket number but DO NOT LINK directly to Jira.
+-->
+
+-   fixes [Issue Number]
+
+## Screenshots (if appropriate)
+
+
+## Author's checklist
+
+<!--- Go over all the following points, and put an `x` in all the boxes that apply.  If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
+
+-   [ ] I have read the **[CONTRIBUTING](<(https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md)>)** and **[PULL_REQUESTS](<(https://github.com/adobe/spectrum-web-components/blob/main/PULL_REQUESTS.md)>)** documents.
+-   [ ] I have reviewed at the Accessibility Practices for this feature, see: [Aria Practices](https://www.w3.org/TR/wai-aria-practices/)
+-   [ ] I have added automated tests to cover my changes.
+-   [ ] I have included a well-written changeset if my change needs to be published.
+-   [ ] I have included updated documentation if my change required it.
+
+
+## Reviewer's checklist
+
+- [ ] Includes a Github Issue with appropriate flag or Jira ticket number without a link
+- [ ] Includes thoughtfully written changeset if changes suggested include `patch`, `minor`, or `major` features
+- [ ] Automated tests cover all use cases and follow best practices for writing
+- [ ] Validated on all supported browsers
+- [ ] All VRTs are approved before the author can update Golden Hash
+
+### Manual review test cases
+
+<!---
+    - For the author, please describe in detail what reviewers should test.
+    - Include links and manual steps for how the reviewer should go through to verify your changes.
+    - Be sure to include all areas of the codebase that might be affected. Any components that use these changes for a dependency should be cross-checked for regressions.
+    - For example, changes to Menu Item will affect Picker, Menu, and Action Menu.
+-->
+
+- [ ] _Descriptive Test Statement_
+
+    1. Go [here](url)
+    2. Do this action
+    3. Expect this result
+
+- [ ] _Descriptive Test Statement_
+    1. Go [here](url)
+    2. Do this action
+    3. Expect this result
+
+### Device review
+
+<!--- Verify the above manual tests and visual accuracy utilizing an emulator like Polypane browser or on an actual device. -->
+
+- [ ] Did it pass in Desktop?
+- [ ] Did it pass in (emulated) Mobile?
+- [ ] Did it pass in (emulated) iPad?
+
+```

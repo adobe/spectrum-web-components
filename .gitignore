@@ -10,7 +10,6 @@ build-storybook.log
 .devcontainer
 tach-results.*
 .gitconfig
-.netlify/plugins
 .env
 
 # documentation
@@ -29,37 +28,55 @@ custom-elements.json
 !packages/icons-workflow/bin/build.js
 !packages/icons-workflow/src/DefaultIcon.ts
 
-packages/*/src/**/*.css.js
-packages/*/custom-elements.json
-packages/**/*.js
-packages/**/*.js.map
-packages/**/*.d.ts
-packages/**/*.test-vrt.ts
-!packages/**/*/spectrum-config.js
-!packages/**/*/spectrum-config.v1.js
-!packages/*/test/global.d.ts
-!packages/*/global.d.ts
-!packages/*/local.d.ts
+1st-gen/packages/*/src/**/*.css.js
+1st-gen/packages/*/src/**/*.css.js.map
+1st-gen/packages/*/custom-elements.json
+1st-gen/packages/**/*.js
+1st-gen/packages/**/*.js.map
+1st-gen/packages/**/*.dev.js
+1st-gen/packages/**/*.dev.js.map
+1st-gen/packages/**/*.d.ts
+1st-gen/packages/**/*.test-vrt.ts
+!1st-gen/packages/**/*/spectrum-config.js
+!1st-gen/packages/**/*/spectrum-config.v1.js
+!1st-gen/packages/*/test/global.d.ts
+!1st-gen/packages/*/global.d.ts
+!1st-gen/packages/*/local.d.ts
 
 react
+1st-gen/react
 
-projects/**/*.js
-projects/**/*.js.map
-projects/**/*.d.ts
-!projects/*/global.d.ts
+1st-gen/projects/**/*.js
+1st-gen/projects/**/*.js.map
+1st-gen/projects/**/*.dev.js
+1st-gen/projects/**/*.dev.js.map
+1st-gen/projects/**/*.d.ts
+!1st-gen/projects/*/global.d.ts
+!1st-gen/projects/*/src/global.d.ts
+!1st-gen/projects/documentation/src/utils/*.js
+!1st-gen/projects/documentation/rollup.config.js
+!1st-gen/projects/documentation/vite.config.js
+!1st-gen/projects/documentation/content/serviceWorker.js
+!1st-gen/projects/example-project-rollup/rollup.config.js
+!1st-gen/projects/example-project-webpack/src/index.js
+!1st-gen/projects/example-project-webpack/webpack.config.js
+!1st-gen/projects/templates/plopfile.js
 
-tools/*/src/**/*.css.js
-tools/*/custom-elements.json
-tools/**/*.js
-tools/**/*.js.map
-tools/**/*.d.ts
-tools/**/*.test-vrt.ts
-!tools/**/*/spectrum-config.js
-!tools/*/test/global.d.ts
-!tools/*/global.d.ts
-!tools/*/local.d.ts
-!tools/base/src/version.js
-!tools/base/src/version.d.ts
+1st-gen/tools/*/src/**/*.css.js
+1st-gen/tools/*/src/**/*.css.js.map
+1st-gen/tools/*/custom-elements.json
+1st-gen/tools/**/*.js
+1st-gen/tools/**/*.js.map
+1st-gen/tools/**/*.dev.js
+1st-gen/tools/**/*.dev.js.map
+1st-gen/tools/**/*.d.ts
+1st-gen/tools/**/*.test-vrt.ts
+!1st-gen/tools/**/*/spectrum-config.js
+!1st-gen/tools/*/test/global.d.ts
+!1st-gen/tools/*/global.d.ts
+!1st-gen/tools/*/local.d.ts
+!1st-gen/tools/base/src/version.js
+!1st-gen/tools/base/src/version.d.ts
 
 # cache directories
 .wireit
@@ -73,26 +90,41 @@ stats.html
 *.tsbuildinfo
 
 # built css assets
-packages/**/*.css.ts
-projects/**/*.css.ts
-tools/**/*.css.ts
-styles/**/*.css.ts
+1st-gen/packages/**/*.css.ts
+1st-gen/projects/**/*.css.ts
+1st-gen/tools/**/*.css.ts
+1st-gen/styles/**/*.css.ts
 
 # test assets
 TESTS.xml
 test-results.xml
-test/benchmark/cli.cjs
-test/visual/review/
-test/visual/screenshots-baseline/
-test/visual/screenshots-actual/
-test/visual/screenshots-current/
-test/visual/src/data.json
-test/**/*.js
-test/**/*.js.map
-test/**/*.d.ts
-!test/visual/**/*.js
-test/visual/test.js
+1st-gen/test/benchmark/cli.cjs
+1st-gen/test/visual/review/
+1st-gen/test/visual/screenshots-baseline/
+1st-gen/test/visual/screenshots-actual/
+1st-gen/test/visual/screenshots-current/
+1st-gen/test/visual/src/data.json
+1st-gen/test/**/*.js
+1st-gen/test/**/*.js.map
+1st-gen/test/**/*.d.ts
+!1st-gen/test/visual/**/*.js
+1st-gen/test/visual/test.js
 test-results
+2nd-gen/packages/swc/playwright-report
+
+# lingering directories from before monorepo
+packages/*
+projects/*
+tools/*
+test/*
+
+# vitest browser test screenshots
+**/__screenshots__/
+
+# second gen build artifacts
+2nd-gen/packages/*/dist/
+2nd-gen/packages/*/custom-elements.json
+2nd-gen/packages/*/storybook-static
 
 # npm assets
 node_modules
@@ -104,6 +136,14 @@ chromatic.log
 chromatic-build-*.xml
 chromatic-diagnostics*.json
 chromatic.config.json
+
+# Playwright test reports (generated)
+1st-gen/test/playwright-a11y/report/
+2nd-gen/test/playwright-a11y/report/
+
+# Playwright test results (generated)
+playwright-report/
+test-results/
 
 # yarn
 .pnp.*

@@ -1,0 +1,34 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    --spectrum-dialog-fullscreen-header-text-size: var(--system-dialog-fullscreen-header-text-size);
+    --spectrum-dialog-min-inline-size: var(--system-dialog-min-inline-size);
+    --spectrum-dialog-confirm-small-width: var(--system-dialog-confirm-small-width);
+    --spectrum-dialog-confirm-medium-width: var(--system-dialog-confirm-medium-width);
+    --spectrum-dialog-confirm-large-width: var(--system-dialog-confirm-large-width);
+    --spectrum-dialog-confirm-divider-block-spacing-start: var(--system-dialog-confirm-divider-block-spacing-start);
+    --spectrum-dialog-confirm-divider-block-spacing-end: var(--system-dialog-confirm-divider-block-spacing-end);
+    --spectrum-dialog-confirm-description-text-color: var(--system-dialog-confirm-description-text-color);
+    --spectrum-dialog-confirm-title-text-color: var(--system-dialog-confirm-title-text-color);
+    --spectrum-dialog-confirm-description-text-line-height: var(--system-dialog-confirm-description-text-line-height);
+    --spectrum-dialog-confirm-title-text-line-height: var(--system-dialog-confirm-title-text-line-height);
+    --spectrum-dialog-heading-font-weight: var(--system-dialog-heading-font-weight);
+    --spectrum-dialog-confirm-description-padding: var(--system-dialog-confirm-description-padding);
+    --spectrum-dialog-confirm-description-margin: var(--system-dialog-confirm-description-margin);
+    --spectrum-dialog-confirm-footer-padding-top: var(--system-dialog-confirm-footer-padding-top);
+    --spectrum-dialog-confirm-gap-size: var(--system-dialog-confirm-gap-size);
+    --spectrum-dialog-confirm-buttongroup-padding-top: var(--system-dialog-confirm-buttongroup-padding-top);
+    --spectrum-dialog-confirm-close-button-size: var(--system-dialog-confirm-close-button-size);
+    --spectrum-dialog-confirm-close-button-padding: var(--system-dialog-confirm-close-button-padding);
+    --spectrum-dialog-confirm-divider-height: var(--system-dialog-confirm-divider-height);
+}
