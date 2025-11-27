@@ -1,0 +1,58 @@
+{
+    "name": "@spectrum-web-components/drag-drop",
+    "version": "0.1.0",
+    "description": "Headless drag-and-drop controllers and mixins for Spectrum Web Components",
+    "license": "Apache-2.0",
+    "repository": {
+        "directory": "tools/drag-drop",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/DragController.js": {
+            "development": "./src/DragController.dev.js",
+            "default": "./src/DragController.js"
+        },
+        "./src/DraggableMixin.js": {
+            "development": "./src/DraggableMixin.dev.js",
+            "default": "./src/DraggableMixin.js"
+        },
+        "./src/DropController.js": {
+            "development": "./src/DropController.dev.js",
+            "default": "./src/DropController.js"
+        },
+        "./src/DropTargetMixin.js": {
+            "development": "./src/DropTargetMixin.dev.js",
+            "default": "./src/DropTargetMixin.js"
+        }
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "scripts": {
+        "test": "echo \"Tests not yet implemented\""
+    },
+    "types": "src/index.d.ts",
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.49.0",
+        "lit": "^3.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-web-components/theme": "^0.49.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
