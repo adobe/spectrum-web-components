@@ -5457,6 +5457,7 @@ __metadata:
     "@spectrum-web-components/button": "npm:1.10.0"
     "@spectrum-web-components/field-label": "npm:1.10.0"
     "@spectrum-web-components/popover": "npm:1.10.0"
+    "@spectrum-web-components/shared": "npm:1.10.0"
   languageName: unknown
   linkType: soft
 
@@ -5492,6 +5493,7 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.10.0"
     "@spectrum-web-components/icon": "npm:1.10.0"
     "@spectrum-web-components/icons-workflow": "npm:1.10.0"
+    "@spectrum-web-components/overlay": "npm:1.10.0"
     "@spectrum-web-components/picker": "npm:1.10.0"
     "@spectrum-web-components/shared": "npm:1.10.0"
   languageName: unknown
@@ -5565,9 +5567,12 @@ __metadata:
   dependencies:
     "@spectrum-web-components/action-menu": "npm:1.10.0"
     "@spectrum-web-components/base": "npm:1.10.0"
+    "@spectrum-web-components/icon": "npm:1.10.0"
+    "@spectrum-web-components/icons-ui": "npm:1.10.0"
     "@spectrum-web-components/icons-workflow": "npm:1.10.0"
     "@spectrum-web-components/link": "npm:1.10.0"
     "@spectrum-web-components/menu": "npm:1.10.0"
+    "@spectrum-web-components/shared": "npm:1.10.0"
   languageName: unknown
   linkType: soft
 
@@ -5728,6 +5733,7 @@ __metadata:
     "@spectrum-web-components/button-group": "npm:1.10.0"
     "@spectrum-web-components/icon": "npm:1.10.0"
     "@spectrum-web-components/icons-ui": "npm:1.10.0"
+    "@spectrum-web-components/popover": "npm:1.10.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
     "@spectrum-web-components/shared": "npm:1.10.0"
   languageName: unknown

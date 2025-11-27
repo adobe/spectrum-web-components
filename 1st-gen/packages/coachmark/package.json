@@ -84,6 +84,7 @@
         "@spectrum-web-components/button-group": "1.10.0",
         "@spectrum-web-components/icon": "1.10.0",
         "@spectrum-web-components/icons-ui": "1.10.0",
+        "@spectrum-web-components/popover": "1.10.0",
         "@spectrum-web-components/reactive-controllers": "1.10.0",
         "@spectrum-web-components/shared": "1.10.0"
     },
