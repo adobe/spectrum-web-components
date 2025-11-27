@@ -19,6 +19,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 
 import type { AutoscrollController } from '../src/AutoscrollController.js';
 import { DraggableMixin } from '../src/DraggableMixin.js';
@@ -55,15 +56,15 @@ class HorizontalScrollItem extends DraggableMixin(
     DropTargetMixin(SpectrumElement)
 ) {
     // @ts-expect-error - Decorator typing issue with mixins
-    @property({ attribute: 'item-id' })
+    @property({ attribute: false })
     public itemId = '';
 
     // @ts-expect-error - Decorator typing issue with mixins
-    @property()
+    @property({ attribute: false })
     public label = '';
 
     // @ts-expect-error - Decorator typing issue with mixins
-    @property()
+    @property({ attribute: false })
     public color = 'blue';
 
     public override acceptedTypes = ['application/x-timeline-item'];
@@ -250,12 +251,14 @@ class HorizontalTimeline extends SpectrumElement {
     protected override render(): TemplateResult {
         return spHtml`
             <div class="timeline-container">
-                ${this.items.map(
+                ${repeat(
+                    this.items,
+                    (item) => item.id,
                     (item) => spHtml`
                         <horizontal-scroll-item
-                            itemId="${item.id}"
-                            label="${item.label}"
-                            color="${item.color}"
+                            .itemId="${item.id}"
+                            .label="${item.label}"
+                            .color="${item.color}"
                         ></horizontal-scroll-item>
                     `
                 )}
@@ -273,11 +276,11 @@ class VerticalScrollItem extends DraggableMixin(
     DropTargetMixin(SpectrumElement)
 ) {
     // @ts-expect-error - Decorator typing issue with mixins
-    @property({ attribute: 'item-id' })
+    @property({ attribute: false })
     public itemId = '';
 
     // @ts-expect-error - Decorator typing issue with mixins
-    @property()
+    @property({ attribute: false })
     public label = '';
 
     public override acceptedTypes = ['application/x-layer'];
@@ -462,11 +465,13 @@ class VerticalLayerStack extends SpectrumElement {
     protected override render(): TemplateResult {
         return spHtml`
             <div class="layer-container">
-                ${this.items.map(
+                ${repeat(
+                    this.items,
+                    (item) => item.id,
                     (item) => spHtml`
                         <vertical-scroll-item
-                            itemId="${item.id}"
-                            label="${item.label}"
+                            .itemId="${item.id}"
+                            .label="${item.label}"
                         ></vertical-scroll-item>
                     `
                 )}

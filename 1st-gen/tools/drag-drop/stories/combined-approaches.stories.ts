@@ -20,6 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { html, LitElement } from 'lit';
+import { repeat } from 'lit/directives/repeat.js';
 
 // APPROACH 1: Using Controllers directly
 import { DragController } from '../src/DragController.js';
@@ -254,8 +255,8 @@ class MixinDropZone extends DropTargetMixin(SpectrumElement) {
     public override connectedCallback(): void {
         super.connectedCallback();
         this.addEventListener('sp-drop', (event: Event) => {
-            const e = event as CustomEvent;
-            const itemId = e.detail.items[0]?.['application/x-item'];
+            const customEvent = event as CustomEvent;
+            const itemId = customEvent.detail.items[0]?.['application/x-item'];
             console.log('[Mixin] Dropped:', itemId);
             this.filled = true;
             this.requestUpdate();
@@ -282,11 +283,11 @@ class ReorderableItem extends DraggableMixin(
     DropTargetMixin(SpectrumElement)
 ) {
     // @ts-expect-error - Decorator typing issue with mixins
-    @property({ type: String })
+    @property({ attribute: false })
     public itemId = '';
 
     // @ts-expect-error - Decorator typing issue with mixins
-    @property({ type: String })
+    @property({ attribute: false })
     public label = '';
 
     public override acceptedTypes = ['application/x-reorderable'];
@@ -347,31 +348,39 @@ class ReorderableItem extends DraggableMixin(
         ];
     }
 
+    private handleDrop = (event: Event): void => {
+        const customEvent = event as CustomEvent;
+        const sourceId = customEvent.detail.items[0]?.['application/x-reorderable'];
+        console.log('[ReorderableItem] Drop received', {
+            sourceId,
+            targetId: this.itemId,
+        });
+        
+        if (sourceId && sourceId !== this.itemId) {
+            // Flash green on successful drop
+            this.classList.add('drop-success');
+            setTimeout(() => {
+                this.classList.remove('drop-success');
+            }, 800);
+            
+            this.dispatchEvent(
+                new CustomEvent('reorder', {
+                    detail: { sourceId, targetId: this.itemId },
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }
+    };
+
     public override connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener('sp-drop', (event: Event) => {
-            const e = event as CustomEvent;
-            const sourceId = e.detail.items[0]?.['application/x-reorderable'];
-            console.log('[ReorderableItem] Drop received', {
-                sourceId,
-                targetId: this.itemId,
-            });
-            if (sourceId && sourceId !== this.itemId) {
-                // Flash green on successful drop
-                this.classList.add('drop-success');
-                setTimeout(() => {
-                    this.classList.remove('drop-success');
-                }, 800);
-                
-                this.dispatchEvent(
-                    new CustomEvent('reorder', {
-                        detail: { sourceId, targetId: this.itemId },
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            }
-        });
+        this.addEventListener('sp-drop', this.handleDrop);
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.removeEventListener('sp-drop', this.handleDrop);
     }
 
     protected override render(): TemplateResult {
@@ -386,7 +395,7 @@ customElements.define('reorderable-item', ReorderableItem);
 // Reorderable list container that manages state
 class ReorderableList extends SpectrumElement {
     // @ts-expect-error - Decorator typing issue with arrays
-    @property({ type: Array })
+    @property({ attribute: false })
     public items: Array<{ id: string; label: string }> = [];
 
     static override get styles(): CSSResultArray {
@@ -406,21 +415,62 @@ class ReorderableList extends SpectrumElement {
         ];
     }
 
+    private handleReorder = (event: CustomEvent): void => {
+        const { sourceId, targetId } = event.detail;
+        console.log('[ReorderableList] Reorder event', { sourceId, targetId });
+
+        // Stop event from bubbling further to prevent multiple handlers
+        event.stopPropagation();
+
+        const sourceIndex = this.items.findIndex(
+            (item) => item.id === sourceId
+        );
+        const targetIndex = this.items.findIndex(
+            (item) => item.id === targetId
+        );
+
+        if (sourceIndex === -1 || targetIndex === -1) {
+            console.error('Could not find items', {
+                sourceIndex,
+                targetIndex,
+            });
+            return;
+        }
+
+        // Reorder the array - create new array reference to trigger Lit update
+        const newItems = [...this.items];
+        const [removed] = newItems.splice(sourceIndex, 1);
+        newItems.splice(targetIndex, 0, removed);
+        
+        // Assign new array
+        this.items = newItems;
+
+        console.log(
+            '[ReorderableList] Reordered:',
+            this.items.map((i) => i.id).join(', ')
+        );
+        
+        // Request update
+        this.requestUpdate('items');
+    };
+
+    private boundHandleReorder = (event: Event): void => {
+        this.handleReorder(event as CustomEvent);
+    };
+
     public override connectedCallback(): void {
         super.connectedCallback();
         
         // Listen for drop enter/exit to show visual blue background indicator
         this.addEventListener('sp-drop-enter', (event: Event) => {
-            const e = event as CustomEvent;
-            const target = e.target as HTMLElement;
+            const target = (event as CustomEvent).target as HTMLElement; 
             if (target.tagName.toLowerCase() === 'reorderable-item') {
                 target.classList.add('drop-target-active');
             }
         });
         
         this.addEventListener('sp-drop-exit', (event: Event) => {
-            const e = event as CustomEvent;
-            const target = e.target as HTMLElement;
+            const target = (event as CustomEvent).target as HTMLElement;
             if (target.tagName.toLowerCase() === 'reorderable-item') {
                 target.classList.remove('drop-target-active');
             }
@@ -428,8 +478,7 @@ class ReorderableList extends SpectrumElement {
         
         // Add green flash on successful drop
         this.addEventListener('sp-drop', (event: Event) => {
-            const e = event as CustomEvent;
-            const target = e.target as HTMLElement;
+            const target = (event as CustomEvent).target as HTMLElement;
             if (target.tagName.toLowerCase() === 'reorderable-item') {
                 // Remove blue, add green on successful drop
                 target.classList.remove('drop-target-active');
@@ -440,48 +489,27 @@ class ReorderableList extends SpectrumElement {
             }
         });
         
-        this.addEventListener('reorder', (event: Event) => {
-            const e = event as CustomEvent;
-            const { sourceId, targetId } = e.detail;
-            console.log('[ReorderableList] Reorder event', { sourceId, targetId });
+        // Use the bound handler to avoid duplicates
+        this.addEventListener('reorder', this.boundHandleReorder);
+    }
 
-            const sourceIndex = this.items.findIndex(
-                (item) => item.id === sourceId
-            );
-            const targetIndex = this.items.findIndex(
-                (item) => item.id === targetId
-            );
-
-            if (sourceIndex === -1 || targetIndex === -1) {
-                console.error('Could not find items', {
-                    sourceIndex,
-                    targetIndex,
-                });
-                return;
-            }
-
-            // Reorder the array
-            const newItems = [...this.items];
-            const [removed] = newItems.splice(sourceIndex, 1);
-            newItems.splice(targetIndex, 0, removed);
-            this.items = newItems;
-
-            console.log(
-                '[ReorderableList] Reordered:',
-                this.items.map((i) => i.id).join(', ')
-            );
-            this.requestUpdate();
-        });
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        // Clean up event listener
+        this.removeEventListener('reorder', this.boundHandleReorder);
     }
 
     protected override render(): TemplateResult {
+        console.log('[ReorderableList] Rendering with items:', this.items.map(i => i.id).join(', '));
         return spHtml`
             <div class="item-container">
-                ${this.items.map(
+                ${repeat(
+                    this.items,
+                    (item) => item.id,
                     (item) => spHtml`
                         <reorderable-item
-                            itemId="${item.id}"
-                            label="${item.label}"
+                            .itemId="${item.id}"
+                            .label="${item.label}"
                         ></reorderable-item>
                     `
                 )}
@@ -595,57 +623,12 @@ export const Approach2Mixins = (): TemplateResult => {
 };
 
 export const Approach2Advanced = (): TemplateResult => {
-    // State management for reorderable items
-    let items = [
+    const items = [
         { id: '1', label: 'Item 1' },
         { id: '2', label: 'Item 2' },
         { id: '3', label: 'Item 3' },
         { id: '4', label: 'Item 4' },
     ];
-
-    const handleReorder = (e: Event) => {
-        const event = e as CustomEvent;
-        const { sourceId, targetId } = event.detail;
-        console.log('Reorder:', { sourceId, targetId });
-
-        // Find indices
-        const sourceIndex = items.findIndex((item) => item.id === sourceId);
-        const targetIndex = items.findIndex((item) => item.id === targetId);
-
-        if (sourceIndex === -1 || targetIndex === -1) {
-            console.error('Could not find items', { sourceIndex, targetIndex });
-            return;
-        }
-
-        // Reorder the array
-        const newItems = [...items];
-        const [removed] = newItems.splice(sourceIndex, 1);
-        newItems.splice(targetIndex, 0, removed);
-        items = newItems;
-
-        console.log('Reordered items:', items.map(i => i.id).join(', '));
-
-        // Re-render by forcing a Storybook update
-        // Get the container and update it
-        const container = (e.target as HTMLElement).closest('.reorderable-container');
-        if (container) {
-            container.innerHTML = '';
-            items.forEach((item) => {
-                const el = document.createElement('reorderable-item');
-                el.setAttribute('itemId', item.id);
-                el.setAttribute('label', item.label);
-                container.appendChild(el);
-            });
-        }
-    };
-
-    // Use setTimeout to ensure the event listener is attached after render
-    setTimeout(() => {
-        const container = document.querySelector('.reorderable-container');
-        if (container) {
-            container.addEventListener('reorder', handleReorder);
-        }
-    }, 0);
 
     return spHtml`
         ${demoStyles}
@@ -664,16 +647,7 @@ export const Approach2Advanced = (): TemplateResult => {
                     <strong>Example:</strong> Layer stack, page ordering, timeline clips
                 </div>
 
-                <div class="reorderable-container" @reorder=${handleReorder}>
-                    ${items.map(
-                        (item) => spHtml`
-                            <reorderable-item
-                                itemId="${item.id}"
-                                label="${item.label}"
-                            ></reorderable-item>
-                        `
-                    )}
-                </div>
+                <reorderable-list .items=${items}></reorderable-list>
             </div>
         </sp-theme>
     `;
