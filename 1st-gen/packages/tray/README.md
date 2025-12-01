@@ -25,11 +25,7 @@ import { Tray } from '@spectrum-web-components/tray';
 
 ### Anatomy
 
-A tray has a single default `slot`.
-
-<sp-tabs selected="dialog" auto label="Using tray's slot">
-<sp-tab value="dialog">Dialog</sp-tab>
-<sp-tab-panel value="dialog">
+A tray has a single default `slot`. Expected content typically includes dialogs and their content, plain text, forms and/or form elements, and some native HTML elements. Always ensure that your tray's content is accessible according to WCAG standards.
 
 ```html
 <overlay-trigger type="modal">
@@ -42,30 +38,6 @@ A tray has a single default `slot`.
     </sp-tray>
 </overlay-trigger>
 ```
-
-</sp-tab-panel>
-<sp-tab value="menu">Menu</sp-tab>
-<sp-tab-panel value="menu">
-
-```html
-<overlay-trigger type="modal">
-    <sp-button slot="trigger" variant="secondary">Toggle menu</sp-button>
-    <sp-tray slot="click-content">
-        <sp-menu style="width: 100%">
-            <sp-menu-item selected>Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item focused>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-            <sp-menu-divider></sp-menu-divider>
-            <sp-menu-item>Save Selection</sp-menu-item>
-            <sp-menu-item disabled>Make Work Path</sp-menu-item>
-        </sp-menu>
-    </sp-tray>
-</overlay-trigger>
-```
-
-</sp-tab-panel>
-</sp-tabs>
 
 ### Accessibility
 
@@ -87,20 +59,35 @@ This dismiss helper pattern is also implemented in the [`<sp-picker>`](https://o
 <sp-tab value="auto">Content has no buttons</sp-tab>
 <sp-tab-panel value="auto">
 
-This example shows the default behavior where the tray automatically detects that the menu content lacks dismiss buttons and renders visually hidden helpers. Screen readers will announce them as "Dismiss, button" and these helpers are keyboard accessible.
+This example shows the default behavior where the tray automatically detects that the content lacks dismiss buttons and renders visually hidden helpers. Screen readers will announce them as "Dismiss, button" and these helpers are keyboard accessible.
 
 ```html
 <overlay-trigger type="modal">
     <sp-button slot="trigger" variant="secondary">
-        Toggle menu content
+        Toggle tray content
     </sp-button>
     <sp-tray slot="click-content">
-        <sp-menu style="width: 100%">
-            <sp-menu-item>Deselect</sp-menu-item>
-            <sp-menu-item>Select Inverse</sp-menu-item>
-            <sp-menu-item>Feather...</sp-menu-item>
-            <sp-menu-item>Select and Mask...</sp-menu-item>
-        </sp-menu>
+        <div style="display: flex; flex-direction: column; margin: 16px;">
+            <p style="margin-block-start: 0;">
+                Custom content that doesn't have dismiss functionality, so the
+                tray detects it needs the visually-hidden dismiss buttons.
+            </p>
+            <label>
+                What's your favorite Super Mario character?
+                <select
+                    name="favorite-characters"
+                    style="margin-block-start: 8px;"
+                >
+                    <option value="">
+                        Choose your favorite Super Mario character.
+                    </option>
+                    <option value="mario">Mario</option>
+                    <option value="luigi">Luigi</option>
+                    <option value="toad">Toad</option>
+                    <option value="bowser">Bowser</option>
+                </select>
+            </label>
+        </div>
     </sp-tray>
 </overlay-trigger>
 ```
@@ -137,7 +124,7 @@ Set `has-keyboard-dismiss` (or `has-keyboard-dismiss="true"`) to prevent the tra
         Toggle without helpers
     </sp-button>
     <sp-tray slot="click-content" has-keyboard-dismiss>
-        <p>
+        <p style="margin: 16px;">
             Custom content that should have custom dismiss functionality, even
             though the tray didn't detect buttons in this slot.
         </p>
