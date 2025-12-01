@@ -160,7 +160,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token"
   dependencies:
-    "@adobe/spectrum-tokens": "npm:^14.0.0"
     postcss: "npm:8.5.6"
   peerDependencies:
     postcss: 8.5.6
@@ -187,6 +186,14 @@ __metadata:
   checksum: 10c0/b94015d75786babf53144225fccfe3d989eb66e2ab5686e5e2feba73c49f83533e2ea0a7c4e9b0d47e5622d89bcad1b32cf39b61c2a6e3ae4690a20b79672b4c
   languageName: node
   linkType: hard
+
+"@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+  version: 0.0.0-use.local
+  resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
+  dependencies:
+    "@adobe/spectrum-tokens": "npm:^14.0.0"
+  languageName: unknown
+  linkType: soft
 
 "@adobe/swc@workspace:2nd-gen/packages/swc":
   version: 0.0.0-use.local

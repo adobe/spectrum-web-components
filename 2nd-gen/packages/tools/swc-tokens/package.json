@@ -1,5 +1,5 @@
 {
-    "name": "@adobe/postcss-token",
+    "name": "@adobe/swc-tokens",
     "version": "0.0.1",
     "private": true,
     "description": "Second generation Spectrum Web Components token processing",
@@ -10,22 +10,19 @@
     ],
     "homepage": "https://opensource.adobe.com/spectrum-web-components/",
     "repository": {
-        "directory": "2nd-gen/packages/tools/postcss-token",
+        "directory": "2nd-gen/packages/tools/swc-tokens",
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git"
     },
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
+    "type": "module",
     "scripts": {
-        "unit": "node --test index.test.js",
-        "test": "yarn run unit"
+        "stylesheets": "node index.js"
     },
     "devDependencies": {
-        "postcss": "8.5.6"
-    },
-    "peerDependencies": {
-        "postcss": "8.5.6"
+        "@adobe/spectrum-tokens": "^14.0.0"
     },
     "keywords": [
         "design-system",
