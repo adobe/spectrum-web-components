@@ -19,7 +19,12 @@ import litCss from 'vite-plugin-lit-css';
 
 export default defineConfig({
     plugins: [
-        litCss({ exclude: ['./tokens/*.css'] }),
+        litCss({
+            exclude: [
+                './stylesheets/tokens/*.css',
+                './stylesheets/global/elements.css',
+            ],
+        }),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
@@ -46,6 +51,7 @@ export default defineConfig({
                 postcssPresetEnv({
                     stage: 2, // Use stage 2 features (stable)
                     features: {
+                        'cascade-layers': false, // prevent stripping @layer
                         'nesting-rules': true,
                         'custom-properties': false, // Let lit-css handle this
                     },

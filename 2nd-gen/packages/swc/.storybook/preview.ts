@@ -1,8 +1,9 @@
 /** @type { import('@storybook/web-components').Preview } */
-import '../tokens/index.css';
-import '../tokens/light-vars.css';
-import '../tokens/medium-vars.css';
-import '../tokens/global-vars.css';
+import '../stylesheets/tokens/index.css';
+import '../stylesheets/tokens/light-vars.css';
+import '../stylesheets/tokens/medium-vars.css';
+import '../stylesheets/tokens/global-vars.css';
+import '../stylesheets/global/elements.css';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
@@ -34,6 +35,15 @@ setCustomElementsManifest(customElements);
 const preview = {
     decorators: [withStaticColorBackground],
     parameters: {
+        options: {
+            storySort: {
+                order: [
+                    'Guides',
+                    ['Welcome to 2nd-gen SWC', 'Global Element Styling'],
+                    'Components',
+                ],
+            },
+        },
         layout: 'centered',
         controls: {
             expanded: true,

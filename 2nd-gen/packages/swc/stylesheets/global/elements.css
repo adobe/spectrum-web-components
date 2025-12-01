@@ -10,11 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-// Import the design tokens to make CSS variables available
-import '../stylesheets/tokens/index.css';
-
-// Set up a basic document structure for testing
-document.documentElement.style.fontFamily = 'Arial, sans-serif';
-document.body.style.margin = '0';
-document.body.style.padding = '20px';
-document.body.style.background = 'white';
+@import url('button.css');
