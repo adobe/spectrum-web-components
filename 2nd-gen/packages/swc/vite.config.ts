@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import postcssToken from '@adobe/postcss-token';
 import autoprefixer from 'autoprefixer';
 import { glob } from 'glob';
 import { resolve } from 'path';
@@ -42,6 +44,7 @@ export default defineConfig({
     css: {
         postcss: {
             plugins: [
+                postcssToken(),
                 autoprefixer(),
                 postcssPresetEnv({
                     stage: 2, // Use stage 2 features (stable)
@@ -95,6 +98,10 @@ export default defineConfig({
         alias: {
             '@spectrum-web-components/core': resolve(__dirname, '../core'),
             '@adobe/swc': resolve(__dirname, './components'),
+            '@adobe/postcss-token': resolve(
+                __dirname,
+                '../tools/postcss-token'
+            ),
         },
     },
     esbuild: {

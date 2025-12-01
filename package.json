@@ -41,7 +41,8 @@
         "1st-gen/tools/*",
         "1st-gen/linters/*",
         "2nd-gen",
-        "2nd-gen/packages/*"
+        "2nd-gen/packages/*",
+        "2nd-gen/packages/tools/*"
     ],
     "resolutions": {
         "playwright": "1.53.1"

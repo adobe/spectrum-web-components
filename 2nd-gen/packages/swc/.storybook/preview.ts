@@ -1,8 +1,4 @@
 /** @type { import('@storybook/web-components').Preview } */
-import '../tokens/index.css';
-import '../tokens/light-vars.css';
-import '../tokens/medium-vars.css';
-import '../tokens/global-vars.css';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {

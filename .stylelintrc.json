@@ -21,7 +21,15 @@
                 "no-duplicate-selectors": null,
                 "selector-class-pattern": null,
                 "no-descending-specificity": null,
-                "declaration-block-no-redundant-longhand-properties": null
+                "declaration-block-no-redundant-longhand-properties": null,
+                "declaration-property-value-no-unknown": [
+                    true,
+                    {
+                        "ignoreProperties": {
+                            "/.+/": ["/token((.*))/"]
+                        }
+                    }
+                ]
             }
         }
     ]
