@@ -27,6 +27,7 @@ const config = {
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',
+        '@chromatic-com/storybook',
     ],
     viteFinal: async (config) => {
         return mergeConfig(config, {
