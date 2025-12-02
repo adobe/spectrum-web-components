@@ -1,0 +1,58 @@
+import {
+    Meta,
+    Title,
+    Primary,
+    Controls,
+    Stories,
+    Markdown,
+    ArgTypes,
+    Description,
+} from '@storybook/addon-docs/blocks';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+
+<Meta isTemplate />
+
+<Title />
+
+This template will likely be going away in the future, but for now it's here to help us get started.
+
+<sp-tabs id="component-doc-tabs" size="xl" selected="overview" auto label="Component Documentation">
+    <sp-tab value="overview">Overview</sp-tab>
+    <sp-tab value="usage">Usage</sp-tab>
+    <sp-tab value="accessibility">Accessibility</sp-tab>
+    <sp-tab value="api">API</sp-tab>
+    <sp-tab value="examples">Examples</sp-tab>
+    <sp-tab-panel value="overview" style={{ flexDirection: 'column' }}>
+        <Description />
+        <Primary />
+        <Controls />
+
+        ### third level
+
+        hello
+
+        #### fourth level
+
+        bananas my friends
+    </sp-tab-panel>
+    <sp-tab-panel value="usage" style={{ flexDirection: 'column' }}>
+            variations
+
+    </sp-tab-panel>
+    <sp-tab-panel value="accessibility" style={{ flexDirection: 'column' }}>
+            Heres some shit about accessibility
+    </sp-tab-panel>
+    <sp-tab-panel value="api" style={{ flexDirection: 'column' }}>
+            <ArgTypes />
+    </sp-tab-panel>
+    <sp-tab-panel value="examples" style={{ flexDirection: 'column' }}>
+        <Stories />
+    </sp-tab-panel>
+
+</sp-tabs>
+
+## Feedback
+
+Have feedback or questions? [Open an issue](https://github.com/adobe/spectrum-web-components/issues/new/choose).
