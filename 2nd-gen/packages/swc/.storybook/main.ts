@@ -13,6 +13,11 @@ const config = {
             titlePrefix: 'Guides',
         },
         {
+            directory: '../../../../CONTRIBUTOR-DOCS',
+            files: '*.@(mdx)',
+            titlePrefix: 'Guides/Contributor Documentation',
+        },
+        {
             directory: '../components',
             files: '*/stories/*.stories.ts',
             titlePrefix: 'Components',

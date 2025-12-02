@@ -1,8 +1,8 @@
 /** @type { import('@storybook/web-components').Preview } */
+import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
-import '../tokens/global-vars.css';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
@@ -48,6 +48,9 @@ const preview = {
                     // Customize axe-core rules if needed
                 ],
             },
+        },
+        docs: {
+            toc: true,
         },
     },
     tags: ['autodocs'],
