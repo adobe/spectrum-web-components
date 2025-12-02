@@ -1,0 +1,18 @@
+{
+    "buildScriptName": "storybook:build",
+    "onlyChanged": true,
+    "projectId": "Project:669e5de19faa57de85e1c1bb",
+    "storybookBaseDir": "2nd-gen/packages/swc",
+    "traceChanged": "expanded",
+    "untraced": [
+        "1st-gen/**",
+        "tools/**",
+        "2nd-gen/test/**",
+        "2nd-gen/package.json",
+        "2nd-gen/packages/core/package.json",
+        "2nd-gen/packages/swc/package.json",
+        "package.json",
+        "yarn.lock"
+    ],
+    "zip": true
+}

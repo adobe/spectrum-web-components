@@ -135,7 +135,7 @@ package-lock.json
 chromatic.log
 chromatic-build-*.xml
 chromatic-diagnostics*.json
-chromatic.config.json
+# chromatic.config.json
 
 # Playwright test reports (generated)
 1st-gen/test/playwright-a11y/report/
