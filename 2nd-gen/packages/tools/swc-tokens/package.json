@@ -18,8 +18,10 @@
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
     "type": "module",
+    "main": "index.js",
+    "bin": "index.js",
     "scripts": {
-        "test:stylesheet": "node index.js --out ./tokens.css --prefix swc --outputType stylesheet",
+        "test:stylesheet": "node index.js --outputType stylesheet --out ./tokens.css --prefix swc",
         "test:tokens": "node index.js --outputType tokens --out ./tokens.json"
     },
     "dependencies": {

@@ -11,15 +11,11 @@
  * governing permissions and limitations under the License.
  */
 
+/* TODO: resolve border radius */
+
 :host {
     display: inline-flex;
 }
-
-.spectrum-Badge {
-    --spectrum-badge-border-width: token('border-width-200');
-}
-
-/*
 
 .spectrum-Badge {
     --spectrum-badge-border-width: token('border-width-200');
@@ -197,7 +193,8 @@
     --spectrum-badge-outline-border-color-positive: token(
         'positive-visual-color'
     );
-    --spectrum-badge-corner-radius: token('corner-radius-medium-size-medium');
+
+    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-medium'); */
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-100');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -232,7 +229,7 @@
 }
 
 .spectrum-Badge--sizeS {
-    --spectrum-badge-corner-radius: token('corner-radius-medium-size-small');
+    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-small'); */
     --spectrum-badge-height: token('component-height-75');
     --spectrum-badge-font-size: token('font-size-75');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -258,7 +255,7 @@
 }
 
 .spectrum-Badge--sizeL {
-    --spectrum-badge-corner-radius: token('corner-radius-medium-size-large');
+    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-large'); */
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-200');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -284,9 +281,9 @@
 }
 
 .spectrum-Badge--sizeXL {
-    --spectrum-badge-corner-radius: token(
+    /* --spectrum-badge-corner-radius: token(
         'corner-radius-medium-size-extra-large'
-    );
+    ); */
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-300');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -318,222 +315,224 @@
 }
 
 .spectrum-Badge {
-    min-block-size: token('badge-height');
+    min-block-size: var(--spectrum-badge-height);
     inline-size: auto;
     display: inline-flex;
     vertical-align: middle;
     position: relative;
     cursor: default;
-    border: token('badge-border-width') solid token('badge-border-color');
-    border-radius: token('badge-corner-radius');
-    background: token('badge-background-color-default');
-    color: token('badge-label-icon-color');
+    border: var(--spectrum-badge-border-width) solid
+        var(--spectrum-badge-border-color);
+
+    /* border-radius: var(--spectrum-badge-corner-radius); */
+    background: var(--spectrum-badge-background-color-default);
+    color: var(--spectrum-badge-label-icon-color);
     background-origin: border-box;
     align-self: start;
 }
 
 .spectrum-Badge--neutral {
-    background: token('badge-background-color-default');
+    background: var(--spectrum-badge-background-color-default);
 }
 
 .spectrum-Badge--accent {
-    background: token('badge-background-color-accent');
+    background: var(--spectrum-badge-background-color-accent);
 }
 
 .spectrum-Badge--informative {
-    background: token('badge-background-color-informative');
+    background: var(--spectrum-badge-background-color-informative);
 }
 
 .spectrum-Badge--negative {
-    background: token('badge-background-color-negative');
+    background: var(--spectrum-badge-background-color-negative);
 }
 
 .spectrum-Badge--positive {
-    background: token('badge-background-color-positive');
+    background: var(--spectrum-badge-background-color-positive);
 }
 
 .spectrum-Badge--notice {
-    background: token('badge-background-color-notice');
+    background: var(--spectrum-badge-background-color-notice);
 }
 
 .spectrum-Badge--gray {
-    background: token('badge-background-color-gray');
+    background: var(--spectrum-badge-background-color-gray);
 }
 
 .spectrum-Badge--red {
-    background: token('badge-background-color-red');
+    background: var(--spectrum-badge-background-color-red);
 }
 
 .spectrum-Badge--orange {
-    background: token('badge-background-color-orange');
+    background: var(--spectrum-badge-background-color-orange);
 }
 
 .spectrum-Badge--yellow {
-    background: token('badge-background-color-yellow');
+    background: var(--spectrum-badge-background-color-yellow);
 }
 
 .spectrum-Badge--chartreuse {
-    background: token('badge-background-color-chartreuse');
+    background: var(--spectrum-badge-background-color-chartreuse);
 }
 
 .spectrum-Badge--celery {
-    background: token('badge-background-color-celery');
+    background: var(--spectrum-badge-background-color-celery);
 }
 
 .spectrum-Badge--green {
-    background: token('badge-background-color-green');
+    background: var(--spectrum-badge-background-color-green);
 }
 
 .spectrum-Badge--seafoam {
-    background: token('badge-background-color-seafoam');
+    background: var(--spectrum-badge-background-color-seafoam);
 }
 
 .spectrum-Badge--cyan {
-    background: token('badge-background-color-cyan');
+    background: var(--spectrum-badge-background-color-cyan);
 }
 
 .spectrum-Badge--blue {
-    background: token('badge-background-color-blue');
+    background: var(--spectrum-badge-background-color-blue);
 }
 
 .spectrum-Badge--indigo {
-    background: token('badge-background-color-indigo');
+    background: var(--spectrum-badge-background-color-indigo);
 }
 
 .spectrum-Badge--purple {
-    background: token('badge-background-color-purple');
+    background: var(--spectrum-badge-background-color-purple);
 }
 
 .spectrum-Badge--fuchsia {
-    background: token('badge-background-color-fuchsia');
+    background: var(--spectrum-badge-background-color-fuchsia);
 }
 
 .spectrum-Badge--magenta {
-    background: token('badge-background-color-magenta');
+    background: var(--spectrum-badge-background-color-magenta);
 }
 
 .spectrum-Badge--pink {
-    background: token('badge-background-color-pink');
+    background: var(--spectrum-badge-background-color-pink);
 }
 
 .spectrum-Badge--turquoise {
-    background: token('badge-background-color-turquoise');
+    background: var(--spectrum-badge-background-color-turquoise);
 }
 
 .spectrum-Badge--brown {
-    background: token('badge-background-color-brown');
+    background: var(--spectrum-badge-background-color-brown);
 }
 
 .spectrum-Badge--cinnamon {
-    background: token('badge-background-color-cinnamon');
+    background: var(--spectrum-badge-background-color-cinnamon);
 }
 
 .spectrum-Badge--silver {
-    background: token('badge-background-color-silver');
+    background: var(--spectrum-badge-background-color-silver);
 }
 
 .spectrum-Badge--subtle {
-    color: token('badge-subtle-label-icon-color');
+    color: var(--spectrum-badge-subtle-label-icon-color);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--neutral {
-    background: token('badge-subtle-background-color-default');
+    background: var(--spectrum-badge-subtle-background-color-default);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--accent {
-    background: token('badge-subtle-background-color-accent');
+    background: var(--spectrum-badge-subtle-background-color-accent);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--informative {
-    background: token('badge-subtle-background-color-informative');
+    background: var(--spectrum-badge-subtle-background-color-informative);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--negative {
-    background: token('badge-subtle-background-color-negative');
+    background: var(--spectrum-badge-subtle-background-color-negative);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--positive {
-    background: token('badge-subtle-background-color-positive');
+    background: var(--spectrum-badge-subtle-background-color-positive);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--notice {
-    background: token('badge-subtle-background-color-notice');
+    background: var(--spectrum-badge-subtle-background-color-notice);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--gray {
-    background: token('badge-subtle-background-color-gray');
+    background: var(--spectrum-badge-subtle-background-color-gray);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--red {
-    background: token('badge-subtle-background-color-red');
+    background: var(--spectrum-badge-subtle-background-color-red);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--orange {
-    background: token('badge-subtle-background-color-orange');
+    background: var(--spectrum-badge-subtle-background-color-orange);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--yellow {
-    background: token('badge-subtle-background-color-yellow');
+    background: var(--spectrum-badge-subtle-background-color-yellow);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--chartreuse {
-    background: token('badge-subtle-background-color-chartreuse');
+    background: var(--spectrum-badge-subtle-background-color-chartreuse);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--celery {
-    background: token('badge-subtle-background-color-celery');
+    background: var(--spectrum-badge-subtle-background-color-celery);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--green {
-    background: token('badge-subtle-background-color-green');
+    background: var(--spectrum-badge-subtle-background-color-green);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--seafoam {
-    background: token('badge-subtle-background-color-seafoam');
+    background: var(--spectrum-badge-subtle-background-color-seafoam);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--cyan {
-    background: token('badge-subtle-background-color-cyan');
+    background: var(--spectrum-badge-subtle-background-color-cyan);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--blue {
-    background: token('badge-subtle-background-color-blue');
+    background: var(--spectrum-badge-subtle-background-color-blue);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--indigo {
-    background: token('badge-subtle-background-color-indigo');
+    background: var(--spectrum-badge-subtle-background-color-indigo);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--purple {
-    background: token('badge-subtle-background-color-purple');
+    background: var(--spectrum-badge-subtle-background-color-purple);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--fuchsia {
-    background: token('badge-subtle-background-color-fuchsia');
+    background: var(--spectrum-badge-subtle-background-color-fuchsia);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--magenta {
-    background: token('badge-subtle-background-color-magenta');
+    background: var(--spectrum-badge-subtle-background-color-magenta);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--pink {
-    background: token('badge-subtle-background-color-pink');
+    background: var(--spectrum-badge-subtle-background-color-pink);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--turquoise {
-    background: token('badge-subtle-background-color-turquoise');
+    background: var(--spectrum-badge-subtle-background-color-turquoise);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--brown {
-    background: token('badge-subtle-background-color-brown');
+    background: var(--spectrum-badge-subtle-background-color-brown);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--cinnamon {
-    background: token('badge-subtle-background-color-cinnamon');
+    background: var(--spectrum-badge-subtle-background-color-cinnamon);
 }
 
 .spectrum-Badge--subtle.spectrum-Badge--silver {
-    background: token('badge-subtle-background-color-silver');
+    background: var(--spectrum-badge-subtle-background-color-silver);
 }
 
 .spectrum-Badge--outline:is(
@@ -544,32 +543,32 @@
     .spectrum-Badge--positive,
     .spectrum-Badge--notice
 ) {
-    background: token('badge-outline-background-color');
-    color: token('badge-outline-label-icon-color');
+    background: var(--spectrum-badge-outline-background-color);
+    color: var(--spectrum-badge-outline-label-icon-color);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--neutral {
-    border-color: token('badge-outline-border-color-neutral');
+    border-color: var(--spectrum-badge-outline-border-color-neutral);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--accent {
-    border-color: token('badge-outline-border-color-accent');
+    border-color: var(--spectrum-badge-outline-border-color-accent);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--informative {
-    border-color: token('badge-outline-border-color-informative');
+    border-color: var(--spectrum-badge-outline-border-color-informative);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--negative {
-    border-color: token('badge-outline-border-color-negative');
+    border-color: var(--spectrum-badge-outline-border-color-negative);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--positive {
-    border-color: token('badge-outline-border-color-positive');
+    border-color: var(--spectrum-badge-outline-border-color-positive);
 }
 
 .spectrum-Badge--outline.spectrum-Badge--notice {
-    border-color: token('badge-outline-border-color-notice');
+    border-color: var(--spectrum-badge-outline-border-color-notice);
 }
 
 .spectrum-Badge--fixed-inline-start {
@@ -593,26 +592,28 @@
 }
 
 .spectrum-Badge-label {
-    font-size: token('badge-font-size');
-    font-weight: token('badge-font-weight');
-    line-height: token('badge-line-height');
+    font-size: var(--spectrum-badge-font-size);
+    font-weight: var(--spectrum-badge-font-weight);
+    line-height: var(--spectrum-badge-line-height);
     padding-inline-end: calc(
-        token('badge-label-spacing-horizontal') - token('badge-border-width')
+        var(--spectrum-badge-label-spacing-horizontal) -
+            var(--spectrum-badge-border-width)
     );
-    padding-inline-start: token('badge-label-spacing-horizontal');
+    padding-inline-start: var(--spectrum-badge-label-spacing-horizontal);
     padding-block-start: calc(
-        token('badge-label-spacing-vertical-top') - token('badge-border-width')
+        var(--spectrum-badge-label-spacing-vertical-top) -
+            var(--spectrum-badge-border-width)
     );
     padding-block-end: calc(
-        token('badge-label-spacing-vertical-bottom') -
-            token('badge-border-width')
+        var(--spectrum-badge-label-spacing-vertical-bottom) -
+            var(--spectrum-badge-border-width)
     );
 }
 
 .spectrum-Badge-label:lang(ja),
 .spectrum-Badge-label:lang(ko),
 .spectrum-Badge-label:lang(zh) {
-    line-height: token('badge-line-height-cjk');
+    line-height: var(--spectrum-badge-line-height-cjk);
 }
 
 .spectrum-Badge-icon + .spectrum-Badge-label {
@@ -620,29 +621,32 @@
 }
 
 .spectrum-Badge-icon {
-    block-size: token('badge-workflow-icon-size');
-    inline-size: token('badge-workflow-icon-size');
-    flex: 0 0 token('badge-workflow-icon-size');
+    block-size: var(--spectrum-badge-workflow-icon-size);
+    inline-size: var(--spectrum-badge-workflow-icon-size);
+    flex: 0 0 var(--spectrum-badge-workflow-icon-size);
     margin-inline-start: calc(
-        token('badge-icon-spacing-horizontal') - token('badge-border-width')
+        var(--spectrum-badge-icon-spacing-horizontal) -
+            var(--spectrum-badge-border-width)
     );
-    margin-inline-end: token('badge-icon-text-spacing');
+    margin-inline-end: var(--spectrum-badge-icon-text-spacing);
     margin-block-start: calc(
-        token('badge-icon-spacing-vertical-top') - token('badge-border-width')
+        var(--spectrum-badge-icon-spacing-vertical-top) -
+            var(--spectrum-badge-border-width)
     );
     margin-block-end: calc(
-        token('badge-icon-spacing-vertical-top') - token('badge-border-width')
+        var(--spectrum-badge-icon-spacing-vertical-top) -
+            var(--spectrum-badge-border-width)
     );
 }
 
 .spectrum-Badge-icon--no-label {
     margin-inline-start: calc(
-        token('badge-icon-only-spacing-horizontal') -
-            token('badge-border-width')
+        var(--spectrum-badge-icon-only-spacing-horizontal) -
+            var(--spectrum-badge-border-width)
     );
     margin-inline-end: calc(
-        token('badge-icon-only-spacing-horizontal') -
-            token('badge-border-width')
+        var(--spectrum-badge-icon-only-spacing-horizontal) -
+            var(--spectrum-badge-border-width)
     );
 }
 
@@ -651,4 +655,3 @@
 .spectrum-Badge-label {
     box-sizing: border-box;
 }
-*/

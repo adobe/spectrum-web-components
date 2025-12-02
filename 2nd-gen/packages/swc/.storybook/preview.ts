@@ -1,4 +1,5 @@
 /** @type { import('@storybook/web-components').Preview } */
+import '../stylesheets/swc.css';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {

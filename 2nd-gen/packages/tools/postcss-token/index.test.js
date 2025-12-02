@@ -17,7 +17,7 @@ import postcss from 'postcss';
 import plugin from './index.js';
 
 async function run(input, output) {
-    let result = await postcss([plugin()]).process(input, {
+    let result = await postcss([plugin({ prefix: 'swc' })]).process(input, {
         from: undefined,
     });
     equal(result.css, output);
@@ -25,5 +25,13 @@ async function run(input, output) {
 }
 
 test('outputs token() value', async () => {
-    await run('a{ color: token("ta"); }', 'a{ color: ta; }');
+    await run(
+        `a { color: token('overlay-color'); }`,
+        `a { color: var(--swc-black); }`
+    );
+
+    await run(
+        `a { color: token('red-visual-color'); }`,
+        `a { color: var(--swc-red-visual-color); }`
+    );
 });

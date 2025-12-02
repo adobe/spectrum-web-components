@@ -160,6 +160,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token"
   dependencies:
+    "@adobe/swc-tokens": "npm:0.0.1"
     postcss: "npm:8.5.6"
   peerDependencies:
     postcss: 8.5.6
@@ -187,12 +188,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+"@adobe/swc-tokens@npm:0.0.1, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
   dependencies:
     "@adobe/spectrum-tokens": "npm:^14.0.0"
     yargs: "npm:^18.0.0"
+  bin:
+    swc-tokens: index.js
   languageName: unknown
   linkType: soft
 
@@ -201,6 +204,7 @@ __metadata:
   resolution: "@adobe/swc@workspace:2nd-gen/packages/swc"
   dependencies:
     "@adobe/postcss-token": "npm:0.0.1"
+    "@adobe/swc-tokens": "npm:0.0.1"
     "@axe-core/playwright": "npm:4.10.2"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@spectrum-web-components/core": "npm:0.0.1"

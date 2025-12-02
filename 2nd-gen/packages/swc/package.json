@@ -43,6 +43,7 @@
         "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
+        "stylesheets": "swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc",
         "test": "vitest --run",
         "test:coverage": "vitest --coverage",
         "test:ui": "vitest --ui",
@@ -55,6 +56,7 @@
     },
     "devDependencies": {
         "@adobe/postcss-token": "0.0.1",
+        "@adobe/swc-tokens": "0.0.1",
         "@axe-core/playwright": "4.10.2",
         "@custom-elements-manifest/analyzer": "0.10.8",
         "@storybook/addon-a11y": "10.0.3",

@@ -21,7 +21,7 @@ import litCss from 'vite-plugin-lit-css';
 
 export default defineConfig({
     plugins: [
-        litCss({ exclude: ['./tokens/*.css'] }),
+        litCss({ exclude: ['./stylesheets/*.css'] }),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
@@ -44,13 +44,14 @@ export default defineConfig({
     css: {
         postcss: {
             plugins: [
-                postcssToken(),
+                postcssToken({ prefix: 'swc' }),
                 autoprefixer(),
                 postcssPresetEnv({
                     stage: 2, // Use stage 2 features (stable)
                     features: {
                         'nesting-rules': true,
                         'custom-properties': false, // Let lit-css handle this
+                        'light-dark-function': false,
                     },
                 }),
             ],
@@ -102,6 +103,7 @@ export default defineConfig({
                 __dirname,
                 '../tools/postcss-token'
             ),
+            '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
         },
     },
     esbuild: {

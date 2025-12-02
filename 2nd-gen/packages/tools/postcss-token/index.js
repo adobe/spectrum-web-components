@@ -10,20 +10,28 @@
  * governing permissions and limitations under the License.
  */
 
+import { lookupToken } from '@adobe/swc-tokens/utils.js';
+
 /**
  * @type {import('postcss').PluginCreator}
  */
-module.exports = () => {
+export default (opts = { prefix: '' }) => {
     return {
         postcssPlugin: 'postcss-token',
-        Declaration(decl) {
-            if (decl.value.includes('token(')) {
-                const token = decl.value.match(/token\((['"])(.*)\1\)/);
 
-                decl.value = token[2];
+        async Declaration(decl) {
+            if (decl.value?.includes('token(')) {
+                const tokenMatch = decl.value.match(
+                    /token\(\s*(['"])([\s\S]*?)\1\s*\)/
+                );
+
+                if (tokenMatch) {
+                    decl.value = await lookupToken(tokenMatch[2], opts.prefix);
+                }
             }
         },
     };
 };
 
-module.exports.postcss = true;
+// Required for PostCSS plugin detection in ESM
+export const postcss = true;

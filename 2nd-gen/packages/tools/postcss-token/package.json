@@ -17,9 +17,14 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
+    "type": "module",
+    "main": "index.js",
     "scripts": {
         "unit": "node --test index.test.js",
         "test": "yarn run unit"
+    },
+    "dependencies": {
+        "@adobe/swc-tokens": "0.0.1"
     },
     "devDependencies": {
         "postcss": "8.5.6"
