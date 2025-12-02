@@ -19,10 +19,12 @@
     },
     "type": "module",
     "scripts": {
-        "stylesheets": "node index.js"
+        "test:stylesheet": "node index.js --out ./tokens.css --prefix swc --outputType stylesheet",
+        "test:tokens": "node index.js --outputType tokens --out ./tokens.json"
     },
-    "devDependencies": {
-        "@adobe/spectrum-tokens": "^14.0.0"
+    "dependencies": {
+        "@adobe/spectrum-tokens": "^14.0.0",
+        "yargs": "^18.0.0"
     },
     "keywords": [
         "design-system",
