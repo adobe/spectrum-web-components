@@ -3,6 +3,7 @@ import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
+import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
@@ -50,7 +51,42 @@ const preview = {
             },
         },
         docs: {
-            toc: true,
+            codePanel: true,
+            page: DocumentTemplate,
+            toc: {
+                contentsSelector: '.sbdocs-content',
+                headingSelector: 'h2, h3',
+                ignoreSelector: '#primary',
+                disable: false,
+                unsafeTocbotOptions: {
+                    orderedList: false,
+                },
+            },
+        },
+        options: {
+            storySort: {
+                method: 'alphabetical-by-kind',
+                order: [
+                    'Get Started',
+                    [
+                        'Welcome to 2nd-gen SWC',
+                        'What is SWC?',
+                        'When to use SWC?',
+                        'First Gen vs Second Gen',
+                    ],
+                    'Components',
+                    'Guides',
+                    [
+                        'Getting started guide',
+                        'Contributor guide',
+                        'Style guide',
+                        'Project planning',
+                        'Accessibility guides',
+                        'React wrappers',
+                    ],
+                    'Resources',
+                ],
+            },
         },
     },
     tags: ['autodocs'],

@@ -1,6 +1,6 @@
-import { resolve, dirname } from 'path';
-import { mergeConfig } from 'vite';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -8,19 +8,24 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
     stories: [
         {
-            directory: 'guides',
-            files: '*.@(md|mdx)',
-            titlePrefix: 'Guides',
-        },
-        {
-            directory: '../../../../CONTRIBUTOR-DOCS',
-            files: '*.@(mdx)',
-            titlePrefix: 'Guides/Contributor Documentation',
+            directory: 'get-started',
+            files: '*.mdx',
+            titlePrefix: 'Get Started',
         },
         {
             directory: '../components',
             files: '*/stories/*.stories.ts',
             titlePrefix: 'Components',
+        },
+        {
+            directory: 'guides',
+            files: '*.mdx',
+            titlePrefix: 'Guides',
+        },
+        {
+            directory: 'guides',
+            files: '**/*.mdx',
+            titlePrefix: 'Guides',
         },
     ],
     framework: '@storybook/web-components-vite',
