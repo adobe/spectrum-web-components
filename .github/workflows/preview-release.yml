@@ -29,8 +29,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   yarn changeset version --snapshot preview-${GITHUB_SHA::8}
-                  yarn constraints --fix
-                  yarn version:update
+                  yarn genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts
                   yarn install --refresh-lockfile
 
             - name: Configure NPM for changeset publish
@@ -43,8 +42,8 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
+                  yarn build
                   git add .
                   git commit -am "chore: publish preview snapshot version"
-                  yarn prepublishOnly
                   yarn changeset publish --no-git-tag --tag preview
                   git reset --hard HEAD^
