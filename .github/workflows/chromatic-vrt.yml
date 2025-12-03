@@ -1,6 +1,11 @@
 name: Visual regression testing with Chromatic
 
 on:
+    push:
+        branches:
+            - main
+        paths:
+            - '2nd-gen/**'
     pull_request:
         paths:
             - '2nd-gen/**'
@@ -26,6 +31,7 @@ jobs:
         name: Chromatic
         runs-on: ubuntu-latest
         timeout-minutes: 20
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'run_vrt') }}
         outputs:
             storybook-url: ${{ steps.chromatic.outputs.storybookUrl != 'undefined' && steps.chromatic.outputs.storybookUrl || '' }}
 
@@ -48,4 +54,5 @@ jobs:
               with:
                   projectToken: ${{ secrets.CHROMATIC_TOKEN }}
                   workingDir: 2nd-gen/packages/swc
+                  autoAcceptChanges: 'main'
                   skip: ${{ inputs.skip }}
