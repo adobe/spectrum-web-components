@@ -74,7 +74,7 @@
         "@spectrum-web-components/textfield": "1.10.0"
     },
     "devDependencies": {
-        "@formatjs/intl-numberformat": "8.15.4"
+        "@formatjs/intl-numberformat": "8.15.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
