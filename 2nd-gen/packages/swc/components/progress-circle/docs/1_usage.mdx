@@ -1,0 +1,43 @@
+import {
+    Meta,
+    Title,
+    Primary,
+    Canvas,
+    Controls,
+    Source,
+    Markdown,
+    ArgTypes,
+    Description,
+} from '@storybook/addon-docs/blocks';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import { * as ProgressCircleStories} from '../stories/progress-circle.stories.js';
+
+<Meta title="Progress circle/Usage" />
+
+# Progress circle usage
+
+```zsh
+yarn add @spectrum-web-components/progress-circle
+```
+
+Import the side effectful registration of `<sp-progress-circle>` via:
+
+```ts
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+```
+
+When looking to leverage the `ProgressCircle` base class as a type and/or for extension purposes, do so via:
+
+```ts
+import { ProgressCircle } from '@spectrum-web-components/progress-circle';
+```
+
+### Anatomy
+
+A progress circle consists of several key parts:
+
+- A label (via `slot="label"`)
+- A progress value (via `progress` attribute)
+- An optional indeterminate state (via `indeterminate` attribute)

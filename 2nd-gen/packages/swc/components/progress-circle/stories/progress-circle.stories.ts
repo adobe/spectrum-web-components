@@ -82,6 +82,7 @@ export const Default: Story = {
         label: 'Loading progress',
     },
     render: (args) => template(args),
+    tags: ['!dev'],
 };
 
 export const Sizes: Story = {

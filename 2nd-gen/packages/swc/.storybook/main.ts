@@ -6,6 +6,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
+    docs: {
+        autodocs: 'tag', // or true
+        defaultName: 'Usage', // Change 'Docs' to 'Component Documentation'
+    },
     stories: [
         {
             directory: 'get-started',
@@ -15,6 +19,11 @@ const config = {
         {
             directory: '../components',
             files: '*/stories/*.stories.ts',
+            titlePrefix: 'Components',
+        },
+        {
+            directory: '../components',
+            files: '*/docs/*.mdx',
             titlePrefix: 'Components',
         },
         {
