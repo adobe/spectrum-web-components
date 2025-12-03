@@ -77,8 +77,11 @@ sp-popover {
 }
 
 .actions {
-    visibility: hidden;
-    margin: auto;
+    opacity: 0;
+}
+
+.actions:focus-within {
+    opacity: 1;
 }
 
 /**
