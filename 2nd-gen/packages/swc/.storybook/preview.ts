@@ -53,6 +53,11 @@ const preview = {
         docs: {
             codePanel: true,
             page: DocumentTemplate,
+            options: {
+                storySort: {
+                order: ['Overview', 'API', 'Accessibility'],
+                },
+            },
             toc: {
                 contentsSelector: '.sbdocs-content',
                 headingSelector: 'h2, h3, h4',
