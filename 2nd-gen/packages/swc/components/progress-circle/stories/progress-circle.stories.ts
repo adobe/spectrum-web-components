@@ -26,30 +26,29 @@ const { events, args, argTypes, template } = getStorybookHelpers(
     'swc-progress-circle'
 );
 
-/*
- * @todo Blurring the range control seems to cause a catastrophic Storybook
- * render failure, so disabling for now.
- */
-// argTypes.progress = {
-//     ...argTypes.progress,
-//     control: { type: 'range', min: 0, max: 100, step: 1 },
-// };
+argTypes.progress = {
+    ...argTypes.progress,
+    control: { type: 'number', min: 0, max: 100, step: 1 },
+};
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: ProgressCircle.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: ProgressCircle.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
     control: { type: 'select' },
     options: [undefined, ...ProgressCircle.STATIC_COLORS],
 };
+
+argTypes['label'] = {
+    ...argTypes['label'],
+    control: { type: 'text', required: true },
+};
+
+// there is no default slot in the progress circle, so we need to remove the control
 
 /**
  * A progress circle component that visually represents the completion progress of a task.
