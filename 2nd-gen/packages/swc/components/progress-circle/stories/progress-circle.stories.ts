@@ -76,23 +76,13 @@ export default meta;
 // ───────────────
 
 export const Default: Story = {
+    name: 'Playground',
     args: {
         progress: 50,
         size: 'm',
         label: 'Loading progress',
     },
     render: (args) => template(args),
-    tags: ['!dev'],
-};
-
-export const ApiDefault: Story = {
-    args: {
-        progress: 50,
-        size: 'm',
-        label: 'Loading progress',
-    },
-    render: (args) => template(args),
-    tags: ['!dev'],
 };
 
 export const Sizes: Story = {

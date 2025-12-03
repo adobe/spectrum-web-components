@@ -55,7 +55,8 @@ const preview = {
             page: DocumentTemplate,
             options: {
                 storySort: {
-                order: ['Overview', 'API', 'Accessibility'],
+                    method: 'alphabetical',
+                    order: ['Overview', 'API', 'Accessibility', 'Playground'],
                 },
             },
             toc: {
@@ -70,7 +71,7 @@ const preview = {
         },
         options: {
             storySort: {
-                method: 'alphabetical-by-kind',
+                method: 'alphabetical',
                 order: [
                     'Get Started',
                     [
@@ -87,6 +88,15 @@ const preview = {
                         'Style guide',
                         'Project planning',
                         'Accessibility guides',
+                        [
+                            'Overview',
+                            'Semantic HTML and ARIA', 
+                            'Accessible pattern libraries', 
+                            'Keyboard testing', 
+                            'Screen reader testing', 
+                            'Wave toolbar testing', 
+                            'Accessibility resources'
+                        ],
                         'React wrappers',
                     ],
                     'Resources',
