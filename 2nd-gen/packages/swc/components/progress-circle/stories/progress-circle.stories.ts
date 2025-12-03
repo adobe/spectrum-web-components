@@ -85,6 +85,16 @@ export const Default: Story = {
     tags: ['!dev'],
 };
 
+export const ApiDefault: Story = {
+    args: {
+        progress: 50,
+        size: 'm',
+        label: 'Loading progress',
+    },
+    render: (args) => template(args),
+    tags: ['!dev'],
+};
+
 export const Sizes: Story = {
     render: () => html`
         <div style="display: flex; gap: 24px; align-items: center;">
@@ -155,10 +165,10 @@ export const Indeterminate: Story = {
     tags: ['!dev'],
 };
 
-export const StaticWhite: Story = {
+export const StaticColors: Story = {
     render: () => html`
         <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
         >
             <swc-progress-circle
                 .progress=${60}
@@ -179,14 +189,8 @@ export const StaticWhite: Story = {
                 label="Loading on dark background"
             ></swc-progress-circle>
         </div>
-    `,
-    tags: ['!dev'],
-};
-
-export const StaticBlack: Story = {
-    render: () => html`
         <div
-            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
         >
             <swc-progress-circle
                 .progress=${60}
@@ -230,6 +234,22 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
             <swc-progress-circle
                 indeterminate
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev'],
+};
+
+export const A11y: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
                 static-color="white"
                 size="l"
                 label="Loading on dark background"

@@ -1,0 +1,27 @@
+import {
+    Meta,
+    Title,
+    Primary,
+    Canvas,
+    Controls,
+    Source,
+    Story,
+    Markdown,
+    ArgTypes,
+    Description,
+} from '@storybook/addon-docs/blocks';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import * as ProgressCircleApi from '../stories/progress-circle.stories.ts';
+
+<Meta title="API" of={ProgressCircleApi} />
+
+# Progress API
+
+<Canvas
+    of={ProgressCircleApi.ApiDefault}
+    withToolbar={true}
+    sourceState="shown"
+/>
+<Controls of={ProgressCircleApi.ApiDefault} />

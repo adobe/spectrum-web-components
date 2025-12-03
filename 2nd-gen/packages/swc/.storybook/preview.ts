@@ -55,7 +55,7 @@ const preview = {
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
-                headingSelector: 'h2, h3',
+                headingSelector: 'h2, h3, h4',
                 ignoreSelector: '#primary',
                 disable: false,
                 unsafeTocbotOptions: {

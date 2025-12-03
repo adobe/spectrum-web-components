@@ -13,9 +13,9 @@ import {
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import * as ProgressCircleStories from '../stories/progress-circle.stories.js';
+import * as ProgressCircleOverview from '../stories/progress-circle.stories.ts';
 
-<Meta title="Progress circle/Usage" of={ProgressCircleStories} />
+<Meta title="Progress circle overview" of={ProgressCircleOverview} />
 
 # Progress circle usage
 
@@ -43,7 +43,42 @@ A progress circle consists of several key parts:
 - A progress value (via `progress` attribute)
 - An optional indeterminate state (via `indeterminate` attribute)
 
-<Canvas>
-    <Story of={ProgressCircleStories.Default} />
-    <Source />
-</Canvas>
+<Canvas
+    of={ProgressCircleOverview.Default}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### Options
+
+#### Sizes
+
+Progress circles come in three sizes to fit various contexts:
+
+<Canvas
+    of={ProgressCircleOverview.Sizes}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+#### Static Colors
+
+When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
+
+<Canvas
+    of={ProgressCircleOverview.StaticColors}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### States
+
+#### Indeterminate
+
+Use indeterminate progress when the duration cannot be calculated:
+
+<Canvas
+    of={ProgressCircleOverview.Indeterminate}
+    withToolbar={true}
+    sourceState="shown"
+/>
