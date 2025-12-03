@@ -31,7 +31,7 @@ test('outputs token() value', async () => {
     );
 
     await run(
-        `a { color: token('red-visual-color'); }`,
-        `a { color: var(--swc-red-visual-color); }`
+        `a { min-block-size: var(--swc-badge-height, token('component-height-100')); }`,
+        `a { min-block-size: var(--swc-badge-height, var(--swc-component-height-100)); }`
     );
 });
