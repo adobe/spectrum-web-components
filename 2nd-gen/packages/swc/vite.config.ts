@@ -52,6 +52,7 @@ export default defineConfig({
                         'nesting-rules': true,
                         'custom-properties': false, // Let lit-css handle this
                         'light-dark-function': false,
+                        'logical-properties-and-values': false,
                     },
                 }),
             ],

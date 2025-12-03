@@ -26,7 +26,10 @@ export default (opts = { prefix: '' }) => {
                 );
 
                 if (tokenMatch) {
-                    decl.value = await lookupToken(tokenMatch[2], opts.prefix);
+                    decl.value = decl.value.replace(
+                        tokenMatch[0],
+                        await lookupToken(tokenMatch[2], opts.prefix)
+                    );
                 }
             }
         },

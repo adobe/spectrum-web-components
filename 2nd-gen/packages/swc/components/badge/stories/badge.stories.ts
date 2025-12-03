@@ -203,7 +203,7 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
     return html`<div
         style=${styleMap({
             display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
+            gap: 'var(--swc-spacing-200)',
             'flex-wrap': 'wrap',
             'justify-content': 'center',
             // Used 80ch because that's generally considered the maximum readable width for text in a web page.

@@ -16,6 +16,7 @@
 
 // TODO:
 // determine if any token types are meant to be excluded from cp
+// resolve invalid CSS values, ex. "medium-font-weight": "medium"
 
 import fs from 'node:fs';
 import path from 'node:path';
