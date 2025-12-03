@@ -5,6 +5,7 @@ import {
     Canvas,
     Controls,
     Source,
+    Story,
     Markdown,
     ArgTypes,
     Description,
@@ -12,9 +13,9 @@ import {
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import { * as ProgressCircleStories} from '../stories/progress-circle.stories.js';
+import * as ProgressCircleStories from '../stories/progress-circle.stories.js';
 
-<Meta title="Progress circle/Usage" />
+<Meta title="Progress circle/Usage" of={ProgressCircleStories} />
 
 # Progress circle usage
 
@@ -41,3 +42,8 @@ A progress circle consists of several key parts:
 - A label (via `slot="label"`)
 - A progress value (via `progress` attribute)
 - An optional indeterminate state (via `indeterminate` attribute)
+
+<Canvas>
+    <Story of={ProgressCircleStories.Default} />
+    <Source />
+</Canvas>
