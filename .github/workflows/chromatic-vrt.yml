@@ -1,6 +1,9 @@
 name: Visual regression testing with Chromatic
 
 on:
+    pull_request:
+        paths:
+            - '2nd-gen/**'
     workflow_dispatch:
     workflow_call:
         inputs:
@@ -12,14 +15,14 @@ on:
         outputs:
             storybook-url:
                 description: 'URL of the published Storybook'
-                value: ${{ jobs.vrt.outputs.storybook-url }}
+                value: ${{ jobs.chromatic.outputs.storybook-url }}
 
 permissions:
     contents: read
     pull-requests: write
 
 jobs:
-    vrt:
+    chromatic:
         name: Chromatic
         runs-on: ubuntu-latest
         timeout-minutes: 20
@@ -36,22 +39,13 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
-
-            - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+              working-directory: 2nd-gen/packages/swc
+              run: yarn analyze
 
             - name: Publish to Chromatic
               id: chromatic
-              uses: chromaui/action@v11
+              uses: chromaui/action@latest
               with:
                   projectToken: ${{ secrets.CHROMATIC_TOKEN }}
-                  buildScriptName: storybook:build
-                  storybookConfigDir: storybook
-                  exitOnceUploaded: true
-                  onlyChanged: true
-                  traceChanged: true
-                  untraced: '.github/actions/*/package.json'
-                  diagnostics: true
-                  # Lets VRT pass without running so as not to waste snapshots
+                  workingDir: 2nd-gen/packages/swc
                   skip: ${{ inputs.skip }}
