@@ -4014,6 +4014,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit-labs/observers@npm:^2.0.2":
+  version: 2.0.6
+  resolution: "@lit-labs/observers@npm:2.0.6"
+  dependencies:
+    "@lit/reactive-element": "npm:^1.0.0 || ^2.0.0"
+    lit-html: "npm:^3.2.0"
+  checksum: 10c0/2e9559beb3b48af9ad6ac4593ec3a15cb8600cf9867ff7b07eb19cc543dc2b5d87aabdd072f007cb389c79bf3a0ef517cebc292e97d95f7153deb1166c66bef1
+  languageName: node
+  linkType: hard
+
 "@lit-labs/react@npm:^1.0.2":
   version: 1.2.1
   resolution: "@lit-labs/react@npm:1.2.1"
@@ -4038,7 +4048,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit/react@npm:1.0.8":
+"@lit/react@npm:1.0.8, @lit/react@npm:^1.0.0":
   version: 1.0.8
   resolution: "@lit/react@npm:1.0.8"
   peerDependencies:
@@ -5413,6 +5423,7 @@ __metadata:
     rollup: "npm:4.52.2"
     sinon: "npm:17.0.2"
     storybook: "npm:8.6.14"
+    storybook-screen-reader: "npm:1.1.0"
     stylelint: "npm:16.24.0"
     stylelint-config-standard: "npm:38.0.0"
     stylelint-header: "npm:3.0.0"
@@ -5561,6 +5572,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/base@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/base@npm:0.42.5"
+  dependencies:
+    lit: "npm:^2.5.0 || ^3.1.3"
+  checksum: 10c0/08a82ed97b2333333438494930fcb2da267f49cab94a7b0e2463d36b50603494db78c268093b7dc643ee016d569ceebe53f04a46ebf990117b1f483773205f6b
+  languageName: node
+  linkType: hard
+
 "@spectrum-web-components/breadcrumbs@npm:1.10.0, @spectrum-web-components/breadcrumbs@workspace:1st-gen/packages/breadcrumbs":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/breadcrumbs@workspace:1st-gen/packages/breadcrumbs"
@@ -5706,6 +5726,18 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.10.0"
   languageName: unknown
   linkType: soft
+
+"@spectrum-web-components/checkbox@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/checkbox@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    "@spectrum-web-components/icon": "npm:^0.42.5"
+    "@spectrum-web-components/icons-ui": "npm:^0.42.5"
+    "@spectrum-web-components/shared": "npm:^0.42.5"
+  checksum: 10c0/a9d9b423b9ff18f790d79d63d50a4112fc5ecacf3d87ed53fc749a306b6bce20235cb21c483bc8f0a1fa68dfc99c1c1be410b297324ee7ab39df160ca5717c7f
+  languageName: node
+  linkType: hard
 
 "@spectrum-web-components/clear-button@npm:1.10.0, @spectrum-web-components/clear-button@workspace:1st-gen/packages/clear-button":
   version: 0.0.0-use.local
@@ -5987,6 +6019,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/icon@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/icon@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    "@spectrum-web-components/iconset": "npm:^0.42.5"
+  checksum: 10c0/6ed5122ee9118c6955cd035ebb27e13a841f62f438d0676ce9168eb396acc7a53a7fe223daebcd1b3a7095ad9c4010241553b415df814670e4c05be549f4f3ac
+  languageName: node
+  linkType: hard
+
 "@spectrum-web-components/icons-ui@npm:1.10.0, @spectrum-web-components/icons-ui@workspace:1st-gen/packages/icons-ui":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons-ui@workspace:1st-gen/packages/icons-ui"
@@ -6002,6 +6044,17 @@ __metadata:
     prettier: "npm:3.6.2"
   languageName: unknown
   linkType: soft
+
+"@spectrum-web-components/icons-ui@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/icons-ui@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    "@spectrum-web-components/icon": "npm:^0.42.5"
+    "@spectrum-web-components/iconset": "npm:^0.42.5"
+  checksum: 10c0/0ae35daaeeefcb7635569e971d66b9e91d3c3e14dde135c9ab44f7f5963eca49f958a327599fc079543ac87bfffb4f6f6588182aa8c9ac9f176711aeb1502336
+  languageName: node
+  linkType: hard
 
 "@spectrum-web-components/icons-workflow@npm:1.10.0, @spectrum-web-components/icons-workflow@workspace:1st-gen/packages/icons-workflow":
   version: 0.0.0-use.local
@@ -6034,6 +6087,15 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.10.0"
   languageName: unknown
   linkType: soft
+
+"@spectrum-web-components/iconset@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/iconset@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+  checksum: 10c0/11a50d3e8f978c7a37e564ea0dc798555381f280a792b42ce5e5cab5fb3de241c1dd919356e0f25da7870709a11ac59df3b93bb2425ca72122cf52785cd42d27
+  languageName: node
+  linkType: hard
 
 "@spectrum-web-components/illustrated-message@npm:1.10.0, @spectrum-web-components/illustrated-message@workspace:1st-gen/packages/illustrated-message":
   version: 0.0.0-use.local
@@ -6244,6 +6306,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/shared@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/shared@npm:0.42.5"
+  dependencies:
+    "@lit-labs/observers": "npm:^2.0.2"
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    focus-visible: "npm:^5.1.0"
+  checksum: 10c0/f363155ed97885875dcd415ee3dce4a6b0325978c492d9b12ad11412c4f9d421789de1e81bc9ea1dbde86f363bc841f184dd70df5aef62e2e9320d44a937448f
+  languageName: node
+  linkType: hard
+
 "@spectrum-web-components/sidenav@npm:1.10.0, @spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav"
@@ -6313,6 +6386,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@spectrum-web-components/styles@npm:^0.42.5":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/styles@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+  checksum: 10c0/caf5bbb0b8ee67da2f79c31883e17055e4d4cae828d588c5cf5c49efd5495ce558a3e6014077364e50327f291a6d909ec0e97926d731cb49756c83ed3d66a1c0
+  languageName: node
+  linkType: hard
+
 "@spectrum-web-components/swatch@npm:1.10.0, @spectrum-web-components/swatch@workspace:1st-gen/packages/swatch":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/swatch@workspace:1st-gen/packages/swatch"
@@ -6335,6 +6417,16 @@ __metadata:
     "@spectrum-web-components/checkbox": "npm:1.10.0"
   languageName: unknown
   linkType: soft
+
+"@spectrum-web-components/switch@npm:^0.42.0":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/switch@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    "@spectrum-web-components/checkbox": "npm:^0.42.5"
+  checksum: 10c0/cbb37673876f05d68d920bf457e2da08212bdccb90992a68b0690cb8667a3258e68028c33f8bf4770df519d8a28459fd72b43ccf8517e471a7e857b704131d7d
+  languageName: node
+  linkType: hard
 
 "@spectrum-web-components/table@npm:1.10.0, @spectrum-web-components/table@workspace:1st-gen/packages/table":
   version: 0.0.0-use.local
@@ -6396,6 +6488,16 @@ __metadata:
     "@spectrum-web-components/styles": "npm:1.10.0"
   languageName: unknown
   linkType: soft
+
+"@spectrum-web-components/theme@npm:^0.42.0":
+  version: 0.42.5
+  resolution: "@spectrum-web-components/theme@npm:0.42.5"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.42.5"
+    "@spectrum-web-components/styles": "npm:^0.42.5"
+  checksum: 10c0/092099b7ccbf6f8a213e01fef18f7555024ceb16568c07de2e78ff5a5ea74bffff4fcfe552c90fbf7fe2ca497715a9de0a97372ea44cfbfb3e4f3ead0c44fa8b
+  languageName: node
+  linkType: hard
 
 "@spectrum-web-components/thumbnail@npm:1.10.0, @spectrum-web-components/thumbnail@workspace:1st-gen/packages/thumbnail":
   version: 0.0.0-use.local
@@ -6928,6 +7030,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/core-events@npm:^8.0.0":
+  version: 8.6.14
+  resolution: "@storybook/core-events@npm:8.6.14"
+  peerDependencies:
+    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+  checksum: 10c0/8fc9941e3ef9954ed82a845e29867ba4bcc2e0c1749c1ab6a916a24d3941d878cc509769b6c0c073e78ec91d22c7895787219bb6b5d3e787c8223963dbef6b3e
+  languageName: node
+  linkType: hard
+
 "@storybook/core-webpack@npm:8.6.14":
   version: 8.6.14
   resolution: "@storybook/core-webpack@npm:8.6.14"
@@ -7082,7 +7193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-api@npm:8.6.14":
+"@storybook/manager-api@npm:8.6.14, @storybook/manager-api@npm:^8.0.0":
   version: 8.6.14
   resolution: "@storybook/manager-api@npm:8.6.14"
   peerDependencies:
@@ -15897,7 +16008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-visible@npm:5.2.1":
+"focus-visible@npm:5.2.1, focus-visible@npm:^5.1.0":
   version: 5.2.1
   resolution: "focus-visible@npm:5.2.1"
   checksum: 10c0/1c0e4e8b22be8684a664acc340efd6a41aafb560ce09979186a1c934de321ce8d6a3d7175c946aab1c87409b0e10f623274d7ce7d42ff16a0e4dc862fa151623
@@ -20298,7 +20409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.3.0":
+"lit-html@npm:^2.0.0 || ^3.0.0, lit-html@npm:^2.4.0 || ^3.1.3, lit-html@npm:^3.2.0, lit-html@npm:^3.3.0":
   version: 3.3.1
   resolution: "lit-html@npm:3.3.1"
   dependencies:
@@ -25889,6 +26000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"query-selector-shadow-dom@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "query-selector-shadow-dom@npm:1.0.1"
+  checksum: 10c0/f36de03f170ff1da69c3eecfa7f8b01e450a46dd266c921e17f36076ec59862eee00179489f30cb17c118bb56e868436578c01ea66f671fb358750d6ae474125
+  languageName: node
+  linkType: hard
+
 "query-string@npm:^7.1.0":
   version: 7.1.3
   resolution: "query-string@npm:7.1.3"
@@ -26033,7 +26151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.3.1":
+"react@npm:18.3.1, react@npm:^18.2.0":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
@@ -28198,6 +28316,22 @@ __metadata:
   version: 2.14.4
   resolution: "store2@npm:2.14.4"
   checksum: 10c0/3453c9c8c153c760e6290395a7bc23669df5dc8a6e8a49f9b3187dbb9f86d14b58705aa4f17fad6b536d4b04fe3e66ea5bde12c1352abd52c6b303bbf5757ab6
+  languageName: node
+  linkType: hard
+
+"storybook-screen-reader@npm:1.1.0":
+  version: 1.1.0
+  resolution: "storybook-screen-reader@npm:1.1.0"
+  dependencies:
+    "@lit/react": "npm:^1.0.0"
+    "@spectrum-web-components/switch": "npm:^0.42.0"
+    "@spectrum-web-components/theme": "npm:^0.42.0"
+    "@storybook/core-events": "npm:^8.0.0"
+    "@storybook/manager-api": "npm:^8.0.0"
+    lit: "npm:^3.1.0"
+    query-selector-shadow-dom: "npm:^1.0.0"
+    react: "npm:^18.2.0"
+  checksum: 10c0/1a39dab767e4c5a77642fbe7c27a17fcccf150d060c7d21c67127f5b53e6762b46a33a3f80b2466354905f7f30657debabfb9fab899aa6ecc6d5a77fe3c12634
   languageName: node
   linkType: hard
 
