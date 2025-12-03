@@ -63,7 +63,7 @@
         "markdown-it": "14.1.0",
         "markdown-it-anchor": "8.6.7",
         "markdown-it-for-inline": "2.0.1",
-        "posthtml": "0.16.6",
+        "posthtml": "0.16.7",
         "posthtml-attrs-parser": "1.1.2",
         "posthtml-match-helper": "2.0.3",
         "prismjs": "1.30.0",
