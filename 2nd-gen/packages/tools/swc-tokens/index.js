@@ -23,7 +23,7 @@ import prettier from 'prettier';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
-import { allTokens, generateCSS } from './utils.js';
+import { allTokens, createLogger, generateCSS } from './utils.js';
 
 const argv = yargs(hideBin(process.argv))
     .option('out', {
@@ -37,6 +37,12 @@ const argv = yargs(hideBin(process.argv))
         describe: 'Prefix for CSS custom properties',
         default: '',
     })
+    .option('debug', {
+        alias: 'd',
+        type: 'boolean',
+        describe: 'Output token processing debug log',
+        default: false,
+    })
     .option('outputType', {
         choices: ['stylesheet', 'tokens'],
         describe: 'Command output type',
@@ -47,13 +53,16 @@ const argv = yargs(hideBin(process.argv))
 const out = argv.out?.trim();
 const prefix = argv.prefix?.trim();
 const outputType = argv.outputType?.trim();
+const debug = argv.debug;
 
 fs.mkdirSync(path.dirname(out), { recursive: true });
+
+const log = debug && createLogger('./debug-tokens.txt');
 
 if (outputType === 'stylesheet') {
     const prettierConfig = await prettier.resolveConfig(process.cwd());
 
-    const css = await generateCSS(prefix);
+    const css = await generateCSS(prefix, log);
     const formattedCss = await prettier.format(css, {
         ...prettierConfig,
         parser: 'css',
@@ -65,7 +74,7 @@ if (outputType === 'stylesheet') {
 } else {
     fs.writeFileSync(
         out,
-        JSON.stringify(await allTokens(prefix), '', 4) + '\n',
+        JSON.stringify(await allTokens(prefix, log), '', 4) + '\n',
         'utf8'
     );
 

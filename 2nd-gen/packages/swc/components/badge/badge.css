@@ -11,7 +11,7 @@
  * governing permissions and limitations under the License.
  */
 
-/* TODO: resolve border radius */
+/* TODO: rewrite with new CP guidelines */
 
 :host {
     display: inline-flex;
@@ -193,8 +193,7 @@
     --spectrum-badge-outline-border-color-positive: token(
         'positive-visual-color'
     );
-
-    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-medium'); */
+    --spectrum-badge-corner-radius: token('corner-radius-medium-size-medium');
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-100');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -229,7 +228,7 @@
 }
 
 .spectrum-Badge--sizeS {
-    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-small'); */
+    --spectrum-badge-corner-radius: token('corner-radius-medium-size-small');
     --spectrum-badge-height: token('component-height-75');
     --spectrum-badge-font-size: token('font-size-75');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -255,7 +254,7 @@
 }
 
 .spectrum-Badge--sizeL {
-    /* --spectrum-badge-corner-radius: token('corner-radius-medium-size-large'); */
+    --spectrum-badge-corner-radius: token('corner-radius-medium-size-large');
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-200');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -281,9 +280,9 @@
 }
 
 .spectrum-Badge--sizeXL {
-    /* --spectrum-badge-corner-radius: token(
+    --spectrum-badge-corner-radius: token(
         'corner-radius-medium-size-extra-large'
-    ); */
+    );
     --spectrum-badge-height: token('component-height-100');
     --spectrum-badge-font-size: token('font-size-300');
     --spectrum-badge-label-spacing-vertical-top: token(
@@ -323,8 +322,7 @@
     cursor: default;
     border: var(--spectrum-badge-border-width) solid
         var(--spectrum-badge-border-color);
-
-    /* border-radius: var(--spectrum-badge-corner-radius); */
+    border-radius: var(--spectrum-badge-corner-radius);
     background: var(--spectrum-badge-background-color-default);
     color: var(--spectrum-badge-label-icon-color);
     background-origin: border-box;

@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+/* eslint-disable no-console */
+
+import fs from 'fs';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
@@ -52,12 +55,34 @@ const TOKEN_JSON = [
     },
 ];
 
+/**
+ * Creates a logger that writes to a file.
+ * @param {string|false} debugPath  path to log file OR false for no logging
+ */
+export function createLogger(debugPath) {
+    if (!debugPath) {
+        return () => {}; // no-op
+    }
+
+    // Ensure the file is reset on each run
+    fs.writeFileSync(debugPath, '');
+
+    return (...args) => {
+        const line = args
+            .map((a) =>
+                typeof a === 'string' ? a : JSON.stringify(a, null, 2)
+            )
+            .join(' ');
+        fs.appendFileSync(debugPath, line + '\n');
+    };
+}
+
 function isAlias(str) {
     return typeof str === 'string' && /^\{(.+)\}$/.test(str);
 }
 
 // Remove braces from values like "{blue-800}"
-function stripBraces(str) {
+function unwrapAlias(str) {
     return str.replace(/^\{/, '').replace(/\}$/, '');
 }
 
@@ -76,6 +101,7 @@ function convertToProperty(value, prefix) {
     }
 }
 
+// Original design data uses an old rgb format
 function convertRGB(input) {
     if (typeof input !== 'string') {
         return input;
@@ -124,181 +150,266 @@ function convertRGB(input) {
         : `rgb(${r} ${g} ${b})`;
 }
 
-// Recursively resolve a single value using the provided tokens map
-function resolveAlias(tokensMap, value, seen = new Set()) {
-    if (typeof value === 'string') {
+/**
+ * Build a raw lookup map from the original JSON.
+ * Keeps values exactly as in the source (including aliases with braces).
+ */
+function buildRawLookup(json) {
+    const lookup = {};
+
+    for (const [k, v] of Object.entries(json)) {
+        // If token has 'value' (string/number/object), keep it raw
+        if ('value' in v && v.value !== undefined) {
+            lookup[k] = v.value;
+            continue;
+        }
+
+        // If token has sets, keep the sets' values raw
+        if (v?.sets) {
+            const s = {};
+            for (const [setName, setObj] of Object.entries(v.sets)) {
+                if (!ALLOWED_SETS.includes(setName)) {
+                    continue;
+                }
+                if ('value' in setObj && setObj.value !== undefined) {
+                    s[setName] = setObj.value;
+                }
+            }
+            lookup[k] = s;
+            continue;
+        }
+
+        // otherwise keep full object (may be multi-part tokens)
+        lookup[k] = v;
+    }
+
+    return lookup;
+}
+
+/**
+ * Resolve an alias or value using the raw lookup map.
+ * - tokensMap: the raw lookup returned by buildRawLookup(json)
+ * - value: a string like "{foo}" OR a primitive OR an object (possibly with nested aliases)
+ *
+ * Returns: resolved primitive / object (with aliases resolved) or undefined if missing/circular.
+ */
+function resolveAliasValue(tokensMap, value, seen = new Set(), debug = false) {
+    // ------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------
+
+    const log = typeof debug === 'function' ? debug : () => {};
+
+    const cloneSeen = () => new Set(seen); // ensures each branch has its own copy
+
+    const resolveObject = (obj) => {
+        const out = Array.isArray(obj) ? [] : {};
+        for (const [k, v] of Object.entries(obj)) {
+            out[k] = resolveAliasValue(tokensMap, v, cloneSeen(), debug);
+        }
+        return out;
+    };
+
+    const resolveSetGroup = (obj) => {
+        const out = {};
+        for (const [setName, setVal] of Object.entries(obj)) {
+            out[setName] = resolveAliasValue(
+                tokensMap,
+                setVal,
+                cloneSeen(),
+                debug
+            );
+        }
+        return out;
+    };
+
+    const isSetsObject = (obj) =>
+        typeof obj === 'object' &&
+        obj !== null &&
+        Object.keys(obj).length > 0 &&
+        Object.keys(obj).every((k) => ALLOWED_SETS.includes(k));
+
+    // ------------------------------------------------------
+    // Primitive handling
+    // ------------------------------------------------------
+
+    if (value === null || typeof value !== 'object') {
+        // number | string | boolean | null
+        if (typeof value !== 'string') {
+            return value;
+        }
         if (!isAlias(value)) {
-            return convertRGB(value);
+            return value;
         }
-
-        const key = stripBraces(value);
-        if (seen.has(key)) {
-            console.warn(`Circular alias detected for "${key}"`);
-            return undefined;
-        }
-        seen.add(key);
-
-        return resolveAlias(tokensMap, tokensMap[key], seen);
     }
 
-    if (typeof value === 'number') {
-        return value.toFixed(4);
+    // ------------------------------------------------------
+    // Alias resolution
+    // ------------------------------------------------------
+
+    const targetName = unwrapAlias(value);
+    if (!targetName) {
+        return value;
     }
 
-    if (typeof value === 'object' && value !== null) {
-        const resolvedObj = {};
-        for (const [k, v] of Object.entries(value)) {
-            resolvedObj[k] = resolveAlias(tokensMap, v, new Set(seen));
-        }
-        return resolvedObj;
+    if (seen.has(targetName)) {
+        log(
+            `circular alias detected: ${[...seen].join(' -> ')} -> ${targetName}`
+        );
+        return undefined;
     }
 
-    // number, boolean, or other primitive
-    return value;
+    seen.add(targetName);
+
+    const targetValue = tokensMap[targetName];
+    if (targetValue === undefined) {
+        log(`missing alias target: ${targetName}`);
+        return undefined;
+    }
+
+    // ------------------------------------------------------
+    // Resolve target value
+    // ------------------------------------------------------
+
+    // simple string → might be another alias
+    if (typeof targetValue === 'string') {
+        return resolveAliasValue(tokensMap, targetValue, seen, debug);
+    }
+
+    // object shapes
+    if (typeof targetValue === 'object' && targetValue !== null) {
+        return isSetsObject(targetValue)
+            ? resolveSetGroup(targetValue)
+            : resolveObject(targetValue);
+    }
+
+    // fallback primitive
+    return targetValue;
 }
 
 // Normalize tokens
-function extractTokenValues(json, resolveAliases, prefix) {
-    const normalized = {};
+function extractTokenValues(
+    json,
+    resolveAliases,
+    prefix,
+    { debug = false } = {}
+) {
     const allowed = new Set(ALLOWED_SETS);
+    const rawLookup = buildRawLookup(json);
+    const normalized = {};
 
-    for (const [tokenName, tokenObj] of Object.entries(json)) {
-        // -------------------------------------------
-        // SKIP deprecated tokens entirely
-        // -------------------------------------------
-        if (tokenObj?.deprecated === true) {
-            continue;
+    const log = typeof debug === 'function' ? debug : () => {};
+
+    // --------------------------
+    //  Helpers
+    // --------------------------
+
+    const normalizePrimitive = (value) => {
+        if (typeof value === 'number') {
+            return value.toFixed(4);
         }
+        if (typeof value === 'string') {
+            const formatted = convertRGB(value); // <-- RGB formatting
+            return resolveAliases
+                ? formatted
+                : convertToProperty(formatted, prefix);
+        }
+        return value;
+    };
 
-        // -------------------------------------------
-        // SKIP composite "component" tokens
-        // (component-xs-regular, etc)
-        // -------------------------------------------
+    const resolveAliasValueSafe = (alias, seen = new Set()) => {
+        const resolved = resolveAliasValue(rawLookup, alias, seen, debug);
+
+        // primitive → normalize directly
         if (
-            typeof tokenObj === 'object' &&
-            tokenObj !== null &&
-            tokenName.includes('component') &&
-            'value' in tokenObj &&
-            typeof tokenObj.value === 'object' &&
-            tokenObj.value !== null &&
-            !('sets' in tokenObj)
+            typeof resolved !== 'object' ||
+            resolved === null ||
+            !('sets' in resolved)
         ) {
-            continue;
+            return normalizePrimitive(resolved);
         }
 
-        // -------------------------------------------
-        // CASE 1 — token has a direct `value`
-        // -------------------------------------------
-        if (tokenObj?.value !== undefined) {
-            const val = tokenObj.value;
+        // multi-set alias → flatten
+        return extractTokenValues({ temp: resolved }, false, prefix, { debug })
+            .temp;
+    };
 
-            // Skip if THIS token is deprecated at this level
-            if (tokenObj?.deprecated === true) {
+    const normalizeValue = (rawValue) => {
+        if (
+            typeof rawValue === 'string' &&
+            resolveAliases &&
+            isAlias(rawValue)
+        ) {
+            log('[ALIAS] resolving', rawValue);
+            return resolveAliasValueSafe(rawValue);
+        }
+        return normalizePrimitive(rawValue);
+    };
+
+    const shouldSkipToken = (tokenName, tokenObj) => {
+        if (tokenObj?.deprecated === true) {
+            log('[SKIP deprecated token]', tokenName);
+            return true;
+        }
+
+        // composite component tokens
+        if (
+            tokenName.startsWith('component-') &&
+            tokenObj.value &&
+            typeof tokenObj.value === 'object' &&
+            !tokenObj.sets
+        ) {
+            log('[SKIP component]', tokenName);
+            return true;
+        }
+
+        return false;
+    };
+
+    const normalizeSetGroup = (tokenName, tokenObj) => {
+        const out = {};
+
+        for (const [setName, setObj] of Object.entries(tokenObj.sets)) {
+            if (!allowed.has(setName)) {
+                log('[SKIP set not allowed]', `${tokenName}.${setName}`);
+                continue;
+            }
+            if (setObj?.deprecated === true) {
+                log('[SKIP deprecated set]', `${tokenName}.${setName}`);
+                continue;
+            }
+            if (setObj?.value === undefined) {
                 continue;
             }
 
-            if (typeof val === 'string') {
-                // Alias case
-                if (resolveAliases && isAlias(val)) {
-                    const resolved = resolveAlias(allTokens, val);
+            out[setName] = normalizeValue(setObj.value);
+        }
 
-                    // -------------------------------
-                    // Do NOT recurse if resolved
-                    // alias is a primitive.
-                    // -------------------------------
-                    if (
-                        typeof resolved !== 'object' ||
-                        resolved === null ||
-                        !('sets' in resolved)
-                    ) {
-                        normalized[tokenName] = resolved;
-                        continue;
-                    }
+        return out;
+    };
 
-                    // resolved is itself a scale-set → flatten it
-                    normalized[tokenName] = extractTokenValues(
-                        { temp: resolved },
-                        false,
-                        prefix
-                    ).temp;
-                    continue;
-                }
+    // --------------------------
+    //  Main loop
+    // --------------------------
 
-                // Non-alias string
-                normalized[tokenName] = resolveAliases
-                    ? val
-                    : convertToProperty(val, prefix);
-            } else {
-                normalized[tokenName] = val;
-            }
-
+    for (const [tokenName, tokenObj] of Object.entries(json)) {
+        if (shouldSkipToken(tokenName, tokenObj)) {
             continue;
         }
 
-        // -------------------------------------------
-        // CASE 2 — token has `sets` (desktop/mobile)
-        // -------------------------------------------
-        if (tokenObj?.sets) {
-            const simplified = {};
-
-            for (const [setName, setObj] of Object.entries(tokenObj.sets)) {
-                if (!allowed.has(setName)) {
-                    continue;
-                }
-
-                // skip deprecated sets
-                if (setObj?.deprecated === true) {
-                    continue;
-                }
-
-                if (setObj?.value !== undefined) {
-                    const val = setObj.value;
-
-                    // -------------------------------
-                    // Alias handling inside sets
-                    // -------------------------------
-                    if (
-                        typeof val === 'string' &&
-                        isAlias(val) &&
-                        resolveAliases
-                    ) {
-                        const resolved = resolveAlias(allTokens, val);
-
-                        // FIX: avoid double nesting
-                        if (
-                            typeof resolved !== 'object' ||
-                            resolved === null ||
-                            !('sets' in resolved)
-                        ) {
-                            simplified[setName] = resolved;
-                            continue;
-                        }
-
-                        // resolved token is itself a multi-set → flatten it
-                        simplified[setName] = extractTokenValues(
-                            { temp: resolved },
-                            false,
-                            prefix
-                        ).temp;
-                        continue;
-                    }
-
-                    // -------------------------------
-                    // Non-alias value
-                    // -------------------------------
-                    if (typeof val === 'string') {
-                        simplified[setName] = resolveAliases
-                            ? val
-                            : convertToProperty(val, prefix);
-                    } else {
-                        simplified[setName] = val;
-                    }
-                }
-            }
-
-            normalized[tokenName] = simplified;
+        // direct value
+        if ('value' in tokenObj) {
+            normalized[tokenName] = normalizeValue(tokenObj.value);
             continue;
         }
+
+        // multi-set
+        if (tokenObj.sets) {
+            normalized[tokenName] = normalizeSetGroup(tokenName, tokenObj);
+            continue;
+        }
+
+        log('[UNHANDLED token shape]', tokenName, tokenObj);
     }
 
     return normalized;
@@ -309,7 +420,7 @@ function createPropertyName(name, prefix) {
 }
 
 // Generate CSS custom properties
-export async function generateCSS(prefix) {
+export async function generateCSS(prefix, debug = false) {
     const lines = [];
 
     function writeProp(name, value) {
@@ -317,7 +428,9 @@ export async function generateCSS(prefix) {
         lines.push(`  ${key}: ${value};`);
     }
 
-    for (const [token, value] of Object.entries(await allTokens(prefix))) {
+    for (const [token, value] of Object.entries(
+        await allTokens(prefix, debug)
+    )) {
         if (value == null) {
             continue;
         }
@@ -382,32 +495,23 @@ async function loadTokenJson(fileName) {
 }
 
 // Load all JSON files from src
-async function loadAllTokens(prefix) {
+async function loadAllTokens(prefix, debug = false) {
     const tokens = {};
 
     // Concatenate all token files
     for (const { file, resolveAliases } of TOKEN_JSON) {
         const json = await loadTokenJson(file);
-        const normalized = extractTokenValues(json, resolveAliases, prefix);
+        const normalized = extractTokenValues(json, resolveAliases, prefix, {
+            debug: debug,
+        });
         Object.assign(tokens, normalized);
-    }
-
-    // Process aliases
-    for (const { resolveAliases } of TOKEN_JSON) {
-        if (resolveAliases) {
-            const resolved = {};
-            for (const key of Object.keys(tokens)) {
-                resolved[key] = resolveAlias(tokens, tokens[key]);
-            }
-
-            Object.assign(tokens, resolved);
-        }
     }
 
     return tokens;
 }
 
-export const allTokens = async (prefix) => await loadAllTokens(prefix);
+export const allTokens = async (prefix, debug = false) =>
+    await loadAllTokens(prefix, debug);
 
 // Lookup individual token values
 export async function lookupToken(key, prefix) {
