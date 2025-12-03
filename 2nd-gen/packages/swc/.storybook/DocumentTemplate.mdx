@@ -9,7 +9,7 @@ import {
     ArgTypes,
     Description,
 } from '@storybook/addon-docs/blocks';
-import { Accessibility } from './blocks/Accessibility';
+import { AccessibilityStories } from './blocks/AccessibilityStories';
 import { AccessibilityDocs } from './blocks/AccessibilityDocs';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
@@ -46,7 +46,7 @@ This template will likely be going away in the future, but for now it's here to 
     </sp-tab-panel>
     <sp-tab-panel value="accessibility" style={{ flexDirection: 'column' }}>
         <AccessibilityDocs />
-            <Accessibility />
+        <AccessibilityStories />
     </sp-tab-panel>
     <sp-tab-panel value="api" style={{ flexDirection: 'column' }}>
             <ArgTypes />

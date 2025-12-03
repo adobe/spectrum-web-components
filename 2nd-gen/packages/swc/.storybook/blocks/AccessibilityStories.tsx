@@ -6,7 +6,7 @@ import React from 'react';
  * - if a meta reference is passed, it finds all a11y-tagged stories from that meta
  * - if nothing is passed, it defaults to the current meta
  */
-export const Accessibility = ({ of }) => {
+export const AccessibilityStories = ({ of }) => {
     const resolvedOf = useOf(of || 'meta', ['story', 'meta']);
     const a11yStories = Object.values(
         resolvedOf.type === 'meta'

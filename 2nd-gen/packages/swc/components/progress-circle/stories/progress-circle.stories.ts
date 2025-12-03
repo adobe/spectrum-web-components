@@ -18,11 +18,6 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
-import {
-    Accessibility as AccessibilityStory,
-    KeyboardNavigation as KeyboardNavigationStory,
-} from './progress-circle.a11y';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -40,15 +35,11 @@ const { events, args, argTypes, template } = getStorybookHelpers(
 //     control: { type: 'range', min: 0, max: 100, step: 1 },
 // };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: ProgressCircle.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: ProgressCircle.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
@@ -89,6 +80,10 @@ export const Default: Story = {
     render: (args) => template(args),
 };
 
+// ─────────────────────
+//    USAGE STORIES
+// ─────────────────────
+
 export const Sizes: Story = {
     render: () => html`
         <div style="display: flex; gap: 24px; align-items: center;">
@@ -109,7 +104,7 @@ export const Sizes: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 export const ProgressValues: Story = {
@@ -133,7 +128,7 @@ export const ProgressValues: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 export const Indeterminate: Story = {
@@ -156,7 +151,7 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 export const StaticWhite: Story = {
@@ -184,7 +179,7 @@ export const StaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 export const StaticBlack: Story = {
@@ -212,7 +207,7 @@ export const StaticBlack: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 export const IndeterminateStaticWhite: Story = {
@@ -240,15 +235,38 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', 'usage'],
 };
 
 // ────────────────────────────────
-//    DOCUMENTATION STORIES EXPORT
+//    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-export const Accessibility: Story = AccessibilityStory;
-Accessibility.tags = ['!dev', '!autodocs', 'a11y'];
+export const Accessibility: Story = {
+    render: () => html`
+        <div>
+            <p>
+                This is coming from the accessibility story through the
+                Accessibility block. This option allows us to fully customize
+                the accessibility documentation for a component by writing a
+                custom story that renders the accessibility documentation.
+            </p>
+        </div>
+    `,
+    tags: ['!dev', '!autodocs', 'a11y'],
+};
 
-export const KeyboardNavigation: Story = KeyboardNavigationStory;
-KeyboardNavigation.tags = ['!dev', '!autodocs', 'a11y'];
+export const KeyboardNavigation: Story = {
+    render: () => html`
+        <div>
+            <p>
+                This is coming from the keyboard navigation story through the
+                Accessibility block. This option allows us to fully customize
+                allows us to fully customize the accessibility documentation for
+                a component by writing a custom story that renders the
+                accessibility documentation.
+            </p>
+        </div>
+    `,
+    tags: ['!dev', '!autodocs', 'a11y'],
+};
