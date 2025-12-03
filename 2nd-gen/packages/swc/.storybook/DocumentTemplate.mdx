@@ -4,10 +4,13 @@ import {
     Primary,
     Controls,
     Stories,
+    Story,
     Markdown,
     ArgTypes,
     Description,
 } from '@storybook/addon-docs/blocks';
+import { Accessibility } from './blocks/Accessibility';
+import { AccessibilityDocs } from './blocks/AccessibilityDocs';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -42,13 +45,14 @@ This template will likely be going away in the future, but for now it's here to 
 
     </sp-tab-panel>
     <sp-tab-panel value="accessibility" style={{ flexDirection: 'column' }}>
-            Heres some shit about accessibility
+        <AccessibilityDocs />
+            <Accessibility />
     </sp-tab-panel>
     <sp-tab-panel value="api" style={{ flexDirection: 'column' }}>
             <ArgTypes />
     </sp-tab-panel>
     <sp-tab-panel value="examples" style={{ flexDirection: 'column' }}>
-        <Stories />
+        <Stories filter={(story) => !story.tags?.includes('a11y')} />
     </sp-tab-panel>
 
 </sp-tabs>

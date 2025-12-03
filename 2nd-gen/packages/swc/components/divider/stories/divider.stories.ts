@@ -18,6 +18,11 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
+import {
+    Accessibility as AccessibilityStory,
+    KeyboardNavigation as KeyboardNavigationStory,
+} from './divider.a11y';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -151,3 +156,13 @@ export const StaticWhite: Story = {
     `,
     tags: ['!dev'],
 };
+
+// ────────────────────────────────
+//    DOCUMENTATION STORIES EXPORT
+// ────────────────────────────────
+
+export const Accessibility: Story = AccessibilityStory;
+Accessibility.tags = ['!dev', '!autodocs', 'a11y'];
+
+export const KeyboardNavigation: Story = KeyboardNavigationStory;
+KeyboardNavigation.tags = ['!dev', '!autodocs', 'a11y'];

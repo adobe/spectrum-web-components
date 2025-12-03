@@ -18,6 +18,11 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
+import {
+    Accessibility as AccessibilityStory,
+    KeyboardNavigation as KeyboardNavigationStory,
+} from './progress-circle.a11y';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -237,3 +242,13 @@ export const IndeterminateStaticWhite: Story = {
     `,
     tags: ['!dev'],
 };
+
+// ────────────────────────────────
+//    DOCUMENTATION STORIES EXPORT
+// ────────────────────────────────
+
+export const Accessibility: Story = AccessibilityStory;
+Accessibility.tags = ['!dev', '!autodocs', 'a11y'];
+
+export const KeyboardNavigation: Story = KeyboardNavigationStory;
+KeyboardNavigation.tags = ['!dev', '!autodocs', 'a11y'];

@@ -56,7 +56,6 @@ const preview = {
             toc: {
                 contentsSelector: '.sbdocs-content',
                 headingSelector: 'h2, h3',
-                ignoreSelector: '#primary',
                 disable: false,
                 unsafeTocbotOptions: {
                     orderedList: false,

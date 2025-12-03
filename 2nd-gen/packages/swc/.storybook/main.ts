@@ -8,14 +8,19 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
     stories: [
         {
+            directory: '../components',
+            files: '**/*.stories.ts',
+            titlePrefix: 'Components',
+        },
+        // {
+        //     directory: '../components',
+        //     files: '**/*.md',
+        //     titlePrefix: 'Components',
+        // },
+        {
             directory: 'get-started',
             files: '*.mdx',
             titlePrefix: 'Get Started',
-        },
-        {
-            directory: '../components',
-            files: '*/stories/*.stories.ts',
-            titlePrefix: 'Components',
         },
         {
             directory: 'guides',
@@ -28,6 +33,9 @@ const config = {
             titlePrefix: 'Guides',
         },
     ],
+    docs: {
+        defaultName: 'Overview',
+    },
     framework: '@storybook/web-components-vite',
     core: {
         disableTelemetry: true,
