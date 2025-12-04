@@ -3892,7 +3892,7 @@
         var(--swc-accent-color-200),
         var(--swc-accent-color-300)
     );
-    --swc-default-font-family: 'Adobe Clean Spectrum VF';
+    --swc-default-font-family: var(--swc-sans-serif-font-family);
     --swc-letter-spacing: 0em;
     --swc-text-align-start: start;
     --swc-text-align-center: center;
@@ -3948,241 +3948,260 @@
     --swc-line-height-200: 1.5;
     --swc-cjk-line-height-100: 1.5;
     --swc-cjk-line-height-200: 1.7;
-    --swc-cjk-letter-spacing: 0em;
-    --swc-heading-sans-serif-font-family: 'Adobe Clean Spectrum VF';
-    --swc-heading-serif-font-family: 'Adobe Clean Serif';
-    --swc-heading-cjk-font-family: 'Adobe Clean Han';
-    --swc-heading-sans-serif-font-weight: 800;
-    --swc-heading-sans-serif-font-style: normal;
-    --swc-heading-serif-font-weight: 700;
-    --swc-heading-serif-font-style: normal;
-    --swc-heading-cjk-font-weight: 800;
-    --swc-heading-cjk-font-style: normal;
-    --swc-heading-sans-serif-heavy-font-weight: 900;
-    --swc-heading-sans-serif-heavy-font-style: normal;
-    --swc-heading-serif-heavy-font-weight: 900;
-    --swc-heading-serif-heavy-font-style: normal;
-    --swc-heading-cjk-heavy-font-weight: 800;
-    --swc-heading-cjk-heavy-font-style: normal;
-    --swc-heading-sans-serif-strong-font-weight: 900;
-    --swc-heading-sans-serif-strong-font-style: normal;
-    --swc-heading-serif-strong-font-weight: 900;
-    --swc-heading-serif-strong-font-style: normal;
-    --swc-heading-cjk-strong-font-weight: 900;
-    --swc-heading-cjk-strong-font-style: normal;
-    --swc-heading-sans-serif-heavy-strong-font-weight: 900;
-    --swc-heading-sans-serif-heavy-strong-font-style: normal;
-    --swc-heading-serif-heavy-strong-font-weight: 900;
-    --swc-heading-serif-heavy-strong-font-style: normal;
-    --swc-heading-cjk-heavy-strong-font-weight: 900;
-    --swc-heading-cjk-heavy-strong-font-style: normal;
-    --swc-heading-sans-serif-emphasized-font-weight: 800;
-    --swc-heading-sans-serif-emphasized-font-style: italic;
-    --swc-heading-serif-emphasized-font-weight: 700;
-    --swc-heading-serif-emphasized-font-style: italic;
-    --swc-heading-cjk-emphasized-font-weight: 900;
-    --swc-heading-cjk-emphasized-font-style: normal;
-    --swc-heading-sans-serif-heavy-emphasized-font-weight: 900;
-    --swc-heading-sans-serif-heavy-emphasized-font-style: italic;
-    --swc-heading-serif-heavy-emphasized-font-weight: 900;
-    --swc-heading-serif-heavy-emphasized-font-style: italic;
-    --swc-heading-cjk-heavy-emphasized-font-weight: 900;
-    --swc-heading-cjk-heavy-emphasized-font-style: normal;
-    --swc-heading-sans-serif-strong-emphasized-font-weight: 900;
-    --swc-heading-sans-serif-strong-emphasized-font-style: italic;
-    --swc-heading-serif-strong-emphasized-font-weight: 900;
-    --swc-heading-serif-strong-emphasized-font-style: italic;
-    --swc-heading-cjk-strong-emphasized-font-weight: 900;
-    --swc-heading-cjk-strong-emphasized-font-style: normal;
-    --swc-heading-sans-serif-heavy-strong-emphasized-font-weight: 900;
-    --swc-heading-sans-serif-heavy-strong-emphasized-font-style: italic;
-    --swc-heading-serif-heavy-strong-emphasized-font-weight: 900;
-    --swc-heading-serif-heavy-strong-emphasized-font-style: italic;
-    --swc-heading-cjk-heavy-strong-emphasized-font-weight: 900;
-    --swc-heading-cjk-heavy-strong-emphasized-font-style: normal;
-    --swc-heading-size-xxxl: var(--spectrum-theme--sizeM, 58px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-heading-size-xxl: var(--spectrum-theme--sizeM, 45px)
-        var(--spectrum-theme--sizeL, 55px);
-    --swc-heading-size-xl: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-heading-size-l: var(--spectrum-theme--sizeM, 28px)
-        var(--spectrum-theme--sizeL, 34px);
-    --swc-heading-size-m: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-heading-size-s: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-heading-size-xs: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-heading-cjk-size-xxxxl: var(--spectrum-theme--sizeM, 65px)
-        var(--spectrum-theme--sizeL, 79px);
-    --swc-heading-size-xxxxl: var(--spectrum-theme--sizeM, 73px)
-        var(--spectrum-theme--sizeL, 88px);
-    --swc-heading-cjk-size-xxxl: var(--spectrum-theme--sizeM, 51px)
-        var(--spectrum-theme--sizeL, 62px);
-    --swc-heading-cjk-size-xxl: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 49px);
-    --swc-heading-cjk-size-xl: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 39px);
-    --swc-heading-cjk-size-l: var(--spectrum-theme--sizeM, 25px)
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-heading-cjk-size-m: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-heading-cjk-size-s: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-heading-cjk-size-xs: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-heading-line-height: 1.3;
-    --swc-heading-cjk-line-height: 1.5;
+    --swc-cjk-letter-spacing: var(--swc-letter-spacing);
+    --swc-heading-sans-serif-font-family: var(--swc-sans-serif-font-family);
+    --swc-heading-serif-font-family: var(--swc-serif-font-family);
+    --swc-heading-cjk-font-family: var(--swc-cjk-font-family);
+    --swc-heading-sans-serif-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-heading-sans-serif-font-style: var(--swc-default-font-style);
+    --swc-heading-serif-font-weight: var(--swc-bold-font-weight);
+    --swc-heading-serif-font-style: var(--swc-default-font-style);
+    --swc-heading-cjk-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-heading-cjk-font-style: var(--swc-default-font-style);
+    --swc-heading-sans-serif-heavy-font-weight: var(--swc-black-font-weight);
+    --swc-heading-sans-serif-heavy-font-style: var(--swc-default-font-style);
+    --swc-heading-serif-heavy-font-weight: var(--swc-black-font-weight);
+    --swc-heading-serif-heavy-font-style: var(--swc-default-font-style);
+    --swc-heading-cjk-heavy-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-heading-cjk-heavy-font-style: var(--swc-default-font-style);
+    --swc-heading-sans-serif-strong-font-weight: var(--swc-black-font-weight);
+    --swc-heading-sans-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-heading-serif-strong-font-weight: var(--swc-black-font-weight);
+    --swc-heading-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-heading-cjk-strong-font-weight: var(--swc-black-font-weight);
+    --swc-heading-cjk-strong-font-style: var(--swc-default-font-style);
+    --swc-heading-sans-serif-heavy-strong-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-sans-serif-heavy-strong-font-style: var(
+        --swc-default-font-style
+    );
+    --swc-heading-serif-heavy-strong-font-weight: var(--swc-black-font-weight);
+    --swc-heading-serif-heavy-strong-font-style: var(--swc-default-font-style);
+    --swc-heading-cjk-heavy-strong-font-weight: var(--swc-black-font-weight);
+    --swc-heading-cjk-heavy-strong-font-style: var(--swc-default-font-style);
+    --swc-heading-sans-serif-emphasized-font-weight: var(
+        --swc-extra-bold-font-weight
+    );
+    --swc-heading-sans-serif-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-serif-emphasized-font-weight: var(--swc-bold-font-weight);
+    --swc-heading-serif-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-heading-cjk-emphasized-font-weight: var(--swc-black-font-weight);
+    --swc-heading-cjk-emphasized-font-style: var(--swc-default-font-style);
+    --swc-heading-sans-serif-heavy-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-sans-serif-heavy-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-serif-heavy-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-serif-heavy-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-cjk-heavy-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-cjk-heavy-emphasized-font-style: var(
+        --swc-default-font-style
+    );
+    --swc-heading-sans-serif-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-sans-serif-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-serif-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-serif-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-cjk-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-cjk-strong-emphasized-font-style: var(
+        --swc-default-font-style
+    );
+    --swc-heading-sans-serif-heavy-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-sans-serif-heavy-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-serif-heavy-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-serif-heavy-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-heading-cjk-heavy-strong-emphasized-font-weight: var(
+        --swc-black-font-weight
+    );
+    --swc-heading-cjk-heavy-strong-emphasized-font-style: var(
+        --swc-default-font-style
+    );
+    --swc-heading-size-xxxl: var(--swc-font-size-1300);
+    --swc-heading-size-xxl: var(--swc-font-size-1100);
+    --swc-heading-size-xl: var(--swc-font-size-900);
+    --swc-heading-size-l: var(--swc-font-size-700);
+    --swc-heading-size-m: var(--swc-font-size-500);
+    --swc-heading-size-s: var(--swc-font-size-400);
+    --swc-heading-size-xs: var(--swc-font-size-300);
+    --swc-heading-cjk-size-xxxxl: var(--swc-font-size-1400);
+    --swc-heading-size-xxxxl: var(--swc-font-size-1500);
+    --swc-heading-cjk-size-xxxl: var(--swc-font-size-1200);
+    --swc-heading-cjk-size-xxl: var(--swc-font-size-1000);
+    --swc-heading-cjk-size-xl: var(--swc-font-size-800);
+    --swc-heading-cjk-size-l: var(--swc-font-size-600);
+    --swc-heading-cjk-size-m: var(--swc-font-size-400);
+    --swc-heading-cjk-size-s: var(--swc-font-size-300);
+    --swc-heading-cjk-size-xs: var(--swc-font-size-200);
+    --swc-heading-line-height: var(--swc-line-height-100);
+    --swc-heading-cjk-line-height: var(--swc-cjk-line-height-100);
     --swc-heading-margin-top-multiplier: 0.89;
     --swc-heading-margin-bottom-multiplier: 0.25;
-    --swc-heading-color: light-dark(rgb(19 19 19), rgb(242 242 242));
-    --swc-body-sans-serif-font-family: 'Adobe Clean Spectrum VF';
-    --swc-body-serif-font-family: 'Adobe Clean Serif';
-    --swc-body-cjk-font-family: 'Adobe Clean Han';
-    --swc-body-sans-serif-font-weight: 400;
-    --swc-body-sans-serif-font-style: normal;
-    --swc-body-serif-font-weight: 400;
-    --swc-body-serif-font-style: normal;
-    --swc-body-cjk-font-weight: 400;
-    --swc-body-cjk-font-style: normal;
-    --swc-body-sans-serif-strong-font-weight: 700;
-    --swc-body-sans-serif-strong-font-style: normal;
-    --swc-body-serif-strong-font-weight: 700;
-    --swc-body-serif-strong-font-style: normal;
-    --swc-body-cjk-strong-font-weight: 800;
-    --swc-body-cjk-strong-font-style: normal;
-    --swc-body-sans-serif-emphasized-font-weight: 400;
-    --swc-body-sans-serif-emphasized-font-style: italic;
-    --swc-body-serif-emphasized-font-weight: 400;
-    --swc-body-serif-emphasized-font-style: italic;
-    --swc-body-cjk-emphasized-font-weight: 800;
-    --swc-body-cjk-emphasized-font-style: normal;
-    --swc-body-sans-serif-strong-emphasized-font-weight: 700;
-    --swc-body-sans-serif-strong-emphasized-font-style: italic;
-    --swc-body-serif-strong-emphasized-font-weight: 700;
-    --swc-body-serif-strong-emphasized-font-style: italic;
-    --swc-body-cjk-strong-emphasized-font-weight: 800;
-    --swc-body-cjk-strong-emphasized-font-style: normal;
-    --swc-body-size-xxxl: var(--spectrum-theme--sizeM, 25px)
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-body-size-xxl: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-body-size-xl: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-body-size-xxs: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-body-cjk-size-xxxl: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-body-cjk-size-xxl: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-body-cjk-size-xl: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-body-cjk-size-l: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-body-cjk-size-m: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-body-cjk-size-s: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-body-cjk-size-xs: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-body-cjk-size-xxs: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-body-size-l: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-body-size-m: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-body-size-s: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-body-size-xs: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-body-line-height: 1.5;
-    --swc-body-cjk-line-height: 1.7;
+    --swc-heading-color: var(--swc-gray-900);
+    --swc-body-sans-serif-font-family: var(--swc-sans-serif-font-family);
+    --swc-body-serif-font-family: var(--swc-serif-font-family);
+    --swc-body-cjk-font-family: var(--swc-cjk-font-family);
+    --swc-body-sans-serif-font-weight: var(--swc-regular-font-weight);
+    --swc-body-sans-serif-font-style: var(--swc-default-font-style);
+    --swc-body-serif-font-weight: var(--swc-regular-font-weight);
+    --swc-body-serif-font-style: var(--swc-default-font-style);
+    --swc-body-cjk-font-weight: var(--swc-regular-font-weight);
+    --swc-body-cjk-font-style: var(--swc-default-font-style);
+    --swc-body-sans-serif-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-body-sans-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-body-serif-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-body-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-body-cjk-strong-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-body-cjk-strong-font-style: var(--swc-default-font-style);
+    --swc-body-sans-serif-emphasized-font-weight: var(
+        --swc-regular-font-weight
+    );
+    --swc-body-sans-serif-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-body-serif-emphasized-font-weight: var(--swc-regular-font-weight);
+    --swc-body-serif-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-body-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-body-cjk-emphasized-font-style: var(--swc-default-font-style);
+    --swc-body-sans-serif-strong-emphasized-font-weight: var(
+        --swc-bold-font-weight
+    );
+    --swc-body-sans-serif-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-body-serif-strong-emphasized-font-weight: var(--swc-bold-font-weight);
+    --swc-body-serif-strong-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-body-cjk-strong-emphasized-font-weight: var(
+        --swc-extra-bold-font-weight
+    );
+    --swc-body-cjk-strong-emphasized-font-style: var(--swc-default-font-style);
+    --swc-body-size-xxxl: var(--swc-font-size-600);
+    --swc-body-size-xxl: var(--swc-font-size-500);
+    --swc-body-size-xl: var(--swc-font-size-400);
+    --swc-body-size-xxs: var(--swc-font-size-50);
+    --swc-body-cjk-size-xxxl: var(--swc-font-size-500);
+    --swc-body-cjk-size-xxl: var(--swc-font-size-400);
+    --swc-body-cjk-size-xl: var(--swc-font-size-300);
+    --swc-body-cjk-size-l: var(--swc-font-size-200);
+    --swc-body-cjk-size-m: var(--swc-font-size-100);
+    --swc-body-cjk-size-s: var(--swc-font-size-75);
+    --swc-body-cjk-size-xs: var(--swc-font-size-50);
+    --swc-body-cjk-size-xxs: var(--swc-font-size-25);
+    --swc-body-size-l: var(--swc-font-size-300);
+    --swc-body-size-m: var(--swc-font-size-200);
+    --swc-body-size-s: var(--swc-font-size-100);
+    --swc-body-size-xs: var(--swc-font-size-75);
+    --swc-body-line-height: var(--swc-line-height-200);
+    --swc-body-cjk-line-height: var(--swc-cjk-line-height-200);
     --swc-body-margin-multiplier: 0.75;
-    --swc-body-color: light-dark(rgb(41 41 41), rgb(219 219 219));
-    --swc-detail-sans-serif-font-family: 'Adobe Clean Spectrum VF';
-    --swc-detail-serif-font-family: 'Adobe Clean Serif';
-    --swc-detail-cjk-font-family: 'Adobe Clean Han';
-    --swc-detail-sans-serif-font-weight: 500;
-    --swc-detail-sans-serif-font-style: normal;
-    --swc-detail-serif-font-weight: 500;
-    --swc-detail-serif-font-style: normal;
-    --swc-detail-cjk-font-weight: 700;
-    --swc-detail-cjk-font-style: normal;
-    --swc-detail-sans-serif-strong-font-weight: 700;
-    --swc-detail-sans-serif-strong-font-style: normal;
-    --swc-detail-serif-strong-font-weight: 700;
-    --swc-detail-serif-strong-font-style: normal;
-    --swc-detail-cjk-strong-font-weight: 800;
-    --swc-detail-cjk-strong-font-style: normal;
-    --swc-detail-sans-serif-emphasized-font-weight: 400;
-    --swc-detail-sans-serif-emphasized-font-style: italic;
-    --swc-detail-serif-emphasized-font-weight: 500;
-    --swc-detail-serif-emphasized-font-style: italic;
-    --swc-detail-cjk-emphasized-font-weight: 800;
-    --swc-detail-cjk-emphasized-font-style: normal;
-    --swc-detail-sans-serif-strong-emphasized-font-weight: 700;
-    --swc-detail-sans-serif-strong-emphasized-font-style: italic;
-    --swc-detail-serif-strong-emphasized-font-weight: 700;
-    --swc-detail-serif-strong-emphasized-font-style: italic;
-    --swc-detail-cjk-strong-emphasized-font-weight: 800;
-    --swc-detail-cjk-strong-emphasized-font-style: normal;
-    --swc-detail-size-xl: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-detail-size-l: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-detail-size-m: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-detail-size-s: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-detail-line-height: 1.3;
-    --swc-detail-cjk-line-height: 1.5;
+    --swc-body-color: var(--swc-gray-800);
+    --swc-detail-sans-serif-font-family: var(--swc-sans-serif-font-family);
+    --swc-detail-serif-font-family: var(--swc-serif-font-family);
+    --swc-detail-cjk-font-family: var(--swc-cjk-font-family);
+    --swc-detail-sans-serif-font-weight: var(--swc-medium-font-weight);
+    --swc-detail-sans-serif-font-style: var(--swc-default-font-style);
+    --swc-detail-serif-font-weight: var(--swc-medium-font-weight);
+    --swc-detail-serif-font-style: var(--swc-default-font-style);
+    --swc-detail-cjk-font-weight: var(--swc-bold-font-weight);
+    --swc-detail-cjk-font-style: var(--swc-default-font-style);
+    --swc-detail-sans-serif-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-detail-sans-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-detail-serif-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-detail-serif-strong-font-style: var(--swc-default-font-style);
+    --swc-detail-cjk-strong-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-detail-cjk-strong-font-style: var(--swc-default-font-style);
+    --swc-detail-sans-serif-emphasized-font-weight: var(
+        --swc-regular-font-weight
+    );
+    --swc-detail-sans-serif-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-detail-serif-emphasized-font-weight: var(--swc-medium-font-weight);
+    --swc-detail-serif-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-detail-cjk-emphasized-font-weight: var(--swc-extra-bold-font-weight);
+    --swc-detail-cjk-emphasized-font-style: var(--swc-default-font-style);
+    --swc-detail-sans-serif-strong-emphasized-font-weight: var(
+        --swc-bold-font-weight
+    );
+    --swc-detail-sans-serif-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-detail-serif-strong-emphasized-font-weight: var(
+        --swc-bold-font-weight
+    );
+    --swc-detail-serif-strong-emphasized-font-style: var(
+        --swc-italic-font-style
+    );
+    --swc-detail-cjk-strong-emphasized-font-weight: var(
+        --swc-extra-bold-font-weight
+    );
+    --swc-detail-cjk-strong-emphasized-font-style: var(
+        --swc-default-font-style
+    );
+    --swc-detail-size-xl: var(--swc-font-size-300);
+    --swc-detail-size-l: var(--swc-font-size-200);
+    --swc-detail-size-m: var(--swc-font-size-100);
+    --swc-detail-size-s: var(--swc-font-size-75);
+    --swc-detail-line-height: var(--swc-line-height-100);
+    --swc-detail-cjk-line-height: var(--swc-cjk-line-height-100);
     --swc-detail-margin-top-multiplier: 0.89;
     --swc-detail-margin-bottom-multiplier: 0.25;
-    --swc-detail-color: light-dark(rgb(113 113 113), rgb(138 138 138));
-    --swc-detail-cjk-size-xs: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-detail-cjk-size-s: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-detail-cjk-size-m: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-detail-cjk-size-l: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-detail-cjk-size-xl: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-detail-size-xs: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
+    --swc-detail-color: var(--swc-gray-600);
+    --swc-detail-cjk-size-xs: var(--swc-font-size-25);
+    --swc-detail-cjk-size-s: var(--swc-font-size-50);
+    --swc-detail-cjk-size-m: var(--swc-font-size-75);
+    --swc-detail-cjk-size-l: var(--swc-font-size-100);
+    --swc-detail-cjk-size-xl: var(--swc-font-size-200);
+    --swc-detail-size-xs: var(--swc-font-size-50);
     --swc-code-font-family: 'Source Code Pro';
-    --swc-code-cjk-font-family: 'Source Code Pro';
-    --swc-code-font-weight: 400;
-    --swc-code-font-style: normal;
-    --swc-code-cjk-font-weight: 400;
-    --swc-code-cjk-font-style: normal;
-    --swc-code-strong-font-weight: 700;
-    --swc-code-strong-font-style: normal;
-    --swc-code-cjk-strong-font-weight: 700;
-    --swc-code-cjk-strong-font-style: normal;
-    --swc-code-emphasized-font-weight: 400;
-    --swc-code-emphasized-font-style: italic;
-    --swc-code-cjk-emphasized-font-weight: 700;
-    --swc-code-cjk-emphasized-font-style: normal;
-    --swc-code-strong-emphasized-font-weight: 700;
-    --swc-code-strong-emphasized-font-style: italic;
-    --swc-code-cjk-strong-emphasized-font-weight: 700;
-    --swc-code-cjk-strong-emphasized-font-style: normal;
-    --swc-code-size-xl: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-code-size-l: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-code-size-m: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-code-size-s: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-code-size-xs: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-code-line-height: 1.5;
-    --swc-code-cjk-line-height: 1.7;
-    --swc-code-color: light-dark(rgb(41 41 41), rgb(219 219 219));
+    --swc-code-cjk-font-family: var(--swc-code-font-family);
+    --swc-code-font-weight: var(--swc-regular-font-weight);
+    --swc-code-font-style: var(--swc-default-font-style);
+    --swc-code-cjk-font-weight: var(--swc-regular-font-weight);
+    --swc-code-cjk-font-style: var(--swc-default-font-style);
+    --swc-code-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-code-strong-font-style: var(--swc-default-font-style);
+    --swc-code-cjk-strong-font-weight: var(--swc-bold-font-weight);
+    --swc-code-cjk-strong-font-style: var(--swc-default-font-style);
+    --swc-code-emphasized-font-weight: var(--swc-regular-font-weight);
+    --swc-code-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-code-cjk-emphasized-font-weight: var(--swc-bold-font-weight);
+    --swc-code-cjk-emphasized-font-style: var(--swc-default-font-style);
+    --swc-code-strong-emphasized-font-weight: var(--swc-bold-font-weight);
+    --swc-code-strong-emphasized-font-style: var(--swc-italic-font-style);
+    --swc-code-cjk-strong-emphasized-font-weight: var(--swc-bold-font-weight);
+    --swc-code-cjk-strong-emphasized-font-style: var(--swc-default-font-style);
+    --swc-code-size-xl: var(--swc-font-size-400);
+    --swc-code-size-l: var(--swc-font-size-300);
+    --swc-code-size-m: var(--swc-font-size-200);
+    --swc-code-size-s: var(--swc-font-size-100);
+    --swc-code-size-xs: var(--swc-font-size-75);
+    --swc-code-line-height: var(--swc-line-height-200);
+    --swc-code-cjk-line-height: var(--swc-cjk-line-height-200);
+    --swc-code-color: var(--swc-gray-800);
     --swc-line-height-font-size-25: var(--spectrum-theme--sizeM, 12px)
         var(--spectrum-theme--sizeL, 14px);
     --swc-line-height-font-size-50: var(--spectrum-theme--sizeM, 14px)
@@ -4235,7 +4254,7 @@
     --swc-font-family-ar: 'myriad-hebrew, adobe-clean, ' Source Sans Pro
         ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
         Trebuchet MS ', ' Lucida Grande ', sans-serif';
-    --swc-font-family: 'var(--swc-sans-font-family-stack)';
+    --swc-font-family: var(--swc-sans-font-family-stack);
     --swc-font-style: normal;
     --swc-font-size: var(--spectrum-theme--sizeM, 14px)
         var(--spectrum-theme--sizeL, 17px);

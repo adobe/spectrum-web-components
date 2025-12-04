@@ -52,7 +52,7 @@ const SPECTRUM_TOKENS = [
     },
     {
         file: 'typography',
-        resolveAliases: true,
+        resolveAliases: false,
     },
 ];
 
@@ -88,6 +88,10 @@ export function createLogger(debugPath) {
 
 function isAlias(str) {
     return typeof str === 'string' && /^\{(.+)\}$/.test(str);
+}
+
+function isVar(str) {
+    return typeof str === 'string' && /^var/.test(str);
 }
 
 // Remove braces from values like "{blue-800}"
@@ -180,7 +184,7 @@ function convertRGB(input) {
 
 // Handle CSS format conversions
 function cssFormatConversions(tokenName, tokenValue) {
-    if (!isAlias(tokenValue)) {
+    if (!isVar(tokenValue)) {
         if (
             (tokenName.includes('gradient-stop') ||
                 tokenName.includes('corner-radius')) &&
@@ -191,30 +195,20 @@ function cssFormatConversions(tokenName, tokenValue) {
         }
 
         if (tokenName.includes('font-weight')) {
-            let weight = '';
             switch (tokenValue) {
                 case 'light':
-                    weight = '300';
-                    break;
+                    return '300';
                 case 'regular':
-                    weight = '400';
-                    break;
+                    return '400';
                 case 'medium':
-                    weight = '500';
-                    break;
+                    return '500';
                 case 'bold':
-                    weight = '700';
-                    break;
+                    return '700';
                 case 'extra-bold':
-                    weight = '800';
-                    break;
+                    return '800';
                 case 'black':
-                    weight = '900';
-                    break;
-                default:
-                    weight = '400';
+                    return '900';
             }
-            return weight;
         }
 
         return tokenValue;
@@ -571,6 +565,7 @@ export async function generateCSS(prefix, debug = false) {
 
         if (typeof value === 'string' || typeof value === 'number') {
             if (
+                !isVar(value) &&
                 token.includes('font-family') &&
                 !token.includes('font-family-stack')
             ) {
