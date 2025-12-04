@@ -1,7 +1,7 @@
-diff --git a/node_modules/@web/test-runner-coverage-v8/dist/index.js b/node_modules/@web/test-runner-coverage-v8/dist/index.js
+diff --git a/dist/index.js b/dist/index.js
 index 997bcfc..b19cf60 100644
---- a/node_modules/@web/test-runner-coverage-v8/dist/index.js
-+++ b/node_modules/@web/test-runner-coverage-v8/dist/index.js
+--- a/dist/index.js
++++ b/dist/index.js
 @@ -63,7 +63,16 @@ async function v8ToIstanbul(config, testFiles, coverage, userAgent) {
              !path.startsWith('/__web-test-runner') &&
              !path.startsWith('/__web-dev-server')) {

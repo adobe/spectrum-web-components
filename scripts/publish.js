@@ -95,7 +95,7 @@ async function publish() {
     }
     // Step 3: Update version file for 2nd-gen
     run(
-        'genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
+        'yarn genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
         'Updating 2nd-gen version.ts from 1st-gen'
     );
 
