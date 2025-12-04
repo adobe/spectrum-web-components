@@ -178,6 +178,51 @@ function convertRGB(input) {
         : `rgb(${r} ${g} ${b})`;
 }
 
+// Handle CSS format conversions
+function cssFormatConversions(tokenName, tokenValue) {
+    if (!isAlias(tokenValue)) {
+        if (
+            (tokenName.includes('gradient-stop') ||
+                tokenName.includes('corner-radius')) &&
+            tokenValue.includes('.')
+        ) {
+            // Values require percentages
+            return Math.floor(parseFloat(tokenValue) * 100).toFixed(0) + '%';
+        }
+
+        if (tokenName.includes('font-weight')) {
+            let weight = '';
+            switch (tokenValue) {
+                case 'light':
+                    weight = '300';
+                    break;
+                case 'regular':
+                    weight = '400';
+                    break;
+                case 'medium':
+                    weight = '500';
+                    break;
+                case 'bold':
+                    weight = '700';
+                    break;
+                case 'extra-bold':
+                    weight = '800';
+                    break;
+                case 'black':
+                    weight = '900';
+                    break;
+                default:
+                    weight = '400';
+            }
+            return weight;
+        }
+
+        return tokenValue;
+    }
+
+    return tokenValue;
+}
+
 /**
  * Build a raw lookup map from the original JSON.
  * Keeps values exactly as in the source (including aliases with braces).
@@ -352,7 +397,7 @@ function extractTokenValues(
 
     const normalizePrimitive = (value) => {
         if (typeof value === 'number') {
-            return value.toFixed(4);
+            return value.toFixed(2);
         }
         if (typeof value === 'string') {
             const formatted = convertRGB(value);
@@ -514,7 +559,7 @@ export async function generateCSS(prefix, debug = false) {
 
     function writeProp(name, value) {
         const key = createPropertyName(name, prefix);
-        lines.push(`  ${key}: ${value};`);
+        lines.push(`  ${key}: ${cssFormatConversions(name, value)};`);
     }
 
     for (const [token, value] of Object.entries(
@@ -646,7 +691,7 @@ async function loadAllTokens(prefix, debug = false) {
 export const allTokens = async (prefix, debug = false) =>
     await loadAllTokens(prefix, debug);
 
-// Lookup individual token values
+// Lookup individual token values for use in component styles
 export async function lookupToken(key, prefix) {
     const tokens = await allTokens(prefix);
     const tokenValue = tokens[key];
@@ -656,7 +701,7 @@ export async function lookupToken(key, prefix) {
             // Reference global custom property that already composites the set
             return `var(${createPropertyName(key, prefix)})`;
         } else {
-            return tokenValue;
+            return cssFormatConversions(key, tokenValue);
         }
     } else {
         throw new Error(`token() did not find '${key}'`);
