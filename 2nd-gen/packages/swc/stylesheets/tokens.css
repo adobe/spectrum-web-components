@@ -10,7 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-:root {
+/* stylelint-disable value-keyword-case */
+
+:root,
+.spectrum-theme {
     --swc-focus-indicator-color: var(--swc-blue-800);
     --swc-static-white-focus-indicator-color: var(--swc-white);
     --swc-static-black-focus-indicator-color: var(--swc-black);
@@ -1353,6 +1356,10 @@
         var(--spectrum-theme--sizeL, 20px);
     --swc-toast-bottom-to-text: var(--spectrum-theme--sizeM, 20px)
         var(--spectrum-theme--sizeL, 22px);
+    --swc-action-bar-height: var(--spectrum-theme--sizeM, 56px)
+        var(--spectrum-theme--sizeL, 70px);
+    --swc-action-bar-top-to-item-counter: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
     --swc-swatch-size-extra-small: var(--spectrum-theme--sizeM, 16px)
         var(--spectrum-theme--sizeL, 20px);
     --swc-swatch-size-small: var(--spectrum-theme--sizeM, 24px)
@@ -1399,6 +1406,7 @@
         var(--spectrum-theme--sizeL, 19px);
     --swc-popover-tip-width: 16px;
     --swc-popover-tip-height: 8px;
+    --swc-popover-edge-to-content-area: 8px;
     --swc-menu-item-edge-to-content-not-selected-small: var(
             --spectrum-theme--sizeM,
             28px
@@ -1501,6 +1509,7 @@
             10px
         )
         var(--spectrum-theme--sizeL, 13px);
+    --swc-picker-border-width: 1px;
     --swc-picker-end-edge-to-disclosure-icon-quiet: 0px;
     --swc-text-field-minimum-width-multiplier: 1.5;
     --swc-text-area-minimum-width: var(--spectrum-theme--sizeM, 112px)
@@ -1611,6 +1620,10 @@
         var(--spectrum-theme--sizeL, 240px);
     --swc-color-area-minimum-height: var(--spectrum-theme--sizeM, 64px)
         var(--spectrum-theme--sizeL, 80px);
+    --swc-color-area-border-width: 1px;
+    --swc-color-area-border-rounding: var(
+        --swc-corner-radius-medium-size-small
+    );
     --swc-color-wheel-width: var(--spectrum-theme--sizeM, 192px)
         var(--spectrum-theme--sizeL, 240px);
     --swc-color-wheel-minimum-width: var(--spectrum-theme--sizeM, 175px)
@@ -1621,12 +1634,16 @@
     --swc-color-slider-minimum-length: var(--spectrum-theme--sizeM, 80px)
         var(--spectrum-theme--sizeL, 100px);
     --swc-color-slider-border-width: 1px;
+    --swc-color-slider-border-rounding: var(
+        --swc-corner-radius-medium-size-small
+    );
     --swc-floating-action-button-drop-shadow-blur: 12px;
     --swc-floating-action-button-drop-shadow-y: 4px;
     --swc-search-field-minimum-width-multiplier: 4;
     --swc-color-loupe-height: 64px;
     --swc-color-loupe-width: 48px;
     --swc-color-loupe-bottom-to-color-handle: 12px;
+    --swc-color-loupe-outer-border-width: 2px;
     --swc-color-loupe-inner-border-width: 1px;
     --swc-card-minimum-width-default: 100px;
     --swc-card-preview-minimum-height: 130px;
@@ -1640,6 +1657,8 @@
         var(--spectrum-theme--sizeL, 216px);
     --swc-coach-mark-maximum-width: var(--spectrum-theme--sizeM, 380px)
         var(--spectrum-theme--sizeL, 248px);
+    --swc-coach-mark-edge-to-content: var(--spectrum-theme--sizeM, 24px)
+        var(--spectrum-theme--sizeL, 16px);
     --swc-coach-mark-pagination-text-to-bottom-edge: var(
             --spectrum-theme--sizeM,
             33px
@@ -1732,6 +1751,7 @@
         var(--spectrum-theme--sizeL, 20px);
     --swc-color-handle-size-key-focus: var(--spectrum-theme--sizeM, 32px)
         var(--spectrum-theme--sizeL, 40px);
+    --swc-color-handle-border-width: 2px;
     --swc-color-handle-inner-border-width: 1px;
     --swc-color-handle-outer-border-width: 1px;
     --swc-color-handle-drop-shadow-x: 0;
@@ -1777,6 +1797,17 @@
             13px
         )
         var(--spectrum-theme--sizeL, 17px);
+    --swc-table-row-height-small-compact: var(--spectrum-theme--sizeM, 24px)
+        var(--spectrum-theme--sizeL, 30px);
+    --swc-table-row-height-medium-compact: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 40px);
+    --swc-table-row-height-large-compact: var(--spectrum-theme--sizeM, 40px)
+        var(--spectrum-theme--sizeL, 50px);
+    --swc-table-row-height-extra-large-compact: var(
+            --spectrum-theme--sizeM,
+            48px
+        )
+        var(--spectrum-theme--sizeL, 60px);
     --swc-table-row-height-small: var(--spectrum-theme--sizeM, 32px)
         var(--spectrum-theme--sizeL, 40px);
     --swc-table-row-height-medium: var(--spectrum-theme--sizeM, 40px)
@@ -1796,6 +1827,40 @@
             64px
         )
         var(--spectrum-theme--sizeL, 80px);
+    --swc-table-row-top-to-text-small-compact: var(--spectrum-theme--sizeM, 4px)
+        var(--spectrum-theme--sizeL, 5px);
+    --swc-table-row-top-to-text-medium-compact: var(
+            --spectrum-theme--sizeM,
+            6px
+        )
+        var(--spectrum-theme--sizeL, 8px);
+    --swc-table-row-top-to-text-large-compact: var(--spectrum-theme--sizeM, 9px)
+        var(--spectrum-theme--sizeL, 12px);
+    --swc-table-row-top-to-text-extra-large-compact: var(
+            --spectrum-theme--sizeM,
+            12px
+        )
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-table-row-bottom-to-text-small-compact: var(
+            --spectrum-theme--sizeM,
+            5px
+        )
+        var(--spectrum-theme--sizeL, 6px);
+    --swc-table-row-bottom-to-text-medium-compact: var(
+            --spectrum-theme--sizeM,
+            9px
+        )
+        var(--spectrum-theme--sizeL, 11px);
+    --swc-table-row-bottom-to-text-large-compact: var(
+            --spectrum-theme--sizeM,
+            11px
+        )
+        var(--spectrum-theme--sizeL, 14px);
+    --swc-table-row-bottom-to-text-extra-large-compact: var(
+            --spectrum-theme--sizeM,
+            14px
+        )
+        var(--spectrum-theme--sizeL, 18px);
     --swc-table-row-top-to-text-small: var(--spectrum-theme--sizeM, 8px)
         var(--spectrum-theme--sizeL, 10px);
     --swc-table-row-top-to-text-medium: var(--spectrum-theme--sizeM, 10px)
@@ -2010,6 +2075,25 @@
             10px
         )
         var(--spectrum-theme--sizeL, 12px);
+    --swc-tab-item-height-small: var(--spectrum-theme--sizeM, 40px)
+        var(--spectrum-theme--sizeL, 50px);
+    --swc-tab-item-height-medium: var(--spectrum-theme--sizeM, 48px)
+        var(--spectrum-theme--sizeL, 60px);
+    --swc-tab-item-height-large: var(--spectrum-theme--sizeM, 56px)
+        var(--spectrum-theme--sizeL, 70px);
+    --swc-tab-item-height-extra-large: var(--spectrum-theme--sizeM, 64px)
+        var(--spectrum-theme--sizeL, 80px);
+    --swc-tab-item-compact-height-small: var(--spectrum-theme--sizeM, 24px)
+        var(--spectrum-theme--sizeL, 30px);
+    --swc-tab-item-compact-height-medium: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 40px);
+    --swc-tab-item-compact-height-large: var(--spectrum-theme--sizeM, 40px)
+        var(--spectrum-theme--sizeL, 50px);
+    --swc-tab-item-compact-height-extra-large: var(
+            --spectrum-theme--sizeM,
+            48px
+        )
+        var(--spectrum-theme--sizeL, 60px);
     --swc-tab-item-to-tab-item-horizontal-small: var(
             --spectrum-theme--sizeM,
             21px
@@ -2190,6 +2274,10 @@
     --swc-in-field-button-outer-edge-to-disclosure-icon-stacked-medium: 3px;
     --swc-in-field-button-outer-edge-to-disclosure-icon-stacked-large: 4px;
     --swc-in-field-button-outer-edge-to-disclosure-icon-stacked-extra-large: 5px;
+    --swc-in-field-button-inner-edge-to-disclosure-icon-stacked-small: 3px;
+    --swc-in-field-button-inner-edge-to-disclosure-icon-stacked-medium: 3px;
+    --swc-in-field-button-inner-edge-to-disclosure-icon-stacked-large: 4px;
+    --swc-in-field-button-inner-edge-to-disclosure-icon-stacked-extra-large: 5px;
     --swc-arrow-icon-size-75: var(--spectrum-theme--sizeM, 10px)
         var(--spectrum-theme--sizeL, 12px);
     --swc-arrow-icon-size-100: var(--spectrum-theme--sizeM, 10px)
@@ -2310,8 +2398,65 @@
         var(--spectrum-theme--sizeL, 15px);
     --swc-tag-edge-to-clear-icon-large: var(--spectrum-theme--sizeM, 15px)
         var(--spectrum-theme--sizeL, 19px);
+    --swc-title-cjk-emphasized-font-style: normal;
+    --swc-title-cjk-emphasized-font-weight: extra-bold;
+    --swc-title-cjk-font-family: 'Adobe Clean Han';
+    --swc-title-cjk-font-style: normal;
+    --swc-title-cjk-font-weight: bold;
+    --swc-title-cjk-line-height: 1.5;
+    --swc-title-cjk-size-l: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-title-cjk-size-m: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-title-cjk-size-s: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-title-cjk-size-xl: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-title-cjk-size-xs: var(--spectrum-theme--sizeM, 11px)
+        var(--spectrum-theme--sizeL, 13px);
+    --swc-title-cjk-size-xxl: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-title-cjk-size-xxxl: var(--spectrum-theme--sizeM, 22px)
+        var(--spectrum-theme--sizeL, 27px);
+    --swc-title-cjk-strong-emphasized-font-style: normal;
+    --swc-title-cjk-strong-emphasized-font-weight: extra-bold;
+    --swc-title-cjk-strong-font-style: normal;
+    --swc-title-cjk-strong-font-weight: extra-bold;
+    --swc-title-line-height: 1.3;
     --swc-title-margin-bottom-multiplier: 0.25;
     --swc-title-margin-top-multiplier: 0.8889;
+    --swc-title-sans-serif-emphasized-font-style: italic;
+    --swc-title-sans-serif-emphasized-font-weight: bold;
+    --swc-title-sans-serif-font-family: 'Adobe Clean Spectrum VF';
+    --swc-title-sans-serif-font-style: normal;
+    --swc-title-sans-serif-font-weight: bold;
+    --swc-title-sans-serif-strong-emphasized-font-style: italic;
+    --swc-title-sans-serif-strong-emphasized-font-weight: extra-bold;
+    --swc-title-sans-serif-strong-font-style: normal;
+    --swc-title-sans-serif-strong-font-weight: extra-bold;
+    --swc-title-serif-emphasized-font-style: italic;
+    --swc-title-serif-emphasized-font-weight: bold;
+    --swc-title-serif-font-family: 'Adobe Clean Serif';
+    --swc-title-serif-font-style: normal;
+    --swc-title-serif-font-weight: bold;
+    --swc-title-serif-strong-emphasized-font-style: italic;
+    --swc-title-serif-strong-emphasized-font-weight: black;
+    --swc-title-serif-strong-font-style: normal;
+    --swc-title-serif-strong-font-weight: black;
+    --swc-title-size-l: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-title-size-m: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-title-size-s: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-title-size-xl: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-title-size-xs: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-title-size-xxl: var(--spectrum-theme--sizeM, 22px)
+        var(--spectrum-theme--sizeL, 27px);
+    --swc-title-size-xxxl: var(--spectrum-theme--sizeM, 25px)
+        var(--spectrum-theme--sizeL, 31px);
     --swc-opacity-checkerboard-square-size-small: var(
             --spectrum-theme--sizeM,
             4px
@@ -2361,10 +2506,53 @@
         var(--spectrum-theme--sizeL, 28px);
     --swc-in-field-progress-circle-size-300: var(--spectrum-theme--sizeM, 26px)
         var(--spectrum-theme--sizeL, 30px);
+    --swc-alert-dialog-description-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
+    --swc-alert-dialog-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-xxl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+    --swc-coach-mark-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
+    --swc-coach-mark-pagination-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-s)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+    --swc-coach-mark-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
+    --swc-standard-dialog-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-xxl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+    --swc-standard-dialog-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
     --swc-standard-dialog-maximum-width-small: 400px;
     --swc-standard-dialog-minimum-width: 288px;
     --swc-standard-dialog-maximum-width-medium: 480px;
     --swc-standard-dialog-maximum-width-large: 640px;
+    --swc-status-light-text-to-visual-75: var(--spectrum-theme--sizeM, 5px)
+        var(--spectrum-theme--sizeL, 7px);
+    --swc-status-light-text-to-visual-100: var(--spectrum-theme--sizeM, 6px)
+        var(--spectrum-theme--sizeL, 8px);
+    --swc-status-light-text-to-visual-200: var(--spectrum-theme--sizeM, 7px)
+        var(--spectrum-theme--sizeL, 9px);
+    --swc-status-light-text-to-visual-300: var(--spectrum-theme--sizeM, 8px)
+        var(--spectrum-theme--sizeL, 10px);
     --swc-link-out-icon-size-75: var(--spectrum-theme--sizeM, 10px)
         var(--spectrum-theme--sizeL, 12px);
     --swc-link-out-icon-size-100: var(--spectrum-theme--sizeM, 12px)
@@ -2395,6 +2583,62 @@
         )
         var(--spectrum-theme--sizeL, 13px);
     --swc-menu-item-background-opacity: 0;
+    --swc-illustrated-message-small-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
+    --swc-illustrated-message-small-cjk-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-cjk-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-s));
+    --swc-illustrated-message-medium-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-xl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-l));
+    --swc-illustrated-message-medium-cjk-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-cjk-size-xl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-l));
+    --swc-illustrated-message-large-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-xxl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+    --swc-illustrated-message-large-cjk-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-cjk-size-xxl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-xl));
+    --swc-illustrated-message-small-body-font-size: var(--swc-body-size-xs);
+    --swc-illustrated-message-medium-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-s)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+    --swc-illustrated-message-large-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-s)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+    --swc-drop-zone-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-xl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-l));
+    --swc-drop-zone-cjk-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-cjk-size-xl)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-l));
+    --swc-drop-zone-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-s)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
     --swc-breadcrumbs-separator-to-bottom-text-multiline: var(
             --spectrum-theme--sizeM,
             11px
@@ -2440,6 +2684,16 @@
             4px
         )
         var(--spectrum-theme--sizeL, 5px);
+    --swc-contextual-help-body-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-body-size-s)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+    --swc-contextual-help-title-font-size: var(
+            --spectrum-theme--sizeM,
+            var(--swc-title-size-m)
+        )
+        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
     --swc-coach-indicator-collapsed-ring-rounding-increment: 6px;
     --swc-coach-indicator-expanded-ring-rounding-increment: 14px;
     --swc-coach-indicator-collapsed-ring-thickness: 4px;
@@ -2493,8 +2747,31 @@
     --swc-meter-thickness-extra-large: var(--spectrum-theme--sizeM, 10px)
         var(--spectrum-theme--sizeL, 13px);
     --swc-thumbnail-opacity-checkerboard-square-size: 4px;
+    --swc-thumbnail-corner-radius: 3px;
+    --swc-action-bar-top-to-content-area: 12px;
+    --swc-action-bar-bottom-to-content-area: 12px;
+    --swc-action-bar-edge-to-content-area: 8px;
+    --swc-action-bar-close-button-to-counter: var(--spectrum-theme--sizeM, 4px)
+        var(--spectrum-theme--sizeL, 5px);
+    --swc-action-bar-counter-font-size: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
     --swc-swatch-group-spacing-spacious: 6px;
     --swc-swatch-group-border-opacity: 0.2;
+    --swc-avatar-border-width: 1px;
+    --swc-avatar-group-size-50: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 20px);
+    --swc-avatar-group-size-75: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-avatar-group-size-100: var(--spectrum-theme--sizeM, 24px)
+        var(--spectrum-theme--sizeL, 28px);
+    --swc-avatar-group-size-200: var(--spectrum-theme--sizeM, 28px)
+        var(--spectrum-theme--sizeL, 32px);
+    --swc-avatar-group-size-300: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 36px);
+    --swc-avatar-group-size-400: var(--spectrum-theme--sizeM, 36px)
+        var(--spectrum-theme--sizeL, 40px);
+    --swc-avatar-group-size-500: var(--spectrum-theme--sizeM, 40px)
+        var(--spectrum-theme--sizeL, 44px);
     --swc-avatar-to-avatar-50: var(--spectrum-theme--sizeM, -4px)
         var(--spectrum-theme--sizeL, -5px);
     --swc-avatar-to-avatar-75: var(--spectrum-theme--sizeM, -5px)
@@ -2509,6 +2786,11 @@
         var(--spectrum-theme--sizeL, -10px);
     --swc-avatar-to-avatar-500: var(--spectrum-theme--sizeM, -10px)
         var(--spectrum-theme--sizeL, -11px);
+    --swc-code-cjk-size-xl: var(--swc-code-size-xl);
+    --swc-code-cjk-size-l: var(--swc-code-size-l);
+    --swc-code-cjk-size-m: var(--swc-code-size-m);
+    --swc-code-cjk-size-s: var(--swc-code-size-s);
+    --swc-code-cjk-size-xs: var(--swc-code-size-xs);
     --swc-standard-panel-width: 260px;
     --swc-standard-panel-minimum-width: 200px;
     --swc-standard-panel-maximum-width: 400px;
@@ -2518,17 +2800,25 @@
     --swc-standard-panel-edge-to-close-button-compact: 3px;
     --swc-standard-panel-edge-to-close-button-regular: 7px;
     --swc-standard-panel-edge-to-close-button-spacious: 15px;
+    --swc-standard-panel-title-font-size: var(--swc-title-size-s);
     --swc-illustrated-message-horizontal-maximum-width: 535px;
     --swc-illustrated-message-vertical-maximum-width: 380px;
     --swc-bar-panel-width: 56px;
     --swc-bar-panel-minimum-width: 40px;
     --swc-bar-panel-maximum-width: 72px;
     --swc-bar-panel-spacing-extra-spacious: 20px;
+    --swc-rating-top-to-content-area-small: 4px;
+    --swc-rating-bottom-to-content-area-small: 4px;
+    --swc-rating-edge-to-content-area-small: 4px;
     --swc-rating-top-to-content-area-medium: 6px;
     --swc-rating-bottom-to-content-area-medium: 6px;
     --swc-rating-edge-to-content-area-medium: 6px;
     --swc-rating-width-small: 104px;
+    --swc-rating-height-small: var(--spectrum-theme--sizeM, 24px)
+        var(--spectrum-theme--sizeL, 30px);
     --swc-rating-width-medium: 128px;
+    --swc-rating-height-medium: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 40px);
     --swc-select-box-horizontal-minimum-height: var(
             --spectrum-theme--sizeM,
             80px
@@ -2630,6 +2920,7 @@
             24px
         )
         var(--spectrum-theme--sizeL, 28px);
+    --swc-segmented-control-selection-border-width: 2px;
     --swc-slider-handle-height-precision-small: var(
             --spectrum-theme--sizeM,
             20px
@@ -2661,6 +2952,8 @@
     --swc-slider-handle-precision-width: 6px;
     --swc-slider-track-height-medium: 4px;
     --swc-slider-track-height-large: 16px;
+    --swc-segmented-control-item-height: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 40px);
     --swc-in-field-stepper-to-end-small: var(--spectrum-theme--sizeM, 0px)
         var(--spectrum-theme--sizeL, 3px);
     --swc-in-field-stepper-to-end-medium: 3px;
@@ -2764,6 +3057,7 @@
     --swc-tree-view-selected-row-background-opacity-emphasized: 0.1;
     --swc-tree-view-selected-row-background-opacity-emphasized-hover: 0.15;
     --swc-action-bar-minimum-width: 176px;
+    --swc-action-bar-label-to-action-group-area: 16px;
     --swc-card-edge-to-content-compact-extra-small: 6px;
     --swc-card-edge-to-content-default-extra-small: 8px;
     --swc-card-edge-to-content-spacious-extra-small: 12px;
@@ -2779,6 +3073,8 @@
     --swc-card-edge-to-content-compact-extra-large: 20px;
     --swc-card-edge-to-content-default-extra-large: 24px;
     --swc-card-edge-to-content-spacious-extra-large: 28px;
+    --swc-card-header-to-description: 4px;
+    --swc-card-description-to-footer: 16px;
     --swc-card-selection-background-size-small: 22px;
     --swc-card-selection-background-size-medium: 24px;
     --swc-card-selection-background-size-large: 26px;
@@ -2905,6 +3201,12 @@
         var(--spectrum-theme--sizeL, 50px);
     --swc-list-view-minimum-width: var(--spectrum-theme--sizeM, 200px)
         var(--spectrum-theme--sizeL, 240px);
+    --swc-list-view-item-top-corner-radius: var(
+        --swc-corner-radius-medium-default
+    );
+    --swc-list-view-item-bottom-corner-radius: var(
+        --swc-corner-radius-medium-default
+    );
     --swc-list-view-end-edge-to-content: var(--spectrum-theme--sizeM, 6px)
         var(--spectrum-theme--sizeL, 8px);
     --swc-stack-item-selected-background-opacity-emphasized: 0.1;
@@ -3377,6 +3679,21 @@
     --swc-component-size-width-ratio-down: 0.3333;
     --swc-component-size-minimum-perspective-down: 24px;
     --swc-component-size-difference-down: -2px;
+    --swc-corner-radius-none: 0px;
+    --swc-corner-radius-small-default: 4px;
+    --swc-corner-radius-medium-default: 8px;
+    --swc-corner-radius-large-default: 10px;
+    --swc-corner-radius-extra-large-default: 16px;
+    --swc-corner-radius-full: 0.5;
+    --swc-corner-radius-small-size-small: 3px;
+    --swc-corner-radius-small-size-medium: 4px;
+    --swc-corner-radius-small-size-large: 5px;
+    --swc-corner-radius-small-size-extra-large: 6px;
+    --swc-corner-radius-medium-size-extra-small: 6px;
+    --swc-corner-radius-medium-size-small: 7px;
+    --swc-corner-radius-medium-size-medium: 8px;
+    --swc-corner-radius-medium-size-large: 9px;
+    --swc-corner-radius-medium-size-extra-large: 10px;
     --swc-drop-shadow-x-100: 0px;
     --swc-drop-shadow-x-200: 0px;
     --swc-drop-shadow-x-300: 0px;
@@ -3386,12 +3703,25 @@
     --swc-drop-shadow-blur-100: 6px;
     --swc-drop-shadow-blur-200: 8px;
     --swc-drop-shadow-blur-300: 16px;
+    --swc-drop-shadow-emphasized-default-x: 0px;
+    --swc-drop-shadow-emphasized-default-y: 1px;
+    --swc-drop-shadow-emphasized-default-blur: 6px;
+    --swc-drop-shadow-emphasized-hover-x: 0px;
+    --swc-drop-shadow-emphasized-hover-y: 2px;
+    --swc-drop-shadow-emphasized-hover-blur: 8px;
+    --swc-drop-shadow-elevated-x: 0px;
+    --swc-drop-shadow-elevated-y: 2px;
+    --swc-drop-shadow-elevated-blur: 8px;
+    --swc-drop-shadow-dragged-x: 0px;
+    --swc-drop-shadow-dragged-y: 6px;
+    --swc-drop-shadow-dragged-blur: 16px;
     --swc-gradient-stop-1-genai: 0;
     --swc-gradient-stop-2-genai: 0.3333;
     --swc-gradient-stop-3-genai: 1;
     --swc-gradient-stop-1-premium: 0;
     --swc-gradient-stop-2-premium: 0.6666;
     --swc-gradient-stop-3-premium: 1;
+    --swc-window-to-edge: 40px;
     --swc-component-size-maximum-perspective-down: 96px;
     --swc-field-top-to-disclosure-icon-compact-small: var(
             --spectrum-theme--sizeM,
@@ -3562,6 +3892,7 @@
         var(--swc-accent-color-200),
         var(--swc-accent-color-300)
     );
+    --swc-default-font-family: 'Adobe Clean Spectrum VF';
     --swc-letter-spacing: 0em;
     --swc-text-align-start: start;
     --swc-text-align-center: center;
@@ -3617,12 +3948,241 @@
     --swc-line-height-200: 1.5;
     --swc-cjk-line-height-100: 1.5;
     --swc-cjk-line-height-200: 1.7;
+    --swc-cjk-letter-spacing: 0em;
+    --swc-heading-sans-serif-font-family: 'Adobe Clean Spectrum VF';
+    --swc-heading-serif-font-family: 'Adobe Clean Serif';
+    --swc-heading-cjk-font-family: 'Adobe Clean Han';
+    --swc-heading-sans-serif-font-weight: extra-bold;
+    --swc-heading-sans-serif-font-style: normal;
+    --swc-heading-serif-font-weight: bold;
+    --swc-heading-serif-font-style: normal;
+    --swc-heading-cjk-font-weight: extra-bold;
+    --swc-heading-cjk-font-style: normal;
+    --swc-heading-sans-serif-heavy-font-weight: black;
+    --swc-heading-sans-serif-heavy-font-style: normal;
+    --swc-heading-serif-heavy-font-weight: black;
+    --swc-heading-serif-heavy-font-style: normal;
+    --swc-heading-cjk-heavy-font-weight: extra-bold;
+    --swc-heading-cjk-heavy-font-style: normal;
+    --swc-heading-sans-serif-strong-font-weight: black;
+    --swc-heading-sans-serif-strong-font-style: normal;
+    --swc-heading-serif-strong-font-weight: black;
+    --swc-heading-serif-strong-font-style: normal;
+    --swc-heading-cjk-strong-font-weight: black;
+    --swc-heading-cjk-strong-font-style: normal;
+    --swc-heading-sans-serif-heavy-strong-font-weight: black;
+    --swc-heading-sans-serif-heavy-strong-font-style: normal;
+    --swc-heading-serif-heavy-strong-font-weight: black;
+    --swc-heading-serif-heavy-strong-font-style: normal;
+    --swc-heading-cjk-heavy-strong-font-weight: black;
+    --swc-heading-cjk-heavy-strong-font-style: normal;
+    --swc-heading-sans-serif-emphasized-font-weight: extra-bold;
+    --swc-heading-sans-serif-emphasized-font-style: italic;
+    --swc-heading-serif-emphasized-font-weight: bold;
+    --swc-heading-serif-emphasized-font-style: italic;
+    --swc-heading-cjk-emphasized-font-weight: black;
+    --swc-heading-cjk-emphasized-font-style: normal;
+    --swc-heading-sans-serif-heavy-emphasized-font-weight: black;
+    --swc-heading-sans-serif-heavy-emphasized-font-style: italic;
+    --swc-heading-serif-heavy-emphasized-font-weight: black;
+    --swc-heading-serif-heavy-emphasized-font-style: italic;
+    --swc-heading-cjk-heavy-emphasized-font-weight: black;
+    --swc-heading-cjk-heavy-emphasized-font-style: normal;
+    --swc-heading-sans-serif-strong-emphasized-font-weight: black;
+    --swc-heading-sans-serif-strong-emphasized-font-style: italic;
+    --swc-heading-serif-strong-emphasized-font-weight: black;
+    --swc-heading-serif-strong-emphasized-font-style: italic;
+    --swc-heading-cjk-strong-emphasized-font-weight: black;
+    --swc-heading-cjk-strong-emphasized-font-style: normal;
+    --swc-heading-sans-serif-heavy-strong-emphasized-font-weight: black;
+    --swc-heading-sans-serif-heavy-strong-emphasized-font-style: italic;
+    --swc-heading-serif-heavy-strong-emphasized-font-weight: black;
+    --swc-heading-serif-heavy-strong-emphasized-font-style: italic;
+    --swc-heading-cjk-heavy-strong-emphasized-font-weight: black;
+    --swc-heading-cjk-heavy-strong-emphasized-font-style: normal;
+    --swc-heading-size-xxxl: var(--spectrum-theme--sizeM, 58px)
+        var(--spectrum-theme--sizeL, 70px);
+    --swc-heading-size-xxl: var(--spectrum-theme--sizeM, 45px)
+        var(--spectrum-theme--sizeL, 55px);
+    --swc-heading-size-xl: var(--spectrum-theme--sizeM, 36px)
+        var(--spectrum-theme--sizeL, 44px);
+    --swc-heading-size-l: var(--spectrum-theme--sizeM, 28px)
+        var(--spectrum-theme--sizeL, 34px);
+    --swc-heading-size-m: var(--spectrum-theme--sizeM, 22px)
+        var(--spectrum-theme--sizeL, 27px);
+    --swc-heading-size-s: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-heading-size-xs: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-heading-cjk-size-xxxxl: var(--spectrum-theme--sizeM, 65px)
+        var(--spectrum-theme--sizeL, 79px);
+    --swc-heading-size-xxxxl: var(--spectrum-theme--sizeM, 73px)
+        var(--spectrum-theme--sizeL, 88px);
+    --swc-heading-cjk-size-xxxl: var(--spectrum-theme--sizeM, 51px)
+        var(--spectrum-theme--sizeL, 62px);
+    --swc-heading-cjk-size-xxl: var(--spectrum-theme--sizeM, 40px)
+        var(--spectrum-theme--sizeL, 49px);
+    --swc-heading-cjk-size-xl: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 39px);
+    --swc-heading-cjk-size-l: var(--spectrum-theme--sizeM, 25px)
+        var(--spectrum-theme--sizeL, 31px);
+    --swc-heading-cjk-size-m: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-heading-cjk-size-s: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-heading-cjk-size-xs: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-heading-line-height: 1.3;
+    --swc-heading-cjk-line-height: 1.5;
     --swc-heading-margin-top-multiplier: 0.8889;
     --swc-heading-margin-bottom-multiplier: 0.25;
+    --swc-heading-color: light-dark(rgb(19 19 19), rgb(242 242 242));
+    --swc-body-sans-serif-font-family: 'Adobe Clean Spectrum VF';
+    --swc-body-serif-font-family: 'Adobe Clean Serif';
+    --swc-body-cjk-font-family: 'Adobe Clean Han';
+    --swc-body-sans-serif-font-weight: regular;
+    --swc-body-sans-serif-font-style: normal;
+    --swc-body-serif-font-weight: regular;
+    --swc-body-serif-font-style: normal;
+    --swc-body-cjk-font-weight: regular;
+    --swc-body-cjk-font-style: normal;
+    --swc-body-sans-serif-strong-font-weight: bold;
+    --swc-body-sans-serif-strong-font-style: normal;
+    --swc-body-serif-strong-font-weight: bold;
+    --swc-body-serif-strong-font-style: normal;
+    --swc-body-cjk-strong-font-weight: extra-bold;
+    --swc-body-cjk-strong-font-style: normal;
+    --swc-body-sans-serif-emphasized-font-weight: regular;
+    --swc-body-sans-serif-emphasized-font-style: italic;
+    --swc-body-serif-emphasized-font-weight: regular;
+    --swc-body-serif-emphasized-font-style: italic;
+    --swc-body-cjk-emphasized-font-weight: extra-bold;
+    --swc-body-cjk-emphasized-font-style: normal;
+    --swc-body-sans-serif-strong-emphasized-font-weight: bold;
+    --swc-body-sans-serif-strong-emphasized-font-style: italic;
+    --swc-body-serif-strong-emphasized-font-weight: bold;
+    --swc-body-serif-strong-emphasized-font-style: italic;
+    --swc-body-cjk-strong-emphasized-font-weight: extra-bold;
+    --swc-body-cjk-strong-emphasized-font-style: normal;
+    --swc-body-size-xxxl: var(--spectrum-theme--sizeM, 25px)
+        var(--spectrum-theme--sizeL, 31px);
+    --swc-body-size-xxl: var(--spectrum-theme--sizeM, 22px)
+        var(--spectrum-theme--sizeL, 27px);
+    --swc-body-size-xl: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-body-size-xxs: var(--spectrum-theme--sizeM, 11px)
+        var(--spectrum-theme--sizeL, 13px);
+    --swc-body-cjk-size-xxxl: var(--spectrum-theme--sizeM, 22px)
+        var(--spectrum-theme--sizeL, 27px);
+    --swc-body-cjk-size-xxl: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-body-cjk-size-xl: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-body-cjk-size-l: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-body-cjk-size-m: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-body-cjk-size-s: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-body-cjk-size-xs: var(--spectrum-theme--sizeM, 11px)
+        var(--spectrum-theme--sizeL, 13px);
+    --swc-body-cjk-size-xxs: var(--spectrum-theme--sizeM, 10px)
+        var(--spectrum-theme--sizeL, 12px);
+    --swc-body-size-l: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-body-size-m: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-body-size-s: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-body-size-xs: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-body-line-height: 1.5;
+    --swc-body-cjk-line-height: 1.7;
     --swc-body-margin-multiplier: 0.75;
+    --swc-body-color: light-dark(rgb(41 41 41), rgb(219 219 219));
+    --swc-detail-sans-serif-font-family: 'Adobe Clean Spectrum VF';
+    --swc-detail-serif-font-family: 'Adobe Clean Serif';
+    --swc-detail-cjk-font-family: 'Adobe Clean Han';
+    --swc-detail-sans-serif-font-weight: medium;
+    --swc-detail-sans-serif-font-style: normal;
+    --swc-detail-serif-font-weight: medium;
+    --swc-detail-serif-font-style: normal;
+    --swc-detail-cjk-font-weight: bold;
+    --swc-detail-cjk-font-style: normal;
+    --swc-detail-sans-serif-strong-font-weight: bold;
+    --swc-detail-sans-serif-strong-font-style: normal;
+    --swc-detail-serif-strong-font-weight: bold;
+    --swc-detail-serif-strong-font-style: normal;
+    --swc-detail-cjk-strong-font-weight: extra-bold;
+    --swc-detail-cjk-strong-font-style: normal;
+    --swc-detail-sans-serif-emphasized-font-weight: regular;
+    --swc-detail-sans-serif-emphasized-font-style: italic;
+    --swc-detail-serif-emphasized-font-weight: medium;
+    --swc-detail-serif-emphasized-font-style: italic;
+    --swc-detail-cjk-emphasized-font-weight: extra-bold;
+    --swc-detail-cjk-emphasized-font-style: normal;
+    --swc-detail-sans-serif-strong-emphasized-font-weight: bold;
+    --swc-detail-sans-serif-strong-emphasized-font-style: italic;
+    --swc-detail-serif-strong-emphasized-font-weight: bold;
+    --swc-detail-serif-strong-emphasized-font-style: italic;
+    --swc-detail-cjk-strong-emphasized-font-weight: extra-bold;
+    --swc-detail-cjk-strong-emphasized-font-style: normal;
+    --swc-detail-size-xl: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-detail-size-l: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-detail-size-m: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-detail-size-s: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-detail-line-height: 1.3;
+    --swc-detail-cjk-line-height: 1.5;
     --swc-detail-margin-top-multiplier: 0.8889;
     --swc-detail-margin-bottom-multiplier: 0.25;
+    --swc-detail-color: light-dark(rgb(113 113 113), rgb(138 138 138));
+    --swc-detail-cjk-size-xs: var(--spectrum-theme--sizeM, 10px)
+        var(--spectrum-theme--sizeL, 12px);
+    --swc-detail-cjk-size-s: var(--spectrum-theme--sizeM, 11px)
+        var(--spectrum-theme--sizeL, 13px);
+    --swc-detail-cjk-size-m: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-detail-cjk-size-l: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-detail-cjk-size-xl: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-detail-size-xs: var(--spectrum-theme--sizeM, 11px)
+        var(--spectrum-theme--sizeL, 13px);
     --swc-code-font-family: 'Source Code Pro';
+    --swc-code-cjk-font-family: 'Source Code Pro';
+    --swc-code-font-weight: regular;
+    --swc-code-font-style: normal;
+    --swc-code-cjk-font-weight: regular;
+    --swc-code-cjk-font-style: normal;
+    --swc-code-strong-font-weight: bold;
+    --swc-code-strong-font-style: normal;
+    --swc-code-cjk-strong-font-weight: bold;
+    --swc-code-cjk-strong-font-style: normal;
+    --swc-code-emphasized-font-weight: regular;
+    --swc-code-emphasized-font-style: italic;
+    --swc-code-cjk-emphasized-font-weight: bold;
+    --swc-code-cjk-emphasized-font-style: normal;
+    --swc-code-strong-emphasized-font-weight: bold;
+    --swc-code-strong-emphasized-font-style: italic;
+    --swc-code-cjk-strong-emphasized-font-weight: bold;
+    --swc-code-cjk-strong-emphasized-font-style: normal;
+    --swc-code-size-xl: var(--spectrum-theme--sizeM, 20px)
+        var(--spectrum-theme--sizeL, 24px);
+    --swc-code-size-l: var(--spectrum-theme--sizeM, 18px)
+        var(--spectrum-theme--sizeL, 22px);
+    --swc-code-size-m: var(--spectrum-theme--sizeM, 16px)
+        var(--spectrum-theme--sizeL, 19px);
+    --swc-code-size-s: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-code-size-xs: var(--spectrum-theme--sizeM, 12px)
+        var(--spectrum-theme--sizeL, 15px);
+    --swc-code-line-height: 1.5;
+    --swc-code-cjk-line-height: 1.7;
+    --swc-code-color: light-dark(rgb(41 41 41), rgb(219 219 219));
     --swc-line-height-font-size-25: var(--spectrum-theme--sizeM, 12px)
         var(--spectrum-theme--sizeL, 14px);
     --swc-line-height-font-size-50: var(--spectrum-theme--sizeM, 14px)
@@ -3659,4 +4219,27 @@
         var(--spectrum-theme--sizeL, 90px);
     --swc-line-height-font-size-1500: var(--spectrum-theme--sizeM, 84px)
         var(--spectrum-theme--sizeL, 102px);
+    --swc-sans-font-family-stack:
+        'Adobe Clean Spectrum VF', 'Adobe Clean', 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --swc-sans-serif-font: var(--swc-sans-font-family-stack);
+    --swc-serif-font-family-stack:
+        adobe-clean-serif, 'Adobe Clean Serif', 'Source Serif Pro', Georgia,
+        serif;
+    --swc-serif-font: var(--swc-serif-font-family-stack);
+    --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+    --swc-font-family-he: 'myriad-arabic, adobe-clean, ' Source Sans Pro
+        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
+        Trebuchet MS ', ' Lucida Grande ', sans-serif';
+    --swc-font-family-ar: 'myriad-hebrew, adobe-clean, ' Source Sans Pro
+        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
+        Trebuchet MS ', ' Lucida Grande ', sans-serif';
+    --swc-font-family: 'var(--swc-sans-font-family-stack)';
+    --swc-font-style: normal;
+    --swc-font-size: var(--spectrum-theme--sizeM, 14px)
+        var(--spectrum-theme--sizeL, 17px);
+    --swc-cjk-font-family-stack:
+        adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
+    --swc-cjk-font: var(--swc-cjk-font-family-stack);
 }

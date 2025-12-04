@@ -12,11 +12,11 @@
 
 @import url('tokens.css');
 
-/* TODO: update to expose/use values similar to previous setup */
+/* Global font defaults */
 :root {
-    font-family: var(--swc-sans-serif-font-family), 'Adobe Clean', sans-serif;
-    font-size: var(--swc-font-size-200);
-    font-style: var(--swc-default-font-style);
+    font-family: token('sans-serif-font');
+    font-size: token('font-size');
+    font-style: token('font-style');
 }
 
 /* Theme scaling setup */

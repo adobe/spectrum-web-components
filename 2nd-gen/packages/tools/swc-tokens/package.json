@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@adobe/spectrum-tokens": "^14.0.0",
+        "prettier": "^3.7.4",
         "yargs": "^18.0.0"
     },
     "keywords": [
