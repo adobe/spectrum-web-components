@@ -14,6 +14,7 @@ import type { ReactiveController, ReactiveElement } from 'lit';
 export const DARK_MODE = '(prefers-color-scheme: dark)';
 export const IS_MOBILE =
     '(max-width: 743px) and (hover: none) and (pointer: coarse)';
+export const IS_TOUCH_DEVICE = '(hover: none) and (pointer: coarse)';
 
 export class MatchMediaController implements ReactiveController {
     key = Symbol('match-media-key');
