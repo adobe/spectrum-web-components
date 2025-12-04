@@ -18,9 +18,9 @@ Output results in the chat window in a way that can be copied and pasted into Ji
 Use these syntax rules when writing Jira tickets:
 
 - `h2.` through `h6.` - Headings (use `h2.` for main, `h3.` for secondary, etc. - avoid `h1.` in descriptions)
-- `{*}{*}` - Bold text
-- `{code}{code}` - Inline code
-- `{code:language}{code}` - Language-specific code blocks
+- `*text*` - Bold text
+- `{{code}}` - Inline code
+-  `{code:language}{code}` - Language-specific code blocks, as in `{code:js}{code}` for JavaScript and Typescript code blocks (JIRA doesn't support `{code:typescript}`)
 - `[text|url]` - Links
 - ` - ` - Bullet points
 - `#` - Numbered list items
