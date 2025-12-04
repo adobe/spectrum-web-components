@@ -17,6 +17,7 @@
     font-family: token('sans-serif-font');
     font-size: token('font-size');
     font-style: token('font-style');
+    background-color: var(--swc-application-background, token('gray-75'));
 }
 
 /* Theme scaling setup */
