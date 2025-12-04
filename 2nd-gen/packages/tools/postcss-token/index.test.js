@@ -48,6 +48,12 @@ test('outputs token() value', async () => {
         `a { font-size: var(--${prefix}-illustrated-message-small-title-font-size); }`
     );
 
+    // Aliased typography token
+    await run(
+        `a { font-family: token('detail-sans-serif-font-family'); }`,
+        `a { font-family: var(--${prefix}-sans-serif-font-family); }`
+    );
+
     // Composite color set
     await run(
         `a { background-color: token('accent-background-color-default'); }`,
