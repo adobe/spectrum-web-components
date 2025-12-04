@@ -20,7 +20,8 @@ const require = createRequire(import.meta.url);
 
 const ALLOWED_SETS = ['desktop', 'mobile', 'light', 'dark'];
 
-const TOKEN_JSON = [
+// Tokens from @adobe/spectrum-tokens/src
+const SPECTRUM_TOKENS = [
     {
         file: 'color-aliases',
         resolveAliases: false,
@@ -55,6 +56,14 @@ const TOKEN_JSON = [
     },
 ];
 
+// Custom token additions and overrides in /custom
+const CUSTOM_TOKENS = [
+    {
+        file: 'typography',
+        resolveAliases: 'true',
+    },
+];
+
 /**
  * Creates a logger that writes to a file.
  * @param {string|false} debugPath  path to log file OR false for no logging
@@ -84,6 +93,25 @@ function isAlias(str) {
 // Remove braces from values like "{blue-800}"
 function unwrapAlias(str) {
     return str.replace(/^\{/, '').replace(/\}$/, '');
+}
+
+const ALIAS_GLOBAL_REGEX = /\{([^{}]+)\}/g;
+
+function resolveAliasesInString(str, tokensMap, prefix, debug) {
+    return str.replace(ALIAS_GLOBAL_REGEX, (full, inner) => {
+        const resolved = resolveAliasValue(
+            tokensMap,
+            `{${inner}}`,
+            prefix,
+            new Set(),
+            debug
+        );
+        return resolved ?? full; // if missing or circular, leave as-is
+    });
+}
+
+function createPropertyName(name, prefix) {
+    return prefix ? `--${prefix}-${name}` : `--${name}`;
 }
 
 // Return as custom property
@@ -193,19 +221,32 @@ function buildRawLookup(json) {
  *
  * Returns: resolved primitive / object (with aliases resolved) or undefined if missing/circular.
  */
-function resolveAliasValue(tokensMap, value, seen = new Set(), debug = false) {
-    // ------------------------------------------------------
-    // Helpers
-    // ------------------------------------------------------
-
+function resolveAliasValue(
+    tokensMap,
+    value,
+    prefix,
+    seen = new Set(),
+    debug = false,
+    skip = false
+) {
     const log = typeof debug === 'function' ? debug : () => {};
+    const cloneSeen = () => new Set(seen);
 
-    const cloneSeen = () => new Set(seen); // ensures each branch has its own copy
+    if (skip === true) {
+        log(`[SKIP RESOLUTION] returning alias untouched: ${value}`);
+        return value; // return literal "{aliasName}"
+    }
 
     const resolveObject = (obj) => {
         const out = Array.isArray(obj) ? [] : {};
         for (const [k, v] of Object.entries(obj)) {
-            out[k] = resolveAliasValue(tokensMap, v, cloneSeen(), debug);
+            out[k] = resolveAliasValue(
+                tokensMap,
+                v,
+                prefix,
+                cloneSeen(),
+                debug
+            );
         }
         return out;
     };
@@ -216,6 +257,7 @@ function resolveAliasValue(tokensMap, value, seen = new Set(), debug = false) {
             out[setName] = resolveAliasValue(
                 tokensMap,
                 setVal,
+                prefix,
                 cloneSeen(),
                 debug
             );
@@ -229,24 +271,27 @@ function resolveAliasValue(tokensMap, value, seen = new Set(), debug = false) {
         Object.keys(obj).length > 0 &&
         Object.keys(obj).every((k) => ALLOWED_SETS.includes(k));
 
-    // ------------------------------------------------------
-    // Primitive handling
-    // ------------------------------------------------------
-
+    // --------------------------
+    // Primitive / non-object
+    // --------------------------
     if (value === null || typeof value !== 'object') {
-        // number | string | boolean | null
         if (typeof value !== 'string') {
             return value;
         }
+
+        // if string contains embedded aliases like "{foo}, something"
+        if (!isAlias(value) && value.includes('{')) {
+            return resolveAliasesInString(value, tokensMap, prefix, debug);
+        }
+
         if (!isAlias(value)) {
             return value;
         }
     }
 
-    // ------------------------------------------------------
+    // --------------------------
     // Alias resolution
-    // ------------------------------------------------------
-
+    // --------------------------
     const targetName = unwrapAlias(value);
     if (!targetName) {
         return value;
@@ -254,36 +299,37 @@ function resolveAliasValue(tokensMap, value, seen = new Set(), debug = false) {
 
     if (seen.has(targetName)) {
         log(
-            `circular alias detected: ${[...seen].join(' -> ')} -> ${targetName}`
+            `[⚠️ ISSUE] circular alias detected: ${[...seen].join(' -> ')} -> ${targetName}`
         );
         return undefined;
     }
-
     seen.add(targetName);
 
     const targetValue = tokensMap[targetName];
     if (targetValue === undefined) {
-        log(`missing alias target: ${targetName}`);
+        log(`[❌ ERROR] missing alias target: ${targetName}`);
         return undefined;
     }
 
-    // ------------------------------------------------------
-    // Resolve target value
-    // ------------------------------------------------------
-
-    // simple string → might be another alias
-    if (typeof targetValue === 'string') {
-        return resolveAliasValue(tokensMap, targetValue, seen, debug);
+    // --- shallow resolution for multi-set targets ---
+    if (isAlias(targetValue)) {
+        log(
+            `[SHALLOW ALIAS] set target has alias, returning alias as property: {${targetName}}`
+        );
+        return convertToProperty(`{${targetName}}`, prefix);
     }
 
-    // object shapes
+    // --- resolve primitives or nested objects ---
+    if (typeof targetValue === 'string') {
+        return resolveAliasValue(tokensMap, targetValue, prefix, seen, debug);
+    }
+
     if (typeof targetValue === 'object' && targetValue !== null) {
         return isSetsObject(targetValue)
             ? resolveSetGroup(targetValue)
             : resolveObject(targetValue);
     }
 
-    // fallback primitive
     return targetValue;
 }
 
@@ -292,10 +338,10 @@ function extractTokenValues(
     json,
     resolveAliases,
     prefix,
-    { debug = false } = {}
+    { debug = false, rawLookupOverride = null } = {}
 ) {
     const allowed = new Set(ALLOWED_SETS);
-    const rawLookup = buildRawLookup(json);
+    const rawLookup = rawLookupOverride ?? buildRawLookup(json);
     const normalized = {};
 
     const log = typeof debug === 'function' ? debug : () => {};
@@ -309,7 +355,7 @@ function extractTokenValues(
             return value.toFixed(4);
         }
         if (typeof value === 'string') {
-            const formatted = convertRGB(value); // <-- RGB formatting
+            const formatted = convertRGB(value);
             return resolveAliases
                 ? formatted
                 : convertToProperty(formatted, prefix);
@@ -317,10 +363,25 @@ function extractTokenValues(
         return value;
     };
 
-    const resolveAliasValueSafe = (alias, seen = new Set()) => {
-        const resolved = resolveAliasValue(rawLookup, alias, seen, debug);
+    const resolveAliasValueSafe = (alias, seen = new Set(), skip = false) => {
+        const targetKey = alias.replace(/[{}]/g, '');
 
-        // primitive → normalize directly
+        // If the alias target contains skipResolution, stop here
+        const targetObj = rawLookup[targetKey];
+        if (targetObj && targetObj.skipResolution === true) {
+            log(`[SKIP RESOLUTION] literal alias preserved for ${alias}`);
+            return alias; // return literal alias untouched
+        }
+
+        const resolved = resolveAliasValue(
+            rawLookup,
+            alias,
+            prefix,
+            seen,
+            debug,
+            skip
+        );
+
         if (
             typeof resolved !== 'object' ||
             resolved === null ||
@@ -329,20 +390,33 @@ function extractTokenValues(
             return normalizePrimitive(resolved);
         }
 
-        // multi-set alias → flatten
         return extractTokenValues({ temp: resolved }, false, prefix, { debug })
             .temp;
     };
 
-    const normalizeValue = (rawValue) => {
-        if (
-            typeof rawValue === 'string' &&
-            resolveAliases &&
-            isAlias(rawValue)
-        ) {
-            log('[ALIAS] resolving', rawValue);
-            return resolveAliasValueSafe(rawValue);
+    const normalizeValue = (rawValue, tokenObj = null) => {
+        // Skip resolution at token level
+        if (tokenObj?.skipResolution === true) {
+            log(`[SKIP RESOLUTION] preserving raw string for`, rawValue);
+            return convertToProperty(rawValue, prefix);
         }
+
+        if (typeof rawValue === 'string' && resolveAliases) {
+            const resolved = resolveAliasesInString(
+                rawValue,
+                rawLookup,
+                prefix,
+                debug
+            );
+
+            if (isAlias(rawValue)) {
+                log('[ALIAS] resolving', rawValue);
+                return resolveAliasValueSafe(rawValue);
+            }
+
+            return normalizePrimitive(resolved);
+        }
+
         return normalizePrimitive(rawValue);
     };
 
@@ -397,6 +471,25 @@ function extractTokenValues(
             continue;
         }
 
+        // Skip-resolution for the entire token
+        if (tokenObj?.skipResolution === true) {
+            log(
+                `[SKIP RESOLUTION] token-level: preserving alias/value for`,
+                tokenName
+            );
+
+            if ('value' in tokenObj) {
+                normalized[tokenName] = convertToProperty(
+                    tokenObj.value,
+                    prefix
+                );
+            } else if (tokenObj.sets) {
+                normalized[tokenName] = normalizeSetGroup(tokenName, tokenObj);
+            }
+
+            continue;
+        }
+
         // direct value
         if ('value' in tokenObj) {
             normalized[tokenName] = normalizeValue(tokenObj.value);
@@ -409,14 +502,10 @@ function extractTokenValues(
             continue;
         }
 
-        log('[UNHANDLED token shape]', tokenName, tokenObj);
+        log('[❌ ERROR] UNHANDLED token shape:', tokenName, tokenObj);
     }
 
     return normalized;
-}
-
-function createPropertyName(name, prefix) {
-    return prefix ? `--${prefix}-${name}` : `--${name}`;
 }
 
 // Generate CSS custom properties
@@ -436,7 +525,10 @@ export async function generateCSS(prefix, debug = false) {
         }
 
         if (typeof value === 'string' || typeof value === 'number') {
-            if (token.includes('font-family')) {
+            if (
+                token.includes('font-family') &&
+                !token.includes('font-family-stack')
+            ) {
                 writeProp(token, `'${value}'`);
             } else {
                 writeProp(token, value);
@@ -449,12 +541,12 @@ export async function generateCSS(prefix, debug = false) {
             if (value.light && value.dark) {
                 if (!token.includes('color') && !token.match(/(\d+)$/)) {
                     // only colors are eligible for use with light-dark()
-                    writeProp(`${token}-light`, value.light);
-                    writeProp(`${token}-dark`, value.dark);
+                    writeProp(`${token}-light`, convertRGB(value.light));
+                    writeProp(`${token}-dark`, convertRGB(value.dark));
                 } else {
                     writeProp(
                         token,
-                        `light-dark(${value.light}, ${value.dark})`
+                        `light-dark(${convertRGB(value.light)}, ${convertRGB(value.dark)})`
                     );
                 }
             }
@@ -479,16 +571,19 @@ export async function generateCSS(prefix, debug = false) {
  * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- */`;
+ */
 
-    return `${copyright}\n\n:root {\n${lines.join('\n')}\n}\n`;
+/* stylelint-disable value-keyword-case */`;
+
+    // TODO: split between scaling and non-scaling values to reduce load on .spectrum-theme
+    return `${copyright}\n\n:root, .spectrum-theme {\n${lines.join('\n')}\n}\n`;
 }
 
-// Load individual JSON from src
-async function loadTokenJson(fileName) {
-    const fullPath = require.resolve(
-        `@adobe/spectrum-tokens/src/${fileName}.json`
-    );
+// Load individual JSON from @adobe/spectrum-tokens/src
+async function loadTokenJson(fileName, src) {
+    const source =
+        src === 'spectrum' ? '@adobe/spectrum-tokens/src' : './custom';
+    const fullPath = require.resolve(`${source}/${fileName}.json`);
 
     const text = await readFile(fullPath, 'utf8');
     return JSON.parse(text);
@@ -496,18 +591,56 @@ async function loadTokenJson(fileName) {
 
 // Load all JSON files from src
 async function loadAllTokens(prefix, debug = false) {
-    const tokens = {};
+    const rawFiles = [];
 
-    // Concatenate all token files
-    for (const { file, resolveAliases } of TOKEN_JSON) {
-        const json = await loadTokenJson(file);
-        const normalized = extractTokenValues(json, resolveAliases, prefix, {
-            debug: debug,
+    // Load Spectrum (raw, unnormalized)
+    for (const { file, resolveAliases } of SPECTRUM_TOKENS) {
+        const json = await loadTokenJson(file, 'spectrum');
+
+        rawFiles.push({
+            file,
+            source: 'spectrum',
+            resolveAliases,
+            raw: json,
         });
-        Object.assign(tokens, normalized);
     }
 
-    return tokens;
+    // Load custom (raw, unnormalized)
+    for (const { file, resolveAliases } of CUSTOM_TOKENS) {
+        const json = await loadTokenJson(file, 'custom');
+
+        rawFiles.push({
+            file,
+            source: 'custom',
+            resolveAliases,
+            raw: json,
+        });
+    }
+
+    // Build one giant raw lookup map
+    let globalRaw = {};
+    for (const entry of rawFiles) {
+        globalRaw = { ...globalRaw, ...buildRawLookup(entry.raw) };
+    }
+
+    // Now normalize using the global raw lookup
+    const finalTokens = {};
+
+    for (const entry of rawFiles) {
+        const normalized = extractTokenValues(
+            entry.raw,
+            entry.resolveAliases,
+            prefix,
+            {
+                debug,
+                rawLookupOverride: globalRaw,
+            }
+        );
+
+        Object.assign(finalTokens, normalized);
+    }
+
+    return finalTokens;
 }
 
 export const allTokens = async (prefix, debug = false) =>

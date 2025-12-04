@@ -15,8 +15,11 @@
 /* eslint-disable no-console */
 
 // TODO:
-// determine if any token types are meant to be excluded from cp
+// context switching
 // resolve invalid CSS values, ex. "medium-font-weight": "medium"
+// add READMEs
+// add docs guide
+// create custom property style guide
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -55,10 +58,11 @@ const out = argv.out?.trim();
 const prefix = argv.prefix?.trim();
 const outputType = argv.outputType?.trim();
 const debug = argv.debug;
+const debugFile = 'debug-tokens.txt';
 
 fs.mkdirSync(path.dirname(out), { recursive: true });
 
-const log = debug && createLogger('./debug-tokens.txt');
+const log = debug && createLogger(`./${debugFile}`);
 
 if (outputType === 'stylesheet') {
     const prettierConfig = await prettier.resolveConfig(process.cwd());
@@ -79,5 +83,6 @@ if (outputType === 'stylesheet') {
         'utf8'
     );
 
+    console.log(`✔ Debug log written to ${debugFile}`);
     console.log(`✔ Tokens written to ${out}`);
 }
