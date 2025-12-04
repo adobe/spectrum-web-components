@@ -1,0 +1,88 @@
+import {
+    Meta,
+    Title,
+    Primary,
+    Canvas,
+    Controls,
+    Source,
+    Story,
+    Markdown,
+    ArgTypes,
+    Description,
+} from '@storybook/addon-docs/blocks';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import * as ProgressCircleOverview from '../stories/progress-circle.stories.ts';
+import '@spectrum-web-components/top-nav/sp-top-nav.js';
+import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
+
+<Meta name="Overview" of={ProgressCircleOverview} />
+
+# Progress circle: Overview
+
+<Primary />
+
+```zsh
+yarn add @spectrum-web-components/progress-circle
+```
+
+Import the side effectful registration of `<sp-progress-circle>` via:
+
+```ts
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+```
+
+When looking to leverage the `ProgressCircle` base class as a type and/or for extension purposes, do so via:
+
+```ts
+import { ProgressCircle } from '@spectrum-web-components/progress-circle';
+```
+
+### Anatomy
+
+A progress circle consists of several key parts:
+
+- A label (via `slot="label"`)
+- A progress value (via `progress` attribute)
+- An optional indeterminate state (via `indeterminate` attribute)
+
+<Canvas
+    of={ProgressCircleOverview.Default}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### Options
+
+#### Sizes
+
+Progress circles come in three sizes to fit various contexts:
+
+<Canvas
+    of={ProgressCircleOverview.Sizes}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+#### Static Colors
+
+When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
+
+<Canvas
+    of={ProgressCircleOverview.StaticColors}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### States
+
+#### Indeterminate
+
+Use indeterminate progress when the duration cannot be calculated:
+
+<Canvas
+    of={ProgressCircleOverview.Indeterminate}
+    withToolbar={true}
+    sourceState="shown"
+/>

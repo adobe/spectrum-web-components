@@ -26,30 +26,29 @@ const { events, args, argTypes, template } = getStorybookHelpers(
     'swc-progress-circle'
 );
 
-/*
- * @todo Blurring the range control seems to cause a catastrophic Storybook
- * render failure, so disabling for now.
- */
-// argTypes.progress = {
-//     ...argTypes.progress,
-//     control: { type: 'range', min: 0, max: 100, step: 1 },
-// };
+argTypes.progress = {
+    ...argTypes.progress,
+    control: { type: 'number', min: 0, max: 100, step: 1 },
+};
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: ProgressCircle.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: ProgressCircle.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
     control: { type: 'select' },
     options: [undefined, ...ProgressCircle.STATIC_COLORS],
 };
+
+argTypes['label'] = {
+    ...argTypes['label'],
+    control: { type: 'text', required: true },
+};
+
+// there is no default slot in the progress circle, so we need to remove the control
 
 /**
  * A progress circle component that visually represents the completion progress of a task.
@@ -76,6 +75,7 @@ export default meta;
 // ───────────────
 
 export const Default: Story = {
+    name: 'Playground',
     args: {
         progress: 50,
         size: 'm',
@@ -154,10 +154,10 @@ export const Indeterminate: Story = {
     tags: ['!dev'],
 };
 
-export const StaticWhite: Story = {
+export const StaticColors: Story = {
     render: () => html`
         <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
         >
             <swc-progress-circle
                 .progress=${60}
@@ -178,14 +178,8 @@ export const StaticWhite: Story = {
                 label="Loading on dark background"
             ></swc-progress-circle>
         </div>
-    `,
-    tags: ['!dev'],
-};
-
-export const StaticBlack: Story = {
-    render: () => html`
         <div
-            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
         >
             <swc-progress-circle
                 .progress=${60}
@@ -229,6 +223,22 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
             <swc-progress-circle
                 indeterminate
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev'],
+};
+
+export const A11y: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
                 static-color="white"
                 size="l"
                 label="Loading on dark background"

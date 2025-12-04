@@ -4,6 +4,6 @@
 
 <!-- Document title (editable) -->
 
-# Accessibility resources
+# accessibility resources
 
 <!-- Document content (editable) -->
