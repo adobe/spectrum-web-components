@@ -2,26 +2,26 @@ import { Story, Description, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 /**
- * A block that renders all stories tagged with 'a11y' from the component's stories file.
- * - if a meta reference is passed, it finds all a11y-tagged stories from that meta
+ * A block that renders all stories tagged with 'usage' from the component's stories file.
+ * - if a meta reference is passed, it finds all usage-tagged stories from that meta
  * - if nothing is passed, it defaults to the current meta
  */
-export const AccessibilityStories = ({ of }) => {
+export const UsageStories = ({ of }) => {
     const resolvedOf = useOf(of || 'meta', ['story', 'meta']);
-    const a11yStories = Object.values(
+    const usageStories = Object.values(
         resolvedOf.type === 'meta'
             ? resolvedOf.csfFile.stories
             : [resolvedOf.story]
-    ).filter((story: any) => story.tags.includes('a11y'));
+    ).filter((story: any) => story.tags.includes('usage'));
     console.log(resolvedOf);
 
-    if (a11yStories.length === 0) {
+    if (usageStories.length === 0) {
         return null;
     }
 
     return (
         <>
-            {a11yStories.map((story: any) => (
+            {usageStories.map((story: any) => (
                 <React.Fragment key={story.id}>
                     <h3>{story.name}</h3>
                     <Description />

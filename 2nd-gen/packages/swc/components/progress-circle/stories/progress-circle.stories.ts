@@ -68,7 +68,7 @@ const meta: Meta = {
 export default meta;
 
 // ───────────────
-//    STORIES
+//    DEFAULT STORY
 // ───────────────
 
 export const Default: Story = {
@@ -84,6 +84,9 @@ export const Default: Story = {
 //    USAGE STORIES
 // ─────────────────────
 
+/**
+ * This is the description fo the sizes story
+ */
 export const Sizes: Story = {
     render: () => html`
         <div style="display: flex; gap: 24px; align-items: center;">
@@ -104,7 +107,7 @@ export const Sizes: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 export const ProgressValues: Story = {
@@ -128,7 +131,7 @@ export const ProgressValues: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 export const Indeterminate: Story = {
@@ -151,7 +154,7 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 export const StaticWhite: Story = {
@@ -179,7 +182,7 @@ export const StaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 export const StaticBlack: Story = {
@@ -207,7 +210,7 @@ export const StaticBlack: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 export const IndeterminateStaticWhite: Story = {
@@ -235,7 +238,7 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'autodocs', 'usage'],
 };
 
 // ────────────────────────────────
