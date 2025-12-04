@@ -16,7 +16,6 @@
 
 // TODO:
 // context switching
-// resolve invalid CSS values, ex. "medium-font-weight": "medium"
 // add READMEs
 // add docs guide
 // create custom property style guide

@@ -59,6 +59,10 @@ const SPECTRUM_TOKENS = [
 // Custom token additions and overrides in /custom
 const CUSTOM_TOKENS = [
     {
+        file: 'animation',
+        resolveAliases: 'false',
+    },
+    {
         file: 'typography',
         resolveAliases: 'true',
     },

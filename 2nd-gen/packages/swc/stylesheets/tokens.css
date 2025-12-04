@@ -4238,6 +4238,25 @@
         var(--spectrum-theme--sizeL, 90px);
     --swc-line-height-font-size-1500: var(--spectrum-theme--sizeM, 84px)
         var(--spectrum-theme--sizeL, 102px);
+    --swc-animation-duration-0: 0ms;
+    --swc-animation-duration-100: 130ms;
+    --swc-animation-duration-200: 160ms;
+    --swc-animation-duration-300: 190ms;
+    --swc-animation-duration-400: 220ms;
+    --swc-animation-duration-500: 250ms;
+    --swc-animation-duration-600: 300ms;
+    --swc-animation-duration-700: 350ms;
+    --swc-animation-duration-800: 400ms;
+    --swc-animation-duration-900: 450ms;
+    --swc-animation-duration-1000: 500ms;
+    --swc-animation-duration-2000: 1000ms;
+    --swc-animation-duration-4000: 2000ms;
+    --swc-animation-duration-6000: 3000ms;
+    --swc-animation-linear: cubic-bezier(0, 0, 1, 1);
+    --swc-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
+    --swc-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
+    --swc-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
+    --swc-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
     --swc-sans-font-family-stack:
         'Adobe Clean Spectrum VF', 'Adobe Clean', 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
