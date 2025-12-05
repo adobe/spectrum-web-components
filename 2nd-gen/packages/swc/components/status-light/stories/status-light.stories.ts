@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import '@adobe/swc/status-light';
 
@@ -153,14 +154,6 @@ export const Sizes: Story = {
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
 function sizeMap(str?: StatusLightSize): string {

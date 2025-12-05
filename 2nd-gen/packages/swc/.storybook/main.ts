@@ -12,11 +12,6 @@ const config = {
             files: '**/*.stories.ts',
             titlePrefix: 'Components',
         },
-        // {
-        //     directory: '../components',
-        //     files: '**/*.md',
-        //     titlePrefix: 'Components',
-        // },
         {
             directory: 'get-started',
             files: '*.mdx',
@@ -34,14 +29,30 @@ const config = {
         },
     ],
     docs: {
-        defaultName: 'Overview',
+        defaultName: 'README',
     },
     framework: '@storybook/web-components-vite',
+    tags: {
+        a11y: {
+            defaultFilterSelection: 'exclude',
+        },
+        usage: {
+            defaultFilterSelection: 'exclude',
+        },
+        examples: {
+            defaultFilterSelection: 'exclude',
+        },
+    },
     core: {
         disableTelemetry: true,
     },
     addons: [
-        '@storybook/addon-docs',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                transcludeMarkdown: true,
+            },
+        },
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',

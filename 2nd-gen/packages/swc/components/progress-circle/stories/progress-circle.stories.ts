@@ -67,17 +67,18 @@ const meta: Meta = {
 
 export default meta;
 
-// ───────────────
-//    DEFAULT STORY
-// ───────────────
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
 
-export const Default: Story = {
+export const Playground: Story = {
     args: {
         progress: 50,
         size: 'm',
         label: 'Loading progress',
     },
     render: (args) => template(args),
+    tags: ['autodocs', 'dev'],
 };
 
 // ─────────────────────
@@ -107,7 +108,7 @@ export const Sizes: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const ProgressValues: Story = {
@@ -131,7 +132,7 @@ export const ProgressValues: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const Indeterminate: Story = {
@@ -154,7 +155,7 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const StaticWhite: Story = {
@@ -182,7 +183,7 @@ export const StaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const StaticBlack: Story = {
@@ -210,7 +211,7 @@ export const StaticBlack: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const IndeterminateStaticWhite: Story = {
@@ -238,7 +239,7 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 // ────────────────────────────────
@@ -256,7 +257,7 @@ export const Accessibility: Story = {
             </p>
         </div>
     `,
-    tags: ['!dev', '!autodocs', 'a11y'],
+    tags: ['a11y'],
 };
 
 export const KeyboardNavigation: Story = {
@@ -271,5 +272,5 @@ export const KeyboardNavigation: Story = {
             </p>
         </div>
     `,
-    tags: ['!dev', '!autodocs', 'a11y'],
+    tags: ['a11y'],
 };

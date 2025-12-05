@@ -4,14 +4,11 @@ import {
     Primary,
     Controls,
     Stories,
-    Story,
-    Markdown,
     ArgTypes,
     Description,
+    Subtitle,
 } from '@storybook/addon-docs/blocks';
-import { AccessibilityStories } from './blocks/AccessibilityStories';
-import { AccessibilityDocs } from './blocks/AccessibilityDocs';
-import { UsageStories } from './blocks/UsageStories';
+import { SpectrumDocs } from './blocks/SpectrumDocs';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -19,8 +16,7 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 <Meta isTemplate />
 
 <Title />
-
-This template will likely be going away in the future, but for now it's here to help us get started.
+<Subtitle />
 
 <sp-tabs id="component-doc-tabs" size="xl" selected="overview" auto label="Component Documentation">
     <sp-tab value="overview">Overview</sp-tab>
@@ -32,20 +28,18 @@ This template will likely be going away in the future, but for now it's here to 
         <Description />
         <Primary />
         <Controls />
-
     </sp-tab-panel>
     <sp-tab-panel value="usage" style={{ flexDirection: 'column' }}>
-        <UsageStories />
-
+        <SpectrumDocs tag="usage" />
     </sp-tab-panel>
     <sp-tab-panel value="accessibility" style={{ flexDirection: 'column' }}>
-        <AccessibilityDocs />
-        <AccessibilityStories />
+        <SpectrumDocs tag="a11y" />
     </sp-tab-panel>
     <sp-tab-panel value="api" style={{ flexDirection: 'column' }}>
             <ArgTypes />
     </sp-tab-panel>
     <sp-tab-panel value="examples" style={{ flexDirection: 'column' }}>
+        <SpectrumDocs tag="examples" />
         <Stories filter={(story) => !story.tags?.includes('a11y')} />
     </sp-tab-panel>
 

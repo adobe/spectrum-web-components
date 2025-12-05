@@ -18,11 +18,6 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
-import {
-    Accessibility as AccessibilityStory,
-    KeyboardNavigation as KeyboardNavigationStory,
-} from './divider.a11y';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -65,20 +60,25 @@ const meta: Meta = {
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
-
 type DividerSize = typeof Divider.prototype.size;
+
+// ────────────────────
+//    PRIMARY STORIES
+// ────────────────────
 
 /**
  * By default, dividers are horizontal and should be used for separating content vertically. The medium divider is the default size.
  */
-export const Default: Story = {
+export const Playground: Story = {
     args: {
         size: 'm',
     },
+    tags: ['autodocs', 'dev'],
 };
+
+// ────────────────────
+//    USAGE STORIES
+// ────────────────────
 
 /**
  * The small divider is used to divide similar components such as table rows, action button groups, and components within a panel.
@@ -106,7 +106,7 @@ export const Sizes: Story = {
             )}
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -123,7 +123,7 @@ export const Vertical: Story = {
             )}
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', '!autodocs', 'usage'],
 };
 
 /**
@@ -140,7 +140,7 @@ export const StaticBlack: Story = {
             )}
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', '!autodocs', 'usage'],
 };
 
 export const StaticWhite: Story = {
@@ -154,15 +154,43 @@ export const StaticWhite: Story = {
             )}
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['!dev', '!autodocs', 'usage'],
 };
 
 // ────────────────────────────────
-//    DOCUMENTATION STORIES EXPORT
+//    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-export const Accessibility: Story = AccessibilityStory;
-Accessibility.tags = ['!dev', '!autodocs', 'a11y'];
+/**
+ * EXAMPLE: Accessibility Documentation
+ */
+export const Accessibility: Story = {
+    render: () => html`
+        <div>
+            <p>
+                This is coming from the accessibility story through the
+                Accessibility block. This option allows us to fully customize
+                the accessibility documentation for a component by writing a
+                custom story that renders the accessibility documentation.
+            </p>
+        </div>
+    `,
+    tags: ['!dev', '!autodocs', 'a11y'],
+};
 
-export const KeyboardNavigation: Story = KeyboardNavigationStory;
-KeyboardNavigation.tags = ['!dev', '!autodocs', 'a11y'];
+/**
+ * EXAMPLE: Keyboard Navigation Documentation
+ */
+export const KeyboardNavigation: Story = {
+    render: () => html`
+        <div>
+            <p>
+                This is coming from the keyboard navigation story through the
+                Accessibility block. This option allows us to fully customize
+                the accessibility documentation for a component by writing a
+                custom story that renders the accessibility documentation.
+            </p>
+        </div>
+    `,
+    tags: ['!dev', '!autodocs', 'a11y'],
+};
