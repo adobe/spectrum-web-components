@@ -12,8 +12,7 @@ export const UsageStories = ({ of }) => {
         resolvedOf.type === 'meta'
             ? resolvedOf.csfFile.stories
             : [resolvedOf.story]
-    ).filter((story: any) => story.tags.includes('usage'));
-    console.log(resolvedOf);
+    ).filter((story: any) => story.tags?.includes('usage'));
 
     if (usageStories.length === 0) {
         return null;

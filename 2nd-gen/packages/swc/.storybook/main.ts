@@ -19,11 +19,6 @@ const config = {
         },
         {
             directory: 'guides',
-            files: '*.mdx',
-            titlePrefix: 'Guides',
-        },
-        {
-            directory: 'guides',
             files: '**/*.mdx',
             titlePrefix: 'Guides',
         },

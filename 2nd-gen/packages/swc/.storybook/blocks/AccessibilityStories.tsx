@@ -12,8 +12,7 @@ export const AccessibilityStories = ({ of }) => {
         resolvedOf.type === 'meta'
             ? resolvedOf.csfFile.stories
             : [resolvedOf.story]
-    ).filter((story: any) => story.tags.includes('a11y'));
-    console.log(resolvedOf);
+    ).filter((story: any) => story.tags?.includes('a11y'));
 
     if (a11yStories.length === 0) {
         return null;
