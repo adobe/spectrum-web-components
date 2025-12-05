@@ -1,8 +1,9 @@
 /** @type { import('@storybook/web-components').Preview } */
+import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
-import '../tokens/global-vars.css';
+import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
 import {
@@ -49,8 +50,55 @@ const preview = {
                 ],
             },
         },
+        docs: {
+            codePanel: true,
+            page: DocumentTemplate,
+            toc: {
+                contentsSelector: '.sbdocs-content',
+                headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
+                ignoreSelector: '.sbdocs-subtitle',
+                disable: false,
+                unsafeTocbotOptions: {
+                    // orderedList: false,
+                },
+            },
+        },
+        options: {
+            storySort: {
+                method: 'alphabetical-by-kind',
+                order: [
+                    'Get Started',
+                    [
+                        'Welcome to 2nd-gen SWC',
+                        'What is SWC?',
+                        'When to use SWC?',
+                        'First Gen vs Second Gen',
+                    ],
+                    'Components',
+                    'Guides',
+                    [
+                        'Getting started guide',
+                        'Contributor guide',
+                        'Style guide',
+                        'Project planning',
+                        'Accessibility guides',
+                        [
+                            'Overview',
+                            'Semantic HTML and ARIA',
+                            'Accessible pattern libraries',
+                            'Keyboard testing',
+                            'Screen reader testing',
+                            'Wave toolbar testing',
+                            'Accessibility resources',
+                        ],
+                        'React wrappers',
+                    ],
+                    'Resources',
+                ],
+            },
+        },
     },
-    tags: ['autodocs'],
+    tags: ['!autodocs', '!dev'],
 };
 
 export default preview;

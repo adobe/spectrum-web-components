@@ -30,20 +30,16 @@ const { events, args, argTypes, template } = getStorybookHelpers(
  * @todo Blurring the range control seems to cause a catastrophic Storybook
  * render failure, so disabling for now.
  */
-// argTypes.progress = {
-//     ...argTypes.progress,
-//     control: { type: 'range', min: 0, max: 100, step: 1 },
-// };
+argTypes.progress = {
+    ...argTypes.progress,
+    control: { type: 'number', min: 0, max: 100, step: 1 },
+};
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: ProgressCircle.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: ProgressCircle.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
@@ -52,8 +48,9 @@ argTypes['static-color'] = {
 };
 
 /**
- * A progress circle component that visually represents the completion progress of a task.
- * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+ *
+ * They can represent determinate or indeterminate progress.
  */
 const meta: Meta = {
     title: 'Progress circle',
@@ -62,6 +59,9 @@ const meta: Meta = {
     argTypes,
     render: (args) => template(args),
     parameters: {
+        docs: {
+            subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. They can represent determinate or indeterminate progress.`,
+        },
         actions: {
             handles: events,
         },
@@ -71,19 +71,44 @@ const meta: Meta = {
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
 
-export const Default: Story = {
+export const Playground: Story = {
     args: {
         progress: 50,
         size: 'm',
         label: 'Loading progress',
     },
     render: (args) => template(args),
+    tags: ['autodocs', 'dev'],
 };
 
+// ─────────────────────
+//    USAGE STORIES
+// ─────────────────────
+
+export const Anatomy: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 24px; align-items: center;">
+            <swc-progress-circle
+                progress=${25}
+                size="l"
+                label="Loading..."
+            ></swc-progress-circle>
+            <swc-progress-circle
+                indeterminate
+                label="Saving progress"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['autodocs', '!dev'],
+};
+
+/**
+ * This is the description fo the sizes story
+ */
 export const Sizes: Story = {
     render: () => html`
         <div style="display: flex; gap: 24px; align-items: center;">
@@ -104,7 +129,7 @@ export const Sizes: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 export const ProgressValues: Story = {
@@ -128,7 +153,7 @@ export const ProgressValues: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 export const Indeterminate: Story = {
@@ -151,7 +176,57 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev'],
+    tags: ['usage'],
+};
+
+export const StaticColors: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="s"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="m"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+        <div
+            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="s"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="m"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev', 'usage'],
 };
 
 export const StaticWhite: Story = {
@@ -229,6 +304,26 @@ export const IndeterminateStaticWhite: Story = {
             ></swc-progress-circle>
             <swc-progress-circle
                 indeterminate
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const A11y: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
                 static-color="white"
                 size="l"
                 label="Loading on dark background"

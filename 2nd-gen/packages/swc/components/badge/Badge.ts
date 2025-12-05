@@ -28,6 +28,7 @@ import styles from './badge.css';
  * A badge component that displays short, descriptive information about an element.
  * Badges are typically used to indicate status, categories, or provide supplementary information.
  *
+ *
  * @element swc-badge
  *
  * @example

@@ -10,11 +10,23 @@
  * governing permissions and limitations under the License.
  */
 
-import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
-
-export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
-export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
-
-export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
-
-export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];
+/**
+ * Capitalizes the first character of a string.
+ *
+ * @param str - The string to capitalize
+ * @returns The capitalized string, or an empty string if the input is not a string
+ *
+ * @example
+ * ```typescript
+ * capitalize('hello') // Returns: 'Hello'
+ * capitalize('world') // Returns: 'World'
+ * capitalize('') // Returns: ''
+ * capitalize(undefined) // Returns: ''
+ * ```
+ */
+export function capitalize(str?: string): string {
+    if (typeof str !== 'string') {
+        return '';
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

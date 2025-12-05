@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import '@adobe/swc/status-light';
 
@@ -30,23 +31,11 @@ argTypes.variant = {
     options: StatusLight.VARIANTS,
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- *
- * We may have to explicitly bind the args to the component (particularly
- * helpful for the size property) so the Storybook controls work as expected.
- * 
- * i.e. render: (args) =>
-        html`<swc-status-light .size=${args.size} variant=${args.variant}
-            >${args['default-slot']}</swc-status-light
-        >`,
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: StatusLight.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: StatusLight.VALID_SIZES,
+};
 
 args['default-slot'] = 'Status light';
 args.size = 'm';
@@ -71,10 +60,12 @@ type StatusLightVariant = typeof StatusLight.prototype.variant;
 type StatusLightSize = typeof StatusLight.prototype.size;
 
 /**
- * Status lights should always include a label with text that clearly communicates the kind of status being shown. Color
- * alone is not enough to communicate the status. Do not change the text color to match the dot.
+ * An `<sp-status-light>` is a great way to convey semantic meaning, such as statuses and categories.
+ * It provides visual indicators through colored dots accompanied by descriptive text.
  */
-export const Default: Story = {};
+export const Playground: Story = {
+    tags: ['autodocs', 'dev'],
+};
 
 /** When the text is too long for the horizontal space available, it wraps to form another line. */
 export const TextWrapping: Story = {
@@ -83,9 +74,8 @@ export const TextWrapping: Story = {
             This is a very long status light label that wraps when it reaches
             its max inline size
         </swc-status-light>`,
-    tags: ['!dev'],
+    tags: ['usage'],
 };
-TextWrapping.storyName = 'Text wrapping';
 
 /**
  * When status lights have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
@@ -108,9 +98,8 @@ export const SemanticVariants: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
-SemanticVariants.storyName = 'Semantic variants';
 
 /**
  * When status lights are used to color code categories and labels that are commonly found in data visualization,
@@ -127,7 +116,7 @@ export const NonsemanticVariants: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 NonsemanticVariants.storyName = 'Non-semantic variants';
 
@@ -147,20 +136,26 @@ export const Sizes: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
+};
+
+export const A11y: Story = {
+    render: () => html`
+        <swc-status-light variant="positive">approved</swc-status-light>
+        <swc-status-light variant="negative">rejected</swc-status-light>
+        <swc-status-light variant="notice">needs approval</swc-status-light>
+        <swc-status-light variant="info">new feature</swc-status-light>
+        <swc-status-light variant="neutral">version 1.2.10</swc-status-light>
+        <swc-status-light variant="celery">online</swc-status-light>
+        <swc-status-light variant="yellow">busy</swc-status-light>
+        <swc-status-light variant="silver">away</swc-status-light>
+    `,
+    tags: ['autodocs', '!dev'],
 };
 
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
 function sizeMap(str?: StatusLightSize): string {

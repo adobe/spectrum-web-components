@@ -1,6 +1,6 @@
-import { resolve, dirname } from 'path';
-import { mergeConfig } from 'vite';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { mergeConfig } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -8,22 +8,46 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
     stories: [
         {
-            directory: 'guides',
-            files: '*.@(md|mdx)',
-            titlePrefix: 'Guides',
-        },
-        {
             directory: '../components',
-            files: '*/stories/*.stories.ts',
+            files: '**/*.stories.ts',
             titlePrefix: 'Components',
         },
+        {
+            directory: 'get-started',
+            files: '*.mdx',
+            titlePrefix: 'Get Started',
+        },
+        {
+            directory: 'guides',
+            files: '**/*.mdx',
+            titlePrefix: 'Guides',
+        },
     ],
+    docs: {
+        defaultName: 'README',
+    },
     framework: '@storybook/web-components-vite',
+    tags: {
+        a11y: {
+            defaultFilterSelection: 'exclude',
+        },
+        usage: {
+            defaultFilterSelection: 'exclude',
+        },
+        examples: {
+            defaultFilterSelection: 'exclude',
+        },
+    },
     core: {
         disableTelemetry: true,
     },
     addons: [
-        '@storybook/addon-docs',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                transcludeMarkdown: true,
+            },
+        },
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',
