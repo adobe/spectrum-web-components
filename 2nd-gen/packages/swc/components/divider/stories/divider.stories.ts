@@ -62,7 +62,8 @@ type DividerSize = typeof Divider.prototype.size;
 // ────────────────────
 
 /**
- * By default, dividers are horizontal and should be used for separating content vertically. The medium divider is the default size.
+ * An `<sp-divider>` brings clarity to a layout by grouping and dividing content that exists in close proximity.
+ * It can also be used to establish rhythm and hierarchy.
  */
 export const Playground: Story = {
     args: {
