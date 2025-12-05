@@ -224,7 +224,7 @@ export const Textwrapping: Story = {
             inline size
         </swc-badge>
     `,
-    tags: ['usage', '!dev'],
+    tags: ['!dev'],
 };
 
 export const A11y: Story = {
@@ -238,7 +238,7 @@ export const A11y: Story = {
         <swc-badge variant="yellow">busy</swc-badge>
         <swc-badge variant="silver">out of office</swc-badge>
     `,
-    tags: ['autodocs', 'usage', '!dev'],
+    tags: ['autodocs', '!dev'],
 };
 
 // ────────────────────────

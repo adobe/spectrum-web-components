@@ -96,7 +96,7 @@ export const Sizes: Story = {
                 </div>`;
             })}
         </div>`,
-    tags: ['usage', '!dev'],
+    tags: ['!dev'],
 };
 
 /**

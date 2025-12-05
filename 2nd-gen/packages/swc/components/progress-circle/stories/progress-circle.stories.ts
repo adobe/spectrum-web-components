@@ -82,7 +82,7 @@ export const Playground: Story = {
         label: 'Loading progress',
     },
     render: (args) => template(args),
-    tags: ['autodocs', 'usage', 'dev'],
+    tags: ['autodocs', 'dev'],
 };
 
 // ─────────────────────
@@ -103,7 +103,7 @@ export const Anatomy: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['autodocs', 'usage', '!dev'],
+    tags: ['autodocs', '!dev'],
 };
 
 /**

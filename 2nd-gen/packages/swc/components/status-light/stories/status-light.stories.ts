@@ -150,7 +150,7 @@ export const A11y: Story = {
         <swc-status-light variant="yellow">busy</swc-status-light>
         <swc-status-light variant="silver">away</swc-status-light>
     `,
-    tags: ['autodocs', 'usage', '!dev'],
+    tags: ['autodocs', '!dev'],
 };
 
 // ────────────────────────
