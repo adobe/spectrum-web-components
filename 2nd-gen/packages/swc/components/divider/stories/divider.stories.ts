@@ -24,16 +24,11 @@ import '@adobe/swc/divider';
 
 const { events, args, argTypes, template } = getStorybookHelpers('swc-divider');
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: Divider.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: Divider.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
@@ -67,7 +62,8 @@ type DividerSize = typeof Divider.prototype.size;
 // ────────────────────
 
 /**
- * By default, dividers are horizontal and should be used for separating content vertically. The medium divider is the default size.
+ * An `<sp-divider>` brings clarity to a layout by grouping and dividing content that exists in close proximity.
+ * It can also be used to establish rhythm and hierarchy.
  */
 export const Playground: Story = {
     args: {
@@ -88,25 +84,19 @@ export const Playground: Story = {
  * The large divider should only be used for page titles or section titles.
  */
 export const Sizes: Story = {
-    render: () => html`
-        <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${Divider.VALID_SIZES.map(
-                (size) => html`
-                    <div>
-                        <h3>
-                            ${size === 's'
-                                ? 'Small'
-                                : size === 'l'
-                                  ? 'Large'
-                                  : 'Medium'}
-                        </h3>
-                        ${template({ size: size as DividerSize })}
-                    </div>
-                `
-            )}
-        </div>
-    `,
-    tags: ['usage'],
+    render: () =>
+        html` <div style="display: flex; flex-direction: row; gap: 16px;">
+            ${Divider.VALID_SIZES.map((size) => {
+                const label =
+                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
+                return html`<div>
+                    <h3 class="demo">${label}</h3>
+                    <swc-divider size=${size}></swc-divider>
+                    <p>Text below the divider.</p>
+                </div>`;
+            })}
+        </div>`,
+    tags: ['!dev'],
 };
 
 /**
@@ -116,11 +106,14 @@ export const Vertical: Story = {
     args: {
         vertical: true,
     },
-    render: (args: Record<string, unknown>) => html`
+    render: () => html`
         <div style="display: flex; flex-direction: row; gap: 48px;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
+            ${Divider.VALID_SIZES.map((size) => {
+                const label =
+                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
+                return html` <h3 class="demo">${label}</h3>
+                    <swc-divider vertical size=${size}></swc-divider>`;
+            })}
         </div>
     `,
     tags: ['!dev', '!autodocs', 'usage'],
@@ -129,6 +122,19 @@ export const Vertical: Story = {
 /**
  * Use the static color options when a divider needs to be placed on top of a color background or visual. Static color dividers are available in black or white regardless of color theme.
  */
+export const StaticColors: Story = {
+    args: {
+        'static-color': 'black',
+    },
+    render: (args: Record<string, unknown>) => html`
+        <div style="display: flex; gap: 24px; align-items: center;">
+            ${Divider.VALID_SIZES.map((size) =>
+                template({ ...args, size: size as DividerSize })
+            )}
+        </div>
+    `,
+    tags: ['!dev', '!autodocs', 'usage'],
+};
 export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
@@ -155,42 +161,4 @@ export const StaticWhite: Story = {
         </div>
     `,
     tags: ['!dev', '!autodocs', 'usage'],
-};
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
-/**
- * EXAMPLE: Accessibility Documentation
- */
-export const Accessibility: Story = {
-    render: () => html`
-        <div>
-            <p>
-                This is coming from the accessibility story through the
-                Accessibility block. This option allows us to fully customize
-                the accessibility documentation for a component by writing a
-                custom story that renders the accessibility documentation.
-            </p>
-        </div>
-    `,
-    tags: ['!dev', '!autodocs', 'a11y'],
-};
-
-/**
- * EXAMPLE: Keyboard Navigation Documentation
- */
-export const KeyboardNavigation: Story = {
-    render: () => html`
-        <div>
-            <p>
-                This is coming from the keyboard navigation story through the
-                Accessibility block. This option allows us to fully customize
-                the accessibility documentation for a component by writing a
-                custom story that renders the accessibility documentation.
-            </p>
-        </div>
-    `,
-    tags: ['!dev', '!autodocs', 'a11y'],
 };

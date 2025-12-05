@@ -11,6 +11,7 @@
  */
 
 import { html, TemplateResult } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
@@ -38,16 +39,11 @@ argTypes.fixed = {
     options: [undefined, ...Badge.FIXED_VALUES],
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: Badge.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: Badge.VALID_SIZES,
+};
 
 args['default-slot'] = 'Badge';
 
@@ -79,11 +75,11 @@ export default meta;
 
 type BadgeVariant = typeof Badge.prototype.variant;
 type BadgeSize = typeof Badge.prototype.size;
-
+type FixedValues = typeof Badge.prototype.fixed;
 /**
- * Badges can contain label, icon, or label and icon. Text wrapping is also included when a `max-inline-size` is applied to the badge.
+ * `<sp-badge>` elements display a small amount of color-categorized metadata. They're ideal for getting a user's attention.
  */
-export const Default: Story = {
+export const Playground: Story = {
     args: {
         size: 'm',
     },
@@ -115,6 +111,34 @@ export const SemanticVariants: Story = {
                 (variant) => html`
                     <swc-badge variant=${variant as BadgeVariant}
                         >${capitalize(variant)}</swc-badge
+                    >
+                `
+            )
+        ),
+    tags: ['usage'],
+};
+
+export const NonsemanticVariants: Story = {
+    render: () =>
+        CONTAINER(
+            Badge.VARIANTS_COLOR.map(
+                (variant) => html`
+                    <swc-badge variant=${variant as BadgeVariant}
+                        >${capitalize(variant)}</swc-badge
+                    >
+                `
+            )
+        ),
+    tags: ['usage'],
+};
+
+export const Fixed: Story = {
+    render: () =>
+        CONTAINER(
+            Badge.FIXED_VALUES.map(
+                (fixed) => html`
+                    <swc-badge fixed=${ifDefined(fixed as FixedValues)}
+                        >${capitalize(fixed)}</swc-badge
                     >
                 `
             )
@@ -191,6 +215,30 @@ export const Subtle: Story = {
             )
         ),
     tags: ['usage'],
+};
+
+export const Textwrapping: Story = {
+    render: () => html`
+        <swc-badge style="max-inline-size: 100px">
+            This is a very long badge label that wraps when it reaches its max
+            inline size
+        </swc-badge>
+    `,
+    tags: ['!dev'],
+};
+
+export const A11y: Story = {
+    render: () => html`
+        <swc-badge variant="positive">approved</swc-badge>
+        <swc-badge variant="negative">rejected</swc-badge>
+        <swc-badge variant="notice">needs approval</swc-badge>
+        <swc-badge variant="informative">new feature</swc-badge>
+        <swc-badge variant="neutral">version 1.2.10</swc-badge>
+        <swc-badge variant="celery">available</swc-badge>
+        <swc-badge variant="yellow">busy</swc-badge>
+        <swc-badge variant="silver">out of office</swc-badge>
+    `,
+    tags: ['autodocs', '!dev'],
 };
 
 // ────────────────────────
