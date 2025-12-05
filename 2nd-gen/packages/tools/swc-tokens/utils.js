@@ -553,11 +553,12 @@ function extractTokenValues(
 
 // Generate CSS custom properties
 export async function generateCSS(prefix, debug = false) {
-    const lines = [];
+    const scaling = [];
+    const nonScaling = [];
 
-    function writeProp(name, value) {
+    function writeProp(name, value, arr) {
         const key = createPropertyName(name, prefix);
-        lines.push(`  ${key}: ${cssFormatConversions(name, value)};`);
+        arr.push(`  ${key}: ${cssFormatConversions(name, value)};`);
     }
 
     for (const [token, value] of Object.entries(
@@ -573,9 +574,9 @@ export async function generateCSS(prefix, debug = false) {
                 token.includes('font-family') &&
                 !token.includes('font-family-stack')
             ) {
-                writeProp(token, `'${value}'`);
+                writeProp(token, `'${value}'`, nonScaling);
             } else {
-                writeProp(token, value);
+                writeProp(token, value, nonScaling);
             }
             continue;
         }
@@ -585,12 +586,21 @@ export async function generateCSS(prefix, debug = false) {
             if (value.light && value.dark) {
                 if (!token.includes('color') && !token.match(/(\d+)$/)) {
                     // only colors are eligible for use with light-dark()
-                    writeProp(`${token}-light`, convertRGB(value.light));
-                    writeProp(`${token}-dark`, convertRGB(value.dark));
+                    writeProp(
+                        `${token}-light`,
+                        convertRGB(value.light),
+                        nonScaling
+                    );
+                    writeProp(
+                        `${token}-dark`,
+                        convertRGB(value.dark),
+                        nonScaling
+                    );
                 } else {
                     writeProp(
                         token,
-                        `light-dark(${convertRGB(value.light)}, ${convertRGB(value.dark)})`
+                        `light-dark(${convertRGB(value.light)}, ${convertRGB(value.dark)})`,
+                        nonScaling
                     );
                 }
             }
@@ -599,13 +609,14 @@ export async function generateCSS(prefix, debug = false) {
                 writeProp(
                     token,
                     `var(--spectrum-theme--sizeM, ${value.desktop}) 
-                    var(--spectrum-theme--sizeL, ${value.mobile})`
+                    var(--spectrum-theme--sizeL, ${value.mobile})`,
+                    scaling
                 );
             }
         }
     }
 
-    const copyright = `/**
+    return `/**
  * Copyright ${new Date().getFullYear()} Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -617,10 +628,15 @@ export async function generateCSS(prefix, debug = false) {
  * governing permissions and limitations under the License.
  */
 
-/* stylelint-disable value-keyword-case */`;
+/* stylelint-disable value-keyword-case */
 
-    // TODO: split between scaling and non-scaling values to reduce load on .spectrum-theme
-    return `${copyright}\n\n:root, .spectrum-theme {\n${lines.join('\n')}\n}\n`;
+:root {
+    ${nonScaling.join('\n')}
+}
+    
+:root, .spectrum-theme {
+    ${scaling.join('\n')}
+}`;
 }
 
 // Load individual JSON from @adobe/spectrum-tokens/src

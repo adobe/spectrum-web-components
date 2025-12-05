@@ -15,7 +15,6 @@
 /* eslint-disable no-console */
 
 // TODO:
-// context switching
 // add READMEs
 // add docs guide
 // create custom property style guide
