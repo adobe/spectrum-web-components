@@ -48,8 +48,9 @@ argTypes['static-color'] = {
 };
 
 /**
- * A progress circle component that visually represents the completion progress of a task.
- * Can be used in both determinate (with specific progress value) and indeterminate (loading) states.
+ * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
+ *
+ * They can represent determinate or indeterminate progress.
  */
 const meta: Meta = {
     title: 'Progress circle',
@@ -58,6 +59,9 @@ const meta: Meta = {
     argTypes,
     render: (args) => template(args),
     parameters: {
+        docs: {
+            subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. They can represent determinate or indeterminate progress.`,
+        },
         actions: {
             handles: events,
         },
