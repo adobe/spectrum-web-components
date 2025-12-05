@@ -30,10 +30,10 @@ const { events, args, argTypes, template } = getStorybookHelpers(
  * @todo Blurring the range control seems to cause a catastrophic Storybook
  * render failure, so disabling for now.
  */
-// argTypes.progress = {
-//     ...argTypes.progress,
-//     control: { type: 'range', min: 0, max: 100, step: 1 },
-// };
+argTypes.progress = {
+    ...argTypes.progress,
+    control: { type: 'number', min: 0, max: 100, step: 1 },
+};
 
 argTypes.size = {
     ...argTypes.size,
