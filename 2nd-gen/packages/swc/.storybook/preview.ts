@@ -55,7 +55,7 @@ const preview = {
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
-                headingSelector: 'h2, h3',
+                headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
                 ignoreSelector: '.sbdocs-subtitle',
                 disable: false,
                 unsafeTocbotOptions: {
@@ -84,12 +84,12 @@ const preview = {
                         'Accessibility guides',
                         [
                             'Overview',
-                            'Semantic HTML and ARIA', 
-                            'Accessible pattern libraries', 
-                            'Keyboard testing', 
-                            'Screen reader testing', 
-                            'Wave toolbar testing', 
-                            'Accessibility resources'
+                            'Semantic HTML and ARIA',
+                            'Accessible pattern libraries',
+                            'Keyboard testing',
+                            'Screen reader testing',
+                            'Wave toolbar testing',
+                            'Accessibility resources',
                         ],
                         'React wrappers',
                     ],
