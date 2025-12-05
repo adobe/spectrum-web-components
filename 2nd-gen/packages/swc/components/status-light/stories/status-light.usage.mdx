@@ -1,0 +1,77 @@
+import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
+import { SpectrumStories } from '../../../.storybook/blocks/SpectrumStories';
+import * as StatusLightStories from './status-light.stories';
+
+<Meta tag="usage" />
+
+## Usage
+
+```
+yarn add @spectrum-web-components/status-light
+```
+
+Import the side effectful registration of `<sp-status-light>` via:
+
+```
+import '@spectrum-web-components/status-light/sp-status-light.js';
+```
+
+When looking to leverage the `StatusLight` base class as a type and/or for extension purposes, do so via:
+
+```
+import { StatusLight } from '@spectrum-web-components/status-light';
+```
+
+### Anatomy
+
+A status light consists of a colored dot indicator and a required text label. The dot's color represents the status or category, while the text provides additional context.
+
+- An optional size
+- An optional orientation
+- An optional static color for backgrounds that have color
+
+<Canvas
+    of={StatusLightStories.Playground}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### Options
+
+#### Sizes
+
+Status lights come in three sizes to fit various contexts, `s`, `m`, or `l`:
+
+<Canvas of={StatusLightStories.Sizes} withToolbar={true} sourceState="shown" />
+
+#### Variants
+
+Status lights come in various semantic and non-semantic variants to convey different meanings. The `variant` attribute controls the main variant of the status light, with `neutral` being the default.
+
+<Canvas
+    of={StatusLightStories.SemanticVariants}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+<Canvas
+    of={StatusLightStories.NonsemanticVariants}
+    withToolbar={true}
+    sourceState="shown"
+/>
+
+### Accessibility
+
+The status light component implements several accessibility features:
+
+- **ARIA Support**: When disabled, the component automatically sets `aria-disabled="true"`.
+- **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone.
+
+#### Best Practices
+
+- Use semantic variants (`positive`, `negative`, `notice`, `info`, `neutral`) when the status has specific meaning
+- Include a clear, descriptive text label that explains the status
+- Consider the disabled state for statuses that exist but are temporarily unavailable
+- Ensure sufficient color contrast between the status light and its background
+
+<Canvas of={StatusLightStories.A11y} withToolbar={true} sourceState="shown" />

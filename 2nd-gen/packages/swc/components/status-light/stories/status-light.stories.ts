@@ -31,23 +31,11 @@ argTypes.variant = {
     options: StatusLight.VARIANTS,
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- *
- * We may have to explicitly bind the args to the component (particularly
- * helpful for the size property) so the Storybook controls work as expected.
- * 
- * i.e. render: (args) =>
-        html`<swc-status-light .size=${args.size} variant=${args.variant}
-            >${args['default-slot']}</swc-status-light
-        >`,
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: StatusLight.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: StatusLight.VALID_SIZES,
+};
 
 args['default-slot'] = 'Status light';
 args.size = 'm';
@@ -75,7 +63,7 @@ type StatusLightSize = typeof StatusLight.prototype.size;
  * Status lights should always include a label with text that clearly communicates the kind of status being shown. Color
  * alone is not enough to communicate the status. Do not change the text color to match the dot.
  */
-export const Default: Story = {
+export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
@@ -149,6 +137,20 @@ export const Sizes: Story = {
             )
         ),
     tags: ['usage'],
+};
+
+export const A11y: Story = {
+    render: () => html`
+        <swc-status-light variant="positive">approved</swc-status-light>
+        <swc-status-light variant="negative">rejected</swc-status-light>
+        <swc-status-light variant="notice">needs approval</swc-status-light>
+        <swc-status-light variant="info">new feature</swc-status-light>
+        <swc-status-light variant="neutral">version 1.2.10</swc-status-light>
+        <swc-status-light variant="celery">online</swc-status-light>
+        <swc-status-light variant="yellow">busy</swc-status-light>
+        <swc-status-light variant="silver">away</swc-status-light>
+    `,
+    tags: ['autodocs', 'usage', '!dev'],
 };
 
 // ────────────────────────
