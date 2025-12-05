@@ -61,6 +61,23 @@ const preview = {
     },
     decorators: [withContext, withStaticColorBackground],
     parameters: {
+        options: {
+            storySort: {
+                order: [
+                    'Guides',
+                    [
+                        'Welcome to 2nd-gen SWC',
+                        'Customization',
+                        [
+                            'Getting Started',
+                            'Theme and Scales',
+                            'Component Styles',
+                        ],
+                    ],
+                    'Components',
+                ],
+            },
+        },
         layout: 'centered',
         backgrounds: { disable: true }, // Use custom context switches
         controls: {

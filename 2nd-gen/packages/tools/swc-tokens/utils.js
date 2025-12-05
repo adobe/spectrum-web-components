@@ -491,6 +491,8 @@ export async function generateCSS(prefix, debug = false) {
  * governing permissions and limitations under the License.
  */
 
+/* ⚠️ NOTE: This file is dynamically generated via swc-tokens */
+
 /* stylelint-disable value-keyword-case */
 
 :root {
