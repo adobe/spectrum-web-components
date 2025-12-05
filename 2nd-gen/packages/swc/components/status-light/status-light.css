@@ -9,306 +9,188 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-.spectrum-StatusLight {
-    /* Static tokens */
-    --spectrum-statuslight-corner-radius: var(--spectrum-corner-radius-full);
-    --spectrum-statuslight-border-width: var(--spectrum-border-width-100);
-
-    /* Size */
-    --spectrum-statuslight-height: var(--spectrum-component-height-100);
-    --spectrum-statuslight-dot-size: var(
-        --spectrum-status-light-dot-size-medium
-    );
-    --spectrum-statuslight-line-height: var(--spectrum-line-height-100);
-    --spectrum-statuslight-line-height-cjk: var(--spectrum-cjk-line-height-100);
-
-    /* Font */
-    --spectrum-statuslight-font-family: var(--spectrum-sans-font-family-stack);
-    --spectrum-statuslight-font-weight: var(--spectrum-regular-font-weight);
-    --spectrum-statuslight-font-style: var(--spectrum-default-font-style);
-    --spectrum-statuslight-font-size: var(--spectrum-font-size-100);
-
-    /* Space */
-    --spectrum-statuslight-spacing-dot-to-label: var(
-        --spectrum-status-light-text-to-visual-100
-    );
-    --spectrum-statuslight-spacing-top-to-dot: var(
-        --spectrum-status-light-top-to-dot-medium
-    );
-    --spectrum-statuslight-spacing-top-to-label: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-statuslight-spacing-bottom-to-label: var(
-        --spectrum-component-bottom-to-text-100
-    );
-
-    /* Color */
-    --spectrum-statuslight-content-color-default: var(
-        --spectrum-neutral-content-color-default
-    );
-    --spectrum-statuslight-subdued-content-color-default: var(
-        --spectrum-gray-600
-    );
-    --spectrum-statuslight-semantic-neutral-color: var(
-        --spectrum-neutral-visual-color
-    );
-    --spectrum-statuslight-semantic-negative-color: var(
-        --spectrum-negative-visual-color
-    );
-    --spectrum-statuslight-semantic-info-color: var(
-        --spectrum-informative-visual-color
-    );
-    --spectrum-statuslight-semantic-notice-color: var(
-        --spectrum-notice-visual-color
-    );
-    --spectrum-statuslight-semantic-positive-color: var(
-        --spectrum-positive-visual-color
-    );
-
-    /* Non-Semantic Colors */
-    --spectrum-statuslight-nonsemantic-yellow-color: var(
-        --spectrum-yellow-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-chartreuse-color: var(
-        --spectrum-chartreuse-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-celery-color: var(
-        --spectrum-celery-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-seafoam-color: var(
-        --spectrum-seafoam-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-cyan-color: var(
-        --spectrum-cyan-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-indigo-color: var(
-        --spectrum-indigo-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-purple-color: var(
-        --spectrum-purple-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-fuchsia-color: var(
-        --spectrum-fuchsia-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-magenta-color: var(
-        --spectrum-magenta-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-pink-color: var(
-        --spectrum-pink-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-turquoise-color: var(
-        --spectrum-turquoise-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-cinnamon-color: var(
-        --spectrum-cinnamon-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-brown-color: var(
-        --spectrum-brown-visual-color
-    );
-    --spectrum-statuslight-nonsemantic-silver-color: var(
-        --spectrum-silver-visual-color
-    );
-}
-
-.spectrum-StatusLight--sizeS {
-    --spectrum-statuslight-height: var(--spectrum-component-height-75);
-    --spectrum-statuslight-dot-size: var(
-        --spectrum-status-light-dot-size-small
-    );
-    --spectrum-statuslight-font-size: var(--spectrum-font-size-75);
-    --spectrum-statuslight-spacing-dot-to-label: var(
-        --spectrum-status-light-text-to-visual-75
-    );
-    --spectrum-statuslight-spacing-top-to-dot: var(
-        --spectrum-status-light-top-to-dot-small
-    );
-    --spectrum-statuslight-spacing-top-to-label: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-statuslight-spacing-bottom-to-label: var(
-        --spectrum-component-bottom-to-text-75
-    );
-}
-
-.spectrum-StatusLight--sizeL {
-    --spectrum-statuslight-height: var(--spectrum-component-height-200);
-    --spectrum-statuslight-dot-size: var(
-        --spectrum-status-light-dot-size-large
-    );
-    --spectrum-statuslight-font-size: var(--spectrum-font-size-200);
-    --spectrum-statuslight-spacing-dot-to-label: var(
-        --spectrum-status-light-text-to-visual-200
-    );
-    --spectrum-statuslight-spacing-top-to-dot: var(
-        --spectrum-status-light-top-to-dot-large
-    );
-    --spectrum-statuslight-spacing-top-to-label: var(
-        --spectrum-component-top-to-text-200
-    );
-    --spectrum-statuslight-spacing-bottom-to-label: var(
-        --spectrum-component-bottom-to-text-200
-    );
-}
-
-.spectrum-StatusLight--sizeXL {
-    --spectrum-statuslight-height: var(--spectrum-component-height-300);
-    --spectrum-statuslight-dot-size: var(
-        --spectrum-status-light-dot-size-extra-large
-    );
-    --spectrum-statuslight-font-size: var(--spectrum-font-size-300);
-    --spectrum-statuslight-spacing-dot-to-label: var(
-        --spectrum-status-light-text-to-visual-300
-    );
-    --spectrum-statuslight-spacing-top-to-dot: var(
-        --spectrum-status-light-top-to-dot-extra-large
-    );
-    --spectrum-statuslight-spacing-top-to-label: var(
-        --spectrum-component-top-to-text-300
-    );
-    --spectrum-statuslight-spacing-bottom-to-label: var(
-        --spectrum-component-bottom-to-text-300
-    );
-}
 
 :host {
-    display: flex;
+    display: block;
 }
 
 .spectrum-StatusLight {
+    --_swc-statuslight-top-to-text: var(
+        --swc-statuslight-top-to-text,
+        token('component-top-to-text-100')
+    );
+    --_swc-statuslight-bottom-to-text: var(
+        --swc-statuslight-bottom-to-text,
+        token('component-bottom-to-text-100')
+    );
+    --_swc-statuslight-top-to-dot: var(
+        --swc-statuslight-top-to-dot,
+        token('status-light-top-to-dot-medium')
+    );
+
     display: flex;
-    flex-direction: row;
+    gap: token('status-light-text-to-visual-100');
     align-items: flex-start;
-    min-block-size: var(--spectrum-statuslight-height);
-    padding-block-start: var(--spectrum-statuslight-spacing-top-to-label);
-    padding-block-end: var(--spectrum-statuslight-spacing-bottom-to-label);
-    padding-inline: 0;
+    min-block-size: var(
+        --swc-statuslight-height,
+        token('component-height-100')
+    );
+    padding-block-start: var(--_swc-statuslight-top-to-text);
+    padding-block-end: var(--_swc-statuslight-bottom-to-text);
     box-sizing: border-box;
-    font-size: var(--spectrum-statuslight-font-size);
-    font-weight: var(--spectrum-statuslight-font-weight);
-    font-family: var(--spectrum-statuslight-font-family);
-    font-style: var(--spectrum-statuslight-font-style);
-    line-height: var(--spectrum-statuslight-line-height);
-    color: var(--highcontrast-statuslight-content-color-default, var(--spectrum-statuslight-content-color-default));
+    font-size: var(--swc-statuslight-font-size, token('font-size-100'));
+    font-weight: token('regular-font-weight');
+    font-family: token('sans-font-family-stack');
+    font-style: token('default-font-style');
+    line-height: token('line-height-100');
+    color: var(
+        --swc-statuslight-content-color,
+        token('neutral-content-color-default')
+    );
 
     &:lang(ja),
     &:lang(zh),
     &:lang(ko) {
-        line-height: var(--spectrum-statuslight-line-height-cjk);
+        line-height: token('cjk-line-height-100');
     }
 
     /* Dot */
     &:before {
-        --spectrum-statuslight-spacing-computed-top-to-dot: calc(
-           var(--spectrum-statuslight-spacing-top-to-dot)
-            -
-            var(--spectrum-statuslight-spacing-top-to-label)
+        --_swc-statuslight-dot-size: var(
+            --swc-statuslight-dot-size,
+            token('status-light-dot-size-medium')
         );
 
         content: '';
+        box-sizing: border-box;
         flex-grow: 0;
         flex-shrink: 0;
         display: inline-block;
-        inline-size: var(--spectrum-statuslight-dot-size);
-        block-size: var(--spectrum-statuslight-dot-size);
-        border-radius: var(--spectrum-statuslight-corner-radius);
-        margin-block-start: var(--spectrum-statuslight-spacing-computed-top-to-dot);
-        margin-inline-end: var(--spectrum-statuslight-spacing-dot-to-label);
+        inline-size: var(--_swc-statuslight-dot-size);
+        block-size: var(--_swc-statuslight-dot-size);
+        border-radius: token('corner-radius-full');
+        background-color: var(--swc-statuslight-dot-color);
+        margin-block-start: calc(
+            var(--_swc-statuslight-top-to-dot) -
+                var(--_swc-statuslight-top-to-text)
+        );
     }
+}
+
+:host([size='s']) {
+    --swc-statuslight-top-to-text: token('component-top-to-text-75');
+    --swc-statuslight-bottom-to-text: token('component-bottom-to-text-75');
+    --swc-statuslight-top-to-dot: token('status-light-top-to-dot-small');
+    --swc-statuslight-height: token('component-height-75');
+    --swc-statuslight-dot-size: token('status-light-dot-size-small');
+    --swc-statuslight-font-size: token('font-size-75');
+}
+
+:host([size='l']) {
+    --swc-statuslight-top-to-text: token('component-top-to-text-200');
+    --swc-statuslight-bottom-to-text: token('component-bottom-to-text-200');
+    --swc-statuslight-top-to-dot: token('status-light-top-to-dot-large');
+    --swc-statuslight-height: token('component-height-200');
+    --swc-statuslight-dot-size: token('status-light-dot-size-large');
+    --swc-statuslight-font-size: token('font-size-200');
+}
+
+:host([size='xl']) {
+    --swc-statuslight-top-to-text: token('component-top-to-text-300');
+    --swc-statuslight-bottom-to-text: token('component-bottom-to-text-300');
+    --swc-statuslight-top-to-dot: token('status-light-top-to-dot-extra-large');
+    --swc-statuslight-height: token('component-height-300');
+    --swc-statuslight-dot-size: token('status-light-dot-size-extra-large');
+    --swc-statuslight-font-size: token('font-size-300');
 }
 
 /* Semantic Colors */
 .spectrum-StatusLight--neutral {
-    color: var(--highcontrast-statuslight-subdued-content-color-default, var(--spectrum-statuslight-subdued-content-color-default));
-
-    &:before {
-        background-color: var(--spectrum-statuslight-semantic-neutral-color);
-    }
+    --swc-statuslight-content-color: token('gray-600');
+    --swc-statuslight-dot-color: token('neutral-visual-color');
 }
 
-.spectrum-StatusLight--info:before {
-    background-color: var(--spectrum-statuslight-semantic-info-color);
+.spectrum-StatusLight--info {
+    --swc-statuslight-dot-color: token('informative-visual-color');
 }
 
-.spectrum-StatusLight--negative:before {
-    background-color: var(--spectrum-statuslight-semantic-negative-color);
+.spectrum-StatusLight--negative {
+    --swc-statuslight-dot-color: token('neutral-visual-color');
 }
 
-.spectrum-StatusLight--notice:before {
-    background-color: var(--spectrum-statuslight-semantic-notice-color);
+.spectrum-StatusLight--notice {
+    --swc-statuslight-dot-color: token('notice-visual-color');
 }
 
-.spectrum-StatusLight--positive:before {
-    background-color: var(--spectrum-statuslight-semantic-positive-color);
+.spectrum-StatusLight--positive {
+    --swc-statuslight-dot-color: token('positive-visual-color');
 }
 
 /* Non-Semantic Colors */
-.spectrum-StatusLight--yellow:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-yellow-color);
+.spectrum-StatusLight--yellow {
+    --swc-statuslight-dot-color: token('yellow-visual-color');
 }
 
-.spectrum-StatusLight--chartreuse:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-chartreuse-color);
+.spectrum-StatusLight--chartreuse {
+    --swc-statuslight-dot-color: token('chartreuse-visual-color');
 }
 
-.spectrum-StatusLight--celery:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-celery-color);
+.spectrum-StatusLight--celery {
+    --swc-statuslight-dot-color: token('celery-visual-color');
 }
 
-.spectrum-StatusLight--seafoam:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-seafoam-color);
+.spectrum-StatusLight--seafoam {
+    --swc-statuslight-dot-color: token('seafoam-visual-color');
 }
 
-.spectrum-StatusLight--cyan:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-cyan-color);
+.spectrum-StatusLight--cyan {
+    --swc-statuslight-dot-color: token('cyan-visual-color');
 }
 
-.spectrum-StatusLight--indigo:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-indigo-color);
+.spectrum-StatusLight--indigo {
+    --swc-statuslight-dot-color: token('indigo-visual-color');
 }
 
-.spectrum-StatusLight--purple:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-purple-color);
+.spectrum-StatusLight--purple {
+    --swc-statuslight-dot-color: token('purple-visual-color');
 }
 
-.spectrum-StatusLight--fuchsia:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-fuchsia-color);
+.spectrum-StatusLight--fuchsia {
+    --swc-statuslight-dot-color: token('fuchsia-visual-color');
 }
 
-.spectrum-StatusLight--magenta:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-magenta-color);
+.spectrum-StatusLight--magenta {
+    --swc-statuslight-dot-color: token('magenta-visual-color');
 }
 
-.spectrum-StatusLight--pink:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-pink-color);
+.spectrum-StatusLight--pink {
+    --swc-statuslight-dot-color: token('pink-visual-color');
 }
 
-.spectrum-StatusLight--turquoise:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-turquoise-color);
+.spectrum-StatusLight--turquoise {
+    --swc-statuslight-dot-color: token('turquoise-visual-color');
 }
 
-.spectrum-StatusLight--cinnamon:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-cinnamon-color);
+.spectrum-StatusLight--cinnamon {
+    --swc-statuslight-dot-color: token('cinnamon-visual-color');
 }
 
-.spectrum-StatusLight--brown:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-brown-color);
+.spectrum-StatusLight--brown {
+    --swc-statuslight-dot-color: token('brown-visual-color');
 }
 
-.spectrum-StatusLight--silver:before {
-    background-color: var(--spectrum-statuslight-nonsemantic-silver-color);
+.spectrum-StatusLight--silver {
+    --swc-statuslight-dot-color: token('silver-visual-color');
 }
 
 @media (forced-colors: active) {
     .spectrum-StatusLight {
-        --highcontrast-statuslight-content-color-default: CanvasText;
-        --highcontrast-statuslight-subdued-content-color-default: CanvasText;
+        --swc-statuslight-content-color: CanvasText;
 
         forced-color-adjust: none;
 
-        /* Dot */
         &:before {
-            forced-color-adjust: none;
-            border: var(--spectrum-statuslight-border-width) solid ButtonText;
+            border: token('border-width-100') solid;
         }
     }
 }
