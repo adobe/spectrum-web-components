@@ -8,19 +8,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
     stories: [
         {
-            directory: 'get-started',
-            files: '*.mdx',
-            titlePrefix: 'Get Started',
-        },
-        {
             directory: '../components',
-            files: '*/stories/*.stories.ts',
+            files: '**/*.stories.ts',
             titlePrefix: 'Components',
         },
         {
-            directory: 'guides',
+            directory: 'get-started',
             files: '*.mdx',
-            titlePrefix: 'Guides',
+            titlePrefix: 'Get Started',
         },
         {
             directory: 'guides',
@@ -28,12 +23,31 @@ const config = {
             titlePrefix: 'Guides',
         },
     ],
+    docs: {
+        defaultName: 'README',
+    },
     framework: '@storybook/web-components-vite',
+    tags: {
+        a11y: {
+            defaultFilterSelection: 'exclude',
+        },
+        usage: {
+            defaultFilterSelection: 'exclude',
+        },
+        examples: {
+            defaultFilterSelection: 'exclude',
+        },
+    },
     core: {
         disableTelemetry: true,
     },
     addons: [
-        '@storybook/addon-docs',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                transcludeMarkdown: true,
+            },
+        },
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',

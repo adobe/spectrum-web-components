@@ -16,6 +16,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/swc/badge';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import '@adobe/swc/badge';
 
@@ -51,7 +52,8 @@ argTypes.fixed = {
 args['default-slot'] = 'Badge';
 
 /**
- * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention. There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
+ * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.
+ * There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
  *
  * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
  */
@@ -71,9 +73,9 @@ const meta: Meta = {
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
 
 type BadgeVariant = typeof Badge.prototype.variant;
 type BadgeSize = typeof Badge.prototype.size;
@@ -85,7 +87,12 @@ export const Default: Story = {
     args: {
         size: 'm',
     },
+    tags: ['autodocs', 'dev'],
 };
+
+// ─────────────────────
+//    USAGE STORIES
+// ─────────────────────
 
 /**
  * Badges can be rendered with or without an icon. Icons can be passed to the component using the `icon` slot and can be sourced from either the Spectrum icon library or a custom icon library as needed.
@@ -95,7 +102,7 @@ export const WithIcon: Story = {
         ['icon-slot']: '✓',
     },
     // Removes the story from the side navigation while keeping in the docs view
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -112,7 +119,7 @@ export const SemanticVariants: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -135,7 +142,7 @@ export const Outline: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -152,7 +159,7 @@ export const ColorVariants: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 export const Sizes: Story = {
@@ -166,7 +173,7 @@ export const Sizes: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -183,20 +190,12 @@ export const Subtle: Story = {
                 `
             )
         ),
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /* @todo Pull this up into a decorator for all stories to leverage */
 function CONTAINER(content: TemplateResult<1>[]): TemplateResult {

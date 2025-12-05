@@ -56,10 +56,10 @@ const preview = {
             toc: {
                 contentsSelector: '.sbdocs-content',
                 headingSelector: 'h2, h3',
-                ignoreSelector: '#primary',
+                ignoreSelector: '.sbdocs-subtitle',
                 disable: false,
                 unsafeTocbotOptions: {
-                    orderedList: false,
+                    // orderedList: false,
                 },
             },
         },
@@ -98,7 +98,7 @@ const preview = {
             },
         },
     },
-    tags: ['autodocs'],
+    tags: ['!autodocs', '!dev'],
 };
 
 export default preview;

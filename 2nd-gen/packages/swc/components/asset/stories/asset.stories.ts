@@ -35,6 +35,7 @@ type Story = StoryObj;
 
 export const Default: Story = {
     render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
+    tags: ['autodocs', 'dev'],
 
     // render: () => html`
     //     <swc-asset style="height: 128px">
