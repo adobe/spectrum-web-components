@@ -81,6 +81,15 @@ const preview = {
                         'Style guide',
                         'Project planning',
                         'Accessibility guides',
+                        [
+                            'Overview',
+                            'Semantic HTML and ARIA', 
+                            'Accessible pattern libraries', 
+                            'Keyboard testing', 
+                            'Screen reader testing', 
+                            'Wave toolbar testing', 
+                            'Accessibility resources'
+                        ],
                         'React wrappers',
                     ],
                     'Resources',
