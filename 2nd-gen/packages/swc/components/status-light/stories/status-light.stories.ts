@@ -60,8 +60,8 @@ type StatusLightVariant = typeof StatusLight.prototype.variant;
 type StatusLightSize = typeof StatusLight.prototype.size;
 
 /**
- * Status lights should always include a label with text that clearly communicates the kind of status being shown. Color
- * alone is not enough to communicate the status. Do not change the text color to match the dot.
+ * An `<sp-status-light>` is a great way to convey semantic meaning, such as statuses and categories.
+ * It provides visual indicators through colored dots accompanied by descriptive text.
  */
 export const Playground: Story = {
     tags: ['autodocs', 'dev'],
