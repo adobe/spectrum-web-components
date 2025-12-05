@@ -26,6 +26,8 @@
     --_swc-badge-border-width-deduction: calc(
         var(--_swc-badge-border-width) * 2
     );
+    --_swc-badge-padding-block: token('component-top-to-text-100')
+        token('component-bottom-to-text-100');
 
     display: inline-flex;
     align-items: center;
@@ -47,10 +49,6 @@
         var(--swc-badge-padding-inline, token('component-edge-to-text-100')) -
             var(--_swc-badge-border-width-deduction)
     );
-
-    --_swc-badge-padding-block: token('component-top-to-text-100')
-        token('component-bottom-to-text-100');
-
     padding-block: calc(
         var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) -
             var(--_swc-badge-border-width-deduction)
@@ -68,12 +66,12 @@
     font-size: var(--swc-badge-font-size, token('font-size-100'));
     font-weight: token('medium-font-weight');
     line-height: var(--swc-badge-line-height, token('line-height-100'));
-}
 
-.spectrum-Badge-label:lang(ja),
-.spectrum-Badge-label:lang(ko),
-.spectrum-Badge-label:lang(zh) {
-    --swc-badge-line-height: token('cjk-line-height-100');
+    &:lang(ja),
+    &:lang(zh),
+    &:lang(ko) {
+        --swc-badge-line-height: token('cjk-line-height-100');
+    }
 }
 
 .spectrum-Badge-icon {
@@ -142,254 +140,266 @@
     border-end-end-radius: 0;
 }
 
-:host([variant='celery']),
-:host([variant='chartreuse']),
-:host([variant='notice']),
-:host([variant='orange']),
-:host([variant='yellow']) {
+.spectrum-Badge--celery,
+.spectrum-Badge--chartreuse,
+.spectrum-Badge--notice,
+.spectrum-Badge--orange,
+.spectrum-Badge--yellow {
     --swc-badge-label-icon-color: token('black');
 }
 
-:host([variant='neutral']) {
+/* NOTE: `accent` is the default color */
+
+.spectrum-Badge--neutral {
     --swc-badge-background-color: token(
         'neutral-subdued-background-color-default'
     );
 }
 
-:host([variant='informative']) {
+.spectrum-Badge--informative {
     --swc-badge-background-color: token('informative-background-color-default');
 }
 
-:host([variant='negative']) {
+.spectrum-Badge--negative {
     --swc-badge-background-color: token('negative-background-color-default');
 }
 
-:host([variant='positive']) {
+.spectrum-Badge--positive {
     --swc-badge-background-color: token('positive-background-color-default');
 }
 
-:host([variant='notice']) {
+.spectrum-Badge--notice {
     --swc-badge-background-color: token('notice-background-color-default');
 }
 
-:host([variant='gray']) {
+.spectrum-Badge--gray {
     --swc-badge-background-color: token('gray-background-color-default');
 }
 
-:host([variant='red']) {
+.spectrum-Badge--red {
     --swc-badge-background-color: token('red-background-color-default');
 }
 
-:host([variant='orange']) {
+.spectrum-Badge--orange {
     --swc-badge-background-color: token('orange-background-color-default');
 }
 
-:host([variant='yellow']) {
+.spectrum-Badge--yellow {
     --swc-badge-background-color: token('yellow-background-color-default');
 }
 
-:host([variant='chartreuse']) {
+.spectrum-Badge--chartreuse {
     --swc-badge-background-color: token('chartreuse-background-color-default');
 }
 
-:host([variant='celery']) {
+.spectrum-Badge--celery {
     --swc-badge-background-color: token('celery-background-color-default');
 }
 
-:host([variant='green']) {
+.spectrum-Badge--green {
     --swc-badge-background-color: token('green-background-color-default');
 }
 
-:host([variant='seafoam']) {
+.spectrum-Badge--seafoam {
     --swc-badge-background-color: token('seafoam-background-color-default');
 }
 
-:host([variant='cyan']) {
+.spectrum-Badge--cyan {
     --swc-badge-background-color: token('cyan-background-color-default');
 }
 
-:host([variant='blue']) {
+.spectrum-Badge--blue {
     --swc-badge-background-color: token('blue-background-color-default');
 }
 
-:host([variant='indigo']) {
+.spectrum-Badge--indigo {
     --swc-badge-background-color: token('indigo-background-color-default');
 }
 
-:host([variant='purple']) {
+.spectrum-Badge--purple {
     --swc-badge-background-color: token('purple-background-color-default');
 }
 
-:host([variant='fuchsia']) {
+.spectrum-Badge--fuchsia {
     --swc-badge-background-color: token('fuchsia-background-color-default');
 }
 
-:host([variant='magenta']) {
+.spectrum-Badge--magenta {
     --swc-badge-background-color: token('magenta-background-color-default');
 }
 
-:host([variant='pink']) {
+.spectrum-Badge--pink {
     --swc-badge-background-color: token('pink-background-color-default');
 }
 
-:host([variant='turquoise']) {
+.spectrum-Badge--turquoise {
     --swc-badge-background-color: token('turquoise-background-color-default');
 }
 
-:host([variant='brown']) {
+.spectrum-Badge--brown {
     --swc-badge-background-color: token('brown-background-color-default');
 }
 
-:host([variant='cinnamon']) {
+.spectrum-Badge--cinnamon {
     --swc-badge-background-color: token('cinnamon-background-color-default');
 }
 
-:host([variant='silver']) {
+.spectrum-Badge--silver {
     --swc-badge-background-color: token('silver-background-color-default');
 }
 
-:host([subtle]) {
+.spectrum-Badge--subtle {
     --swc-badge-label-icon-color: token('gray-1000');
-}
 
-:host([variant='neutral'][subtle]) {
-    --swc-badge-background-color: token(
-        'neutral-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--neutral {
+        --swc-badge-background-color: token(
+            'neutral-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='accent']) {
-    --swc-badge-background-color: token(
-        'accent-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--accent {
+        --swc-badge-background-color: token(
+            'accent-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='informative']) {
-    --swc-badge-background-color: token(
-        'informative-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--informative {
+        --swc-badge-background-color: token(
+            'informative-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='negative']) {
-    --swc-badge-background-color: token(
-        'negative-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--negative {
+        --swc-badge-background-color: token(
+            'negative-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='positive']) {
-    --swc-badge-background-color: token(
-        'positive-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--positive {
+        --swc-badge-background-color: token(
+            'positive-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='notice']) {
-    --swc-badge-background-color: token(
-        'notice-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--notice {
+        --swc-badge-background-color: token(
+            'notice-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='gray']) {
-    --swc-badge-background-color: token('gray-subtle-background-color-default');
-}
+    &.spectrum-Badge--gray {
+        --swc-badge-background-color: token(
+            'gray-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='red']) {
-    --swc-badge-background-color: token('red-subtle-background-color-default');
-}
+    &.spectrum-Badge--red {
+        --swc-badge-background-color: token(
+            'red-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='orange']) {
-    --swc-badge-background-color: token(
-        'orange-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--orange {
+        --swc-badge-background-color: token(
+            'orange-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='yellow']) {
-    --swc-badge-background-color: token(
-        'yellow-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--yellow {
+        --swc-badge-background-color: token(
+            'yellow-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='chartreuse']) {
-    --swc-badge-background-color: token(
-        'chartreuse-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--chartreuse {
+        --swc-badge-background-color: token(
+            'chartreuse-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='celery']) {
-    --swc-badge-background-color: token(
-        'celery-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--celery {
+        --swc-badge-background-color: token(
+            'celery-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='green']) {
-    --swc-badge-background-color: token(
-        'green-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--green {
+        --swc-badge-background-color: token(
+            'green-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='seafoam']) {
-    --swc-badge-background-color: token(
-        'seafoam-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--seafoam {
+        --swc-badge-background-color: token(
+            'seafoam-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='cyan']) {
-    --swc-badge-background-color: token('cyan-subtle-background-color-default');
-}
+    &.spectrum-Badge--cyan {
+        --swc-badge-background-color: token(
+            'cyan-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='blue']) {
-    --swc-badge-background-color: token('blue-subtle-background-color-default');
-}
+    &.spectrum-Badge--blue {
+        --swc-badge-background-color: token(
+            'blue-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='indigo']) {
-    --swc-badge-background-color: token(
-        'indigo-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--indigo {
+        --swc-badge-background-color: token(
+            'indigo-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='purple']) {
-    --swc-badge-background-color: token(
-        'purple-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--purple {
+        --swc-badge-background-color: token(
+            'purple-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='fuchsia']) {
-    --swc-badge-background-color: token(
-        'fuchsia-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--fuchsia {
+        --swc-badge-background-color: token(
+            'fuchsia-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='magenta']) {
-    --swc-badge-background-color: token(
-        'magenta-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--magenta {
+        --swc-badge-background-color: token(
+            'magenta-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='pink']) {
-    --swc-badge-background-color: token('pink-subtle-background-color-default');
-}
+    &.spectrum-Badge--pink {
+        --swc-badge-background-color: token(
+            'pink-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='turquoise']) {
-    --swc-badge-background-color: token(
-        'turquoise-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--turquoise {
+        --swc-badge-background-color: token(
+            'turquoise-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='brown']) {
-    --swc-badge-background-color: token(
-        'brown-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--brown {
+        --swc-badge-background-color: token(
+            'brown-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='cinnamon']) {
-    --swc-badge-background-color: token(
-        'cinnamon-subtle-background-color-default'
-    );
-}
+    &.spectrum-Badge--cinnamon {
+        --swc-badge-background-color: token(
+            'cinnamon-subtle-background-color-default'
+        );
+    }
 
-:host([subtle][variant='silver']) {
-    --swc-badge-background-color: token(
-        'silver-subtle-background-color-default'
-    );
+    &.spectrum-Badge--silver {
+        --swc-badge-background-color: token(
+            'silver-subtle-background-color-default'
+        );
+    }
 }
 
 .spectrum-Badge--outline:is(
@@ -410,26 +420,28 @@
     );
 }
 
-:host([outline][variant='neutral']) {
-    --swc-badge-border-color: token('neutral-visual-color');
-}
+.spectrum-Badge--outline {
+    &.spectrum-Badge--neutral {
+        --swc-badge-border-color: token('neutral-visual-color');
+    }
 
-:host([outline][variant='accent']) {
-    --swc-badge-border-color: token('accent-visual-color');
-}
+    &.spectrum-Badge--accent {
+        --swc-badge-border-color: token('accent-visual-color');
+    }
 
-:host([outline][variant='informative']) {
-    --swc-badge-border-color: token('informative-visual-color');
-}
+    &.spectrum-Badge--informative {
+        --swc-badge-border-color: token('informative-visual-color');
+    }
 
-:host([outline][variant='negative']) {
-    --swc-badge-border-color: token('negative-visual-color');
-}
+    &.spectrum-Badge--negative {
+        --swc-badge-border-color: token('negative-visual-color');
+    }
 
-:host([outline][variant='positive']) {
-    --swc-badge-border-color: token('positive-visual-color');
-}
+    &.spectrum-Badge--positive {
+        --swc-badge-border-color: token('positive-visual-color');
+    }
 
-:host([outline][variant='notice']) {
-    --swc-badge-border-color: token('notice-visual-color');
+    &.spectrum-Badge--notice {
+        --swc-badge-border-color: token('notice-visual-color');
+    }
 }
