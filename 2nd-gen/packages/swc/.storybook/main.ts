@@ -1,6 +1,7 @@
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { mergeConfig } from 'vite';
+import remarkGfm from 'remark-gfm';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -46,6 +47,11 @@ const config = {
             name: '@storybook/addon-docs',
             options: {
                 transcludeMarkdown: true,
+                mdxPluginOptions: {
+                    mdxCompileOptions: {
+                        remarkPlugins: [remarkGfm],
+                    },
+                },
             },
         },
         '@storybook/addon-a11y',

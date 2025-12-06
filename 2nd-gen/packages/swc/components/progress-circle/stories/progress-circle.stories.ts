@@ -66,6 +66,12 @@ const meta: Meta = {
             handles: events,
         },
     },
+    decorators: [
+        (story) =>
+            html`<div style="display: flex; gap: 24px; align-items: center;">
+                ${story()}
+            </div>`,
+    ],
     tags: ['migrated'],
 };
 
@@ -93,50 +99,28 @@ export const Playground: Story = {
  * This is the description fo the sizes story
  */
 export const Sizes: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
-                .progress=${25}
-                size="s"
-                label="Small progress"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${25}
-                size="m"
-                label="Medium progress"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${25}
-                size="l"
-                label="Large progress"
-            ></swc-progress-circle>
-        </div>
+    render: (args) => html`
+        ${template({ ...args, size: 's', label: 'Small progress' })}
+        ${template({ ...args, size: 'm', label: 'Medium progress' })}
+        ${template({ ...args, size: 'l', label: 'Large progress' })}
     `,
     tags: ['usage'],
+    args: {
+        progress: 25,
+    },
 };
 
 export const ProgressValues: Story = {
     render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
-                .progress=${25}
-                label="25% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${50}
-                label="50% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${75}
-                label="75% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${100}
-                label="Complete"
-            ></swc-progress-circle>
-        </div>
+        ${template({ ...args, progress: 25, label: '25% progress' })}
+        ${template({ ...args, progress: 50, label: '50% progress' })}
+        ${template({ ...args, progress: 75, label: '75% progress' })}
+        ${template({ ...args, progress: 100, label: '100% progress' })}
     `,
     tags: ['usage'],
+    args: {
+        size: 'm',
+    },
 };
 
 export const Indeterminate: Story = {
@@ -163,86 +147,32 @@ export const Indeterminate: Story = {
 };
 
 export const StaticWhite: Story = {
-    render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-    `,
+    render: (args) => template(args),
+    args: {
+        'static-color': 'white',
+        progress: 60,
+        label: 'Loading on dark background',
+    },
     tags: ['usage'],
 };
 
 export const StaticBlack: Story = {
-    render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-    `,
+    render: (args) => template(args),
+    args: {
+        'static-color': 'black',
+        progress: 60,
+        label: 'Loading on dark background',
+    },
     tags: ['usage'],
 };
 
 export const IndeterminateStaticWhite: Story = {
-    render: () => html`
-        <div
-            style="background-color: rgba(0,0,0,0.4); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-    `,
+    render: (args) => template(args),
+    args: {
+        'static-color': 'white',
+        indeterminate: true,
+        label: 'Loading on dark background',
+    },
     tags: ['usage'],
 };
 

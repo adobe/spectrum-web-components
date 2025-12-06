@@ -8,8 +8,7 @@ import {
     Description,
     Subtitle,
 } from '@storybook/addon-docs/blocks';
-import { SpectrumDocs } from './blocks/SpectrumDocs';
-import { SpectrumStories } from './blocks/SpectrumStories';
+import { SpectrumDocs, SpectrumStories } from './blocks';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -19,32 +18,18 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 <Title />
 <Subtitle />
 
-<sp-tabs id="component-doc-tabs" size="xl" selected="overview" auto label="Component Documentation">
-    <sp-tab value="overview">Overview</sp-tab>
-    <sp-tab value="usage">Usage</sp-tab>
-    <sp-tab value="accessibility">Accessibility</sp-tab>
-    <sp-tab value="api">API</sp-tab>
-    <sp-tab value="examples">Examples</sp-tab>
-    <sp-tab-panel value="overview" style={{ flexDirection: 'column' }}>
-        <Description />
-        <Primary />
-        <Controls />
-    </sp-tab-panel>
-    <sp-tab-panel value="usage" style={{ flexDirection: 'column' }}>
-        <SpectrumDocs tag="usage" />
-    </sp-tab-panel>
-    <sp-tab-panel value="accessibility" style={{ flexDirection: 'column' }}>
-        <SpectrumDocs tag="a11y" />
-    </sp-tab-panel>
-    <sp-tab-panel value="api" style={{ flexDirection: 'column' }}>
-        <ArgTypes />
-    </sp-tab-panel>
-    <sp-tab-panel value="examples" style={{ flexDirection: 'column' }}>
-        <SpectrumDocs tag="examples" />
-        <Stories />
-    </sp-tab-panel>
+<Description />
+<Primary />
 
-</sp-tabs>
+<SpectrumDocs tag="usage" />
+
+<SpectrumDocs tag="a11y" />
+
+<Primary />
+<Controls />
+
+<SpectrumDocs tag="examples" />
+<Stories />
 
 ## Feedback
 

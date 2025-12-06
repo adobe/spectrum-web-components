@@ -3,6 +3,7 @@ import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
+import './assets/base.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -10,8 +11,9 @@ import {
     setStorybookHelpersConfig,
     type Options,
 } from '@wc-toolkit/storybook-helpers';
+import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
-import { withStaticColorBackground } from './decorators/static-color-background';
+import { withStaticColorBackground } from './decorators';
 
 const options: Options = {
     categoryOrder: [
@@ -38,6 +40,8 @@ const preview = {
         layout: 'centered',
         controls: {
             expanded: true,
+            hideNoControlsWarning: true,
+            sort: 'requiredFirst',
             matchers: {
                 color: /(background|color)$/i,
                 date: /Date$/i,
@@ -50,17 +54,35 @@ const preview = {
                 ],
             },
         },
+        html: {
+            root: '[data-html-preview]:first-of-type > *',
+            removeComments: true,
+            prettier: {
+                tabWidth: 2,
+                useTabs: false,
+            },
+            highlighter: {
+                showLineNumbers: false,
+                wrapLines: true,
+            },
+        },
         docs: {
             codePanel: true,
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
-                headingSelector: 'h2, h3',
+                headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
                 ignoreSelector: '.sbdocs-subtitle',
                 disable: false,
                 unsafeTocbotOptions: {
-                    // orderedList: false,
+                    orderedList: false,
                 },
+            },
+            // story: { inline: true },
+            source: {
+                excludeDecorators: true,
+                type: 'auto',
+                language: 'html',
             },
         },
         options: {
@@ -84,12 +106,12 @@ const preview = {
                         'Accessibility guides',
                         [
                             'Overview',
-                            'Semantic HTML and ARIA', 
-                            'Accessible pattern libraries', 
-                            'Keyboard testing', 
-                            'Screen reader testing', 
-                            'Wave toolbar testing', 
-                            'Accessibility resources'
+                            'Semantic HTML and ARIA',
+                            'Accessible pattern libraries',
+                            'Keyboard testing',
+                            'Screen reader testing',
+                            'Wave toolbar testing',
+                            'Accessibility resources',
                         ],
                         'React wrappers',
                     ],
@@ -99,6 +121,7 @@ const preview = {
         },
     },
     tags: ['!autodocs', '!dev'],
+    loaders: [FontLoader],
 };
 
 export default preview;

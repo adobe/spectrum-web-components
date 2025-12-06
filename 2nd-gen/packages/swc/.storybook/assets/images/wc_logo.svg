@@ -1,0 +1,28 @@
+<svg viewBox="0 -23.5 256 256" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
+        <defs>
+                <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="prefix__a">
+                        <stop stop-color="#2A3B8F" offset="0%" />
+                        <stop stop-color="#29ABE2" offset="100%" />
+                </linearGradient>
+                <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="prefix__b">
+                        <stop stop-color="#2A3B8F" offset="0%" />
+                        <stop stop-color="#29ABE2" offset="100%" />
+                </linearGradient>
+                <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="prefix__c">
+                        <stop stop-color="#B4D44E" offset="0%" />
+                        <stop stop-color="#E7F716" offset="100%" />
+                </linearGradient>
+                <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="prefix__d">
+                        <stop stop-color="#B4D44E" offset="0%" />
+                        <stop stop-color="#E7F716" offset="100%" />
+                </linearGradient>
+        </defs>
+        <path fill="#166DA5" d="M255.997 104.029l-27.805 46.82-38.991-47.46 38.991-46.181z" />
+        <path fill="#8FDB69" d="M225.156 158.839l-42.347-50.656-25.408 42.507 39.47 57.687z" />
+        <path fill="#166DA5" d="M224.676 48.898l-41.867 50.816-25.408-42.506L196.871.16z" />
+        <path fill="url(#prefix__a)" opacity=".95" d="M96.997 48.898h127.679L196.552.16h-71.43z" />
+        <path fill="url(#prefix__b)" opacity=".95" d="M182.809 99.874h70.631l-25.408-42.826h-70.791" />
+        <path fill="url(#prefix__c)" opacity=".95" d="M225.156 158.999H96.838l28.124 48.739h71.909z" />
+        <path fill="#010101" d="M124.962 207.738L64.878 103.869 125.761 0H59.924L0 103.869l59.924 103.869z" />
+        <path fill="url(#prefix__d)" opacity=".95" d="M182.809 108.024h70.631l-25.408 42.825h-70.791" />
+</svg>
