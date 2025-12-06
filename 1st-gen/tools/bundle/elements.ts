@@ -98,4 +98,5 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
 import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
 import '@spectrum-web-components/tray/sp-tray.js';
+import '@spectrum-web-components/truncated/sp-truncated.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
