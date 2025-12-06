@@ -21,18 +21,18 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
 import {
     Overlay,
     OverlayTrigger,
     Placement,
 } from '@spectrum-web-components/overlay';
-import { RadioGroup } from '@spectrum-web-components/radio';
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import { RadioGroup } from '@spectrum-web-components/radio';
+import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

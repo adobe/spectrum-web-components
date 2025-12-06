@@ -21,6 +21,14 @@ export enum InteractionTypes {
 
 export const lastInteractionType = Symbol('lastInteractionType');
 
+/**
+ * Configuration options for creating an InteractionController.
+ *
+ * @typedef {Object} ControllerOptions
+ * @property {AbstractOverlay} [overlay] - The overlay element to control. Can be undefined for lazy initialization.
+ * @property {function(AbstractOverlay): void} [handleOverlayReady] - Callback invoked when overlay is assigned to the controller.
+ * @property {boolean} [isPersistent=false] - When `true`, initializes event listeners immediately in constructor. When `false`, delays until `hostConnected()`.
+ */
 export type ControllerOptions = {
     overlay?: AbstractOverlay;
     handleOverlayReady?: (overlay: AbstractOverlay) => void;
@@ -31,6 +39,43 @@ type InteractionTarget = HTMLElement & {
     [lastInteractionType]?: InteractionTypes;
 };
 
+/**
+ * Base class for overlay interaction controllers.
+ *
+ * Interaction controllers manage the lifecycle of overlays based on user interactions
+ * (click, hover, longpress). They handle:
+ * - Event binding to trigger elements
+ * - Overlay open/close state management
+ * - ARIA relationship management for accessibility
+ * - Lazy overlay creation and initialization
+ *
+ * **Lifecycle:**
+ * 1. **Construction** - Controller created with target element and options
+ * 2. **Initialization** - Event listeners bound (immediate if `isPersistent`, otherwise on `hostConnected`)
+ * 3. **Overlay Assignment** - Overlay element assigned, `initOverlay()` called
+ * 4. **Description Preparation** - ARIA relationships established via `prepareDescription()`
+ * 5. **Cleanup** - `abort()` releases listeners and descriptions
+ *
+ * **Subclasses:**
+ * - {@link ClickController} - Handles click/tap interactions
+ * - {@link HoverController} - Handles hover and focus interactions with delayed close
+ * - {@link LongpressController} - Handles longpress gestures and keyboard shortcuts
+ *
+ * @implements {ReactiveController}
+ *
+ * @example Basic usage (from Overlay.ts)
+ * ```typescript
+ * import { strategies } from './strategies.js';
+ *
+ * // Create appropriate controller based on interaction type
+ * this.strategy = new strategies[this.triggerInteraction](
+ *   this.triggerElement as HTMLElement,
+ *   { overlay: this }
+ * );
+ * ```
+ *
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#interaction-controllers | Architecture: Interaction Controllers}
+ */
 export class InteractionController implements ReactiveController {
     abortController!: AbortController;
 
@@ -74,6 +119,7 @@ export class InteractionController implements ReactiveController {
                 this.overlay.open = true;
                 this.target[lastInteractionType] = this.type;
             });
+        // eslint-disable-next-line import/no-extraneous-dependencies
         import('@spectrum-web-components/overlay/sp-overlay.js');
     }
 

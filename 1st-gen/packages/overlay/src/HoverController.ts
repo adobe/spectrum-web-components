@@ -20,17 +20,88 @@ import {
     lastInteractionType,
 } from './InteractionController.js';
 
+/**
+ * Manages hover and focus interactions for overlay triggers.
+ *
+ * The HoverController handles opening overlays on mouseenter/focus and closing them
+ * after a delay when the pointer leaves. It implements sophisticated logic to handle
+ * the transition between trigger and overlay, allowing users to move their mouse
+ * into the overlay content before it closes.
+ *
+ * **Behavior:**
+ * - Opens on `pointerenter` or keyboard `focus` (with `:focus-visible`)
+ * - Closes after 300ms delay when pointer leaves both trigger and overlay
+ * - Supports keyboard navigation with Tab and Escape keys
+ * - Manages `aria-describedby` relationships for accessibility
+ *
+ * **State Tracking:**
+ * - `hovering` - Mouse is over trigger or overlay
+ * - `targetFocused` - Trigger has keyboard focus
+ * - `overlayFocused` - Focus is within overlay content
+ * - `hoverTimeout` - Delay before closing (300ms)
+ *
+ * **Event Handling:**
+ * - Trigger: `pointerenter`, `pointerleave`, `focusin`, `focusout`, `keyup`
+ * - Overlay: `pointerenter`, `pointerleave`, `focusin`, `focusout`, `keyup`
+ *
+ * **Used by:**
+ * - `<sp-overlay trigger="id@hover" type="hint">` - Non-interactive tooltips
+ * - `<overlay-trigger>` with `hover-content` slot (always uses `hint` type)
+ *
+ * @extends {InteractionController}
+ *
+ * @example Basic tooltip
+ * ```html
+ * <sp-button id="help-btn">Help</sp-button>
+ * <sp-overlay trigger="help-btn@hover" type="hint" placement="top" delayed>
+ *   <sp-tooltip>Helpful information</sp-tooltip>
+ * </sp-overlay>
+ * ```
+ *
+ * @example Keyboard accessible tooltip
+ * ```html
+ * <!-- Tooltip shows on both hover and keyboard focus -->
+ * <sp-button id="save-btn">Save</sp-button>
+ * <sp-overlay trigger="save-btn@hover" type="hint" placement="bottom">
+ *   <sp-tooltip>Save your changes (Ctrl+S)</sp-tooltip>
+ * </sp-overlay>
+ * ```
+ *
+ * @see {@link ClickController} for click interactions
+ * @see {@link LongpressController} for longpress interactions
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#interaction-controllers | Architecture Documentation}
+ */
 export class HoverController extends InteractionController {
     override type = InteractionTypes.hover;
 
+    /**
+     * Stores original element IDs for cleanup.
+     * @private
+     */
     private elementIds: string[] = [];
 
+    /**
+     * Tracks whether the trigger element has keyboard focus.
+     * @private
+     */
     private targetFocused = false;
 
+    /**
+     * Timeout handle for delayed close (300ms).
+     * @private
+     */
     private hoverTimeout?: ReturnType<typeof setTimeout>;
 
+    /**
+     * Tracks whether mouse is hovering over trigger or overlay.
+     * @private
+     */
     private hovering = false;
 
+    /**
+     * Tracks whether focus is within the overlay content.
+     * @private
+     */
     private overlayFocused = false;
 
     handleKeyup(event: KeyboardEvent): void {
