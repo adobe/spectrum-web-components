@@ -75,10 +75,10 @@ const preview = {
                 ignoreSelector: '.sbdocs-subtitle',
                 disable: false,
                 unsafeTocbotOptions: {
-                    orderedList: false,
+                    // orderedList: false,
                 },
             },
-            // story: { inline: true },
+            story: { inline: true },
             source: {
                 excludeDecorators: true,
                 type: 'auto',

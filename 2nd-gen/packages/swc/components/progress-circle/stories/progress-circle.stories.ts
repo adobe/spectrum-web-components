@@ -30,10 +30,10 @@ const { events, args, argTypes, template } = getStorybookHelpers(
  * @todo Blurring the range control seems to cause a catastrophic Storybook
  * render failure, so disabling for now.
  */
-// argTypes.progress = {
-//     ...argTypes.progress,
-//     control: { type: 'range', min: 0, max: 100, step: 1 },
-// };
+argTypes.progress = {
+    ...argTypes.progress,
+    control: { type: 'number', min: 0, max: 100, step: 1 },
+};
 
 argTypes.size = {
     ...argTypes.size,
@@ -95,6 +95,23 @@ export const Playground: Story = {
 //    USAGE STORIES
 // ─────────────────────
 
+export const Anatomy: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 24px; align-items: center;">
+            <swc-progress-circle
+                progress=${25}
+                size="l"
+                label="Loading..."
+            ></swc-progress-circle>
+            <swc-progress-circle
+                indeterminate
+                label="Saving progress"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['autodocs', '!dev'],
+};
+
 /**
  * This is the description fo the sizes story
  */
@@ -144,6 +161,56 @@ export const Indeterminate: Story = {
         </div>
     `,
     tags: ['usage'],
+};
+
+export const StaticColors: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="s"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="m"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+        <div
+            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="s"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="m"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+            <swc-progress-circle
+                .progress=${60}
+                static-color="black"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev', 'usage'],
 };
 
 export const StaticWhite: Story = {
@@ -207,4 +274,24 @@ export const KeyboardNavigation: Story = {
         </div>
     `,
     tags: ['a11y'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+export const A11y: Story = {
+    render: () => html`
+        <div
+            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
+        >
+            <swc-progress-circle
+                .progress=${60}
+                static-color="white"
+                size="l"
+                label="Loading on dark background"
+            ></swc-progress-circle>
+        </div>
+    `,
+    tags: ['!dev'],
 };
