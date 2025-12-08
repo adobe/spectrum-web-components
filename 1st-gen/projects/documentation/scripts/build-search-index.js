@@ -101,7 +101,11 @@ async function main() {
         ignore: ['**/node_modules/**'],
     })) {
         // Similar processing as components, but for tools
-        let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
+        const pathMatch = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path);
+        if (!pathMatch) {
+            continue; // Skip files that don't match expected path pattern
+        }
+        let componentName = pathMatch[1];
         const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
         if (fileName === 'CHANGELOG.md') {
             continue;
