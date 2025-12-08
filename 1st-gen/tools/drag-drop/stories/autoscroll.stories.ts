@@ -32,15 +32,6 @@ const loadAutoScroll = async (): Promise<
     return await import('../src/AutoscrollController.js');
 };
 
-// Type augmentation for window
-declare global {
-    interface Window {
-        __swc_hack_knobs__: {
-            defaultSystemVariant: string;
-        };
-    }
-}
-
 export default {
     component: 'autoscroll-demo',
     title: 'Drag and Drop/Autoscroll',
@@ -55,15 +46,12 @@ export default {
 class HorizontalScrollItem extends DraggableMixin(
     DropTargetMixin(SpectrumElement)
 ) {
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public itemId = '';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public label = '';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public color = 'blue';
 
@@ -162,11 +150,10 @@ class HorizontalScrollItem extends DraggableMixin(
 customElements.define('horizontal-scroll-item', HorizontalScrollItem);
 
 class HorizontalTimeline extends SpectrumElement {
-    // @ts-expect-error - Decorator typing issue with arrays
     @property({ attribute: false })
     public items: Array<{ id: string; label: string; color: string }> = [];
 
-    private autoscroll?: AutoscrollController;
+    private _autoscroll?: AutoscrollController;
 
     static override get styles(): CSSResultArray {
         return [
@@ -210,7 +197,7 @@ class HorizontalTimeline extends SpectrumElement {
         ) as HTMLElement;
         if (container) {
             const { AutoscrollController } = await loadAutoScroll();
-            this.autoscroll = new AutoscrollController(this, {
+            this._autoscroll = new AutoscrollController(this, {
                 enableX: true,
                 enableY: false,
                 threshold: 80,
@@ -275,11 +262,9 @@ customElements.define('horizontal-timeline', HorizontalTimeline);
 class VerticalScrollItem extends DraggableMixin(
     DropTargetMixin(SpectrumElement)
 ) {
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public itemId = '';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public label = '';
 
@@ -352,7 +337,8 @@ class VerticalScrollItem extends DraggableMixin(
         super.connectedCallback();
         this.addEventListener('sp-drop', (event: Event) => {
             const customEvent = event as CustomEvent;
-            const sourceId = customEvent.detail.items[0]?.['application/x-layer'];
+            const sourceId =
+                customEvent.detail.items[0]?.['application/x-layer'];
             if (sourceId && sourceId !== this.itemId) {
                 // Flash green on successful drop
                 this.classList.add('drop-success');
@@ -381,11 +367,10 @@ class VerticalScrollItem extends DraggableMixin(
 customElements.define('vertical-scroll-item', VerticalScrollItem);
 
 class VerticalLayerStack extends SpectrumElement {
-    // @ts-expect-error - Decorator typing issue with arrays
     @property({ attribute: false })
     public items: Array<{ id: string; label: string }> = [];
 
-    private autoscroll?: AutoscrollController;
+    private _autoscroll?: AutoscrollController;
 
     static override get styles(): CSSResultArray {
         return [
@@ -427,7 +412,7 @@ class VerticalLayerStack extends SpectrumElement {
         ) as HTMLElement;
         if (container) {
             const { AutoscrollController } = await loadAutoScroll();
-            this.autoscroll = new AutoscrollController(this, {
+            this._autoscroll = new AutoscrollController(this, {
                 enableX: false,
                 enableY: true,
                 threshold: 60,

@@ -45,14 +45,14 @@ export interface DropIndicatorOptions {
 
 /**
  * DropIndicatorController - Manages visual drop zone indicators
- * 
+ *
  * PRD Requirement (P0):
  * - "Need visual drop zones shown"
  * - "Need visual drop target (specific area of current drop decision) shown"
  * - Custom styling ability required
- * 
+ *
  * Shows a visual line indicator between items to show where the dragged item will drop.
- * 
+ *
  * Usage:
  * ```typescript
  * class MyList extends LitElement {
@@ -61,12 +61,12 @@ export interface DropIndicatorOptions {
  *     color: 'blue',
  *     thickness: 3
  *   });
- * 
+ *
  *   // Show indicator between items
  *   showDropIndicator(targetElement) {
  *     this.dropIndicator.show(targetElement, 'before');
  *   }
- * 
+ *
  *   // Hide indicator
  *   hideDropIndicator() {
  *     this.dropIndicator.hide();
@@ -115,7 +115,10 @@ export class DropIndicatorController implements ReactiveController {
      * @param targetElement - The element to show the indicator near
      * @param position - Show indicator 'before' or 'after' the target element
      */
-    public show(targetElement: HTMLElement, position: 'before' | 'after' = 'after'): void {
+    public show(
+        targetElement: HTMLElement,
+        position: 'before' | 'after' = 'after'
+    ): void {
         if (!this.indicatorElement || !targetElement) return;
 
         const rect = targetElement.getBoundingClientRect();
@@ -180,8 +183,6 @@ export class DropIndicatorController implements ReactiveController {
     private applyStyles(): void {
         if (!this.indicatorElement) return;
 
-        const isHorizontal = this.options.orientation === 'horizontal';
-
         // Base styles
         Object.assign(this.indicatorElement.style, {
             position: 'fixed',
@@ -196,11 +197,10 @@ export class DropIndicatorController implements ReactiveController {
         // Add dot indicator if enabled
         if (this.options.showDot) {
             const dotSize = this.options.thickness * 3;
-            const dot = isHorizontal ? '::before' : '::after';
-            
+
             // Create pseudo-element for dot via inline style
             this.indicatorElement.setAttribute('data-show-dot', 'true');
-            
+
             // Inject styles for pseudo-element
             if (!document.getElementById('drop-indicator-styles')) {
                 const style = document.createElement('style');
@@ -229,8 +229,11 @@ export class DropIndicatorController implements ReactiveController {
                 `;
                 document.head.appendChild(style);
             }
-            
-            this.indicatorElement.setAttribute('data-orientation', this.options.orientation);
+
+            this.indicatorElement.setAttribute(
+                'data-orientation',
+                this.options.orientation
+            );
         }
     }
 
@@ -241,4 +244,3 @@ export class DropIndicatorController implements ReactiveController {
         }
     }
 }
-

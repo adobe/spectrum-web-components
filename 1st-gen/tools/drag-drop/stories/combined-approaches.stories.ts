@@ -14,8 +14,8 @@ import '@spectrum-web-components/theme/src/themes.js';
 import {
     css,
     CSSResultArray,
-    html as spHtml,
     SpectrumElement,
+    html as spHtml,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -30,15 +30,6 @@ import { DropController } from '../src/DropController.js';
 import { DraggableMixin } from '../src/DraggableMixin.js';
 import { DropTargetMixin } from '../src/DropTargetMixin.js';
 
-// Type augmentation for window
-declare global {
-    interface Window {
-        __swc_hack_knobs__: {
-            defaultSystemVariant: string;
-        };
-    }
-}
-
 export default {
     component: 'drag-drop-demo',
     title: 'Drag and Drop/Combined Approaches',
@@ -51,15 +42,13 @@ export default {
 // ==============================================================================
 
 class ControllerDraggable extends LitElement {
-    // @ts-expect-error - Decorator typing issue
     @property({ type: String })
     public itemId = '';
 
-    // @ts-expect-error - Decorator typing issue
     @property({ type: String })
     public label = '';
 
-    private dragController = new DragController(this, {
+    private _dragController = new DragController(this, {
         getItems: () => {
             console.log('[ControllerDraggable] getItems called');
             return [
@@ -79,7 +68,7 @@ class ControllerDraggable extends LitElement {
         },
     });
 
-    static styles = css`
+    static override styles = css`
         :host {
             display: block;
             padding: 12px 16px;
@@ -94,22 +83,22 @@ class ControllerDraggable extends LitElement {
         }
     `;
 
-    render() {
-        return html`${this.label}`;
+    override render() {
+        return html`
+            ${this.label}
+        `;
     }
 }
 customElements.define('controller-draggable', ControllerDraggable);
 
 class ControllerDropZone extends LitElement {
-    // @ts-expect-error - Decorator typing issue
     @property({ type: String })
     public label = 'Drop Zone';
 
-    // @ts-expect-error - Decorator typing issue
     @property({ type: Boolean, reflect: true })
     public filled = false;
 
-    private dropController = new DropController(this, {
+    private _dropController = new DropController(this, {
         acceptedTypes: ['application/x-item'],
         onDrop: (event) => {
             const itemId = event.items[0]?.['application/x-item'];
@@ -131,7 +120,7 @@ class ControllerDropZone extends LitElement {
         },
     });
 
-    static styles = css`
+    static override styles = css`
         :host {
             display: block;
             min-height: 100px;
@@ -154,7 +143,7 @@ class ControllerDropZone extends LitElement {
         }
     `;
 
-    render() {
+    override render() {
         return html`
             <div>${this.label} ${this.filled ? '✓ Dropped!' : ''}</div>
         `;
@@ -167,11 +156,9 @@ customElements.define('controller-drop-zone', ControllerDropZone);
 // ==============================================================================
 
 class MixinDraggable extends DraggableMixin(SpectrumElement) {
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ type: String })
     public itemId = '';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ type: String })
     public label = '';
 
@@ -214,11 +201,9 @@ class MixinDraggable extends DraggableMixin(SpectrumElement) {
 customElements.define('mixin-draggable', MixinDraggable);
 
 class MixinDropZone extends DropTargetMixin(SpectrumElement) {
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ type: String })
     public label = 'Drop Zone';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ type: Boolean, reflect: true })
     public filled = false;
 
@@ -279,14 +264,10 @@ customElements.define('mixin-drop-zone', MixinDropZone);
 // APPROACH 2 ADVANCED: Combining Both Mixins
 // ==============================================================================
 
-class ReorderableItem extends DraggableMixin(
-    DropTargetMixin(SpectrumElement)
-) {
-    // @ts-expect-error - Decorator typing issue with mixins
+class ReorderableItem extends DraggableMixin(DropTargetMixin(SpectrumElement)) {
     @property({ attribute: false })
     public itemId = '';
 
-    // @ts-expect-error - Decorator typing issue with mixins
     @property({ attribute: false })
     public label = '';
 
@@ -350,19 +331,20 @@ class ReorderableItem extends DraggableMixin(
 
     private handleDrop = (event: Event): void => {
         const customEvent = event as CustomEvent;
-        const sourceId = customEvent.detail.items[0]?.['application/x-reorderable'];
+        const sourceId =
+            customEvent.detail.items[0]?.['application/x-reorderable'];
         console.log('[ReorderableItem] Drop received', {
             sourceId,
             targetId: this.itemId,
         });
-        
+
         if (sourceId && sourceId !== this.itemId) {
             // Flash green on successful drop
             this.classList.add('drop-success');
             setTimeout(() => {
                 this.classList.remove('drop-success');
             }, 800);
-            
+
             this.dispatchEvent(
                 new CustomEvent('reorder', {
                     detail: { sourceId, targetId: this.itemId },
@@ -394,7 +376,6 @@ customElements.define('reorderable-item', ReorderableItem);
 
 // Reorderable list container that manages state
 class ReorderableList extends SpectrumElement {
-    // @ts-expect-error - Decorator typing issue with arrays
     @property({ attribute: false })
     public items: Array<{ id: string; label: string }> = [];
 
@@ -441,7 +422,7 @@ class ReorderableList extends SpectrumElement {
         const newItems = [...this.items];
         const [removed] = newItems.splice(sourceIndex, 1);
         newItems.splice(targetIndex, 0, removed);
-        
+
         // Assign new array
         this.items = newItems;
 
@@ -449,7 +430,7 @@ class ReorderableList extends SpectrumElement {
             '[ReorderableList] Reordered:',
             this.items.map((i) => i.id).join(', ')
         );
-        
+
         // Request update
         this.requestUpdate('items');
     };
@@ -460,22 +441,22 @@ class ReorderableList extends SpectrumElement {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        
+
         // Listen for drop enter/exit to show visual blue background indicator
         this.addEventListener('sp-drop-enter', (event: Event) => {
-            const target = (event as CustomEvent).target as HTMLElement; 
+            const target = (event as CustomEvent).target as HTMLElement;
             if (target.tagName.toLowerCase() === 'reorderable-item') {
                 target.classList.add('drop-target-active');
             }
         });
-        
+
         this.addEventListener('sp-drop-exit', (event: Event) => {
             const target = (event as CustomEvent).target as HTMLElement;
             if (target.tagName.toLowerCase() === 'reorderable-item') {
                 target.classList.remove('drop-target-active');
             }
         });
-        
+
         // Add green flash on successful drop
         this.addEventListener('sp-drop', (event: Event) => {
             const target = (event as CustomEvent).target as HTMLElement;
@@ -488,7 +469,7 @@ class ReorderableList extends SpectrumElement {
                 }, 800);
             }
         });
-        
+
         // Use the bound handler to avoid duplicates
         this.addEventListener('reorder', this.boundHandleReorder);
     }
@@ -500,7 +481,10 @@ class ReorderableList extends SpectrumElement {
     }
 
     protected override render(): TemplateResult {
-        console.log('[ReorderableList] Rendering with items:', this.items.map(i => i.id).join(', '));
+        console.log(
+            '[ReorderableList] Rendering with items:',
+            this.items.map((i) => i.id).join(', ')
+        );
         return spHtml`
             <div class="item-container">
                 ${repeat(
@@ -675,4 +659,3 @@ export const AllApproaches = (): TemplateResult => {
         </sp-theme>
     `;
 };
-
