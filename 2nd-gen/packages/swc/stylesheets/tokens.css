@@ -487,8 +487,8 @@
     --swc-color-loupe-inner-border: var(--swc-transparent-black-200);
     --swc-color-loupe-outer-border: var(--swc-white);
     --swc-card-selection-background-color: light-dark(
-        var(--swc-transparent-white-600),
-        var(--swc-transparent-black-600)
+        rgb(255 255 255 / 51%),
+        rgb(0 0 0 / 56%)
     );
     --swc-card-selection-background-color-opacity: 0.95;
     --swc-drop-zone-background-color: var(--swc-accent-visual-color);
@@ -538,7 +538,7 @@
         var(--swc-gray-200)
     );
     --swc-popover-border-color: light-dark(
-        var(--swc-transparent-white-25),
+        rgb(255 255 255 / 0%),
         var(--swc-gray-400)
     );
     --swc-popover-border-opacity-light: 0;
@@ -560,7 +560,7 @@
     --swc-color-wheel-border-color: var(--swc-gray-1000);
     --swc-color-wheel-border-opacity: 0.1;
     --swc-action-bar-border-color: light-dark(
-        var(--swc-transparent-white-25),
+        rgb(255 255 255 / 0%),
         var(--swc-gray-400)
     );
     --swc-card-background-well-color: var(--swc-gray-100);
