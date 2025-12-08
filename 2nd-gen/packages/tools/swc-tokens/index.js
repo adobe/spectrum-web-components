@@ -80,6 +80,9 @@ if (outputType === 'stylesheet') {
         'utf8'
     );
 
-    console.log(`✔ Debug log written to ${debugFile}`);
+    if (debug) {
+        console.log(`✔ Debug log written to ${debugFile}`);
+    }
+
     console.log(`✔ Tokens written to ${out}`);
 }

@@ -3,6 +3,10 @@
         "editor.wordWrapColumn": 120,
         "editor.wordWrap": "bounded"
     },
+    "[markdown]": {
+        "editor.wordWrapColumn": 120,
+        "editor.wordWrap": "bounded"
+    },
     "files.exclude": {
         "**/*.css.ts": {
             "when": "$(basename)"
