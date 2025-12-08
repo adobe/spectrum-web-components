@@ -17,7 +17,7 @@
 
 .spectrum-Badge {
     --spectrum-badge-border-width: var(--spectrum-border-width-200);
-    --spectrum-badge-border-color: red;
+    --spectrum-badge-border-color: transparent;
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
     --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-badge-font-weight: var(--spectrum-medium-font-weight);
