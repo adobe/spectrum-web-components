@@ -237,7 +237,7 @@ class HorizontalTimeline extends SpectrumElement {
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
-        this._autoscroll = undefined;
+        void this._autoscroll;
     }
 
     protected override render(): TemplateResult {
@@ -454,7 +454,7 @@ class VerticalLayerStack extends SpectrumElement {
 
     public override disconnectedCallback(): void {
         super.disconnectedCallback();
-        this._autoscroll = undefined;
+        void this._autoscroll;
     }
 
     protected override render(): TemplateResult {
