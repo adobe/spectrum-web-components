@@ -83,6 +83,11 @@ class ControllerDraggable extends LitElement {
         }
     `;
 
+    override disconnectedCallback() {
+        super.disconnectedCallback();
+        void this._dragController;
+    }
+
     override render() {
         return html`
             ${this.label}
@@ -142,6 +147,11 @@ class ControllerDropZone extends LitElement {
             border-style: solid;
         }
     `;
+
+    override disconnectedCallback() {
+        super.disconnectedCallback();
+        void this._dropController;
+    }
 
     override render() {
         return html`

@@ -235,6 +235,11 @@ class HorizontalTimeline extends SpectrumElement {
         });
     }
 
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this._autoscroll = undefined;
+    }
+
     protected override render(): TemplateResult {
         return spHtml`
             <div class="timeline-container">
@@ -445,6 +450,11 @@ class VerticalLayerStack extends SpectrumElement {
                 this.requestUpdate();
             }
         });
+    }
+
+    public override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this._autoscroll = undefined;
     }
 
     protected override render(): TemplateResult {
