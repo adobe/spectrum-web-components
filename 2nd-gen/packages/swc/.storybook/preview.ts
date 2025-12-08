@@ -15,7 +15,7 @@ import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
 import { withStaticColorBackground } from './decorators';
 
-const options: Options = {
+const storybookHelperOptions: Options = {
     categoryOrder: [
         'attributes',
         'properties',
@@ -29,7 +29,7 @@ const options: Options = {
     renderDefaultValues: true,
 };
 
-setStorybookHelpersConfig(options);
+setStorybookHelpersConfig(storybookHelperOptions);
 
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
@@ -79,6 +79,10 @@ const preview = {
                 },
             },
             story: { inline: true },
+            canvas: {
+                withToolbar: true,
+                sourceState: 'shown',
+            },
             source: {
                 excludeDecorators: true,
                 type: 'auto',
@@ -120,7 +124,7 @@ const preview = {
             },
         },
     },
-    tags: ['!autodocs', '!dev'],
+    tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
     loaders: [FontLoader],
 };
 

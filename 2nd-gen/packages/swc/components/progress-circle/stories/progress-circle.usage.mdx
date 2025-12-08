@@ -2,9 +2,7 @@ import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
 import { SpectrumStories } from '../../../.storybook/blocks';
 import * as ProgressCircleStories from './progress-circle.stories';
 
-<Meta tag="usage" />
-
-## Usage
+## Getting Started
 
 ```zsh
 yarn add @spectrum-web-components/progress-circle
@@ -22,55 +20,17 @@ When looking to leverage the `ProgressCircle` base class as a type and/or for ex
 import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 ```
 
-### Anatomy
+## Anatomy
 
-A progress circle consists of several key parts:
+<SpectrumStories of={ProgressCircleStories} tag="anatomy" />
 
-- A label (via `slot="label"`)
-- A progress value (via `progress` attribute)
-- An an optional indeterminate state (via `indeterminate` attribute)
-- An optional size
-- An optional static color for backgrounds that have color
+## Options
 
-<Canvas
-    of={ProgressCircleStories.Anatomy}
-    withToolbar={true}
-    sourceState="shown"
-/>
+<SpectrumStories of={ProgressCircleStories} tag="options" />
 
-### Options
+## States
 
-#### Sizes
-
-Progress circles come in three sizes to fit various contexts:
-
-<Canvas
-    of={ProgressCircleStories.Sizes}
-    withToolbar={true}
-    sourceState="shown"
-/>
-
-#### Static Colors
-
-When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
-
-<Canvas
-    of={ProgressCircleStories.StaticColors}
-    withToolbar={true}
-    sourceState="shown"
-/>
-
-### States
-
-#### Indeterminate
-
-Use indeterminate progress when the duration cannot be calculated:
-
-<Canvas
-    of={ProgressCircleStories.Indeterminate}
-    withToolbar={true}
-    sourceState="shown"
-/>
+<SpectrumStories of={ProgressCircleStories} tag="states" />
 
 ## Accessibility
 
@@ -94,8 +54,4 @@ The `<sp-progress-circle>` element implements several accessibility features:
 - For determinate progress, ensure the `progress` value accurately reflects the actual progress
 - Consider using size="l" for primary loading states to improve visibility
 
-<Canvas
-    of={ProgressCircleStories.A11y}
-    withToolbar={true}
-    sourceState="shown"
-/>
+<Canvas of={ProgressCircleStories.A11y} />

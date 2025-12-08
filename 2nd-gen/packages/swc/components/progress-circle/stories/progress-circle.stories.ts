@@ -28,7 +28,7 @@ const { events, args, argTypes, template } = getStorybookHelpers(
 
 /*
  * @todo Blurring the range control seems to cause a catastrophic Storybook
- * render failure, so disabling for now.
+ * render failure, so using number input for now.
  */
 argTypes.progress = {
     ...argTypes.progress,
@@ -48,16 +48,11 @@ argTypes['static-color'] = {
 };
 
 /**
- * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
- *
- * They can represent determinate or indeterminate progress.
+ * This is the `description` fo the progress circle component
  */
 const meta: Meta = {
     title: 'Progress circle',
     component: 'swc-progress-circle',
-    args,
-    argTypes,
-    render: (args) => template(args),
     parameters: {
         docs: {
             subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. They can represent determinate or indeterminate progress.`,
@@ -72,6 +67,9 @@ const meta: Meta = {
                 ${story()}
             </div>`,
     ],
+    args,
+    argTypes,
+    render: (args) => template(args),
     tags: ['migrated'],
 };
 
@@ -82,38 +80,39 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
+    render: (args) => template(args),
+    tags: ['autodocs', 'dev'],
     args: {
         progress: 50,
         size: 'm',
         label: 'Loading progress',
     },
-    render: (args) => template(args),
-    tags: ['autodocs', 'dev'],
 };
 
 // ─────────────────────
 //    USAGE STORIES
 // ─────────────────────
 
+/**
+ * A progress circle consists of several key parts:
+ *
+ * - A label (via `label` attribute)
+ * - A progress value (via `progress` attribute)
+ * - An an optional indeterminate state (via `indeterminate` attribute)
+ * - An optional size
+ * - An optional static color for backgrounds that have color
+ */
 export const Anatomy: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
-                progress=${25}
-                size="l"
-                label="Loading..."
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                label="Saving progress"
-            ></swc-progress-circle>
-        </div>
+    render: (args) => html`
+        ${template({ ...args, progress: 25, size: 'l', label: 'Loading' })}
+        ${template({ ...args, indeterminate: true, label: 'Saving progress' })}
     `,
-    tags: ['autodocs', '!dev'],
+    tags: ['anatomy'],
+    args: {},
 };
 
 /**
- * This is the description fo the sizes story
+ * Progress circles come in three sizes to fit various contexts:
  */
 export const Sizes: Story = {
     render: (args) => html`
@@ -121,7 +120,7 @@ export const Sizes: Story = {
         ${template({ ...args, size: 'm', label: 'Medium progress' })}
         ${template({ ...args, size: 'l', label: 'Large progress' })}
     `,
-    tags: ['usage'],
+    tags: ['options'],
     args: {
         progress: 25,
     },
@@ -140,6 +139,13 @@ export const ProgressValues: Story = {
     },
 };
 
+/**
+ * Use `indeterminate` progress when the duration cannot be calculated:
+ *
+ * - `size="s"`
+ * - `size="m"`
+ * - `size="l"`
+ */
 export const Indeterminate: Story = {
     render: () => html`
         <div style="display: flex; gap: 24px; align-items: center;">
@@ -160,9 +166,11 @@ export const Indeterminate: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['usage'],
+    tags: ['states'],
 };
 
+/** When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background: */
+// TODO: Add a story for each static color
 export const StaticColors: Story = {
     render: () => html`
         <div
@@ -210,7 +218,7 @@ export const StaticColors: Story = {
             ></swc-progress-circle>
         </div>
     `,
-    tags: ['!dev', 'usage'],
+    tags: ['!dev', 'options'],
 };
 
 export const StaticWhite: Story = {

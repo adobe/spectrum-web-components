@@ -28,17 +28,6 @@ const config = {
         defaultName: 'README',
     },
     framework: '@storybook/web-components-vite',
-    tags: {
-        a11y: {
-            defaultFilterSelection: 'exclude',
-        },
-        usage: {
-            defaultFilterSelection: 'exclude',
-        },
-        examples: {
-            defaultFilterSelection: 'exclude',
-        },
-    },
     core: {
         disableTelemetry: true,
     },

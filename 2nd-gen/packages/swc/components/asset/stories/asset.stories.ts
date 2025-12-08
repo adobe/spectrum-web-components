@@ -98,7 +98,7 @@ export const Anatomy: Story = {
         html`<swc-asset label="Avatar"
             ><img src="https://picsum.photos/120/120" alt="Avatar"
         /></swc-asset>`,
-    tags: ['autodocs', '!dev'],
+    tags: ['usage'],
 };
 
 export const File: Story = {
@@ -106,12 +106,12 @@ export const File: Story = {
         variant: 'file',
         label: 'README.md',
     },
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 export const Folder: Story = {
     args: {
         variant: 'folder',
         label: 'packages/swc/',
     },
-    tags: ['!dev'],
+    tags: ['usage'],
 };

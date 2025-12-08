@@ -96,7 +96,7 @@ export const Sizes: Story = {
                 </div>`;
             })}
         </div>`,
-    tags: ['!dev'],
+    tags: ['usage'],
 };
 
 /**
@@ -116,7 +116,7 @@ export const Vertical: Story = {
             })}
         </div>
     `,
-    tags: ['!dev', '!autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 /**
@@ -146,7 +146,7 @@ export const StaticBlack: Story = {
             )}
         </div>
     `,
-    tags: ['!dev', '!autodocs', 'usage'],
+    tags: ['usage'],
 };
 
 export const StaticWhite: Story = {
@@ -160,5 +160,5 @@ export const StaticWhite: Story = {
             )}
         </div>
     `,
-    tags: ['!dev', '!autodocs', 'usage'],
+    tags: ['usage'],
 };
