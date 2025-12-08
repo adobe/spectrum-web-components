@@ -33,7 +33,7 @@ test('outputs token() value', async () => {
     // Composite core color alias
     await run(
         `a { color: token('gray-700'); }`,
-        `a { color: var(--swc-gray-700); }`
+        `a { color: var(--${prefix}-gray-700); }`
     );
 
     // Basic token alias
