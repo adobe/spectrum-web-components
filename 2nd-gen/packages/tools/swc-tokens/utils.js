@@ -90,23 +90,25 @@ export function createLogger(debugPath) {
     };
 }
 
+// Tests a string to determine if it is a singular alias, ex. {gray-500}
 function isAlias(str) {
     return typeof str === 'string' && /^\{(.+)\}$/.test(str);
 }
 
+// Tests a string to determine if it is already a custom property `var()`
 function isVar(str) {
     return typeof str === 'string' && /^var/.test(str);
 }
 
-// Remove braces from values like "{blue-800}"
+// Remove braces from alias values, ex. "{blue-800}"
 function unwrapAlias(str) {
     return str.replace(/^\{/, '').replace(/\}$/, '');
 }
 
-const ALIAS_GLOBAL_REGEX = /\{([^{}]+)\}/g;
-
+// Find and replace aliases embedded in a string, ex. `value1 {token} value2`
 function resolveAliasesInString(str, tokensMap, prefix, debug) {
-    return str.replace(ALIAS_GLOBAL_REGEX, (full, inner) => {
+    const aliasRegex = /\{([^{}]+)\}/g;
+    return str.replace(aliasRegex, (full, inner) => {
         const resolved = resolveAliasValue(
             tokensMap,
             `{${inner}}`,
@@ -118,17 +120,18 @@ function resolveAliasesInString(str, tokensMap, prefix, debug) {
     });
 }
 
+// Return the composed custom property name with optional prefix
 function createPropertyName(name, prefix) {
     return prefix ? `--${prefix}-${name}` : `--${name}`;
 }
 
-// Return as custom property
+// Return full custom property value inclusive of `var()` for aliases, else precomputed value
 function convertToProperty(value, prefix) {
     if (typeof value === 'string') {
         const cp = value.match(/^\{(.+)\}$/);
 
         if (cp) {
-            return `var(${prefix ? `--${prefix}-${cp[1]}` : `--${cp[1]}`})`;
+            return `var(${createPropertyName(cp[1], prefix)})`;
         } else {
             return value;
         }
@@ -137,7 +140,7 @@ function convertToProperty(value, prefix) {
     }
 }
 
-// Original design data uses an old rgb format
+// Original design data uses an old rgb format, convert to modern syntax
 function convertRGB(input) {
     if (typeof input !== 'string') {
         return input;
@@ -186,7 +189,7 @@ function convertRGB(input) {
         : `rgb(${r} ${g} ${b})`;
 }
 
-// Handle CSS format conversions
+// Handle CSS format conversions for final CSS values
 function cssFormatConversions(tokenName, tokenValue) {
     if (!isVar(tokenValue)) {
         if (
@@ -198,6 +201,7 @@ function cssFormatConversions(tokenName, tokenValue) {
             return Math.floor(parseFloat(tokenValue) * 100).toFixed(0) + '%';
         }
 
+        // Match to valid CSS numeric weights
         if (tokenName.includes('font-weight')) {
             switch (tokenValue) {
                 case 'light':
@@ -376,7 +380,7 @@ function resolveAliasValue(
     return targetValue;
 }
 
-// Normalize tokens
+// Normalize token values, sensitive to alias directives
 function extractTokenValues(
     json,
     resolveAliases,
@@ -551,7 +555,7 @@ function extractTokenValues(
     return normalized;
 }
 
-// Generate CSS custom properties
+// Generate final unified CSS stylesheet with tokens as custom properties
 export async function generateCSS(prefix, debug = false) {
     const scaling = [];
     const nonScaling = [];
@@ -641,7 +645,7 @@ export async function generateCSS(prefix, debug = false) {
 }`;
 }
 
-// Load individual JSON from @adobe/spectrum-tokens/src
+// Load individual token JSON files
 async function loadTokenJson(fileName, src) {
     const source =
         src === 'spectrum' ? '@adobe/spectrum-tokens/src' : './custom';
@@ -651,11 +655,11 @@ async function loadTokenJson(fileName, src) {
     return JSON.parse(text);
 }
 
-// Load all JSON files from src
+// Load, concat, and resolve all token JSON sources
 async function loadAllTokens(prefix, debug = false) {
     const rawFiles = [];
 
-    // Load Spectrum (raw, unnormalized)
+    // Load @adobe/spectrum-tokens (raw, unnormalized)
     for (const { file, resolveAliases } of SPECTRUM_TOKENS) {
         const json = await loadTokenJson(file, 'spectrum');
 
@@ -679,13 +683,13 @@ async function loadAllTokens(prefix, debug = false) {
         });
     }
 
-    // Build one giant raw lookup map
+    // Build raw lookup map
     let globalRaw = {};
     for (const entry of rawFiles) {
         globalRaw = { ...globalRaw, ...buildRawLookup(entry.raw) };
     }
 
-    // Now normalize using the global raw lookup
+    // Normalize using the global raw lookup
     const finalTokens = {};
 
     for (const entry of rawFiles) {
@@ -705,6 +709,7 @@ async function loadAllTokens(prefix, debug = false) {
     return finalTokens;
 }
 
+// Returns combined total token JSON
 export const allTokens = async (prefix, debug = false) =>
     await loadAllTokens(prefix, debug);
 
