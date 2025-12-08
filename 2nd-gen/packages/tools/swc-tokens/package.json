@@ -23,12 +23,17 @@
     "scripts": {
         "debug:tokens": "node index.js --outputType tokens --out ./tokens.json --debug true",
         "generate:stylesheet": "node index.js --outputType stylesheet --out ./tokens.css --prefix swc",
-        "generate:tokens": "node index.js --outputType tokens --out ./tokens.json"
+        "generate:tokens": "node index.js --outputType tokens --out ./tokens.json",
+        "test": "vitest --run",
+        "test:watch": "vitest --watch"
     },
     "dependencies": {
         "@adobe/spectrum-tokens": "^14.0.0",
         "prettier": "^3.7.4",
         "yargs": "^18.0.0"
+    },
+    "devDependencies": {
+        "vitest": "^4.0.15"
     },
     "keywords": [
         "design-system",

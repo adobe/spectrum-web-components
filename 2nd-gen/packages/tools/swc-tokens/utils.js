@@ -380,7 +380,7 @@ function extractTokenValues(
     json,
     resolveAliases,
     prefix,
-    { debug, rawLookupOverride = null } = {}
+    { debug = false, rawLookupOverride = null } = {}
 ) {
     const lookup = rawLookupOverride ?? buildRawLookup(json);
     const out = {};
@@ -561,3 +561,18 @@ export async function lookupToken(key, prefix) {
         ? `var(${createPropertyName(key, prefix)})`
         : cssFormatConversions(key, tokens[key]);
 }
+
+// test exports (non-public API)
+export const __test__ = {
+    createPropertyName,
+    convertToProperty,
+    convertRGB,
+    cssFormatConversions,
+    buildRawLookup,
+    resolveAlias,
+    resolveAliasesInString,
+    normalizePrimitive,
+    normalizeSetGroup,
+    extractTokenValues,
+    lookupToken,
+};
