@@ -358,6 +358,8 @@ function normalizePrimitive(
 }
 
 function normalizeSetGroup(sets, lookup, prefix, debug) {
+    // const log = typeof debug === 'function' ? debug : () => {};
+
     const out = {};
 
     for (const [name, set] of Object.entries(sets)) {
@@ -385,11 +387,11 @@ function extractTokenValues(
     const lookup = rawLookupOverride ?? buildRawLookup(json);
     const out = {};
 
-    // const log = typeof debug === 'function' ? debug : () => {};
+    const log = typeof debug === 'function' ? debug : () => {};
 
     for (const [name, token] of Object.entries(json)) {
         if (token?.deprecated) {
-            // log(`[DEPRECATED] ${name}`);
+            log(`[DEPRECATED] token '${name}'`);
             continue;
         }
 
@@ -554,7 +556,7 @@ export const allTokens = (prefix, debug = false) =>
 export async function lookupToken(key, prefix) {
     const tokens = await allTokens(prefix);
     if (!(key in tokens)) {
-        throw new Error(`token() did not find '${key}'`);
+        throw new Error(`token() not found: '${key}'`);
     }
 
     return typeof tokens[key] === 'object'
