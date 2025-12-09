@@ -25,7 +25,6 @@ export const SpectrumStories = ({
     hideTitle?: boolean;
 }) => {
     const resolvedOf = useOf(of || 'meta', ['story', 'meta']);
-    console.log('resolvedOf', resolvedOf);
 
     // Object.values() preserves insertion order (definition order in the file)
     const taggedStories = Object.values(

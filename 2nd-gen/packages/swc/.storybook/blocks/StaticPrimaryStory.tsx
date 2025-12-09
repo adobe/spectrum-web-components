@@ -10,7 +10,6 @@ export const StaticPrimaryStory = () => {
     );
     if (!primaryStory) return null;
     primaryStory.argTypes = undefined;
-    console.log('primaryStory', primaryStory);
 
     // Extract component name and create GitHub link
     const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
