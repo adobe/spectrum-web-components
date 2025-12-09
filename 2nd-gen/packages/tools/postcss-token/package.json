@@ -20,14 +20,15 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "unit": "node --test index.test.js",
-        "test": "yarn run unit"
+        "test": "vitest --run",
+        "test:watch": "vitest --watch"
     },
     "dependencies": {
         "@adobe/swc-tokens": "0.0.1"
     },
     "devDependencies": {
-        "postcss": "8.5.6"
+        "postcss": "8.5.6",
+        "vitest": "^4.0.15"
     },
     "peerDependencies": {
         "postcss": "8.5.6"
