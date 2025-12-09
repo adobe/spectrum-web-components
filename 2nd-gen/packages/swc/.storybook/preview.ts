@@ -55,8 +55,8 @@ const preview = {
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
-                headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
-                ignoreSelector: '.sbdocs-subtitle',
+                headingSelector: 'h2, h3, h4',
+                ignoreSelector: '.sbdocs-subtitle, .sbdocs-preview',
                 disable: false,
                 unsafeTocbotOptions: {
                     // orderedList: false,
@@ -92,6 +92,28 @@ const preview = {
                         ],
                         'Style guide',
                         'Project planning',
+                        [
+                            'Overview',
+                            'Components',
+                            'Milestones',
+                            'Workstreams',
+                            [
+                                'About workstreams',
+                                '2nd-gen definition and development',
+                                '2nd-gen component migration',
+                                [
+                                    'Overview',
+                                    'Factor rendering out of 1st-gen component',
+                                    'Move base class to 2nd-gen core',
+                                    'Formalize Spectrum data model',
+                                    'Add 2nd-gen component',
+                                    'Migrate rendering and styles',
+                                ],
+                                'Accessibility improvements',
+                                'Component improvements',
+                                '1st-gen Spectrum 2 enhancements',
+                            ],
+                        ],
                         'Accessibility guides',
                         [
                             'Overview',
