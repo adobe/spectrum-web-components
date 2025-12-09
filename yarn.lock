@@ -179,7 +179,7 @@ __metadata:
     "@custom-elements-manifest/analyzer": "npm:0.11.0"
     "@spectrum-web-components/core": "npm:0.0.1"
     "@storybook/addon-a11y": "npm:10.1.4"
-    "@storybook/addon-designs": "npm:11.0.1"
+    "@storybook/addon-designs": "npm:11.1.0"
     "@storybook/addon-docs": "npm:10.1.4"
     "@storybook/addon-vitest": "npm:10.1.4"
     "@storybook/test-runner": "npm:0.23.0"
@@ -3573,6 +3573,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@figspec/components@npm:^2.0.1":
+  version: 2.0.5
+  resolution: "@figspec/components@npm:2.0.5"
+  checksum: 10c0/94fc1a4e8d3a8908af2967f9fb95ffc4d9057545a340de390fb96bb0dfb585690ff22b73760ca64a1e591faabe06196946142de9903d6b6cfe84134237c363ab
+  languageName: node
+  linkType: hard
+
 "@figspec/react@npm:^1.0.0":
   version: 1.0.4
   resolution: "@figspec/react@npm:1.0.4"
@@ -3582,6 +3589,18 @@ __metadata:
   peerDependencies:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10c0/a91bec560d8262b2c886bd5664f4456083bb79327910d414fc459885302e8cf1d8e6c40d36132fe404dc5154ab761fdcfe237211f318185bb56056d14e7a9ff7
+  languageName: node
+  linkType: hard
+
+"@figspec/react@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "@figspec/react@npm:2.0.1"
+  dependencies:
+    "@figspec/components": "npm:^2.0.1"
+    "@lit-labs/react": "npm:^2.0.0"
+  peerDependencies:
+    react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/d05307df71c58b461a6ad19999237d4dae34f68748c6edcbe1ddc4c8dee9938745c2270cb3f5102e710aed3907ac2d61edef23c4033c38b99185af782ca33841
   languageName: node
   linkType: hard
 
@@ -4257,6 +4276,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit-labs/react@npm:^2.0.0":
+  version: 2.1.3
+  resolution: "@lit-labs/react@npm:2.1.3"
+  dependencies:
+    "@lit/react": "npm:^1.0.3"
+  checksum: 10c0/1e22663b4eedbd7d14e9b46fc6e89903911c51c8e306b8d34842f4576c23f3b1d050a5f2f17de1518ada27e8ec6da7ae5b6699ca07b0835190899d451fe752b4
+  languageName: node
+  linkType: hard
+
 "@lit-labs/ssr-dom-shim@npm:^1.0.0, @lit-labs/ssr-dom-shim@npm:^1.1.0, @lit-labs/ssr-dom-shim@npm:^1.4.0":
   version: 1.4.0
   resolution: "@lit-labs/ssr-dom-shim@npm:1.4.0"
@@ -4274,7 +4302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit/react@npm:1.0.8":
+"@lit/react@npm:1.0.8, @lit/react@npm:^1.0.3":
   version: 1.0.8
   resolution: "@lit/react@npm:1.0.8"
   peerDependencies:
@@ -6957,11 +6985,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-designs@npm:11.0.1":
-  version: 11.0.1
-  resolution: "@storybook/addon-designs@npm:11.0.1"
+"@storybook/addon-designs@npm:11.1.0":
+  version: 11.1.0
+  resolution: "@storybook/addon-designs@npm:11.1.0"
   dependencies:
-    "@figspec/react": "npm:^1.0.0"
+    "@figspec/react": "npm:^2.0.0"
   peerDependencies:
     "@storybook/addon-docs": ^10.0.0 || ^10.0.0-0 || ^10.1.0-0 || ^10.2.0-0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -6974,7 +7002,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10c0/69aca21c9be81345c91c782a72d7b2d90633581ef28be582836af1d9a7ddcc7515816391020b0ae947058bc59fd56c439a4b957a46ece6439cfbf8bfd1e0e2e7
+  checksum: 10c0/9f8d79745b3f4be445821a6ab5cd3af2659f6252c4415d48fc82d5ac875633f025ec7f8ce2fa1ffff82fbfe93651334cca14a19dbecac2feabc0eeaa77212368
   languageName: node
   linkType: hard
 
