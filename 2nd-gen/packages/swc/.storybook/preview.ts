@@ -75,6 +75,17 @@ const preview = {
                         'First Gen vs Second Gen',
                     ],
                     'Components',
+                    [
+                        'Gettiing involved',
+                        'Using the issue tracker',
+                        'Working in the SWC repo',
+                        'Making a pull request',
+                        'Participating in PR reviews',
+                        'Releasing SWC',
+                        'Authoring contributor docs',
+                        'Patching dependencies',
+                        'Accessibility testing',
+                    ],
                     'Guides',
                     [
                         'Getting started guide',
