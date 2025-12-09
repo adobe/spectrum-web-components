@@ -3,7 +3,7 @@ import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
-import './assets/base.css';
+import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -72,13 +72,10 @@ const preview = {
             toc: {
                 contentsSelector: '.sbdocs-content',
                 headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
-                ignoreSelector: '.sbdocs-subtitle',
+                ignoreSelector: '.sbdocs-subtitle, #root-inner, #feedback',
                 disable: false,
-                unsafeTocbotOptions: {
-                    // orderedList: false,
-                },
+
             },
-            // story: { inline: true },
             canvas: {
                 withToolbar: true,
                 sourceState: 'shown',

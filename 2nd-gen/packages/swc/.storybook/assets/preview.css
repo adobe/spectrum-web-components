@@ -61,39 +61,12 @@ body {
     background: var(--spectrum-examples-gradient-static-white);
 }
 
-/* Hide the SVG elements that only include references */
-svg:has(symbol):not(:has(use)) {
-    display: none;
-}
-
 /* --- DOCS STYLES --- */
-.docs-story > *:first-child {
-    overflow: hidden;
-}
-
-/* Make sure heading provided by <Stories/> doc block uses styles consistent with the default H2. */
-#variants {
-    font-size: 24px;
-    margin-block-end: 8px;
-    color: rgb(46, 52, 56);
-    font-weight: bold;
-    line-height: normal;
-    letter-spacing: normal;
-    text-transform: none;
-    border-block-end: 1px solid hsl(203deg, 50%, 30%, 15%);
-}
-
 /* Force the modal wrapper to be contained by the frame not the viewport */
 #root-inner {
     .spectrum-Modal-wrapper {
         inline-size: 100% !important;
     }
-}
-
-.sb-story {
-    /* Prevent inline stories in the Docs from cutting off content (which is different than the regular
-	story view), due to Storybook's inline style that sets overflow: auto */
-    overflow: visible !important;
 }
 
 /* stylelint-enable selector-class-pattern */

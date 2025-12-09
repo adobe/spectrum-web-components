@@ -1,0 +1,465 @@
+---
+description: 2nd-gen/packages/swc/components/*/stories/**
+alwaysApply: false
+---
+# Storybook stories format standards
+
+Enforce consistent formatting and structure for Storybook stories files in 2nd-gen components.
+
+## Scope
+
+Apply to all `.stories.ts` and `.usage.mdx` files in:
+
+- `2nd-gen/packages/swc/components/*/stories/`
+
+## File structure requirements
+
+### Stories file (`.stories.ts`)
+
+Every component must have a `.stories.ts` file with the following structure:
+
+1. **Copyright header** (lines 1-11)
+2. **Imports section**
+3. **METADATA section** with visual separator
+4. **AUTODOCS STORY section** with visual separator
+5. **ANATOMY STORIES section** with visual separator (if applicable)
+6. **STATES STORIES section** with visual separator (if applicable)
+7. **OPTIONS STORIES section** with visual separator
+8. **ACCESSIBILITY STORIES section** with visual separator
+9. **HELPER FUNCTIONS section** with visual separator (if needed)
+
+### Usage file (`.usage.mdx`)
+
+Every component must have a `.usage.mdx` file with simplified structure:
+
+```mdx
+import { SpectrumStories } from '../../../.storybook/blocks';
+
+## Anatomy
+
+<SpectrumStories tag="anatomy" hideTitle />
+
+## States
+
+<SpectrumStories tag="states" />
+
+## Options
+
+<SpectrumStories tag="options" />
+
+## Accessibility
+
+<SpectrumStories tag="a11y" hideTitle />
+```
+
+**Note**: Only include sections that have corresponding stories.
+
+## Section formatting
+
+### Visual separators
+
+Use consistent visual separators for major sections:
+
+```typescript
+// ────────────────
+//    METADATA
+// ────────────────
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+```
+
+## Meta configuration
+
+### Required fields
+
+The meta object must include:
+
+```typescript
+const meta: Meta = {
+    title: 'Component name',              // Required
+    component: 'swc-component-name',      // Required
+    args,                                  // Required
+    argTypes,                              // Required
+    render: (args) => template(args),     // Required
+    parameters: {
+        actions: {
+            handles: events,               // If events exist
+        },
+        docs: {
+            subtitle: `Component description`,  // Required
+        },
+        design: {                          // Optional but recommended
+            type: 'figma',
+            url: 'https://www.figma.com/...',
+        },
+        stackblitz: {                      // Optional but recommended
+            url: 'https://stackblitz.com/...',
+        },
+    },
+    tags: ['migrated'],                    // Required
+};
+```
+
+### JSDoc for meta
+
+Include comprehensive JSDoc comment above the meta object explaining what the component does:
+
+```typescript
+/**
+ * Component description explaining its purpose and key features.
+ * Can be multiple paragraphs if needed.
+ */
+const meta: Meta = {
+    // ...
+};
+```
+
+## Story organization and tagging
+
+### Playground story
+
+Required first story after meta. Do NOT include JSDoc comment above Playground story:
+
+```typescript
+export const Playground: Story = {
+    args: {
+        // Default args for playground
+    },
+    tags: ['autodocs', 'dev'],
+};
+```
+
+### Anatomy stories
+
+Stories demonstrating component structure:
+
+```typescript
+/**
+ * Description of the component's anatomy and key parts.
+ * Explain what makes up the component.
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args /* specific anatomy example */ })}
+    `,
+    tags: ['anatomy'],
+    args: {},
+};
+```
+
+### States stories
+
+Stories demonstrating different states (if applicable):
+
+```typescript
+/**
+ * Description of this particular state.
+ */
+export const StateName: Story = {
+    render: (args) => html`
+        ${template({ ...args /* state example */ })}
+    `,
+    tags: ['states'],
+    args: {},
+};
+```
+
+### Options stories
+
+Stories demonstrating variants, sizes, styles:
+
+```typescript
+/**
+ * Description of this option/variant.
+ */
+export const OptionName: Story = {
+    render: () => html`
+        ${/* examples */}
+    `,
+    tags: ['options'],
+};
+```
+
+### Accessibility story
+
+Required accessibility demonstration:
+
+```typescript
+/**
+ * ### Features
+ *
+ * The `<sp-component-name>` element implements several accessibility features:
+ *
+ * 1. **Feature name**: Description
+ * 2. **Feature name**: Description
+ *
+ * ### Best Practices
+ *
+ * - Best practice one
+ * - Best practice two
+ */
+export const Accessibility: Story = {
+    render: () => html`
+        ${/* accessibility examples */}
+    `,
+    tags: ['a11y'],
+};
+```
+
+## Tag usage requirements
+
+### Required tags
+
+- `'autodocs'` - Only on Playground story
+- `'dev'` - Only on Playground story
+- `'anatomy'` - For anatomy stories
+- `'states'` - For state demonstration stories (if component has states)
+- `'options'` - For variant, size, and style stories
+- `'a11y'` - For accessibility demonstration story
+
+### Exclusion tags
+
+- `'!test'` - Exclude from test runs (e.g., complex static color stories)
+- `'!dev'` - Exclude from dev Storybook
+
+### Migration tag
+
+- `'migrated'` - On the meta object to indicate refined format
+
+## JSDoc requirements
+
+### Above each story export
+
+Every story export must have a JSDoc comment explaining:
+
+- What it demonstrates
+- Any important context or usage notes
+- Best practices if relevant
+
+**Exception**: Do NOT add JSDoc comments above the Playground story.
+
+Use markdown formatting within JSDoc:
+
+- `**Bold**` for emphasis
+- Bullet lists for multiple points
+- Code formatting with backticks
+
+Example:
+
+```typescript
+/**
+ * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color.
+ *
+ * Use these variants for the following statuses:
+ * - **Positive**: approved, complete, success, new, purchased, licensed
+ * - **Informative**: active, in use, live, published
+ * - **Negative**: error, alert, rejected, failed
+ */
+export const SemanticVariants: Story = {
+    // ...
+};
+```
+
+## Static color pattern
+
+For components with `static-color` attribute, implement the three-story pattern:
+
+```typescript
+// Individual color stories without JSDoc
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+        // other args
+    },
+};
+
+export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+        // other args
+    },
+};
+
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast.
+ */
+export const StaticColors: Story = {
+    render: createStaticColorStory(template, [
+        { args: StaticWhite.args },
+        { args: StaticBlack.args },
+    ]),
+    parameters: {
+        docs: {
+            source: {
+                code: generateStaticColorSource('swc-component-name', [
+                    { args: StaticWhite.args },
+                    { args: StaticBlack.args },
+                ]),
+            },
+        },
+    },
+    tags: ['options', '!test'],
+};
+```
+
+## Heading elements in stories
+
+### Demo class requirement
+
+When a story includes heading elements (h1, h2, h3, h4, h5, h6) in its rendered output, apply the `demo` class to prevent the heading from appearing in the table of contents:
+
+```typescript
+export const Sizes: Story = {
+    render: () =>
+        html` <div style="display: flex; flex-direction: row; gap: 16px;">
+            ${Divider.VALID_SIZES.map((size) => {
+                const label =
+                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
+                return html`<div>
+                    <h3 class="demo">${label}</h3>
+                    <swc-divider size=${size}></swc-divider>
+                    <p>Text below the divider.</p>
+                </div>`;
+            })}
+        </div>`,
+    tags: ['options'],
+};
+```
+
+**Why**: The `demo` class prevents story headings from being included in the Storybook documentation's table of contents, keeping the TOC clean and focused on actual documentation sections.
+
+### Common scenarios
+
+Apply `class="demo"` to headings when:
+- Demonstrating size variations with labeled examples
+- Showing component hierarchy in rendered examples
+- Including headings as part of the component demo context
+
+Do NOT use the `demo` class for:
+- Section headings in JSDoc comments (use markdown)
+- Headings in usage.mdx files (these should not exist)
+
+## Helper functions
+
+### CONTAINER helper
+
+If a CONTAINER helper is needed for layout:
+
+```typescript
+/* @todo Pull this up into a decorator for all stories to leverage */
+function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
+    return html`<div
+        style=${styleMap({
+            display: 'flex',
+            gap: 'var(--spectrum-spacing-200)',
+            'flex-wrap': 'wrap',
+            'justify-content': 'center',
+            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
+            'max-inline-size': '80ch',
+        })}
+    >
+        ${content}
+    </div>`;
+}
+```
+
+**Note**: Include @todo comment suggesting extraction to shared utility.
+
+## Usage.mdx requirements
+
+### Minimal structure
+
+Keep usage.mdx files minimal and use `<SpectrumStories />` component:
+
+```mdx
+import { SpectrumStories } from '../../../.storybook/blocks';
+
+## Anatomy
+
+<SpectrumStories tag="anatomy" hideTitle />
+
+## Options
+
+<SpectrumStories tag="options" />
+
+## Accessibility
+
+<SpectrumStories tag="a11y" hideTitle />
+```
+
+### Section rules
+
+- Use `hideTitle` for Anatomy and Accessibility sections
+- Do NOT use `hideTitle` for States and Options sections
+- Only include sections that have corresponding stories
+- Use consistent section heading capitalization (sentence case)
+
+## Common violations
+
+### ❌ Don't
+
+- Use old Canvas/Story imports from '@storybook/addon-docs/blocks'
+- Write verbose examples directly in usage.mdx
+- Forget JSDoc comments on story exports (except Playground)
+- Add JSDoc comment to Playground story
+- Use inconsistent section separators
+- Tag stories incorrectly (e.g., 'usage' instead of 'options')
+- Forget to include subtitle in meta parameters
+- Use 'usage' tag (deprecated in refined format)
+- Include heading elements in stories without `class="demo"`
+
+### ✅ Do
+
+- Use SpectrumStories component in usage.mdx
+- Include comprehensive JSDoc for each story (except Playground)
+- Keep Playground story without JSDoc comment
+- Use consistent visual separators
+- Tag stories with proper semantic tags
+- Include subtitle in meta.parameters.docs
+- Keep usage.mdx minimal and maintainable
+- Use 'anatomy', 'states', 'options', 'a11y' tags
+- Apply `class="demo"` to any heading elements in story renders
+
+## Checklist for new/migrated stories
+
+- [ ] Copyright header present (2025 year)
+- [ ] All required sections with visual separators
+- [ ] Meta has title, component, args, argTypes, render, parameters.docs.subtitle, tags
+- [ ] Playground story with 'autodocs' and 'dev' tags (no JSDoc comment)
+- [ ] Anatomy story with 'anatomy' tag and JSDoc
+- [ ] States stories with 'states' tag and JSDoc (if applicable)
+- [ ] Options stories with 'options' tag and JSDoc
+- [ ] Accessibility story with 'a11y' tag and comprehensive JSDoc
+- [ ] All story exports have JSDoc comments (except Playground)
+- [ ] Playground story does NOT have JSDoc comment
+- [ ] Heading elements in stories have `class="demo"`
+- [ ] Usage.mdx uses SpectrumStories component
+- [ ] Usage.mdx only includes relevant sections
+- [ ] Static color pattern implemented correctly (if applicable)
+- [ ] Helper functions include @todo comments
+
+## Reference implementation
+
+See [`progress-circle`](/Users/ceickhoff/Desktop/Code/spectrum-web-components-2/2nd-gen/packages/swc/components/progress-circle/stories) for the canonical refined format implementation.

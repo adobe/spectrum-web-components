@@ -1,7 +1,10 @@
 import { addons } from '@storybook/manager-api';
 import { create } from '@storybook/theming';
-
-import './assets/index.css';
+import '../tokens/global-vars.css';
+import '../tokens/index.css';
+import '../tokens/light-vars.css';
+import '../tokens/medium-vars.css';
+import './assets/manager.css';
 
 import logo from './assets/logo.svg';
 
@@ -28,12 +31,11 @@ addons.setConfig({
         colorSecondary: 'rgb(2, 101, 220)',
 
         /* Being applied to the active state of radio buttons */
-        appBg: 'rgb(255, 255, 255)',
+        appBg: 'rgb(248, 248, 248)',
         /* Being applied to the arg table */
         appContentBg: 'rgb(255, 255, 255)',
-        // appPreviewBg: "rgb(248, 248, 248)",
         appBorderColor: 'rgb(213, 213, 213)',
-        appBorderRadius: 4,
+        appBorderRadius: 8,
 
         /* Text colors */
         fontBase:

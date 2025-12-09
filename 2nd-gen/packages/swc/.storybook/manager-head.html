@@ -5,9 +5,16 @@
 <script src="https://use.typekit.net/evk7lzt.js"></script>
 <script>
     try {
-        Typekit.load({ async: true });
+        Typekit.load({
+            async: true,
+            events: {
+                active: function () {
+                    document.dispatchEvent(new Event('typekit-loaded'));
+                },
+            },
+        });
     } catch (e) {
-        console.error('Typekit failed to load in manager:', e);
+        console.error('Typekit failed to load:', e);
     }
 </script>
 

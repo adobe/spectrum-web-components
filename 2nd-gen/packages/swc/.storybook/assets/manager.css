@@ -42,42 +42,9 @@ body:lang(he) {
     font-family: var(--spectrum-font-family-he);
 }
 
-/* Hide the SVG elements that only include references */
-svg:has(symbol):not(:has(use)) {
-    display: none;
-}
-
-.sidebar-header > div:has(img, a) {
-    margin-inline-end: 8px;
-}
-
-.sidebar-header > div img {
-    block-size: auto;
-    inline-size: 100%;
-}
-
-nav .spectrum-Site-logo {
-    margin-inline-end: 16px;
-    color: #fa0f00;
-    block-size: 32px;
-}
-
-.spectrum--large nav .spectrum-Site-logo {
-    block-size: 40px;
-}
-
-.docs-story > div:first-child {
-    padding: 20px !important;
-}
-
-/* Hide that first divider line in the top navigation */
-div.sb-bar > div > div > span:first-child {
-    /* display: none; */
-}
-
 .docblock-argstable-body tr td {
     letter-spacing: unset;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .docblock-argstable-body td > span:has(select),
@@ -89,8 +56,8 @@ div.sb-bar > div > div > span:first-child {
     padding: 3px 12px 5px 35px !important;
 }
 
-button.sidebar-item {
-    font-weight: 700;
+.sidebar-item {
+    font-weight: 700 !important;
 }
 
 button[data-action='collapse-root'] {
@@ -109,13 +76,13 @@ button[data-action='collapse-root'] {
 }
 
 .sidebar-item {
-    padding-block: 4px;
+    padding-block: 0.25rem;
 }
 
 input,
 textarea,
 select {
-    border-radius: 4px !important;
+    border-radius: 0.25rem !important;
 }
 
 input:focus,
@@ -124,5 +91,12 @@ select:focus,
 #storybook-explorer-searchfield:focus {
     border-color: rgb(2, 101, 220) !important;
     box-shadow: rgb(2, 101, 220) 0 0 0 1px inset !important;
+}
+
+.sbdocs-toc--custom {
+    width: 20rem !important;
+    nav {
+        width: 100% !important;
+    }
 }
 /* stylelint-enable selector-class-pattern */

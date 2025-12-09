@@ -124,7 +124,7 @@ export const ProgressValues: Story = {
         ${template({ ...args, progress: 75, label: '75% progress' })}
         ${template({ ...args, progress: 100, label: '100% progress' })}
     `,
-    tags: ['states'],
+    tags: ['states', 'autodocs'],
     args: {
         size: 'm',
     },

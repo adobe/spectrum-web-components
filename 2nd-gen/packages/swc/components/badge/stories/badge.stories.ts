@@ -48,8 +48,9 @@ argTypes.size = {
 args['default-slot'] = 'Badge';
 
 /**
- * There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
+ * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.
  *
+ * There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
  * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
  */
 const meta: Meta = {
@@ -78,9 +79,7 @@ export default meta;
 type BadgeVariant = typeof Badge.prototype.variant;
 type BadgeSize = typeof Badge.prototype.size;
 type FixedValues = typeof Badge.prototype.fixed;
-/**
- * `<sp-badge>` elements display a small amount of color-categorized metadata. They're ideal for getting a user's attention.
- */
+
 export const Playground: Story = {
     args: {
         size: 'm',
@@ -88,23 +87,63 @@ export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
-// ─────────────────────
-//    USAGE STORIES
-// ─────────────────────
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
- * Badges can be rendered with or without an icon. Icons can be passed to the component using the `icon` slot and can be sourced from either the Spectrum icon library or a custom icon library as needed.
+ * A badge is made up of the following parts:
+ *
+ * - Text can be displayed within the badge by using the default slot
+ * - An optional icon element can be used to display an icon within the badge
+ *
+ * Badges can contain either a label, an icon, or both.
  */
-export const WithIcon: Story = {
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Label only' })}
+        ${template({ ...args, 'icon-slot': '✓', 'default-slot': '' })}
+        ${template({
+            ...args,
+            'icon-slot': '✓',
+            'default-slot': 'Icon and label',
+        })}
+    `,
+    tags: ['anatomy'],
     args: {
-        ['icon-slot']: '✓',
+        size: 'm',
     },
-    // Removes the story from the side navigation while keeping in the docs view
-    tags: ['usage'],
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Badges come in four sizes to fit various contexts:
+ */
+export const Sizes: Story = {
+    render: () =>
+        CONTAINER(
+            Badge.VALID_SIZES.map(
+                (size) => html`
+                    <swc-badge size=${size as BadgeSize}
+                        >${capitalize(size)}</swc-badge
+                    >
+                `
+            )
+        ),
+    tags: ['options'],
 };
 
 /**
  * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color. This is the preferred way to assign color to a badge because it will align more consistently with other components in your UI with the same meaning.
+ *
+ * Use these variants for the following statuses:
+ * - **Positive**: approved, complete, success, new, purchased, licensed
+ * - **Informative**: active, in use, live, published
+ * - **Negative**: error, alert, rejected, failed
+ * - **Neutral**: archived, deleted, paused, draft, not started, ended
  */
 export const SemanticVariants: Story = {
     render: () =>
@@ -117,9 +156,12 @@ export const SemanticVariants: Story = {
                 `
             )
         ),
-    tags: ['usage'],
+    tags: ['options'],
 };
 
+/**
+ * When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
+ */
 export const NonsemanticVariants: Story = {
     render: () =>
         CONTAINER(
@@ -131,21 +173,7 @@ export const NonsemanticVariants: Story = {
                 `
             )
         ),
-    tags: ['usage'],
-};
-
-export const Fixed: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.FIXED_VALUES.map(
-                (fixed) => html`
-                    <swc-badge fixed=${ifDefined(fixed as FixedValues)}
-                        >${capitalize(fixed)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['usage'],
+    tags: ['options'],
 };
 
 /**
@@ -168,38 +196,7 @@ export const Outline: Story = {
                 `
             )
         ),
-    tags: ['usage'],
-};
-
-/**
- * Color variants are available for the badge component and provide a more granular access to the full color palette in the design system.
- */
-export const ColorVariants: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_COLOR.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['usage'],
-};
-
-export const Sizes: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VALID_SIZES.map(
-                (size) => html`
-                    <swc-badge size=${size as BadgeSize}
-                        >${capitalize(size)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['usage'],
+    tags: ['options'],
 };
 
 /**
@@ -216,9 +213,29 @@ export const Subtle: Story = {
                 `
             )
         ),
-    tags: ['usage'],
+    tags: ['options'],
 };
 
+/**
+ * Badge can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
+ */
+export const Fixed: Story = {
+    render: () =>
+        CONTAINER(
+            Badge.FIXED_VALUES.map(
+                (fixed) => html`
+                    <swc-badge fixed=${ifDefined(fixed as FixedValues)}
+                        >${capitalize(fixed)}</swc-badge
+                    >
+                `
+            )
+        ),
+    tags: ['options'],
+};
+
+/**
+ * When a badge's label is too long for the available horizontal space, it wraps to form another line. Text wrapping can be enforced when a `max-inline-size` is applied to the badge.
+ */
 export const Textwrapping: Story = {
     render: () => html`
         <swc-badge style="max-inline-size: 100px">
@@ -226,10 +243,28 @@ export const Textwrapping: Story = {
             inline size
         </swc-badge>
     `,
-    tags: ['!dev'],
+    tags: ['options'],
 };
 
-export const A11y: Story = {
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<sp-badge>` element implements several accessibility features:
+ *
+ * 1. **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
+ *
+ * ### Best Practices
+ *
+ * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`) when the status has specific meaning
+ * - Include a clear, descriptive text label that explains the status
+ * - Ensure sufficient color contrast between the badge and its background
+ * - Avoid using badges for interactive elements; consider using buttons, tags, or links instead
+ */
+export const Accessibility: Story = {
     render: () => html`
         <swc-badge variant="positive">approved</swc-badge>
         <swc-badge variant="negative">rejected</swc-badge>
@@ -240,7 +275,7 @@ export const A11y: Story = {
         <swc-badge variant="yellow">busy</swc-badge>
         <swc-badge variant="silver">out of office</swc-badge>
     `,
-    tags: ['autodocs', '!dev'],
+    tags: ['a11y'],
 };
 
 // ────────────────────────

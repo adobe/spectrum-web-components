@@ -49,6 +49,9 @@ const meta: Meta = {
         actions: {
             handles: events,
         },
+        docs: {
+            subtitle: `Dividers bring clarity to a layout by grouping and dividing content in close proximity.`,
+        },
     },
     tags: ['migrated'],
 };
@@ -58,13 +61,9 @@ export default meta;
 type DividerSize = typeof Divider.prototype.size;
 
 // ────────────────────
-//    PRIMARY STORIES
+//    AUTODOCS STORY
 // ────────────────────
 
-/**
- * An `<sp-divider>` brings clarity to a layout by grouping and dividing content that exists in close proximity.
- * It can also be used to establish rhythm and hierarchy.
- */
 export const Playground: Story = {
     args: {
         size: 'm',
@@ -72,16 +71,39 @@ export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
-// ────────────────────
-//    USAGE STORIES
-// ────────────────────
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
- * The small divider is used to divide similar components such as table rows, action button groups, and components within a panel.
+ * A divider consists of a line with the following aspects:
  *
- * The medium divider is used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
+ * - An optional size
+ * - An optional orientation
+ * - An optional static color for backgrounds that have color
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        <div>
+            <p>Content above the divider</p>
+            ${template({ ...args, size: 'm' })}
+            <p>Content below the divider</p>
+        </div>
+    `,
+    tags: ['anatomy'],
+    args: {},
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Dividers come in three sizes to fit various contexts:
  *
- * The large divider should only be used for page titles or section titles.
+ * - **Small**: Used to divide similar components such as table rows, action button groups, and components within a panel
+ * - **Medium**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
+ * - **Large**: Should only be used for page titles or section titles
  */
 export const Sizes: Story = {
     render: () =>
@@ -96,11 +118,13 @@ export const Sizes: Story = {
                 </div>`;
             })}
         </div>`,
-    tags: ['usage'],
+    tags: ['options'],
 };
 
 /**
- * Vertical dividers are used to separate content horizontally.
+ * The default horizontal divider is used to separate content stacked vertically. To separate horizontal content, use the `vertical` attribute.
+ *
+ * When a vertical divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the divider.
  */
 export const Vertical: Story = {
     args: {
@@ -116,25 +140,9 @@ export const Vertical: Story = {
             })}
         </div>
     `,
-    tags: ['usage'],
+    tags: ['options'],
 };
 
-/**
- * Use the static color options when a divider needs to be placed on top of a color background or visual. Static color dividers are available in black or white regardless of color theme.
- */
-export const StaticColors: Story = {
-    args: {
-        'static-color': 'black',
-    },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
-    `,
-    tags: ['!dev', '!autodocs', 'usage'],
-};
 export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
@@ -146,7 +154,6 @@ export const StaticBlack: Story = {
             )}
         </div>
     `,
-    tags: ['usage'],
 };
 
 export const StaticWhite: Story = {
@@ -160,5 +167,56 @@ export const StaticWhite: Story = {
             )}
         </div>
     `,
-    tags: ['usage'],
+};
+
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
+ */
+export const StaticColors: Story = {
+    render: () => html`
+        <div style="display: flex; gap: 48px;">
+            <div
+                style="background: var(--spectrum-gray-900); padding: 24px; flex: 1;"
+            >
+                <h4 style="color: white;">White on dark</h4>
+                ${template({ 'static-color': 'white', size: 'm' })}
+            </div>
+            <div
+                style="background: var(--spectrum-gray-50); padding: 24px; flex: 1;"
+            >
+                <h4>Black on light</h4>
+                ${template({ 'static-color': 'black', size: 'm' })}
+            </div>
+        </div>
+    `,
+    tags: ['options', '!test'],
+};
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<sp-divider>` element implements the following accessibility features:
+ *
+ * 1. **ARIA Role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
+ * 2. **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
+ *
+ * ### Best Practices
+ *
+ * - Medium or large dividers can be used with header text to visually create a section or page title. Place the divider below the header for best results
+ * - Use dividers to create meaningful visual separation, not just decorative lines
+ * - Use dividers sparingly; excessive use can diminish their visual impact
+ */
+export const Accessibility: Story = {
+    render: () => html`
+        <div>
+            <h2>Section title</h2>
+            ${template({ size: 'l' })}
+            <p>Content in this section...</p>
+        </div>
+    `,
+    tags: ['a11y'],
 };

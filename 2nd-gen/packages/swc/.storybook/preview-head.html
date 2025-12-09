@@ -1,5 +1,6 @@
 <link rel="preconnect" href="https://use.typekit.net" />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
+
 <!-- For Adobe Clean font support -->
 <link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
 <script src="https://use.typekit.net/evk7lzt.js"></script>
@@ -21,6 +22,7 @@
 <style>
     /* Force Adobe Clean font on all Storybook elements */
     body,
+    html,
     #storybook-root,
     #storybook-docs,
     #stories,
@@ -29,6 +31,7 @@
     .sbdocs-wrapper,
     .sbdocs-content,
     .sbdocs-title,
+    .sbdocs-toc--custom,
     .docs-story,
     button,
     h1,
@@ -38,9 +41,14 @@
     h5,
     h6,
     p,
+    li,
+    ul,
+    ol,
+    table,
     input,
     select,
-    textarea {
+    textarea,
+    nav {
         font-family:
             adobe-clean,
             'Adobe Clean',
@@ -55,13 +63,39 @@
             sans-serif !important;
     }
 
-    p {
-        font-size: 16px !important;
+    html,
+    p,
+    li,
+    ul,
+    ol,
+    table,
+    input,
+    select,
+    textarea,
+    nav {
+        font-size: 1rem !important;
     }
 
-    #stories {
+    h1 {
+        font-size: var(--spectrum-heading-size-xxl) !important;
+    }
+
+    h2:not(.sbdocs-subtitle) {
+        font-size: var(--spectrum-heading-size-xl) !important;
+    }
+
+    h3 {
+        font-size: var(--spectrum-heading-size-l) !important;
+    }
+
+    h4 {
+        font-size: var(--spectrum-heading-size-m) !important;
+    }
+
+    #stories,
+    .sbdocs-content h2:not(.sbdocs-subtitle) {
         font-size: 24px;
-        margin: 20px 0px 8px;
+        margin: 1.25rem 0px 2rem;
         -webkit-font-smoothing: antialiased;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         padding: 0px 0px 4px;
@@ -72,6 +106,22 @@
         text-transform: capitalize !important;
         letter-spacing: unset;
         line-height: unset;
+    }
+
+    .sbdocs-toc--custom {
+        width: 20rem !important;
+        nav {
+            width: 20rem !important;
+            font-size: 1rem !important;
+        }
+    }
+
+    .toc-list-item.is-active-li > a {
+        color: rgb(2, 101, 220) !important;
+    }
+
+    .sbdocs-content {
+        max-width: calc(1000px - 20rem) !important;
     }
 
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */

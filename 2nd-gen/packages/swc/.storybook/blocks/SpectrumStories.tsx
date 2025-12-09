@@ -1,4 +1,9 @@
-import { Canvas, Description, useOf } from '@storybook/addon-docs/blocks';
+import {
+    Canvas,
+    Description,
+    Markdown,
+    useOf,
+} from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 /**
@@ -37,7 +42,7 @@ export const SpectrumStories = ({
         <>
             {taggedStories.map((story: any) => (
                 <React.Fragment key={story.name}>
-                    {!hideTitle && <h3>{story.name}</h3>}
+                    {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
                     <Description of={story.moduleExport} />
                     <Canvas of={story.moduleExport} />
                 </React.Fragment>

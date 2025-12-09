@@ -1,75 +1,13 @@
-import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
-import { SpectrumStories } from '../../../.storybook/blocks/SpectrumStories';
-import * as DividerStories from './divider.stories';
-
-## Getting Started
-
-```zsh
-yarn add @spectrum-web-components/divider
-```
-
-Import the side effectful registration of `<sp-divider>` via:
-
-```js
-import '@spectrum-web-components/divider/sp-divider.js';
-```
-
-When looking to leverage the `Divider` base class as a type and/or for extension purposes, do so via:
-
-```js
-import { Divider } from '@spectrum-web-components/divider';
-```
+import { SpectrumStories } from '../../../.storybook/blocks';
 
 ## Anatomy
 
-A divider consists of line two key aspects:
-
-- An optional size
-- An optional orientation
-- An optional static color for backgrounds that have color
-
-<Canvas of={DividerStories.Playground} withToolbar={true} sourceState="shown" />
+<SpectrumStories tag="anatomy" hideTitle />
 
 ## Options
 
-### Sizes
-
-Dividers come in three sizes to fit various contexts, `s`, `m`, or `l`:
-
-<Canvas of={DividerStories.Sizes} withToolbar={true} sourceState="shown" />
-
-### Vertical
-
-The default horizontal divider is used to separate content stacked vertically. To separate horizonally content use the `vertical` attribute.
-
-When a vertical divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the divider.
-
-<Canvas of={DividerStories.Vertical} withToolbar={true} sourceState="shown" />
-
-### Static color
-
-When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
-
-<Canvas
-    of={DividerStories.StaticBlack}
-    withToolbar={true}
-    sourceState="shown"
-/>
-<Canvas
-    of={DividerStories.StaticWhite}
-    withToolbar={true}
-    sourceState="shown"
-/>
+<SpectrumStories tag="options" />
 
 ## Accessibility
 
-The `<sp-divider>` element implements the following accessibility features:
-
-- **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
-- **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
-
-### Best practices
-
-- Medium or large dividers can be used with header text to visually create a section or page title. Place the divider below the header for best results.
-- Use dividers to create meaningful visual separation, not just decorative lines.
-- Use dividers sparingly; excessive use can diminish their visual impact.
+<SpectrumStories tag="a11y" hideTitle />
