@@ -86,7 +86,7 @@ const preview = {
                             'Making a pull request',
                             'Participating in PR reviews',
                             'Releasing SWC',
-                            'Authoring spectrum web component guides',
+                            'Authoring SWC guides',
                             'Patching dependencies',
                             'Accessibility testing',
                         ],
