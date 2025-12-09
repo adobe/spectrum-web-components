@@ -80,7 +80,7 @@ const preview = {
                         'Getting started guide',
                         'Contributor guides',
                         [
-                            'Gettiing involved',
+                            'Getting involved',
                             'Using the issue tracker',
                             'Working in the SWC repo',
                             'Making a pull request',
