@@ -105,24 +105,24 @@
 }
 
 /* Semantic Colors */
-.spectrum-StatusLight--neutral {
+:host([variant='neutral']) {
     --swc-statuslight-content-color: token('gray-600');
     --swc-statuslight-dot-color: token('neutral-visual-color');
 }
 
-.spectrum-StatusLight--info {
+:host([variant='info']) {
     --swc-statuslight-dot-color: token('informative-visual-color');
 }
 
-.spectrum-StatusLight--negative {
+:host([variant='negative']) {
     --swc-statuslight-dot-color: token('neutral-visual-color');
 }
 
-.spectrum-StatusLight--notice {
+:host([variant='notice']) {
     --swc-statuslight-dot-color: token('notice-visual-color');
 }
 
-.spectrum-StatusLight--positive {
+:host([variant='positive']) {
     --swc-statuslight-dot-color: token('positive-visual-color');
 }
 

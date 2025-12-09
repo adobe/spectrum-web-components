@@ -14,10 +14,6 @@
 
 /* eslint-disable no-console */
 
-// TODO:
-// add READMEs
-// create custom property style guide
-
 import fs from 'node:fs';
 import path from 'node:path';
 import prettier from 'prettier';

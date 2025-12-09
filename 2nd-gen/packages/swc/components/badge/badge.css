@@ -150,25 +150,25 @@
 
 /* NOTE: `accent` is the default color */
 
-.spectrum-Badge--neutral {
+:host([variant='neutral']) {
     --swc-badge-background-color: token(
         'neutral-subdued-background-color-default'
     );
 }
 
-.spectrum-Badge--informative {
+:host([variant='informative']) {
     --swc-badge-background-color: token('informative-background-color-default');
 }
 
-.spectrum-Badge--negative {
+:host([variant='negative']) {
     --swc-badge-background-color: token('negative-background-color-default');
 }
 
-.spectrum-Badge--positive {
+:host([variant='positive']) {
     --swc-badge-background-color: token('positive-background-color-default');
 }
 
-.spectrum-Badge--notice {
+:host([variant='notice']) {
     --swc-badge-background-color: token('notice-background-color-default');
 }
 
@@ -248,45 +248,47 @@
     --swc-badge-background-color: token('silver-background-color-default');
 }
 
-.spectrum-Badge--subtle {
+:host([subtle]) {
     --swc-badge-label-icon-color: token('gray-1000');
+}
 
-    &.spectrum-Badge--neutral {
-        --swc-badge-background-color: token(
-            'neutral-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='neutral']) {
+    --swc-badge-background-color: token(
+        'neutral-subtle-background-color-default'
+    );
+}
 
-    &.spectrum-Badge--accent {
-        --swc-badge-background-color: token(
-            'accent-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='accent']) {
+    --swc-badge-background-color: token(
+        'accent-subtle-background-color-default'
+    );
+}
 
-    &.spectrum-Badge--informative {
-        --swc-badge-background-color: token(
-            'informative-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='informative']) {
+    --swc-badge-background-color: token(
+        'informative-subtle-background-color-default'
+    );
+}
 
-    &.spectrum-Badge--negative {
-        --swc-badge-background-color: token(
-            'negative-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='negative']) {
+    --swc-badge-background-color: token(
+        'negative-subtle-background-color-default'
+    );
+}
 
-    &.spectrum-Badge--positive {
-        --swc-badge-background-color: token(
-            'positive-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='positive']) {
+    --swc-badge-background-color: token(
+        'positive-subtle-background-color-default'
+    );
+}
 
-    &.spectrum-Badge--notice {
-        --swc-badge-background-color: token(
-            'notice-subtle-background-color-default'
-        );
-    }
+:host([subtle][variant='notice']) {
+    --swc-badge-background-color: token(
+        'notice-subtle-background-color-default'
+    );
+}
 
+.spectrum-Badge--subtle {
     &.spectrum-Badge--gray {
         --swc-badge-background-color: token(
             'gray-subtle-background-color-default'
@@ -402,14 +404,12 @@
     }
 }
 
-.spectrum-Badge--outline:is(
-    .spectrum-Badge--neutral,
-    .spectrum-Badge--accent,
-    .spectrum-Badge--informative,
-    .spectrum-Badge--negative,
-    .spectrum-Badge--positive,
-    .spectrum-Badge--notice
-) {
+:host([outline][variant='neutral']),
+:host([outline][variant='accent']),
+:host([outline][variant='informative']),
+:host([outline][variant='negative']),
+:host([outline][variant='positive']),
+:host([outline][variant='notice']) {
     --swc-badge-background-color: var(
         --swc-badge-outline-background-color,
         token('background-layer-2-color')
@@ -420,28 +420,26 @@
     );
 }
 
-.spectrum-Badge--outline {
-    &.spectrum-Badge--neutral {
-        --swc-badge-border-color: token('neutral-visual-color');
-    }
+:host([outline][variant='neutral']) {
+    --swc-badge-border-color: token('neutral-visual-color');
+}
 
-    &.spectrum-Badge--accent {
-        --swc-badge-border-color: token('accent-visual-color');
-    }
+:host([outline][variant='accent']) {
+    --swc-badge-border-color: token('accent-visual-color');
+}
 
-    &.spectrum-Badge--informative {
-        --swc-badge-border-color: token('informative-visual-color');
-    }
+:host([outline][variant='informative']) {
+    --swc-badge-border-color: token('informative-visual-color');
+}
 
-    &.spectrum-Badge--negative {
-        --swc-badge-border-color: token('negative-visual-color');
-    }
+:host([outline][variant='negative']) {
+    --swc-badge-border-color: token('negative-visual-color');
+}
 
-    &.spectrum-Badge--positive {
-        --swc-badge-border-color: token('positive-visual-color');
-    }
+:host([outline][variant='positive']) {
+    --swc-badge-border-color: token('positive-visual-color');
+}
 
-    &.spectrum-Badge--notice {
-        --swc-badge-border-color: token('notice-visual-color');
-    }
+:host([outline][variant='notice']) {
+    --swc-badge-border-color: token('notice-visual-color');
 }
