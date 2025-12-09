@@ -40,8 +40,7 @@ argTypes.size = {
 // we need to use a select option and render a predefined HTML template based on the selected option
 argTypes['default-slot'] = {
     ...argTypes['default-slot'],
-    control: { type: 'select' },
-    options: [undefined, 'slotted image'],
+    control: { type: 'text' },
 };
 
 /*
@@ -77,15 +76,11 @@ export default meta;
 export const Playground: Story = {
     // since we cant't use HTML templates in a slot control,
     // we need to use a select option and render a predefined HTML template based on the selected option
-    render: (args) =>
-        html`<swc-asset label="${args.label}" variant="${args.variant}">
-            ${args['default-slot'] === 'slotted image'
-                ? html`<img src="https://picsum.photos/120/120" alt="Avatar" />`
-                : ''}
-        </swc-asset>`,
+    render: (args) => template({ ...args }),
     args: {
-        variant: 'file',
         label: 'picture.png',
+        variant: undefined,
+        'default-slot': `<img src="https://picsum.photos/120/120" alt="Avatar" />`,
     },
     tags: ['autodocs', 'dev'],
 };
