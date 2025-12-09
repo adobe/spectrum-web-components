@@ -9,7 +9,7 @@ It is intended for use alongside `@adobe/swc-tokens`, which supplies the process
 `@adobe/postcss-token` allows CSS such as:
 
 ```css
-.button {
+.spectrum-Button {
     background-color: token('accent-background-color-default');
 }
 ```
@@ -17,7 +17,7 @@ It is intended for use alongside `@adobe/swc-tokens`, which supplies the process
 to be transformed at build time into valid CSS values:
 
 ```css
-.button {
+.spectrum-Button {
     background-color: var(--swc-accent-background-color-default);
 }
 ```
@@ -127,7 +127,7 @@ color: token('not-a-real-token');
 ```
 
 ```
-Error: token() did not find 'not-a-real-token'
+Error: token() not found: 'not-a-real-token'
 ```
 
 ## Plugin Options

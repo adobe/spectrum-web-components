@@ -155,6 +155,12 @@ By declaring scaling tokens under both `:root` and `.spectrum-theme`:
 
 Without this structure, scaling tokens would not recompute correctly when applied within a scoped theme or size container.
 
+### Updating the Tokens Stylesheet
+
+If changes are made to the token data or processing, then you will need to navigate your terminal into `swc` and re-run `yarn` followed by `yarn stylesheets`. This will re-generate the tokens stylesheet.
+
+> Review stylesheet changes via git to ensure there are no regressions and that changes are expected.
+
 ## Function: `lookupToken()`
 
 This function is provided primarily for use by `@adobe/postcss-token` and powers the custom PostCSS `token()` function.
