@@ -78,10 +78,11 @@ const preview = {
                     // orderedList: false,
                 },
             },
-            story: { inline: true },
+            // story: { inline: true },
             canvas: {
                 withToolbar: true,
                 sourceState: 'shown',
+                layout: 'centered',
             },
             source: {
                 excludeDecorators: true,

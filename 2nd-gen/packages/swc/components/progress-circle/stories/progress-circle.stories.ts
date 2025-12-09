@@ -18,6 +18,11 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
+import {
+    createStaticColorStory,
+    generateStaticColorSource,
+} from '../../../.storybook/helpers/index.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -59,6 +64,13 @@ const meta: Meta = {
         },
         actions: {
             handles: events,
+        },
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Web--Desktop-scale-?node-id=13061-181&p=f&t=l8WhfseyuepkVXrl-0',
+        },
+        stackblitz: {
+            url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
         },
     },
     decorators: [
@@ -127,13 +139,13 @@ export const Sizes: Story = {
 };
 
 export const ProgressValues: Story = {
-    render: () => html`
+    render: (args) => html`
         ${template({ ...args, progress: 25, label: '25% progress' })}
         ${template({ ...args, progress: 50, label: '50% progress' })}
         ${template({ ...args, progress: 75, label: '75% progress' })}
         ${template({ ...args, progress: 100, label: '100% progress' })}
     `,
-    tags: ['usage'],
+    tags: ['options'],
     args: {
         size: 'm',
     },
@@ -141,147 +153,51 @@ export const ProgressValues: Story = {
 
 /**
  * Use `indeterminate` progress when the duration cannot be calculated:
- *
- * - `size="s"`
- * - `size="m"`
- * - `size="l"`
  */
 export const Indeterminate: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
-                indeterminate
-                size="s"
-                label="Loading..."
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                size="m"
-                label="Loading..."
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                size="l"
-                label="Loading..."
-            ></swc-progress-circle>
-        </div>
-    `,
     tags: ['states'],
+    args: {
+        indeterminate: true,
+        size: 'm',
+        label: 'Loading...',
+    },
 };
 
-/** When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background: */
-// TODO: Add a story for each static color
-export const StaticColors: Story = {
-    render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-        <div
-            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: inline-flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-    `,
-    tags: ['!dev', 'options'],
-};
-
-export const StaticWhite: Story = {
-    render: (args) => template(args),
+const staticWhite = {
     args: {
         'static-color': 'white',
         progress: 60,
         label: 'Loading on dark background',
     },
-    tags: ['usage'],
 };
 
-export const StaticBlack: Story = {
-    render: (args) => template(args),
+const staticBlack = {
     args: {
         'static-color': 'black',
         progress: 60,
         label: 'Loading on dark background',
     },
-    tags: ['usage'],
 };
 
-export const IndeterminateStaticWhite: Story = {
-    render: (args) => template(args),
-    args: {
-        'static-color': 'white',
-        indeterminate: true,
-        label: 'Loading on dark background',
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
+ */
+export const StaticColors: Story = {
+    render: createStaticColorStory(template, [
+        { args: staticWhite.args },
+        { args: staticBlack.args },
+    ]),
+    parameters: {
+        docs: {
+            source: {
+                code: generateStaticColorSource('swc-progress-circle', [
+                    { args: staticWhite.args },
+                    { args: staticBlack.args },
+                ]),
+            },
+        },
     },
-    tags: ['usage'],
-};
-
-// ────────────────────────────────
-//    ACCESSIBILITY STORIES
-// ────────────────────────────────
-
-export const Accessibility: Story = {
-    render: () => html`
-        <div>
-            <p>
-                This is coming from the accessibility story through the
-                Accessibility block. This option allows us to fully customize
-                the accessibility documentation for a component by writing a
-                custom story that renders the accessibility documentation.
-            </p>
-        </div>
-    `,
-    tags: ['a11y'],
-};
-
-export const KeyboardNavigation: Story = {
-    render: () => html`
-        <div>
-            <p>
-                This is coming from the keyboard navigation story through the
-                Accessibility block. This option allows us to fully customize
-                allows us to fully customize the accessibility documentation for
-                a component by writing a custom story that renders the
-                accessibility documentation.
-            </p>
-        </div>
-    `,
-    tags: ['a11y'],
+    tags: ['options'],
 };
 
 // ────────────────────────────────
@@ -289,17 +205,11 @@ export const KeyboardNavigation: Story = {
 // ────────────────────────────────
 
 export const A11y: Story = {
-    render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="white"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
-    `,
-    tags: ['!dev'],
+    args: {
+        progress: 60,
+        size: 'l',
+        label: 'Loading on dark background',
+        'static-color': 'white',
+    },
+    tags: ['a11y'],
 };

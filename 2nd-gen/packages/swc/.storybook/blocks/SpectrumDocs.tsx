@@ -2,8 +2,6 @@
 import { useOf } from '@storybook/addon-docs/blocks';
 import React, { useEffect, useState } from 'react';
 
-const TAGS = ['overview', 'usage', 'a11y', 'examples'];
-
 // Glob import all MDX files from component stories directories as compiled React components
 const mdxModules = import.meta.glob<{ default: React.ComponentType }>(
     '../../components/**/*.mdx',
