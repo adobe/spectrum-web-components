@@ -47,10 +47,12 @@ export const withStaticColorBackground: DecoratorFunction = makeDecorator({
             return StoryFn(context);
         }
 
-        // Wrap the story with the background
+        // Wrap the story with the background.
+        // Note: withFlexLayout will handle the flex styling if enabled,
+        // so we only add justify-content: center here for additional centering.
         return html`
             <div
-                style="background: ${background}; padding: 36px; display: flex; gap: 24px; align-items: center; justify-content: center;"
+                style="background: ${background}; padding: 36px; display: flex; justify-content: center;"
             >
                 ${StoryFn(context)}
             </div>

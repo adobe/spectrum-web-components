@@ -13,7 +13,7 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
-import { withStaticColorBackground } from './decorators';
+import { withStaticColorBackground, withFlexLayout } from './decorators';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -35,7 +35,7 @@ setStorybookHelpersConfig(storybookHelperOptions);
 setCustomElementsManifest(customElements);
 
 const preview = {
-    decorators: [withStaticColorBackground],
+    decorators: [withStaticColorBackground, withFlexLayout],
     parameters: {
         layout: 'centered',
         controls: {

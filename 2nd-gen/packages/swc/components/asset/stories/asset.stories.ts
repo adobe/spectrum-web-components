@@ -32,10 +32,6 @@ argTypes.label = {
     control: { type: 'text' },
 };
 
-argTypes.size = {
-    control: { disable: true },
-};
-
 // since we cant't use HTML templates in a slot control,
 // we need to use a select option and render a predefined HTML template based on the selected option
 argTypes['default-slot'] = {

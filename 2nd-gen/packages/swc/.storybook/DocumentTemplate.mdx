@@ -9,7 +9,12 @@ import {
     Subtitle,
     useOf,
 } from '@storybook/addon-docs/blocks';
-import { SpectrumDocs, SpectrumStories, StaticPrimaryStory } from './blocks';
+import {
+    GettingStarted,
+    SpectrumDocs,
+    SpectrumStories,
+    StaticPrimaryStory,
+} from './blocks';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
@@ -17,7 +22,6 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 export const checkIsSingleStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
     const { stories } = resolvedOf.csfFile;
-    console.log('how many stories', stories);
     const visibleStories = Object.values(stories).filter((story) =>
         story.tags?.includes('autodocs' || 'dev')
     );
@@ -45,6 +49,7 @@ export const AdvancedExamplesStories = () => {
 <Description />
 <SingleStoryDescription />
 <StaticPrimaryStory />
+<GettingStarted />
 <SpectrumDocs tag="usage" />
 
 ## API

@@ -27,14 +27,9 @@ import {
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStorybookHelpers(
-    'swc-progress-circle'
-);
+const { args, argTypes, template } = getStorybookHelpers('swc-progress-circle');
 
-/*
- * @todo Blurring the range control seems to cause a catastrophic Storybook
- * render failure, so using number input for now.
- */
+// @TODO: Blurring the range control seems to cause a catastrophic Storybook render failure, so using number input for now. React spectrum has the range control working, check their implementation for a solution.
 argTypes.progress = {
     ...argTypes.progress,
     control: { type: 'number', min: 0, max: 100, step: 1 },
@@ -53,17 +48,16 @@ argTypes['static-color'] = {
 };
 
 /**
- * This is the `description` fo the progress circle component
+ * They can represent determinate or indeterminate progress.
+ * By default, they represent determinate progress. To represent determinate progress, set the `progress` attribute to a value between 0 and 100.
+ * To represent indeterminate progress, set the `indeterminate` attribute to `true`.
  */
 const meta: Meta = {
     title: 'Progress circle',
     component: 'swc-progress-circle',
     parameters: {
         docs: {
-            subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way. They can represent determinate or indeterminate progress.`,
-        },
-        actions: {
-            handles: events,
+            subtitle: `Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.`,
         },
         design: {
             type: 'figma',
@@ -73,15 +67,9 @@ const meta: Meta = {
             url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
         },
     },
-    decorators: [
-        (story) =>
-            html`<div style="display: flex; gap: 24px; align-items: center;">
-                ${story()}
-            </div>`,
-    ],
     args,
     argTypes,
-    render: (args) => template(args),
+    render: (args) => template(args), // This is the default render function for the component. Think of this like a beforeEach setup function for the stories below.
     tags: ['migrated'],
 };
 
@@ -92,7 +80,6 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    render: (args) => template(args),
     tags: ['autodocs', 'dev'],
     args: {
         progress: 50,
@@ -101,14 +88,14 @@ export const Playground: Story = {
     },
 };
 
-// ─────────────────────
-//    USAGE STORIES
-// ─────────────────────
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
  * A progress circle consists of several key parts:
  *
- * - A label (via `label` attribute)
+ * - An accessible label (via `label` attribute)
  * - A progress value (via `progress` attribute)
  * - An an optional indeterminate state (via `indeterminate` attribute)
  * - An optional size
@@ -122,6 +109,42 @@ export const Anatomy: Story = {
     tags: ['anatomy'],
     args: {},
 };
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+/**
+ * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress. This automatically sets `aria-valuenow` to the provided value.
+ */
+export const ProgressValues: Story = {
+    render: (args) => html`
+        ${template({ ...args, progress: 25, label: '25% progress' })}
+        ${template({ ...args, progress: 50, label: '50% progress' })}
+        ${template({ ...args, progress: 75, label: '75% progress' })}
+        ${template({ ...args, progress: 100, label: '100% progress' })}
+    `,
+    tags: ['states'],
+    args: {
+        size: 'm',
+    },
+};
+
+/**
+ * Set the `indeterminate` attribute to render an animated loading indicator when the progress is unknown. This removes `aria-valuenow` from the element.
+ */
+export const Indeterminate: Story = {
+    tags: ['states'],
+    args: {
+        indeterminate: true,
+        size: 'm',
+        label: 'Loading...',
+    },
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
 
 /**
  * Progress circles come in three sizes to fit various contexts:
@@ -138,32 +161,8 @@ export const Sizes: Story = {
     },
 };
 
-export const ProgressValues: Story = {
-    render: (args) => html`
-        ${template({ ...args, progress: 25, label: '25% progress' })}
-        ${template({ ...args, progress: 50, label: '50% progress' })}
-        ${template({ ...args, progress: 75, label: '75% progress' })}
-        ${template({ ...args, progress: 100, label: '100% progress' })}
-    `,
-    tags: ['options'],
-    args: {
-        size: 'm',
-    },
-};
-
-/**
- * Use `indeterminate` progress when the duration cannot be calculated:
- */
-export const Indeterminate: Story = {
-    tags: ['states'],
-    args: {
-        indeterminate: true,
-        size: 'm',
-        label: 'Loading...',
-    },
-};
-
-const staticWhite = {
+// The three static color stories are used to demonstrate the different static color variants for testing and documentation purposes. The documentation story uses the createStaticColorStory helper to render the two static color variants side by side based on the args being used in the test stories. This ensure that the source code documentation is consistent with the test stories.
+export const StaticWhite: Story = {
     args: {
         'static-color': 'white',
         progress: 60,
@@ -171,7 +170,7 @@ const staticWhite = {
     },
 };
 
-const staticBlack = {
+export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
         progress: 60,
@@ -184,32 +183,53 @@ const staticBlack = {
  */
 export const StaticColors: Story = {
     render: createStaticColorStory(template, [
-        { args: staticWhite.args },
-        { args: staticBlack.args },
+        { args: StaticWhite.args },
+        { args: StaticBlack.args },
     ]),
     parameters: {
         docs: {
             source: {
                 code: generateStaticColorSource('swc-progress-circle', [
-                    { args: staticWhite.args },
-                    { args: staticBlack.args },
+                    { args: StaticWhite.args },
+                    { args: StaticBlack.args },
                 ]),
             },
         },
     },
-    tags: ['options'],
+    tags: ['options', '!test'],
 };
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-export const A11y: Story = {
+/**
+ * ### Features
+ *
+ * The `<sp-progress-circle>` element implements several accessibility features:
+ *
+ * 1. **ARIA Role**: Automatically sets `role="progressbar"` for proper semantic meaning
+ * 2. **Labeling**:
+ *     - Uses the `label` attribute value as `aria-label`
+ *     - When determinate, adds `aria-valuenow` with the current progress
+ *  - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
+ * 3. **Status Communication**:
+ *     - Screen readers announce progress updates
+ *     - Indeterminate state is properly conveyed to assistive technologies
+ *
+ * ### Best Practices
+ *
+ * - Always provide a descriptive `label` that explains what the progress represents
+ * - Use determinate progress when possible to give users a clear sense of completion
+ * - For determinate progress, ensure the `progress` value accurately reflects the actual progress
+ * - Consider using size="l" for primary loading states to improve visibility
+ */
+export const Accessibility: Story = {
+    tags: ['a11y'],
     args: {
         progress: 60,
         size: 'l',
         label: 'Loading on dark background',
         'static-color': 'white',
     },
-    tags: ['a11y'],
 };

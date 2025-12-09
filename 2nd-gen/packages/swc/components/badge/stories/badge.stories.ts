@@ -48,7 +48,6 @@ argTypes.size = {
 args['default-slot'] = 'Badge';
 
 /**
- * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.
  * There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
  *
  * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
@@ -62,6 +61,9 @@ const meta: Meta = {
     parameters: {
         actions: {
             handles: events,
+        },
+        docs: {
+            subtitle: `Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.`,
         },
     },
     tags: ['migrated'],

@@ -15,3 +15,4 @@ export {
     createStaticColorStory,
     generateStaticColorSource,
 } from './static-color-wrapper.js';
+export { formatComponentName } from './format-component-name.js';

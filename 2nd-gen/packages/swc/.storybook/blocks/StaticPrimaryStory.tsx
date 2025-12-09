@@ -1,5 +1,6 @@
 import { Canvas, Story, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
+import { formatComponentName } from '../helpers/index.js';
 
 export const StaticPrimaryStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
@@ -12,12 +13,7 @@ export const StaticPrimaryStory = () => {
     console.log('primaryStory', primaryStory);
 
     // Extract component name and create GitHub link
-    const title = resolvedOf.preparedMeta?.title || '';
-    const componentName = title
-        .split('/')
-        .pop()
-        ?.toLowerCase()
-        .replace(/\s+/g, '-');
+    const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
     const githubBaseUrl =
         'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/swc/components';
 
@@ -85,7 +81,7 @@ export const StaticPrimaryStory = () => {
 
     return (
         <Canvas {...canvasOptions}>
-            <Story of={primaryStory.moduleExport} />
+            <Story of={primaryStory.moduleExport} inline />
         </Canvas>
     );
 };

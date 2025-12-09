@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 import { useOf } from '@storybook/addon-docs/blocks';
 import React, { useEffect, useState } from 'react';
+import { formatComponentName } from '../helpers/index.js';
 
 // Glob import all MDX files from component stories directories as compiled React components
 const mdxModules = import.meta.glob<{ default: React.ComponentType }>(
@@ -30,12 +31,9 @@ export const SpectrumDocs = ({
 
     useEffect(() => {
         // Extract component name from the title (e.g., "Components/Progress Circle" -> "progress-circle")
-        const title = resolvedOf.preparedMeta?.title || '';
-        const componentName = title
-            .split('/')
-            .pop()
-            ?.toLowerCase()
-            .replace(/\s+/g, '-');
+        const componentName = formatComponentName(
+            resolvedOf.preparedMeta?.title
+        );
 
         // Find the matching MDX file path based on component name and tag
         const matchingPath = Object.keys(mdxModules).find((path) => {
