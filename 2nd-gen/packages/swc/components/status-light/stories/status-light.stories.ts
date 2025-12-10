@@ -67,12 +67,11 @@ export default meta;
 type StatusLightVariant = typeof StatusLight.prototype.variant;
 type StatusLightSize = typeof StatusLight.prototype.size;
 
-/**
- * An `<sp-status-light>` is a great way to convey semantic meaning, such as statuses and categories.
- * It provides visual indicators through colored dots accompanied by descriptive text.
- */
 export const Playground: Story = {
     tags: ['autodocs', 'dev'],
+    args: {
+        'default-slot': 'New Feature',
+    },
 };
 
 // ──────────────────────────
@@ -145,7 +144,7 @@ export const SemanticVariants: Story = {
 /**
  * When status lights are used to color code categories and labels that are commonly found in data visualization, they use label colors. The ideal usage for these is when there are 8 or fewer categories or labels being color coded.
  */
-export const NonsemanticVariants: Story = {
+export const NonSemanticVariants: Story = {
     render: () =>
         CONTAINER(
             StatusLight.VARIANTS_COLOR.map(
@@ -158,18 +157,47 @@ export const NonsemanticVariants: Story = {
         ),
     tags: ['options'],
 };
-NonsemanticVariants.storyName = 'Non-semantic variants';
+NonSemanticVariants.storyName = 'Non-semantic variants';
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+/**
+ * A status light in a disabled state shows that a status exists, but is not available in that circumstance.
+ * This can be used to maintain layout continuity and communicate that a status may become available later.
+ *
+ * - **ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`
+ */
+/*
+ @todo ois this story needed?
+ export const Disabled: Story = {
+    render: () =>
+        CONTAINER([
+            html`<swc-status-light variant="positive"
+                >Approved (enabled)</swc-status-light
+            >`,
+            html`<swc-status-light variant="positive" disabled
+                >Approved (disabled)</swc-status-light
+            >`,
+        ]),
+    tags: ['states'],
+};*/
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
 /**
  * When the text is too long for the horizontal space available, it wraps to form another line.
  */
 export const TextWrapping: Story = {
     render: () =>
-        html` <swc-status-light style="max-inline-size: 200px">
-            This is a very long status light label that wraps when it reaches
-            its max inline size
+        html` <swc-status-light variant="info" style="max-inline-size: 200px">
+            Document processing in progress - please wait while we validate your
+            submission
         </swc-status-light>`,
-    tags: ['options'],
+    tags: ['behaviors'],
 };
 
 // ────────────────────────────────
@@ -179,16 +207,19 @@ export const TextWrapping: Story = {
 /**
  * ### Features
  *
- * The `<sp-status-light>` element implements several accessibility features:
+ * The `<swc-status-light>` element implements several accessibility features:
  *
- * 1. **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
+ * 1. **Color meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
+ * 2. **ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`
  *
- * ### Best Practices
+ * ### Best practices
  *
  * - Use semantic variants (`positive`, `negative`, `notice`, `info`, `neutral`) when the status has specific meaning
  * - Include a clear, descriptive text label that explains the status
  * - Ensure sufficient color contrast between the status light and its background
  */
+// @todo disabled state
+// - Consider using the disabled state to maintain layout continuity when a status is temporarily unavailable
 export const Accessibility: Story = {
     render: () => html`
         <swc-status-light variant="positive">approved</swc-status-light>
