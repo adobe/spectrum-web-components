@@ -84,11 +84,9 @@ export const Playground: Story = {
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        <div>
-            <p>Content above the divider</p>
-            ${template({ ...args, size: 'm' })}
-            <p>Content below the divider</p>
-        </div>
+        <p>Content above the divider</p>
+        ${template({ ...args, size: 'm' })}
+        <p>Content below the divider</p>
     `,
     tags: ['anatomy'],
     args: {},
@@ -107,17 +105,21 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
     render: () =>
-        html` <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${Divider.VALID_SIZES.map((size) => {
-                const label =
-                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
-                return html`<div>
-                    <h3 class="demo">${label}</h3>
-                    <swc-divider size=${size}></swc-divider>
-                    <p>Text below the divider.</p>
-                </div>`;
-            })}
-        </div>`,
+        html`${Divider.VALID_SIZES.map((size) => {
+            const label = sizeLabel(size);
+            return html`<div>
+                <h3>${label}</h3>
+                <swc-divider size=${size}></swc-divider>
+                <p>Content below the ${label.toLowerCase()} divider.</p>
+            </div>`;
+        })}`,
+    parameters: {
+        flexLayout: true,
+        styles: {
+            'flex-direction': 'row',
+            gap: '16px',
+        },
+    },
     tags: ['options'],
 };
 
@@ -130,30 +132,46 @@ export const Vertical: Story = {
     args: {
         vertical: true,
     },
-    render: () => html`
-        <div style="display: flex; flex-direction: row; gap: 48px;">
-            ${Divider.VALID_SIZES.map((size) => {
-                const label =
-                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
-                return html` <h3 class="demo">${label}</h3>
-                    <swc-divider vertical size=${size}></swc-divider>`;
-            })}
-        </div>
-    `,
+    render: () =>
+        html`${Divider.VALID_SIZES.map((size) => {
+            const label = sizeLabel(size);
+            return html`
+                <span>${label}</span>
+                <swc-divider
+                    vertical
+                    size=${size}
+                    style="align-self: stretch; height: auto;"
+                ></swc-divider>
+            `;
+        })}`,
+    parameters: {
+        flexLayout: true,
+        styles: {
+            'flex-direction': 'row',
+            gap: '16px',
+        },
+    },
     tags: ['options'],
 };
 
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
+ */
 export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
     },
     render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
+        <p>Content above the divider on a light background</p>
+        ${template({ ...args, size: 'm' as DividerSize })}
+        <p>Content below the divider</p>
     `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'black',
+        },
+    },
 };
 
 export const StaticWhite: Story = {
@@ -161,12 +179,16 @@ export const StaticWhite: Story = {
         'static-color': 'white',
     },
     render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
-                template({ ...args, size: size as DividerSize })
-            )}
-        </div>
+        <p>Content above the divider on a dark background</p>
+        ${template({ ...args, size: 'm' as DividerSize })}
+        <p>Content below the divider</p>
     `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'white',
+        },
+    },
 };
 
 /**
@@ -174,21 +196,21 @@ export const StaticWhite: Story = {
  */
 export const StaticColors: Story = {
     render: () => html`
-        <div style="display: flex; gap: 48px;">
-            <div
-                style="background: var(--spectrum-gray-900); padding: 24px; flex: 1;"
-            >
-                <h4 style="color: white;">White on dark</h4>
-                ${template({ 'static-color': 'white', size: 'm' })}
-            </div>
-            <div
-                style="background: var(--spectrum-gray-50); padding: 24px; flex: 1;"
-            >
-                <h4>Black on light</h4>
-                ${template({ 'static-color': 'black', size: 'm' })}
-            </div>
+        <div>
+            <h4>Dashboard settings</h4>
+            ${template({ 'static-color': 'white', size: 'm' })}
+            <p>Configure your dashboard preferences and layout options.</p>
+        </div>
+        <div>
+            <h4>Account details</h4>
+            ${template({ 'static-color': 'black', size: 'm' })}
+            <p>Manage your account information and security settings.</p>
         </div>
     `,
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
     tags: ['options', '!test'],
 };
 
@@ -199,12 +221,12 @@ export const StaticColors: Story = {
 /**
  * ### Features
  *
- * The `<sp-divider>` element implements the following accessibility features:
+ * The `<swc-divider>` element implements the following accessibility features:
  *
- * 1. **ARIA Role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
+ * 1. **ARIA role**: Automatically sets `role="separator"` to ensure proper semantic meaning for assistive technologies
  * 2. **Orientation support**: When `vertical` is true, automatically sets `aria-orientation="vertical"` to indicate the divider's orientation
  *
- * ### Best Practices
+ * ### Best practices
  *
  * - Medium or large dividers can be used with header text to visually create a section or page title. Place the divider below the header for best results
  * - Use dividers to create meaningful visual separation, not just decorative lines
@@ -212,11 +234,26 @@ export const StaticColors: Story = {
  */
 export const Accessibility: Story = {
     render: () => html`
-        <div>
-            <h2>Section title</h2>
-            ${template({ size: 'l' })}
-            <p>Content in this section...</p>
-        </div>
+        <h4>Project overview</h4>
+        ${template({ size: 'l' })}
+        <p>
+            Review the project timeline, milestones, and deliverables for the
+            current sprint.
+        </p>
     `,
     tags: ['a11y'],
 };
+
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+
+/* @todo Pull this up into a utility function for more components to leverage */
+function sizeLabel(size?: DividerSize): string {
+    const labels: Record<string, string> = {
+        s: 'Small',
+        m: 'Medium',
+        l: 'Large',
+    };
+    return size ? labels[size] || size : '';
+}
