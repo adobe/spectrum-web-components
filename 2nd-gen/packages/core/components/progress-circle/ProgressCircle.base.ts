@@ -90,6 +90,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
      * Accessible label for the progress circle.
      *
      * Used to provide context about what is loading or progressing.
+     * @required for accessibility
      */
     @property({ type: String })
     public label = '';

@@ -1,61 +1,13 @@
-import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
-import { SpectrumStories } from '../../../.storybook/blocks/SpectrumStories';
-import * as AssetStories from './asset.stories';
+import { SpectrumStories } from '../../../.storybook/blocks';
 
-<Meta tag="usage" />
+## Anatomy
 
-## Usage
+<SpectrumStories tag="anatomy" hideTitle />
 
-```
-yarn add @spectrum-web-components/asset
-```
+## Options
 
-Import the side effectful registration of `<sp-asset>` via:
+<SpectrumStories tag="options" />
 
-```
-import '@spectrum-web-components/asset/sp-asset.js';
-```
+## Accessibility
 
-When looking to leverage the `Asset` base class as a type and/or for extension purposes, do so via:
-
-```
-import { Asset } from '@spectrum-web-components/asset';
-```
-
-### Anatomy
-
-A asset is made up of the following parts:
-
-- A large file or folder icon based on the asset `variant`
-- An accessible label for the asset
-- Optional content to be displayed in the asset when an acceptable value for `variant` is not present
-
-<Canvas of={AssetStories.Anatomy} withToolbar={true} sourceState="shown" />
-
-#### Optional content
-
-Optional content, like a preview thumbnail or an icon, can be slotted into an assets
-
-<Canvas of={AssetStories.Playground} withToolbar={true} sourceState="shown" />
-
-### Options
-
-It is not recommended to make badges interactive. Consider using a different component if you need interactivity, such as buttons, tags, or links.
-
-#### Variants
-
-When the `file` or `folder` variant is added, an icon displays instead of the slotted content.
-
-<Canvas of={AssetStories.File} withToolbar={true} sourceState="shown" />
-
-<Canvas of={AssetStories.Folder} withToolbar={true} sourceState="shown" />
-
-### Accessibility
-
-The asset component implements several accessibility features:
-
-- **Labeling**: Uses the `label` attribute value as `aria-label`
-
-#### Best Practices
-
-- Always provide a descriptive `label` that explains what the progress represents, unless the asset is purely decorative
+<SpectrumStories tag="a11y" hideTitle />

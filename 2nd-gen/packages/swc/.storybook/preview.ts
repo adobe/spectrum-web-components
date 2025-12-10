@@ -3,6 +3,7 @@ import '../tokens/global-vars.css';
 import '../tokens/index.css';
 import '../tokens/light-vars.css';
 import '../tokens/medium-vars.css';
+import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -10,10 +11,11 @@ import {
     setStorybookHelpersConfig,
     type Options,
 } from '@wc-toolkit/storybook-helpers';
+import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
-import { withStaticColorBackground } from './decorators/static-color-background';
+import { withStaticColorBackground, staticColors, withFlexLayout } from './decorators';
 
-const options: Options = {
+const storybookHelperOptions: Options = {
     categoryOrder: [
         'attributes',
         'properties',
@@ -27,17 +29,19 @@ const options: Options = {
     renderDefaultValues: true,
 };
 
-setStorybookHelpersConfig(options);
+setStorybookHelpersConfig(storybookHelperOptions);
 
 // Set the Custom Elements Manifest for automatic controls generation
 setCustomElementsManifest(customElements);
 
 const preview = {
-    decorators: [withStaticColorBackground],
+    decorators: [withStaticColorBackground, staticColors, withFlexLayout],
     parameters: {
         layout: 'centered',
         controls: {
             expanded: true,
+            hideNoControlsWarning: true,
+            sort: 'requiredFirst',
             matchers: {
                 color: /(background|color)$/i,
                 date: /Date$/i,
@@ -50,17 +54,37 @@ const preview = {
                 ],
             },
         },
+        html: {
+            root: '[data-html-preview]:first-of-type > *',
+            removeComments: true,
+            prettier: {
+                tabWidth: 2,
+                useTabs: false,
+            },
+            highlighter: {
+                showLineNumbers: false,
+                wrapLines: true,
+            },
+        },
         docs: {
             codePanel: true,
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
                 headingSelector: 'h2, h3, h4',
-                ignoreSelector: '.sbdocs-subtitle, .sbdocs-preview',
+                ignoreSelector:
+                    '.sbdocs-subtitle, .sbdocs-preview *, #root-inner, #feedback',
                 disable: false,
-                unsafeTocbotOptions: {
-                    // orderedList: false,
-                },
+            },
+            canvas: {
+                withToolbar: true,
+                sourceState: 'shown',
+                layout: 'centered',
+            },
+            source: {
+                excludeDecorators: true,
+                type: 'dynamic',
+                language: 'html',
             },
         },
         options: {
@@ -131,7 +155,8 @@ const preview = {
             },
         },
     },
-    tags: ['!autodocs', '!dev'],
+    tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
+    loaders: [FontLoader],
 };
 
 export default preview;

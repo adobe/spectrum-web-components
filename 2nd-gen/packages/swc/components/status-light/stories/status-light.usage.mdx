@@ -1,75 +1,17 @@
-import { Canvas, Story, Meta } from '@storybook/addon-docs/blocks';
-import { SpectrumStories } from '../../../.storybook/blocks/SpectrumStories';
-import * as StatusLightStories from './status-light.stories';
+import { SpectrumStories } from '../../../.storybook/blocks';
 
-<Meta tag="usage" />
+## Anatomy
 
-## Usage
+<SpectrumStories tag="anatomy" hideTitle />
 
-```
-yarn add @spectrum-web-components/status-light
-```
+## Options
 
-Import the side effectful registration of `<sp-status-light>` via:
+<SpectrumStories tag="options" />
 
-```
-import '@spectrum-web-components/status-light/sp-status-light.js';
-```
+## Behaviors
 
-When looking to leverage the `StatusLight` base class as a type and/or for extension purposes, do so via:
+<SpectrumStories tag="behaviors" />
 
-```
-import { StatusLight } from '@spectrum-web-components/status-light';
-```
+## Accessibility
 
-### Anatomy
-
-A status light consists of a colored dot indicator and a required text label. The dot's color represents the status or category, while the text provides additional context. The following are key aspects of status-light:
-
-- Required text
-- An optional size
-- An optional variant
-
-<Canvas
-    of={StatusLightStories.Playground}
-    withToolbar={true}
-    sourceState="shown"
-/>
-
-### Options
-
-#### Sizes
-
-Status lights come in three sizes to fit various contexts, `s`, `m`, or `l`:
-
-<Canvas of={StatusLightStories.Sizes} withToolbar={true} sourceState="shown" />
-
-#### Variants
-
-Status lights come in various semantic and non-semantic variants to convey different meanings. The `variant` attribute controls the main variant of the status light, with `neutral` being the default.
-
-<Canvas
-    of={StatusLightStories.SemanticVariants}
-    withToolbar={true}
-    sourceState="shown"
-/>
-
-<Canvas
-    of={StatusLightStories.NonsemanticVariants}
-    withToolbar={true}
-    sourceState="shown"
-/>
-
-### Accessibility
-
-The status light component implements several accessibility feature:
-
-- **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone.
-
-#### Best Practices
-
-- Use semantic variants (`positive`, `negative`, `notice`, `info`, `neutral`) when the status has specific meaning
-- Include a clear, descriptive text label that explains the status
-- Ensure sufficient color contrast between the status light and its background
-
-<Canvas of={StatusLightStories.A11y} withToolbar={true} sourceState="shown" />
+<SpectrumStories tag="a11y" hideTitle />

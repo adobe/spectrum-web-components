@@ -1,0 +1,72 @@
+/* stylelint-disable selector-class-pattern -- Targeting pre-defined Storybook classes */
+
+/*!
+ * Copyright 2024 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+body {
+    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-font-style: var(--spectrum-default-font-style);
+    --spectrum-font-size: var(--spectrum-font-size-100);
+
+    margin: 0;
+
+    font-family: var(--spectrum-font-family);
+    font-size: var(--spectrum-font-size);
+    font-style: var(--spectrum-font-style);
+
+    color: var(--spectrum-neutral-content-color-default, rgb(34, 34, 34));
+    background-color: var(--spectrum-background-base-color, rgb(230, 230, 230));
+}
+
+.spectrum {
+    /* Gradient that changes with the color theme. */
+    --spectrum-examples-gradient: linear-gradient(
+        45deg,
+        var(--spectrum-magenta-1500),
+        var(--spectrum-blue-1500)
+    );
+
+    /* Gradients that do not change with the color theme, for use in static color backgrounds. */
+    --spectrum-examples-gradient-static-black: linear-gradient(
+        45deg,
+        rgb(255 241 246),
+        rgb(238 245 255)
+    );
+    --spectrum-examples-gradient-static-white: linear-gradient(
+        45deg,
+        rgb(64 0 22),
+        rgb(14 24 67)
+    );
+
+    color: var(--spectrum-neutral-content-color-default);
+    background-color: var(--spectrum-background-base-color);
+    -webkit-tap-highlight-color: rgb(0, 0, 0, 0%);
+}
+
+.spectrum .spectrum-examples-static-black {
+    background: var(--spectrum-examples-gradient-static-black);
+}
+
+.spectrum .spectrum-examples-static-white {
+    background: var(--spectrum-examples-gradient-static-white);
+}
+
+/* --- DOCS STYLES --- */
+/* Force the modal wrapper to be contained by the frame not the viewport */
+#root-inner {
+    .spectrum-Modal-wrapper {
+        inline-size: 100% !important;
+    }
+}
+
+/* stylelint-enable selector-class-pattern */

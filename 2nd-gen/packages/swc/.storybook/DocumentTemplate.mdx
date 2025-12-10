@@ -7,25 +7,56 @@ import {
     ArgTypes,
     Description,
     Subtitle,
+    useOf,
 } from '@storybook/addon-docs/blocks';
-import { SpectrumDocs } from './blocks/SpectrumDocs';
-import { SpectrumStories } from './blocks/SpectrumStories';
+import {
+    GettingStarted,
+    SpectrumDocs,
+    SpectrumStories,
+    StaticPrimaryStory,
+} from './blocks';
 import '@spectrum-web-components/tabs/sp-tabs.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
+
+export const checkIsSingleStory = () => {
+    const resolvedOf = useOf('meta', ['meta']);
+    const { stories } = resolvedOf.csfFile;
+    const visibleStories = Object.values(stories).filter((story) =>
+        story.tags?.includes('autodocs' || 'dev')
+    );
+    return visibleStories.length === 1;
+};
+
+export const SingleStoryDescription = () => {
+    const isSingleStory = checkIsSingleStory();
+
+    return (isSingleStory ? <Description of="story" /> : null)
+
+}
+
+export const AdvancedExamplesStories = () => {
+    const isSingleStory = checkIsSingleStory();
+
+    return (isSingleStory ? null : <Stories includePrimary={false} />)
+
+}
 
 <Meta isTemplate />
 
 <Title />
 <Subtitle />
-<Primary />
-
+<Description />
+<SingleStoryDescription />
+<StaticPrimaryStory />
+<GettingStarted />
 <SpectrumDocs tag="usage" />
 
 ## API
 
 <Primary />
 <Controls />
+<AdvancedExamplesStories />
 
 ## Feedback
 

@@ -1,0 +1,747 @@
+---
+description: 2nd-gen/packages/swc/components/*/stories/**
+alwaysApply: false
+---
+# Storybook stories format standards
+
+Enforce consistent formatting and structure for Storybook stories files in 2nd-gen components.
+
+## Scope
+
+Apply to all `.stories.ts` and `.usage.mdx` files in:
+
+- `2nd-gen/packages/swc/components/*/stories/`
+
+## File structure requirements
+
+### Stories file (`.stories.ts`)
+
+Every component must have a `.stories.ts` file with the following structure:
+
+1. **Copyright header** (lines 1-11)
+2. **Imports section**
+3. **METADATA section** with visual separator
+4. **AUTODOCS STORY section** with visual separator
+5. **ANATOMY STORIES section** with visual separator (if applicable)
+6. **OPTIONS STORIES section** with visual separator
+7. **STATES STORIES section** with visual separator (if applicable)
+8. **BEHAVIORS STORIES section** with visual separator (if applicable)
+9. **ACCESSIBILITY STORIES section** with visual separator
+10. **HELPER FUNCTIONS section** with visual separator (if needed, e.g., size label mappers)
+
+**Note**: Installation documentation is handled separately in usage.mdx, not as a story.
+
+### Usage file (`.usage.mdx`)
+
+Every component must have a `.usage.mdx` file with simplified structure:
+
+```mdx
+import { SpectrumStories } from '../../../.storybook/blocks';
+
+## Installation
+
+Installation content is written directly in MDX (not a story). Include package name, npm install command, and import statements.
+
+## Anatomy
+
+<SpectrumStories tag="anatomy" hideTitle />
+
+## Options
+
+<SpectrumStories tag="options" />
+
+## States
+
+<SpectrumStories tag="states" />
+
+## Behaviors
+
+<SpectrumStories tag="behaviors" />
+
+## Accessibility
+
+<SpectrumStories tag="a11y" hideTitle />
+```
+
+**Note**: Only include sections that have corresponding stories (except Installation, which is written directly in MDX). Follow this section order, skipping inapplicable sections.
+
+## Section formatting
+
+### Visual separators
+
+Use consistent visual separators for major sections:
+
+```typescript
+// ────────────────
+//    METADATA
+// ────────────────
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+```
+
+**Note**: Installation documentation is written directly in usage.mdx, not as a story.
+
+## Meta configuration
+
+### Required fields
+
+The meta object must include:
+
+```typescript
+const meta: Meta = {
+    title: 'Component name',              // Required
+    component: 'swc-component-name',      // Required
+    args,                                  // Required
+    argTypes,                              // Required
+    render: (args) => template(args),     // Required
+    parameters: {
+        actions: {
+            handles: events,               // If events exist
+        },
+        docs: {
+            subtitle: `Component description`,  // Required
+        },
+        design: {                          // Optional but recommended
+            type: 'figma',
+            url: 'https://www.figma.com/...',
+        },
+        stackblitz: {                      // Optional but recommended
+            url: 'https://stackblitz.com/...',
+        },
+    },
+    tags: ['migrated'],                    // Required
+};
+```
+
+### JSDoc for meta
+
+Include comprehensive JSDoc comment above the meta object explaining what the component does:
+
+```typescript
+/**
+ * Component description explaining its purpose and key features.
+ * Can be multiple paragraphs if needed.
+ */
+const meta: Meta = {
+    // ...
+};
+```
+
+## Accessibility requirements for all stories
+
+**All stories must follow accessibility best practices.** Stories serve as examples for consumers, so they must demonstrate proper accessible usage.
+
+### Required accessibility practices
+
+1. **Include descriptive labels**: If a component requires a label for accessibility (e.g., `label`, `aria-label`, slot content), every story must include it
+2. **Use meaningful text content**: Avoid placeholder text like "Lorem ipsum" - use realistic, descriptive content
+3. **Demonstrate proper ARIA usage**: Show correct ARIA attributes when applicable
+4. **Never demonstrate inaccessible patterns**: Stories should not show examples that would fail accessibility audits
+
+### Common accessibility requirements by component type
+
+| Component type | Required accessibility |
+| -------------- | ---------------------- |
+| Progress indicators | `label` attribute describing what is loading |
+| Buttons/actions | Visible text or `aria-label` for icon-only |
+| Form fields | Associated `<label>` or `aria-label` |
+| Status indicators | Text content describing the status |
+| Images/icons | `alt` text or `aria-label` |
+| Interactive elements | Keyboard accessibility, focus indicators |
+
+### Example: accessible story
+
+```typescript
+// ✅ Good: Includes descriptive label
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's', label: 'Uploading file' })}
+        ${template({ ...args, size: 'm', label: 'Processing request' })}
+        ${template({ ...args, size: 'l', label: 'Loading dashboard' })}
+    `,
+    tags: ['options'],
+};
+
+// ❌ Bad: Missing required label
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's' })}
+        ${template({ ...args, size: 'm' })}
+        ${template({ ...args, size: 'l' })}
+    `,
+    tags: ['options'],
+};
+```
+
+## Story organization and tagging
+
+### Playground story
+
+Required first story after meta. Do NOT include JSDoc comment above Playground story.
+
+**Important**: Set the Playground args to the *simplest or most common use case** for the component, as this story is also used as the preview at the top of the documentation page.
+
+```typescript
+export const Playground: Story = {
+    args: {
+        // Set to the default args or args for the most common use case - this appears as the docs page preview
+    },
+    tags: ['autodocs', 'dev'],
+};
+```
+
+### Anatomy stories
+
+Stories demonstrating component structure. **Combine all slotted content combinations into a single Anatomy story** to make it easier for consumers to view all variations at once.
+
+```typescript
+/**
+ * Description of the component's anatomy and key parts.
+ * Explain what makes up the component.
+ *
+ * Show all combinations of slotted content in a single story.
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, /* text only */ })}
+        ${template({ ...args, /* icon only */ })}
+        ${template({ ...args, /* text + icon */ })}
+    `,
+    tags: ['anatomy'],
+    args: {},
+};
+```
+
+### Options stories
+
+Stories demonstrating variants, sizes, styles. **Consolidate related options into single stories** to make it easier for consumers to compare variations:
+
+- **Sizes**: Combine all sizes into a single `Sizes` story
+- **Semantic variants**: Combine all semantic variants into a single `SemanticVariants` story
+- **Non-semantic variants**: Combine all non-semantic variants into a single `NonSemanticVariants` story
+- **Quiet/subtle/emphasized**: Combine into a single story if multiple apply
+- **Outline**: Can be shown alongside variants or as a separate story
+- **Static color**: Use the three-story pattern (see Static color pattern section)
+- **Positioning**: Combine positioning options into a single story
+
+```typescript
+/**
+ * Components come in [X] sizes to fit various contexts.
+ * Show all sizes in a single story for easy comparison.
+ */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's' })}
+        ${template({ ...args, size: 'm' })}
+        ${template({ ...args, size: 'l' })}
+    `,
+    tags: ['options'],
+};
+
+/**
+ * Semantic variants provide meaning through color.
+ * Show all semantic variants in a single story for easy comparison.
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'positive' })}
+        ${template({ ...args, variant: 'informative' })}
+        ${template({ ...args, variant: 'negative' })}
+        ${template({ ...args, variant: 'notice' })}
+        ${template({ ...args, variant: 'neutral' })}
+    `,
+    tags: ['options'],
+};
+
+/**
+ * Non-semantic variants use color-coded categories.
+ * Show all non-semantic variants in a single story for easy comparison.
+ */
+export const NonSemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'seafoam' })}
+        ${template({ ...args, variant: 'indigo' })}
+        ${/* ... other colors */ ''}
+    `,
+    tags: ['options'],
+};
+```
+
+### States stories
+
+Stories demonstrating different states (if applicable). **Combine all states into a single States story** (or minimal stories when states are complex) to make it easier for consumers to compare:
+
+```typescript
+/**
+ * Components can exist in various states.
+ * Show all states in a single story for easy comparison.
+ */
+export const States: Story = {
+    render: (args) => html`
+        ${template({ ...args, /* default */ })}
+        ${template({ ...args, selected: true })}
+        ${template({ ...args, disabled: true })}
+        ${template({ ...args, readonly: true })}
+        ${template({ ...args, invalid: true })}
+    `,
+    tags: ['states'],
+    args: {},
+};
+```
+
+If a state requires more complex demonstration (e.g., indeterminate progress with animation), it may warrant a separate story:
+
+```typescript
+/**
+ * Indeterminate state shows unknown progress.
+ */
+export const Indeterminate: Story = {
+    tags: ['states'],
+    args: {
+        indeterminate: true,
+    },
+};
+```
+
+### Behaviors stories
+
+Stories demonstrating built-in functionality (if applicable). Order subsections as follows (skip inapplicable):
+
+- Automatic behaviors (text wrapping, truncation, interactivity)
+- Methods
+- Events
+
+```typescript
+/**
+ * Description of this behavior.
+ */
+export const BehaviorName: Story = {
+    render: (args) => html`
+        ${template({ ...args /* behavior example */ })}
+    `,
+    tags: ['behaviors'],
+    args: {},
+};
+```
+
+### Accessibility story
+
+Required accessibility demonstration:
+
+```typescript
+/**
+ * ### Features
+ *
+ * The `<sp-component-name>` element implements several accessibility features:
+ *
+ * 1. **Feature name**: Description (e.g., keyboard navigation, ARIA states, roles, properties)
+ * 2. **Feature name**: Description
+ *
+ * ### Best practices
+ *
+ * - Best practice one
+ * - Best practice two
+ */
+export const Accessibility: Story = {
+    render: () => html`
+        ${/* accessibility examples */}
+    `,
+    tags: ['a11y'],
+};
+```
+
+## Tag usage requirements
+
+### Required tags
+
+- `'autodocs'` - Only on Playground story
+- `'dev'` - Only on Playground story
+- `'anatomy'` - For anatomy stories
+- `'options'` - For variant, size, and style stories
+- `'states'` - For state demonstration stories (if component has states)
+- `'behaviors'` - For behavior stories (methods, events, automatic behaviors)
+- `'a11y'` - For accessibility demonstration story
+
+**Note**: Installation documentation is written directly in usage.mdx, not as a tagged story.
+
+### Exclusion tags
+
+- `'!test'` - Exclude from test runs (e.g., complex static color stories)
+- `'!dev'` - Exclude from dev Storybook
+
+### Migration tag
+
+- `'migrated'` - On the meta object to indicate refined format
+
+## JSDoc requirements
+
+### Above each story export
+
+Every story export must have a JSDoc comment explaining:
+
+- What it demonstrates
+- Any important context or usage notes
+- Best practices if relevant
+
+**Exception**: Do NOT add JSDoc comments above the Playground story.
+
+Use markdown formatting within JSDoc:
+
+- `**Bold**` for emphasis
+- Bullet lists for multiple points
+- Code formatting with backticks
+
+Example:
+
+```typescript
+/**
+ * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color.
+ *
+ * Use these variants for the following statuses:
+ * - **Positive**: approved, complete, success, new, purchased, licensed
+ * - **Informative**: active, in use, live, published
+ * - **Negative**: error, alert, rejected, failed
+ */
+export const SemanticVariants: Story = {
+    // ...
+};
+```
+
+## Static color pattern
+
+For components with `static-color` attribute, implement the three-story pattern:
+
+1. **`StaticBlack`** - Individual story with `static-color="black"` (auto-background via `withStaticColorBackground`)
+2. **`StaticWhite`** - Individual story with `static-color="white"` (auto-background via `withStaticColorBackground`)
+3. **`StaticColors`** - Combined story showing both variants side-by-side (via `staticColorsDemo` decorator)
+
+### Individual static color stories
+
+The `withStaticColorBackground` decorator automatically detects the `static-color` arg and applies the appropriate gradient background:
+
+```typescript
+// Individual color stories - JSDoc only on StaticBlack to introduce the pattern
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+    },
+    render: (args) => html`
+        <p>Content above the component on a light background</p>
+        ${template({ ...args })}
+        <p>Content below the component</p>
+    `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'black',
+        },
+    },
+};
+
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+    },
+    render: (args) => html`
+        <p>Content above the component on a dark background</p>
+        ${template({ ...args })}
+        <p>Content below the component</p>
+    `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'white',
+        },
+    },
+};
+```
+
+### Combined static colors story
+
+The `StaticColors` story uses the `staticColorsDemo` decorator to display both variants side-by-side. Use the **simple pattern** (preferred) for most components, or the **contextual pattern** when additional descriptive content is needed.
+
+#### Simple pattern (preferred)
+
+Map over the static color values and use story-level args for common properties. The decorator automatically applies the appropriate gradient backgrounds:
+
+```typescript
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map((color) => html`${template({ ...args, 'static-color': color })}`)}
+    `,
+    args: {
+        progress: 60,
+        label: 'Loading',
+    },
+    tags: ['options', '!test'],
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+};
+```
+
+#### Contextual pattern
+
+Use when components need additional descriptive content around them (e.g., dividers with surrounding text):
+
+```typescript
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) => html`
+            <div>
+                <h4>Dashboard settings</h4>
+                ${template({ ...args, 'static-color': color })}
+                <p>Configure your dashboard preferences and layout options.</p>
+            </div>`
+        )}
+    `,
+    args: {
+        size: 'm',
+    },
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+    tags: ['options', '!test'],
+};
+```
+
+### How the static color decorators work
+
+**`withStaticColorBackground`** (automatic):
+- Detects `static-color` arg value ('white' or 'black')
+- Applies the appropriate gradient background image automatically
+- No configuration needed - works automatically when `static-color` arg is set
+
+**`staticColorsDemo`** (opt-in):
+- Enable with `parameters.staticColorsDemo = true`
+- Wraps story content in a flex container with two background zones
+- **First child**: Gets a dark gradient background (for `static-color="white"` components)
+- **Last child**: Gets a light gradient background (for `static-color="black"` components)
+- Uses CSS custom properties: `--spectrum-examples-gradient-static-white` and `--spectrum-examples-gradient-static-black`
+
+## Decorators and layout
+
+Three global decorators are available for story layout:
+
+1. **`withFlexLayout`** - Provides consistent flex container spacing (enabled by default)
+2. **`withStaticColorBackground`** - Automatically applies gradient background when `static-color` arg is set (automatic)
+3. **`staticColors`** - Displays static color variants side-by-side with appropriate backgrounds (opt-in via `staticColorsDemo: true`)
+
+### Using the flex-layout decorator
+
+The `withFlexLayout` decorator is applied globally and provides consistent spacing for stories. By default, it applies:
+
+```typescript
+{ display: 'flex', gap: '24px', alignItems: 'center' }
+```
+
+### Customizing layout with parameters.styles
+
+For stories that need custom layout (e.g., wrapping, max-width constraints), use `parameters.styles`:
+
+```typescript
+// Define reusable parameters at the top of your stories file
+const parameters = {
+    flexLayout: true,
+    styles: {
+        display: 'flex',
+        gap: 'var(--spectrum-spacing-200)',
+        'flex-wrap': 'wrap',
+        'justify-content': 'center',
+        'max-inline-size': '80ch',
+    },
+};
+
+// Apply to individual stories
+export const Sizes: Story = {
+    render: () => html`
+        ${Component.VALID_SIZES.map((size) => html`
+            <swc-component size="${size}">${sizeLabel(size)}</swc-component>
+        `)}
+    `,
+    parameters: parameters,
+    tags: ['options'],
+};
+```
+
+### Disabling flex layout
+
+To disable the flex layout decorator for a specific story:
+
+```typescript
+export const SingleComponent: Story = {
+    parameters: {
+        flexLayout: false,
+    },
+};
+```
+
+### Using the staticColorsDemo decorator
+
+The `staticColorsDemo` decorator is opt-in and displays static color variants side-by-side with appropriate gradient backgrounds. Enable it by setting `parameters.staticColorsDemo = true`.
+
+**Important**: When using `staticColorsDemo`, set `flexLayout: false` to avoid conflicting layouts.
+
+```typescript
+export const StaticColors: Story = {
+    render: () => html`
+        <div>
+            <!-- Content for static-color="white" (displayed on dark background) -->
+        </div>
+        <div>
+            <!-- Content for static-color="black" (displayed on light background) -->
+        </div>
+    `,
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+    tags: ['options', '!test'],
+};
+```
+
+## Usage.mdx requirements
+
+### Minimal structure
+
+Keep usage.mdx files minimal and use `<SpectrumStories />` component:
+
+```mdx
+import { SpectrumStories } from '../../../.storybook/blocks';
+
+## Installation
+
+Installation content is written directly in MDX (not a story). Include:
+- Package name and npm install command
+- Import statements
+- Basic usage example
+
+## Anatomy
+
+<SpectrumStories tag="anatomy" hideTitle />
+
+## Options
+
+<SpectrumStories tag="options" />
+
+## States
+
+<SpectrumStories tag="states" />
+
+## Behaviors
+
+<SpectrumStories tag="behaviors" />
+
+## Accessibility
+
+<SpectrumStories tag="a11y" hideTitle />
+```
+
+### Section rules
+
+- Installation content is written directly in MDX (not as a story)
+- Use `hideTitle` for Anatomy and Accessibility sections
+- Do NOT use `hideTitle` for Options, States, and Behaviors sections
+- Only include sections that have corresponding stories (except Installation)
+- Use consistent section heading capitalization (sentence case)
+- Follow the prescribed section order: Installation → Anatomy → Options → States → Behaviors → Accessibility
+
+## Common violations
+
+### ❌ Don't
+
+- Use old Canvas/Story imports from '@storybook/addon-docs/blocks'
+- Write verbose examples directly in usage.mdx
+- Forget JSDoc comments on story exports (except Playground)
+- Add JSDoc comment to Playground story
+- Use inconsistent section separators
+- Tag stories incorrectly (e.g., 'usage' instead of 'options')
+- Forget to include subtitle in meta parameters
+- Use 'usage' tag (deprecated in refined format)
+- Omit required accessibility attributes (labels, aria-label, etc.)
+- Use placeholder text instead of meaningful, descriptive content
+- Demonstrate inaccessible patterns in story examples
+
+### ✅ Do
+
+- Use SpectrumStories component in usage.mdx
+- Include comprehensive JSDoc for each story (except Playground)
+- Keep Playground story without JSDoc comment
+- Use consistent visual separators
+- Tag stories with proper semantic tags
+- Include subtitle in meta.parameters.docs
+- Keep usage.mdx minimal and maintainable
+- Use 'anatomy', 'options', 'states', 'behaviors', 'a11y' tags (Installation is MDX-only, no tag)
+- Include all required accessibility attributes in every story (labels, aria-label, etc.)
+- Use meaningful, descriptive text content that reflects real-world usage
+- Demonstrate accessible patterns that consumers should follow
+
+## Checklist for new/migrated stories
+
+- [ ] Copyright header present (2025 year)
+- [ ] All required sections with visual separators
+- [ ] Meta has title, component, args, argTypes, render, parameters.docs.subtitle, tags
+- [ ] Playground story with 'autodocs' and 'dev' tags, set to default or most common use case (no JSDoc comment)
+- [ ] Installation section written directly in usage.mdx (not a story)
+- [ ] Anatomy story combining all slotted content variations with 'anatomy' tag and JSDoc
+- [ ] Sizes story combining all sizes with 'options' tag and JSDoc
+- [ ] SemanticVariants story combining all semantic variants with 'options' tag and JSDoc (if applicable)
+- [ ] NonSemanticVariants story combining all non-semantic variants with 'options' tag and JSDoc (if applicable)
+- [ ] States story combining all states with 'states' tag and JSDoc (if applicable)
+- [ ] Behaviors stories with 'behaviors' tag and JSDoc (if applicable; subsections: automatic behaviors, methods, events)
+- [ ] Accessibility story with 'a11y' tag and comprehensive JSDoc (subsections: features, best practices)
+- [ ] All story exports have JSDoc comments (except Playground)
+- [ ] Playground story does NOT have JSDoc comment
+- [ ] Usage.mdx uses SpectrumStories component
+- [ ] Usage.mdx only includes relevant sections in correct order
+- [ ] Static color pattern implemented correctly using `staticColorsDemo` decorator (if applicable)
+- [ ] Custom layout uses `parameters.styles` with flex-layout decorator
+- [ ] Static color stories use `flexLayout: false` with `staticColorsDemo: true`
+- [ ] **All stories include required accessibility attributes** (labels, aria-label, text content)
+- [ ] **All stories use meaningful, descriptive content** (not placeholder text)
+- [ ] **No stories demonstrate inaccessible patterns**
+
+## Reference implementation
+
+See [`progress-circle`](/Users/ceickhoff/Desktop/Code/spectrum-web-components-2/2nd-gen/packages/swc/components/progress-circle/stories) for the canonical refined format implementation.
