@@ -429,43 +429,6 @@ export const StaticColors: Story = {
 };
 ```
 
-## Heading elements in stories
-
-### Demo class requirement
-
-When a story includes heading elements (h1, h2, h3, h4, h5, h6) in its rendered output, apply the `demo` class to prevent the heading from appearing in the table of contents:
-
-```typescript
-export const Sizes: Story = {
-    render: () =>
-        html` <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${Divider.VALID_SIZES.map((size) => {
-                const label =
-                    size === 's' ? 'Small' : size === 'l' ? 'Large' : 'Medium';
-                return html`<div>
-                    <h3 class="demo">${label}</h3>
-                    <swc-divider size=${size}></swc-divider>
-                    <p>Text below the divider.</p>
-                </div>`;
-            })}
-        </div>`,
-    tags: ['options'],
-};
-```
-
-**Why**: The `demo` class prevents story headings from being included in the Storybook documentation's table of contents, keeping the TOC clean and focused on actual documentation sections.
-
-### Common scenarios
-
-Apply `class="demo"` to headings when:
-- Demonstrating size variations with labeled examples
-- Showing component hierarchy in rendered examples
-- Including headings as part of the component demo context
-
-Do NOT use the `demo` class for:
-- Section headings in JSDoc comments (use markdown)
-- Headings in usage.mdx files (these should not exist)
-
 ## Helper functions
 
 ### CONTAINER helper
@@ -550,7 +513,6 @@ Installation content is written directly in MDX (not a story). Include:
 - Tag stories incorrectly (e.g., 'usage' instead of 'options')
 - Forget to include subtitle in meta parameters
 - Use 'usage' tag (deprecated in refined format)
-- Include heading elements in stories without `class="demo"`
 
 ### ✅ Do
 
@@ -562,7 +524,6 @@ Installation content is written directly in MDX (not a story). Include:
 - Include subtitle in meta.parameters.docs
 - Keep usage.mdx minimal and maintainable
 - Use 'anatomy', 'options', 'states', 'behaviors', 'a11y' tags (Installation is MDX-only, no tag)
-- Apply `class="demo"` to any heading elements in story renders
 
 ## Checklist for new/migrated stories
 
@@ -580,7 +541,6 @@ Installation content is written directly in MDX (not a story). Include:
 - [ ] Accessibility story with 'a11y' tag and comprehensive JSDoc (subsections: features, best practices)
 - [ ] All story exports have JSDoc comments (except Playground)
 - [ ] Playground story does NOT have JSDoc comment
-- [ ] Heading elements in stories have `class="demo"`
 - [ ] Usage.mdx uses SpectrumStories component
 - [ ] Usage.mdx only includes relevant sections in correct order
 - [ ] Static color pattern implemented correctly (if applicable)
