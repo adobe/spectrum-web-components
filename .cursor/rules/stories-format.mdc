@@ -23,10 +23,13 @@ Every component must have a `.stories.ts` file with the following structure:
 3. **METADATA section** with visual separator
 4. **AUTODOCS STORY section** with visual separator
 5. **ANATOMY STORIES section** with visual separator (if applicable)
-6. **STATES STORIES section** with visual separator (if applicable)
-7. **OPTIONS STORIES section** with visual separator
-8. **ACCESSIBILITY STORIES section** with visual separator
-9. **HELPER FUNCTIONS section** with visual separator (if needed)
+6. **OPTIONS STORIES section** with visual separator
+7. **STATES STORIES section** with visual separator (if applicable)
+8. **BEHAVIORS STORIES section** with visual separator (if applicable)
+9. **ACCESSIBILITY STORIES section** with visual separator
+10. **HELPER FUNCTIONS section** with visual separator (if needed)
+
+**Note**: Installation documentation is handled separately in usage.mdx, not as a story.
 
 ### Usage file (`.usage.mdx`)
 
@@ -35,24 +38,32 @@ Every component must have a `.usage.mdx` file with simplified structure:
 ```mdx
 import { SpectrumStories } from '../../../.storybook/blocks';
 
+## Installation
+
+Installation content is written directly in MDX (not a story). Include package name, npm install command, and import statements.
+
 ## Anatomy
 
 <SpectrumStories tag="anatomy" hideTitle />
+
+## Options
+
+<SpectrumStories tag="options" />
 
 ## States
 
 <SpectrumStories tag="states" />
 
-## Options
+## Behaviors
 
-<SpectrumStories tag="options" />
+<SpectrumStories tag="behaviors" />
 
 ## Accessibility
 
 <SpectrumStories tag="a11y" hideTitle />
 ```
 
-**Note**: Only include sections that have corresponding stories.
+**Note**: Only include sections that have corresponding stories (except Installation, which is written directly in MDX). Follow this section order, skipping inapplicable sections.
 
 ## Section formatting
 
@@ -74,12 +85,16 @@ Use consistent visual separators for major sections:
 // ──────────────────────────
 
 // ──────────────────────────
-//    STATES STORIES
+//    OPTIONS STORIES
 // ──────────────────────────
 
 // ──────────────────────────
-//    OPTIONS STORIES
+//    STATES STORIES
 // ──────────────────────────
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
@@ -89,6 +104,8 @@ Use consistent visual separators for major sections:
 //    HELPER FUNCTIONS
 // ────────────────────────
 ```
+
+**Note**: Installation documentation is written directly in usage.mdx, not as a story.
 
 ## Meta configuration
 
@@ -140,12 +157,14 @@ const meta: Meta = {
 
 ### Playground story
 
-Required first story after meta. Do NOT include JSDoc comment above Playground story:
+Required first story after meta. Do NOT include JSDoc comment above Playground story.
+
+**Important**: Set the Playground args to the *simplest or most common use case** for the component, as this story is also used as the preview at the top of the documentation page.
 
 ```typescript
 export const Playground: Story = {
     args: {
-        // Default args for playground
+        // Set to the default args or args for the most common use case - this appears as the docs page preview
     },
     tags: ['autodocs', 'dev'],
 };
@@ -153,52 +172,135 @@ export const Playground: Story = {
 
 ### Anatomy stories
 
-Stories demonstrating component structure:
+Stories demonstrating component structure. **Combine all slotted content combinations into a single Anatomy story** to make it easier for consumers to view all variations at once.
 
 ```typescript
 /**
  * Description of the component's anatomy and key parts.
  * Explain what makes up the component.
+ *
+ * Show all combinations of slotted content in a single story.
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${template({ ...args /* specific anatomy example */ })}
+        ${template({ ...args, /* text only */ })}
+        ${template({ ...args, /* icon only */ })}
+        ${template({ ...args, /* text + icon */ })}
     `,
     tags: ['anatomy'],
     args: {},
 };
 ```
 
-### States stories
+### Options stories
 
-Stories demonstrating different states (if applicable):
+Stories demonstrating variants, sizes, styles. **Consolidate related options into single stories** to make it easier for consumers to compare variations:
+
+- **Sizes**: Combine all sizes into a single `Sizes` story
+- **Semantic variants**: Combine all semantic variants into a single `SemanticVariants` story
+- **Non-semantic variants**: Combine all non-semantic variants into a single `NonSemanticVariants` story
+- **Quiet/subtle/emphasized**: Combine into a single story if multiple apply
+- **Outline**: Can be shown alongside variants or as a separate story
+- **Static color**: Use the three-story pattern (see Static color pattern section)
+- **Positioning**: Combine positioning options into a single story
 
 ```typescript
 /**
- * Description of this particular state.
+ * Components come in [X] sizes to fit various contexts.
+ * Show all sizes in a single story for easy comparison.
  */
-export const StateName: Story = {
+export const Sizes: Story = {
     render: (args) => html`
-        ${template({ ...args /* state example */ })}
+        ${template({ ...args, size: 's' })}
+        ${template({ ...args, size: 'm' })}
+        ${template({ ...args, size: 'l' })}
+    `,
+    tags: ['options'],
+};
+
+/**
+ * Semantic variants provide meaning through color.
+ * Show all semantic variants in a single story for easy comparison.
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'positive' })}
+        ${template({ ...args, variant: 'informative' })}
+        ${template({ ...args, variant: 'negative' })}
+        ${template({ ...args, variant: 'notice' })}
+        ${template({ ...args, variant: 'neutral' })}
+    `,
+    tags: ['options'],
+};
+
+/**
+ * Non-semantic variants use color-coded categories.
+ * Show all non-semantic variants in a single story for easy comparison.
+ */
+export const NonSemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'seafoam' })}
+        ${template({ ...args, variant: 'indigo' })}
+        ${/* ... other colors */ ''}
+    `,
+    tags: ['options'],
+};
+```
+
+### States stories
+
+Stories demonstrating different states (if applicable). **Combine all states into a single States story** (or minimal stories when states are complex) to make it easier for consumers to compare:
+
+```typescript
+/**
+ * Components can exist in various states.
+ * Show all states in a single story for easy comparison.
+ */
+export const States: Story = {
+    render: (args) => html`
+        ${template({ ...args, /* default */ })}
+        ${template({ ...args, selected: true })}
+        ${template({ ...args, disabled: true })}
+        ${template({ ...args, readonly: true })}
+        ${template({ ...args, invalid: true })}
     `,
     tags: ['states'],
     args: {},
 };
 ```
 
-### Options stories
-
-Stories demonstrating variants, sizes, styles:
+If a state requires more complex demonstration (e.g., indeterminate progress with animation), it may warrant a separate story:
 
 ```typescript
 /**
- * Description of this option/variant.
+ * Indeterminate state shows unknown progress.
  */
-export const OptionName: Story = {
-    render: () => html`
-        ${/* examples */}
+export const Indeterminate: Story = {
+    tags: ['states'],
+    args: {
+        indeterminate: true,
+    },
+};
+```
+
+### Behaviors stories
+
+Stories demonstrating built-in functionality (if applicable). Order subsections as follows (skip inapplicable):
+
+- Automatic behaviors (text wrapping, truncation, interactivity)
+- Methods
+- Events
+
+```typescript
+/**
+ * Description of this behavior.
+ */
+export const BehaviorName: Story = {
+    render: (args) => html`
+        ${template({ ...args /* behavior example */ })}
     `,
-    tags: ['options'],
+    tags: ['behaviors'],
+    args: {},
 };
 ```
 
@@ -212,10 +314,10 @@ Required accessibility demonstration:
  *
  * The `<sp-component-name>` element implements several accessibility features:
  *
- * 1. **Feature name**: Description
+ * 1. **Feature name**: Description (e.g., keyboard navigation, ARIA states, roles, properties)
  * 2. **Feature name**: Description
  *
- * ### Best Practices
+ * ### Best practices
  *
  * - Best practice one
  * - Best practice two
@@ -235,9 +337,12 @@ export const Accessibility: Story = {
 - `'autodocs'` - Only on Playground story
 - `'dev'` - Only on Playground story
 - `'anatomy'` - For anatomy stories
-- `'states'` - For state demonstration stories (if component has states)
 - `'options'` - For variant, size, and style stories
+- `'states'` - For state demonstration stories (if component has states)
+- `'behaviors'` - For behavior stories (methods, events, automatic behaviors)
 - `'a11y'` - For accessibility demonstration story
+
+**Note**: Installation documentation is written directly in usage.mdx, not as a tagged story.
 
 ### Exclusion tags
 
@@ -396,6 +501,13 @@ Keep usage.mdx files minimal and use `<SpectrumStories />` component:
 ```mdx
 import { SpectrumStories } from '../../../.storybook/blocks';
 
+## Installation
+
+Installation content is written directly in MDX (not a story). Include:
+- Package name and npm install command
+- Import statements
+- Basic usage example
+
 ## Anatomy
 
 <SpectrumStories tag="anatomy" hideTitle />
@@ -404,6 +516,14 @@ import { SpectrumStories } from '../../../.storybook/blocks';
 
 <SpectrumStories tag="options" />
 
+## States
+
+<SpectrumStories tag="states" />
+
+## Behaviors
+
+<SpectrumStories tag="behaviors" />
+
 ## Accessibility
 
 <SpectrumStories tag="a11y" hideTitle />
@@ -411,10 +531,12 @@ import { SpectrumStories } from '../../../.storybook/blocks';
 
 ### Section rules
 
+- Installation content is written directly in MDX (not as a story)
 - Use `hideTitle` for Anatomy and Accessibility sections
-- Do NOT use `hideTitle` for States and Options sections
-- Only include sections that have corresponding stories
+- Do NOT use `hideTitle` for Options, States, and Behaviors sections
+- Only include sections that have corresponding stories (except Installation)
 - Use consistent section heading capitalization (sentence case)
+- Follow the prescribed section order: Installation → Anatomy → Options → States → Behaviors → Accessibility
 
 ## Common violations
 
@@ -439,7 +561,7 @@ import { SpectrumStories } from '../../../.storybook/blocks';
 - Tag stories with proper semantic tags
 - Include subtitle in meta.parameters.docs
 - Keep usage.mdx minimal and maintainable
-- Use 'anatomy', 'states', 'options', 'a11y' tags
+- Use 'anatomy', 'options', 'states', 'behaviors', 'a11y' tags (Installation is MDX-only, no tag)
 - Apply `class="demo"` to any heading elements in story renders
 
 ## Checklist for new/migrated stories
@@ -447,16 +569,20 @@ import { SpectrumStories } from '../../../.storybook/blocks';
 - [ ] Copyright header present (2025 year)
 - [ ] All required sections with visual separators
 - [ ] Meta has title, component, args, argTypes, render, parameters.docs.subtitle, tags
-- [ ] Playground story with 'autodocs' and 'dev' tags (no JSDoc comment)
-- [ ] Anatomy story with 'anatomy' tag and JSDoc
-- [ ] States stories with 'states' tag and JSDoc (if applicable)
-- [ ] Options stories with 'options' tag and JSDoc
-- [ ] Accessibility story with 'a11y' tag and comprehensive JSDoc
+- [ ] Playground story with 'autodocs' and 'dev' tags, set to default or most common use case (no JSDoc comment)
+- [ ] Installation section written directly in usage.mdx (not a story)
+- [ ] Anatomy story combining all slotted content variations with 'anatomy' tag and JSDoc
+- [ ] Sizes story combining all sizes with 'options' tag and JSDoc
+- [ ] SemanticVariants story combining all semantic variants with 'options' tag and JSDoc (if applicable)
+- [ ] NonSemanticVariants story combining all non-semantic variants with 'options' tag and JSDoc (if applicable)
+- [ ] States story combining all states with 'states' tag and JSDoc (if applicable)
+- [ ] Behaviors stories with 'behaviors' tag and JSDoc (if applicable; subsections: automatic behaviors, methods, events)
+- [ ] Accessibility story with 'a11y' tag and comprehensive JSDoc (subsections: features, best practices)
 - [ ] All story exports have JSDoc comments (except Playground)
 - [ ] Playground story does NOT have JSDoc comment
 - [ ] Heading elements in stories have `class="demo"`
 - [ ] Usage.mdx uses SpectrumStories component
-- [ ] Usage.mdx only includes relevant sections
+- [ ] Usage.mdx only includes relevant sections in correct order
 - [ ] Static color pattern implemented correctly (if applicable)
 - [ ] Helper functions include @todo comments
 

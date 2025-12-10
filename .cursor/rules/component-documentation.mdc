@@ -16,6 +16,37 @@ Apply to component documentation in:
 
 ## Documentation completeness requirements
 
+### Section order
+
+Document sections in this order (skip sections that don't apply):
+
+1. **Installation** - How to install and import (may be centralized)
+2. **Anatomy** - Component structure and key parts
+3. **Options** - Variants, sizes, styles, and configuration
+   - Sizes
+   - Variants
+   - Quiet/subtle/emphasized
+   - Outline
+   - Static color
+   - Positioning (e.g., fixed)
+   - Other options as applicable
+4. **States** - Different states in this order:
+   - Default
+   - Selected
+   - Active
+   - Disabled
+   - Readonly
+   - Error (valid, invalid, etc.)
+   - Loading/pending/indeterminate
+   - Other states as applicable
+5. **Behaviors** - Built-in functionality:
+   - Automatic behaviors (text wrapping, truncation, interactivity)
+   - Methods
+   - Events
+6. **Accessibility** - A11y features and best practices:
+   - Features (keyboard navigation, ARIA states, roles, properties)
+   - Best practices
+
 ### Essential sections
 
 Every component must document:
@@ -28,9 +59,37 @@ Every component must document:
 
 Include if applicable:
 
-4. **States** - Different states (disabled, loading, error, etc.)
-5. **Behaviors** - Interactive behaviors, text wrapping, etc.
-6. **Installation** - How to install and import (may be centralized)
+4. **Installation** - How to install and import (may be centralized)
+5. **States** - Different states (disabled, loading, error, etc.)
+6. **Behaviors** - Interactive behaviors, text wrapping, methods, events
+
+## Installation documentation
+
+**Note**: Installation is documented directly in usage.mdx, not as a Storybook story.
+
+### Required content
+
+- Package name and npm install command
+- Import statements
+- Basic usage example
+
+### Example format (in usage.mdx)
+
+```mdx
+## Installation
+
+Install the component package:
+
+```bash
+npm install @spectrum-web-components/component-name
+```
+
+Import the component:
+
+```javascript
+import '@spectrum-web-components/component-name/sp-component-name.js';
+```
+```
 
 ## Anatomy documentation
 
@@ -39,6 +98,8 @@ Include if applicable:
 - List of component parts/slots
 - Visual examples showing structure
 - Explanation of required vs optional elements
+
+**Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story** to make it easier for consumers to view all variations at once.
 
 ### Example format
 
@@ -51,7 +112,16 @@ Include if applicable:
  * - Additional elements
  *
  * Components can contain X, Y, or both.
+ * All combinations are shown below for comparison.
  */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, /* text only */ })}
+        ${template({ ...args, /* icon only */ })}
+        ${template({ ...args, /* text + icon */ })}
+    `,
+    tags: ['anatomy'],
+};
 ```
 
 ### Common elements to document
@@ -63,9 +133,25 @@ Include if applicable:
 
 ## Options documentation
 
+Document options in this order (skip subsections that don't apply):
+
+1. Sizes
+2. Semantic variants
+3. Non-semantic variants
+4. Quiet/subtle/emphasized
+5. Outline
+6. Static color
+7. Positioning (e.g., fixed)
+8. Other options as applicable
+
+**Consolidation rules**: Combine related options into single stories for easier comparison:
+- All sizes → single `Sizes` story
+- All semantic variants → single `SemanticVariants` story
+- All non-semantic variants → single `NonSemanticVariants` story
+
 ### Size options
 
-If component has sizes, document:
+If component has sizes, document all sizes in a **single Sizes story**:
 
 - All available sizes (s, m, l, xl if supported)
 - Default size
@@ -81,14 +167,24 @@ If component has sizes, document:
  * - **Small**: Used for [specific use case]
  * - **Medium**: Default size, used for [typical use case]
  * - **Large**: Used for [prominent use case]
+ *
+ * All sizes shown below for comparison.
  */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's' })}
+        ${template({ ...args, size: 'm' })}
+        ${template({ ...args, size: 'l' })}
+    `,
+    tags: ['options'],
+};
 ```
 
 ### Variant options
 
 #### Semantic variants
 
-Document with clear use case guidance:
+Document all semantic variants in a **single SemanticVariants story** with clear use case guidance:
 
 ```typescript
 /**
@@ -99,28 +195,64 @@ Document with clear use case guidance:
  * - **Negative**: error, alert, rejected, failed
  * - **Neutral**: archived, deleted, paused, draft, not started, ended
  * - **Notice**: needs approval, pending, scheduled
+ *
+ * All semantic variants shown below for comparison.
  */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'positive' })}
+        ${template({ ...args, variant: 'informative' })}
+        ${template({ ...args, variant: 'negative' })}
+        ${template({ ...args, variant: 'neutral' })}
+        ${template({ ...args, variant: 'notice' })}
+    `,
+    tags: ['options'],
+};
 ```
 
 #### Non-semantic variants
 
-Document purpose and limitations:
+Document all non-semantic variants in a **single NonSemanticVariants story**:
 
 ```typescript
 /**
  * When components are for color-coded categories, they use non-semantic colors.
  * Non-semantic variants are ideally used for when there are 8 categories or less.
+ *
+ * All non-semantic variants shown below for comparison.
+ */
+export const NonSemanticVariants: Story = {
+    render: (args) => html`
+        ${template({ ...args, variant: 'seafoam' })}
+        ${template({ ...args, variant: 'indigo' })}
+        ${/* ... other colors */ ''}
+    `,
+    tags: ['options'],
+};
+```
+
+### Quiet/subtle/emphasized options
+
+Document visual prominence modifiers:
+
+```typescript
+/**
+ * - **Quiet**: Reduced visual prominence for less important actions
+ * - **Subtle**: Even more reduced prominence
+ * - **Emphasized**: Increased visual prominence for primary actions
  */
 ```
 
-### Style modifiers
+### Outline options
 
-Document modifiers like:
+Document outline style (typically semantic only):
 
-- `outline` style (semantic only)
-- `subtle` style (reduced prominence)
-- `fixed` positioning options
-- `static-color` for colored backgrounds
+```typescript
+/**
+ * The `outline` style provides a bordered appearance.
+ * Note: Outline style is only available with semantic variants.
+ */
+```
 
 ### Static color pattern
 
@@ -133,17 +265,78 @@ For components with static-color support:
  */
 ```
 
+### Positioning options
+
+Document positioning modifiers like fixed:
+
+```typescript
+/**
+ * The `fixed` attribute positions the component relative to the viewport.
+ * Use for components that should remain visible during scrolling.
+ */
+```
+
 ## States documentation
 
 ### Required for components with states
 
-Document all states:
+**Consolidation rule**: Combine all states into a **single States story** (or minimal stories when states are complex) to make it easier for consumers to compare variations.
 
-- Default/normal state
-- Disabled state
-- Loading/indeterminate state
-- Error state
-- Selected/active state
+Document states in this order (skip states that don't apply):
+
+1. Default - Normal/initial state
+2. Selected - When item is chosen
+3. Active - During interaction
+4. Disabled - When unavailable
+5. Readonly - When not editable
+6. Error - Validation states (valid, invalid, etc.)
+7. Loading/pending/indeterminate - Async states
+8. Other states as applicable
+
+**Example**:
+
+```typescript
+/**
+ * Components can exist in various states.
+ * All states shown below for comparison.
+ */
+export const States: Story = {
+    render: (args) => html`
+        ${template({ ...args, /* default */ })}
+        ${template({ ...args, selected: true })}
+        ${template({ ...args, disabled: true })}
+        ${template({ ...args, readonly: true })}
+        ${template({ ...args, invalid: true })}
+    `,
+    tags: ['states'],
+};
+```
+
+If a state requires complex demonstration (e.g., animated indeterminate progress), it may warrant a separate story.
+
+### Default state template
+
+```typescript
+/**
+ * The default state represents the component in its normal, interactive state.
+ */
+```
+
+### Selected state template
+
+```typescript
+/**
+ * The selected state indicates that the item has been chosen or activated.
+ */
+```
+
+### Active state template
+
+```typescript
+/**
+ * The active state represents the component during user interaction (e.g., mouse down, touch).
+ */
+```
 
 ### Disabled state template
 
@@ -157,7 +350,101 @@ Document all states:
 Include ARIA support documentation:
 
 ```
-- **ARIA Support**: When disabled, the component automatically sets `aria-disabled="true"`
+- **ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`
+```
+
+### Readonly state template
+
+```typescript
+/**
+ * A readonly component displays its value but cannot be modified by the user.
+ * Unlike disabled, readonly components can still receive focus and be read by assistive technologies.
+ */
+```
+
+### Error state template
+
+```typescript
+/**
+ * Error states communicate validation status:
+ *
+ * - **Valid**: Input meets all requirements
+ * - **Invalid**: Input fails validation with appropriate error messaging
+ */
+```
+
+### Loading/pending/indeterminate state template
+
+```typescript
+/**
+ * Loading states indicate asynchronous operations:
+ *
+ * - **Loading**: Data is being fetched or processed
+ * - **Pending**: Action is awaiting completion
+ * - **Indeterminate**: Progress cannot be determined
+ */
+```
+
+## Behaviors documentation
+
+### Required for components with behaviors
+
+Document behaviors in this order (skip subsections that don't apply):
+
+1. Automatic behaviors - Built-in functionality that can't be modified via properties or attributes
+2. Methods - Public methods available on the component
+3. Events - Events dispatched by the component
+
+### Automatic behaviors
+
+Document built-in functionality like:
+
+- Text wrapping and truncation
+- Overflow handling
+- Focus management
+- Interactivity patterns
+
+```typescript
+/**
+ * ### Text handling
+ *
+ * - Long text automatically wraps to multiple lines
+ * - Text truncates with ellipsis when space is constrained
+ *
+ * ### Focus behavior
+ *
+ * - Focus is trapped within the component when open
+ * - Focus returns to trigger element on close
+ */
+```
+
+### Methods
+
+Document public methods:
+
+```typescript
+/**
+ * ### Methods
+ *
+ * - `open()`: Opens the component programmatically
+ * - `close()`: Closes the component programmatically
+ * - `toggle()`: Toggles the open/closed state
+ */
+```
+
+### Events
+
+Document dispatched events:
+
+```typescript
+/**
+ * ### Events
+ *
+ * - `change`: Dispatched when the value changes
+ * - `input`: Dispatched during user input
+ * - `sp-opened`: Dispatched when the component opens
+ * - `sp-closed`: Dispatched when the component closes
+ */
 ```
 
 ## Accessibility documentation
@@ -166,8 +453,8 @@ Include ARIA support documentation:
 
 Every component must have comprehensive accessibility documentation with two subsections:
 
-1. **Features** - Built-in accessibility features
-2. **Best Practices** - Guidelines for proper usage
+1. **Features** - Built-in accessibility features (keyboard navigation, ARIA states, roles, properties)
+2. **Best practices** - Guidelines for proper usage
 
 ### Features template
 
@@ -177,11 +464,12 @@ Every component must have comprehensive accessibility documentation with two sub
  *
  * The `<sp-component-name>` element implements several accessibility features:
  *
- * 1. **Feature name**: Clear description of what it does
- * 2. **Feature name**: Clear description of what it does
- * 3. **Feature name**: Clear description of what it does
+ * 1. **Keyboard navigation**: Description of keyboard interactions
+ * 2. **ARIA role**: Automatically sets appropriate role
+ * 3. **ARIA states**: Manages aria-disabled, aria-expanded, etc.
+ * 4. **ARIA properties**: Sets aria-label, aria-labelledby, etc.
  *
- * ### Best Practices
+ * ### Best practices
  *
  * - Specific, actionable guidance
  * - Another best practice
@@ -191,19 +479,33 @@ Every component must have comprehensive accessibility documentation with two sub
 
 ### Common accessibility features to document
 
+#### Keyboard navigation
+
+Document keyboard interactions first:
+
+```
+#### Keyboard navigation
+
+- <kbd>Tab</kbd>: Description of tab behavior
+- <kbd>Space</kbd> or <kbd>Enter</kbd>: Description of activation
+- <kbd>Arrow keys</kbd>: Description of navigation
+- <kbd>Escape</kbd>: Description of dismiss behavior
+```
+
 #### ARIA attributes
 
-- **ARIA Role**: Document automatic role assignment
-- **ARIA Labels**: Document labeling mechanism (aria-label, aria-labelledby)
-- **ARIA States**: Document state attributes (aria-disabled, aria-valuenow, etc.)
-- **ARIA Orientation**: Document for components with orientation
+- **ARIA role**: Document automatic role assignment
+- **ARIA labels**: Document labeling mechanism (aria-label, aria-labelledby)
+- **ARIA states**: Document state attributes (aria-disabled, aria-valuenow, etc.)
+- **ARIA properties**: Document other ARIA properties
+- **ARIA orientation**: Document for components with orientation
 
 **Examples**:
 
 ```
-- **ARIA Role**: Automatically sets `role="progressbar"` for proper semantic meaning
+- **ARIA role**: Automatically sets `role="progressbar"` for proper semantic meaning
 - **Labeling**: Uses the `label` attribute value as `aria-label`
-- **Status Communication**: Screen readers announce progress updates
+- **Status communication**: Screen readers announce progress updates
 ```
 
 #### Color meaning
@@ -211,19 +513,7 @@ Every component must have comprehensive accessibility documentation with two sub
 For components using color to convey information:
 
 ```
-- **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
-```
-
-#### Keyboard interactions
-
-If component is interactive:
-
-```
-#### Keyboard interactions
-
-- <kbd>Tab</kbd>: Description of tab behavior
-- <kbd>Space</kbd> or <kbd>Enter</kbd>: Description of activation
-- <kbd>Arrow keys</kbd>: Description of navigation
+- **Color meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
 ```
 
 ### Best practices format
@@ -256,15 +546,19 @@ When migrating or enhancing 2nd-gen documentation, check 1st-gen for:
 
 Compare 2nd-gen against 1st-gen README.md for:
 
+- [ ] Missing installation instructions
 - [ ] Missing size options (xl is common)
 - [ ] Missing semantic variants (accent is common)
 - [ ] Undocumented disabled state
+- [ ] Missing readonly state documentation
 - [ ] Missing ARIA disabled documentation
 - [ ] Lack of tooltip integration examples
 - [ ] Missing icon-only accessibility guidance
-- [ ] No keyboard interaction documentation
+- [ ] No keyboard navigation documentation
 - [ ] Missing static-color contrast guidance
 - [ ] No text truncation/wrapping behavior explanation
+- [ ] Missing methods documentation
+- [ ] Missing events documentation
 
 ### Enhancement opportunities
 
@@ -280,22 +574,34 @@ Areas where 2nd-gen often improves on 1st-gen:
 
 ### For each component
 
-- [ ] Anatomy section with clear part descriptions
-- [ ] All size options documented with use cases
-- [ ] All variant options documented with guidance
+Sections in correct order:
+- [ ] Playground story set to most common use case (used as docs page preview)
+- [ ] Installation section written directly in usage.mdx (if applicable)
+- [ ] Anatomy story combining all slotted content variations
+- [ ] Options section with consolidated stories:
+  - [ ] Single Sizes story with all sizes for comparison
+  - [ ] Single SemanticVariants story with all semantic variants (if applicable)
+  - [ ] Single NonSemanticVariants story with all non-semantic variants (if applicable)
+  - [ ] Quiet/subtle/emphasized documented (if applicable)
+  - [ ] Outline documented (if applicable)
+  - [ ] Static color with three-story pattern
+  - [ ] Positioning documented (if applicable)
+- [ ] States section with consolidated story:
+  - [ ] Single States story combining all states for comparison
+  - [ ] Separate stories only for complex states (e.g., animated indeterminate)
+- [ ] Behaviors section (if applicable) with subsections:
+  - [ ] Automatic behaviors (text wrapping, truncation, interactivity)
+  - [ ] Methods documented
+  - [ ] Events documented
+- [ ] Accessibility section with subsections:
+  - [ ] Features (keyboard navigation, ARIA states, roles, properties)
+  - [ ] Best practices with actionable guidance
+
+Content quality:
 - [ ] Semantic variants have usage examples
 - [ ] Non-semantic variants note 8-category limit
-- [ ] Style modifiers documented (outline, subtle, fixed, static-color)
-- [ ] States section if component has states
-- [ ] Disabled state documented if supported
-- [ ] Accessibility Features section with numbered list
-- [ ] Accessibility Best Practices section with bullet points
-- [ ] ARIA attributes documented
 - [ ] Color meaning documented for status indicators
-- [ ] Keyboard interactions documented if interactive
 - [ ] Label requirements clearly stated
-- [ ] Contrast guidance for static colors
-- [ ] Text wrapping/truncation behavior explained
 - [ ] Do/don't guidance present
 
 ## Writing style standards
