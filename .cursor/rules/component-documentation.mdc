@@ -283,6 +283,35 @@ Two decorators handle static color backgrounds:
 - First child: dark gradient (for `static-color="white"`)
 - Last child: light gradient (for `static-color="black"`)
 
+#### Simple pattern (preferred)
+
+Map over the static color values and use story-level args for common properties:
+
+```typescript
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map((color) => html`${template({ ...args, 'static-color': color })}`)}
+    `,
+    args: {
+        progress: 60,
+        label: 'Loading',
+    },
+    tags: ['options', '!test'],
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+};
+```
+
+#### Contextual pattern
+
+Use when components need additional descriptive content around them (e.g., dividers with surrounding text):
+
 ```typescript
 /**
  * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,

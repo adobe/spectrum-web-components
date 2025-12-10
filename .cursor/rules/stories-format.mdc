@@ -488,7 +488,36 @@ export const StaticWhite: Story = {
 
 ### Combined static colors story
 
-The `StaticColors` story uses the `staticColorsDemo` decorator to display both variants side-by-side:
+The `StaticColors` story uses the `staticColorsDemo` decorator to display both variants side-by-side. Use the **simple pattern** (preferred) for most components, or the **contextual pattern** when additional descriptive content is needed.
+
+#### Simple pattern (preferred)
+
+Map over the static color values and use story-level args for common properties. The decorator automatically applies the appropriate gradient backgrounds:
+
+```typescript
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map((color) => html`${template({ ...args, 'static-color': color })}`)}
+    `,
+    args: {
+        progress: 60,
+        label: 'Loading',
+    },
+    tags: ['options', '!test'],
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+};
+```
+
+#### Contextual pattern
+
+Use when components need additional descriptive content around them (e.g., dividers with surrounding text):
 
 ```typescript
 /**
