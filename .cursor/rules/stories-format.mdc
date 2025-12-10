@@ -437,45 +437,106 @@ export const SemanticVariants: Story = {
 
 For components with `static-color` attribute, implement the three-story pattern:
 
-```typescript
-// Individual color stories without JSDoc
-export const StaticWhite: Story = {
-    args: {
-        'static-color': 'white',
-        // other args
-    },
-};
+1. **`StaticBlack`** - Individual story with `static-color="black"` (auto-background via `withStaticColorBackground`)
+2. **`StaticWhite`** - Individual story with `static-color="white"` (auto-background via `withStaticColorBackground`)
+3. **`StaticColors`** - Combined story showing both variants side-by-side (via `staticColorsDemo` decorator)
 
+### Individual static color stories
+
+The `withStaticColorBackground` decorator automatically detects the `static-color` arg and applies the appropriate gradient background:
+
+```typescript
+// Individual color stories - JSDoc only on StaticBlack to introduce the pattern
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
 export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
-        // other args
+    },
+    render: (args) => html`
+        <p>Content above the component on a light background</p>
+        ${template({ ...args })}
+        <p>Content below the component</p>
+    `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'black',
+        },
     },
 };
 
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+    },
+    render: (args) => html`
+        <p>Content above the component on a dark background</p>
+        ${template({ ...args })}
+        <p>Content below the component</p>
+    `,
+    parameters: {
+        flexLayout: false,
+        styles: {
+            color: 'white',
+        },
+    },
+};
+```
+
+### Combined static colors story
+
+The `StaticColors` story uses the `staticColorsDemo` decorator to display both variants side-by-side:
+
+```typescript
 /**
- * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast.
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
  */
 export const StaticColors: Story = {
-    render: createStaticColorStory(template, [
-        { args: StaticWhite.args },
-        { args: StaticBlack.args },
-    ]),
+    render: () => html`
+        <div>
+            <h4>Section title</h4>
+            ${template({ 'static-color': 'white', /* other args */ })}
+            <p>Description text for the white static color variant.</p>
+        </div>
+        <div>
+            <h4>Another section</h4>
+            ${template({ 'static-color': 'black', /* other args */ })}
+            <p>Description text for the black static color variant.</p>
+        </div>
+    `,
     parameters: {
-        docs: {
-            source: {
-                code: generateStaticColorSource('swc-component-name', [
-                    { args: StaticWhite.args },
-                    { args: StaticBlack.args },
-                ]),
-            },
-        },
+        flexLayout: false,
+        staticColorsDemo: true,
     },
     tags: ['options', '!test'],
 };
 ```
 
-## Flex layout and custom styles
+### How the static color decorators work
+
+**`withStaticColorBackground`** (automatic):
+- Detects `static-color` arg value ('white' or 'black')
+- Applies the appropriate gradient background image automatically
+- No configuration needed - works automatically when `static-color` arg is set
+
+**`staticColorsDemo`** (opt-in):
+- Enable with `parameters.staticColorsDemo = true`
+- Wraps story content in a flex container with two background zones
+- **First child**: Gets a dark gradient background (for `static-color="white"` components)
+- **Last child**: Gets a light gradient background (for `static-color="black"` components)
+- Uses CSS custom properties: `--spectrum-examples-gradient-static-white` and `--spectrum-examples-gradient-static-black`
+
+## Decorators and layout
+
+Three global decorators are available for story layout:
+
+1. **`withFlexLayout`** - Provides consistent flex container spacing (enabled by default)
+2. **`withStaticColorBackground`** - Automatically applies gradient background when `static-color` arg is set (automatic)
+3. **`staticColors`** - Displays static color variants side-by-side with appropriate backgrounds (opt-in via `staticColorsDemo: true`)
 
 ### Using the flex-layout decorator
 
@@ -523,6 +584,30 @@ export const SingleComponent: Story = {
     parameters: {
         flexLayout: false,
     },
+};
+```
+
+### Using the staticColorsDemo decorator
+
+The `staticColorsDemo` decorator is opt-in and displays static color variants side-by-side with appropriate gradient backgrounds. Enable it by setting `parameters.staticColorsDemo = true`.
+
+**Important**: When using `staticColorsDemo`, set `flexLayout: false` to avoid conflicting layouts.
+
+```typescript
+export const StaticColors: Story = {
+    render: () => html`
+        <div>
+            <!-- Content for static-color="white" (displayed on dark background) -->
+        </div>
+        <div>
+            <!-- Content for static-color="black" (displayed on light background) -->
+        </div>
+    `,
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+    tags: ['options', '!test'],
 };
 ```
 
@@ -620,8 +705,9 @@ Installation content is written directly in MDX (not a story). Include:
 - [ ] Playground story does NOT have JSDoc comment
 - [ ] Usage.mdx uses SpectrumStories component
 - [ ] Usage.mdx only includes relevant sections in correct order
-- [ ] Static color pattern implemented correctly (if applicable)
-- [ ] Custom layout uses `parameters.styles` with flex-layout decorator (not CONTAINER helper)
+- [ ] Static color pattern implemented correctly using `staticColorsDemo` decorator (if applicable)
+- [ ] Custom layout uses `parameters.styles` with flex-layout decorator
+- [ ] Static color stories use `flexLayout: false` with `staticColorsDemo: true`
 - [ ] **All stories include required accessibility attributes** (labels, aria-label, text content)
 - [ ] **All stories use meaningful, descriptive content** (not placeholder text)
 - [ ] **No stories demonstrate inaccessible patterns**

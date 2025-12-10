@@ -265,13 +265,48 @@ Document outline style (typically semantic only):
 
 ### Static color pattern
 
-For components with static-color support:
+For components with static-color support, implement the three-story pattern using the static color decorators:
+
+1. **`StaticBlack`** - Individual story with `static-color="black"`
+2. **`StaticWhite`** - Individual story with `static-color="white"`
+3. **`StaticColors`** - Combined story showing both variants side-by-side
+
+Two decorators handle static color backgrounds:
+
+**`withStaticColorBackground`** (automatic):
+- Automatically detects `static-color` arg and applies appropriate gradient background
+- Used for individual `StaticBlack` and `StaticWhite` stories
+
+**`staticColorsDemo`** (opt-in):
+- Enable with `parameters.staticColorsDemo = true`
+- Displays two variants side-by-side with appropriate backgrounds
+- First child: dark gradient (for `static-color="white"`)
+- Last child: light gradient (for `static-color="black"`)
 
 ```typescript
 /**
  * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
  * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
  */
+export const StaticColors: Story = {
+    render: () => html`
+        <div>
+            <h4>Section title</h4>
+            ${template({ 'static-color': 'white', /* other args */ })}
+            <p>Description text.</p>
+        </div>
+        <div>
+            <h4>Another section</h4>
+            ${template({ 'static-color': 'black', /* other args */ })}
+            <p>Description text.</p>
+        </div>
+    `,
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
+    tags: ['options', '!test'],
+};
 ```
 
 ### Positioning options
@@ -593,7 +628,7 @@ Sections in correct order:
   - [ ] Single NonSemanticVariants story with all non-semantic variants (if applicable)
   - [ ] Quiet/subtle/emphasized documented (if applicable)
   - [ ] Outline documented (if applicable)
-  - [ ] Static color with three-story pattern
+  - [ ] Static color with three-story pattern using `staticColorsDemo` decorator
   - [ ] Positioning documented (if applicable)
 - [ ] States section with consolidated story:
   - [ ] Single States story combining all states for comparison
