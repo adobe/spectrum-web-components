@@ -55,6 +55,15 @@ Every component must document:
 2. **Options** - Variants, sizes, styles, and configuration
 3. **Accessibility** - A11y features and best practices
 
+### Accessibility requirements for all stories
+
+**All stories must follow accessibility best practices.** Stories serve as examples for consumers, so they must demonstrate proper accessible usage:
+
+- **Include descriptive labels**: If a component requires a label (e.g., `label`, `aria-label`, slot content), every story must include it
+- **Use meaningful text content**: Avoid placeholder text - use realistic, descriptive content
+- **Demonstrate proper ARIA usage**: Show correct ARIA attributes when applicable
+- **Never demonstrate inaccessible patterns**: Stories should not show examples that would fail accessibility audits
+
 ### Conditional sections
 
 Include if applicable:
@@ -603,6 +612,11 @@ Content quality:
 - [ ] Color meaning documented for status indicators
 - [ ] Label requirements clearly stated
 - [ ] Do/don't guidance present
+
+Accessibility in all stories:
+- [ ] **All stories include required accessibility attributes** (labels, aria-label, text content)
+- [ ] **All stories use meaningful, descriptive content** (not placeholder text)
+- [ ] **No stories demonstrate inaccessible patterns**
 
 ## Writing style standards
 

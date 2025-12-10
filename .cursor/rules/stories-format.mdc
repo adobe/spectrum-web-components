@@ -153,6 +153,52 @@ const meta: Meta = {
 };
 ```
 
+## Accessibility requirements for all stories
+
+**All stories must follow accessibility best practices.** Stories serve as examples for consumers, so they must demonstrate proper accessible usage.
+
+### Required accessibility practices
+
+1. **Include descriptive labels**: If a component requires a label for accessibility (e.g., `label`, `aria-label`, slot content), every story must include it
+2. **Use meaningful text content**: Avoid placeholder text like "Lorem ipsum" - use realistic, descriptive content
+3. **Demonstrate proper ARIA usage**: Show correct ARIA attributes when applicable
+4. **Never demonstrate inaccessible patterns**: Stories should not show examples that would fail accessibility audits
+
+### Common accessibility requirements by component type
+
+| Component type | Required accessibility |
+| -------------- | ---------------------- |
+| Progress indicators | `label` attribute describing what is loading |
+| Buttons/actions | Visible text or `aria-label` for icon-only |
+| Form fields | Associated `<label>` or `aria-label` |
+| Status indicators | Text content describing the status |
+| Images/icons | `alt` text or `aria-label` |
+| Interactive elements | Keyboard accessibility, focus indicators |
+
+### Example: accessible story
+
+```typescript
+// ✅ Good: Includes descriptive label
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's', label: 'Uploading file' })}
+        ${template({ ...args, size: 'm', label: 'Processing request' })}
+        ${template({ ...args, size: 'l', label: 'Loading dashboard' })}
+    `,
+    tags: ['options'],
+};
+
+// ❌ Bad: Missing required label
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's' })}
+        ${template({ ...args, size: 'm' })}
+        ${template({ ...args, size: 'l' })}
+    `,
+    tags: ['options'],
+};
+```
+
 ## Story organization and tagging
 
 ### Playground story
@@ -513,6 +559,9 @@ Installation content is written directly in MDX (not a story). Include:
 - Tag stories incorrectly (e.g., 'usage' instead of 'options')
 - Forget to include subtitle in meta parameters
 - Use 'usage' tag (deprecated in refined format)
+- Omit required accessibility attributes (labels, aria-label, etc.)
+- Use placeholder text instead of meaningful, descriptive content
+- Demonstrate inaccessible patterns in story examples
 
 ### ✅ Do
 
@@ -524,6 +573,9 @@ Installation content is written directly in MDX (not a story). Include:
 - Include subtitle in meta.parameters.docs
 - Keep usage.mdx minimal and maintainable
 - Use 'anatomy', 'options', 'states', 'behaviors', 'a11y' tags (Installation is MDX-only, no tag)
+- Include all required accessibility attributes in every story (labels, aria-label, etc.)
+- Use meaningful, descriptive text content that reflects real-world usage
+- Demonstrate accessible patterns that consumers should follow
 
 ## Checklist for new/migrated stories
 
@@ -545,6 +597,9 @@ Installation content is written directly in MDX (not a story). Include:
 - [ ] Usage.mdx only includes relevant sections in correct order
 - [ ] Static color pattern implemented correctly (if applicable)
 - [ ] Helper functions include @todo comments
+- [ ] **All stories include required accessibility attributes** (labels, aria-label, text content)
+- [ ] **All stories use meaningful, descriptive content** (not placeholder text)
+- [ ] **No stories demonstrate inaccessible patterns**
 
 ## Reference implementation
 
