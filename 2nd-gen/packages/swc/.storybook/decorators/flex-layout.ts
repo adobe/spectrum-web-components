@@ -25,20 +25,23 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
     name: 'withFlexLayout',
     parameterName: 'flexLayout',
     wrapper: (StoryFn, context) => {
-        // Allow stories to opt-out of the flex layout
-        const { args, parameters } = context;
+        const { parameters } = context;
         const { flexLayout, styles } = parameters;
-        const flexStyles =
-            (flexLayout ?? true)
-                ? { display: 'flex', gap: '24px', alignItems: 'center' }
-                : undefined;
 
-        if (!flexStyles || !styles) {
+        // Allow stories to opt-out of the flex layout
+        if (!flexLayout) {
             return StoryFn(context);
         }
 
         return html`
-            <div style=${styleMap({ ...flexStyles, ...styles })}>
+            <style>
+                .spectrum-examples-flex-layout {
+                    display: flex;
+                    gap: 24px;
+                    align-items: center;
+                }
+            </style>
+            <div class="spectrum-examples-flex-layout" style=${styleMap({ ...styles })}>
                 ${StoryFn(context)}
             </div>
         `;
