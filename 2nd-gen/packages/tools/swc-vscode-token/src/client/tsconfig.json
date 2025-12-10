@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "../out/client",
+        "rootDir": ".",
+        "strict": true,
+        "types": ["node", "vscode"]
+    },
+    "include": ["src", "extension.ts"]
+}
