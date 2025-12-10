@@ -525,18 +525,19 @@ Use when components need additional descriptive content around them (e.g., divid
  * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
  */
 export const StaticColors: Story = {
-    render: () => html`
-        <div>
-            <h4>Section title</h4>
-            ${template({ 'static-color': 'white', /* other args */ })}
-            <p>Description text for the white static color variant.</p>
-        </div>
-        <div>
-            <h4>Another section</h4>
-            ${template({ 'static-color': 'black', /* other args */ })}
-            <p>Description text for the black static color variant.</p>
-        </div>
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) => html`
+            <div>
+                <h4>Dashboard settings</h4>
+                ${template({ ...args, 'static-color': color })}
+                <p>Configure your dashboard preferences and layout options.</p>
+            </div>`
+        )}
     `,
+    args: {
+        size: 'm',
+    },
     parameters: {
         flexLayout: false,
         staticColorsDemo: true,

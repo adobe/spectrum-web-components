@@ -195,18 +195,21 @@ export const StaticWhite: Story = {
  * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
  */
 export const StaticColors: Story = {
-    render: () => html`
-        <div>
-            <h4>Dashboard settings</h4>
-            ${template({ 'static-color': 'white', size: 'm' })}
-            <p>Configure your dashboard preferences and layout options.</p>
-        </div>
-        <div>
-            <h4>Account details</h4>
-            ${template({ 'static-color': 'black', size: 'm' })}
-            <p>Manage your account information and security settings.</p>
-        </div>
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) =>
+                html` <div>
+                    <h4>Dashboard settings</h4>
+                    ${template({ ...args, 'static-color': color })}
+                    <p>
+                        Configure your dashboard preferences and layout options.
+                    </p>
+                </div>`
+        )}
     `,
+    args: {
+        size: 'm',
+    },
     parameters: {
         flexLayout: false,
         staticColorsDemo: true,
