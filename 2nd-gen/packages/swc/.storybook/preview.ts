@@ -71,10 +71,10 @@ const preview = {
             page: DocumentTemplate,
             toc: {
                 contentsSelector: '.sbdocs-content',
-                headingSelector: 'h2:not(.demo), h3:not(.demo), h4:not(.demo)',
-                ignoreSelector: '.sbdocs-subtitle, #root-inner, #feedback',
+                headingSelector: 'h2, h3, h4',
+                ignoreSelector:
+                    '.sbdocs-subtitle, .sbdocs-preview *, #root-inner, #feedback',
                 disable: false,
-
             },
             canvas: {
                 withToolbar: true,
