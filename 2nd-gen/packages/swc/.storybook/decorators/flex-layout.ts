@@ -13,6 +13,7 @@
 import { html } from 'lit';
 import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
+import { styleMap } from 'lit/directives/style-map.js';
 
 /**
  * Decorator that wraps stories in a flex container with consistent spacing.
@@ -25,14 +26,19 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
     parameterName: 'flexLayout',
     wrapper: (StoryFn, context) => {
         // Allow stories to opt-out of the flex layout
-        const flexLayout = context.parameters?.flexLayout ?? true;
+        const { args, parameters } = context;
+        const { flexLayout, styles } = parameters;
+        const flexStyles =
+            (flexLayout ?? true)
+                ? { display: 'flex', gap: '24px', alignItems: 'center' }
+                : undefined;
 
-        if (!flexLayout) {
+        if (!flexStyles || !styles) {
             return StoryFn(context);
         }
 
         return html`
-            <div style="display: flex; gap: 24px; align-items: center;">
+            <div style=${styleMap({ ...flexStyles, ...styles })}>
                 ${StoryFn(context)}
             </div>
         `;

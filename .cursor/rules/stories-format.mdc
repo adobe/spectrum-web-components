@@ -27,7 +27,7 @@ Every component must have a `.stories.ts` file with the following structure:
 7. **STATES STORIES section** with visual separator (if applicable)
 8. **BEHAVIORS STORIES section** with visual separator (if applicable)
 9. **ACCESSIBILITY STORIES section** with visual separator
-10. **HELPER FUNCTIONS section** with visual separator (if needed)
+10. **HELPER FUNCTIONS section** with visual separator (if needed, e.g., size label mappers)
 
 **Note**: Installation documentation is handled separately in usage.mdx, not as a story.
 
@@ -475,31 +475,56 @@ export const StaticColors: Story = {
 };
 ```
 
-## Helper functions
+## Flex layout and custom styles
 
-### CONTAINER helper
+### Using the flex-layout decorator
 
-If a CONTAINER helper is needed for layout:
+The `withFlexLayout` decorator is applied globally and provides consistent spacing for stories. By default, it applies:
 
 ```typescript
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
-}
+{ display: 'flex', gap: '24px', alignItems: 'center' }
 ```
 
-**Note**: Include @todo comment suggesting extraction to shared utility.
+### Customizing layout with parameters.styles
+
+For stories that need custom layout (e.g., wrapping, max-width constraints), use `parameters.styles`:
+
+```typescript
+// Define reusable parameters at the top of your stories file
+const parameters = {
+    flexLayout: true,
+    styles: {
+        display: 'flex',
+        gap: 'var(--spectrum-spacing-200)',
+        'flex-wrap': 'wrap',
+        'justify-content': 'center',
+        'max-inline-size': '80ch',
+    },
+};
+
+// Apply to individual stories
+export const Sizes: Story = {
+    render: () => html`
+        ${Component.VALID_SIZES.map((size) => html`
+            <swc-component size="${size}">${sizeLabel(size)}</swc-component>
+        `)}
+    `,
+    parameters: parameters,
+    tags: ['options'],
+};
+```
+
+### Disabling flex layout
+
+To disable the flex layout decorator for a specific story:
+
+```typescript
+export const SingleComponent: Story = {
+    parameters: {
+        flexLayout: false,
+    },
+};
+```
 
 ## Usage.mdx requirements
 
@@ -596,7 +621,7 @@ Installation content is written directly in MDX (not a story). Include:
 - [ ] Usage.mdx uses SpectrumStories component
 - [ ] Usage.mdx only includes relevant sections in correct order
 - [ ] Static color pattern implemented correctly (if applicable)
-- [ ] Helper functions include @todo comments
+- [ ] Custom layout uses `parameters.styles` with flex-layout decorator (not CONTAINER helper)
 - [ ] **All stories include required accessibility attributes** (labels, aria-label, text content)
 - [ ] **All stories use meaningful, descriptive content** (not placeholder text)
 - [ ] **No stories demonstrate inaccessible patterns**
