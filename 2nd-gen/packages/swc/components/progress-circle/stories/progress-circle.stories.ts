@@ -18,11 +18,6 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
-import {
-    createStaticColorStory,
-    generateStaticColorSource,
-} from '../../../.storybook/helpers/index.js';
-
 // ────────────────
 //    METADATA
 // ────────────────
@@ -97,7 +92,7 @@ export const Playground: Story = {
  *
  * - An accessible label (via `label` attribute)
  * - A progress value (via `progress` attribute)
- * - An an optional indeterminate state (via `indeterminate` attribute)
+ * - An indeterminate state (via `indeterminate` attribute)
  * - An optional size
  * - An optional static color for backgrounds that have color
  */
@@ -108,6 +103,70 @@ export const Anatomy: Story = {
     `,
     tags: ['anatomy'],
     args: {},
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Progress circles come in three sizes to fit various contexts:
+ *
+ * - **Small**: Used for inline indicators or space-constrained areas
+ * - **Medium**: Default size, used for typical loading states
+ * - **Large**: Used for prominent loading states or primary content areas
+ */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's', label: 'Small progress' })}
+        ${template({ ...args, size: 'm', label: 'Medium progress' })}
+        ${template({ ...args, size: 'l', label: 'Large progress' })}
+    `,
+    tags: ['options'],
+    args: {
+        progress: 25,
+    },
+};
+
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+        progress: 60,
+        label: 'Loading on dark background',
+    },
+};
+
+export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+        progress: 60,
+        label: 'Loading on light background',
+    },
+};
+
+/**
+ * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
+ * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ */
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) => html`${template({ ...args, 'static-color': color })}`
+        )}
+    `,
+    args: {
+        progress: 60,
+        label: 'Loading',
+    },
+    tags: ['options', '!test'],
+    parameters: {
+        flexLayout: false,
+        staticColorsDemo: true,
+    },
 };
 
 // ──────────────────────────
@@ -142,63 +201,6 @@ export const Indeterminate: Story = {
     },
 };
 
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
-/**
- * Progress circles come in three sizes to fit various contexts:
- */
-export const Sizes: Story = {
-    render: (args) => html`
-        ${template({ ...args, size: 's', label: 'Small progress' })}
-        ${template({ ...args, size: 'm', label: 'Medium progress' })}
-        ${template({ ...args, size: 'l', label: 'Large progress' })}
-    `,
-    tags: ['options'],
-    args: {
-        progress: 25,
-    },
-};
-
-// The three static color stories are used to demonstrate the different static color variants for testing and documentation purposes. The documentation story uses the createStaticColorStory helper to render the two static color variants side by side based on the args being used in the test stories. This ensure that the source code documentation is consistent with the test stories.
-export const StaticWhite: Story = {
-    args: {
-        'static-color': 'white',
-        progress: 60,
-        label: 'Loading on dark background',
-    },
-};
-
-export const StaticBlack: Story = {
-    args: {
-        'static-color': 'black',
-        progress: 60,
-        label: 'Loading on dark background',
-    },
-};
-
-/**
- * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast, e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background:
- */
-export const StaticColors: Story = {
-    render: createStaticColorStory(template, [
-        { args: StaticWhite.args },
-        { args: StaticBlack.args },
-    ]),
-    parameters: {
-        docs: {
-            source: {
-                code: generateStaticColorSource('swc-progress-circle', [
-                    { args: StaticWhite.args },
-                    { args: StaticBlack.args },
-                ]),
-            },
-        },
-    },
-    tags: ['options', '!test'],
-};
-
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
@@ -206,30 +208,29 @@ export const StaticColors: Story = {
 /**
  * ### Features
  *
- * The `<sp-progress-circle>` element implements several accessibility features:
+ * The `<swc-progress-circle>` element implements several accessibility features:
  *
- * 1. **ARIA Role**: Automatically sets `role="progressbar"` for proper semantic meaning
+ * 1. **ARIA role**: Automatically sets `role="progressbar"` for proper semantic meaning
  * 2. **Labeling**:
  *     - Uses the `label` attribute value as `aria-label`
  *     - When determinate, adds `aria-valuenow` with the current progress
- *  - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
- * 3. **Status Communication**:
+ *     - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
+ * 3. **Status communication**:
  *     - Screen readers announce progress updates
  *     - Indeterminate state is properly conveyed to assistive technologies
  *
- * ### Best Practices
+ * ### Best practices
  *
  * - Always provide a descriptive `label` that explains what the progress represents
  * - Use determinate progress when possible to give users a clear sense of completion
  * - For determinate progress, ensure the `progress` value accurately reflects the actual progress
- * - Consider using size="l" for primary loading states to improve visibility
+ * - Consider using `size="l"` for primary loading states to improve visibility
  */
 export const Accessibility: Story = {
     tags: ['a11y'],
     args: {
         progress: 60,
         size: 'l',
-        label: 'Loading on dark background',
-        'static-color': 'white',
+        label: 'Uploading document',
     },
 };
