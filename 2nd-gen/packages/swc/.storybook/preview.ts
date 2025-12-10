@@ -83,7 +83,7 @@ const preview = {
             },
             source: {
                 excludeDecorators: true,
-                type: 'auto',
+                type: 'dynamic',
                 language: 'html',
             },
         },
