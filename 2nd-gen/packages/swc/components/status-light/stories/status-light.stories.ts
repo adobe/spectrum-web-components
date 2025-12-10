@@ -9,8 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -24,6 +23,18 @@ import '@adobe/swc/status-light';
 // ────────────────
 
 const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
+
+const parameters = {
+    flexLayout: true,
+    styles: {
+        display: 'flex',
+        gap: 'var(--spectrum-spacing-200)',
+        'flex-wrap': 'wrap',
+        'justify-content': 'center',
+        // Used 80ch because that's generally considered the maximum readable width for text in a web page.
+        'max-inline-size': '80ch',
+    },
+};
 
 argTypes.variant = {
     ...argTypes.variant,
@@ -104,15 +115,14 @@ export const Anatomy: Story = {
  */
 export const Sizes: Story = {
     render: () =>
-        CONTAINER(
-            StatusLight.VALID_SIZES.map(
-                (size: StatusLightSize) => html`
-                    <swc-status-light size="${size}"
-                        >${sizeMap(size)}</swc-status-light
-                    >
-                `
-            )
-        ),
+        html`${StatusLight.VALID_SIZES.map(
+            (size: StatusLightSize) => html`
+                <swc-status-light size="${size}">
+                    ${sizeMap(size)}
+                </swc-status-light>
+            `
+        )} `,
+    parameters: parameters,
     tags: ['options'],
 };
 
@@ -129,15 +139,14 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
     render: () =>
-        CONTAINER(
-            StatusLight.VARIANTS_SEMANTIC.map(
-                (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
-                    >
-                `
-            )
-        ),
+        html` ${StatusLight.VARIANTS_SEMANTIC.map(
+            (variant: StatusLightVariant) => html`
+                <swc-status-light variant="${variant as StatusLightVariant}"
+                    >${capitalize(variant)}</swc-status-light
+                >
+            `
+        )}`,
+    parameters: parameters,
     tags: ['options'],
 };
 
@@ -146,15 +155,14 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
     render: () =>
-        CONTAINER(
-            StatusLight.VARIANTS_COLOR.map(
-                (variant: StatusLightVariant) => html`
-                    <swc-status-light variant="${variant as StatusLightVariant}"
-                        >${capitalize(variant)}</swc-status-light
-                    >
-                `
-            )
-        ),
+        html`${StatusLight.VARIANTS_COLOR.map(
+            (variant: StatusLightVariant) => html`
+                <swc-status-light variant="${variant as StatusLightVariant}"
+                    >${capitalize(variant)}</swc-status-light
+                >
+            `
+        )}`,
+    parameters: parameters,
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -172,16 +180,12 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
 /*
  @todo ois this story needed?
  export const Disabled: Story = {
-    render: () =>
-        CONTAINER([
-            html`<swc-status-light variant="positive"
-                >Approved (enabled)</swc-status-light
-            >`,
-            html`<swc-status-light variant="positive" disabled
-                >Approved (disabled)</swc-status-light
-            >`,
-        ]),
+    render: () => html`
+        <swc-status-light variant="positive">Approved (enabled)</swc-status-light>
+        <swc-status-light variant="positive" disabled>Approved (disabled)</swc-status-light>
+    `,
     tags: ['states'],
+    parameters: parameters,
 };*/
 
 // ──────────────────────────────
@@ -253,20 +257,4 @@ function sizeMap(str?: StatusLightSize): string {
     };
 
     return str ? sizeLabels.labels[str] : '';
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
 }
