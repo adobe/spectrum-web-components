@@ -86,6 +86,7 @@ export default meta;
 type BadgeSize = typeof Badge.prototype.size;
 
 export const Playground: Story = {
+    render: (args) => template(args),
     args: {
         size: 'm',
         'default-slot': 'New',
@@ -97,6 +98,18 @@ export const Playground: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
+const anatomyArgs = [
+    {
+        'default-slot': 'Label only',
+    },
+    {
+        'icon-slot': '✓',
+    },
+    {
+        'icon-slot': '✓',
+        'default-slot': 'Icon and label',
+    },
+];
 /**
  * A badge is made up of the following parts:
  *
@@ -107,18 +120,10 @@ export const Playground: Story = {
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${template({ ...args, 'default-slot': 'Label only' })}
-        ${template({ ...args, 'icon-slot': '✓', 'default-slot': '' })}
-        ${template({
-            ...args,
-            'icon-slot': '✓',
-            'default-slot': 'Icon and label',
-        })}
+        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
     `,
+    parameters: parameters,
     tags: ['anatomy'],
-    args: {
-        size: 'm',
-    },
 };
 
 // ──────────────────────────
@@ -134,13 +139,14 @@ export const Anatomy: Story = {
  * - **Extra-large (xl)**: Maximum visibility
  */
 export const Sizes: Story = {
-    render: () =>
+    render: (args) =>
         html`${Badge.VALID_SIZES.map(
-            (size) => html`
-                <swc-badge size=${size as BadgeSize}
-                    >${sizeLabel(size)}</swc-badge
-                >
-            `
+            (size) =>
+                html`${template({
+                    ...args,
+                    size: size as BadgeSize,
+                    'default-slot': sizeLabel(size),
+                })}`
         )}`,
     parameters: parameters,
     tags: ['options'],
