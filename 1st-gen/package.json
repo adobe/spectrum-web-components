@@ -186,7 +186,6 @@
         "rollup": "4.52.2",
         "sinon": "17.0.2",
         "storybook": "8.6.14",
-        "storybook-screen-reader": "1.1.0",
         "stylelint": "16.24.0",
         "stylelint-config-standard": "38.0.0",
         "stylelint-header": "3.0.0",
@@ -233,6 +232,19 @@
             "command": "node ./scripts/watch-css.js",
             "service": true
         },
+        "build:screen-reader-addon": {
+            "command": "yarn workspace @spectrum-web-components/screen-reader-addon build",
+            "files": [
+                "projects/screen-reader-addon/src/**/*.ts",
+                "projects/screen-reader-addon/src/**/*.tsx",
+                "projects/screen-reader-addon/tsconfig.json",
+                "projects/screen-reader-addon/package.json",
+                "projects/screen-reader-addon/manager.js"
+            ],
+            "output": [
+                "projects/screen-reader-addon/dist/**"
+            ]
+        },
         "build:ts": {
             "clean": "if-file-deleted",
             "command": "node ./scripts/build-ts.js",
@@ -270,6 +282,8 @@
                 "!projects/example-project-rollup",
                 "!projects/example-project-webpack",
                 "!projects/templates",
+                "!projects/screen-reader-addon/manager.js",
+                "!projects/screen-reader-addon/dist/**",
                 "tools/**/*.js",
                 "tools/**/*.js.map",
                 "!**/build.js",
@@ -382,7 +396,8 @@
         "prestorybook": {
             "command": "cem analyze --outdir storybook/",
             "dependencies": [
-                "build:ts"
+                "build:ts",
+                "build:screen-reader-addon"
             ],
             "files": [
                 "packages/**/*.ts",
