@@ -104,11 +104,16 @@ import '@spectrum-web-components/component-name/sp-component-name.js';
 
 ### Required content
 
-- List of component parts/slots
+The anatomy section should document:
+
+- **All slots** - Named and default slots that accept content
+- **Content-rendering properties** - Properties that render additional visual content (e.g., `label`, `icon`, `src`, `value`)
 - Visual examples showing structure
 - Explanation of required vs optional elements
 
 **Consolidation rule**: Combine all slotted content combinations into a **single Anatomy story** to make it easier for consumers to view all variations at once.
+
+**Layout requirement**: Use `flexLayout: true` when showing multiple anatomy variations.
 
 ### Example format
 
@@ -116,11 +121,18 @@ import '@spectrum-web-components/component-name/sp-component-name.js';
 /**
  * A component-name consists of:
  *
- * - Primary element description
- * - Secondary element description (optional)
- * - Additional elements
+ * ### Slots
  *
- * Components can contain X, Y, or both.
+ * - **Default slot**: Primary content (text or elements)
+ * - **icon slot**: Optional icon element
+ * - **description slot**: Additional descriptive content
+ *
+ * ### Content properties
+ *
+ * - **label**: Text label rendered by the component
+ * - **icon**: Icon name to display
+ * - **src**: Image source URL
+ *
  * All combinations are shown below for comparison.
  */
 export const Anatomy: Story = {
@@ -130,17 +142,32 @@ export const Anatomy: Story = {
         ${template({ ...args, /* text + icon */ })}
     `,
     tags: ['anatomy'],
+    parameters: {
+        flexLayout: true,
+    },
 };
 ```
 
 ### Common elements to document
 
-- Text/label slots
-- Icon slots
-- Required attributes
-- Optional visual elements
+#### Slots
+
+- Default slot
+- Named slots (icon, description, footer, etc.)
+- Conditional slots (shown only in certain states)
+
+#### Content-rendering properties
+
+- `label` - Text label displayed by the component
+- `icon` - Icon name or identifier
+- `src` - Image or media source
+- `value` - Displayed value content
+- `placeholder` - Placeholder text
+- Any property that causes the component to render additional visible content
 
 ## Options documentation
+
+**The Options section should document every attribute or property that isn't already covered in the Anatomy or States sections.** This includes configuration options, visual modifiers, and behavioral settings.
 
 Document options in this order (skip subsections that don't apply):
 
@@ -157,6 +184,8 @@ Document options in this order (skip subsections that don't apply):
 - All sizes → single `Sizes` story
 - All semantic variants → single `SemanticVariants` story
 - All non-semantic variants → single `NonSemanticVariants` story
+
+**Layout requirement**: For stories that display multiple variations (sizes, variants, etc.) within a single story, use the `flexLayout` decorator to ensure proper spacing and alignment.
 
 ### Size options
 
@@ -186,6 +215,9 @@ export const Sizes: Story = {
         ${template({ ...args, size: 'l' })}
     `,
     tags: ['options'],
+    parameters: {
+        flexLayout: true,
+    },
 };
 ```
 
@@ -216,6 +248,9 @@ export const SemanticVariants: Story = {
         ${template({ ...args, variant: 'notice' })}
     `,
     tags: ['options'],
+    parameters: {
+        flexLayout: true,
+    },
 };
 ```
 
@@ -237,6 +272,9 @@ export const NonSemanticVariants: Story = {
         ${/* ... other colors */ ''}
     `,
     tags: ['options'],
+    parameters: {
+        flexLayout: true,
+    },
 };
 ```
 
@@ -356,6 +394,8 @@ Document positioning modifiers like fixed:
 
 **Consolidation rule**: Combine all states into a **single States story** (or minimal stories when states are complex) to make it easier for consumers to compare variations.
 
+**Layout requirement**: For stories showing multiple states, use the `flexLayout` decorator.
+
 Document states in this order (skip states that don't apply):
 
 1. Default - Normal/initial state
@@ -383,6 +423,9 @@ export const States: Story = {
         ${template({ ...args, invalid: true })}
     `,
     tags: ['states'],
+    parameters: {
+        flexLayout: true,
+    },
 };
 ```
 
@@ -644,6 +687,33 @@ Areas where 2nd-gen often improves on 1st-gen:
 - Better visual comparisons (e.g., static colors side-by-side)
 - Improved testability
 
+## Story ordering within sections
+
+To control the display order of stories within a section, use the `section-order` parameter. Stories are sorted within each section by:
+
+1. **Lowest to highest `section-order` value** - Stories with lower numbers appear first
+2. **Alphabetically** - For stories with no `section-order` or with the same `section-order` value
+
+### Example: controlling story order
+
+```typescript
+export const Sizes: Story = {
+    tags: ['options'],
+    parameters: {
+        'section-order': 1,
+        flexLayout: true,
+    },
+};
+
+export const Variants: Story = {
+    tags: ['options'],
+    parameters: {
+        'section-order': 2,
+        flexLayout: true,
+    },
+};
+```
+
 ## Documentation quality checklist
 
 ### For each component
@@ -651,8 +721,8 @@ Areas where 2nd-gen often improves on 1st-gen:
 Sections in correct order:
 - [ ] Playground story set to most common use case (used as docs page preview)
 - [ ] Installation section written directly in usage.mdx (if applicable)
-- [ ] Anatomy story combining all slotted content variations
-- [ ] Options section with consolidated stories:
+- [ ] Anatomy story documents all slots AND content-rendering properties (label, icon, src, etc.)
+- [ ] Options section covers all attributes/properties not in Anatomy or States:
   - [ ] Single Sizes story with all sizes for comparison
   - [ ] Single SemanticVariants story with all semantic variants (if applicable)
   - [ ] Single NonSemanticVariants story with all non-semantic variants (if applicable)
@@ -670,6 +740,10 @@ Sections in correct order:
 - [ ] Accessibility section with subsections:
   - [ ] Features (keyboard navigation, ARIA states, roles, properties)
   - [ ] Best practices with actionable guidance
+
+Layout and ordering:
+- [ ] **Stories showing multiple items use `flexLayout: true`** (sizes, variants, states, etc.)
+- [ ] **Story order controlled with `section-order` parameter** when alphabetical order isn't appropriate
 
 Content quality:
 - [ ] Semantic variants have usage examples
