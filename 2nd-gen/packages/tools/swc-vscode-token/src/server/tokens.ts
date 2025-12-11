@@ -41,4 +41,8 @@ export class TokenStore {
             k.toLowerCase().includes(q)
         );
     }
+
+    all() {
+        return Object.keys(this.tokens);
+    }
 }

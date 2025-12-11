@@ -37,6 +37,7 @@
         "tokens": "swc-tokens --outputType tokens --out ./tokens.json --prefix swc",
         "build": "node esbuild.config.js",
         "package": "vsce package --no-dependencies",
+        "deploy": "yarn build && yarn package",
         "test": "vitest --run",
         "test:watch": "vitest --watch"
     },

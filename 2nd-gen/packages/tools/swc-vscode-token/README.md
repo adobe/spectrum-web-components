@@ -43,13 +43,12 @@ Ensure the base tokens package - `@adobe/swc-tokens` is the latest version, and 
 
 Then run `yarn tokens` to update the extension-relative `tokens.json`.
 
-### Build extension
+### Deploy extension
 
-Run both commands to get the updated VSIX file required for VSCode to load the extension.
+Deploy to build and package updated VSIX file required for VSCode to load the extension.
 
 ```bash
-yarn build
-yarn package
+yarn deploy
 ```
 
 Post-build, will require uninstalling and re-installing the extension to see changes take affect.
