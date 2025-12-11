@@ -223,6 +223,33 @@ function shouldWrapLocalVar(text: string, tokenStartOffset: number): boolean {
     return true;
 }
 
+// Token search for diagnostic hover suggestions
+function levenshtein(a: string, b: string): number {
+    const aLen = a.length;
+    const bLen = b.length;
+    const dp = Array.from({ length: aLen + 1 }, () => Array(bLen + 1).fill(0));
+
+    for (let i = 0; i <= aLen; i++) {
+        dp[i][0] = i;
+    }
+    for (let j = 0; j <= bLen; j++) {
+        dp[0][j] = j;
+    }
+
+    for (let i = 1; i <= aLen; i++) {
+        for (let j = 1; j <= bLen; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            dp[i][j] = Math.min(
+                dp[i - 1][j] + 1, // delete
+                dp[i][j - 1] + 1, // insert
+                dp[i - 1][j - 1] + cost // replace
+            );
+        }
+    }
+
+    return dp[aLen][bLen];
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                 Completions                                */
 /* -------------------------------------------------------------------------- */
@@ -371,6 +398,9 @@ export function startServer() {
     const docs = new TextDocuments(TextDocument);
     const store = new TokenStore(path.join(__dirname, '../../tokens.json'));
 
+    // Cache diagnostics so hover can reflect them
+    const diagnosticCache = new Map<string, unknown[]>();
+
     conn.onInitialize(() => ({
         capabilities: {
             textDocumentSync: TextDocumentSyncKind.Incremental,
@@ -391,27 +421,150 @@ export function startServer() {
         return getCompletions(doc, doc.offsetAt(position), store, localVars);
     });
 
+    conn.onHover((params) => {
+        const doc = docs.get(params.textDocument.uri);
+        if (!doc) {
+            return null;
+        }
+
+        const uri = params.textDocument.uri;
+        const hoverOffset = doc.offsetAt(params.position);
+
+        const diags = diagnosticCache.get(uri) ?? [];
+        if (!diags.length) {
+            return null;
+        }
+
+        // Only show hover where diagnostic is under cursor
+        const active = diags.find((d) => {
+            const start = doc.offsetAt(d.range.start);
+            const end = doc.offsetAt(d.range.end);
+            return hoverOffset >= start && hoverOffset <= end;
+        });
+        if (!active) {
+            return null;
+        }
+
+        const msg = active.message;
+        const tokenMatch = /Unknown token '([\w-]+)'/.exec(msg);
+        if (!tokenMatch) {
+            return { contents: msg };
+        }
+
+        const unknown = tokenMatch[1];
+
+        // Ranking logic
+
+        const tokens = store.all(); // ensure TokenStore exposes this
+
+        const scored = tokens.map((tok) => {
+            const prefixScore = tok.startsWith(unknown)
+                ? 0
+                : tok.includes(unknown)
+                  ? 1
+                  : 2;
+            const editDist = levenshtein(unknown, tok);
+            return { tok, prefixScore, editDist };
+        });
+
+        scored.sort((a, b) => {
+            if (a.prefixScore !== b.prefixScore) {
+                return a.prefixScore - b.prefixScore; // strong prefix match wins
+            }
+            return a.editDist - b.editDist;
+        });
+
+        const best = scored[0];
+        const topCandidates = scored.slice(0, 3);
+
+        const bestOpt = best ? best.tok : null;
+        const altLinks =
+            topCandidates.length > 1
+                ? topCandidates
+                      .slice(1)
+                      .map((c) => c.tok)
+                      .join(', ')
+                : '';
+
+        const md = [
+            bestOpt
+                ? `**Did you mean:** ${bestOpt}`
+                : `_No similar token found, please check if there is a typo and/or reference the specs_`,
+            '',
+            altLinks ? `**Similar:** ${altLinks}` : '',
+        ]
+            .filter(Boolean)
+            .join('\n');
+
+        return {
+            contents: {
+                kind: 'markdown',
+                value: md,
+            },
+        };
+    });
+
     /* -------------------------------------------------------------------------- */
     /*                                Diagnostics                                 */
     /* -------------------------------------------------------------------------- */
 
     docs.onDidChangeContent((d) => {
+        const uri = d.document.uri;
+
+        // Exclude extension and test files due to likely mocked token data
+        if (
+            uri.endsWith('.test.js') ||
+            uri.endsWith('.test.ts') ||
+            uri.includes('/swc-vscode-token/')
+        ) {
+            conn.sendDiagnostics({ uri, diagnostics: [] });
+            return;
+        }
+
         const diagnostics = [];
         const text = d.document.getText();
-        const re = /token\(['"]([\w-]+)['"]\)/g;
-        let m;
-        while ((m = re.exec(text))) {
-            if (!store.has(m[1])) {
-                const start = d.document.positionAt(m.index + 7);
-                const end = d.document.positionAt(m.index + 7 + m[1].length);
+
+        // Match *all* token() usages (quoted or unquoted)
+        const allTokenCalls = /token\(([^)]*)\)/g;
+        let match;
+
+        while ((match = allTokenCalls.exec(text))) {
+            const fullMatch = match[0];
+            const inner = match[1].trim();
+            const innerStart = match.index + fullMatch.indexOf(inner);
+
+            const start = d.document.positionAt(innerStart);
+            const end = d.document.positionAt(innerStart + inner.length);
+
+            // --- 1) Detect missing quotes ----------------------------------------
+            const isQuoted = /^['"].+['"]$/.test(inner);
+
+            if (!isQuoted) {
                 diagnostics.push({
                     severity: DiagnosticSeverity.Error,
                     range: { start, end },
-                    message: `Unknown token '${m[1]}'`,
+                    message: `Token name must be quoted: expected token('name')`,
+                });
+                continue; // Skip unknown-token logic
+            }
+
+            // Extract stripped value (drop quotes)
+            const tokenName = inner.slice(1, -1);
+
+            // --- 2) Detect unknown token -----------------------------------------
+            if (!store.has(tokenName)) {
+                diagnostics.push({
+                    severity: DiagnosticSeverity.Error,
+                    range: { start, end },
+                    message: `Unknown token '${tokenName}'`,
                 });
             }
         }
-        conn.sendDiagnostics({ uri: d.document.uri, diagnostics });
+
+        // Store into cache for hover lookup
+        diagnosticCache.set(uri, diagnostics);
+
+        conn.sendDiagnostics({ uri, diagnostics });
     });
 
     // Your existing onCompletion and diagnostics logic here
