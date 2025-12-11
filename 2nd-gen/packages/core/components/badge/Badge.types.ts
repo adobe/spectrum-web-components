@@ -14,6 +14,10 @@
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
+import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
+
+export const VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
+
 export const FIXED_VALUES = [
     'inline-start',
     'inline-end',

@@ -1,0 +1,102 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Contributor guides/Authoring SWC guides" />
+
+# Authoring SWC guides
+
+## Overview
+
+This document provides guidance for maintainers of the Spectrum Web Components guides. The SWC guides are MDX files (`.mdx`) located in the `.storybook/guides/` directory and rendered through Storybook.
+
+## Writing & editing docs
+
+### Creating a new doc
+
+To create a new doc:
+
+1. Decide where to place it within the `.storybook/guides/` directory structure
+2. Create an MDX file with your content
+3. Add the document to the story sort order in `preview.ts` (see [Ordering docs](#ordering-docs))
+
+Your MDX file should contain an H1 heading representing the document title, along with whatever content you want to include:
+
+```mdx
+# Your document title
+
+Your content goes here.
+
+## Section one
+
+More content...
+```
+
+### Editing existing docs
+
+When editing existing docs, simply modify the MDX content directly. There are no auto-generated sections or special markers to work around.
+
+### Titles and headings
+
+- Each document should have a title, represented by a Markdown H1 (`#`) heading
+- Within each document, use proper heading hierarchy (don't skip levels)
+- Avoid duplicate heading names in the same document (they'll create conflicting anchor links in the table of contents)
+
+### Links
+
+When linking to other docs, use Storybook's path query parameter format:
+
+```mdx
+[Getting involved](?path=/docs/guides-contributor-guides-getting-involved--docs)
+```
+
+The path follows the pattern: `?path=/docs/{category}-{subcategory}-{doc-name}--docs`
+
+## Organizing docs
+
+### Folder structure
+
+- Keep the hierarchy shallow when possible (avoid deeply nested structures)
+- Group related content into folders within `.storybook/guides/`
+
+### File naming conventions
+
+- Use lowercase kebab-case for all file names: `getting-involved.mdx`, `working-in-the-swc-repo.mdx`
+- No numeric prefixes are needed; ordering is controlled separately in `preview.ts`
+
+### Ordering docs
+
+Document order in the Storybook sidebar is controlled by the `storySort` configuration in `.storybook/preview.ts`.
+
+To add or reorder docs, update the `order` array in the `storySort` options:
+
+```typescript
+options: {
+    storySort: {
+        method: 'alphabetical-by-kind',
+        order: [
+            'Get Started',
+            'Components',
+            'Guides',
+            [
+                'Contributor guide',
+                [
+                    'Getting involved',
+                    'Using the issue tracker',
+                    'Working in the SWC repo',
+                    // Add new docs here in desired order
+                ],
+            ],
+        ],
+    },
+},
+```
+
+- Documents not listed in the `order` array will appear alphabetically after explicitly ordered items
+- Nested arrays represent subcategories
+
+## Committing updates
+
+When adding new docs, make sure to:
+
+1. Create the MDX file with your content
+2. Update the `storySort` order in `preview.ts` if you need specific positioning
+3. Commit both changes together to keep the navigation in sync with content
