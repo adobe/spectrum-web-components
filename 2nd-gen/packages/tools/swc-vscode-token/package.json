@@ -47,7 +47,7 @@
         "vscode-languageserver": "^8.1.0"
     },
     "devDependencies": {
-        "@adobe/swc-tokens": "0.0.1",
+        "@adobe/swc-tokens": "workspace:*",
         "@types/node": "^24.10.2",
         "@types/vscode": "^1.85.0",
         "esbuild": "^0.27.1",

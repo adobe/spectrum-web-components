@@ -156,11 +156,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/postcss-token@npm:0.0.1, @adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token":
+"@adobe/postcss-token@workspace:*, @adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token":
   version: 0.0.0-use.local
   resolution: "@adobe/postcss-token@workspace:2nd-gen/packages/tools/postcss-token"
   dependencies:
-    "@adobe/swc-tokens": "npm:0.0.1"
+    "@adobe/swc-tokens": "workspace:*"
     postcss: "npm:8.5.6"
     vitest: "npm:^4.0.15"
   peerDependencies:
@@ -189,7 +189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/swc-tokens@npm:0.0.1, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
+"@adobe/swc-tokens@workspace:*, @adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens":
   version: 0.0.0-use.local
   resolution: "@adobe/swc-tokens@workspace:2nd-gen/packages/tools/swc-tokens"
   dependencies:
@@ -206,8 +206,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@adobe/swc@workspace:2nd-gen/packages/swc"
   dependencies:
-    "@adobe/postcss-token": "npm:0.0.1"
-    "@adobe/swc-tokens": "npm:0.0.1"
+    "@adobe/postcss-token": "workspace:*"
+    "@adobe/swc-tokens": "workspace:*"
     "@axe-core/playwright": "npm:4.10.2"
     "@custom-elements-manifest/analyzer": "npm:0.10.8"
     "@spectrum-web-components/core": "npm:0.0.1"
@@ -29448,7 +29448,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "swc-vscode-token@workspace:2nd-gen/packages/tools/swc-vscode-token"
   dependencies:
-    "@adobe/swc-tokens": "npm:0.0.1"
+    "@adobe/swc-tokens": "workspace:*"
     "@types/node": "npm:^24.10.2"
     "@types/vscode": "npm:^1.85.0"
     esbuild: "npm:^0.27.1"

@@ -47,13 +47,13 @@ To use for local development:
 
 ### Update tokens
 
-Ensure the base tokens package - `@adobe/swc-tokens` is the latest version, and install.
-
-THen update the extension-relative `tokens.json`.
+Ensure tokens are updated to the latest by running the following command at the _root level_ of the repo:
 
 ```bash
-yarn tokens
+yarn tokens:update
 ```
+
+This will update the extension-relative `tokens.json`.
 
 ### Deploy extension
 
