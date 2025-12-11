@@ -4,17 +4,453 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Add stories for 2nd-gen component
 
-- Create `stories/[component].stories.ts` file
-- Add section headers: METADATA, STORIES, HELPER FUNCTIONS (if needed)
-- In METADATA section:
-    - Import `StoryObj as Story` for consistency
-    - Set up Storybook helpers with `getStorybookHelpers()`
-    - Configure argTypes for component-specific controls
-    - Define and export the meta object
-- In STORIES section:
-    - Create Default story (without `tags: ['!dev']`)
-    - Create additional stories showcasing variants, sizes, states
-    - Add `tags: ['!dev']` to all non-default stories
-- In HELPER FUNCTIONS section (if needed):
-    - Add any utility functions or template helpers
-    - Convert arrow functions to standard function declarations where appropriate
+This guide walks you through creating Storybook stories for a 2nd-gen component. For detailed formatting rules and examples, see the [stories-format rules](/.cursor/rules/stories-format.mdc).
+
+## Overview
+
+Each component needs two files in its `stories/` folder:
+
+| File                     | Purpose                                             |
+| ------------------------ | --------------------------------------------------- |
+| `[component].stories.ts` | Story definitions with examples and documentation   |
+| `[component].usage.mdx`  | Documentation page that displays stories by section |
+
+---
+
+## Part 1: Create the stories file
+
+Create `stories/[component].stories.ts` with the following sections, separated by visual dividers.
+
+### Step 1: Add copyright header and imports
+
+```typescript
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * ...
+ */
+
+import { html } from 'lit';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { ComponentName } from '@adobe/swc/component-name';
+import '@adobe/swc/component-name';
+```
+
+### Step 2: Add the METADATA section
+
+Set up Storybook helpers and configure the meta object.
+
+```typescript
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { events, args, argTypes, template } =
+    getStorybookHelpers('swc-component-name');
+
+/**
+ * Component description explaining its purpose and key features.
+ * This JSDoc becomes the component overview in the docs.
+ */
+const meta: Meta = {
+    title: 'Component name',
+    component: 'swc-component-name',
+    args,
+    argTypes,
+    render: (args) => template(args),
+    parameters: {
+        actions: { handles: events },
+        docs: { subtitle: 'Brief component description' },
+    },
+    tags: ['migrated'],
+};
+
+export default meta;
+```
+
+**Required meta fields:**
+
+- `title` - Component name as it appears in Storybook sidebar
+- `component` - The custom element tag name
+- `args`, `argTypes` - From `getStorybookHelpers()`
+- `render` - Template function
+- `parameters.docs.subtitle` - Brief description shown in docs header
+- `tags: ['migrated']` - Indicates refined format
+
+### Step 3: Add the Playground story
+
+The Playground is the interactive demo at the top of the docs page. **Do not add a JSDoc comment.**
+
+```typescript
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+    args: {
+        // Set to the most common use case
+        size: 'm',
+        'default-slot': 'Example content',
+    },
+    tags: ['autodocs', 'dev'],
+};
+```
+
+### Step 4: Add Anatomy story (if applicable)
+
+Document all slots and content-rendering properties. Combine all variations into one story.
+
+```typescript
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
+/**
+ * A component-name consists of:
+ *
+ * - **Default slot**: Primary content (text or elements)
+ * - **icon slot**: Optional icon element
+ * - **label property**: Text label rendered by the component
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Text only' })}
+        ${template({ ...args, 'icon-slot': '✓' })}
+        ${template({ ...args, 'default-slot': 'Both', 'icon-slot': '✓' })}
+    `,
+    parameters: { flexLayout: true },
+    tags: ['anatomy'],
+};
+```
+
+### Step 5: Add Options stories
+
+Document every attribute/property not covered in Anatomy, States, or Behaviors. Use `section-order` to control display order.
+
+**Common options stories (in order):**
+
+| Order | Story                   | What to show                                     |
+| ----- | ----------------------- | ------------------------------------------------ |
+| 0     | `Sizes`                 | All size variants (s, m, l, xl)                  |
+| 1     | `SemanticVariants`      | positive, informative, negative, notice, neutral |
+| 2     | `NonSemanticVariants`   | Color-coded categories (seafoam, indigo, etc.)   |
+| 3     | `Outline`               | Outline style variants                           |
+| 4     | `Subtle`                | Subtle/quiet variants                            |
+| 5     | `Fixed` / `Positioning` | Position modifiers                               |
+| 10    | `StaticColors`          | Static color pattern (if applicable)             |
+
+```typescript
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Components come in multiple sizes to fit various contexts.
+ */
+export const Sizes: Story = {
+    render: () => html`
+        <swc-component size="s">Small</swc-component>
+        <swc-component size="m">Medium</swc-component>
+        <swc-component size="l">Large</swc-component>
+    `,
+    parameters: { flexLayout: true, 'section-order': 0 },
+    tags: ['options'],
+};
+
+/**
+ * Semantic variants provide meaning through color:
+ * - **Positive**: approved, complete, success
+ * - **Informative**: active, in use, live
+ * - **Negative**: error, alert, rejected
+ * - **Notice**: pending, scheduled
+ * - **Neutral**: archived, paused, draft
+ */
+export const SemanticVariants: Story = {
+    render: () => html`
+        <swc-component variant="positive">Approved</swc-component>
+        <swc-component variant="informative">Active</swc-component>
+        <swc-component variant="negative">Error</swc-component>
+    `,
+    parameters: { flexLayout: true, 'section-order': 1 },
+    tags: ['options'],
+};
+```
+
+**Static color pattern** (if component supports `static-color`):
+
+Create three stories for components displayed over images or colored backgrounds:
+
+```typescript
+/**
+ * Use `static-color` for display over images or colored backgrounds.
+ */
+export const StaticBlack: Story = {
+    args: { 'static-color': 'black' },
+    parameters: {
+        flexLayout: false,
+        styles: { color: 'black' },
+        'section-order': 10,
+    },
+    tags: ['options'],
+};
+
+export const StaticWhite: Story = {
+    args: { 'static-color': 'white' },
+    parameters: {
+        flexLayout: false,
+        styles: { color: 'white' },
+        'section-order': 11,
+    },
+    tags: ['options'],
+};
+
+export const StaticColors: Story = {
+    render: (args) => html`
+        ${['white', 'black'].map(
+            (color) => html`${template({ ...args, 'static-color': color })}`
+        )}
+    `,
+    parameters: {
+        flexLayout: true,
+        staticColorsDemo: true,
+        'section-order': 12,
+    },
+    tags: ['options', '!test'],
+};
+```
+
+### Step 6: Add States stories (if applicable)
+
+Combine all states into one story when possible.
+
+```typescript
+// ──────────────────────────
+//    STATES STORIES
+// ──────────────────────────
+
+/**
+ * Components can exist in various states.
+ */
+export const States: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Default' })}
+        ${template({ ...args, selected: true, 'default-slot': 'Selected' })}
+        ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
+    `,
+    parameters: { flexLayout: true },
+    tags: ['states'],
+};
+```
+
+For complex states (animated, indeterminate), create separate stories:
+
+```typescript
+/**
+ * Indeterminate state shows unknown progress.
+ */
+export const Indeterminate: Story = {
+    args: { indeterminate: true },
+    tags: ['states'],
+};
+```
+
+### Step 7: Add Behaviors stories (if applicable)
+
+Document automatic behaviors (text wrapping, truncation), methods, and events.
+
+```typescript
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * When content is too long, it wraps to multiple lines.
+ */
+export const TextWrapping: Story = {
+    render: () => html`
+        <swc-component style="max-inline-size: 120px">
+            Long content that wraps to multiple lines
+        </swc-component>
+    `,
+    tags: ['behaviors'],
+};
+```
+
+### Step 8: Add Accessibility story
+
+**Required for every component.** Document features and best practices.
+
+```typescript
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
+
+/**
+ * ### Features
+ *
+ * The `<swc-component-name>` element implements:
+ *
+ * 1. **Keyboard navigation**: Tab to focus, Enter to activate
+ * 2. **ARIA role**: Automatically sets appropriate role
+ * 3. **Color meaning**: Status conveyed through text, not just color
+ *
+ * ### Best practices
+ *
+ * - Always provide a descriptive text label
+ * - Ensure sufficient color contrast
+ * - Use semantic variants when status has specific meaning
+ */
+export const Accessibility: Story = {
+    render: () => html`
+        <swc-component variant="positive">Approved</swc-component>
+        <swc-component variant="negative">Rejected</swc-component>
+    `,
+    tags: ['a11y'],
+};
+```
+
+### Step 9: Add helper functions (if needed)
+
+Place utility functions at the bottom.
+
+```typescript
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+
+function sizeLabel(size: string): string {
+    const labels = { s: 'Small', m: 'Medium', l: 'Large', xl: 'Extra-large' };
+    return labels[size] || size;
+}
+```
+
+---
+
+## Part 2: Create the usage.mdx file
+
+Create `stories/[component].usage.mdx` to display stories organized by section.
+
+```mdx
+import { SpectrumStories } from '../../../.storybook/blocks';
+
+## Installation
+
+Install the component:
+
+\`\`\`bash
+npm install @adobe/swc
+\`\`\`
+
+Import and use:
+
+\`\`\`javascript
+import '@adobe/swc/component-name';
+\`\`\`
+
+\`\`\`html
+<swc-component-name>Content</swc-component-name>
+\`\`\`
+
+## Anatomy
+
+<SpectrumStories tag="anatomy" hideTitle />
+
+## Options
+
+<SpectrumStories tag="options" />
+
+## States
+
+<SpectrumStories tag="states" />
+
+## Behaviors
+
+<SpectrumStories tag="behaviors" />
+
+## Accessibility
+
+<SpectrumStories tag="a11y" hideTitle />
+```
+
+**Section rules:**
+
+- Use `hideTitle` for Anatomy and Accessibility only
+- Only include sections that have corresponding stories
+- Follow the section order shown above
+- Use sentence case for headings
+
+---
+
+## Key requirements
+
+### JSDoc comments
+
+Every story **except Playground** needs a JSDoc comment explaining:
+
+- What it demonstrates
+- Usage guidance or best practices
+- When to use each variant/option
+
+Use markdown: `**Bold**`, bullet lists, and backticks for code.
+
+### Accessibility in stories
+
+All stories must demonstrate accessible usage:
+
+- ✅ Include required labels (`label`, `aria-label`, slot content)
+- ✅ Use meaningful, realistic content (not "Lorem ipsum")
+- ✅ Show proper ARIA attributes
+- ❌ Never demonstrate inaccessible patterns
+
+### Layout
+
+Use `flexLayout: true` for stories showing multiple items:
+
+```typescript
+parameters: {
+    flexLayout: true;
+}
+```
+
+Customize with `styles`:
+
+```typescript
+parameters: {
+    flexLayout: true,
+    styles: { 'flex-wrap': 'wrap', 'max-inline-size': '80ch' }
+}
+```
+
+### Tags reference
+
+| Tag                   | Usage                                   |
+| --------------------- | --------------------------------------- |
+| `'autodocs'`, `'dev'` | Playground story only                   |
+| `'anatomy'`           | Anatomy stories                         |
+| `'options'`           | Options stories (sizes, variants, etc.) |
+| `'states'`            | States stories                          |
+| `'behaviors'`         | Behaviors stories                       |
+| `'a11y'`              | Accessibility story                     |
+| `'!test'`             | Exclude from visual regression tests    |
+| `'!dev'`              | Exclude from dev Storybook              |
+
+---
+
+## Checklist
+
+Before submitting:
+
+- [ ] Copyright header (2025)
+- [ ] Visual separators between all sections
+- [ ] Meta object has all required fields including `subtitle` and `tags: ['migrated']`
+- [ ] Playground story has `['autodocs', 'dev']` tags and no JSDoc
+- [ ] Anatomy story documents slots and content properties
+- [ ] Options stories cover all attributes not in other sections
+- [ ] Stories use `flexLayout: true` when showing multiple items
+- [ ] Story order controlled with `section-order` parameter
+- [ ] All stories have JSDoc comments (except Playground)
+- [ ] All stories are accessible with meaningful content
+- [ ] Accessibility story documents features and best practices
+- [ ] usage.mdx uses `<SpectrumStories />` for each section
