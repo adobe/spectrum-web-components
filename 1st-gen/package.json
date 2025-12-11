@@ -269,7 +269,6 @@
                 "!projects/example-project-rollup",
                 "!projects/example-project-webpack",
                 "!projects/templates",
-                "!projects/screen-reader-addon/**",
                 "tools/**/*.js",
                 "tools/**/*.js.map",
                 "!**/build.js",

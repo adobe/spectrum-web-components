@@ -27,6 +27,8 @@ const config = {
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',
+        // Screen reader addon (local)
+        resolve(__dirname, './addons/screen-reader-addon'),
     ],
     viteFinal: async (config) => {
         return mergeConfig(config, {

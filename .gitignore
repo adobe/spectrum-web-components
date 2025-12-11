@@ -61,7 +61,6 @@ react
 !1st-gen/projects/example-project-webpack/src/index.js
 !1st-gen/projects/example-project-webpack/webpack.config.js
 !1st-gen/projects/templates/plopfile.js
-!1st-gen/projects/screen-reader-addon/manager.js
 
 1st-gen/tools/*/src/**/*.css.js
 1st-gen/tools/*/src/**/*.css.js.map
