@@ -11,7 +11,6 @@
  */
 
 import { css, html, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
 import { addons, type Channel } from '@storybook/manager-api';
 import { STORY_CHANGED } from '@storybook/core-events';
 
@@ -29,17 +28,20 @@ interface ScreenReaderTextEvent extends CustomEvent {
 }
 
 export class ScreenReaderPanel extends LitElement {
-    @property({ type: Boolean })
-    voice = false;
+    // Using static properties instead of decorators for compatibility
+    // with Storybook's internal esbuild (no decorator compilation needed)
+    static override properties = {
+        voice: { type: Boolean },
+        text: { type: Boolean },
+        isActive: { type: Boolean },
+        screenReaderText: { type: String },
+    };
 
-    @property({ type: Boolean })
-    text = false;
-
-    @property({ type: Boolean })
-    isActive = false;
-
-    @property({ type: String })
-    screenReaderText = '';
+    // Use 'declare' to avoid class field definition overriding Lit's reactive properties
+    declare voice: boolean;
+    declare text: boolean;
+    declare isActive: boolean;
+    declare screenReaderText: string;
 
     private screenReader: ScreenReader | null = null;
     private channel: Channel | null = null;
@@ -91,6 +93,12 @@ export class ScreenReaderPanel extends LitElement {
 
     constructor() {
         super();
+        // Initialize reactive properties
+        this.voice = false;
+        this.text = false;
+        this.isActive = false;
+        this.screenReaderText = '';
+        // Bind event handlers
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleStoryChange = this.handleStoryChange.bind(this);
     }

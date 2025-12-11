@@ -11,4 +11,5 @@
  */
 
 // Storybook manager addon entry point
-import './dist/register.js';
+// Imports TypeScript source directly - Storybook's esbuild compiles on the fly
+import './src/register.tsx';
