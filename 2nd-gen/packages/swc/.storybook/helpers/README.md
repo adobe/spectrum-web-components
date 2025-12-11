@@ -2,85 +2,51 @@
 
 Reusable utilities for creating consistent Storybook stories across components.
 
-## Static color wrapper helpers
+## formatComponentName
 
-When documenting components that support `static-color` variants (for use on colored backgrounds), these helpers provide a clean, reusable pattern.
+Formats a Storybook story title into a component name in either kebab-case or PascalCase.
 
 ### Usage
 
-Import the helpers in your stories file:
+Import the helper in your stories file:
 
 ```typescript
-import {
-    createStaticColorStory,
-    generateStaticColorSource,
-} from '../../../.storybook/helpers/index.js';
+import { formatComponentName } from '../../../.storybook/helpers/index.js';
 ```
 
-### Example: Showing multiple static color variants
+### Parameters
+
+- `title` (string): The Storybook story title (e.g., `'Components/Button'`)
+- `typeCase` ('kebab' | 'pascal'): The desired output format (defaults to `'kebab'`)
+
+### Examples
 
 ```typescript
-export const StaticColors: Story = {
-    render: createStaticColorStory(template, [
-        {
-            staticColor: 'white',
-            args: { progress: 60, label: 'Loading on dark' },
-        },
-        {
-            staticColor: 'black',
-            args: { progress: 60, label: 'Loading on light' },
-        },
-    ]),
-    parameters: {
-        docs: {
-            source: {
-                code: generateStaticColorSource('swc-progress-circle', [
-                    {
-                        staticColor: 'white',
-                        args: { progress: 60, label: 'Loading on dark' },
-                    },
-                    {
-                        staticColor: 'black',
-                        args: { progress: 60, label: 'Loading on light' },
-                    },
-                ]),
-            },
-        },
-    },
-    tags: ['options'],
-};
+// Get kebab-case component name (default)
+formatComponentName('Components/Action Button');
+// Returns: 'action-button'
+
+// Get PascalCase component name
+formatComponentName('Components/Action Button', 'pascal');
+// Returns: 'ActionButton'
+
+// Typical usage in stories
+export default {
+    title: 'Components/Progress Circle',
+    component: 'swc-progress-circle',
+    // ...
+} as Meta;
+
+const componentName = formatComponentName(meta.title);
+// Returns: 'progress-circle'
 ```
 
 ### What it does
 
-1. **`createStaticColorStory`**: Wraps each component variant in an appropriately colored background
-    - `white` static color → dark gradient background
-    - `black` static color → light gradient background
-
-2. **`generateStaticColorSource`**: Generates clean source code for the docs that excludes the wrapper styling
-
-### Benefits
-
-- **Reusable**: Same pattern across all components
-- **Clean source**: Source code view shows only the component, not the wrapper
-- **Consistent styling**: Uses the same gradient backgrounds as the decorator
-- **Type-safe**: Full TypeScript support
-
-### Individual wrapper
-
-If you need to wrap a single component:
-
-```typescript
-import { withStaticColorWrapper } from '../../../.storybook/helpers/index.js';
-
-export const SingleStatic: Story = {
-    render: (args) =>
-        withStaticColorWrapper(
-            template({ ...args, 'static-color': 'white' }),
-            'white'
-        ),
-};
-```
+1. Extracts the component name from the last segment of the story title path
+2. Converts it to lowercase
+3. Replaces spaces with hyphens for kebab-case
+4. Optionally converts to PascalCase by capitalizing each word and removing hyphens
 
 ## Adding new helpers
 

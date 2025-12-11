@@ -10,18 +10,16 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
 import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
-import gradientBackgroundDark from '../assets/images/gradient-background-dark.png';
-import gradientBackgroundLight from '../assets/images/gradient-background-light.png';
+import { html } from 'lit';
 
 /**
  * Static color background settings - matching spectrum-css gradients
  */
 const staticColorSettings = {
-    black: `url(${gradientBackgroundLight}) no-repeat center center`,
-    white: `url(${gradientBackgroundDark}) no-repeat center center`,
+    black: `var(--spectrum-examples-gradient-static-black)`,
+    white: `var(--spectrum-examples-gradient-static-white)`,
 } as const;
 
 /**
