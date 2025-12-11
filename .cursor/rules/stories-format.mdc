@@ -564,56 +564,78 @@ export const StaticColors: Story = {
 
 Three global decorators are available for story layout:
 
-1. **`withFlexLayout`** - Provides consistent flex container spacing (enabled by default)
+1. **`withFlexLayout`** - Provides consistent flex container spacing (opt-in)
 2. **`withStaticColorBackground`** - Automatically applies gradient background when `static-color` arg is set (automatic)
 3. **`staticColors`** - Displays static color variants side-by-side with appropriate backgrounds (opt-in via `staticColorsDemo: true`)
 
 ### Using the flex-layout decorator
 
-The `withFlexLayout` decorator is applied globally and provides consistent spacing for stories. By default, it applies:
+The `withFlexLayout` decorator wraps stories in a styled container. Stories can opt-in to this decorator in two ways:
+
+1. **Setting `flexLayout` to `true`** - Applies the default flex layout styles
+2. **Adding styles to `parameters.styles`** - Applies custom styles (with or without flex layout)
+
+When `flexLayout: true` is set, the decorator applies:
 
 ```typescript
 { display: 'flex', gap: '24px', alignItems: 'center' }
 ```
 
-### Customizing layout with parameters.styles
+### Enabling flex layout
 
-For stories that need custom layout (e.g., wrapping, max-width constraints), use `parameters.styles`:
+To enable the default flex layout for a story:
 
 ```typescript
-// Define reusable parameters at the top of your stories file
-const parameters = {
-    flexLayout: true,
-    styles: {
-        display: 'flex',
-        gap: 'var(--spectrum-spacing-200)',
-        'flex-wrap': 'wrap',
-        'justify-content': 'center',
-        'max-inline-size': '80ch',
+export const Sizes: Story = {
+    parameters: {
+        flexLayout: true,
     },
+    tags: ['options'],
 };
+```
 
-// Apply to individual stories
+### Customizing layout with parameters.styles
+
+For stories that need custom layout (e.g., wrapping, max-width constraints), use `parameters.styles`. You can combine this with `flexLayout: true` to extend the default flex styles, or use `styles` alone for completely custom styling:
+
+```typescript
+// Option 1: Extend flex layout with additional styles
 export const Sizes: Story = {
     render: () => html`
         ${Component.VALID_SIZES.map((size) => html`
             <swc-component size="${size}">${sizeLabel(size)}</swc-component>
         `)}
     `,
-    parameters: parameters,
+    parameters: {
+        flexLayout: true,
+        styles: {
+            'flex-wrap': 'wrap',
+            'justify-content': 'center',
+            'max-inline-size': '80ch',
+        },
+    },
     tags: ['options'],
+};
+
+// Option 2: Custom styles only (no flex layout defaults)
+export const CustomLayout: Story = {
+    parameters: {
+        styles: {
+            display: 'grid',
+            gap: 'var(--spectrum-spacing-200)',
+            'grid-template-columns': 'repeat(3, 1fr)',
+        },
+    },
 };
 ```
 
-### Disabling flex layout
+### No wrapper (default behavior)
 
-To disable the flex layout decorator for a specific story:
+If neither `flexLayout` nor `styles` is provided, the decorator does not wrap the story content:
 
 ```typescript
 export const SingleComponent: Story = {
-    parameters: {
-        flexLayout: false,
-    },
+    // No wrapper applied - story renders without container
 };
 ```
 

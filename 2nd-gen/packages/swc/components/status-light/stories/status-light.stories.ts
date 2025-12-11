@@ -27,7 +27,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 const parameters = {
     flexLayout: true,
     styles: {
-        display: 'flex',
         gap: 'var(--spectrum-spacing-200)',
         'flex-wrap': 'wrap',
         'justify-content': 'center',
