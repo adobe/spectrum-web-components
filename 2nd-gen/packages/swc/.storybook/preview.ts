@@ -13,7 +13,11 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
-import { withStaticColorBackground, staticColors, withFlexLayout } from './decorators';
+import {
+    withStaticColorBackground,
+    staticColors,
+    withFlexLayout,
+} from './decorators';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -93,7 +97,7 @@ const preview = {
                 order: [
                     'Get Started',
                     [
-                        'Welcome to 2nd-gen SWC',
+                        'Welcome',
                         'What is SWC?',
                         'When to use SWC?',
                         'First Gen vs Second Gen',

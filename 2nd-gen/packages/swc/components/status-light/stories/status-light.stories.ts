@@ -27,7 +27,6 @@ const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 const parameters = {
     flexLayout: true,
     styles: {
-        display: 'flex',
         gap: 'var(--spectrum-spacing-200)',
         'flex-wrap': 'wrap',
         'justify-content': 'center',
@@ -122,7 +121,7 @@ export const Sizes: Story = {
                 </swc-status-light>
             `
         )} `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 0 },
     tags: ['options'],
 };
 
@@ -146,7 +145,7 @@ export const SemanticVariants: Story = {
                 >
             `
         )}`,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 1 },
     tags: ['options'],
 };
 
@@ -162,7 +161,7 @@ export const NonSemanticVariants: Story = {
                 >
             `
         )}`,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 2 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';

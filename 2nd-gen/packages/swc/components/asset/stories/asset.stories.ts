@@ -68,11 +68,10 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    render: (args) => template({ ...args }),
+    render: (args) => template(args),
     args: {
-        label: 'picture.png',
-        variant: undefined,
-        'default-slot': `<img src="https://picsum.photos/120/120" alt="Avatar" />`,
+        label: 'Background',
+        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
     },
     tags: ['autodocs', 'dev'],
 };
@@ -81,6 +80,16 @@ export const Playground: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
+const anatomyArgs = [
+    {
+        variant: 'file',
+        label: 'packages/swc/',
+    },
+    {
+        label: 'Avatar',
+        'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="preview of the avatar" />`,
+    },
+];
 /**
  * An asset is made up of the following parts:
  *
@@ -89,10 +98,12 @@ export const Playground: Story = {
  * - Optional content to be displayed in the asset when an acceptable value for `variant` is not present
  */
 export const Anatomy: Story = {
-    render: () =>
-        html`<swc-asset label="Avatar"
-            ><img src="https://picsum.photos/120/120" alt="Avatar"
-        /></swc-asset>`,
+    render: (args) => html`
+        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+    `,
+    parameters: {
+        flexLayout: true,
+    },
     tags: ['anatomy'],
 };
 
@@ -126,6 +137,16 @@ export const Folder: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
+const accessibilityArgs = [
+    {
+        variant: 'folder',
+        label: '/packages/swc/ folder',
+    },
+    {
+        label: 'Sara Sawyer avatar',
+        'default-slot': `<img src="https://picsum.photos/id/823/80/80" alt="preview of the user profile picture" />`,
+    },
+];
 /**
  * ### Features
  *
@@ -138,9 +159,11 @@ export const Folder: Story = {
  * - Always provide a descriptive `label` that explains what the asset represents, unless the asset is purely decorative
  */
 export const Accessibility: Story = {
-    render: () =>
-        html`<swc-asset label="User profile picture"
-            ><img src="https://picsum.photos/120/120" alt="User profile"
-        /></swc-asset>`,
+    render: (args) => html`
+        ${accessibilityArgs.map((arg) => template({ ...args, ...arg }))}
+    `,
+    parameters: {
+        flexLayout: true,
+    },
     tags: ['a11y'],
 };

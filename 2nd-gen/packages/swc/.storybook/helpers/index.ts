@@ -10,9 +10,4 @@
  * governing permissions and limitations under the License.
  */
 
-export {
-    withStaticColorWrapper,
-    createStaticColorStory,
-    generateStaticColorSource,
-} from './static-color-wrapper.js';
 export { formatComponentName } from './format-component-name.js';

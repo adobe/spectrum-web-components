@@ -16,10 +16,16 @@ import type { DecoratorFunction } from '@storybook/types';
 import { styleMap } from 'lit/directives/style-map.js';
 
 /**
- * Decorator that wraps stories in a flex container with consistent spacing.
+ * Decorator that wraps stories in a styled container.
  * This is useful for components that benefit from horizontal layout with gap spacing.
  *
- * Can be disabled per-story by setting parameters.flexLayout = false
+ * Stories can opt-in to this decorator in two ways:
+ * 1. Setting `parameters.flexLayout = true` - Applies default flex layout styles
+ *    (display: flex, gap: 24px, alignItems: center)
+ * 2. Adding styles to `parameters.styles` - Applies custom styles
+ *
+ * When both are set, flex layout styles are applied first, then merged with custom styles.
+ * If neither is provided, no wrapper is applied.
  */
 export const withFlexLayout: DecoratorFunction = makeDecorator({
     name: 'withFlexLayout',
@@ -28,22 +34,21 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
         const { parameters } = context;
         const { flexLayout, styles } = parameters;
 
-        // Allow stories to opt-out of the flex layout
-        if (!flexLayout) {
+        // Build styles object based on flexLayout and custom styles parameters
+        const stylesObj = flexLayout
+            ? {
+                  display: 'flex',
+                  gap: '24px',
+                  alignItems: 'center',
+                  ...styles,
+              }
+            : { ...styles };
+        if (Object.keys(stylesObj).length === 0) {
             return StoryFn(context);
         }
 
         return html`
-            <style>
-                .spectrum-examples-flex-layout {
-                    display: flex;
-                    gap: 24px;
-                    align-items: center;
-                }
-            </style>
-            <div class="spectrum-examples-flex-layout" style=${styleMap({ ...styles })}>
-                ${StoryFn(context)}
-            </div>
+            <div style=${styleMap(stylesObj)}>${StoryFn(context)}</div>
         `;
     },
 });

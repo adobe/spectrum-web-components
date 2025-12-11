@@ -27,7 +27,6 @@ const { events, args, argTypes, template } = getStorybookHelpers('swc-badge');
 const parameters = {
     flexLayout: true,
     styles: {
-        display: 'flex',
         gap: 'var(--spectrum-spacing-200)',
         'flex-wrap': 'wrap',
         'justify-content': 'center',
@@ -39,21 +38,22 @@ argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
     options: Badge.VARIANTS,
+    defaultValue: 'informative',
 };
 
 argTypes.fixed = {
     ...argTypes.fixed,
     control: { type: 'select' },
-    options: [undefined, ...Badge.FIXED_VALUES],
+    options: ['', ...Badge.FIXED_VALUES],
+    defaultValue: '',
 };
 
 argTypes.size = {
     ...argTypes.size,
     control: { type: 'select' },
     options: Badge.VALID_SIZES,
+    defaultValue: 'm',
 };
-
-args['default-slot'] = 'Badge';
 
 /**
  * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.
@@ -84,9 +84,8 @@ export default meta;
 //    AUTODOCS STORY
 // ────────────────────
 
-type BadgeSize = typeof Badge.prototype.size;
-
 export const Playground: Story = {
+    render: (args) => template(args),
     args: {
         size: 'm',
         'default-slot': 'New',
@@ -98,6 +97,18 @@ export const Playground: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
+const anatomyArgs = [
+    {
+        'default-slot': 'Label only',
+    },
+    {
+        'icon-slot': '✓',
+    },
+    {
+        'icon-slot': '✓',
+        'default-slot': 'Icon and label',
+    },
+];
 /**
  * A badge is made up of the following parts:
  *
@@ -108,18 +119,10 @@ export const Playground: Story = {
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${template({ ...args, 'default-slot': 'Label only' })}
-        ${template({ ...args, 'icon-slot': '✓', 'default-slot': '' })}
-        ${template({
-            ...args,
-            'icon-slot': '✓',
-            'default-slot': 'Icon and label',
-        })}
+        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
     `,
+    parameters: parameters,
     tags: ['anatomy'],
-    args: {
-        size: 'm',
-    },
 };
 
 // ──────────────────────────
@@ -135,15 +138,13 @@ export const Anatomy: Story = {
  * - **Extra-large (xl)**: Maximum visibility
  */
 export const Sizes: Story = {
-    render: () =>
-        html`${Badge.VALID_SIZES.map(
-            (size) => html`
-                <swc-badge size=${size as BadgeSize}
-                    >${sizeLabel(size)}</swc-badge
-                >
-            `
-        )}`,
-    parameters: parameters,
+    render: () => html`
+        <swc-badge size="s">Small</swc-badge>
+        <swc-badge size="m">Medium</swc-badge>
+        <swc-badge size="l">Large</swc-badge>
+        <swc-badge size="xl">Extra-large</swc-badge>
+    `,
+    parameters: { ...parameters, 'section-order': 0 },
     tags: ['options'],
 };
 
@@ -164,7 +165,7 @@ export const SemanticVariants: Story = {
         <swc-badge variant="notice">Pending</swc-badge>
         <swc-badge variant="neutral">Archived</swc-badge>
     `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 1 },
     tags: ['options'],
 };
 
@@ -183,7 +184,7 @@ export const NonSemanticVariants: Story = {
         <swc-badge variant="celery">HR</swc-badge>
         <swc-badge variant="cyan">Legal</swc-badge>
     `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 2 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -205,7 +206,7 @@ export const Outline: Story = {
         <swc-badge variant="notice" outline>Pending</swc-badge>
         <swc-badge variant="neutral" outline>Archived</swc-badge>
     `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 3 },
     tags: ['options'],
 };
 
@@ -222,7 +223,7 @@ export const Subtle: Story = {
         <swc-badge variant="seafoam" subtle>Design</swc-badge>
         <swc-badge variant="indigo" subtle>Engineering</swc-badge>
     `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 4 },
     tags: ['options'],
 };
 
@@ -236,7 +237,7 @@ export const Fixed: Story = {
         <swc-badge fixed="inline-start">Left edge</swc-badge>
         <swc-badge fixed="inline-end">Right edge</swc-badge>
     `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 5 },
     tags: ['options'],
 };
 
@@ -291,14 +292,3 @@ export const Accessibility: Story = {
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
-
-/* @todo Pull this up into a utility function for more components to leverage */
-function sizeLabel(size?: BadgeSize): string {
-    const labels: Record<string, string> = {
-        s: 'Small',
-        m: 'Medium',
-        l: 'Large',
-        xl: 'Extra-large',
-    };
-    return size ? labels[size] || size : '';
-}
