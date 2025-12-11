@@ -30,8 +30,8 @@ export default {
             : []),
         // https://geometricpanda.github.io/storybook-addon-badges/
         '@geometricpanda/storybook-addon-badges',
-        // Screen reader addon: https://www.npmjs.com/package/storybook-screen-reader
-        'storybook-screen-reader',
+        // Screen reader addon (local build)
+        '../projects/screen-reader-addon',
     ],
     framework: {
         name: '@storybook/web-components-webpack5',
