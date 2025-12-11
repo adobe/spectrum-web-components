@@ -7,5 +7,5 @@
         "strict": true,
         "types": ["node"]
     },
-    "include": ["src", "server.ts", "tokens.ts"]
+    "include": ["server.ts", "tokens.ts"]
 }
