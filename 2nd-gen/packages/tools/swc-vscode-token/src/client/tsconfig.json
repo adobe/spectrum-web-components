@@ -8,5 +8,5 @@
         "strict": true,
         "types": ["node", "vscode"]
     },
-    "include": ["src", "extension.ts"]
+    "include": ["extension.ts"]
 }

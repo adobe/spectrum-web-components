@@ -56,7 +56,8 @@ function findCssVarContext(prefix: string) {
 }
 
 function findTokenContext(prefix: string) {
-    return /token\(\s*(['"]?)([\w-]*)$/.exec(prefix);
+    const matches = [...prefix.matchAll(/token\(\s*(['"]?)([\w-]*)/g)];
+    return matches.length ? matches[matches.length - 1] : null;
 }
 
 function findVarContext(prefix: string) {
@@ -273,29 +274,32 @@ export function getCompletions(
     const prefix = text.slice(0, offset);
     const vars = localVars ?? collectLocalVars(text);
 
-    // --- token(...) context ---
+    /* ----------------------------- token(...) ----------------------------- */
+
     const tokenMatch = findTokenContext(prefix);
     if (tokenMatch) {
-        const partial = tokenMatch[2] ?? '';
-        const start = offset - partial.length;
+        const rawPartial = tokenMatch[2] ?? '';
+        const start = offset - rawPartial.length;
+        const partial = rawPartial.trimStart(); // allow completion after spaces
 
-        return store.filter(partial).map((k) => {
-            const lastCharBefore = prefix[prefix.length - 1];
+        const openingQuote = tokenMatch[1]; // may be ' or "
+
+        return store.filter(partial).map((tok) => {
+            let replacement = tok.trim(); // remove trailing spaces automatically
+
+            // Determine if we need closing quote
             const nextChar = text[offset] ?? '';
+            if (openingQuote && nextChar !== openingQuote) {
+                replacement = replacement + openingQuote; // add closing quote
+            }
 
-            let replacement = k;
-
-            if (lastCharBefore === "'" || lastCharBefore === '"') {
-                // Only add closing quote if it's not already there
-                if (nextChar !== lastCharBefore) {
-                    replacement = k + lastCharBefore;
-                }
-            } else {
-                replacement = `'${k}'`;
+            // Only prepend opening quote if user hasn't typed one
+            if (!openingQuote) {
+                replacement = `'${replacement}'`;
             }
 
             return {
-                label: k,
+                label: tok,
                 kind: CompletionItemKind.Value,
                 textEdit: TextEdit.replace(
                     rangeFromOffsets(doc, start, offset),
@@ -305,7 +309,8 @@ export function getCompletions(
         });
     }
 
-    // --- var(...) context ---
+    /* ----------------------------- var(...) ----------------------------- */
+
     const varCtx = findVarContext(prefix);
     if (varCtx) {
         const inner = varCtx[1] ?? '';
@@ -346,14 +351,15 @@ export function getCompletions(
                     varStart,
                     varStart + (fullVarMatch?.[0].length ?? 0)
                 ),
-                `token('${k}')`
+                `token('${k.trim()}')` // auto-trim token here too
             ),
         }));
 
         return [...localItems, ...tokenItems];
     }
 
-    // --- top-level --foo ---
+    /* ---------------------------- top-level --foo ---------------------------- */
+
     const cssVar = findCssVarContext(prefix);
     if (cssVar) {
         const partial = cssVar[1] ?? '';
@@ -383,7 +389,7 @@ export function getCompletions(
             sortText: '1',
             textEdit: TextEdit.replace(
                 rangeFromOffsets(doc, start, offset),
-                `token('${k}')`
+                `token('${k.trim()}')` // auto-trim token here too
             ),
         }));
 
@@ -405,12 +411,14 @@ export function startServer() {
         capabilities: {
             textDocumentSync: TextDocumentSyncKind.Incremental,
             completionProvider: {
-                triggerCharacters: ['-', '(', ',', "'", '"'],
+                // Let the client handle typing triggers for most characters
+                triggerCharacters: ['-', '_', "'", '"', '(', ')', ','],
             },
             hoverProvider: true,
         },
     }));
 
+    /* ----------------------------- Completions ----------------------------- */
     conn.onCompletion(({ textDocument, position }): CompletionItem[] => {
         const doc = docs.get(textDocument.uri);
         if (!doc) {
@@ -421,6 +429,7 @@ export function startServer() {
         return getCompletions(doc, doc.offsetAt(position), store, localVars);
     });
 
+    /* ----------------------------- Hover ----------------------------- */
     conn.onHover((params) => {
         const doc = docs.get(params.textDocument.uri);
         if (!doc) {
@@ -429,7 +438,6 @@ export function startServer() {
 
         const uri = params.textDocument.uri;
         const hoverOffset = doc.offsetAt(params.position);
-
         const diags = diagnosticCache.get(uri) ?? [];
         if (!diags.length) {
             return null;
@@ -451,28 +459,24 @@ export function startServer() {
             return { contents: msg };
         }
 
-        const unknown = tokenMatch[1];
+        const unknown = tokenMatch[1].trim();
 
-        // Ranking logic
-
-        const tokens = store.all(); // ensure TokenStore exposes this
-
-        const scored = tokens.map((tok) => {
-            const prefixScore = tok.startsWith(unknown)
+        // Ranking
+        const tokens = store.all();
+        const scored = tokens.map((tok) => ({
+            tok,
+            prefixScore: tok.startsWith(unknown)
                 ? 0
                 : tok.includes(unknown)
                   ? 1
-                  : 2;
-            const editDist = levenshtein(unknown, tok);
-            return { tok, prefixScore, editDist };
-        });
-
-        scored.sort((a, b) => {
-            if (a.prefixScore !== b.prefixScore) {
-                return a.prefixScore - b.prefixScore; // strong prefix match wins
-            }
-            return a.editDist - b.editDist;
-        });
+                  : 2,
+            editDist: levenshtein(unknown, tok),
+        }));
+        scored.sort((a, b) =>
+            a.prefixScore !== b.prefixScore
+                ? a.prefixScore - b.prefixScore
+                : a.editDist - b.editDist
+        );
 
         const best = scored[0];
         const topCandidates = scored.slice(0, 3);
@@ -496,22 +500,14 @@ export function startServer() {
             .filter(Boolean)
             .join('\n');
 
-        return {
-            contents: {
-                kind: 'markdown',
-                value: md,
-            },
-        };
+        return { contents: { kind: 'markdown', value: md } };
     });
 
-    /* -------------------------------------------------------------------------- */
-    /*                                Diagnostics                                 */
-    /* -------------------------------------------------------------------------- */
-
+    /* ----------------------------- Diagnostics ----------------------------- */
     docs.onDidChangeContent((d) => {
         const uri = d.document.uri;
 
-        // Exclude extension and test files due to likely mocked token data
+        // Exclude test/mocked files
         if (
             uri.endsWith('.test.js') ||
             uri.endsWith('.test.ts') ||
@@ -523,8 +519,6 @@ export function startServer() {
 
         const diagnostics = [];
         const text = d.document.getText();
-
-        // Match *all* token() usages (quoted or unquoted)
         const allTokenCalls = /token\(([^)]*)\)/g;
         let match;
 
@@ -532,12 +526,34 @@ export function startServer() {
             const fullMatch = match[0];
             const inner = match[1].trim();
             const innerStart = match.index + fullMatch.indexOf(inner);
-
             const start = d.document.positionAt(innerStart);
             const end = d.document.positionAt(innerStart + inner.length);
 
-            // --- 1) Detect missing quotes ----------------------------------------
+            // 1) Detect missing quotes
             const isQuoted = /^['"].+['"]$/.test(inner);
+
+            // Auto-trim trailing/leading spaces inside quotes
+            if (isQuoted) {
+                const tokenName = inner.slice(1, -1);
+                const trimmed = tokenName.trim();
+
+                if (tokenName !== trimmed) {
+                    diagnostics.push({
+                        severity: DiagnosticSeverity.Warning,
+                        range: { start, end },
+                        message: `Token name has extra spaces; auto-trimmed.`,
+                    });
+
+                    // Auto-edit to remove spaces
+                    const edit: TextEdit = TextEdit.replace(
+                        { start, end },
+                        `'${trimmed}'`
+                    );
+                    conn.workspace.applyEdit({ changes: { [uri]: [edit] } });
+
+                    match[1] = `'${trimmed}'`; // update match for unknown-token check
+                }
+            }
 
             if (!isQuoted) {
                 diagnostics.push({
@@ -545,13 +561,13 @@ export function startServer() {
                     range: { start, end },
                     message: `Token name must be quoted: expected token('name')`,
                 });
-                continue; // Skip unknown-token logic
+                continue;
             }
 
-            // Extract stripped value (drop quotes)
-            const tokenName = inner.slice(1, -1);
+            // Extract stripped value (drop quotes and trim)
+            const tokenName = inner.slice(1, -1).trim();
 
-            // --- 2) Detect unknown token -----------------------------------------
+            // 2) Detect unknown token
             if (!store.has(tokenName)) {
                 diagnostics.push({
                     severity: DiagnosticSeverity.Error,
@@ -561,13 +577,10 @@ export function startServer() {
             }
         }
 
-        // Store into cache for hover lookup
         diagnosticCache.set(uri, diagnostics);
-
         conn.sendDiagnostics({ uri, diagnostics });
     });
 
-    // Your existing onCompletion and diagnostics logic here
     docs.listen(conn);
     conn.listen();
 }
