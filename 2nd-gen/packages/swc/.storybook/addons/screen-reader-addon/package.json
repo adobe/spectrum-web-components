@@ -23,7 +23,10 @@
     "name": "@spectrum-web-components/screen-reader-addon",
     "peerDependencies": {
         "@lit/react": ">=1.0.0",
+        "@spectrum-web-components/field-label": ">=1.0.0",
+        "@spectrum-web-components/help-text": ">=1.0.0",
         "@spectrum-web-components/switch": ">=1.0.0",
+        "@spectrum-web-components/textfield": ">=1.0.0",
         "@spectrum-web-components/theme": ">=1.0.0",
         "@storybook/components": ">=8.0.0",
         "@storybook/core-events": ">=8.0.0",
@@ -33,7 +36,7 @@
     },
     "private": true,
     "repository": {
-        "directory": "1st-gen/projects/screen-reader-addon",
+        "directory": "2nd-gen/packages/swc/.storybook/addons/screen-reader-addon",
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git"
     },

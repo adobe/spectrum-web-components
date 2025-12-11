@@ -11,13 +11,16 @@
  */
 
 import { css, html, LitElement } from 'lit';
-import { addons, type Channel } from '@storybook/manager-api';
+import { addons } from '@storybook/manager-api';
 import { STORY_CHANGED } from '@storybook/core-events';
 
 // Import Spectrum Web Components
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/spectrum-two/themes-core-tokens.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 
 import ScreenReader from '../screen-reader/screenReader.js';
 
@@ -35,6 +38,7 @@ export class ScreenReaderPanel extends LitElement {
         text: { type: Boolean },
         isActive: { type: Boolean },
         screenReaderText: { type: String },
+        themeColor: { type: String },
     };
 
     // Use 'declare' to avoid class field definition overriding Lit's reactive properties
@@ -42,52 +46,34 @@ export class ScreenReaderPanel extends LitElement {
     declare text: boolean;
     declare isActive: boolean;
     declare screenReaderText: string;
+    declare themeColor: 'light' | 'dark';
 
     private screenReader: ScreenReader | null = null;
-    private channel: Channel | null = null;
+    private channel: ReturnType<typeof addons.getChannel> | null = null;
+    private themeMediaQuery: MediaQueryList | null = null;
 
     static override styles = css`
         :host {
             display: block;
             padding: 16px;
-            font-family:
-                -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-                sans-serif;
         }
 
         .toggle-row {
             display: flex;
             align-items: center;
             margin-bottom: 12px;
-            gap: 8px;
         }
 
-        .toggle-label {
-            font-size: 14px;
-            color: var(--spectrum-global-color-gray-800, #4b4b4b);
+        .output-section {
+            margin-top: 16px;
         }
 
-        .text-output {
-            font-size: 14px;
-            border-radius: 6px;
-            border: 1px solid var(--spectrum-global-color-gray-300, #e0e0e0);
-            padding: 12px;
+        sp-textfield {
+            width: 100%;
+        }
+
+        sp-help-text {
             margin-top: 12px;
-            background: var(--spectrum-global-color-gray-100, #f5f5f5);
-            min-height: 60px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .status-text {
-            font-size: 12px;
-            color: var(--spectrum-global-color-gray-600, #6e6e6e);
-            margin: 12px 0 0 0;
-            font-style: italic;
-        }
-
-        .placeholder {
-            color: var(--spectrum-global-color-gray-500, #959595);
         }
     `;
 
@@ -98,9 +84,41 @@ export class ScreenReaderPanel extends LitElement {
         this.text = false;
         this.isActive = false;
         this.screenReaderText = '';
+        this.themeColor = this.detectTheme();
         // Bind event handlers
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleStoryChange = this.handleStoryChange.bind(this);
+        this.handleThemeChange = this.handleThemeChange.bind(this);
+    }
+
+    private detectTheme(): 'light' | 'dark' {
+        // Detect theme by checking Storybook's actual background color
+        // This works for both explicit themes (1st-gen) and auto themes (2nd-gen)
+        const body = document.body;
+        const computedStyle = getComputedStyle(body);
+        const bgColor = computedStyle.backgroundColor;
+
+        // Parse RGB values
+        const rgbMatch = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+        if (rgbMatch) {
+            const [, r, g, b] = rgbMatch.map(Number);
+            // Calculate relative luminance
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+            // If background is dark (luminance < 0.5), use dark theme
+            return luminance < 0.5 ? 'dark' : 'light';
+        }
+
+        // Fallback to system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+
+        return 'light';
+    }
+
+    private handleThemeChange(): void {
+        this.themeColor = this.detectTheme();
     }
 
     override connectedCallback(): void {
@@ -115,6 +133,12 @@ export class ScreenReaderPanel extends LitElement {
         // Listen for story changes via Storybook API
         this.channel = addons.getChannel();
         this.channel.on(STORY_CHANGED, this.handleStoryChange);
+
+        // Listen for system theme changes (for auto-theme Storybooks like 2nd-gen)
+        this.themeMediaQuery = window.matchMedia(
+            '(prefers-color-scheme: dark)'
+        );
+        this.themeMediaQuery.addEventListener('change', this.handleThemeChange);
     }
 
     override disconnectedCallback(): void {
@@ -127,6 +151,13 @@ export class ScreenReaderPanel extends LitElement {
 
         if (this.channel) {
             this.channel.off(STORY_CHANGED, this.handleStoryChange);
+        }
+
+        if (this.themeMediaQuery) {
+            this.themeMediaQuery.removeEventListener(
+                'change',
+                this.handleThemeChange
+            );
         }
 
         this.stopScreenReader();
@@ -216,7 +247,11 @@ export class ScreenReaderPanel extends LitElement {
 
     override render() {
         return html`
-            <sp-theme scale="medium" color="light" system="spectrum-two">
+            <sp-theme
+                scale="medium"
+                color=${this.themeColor}
+                system="spectrum-two"
+            >
                 <div class="toggle-row">
                     <sp-switch
                         ?checked=${this.voice}
@@ -237,22 +272,27 @@ export class ScreenReaderPanel extends LitElement {
 
                 ${this.text
                     ? html`
-                          <div class="text-output">
-                              ${this.screenReaderText ||
-                              html`
-                                  <span class="placeholder">
-                                      Navigate to hear announcements...
-                                  </span>
-                              `}
+                          <div class="output-section">
+                              <sp-field-label for="screen-reader-output">
+                                  Screen reader output
+                              </sp-field-label>
+                              <sp-textfield
+                                  id="screen-reader-output"
+                                  multiline
+                                  readonly
+                                  rows="1"
+                                  placeholder="Navigate to hear announcements..."
+                                  .value=${this.screenReaderText}
+                              ></sp-textfield>
                           </div>
                       `
                     : ''}
                 ${this.isActive
                     ? html`
-                          <p class="status-text">
+                          <sp-help-text>
                               Use Tab or arrow keys to navigate. Focus changes
                               will be announced.
-                          </p>
+                          </sp-help-text>
                       `
                     : ''}
             </sp-theme>
