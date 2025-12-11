@@ -19,7 +19,7 @@ import {
     findVarContext,
     isSoloVarValue,
     shouldWrapLocalVar,
-} from './server.js';
+} from '../server.js';
 
 describe('server utilities', () => {
     describe('collectLocalVars', () => {
