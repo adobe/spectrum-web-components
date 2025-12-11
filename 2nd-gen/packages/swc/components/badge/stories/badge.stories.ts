@@ -41,16 +41,11 @@ argTypes.fixed = {
     options: [undefined, ...Badge.FIXED_VALUES],
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: Badge.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: Badge.VALID_SIZES,
+};
 
 args['default-slot'] = 'Badge';
 
