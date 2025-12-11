@@ -34,7 +34,6 @@ export function activate(ctx: vscode.ExtensionContext) {
             { language: 'css' },
             { language: 'scss' },
             { language: 'postcss' },
-            { language: 'html' },
             { language: 'javascript' },
             { language: 'typescript' },
         ],

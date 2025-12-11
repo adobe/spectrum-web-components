@@ -23,8 +23,8 @@ import { describe, expect, it } from 'vitest';
 import { TextEdit } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { getCompletions } from './server.js';
-import { TokenStore } from './tokens.js';
+import { getCompletions } from '../server.js';
+import { TokenStore } from '../tokens.js';
 
 /* -------------------------------------------------------------------------- */
 /*                               Test helpers                                 */

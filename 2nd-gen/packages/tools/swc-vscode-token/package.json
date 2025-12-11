@@ -31,7 +31,8 @@
         "onLanguage:css",
         "onLanguage:scss",
         "onLanguage:postcss",
-        "onLanguage:javascript"
+        "onLanguage:javascript",
+        "onLanguage:typescript"
     ],
     "scripts": {
         "tokens": "swc-tokens --outputType tokens --out ./tokens.json --prefix swc",
