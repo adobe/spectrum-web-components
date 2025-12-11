@@ -33,7 +33,9 @@
         "test:a11y:2nd": "playwright test --config=playwright.a11y.config.ts --project=2nd-gen",
         "test:a11y:report": "playwright show-report 2nd-gen/test/playwright-a11y/report",
         "test:1st-gen": "yarn workspace @spectrum-web-components/1st-gen test",
-        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test"
+        "test:2nd-gen": "yarn workspace @spectrum-web-components/2nd-gen test",
+        "tokens:test": "yarn workspace @adobe/swc-tokens test && yarn workspace @adobe/postcss-token test && yarn workspace swc-vscode-token test",
+        "tokens:update": "yarn tokens:test && yarn workspace swc-vscode-token tokens && yarn workspace @adobe/swc stylesheets"
     },
     "workspaces": [
         "1st-gen",

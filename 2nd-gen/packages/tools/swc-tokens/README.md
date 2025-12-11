@@ -12,6 +12,20 @@ An additional function, `lookupToken()`, is exported for use by `@adobe/postcss-
 - **Resolved value** – A final primitive value
 - **Custom property** – A CSS variable (`var(--swc-gray-500)`)
 
+## Upon Token Data Update
+
+> If you update either the `@adobe/spectrum-tokens` package version or modify custom tokens, you must do the following.
+
+Ensure tokens are updated in the dependent packages by running the following command at the _root level_ of the repo:
+
+```bash
+yarn tokens:update
+```
+
+This will first run all token related tests, then update the extension-relative `tokens.json` for `swc-vscode-token` and the library-relative `tokens.css` for `@adobe/swc`.
+
+If any test fails, the artifacts will not be generated, allowing you to investigate and fix any issues.
+
 ## Data Sources
 
 Design token data is sourced from [@adobe/spectrum-tokens](https://www.npmjs.com/package/@adobe/spectrum-tokens) and the original [/tokens/src](https://github.com/adobe/spectrum-design-data/tree/main/packages/tokens/src) files.
@@ -157,7 +171,7 @@ Without this structure, scaling tokens would not recompute correctly when applie
 
 ### Updating the Tokens Stylesheet
 
-If changes are made to the token data or processing, then you will need to navigate your terminal into `swc` and re-run `yarn` followed by `yarn stylesheets`. This will re-generate the tokens stylesheet.
+If changes are made to the token data or processing, see ["Upon Token Data Update"](#upon-token-data-update) for how to update dependent packages, which includes regenerating the tokens stylesheet.
 
 > Review stylesheet changes via git to ensure there are no regressions and that changes are expected.
 
@@ -258,4 +272,10 @@ Tests are set up using [Vitest](https://vitest.dev/guide/), located in `./tests`
 ```bash
 yarn test
 yarn test:watch
+```
+
+Additionally, you can run all token-package related tests at the _root level_ of the repo. This test command is also run at the start of `tokens:update`.
+
+```bash
+yarn tokens:test
 ```
