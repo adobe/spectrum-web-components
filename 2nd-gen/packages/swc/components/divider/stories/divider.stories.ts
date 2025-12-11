@@ -18,6 +18,8 @@ import { Divider } from '@adobe/swc/divider';
 
 import '@adobe/swc/divider';
 
+import { HorizontalContainer } from '../../../.storybook/decorators/utilities.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -83,9 +85,9 @@ export const Default: Story = {
  * The large divider should only be used for page titles or section titles.
  */
 export const Sizes: Story = {
-    render: () => html`
-        <div style="display: flex; flex-direction: row; gap: 16px;">
-            ${Divider.VALID_SIZES.map(
+    render: () =>
+        HorizontalContainer(
+            Divider.VALID_SIZES.map(
                 (size) => html`
                     <div>
                         <h3>
@@ -98,9 +100,9 @@ export const Sizes: Story = {
                         ${template({ size: size as DividerSize })}
                     </div>
                 `
-            )}
-        </div>
-    `,
+            ),
+            'var(--spectrum-spacing-200)'
+        ),
     tags: ['!dev'],
 };
 
@@ -111,13 +113,13 @@ export const Vertical: Story = {
     args: {
         vertical: true,
     },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; flex-direction: row; gap: 48px;">
-            ${Divider.VALID_SIZES.map((size) =>
+    render: (args: Record<string, unknown>) =>
+        HorizontalContainer(
+            Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
-            )}
-        </div>
-    `,
+            ),
+            'var(--spectrum-spacing-600)'
+        ),
     tags: ['!dev'],
 };
 
@@ -128,13 +130,12 @@ export const StaticBlack: Story = {
     args: {
         'static-color': 'black',
     },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
+    render: (args: Record<string, unknown>) =>
+        HorizontalContainer(
+            Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
-            )}
-        </div>
-    `,
+            )
+        ),
     tags: ['!dev'],
 };
 
@@ -142,12 +143,11 @@ export const StaticWhite: Story = {
     args: {
         'static-color': 'white',
     },
-    render: (args: Record<string, unknown>) => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            ${Divider.VALID_SIZES.map((size) =>
+    render: (args: Record<string, unknown>) =>
+        HorizontalContainer(
+            Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
-            )}
-        </div>
-    `,
+            )
+        ),
     tags: ['!dev'],
 };
