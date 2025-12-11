@@ -121,7 +121,7 @@ export const Sizes: Story = {
                 </swc-status-light>
             `
         )} `,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 0 },
     tags: ['options'],
 };
 
@@ -145,7 +145,7 @@ export const SemanticVariants: Story = {
                 >
             `
         )}`,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 1 },
     tags: ['options'],
 };
 
@@ -161,7 +161,7 @@ export const NonSemanticVariants: Story = {
                 >
             `
         )}`,
-    parameters: parameters,
+    parameters: { ...parameters, 'section-order': 2 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
