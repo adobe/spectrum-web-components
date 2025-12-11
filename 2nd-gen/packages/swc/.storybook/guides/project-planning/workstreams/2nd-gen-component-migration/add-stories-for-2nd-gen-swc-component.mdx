@@ -436,6 +436,54 @@ parameters: {
 | `'!test'`             | Exclude from visual regression tests    |
 | `'!dev'`              | Exclude from dev Storybook              |
 
+### Image assets
+
+When stories require placeholder images, use the [picsum.photos](https://picsum.photos/) API instead of local image assets. This keeps the repository lightweight and provides consistent, high-quality images.
+
+**Important: Use static IDs for VRT consistency**
+
+Always use static image IDs to ensure visual regression tests (VRTs) produce consistent snapshots. Random images cause false positives in VRT comparisons.
+
+```typescript
+// ✅ Good - static ID ensures consistent VRT snapshots
+'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar" />`
+
+// ❌ Bad - random image causes VRT failures
+'default-slot': `<img src="https://picsum.photos/80/80" alt="Random image" />`
+```
+
+**URL format:** `https://picsum.photos/id/{ID}/{WIDTH}/{HEIGHT}`
+
+**Recommended static IDs:**
+
+| ID  | Description        | Example URL                          |
+| --- | ------------------ | ------------------------------------ |
+| 64  | Portrait/avatar    | `https://picsum.photos/id/64/80/80`  |
+| 56  | Background/texture | `https://picsum.photos/id/56/80/80`  |
+| 823 | Person/profile     | `https://picsum.photos/id/823/80/80` |
+
+**Example usage** (from `asset.stories.ts`):
+
+```typescript
+const anatomyArgs = [
+    {
+        variant: 'file',
+        label: 'README.md',
+    },
+    {
+        label: 'User avatar',
+        'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+    },
+];
+
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+    `,
+    tags: ['anatomy'],
+};
+```
+
 ---
 
 ## Checklist
@@ -453,4 +501,5 @@ Before submitting:
 - [ ] All stories have JSDoc comments (except Playground)
 - [ ] All stories are accessible with meaningful content
 - [ ] Accessibility story documents features and best practices
+- [ ] Image assets use `picsum.photos` with static IDs for VRT consistency (if applicable)
 - [ ] usage.mdx uses `<SpectrumStories />` for each section
