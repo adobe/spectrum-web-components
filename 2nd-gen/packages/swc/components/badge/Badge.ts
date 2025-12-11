@@ -20,6 +20,7 @@ import {
     BADGE_VARIANTS_S2,
     BadgeBase,
     type BadgeVariantS2 as BadgeVariant,
+    VALID_SIZES,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -54,6 +55,11 @@ export class Badge extends BadgeBase {
      * @internal
      */
     static override readonly VARIANTS = BADGE_VARIANTS_S2;
+
+    /**
+     * @internal
+     */
+    static override readonly VALID_SIZES = VALID_SIZES;
 
     /**
      * The variant of the badge.
