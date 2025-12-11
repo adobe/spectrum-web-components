@@ -1,6 +1,7 @@
 import {
     Canvas,
     Description,
+    Story,
     Markdown,
     useOf,
 } from '@storybook/addon-docs/blocks';
@@ -24,28 +25,31 @@ export const SpectrumStories = ({
     tag?: string;
     hideTitle?: boolean;
 }) => {
-    const resolvedOf = useOf(of || 'meta', ['story', 'meta']);
+    const resolvedOf = useOf(of || 'meta', ['meta']);
 
     // Object.values() preserves insertion order (definition order in the file)
-    const taggedStories = Object.values(
-        resolvedOf.type === 'meta'
-            ? resolvedOf.csfFile.stories
-            : [resolvedOf.story]
-    ).filter((story: any) => story.tags?.includes(tag));
+    const taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
+        (story: any) => story.tags?.includes(tag)
+    );
 
     if (taggedStories.length === 0) {
         return null;
     }
 
-    return (
-        <>
-            {taggedStories.map((story: any) => (
-                <React.Fragment key={story.name}>
-                    {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
-                    <Description of={story.moduleExport} />
-                    <Canvas of={story.moduleExport} />
-                </React.Fragment>
-            ))}
-        </>
-    );
+    const canvasOptions = {
+        withToolbar: true,
+        sourceState: 'shown' as const,
+    };
+
+    const spectrumStories = taggedStories.map((story: any) => (
+        <React.Fragment key={story.name}>
+            {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
+            <Description of={story.moduleExport} />
+            <Canvas {...canvasOptions}>
+                <Story of={story.moduleExport} />
+            </Canvas>
+        </React.Fragment>
+    ));
+
+    return spectrumStories;
 };

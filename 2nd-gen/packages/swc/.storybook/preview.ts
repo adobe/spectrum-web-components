@@ -78,7 +78,6 @@ const preview = {
             },
             canvas: {
                 withToolbar: true,
-                sourceState: 'shown',
                 layout: 'centered',
             },
             source: {
