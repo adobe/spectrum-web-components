@@ -9575,7 +9575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner-coverage-v8@npm:^0.8.0":
+"@web/test-runner-coverage-v8@npm:0.8.0":
   version: 0.8.0
   resolution: "@web/test-runner-coverage-v8@npm:0.8.0"
   dependencies:
@@ -9585,6 +9585,19 @@ __metadata:
     picomatch: "npm:^2.2.2"
     v8-to-istanbul: "npm:^9.0.1"
   checksum: 10c0/ba6de6d646762d0b6ade857c78f61b24a86ee647b38d64f102c8f9597972001d3972d974b0fcc809510bbaff34976bad7141f9c7bd8177b52dda97667abac267
+  languageName: node
+  linkType: hard
+
+"@web/test-runner-coverage-v8@patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch":
+  version: 0.8.0
+  resolution: "@web/test-runner-coverage-v8@patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch::version=0.8.0&hash=e82263"
+  dependencies:
+    "@web/test-runner-core": "npm:^0.13.0"
+    istanbul-lib-coverage: "npm:^3.0.0"
+    lru-cache: "npm:^8.0.4"
+    picomatch: "npm:^2.2.2"
+    v8-to-istanbul: "npm:^9.0.1"
+  checksum: 10c0/191c2fdb4187518014a35f88f17c9ab20f22afa4c71a52947d0ec232cededcf14aee5bd99d04403390905f8bb8fbd06e9e923de5ec2a340434d5376779b878d4
   languageName: node
   linkType: hard
 
