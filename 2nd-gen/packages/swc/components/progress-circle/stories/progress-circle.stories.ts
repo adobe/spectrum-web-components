@@ -35,15 +35,11 @@ const { events, args, argTypes, template } = getStorybookHelpers(
 //     control: { type: 'range', min: 0, max: 100, step: 1 },
 // };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: ProgressCircle.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: ProgressCircle.VALID_SIZES,
+};
 
 argTypes['static-color'] = {
     ...argTypes['static-color'],
