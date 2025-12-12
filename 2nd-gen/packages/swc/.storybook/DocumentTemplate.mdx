@@ -22,8 +22,9 @@ import '@spectrum-web-components/tabs/sp-tab-panel.js';
 export const checkIsSingleStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
     const { stories } = resolvedOf.csfFile;
-    const visibleStories = Object.values(stories).filter((story) =>
-        story.tags?.includes('autodocs' || 'dev')
+    const visibleStories = Object.values(stories).filter(
+        (story) =>
+            story.tags?.includes('autodocs') || story.tags?.includes('dev')
     );
     return visibleStories.length === 1;
 };

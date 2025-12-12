@@ -33,8 +33,6 @@ export const SpectrumStories = ({
             : [resolvedOf.story]
     ).filter((story: any) => story.tags?.includes(tag));
 
-    console.log('taggedStories', taggedStories);
-
     // Sort by explicit order if provided, otherwise preserve current order
     taggedStories = taggedStories.sort((a: any, b: any) => {
         const aIndex = a.parameters['section-order'] ?? taggedStories.length;

@@ -94,6 +94,7 @@ export const Overview: Story = {
         label: 'Loading progress',
     },
 };
+
 // ──────────────────────────
 //    ANATOMY STORIES
 // ──────────────────────────

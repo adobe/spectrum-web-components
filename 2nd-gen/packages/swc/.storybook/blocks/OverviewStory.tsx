@@ -7,12 +7,11 @@ export const OverviewStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
 
     const primaryStory = Object.values(resolvedOf.csfFile.stories).find(
-        (story) => story.tags?.includes('static')
+        (story) => story.tags?.includes('overview')
     );
 
     if (!primaryStory) return null;
     primaryStory.args = null;
-    console.log('primaryStory', primaryStory);
 
     // Extract component name and create GitHub link
     const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
