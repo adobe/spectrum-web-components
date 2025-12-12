@@ -5,7 +5,7 @@ import {
     Markdown,
     useOf,
 } from '@storybook/addon-docs/blocks';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 /**
  * A block that renders all stories tagged with a specified tag from the component's stories file.
@@ -23,7 +23,6 @@ export const SpectrumStories = ({
     of?: any;
     tag?: string;
     hideTitle?: boolean;
-    order?: string[];
 }) => {
     const resolvedOf = useOf(of || 'meta', ['meta']);
 
@@ -48,19 +47,12 @@ export const SpectrumStories = ({
         return null;
     }
 
-    const canvasOptions = {
-        withToolbar: true,
-        sourceState: 'shown' as const,
-    };
-
     const spectrumStories = taggedStories.map((story: any) => (
-        <React.Fragment key={story.name}>
+        <Fragment key={story.name}>
             {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
             <Description of={story.moduleExport} />
-            <Canvas {...canvasOptions}>
-                <Story of={story.moduleExport} />
-            </Canvas>
-        </React.Fragment>
+            <Canvas of={story.moduleExport} />
+        </Fragment>
     ));
 
     return spectrumStories;

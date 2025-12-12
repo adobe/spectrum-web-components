@@ -3,16 +3,16 @@ import React from 'react';
 import type { ActionItem } from 'storybook/internal/components';
 import { formatComponentName } from '../helpers/index.js';
 
-export const StaticPrimaryStory = () => {
+export const OverviewStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
 
     const primaryStory = Object.values(resolvedOf.csfFile.stories).find(
-        (story) =>
-            story.name === 'Playground' || story.id.endsWith('--playground')
+        (story) => story.tags?.includes('static')
     );
 
     if (!primaryStory) return null;
     primaryStory.args = null;
+    console.log('primaryStory', primaryStory);
 
     // Extract component name and create GitHub link
     const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
@@ -74,15 +74,12 @@ export const StaticPrimaryStory = () => {
         });
     }
 
-    const canvasOptions = {
-        additionalActions,
-        withToolbar: false,
-        sourceState: 'none' as const,
-    };
-
     return (
-        <Canvas {...canvasOptions}>
-            <Story of={primaryStory.moduleExport} />
-        </Canvas>
+        <Canvas
+            of={primaryStory.moduleExport}
+            withToolbar={false}
+            additionalActions={additionalActions}
+            sourceState="none"
+        />
     );
 };

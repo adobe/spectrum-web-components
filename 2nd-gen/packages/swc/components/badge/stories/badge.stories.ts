@@ -119,7 +119,7 @@ const anatomyArgs = [
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+        ${anatomyArgs.map((anatomyArg) => template({ ...args, ...anatomyArg }))}
     `,
     parameters: parameters,
     tags: ['anatomy'],
@@ -138,11 +138,11 @@ export const Anatomy: Story = {
  * - **Extra-large (xl)**: Maximum visibility
  */
 export const Sizes: Story = {
-    render: () => html`
-        <swc-badge size="s">Small</swc-badge>
-        <swc-badge size="m">Medium</swc-badge>
-        <swc-badge size="l">Large</swc-badge>
-        <swc-badge size="xl">Extra-large</swc-badge>
+    render: (args) => html`
+        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
+        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
+        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
+        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
     `,
     parameters: { ...parameters, 'section-order': 0 },
     tags: ['options'],
@@ -158,12 +158,24 @@ export const Sizes: Story = {
  * - **Neutral**: archived, deleted, paused, draft, not started, ended
  */
 export const SemanticVariants: Story = {
-    render: () => html`
-        <swc-badge variant="positive">Approved</swc-badge>
-        <swc-badge variant="informative">Published</swc-badge>
-        <swc-badge variant="negative">Rejected</swc-badge>
-        <swc-badge variant="notice">Pending</swc-badge>
-        <swc-badge variant="neutral">Archived</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Published',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'Rejected',
+        })}
+        ${template({ ...args, variant: 'notice', 'default-slot': 'Pending' })}
+        ${template({ ...args, variant: 'neutral', 'default-slot': 'Archived' })}
     `,
     parameters: { ...parameters, 'section-order': 1 },
     tags: ['options'],
@@ -173,16 +185,24 @@ export const SemanticVariants: Story = {
  * When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
  */
 export const NonSemanticVariants: Story = {
-    render: () => html`
-        <swc-badge variant="seafoam">Design</swc-badge>
-        <swc-badge variant="indigo">Engineering</swc-badge>
-        <swc-badge variant="purple">Marketing</swc-badge>
-        <swc-badge variant="fuchsia">Sales</swc-badge>
-        <swc-badge variant="magenta">Support</swc-badge>
-        <swc-badge variant="yellow">Finance</swc-badge>
-        <swc-badge variant="chartreuse">Operations</swc-badge>
-        <swc-badge variant="celery">HR</swc-badge>
-        <swc-badge variant="cyan">Legal</swc-badge>
+    render: (args) => html`
+        ${template({ ...args, variant: 'seafoam', 'default-slot': 'Design' })}
+        ${template({
+            ...args,
+            variant: 'indigo',
+            'default-slot': 'Engineering',
+        })}
+        ${template({ ...args, variant: 'purple', 'default-slot': 'Marketing' })}
+        ${template({ ...args, variant: 'fuchsia', 'default-slot': 'Sales' })}
+        ${template({ ...args, variant: 'magenta', 'default-slot': 'Support' })}
+        ${template({ ...args, variant: 'yellow', 'default-slot': 'Finance' })}
+        ${template({
+            ...args,
+            variant: 'chartreuse',
+            'default-slot': 'Operations',
+        })}
+        ${template({ ...args, variant: 'celery', 'default-slot': 'HR' })}
+        ${template({ ...args, variant: 'cyan', 'default-slot': 'Legal' })}
     `,
     parameters: { ...parameters, 'section-order': 2 },
     tags: ['options'],
@@ -199,12 +219,37 @@ export const Outline: Story = {
             options: Badge.VARIANTS_SEMANTIC,
         },
     },
-    render: () => html`
-        <swc-badge variant="positive" outline>Approved</swc-badge>
-        <swc-badge variant="informative" outline>Published</swc-badge>
-        <swc-badge variant="negative" outline>Rejected</swc-badge>
-        <swc-badge variant="notice" outline>Pending</swc-badge>
-        <swc-badge variant="neutral" outline>Archived</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            outline: true,
+            'default-slot': 'Approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            outline: true,
+            'default-slot': 'Published',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            outline: true,
+            'default-slot': 'Rejected',
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            outline: true,
+            'default-slot': 'Pending',
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            outline: true,
+            'default-slot': 'Archived',
+        })}
     `,
     parameters: { ...parameters, 'section-order': 3 },
     tags: ['options'],
@@ -214,14 +259,49 @@ export const Outline: Story = {
  * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
  */
 export const Subtle: Story = {
-    render: () => html`
-        <swc-badge variant="positive" subtle>Approved</swc-badge>
-        <swc-badge variant="informative" subtle>Published</swc-badge>
-        <swc-badge variant="negative" subtle>Rejected</swc-badge>
-        <swc-badge variant="notice" subtle>Pending</swc-badge>
-        <swc-badge variant="neutral" subtle>Archived</swc-badge>
-        <swc-badge variant="seafoam" subtle>Design</swc-badge>
-        <swc-badge variant="indigo" subtle>Engineering</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            subtle: true,
+            'default-slot': 'Approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            subtle: true,
+            'default-slot': 'Published',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            subtle: true,
+            'default-slot': 'Rejected',
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            subtle: true,
+            'default-slot': 'Pending',
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            subtle: true,
+            'default-slot': 'Archived',
+        })}
+        ${template({
+            ...args,
+            variant: 'seafoam',
+            subtle: true,
+            'default-slot': 'Design',
+        })}
+        ${template({
+            ...args,
+            variant: 'indigo',
+            subtle: true,
+            'default-slot': 'Engineering',
+        })}
     `,
     parameters: { ...parameters, 'section-order': 4 },
     tags: ['options'],
@@ -231,11 +311,27 @@ export const Subtle: Story = {
  * Badge can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
  */
 export const Fixed: Story = {
-    render: () => html`
-        <swc-badge fixed="block-start">Top edge</swc-badge>
-        <swc-badge fixed="block-end">Bottom edge</swc-badge>
-        <swc-badge fixed="inline-start">Left edge</swc-badge>
-        <swc-badge fixed="inline-end">Right edge</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            fixed: 'block-start',
+            'default-slot': 'Top edge',
+        })}
+        ${template({
+            ...args,
+            fixed: 'block-end',
+            'default-slot': 'Bottom edge',
+        })}
+        ${template({
+            ...args,
+            fixed: 'inline-start',
+            'default-slot': 'Left edge',
+        })}
+        ${template({
+            ...args,
+            fixed: 'inline-end',
+            'default-slot': 'Right edge',
+        })}
     `,
     parameters: { ...parameters, 'section-order': 5 },
     tags: ['options'],
@@ -249,10 +345,13 @@ export const Fixed: Story = {
  * When a badge's label is too long for the available horizontal space, it wraps to form another line. Text wrapping can be enforced when a `max-inline-size` is applied to the badge.
  */
 export const TextWrapping: Story = {
-    render: () => html`
-        <swc-badge variant="informative" style="max-inline-size: 120px">
-            Document review pending approval from manager
-        </swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Document review pending approval from manager',
+            style: 'max-inline-size: 120px',
+        })}
     `,
     tags: ['behaviors'],
 };
@@ -276,16 +375,41 @@ export const TextWrapping: Story = {
  * - Avoid using badges for interactive elements; consider using buttons, tags, or links instead
  */
 export const Accessibility: Story = {
-    render: () => html`
-        <swc-badge variant="positive">approved</swc-badge>
-        <swc-badge variant="negative">rejected</swc-badge>
-        <swc-badge variant="notice">needs approval</swc-badge>
-        <swc-badge variant="informative">new feature</swc-badge>
-        <swc-badge variant="neutral">version 1.2.10</swc-badge>
-        <swc-badge variant="celery">available</swc-badge>
-        <swc-badge variant="yellow">busy</swc-badge>
-        <swc-badge variant="silver">out of office</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'rejected',
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            'default-slot': 'needs approval',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'new feature',
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            'default-slot': 'version 1.2.10',
+        })}
+        ${template({ ...args, variant: 'celery', 'default-slot': 'available' })}
+        ${template({ ...args, variant: 'yellow', 'default-slot': 'busy' })}
+        ${template({
+            ...args,
+            variant: 'silver',
+            'default-slot': 'out of office',
+        })}
     `,
+    parameters: parameters,
     tags: ['a11y'],
 };
 

@@ -83,10 +83,11 @@ const preview = {
             canvas: {
                 withToolbar: true,
                 layout: 'centered',
+                // sourceState: 'shown',
             },
             source: {
                 excludeDecorators: true,
-                type: 'dynamic',
+                type: 'auto',
                 language: 'html',
             },
         },

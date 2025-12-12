@@ -84,6 +84,17 @@ export const Playground: Story = {
 };
 
 // ──────────────────────────
+//    STATIC STORIES
+// ──────────────────────────
+
+export const Overview: Story = {
+    tags: ['overview'],
+    args: {
+        progress: 50,
+        label: 'Loading progress',
+    },
+};
+// ──────────────────────────
 //    ANATOMY STORIES
 // ──────────────────────────
 
