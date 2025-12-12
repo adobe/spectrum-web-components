@@ -473,8 +473,8 @@ export async function generateCSS(prefix, debug = false) {
             if (value.desktop && value.mobile) {
                 write(
                     name,
-                    `var(--spectrum-theme--sizeM, ${value.desktop})
-                var(--spectrum-theme--sizeL, ${value.mobile})`,
+                    `var(--${prefix}-theme--sizeM, ${value.desktop})
+                var(--${prefix}-theme--sizeL, ${value.mobile})`,
                     scaling
                 );
             }
@@ -501,7 +501,7 @@ export async function generateCSS(prefix, debug = false) {
 ${nonScaling.join('\n')}
 }
 
-:root, .spectrum-theme {
+:root, .swc-theme {
 ${scaling.join('\n')}
 }`.trim();
 }

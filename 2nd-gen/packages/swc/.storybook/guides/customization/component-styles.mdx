@@ -79,7 +79,7 @@ For brand-specific reasons, you may need to override design tokens at a global a
 
 It is strongly encouraged to re-assign color values to existing Spectrum color tokens which have the built-in capability to adapt to light and dark theme contexts.
 
-For scaling values, you will need to provide both the medium and large values, even if only one value has been revised. Scaling values need to be attached to both `:root` and `.spectrum-theme` to continue successfully supporting dynamic scaling.
+For scaling values, you will need to provide both the medium and large values, even if only one value has been revised. Scaling values need to be attached to both `:root` and `.swc-theme` to continue successfully supporting dynamic scaling.
 
 Overrides should be included after the [main library stylesheet](docs/guides-customization-getting-started--docs), which allows overrides to work via the natural CSS cascade.
 
@@ -93,8 +93,8 @@ Overrides should be included after the [main library stylesheet](docs/guides-cus
 
 /* Overrides for scaling values */
 :root,
-.spectrum-theme {
-    --swc-avatar-size-400: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 48px);
+.swc-theme {
+    --swc-avatar-size-400: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 48px);
 }
 ```

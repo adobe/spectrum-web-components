@@ -18,11 +18,11 @@ Preview component theme color changes via the top toolbar.
 
 ### Theme classes
 
-You can change your application - or a section or element - to an alternate theme by including both the `spectrum-theme` class and a theme class.
+You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a theme class.
 
-- `.spectrum-theme--dark` - sets `color-scheme: dark`
-- `.spectrum-theme--light` - sets `color-scheme: light`
-- `.spectrum-theme--adaptive` - sets `color-scheme: light dark`, adapts to user's OS setting
+- `.swc-theme--dark` - sets `color-scheme: dark`
+- `.swc-theme--light` - sets `color-scheme: light`
+- `.swc-theme--adaptive` - sets `color-scheme: light dark`, adapts to user's OS setting
 
 ### Theme examples
 
@@ -31,14 +31,14 @@ You can change your application - or a section or element - to an alternate them
 <html></html>
 
 <!-- Dark app theme -->
-<html class="spectrum-theme spectrum-theme--dark"></html>
+<html class="swc-theme swc-theme--dark"></html>
 
 <!-- Adaptive app theme -->
-<html class="spectrum-theme spectrum-theme--adaptive"></html>
+<html class="swc-theme swc-theme--adaptive"></html>
 
 <!-- Nested theme switching -->
-<div class="spectrum-theme spectrum-theme--dark">
-    <div class="spectrum-theme spectrum-theme--light"></div>
+<div class="swc-theme swc-theme--dark">
+    <div class="swc-theme swc-theme--light"></div>
 </div>
 ```
 
@@ -52,10 +52,10 @@ Preview component scale changes via the top toolbar.
 
 ### Scale classes
 
-You can change your application - or a section or element - to an alternate theme by including both the `spectrum-theme` class and a scale class.
+You can change your application - or a section or element - to an alternate theme by including both the `swc-theme` class and a scale class.
 
-- `.spectrum-theme--sizeM` - use the medium scale
-- `.spectrum-theme--sizeL` - use the large scale
+- `.swc-theme--sizeM` - use the medium scale
+- `.swc-theme--sizeL` - use the large scale
 
 See the examples for you can also change the scale responsively.
 
@@ -68,11 +68,11 @@ Option one is to alter scale appearance via classes.
 <html></html>
 
 <!-- Large app theme -->
-<html class="spectrum-theme spectrum-theme--sizeL"></html>
+<html class="swc-theme swc-theme--sizeL"></html>
 
 <!-- Nested scale switching -->
-<div class="spectrum-theme spectrum-theme--sizeL">
-    <div class="spectrum-theme spectrum-theme--sizeM"></div>
+<div class="swc-theme swc-theme--sizeL">
+    <div class="swc-theme swc-theme--sizeM"></div>
 </div>
 ```
 
@@ -82,27 +82,27 @@ Alternatively, you can switch the scale context within a media query for the ent
 /* Swap entire app to Large below 600px breakpoint */
 @media (max-width: 600px) {
     :root,
-    .spectrum-theme {
-        --spectrum-theme-size: var(--spectrum-theme--sizeL);
+    .swc-theme {
+        --swc-theme-size: var(--swc-theme--sizeL);
     }
 }
 ```
 
-You can also do this per a custom class (or other selector) for a section or specific element, but **this requires** inclusion of the `spectrum-theme` class on the targeted element. This enables changing the scale via any valid CSS selector and querying method.
+You can also do this per a custom class (or other selector) for a section or specific element, but **this requires** inclusion of the `swc-theme` class on the targeted element. This enables changing the scale via any valid CSS selector and querying method.
 
 ```css
-/* .my-section-large must also have the class .spectrum-theme */
+/* .my-section-large must also have the class .swc-theme */
 .my-section-large {
     @container (inline-size < 30ch) {
-        --spectrum-theme-size: var(--spectrum-theme--sizeL);
+        --swc-theme-size: var(--swc-theme--sizeL);
     }
 }
 
 /* Also available for extension inside custom elements
-<custom-element> must also have the class .spectrum-theme */
+<custom-element> must also have the class .swc-theme */
 @container (inline-size < 30ch) {
     :host {
-        --spectrum-theme-size: var(--spectrum-theme--sizeL);
+        --swc-theme-size: var(--swc-theme--sizeL);
     }
 }
 ```
@@ -114,11 +114,10 @@ Dynamic scaling is available via all provided design tokens which include values
 These are processed into a format like the following:
 
 ```css
---swc-font-size-100: var(--spectrum-theme--sizeM, 14px)
-    var(--spectrum-theme--sizeL, 17px);
+--swc-font-size-100: var(--swc-theme--sizeM, 14px) var(--swc-theme--sizeL, 17px);
 ```
 
-Due to a bit of CSS magic relying on [cyclic dependency toggles](https://kizu.dev/cyclic-toggles/), the value that corresponds with the current value of `--spectrum-theme` is what becomes the computed value.
+Due to a bit of CSS magic relying on [cyclic dependency toggles](https://kizu.dev/cyclic-toggles/), the value that corresponds with the current value of `--swc-theme` is what becomes the computed value.
 
 ### Setting up custom dynamic scaling values
 
@@ -128,7 +127,6 @@ In this example, the value `1rem` will be used for the medium scale, and the val
 
 ```css
 .element {
-    margin-block: var(--spectrum-theme--sizeM, 1rem)
-        var(--spectrum-theme--sizeL, 1.25rem);
+    margin-block: var(--swc-theme--sizeM, 1rem) var(--swc-theme--sizeL, 1.25rem);
 }
 ```
