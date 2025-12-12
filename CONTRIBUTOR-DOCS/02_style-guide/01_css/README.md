@@ -11,7 +11,11 @@
 <details open>
 <summary><strong>Beneath this doc</strong></summary>
 
-- [Custom Properties](01_custom-properties.md)
+- [Component CSS](01_component-css.md)
+- [Custom Properties](02_custom-properties.md)
+- [Component CSS PR Checklist](03_component-css-pr-checklist.md)
+- [Spectrum CSS to SWC Migration](04_spectrum-swc-migration.md)
+- [Styling Anti-Patterns (What to Avoid)](05_anti-patterns.md)
 
 </details>
 
