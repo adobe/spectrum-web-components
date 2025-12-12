@@ -16,8 +16,9 @@
 - [Component Custom Property Exposure](#component-custom-property-exposure)
     - [Internal vs. Exposed vs. Static](#internal-vs-exposed-vs-static)
     - [Decision Tree for Exposure](#decision-tree-for-exposure)
-- [Selector Conventions](#selector-conventions)
     - [Exclusions for Custom Property Overrides](#exclusions-for-custom-property-overrides)
+- [Selector Conventions](#selector-conventions)
+    - [Variant Selectors and Inheritance](#variant-selectors-and-inheritance)
 - [Using `token()`](#using-token)
     - [Troubleshooting `token()`](#troubleshooting-token)
 - [Adding Global Tokens](#adding-global-tokens)
@@ -45,7 +46,7 @@ This guide explains how to manage **private, internal, and exposed custom proper
 - Not directly overrideable by consumers
 
 ```css
-.spectrum-Button {
+.swc-Button {
     --_swc-button-background-color: /* value */;
 }
 ```
@@ -56,10 +57,14 @@ _*"partially" due to possible eventual exposure when we introduce parts_
 
 ## Component Custom Property Exposure
 
+**Selector choice encodes API intent**: exposed properties are modified via `:host()`, while internal-only behavior is implemented with internal class selectors.
+
 - Only expose component properties when needed by the component itself or for passthrough (nested) styling
 - Exposed singularly based on CSS *property type*, and no longer based on states or variants
+    - This distinction directly affects which selector type is used (`:host()` vs internal class selectors). See [Variant Selectors and Inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance).
 - May be exposed via inclusion in private property, or inline with CSS property
     - Include in private property if value has repeated usage throughout base (non-variant) component styles
+- In migrated components, legacy `--mod-* `properties should not be preserved; instead, collapse the chain into a single component-level property.
 
 ### Internal vs. Exposed vs. Static
 
@@ -69,16 +74,18 @@ _*"partially" due to possible eventual exposure when we introduce parts_
 | Exposed  | Allows consumer overrides | `--swc-button-font-size`      |
 | Static   | Non-tokenized, fixed CSS  | `display: inline-flex`        |
 
+Static properties are not part of the customization surface and are not expected to change across variants, states, or contexts.
+
 ```css
-.spectrum-Button {
+.swc-Button {
     /* Changes per size variant = exposed */
-    font-size: var(--spectrum-button-font-size, token('font-size-200'));
+    font-size: var(--swc-button-font-size, token('font-size-200'));
     
     /* Changes per size variant = exposed,
        Multi-value definition = private */
     --_button-padding-block:  
         token('component-top-to-text-100') token('component-bottom-to-text-100');
-    padding-block: var(--spectrum-button-padding-block, 
+    padding-block: var(--swc-button-padding-block, 
                         var(--_button-padding-block));
     
     /* Does not change = internal
@@ -91,14 +98,14 @@ _*"partially" due to possible eventual exposure when we introduce parts_
 
 /* Library style for component "large" variant via :host() selector to maintain consumer override capability */
 :host([size="l"]) {
-    --spectrum-button-font-size: token('font-size-400');
-    --spectrum-button-padding-block: 
+    --swc-button-font-size: token('font-size-400');
+    --swc-button-padding-block: 
         token('component-top-to-text-200') token('component-bottom-to-text-200');
 }
 
 /* Consumer override */
 sp-button[size="l"] {
-    --spectrum-button-font-size: var(--spectrum-font-size-500);
+    --swc-button-font-size: var(--swc-font-size-500);
 }
 ```
 
@@ -115,6 +122,26 @@ flowchart TD
 ```
 
 > For **nested component relationships**, expose only if dependent on the base library and _not_ legacy consumer customization.
+
+For examples of exposed vs internal properties applied via selectors, see:
+- [Selector Conventions](#selector-conventions)
+- [Variant Selectors and Inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance)
+
+### Exclusions for Custom Property Overrides
+
+There are some exclusions as to what should be exposed for overrides:
+
+- color properties for static white and static black variants
+    - ensures intent of color contrast
+- color properties when tied to non-semantic color palette variants
+    - *example*: the `magenta` variant of Badge
+    - consumers will be encouraged to instead add a global override to re-assign those color values instead
+- certain geometric variants (e.g. fixed-edge Badge) intentionally override exposed properties, such as corner radius
+- properties modified for forced-colors mode
+    - ensures forced-colors related overrides take precedence over consumer overrides for base component
+    - forced-colors overrides are applied at the end of the component stylesheet. See the forced-colors section in the [Component CSS Style Guide](01_component-css.md).
+
+Use internal selectors (ex. `.swc-Badge--magenta` ) to pass library overrides for these exclusions.
 
 ## Selector Conventions
 
@@ -134,19 +161,9 @@ swc-button[aria-expanded]
 swc-button:focus-visible
 ```
 
-### Exclusions for Custom Property Overrides
+### Variant Selectors and Inheritance
 
-There are some exclusions as to what should be exposed for overrides:
-
-- color properties for static white and static black variants
-    - ensures intent of color contrast
-- color properties when tied to non-semantic color palette variants
-    - *example*: the `magenta` variant of Badge
-    - consumers will be encouraged to instead add a global override to re-assign those color values instead
-- properties modified for forced-colors mode
-    - ensures forced-colors related overrides take precedence over consumer overrides for base component
-
-Use internal selectors (ex. `.spectrum-Badge--magenta` ) to pass library overrides for these exclusions.
+Refer to the [Component CSS Style Guide](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance) for more details about variant selectors and how they are impacted by custom property inheritance.
 
 ## Using `token()`
 
@@ -157,7 +174,7 @@ Use internal selectors (ex. `.spectrum-Badge--magenta` ) to pass library overrid
 Use of `token()`  in CSS values such as the following:
 
 ```css
-.spectrum-Button {
+.swc-Button {
     background-color: token('accent-background-color-default');
 }
 ```
@@ -165,7 +182,7 @@ Use of `token()`  in CSS values such as the following:
 Will be transformed at build time into valid CSS values:
 
 ```css
-.spectrum--Button {
+.swc-Button {
     background-color: var(--swc-accent-background-color-default);
 }
 ```
