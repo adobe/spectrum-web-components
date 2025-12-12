@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Accessbility Guide](README.md) / Accessible pattern libraries
+[CONTRIBUTOR-DOCS](../README.md) / [Accessibility Guide](README.md) / Accessible pattern libraries
 
 <!-- Document title (editable) -->
 

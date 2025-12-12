@@ -1,5 +1,5 @@
 /*!
- * Copyright 2024 Adobe. All rights reserved.
+ * Copyright 2025 Adobe. All rights reserved.
  *
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -12,569 +12,112 @@
  */
 
 :host {
-    display: inline-flex;
-}
+    display: inline-block;
+    vertical-align: middle;
+    align-self: start;
 
-.spectrum-Badge {
-    --spectrum-badge-border-width: var(--spectrum-border-width-200);
-    --spectrum-badge-border-color: transparent;
-    --spectrum-badge-line-height: var(--spectrum-line-height-100);
-    --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
-    --spectrum-badge-font-weight: var(--spectrum-medium-font-weight);
-    --spectrum-badge-label-icon-color: var(--spectrum-white);
-    --spectrum-badge-background-color-default: var(
-        --spectrum-neutral-subdued-background-color-default
-    );
-    --spectrum-badge-background-color-accent: var(
-        --spectrum-accent-background-color-default
-    );
-    --spectrum-badge-background-color-informative: var(
-        --spectrum-informative-background-color-default
-    );
-    --spectrum-badge-background-color-negative: var(
-        --spectrum-negative-background-color-default
-    );
-    --spectrum-badge-background-color-positive: var(
-        --spectrum-positive-background-color-default
-    );
-    --spectrum-badge-background-color-notice: var(
-        --spectrum-notice-background-color-default
-    );
-    --spectrum-badge-background-color-gray: var(
-        --spectrum-gray-background-color-default
-    );
-    --spectrum-badge-background-color-red: var(
-        --spectrum-red-background-color-default
-    );
-    --spectrum-badge-background-color-orange: var(
-        --spectrum-orange-background-color-default
-    );
-    --spectrum-badge-background-color-yellow: var(
-        --spectrum-yellow-background-color-default
-    );
-    --spectrum-badge-background-color-chartreuse: var(
-        --spectrum-chartreuse-background-color-default
-    );
-    --spectrum-badge-background-color-celery: var(
-        --spectrum-celery-background-color-default
-    );
-    --spectrum-badge-background-color-green: var(
-        --spectrum-green-background-color-default
-    );
-    --spectrum-badge-background-color-seafoam: var(
-        --spectrum-seafoam-background-color-default
-    );
-    --spectrum-badge-background-color-cyan: var(
-        --spectrum-cyan-background-color-default
-    );
-    --spectrum-badge-background-color-blue: var(
-        --spectrum-blue-background-color-default
-    );
-    --spectrum-badge-background-color-indigo: var(
-        --spectrum-indigo-background-color-default
-    );
-    --spectrum-badge-background-color-purple: var(
-        --spectrum-purple-background-color-default
-    );
-    --spectrum-badge-background-color-fuchsia: var(
-        --spectrum-fuchsia-background-color-default
-    );
-    --spectrum-badge-background-color-magenta: var(
-        --spectrum-magenta-background-color-default
-    );
-    --spectrum-badge-background-color-pink: var(
-        --spectrum-pink-background-color-default
-    );
-    --spectrum-badge-background-color-turquoise: var(
-        --spectrum-turquoise-background-color-default
-    );
-    --spectrum-badge-background-color-brown: var(
-        --spectrum-brown-background-color-default
-    );
-    --spectrum-badge-background-color-cinnamon: var(
-        --spectrum-cinnamon-background-color-default
-    );
-    --spectrum-badge-background-color-silver: var(
-        --spectrum-silver-background-color-default
-    );
-    --spectrum-badge-subtle-label-icon-color: var(--spectrum-gray-1000);
-    --spectrum-badge-subtle-background-color-default: var(
-        --spectrum-neutral-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-accent: var(
-        --spectrum-accent-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-informative: var(
-        --spectrum-informative-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-negative: var(
-        --spectrum-negative-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-positive: var(
-        --spectrum-positive-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-notice: var(
-        --spectrum-notice-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-gray: var(
-        --spectrum-gray-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-red: var(
-        --spectrum-red-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-orange: var(
-        --spectrum-orange-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-yellow: var(
-        --spectrum-yellow-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-chartreuse: var(
-        --spectrum-chartreuse-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-celery: var(
-        --spectrum-celery-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-green: var(
-        --spectrum-green-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-seafoam: var(
-        --spectrum-seafoam-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-cyan: var(
-        --spectrum-cyan-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-blue: var(
-        --spectrum-blue-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-indigo: var(
-        --spectrum-indigo-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-purple: var(
-        --spectrum-purple-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-fuchsia: var(
-        --spectrum-fuchsia-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-magenta: var(
-        --spectrum-magenta-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-pink: var(
-        --spectrum-pink-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-turquoise: var(
-        --spectrum-turquoise-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-brown: var(
-        --spectrum-brown-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-cinnamon: var(
-        --spectrum-cinnamon-subtle-background-color-default
-    );
-    --spectrum-badge-subtle-background-color-silver: var(
-        --spectrum-silver-subtle-background-color-default
-    );
-    --spectrum-badge-outline-label-icon-color: var(--spectrum-gray-1000);
-    --spectrum-badge-outline-background-color: var(
-        --spectrum-background-layer-2-color
-    );
-    --spectrum-badge-outline-border-color-neutral: var(
-        --spectrum-neutral-visual-color
-    );
-    --spectrum-badge-outline-border-color-accent: var(
-        --spectrum-accent-visual-color
-    );
-    --spectrum-badge-outline-border-color-informative: var(
-        --spectrum-informative-visual-color
-    );
-    --spectrum-badge-outline-border-color-negative: var(
-        --spectrum-negative-visual-color
-    );
-    --spectrum-badge-outline-border-color-notice: var(
-        --spectrum-notice-visual-color
-    );
-    --spectrum-badge-outline-border-color-positive: var(
-        --spectrum-positive-visual-color
-    );
-    --spectrum-badge-corner-radius: var(
-        --spectrum-corner-radius-medium-size-medium
-    );
-    --spectrum-badge-height: var(--spectrum-component-height-100);
-    --spectrum-badge-font-size: var(--spectrum-font-size-100);
-    --spectrum-badge-label-spacing-vertical-top: var(
-        --spectrum-component-top-to-text-100
-    );
-    --spectrum-badge-label-spacing-vertical-bottom: var(
-        --spectrum-component-bottom-to-text-100
-    );
-    --spectrum-badge-label-spacing-horizontal: var(
-        --spectrum-component-edge-to-text-100
-    );
-    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-100);
-    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-100);
-    --spectrum-badge-icon-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-100
-    );
-    --spectrum-badge-icon-spacing-vertical-top: var(
-        --spectrum-component-top-to-workflow-icon-100
-    );
-    --spectrum-badge-icon-only-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-only-100
-    );
-    --highcontrast-badge-border-color: CanvasText;
-}
-
-.spectrum-Badge--celery,
-.spectrum-Badge--chartreuse,
-.spectrum-Badge--notice,
-.spectrum-Badge--orange,
-.spectrum-Badge--yellow {
-    --spectrum-badge-label-icon-color: var(--spectrum-black);
-}
-
-.spectrum-Badge--sizeS {
-    --spectrum-badge-corner-radius: var(
-        --spectrum-corner-radius-medium-size-small
-    );
-    --spectrum-badge-height: var(--spectrum-component-height-75);
-    --spectrum-badge-font-size: var(--spectrum-font-size-75);
-    --spectrum-badge-label-spacing-vertical-top: var(
-        --spectrum-component-top-to-text-75
-    );
-    --spectrum-badge-label-spacing-vertical-bottom: var(
-        --spectrum-component-bottom-to-text-75
-    );
-    --spectrum-badge-label-spacing-horizontal: var(
-        --spectrum-component-edge-to-text-75
-    );
-    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-75);
-    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-75);
-    --spectrum-badge-icon-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-75
-    );
-    --spectrum-badge-icon-spacing-vertical-top: var(
-        --spectrum-component-top-to-workflow-icon-75
-    );
-    --spectrum-badge-icon-only-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-only-75
-    );
-}
-
-.spectrum-Badge--sizeL {
-    --spectrum-badge-corner-radius: var(
-        --spectrum-corner-radius-medium-size-large
-    );
-    --spectrum-badge-height: var(--spectrum-component-height-100);
-    --spectrum-badge-font-size: var(--spectrum-font-size-200);
-    --spectrum-badge-label-spacing-vertical-top: var(
-        --spectrum-component-top-to-text-200
-    );
-    --spectrum-badge-label-spacing-vertical-bottom: var(
-        --spectrum-component-bottom-to-text-200
-    );
-    --spectrum-badge-label-spacing-horizontal: var(
-        --spectrum-component-edge-to-text-200
-    );
-    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-200);
-    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-200);
-    --spectrum-badge-icon-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-200
-    );
-    --spectrum-badge-icon-spacing-vertical-top: var(
-        --spectrum-component-top-to-workflow-icon-200
-    );
-    --spectrum-badge-icon-only-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-only-200
-    );
-}
-
-.spectrum-Badge--sizeXL {
-    --spectrum-badge-corner-radius: var(
-        --spectrum-corner-radius-medium-size-extra-large
-    );
-    --spectrum-badge-height: var(--spectrum-component-height-100);
-    --spectrum-badge-font-size: var(--spectrum-font-size-300);
-    --spectrum-badge-label-spacing-vertical-top: var(
-        --spectrum-component-top-to-text-300
-    );
-    --spectrum-badge-label-spacing-vertical-bottom: var(
-        --spectrum-component-bottom-to-text-300
-    );
-    --spectrum-badge-label-spacing-horizontal: var(
-        --spectrum-component-edge-to-text-300
-    );
-    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-300);
-    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-300);
-    --spectrum-badge-icon-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-300
-    );
-    --spectrum-badge-icon-spacing-vertical-top: var(
-        --spectrum-component-top-to-workflow-icon-300
-    );
-    --spectrum-badge-icon-only-spacing-horizontal: var(
-        --spectrum-component-edge-to-visual-only-300
-    );
-}
-
-@media (forced-colors: active) {
-    .spectrum-Badge {
-        border-color: var(--highcontrast-badge-border-color);
+    > * {
+        box-sizing: border-box;
     }
 }
 
 .spectrum-Badge {
-    min-block-size: var(--spectrum-badge-height);
-    inline-size: auto;
+    --_swc-badge-border-width: token('border-width-200');
+    --_swc-badge-border-width-deduction: calc(
+        var(--_swc-badge-border-width) * 2
+    );
+    --_swc-badge-padding-block: token('component-top-to-text-100')
+        token('component-bottom-to-text-100');
+
     display: inline-flex;
-    vertical-align: middle;
-    position: relative;
+    align-items: center;
     cursor: default;
-    border: var(--spectrum-badge-border-width) solid
-        var(--spectrum-badge-border-color);
-    border-radius: var(--spectrum-badge-corner-radius);
-    background: var(--spectrum-badge-background-color-default);
-    color: var(--spectrum-badge-label-icon-color);
-    background-origin: border-box;
-    align-self: start;
+    min-block-size: var(--swc-badge-height, token('component-height-100'));
+    border-radius: var(
+        --swc-badge-corner-radius,
+        token('corner-radius-medium-size-medium')
+    );
+    border: var(--_swc-badge-border-width) solid
+        var(--swc-badge-border-color, transparent);
+    background: var(
+        --swc-badge-background-color,
+        token('accent-background-color-default')
+    );
+    color: var(--swc-badge-label-icon-color, token('white'));
+    gap: var(--swc-badge-gap, token('text-to-visual-100'));
+    padding-inline: calc(
+        var(--swc-badge-padding-inline, token('component-edge-to-text-100')) -
+            var(--_swc-badge-border-width-deduction)
+    );
+    padding-block: calc(
+        var(--swc-badge-padding-block, var(--_swc-badge-padding-block)) -
+            var(--_swc-badge-border-width-deduction)
+    );
 }
 
-.spectrum-Badge--neutral {
-    background: var(--spectrum-badge-background-color-default);
+.spectrum-Badge:has(.spectrum-Badge-icon) {
+    --swc-badge-padding-inline: var(
+        --swc-badge-with-icon-padding-inline,
+        token('component-edge-to-visual-100')
+    );
 }
 
-.spectrum-Badge--accent {
-    background: var(--spectrum-badge-background-color-accent);
+.spectrum-Badge-label {
+    font-size: var(--swc-badge-font-size, token('font-size-100'));
+    font-weight: token('medium-font-weight');
+    line-height: var(--swc-badge-line-height, token('line-height-100'));
+
+    &:lang(ja),
+    &:lang(zh),
+    &:lang(ko) {
+        --swc-badge-line-height: token('cjk-line-height-100');
+    }
 }
 
-.spectrum-Badge--informative {
-    background: var(--spectrum-badge-background-color-informative);
+.spectrum-Badge-icon {
+    --_swc-badge-icon-size: token('workflow-icon-size-100');
+
+    block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
+    inline-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
+    flex-shrink: 0;
+    display: grid;
+    place-content: center;
 }
 
-.spectrum-Badge--negative {
-    background: var(--spectrum-badge-background-color-negative);
+:host([size='s']) {
+    --swc-badge-height: token('component-height-75');
+    --swc-badge-corner-radius: token('corner-radius-medium-size-small');
+    --swc-badge-gap: token('text-to-visual-75');
+    --swc-badge-padding-inline: token('component-edge-to-text-75');
+    --swc-badge-with-icon-padding-inline: token('component-edge-to-visual-75');
+    --swc-badge-padding-block: token('component-top-to-text-75')
+        token('component-bottom-to-text-75');
+    --swc-badge-font-size: token('font-size-75');
+    --swc-badge-icon-size: token('workflow-icon-size-75');
 }
 
-.spectrum-Badge--positive {
-    background: var(--spectrum-badge-background-color-positive);
+:host([size='l']) {
+    --swc-badge-height: token('component-height-200');
+    --swc-badge-corner-radius: token('corner-radius-medium-size-large');
+    --swc-badge-gap: token('text-to-visual-200');
+    --swc-badge-padding-inline: token('component-edge-to-text-200');
+    --swc-badge-with-icon-padding-inline: token('component-edge-to-visual-200');
+    --swc-badge-padding-block: token('component-top-to-text-200')
+        token('component-bottom-to-text-200');
+    --swc-badge-font-size: token('font-size-200');
+    --swc-badge-icon-size: token('workflow-icon-size-200');
 }
 
-.spectrum-Badge--notice {
-    background: var(--spectrum-badge-background-color-notice);
-}
-
-.spectrum-Badge--gray {
-    background: var(--spectrum-badge-background-color-gray);
-}
-
-.spectrum-Badge--red {
-    background: var(--spectrum-badge-background-color-red);
-}
-
-.spectrum-Badge--orange {
-    background: var(--spectrum-badge-background-color-orange);
-}
-
-.spectrum-Badge--yellow {
-    background: var(--spectrum-badge-background-color-yellow);
-}
-
-.spectrum-Badge--chartreuse {
-    background: var(--spectrum-badge-background-color-chartreuse);
-}
-
-.spectrum-Badge--celery {
-    background: var(--spectrum-badge-background-color-celery);
-}
-
-.spectrum-Badge--green {
-    background: var(--spectrum-badge-background-color-green);
-}
-
-.spectrum-Badge--seafoam {
-    background: var(--spectrum-badge-background-color-seafoam);
-}
-
-.spectrum-Badge--cyan {
-    background: var(--spectrum-badge-background-color-cyan);
-}
-
-.spectrum-Badge--blue {
-    background: var(--spectrum-badge-background-color-blue);
-}
-
-.spectrum-Badge--indigo {
-    background: var(--spectrum-badge-background-color-indigo);
-}
-
-.spectrum-Badge--purple {
-    background: var(--spectrum-badge-background-color-purple);
-}
-
-.spectrum-Badge--fuchsia {
-    background: var(--spectrum-badge-background-color-fuchsia);
-}
-
-.spectrum-Badge--magenta {
-    background: var(--spectrum-badge-background-color-magenta);
-}
-
-.spectrum-Badge--pink {
-    background: var(--spectrum-badge-background-color-pink);
-}
-
-.spectrum-Badge--turquoise {
-    background: var(--spectrum-badge-background-color-turquoise);
-}
-
-.spectrum-Badge--brown {
-    background: var(--spectrum-badge-background-color-brown);
-}
-
-.spectrum-Badge--cinnamon {
-    background: var(--spectrum-badge-background-color-cinnamon);
-}
-
-.spectrum-Badge--silver {
-    background: var(--spectrum-badge-background-color-silver);
-}
-
-.spectrum-Badge--subtle {
-    color: var(--spectrum-badge-subtle-label-icon-color);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--neutral {
-    background: var(--spectrum-badge-subtle-background-color-default);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--accent {
-    background: var(--spectrum-badge-subtle-background-color-accent);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--informative {
-    background: var(--spectrum-badge-subtle-background-color-informative);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--negative {
-    background: var(--spectrum-badge-subtle-background-color-negative);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--positive {
-    background: var(--spectrum-badge-subtle-background-color-positive);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--notice {
-    background: var(--spectrum-badge-subtle-background-color-notice);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--gray {
-    background: var(--spectrum-badge-subtle-background-color-gray);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--red {
-    background: var(--spectrum-badge-subtle-background-color-red);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--orange {
-    background: var(--spectrum-badge-subtle-background-color-orange);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--yellow {
-    background: var(--spectrum-badge-subtle-background-color-yellow);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--chartreuse {
-    background: var(--spectrum-badge-subtle-background-color-chartreuse);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--celery {
-    background: var(--spectrum-badge-subtle-background-color-celery);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--green {
-    background: var(--spectrum-badge-subtle-background-color-green);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--seafoam {
-    background: var(--spectrum-badge-subtle-background-color-seafoam);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--cyan {
-    background: var(--spectrum-badge-subtle-background-color-cyan);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--blue {
-    background: var(--spectrum-badge-subtle-background-color-blue);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--indigo {
-    background: var(--spectrum-badge-subtle-background-color-indigo);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--purple {
-    background: var(--spectrum-badge-subtle-background-color-purple);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--fuchsia {
-    background: var(--spectrum-badge-subtle-background-color-fuchsia);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--magenta {
-    background: var(--spectrum-badge-subtle-background-color-magenta);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--pink {
-    background: var(--spectrum-badge-subtle-background-color-pink);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--turquoise {
-    background: var(--spectrum-badge-subtle-background-color-turquoise);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--brown {
-    background: var(--spectrum-badge-subtle-background-color-brown);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--cinnamon {
-    background: var(--spectrum-badge-subtle-background-color-cinnamon);
-}
-
-.spectrum-Badge--subtle.spectrum-Badge--silver {
-    background: var(--spectrum-badge-subtle-background-color-silver);
-}
-
-.spectrum-Badge--outline:is(
-    .spectrum-Badge--neutral,
-    .spectrum-Badge--accent,
-    .spectrum-Badge--informative,
-    .spectrum-Badge--negative,
-    .spectrum-Badge--positive,
-    .spectrum-Badge--notice
-) {
-    background: var(--spectrum-badge-outline-background-color);
-    color: var(--spectrum-badge-outline-label-icon-color);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--neutral {
-    border-color: var(--spectrum-badge-outline-border-color-neutral);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--accent {
-    border-color: var(--spectrum-badge-outline-border-color-accent);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--informative {
-    border-color: var(--spectrum-badge-outline-border-color-informative);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--negative {
-    border-color: var(--spectrum-badge-outline-border-color-negative);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--positive {
-    border-color: var(--spectrum-badge-outline-border-color-positive);
-}
-
-.spectrum-Badge--outline.spectrum-Badge--notice {
-    border-color: var(--spectrum-badge-outline-border-color-notice);
+:host([size='xl']) {
+    --swc-badge-height: token('component-height-300');
+    --swc-badge-corner-radius: token('corner-radius-medium-size-extra-large');
+    --swc-badge-gap: token('text-to-visual-300');
+    --swc-badge-padding-inline: token('component-edge-to-text-300');
+    --swc-badge-with-icon-padding-inline: token('component-edge-to-visual-300');
+    --swc-badge-padding-block: token('component-top-to-text-300')
+        token('component-bottom-to-text-300');
+    --swc-badge-font-size: token('font-size-300');
+    --swc-badge-icon-size: token('workflow-icon-size-300');
 }
 
 .spectrum-Badge--fixed-inline-start {
@@ -597,67 +140,306 @@
     border-end-end-radius: 0;
 }
 
-.spectrum-Badge-label {
-    font-size: var(--spectrum-badge-font-size);
-    font-weight: var(--spectrum-badge-font-weight);
-    line-height: var(--spectrum-badge-line-height);
-    padding-inline-end: calc(
-        var(--spectrum-badge-label-spacing-horizontal) -
-            var(--spectrum-badge-border-width)
-    );
-    padding-inline-start: var(--spectrum-badge-label-spacing-horizontal);
-    padding-block-start: calc(
-        var(--spectrum-badge-label-spacing-vertical-top) -
-            var(--spectrum-badge-border-width)
-    );
-    padding-block-end: calc(
-        var(--spectrum-badge-label-spacing-vertical-bottom) -
-            var(--spectrum-badge-border-width)
+.spectrum-Badge--celery,
+.spectrum-Badge--chartreuse,
+.spectrum-Badge--notice,
+.spectrum-Badge--orange,
+.spectrum-Badge--yellow {
+    --swc-badge-label-icon-color: token('black');
+}
+
+/* NOTE: `accent` is the default color */
+
+:host([variant='neutral']) {
+    --swc-badge-background-color: token(
+        'neutral-subdued-background-color-default'
     );
 }
 
-.spectrum-Badge-label:lang(ja),
-.spectrum-Badge-label:lang(ko),
-.spectrum-Badge-label:lang(zh) {
-    line-height: var(--spectrum-badge-line-height-cjk);
+:host([variant='informative']) {
+    --swc-badge-background-color: token('informative-background-color-default');
 }
 
-.spectrum-Badge-icon + .spectrum-Badge-label {
-    padding-inline-start: 0;
+:host([variant='negative']) {
+    --swc-badge-background-color: token('negative-background-color-default');
 }
 
-.spectrum-Badge-icon {
-    block-size: var(--spectrum-badge-workflow-icon-size);
-    inline-size: var(--spectrum-badge-workflow-icon-size);
-    flex: 0 0 var(--spectrum-badge-workflow-icon-size);
-    margin-inline-start: calc(
-        var(--spectrum-badge-icon-spacing-horizontal) -
-            var(--spectrum-badge-border-width)
-    );
-    margin-inline-end: var(--spectrum-badge-icon-text-spacing);
-    margin-block-start: calc(
-        var(--spectrum-badge-icon-spacing-vertical-top) -
-            var(--spectrum-badge-border-width)
-    );
-    margin-block-end: calc(
-        var(--spectrum-badge-icon-spacing-vertical-top) -
-            var(--spectrum-badge-border-width)
+:host([variant='positive']) {
+    --swc-badge-background-color: token('positive-background-color-default');
+}
+
+:host([variant='notice']) {
+    --swc-badge-background-color: token('notice-background-color-default');
+}
+
+.spectrum-Badge--gray {
+    --swc-badge-background-color: token('gray-background-color-default');
+}
+
+.spectrum-Badge--red {
+    --swc-badge-background-color: token('red-background-color-default');
+}
+
+.spectrum-Badge--orange {
+    --swc-badge-background-color: token('orange-background-color-default');
+}
+
+.spectrum-Badge--yellow {
+    --swc-badge-background-color: token('yellow-background-color-default');
+}
+
+.spectrum-Badge--chartreuse {
+    --swc-badge-background-color: token('chartreuse-background-color-default');
+}
+
+.spectrum-Badge--celery {
+    --swc-badge-background-color: token('celery-background-color-default');
+}
+
+.spectrum-Badge--green {
+    --swc-badge-background-color: token('green-background-color-default');
+}
+
+.spectrum-Badge--seafoam {
+    --swc-badge-background-color: token('seafoam-background-color-default');
+}
+
+.spectrum-Badge--cyan {
+    --swc-badge-background-color: token('cyan-background-color-default');
+}
+
+.spectrum-Badge--blue {
+    --swc-badge-background-color: token('blue-background-color-default');
+}
+
+.spectrum-Badge--indigo {
+    --swc-badge-background-color: token('indigo-background-color-default');
+}
+
+.spectrum-Badge--purple {
+    --swc-badge-background-color: token('purple-background-color-default');
+}
+
+.spectrum-Badge--fuchsia {
+    --swc-badge-background-color: token('fuchsia-background-color-default');
+}
+
+.spectrum-Badge--magenta {
+    --swc-badge-background-color: token('magenta-background-color-default');
+}
+
+.spectrum-Badge--pink {
+    --swc-badge-background-color: token('pink-background-color-default');
+}
+
+.spectrum-Badge--turquoise {
+    --swc-badge-background-color: token('turquoise-background-color-default');
+}
+
+.spectrum-Badge--brown {
+    --swc-badge-background-color: token('brown-background-color-default');
+}
+
+.spectrum-Badge--cinnamon {
+    --swc-badge-background-color: token('cinnamon-background-color-default');
+}
+
+.spectrum-Badge--silver {
+    --swc-badge-background-color: token('silver-background-color-default');
+}
+
+:host([subtle]) {
+    --swc-badge-label-icon-color: token('gray-1000');
+}
+
+:host([subtle][variant='neutral']) {
+    --swc-badge-background-color: token(
+        'neutral-subtle-background-color-default'
     );
 }
 
-.spectrum-Badge-icon--no-label {
-    margin-inline-start: calc(
-        var(--spectrum-badge-icon-only-spacing-horizontal) -
-            var(--spectrum-badge-border-width)
-    );
-    margin-inline-end: calc(
-        var(--spectrum-badge-icon-only-spacing-horizontal) -
-            var(--spectrum-badge-border-width)
+:host([subtle][variant='accent']) {
+    --swc-badge-background-color: token(
+        'accent-subtle-background-color-default'
     );
 }
 
-.spectrum-Badge,
-.spectrum-Badge-icon,
-.spectrum-Badge-label {
-    box-sizing: border-box;
+:host([subtle][variant='informative']) {
+    --swc-badge-background-color: token(
+        'informative-subtle-background-color-default'
+    );
+}
+
+:host([subtle][variant='negative']) {
+    --swc-badge-background-color: token(
+        'negative-subtle-background-color-default'
+    );
+}
+
+:host([subtle][variant='positive']) {
+    --swc-badge-background-color: token(
+        'positive-subtle-background-color-default'
+    );
+}
+
+:host([subtle][variant='notice']) {
+    --swc-badge-background-color: token(
+        'notice-subtle-background-color-default'
+    );
+}
+
+.spectrum-Badge--subtle {
+    &.spectrum-Badge--gray {
+        --swc-badge-background-color: token(
+            'gray-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--red {
+        --swc-badge-background-color: token(
+            'red-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--orange {
+        --swc-badge-background-color: token(
+            'orange-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--yellow {
+        --swc-badge-background-color: token(
+            'yellow-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--chartreuse {
+        --swc-badge-background-color: token(
+            'chartreuse-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--celery {
+        --swc-badge-background-color: token(
+            'celery-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--green {
+        --swc-badge-background-color: token(
+            'green-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--seafoam {
+        --swc-badge-background-color: token(
+            'seafoam-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--cyan {
+        --swc-badge-background-color: token(
+            'cyan-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--blue {
+        --swc-badge-background-color: token(
+            'blue-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--indigo {
+        --swc-badge-background-color: token(
+            'indigo-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--purple {
+        --swc-badge-background-color: token(
+            'purple-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--fuchsia {
+        --swc-badge-background-color: token(
+            'fuchsia-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--magenta {
+        --swc-badge-background-color: token(
+            'magenta-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--pink {
+        --swc-badge-background-color: token(
+            'pink-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--turquoise {
+        --swc-badge-background-color: token(
+            'turquoise-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--brown {
+        --swc-badge-background-color: token(
+            'brown-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--cinnamon {
+        --swc-badge-background-color: token(
+            'cinnamon-subtle-background-color-default'
+        );
+    }
+
+    &.spectrum-Badge--silver {
+        --swc-badge-background-color: token(
+            'silver-subtle-background-color-default'
+        );
+    }
+}
+
+:host([outline][variant='neutral']),
+:host([outline][variant='accent']),
+:host([outline][variant='informative']),
+:host([outline][variant='negative']),
+:host([outline][variant='positive']),
+:host([outline][variant='notice']) {
+    --swc-badge-background-color: var(
+        --swc-badge-outline-background-color,
+        token('background-layer-2-color')
+    );
+    --swc-badge-label-icon-color: var(
+        --swc-badge-outline-label-icon-color,
+        token('gray-1000')
+    );
+}
+
+:host([outline][variant='neutral']) {
+    --swc-badge-border-color: token('neutral-visual-color');
+}
+
+:host([outline][variant='accent']) {
+    --swc-badge-border-color: token('accent-visual-color');
+}
+
+:host([outline][variant='informative']) {
+    --swc-badge-border-color: token('informative-visual-color');
+}
+
+:host([outline][variant='negative']) {
+    --swc-badge-border-color: token('negative-visual-color');
+}
+
+:host([outline][variant='positive']) {
+    --swc-badge-border-color: token('positive-visual-color');
+}
+
+:host([outline][variant='notice']) {
+    --swc-badge-border-color: token('notice-visual-color');
 }
