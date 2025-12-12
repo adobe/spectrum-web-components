@@ -14,27 +14,24 @@
     display: block;
 }
 
-.spectrum-Divider {
+.swc-Divider {
     --_swc-divider-thickness: var(
         --swc-divider-thickness,
         token('divider-thickness-medium')
     );
 
-    /* Show the overflow for hr in Edge and IE. */
-    overflow: visible;
     border: none;
-    border-width: var(--_swc-divider-thickness);
     border-radius: var(--_swc-divider-thickness);
     background-color: var(--swc-divider-background-color, token('gray-200'));
     block-size: var(--_swc-divider-thickness);
     inline-size: 100%;
 }
 
-.spectrum-Divider:not(.spectrum-Divider--vertical) {
+.swc-Divider:not(.swc-Divider--vertical) {
     min-inline-size: token('divider-horizontal-minimum-width');
 }
 
-.spectrum-Divider--vertical {
+.swc-Divider--vertical {
     inline-size: var(--_swc-divider-thickness);
     min-block-size: token('divider-vertical-minimum-height');
     margin-block: 0;
@@ -51,24 +48,24 @@
     --swc-divider-background-color: token('gray-800');
 }
 
-.spectrum-Divider--staticWhite {
+.swc-Divider--staticWhite {
     --swc-divider-background-color: token('transparent-white-200');
 }
 
-.spectrum-Divider--staticWhite:where(.spectrum-Divider--sizeL) {
+.swc-Divider--staticWhite:where(.swc-Divider--sizeL) {
     --swc-divider-background-color: token('transparent-white-800');
 }
 
-.spectrum-Divider--staticBlack {
+.swc-Divider--staticBlack {
     --swc-divider-background-color: token('transparent-black-200');
 }
 
-.spectrum-Divider--staticBlack:where(.spectrum-Divider--sizeL) {
+.swc-Divider--staticBlack:where(.swc-Divider--sizeL) {
     --swc-divider-background-color: token('transparent-black-800');
 }
 
 @media (forced-colors: active) {
-    .spectrum-Divider {
+    .swc-Divider {
         --swc-divider-background-color: CanvasText;
     }
 }

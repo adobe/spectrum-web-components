@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-@keyframes spectrum-fills-rotate {
+@keyframes swc-fills-rotate {
     0% {
         transform: rotate(-90deg);
     }
@@ -20,7 +20,7 @@
     }
 }
 
-@keyframes spectrum-dashoffset-animation {
+@keyframes swc-dashoffset-animation {
     0%,
     100% {
         stroke-dashoffset: 75px;
@@ -33,17 +33,14 @@
 
 :host {
     display: inline-block;
-
-    * {
-        box-sizing: border-box;
-    }
+    place-self: center;
 }
 
-slot {
-    display: none;
+* {
+    box-sizing: border-box;
 }
 
-.spectrum-ProgressCircle {
+.swc-ProgressCircle {
     --_swc-progress-circle-size: var(
         --swc-progress-circle-size,
         token('progress-circle-size-medium')
@@ -69,30 +66,29 @@ slot {
     transform: translateZ(0);
 }
 
-.spectrum-ProgressCircle-fill,
-.spectrum-ProgressCircle-track {
+.swc-ProgressCircle-fill,
+.swc-ProgressCircle-track {
     inline-size: var(--_swc-progress-circle-size);
     block-size: var(--_swc-progress-circle-size);
 }
 
-.spectrum-ProgressCircle-track {
+.swc-ProgressCircle-track {
     stroke-width: var(--_swc-progress-circle-thickness);
     stroke: var(--_swc-progress-circle-track-border-color);
 }
 
-.spectrum-ProgressCircle-fill {
+.swc-ProgressCircle-fill {
     stroke-width: var(--_swc-progress-circle-thickness);
     stroke: var(--_swc-progress-circle-fill-border-color);
     transform: rotate(-90deg);
     transform-origin: center;
 }
 
-.spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fill {
+.swc-ProgressCircle--indeterminate .swc-ProgressCircle-fill {
     will-change: transform;
     animation:
-        spectrum-fills-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
-        spectrum-dashoffset-animation 1s cubic-bezier(0.25, 0.1, 0.25, 1.3)
-            infinite;
+        swc-fills-rotate 1s cubic-bezier(0.6, 0.1, 0.3, 0.9) infinite,
+        swc-dashoffset-animation 1s cubic-bezier(0.25, 0.1, 0.25, 1.3) infinite;
     transform-origin: center;
 }
 
@@ -106,22 +102,26 @@ slot {
     --swc-progress-circle-thickness: token('progress-circle-thickness-large');
 }
 
-.spectrum-ProgressCircle:where(.spectrum-ProgressCircle--staticWhite) {
+.swc-ProgressCircle:where(.swc-ProgressCircle--staticWhite) {
     --swc-progress-circle-track-border-color: token('static-white-track-color');
     --swc-progress-circle-fill-border-color: token(
         'static-white-track-indicator-color'
     );
 }
 
-.spectrum-ProgressCircle:where(.spectrum-ProgressCircle--staticBlack) {
+.swc-ProgressCircle:where(.swc-ProgressCircle--staticBlack) {
     --swc-progress-circle-track-border-color: token('static-black-track-color');
     --swc-progress-circle-fill-border-color: token(
         'static-black-track-indicator-color'
     );
 }
 
+slot {
+    display: none;
+}
+
 @media (forced-colors: active) {
-    .spectrum-ProgressCircle {
+    .swc-ProgressCircle {
         --swc-progress-circle-fill-border-color: Highlight;
         --swc-progress-circle-track-color: Canvas;
 
