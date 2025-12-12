@@ -14,10 +14,12 @@ import {
 import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
 import {
-    withStaticColorBackground,
-    staticColors,
+    withSingleStaticColor,
+    withStaticColorsDemo,
     withFlexLayout,
+    withTextDirectionWrapper,
 } from './decorators';
+import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -39,7 +41,12 @@ setStorybookHelpersConfig(storybookHelperOptions);
 setCustomElementsManifest(customElements);
 
 const preview = {
-    decorators: [withStaticColorBackground, staticColors, withFlexLayout],
+    decorators: [
+        withSingleStaticColor,
+        withStaticColorsDemo,
+        withTextDirectionWrapper,
+        withFlexLayout,
+    ],
     parameters: {
         layout: 'centered',
         controls: {
@@ -161,6 +168,7 @@ const preview = {
     },
     tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
     loaders: [FontLoader],
+    globalTypes,
 };
 
 export default preview;

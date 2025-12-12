@@ -1,3 +1,4 @@
-export { withStaticColorBackground } from './static-color-background';
+export { withSingleStaticColor } from './single-static-color';
 export { withFlexLayout } from './flex-layout';
-export { staticColors } from './static-colors';
+export { withStaticColorsDemo } from './static-colors-demo';
+export { withTextDirectionWrapper } from './text-direction';
