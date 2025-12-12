@@ -1,15 +1,17 @@
 import { Canvas, Story, useOf } from '@storybook/addon-docs/blocks';
 import React from 'react';
+import type { ActionItem } from 'storybook/internal/components';
 import { formatComponentName } from '../helpers/index.js';
 
-export const StaticPrimaryStory = () => {
+export const OverviewStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
+
     const primaryStory = Object.values(resolvedOf.csfFile.stories).find(
-        (story) =>
-            story.name === 'Playground' || story.id.endsWith('--playground')
+        (story) => story.tags?.includes('overview')
     );
+
     if (!primaryStory) return null;
-    primaryStory.argTypes = undefined;
+    primaryStory.args = null;
 
     // Extract component name and create GitHub link
     const componentName = formatComponentName(resolvedOf.preparedMeta?.title);
@@ -17,12 +19,12 @@ export const StaticPrimaryStory = () => {
         'https://github.com/adobe/spectrum-web-components/tree/main/2nd-gen/packages/swc/components';
 
     // Build additional actions dynamically based on available metadata
-    const additionalActions = [];
+    const additionalActions: ActionItem[] = [];
 
     // Spectrum Design Guidance - requires valid component name
     if (
         componentName &&
-        !resolvedOf.csfFile.meta.parameters?.missingDesignDocs
+        !resolvedOf.csfFile.meta?.parameters?.missingDesignDocs
     ) {
         additionalActions.push({
             title: 'Read Spectrum Design Guidance',
@@ -36,12 +38,12 @@ export const StaticPrimaryStory = () => {
     }
 
     // Figma - requires design URL in parameters
-    if (resolvedOf.csfFile.meta.parameters?.design?.url) {
+    if (resolvedOf.csfFile.meta?.parameters?.design?.url) {
         additionalActions.push({
             title: 'View Figma',
             onClick: () => {
                 window.open(
-                    resolvedOf.csfFile.meta.parameters.design.url,
+                    resolvedOf.csfFile.meta?.parameters?.design?.url,
                     '_blank'
                 );
             },
@@ -59,28 +61,24 @@ export const StaticPrimaryStory = () => {
     }
 
     // Stackblitz - requires stackblitz URL in meta parameters
-    if (resolvedOf.csfFile.meta.parameters?.stackblitz?.url) {
+    if (resolvedOf.csfFile.meta?.parameters?.stackblitz?.url) {
         additionalActions.push({
             title: 'Debug in Stackblitz',
             onClick: () => {
                 window.open(
-                    resolvedOf.csfFile.meta.parameters.stackblitz.url,
+                    resolvedOf.csfFile.meta?.parameters?.stackblitz?.url,
                     '_blank'
                 );
             },
         });
     }
 
-    const canvasOptions = {
-        additionalActions,
-        withToolbar: false,
-        sourceState: 'none',
-        layout: 'centered',
-    };
-
     return (
-        <Canvas {...canvasOptions}>
-            <Story of={primaryStory.moduleExport} inline />
-        </Canvas>
+        <Canvas
+            of={primaryStory.moduleExport}
+            withToolbar={false}
+            additionalActions={additionalActions}
+            sourceState="none"
+        />
     );
 };

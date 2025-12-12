@@ -82,12 +82,12 @@ const preview = {
             },
             canvas: {
                 withToolbar: true,
-                sourceState: 'shown',
                 layout: 'centered',
+                // sourceState: 'shown',
             },
             source: {
                 excludeDecorators: true,
-                type: 'dynamic',
+                type: 'auto',
                 language: 'html',
             },
         },

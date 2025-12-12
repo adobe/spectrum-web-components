@@ -22,8 +22,8 @@ import { styleMap } from 'lit/directives/style-map.js';
  *
  * Enable per-story by setting parameters.staticColorsDemo = true
  */
-export const staticColors: DecoratorFunction = makeDecorator({
-    name: 'staticColors',
+export const withStaticColorsDemo: DecoratorFunction = makeDecorator({
+    name: 'withStaticColorsDemo',
     parameterName: 'staticColorsDemo',
     wrapper: (StoryFn, context) => {
         const { parameters } = context;

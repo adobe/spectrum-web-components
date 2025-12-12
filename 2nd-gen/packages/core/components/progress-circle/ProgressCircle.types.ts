@@ -30,4 +30,3 @@ export type ProgressCircleStaticColorS2 =
 export type ProgressCircleStaticColor =
     | ProgressCircleStaticColorS1
     | ProgressCircleStaticColorS2;
-export type ProgressCircleSize = (typeof PROGRESS_CIRCLE_VALID_SIZES)[number];
