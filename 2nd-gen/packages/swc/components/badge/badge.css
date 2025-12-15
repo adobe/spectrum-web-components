@@ -140,11 +140,11 @@
     border-end-end-radius: 0;
 }
 
-.swc-Badge--celery,
-.swc-Badge--chartreuse,
-.swc-Badge--notice,
-.swc-Badge--orange,
-.swc-Badge--yellow {
+:host([variant='notice']),
+:host([variant='celery']),
+:host([variant='chartreuse']),
+:host([variant='orange']),
+:host([variant='yellow']) {
     --swc-badge-label-icon-color: token('black');
 }
 

@@ -27,3 +27,17 @@ You may override the default application background color via the `--swc-applica
 ```
 
 **Note**: It is strongly encouraged to use a Spectrum color token which has the built-in capability to adapt to light and dark theme contexts.
+
+## PostCSS Options
+
+Please note that if you are re-processing the stylesheet through PostCSS and using PostCSS Preset Env, you'll need to use the following options. Otherwise you will encounter issues with these features as the transpilation isn't successful for the applied use across shadow DOM.
+
+```json
+stage: 2,
+features: {
+    'nesting-rules': true,
+    'custom-properties': false,
+    'light-dark-function': false,
+    'logical-properties-and-values': false,
+}
+```
