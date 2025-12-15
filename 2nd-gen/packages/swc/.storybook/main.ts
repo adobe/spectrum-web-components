@@ -14,9 +14,9 @@ const config = {
             titlePrefix: 'Components',
         },
         {
-            directory: 'get-started',
+            directory: 'about-swc',
             files: '*.mdx',
-            titlePrefix: 'Get Started',
+            titlePrefix: 'About SWC',
         },
         {
             directory: 'guides',

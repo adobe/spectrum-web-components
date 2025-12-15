@@ -1,0 +1,94 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import '@spectrum-web-components/table/elements.js';
+
+<Meta title="First Gen vs Second Gen" />
+
+# 1st-gen vs 2nd-gen
+
+SWC 2nd-gen is the next version of Spectrum Web Components. It updates the design, improves the architecture, and aligns the components with Spectrum 2. This page explains how 2nd-gen is different from 1st-gen so teams know what to expect when adopting or migrating.
+
+## Key differences
+
+<sp-table size="m">
+    <sp-table-head>
+        <sp-table-head-cell>Area</sp-table-head-cell>
+        <sp-table-head-cell>1st-gen SWC</sp-table-head-cell>
+        <sp-table-head-cell>2nd-gen SWC</sp-table-head-cell>
+    </sp-table-head>
+    <sp-table-body>
+        <sp-table-row>
+            <sp-table-cell>Design</sp-table-cell>
+            <sp-table-cell>Matches Spectrum 1</sp-table-cell>
+            <sp-table-cell>Updated for Spectrum 2 design</sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Architecture</sp-table-cell>
+            <sp-table-cell>
+                Earlier component patterns; less consistent
+            </sp-table-cell>
+            <sp-table-cell>
+                More consistent structure and APIs across the library
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Tokens and scales</sp-table-cell>
+            <sp-table-cell>Based on Spectrum 1 tokens</sp-table-cell>
+            <sp-table-cell>
+                Updated tokens, scales, and interaction patterns
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Styling system</sp-table-cell>
+            <sp-table-cell>Older styling approach</sp-table-cell>
+            <sp-table-cell>
+                Modernized styling aligned with Spectrum 2
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Accessibility</sp-table-cell>
+            <sp-table-cell>Basic support</sp-table-cell>
+            <sp-table-cell>
+                Improved and more complete accessibility coverage
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Performance</sp-table-cell>
+            <sp-table-cell>Larger packages and more overhead</sp-table-cell>
+            <sp-table-cell>
+                Smaller packages and better runtime performance
+            </sp-table-cell>
+        </sp-table-row>
+        <sp-table-row>
+            <sp-table-cell>Long-term support</sp-table-cell>
+            <sp-table-cell>Maintained for existing products</sp-table-cell>
+            <sp-table-cell>Recommended for all new work</sp-table-cell>
+        </sp-table-row>
+    </sp-table-body>
+</sp-table>
+
+## What this means for teams
+
+### If you are starting a new project
+
+Use 2nd-gen SWC. It matches the current Spectrum guidelines and offers better performance and consistency.
+
+### If your project already uses 1st-gen SWC
+
+You can continue using it, but you may want to plan a migration. Some components and APIs have changed in 2nd-gen, so updates may require code changes or testing.
+
+### If you maintain a large 1st-gen codebase
+
+Migration will take more time. Review your components, compare APIs, and update your patterns gradually. Not everything must move at once.
+
+### Why 2nd-gen is recommended
+
+- It aligns with Spectrum 2, which is the standard for new Adobe work.
+- Components follow more consistent design and code patterns.
+- Accessibility is stronger and more complete.
+- Smaller packages help improve performance.
+- It better supports future updates to Spectrum.
+
+## Where to learn more
+
+You can find detailed guidance in the component documentation, including updated APIs, usage examples, and patterns for Spectrum 2.
+If you are planning a migration, check each component’s notes for differences between 1st-gen and 2nd-gen.
