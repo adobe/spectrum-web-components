@@ -16,11 +16,11 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
+    BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BadgeBase,
     type BadgeVariantS2 as BadgeVariant,
-    VALID_SIZES,
 } from '@spectrum-web-components/core/components/badge';
 
 import styles from './badge.css';
@@ -59,7 +59,7 @@ export class Badge extends BadgeBase {
     /**
      * @internal
      */
-    static override readonly VALID_SIZES = VALID_SIZES;
+    static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
     /**
      * The variant of the badge.

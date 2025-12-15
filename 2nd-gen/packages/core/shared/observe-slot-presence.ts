@@ -55,7 +55,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         }
 
         /**
-         *  @private
+         *  @internal
          */
         public get slotContentIsPresent(): boolean {
             if (lightDomSelectors.length === 1) {
@@ -71,6 +71,9 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         }
         private [slotContentIsPresent]: Map<string, boolean> = new Map();
 
+        /**
+         * @internal
+         */
         public getSlotContentPresence(selector: string): boolean {
             if (this[slotContentIsPresent].has(selector)) {
                 return this[slotContentIsPresent].get(selector) || false;
@@ -80,6 +83,9 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             );
         }
 
+        /**
+         * @internal
+         */
         public managePresenceObservedSlot = (): void => {
             let changes = false;
             lightDomSelectors.forEach((selector) => {

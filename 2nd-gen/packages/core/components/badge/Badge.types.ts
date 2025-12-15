@@ -10,26 +10,28 @@
  * governing permissions and limitations under the License.
  */
 
+import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
+
 /*
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
-export const FIXED_VALUES = [
-    'inline-start',
-    'inline-end',
+export const BADGE_FIXED_VALUES = [
     'block-start',
     'block-end',
+    'inline-start',
+    'inline-end',
 ] as const;
 
-export type FixedValues = (typeof FIXED_VALUES)[number];
+export const BADGE_VALID_SIZES: ElementSize[] = ['s', 'm', 'l', 'xl'] as const;
 
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
-    'neutral',
     'informative',
+    'neutral',
     'positive',
-    'negative',
     'notice',
+    'negative',
 ] as const;
 
 export const BADGE_VARIANTS_COLOR_S1 = [
@@ -68,6 +70,8 @@ export const BADGE_VARIANTS_S2 = [
     ...BADGE_VARIANTS_COLOR_S2,
 ] as const;
 
+export type BadgeFixedValues = (typeof BADGE_FIXED_VALUES)[number];
+export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
 export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number];
 export type BadgeVariantS2 = (typeof BADGE_VARIANTS_S2)[number];
 export type BadgeVariant = BadgeVariantS1 | BadgeVariantS2;

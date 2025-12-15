@@ -29,6 +29,7 @@ import {
  */
 export abstract class DividerBase extends SizedMixin(SpectrumElement, {
     validSizes: DIVIDER_VALID_SIZES,
+    /**@todo the design spec says the default size is small but we declare no default size */
     noDefaultSize: true,
 }) {
     /**
