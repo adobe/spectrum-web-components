@@ -14,7 +14,7 @@ const config = {
             titlePrefix: 'Components',
         },
         {
-            directory: 'about-swc',
+            directory: 'learn-about-swc',
             files: '*.mdx',
             titlePrefix: 'About SWC',
         },
