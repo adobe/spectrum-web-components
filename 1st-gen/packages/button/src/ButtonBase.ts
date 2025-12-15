@@ -114,6 +114,13 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         }
 
         if (this.anchorElement) {
+            // Check if the click already went through the anchor element.
+            // If so, the browser will handle navigation naturally and we
+            // don't need to proxy the click (which would cause double navigation).
+            const path = event?.composedPath() || [];
+            if (path.includes(this.anchorElement)) {
+                return false;
+            }
             // Click HTML anchor element by proxy, but only for non-modified clicks
             this.anchorElement.click();
             handled = true;
