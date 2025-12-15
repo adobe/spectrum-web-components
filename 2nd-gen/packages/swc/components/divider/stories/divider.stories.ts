@@ -96,7 +96,7 @@ export const Sizes: Story = {
                     </div>
                 `
             ),
-            'var(--spectrum-spacing-200)'
+            'var(--swc-spacing-200)'
         ),
     tags: ['!dev'],
 };
@@ -113,7 +113,7 @@ export const Vertical: Story = {
             Divider.VALID_SIZES.map((size) =>
                 template({ ...args, size: size as DividerSize })
             ),
-            'var(--spectrum-spacing-600)'
+            'var(--swc-spacing-600)'
         ),
     tags: ['!dev'],
 };

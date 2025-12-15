@@ -45,7 +45,7 @@ export function capitalize(str?: string): string {
  * Used in stories to display multiple variants side by side.
  *
  * @param content - Array of template results to render
- * @param gap - Gap between items (default: var(--spectrum-spacing-200))
+ * @param gap - Gap between items (default: var(--swc-spacing-200))
  * @param maxInlineSize - Maximum inline size for readability (default: 80ch)
  * @returns Template result with flex layout
  *
@@ -63,7 +63,7 @@ export function capitalize(str?: string): string {
  */
 export function Container(
     content: TemplateResult[],
-    gap: string = 'var(--spectrum-spacing-200)',
+    gap: string = 'var(--swc-spacing-200)',
     maxInlineSize: string = '80ch'
 ): TemplateResult {
     return html`<div
@@ -109,7 +109,7 @@ export function GridContainer(
         style=${styleMap({
             display: 'grid',
             'grid-template-columns': `repeat(${columns}, 1fr)`,
-            gap: 'var(--spectrum-spacing-200)',
+            gap: 'var(--swc-spacing-200)',
         })}
     >
         ${content}
@@ -121,7 +121,7 @@ export function GridContainer(
  * Common pattern for displaying multiple variants side by side.
  *
  * @param content - Array of template results or single template result
- * @param gap - Gap between items (default: 'var(--spectrum-spacing-300)' = 24px)
+ * @param gap - Gap between items (default: 'var(--swc-spacing-300)' = 16px)
  * @returns Template result with horizontal flex layout
  *
  * @example
@@ -138,7 +138,7 @@ export function GridContainer(
  */
 export function HorizontalContainer(
     content: TemplateResult | TemplateResult[],
-    gap: string = 'var(--spectrum-spacing-300)'
+    gap: string = 'var(--swc-spacing-300)'
 ): TemplateResult {
     return html`<div
         style=${styleMap({
@@ -153,10 +153,10 @@ export function HorizontalContainer(
 
 /**
  * Vertical flex container.
- * Useful for stacking components vertically with consistent spacing.
+ * Useful for ===stacking components vertically with consistent spacing.
  *
  * @param content - Array of template results or single template result
- * @param gap - Gap between items (default: 'var(--spectrum-spacing-200)' = 16px)
+ * @param gap - Gap between items (default: 'var(--swc-spacing-200)' = 12px)
  * @returns Template result with vertical flex layout
  *
  * @example
@@ -172,7 +172,7 @@ export function HorizontalContainer(
  */
 export function VerticalContainer(
     content: TemplateResult | TemplateResult[],
-    gap: string = 'var(--spectrum-spacing-200)'
+    gap: string = 'var(--swc-spacing-200)'
 ): TemplateResult {
     return html`<div
         style=${styleMap({
