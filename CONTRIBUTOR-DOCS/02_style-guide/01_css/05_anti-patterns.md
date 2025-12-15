@@ -112,9 +112,9 @@ This anti-pattern reflects one of the most common and subtle migration mistakes.
 Preserving Spectrum-era `--mod-*` fallback chains, or introducing an SWC equivalent:
 
 ```css
-min-block-size: var(--mod-badge-height, var(--spectrum-badge-height));
-border-radius: var(--mod-badge-corner-radius, var(--spectrum-badge-corner-radius));
-background: var(--mod-badge-background-color-default, var(--spectrum-badge-background-color-default));
+min-block-size: var(--mod-badge-height, var(--swc-badge-height));
+border-radius: var(--mod-badge-corner-radius, var(--swc-badge-corner-radius));
+background: var(--mod-badge-background-color-default, var(--swc-badge-background-color-default));
 ```
 
 or:
@@ -165,14 +165,16 @@ See the Badge migration where all `--mod-* → spectrum → property` chains are
 📖 See: *Custom Properties Style Guide → Component Custom Property Exposure*
 
 
-## 3. Re-implementing Variants with Extra Classes in `render()`
+## 3. Excess Variant Classes in `render()`
 
 ### ❌ Anti-Pattern
 
+This is an anti-pattern when the class is _not_ being used in the actual component stylesheet.
+
 ```js
 classMap({
-  'is-large': this.size === 'l',
-  'is-expanded': this.expanded
+  [`spectrum-Badge--size${this.size?.toUpperCase()}`]:
+    typeof this.size !== 'undefined',
 })
 ```
 
@@ -184,8 +186,7 @@ classMap({
 ### Why This Is a Problem
 
 - Duplicates logic already expressed by attributes
-- Couples JS and CSS unnecessarily
-- Makes variants harder to reason about
+- Extranneous when class not actually being used as a style hook
 
 ### ✅ Correct Approach
 

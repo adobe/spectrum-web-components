@@ -31,7 +31,7 @@ The following are high-level guidelines for the CSS creation for components.
 
 - `:host` is for defining how the container participates in the global layout, not the core component styles
 - Follow the prescribed rule order
-- Keep selector specificity ≤ `\(0,1,0\)`
+- Strive to keep selector specificity ≤ `\(0,1,0\)`
 - Use variants and custom property exposure intentionally
 - Prefer CSS layout primitives when applying component specs
 - Introduce cascade layers if needed as a specificity controller, using the prescribed layer order
@@ -77,12 +77,12 @@ Most components are scoped enough that following the prescribed rule order will 
 
 The issue with bumping up specificity is that is makes valid overrides - such as for a `:disabled` state - more challenging.
 
-Try to keep specificity no greater than `(0, 1, 0)` which means a maximum of 1 class.
+Try to keep specificity no greater than `(0,1,0)` which means a maximum of 1 class.
 
 > - Learn [how specificity is calculated](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity#how_is_specificity_calculated)
 > - Test with a [specificity calculator](https://polypane.app/css-specificity-calculator/)
 
-To do this, clauses beyond a single class can be wrapped in `:where()` which nulls the specificity of that clause to zero. Use of `:where()` is encouraged, has ample browser support, and will be expected in PR reviews for compounding selectors.
+To keep specificity low, clauses beyond a single class can be wrapped in `:where()` which nulls the specificity of that clause to zero. Use of `:where()` is encouraged, has ample browser support, and will be expected in PR reviews for compounding class selectors.
 
 ```css
 /* Before */
@@ -96,7 +96,10 @@ Reducing specificity in this way means the *order* of the rulesets takes precede
 
 Occasionally, specificity bumping *is* necessary, but carefully evaluate the order of the rule first. Then, only add the most critical selectors to achieve the necessary specificity bump. Alternatively, consider cascade layers, as described next.
 
-**Exception**: compounded attributes within `:host()` most often should not use `:where()` as their computed value will be treated differently, as described next.
+**Exceptions to max-specificity rule**:
+
+- use of pseudo-classes and pseudo-elements are an acceptable bump to specificity, and should be applied outside of `:where()`
+- compound attribute selectors in `:host()` are permissable, and most often should not use `:where()` as their computed value will be treated differently, as described next
 
 ### Shadow DOM Specificity and Custom Property Inheritance
 
@@ -234,8 +237,8 @@ The ultimate intent here is to prioritize working with the grain of CSS layout m
 If you feel like you’re:
 
 - stacking selectors,
-- adding !important,
-- or fighting overrides—
+- adding `!important`,
+- or fighting overrides
 
 **pause and reconsider rule order or layers first**.
 
