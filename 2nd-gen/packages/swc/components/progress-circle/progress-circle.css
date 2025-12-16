@@ -33,83 +33,56 @@
 
 :host {
     display: inline-block;
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+slot {
+    display: none;
 }
 
 .spectrum-ProgressCircle {
-    --spectrum-progress-circle-track-border-color: var(--spectrum-track-color);
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-accent-content-color-default
+    --_swc-progress-circle-size: var(
+        --swc-progress-circle-size,
+        token('progress-circle-size-medium')
     );
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-medium
+    --_swc-progress-circle-track-border-color: var(
+        --swc-progress-circle-track-border-color,
+        token('track-color')
     );
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-medium
+    --_swc-progress-circle-fill-border-color: var(
+        --swc-progress-circle-fill-border-color,
+        token('accent-content-color-default')
     );
-}
+    --_swc-progress-circle-thickness: var(
+        --swc-progress-circle-thickness,
+        token('progress-circle-thickness-medium')
+    );
 
-.spectrum-ProgressCircle--sizeS {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-small
-    );
-}
-
-.spectrum-ProgressCircle--sizeL {
-    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
-    --spectrum-progress-circle-thickness: var(
-        --spectrum-progress-circle-thickness-large
-    );
-}
-
-.spectrum-ProgressCircle {
     display: inline-block;
-    inline-size: var(--spectrum-progress-circle-size);
-    block-size: var(--spectrum-progress-circle-size);
+    inline-size: var(--_swc-progress-circle-size);
+    block-size: var(--_swc-progress-circle-size);
     position: relative;
     direction: ltr;
     transform: translateZ(0);
 }
 
-.spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite {
-    --spectrum-progress-circle-track-border-color: var(
-        --spectrum-static-white-track-color
-    );
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-static-white-track-indicator-color
-    );
-}
-
-.spectrum-ProgressCircle.spectrum-ProgressCircle--staticBlack {
-    --spectrum-progress-circle-track-border-color: var(
-        --spectrum-static-black-track-color
-    );
-    --spectrum-progress-circle-fill-border-color: var(
-        --spectrum-static-black-track-indicator-color
-    );
-}
-
 .spectrum-ProgressCircle-fill,
 .spectrum-ProgressCircle-track {
-    box-sizing: border-box;
-    inline-size: var(--spectrum-progress-circle-size);
-    block-size: var(--spectrum-progress-circle-size);
+    inline-size: var(--_swc-progress-circle-size);
+    block-size: var(--_swc-progress-circle-size);
 }
 
 .spectrum-ProgressCircle-track {
-    stroke-width: var(--spectrum-progress-circle-thickness);
-    stroke: var(
-        --highcontrast-progress-circle-track-color,
-        var(--spectrum-progress-circle-track-border-color)
-    );
+    stroke-width: var(--_swc-progress-circle-thickness);
+    stroke: var(--_swc-progress-circle-track-border-color);
 }
 
 .spectrum-ProgressCircle-fill {
-    stroke-width: var(--spectrum-progress-circle-thickness);
-    stroke: var(
-        --highcontrast-progress-circle-fill-border-color,
-        var(--spectrum-progress-circle-fill-border-color)
-    );
+    stroke-width: var(--_swc-progress-circle-thickness);
+    stroke: var(--_swc-progress-circle-fill-border-color);
     transform: rotate(-90deg);
     transform-origin: center;
 }
@@ -123,24 +96,45 @@
     transform-origin: center;
 }
 
-@media (forced-colors: active) {
-    .spectrum-ProgressCircle {
-        --highcontrast-progress-circle-fill-border-color: Highlight;
-        --highcontrast-progress-circle-track-color: Background;
-    }
-
-    .spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate)
-        .spectrum-innerCircle {
-        stroke: CanvasText;
-    }
-
-    .spectrum-ProgressCircle:not(.spectrum-ProgressCircle--indeterminate)
-        .spectrum-outerCircle {
-        border: 1px solid CanvasText;
-        border-radius: 50%;
-    }
+:host([size='s']) {
+    --swc-progress-circle-size: token('progress-circle-size-small');
+    --swc-progress-circle-thickness: token('progress-circle-thickness-small');
 }
 
-slot {
-    display: none;
+:host([size='l']) {
+    --swc-progress-circle-size: token('progress-circle-size-large');
+    --swc-progress-circle-thickness: token('progress-circle-thickness-large');
+}
+
+.spectrum-ProgressCircle:where(.spectrum-ProgressCircle--staticWhite) {
+    --swc-progress-circle-track-border-color: token('static-white-track-color');
+    --swc-progress-circle-fill-border-color: token(
+        'static-white-track-indicator-color'
+    );
+}
+
+.spectrum-ProgressCircle:where(.spectrum-ProgressCircle--staticBlack) {
+    --swc-progress-circle-track-border-color: token('static-black-track-color');
+    --swc-progress-circle-fill-border-color: token(
+        'static-black-track-indicator-color'
+    );
+}
+
+@media (forced-colors: active) {
+    .spectrum-ProgressCircle {
+        --swc-progress-circle-fill-border-color: Highlight;
+        --swc-progress-circle-track-color: Canvas;
+
+        @media (prefers-color-scheme: dark) {
+            --swc-progress-circle-track-border-color: token(
+                'static-white-track-color'
+            );
+        }
+
+        @media (prefers-color-scheme: light) {
+            --swc-progress-circle-track-border-color: token(
+                'static-black-track-color'
+            );
+        }
+    }
 }
