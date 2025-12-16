@@ -102,13 +102,8 @@ const preview = {
             storySort: {
                 method: 'alphabetical-by-kind',
                 order: [
-                    'Get Started',
-                    [
-                        'Welcome',
-                        'What is SWC?',
-                        'When to use SWC?',
-                        'First Gen vs Second Gen',
-                    ],
+                    'About SWC',
+                    ['Overview', 'When to use SWC', 'First Gen vs Second Gen'],
                     'Components',
                     'Guides',
                     [
