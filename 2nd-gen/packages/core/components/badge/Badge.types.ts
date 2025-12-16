@@ -23,7 +23,12 @@ export const BADGE_FIXED_VALUES = [
     'inline-end',
 ] as const;
 
-export const BADGE_VALID_SIZES: ElementSize[] = ['s', 'm', 'l', 'xl'] as const;
+export const BADGE_VALID_SIZES = [
+    's',
+    'm',
+    'l',
+    'xl',
+] as const satisfies readonly ElementSize[];
 
 export const BADGE_VARIANTS_SEMANTIC = [
     'accent',
@@ -72,6 +77,9 @@ export const BADGE_VARIANTS_S2 = [
 
 export type BadgeFixedValues = (typeof BADGE_FIXED_VALUES)[number];
 export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
+export type BadgeSemanticVariant = (typeof BADGE_VARIANTS_SEMANTIC)[number];
+export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number];
+export type BadgeColorVariantS2 = (typeof BADGE_VARIANTS_COLOR_S2)[number];
 export type BadgeVariantS1 = (typeof BADGE_VARIANTS_S1)[number];
 export type BadgeVariantS2 = (typeof BADGE_VARIANTS_S2)[number];
 export type BadgeVariant = BadgeVariantS1 | BadgeVariantS2;

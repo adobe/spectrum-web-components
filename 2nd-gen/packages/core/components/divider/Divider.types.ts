@@ -12,7 +12,13 @@
 
 import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
 
-export const DIVIDER_VALID_SIZES: ElementSize[] = ['s', 'm', 'l'] as const;
+export const DIVIDER_VALID_SIZES = [
+    's',
+    'm',
+    'l',
+] as const satisfies ElementSize[];
 export const DIVIDER_STATIC_COLORS = ['white', 'black'] as const;
 
 export type DividerStaticColor = (typeof DIVIDER_STATIC_COLORS)[number];
+
+export type DividerSize = (typeof DIVIDER_VALID_SIZES)[number];

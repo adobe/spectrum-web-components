@@ -36,8 +36,6 @@ import {
  * @slot - Accessible label for the progress circle.
  *
  *   Used to provide context about what is loading or progressing.
- *
- * @fires progress-change - Dispatched when the progress value changes
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
     validSizes: PROGRESS_CIRCLE_VALID_SIZES,

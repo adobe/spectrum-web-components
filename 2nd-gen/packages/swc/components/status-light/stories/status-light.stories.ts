@@ -14,6 +14,12 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
+import {
+    STATUSLIGHT_VARIANTS_COLOR_S2,
+    STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+    StatusLightColorVariantS2,
+    StatusLightSemanticVariantS2,
+} from '@spectrum-web-components/core/components/status-light';
 
 import '@adobe/swc/status-light';
 
@@ -47,12 +53,11 @@ argTypes.size = {
 };
 
 /**
- * Status lights describe the condition of an entity. They can be used to convey semantic meaning, such as statuses and categories.
+ * Status lights describe the condition of an entity. Much like [Badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
 const meta: Meta = {
     title: 'Status light',
     component: 'swc-status-light',
-    argTypes,
     parameters: {
         docs: {
             subtitle: `Status lights convey semantic meaning through colored dots accompanied by descriptive text.`,
@@ -136,6 +141,13 @@ export const Sizes: Story = {
     tags: ['options'],
 };
 
+const semanticLabels = {
+    info: 'Information',
+    neutral: 'Archived',
+    positive: 'Approved',
+    notice: 'Pending approval',
+    negative: 'Rejected',
+} as const satisfies Record<StatusLightSemanticVariantS2, string>;
 /**
  * When status lights have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
  *
@@ -149,59 +161,48 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
     render: () => html`
-        ${template({
-            ...args,
-            variant: 'info',
-            'default-slot': 'Info',
-        })}
-        ${template({ ...args, variant: 'neutral', 'default-slot': 'Neutral' })}
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot': 'Positive',
-        })}
-        ${template({ ...args, variant: 'notice', 'default-slot': 'Notice' })}
-        ${template({
-            ...args,
-            variant: 'negative',
-            'default-slot': 'Negative',
-        })}
+        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
+            (variant: StatusLightSemanticVariantS2) =>
+                template({
+                    ...args,
+                    variant,
+                    'default-slot': semanticLabels[variant],
+                })
+        )}
     `,
     parameters: { ...parameters, 'section-order': 1 },
     tags: ['options'],
 };
 
+const nonSemanticLabels = {
+    yellow: 'Busy',
+    chartreuse: 'Quality',
+    celery: 'Documentation',
+    seafoam: 'Support',
+    cyan: 'Analytics',
+    indigo: 'Engineering',
+    purple: 'Product',
+    fuchsia: 'Marketing',
+    magenta: 'Design',
+    pink: 'Creative',
+    turquoise: 'Training',
+    brown: 'Facilities',
+    cinnamon: 'Compliance',
+    silver: 'Version 1.2.10',
+} as const satisfies Record<StatusLightColorVariantS2, string>;
 /**
  * When status lights are used to color code categories and labels that are commonly found in data visualization, they use label colors. The ideal usage for these is when there are **8 or fewer** categories or labels being color coded.
  */
 export const NonSemanticVariants: Story = {
     render: () => html`
-        ${template({ ...args, variant: 'yellow', 'default-slot': 'Yellow' })}
-        ${template({
-            ...args,
-            variant: 'chartreuse',
-            'default-slot': 'Chartreuse',
-        })}
-        ${template({ ...args, variant: 'celery', 'default-slot': 'Celery' })}
-        ${template({ ...args, variant: 'seafoam', 'default-slot': 'Seafoam' })}
-        ${template({ ...args, variant: 'cyan', 'default-slot': 'Cyan' })}
-        ${template({ ...args, variant: 'indigo', 'default-slot': 'Indigo' })}
-        ${template({ ...args, variant: 'purple', 'default-slot': 'Purple' })}
-        ${template({ ...args, variant: 'fuchsia', 'default-slot': 'Fuchsia' })}
-        ${template({ ...args, variant: 'magenta', 'default-slot': 'Magenta' })}
-        ${template({ ...args, variant: 'pink', 'default-slot': 'Pink' })}
-        ${template({
-            ...args,
-            variant: 'turquoise',
-            'default-slot': 'Turquoise',
-        })}
-        ${template({ ...args, variant: 'silver', 'default-slot': 'Silver' })}
-        ${template({ ...args, variant: 'brown', 'default-slot': 'Brown' })}
-        ${template({
-            ...args,
-            variant: 'cinnamon',
-            'default-slot': 'Cinnamon',
-        })}
+        ${STATUSLIGHT_VARIANTS_COLOR_S2.map(
+            (variant: StatusLightColorVariantS2) =>
+                template({
+                    ...args,
+                    variant,
+                    'default-slot': nonSemanticLabels[variant],
+                })
+        )}
     `,
     parameters: { ...parameters, 'section-order': 2 },
     tags: ['options'],
@@ -247,31 +248,47 @@ export const TextWrapping: Story = {
  * - Ensure sufficient color contrast between the status light and its background
  */
 export const Accessibility: Story = {
-    render: () => html`
+    render: (args) => html`
         ${template({
             ...args,
             variant: 'positive',
-            'default-slot': 'Approved',
+            'default-slot': semanticLabels['positive'],
         })}
         ${template({
             ...args,
             variant: 'negative',
-            'default-slot': 'Rejected',
+            'default-slot': semanticLabels['negative'],
         })}
         ${template({
             ...args,
             variant: 'notice',
-            'default-slot': 'Needs Approval',
+            'default-slot': semanticLabels['notice'],
         })}
-        ${template({ ...args, variant: 'info', 'default-slot': 'New Feature' })}
+        ${template({
+            ...args,
+            variant: 'info',
+            'default-slot': semanticLabels['info'],
+        })}
         ${template({
             ...args,
             variant: 'neutral',
-            'default-slot': 'Version 1.2.10',
+            'default-slot': semanticLabels['neutral'],
         })}
-        ${template({ ...args, variant: 'celery', 'default-slot': 'Online' })}
-        ${template({ ...args, variant: 'yellow', 'default-slot': 'Busy' })}
-        ${template({ ...args, variant: 'silver', 'default-slot': 'Away' })}
+        ${template({
+            ...args,
+            variant: 'celery',
+            'default-slot': nonSemanticLabels['celery'],
+        })}
+        ${template({
+            ...args,
+            variant: 'yellow',
+            'default-slot': nonSemanticLabels['yellow'],
+        })}
+        ${template({
+            ...args,
+            variant: 'silver',
+            'default-slot': nonSemanticLabels['silver'],
+        })}
     `,
     tags: ['a11y'],
 };

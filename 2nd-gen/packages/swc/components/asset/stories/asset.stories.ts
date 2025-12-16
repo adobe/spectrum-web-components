@@ -76,6 +76,19 @@ export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
+// ---------------------
+//   OVERVIEW STORIES
+// ---------------------
+
+export const Overview: Story = {
+    render: (args) => template(args),
+    args: {
+        label: 'Background',
+        'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
+    },
+    tags: ['overview'],
+};
+
 // ──────────────────────────
 //    ANATOMY STORIES
 // ──────────────────────────

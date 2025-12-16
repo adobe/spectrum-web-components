@@ -84,7 +84,7 @@ export const Playground: Story = {
 };
 
 // ──────────────────────────
-//    STATIC STORIES
+//    OVERVIEW STORIES
 // ──────────────────────────
 
 export const Overview: Story = {
@@ -166,7 +166,7 @@ export const StaticBlack: Story = {
  */
 export const StaticColors: Story = {
     render: (args) => html`
-        ${['white', 'black'].map(
+        ${ProgressCircle.STATIC_COLORS.map(
             (color) => html`${template({ ...args, 'static-color': color })}`
         )}
     `,

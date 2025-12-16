@@ -90,7 +90,7 @@ const preview = {
             canvas: {
                 withToolbar: true,
                 layout: 'centered',
-                // sourceState: 'shown',
+                sourceState: 'shown',
             },
             source: {
                 excludeDecorators: true,

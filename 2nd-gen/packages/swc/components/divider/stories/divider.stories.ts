@@ -15,6 +15,7 @@ import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Divider } from '@adobe/swc/divider';
+import { DividerSize } from '@spectrum-web-components/core/components/divider';
 
 import '@adobe/swc/divider';
 
@@ -150,33 +151,36 @@ export const Sizes: Story = {
  * When a vertical divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the divider.
  */
 export const Vertical: Story = {
-    args: {
-        vertical: true,
-    },
     render: (args) => html`
-        <div>
-            <h3>Small</h3>
+        <div
+            style="display: flex; flex-direction: row; gap: 16px; align-items: flex-start;"
+        >
+            <h4>Small</h4>
             ${template({
                 ...args,
                 size: 's',
             })}
-            <p>Content below the small divider.</p>
+            <p>Content next to the small divider.</p>
         </div>
-        <div>
-            <h3>Medium</h3>
+        <div
+            style="display: flex; flex-direction: row; gap: 16px; align-items: flex-start;"
+        >
+            <h4>Medium</h4>
             ${template({
                 ...args,
                 size: 'm',
             })}
-            <p>Content below the medium divider.</p>
+            <p>Content next to the medium divider.</p>
         </div>
-        <div>
-            <h3>Large</h3>
+        <div
+            style="display: flex; flex-direction: row; gap: 16px; align-items: flex-start;"
+        >
+            <h4>Large</h4>
             ${template({
                 ...args,
                 size: 'l',
             })}
-            <p>Content below the large divider.</p>
+            <p>Content next to the large divider.</p>
         </div>
     `,
     parameters: {

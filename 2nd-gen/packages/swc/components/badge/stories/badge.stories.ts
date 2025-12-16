@@ -20,11 +20,15 @@ import '@adobe/swc/badge';
 
 import {
     BADGE_FIXED_VALUES,
+    BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BADGE_VARIANTS_SEMANTIC,
+    type BadgeColorVariantS2,
+    type BadgeFixedValues,
+    type BadgeSemanticVariant,
+    type BadgeSize,
 } from '../../../../core/components/badge/Badge.types.js';
-import { capitalize } from '../../../../core/shared/utilities/index.js';
 
 // ────────────────
 //    METADATA
@@ -150,7 +154,19 @@ export const Anatomy: Story = {
 //    OPTIONS STORIES
 // ──────────────────────────
 
+const sizeLabels = {
+    s: 'Small',
+    m: 'Medium',
+    l: 'Large',
+    xl: 'Extra-large',
+} as const satisfies Record<BadgeSize, string>;
+
 /**
+ * Valid badge sizes can be found in the `BADGE_VALID_SIZES` constant.
+ * ```typescript
+ * import { BADGE_VALID_SIZES, type BadgeSize } from '@adobe/swc/badge';
+ * ```
+ *
  * Badges come in four sizes to fit various contexts:
  *
  * - **`s` - Small**: Compact spaces, inline with text
@@ -160,22 +176,35 @@ export const Anatomy: Story = {
  *
  * The `s` size is the default and most frequently used option. Use the other sizes sparingly to create a hierarchy of importance on a page.
  *
- * ```typescript
- * import { BADGE_VALID_SIZES, type BadgeSize } from '@adobe/swc/badge';
- * ```
  */
 export const Sizes: Story = {
     render: (args) => html`
-        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
-        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
-        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
-        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+        ${BADGE_VALID_SIZES.map((size) =>
+            template({
+                ...args,
+                size,
+                'default-slot': sizeLabels[size],
+            })
+        )}
     `,
     parameters: { ...parameters, 'section-order': 0 },
     tags: ['options'],
 };
 
+const semanticLabels = {
+    accent: 'New',
+    informative: 'Active',
+    neutral: 'Archived',
+    positive: 'Approved',
+    notice: 'Pending approval',
+    negative: 'Rejected',
+} as const satisfies Record<BadgeSemanticVariant, string>;
 /**
+ * Valid badge semantic variants can be found in the `BADGE_VARIANTS_SEMANTIC` constant.
+ * ```typescript
+ * import { BADGE_VARIANTS_SEMANTIC, type BadgeVariantS2 } from '@adobe/swc/badge';
+ * ```
+ *
  * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color. This is the preferred way to assign color to a badge because it will align more consistently with other components in your UI with the same meaning.
  *
  * Use these variants for the following statuses:
@@ -184,16 +213,16 @@ export const Sizes: Story = {
  * - **`neutral`**: (e.g., archived, deleted, paused, not started, ended)
  * - **`positive`**: (e.g., approved, complete, success, purchased, licensed)
  * - **`notice`**: (e.g., pending, expiring soon, limited, deprecated )
- * - **`negative`**: (e.g., error, alert, rejected, failed)
- *
- * ```typescript
- * import { BADGE_VARIANTS_SEMANTIC, type BadgeVariantS2 } from '@adobe/swc/badge';
- * ```
+ * - **`negative`**: (e.g., rejected, error, alert, failed)
  */
 export const SemanticVariants: Story = {
     render: (args) => html`
         ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
-            template({ ...args, variant, 'default-slot': capitalize(variant) })
+            template({
+                ...args,
+                variant,
+                'default-slot': semanticLabels[variant],
+            })
         )}
     `,
     parameters: { ...parameters, 'section-order': 1 },
@@ -201,17 +230,44 @@ export const SemanticVariants: Story = {
 };
 SemanticVariants.storyName = 'Semantic variants';
 
+const nonSemanticLabels = {
+    fuchsia: 'Marketing',
+    indigo: 'Engineering',
+    magenta: 'Design',
+    purple: 'Product',
+    seafoam: 'Support',
+    yellow: 'Busy',
+    gray: 'Available',
+    red: 'Sales',
+    orange: 'Research',
+    chartreuse: 'Quality',
+    celery: 'Documentation',
+    green: 'Legal',
+    cyan: 'Analytics',
+    blue: 'Security',
+    pink: 'Creative',
+    turquoise: 'Training',
+    brown: 'Facilities',
+    cinnamon: 'Compliance',
+    silver: 'Version 1.2.10',
+} as const satisfies Record<BadgeColorVariantS2, string>;
+
 /**
- * When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
- *
+ * Valid badge non-semantic variants can be found in the `BADGE_VARIANTS_COLOR_S2` constant.
  * ```typescript
  * import { BADGE_VARIANTS_COLOR_S2, type BadgeVariantS2 } from '@adobe/swc/badge';
  * ```
+ *
+ * When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
  */
 export const NonSemanticVariants: Story = {
     render: (args) => html`
         ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
-            template({ ...args, variant, 'default-slot': capitalize(variant) })
+            template({
+                ...args,
+                variant,
+                'default-slot': nonSemanticLabels[variant],
+            })
         )}
     `,
     parameters: { ...parameters, 'section-order': 2 },
@@ -220,11 +276,12 @@ export const NonSemanticVariants: Story = {
 NonSemanticVariants.storyName = 'Non-semantic variants';
 
 /**
- * The `outline` style is only valid for semantic color variants.
- *
+ * Valid badge semantic variants can be found in the `BADGE_VARIANTS_SEMANTIC` constant.
  * ```typescript
  * import { BADGE_VARIANTS_SEMANTIC, type BadgeVariantS2 } from '@adobe/swc/badge';
  * ```
+ *
+ * The `outline` style is only valid for `accent`, `informative`, `neutral`, `positive`, `notice`, and `negative` variants.
  */
 export const Outline: Story = {
     render: (args) => html`
@@ -233,7 +290,7 @@ export const Outline: Story = {
                 ...args,
                 variant,
                 outline: true,
-                'default-slot': capitalize(variant),
+                'default-slot': semanticLabels[variant],
             })
         )}
     `,
@@ -241,12 +298,14 @@ export const Outline: Story = {
     tags: ['options'],
 };
 
+const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
 /**
- * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
- *
+ * Valid badge semantic and non-semantic variants can be found in the `BADGE_VARIANTS_S2` constant.
  * ```typescript
  * import { BADGE_VARIANTS_S2, type BadgeVariantS2 } from '@adobe/swc/badge';
  * ```
+ *
+ * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
  */
 export const Subtle: Story = {
     render: (args) => html`
@@ -255,7 +314,7 @@ export const Subtle: Story = {
                 ...args,
                 variant,
                 subtle: true,
-                'default-slot': capitalize(variant),
+                'default-slot': allVariantsLabels[variant],
             })
         )}
     `,
@@ -263,12 +322,20 @@ export const Subtle: Story = {
     tags: ['options'],
 };
 
+const fixedLabels = {
+    'block-start': 'Block start',
+    'block-end': 'Block end',
+    'inline-start': 'Inline start',
+    'inline-end': 'Inline end',
+} as const satisfies Record<BadgeFixedValues, string>;
+
 /**
- * Badge can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
- *
+ * Valid badge fixed values can be found in the `BADGE_FIXED_VALUES` constant.
  * ```typescript
  * import { BADGE_FIXED_VALUES, type BadgeFixedValues } from '@adobe/swc/badge';
  * ```
+ *
+ * Badge can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
  */
 export const Fixed: Story = {
     render: (args) => html`
@@ -276,7 +343,7 @@ export const Fixed: Story = {
             template({
                 ...args,
                 fixed,
-                'default-slot': capitalize(fixed),
+                'default-slot': fixedLabels[fixed],
             })
         )}
     `,
@@ -327,36 +394,48 @@ export const Accessibility: Story = {
         ${template({
             ...args,
             variant: 'positive',
-            'default-slot': 'Approved',
+            'default-slot': allVariantsLabels['positive'],
         })}
         ${template({
             ...args,
             variant: 'negative',
-            'default-slot': 'Rejected',
+            'default-slot': allVariantsLabels['negative'],
         })}
         ${template({
             ...args,
             variant: 'notice',
-            'default-slot': 'Needs approval',
+            'default-slot': allVariantsLabels['notice'],
         })}
         ${template({
             ...args,
             variant: 'informative',
-            'default-slot': 'New feature',
+            'default-slot': allVariantsLabels['informative'],
         })}
         ${template({
             ...args,
             variant: 'neutral',
-            'default-slot': 'Version 1.2.10',
+            'default-slot': allVariantsLabels['neutral'],
         })}
-        ${template({ ...args, variant: 'celery', 'default-slot': 'Available' })}
-        ${template({ ...args, variant: 'yellow', 'default-slot': 'Busy' })}
+        ${template({
+            ...args,
+            variant: 'celery',
+            'default-slot': allVariantsLabels['celery'],
+        })}
+        ${template({
+            ...args,
+            variant: 'yellow',
+            'default-slot': allVariantsLabels['yellow'],
+        })}
         ${template({
             ...args,
             variant: 'silver',
-            'default-slot': 'Out of office',
+            'default-slot': allVariantsLabels['silver'],
         })}
     `,
     parameters: parameters,
     tags: ['a11y'],
 };
+
+// ──────────────────────────────
+//    HELPER FUNCTIONS STORIES
+// ──────────────────────────────
