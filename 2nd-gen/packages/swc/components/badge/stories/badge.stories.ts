@@ -19,15 +19,15 @@ import { Badge } from '@adobe/swc/badge';
 import '@adobe/swc/badge';
 
 import {
-    BADGE_FIXED_VALUES,
     BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BADGE_VARIANTS_SEMANTIC,
     type BadgeColorVariantS2,
-    type BadgeFixedValues,
     type BadgeSemanticVariant,
     type BadgeSize,
+    FIXED_VALUES,
+    type FixedValues,
 } from '../../../../core/components/badge/Badge.types.js';
 
 // ────────────────
@@ -147,7 +147,7 @@ const fixedLabels = {
     'block-end': 'Block end',
     'inline-start': 'Inline start',
     'inline-end': 'Inline end',
-} as const satisfies Record<BadgeFixedValues, string>;
+} as const satisfies Record<FixedValues, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -393,7 +393,7 @@ export const Subtle: Story = {
  */
 export const Fixed: Story = {
     render: (args) => html`
-        ${BADGE_FIXED_VALUES.map((fixed) =>
+        ${FIXED_VALUES.map((fixed) =>
             template({
                 ...args,
                 fixed,

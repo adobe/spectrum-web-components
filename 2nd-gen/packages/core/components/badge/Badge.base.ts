@@ -20,10 +20,10 @@ import { ObserveSlotPresence } from '@spectrum-web-components/core/shared/observ
 import { ObserveSlotText } from '@spectrum-web-components/core/shared/observe-slot-text.js';
 
 import {
-    BADGE_FIXED_VALUES,
     BADGE_VARIANTS_SEMANTIC,
-    type BadgeFixedValues,
     type BadgeVariant,
+    FIXED_VALUES,
+    type FixedValues,
 } from './Badge.types.js';
 
 /**
@@ -92,7 +92,7 @@ export abstract class BadgeBase extends SizedMixin(
     /**
      * @internal
      */
-    static readonly FIXED_VALUES: readonly string[] = BADGE_FIXED_VALUES;
+    static readonly FIXED_VALUES: readonly string[] = FIXED_VALUES;
 
     /**
      * @internal
@@ -108,11 +108,11 @@ export abstract class BadgeBase extends SizedMixin(
      * property. Explore replacing after the Barebones milestone.
      */
     @property({ reflect: true })
-    public get fixed(): BadgeFixedValues | undefined {
+    public get fixed(): FixedValues | undefined {
         return this._fixed;
     }
 
-    public set fixed(fixed: BadgeFixedValues | undefined) {
+    public set fixed(fixed: FixedValues | undefined) {
         if (fixed === this.fixed) {
             return;
         }
@@ -126,7 +126,7 @@ export abstract class BadgeBase extends SizedMixin(
         this.requestUpdate('fixed', oldValue);
     }
 
-    private _fixed?: BadgeFixedValues;
+    private _fixed?: FixedValues;
 
     // ──────────────────────
     //     IMPLEMENTATION

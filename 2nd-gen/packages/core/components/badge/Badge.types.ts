@@ -16,7 +16,7 @@ import type { ElementSize } from '@spectrum-web-components/core/shared/base/inde
  * @todo The S1 types can be removed once we are no longer maintaining 1st-gen.
  */
 
-export const BADGE_FIXED_VALUES = [
+export const FIXED_VALUES = [
     'block-start',
     'block-end',
     'inline-start',
@@ -75,7 +75,7 @@ export const BADGE_VARIANTS_S2 = [
     ...BADGE_VARIANTS_COLOR_S2,
 ] as const;
 
-export type BadgeFixedValues = (typeof BADGE_FIXED_VALUES)[number];
+export type FixedValues = (typeof FIXED_VALUES)[number];
 export type BadgeSize = (typeof BADGE_VALID_SIZES)[number];
 export type BadgeSemanticVariant = (typeof BADGE_VARIANTS_SEMANTIC)[number];
 export type BadgeColorVariantS1 = (typeof BADGE_VARIANTS_COLOR_S1)[number];
