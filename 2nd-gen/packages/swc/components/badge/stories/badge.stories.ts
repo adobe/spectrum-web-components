@@ -308,6 +308,9 @@ SemanticVariants.storyName = 'Semantic variants';
  * - Visual distinction matters more than semantic meaning
  * - Creating department, team, or project color schemes
  *
+ * **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
+ * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
+ *
  * All non-semantic variants shown below for comparison.
  */
 export const NonSemanticVariants: Story = {
@@ -512,7 +515,10 @@ export const Accessibility: Story = {
             'default-slot': 'Version 1.2.10',
         })}
     `,
-    parameters: parameters,
+    parameters: {
+        ...parameters,
+        flexLayout: true,
+    },
     tags: ['a11y'],
     args: {
         size: 'm',

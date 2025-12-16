@@ -28,10 +28,6 @@ argTypes.variant = {
     options: [undefined, 'file', 'folder'],
 };
 
-argTypes.label = {
-    control: { type: 'text' },
-};
-
 // since we cant't use HTML templates in a slot control,
 // we need to use a select option and render a predefined HTML template based on the selected option
 argTypes['default-slot'] = {
@@ -40,9 +36,9 @@ argTypes['default-slot'] = {
 };
 
 /**
- * Use an `<sp-asset>` element to visually represent a file, folder or image in your application.
- * File and folder representations will center themselves horizontally and vertically in the space provided to the element.
- * Images will be contained to the element, growing to the element's full height while centering itself within the width provided.
+ * An asset visually represents a file, folder, or image in your application.
+ * File and folder representations center themselves horizontally and vertically in the space provided.
+ * Images are contained within the element, growing to the element's full height while centering within the width provided.
  */
 const meta: Meta = {
     title: 'Asset',
@@ -55,7 +51,7 @@ const meta: Meta = {
             handles: events,
         },
         docs: {
-            subtitle: `Assets visually represent a file, folder or image in your application.`,
+            subtitle: `Visually represent files, folders, or images in your application`,
         },
     },
     tags: ['migrated'],
@@ -68,7 +64,6 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    render: (args) => template(args),
     args: {
         label: 'Background',
         'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
@@ -76,12 +71,11 @@ export const Playground: Story = {
     tags: ['autodocs', 'dev'],
 };
 
-// ---------------------
-//   OVERVIEW STORIES
-// ---------------------
+// ────────────────────
+//    OVERVIEW STORY
+// ────────────────────
 
 export const Overview: Story = {
-    render: (args) => template(args),
     args: {
         label: 'Background',
         'default-slot': `<img src="https://picsum.photos/id/56/80/80/?blur=2" alt="preview of background" />`,
@@ -93,26 +87,40 @@ export const Overview: Story = {
 //    ANATOMY STORIES
 // ──────────────────────────
 
-const anatomyArgs = [
-    {
-        variant: 'file',
-        label: 'packages/swc/',
-    },
-    {
-        label: 'Avatar',
-        'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="preview of the avatar" />`,
-    },
-];
 /**
- * An asset is made up of the following parts:
+ * ### Visual structure
  *
- * - A large file or folder icon based on the asset `variant`
- * - An accessible label for the asset
- * - Optional content to be displayed in the asset when an acceptable value for `variant` is not present
+ * An asset consists of:
+ *
+ * 1. **Icon or image content** - Either a file/folder icon or custom slotted content
+ * 2. **Accessible label** - Provides context for assistive technologies
+ *
+ * The asset automatically centers its content both horizontally and vertically within the available space.
+ *
+ * ### Technical structure
+ *
+ * #### Slots
+ *
+ * - **Default slot**: Custom content to display (typically an image) when variant is not set
+ *
+ * #### Properties
+ *
+ * Properties that control the asset's appearance:
+ *
+ * - **variant**: Controls which built-in icon to display (`file`, `folder`, or unset for custom content)
+ * - **label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
+ *
+ * All variations shown below for comparison.
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+        ${template({ ...args, variant: 'file', label: 'README.md' })}
+        ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
+        ${template({
+            ...args,
+            label: 'User avatar',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+        })}
     `,
     parameters: {
         flexLayout: true,
@@ -125,23 +133,36 @@ export const Anatomy: Story = {
 // ──────────────────────────
 
 /**
- * When the `file` variant is added, a file icon displays instead of the slotted content.
+ * Assets support two built-in icon variants for representing files and folders:
+ *
+ * - **file**: Displays a file icon, useful for representing documents, files, or file types
+ * - **folder**: Displays a folder icon, useful for representing directories or collections
+ *
+ * When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
+ *
+ * All variants shown below for comparison.
  */
-export const File: Story = {
-    args: {
-        variant: 'file',
-        label: 'README.md',
-    },
-    tags: ['options'],
-};
-
-/**
- * When the `folder` variant is added, a folder icon displays instead of the slotted content.
- */
-export const Folder: Story = {
-    args: {
-        variant: 'folder',
-        label: 'packages/swc/',
+export const Variants: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'file',
+            label: 'README.md',
+        })}
+        ${template({
+            ...args,
+            variant: 'folder',
+            label: 'packages/swc/',
+        })}
+        ${template({
+            ...args,
+            label: 'User profile image',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User profile preview" />`,
+        })}
+    `,
+    parameters: {
+        flexLayout: true,
+        'section-order': 1,
     },
     tags: ['options'],
 };
@@ -150,30 +171,51 @@ export const Folder: Story = {
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
 
-const accessibilityArgs = [
-    {
-        variant: 'folder',
-        label: '/packages/swc/ folder',
-    },
-    {
-        label: 'Sara Sawyer avatar',
-        'default-slot': `<img src="https://picsum.photos/id/823/80/80" alt="preview of the user profile picture" />`,
-    },
-];
 /**
  * ### Features
  *
- * The `<sp-asset>` element implements several accessibility features:
+ * The `<swc-asset>` element implements several accessibility features:
  *
- * 1. **Labeling**: Uses the `label` attribute value as `aria-label`
+ * #### ARIA implementation
  *
- * ### Best Practices
+ * - **Icon labeling**: File and folder SVG icons automatically use the `label` property as `aria-label`
+ * - **Semantic role**: SVG icons use `role="img"` to identify them as image content
+ * - **Non-interactive**: Assets have no interactive behavior and are not focusable
  *
- * - Always provide a descriptive `label` that explains what the asset represents, unless the asset is purely decorative
+ * #### Visual accessibility
+ *
+ * - Icons use sufficient color contrast in both light and dark modes
+ * - High contrast mode is supported with appropriate color overrides
+ * - Content automatically centers for consistent layout and visual balance
+ *
+ * ### Best practices
+ *
+ * - Always provide a descriptive `label` attribute for file and folder variants
+ * - Use specific, meaningful labels (e.g., "Project proposal PDF" not just "File")
+ * - When using images in the default slot, provide descriptive `alt` text on the `<img>` element
+ * - The `label` on the asset itself should describe the asset's purpose or context
+ * - For decorative images, use an empty `alt=""` attribute on the img tag
+ * - Ensure images have sufficient contrast against their backgrounds
+ * - Test with screen readers to verify assets are announced appropriately in context
+ * - Consider the surrounding context - assets should be clearly associated with related content
  */
 export const Accessibility: Story = {
     render: (args) => html`
-        ${accessibilityArgs.map((arg) => template({ ...args, ...arg }))}
+        ${template({
+            ...args,
+            variant: 'file',
+            label: 'Project proposal document',
+        })}
+        ${template({
+            ...args,
+            variant: 'folder',
+            label: 'Design assets directory',
+        })}
+        ${template({
+            ...args,
+            label: 'User profile photo',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
+        })}
     `,
     parameters: {
         flexLayout: true,

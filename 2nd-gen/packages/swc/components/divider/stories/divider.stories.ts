@@ -99,7 +99,7 @@ export const Overview: Story = {
  *
  * A divider consists of:
  *
- * 1. **Line** - The visual separator element
+ * 1. **Line** - The visual separator element that creates visual separation between content
  *
  * ### Technical structure
  *
@@ -109,7 +109,7 @@ export const Overview: Story = {
  *
  * - **size**: Controls the thickness of the divider line (`s`, `m`, `l`)
  * - **vertical**: Changes orientation from horizontal to vertical
- * - **staticColor**: Provides contrast on colored backgrounds (`white`, `black`)
+ * - **static-color**: Provides contrast on colored backgrounds (`white`, `black`)
  *
  * #### CSS custom properties
  *
@@ -121,8 +121,15 @@ export const Overview: Story = {
  * - **--spectrum-divider-block-minimum-size**: Minimum height for vertical dividers
  */
 export const Anatomy: Story = {
+    render: (args) => html`
+        <h4>Content above the divider</h4>
+        ${template({ ...args, size: 'm' })}
+        <p>Content below the divider</p>
+    `,
     tags: ['anatomy'],
-    args: {},
+    parameters: {
+        flexLayout: true,
+    },
 };
 
 // ──────────────────────────
