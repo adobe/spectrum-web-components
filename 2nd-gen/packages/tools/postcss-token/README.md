@@ -9,7 +9,7 @@ It is intended for use alongside `@adobe/swc-tokens`, which supplies the process
 `@adobe/postcss-token` allows CSS such as:
 
 ```css
-.button {
+.swc-Button {
     background-color: token('accent-background-color-default');
 }
 ```
@@ -17,7 +17,7 @@ It is intended for use alongside `@adobe/swc-tokens`, which supplies the process
 to be transformed at build time into valid CSS values:
 
 ```css
-.button {
+.swc-Button {
     background-color: var(--swc-accent-background-color-default);
 }
 ```
@@ -52,9 +52,9 @@ All of the above are handled by `@adobe/swc-tokens`.
 
 ```mermaid
 flowchart LR
-    A[Design Token Data] --> B[@adobe/swc-tokens]
-    B -->|lookupToken()| C[@adobe/postcss-token]
-    C --> D[Final CSS Output]
+    A["Design Token Data"] --> B["@adobe/swc-tokens"]
+    B -->|"lookupToken()"| C["@adobe/postcss-token"]
+    C --> D["Final CSS Output"]
 ```
 
 ## Usage
@@ -127,7 +127,7 @@ color: token('not-a-real-token');
 ```
 
 ```
-Error: token() did not find 'not-a-real-token'
+Error: token() not found: 'not-a-real-token'
 ```
 
 ## Plugin Options

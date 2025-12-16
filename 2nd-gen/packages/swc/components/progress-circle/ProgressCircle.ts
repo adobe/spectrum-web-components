@@ -82,12 +82,11 @@ export class ProgressCircle extends ProgressCircleBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-ProgressCircle']: true,
-                    [`spectrum-ProgressCircle--indeterminate`]:
-                        this.indeterminate,
-                    [`spectrum-ProgressCircle--static${capitalize(this.staticColor)}`]:
+                    ['swc-ProgressCircle']: true,
+                    [`swc-ProgressCircle--indeterminate`]: this.indeterminate,
+                    [`swc-ProgressCircle--static${capitalize(this.staticColor)}`]:
                         typeof this.staticColor !== 'undefined',
-                    [`spectrum-ProgressCircle--size${this.size?.toUpperCase()}`]:
+                    [`swc-ProgressCircle--size${this.size?.toUpperCase()}`]:
                         typeof this.size !== 'undefined',
                 })}
             >
@@ -96,10 +95,10 @@ export class ProgressCircle extends ProgressCircleBase {
                     fill="none"
                     width="100%"
                     height="100%"
-                    class="spectrum-outerCircle"
+                    class="swc-outerCircle"
                 >
                     <circle
-                        class="spectrum-innerCircle"
+                        class="swc-innerCircle"
                         cx="50%"
                         cy="50%"
                         r=${`calc(50% - ${strokeWidth / 1}px)`}
@@ -108,14 +107,14 @@ export class ProgressCircle extends ProgressCircleBase {
                     <circle
                         cx="50%"
                         cy="50%"
-                        class="spectrum-ProgressCircle-track"
+                        class="swc-ProgressCircle-track"
                         r=${radius}
                     />
                     <circle
                         cx="50%"
                         cy="50%"
                         r=${radius}
-                        class="spectrum-ProgressCircle-fill"
+                        class="swc-ProgressCircle-fill"
                         pathLength="100"
                         stroke-dasharray="100 200"
                         stroke-dashoffset=${100 - this.progress}

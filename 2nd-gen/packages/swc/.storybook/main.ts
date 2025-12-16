@@ -9,7 +9,7 @@ const config = {
     stories: [
         {
             directory: 'guides',
-            files: '*.@(md|mdx)',
+            files: '**/*.@(md|mdx)',
             titlePrefix: 'Guides',
         },
         {

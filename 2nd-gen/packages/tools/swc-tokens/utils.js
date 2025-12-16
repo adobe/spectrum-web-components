@@ -358,6 +358,8 @@ function normalizePrimitive(
 }
 
 function normalizeSetGroup(sets, lookup, prefix, debug) {
+    // const log = typeof debug === 'function' ? debug : () => {};
+
     const out = {};
 
     for (const [name, set] of Object.entries(sets)) {
@@ -385,11 +387,11 @@ function extractTokenValues(
     const lookup = rawLookupOverride ?? buildRawLookup(json);
     const out = {};
 
-    // const log = typeof debug === 'function' ? debug : () => {};
+    const log = typeof debug === 'function' ? debug : () => {};
 
     for (const [name, token] of Object.entries(json)) {
         if (token?.deprecated) {
-            // log(`[DEPRECATED] ${name}`);
+            log(`[DEPRECATED] token '${name}'`);
             continue;
         }
 
@@ -471,8 +473,8 @@ export async function generateCSS(prefix, debug = false) {
             if (value.desktop && value.mobile) {
                 write(
                     name,
-                    `var(--spectrum-theme--sizeM, ${value.desktop})
-                var(--spectrum-theme--sizeL, ${value.mobile})`,
+                    `var(--${prefix}-theme--sizeM, ${value.desktop})
+                var(--${prefix}-theme--sizeL, ${value.mobile})`,
                     scaling
                 );
             }
@@ -491,13 +493,15 @@ export async function generateCSS(prefix, debug = false) {
  * governing permissions and limitations under the License.
  */
 
+/* ⚠️ NOTE: This file is dynamically generated via swc-tokens */
+
 /* stylelint-disable value-keyword-case */
 
 :root {
 ${nonScaling.join('\n')}
 }
 
-:root, .spectrum-theme {
+:root, .swc-theme {
 ${scaling.join('\n')}
 }`.trim();
 }
@@ -552,7 +556,7 @@ export const allTokens = (prefix, debug = false) =>
 export async function lookupToken(key, prefix) {
     const tokens = await allTokens(prefix);
     if (!(key in tokens)) {
-        throw new Error(`token() did not find '${key}'`);
+        throw new Error(`token() not found: '${key}'`);
     }
 
     return typeof tokens[key] === 'object'

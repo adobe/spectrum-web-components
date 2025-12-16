@@ -36,7 +36,7 @@ describe('swc-status-light', () => {
 
             expect(statusLight.shadowRoot).toBeTruthy();
             expect(
-                statusLight.shadowRoot?.querySelector('.spectrum-StatusLight')
+                statusLight.shadowRoot?.querySelector('.swc-StatusLight')
             ).toBeTruthy();
         });
 
@@ -66,7 +66,7 @@ describe('swc-status-light', () => {
             expect(statusLight.getAttribute('variant')).toBe('positive');
             expect(
                 statusLight.shadowRoot?.querySelector(
-                    '.spectrum-StatusLight--positive'
+                    '.swc-StatusLight--positive'
                 )
             ).toBeTruthy();
         });
@@ -79,7 +79,7 @@ describe('swc-status-light', () => {
             expect(statusLight.variant).toBe('negative');
             expect(
                 statusLight.shadowRoot?.querySelector(
-                    '.spectrum-StatusLight--negative'
+                    '.swc-StatusLight--negative'
                 )
             ).toBeTruthy();
         });
@@ -101,7 +101,7 @@ describe('swc-status-light', () => {
                 expect(statusLight.variant).toBe(variant);
                 expect(
                     statusLight.shadowRoot?.querySelector(
-                        `.spectrum-StatusLight--${variant}`
+                        `.swc-StatusLight--${variant}`
                     )
                 ).toBeTruthy();
             }
@@ -133,7 +133,7 @@ describe('swc-status-light', () => {
                 expect(statusLight.variant).toBe(variant);
                 expect(
                     statusLight.shadowRoot?.querySelector(
-                        `.spectrum-StatusLight--${variant}`
+                        `.swc-StatusLight--${variant}`
                     )
                 ).toBeTruthy();
             }
@@ -151,9 +151,7 @@ describe('swc-status-light', () => {
 
             expect(statusLight.getAttribute('size')).toBe('s');
             expect(
-                statusLight.shadowRoot?.querySelector(
-                    '.spectrum-StatusLight--sizeS'
-                )
+                statusLight.shadowRoot?.querySelector('.swc-StatusLight--sizeS')
             ).toBeTruthy();
         });
     });
@@ -190,9 +188,8 @@ describe('swc-status-light', () => {
                 <swc-status-light variant="positive">Approved</swc-status-light>
             `);
 
-            const statusLightElement = statusLight.shadowRoot?.querySelector(
-                '.spectrum-StatusLight'
-            );
+            const statusLightElement =
+                statusLight.shadowRoot?.querySelector('.swc-StatusLight');
             expect(statusLightElement).toBeTruthy();
             expect(statusLight.textContent).toBe('Approved');
         });

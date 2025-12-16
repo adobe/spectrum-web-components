@@ -155,17 +155,17 @@ The final unified stylesheet uses the following selectors for those token groups
 }
 
 :root,
-.spectrum-theme {
+.swc-theme {
     /* Scaling values */
 }
 ```
 
 CSS computes custom property values at declaration time. For scale-aware tokens, their resolved values must be re-evaluated whenever a size context changes (for example, from medium to large).
 
-By declaring scaling tokens under both `:root` and `.spectrum-theme`:
+By declaring scaling tokens under both `:root` and `.swc-theme`:
 
 - Tokens remain available globally by default
-- Consumers can locally override scale by applying `.spectrum-theme` plus a corresponding size class (e.g. `--spectrum-theme--sizeL`)
+- Consumers can locally override scale by applying `.swc-theme` plus a corresponding size class (e.g. `--swc-theme--sizeL`)
 
 Without this structure, scaling tokens would not recompute correctly when applied within a scoped theme or size container.
 

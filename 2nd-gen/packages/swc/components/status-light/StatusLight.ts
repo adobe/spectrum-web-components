@@ -74,10 +74,10 @@ export class StatusLight extends StatusLightBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-StatusLight']: true,
-                    [`spectrum-StatusLight--size${this.size?.toUpperCase()}`]:
+                    ['swc-StatusLight']: true,
+                    [`swc-StatusLight--size${this.size?.toUpperCase()}`]:
                         this.size != null,
-                    [`spectrum-StatusLight--${this.variant}`]:
+                    [`swc-StatusLight--${this.variant}`]:
                         typeof this.variant !== 'undefined',
                 })}
             >
