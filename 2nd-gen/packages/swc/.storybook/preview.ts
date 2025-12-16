@@ -7,6 +7,7 @@ import {
     type Options,
 } from '@wc-toolkit/storybook-helpers';
 import customElements from './custom-elements.json';
+import { withContext } from './decorators/contexts';
 import { withStaticColorBackground } from './decorators/static-color-background';
 
 const options: Options = {
@@ -29,9 +30,39 @@ setStorybookHelpersConfig(options);
 setCustomElementsManifest(customElements);
 
 const preview = {
-    decorators: [withStaticColorBackground],
+    globalTypes: {
+        theme: {
+            description: 'Global theme for components',
+            toolbar: {
+                title: 'Theme',
+                items: [
+                    { value: 'light', title: 'Light' },
+                    { value: 'dark', title: 'Dark' },
+                    { value: 'adaptive', title: 'Adaptive' },
+                ],
+                dynamicTitle: true,
+            },
+        },
+        scale: {
+            description: 'Global scale for components',
+            toolbar: {
+                title: 'Scale',
+                items: [
+                    { value: 'medium', title: 'Medium' },
+                    { value: 'large', title: 'Large' },
+                ],
+                dynamicTitle: true,
+            },
+        },
+    },
+    initialGlobals: {
+        theme: 'light',
+        scale: 'medium',
+    },
+    decorators: [withContext, withStaticColorBackground],
     parameters: {
         layout: 'centered',
+        backgrounds: { disable: true }, // Use custom context switches
         controls: {
             expanded: true,
             matchers: {
