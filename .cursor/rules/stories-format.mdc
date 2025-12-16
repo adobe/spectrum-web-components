@@ -1,10 +1,12 @@
 ---
-description: 2nd-gen/packages/swc/components/*/stories/**
-alwaysApply: false
+globs: 2nd-gen/packages/swc/components/*/stories/**
+alwaysApply: true
 ---
 # Storybook stories format standards
 
-Enforce consistent formatting and structure for Storybook stories files in 2nd-gen components.
+Enforce consistent formatting and technical structure for Storybook stories files in 2nd-gen components.
+
+**See also**: `.cursor/rules/stories-documentation.mdc` for comprehensive guidance on WHAT to document (content, patterns, examples).
 
 ## Scope
 
@@ -19,13 +21,13 @@ Required structure with visual separators between sections:
 1. **Copyright header** (lines 1-11)
 2. **Imports**
 3. **METADATA** - Meta object with component configuration
-4. **AUTODOCS STORY** - Playground story
-5. **ANATOMY STORIES** - Component structure (if applicable)
-6. **OPTIONS STORIES** - Variants, sizes, styles
-7. **STATES STORIES** - Component states (if applicable)
-8. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
-9. **ACCESSIBILITY STORIES** - A11y demonstration
-10. **HELPER FUNCTIONS** - Utilities like size label mappers (if needed)
+4. **HELPERS** - Shared label mappings and utilities (if needed)
+5. **AUTODOCS STORY** - Playground story
+6. **ANATOMY STORIES** - Component structure (if applicable)
+7. **OPTIONS STORIES** - Variants, sizes, styles
+8. **STATES STORIES** - Component states (if applicable)
+9. **BEHAVIORS STORIES** - Built-in functionality (if applicable)
+10. **ACCESSIBILITY STORIES** - A11y demonstration
 
 #### Visual separators
 
@@ -33,6 +35,10 @@ Required structure with visual separators between sections:
 // ────────────────
 //    METADATA
 // ────────────────
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -57,10 +63,6 @@ Required structure with visual separators between sections:
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES
 // ────────────────────────────────
-
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────
 ```
 
 ### Usage file (`.usage.mdx`)
@@ -96,6 +98,7 @@ Package name, npm install command, and import statements go here directly (not a
 ```
 
 **Section rules**:
+
 - Use `hideTitle` for Anatomy and Accessibility only
 - Follow this section order, skipping inapplicable sections
 - Use sentence case for headings
@@ -107,6 +110,11 @@ Package name, npm install command, and import statements go here directly (not a
 ```typescript
 /**
  * Component description explaining its purpose and key features.
+ * 
+ * This description is displayed in the Overview story. It should provide context about
+ * what the component does and when to use it. If referencing other components, link to
+ * their Storybook paths using relative URLs (e.g., `<swc-badge>` becomes 
+ * `[Badge](../?path=/docs/badge--overview)`).
  */
 const meta: Meta = {
     title: 'Component name',
@@ -116,13 +124,22 @@ const meta: Meta = {
     render: (args) => template(args),
     parameters: {
         actions: { handles: events },      // If events exist
-        docs: { subtitle: `Component description` }, // Required
+        docs: { 
+            subtitle: `Component description` // Required - displayed in Overview, cannot include links
+        },
         design: { type: 'figma', url: 'https://www.figma.com/...'},     // Recommended
         stackblitz: { url: 'https://stackblitz.com/...'},                // Recommended
     },
     tags: ['migrated'],
 };
 ```
+
+**Important notes:**
+
+- **JSDoc description above meta**: Displayed in the Overview story. Can include markdown links to other components.
+- **`parameters.docs.subtitle`**: Displayed as the subtitle in the Overview story. Cannot include links (plain text only).
+- **Avoid repetition**: The subtitle and JSDoc description should complement each other, not duplicate content. The subtitle is a brief summary; the JSDoc provides fuller context.
+- **Component links**: When referencing other components in the JSDoc description, use relative Storybook paths: `[ComponentName](../?path=/docs/component-name--overview)`
 
 ## Layout and decorators
 
@@ -208,6 +225,7 @@ export const StaticColors: Story = {
 | Tag | Usage |
 |-----|-------|
 | `'autodocs'`, `'dev'` | Playground story only |
+| `'overview'` | Overview story |
 | `'anatomy'` | Anatomy stories |
 | `'options'` | Variant, size, and style stories |
 | `'states'` | State demonstration stories |
@@ -241,7 +259,7 @@ Every story export must have a JSDoc comment explaining:
 - Any important context or usage notes
 - Best practices if relevant
 
-**Exception**: Do NOT add JSDoc comments above the Playground story.
+**Exceptions**: Do NOT add JSDoc comments above the Playground or Overview stories.
 
 Use markdown formatting within JSDoc:
 
@@ -256,6 +274,19 @@ Use markdown formatting within JSDoc:
 export const Playground: Story = {
     args: { /* most common use case */ },
     tags: ['autodocs', 'dev'],
+};
+```
+
+### Overview
+
+Quick introduction showing the component in its most common use case. No JSDoc comment needed.
+
+```typescript
+export const Overview: Story = {
+    args: {
+        // Most common/representative configuration
+    },
+    tags: ['overview'],
 };
 ```
 
@@ -455,6 +486,7 @@ export const Accessibility: Story = {
 Every story export requires a JSDoc comment explaining what it demonstrates, **except Playground**.
 
 Use markdown formatting:
+
 - `**Bold**` for emphasis
 - Bullet lists for multiple points
 - Backticks for code
@@ -561,7 +593,7 @@ See `asset.stories.ts` for complete examples.
 
 ### ❌ Don't
 
-- Add JSDoc to Playground story
+- Add JSDoc to Playground or Overview story
 - Use 'usage' tag (deprecated)
 - Omit `subtitle` in meta parameters
 - Use placeholder text
@@ -572,7 +604,7 @@ See `asset.stories.ts` for complete examples.
 - Use `<SpectrumStories />` in usage.mdx
 - Use `flexLayout: true` for multi-item stories
 - Tag stories correctly: `anatomy`, `options`, `states`, `behaviors`, `a11y`
-- Include comprehensive JSDoc (except Playground)
+- Include comprehensive JSDoc (except Playground and Overview)
 - Use meaningful, realistic content
 
 ## Checklist
@@ -580,6 +612,9 @@ See `asset.stories.ts` for complete examples.
 - [ ] Copyright header (2025)
 - [ ] Visual separators between sections
 - [ ] Meta: title, component, args, argTypes, render, `parameters.docs.subtitle`, `tags: ['migrated']`
+- [ ] Meta JSDoc description above meta object (with component links if applicable)
+- [ ] Subtitle is concise and non-repetitive (plain text only, no links)
+- [ ] Overview: `['overview']` tag, common use case args, no JSDoc on story itself
 - [ ] Playground: `['autodocs', 'dev']` tags, no JSDoc, common use case args
 - [ ] Anatomy: all slots + content properties, `['anatomy']` tag, `flexLayout: true`
 - [ ] Options: all uncovered attributes, `['options']` tag, `flexLayout: true`

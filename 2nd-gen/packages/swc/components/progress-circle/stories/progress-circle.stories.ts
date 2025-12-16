@@ -43,9 +43,8 @@ argTypes['static-color'] = {
 };
 
 /**
+ * Progress circles show the progression of a system operation such as downloading, uploading, processing, etc. in a visual way.
  * They can represent determinate or indeterminate progress.
- * By default, they represent determinate progress. To represent determinate progress, set the `progress` attribute to a value between 0 and 100.
- * To represent indeterminate progress, set the `indeterminate` attribute to `true`.
  */
 const meta: Meta = {
     title: 'Progress circle',
@@ -64,7 +63,7 @@ const meta: Meta = {
     },
     args,
     argTypes,
-    render: (args) => template(args), // This is the default render function for the component. Think of this like a beforeEach setup function for the stories below.
+    render: (args) => template(args),
     tags: ['migrated'],
 };
 
@@ -79,7 +78,7 @@ export const Playground: Story = {
     args: {
         progress: 50,
         size: 'm',
-        label: 'Loading progress',
+        label: 'Uploading document',
     },
 };
 
@@ -91,7 +90,7 @@ export const Overview: Story = {
     tags: ['overview'],
     args: {
         progress: 50,
-        label: 'Loading progress',
+        label: 'Uploading document',
     },
 };
 
@@ -100,21 +99,65 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * A progress circle consists of several key parts:
+ * ### Visual structure
  *
- * - An accessible label (via `label` attribute)
- * - A progress value (via `progress` attribute)
- * - An indeterminate state (via `indeterminate` attribute)
- * - An optional size
- * - An optional static color for backgrounds that have color
+ * A progress circle consists of:
+ *
+ * 1. **Track** - Background ring showing the full progress range
+ * 2. **Fill** - Colored ring segment showing current progress
+ * 3. **Label** - Accessible text describing the operation (not visually rendered)
+ *
+ * ### Technical structure
+ *
+ * #### Slots
+ *
+ * - **Default slot**: Alternative way to provide an accessible label (the `label` attribute is preferred)
+ *
+ * #### Properties
+ *
+ * - **progress**: Numeric value from 0-100 controlling the fill amount
+ * - **label**: Accessible text describing what is loading or progressing
+ * - **indeterminate**: Boolean controlling animated vs. determinate state
+ * - **size**: Visual size (s, m, or l)
+ * - **static-color**: Color variant for use on different backgrounds (white or black)
+ *
+ * #### CSS custom properties
+ *
+ * Key design tokens that control appearance:
+ *
+ * - **--spectrum-progress-circle-size**: Overall diameter of the circle
+ * - **--spectrum-progress-circle-thickness**: Width of the progress ring
+ * - **--spectrum-progress-circle-track-border-color**: Color of the background track
+ * - **--spectrum-progress-circle-fill-border-color**: Color of the progress fill
+ *
+ * All variations shown below for comparison.
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${template({ ...args, progress: 25, size: 'l', label: 'Loading' })}
-        ${template({ ...args, indeterminate: true, label: 'Saving progress' })}
+        ${template({
+            ...args,
+            progress: 0,
+            size: 'l',
+            label: 'Starting upload',
+        })}
+        ${template({
+            ...args,
+            progress: 50,
+            size: 'l',
+            label: 'Uploading document',
+        })}
+        ${template({
+            ...args,
+            progress: 100,
+            size: 'l',
+            label: 'Upload complete',
+        })}
     `,
     tags: ['anatomy'],
     args: {},
+    parameters: {
+        flexLayout: true,
+    },
 };
 
 // ──────────────────────────
@@ -124,45 +167,35 @@ export const Anatomy: Story = {
 /**
  * Progress circles come in three sizes to fit various contexts:
  *
- * - **Small**: Used for inline indicators or space-constrained areas
- * - **Medium**: Default size, used for typical loading states
- * - **Large**: Used for prominent loading states or primary content areas
+ * - **Small (s)**: Used for inline indicators or space-constrained areas, such as in tables or alongside small text
+ * - **Medium (m)**: Default size, used for typical loading states in cards, forms, or content areas
+ * - **Large (l)**: Used for prominent loading states, primary content areas, or full-page loading indicators
+ *
+ * All sizes shown below for comparison.
  */
 export const Sizes: Story = {
     render: (args) => html`
-        ${template({ ...args, size: 's', label: 'Small progress' })}
-        ${template({ ...args, size: 'm', label: 'Medium progress' })}
-        ${template({ ...args, size: 'l', label: 'Large progress' })}
+        ${template({ ...args, size: 's', label: 'Processing small item' })}
+        ${template({ ...args, size: 'm', label: 'Processing medium item' })}
+        ${template({ ...args, size: 'l', label: 'Processing large item' })}
     `,
     tags: ['options'],
     args: {
         progress: 25,
     },
-};
-
-/**
- * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
- * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
- */
-export const StaticWhite: Story = {
-    args: {
-        'static-color': 'white',
-        progress: 60,
-        label: 'Loading on dark background',
-    },
-};
-
-export const StaticBlack: Story = {
-    args: {
-        'static-color': 'black',
-        progress: 60,
-        label: 'Loading on light background',
+    parameters: {
+        flexLayout: true,
+        'section-order': 1,
     },
 };
 
 /**
- * When displaying over images or colored backgrounds, use the `static-color` attribute for better contrast,
- * e.g. `static-color="white"` on a dark background or `static-color="black"` on a light background.
+ * Use the `static-color` attribute when displaying over images or colored backgrounds:
+ *
+ * - **white**: Use on dark or colored backgrounds for better contrast
+ * - **black**: Use on light backgrounds for better contrast
+ *
+ * Both variants shown below with appropriate backgrounds.
  */
 export const StaticColors: Story = {
     render: (args) => html`
@@ -172,12 +205,41 @@ export const StaticColors: Story = {
     `,
     args: {
         progress: 60,
-        label: 'Loading',
+        label: 'Processing media',
     },
     tags: ['options', '!test'],
     parameters: {
         flexLayout: false,
         staticColorsDemo: true,
+        'section-order': 2,
+    },
+};
+
+/**
+ * Individual `static-color="white"` example for testing and demonstration on dark backgrounds.
+ */
+export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+        progress: 60,
+        label: 'Loading on dark background',
+    },
+    parameters: {
+        'section-order': 3,
+    },
+};
+
+/**
+ * Individual `static-color="black"` example for testing and demonstration on light backgrounds.
+ */
+export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+        progress: 60,
+        label: 'Loading on light background',
+    },
+    parameters: {
+        'section-order': 4,
     },
 };
 
@@ -186,30 +248,49 @@ export const StaticColors: Story = {
 // ──────────────────────────
 
 /**
- * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress. This automatically sets `aria-valuenow` to the provided value.
+ * Progress circles can show specific progress values from 0% to 100%.
+ * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
+ * This automatically sets `aria-valuenow` to the provided value for screen readers.
+ *
+ * All progress values shown below for comparison.
  */
 export const ProgressValues: Story = {
     render: (args) => html`
-        ${template({ ...args, progress: 25, label: '25% progress' })}
-        ${template({ ...args, progress: 50, label: '50% progress' })}
-        ${template({ ...args, progress: 75, label: '75% progress' })}
-        ${template({ ...args, progress: 100, label: '100% progress' })}
+        ${template({ ...args, progress: 0, label: 'Starting download' })}
+        ${template({ ...args, progress: 25, label: 'Downloading (25%)' })}
+        ${template({ ...args, progress: 50, label: 'Downloading (50%)' })}
+        ${template({ ...args, progress: 75, label: 'Downloading (75%)' })}
+        ${template({ ...args, progress: 100, label: 'Download complete' })}
     `,
     tags: ['states'],
     args: {
         size: 'm',
     },
+    parameters: {
+        flexLayout: true,
+        'section-order': 1,
+    },
 };
 
 /**
- * Set the `indeterminate` attribute to render an animated loading indicator when the progress is unknown. This removes `aria-valuenow` from the element.
+ * The indeterminate state shows an animated loading indicator when progress is unknown or cannot be determined.
+ * Set the `indeterminate` attribute to `true` to activate this state.
+ * This removes `aria-valuenow` from the element and provides appropriate feedback to assistive technologies.
+ *
+ * Use indeterminate progress when:
+ * - The operation duration is unknown
+ * - Progress cannot be accurately measured
+ * - Multiple sub-operations are running in parallel
  */
 export const Indeterminate: Story = {
     tags: ['states'],
     args: {
         indeterminate: true,
         size: 'm',
-        label: 'Loading...',
+        label: 'Processing request',
+    },
+    parameters: {
+        'section-order': 2,
     },
 };
 
@@ -222,27 +303,43 @@ export const Indeterminate: Story = {
  *
  * The `<swc-progress-circle>` element implements several accessibility features:
  *
+ * #### ARIA implementation
+ *
  * 1. **ARIA role**: Automatically sets `role="progressbar"` for proper semantic meaning
  * 2. **Labeling**:
  *     - Uses the `label` attribute value as `aria-label`
- *     - When determinate, adds `aria-valuenow` with the current progress
- *     - Includes `aria-valuemin="0"` and `aria-valuemax="100"` for the progress range
- * 3. **Status communication**:
- *     - Screen readers announce progress updates
- *     - Indeterminate state is properly conveyed to assistive technologies
+ *     - Alternative: Content in the default slot can provide the label
+ * 3. **Progress state** (determinate):
+ *     - Sets `aria-valuenow` with the current `progress` value
+ * 4. **Loading state** (indeterminate):
+ *     - Removes `aria-valuenow` when `indeterminate="true"`
+ *     - Screen readers understand this as an ongoing operation with unknown duration
+ * 5. **Status communication**: Screen readers announce progress updates as values change
+ *
+ * #### Visual accessibility
+ *
+ * - Progress is shown visually through the fill amount, not relying solely on color
+ * - High contrast mode is supported with appropriate color overrides
+ * - Static color variants ensure sufficient contrast on different backgrounds
  *
  * ### Best practices
  *
  * - Always provide a descriptive `label` that explains what the progress represents
- * - Use determinate progress when possible to give users a clear sense of completion
+ * - Use specific, meaningful labels (e.g., "Uploading profile photo" instead of "Loading")
+ * - Use determinate progress (`progress="50"`) when possible to give users a clear sense of completion
  * - For determinate progress, ensure the `progress` value accurately reflects the actual progress
+ * - Use indeterminate progress only when duration is truly unknown
  * - Consider using `size="l"` for primary loading states to improve visibility
+ * - Ensure sufficient color contrast between the progress circle and its background
+ * - Use `static-color="white"` on dark backgrounds or `static-color="black"` on light backgrounds
+ * - Test with screen readers to verify progress announcements are clear and timely
+ * - Avoid updating progress values more frequently than every 1-2 seconds to prevent announcement overload
  */
 export const Accessibility: Story = {
     tags: ['a11y'],
     args: {
         progress: 60,
         size: 'l',
-        label: 'Uploading document',
+        label: 'Uploading presentation slides',
     },
 };

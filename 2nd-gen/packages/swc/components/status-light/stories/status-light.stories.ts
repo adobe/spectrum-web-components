@@ -79,103 +79,19 @@ const meta: Meta = {
 export default meta;
 
 // ────────────────────
-//    AUTODOCS STORY
+//    HELPERS
 // ────────────────────
-
-export const Playground: Story = {
-    tags: ['autodocs', 'dev'],
-    args: {
-        size: 'm',
-        'default-slot': 'New Feature',
-    },
-};
-
-// ────────────────────
-//    OVERVIEW STORY
-// ────────────────────
-
-export const Overview: Story = {
-    tags: ['overview'],
-    args: {
-        size: 'm',
-        'default-slot': 'Active',
-    },
-};
-
-// ──────────────────────────
-//    ANATOMY STORIES
-// ──────────────────────────
-
-/**
- * A status light consists of a colored dot indicator and a required text label. The dot's color represents the status or category, while the text provides additional context.
- */
-export const Anatomy: Story = {
-    render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'positive',
-            'default-slot': 'Approved',
-        })}
-    `,
-    tags: ['anatomy'],
-    args: {
-        size: 'm',
-    },
-};
-
-// ──────────────────────────
-//    OPTIONS STORIES
-// ──────────────────────────
-
-/**
- * Status lights come in four different sizes: `s`, `m`, `l`, and `xl`. The `m` size is the default and most frequently used option. Use the other sizes sparingly; they should be used to create a hierarchy of importance within the page.
- */
-export const Sizes: Story = {
-    render: (args) => html`
-        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
-        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
-        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
-        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
-    `,
-    parameters: { ...parameters, 'section-order': 0 },
-    tags: ['options'],
-};
 
 const semanticLabels = {
-    info: 'Information',
+    info: 'Active',
     neutral: 'Archived',
     positive: 'Approved',
     notice: 'Pending approval',
     negative: 'Rejected',
 } as const satisfies Record<StatusLightSemanticVariantS2, string>;
-/**
- * When status lights have a semantic meaning, they use semantic colors. Use these variants for the following statuses:
- *
- * - **Info**: active, in use, live, published
- * - **Neutral**: archived, deleted, paused, draft, not started, ended
- * - **Positive**: approved, complete, success, new, purchased, licensed
- * - **Notice**: needs approval, pending, scheduled, syncing, indexing, processing
- * - **Negative**: error, alert, rejected, failed
- *
- * Semantic status lights should never be used for color coding categories or labels, and vice versa.
- */
-export const SemanticVariants: Story = {
-    render: () => html`
-        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
-            (variant: StatusLightSemanticVariantS2) =>
-                template({
-                    ...args,
-                    variant,
-                    'default-slot': semanticLabels[variant],
-                })
-        )}
-    `,
-    parameters: { ...parameters, 'section-order': 1 },
-    tags: ['options'],
-};
 
 const nonSemanticLabels = {
-    yellow: 'Busy',
+    yellow: 'Operations',
     chartreuse: 'Quality',
     celery: 'Documentation',
     seafoam: 'Support',
@@ -190,11 +106,135 @@ const nonSemanticLabels = {
     cinnamon: 'Compliance',
     silver: 'Version 1.2.10',
 } as const satisfies Record<StatusLightColorVariantS2, string>;
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+    tags: ['autodocs', 'dev'],
+    args: {
+        size: 'm',
+        variant: 'info',
+        'default-slot': 'Active',
+    },
+};
+
+// ────────────────────
+//    OVERVIEW STORY
+// ────────────────────
+
+export const Overview: Story = {
+    tags: ['overview'],
+    args: {
+        size: 'm',
+        variant: 'info',
+        'default-slot': 'Active',
+    },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
+
 /**
- * When status lights are used to color code categories and labels that are commonly found in data visualization, they use label colors. The ideal usage for these is when there are **8 or fewer** categories or labels being color coded.
+ * ### Visual structure
+ *
+ * A status light consists of:
+ *
+ * 1. **Colored dot indicator** - Visual representation of status or category
+ * 2. **Text label** - Descriptive text providing context
+ *
+ * ### Technical structure
+ *
+ * #### Slots
+ *
+ * - **Default slot**: Text label describing the status (required)
+ *
+ * #### Properties
+ *
+ * Properties that control visual appearance:
+ *
+ * - **variant**: Controls the color of the status dot (semantic or non-semantic)
+ * - **size**: Controls the overall size of the component
+ */
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
+        })}
+    `,
+    tags: ['anatomy'],
+    args: {
+        size: 'm',
+    },
+    parameters: {
+        flexLayout: true,
+    },
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Status lights come in four sizes to fit various contexts:
+ *
+ * - **Small (s)**: Used for inline indicators or space-constrained areas
+ * - **Medium (m)**: Default size, used for typical use cases
+ * - **Large (l)**: Used for prominent displays or primary content areas
+ * - **Extra-large (xl)**: Maximum visibility for high-priority statuses
+ *
+ * All sizes shown below for comparison.
+ */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${template({ ...args, size: 's', 'default-slot': 'Small' })}
+        ${template({ ...args, size: 'm', 'default-slot': 'Medium' })}
+        ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
+        ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
+    `,
+    parameters: { ...parameters, 'section-order': 1 },
+    tags: ['options'],
+};
+/**
+ * Semantic variants provide meaning through color:
+ *
+ * - **info**: Active, in use, live, published
+ * - **neutral**: Archived, deleted, paused, draft, not started, ended
+ * - **positive**: Approved, complete, success, new, purchased, licensed
+ * - **notice**: Needs approval, pending, scheduled, syncing, indexing, processing
+ * - **negative**: Error, alert, rejected, failed
+ *
+ * All semantic variants shown below for comparison.
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
+            (variant: StatusLightSemanticVariantS2) =>
+                template({
+                    ...args,
+                    variant,
+                    'default-slot': semanticLabels[variant],
+                })
+        )}
+    `,
+    parameters: { ...parameters, 'section-order': 2 },
+    tags: ['options'],
+};
+
+/**
+ * Non-semantic variants use color-coded categories, ideal for data visualization and labeling.
+ * Best used when there are **8 or fewer** categories being color coded.
+ *
+ * **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
+ *
+ * All non-semantic variants shown below for comparison.
  */
 export const NonSemanticVariants: Story = {
-    render: () => html`
+    render: (args) => html`
         ${STATUSLIGHT_VARIANTS_COLOR_S2.map(
             (variant: StatusLightColorVariantS2) =>
                 template({
@@ -204,7 +244,7 @@ export const NonSemanticVariants: Story = {
                 })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 2 },
+    parameters: { ...parameters, 'section-order': 3 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -214,17 +254,27 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
 // ──────────────────────────────
 
 /**
- * When the text is too long for the horizontal space available, it wraps to form another line. You can control the wrapping behavior by setting the `style` attribute to `max-inline-size`.
+ * ### Text wrapping
+ *
+ * When the text is too long for the horizontal space available, it wraps to form another line.
+ * You can control the wrapping behavior by setting a `max-inline-size` style on the component.
  */
 export const TextWrapping: Story = {
     render: (args) => html`
-        ${template({
-            ...args,
-            variant: 'info',
-            'default-slot':
-                'Document processing in progress - please wait while we validate your submission',
-            style: 'max-inline-size: 200px',
-        })}
+        <div style="display: flex; gap: var(--spectrum-spacing-200);">
+            ${template({
+                ...args,
+                variant: 'info',
+                'default-slot': 'Active',
+            })}
+            ${template({
+                ...args,
+                variant: 'positive',
+                'default-slot':
+                    'Document processing in progress - please wait while we validate your submission',
+                style: 'max-inline-size: 200px',
+            })}
+        </div>
     `,
     tags: ['behaviors'],
 };
@@ -238,14 +288,24 @@ export const TextWrapping: Story = {
  *
  * The `<swc-status-light>` element implements several accessibility features:
  *
- * 1. **Color meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
- * 2. **ARIA support**: When disabled, the component automatically sets `aria-disabled="true"`
+ * #### Visual accessibility
+ *
+ * - Status information is conveyed through both color and text labels, not relying on color alone
+ * - High contrast mode is supported with appropriate color overrides
+ * - Sufficient color contrast is maintained between the status dot and background
+ *
+ * #### Semantic meaning
+ *
+ * - Semantic variants provide consistent color associations for common statuses
+ * - Text labels provide clear context for all users
  *
  * ### Best practices
  *
- * - Use semantic variants (`positive`, `negative`, `notice`, `info`, `neutral`) when the status has specific meaning
- * - Include a clear, descriptive text label that explains the status
+ * - Always provide a descriptive text label that explains the status
+ * - Use semantic variants (`info`, `positive`, `negative`, `notice`, `neutral`) when the status has specific meaning
+ * - Use meaningful, specific labels (e.g., "Approved" instead of "Green")
  * - Ensure sufficient color contrast between the status light and its background
+ * - For non-semantic variants, ensure the text label provides complete context
  */
 export const Accessibility: Story = {
     render: (args) => html`
@@ -291,4 +351,7 @@ export const Accessibility: Story = {
         })}
     `,
     tags: ['a11y'],
+    parameters: {
+        flexLayout: true,
+    },
 };
