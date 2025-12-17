@@ -16,6 +16,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
 import {
+    BADGE_VALID_SIZES,
     BADGE_VARIANTS_COLOR_S2,
     BADGE_VARIANTS_S2,
     BadgeBase,
@@ -27,6 +28,7 @@ import styles from './badge.css';
 /**
  * A badge component that displays short, descriptive information about an element.
  * Badges are typically used to indicate status, categories, or provide supplementary information.
+ *
  *
  * @element swc-badge
  *
@@ -53,6 +55,11 @@ export class Badge extends BadgeBase {
      * @internal
      */
     static override readonly VARIANTS = BADGE_VARIANTS_S2;
+
+    /**
+     * @internal
+     */
+    static override readonly VALID_SIZES = BADGE_VALID_SIZES;
 
     /**
      * The variant of the badge.

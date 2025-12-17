@@ -14,16 +14,9 @@ import { CSSResultArray, html, TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 
 import { DividerBase } from '@spectrum-web-components/core/components/divider';
+import { capitalize } from '@spectrum-web-components/core/shared/utilities';
 
 import styles from './divider.css';
-
-// @todo Pull this up into a utility function for all components to leverage
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /**
  * @element swc-divider

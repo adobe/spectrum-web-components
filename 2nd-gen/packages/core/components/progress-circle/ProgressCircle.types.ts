@@ -16,7 +16,7 @@ export const PROGRESS_CIRCLE_VALID_SIZES: ElementSize[] = [
     's',
     'm',
     'l',
-] as const;
+] as const satisfies ElementSize[];
 export const PROGRESS_CIRCLE_STATIC_COLORS_S1 = ['white'] as const;
 export const PROGRESS_CIRCLE_STATIC_COLORS_S2 = [
     ...PROGRESS_CIRCLE_STATIC_COLORS_S1,

@@ -63,23 +63,25 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 ): T & Constructor<SpectrumInterface> {
     class SpectrumMixinElement extends constructor {
         /**
-         * @private
+         * @internal
          */
         public override shadowRoot!: ShadowRoot;
         private _dirParent?: HTMLElement;
 
         /**
-         * @private
+         * @internal
          */
         public override dir!: 'ltr' | 'rtl';
 
         /**
-         * @private
+         * @internal
          */
         public get isLTR(): boolean {
             return this.dir === 'ltr';
         }
-
+        /**
+         * @internal
+         */
         public hasVisibleFocusInTree(): boolean {
             const getAncestors = (root: Document = document): HTMLElement[] => {
                 // eslint-disable-next-line @spectrum-web-components/document-active-element
