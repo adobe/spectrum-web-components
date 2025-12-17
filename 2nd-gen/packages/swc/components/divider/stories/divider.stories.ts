@@ -111,9 +111,9 @@ export const Overview: Story = {
  *
  * Properties that control the divider's appearance and behavior:
  *
- * - **size**: Controls the thickness of the divider line (`s`, `m`, `l`)
- * - **vertical**: Changes orientation from horizontal to vertical
- * - **static-color**: Provides contrast on colored backgrounds (`white`, `black`)
+ * - [**Size**](#sizes): Controls the thickness of the divider line (`s`, `m`, `l`)
+ * - [**Vertical**](#vertical): Changes orientation from horizontal to vertical
+ * - [**Static color**](#static-colors): Provides contrast on colored backgrounds (`white`, `black`)
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -224,6 +224,7 @@ export const StaticColors: Story = {
     },
     tags: ['options'],
 };
+StaticColors.storyName = 'Static colors';
 
 // ────────────────────────────────
 //    ACCESSIBILITY STORIES

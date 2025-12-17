@@ -50,6 +50,7 @@ const meta: Meta = {
         docs: {
             subtitle: `Visually represent files, folders, or images in your application`,
         },
+        flexLayout: 'row-nowrap',
     },
     tags: ['migrated'],
 };
@@ -127,8 +128,8 @@ export const Anatomy: Story = {
 /**
  * Assets support two built-in icon variants for representing files and folders:
  *
- * - **file**: Displays a file icon, useful for representing documents, files, or file types
- * - **folder**: Displays a folder icon, useful for representing directories or collections
+ * - **`file`**: Displays a file icon, useful for representing documents, files, or file types
+ * - **`folder`**: Displays a folder icon, useful for representing directories or collections
  *
  * When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
  */
