@@ -1,64 +1,62 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import headerImage from '../assets/images/banner_principles_S2_desktop_2x_1689964204945.png';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 
-<Meta title="When to use SWC?" />
+<Meta title="When to use SWC" />
+
+<img src={headerImage} alt="When to use SWC" class="docs-image" />
 
 # When to use SWC
 
 Spectrum Web Components (SWC) is a good choice when you want to build interfaces that match the Spectrum design system and can run in many different environments. This page explains when SWC is the right tool and when you may need extra support or a different approach.
 
-## Use SWC when:
+## SWC is a good choice when
 
-<sp-accordion>
+<sp-accordion allow-multiple size="m" class="docs-accordion">
     <sp-accordion-item label="You need Spectrum-aligned UI in a web environment">
-        SWC gives you ready-made components that follow Spectrum design and
-        behavior. Use them when your project must look and feel like other Adobe
-        experiences.
+        SWC gives you ready-made components that follow Spectrum design and behavior. Use them when your project must look and feel like other Adobe experiences.
     </sp-accordion-item>
+
     <sp-accordion-item label="You want components that work without a specific framework">
         SWC works in plain HTML, JavaScript, or TypeScript. It also works with
-        frameworks like React through wrapper packages. This makes it a good
-        option for teams using mixed technologies. Use 2nd-gen SWC. It matches
-        the current Spectrum guidelines and offers better performance and
-        consistency.
+        frameworks like React through wrapper packages. This makes it a good option
+        for teams using mixed technologies.
     </sp-accordion-item>
+
     <sp-accordion-item label="You want consistent behavior across products">
-        Because SWC components share a common architecture and API, they behave
-        the same across all projects. This reduces the amount of one-off code
-        your team needs to maintain. Use 2nd-gen SWC. It matches the current
-        Spectrum guidelines and offers better performance and consistency.
+        Because SWC components share a common architecture and API, they behave the
+        same across all projects. This reduces the amount of one-off code your team
+        needs to maintain.
     </sp-accordion-item>
+
     <sp-accordion-item label="You want built-in accessibility">
-        SWC includes accessibility features that follow Spectrum and web
-        standards. This helps teams meet accessibility requirements without
-        writing them from scratch. Use 2nd-gen SWC. It matches the current
-        Spectrum guidelines and offers better performance and consistency.
+        SWC includes accessibility features that follow Spectrum and web standards.
+        This helps teams meet accessibility requirements without writing them from
+        scratch.
     </sp-accordion-item>
+
     <sp-accordion-item label="You only need a few components">
-        Since SWC ships as individual packages, you can install only the
-        components you need. This keeps your project lighter and easier to
-        maintain.
+        Since SWC ships as individual packages, you can install only the components you need. This keeps your project lighter and easier to maintain.
     </sp-accordion-item>
+
 </sp-accordion>
 
-## SWC may not be enough on its own when:
+## SWC may not be enough on its own
 
-<sp-accordion>
+<sp-accordion allow-multiple size="m" class="docs-accordion">
     <sp-accordion-item label="Your project depends on framework-specific features">
-        If your app uses advanced React, Vue, or Angular patterns, you might
-        need extra setup or wrapper components. SWC can still work, but you may
-        need additional engineering support.
+        If your app uses advanced React, Vue, or Angular patterns, you might need extra setup or wrapper components. SWC can still work, but you may need additional engineering support.
     </sp-accordion-item>
+
     <sp-accordion-item label="You need a custom design system">
-        SWC is built to match Spectrum. If your product uses patterns that do
-        not follow Spectrum, you may need custom components or additional
-        styling.
+        SWC is built to match Spectrum. If your product uses patterns that do not follow Spectrum, you may need custom components or additional styling.
     </sp-accordion-item>
-    <sp-accordion-item label=" You are migrating large 1st-gen codebases">
-        SWC 2nd-gen changes some APIs and patterns. Large migrations may require
-        planning, refactoring, or testing before you switch fully.
+
+    <sp-accordion-item label="You are migrating large 1st-gen codebases">
+        SWC 2nd-gen changes some APIs and patterns. Large migrations may require planning, refactoring, or testing before you switch fully.
     </sp-accordion-item>
+
 </sp-accordion>
 
 ## Questions to help you decide
@@ -69,8 +67,8 @@ Spectrum Web Components (SWC) is a good choice when you want to build interfaces
 - Does your project need built-in accessibility support?
 - Are you using only a small set of components or the full library?
 
-If you answered “yes” to most of these, SWC is likely a good fit.
+**If you answered “yes” to most of these, SWC is likely a good fit.**
 
-## Still not sure?
+### Still not sure?
 
 Check the examples in the component documentation or explore how other Adobe teams use SWC. You can also reach out to the SWC team if you need help deciding whether SWC is the right fit for your project.

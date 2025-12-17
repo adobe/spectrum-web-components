@@ -15,6 +15,14 @@ import { makeDecorator } from '@storybook/preview-api';
 import type { DecoratorFunction } from '@storybook/types';
 import { styleMap } from 'lit/directives/style-map.js';
 
+export const FLEX_LAYOUT_TYPES = [
+    'column-center',
+    'column-stretch',
+    'row-wrap',
+    'row-nowrap',
+] as const;
+export type FlexLayoutType = (typeof FLEX_LAYOUT_TYPES)[number];
+
 /**
  * Decorator that wraps stories in a styled container.
  * This is useful for components that benefit from horizontal layout with gap spacing.
@@ -34,21 +42,74 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
         const { parameters } = context;
         const { flexLayout, styles } = parameters;
 
-        // Build styles object based on flexLayout and custom styles parameters
-        const stylesObj = flexLayout
-            ? {
-                  display: 'flex',
-                  gap: '24px',
-                  alignItems: 'center',
-                  ...styles,
-              }
-            : { ...styles };
-        if (Object.keys(stylesObj).length === 0) {
+        // If no flexLayout or styles provided, render story normally
+        if (!flexLayout && !styles) {
+            return StoryFn(context);
+        }
+
+        let compiledStyles: Record<string, string> = {};
+
+        switch (flexLayout as FlexLayoutType) {
+            case 'column-center':
+                compiledStyles = {
+                    display: 'flex',
+                    gap: 'var(--spectrum-spacing-100)',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    'max-inline-size': '80ch',
+                    ...styles,
+                };
+                break;
+
+            case 'column-stretch':
+                compiledStyles = {
+                    display: 'flex',
+                    gap: 'var(--spectrum-spacing-100)',
+                    flexDirection: 'column',
+                    alignItems: 'stretch',
+                    'max-inline-size': '80ch',
+                    ...styles,
+                };
+                break;
+
+            case 'row-wrap':
+                compiledStyles = {
+                    display: 'flex',
+                    gap: 'var(--spectrum-spacing-200)',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    'max-inline-size': '80ch',
+                    ...styles,
+                };
+                break;
+
+            case 'row-nowrap':
+                compiledStyles = {
+                    display: 'flex',
+                    gap: 'var(--spectrum-spacing-200)',
+                    flexDirection: 'row',
+                    flexWrap: 'nowrap',
+                    alignItems: 'center',
+                    'max-inline-size': '80ch',
+                    ...styles,
+                };
+                break;
+
+            default:
+                // If flexLayout is not a valid type but styles exist, use styles only
+                compiledStyles = styles || {};
+                break;
+        }
+
+        // If no styles were compiled, render story normally
+        if (Object.keys(compiledStyles).length === 0) {
             return StoryFn(context);
         }
 
         return html`
-            <div style=${styleMap(stylesObj)}>${StoryFn(context)}</div>
+            <div style=${styleMap(compiledStyles)}>${StoryFn(context)}</div>
         `;
     },
 });

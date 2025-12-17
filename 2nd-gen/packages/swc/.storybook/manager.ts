@@ -16,16 +16,9 @@ addons.setConfig({
         base: 'light',
 
         brandTitle: 'Adobe | Spectrum Web Components',
-        brandUrl: 'https://opensource.adobe.com/spectrum-web-components', // TODO: Add the correct URL once we are publishing 2nd-gen
+        brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
         brandImage: logo,
         brandTarget: '_self',
-
-        typography: {
-            fonts: {
-                base: 'adobe-clean, "Adobe Clean", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif',
-                code: '"Source Code Pro", Monaco, monospace',
-            },
-        },
 
         // colorPrimary: "#7326d3",
         colorSecondary: 'rgb(2, 101, 220)',

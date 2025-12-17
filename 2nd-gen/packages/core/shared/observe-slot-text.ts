@@ -59,6 +59,9 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             });
         }
 
+        /**
+         * @internal
+         */
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
@@ -68,6 +71,9 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         })
         private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
+        /**
+         * @internal
+         */
         public manageTextObservedSlot(): void {
             if (!this[assignedNodesList]) {
                 return;

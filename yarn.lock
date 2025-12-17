@@ -195,6 +195,7 @@ __metadata:
     playwright: "npm:1.53.1"
     postcss: "npm:8.5.6"
     postcss-preset-env: "npm:10.4.0"
+    prettier: "npm:3.4.2"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
     remark-gfm: "npm:4.0.0"
@@ -25723,6 +25724,15 @@ __metadata:
   peerDependencies:
     prettier: ^2.0.0 || ^3.0.0
   checksum: 10c0/6788d8680b11cfff72773d6c19dec3a5d40c60d9893640dc58f18b093417ddeb036a04c1a018c669c6d19a99c507c6080f782768843ad750f04d5edd8aaf13d2
+  languageName: node
+  linkType: hard
+
+"prettier@npm:3.4.2":
+  version: 3.4.2
+  resolution: "prettier@npm:3.4.2"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/99e076a26ed0aba4ebc043880d0f08bbb8c59a4c6641cdee6cdadf2205bdd87aa1d7823f50c3aea41e015e99878d37c58d7b5f0e663bba0ef047f94e36b96446
   languageName: node
   linkType: hard
 

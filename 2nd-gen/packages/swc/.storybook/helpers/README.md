@@ -2,17 +2,51 @@
 
 Reusable utilities for creating consistent Storybook stories across components.
 
-## Available helpers
+## formatComponentName
 
-### `formatComponentName`
+Formats a Storybook story title into a component name in either kebab-case or PascalCase.
 
-Formats a component tag name for display (e.g., `swc-badge` → `Badge`).
+### Usage
+
+Import the helper in your stories file:
 
 ```typescript
 import { formatComponentName } from '../../../.storybook/helpers/index.js';
-
-const displayName = formatComponentName('swc-badge'); // "Badge"
 ```
+
+### Parameters
+
+- `title` (string): The Storybook story title (e.g., `'Components/Button'`)
+- `typeCase` ('kebab' | 'pascal'): The desired output format (defaults to `'kebab'`)
+
+### Examples
+
+```typescript
+// Get kebab-case component name (default)
+formatComponentName('Components/Action Button');
+// Returns: 'action-button'
+
+// Get PascalCase component name
+formatComponentName('Components/Action Button', 'pascal');
+// Returns: 'ActionButton'
+
+// Typical usage in stories
+export default {
+    title: 'Components/Progress Circle',
+    component: 'swc-progress-circle',
+    // ...
+} as Meta;
+
+const componentName = formatComponentName(meta.title);
+// Returns: 'progress-circle'
+```
+
+### What it does
+
+1. Extracts the component name from the last segment of the story title path
+2. Converts it to lowercase
+3. Replaces spaces with hyphens for kebab-case
+4. Optionally converts to PascalCase by capitalizing each word and removing hyphens
 
 ## Adding new helpers
 

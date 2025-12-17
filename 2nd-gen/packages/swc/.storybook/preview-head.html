@@ -1,4 +1,17 @@
-<link rel="preconnect" href="https://use.typekit.net" />
+<!-- Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="theme-color" content="#5258e4" />
+
+<title>Adobe | Spectrum Web Components</title>
+
+<meta property="og:site_name" content="Adobe | Spectrum Web Components" />
+<meta property="og:type" content="website" />
+
+<!-- This preconnect opens the connection for typekit to more quickly load fonts -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
 
 <!-- For Adobe Clean font support -->
@@ -67,13 +80,18 @@
     p,
     li,
     ul,
-    ol,
+    ol {
+        font-size: 1rem !important;
+    }
+
     table,
     input,
     select,
     textarea,
-    nav {
-        font-size: 1rem !important;
+    nav,
+    sp-table *,
+    .toc-list-item {
+        font-size: 0.875rem !important;
     }
 
     h1 {
@@ -81,15 +99,15 @@
     }
 
     h2:not(.sbdocs-subtitle) {
-        font-size: var(--spectrum-heading-size-xl) !important;
-    }
-
-    h3 {
         font-size: var(--spectrum-heading-size-l) !important;
     }
 
-    h4 {
+    h3 {
         font-size: var(--spectrum-heading-size-m) !important;
+    }
+
+    h4 {
+        font-size: var(--spectrum-heading-size-s) !important;
     }
 
     #stories,
@@ -103,7 +121,6 @@
         position: relative;
         color: rgb(46, 52, 56);
         border-bottom: 1px solid rgba(38, 85, 115, 0.15);
-        text-transform: capitalize !important;
         letter-spacing: unset;
         line-height: unset;
     }
@@ -111,8 +128,9 @@
     .sbdocs-toc--custom {
         width: 20rem !important;
         nav {
-            width: 20rem !important;
-            font-size: 1rem !important;
+            width: auto;
+            max-width: 15rem !important;
+            font-size: 0.75rem !important;
         }
     }
 
@@ -120,8 +138,35 @@
         color: rgb(2, 101, 220) !important;
     }
 
+    .sbdocs-wrapper {
+        justify-content: space-between !important;
+    }
+
     .sbdocs-content {
-        max-width: calc(1000px - 20rem) !important;
+        max-width: 80ch !important;
+        margin: auto !important;
+    }
+
+    .docs-image {
+        background-size: 100% 100%;
+        border-radius: 1rem;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        max-height: 13rem;
+    }
+
+    .docs-accordion {
+        border-color: 1px solid rgba(38, 85, 115, 0.15) !important;
+
+        sp-accordion-item:first-child {
+            border-block-start: none !important;
+        }
+
+        sp-accordion-item {
+            border-color: 1px solid rgba(38, 85, 115, 0.15) !important;
+            border-block-end: 1px solid rgba(38, 85, 115, 0.15) !important;
+        }
     }
 
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */

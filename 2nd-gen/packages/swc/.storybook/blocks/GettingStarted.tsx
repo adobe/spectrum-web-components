@@ -27,6 +27,8 @@ export const GettingStarted = ({ of }: { of?: any }) => {
 
     const markdownContent = `## Getting started
 
+Add the package to your project:
+
 \`\`\`zsh
 yarn add @spectrum-web-components/${packageName}
 \`\`\`

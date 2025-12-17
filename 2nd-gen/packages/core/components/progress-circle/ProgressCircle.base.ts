@@ -20,7 +20,6 @@ import { getLabelFromSlot } from '@spectrum-web-components/core/shared/get-label
 
 import {
     PROGRESS_CIRCLE_VALID_SIZES,
-    ProgressCircleSize,
     ProgressCircleStaticColor,
 } from './ProgressCircle.types.js';
 
@@ -37,11 +36,9 @@ import {
  * @slot - Accessible label for the progress circle.
  *
  *   Used to provide context about what is loading or progressing.
- *
- * @fires progress-change - Dispatched when the progress value changes
  */
 export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
-    validSizes: PROGRESS_CIRCLE_VALID_SIZES as ProgressCircleSize[],
+    validSizes: PROGRESS_CIRCLE_VALID_SIZES,
 }) {
     // ─────────────────────────
     //     API TO OVERRIDE
@@ -90,7 +87,6 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
      * Accessible label for the progress circle.
      *
      * Used to provide context about what is loading or progressing.
-     * @required for accessibility
      */
     @property({ type: String })
     public label = '';

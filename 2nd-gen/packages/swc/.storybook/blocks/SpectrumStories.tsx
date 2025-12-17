@@ -1,10 +1,11 @@
 import {
     Canvas,
     Description,
+    Story,
     Markdown,
     useOf,
 } from '@storybook/addon-docs/blocks';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 /**
  * A block that renders all stories tagged with a specified tag from the component's stories file.
@@ -22,9 +23,8 @@ export const SpectrumStories = ({
     of?: any;
     tag?: string;
     hideTitle?: boolean;
-    order?: string[];
 }) => {
-    const resolvedOf = useOf(of || 'meta', ['story', 'meta']);
+    const resolvedOf = useOf(of || 'meta', ['meta']);
 
     // Get stories and filter by tag
     let taggedStories = Object.values(
@@ -32,8 +32,6 @@ export const SpectrumStories = ({
             ? resolvedOf.csfFile.stories
             : [resolvedOf.story]
     ).filter((story: any) => story.tags?.includes(tag));
-
-    console.log('taggedStories', taggedStories);
 
     // Sort by explicit order if provided, otherwise preserve current order
     taggedStories = taggedStories.sort((a: any, b: any) => {
@@ -47,15 +45,13 @@ export const SpectrumStories = ({
         return null;
     }
 
-    return (
-        <>
-            {taggedStories.map((story: any) => (
-                <React.Fragment key={story.name}>
-                    {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
-                    <Description of={story.moduleExport} />
-                    <Canvas of={story.moduleExport} />
-                </React.Fragment>
-            ))}
-        </>
-    );
+    const spectrumStories = taggedStories.map((story: any) => (
+        <Fragment key={story.name}>
+            {!hideTitle && <Markdown>{`### ${story.name}`}</Markdown>}
+            <Description of={story.moduleExport} />
+            <Canvas of={story.moduleExport} />
+        </Fragment>
+    ));
+
+    return spectrumStories;
 };

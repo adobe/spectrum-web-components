@@ -62,7 +62,17 @@ const meta: Meta = {
     render: (args) => template(args),
     parameters: {
         actions: { handles: events },
-        docs: { subtitle: 'Brief component description' },
+        docs: {
+            subtitle: 'Brief component description',
+            design: {
+                type: 'figma',
+                url: 'https://www.figma.com/design/1234567890/Component-Name',
+            },
+            stackblitz: {
+                url: 'https://stackblitz.com/edit/swc-component-name',
+            },
+        },
+        flexLayout: 'row-wrap',
     },
     tags: ['migrated'],
 };
@@ -75,9 +85,16 @@ export default meta;
 - `title` - Component name as it appears in Storybook sidebar
 - `component` - The custom element tag name
 - `args`, `argTypes` - From `getStorybookHelpers()`
-- `render` - Template function
+- `render` - Template function from `getStorybookHelpers()`
 - `parameters.docs.subtitle` - Brief description shown in docs header
-- `tags: ['migrated']` - Indicates refined format
+
+**Optional meta fields:**
+
+- `parameters.docs.design` - Design documentation for the component. Only add if the component has design documentation.
+- `parameters.docs.stackblitz` - Stackblitz URL for the component. Only add if the component has a Stackblitz example.
+- `parameters.actions.handles` - Event handlers to bind to the component. Only add if the component has event handlers defined in the component's API.
+- `parameters.flexLayout` - Default flex layout to use for the component's stories. Only add if the component has multiple items or elements that need to be aligned.
+- `tags: ['migrated']` - Indicates refined format. Only add if the component has been migrated to the 2nd-gen format.
 
 ### Step 3: Add the Playground story
 
@@ -108,11 +125,28 @@ Document all slots and content-rendering properties. Combine all variations into
 // ──────────────────────────
 
 /**
- * A component-name consists of:
+ * ### Visual structure
  *
- * - **Default slot**: Primary content (text or elements)
- * - **icon slot**: Optional icon element
- * - **label property**: Text label rendered by the component
+ * A badge consists of:
+ *
+ * 1. **Container** - Colored background with rounded corners
+ * 2. **Label** - Text content describing the status or category (required)
+ * 3. **Icon** (optional) - Visual indicator positioned before the label
+ *
+ * ### Technical structure
+ *
+ * #### Slots
+ *
+ * - **Default slot**: Text label displayed in the badge (required for accessibility)
+ * - **icon slot**: Optional icon element positioned to the left of the label
+ *
+ * #### Properties
+ *
+ * - **Variant**: Color scheme ([semantic](#semantic-variants) or [non-semantic](#non-semantic-variants) variants)
+ * - [**Size**](#sizes): Visual size
+ * - [**Subtle**](#subtle): Boolean for reduced visual prominence
+ * - [**Outline**](#outline): Boolean for bordered style (semantic variants only)
+ * - [**Fixed**](#fixed): Border radius adjustment for edge positioning
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -120,7 +154,6 @@ export const Anatomy: Story = {
         ${template({ ...args, 'icon-slot': '✓' })}
         ${template({ ...args, 'default-slot': 'Both', 'icon-slot': '✓' })}
     `,
-    parameters: { flexLayout: true },
     tags: ['anatomy'],
 };
 ```
@@ -180,44 +213,20 @@ export const SemanticVariants: Story = {
 
 **Static color pattern** (if component supports `static-color`):
 
-Create three stories for components displayed over images or colored backgrounds:
+Create a single story for the static color pattern:
 
 ```typescript
-/**
- * Use `static-color` for display over images or colored backgrounds.
- */
-export const StaticBlack: Story = {
-    args: { 'static-color': 'black' },
-    parameters: {
-        flexLayout: false,
-        styles: { color: 'black' },
-        'section-order': 10,
-    },
-    tags: ['options'],
-};
-
-export const StaticWhite: Story = {
-    args: { 'static-color': 'white' },
-    parameters: {
-        flexLayout: false,
-        styles: { color: 'white' },
-        'section-order': 11,
-    },
-    tags: ['options'],
-};
-
 export const StaticColors: Story = {
     render: (args) => html`
-        ${['white', 'black'].map(
+        ${component.STATIC_COLORS.map(
             (color) => html`${template({ ...args, 'static-color': color })}`
         )}
     `,
     parameters: {
-        flexLayout: true,
         staticColorsDemo: true,
-        'section-order': 12,
+        'section-order': 2,
     },
-    tags: ['options', '!test'],
+    tags: ['options'],
 };
 ```
 
@@ -239,8 +248,10 @@ export const States: Story = {
         ${template({ ...args, selected: true, 'default-slot': 'Selected' })}
         ${template({ ...args, disabled: true, 'default-slot': 'Disabled' })}
     `,
-    parameters: { flexLayout: true },
     tags: ['states'],
+    parameters: {
+        sectionOrder: 0,
+    },
 };
 ```
 
@@ -253,6 +264,9 @@ For complex states (animated, indeterminate), create separate stories:
 export const Indeterminate: Story = {
     args: { indeterminate: true },
     tags: ['states'],
+    parameters: {
+        sectionOrder: 1,
+    },
 };
 ```
 
@@ -270,9 +284,11 @@ Document automatic behaviors (text wrapping, truncation), methods, and events.
  */
 export const TextWrapping: Story = {
     render: () => html`
-        <swc-component style="max-inline-size: 120px">
-            Long content that wraps to multiple lines
-        </swc-component>
+        ${template({
+            ...args,
+            'default-slot': 'Long content that wraps to multiple lines',
+            styles: { 'max-inline-size': '120px' },
+        })}
     `,
     tags: ['behaviors'],
 };
@@ -290,39 +306,62 @@ export const TextWrapping: Story = {
 /**
  * ### Features
  *
- * The `<swc-component-name>` element implements:
+ * The `<swc-component>` element implements several accessibility features:
  *
- * 1. **Keyboard navigation**: Tab to focus, Enter to activate
- * 2. **ARIA role**: Automatically sets appropriate role
- * 3. **Color meaning**: Status conveyed through text, not just color
+ * #### Color meaning
+ *
+ * - Colors are used in combination with text labels and/or icons to ensure that status information is not conveyed through color alone
+ * - Users with color vision deficiencies can understand component meaning through text content
+ * - High contrast mode is supported with appropriate color overrides
+ *
+ * #### Non-interactive element
+ *
+ * - Component has no interactive behavior and are not focusable
+ * - Screen readers will announce the component content as static text
+ * - No keyboard interaction is required or expected
  *
  * ### Best practices
  *
- * - Always provide a descriptive text label
- * - Ensure sufficient color contrast
- * - Use semantic variants when status has specific meaning
+ * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
+ * - Include clear, descriptive labels that explain the status without relying on color alone
+ * - For icon-only components, provide descriptive text in the default slot or use the `aria-label` attribute directly on the element
+ * - Ensure sufficient color contrast between the badge and its background
+ * - Components are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
+ * - When using multiple components together, ensure they're clearly associated with their related content
+ * - Use consistent component variants across your application for the same statuses
+ * - Test with screen readers to verify component content is announced in context
+ * - Consider placement carefully - components should be close to the content they describe
  */
 export const Accessibility: Story = {
     render: () => html`
-        <swc-component variant="positive">Approved</swc-component>
-        <swc-component variant="negative">Rejected</swc-component>
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'Rejected',
+        })}
     `,
     tags: ['a11y'],
 };
 ```
 
-### Step 9: Add helper functions (if needed)
+### Step 9: Add helpers (if needed)
 
 Place utility functions at the bottom.
 
 ```typescript
 // ────────────────────────
-//    HELPER FUNCTIONS
+//    HELPERS
 // ────────────────────────
 
+const sizeLabels = { s: 'Small', m: 'Medium', l: 'Large', xl: 'Extra-large' };
+
 function sizeLabel(size: string): string {
-    const labels = { s: 'Small', m: 'Medium', l: 'Large', xl: 'Extra-large' };
-    return labels[size] || size;
+    return sizeLabels[size as keyof typeof sizeLabels] || size;
 }
 ```
 
@@ -331,27 +370,6 @@ function sizeLabel(size: string): string {
 ## Part 2: Create the usage.mdx file
 
 Create `stories/[component].usage.mdx` to display stories organized by section.
-
-```mdx
-import { SpectrumStories } from '../../../.storybook/blocks';
-
-## Installation
-
-Install the component:
-
-\`\`\`bash
-npm install @adobe/swc
-\`\`\`
-
-Import and use:
-
-\`\`\`javascript
-import '@adobe/swc/component-name';
-\`\`\`
-
-\`\`\`html
-<swc-component-name>Content</swc-component-name>
-\`\`\`
 
 ## Anatomy
 
@@ -387,7 +405,7 @@ import '@adobe/swc/component-name';
 
 ### JSDoc comments
 
-Every story **except Playground** needs a JSDoc comment explaining:
+Every story **except Playground AND Overview** needs a JSDoc comment explaining:
 
 - What it demonstrates
 - Usage guidance or best practices
@@ -406,11 +424,11 @@ All stories must demonstrate accessible usage:
 
 ### Layout
 
-Use `flexLayout: true` for stories showing multiple items:
+Use `flexLayout: 'row-wrap' | 'column-stretch' | 'row-nowrap' | 'column-center'` for stories showing multiple items or elements that need to be aligned:
 
 ```typescript
 parameters: {
-    flexLayout: true;
+    flexLayout: 'row-wrap';
 }
 ```
 
@@ -418,8 +436,8 @@ Customize with `styles`:
 
 ```typescript
 parameters: {
-    flexLayout: true,
-    styles: { 'flex-wrap': 'wrap', 'max-inline-size': '80ch' }
+    flexLayout: 'row-wrap',
+    styles: { alignItems: 'flex-start' }
 }
 ```
 
@@ -428,6 +446,7 @@ parameters: {
 | Tag                   | Usage                                   |
 | --------------------- | --------------------------------------- |
 | `'autodocs'`, `'dev'` | Playground story only                   |
+| `'overview'`          | Overview story only                     |
 | `'anatomy'`           | Anatomy stories                         |
 | `'options'`           | Options stories (sizes, variants, etc.) |
 | `'states'`            | States stories                          |
@@ -465,20 +484,15 @@ Always use static image IDs to ensure visual regression tests (VRTs) produce con
 **Example usage** (from `asset.stories.ts`):
 
 ```typescript
-const anatomyArgs = [
-    {
-        variant: 'file',
-        label: 'README.md',
-    },
-    {
-        label: 'User avatar',
-        'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
-    },
-];
-
 export const Anatomy: Story = {
     render: (args) => html`
-        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+        ${template({ ...args, variant: 'file', label: 'README.md' })}
+        ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
+        ${template({
+            ...args,
+            label: 'User avatar',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+        })}
     `,
     tags: ['anatomy'],
 };
@@ -494,11 +508,12 @@ Before submitting:
 - [ ] Visual separators between all sections
 - [ ] Meta object has all required fields including `subtitle` and `tags: ['migrated']`
 - [ ] Playground story has `['autodocs', 'dev']` tags and no JSDoc
-- [ ] Anatomy story documents slots and content properties
+- [ ] Overview story has `['overview']` tags and no JSDoc
+- [ ] Anatomy story documents visual and technical structure
 - [ ] Options stories cover all attributes not in other sections
-- [ ] Stories use `flexLayout: true` when showing multiple items
+- [ ] Stories use `flexLayout: 'row-wrap' | 'column-stretch' | 'row-nowrap' | 'column-center'` when showing multiple items or elements that need to be aligned
 - [ ] Story order controlled with `section-order` parameter
-- [ ] All stories have JSDoc comments (except Playground)
+- [ ] All stories have JSDoc comments (except Playground and Overview)
 - [ ] All stories are accessible with meaningful content
 - [ ] Accessibility story documents features and best practices
 - [ ] Image assets use `picsum.photos` with static IDs for VRT consistency (if applicable)

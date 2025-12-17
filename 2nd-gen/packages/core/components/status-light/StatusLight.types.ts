@@ -62,6 +62,22 @@ export const STATUSLIGHT_VARIANTS_S2 = [
     ...STATUSLIGHT_VARIANTS_COLOR_S2,
 ] as const;
 
+export type StatusLightSemanticVariantS1 =
+    (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S1)[number];
+export type StatusLightSemanticVariantS2 =
+    (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S2)[number];
+export type StatusLightSemanticVariant =
+    | StatusLightSemanticVariantS1
+    | StatusLightSemanticVariantS2;
+
+export type StatusLightColorVariantS1 =
+    (typeof STATUSLIGHT_VARIANTS_COLOR_S1)[number];
+export type StatusLightColorVariantS2 =
+    (typeof STATUSLIGHT_VARIANTS_COLOR_S2)[number];
+export type StatusLightColorVariant =
+    | StatusLightColorVariantS1
+    | StatusLightColorVariantS2;
+
 export type StatusLightVariantS1 = (typeof STATUSLIGHT_VARIANTS_S1)[number];
 export type StatusLightVariantS2 = (typeof STATUSLIGHT_VARIANTS_S2)[number];
 export type StatusLightVariant = StatusLightVariantS1 | StatusLightVariantS2;

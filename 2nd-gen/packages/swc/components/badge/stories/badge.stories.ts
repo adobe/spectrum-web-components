@@ -18,21 +18,23 @@ import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
 
+import {
+    BADGE_VALID_SIZES,
+    BADGE_VARIANTS_COLOR_S2,
+    BADGE_VARIANTS_S2,
+    BADGE_VARIANTS_SEMANTIC,
+    type BadgeColorVariantS2,
+    type BadgeSemanticVariant,
+    type BadgeSize,
+    FIXED_VALUES,
+    type FixedValues,
+} from '../../../../core/components/badge/Badge.types.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStorybookHelpers('swc-badge');
-
-const parameters = {
-    flexLayout: true,
-    styles: {
-        gap: 'var(--spectrum-spacing-200)',
-        'flex-wrap': 'wrap',
-        'justify-content': 'center',
-        'max-inline-size': '80ch',
-    },
-};
+const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
 argTypes.variant = {
     ...argTypes.variant,
@@ -56,10 +58,11 @@ argTypes.size = {
 };
 
 /**
- * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.
+ * Similar to [status lights](/?path=/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
- * There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
- * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
+ * Badges come in three styles: bold fill (default), subtle fill, and outline.
+ * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
+ * Reserve bold fill for high-attention badging only.
  */
 const meta: Meta = {
     title: 'Badge',
@@ -68,17 +71,73 @@ const meta: Meta = {
     argTypes,
     render: (args) => template(args),
     parameters: {
-        actions: {
-            handles: events,
-        },
         docs: {
-            subtitle: `Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention.`,
+            subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
         },
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
+        },
+        stackblitz: {
+            url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
+        },
+        flexLayout: 'row-wrap',
     },
     tags: ['migrated'],
 };
 
 export default meta;
+
+// ────────────────────
+//    HELPERS
+// ────────────────────
+
+const sizeLabels = {
+    s: 'Small',
+    m: 'Medium',
+    l: 'Large',
+    xl: 'Extra-large',
+} as const satisfies Record<BadgeSize, string>;
+
+const semanticLabels = {
+    accent: 'New',
+    informative: 'Active',
+    neutral: 'Archived',
+    positive: 'Approved',
+    notice: 'Pending approval',
+    negative: 'Rejected',
+} as const satisfies Record<BadgeSemanticVariant, string>;
+
+const nonSemanticLabels = {
+    fuchsia: 'Marketing',
+    indigo: 'Engineering',
+    magenta: 'Design',
+    purple: 'Product',
+    seafoam: 'Support',
+    yellow: 'Busy',
+    gray: 'Available',
+    red: 'Sales',
+    orange: 'Research',
+    chartreuse: 'Quality',
+    celery: 'Documentation',
+    green: 'Legal',
+    cyan: 'Analytics',
+    blue: 'Security',
+    pink: 'Creative',
+    turquoise: 'Training',
+    brown: 'Facilities',
+    cinnamon: 'Compliance',
+    silver: 'Version 1.2.10',
+} as const satisfies Record<BadgeColorVariantS2, string>;
+
+const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
+
+const fixedLabels = {
+    'block-start': 'Block start',
+    'block-end': 'Block end',
+    'inline-start': 'Inline start',
+    'inline-end': 'Inline end',
+} as const satisfies Record<FixedValues, string>;
 
 // ────────────────────
 //    AUTODOCS STORY
@@ -88,41 +147,57 @@ export const Playground: Story = {
     render: (args) => template(args),
     args: {
         size: 'm',
-        'default-slot': 'New',
+        variant: 'informative',
+        'default-slot': 'Active',
     },
     tags: ['autodocs', 'dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORIES
+// ──────────────────────────────
+
+export const Overview: Story = {
+    render: (args) => html` ${template(args)} `,
+    tags: ['overview'],
+    args: {
+        size: 'm',
+        variant: 'informative',
+        'default-slot': 'Active',
+    },
 };
 
 // ──────────────────────────
 //    ANATOMY STORIES
 // ──────────────────────────
 
-const anatomyArgs = [
-    {
-        'default-slot': 'Label only',
-    },
-    {
-        'icon-slot': '✓',
-    },
-    {
-        'icon-slot': '✓',
-        'default-slot': 'Icon and label',
-    },
-];
 /**
- * A badge is made up of the following parts:
+ * A badge consists of:
  *
- * - Text can be displayed within the badge by using the default slot
- * - An optional icon element can be used to display an icon within the badge
+ * 1. **Container** - Colored background with rounded corners
+ * 2. **Label** - Text content describing the status or category (required)
+ * 3. **Icon** (optional) - Visual indicator positioned before the label
  *
- * Badges can contain either a label, an icon, or both.
+ * ### Content
+ *
+ * - **Default slot**: Text content describing the status or category (required for accessibility)
+ * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
 export const Anatomy: Story = {
     render: (args) => html`
-        ${anatomyArgs.map((arg) => template({ ...args, ...arg }))}
+        ${template({ ...args, 'default-slot': 'Label only' })}
+        ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
+        ${template({
+            ...args,
+            'icon-slot': '✓',
+            'default-slot': 'Icon and label',
+        })}
     `,
-    parameters: parameters,
     tags: ['anatomy'],
+    args: {
+        variant: 'informative',
+        size: 'm',
+    },
 };
 
 // ──────────────────────────
@@ -132,113 +207,163 @@ export const Anatomy: Story = {
 /**
  * Badges come in four sizes to fit various contexts:
  *
- * - **Small (s)**: Compact spaces, inline with text
- * - **Medium (m)**: Default size, most common usage
- * - **Large (l)**: Increased emphasis
- * - **Extra-large (xl)**: Maximum visibility
+ * - **Small (`s`)**: Compact spaces, inline with text, or in tables
+ * - **Medium (`m`)**: Default size for most common usage scenarios
+ * - **Large (`l`)**: Increased emphasis in cards or content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
+ *
+ * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
  */
 export const Sizes: Story = {
-    render: () => html`
-        <swc-badge size="s">Small</swc-badge>
-        <swc-badge size="m">Medium</swc-badge>
-        <swc-badge size="l">Large</swc-badge>
-        <swc-badge size="xl">Extra-large</swc-badge>
+    render: (args) => html`
+        ${BADGE_VALID_SIZES.map((size) =>
+            template({
+                ...args,
+                size,
+                'default-slot': sizeLabels[size],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 0 },
+    parameters: { 'section-order': 1 },
     tags: ['options'],
+    args: {
+        variant: 'informative',
+    },
 };
 
 /**
- * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color. This is the preferred way to assign color to a badge because it will align more consistently with other components in your UI with the same meaning.
+ * Semantic variants provide meaning through color and should be used when status has specific significance.
+ * These variants align consistently with other design system components that use the same semantic meanings.
  *
  * Use these variants for the following statuses:
- * - **Positive**: approved, complete, success, new, purchased, licensed
- * - **Informative**: active, in use, live, published
- * - **Negative**: error, alert, rejected, failed
- * - **Neutral**: archived, deleted, paused, draft, not started, ended
+ *
+ * - **accent**: New, beta, prototype, draft
+ * - **informative**: Active, in use, live, published
+ * - **neutral**: Archived, deleted, paused, not started, ended
+ * - **positive**: Approved, complete, success, purchased, licensed
+ * - **notice**: Pending, expiring soon, limited, deprecated
+ * - **negative**: Rejected, error, alert, failed
  */
 export const SemanticVariants: Story = {
-    render: () => html`
-        <swc-badge variant="positive">Approved</swc-badge>
-        <swc-badge variant="informative">Published</swc-badge>
-        <swc-badge variant="negative">Rejected</swc-badge>
-        <swc-badge variant="notice">Pending</swc-badge>
-        <swc-badge variant="neutral">Archived</swc-badge>
+    render: (args) => html`
+        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            template({
+                ...args,
+                variant,
+                'default-slot': semanticLabels[variant],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 1 },
+    parameters: { 'section-order': 2 },
     tags: ['options'],
 };
+SemanticVariants.storyName = 'Semantic variants';
 
 /**
- * When badges are for color-coded categories, they use non-semantic colors. Non-semantic variants are ideally used for when there are 8 categories or less.
+ * Non-semantic variants use distinctive colors for visual categorization without inherent meaning.
+ * These are ideal for color-coding categories, teams, or projects - especially when there are 8 categories or fewer.
+ *
+ * Use non-semantic variants when:
+ * - Categories don't have universal status meanings
+ * - Visual distinction matters more than semantic meaning
+ * - Creating department, team, or project color schemes
+ *
+ * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
+ * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
  */
 export const NonSemanticVariants: Story = {
-    render: () => html`
-        <swc-badge variant="seafoam">Design</swc-badge>
-        <swc-badge variant="indigo">Engineering</swc-badge>
-        <swc-badge variant="purple">Marketing</swc-badge>
-        <swc-badge variant="fuchsia">Sales</swc-badge>
-        <swc-badge variant="magenta">Support</swc-badge>
-        <swc-badge variant="yellow">Finance</swc-badge>
-        <swc-badge variant="chartreuse">Operations</swc-badge>
-        <swc-badge variant="celery">HR</swc-badge>
-        <swc-badge variant="cyan">Legal</swc-badge>
+    render: (args) => html`
+        ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
+            template({
+                ...args,
+                variant,
+                'default-slot': nonSemanticLabels[variant],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 2 },
+    parameters: { 'section-order': 3 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
 
 /**
- * The `outline` style is only valid for semantic color variants.
+ * The `outline` style provides a bordered appearance with a transparent background.
+ * This style reduces visual weight while maintaining semantic meaning.
+ *
+ * **Important**: The outline style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
+ * Attempting to use `outline` with non-semantic color variants will not apply the style.
  */
 export const Outline: Story = {
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: Badge.VARIANTS_SEMANTIC,
-        },
-    },
-    render: () => html`
-        <swc-badge variant="positive" outline>Approved</swc-badge>
-        <swc-badge variant="informative" outline>Published</swc-badge>
-        <swc-badge variant="negative" outline>Rejected</swc-badge>
-        <swc-badge variant="notice" outline>Pending</swc-badge>
-        <swc-badge variant="neutral" outline>Archived</swc-badge>
+    render: (args) => html`
+        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            template({
+                ...args,
+                variant,
+                outline: true,
+                'default-slot': semanticLabels[variant],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 3 },
+    parameters: { 'section-order': 4 },
     tags: ['options'],
+    args: {},
 };
 
 /**
- * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
+ * The `subtle` style reduces visual prominence with a softer background fill.
+ * Unlike outline, subtle is available for **all** variants (semantic and non-semantic).
+ *
+ * Use subtle style when:
+ * - Multiple badges appear together and need less visual competition
+ * - Status is secondary to main content
+ * - Maintaining design system color palette while reducing emphasis
  */
 export const Subtle: Story = {
-    render: () => html`
-        <swc-badge variant="positive" subtle>Approved</swc-badge>
-        <swc-badge variant="informative" subtle>Published</swc-badge>
-        <swc-badge variant="negative" subtle>Rejected</swc-badge>
-        <swc-badge variant="notice" subtle>Pending</swc-badge>
-        <swc-badge variant="neutral" subtle>Archived</swc-badge>
-        <swc-badge variant="seafoam" subtle>Design</swc-badge>
-        <swc-badge variant="indigo" subtle>Engineering</swc-badge>
+    render: (args) => html`
+        ${BADGE_VARIANTS_S2.map((variant) =>
+            template({
+                ...args,
+                variant,
+                subtle: true,
+                'default-slot': allVariantsLabels[variant],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 4 },
+    parameters: { 'section-order': 5 },
     tags: ['options'],
+    args: {},
 };
 
 /**
- * Badge can be displayed as if it is "fixed" to the edge of a UI. The `fixed` attribute can be leveraged to alter the border rounding based on the position you would like to achieve. Fixed positioning options include `block-start`, `block-end`, `inline-start`, and `inline-end`.
+ * The `fixed` attribute adjusts border radius based on edge positioning, creating the appearance that the badge is "fixed" to a UI edge.
+ *
+ * Fixed positioning options:
+ *
+ * - **block-start**: Top edge (removes top-left and top-right border radius)
+ * - **block-end**: Bottom edge (removes bottom-left and bottom-right border radius)
+ * - **inline-start**: Left edge (removes top-left and bottom-left border radius)
+ * - **inline-end**: Right edge (removes top-right and bottom-right border radius)
+ *
+ * This is purely visual styling - actual positioning must be handled separately with CSS.
+ *
+ * All fixed positions shown below for comparison.
  */
 export const Fixed: Story = {
-    render: () => html`
-        <swc-badge fixed="block-start">Top edge</swc-badge>
-        <swc-badge fixed="block-end">Bottom edge</swc-badge>
-        <swc-badge fixed="inline-start">Left edge</swc-badge>
-        <swc-badge fixed="inline-end">Right edge</swc-badge>
+    render: (args) => html`
+        ${FIXED_VALUES.map((fixed) =>
+            template({
+                ...args,
+                fixed,
+                'default-slot': fixedLabels[fixed],
+            })
+        )}
     `,
-    parameters: { ...parameters, 'section-order': 5 },
+    parameters: { 'section-order': 6 },
     tags: ['options'],
+    args: {
+        variant: 'informative',
+        size: 'm',
+    },
 };
 
 // ──────────────────────────────
@@ -246,15 +371,24 @@ export const Fixed: Story = {
 // ──────────────────────────────
 
 /**
- * When a badge's label is too long for the available horizontal space, it wraps to form another line. Text wrapping can be enforced when a `max-inline-size` is applied to the badge.
+ * When a badge's label is too long for the available horizontal space, it wraps to form multiple lines.
+ * Text wrapping can be controlled by applying a `max-inline-size` constraint to the badge.
+ *
+ * This ensures badges remain readable even with longer status messages or category names.
  */
 export const TextWrapping: Story = {
-    render: () => html`
-        <swc-badge variant="informative" style="max-inline-size: 120px">
-            Document review pending approval from manager
-        </swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Document review pending approval from manager',
+            style: 'max-inline-size: 120px',
+        })}
     `,
     tags: ['behaviors'],
+    args: {
+        size: 'm',
+    },
 };
 
 // ────────────────────────────────
@@ -264,31 +398,77 @@ export const TextWrapping: Story = {
 /**
  * ### Features
  *
- * The `<sp-badge>` element implements several accessibility features:
+ * The `<swc-badge>` element implements several accessibility features:
  *
- * 1. **Color Meaning**: Colors are used in combination with text labels to ensure that status information is not conveyed through color alone
+ * #### Color meaning
  *
- * ### Best Practices
+ * - Colors are used in combination with text labels and/or icons to ensure that status information is not conveyed through color alone
+ * - Users with color vision deficiencies can understand badge meaning through text content
+ * - High contrast mode is supported with appropriate color overrides
  *
- * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`) when the status has specific meaning
- * - Include a clear, descriptive text label that explains the status
+ * #### Non-interactive element
+ *
+ * - Badges have no interactive behavior and are not focusable
+ * - Screen readers will announce the badge content as static text
+ * - No keyboard interaction is required or expected
+ *
+ * ### Best practices
+ *
+ * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
+ * - Include clear, descriptive labels that explain the status without relying on color alone
+ * - For icon-only badges, provide descriptive text in the default slot or use the `aria-label` attribute directly on the element
  * - Ensure sufficient color contrast between the badge and its background
- * - Avoid using badges for interactive elements; consider using buttons, tags, or links instead
+ * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
+ * - When using multiple badges together, ensure they're clearly associated with their related content
+ * - Use consistent badge variants across your application for the same statuses
+ * - Test with screen readers to verify badge content is announced in context
+ * - Consider placement carefully - badges should be close to the content they describe
  */
 export const Accessibility: Story = {
-    render: () => html`
-        <swc-badge variant="positive">approved</swc-badge>
-        <swc-badge variant="negative">rejected</swc-badge>
-        <swc-badge variant="notice">needs approval</swc-badge>
-        <swc-badge variant="informative">new feature</swc-badge>
-        <swc-badge variant="neutral">version 1.2.10</swc-badge>
-        <swc-badge variant="celery">available</swc-badge>
-        <swc-badge variant="yellow">busy</swc-badge>
-        <swc-badge variant="silver">out of office</swc-badge>
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
+        })}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'Rejected',
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            'default-slot': 'Pending approval',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Active',
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            'default-slot': 'Archived',
+        })}
+        ${template({
+            ...args,
+            variant: 'celery',
+            'default-slot': 'Documentation',
+        })}
+        ${template({
+            ...args,
+            variant: 'yellow',
+            'default-slot': 'Busy',
+        })}
+        ${template({
+            ...args,
+            variant: 'silver',
+            'default-slot': 'Version 1.2.10',
+        })}
     `,
     tags: ['a11y'],
+    args: {
+        size: 'm',
+    },
 };
-
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────

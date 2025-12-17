@@ -11,13 +11,14 @@ import {
     setStorybookHelpersConfig,
     type Options,
 } from '@wc-toolkit/storybook-helpers';
-import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
 import {
-    withStaticColorBackground,
-    staticColors,
     withFlexLayout,
+    withStaticColorsDemo,
+    withTextDirectionWrapper,
 } from './decorators';
+import { FontLoader } from './loaders/font-loader';
+import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -39,7 +40,11 @@ setStorybookHelpersConfig(storybookHelperOptions);
 setCustomElementsManifest(customElements);
 
 const preview = {
-    decorators: [withStaticColorBackground, staticColors, withFlexLayout],
+    decorators: [
+        withStaticColorsDemo,
+        withFlexLayout,
+        withTextDirectionWrapper,
+    ],
     parameters: {
         layout: 'centered',
         controls: {
@@ -82,21 +87,52 @@ const preview = {
             },
             canvas: {
                 withToolbar: true,
-                sourceState: 'shown',
                 layout: 'centered',
+                sourceState: 'shown',
             },
             source: {
                 excludeDecorators: true,
-                type: 'dynamic',
+                type: 'auto',
                 language: 'html',
+                transform: async (source: string) => {
+                    try {
+                        const prettier = await import('prettier/standalone');
+                        const prettierPluginHtml = await import(
+                            'prettier/plugins/html'
+                        );
+                        const prettierPluginBabel = await import(
+                            'prettier/plugins/babel'
+                        );
+                        const prettierPluginEstree = await import(
+                            'prettier/plugins/estree'
+                        );
+
+                        return prettier.format(source, {
+                            parser: 'html',
+                            plugins: [
+                                prettierPluginHtml.default,
+                                prettierPluginBabel.default,
+                                prettierPluginEstree.default,
+                            ],
+                            tabWidth: 2,
+                            useTabs: false,
+                            singleQuote: true,
+                            printWidth: 80,
+                        });
+                    } catch (error) {
+                        // If formatting fails, return the original source
+                        console.error('Failed to format source code:', error);
+                        return source;
+                    }
+                },
             },
         },
         options: {
             storySort: {
                 method: 'alphabetical-by-kind',
                 order: [
-                    'About SWC',
-                    ['Overview', 'When to use SWC', 'First Gen vs Second Gen'],
+                    'Learn about SWC',
+                    ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
                     'Components',
                     'Guides',
                     [
@@ -156,6 +192,7 @@ const preview = {
     },
     tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
     loaders: [FontLoader],
+    globalTypes,
 };
 
 export default preview;
