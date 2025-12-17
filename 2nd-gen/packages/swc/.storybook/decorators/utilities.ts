@@ -429,13 +429,16 @@ function renderThemedContainer(
 /**
  * Configuration for a VRT template.
  */
-export interface VRTTemplateConfig<T> {
+export interface VRTTemplateConfig {
     /** The template function that renders each permutation */
-    Template: (
-        args: Partial<T> & { state?: InteractionState }
-    ) => TemplateResult;
-    /** Permutation options for this template */
-    permutations: PermutationOptions<T>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Template: (args: Record<string, any>) => TemplateResult;
+    /**
+     * Permutation options for this template.
+     * Can be a single object or an array of objects (all rendered with the same Template).
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    permutations: Record<string, readonly any[]> | Record<string, readonly any[]>[];
     /** Whether to include interaction states (default: false) */
     withStates?: boolean;
     /** Specific states to include (default: all) */
@@ -450,6 +453,7 @@ export interface VRTTemplateConfig<T> {
  *
  * @example
  * ```typescript
+ * // Single permutation set
  * renderPermutations({
  *     Template: ({ variant, state }) => html`
  *         <swc-badge variant=${variant}>Badge</swc-badge>
@@ -458,24 +462,46 @@ export interface VRTTemplateConfig<T> {
  *     withStates: true,
  *     states: ['default', 'hover'],
  * })
+ *
+ * // Multiple permutation sets with same template
+ * renderPermutations({
+ *     Template: (args) => template(args),
+ *     permutations: [
+ *         { variant: Badge.VARIANTS_SEMANTIC, 'icon-slot': ['', '✓'] },
+ *         { variant: Badge.VARIANTS_COLOR, 'icon-slot': [''] },
+ *     ],
+ * })
  * ```
  */
-export function renderPermutations<T>({
+export function renderPermutations({
     Template,
     permutations,
     withStates = false,
     states = INTERACTION_STATES,
-}: VRTTemplateConfig<T>): TemplateResult[] {
-    if (withStates) {
-        const combos = createPermutationsWithStates(permutations, states);
-        return combos.map((combo) => {
-            const content = Template(combo);
-            return withState(combo.state, content);
-        });
+}: VRTTemplateConfig): TemplateResult[] {
+    // Normalize to array
+    const permutationSets = Array.isArray(permutations)
+        ? permutations
+        : [permutations];
+
+    const results: TemplateResult[] = [];
+
+    for (const permSet of permutationSets) {
+        if (withStates) {
+            const combos = createPermutationsWithStates(permSet, states);
+            for (const combo of combos) {
+                const content = Template(combo);
+                results.push(withState(combo.state, content));
+            }
+        } else {
+            const combos = createPermutations(permSet);
+            for (const combo of combos) {
+                results.push(Template(combo));
+            }
+        }
     }
 
-    const combos = createPermutations(permutations);
-    return combos.map((combo) => Template(combo));
+    return results;
 }
 
 /**
@@ -507,7 +533,7 @@ export function renderPermutations<T>({
  * };
  * ```
  */
-export function VRT<T>(configs: VRTTemplateConfig<T>[]): TemplateResult {
+export function VRT(configs: VRTTemplateConfig[]): TemplateResult {
     return renderVRTContainers(
         () => html`${configs.flatMap((config) => renderPermutations(config))}`
     );

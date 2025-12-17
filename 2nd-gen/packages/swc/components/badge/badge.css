@@ -62,6 +62,10 @@
     );
 }
 
+.spectrum-Badge:has(.spectrum-Badge-icon--no-label) {
+    gap: 0;
+}
+
 .spectrum-Badge-label {
     font-size: var(--swc-badge-font-size, token('font-size-100'));
     font-weight: token('medium-font-weight');

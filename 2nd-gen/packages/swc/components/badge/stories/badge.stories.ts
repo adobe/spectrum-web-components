@@ -85,6 +85,7 @@ export const Default: Story = {
     args: {
         size: 'm',
     },
+    tags: ['!dev'],
 };
 
 /**
@@ -188,17 +189,60 @@ export const Subtle: Story = {
 
 /**
  * VRT story for visual regression testing.
- * Displays all semantic variants in light/medium/LTR and dark/large/RTL.
+ * Displays semantic variants with different slot content configurations
+ * in light/medium/LTR and dark/large/RTL.
  */
 export const VisualRegressionTest: Story = {
     render: () =>
         VRT([
+            // Default style - semantic variants with icon variations
             {
-                Template: ({ variant }) =>
-                    html`<swc-badge variant=${variant as BadgeVariant}>
-                        Badge text
-                    </swc-badge>`,
-                permutations: { variant: Badge.VARIANTS_SEMANTIC },
+                Template: (permArgs) => template({ ...args, ...permArgs }),
+                permutations: [
+                    {
+                        variant: Badge.VARIANTS,
+                        'default-slot': ['Badge'],
+                        'icon-slot': ['', '✓'],
+                    },
+                    {
+                        variant: Badge.VARIANTS,
+                        'default-slot': [''],
+                        'icon-slot': ['✓'],
+                    },
+                    {
+                        variant: Badge.VARIANTS,
+                        subtle: [true],
+                    },
+                    {
+                        variant: Badge.VARIANTS_SEMANTIC,
+                        outline: [true],
+                    },
+                    {
+                        variant: ['informative'],
+                        'default-slot': ['Badge'],
+                        fixed: [
+                            'inline-start',
+                            'inline-end',
+                            'block-start',
+                            'block-end',
+                        ],
+                    },
+                ],
+            },
+            {
+                Template: (permArgs) =>
+                    template({
+                        ...args,
+                        ...permArgs,
+                        style: 'max-inline-size: 120px',
+                    }),
+                permutations: [
+                    {
+                        variant: ['neutral'],
+                        'default-slot': ['Very long label that should wrap'],
+                        'icon-slot': ['', '✓'],
+                    },
+                ],
             },
         ]),
     parameters: {
