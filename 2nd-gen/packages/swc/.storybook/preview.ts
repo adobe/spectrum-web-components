@@ -11,13 +11,13 @@ import {
     setStorybookHelpersConfig,
     type Options,
 } from '@wc-toolkit/storybook-helpers';
-import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
 import {
-    withStaticColorsDemo,
     withFlexLayout,
+    withStaticColorsDemo,
     withTextDirectionWrapper,
 } from './decorators';
+import { FontLoader } from './loaders/font-loader';
 import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
@@ -94,6 +94,37 @@ const preview = {
                 excludeDecorators: true,
                 type: 'auto',
                 language: 'html',
+                transform: async (source: string) => {
+                    try {
+                        const prettier = await import('prettier/standalone');
+                        const prettierPluginHtml = await import(
+                            'prettier/plugins/html'
+                        );
+                        const prettierPluginBabel = await import(
+                            'prettier/plugins/babel'
+                        );
+                        const prettierPluginEstree = await import(
+                            'prettier/plugins/estree'
+                        );
+
+                        return prettier.format(source, {
+                            parser: 'html',
+                            plugins: [
+                                prettierPluginHtml.default,
+                                prettierPluginBabel.default,
+                                prettierPluginEstree.default,
+                            ],
+                            tabWidth: 2,
+                            useTabs: false,
+                            singleQuote: true,
+                            printWidth: 80,
+                        });
+                    } catch (error) {
+                        // If formatting fails, return the original source
+                        console.error('Failed to format source code:', error);
+                        return source;
+                    }
+                },
             },
         },
         options: {

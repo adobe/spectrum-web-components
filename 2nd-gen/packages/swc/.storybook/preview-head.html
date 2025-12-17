@@ -89,6 +89,7 @@
     select,
     textarea,
     nav,
+    sp-table *,
     .toc-list-item {
         font-size: 0.875rem !important;
     }
@@ -120,7 +121,6 @@
         position: relative;
         color: rgb(46, 52, 56);
         border-bottom: 1px solid rgba(38, 85, 115, 0.15);
-        text-transform: capitalize !important;
         letter-spacing: unset;
         line-height: unset;
     }
@@ -128,7 +128,8 @@
     .sbdocs-toc--custom {
         width: 20rem !important;
         nav {
-            width: 20rem !important;
+            width: auto;
+            max-width: 15rem !important;
             font-size: 0.75rem !important;
         }
     }
@@ -144,6 +145,15 @@
     .sbdocs-content {
         max-width: 80ch !important;
         margin: auto !important;
+    }
+
+    .docs-image {
+        background-size: 100% 100%;
+        border-radius: 1rem;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        max-height: 13rem;
     }
 
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */

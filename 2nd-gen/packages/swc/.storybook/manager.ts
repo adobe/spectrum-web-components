@@ -16,7 +16,7 @@ addons.setConfig({
         base: 'light',
 
         brandTitle: 'Adobe | Spectrum Web Components',
-        brandUrl: 'https://opensource.adobe.com/spectrum-web-components', // TODO: Add the correct URL once we are publishing 2nd-gen
+        brandUrl: '?path=/docs/about-swc-overview--readme', // TODO: Add the correct URL once we are publishing 2nd-gen
         brandImage: logo,
         brandTarget: '_self',
 
