@@ -60,6 +60,7 @@ const meta: Meta = {
         stackblitz: {
             url: 'https://stackblitz.com/edit/vitejs-vite-xx1plot6?file=package.json',
         },
+        flexLayout: 'row-wrap',
     },
     args,
     argTypes,
@@ -115,22 +116,11 @@ export const Overview: Story = {
  *
  * #### Properties
  *
- * - **progress**: Numeric value from 0-100 controlling the fill amount
- * - **label**: Accessible text describing what is loading or progressing
- * - **indeterminate**: Boolean controlling animated vs. determinate state
- * - **size**: Visual size (s, m, or l)
- * - **static-color**: Color variant for use on different backgrounds (white or black)
- *
- * #### CSS custom properties
- *
- * Key design tokens that control appearance:
- *
- * - **--spectrum-progress-circle-size**: Overall diameter of the circle
- * - **--spectrum-progress-circle-thickness**: Width of the progress ring
- * - **--spectrum-progress-circle-track-border-color**: Color of the background track
- * - **--spectrum-progress-circle-fill-border-color**: Color of the progress fill
- *
- * All variations shown below for comparison.
+ * - [**Progress**](#progress-values): Numeric value from 0-100 controlling the fill amount
+ * - [**Label**](#progress-values): Accessible text describing what is loading or progressing
+ * - [**Indeterminate**](#indeterminate): Boolean controlling animated vs. determinate state
+ * - [**Size**](#sizes): Visual size (s, m, or l)
+ * - [**Static color**](#static-colors): Color variant for use on different backgrounds (white or black)
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -155,9 +145,6 @@ export const Anatomy: Story = {
     `,
     tags: ['anatomy'],
     args: {},
-    parameters: {
-        flexLayout: true,
-    },
 };
 
 // ──────────────────────────
@@ -167,11 +154,9 @@ export const Anatomy: Story = {
 /**
  * Progress circles come in three sizes to fit various contexts:
  *
- * - **Small (s)**: Used for inline indicators or space-constrained areas, such as in tables or alongside small text
- * - **Medium (m)**: Default size, used for typical loading states in cards, forms, or content areas
- * - **Large (l)**: Used for prominent loading states, primary content areas, or full-page loading indicators
- *
- * All sizes shown below for comparison.
+ * - **Small (`s`)**: Used for inline indicators or space-constrained areas, such as in tables or alongside small text
+ * - **Medium (`m`)**: Default size, used for typical loading states in cards, forms, or content areas
+ * - **Large (`l`)**: Used for prominent loading states, primary content areas, or full-page loading indicators
  */
 export const Sizes: Story = {
     render: (args) => html`
@@ -184,7 +169,6 @@ export const Sizes: Story = {
         progress: 25,
     },
     parameters: {
-        flexLayout: true,
         'section-order': 1,
     },
 };
@@ -194,8 +178,6 @@ export const Sizes: Story = {
  *
  * - **white**: Use on dark or colored backgrounds for better contrast
  * - **black**: Use on light backgrounds for better contrast
- *
- * Both variants shown below with appropriate backgrounds.
  */
 export const StaticColors: Story = {
     render: (args) => html`
@@ -207,41 +189,13 @@ export const StaticColors: Story = {
         progress: 60,
         label: 'Processing media',
     },
-    tags: ['options', '!test'],
+    tags: ['options'],
     parameters: {
-        flexLayout: false,
         staticColorsDemo: true,
         'section-order': 2,
     },
 };
-
-/**
- * Individual `static-color="white"` example for testing and demonstration on dark backgrounds.
- */
-export const StaticWhite: Story = {
-    args: {
-        'static-color': 'white',
-        progress: 60,
-        label: 'Loading on dark background',
-    },
-    parameters: {
-        'section-order': 3,
-    },
-};
-
-/**
- * Individual `static-color="black"` example for testing and demonstration on light backgrounds.
- */
-export const StaticBlack: Story = {
-    args: {
-        'static-color': 'black',
-        progress: 60,
-        label: 'Loading on light background',
-    },
-    parameters: {
-        'section-order': 4,
-    },
-};
+StaticColors.storyName = 'Static colors';
 
 // ──────────────────────────
 //    STATES STORIES
@@ -251,8 +205,6 @@ export const StaticBlack: Story = {
  * Progress circles can show specific progress values from 0% to 100%.
  * Set the `progress` attribute to a value between 0 and 100 to represent determinate progress.
  * This automatically sets `aria-valuenow` to the provided value for screen readers.
- *
- * All progress values shown below for comparison.
  */
 export const ProgressValues: Story = {
     render: (args) => html`
@@ -267,10 +219,10 @@ export const ProgressValues: Story = {
         size: 'm',
     },
     parameters: {
-        flexLayout: true,
         'section-order': 1,
     },
 };
+ProgressValues.storyName = 'Progress values';
 
 /**
  * The indeterminate state shows an animated loading indicator when progress is unknown or cannot be determined.
