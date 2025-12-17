@@ -153,7 +153,7 @@ export function HorizontalContainer(
 
 /**
  * Vertical flex container.
- * Useful for ===stacking components vertically with consistent spacing.
+ * Useful for stacking components vertically with consistent spacing.
  *
  * @param content - Array of template results or single template result
  * @param gap - Gap between items (default: 'var(--swc-spacing-200)' = 12px)
@@ -183,4 +183,332 @@ export function VerticalContainer(
     >
         ${content}
     </div>`;
+}
+
+// ────────────────────────────────────
+//    PERMUTATIONS
+// ────────────────────────────────────
+
+/**
+ * Defines permutation options where each property maps to an array of possible values.
+ */
+export type PermutationOptions<T> = {
+    [K in keyof T]?: ReadonlyArray<T[K]>;
+};
+
+/**
+ * Creates a cartesian product of all property combinations.
+ *
+ * @param options - Object where each key maps to an array of possible values
+ * @returns Array of all combinations
+ *
+ * @example
+ * ```typescript
+ * const combos = createPermutations({
+ *     variant: ['positive', 'negative'],
+ *     size: ['s', 'm'],
+ * });
+ * // Result: [
+ * //   { variant: 'positive', size: 's' },
+ * //   { variant: 'positive', size: 'm' },
+ * //   { variant: 'negative', size: 's' },
+ * //   { variant: 'negative', size: 'm' },
+ * // ]
+ * ```
+ */
+export function createPermutations<T>(
+    options: PermutationOptions<T>
+): Partial<T>[] {
+    const keys = Object.keys(options) as Array<keyof T>;
+    const result: Partial<T>[] = [];
+
+    function recurse(index: number, current: Partial<T>): void {
+        if (index === keys.length) {
+            result.push({ ...current });
+            return;
+        }
+
+        const key = keys[index];
+        const values = options[key];
+
+        if (values && values.length > 0) {
+            for (const value of values) {
+                current[key] = value;
+                recurse(index + 1, current);
+            }
+        } else {
+            recurse(index + 1, current);
+        }
+    }
+
+    recurse(0, {});
+    return result;
+}
+
+// ────────────────────────────────────
+//    STATES
+// ────────────────────────────────────
+
+/**
+ * Interaction states for VRT testing.
+ */
+export type InteractionState = 'default' | 'hover' | 'active' | 'focus';
+
+/**
+ * All interaction states.
+ */
+export const INTERACTION_STATES: readonly InteractionState[] = [
+    'default',
+    'hover',
+    'active',
+    'focus',
+];
+
+/**
+ * Wraps content with a state class for CSS-based state simulation.
+ *
+ * @param state - The interaction state to apply
+ * @param content - The content to wrap
+ * @returns Template with state class applied
+ */
+export function withState(
+    state: InteractionState,
+    content: TemplateResult
+): TemplateResult {
+    if (state === 'default') {
+        return content;
+    }
+
+    // Uses classes that can be targeted with CSS to simulate states
+    return html`<div class="is-${state}">${content}</div>`;
+}
+
+/**
+ * Creates permutations combined with interaction states.
+ *
+ * @param options - Permutation options
+ * @param states - States to combine with (default: all states)
+ * @returns Array of combinations, each with a `state` property
+ *
+ * @example
+ * ```typescript
+ * const combos = createPermutationsWithStates(
+ *     { variant: ['positive', 'negative'] },
+ *     ['default', 'hover']
+ * );
+ * // Result: [
+ * //   { variant: 'positive', state: 'default' },
+ * //   { variant: 'positive', state: 'hover' },
+ * //   { variant: 'negative', state: 'default' },
+ * //   { variant: 'negative', state: 'hover' },
+ * // ]
+ * ```
+ */
+export function createPermutationsWithStates<T>(
+    options: PermutationOptions<T>,
+    states: readonly InteractionState[] = INTERACTION_STATES
+): Array<Partial<T> & { state: InteractionState }> {
+    const basePermutations = createPermutations(options);
+    const result: Array<Partial<T> & { state: InteractionState }> = [];
+
+    for (const perm of basePermutations) {
+        for (const state of states) {
+            result.push({ ...perm, state });
+        }
+    }
+
+    return result;
+}
+
+// ────────────────────────────────────
+//    VRT CONTAINERS
+// ────────────────────────────────────
+
+/**
+ * Renders content in two side-by-side containers:
+ * - Left: Light theme, medium scale, LTR
+ * - Right: Dark theme, large scale, RTL
+ *
+ * @param content - Function that receives the context and returns content
+ * @returns Template with both containers
+ *
+ * @example
+ * ```typescript
+ * export const VRT: Story = {
+ *     render: () =>
+ *         renderVRTContainers((ctx) =>
+ *             createPermutations({ variant: Badge.VARIANTS }).map((combo) =>
+ *                 html`<swc-badge variant=${combo.variant}>Badge</swc-badge>`
+ *             )
+ *         ),
+ *     tags: ['!autodocs'],
+ * };
+ * ```
+ */
+export function renderVRTContainers(
+    content: (context: {
+        theme: 'light' | 'dark';
+        scale: 'medium' | 'large';
+        dir: 'ltr' | 'rtl';
+    }) => TemplateResult | TemplateResult[]
+): TemplateResult {
+    const lightContext = {
+        theme: 'light' as const,
+        scale: 'medium' as const,
+        dir: 'ltr' as const,
+    };
+    const darkContext = {
+        theme: 'dark' as const,
+        scale: 'large' as const,
+        dir: 'rtl' as const,
+    };
+
+    return html`<div
+        style=${styleMap({
+            display: 'flex',
+            'flex-direction': 'column',
+        })}
+    >
+        ${renderThemedContainer(lightContext, content(lightContext))}
+        ${renderThemedContainer(darkContext, content(darkContext))}
+    </div>`;
+}
+
+/**
+ * Renders a single themed container with label.
+ */
+function renderThemedContainer(
+    context: {
+        theme: 'light' | 'dark';
+        scale: 'medium' | 'large';
+        dir: 'ltr' | 'rtl';
+    },
+    content: TemplateResult | TemplateResult[]
+): TemplateResult {
+    const label = `${context.theme}, ${context.scale}, ${context.dir === 'ltr' ? 'LTR' : 'RTL'}`;
+    const scaleClass = context.scale === 'large' ? 'spectrum-theme--sizeL' : '';
+
+    return html`<div
+        class="spectrum-theme spectrum-theme--${context.theme} ${scaleClass}"
+        dir=${context.dir}
+        style=${styleMap({
+            padding: '24px',
+            'background-color': 'var(--swc-background-base-color)',
+        })}
+    >
+        <div style="margin-block-end: 16px;">
+            <span
+                class="chromatic-ignore .swc-Typography"
+                style=${styleMap({
+                    'font-family':
+                        'adobe-clean, -apple-system, BlinkMacSystemFont, sans-serif',
+                    'font-size': '14px',
+                    'font-weight': '300',
+                    color: 'var(--swc-neutral-content-color-default)',
+                })}
+                >${label}</span
+            >
+        </div>
+        <div
+            style=${styleMap({
+                display: 'flex',
+                'flex-wrap': 'wrap',
+                gap: '12px',
+                'align-items': 'center',
+            })}
+        >
+            ${content}
+        </div>
+    </div>`;
+}
+
+// ────────────────────────────────────
+//    VRT TEMPLATE HELPERS
+// ────────────────────────────────────
+
+/**
+ * Configuration for a VRT template.
+ */
+export interface VRTTemplateConfig<T> {
+    /** The template function that renders each permutation */
+    Template: (
+        args: Partial<T> & { state?: InteractionState }
+    ) => TemplateResult;
+    /** Permutation options for this template */
+    permutations: PermutationOptions<T>;
+    /** Whether to include interaction states (default: false) */
+    withStates?: boolean;
+    /** Specific states to include (default: all) */
+    states?: readonly InteractionState[];
+}
+
+/**
+ * Renders a set of permutations using the provided template.
+ *
+ * @param config - Template configuration
+ * @returns Array of rendered templates
+ *
+ * @example
+ * ```typescript
+ * renderPermutations({
+ *     Template: ({ variant, state }) => html`
+ *         <swc-badge variant=${variant}>Badge</swc-badge>
+ *     `,
+ *     permutations: { variant: ['positive', 'negative'] },
+ *     withStates: true,
+ *     states: ['default', 'hover'],
+ * })
+ * ```
+ */
+export function renderPermutations<T>({
+    Template,
+    permutations,
+    withStates = false,
+    states = INTERACTION_STATES,
+}: VRTTemplateConfig<T>): TemplateResult[] {
+    if (withStates) {
+        const combos = createPermutationsWithStates(permutations, states);
+        return combos.map((combo) => {
+            const content = Template(combo);
+            return withState(combo.state, content);
+        });
+    }
+
+    const combos = createPermutations(permutations);
+    return combos.map((combo) => Template(combo));
+}
+
+/**
+ * Creates a complete VRT story with two containers and permutations.
+ *
+ * @param configs - Array of template configurations to render
+ * @returns Template result for the VRT story
+ *
+ * @example
+ * ```typescript
+ * export const VRT: Story = {
+ *     render: () =>
+ *         VRT([
+ *             {
+ *                 Template: ({ variant }) =>
+ *                     html`<swc-badge variant=${variant}>Badge</swc-badge>`,
+ *                 permutations: { variant: Badge.VARIANTS_SEMANTIC },
+ *             },
+ *             {
+ *                 Template: ({ variant }) =>
+ *                     html`<swc-badge variant=${variant} outline>Outline</swc-badge>`,
+ *                 permutations: { variant: Badge.VARIANTS_SEMANTIC },
+ *                 withStates: true,
+ *                 states: ['default', 'hover'],
+ *             },
+ *         ]),
+ *     parameters: { layout: 'fullscreen' },
+ *     tags: ['!autodocs'],
+ * };
+ * ```
+ */
+export function VRT<T>(configs: VRTTemplateConfig<T>[]): TemplateResult {
+    return renderVRTContainers(
+        () => html`${configs.flatMap((config) => renderPermutations(config))}`
+    );
 }

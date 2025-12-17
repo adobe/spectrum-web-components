@@ -21,6 +21,7 @@ import '@adobe/swc/badge';
 import {
     capitalize,
     Container,
+    VRT,
 } from '../../../.storybook/decorators/utilities.js';
 
 // ────────────────
@@ -183,4 +184,25 @@ export const Subtle: Story = {
             )
         ),
     tags: ['!dev'],
+};
+
+/**
+ * VRT story for visual regression testing.
+ * Displays all semantic variants in light/medium/LTR and dark/large/RTL.
+ */
+export const VisualRegressionTest: Story = {
+    render: () =>
+        VRT([
+            {
+                Template: ({ variant }) =>
+                    html`<swc-badge variant=${variant as BadgeVariant}>
+                        Badge text
+                    </swc-badge>`,
+                permutations: { variant: Badge.VARIANTS_SEMANTIC },
+            },
+        ]),
+    parameters: {
+        layout: 'fullscreen',
+    },
+    tags: ['!autodocs'],
 };

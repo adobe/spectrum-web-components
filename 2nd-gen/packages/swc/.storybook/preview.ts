@@ -36,9 +36,9 @@ const preview = {
             toolbar: {
                 title: 'Theme',
                 items: [
-                    { value: 'light', title: 'Light' },
-                    { value: 'dark', title: 'Dark' },
-                    { value: 'adaptive', title: 'Adaptive' },
+                    { value: 'light', title: 'Light', icon: 'sun' },
+                    { value: 'dark', title: 'Dark', icon: 'moon' },
+                    { value: 'adaptive', title: 'Adaptive', icon: 'mirror' },
                 ],
                 dynamicTitle: true,
             },
