@@ -128,25 +128,14 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
- *
  * A status light consists of:
  *
  * 1. **Colored dot indicator** - Visual representation of status or category
  * 2. **Text label** - Descriptive text providing context
  *
- * ### Technical structure
+ * ### Content
  *
- * #### Slots
- *
- * - **Default slot**: Text label describing the status (required)
- *
- * #### Properties
- *
- * Properties that control visual appearance:
- *
- * - **Variant**: Controls the color of the status dot ([semantic](#semantic-variants) or [non-semantic](#non-semantic-variants) variants)
- * - [**Size**](#sizes): Controls the overall size of the component
+ * - **Default slot**: Text content describing the status or category (required for accessibility)
  */
 export const Anatomy: Story = {
     render: (args) => html`

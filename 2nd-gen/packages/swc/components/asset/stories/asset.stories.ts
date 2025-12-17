@@ -36,8 +36,7 @@ argTypes['default-slot'] = {
 };
 
 /**
- * An asset visually represents a file, folder, or image in your application.
- * File and folder representations center themselves horizontally and vertically in the space provided.
+ * The `file` and `folder` variants center themselves horizontally and vertically in the space provided.
  * Images are contained within the element, growing to the element's full height while centering within the width provided.
  */
 const meta: Meta = {
@@ -86,8 +85,6 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
- *
  * An asset consists of:
  *
  * 1. **Icon or image content** - Either a file/folder icon or custom slotted content
@@ -95,17 +92,9 @@ export const Overview: Story = {
  *
  * The asset automatically centers its content both horizontally and vertically within the available space.
  *
- * ### Technical structure
- *
- * #### Slots
+ * ### Content
  *
  * - **Default slot**: Custom content to display (typically an image) when variant is not set
- *
- * #### Properties
- *
- * Properties that control the asset's appearance:
- *
- * - [**Variant**](#variants): Controls which built-in icon to display (`file`, `folder`, or unset for custom content)
  * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
  */
 export const Anatomy: Story = {
@@ -169,7 +158,6 @@ export const Variants: Story = {
  * #### ARIA implementation
  *
  * - **Icon labeling**: File and folder SVG icons automatically use the `label` property as `aria-label`
- * - **Semantic role**: SVG icons use `role="img"` to identify them as image content
  * - **Non-interactive**: Assets have no interactive behavior and are not focusable
  *
  * #### Visual accessibility

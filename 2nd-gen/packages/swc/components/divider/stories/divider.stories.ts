@@ -99,21 +99,9 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
- *
  * A divider consists of:
  *
  * 1. **Line** - The visual separator element that creates visual separation between content
- *
- * ### Technical structure
- *
- * #### Properties
- *
- * Properties that control the divider's appearance and behavior:
- *
- * - [**Size**](#sizes): Controls the thickness of the divider line (`s`, `m`, `l`)
- * - [**Vertical**](#vertical): Changes orientation from horizontal to vertical
- * - [**Static color**](#static-colors): Provides contrast on colored backgrounds (`white`, `black`)
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -134,9 +122,9 @@ export const Anatomy: Story = {
 /**
  * Dividers come in three sizes to fit various contexts:
  *
- * - **Small (s)**: Used to divide similar components such as table rows, action button groups, and components within a panel
- * - **Medium (m)**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
- * - **Large (l)**: Should only be used for page titles or section titles
+ * - **Small (`s`)**: Used to divide similar components such as table rows, action button groups, and components within a panel
+ * - **Medium (`m`)**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
+ * - **Large (`l`)**: Should only be used for page titles or section titles
  */
 export const Sizes: Story = {
     render: (args) => html`

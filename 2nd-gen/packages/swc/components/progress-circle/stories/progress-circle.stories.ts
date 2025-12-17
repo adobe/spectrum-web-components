@@ -100,27 +100,15 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
- *
  * A progress circle consists of:
  *
  * 1. **Track** - Background ring showing the full progress range
  * 2. **Fill** - Colored ring segment showing current progress
  * 3. **Label** - Accessible text describing the operation (not visually rendered)
  *
- * ### Technical structure
- *
- * #### Slots
- *
+ * ### Content
  * - **Default slot**: Alternative way to provide an accessible label (the `label` attribute is preferred)
- *
- * #### Properties
- *
- * - [**Progress**](#progress-values): Numeric value from 0-100 controlling the fill amount
- * - [**Label**](#progress-values): Accessible text describing what is loading or progressing
- * - [**Indeterminate**](#indeterminate): Boolean controlling animated vs. determinate state
- * - [**Size**](#sizes): Visual size (s, m, or l)
- * - [**Static color**](#static-colors): Color variant for use on different backgrounds (white or black)
+ * - **Label**: Accessible text describing what is loading or progressing (not visually rendered)
  */
 export const Anatomy: Story = {
     render: (args) => html`

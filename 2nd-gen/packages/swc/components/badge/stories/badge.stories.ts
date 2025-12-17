@@ -172,28 +172,16 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
- * ### Visual structure
- *
  * A badge consists of:
  *
  * 1. **Container** - Colored background with rounded corners
  * 2. **Label** - Text content describing the status or category (required)
  * 3. **Icon** (optional) - Visual indicator positioned before the label
  *
- * ### Technical structure
+ * ### Content
  *
- * #### Slots
- *
- * - **Default slot**: Text label displayed in the badge (required for accessibility)
- * - **icon slot**: Optional icon element positioned to the left of the label
- *
- * #### Properties
- *
- * - **Variant**: Color scheme ([semantic](#semantic-variants) or [non-semantic](#non-semantic-variants) variants)
- * - [**Size**](#sizes): Visual size
- * - [**Subtle**](#subtle): Boolean for reduced visual prominence
- * - [**Outline**](#outline): Boolean for bordered style (semantic variants only)
- * - [**Fixed**](#fixed): Border radius adjustment for edge positioning
+ * - **Default slot**: Text content describing the status or category (required for accessibility)
+ * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
 export const Anatomy: Story = {
     render: (args) => html`
