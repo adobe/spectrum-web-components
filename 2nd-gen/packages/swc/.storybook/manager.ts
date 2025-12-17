@@ -20,13 +20,6 @@ addons.setConfig({
         brandImage: logo,
         brandTarget: '_self',
 
-        typography: {
-            fonts: {
-                base: 'adobe-clean, "Adobe Clean", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Trebuchet MS", "Lucida Grande", sans-serif',
-                code: '"Source Code Pro", Monaco, monospace',
-            },
-        },
-
         // colorPrimary: "#7326d3",
         colorSecondary: 'rgb(2, 101, 220)',
 

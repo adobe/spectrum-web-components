@@ -99,15 +99,15 @@
     }
 
     h2:not(.sbdocs-subtitle) {
-        font-size: var(--spectrum-heading-size-xl) !important;
-    }
-
-    h3 {
         font-size: var(--spectrum-heading-size-l) !important;
     }
 
-    h4 {
+    h3 {
         font-size: var(--spectrum-heading-size-m) !important;
+    }
+
+    h4 {
+        font-size: var(--spectrum-heading-size-s) !important;
     }
 
     #stories,
@@ -154,6 +154,19 @@
         background-repeat: no-repeat;
         width: 100%;
         max-height: 13rem;
+    }
+
+    .docs-accordion {
+        border-color: 1px solid rgba(38, 85, 115, 0.15) !important;
+
+        sp-accordion-item:first-child {
+            border-block-start: none !important;
+        }
+
+        sp-accordion-item {
+            border-color: 1px solid rgba(38, 85, 115, 0.15) !important;
+            border-block-end: 1px solid rgba(38, 85, 115, 0.15) !important;
+        }
     }
 
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */

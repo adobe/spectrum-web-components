@@ -132,7 +132,7 @@ const preview = {
                 method: 'alphabetical-by-kind',
                 order: [
                     'About SWC',
-                    ['Overview', 'When to use SWC', 'First Gen vs Second Gen'],
+                    ['Overview', 'When to use SWC', '1st-gen vs 2nd-gen'],
                     'Components',
                     'Guides',
                     [
