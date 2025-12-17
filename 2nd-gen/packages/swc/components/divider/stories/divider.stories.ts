@@ -61,6 +61,7 @@ const meta: Meta = {
         stackblitz: {
             url: 'https://stackblitz.com/edit/vitejs-vite-rqfjtpgz?file=package.json',
         },
+        flexLayout: 'row-nowrap',
     },
     tags: ['migrated'],
 };
@@ -87,6 +88,9 @@ export const Overview: Story = {
         <p>Content below the divider</p>
     `,
     args: {},
+    parameters: {
+        flexLayout: 'column-stretch',
+    },
     tags: ['overview'],
 };
 
@@ -110,15 +114,6 @@ export const Overview: Story = {
  * - **size**: Controls the thickness of the divider line (`s`, `m`, `l`)
  * - **vertical**: Changes orientation from horizontal to vertical
  * - **static-color**: Provides contrast on colored backgrounds (`white`, `black`)
- *
- * #### CSS custom properties
- *
- * Key design tokens that control appearance:
- *
- * - **--spectrum-divider-background-color**: Color of the divider line
- * - **--spectrum-divider-thickness**: Thickness of the divider
- * - **--spectrum-divider-inline-minimum-size**: Minimum width for horizontal dividers
- * - **--spectrum-divider-block-minimum-size**: Minimum height for vertical dividers
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -128,7 +123,7 @@ export const Anatomy: Story = {
     `,
     tags: ['anatomy'],
     parameters: {
-        flexLayout: true,
+        flexLayout: 'column-stretch',
     },
 };
 
@@ -142,8 +137,6 @@ export const Anatomy: Story = {
  * - **Small (s)**: Used to divide similar components such as table rows, action button groups, and components within a panel
  * - **Medium (m)**: Used for dividing subsections on a page, or to separate different groupings of components such as panels, rails, etc.
  * - **Large (l)**: Should only be used for page titles or section titles
- *
- * All sizes shown below for comparison.
  */
 export const Sizes: Story = {
     render: (args) => html`
@@ -164,11 +157,6 @@ export const Sizes: Story = {
         </div>
     `,
     parameters: {
-        flexLayout: true,
-        styles: {
-            'flex-direction': 'row',
-            gap: '16px',
-        },
         'section-order': 1,
     },
     tags: ['options'],
@@ -177,51 +165,34 @@ export const Sizes: Story = {
 /**
  * The default horizontal divider is used to separate content stacked vertically. To separate
  * horizontal content, use the `vertical` attribute.
- *
- * **Note**: When a vertical divider is used inside a flex container, apply `align-self: stretch; height: auto;` styling to the divider element.
- *
- * All sizes shown below for comparison.
  */
 export const Vertical: Story = {
     render: (args) => html`
-        <div class="story-vertical-divider-container">
-            <h4>Small</h4>
-            ${template({
-                ...args,
-                size: 's',
-            })}
-            <p>Content next to the small divider.</p>
-        </div>
-        <div class="story-vertical-divider-container">
-            <h4>Medium</h4>
-            ${template({
-                ...args,
-                size: 'm',
-            })}
-            <p>Content next to the medium divider.</p>
-        </div>
-        <div class="story-vertical-divider-container">
-            <h4>Large</h4>
-            ${template({
-                ...args,
-                size: 'l',
-            })}
-            <p>Content next to the large divider.</p>
-        </div>
+        <h4>Small</h4>
+        ${template({
+            ...args,
+            size: 's',
+        })}
+        <p>Content next to the small divider.</p>
+        <h4>Medium</h4>
+        ${template({
+            ...args,
+            size: 'm',
+        })}
+        <p>Content next to the medium divider.</p>
+        <h4>Large</h4>
+        ${template({
+            ...args,
+            size: 'l',
+        })}
+        <p>Content next to the large divider.</p>
     `,
     parameters: {
-        flexLayout: true,
-        styles: {
-            'flex-direction': 'row',
-            gap: '24px',
-            'align-items': 'stretch',
-        },
         'section-order': 2,
     },
     tags: ['options'],
     args: {
         vertical: true,
-        style: 'align-self: stretch; height: auto;',
     },
 };
 
@@ -230,8 +201,6 @@ export const Vertical: Story = {
  *
  * - **white**: Use on dark or colored backgrounds for better contrast
  * - **black**: Use on light backgrounds for better contrast
- *
- * Both static color variants shown below with appropriate backgrounds.
  */
 export const StaticColors: Story = {
     render: (args) => html`
@@ -250,7 +219,6 @@ export const StaticColors: Story = {
         size: 'm',
     },
     parameters: {
-        flexLayout: false,
         staticColorsDemo: true,
         'section-order': 3,
     },
@@ -294,5 +262,8 @@ export const Accessibility: Story = {
             current sprint.
         </p>
     `,
+    parameters: {
+        flexLayout: 'column-stretch',
+    },
     tags: ['a11y'],
 };

@@ -14,7 +14,6 @@ import {
 import { FontLoader } from './loaders/font-loader';
 import customElements from './custom-elements.json';
 import {
-    withSingleStaticColor,
     withStaticColorsDemo,
     withFlexLayout,
     withTextDirectionWrapper,
@@ -42,10 +41,9 @@ setCustomElementsManifest(customElements);
 
 const preview = {
     decorators: [
-        withSingleStaticColor,
         withStaticColorsDemo,
-        withTextDirectionWrapper,
         withFlexLayout,
+        withTextDirectionWrapper,
     ],
     parameters: {
         layout: 'centered',

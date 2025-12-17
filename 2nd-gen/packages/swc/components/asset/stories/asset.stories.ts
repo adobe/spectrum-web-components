@@ -20,7 +20,7 @@ import '@adobe/swc/asset';
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
+const { args, argTypes, template } = getStorybookHelpers('swc-asset');
 
 argTypes.variant = {
     ...argTypes.variant,
@@ -47,9 +47,6 @@ const meta: Meta = {
     argTypes,
     render: (args) => template(args),
     parameters: {
-        actions: {
-            handles: events,
-        },
         docs: {
             subtitle: `Visually represent files, folders, or images in your application`,
         },
@@ -107,10 +104,8 @@ export const Overview: Story = {
  *
  * Properties that control the asset's appearance:
  *
- * - **variant**: Controls which built-in icon to display (`file`, `folder`, or unset for custom content)
- * - **label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
- *
- * All variations shown below for comparison.
+ * - [**Variant**](#variants): Controls which built-in icon to display (`file`, `folder`, or unset for custom content)
+ * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -122,9 +117,6 @@ export const Anatomy: Story = {
             'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
         })}
     `,
-    parameters: {
-        flexLayout: true,
-    },
     tags: ['anatomy'],
 };
 
@@ -139,8 +131,6 @@ export const Anatomy: Story = {
  * - **folder**: Displays a folder icon, useful for representing directories or collections
  *
  * When no variant is specified, the asset displays custom content provided via the default slot (typically an image).
- *
- * All variants shown below for comparison.
  */
 export const Variants: Story = {
     render: (args) => html`
@@ -161,7 +151,6 @@ export const Variants: Story = {
         })}
     `,
     parameters: {
-        flexLayout: true,
         'section-order': 1,
     },
     tags: ['options'],
@@ -217,8 +206,5 @@ export const Accessibility: Story = {
             'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Profile photo of Maria Rodriguez, Senior Designer" />`,
         })}
     `,
-    parameters: {
-        flexLayout: true,
-    },
     tags: ['a11y'],
 };

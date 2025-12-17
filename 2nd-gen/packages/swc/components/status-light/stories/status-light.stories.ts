@@ -29,17 +29,6 @@ import '@adobe/swc/status-light';
 
 const { args, argTypes, template } = getStorybookHelpers('swc-status-light');
 
-const parameters = {
-    flexLayout: true,
-    styles: {
-        gap: 'var(--spectrum-spacing-200)',
-        'flex-wrap': 'wrap',
-        'justify-content': 'center',
-        // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-        'max-inline-size': '80ch',
-    },
-};
-
 argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
@@ -53,7 +42,7 @@ argTypes.size = {
 };
 
 /**
- * Status lights describe the condition of an entity. Much like [Badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
+ * Status lights describe the condition of an entity. Much like [badges](../?path=/docs/components-badge--readme), they can be used to convey semantic meaning, such as statuses and categories.
  */
 const meta: Meta = {
     title: 'Status light',
@@ -69,6 +58,7 @@ const meta: Meta = {
         stackblitz: {
             url: 'https://stackblitz.com/edit/vitejs-vite-y2kz1rkx?file=package.json',
         },
+        flexLayout: 'row-wrap',
     },
     args,
     argTypes,
@@ -155,8 +145,8 @@ export const Overview: Story = {
  *
  * Properties that control visual appearance:
  *
- * - **variant**: Controls the color of the status dot (semantic or non-semantic)
- * - **size**: Controls the overall size of the component
+ * - **Variant**: Controls the color of the status dot ([semantic](#semantic-variants) or [non-semantic](#non-semantic-variants) variants)
+ * - [**Size**](#sizes): Controls the overall size of the component
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -170,9 +160,6 @@ export const Anatomy: Story = {
     args: {
         size: 'm',
     },
-    parameters: {
-        flexLayout: true,
-    },
 };
 
 // ──────────────────────────
@@ -182,10 +169,10 @@ export const Anatomy: Story = {
 /**
  * Status lights come in four sizes to fit various contexts:
  *
- * - **Small (s)**: Used for inline indicators or space-constrained areas
- * - **Medium (m)**: Default size, used for typical use cases
- * - **Large (l)**: Used for prominent displays or primary content areas
- * - **Extra-large (xl)**: Maximum visibility for high-priority statuses
+ * - **Small (`s`)**: Used for inline indicators or space-constrained areas
+ * - **Medium (`m`)**: Default size, used for typical use cases
+ * - **Large (`l`)**: Used for prominent displays or primary content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for high-priority statuses
  *
  * All sizes shown below for comparison.
  */
@@ -196,19 +183,17 @@ export const Sizes: Story = {
         ${template({ ...args, size: 'l', 'default-slot': 'Large' })}
         ${template({ ...args, size: 'xl', 'default-slot': 'Extra-large' })}
     `,
-    parameters: { ...parameters, 'section-order': 1 },
+    parameters: { 'section-order': 1 },
     tags: ['options'],
 };
 /**
  * Semantic variants provide meaning through color:
  *
- * - **info**: Active, in use, live, published
- * - **neutral**: Archived, deleted, paused, draft, not started, ended
- * - **positive**: Approved, complete, success, new, purchased, licensed
- * - **notice**: Needs approval, pending, scheduled, syncing, indexing, processing
- * - **negative**: Error, alert, rejected, failed
- *
- * All semantic variants shown below for comparison.
+ * - **`info`**: Active, in use, live, published
+ * - **`neutral`**: Archived, deleted, paused, draft, not started, ended
+ * - **`positive`**: Approved, complete, success, new, purchased, licensed
+ * - **`notice`**: Needs approval, pending, scheduled, syncing, indexing, processing
+ * - **`negative`**: Error, alert, rejected, failed
  */
 export const SemanticVariants: Story = {
     render: (args) => html`
@@ -221,7 +206,7 @@ export const SemanticVariants: Story = {
                 })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 2 },
+    parameters: { 'section-order': 2 },
     tags: ['options'],
 };
 
@@ -230,8 +215,6 @@ export const SemanticVariants: Story = {
  * Best used when there are **8 or fewer** categories being color coded.
  *
  * **Note**: The `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants are new in 2nd-gen and not available in 1st-gen.
- *
- * All non-semantic variants shown below for comparison.
  */
 export const NonSemanticVariants: Story = {
     render: (args) => html`
@@ -244,7 +227,7 @@ export const NonSemanticVariants: Story = {
                 })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 3 },
+    parameters: { 'section-order': 3 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -254,27 +237,18 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
 // ──────────────────────────────
 
 /**
- * ### Text wrapping
- *
  * When the text is too long for the horizontal space available, it wraps to form another line.
  * You can control the wrapping behavior by setting a `max-inline-size` style on the component.
  */
 export const TextWrapping: Story = {
     render: (args) => html`
-        <div style="display: flex; gap: var(--spectrum-spacing-200);">
-            ${template({
-                ...args,
-                variant: 'info',
-                'default-slot': 'Active',
-            })}
-            ${template({
-                ...args,
-                variant: 'positive',
-                'default-slot':
-                    'Document processing in progress - please wait while we validate your submission',
-                style: 'max-inline-size: 200px',
-            })}
-        </div>
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot':
+                'Document processing in progress - please wait while we validate your submission',
+            style: 'max-inline-size: 200px',
+        })}
     `,
     tags: ['behaviors'],
 };
@@ -351,7 +325,4 @@ export const Accessibility: Story = {
         })}
     `,
     tags: ['a11y'],
-    parameters: {
-        flexLayout: true,
-    },
 };

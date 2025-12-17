@@ -36,16 +36,6 @@ import {
 
 const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
-const parameters = {
-    flexLayout: true,
-    styles: {
-        gap: 'var(--spectrum-spacing-200)',
-        'flex-wrap': 'wrap',
-        'justify-content': 'center',
-        'max-inline-size': '80ch',
-    },
-};
-
 argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
@@ -68,11 +58,10 @@ argTypes.size = {
 };
 
 /**
- * Badges display small amounts of color-categorized metadata to get a user's attention.
- * Similar to status lights, they use color and text to convey status or category information.
+ * Similar to [status lights](/?path=/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
  * Badges come in three styles: bold fill (default), subtle fill, and outline.
- * Choose one style consistently within a product - outline and subtle fill draw similar attention levels.
+ * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
  * Reserve bold fill for high-attention badging only.
  */
 const meta: Meta = {
@@ -92,6 +81,7 @@ const meta: Meta = {
         stackblitz: {
             url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
         },
+        flexLayout: 'row-wrap',
     },
     tags: ['migrated'],
 };
@@ -169,7 +159,6 @@ export const Playground: Story = {
 
 export const Overview: Story = {
     render: (args) => html` ${template(args)} `,
-    parameters: parameters,
     tags: ['overview'],
     args: {
         size: 'm',
@@ -200,23 +189,11 @@ export const Overview: Story = {
  *
  * #### Properties
  *
- * - **variant**: Color scheme (semantic or non-semantic variants)
- * - **size**: Visual size (s, m, l, or xl)
- * - **subtle**: Boolean for reduced visual prominence
- * - **outline**: Boolean for bordered style (semantic variants only)
- * - **fixed**: Border radius adjustment for edge positioning
- *
- * #### CSS custom properties
- *
- * Key design tokens that control appearance:
- *
- * - **--spectrum-badge-background-color-default**: Background color for the badge
- * - **--spectrum-badge-label-icon-color**: Text and icon color
- * - **--spectrum-badge-height**: Overall height of the badge
- * - **--spectrum-badge-corner-radius**: Border radius for corners
- * - **--spectrum-badge-font-size**: Text size within the badge
- *
- * All combinations shown below for comparison.
+ * - **Variant**: Color scheme ([semantic](#semantic-variants) or [non-semantic](#non-semantic-variants) variants)
+ * - [**Size**](#sizes): Visual size
+ * - [**Subtle**](#subtle): Boolean for reduced visual prominence
+ * - [**Outline**](#outline): Boolean for bordered style (semantic variants only)
+ * - [**Fixed**](#fixed): Border radius adjustment for edge positioning
  */
 export const Anatomy: Story = {
     render: (args) => html`
@@ -228,7 +205,6 @@ export const Anatomy: Story = {
             'default-slot': 'Icon and label',
         })}
     `,
-    parameters: parameters,
     tags: ['anatomy'],
     args: {
         variant: 'informative',
@@ -243,14 +219,12 @@ export const Anatomy: Story = {
 /**
  * Badges come in four sizes to fit various contexts:
  *
- * - **Small (s)**: Compact spaces, inline with text, or in tables
- * - **Medium (m)**: Default size for most common usage scenarios
- * - **Large (l)**: Increased emphasis in cards or content areas
- * - **Extra-large (xl)**: Maximum visibility for primary status indicators
+ * - **Small (`s`)**: Compact spaces, inline with text, or in tables
+ * - **Medium (`m`)**: Default size for most common usage scenarios
+ * - **Large (`l`)**: Increased emphasis in cards or content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
  *
  * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
- *
- * All sizes shown below for comparison.
  */
 export const Sizes: Story = {
     render: (args) => html`
@@ -262,7 +236,7 @@ export const Sizes: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 1 },
+    parameters: { 'section-order': 1 },
     tags: ['options'],
     args: {
         variant: 'informative',
@@ -281,8 +255,6 @@ export const Sizes: Story = {
  * - **positive**: Approved, complete, success, purchased, licensed
  * - **notice**: Pending, expiring soon, limited, deprecated
  * - **negative**: Rejected, error, alert, failed
- *
- * All semantic variants shown below for comparison.
  */
 export const SemanticVariants: Story = {
     render: (args) => html`
@@ -294,7 +266,7 @@ export const SemanticVariants: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 2 },
+    parameters: { 'section-order': 2 },
     tags: ['options'],
 };
 SemanticVariants.storyName = 'Semantic variants';
@@ -308,10 +280,8 @@ SemanticVariants.storyName = 'Semantic variants';
  * - Visual distinction matters more than semantic meaning
  * - Creating department, team, or project color schemes
  *
- * **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
+ * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
  * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
- *
- * All non-semantic variants shown below for comparison.
  */
 export const NonSemanticVariants: Story = {
     render: (args) => html`
@@ -323,7 +293,7 @@ export const NonSemanticVariants: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 3 },
+    parameters: { 'section-order': 3 },
     tags: ['options'],
 };
 NonSemanticVariants.storyName = 'Non-semantic variants';
@@ -332,10 +302,8 @@ NonSemanticVariants.storyName = 'Non-semantic variants';
  * The `outline` style provides a bordered appearance with a transparent background.
  * This style reduces visual weight while maintaining semantic meaning.
  *
- * **Important**: The outline style is only valid for semantic variants (accent, informative, neutral, positive, notice, negative).
- * Attempting to use outline with non-semantic color variants will not apply the style.
- *
- * All outlined semantic variants shown below for comparison.
+ * **Important**: The outline style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
+ * Attempting to use `outline` with non-semantic color variants will not apply the style.
  */
 export const Outline: Story = {
     render: (args) => html`
@@ -348,7 +316,7 @@ export const Outline: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 4 },
+    parameters: { 'section-order': 4 },
     tags: ['options'],
     args: {},
 };
@@ -361,8 +329,6 @@ export const Outline: Story = {
  * - Multiple badges appear together and need less visual competition
  * - Status is secondary to main content
  * - Maintaining design system color palette while reducing emphasis
- *
- * All variants shown below with subtle styling for comparison.
  */
 export const Subtle: Story = {
     render: (args) => html`
@@ -375,7 +341,7 @@ export const Subtle: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 5 },
+    parameters: { 'section-order': 5 },
     tags: ['options'],
     args: {},
 };
@@ -404,7 +370,7 @@ export const Fixed: Story = {
             })
         )}
     `,
-    parameters: { ...parameters, 'section-order': 6 },
+    parameters: { 'section-order': 6 },
     tags: ['options'],
     args: {
         variant: 'informative',
@@ -417,8 +383,6 @@ export const Fixed: Story = {
 // ──────────────────────────────
 
 /**
- * ### Text wrapping
- *
  * When a badge's label is too long for the available horizontal space, it wraps to form multiple lines.
  * Text wrapping can be controlled by applying a `max-inline-size` constraint to the badge.
  *
@@ -515,10 +479,6 @@ export const Accessibility: Story = {
             'default-slot': 'Version 1.2.10',
         })}
     `,
-    parameters: {
-        ...parameters,
-        flexLayout: true,
-    },
     tags: ['a11y'],
     args: {
         size: 'm',
