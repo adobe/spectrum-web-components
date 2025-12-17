@@ -114,8 +114,8 @@ export const Anatomy: Story = {
         ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
         ${template({
             ...args,
-            label: 'User avatar',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
+            label: 'images/profile_sm.png',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Headshot of Jenn" />`,
         })}
     `,
     tags: ['anatomy'],
@@ -147,8 +147,8 @@ export const Variants: Story = {
         })}
         ${template({
             ...args,
-            label: 'User profile image',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User profile preview" />`,
+            label: 'banners/sunset.jpg',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="sunset over a sandy beach" />`,
         })}
     `,
     parameters: {
@@ -181,13 +181,10 @@ export const Variants: Story = {
  * ### Best practices
  *
  * - Always provide a descriptive `label` attribute for file and folder variants
- * - Use specific, meaningful labels (e.g., "Project proposal PDF" not just "File")
- * - When using images in the default slot, provide descriptive `alt` text on the `<img>` element
+ * - Use specific, meaningful labels or alt text (e.g., "Project proposal PDF", "projects/2025/proposal.pdf", or not just "File")
  * - The `label` on the asset itself should describe the asset's purpose or context
  * - For decorative images, use an empty `alt=""` attribute on the img tag
- * - Ensure images have sufficient contrast against their backgrounds
  * - Test with screen readers to verify assets are announced appropriately in context
- * - Consider the surrounding context - assets should be clearly associated with related content
  */
 export const Accessibility: Story = {
     render: (args) => html`
