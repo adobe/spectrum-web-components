@@ -1,7 +1,15 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import headerImage from '../assets/images/banner_principles_S2_desktop_2x_1689964204945.png';
+import consistent from '../assets/images/consistent_products.jpg';
+import alignment from '../assets/images/component_alignment.jpg';
+import custom from '../assets/images/custom_design_systems.jpg';
+import a11y from '../assets/images/a11y.jpg';
+import first from '../assets/images/first_gen_components.jpg';
+import frameowrk from '../assets/images/framework_components.jpg';
+import noFrameowrk from '../assets/images/no_framework.jpg';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import '@spectrum-web-components/card/sp-card.js';
 
 <Meta title="When to use SWC" />
 
@@ -13,34 +21,27 @@ Spectrum Web Components (SWC) is a good choice when you want to build interfaces
 
 ## SWC is a good choice when
 
-<sp-accordion allow-multiple size="m" class="docs-accordion">
-    <sp-accordion-item label="You need Spectrum-aligned UI in a web environment">
-        SWC gives you ready-made components that follow Spectrum design and behavior. Use them when your project must look and feel like other Adobe experiences.
-    </sp-accordion-item>
+<sp-card heading="You need Spectrum-aligned UI in a web environment">
+    <img alt="" slot="cover-photo" src="${consistent}" />
+    SWC gives you ready-made components that follow Spectrum design and behavior. Use them when your project must look and feel like other Adobe experiences.
 
-    <sp-accordion-item label="You want components that work without a specific framework">
-        SWC works in plain HTML, JavaScript, or TypeScript. It also works with
-        frameworks like React through wrapper packages. This makes it a good option
-        for teams using mixed technologies.
-    </sp-accordion-item>
-
-    <sp-accordion-item label="You want consistent behavior across products">
-        Because SWC components share a common architecture and API, they behave the
-        same across all projects. This reduces the amount of one-off code your team
-        needs to maintain.
-    </sp-accordion-item>
-
-    <sp-accordion-item label="You want built-in accessibility">
-        SWC includes accessibility features that follow Spectrum and web standards.
-        This helps teams meet accessibility requirements without writing them from
-        scratch.
-    </sp-accordion-item>
-
-    <sp-accordion-item label="You only need a few components">
-        Since SWC ships as individual packages, you can install only the components you need. This keeps your project lighter and easier to maintain.
-    </sp-accordion-item>
-
-</sp-accordion>
+</sp-card>
+<sp-card heading="You want components that work without a specific framework">
+    <img alt="" slot="cover-photo" src="${consistent}" />
+    SWC works in plain HTML, JavaScript, or TypeScript. It also works with frameworks like React through wrapper packages. This makes it a good option for teams using mixed technologies.
+</sp-card>
+<sp-card heading="You want consistent behavior across products">
+    <img alt="" slot="cover-photo" src="${consistent}" />
+    <p slot="subheading">Because SWC components share a common architecture and API, they behave the same across all projects. This reduces the amount of one-off code your team  needs to maintain.</p>
+</sp-card>
+<sp-card heading="You want built-in accessibility">
+    <img alt="" slot="cover-photo" src="${consistent}" />
+    Because SWC components share a common architecture and API, they behave the same across all projects. This reduces the amount of one-off code your team  needs to maintain.
+</sp-card>
+<sp-card heading="You only need a few components">
+    <img alt="" slot="cover-photo" src="${consistent}" />
+    Since SWC ships as individual packages, you can install only the components you need. This keeps your project lighter and easier to maintain.
+</sp-card>
 
 ## SWC may not be enough on its own
 
