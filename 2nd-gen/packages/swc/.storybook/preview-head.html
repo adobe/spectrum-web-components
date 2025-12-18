@@ -169,6 +169,30 @@
         }
     }
 
+    .firefly-cards {
+        list-style: none !important;
+        padding-left: 0 !important;
+    }
+
+    .firefly-cards li {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        grid-template-rows: repeat(2, auto);
+        grid-column-gap: 15px;
+        grid-row-gap: 0px;
+        max-height: 150px;
+        margin: 15px 0 30px;
+    }
+    .firefly-cards swc-asset {
+        grid-area: 1 / 1 / 3 / 2;
+    }
+    .firefly-cards h3 {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    .firefly-cards p {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+
     /* Fix for Storybook's zoom wrapper interfering with forced-colors mode */
     @media (forced-colors: active) {
         .innerZoomElementWrapper.innerZoomElementWrapper.innerZoomElementWrapper
