@@ -12,6 +12,7 @@
         "../tools/**/*.ts",
         "../tools/*/stories/*.ts",
         "./testing-helpers.ts",
+        "./stress-test-helpers.ts",
         "./visual/test.ts",
         "../global.d.ts"
     ],
