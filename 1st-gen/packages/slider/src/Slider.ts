@@ -91,9 +91,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property()
     public type = '';
 
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;

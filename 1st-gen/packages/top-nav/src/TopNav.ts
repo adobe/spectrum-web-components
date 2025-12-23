@@ -44,9 +44,6 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         return [tabsSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
 
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @property({ type: String })
     public label = '';
 

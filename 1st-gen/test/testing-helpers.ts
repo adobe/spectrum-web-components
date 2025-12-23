@@ -404,7 +404,7 @@ export async function isInteractive(
 
 export async function fixture<T extends Element>(
     story: TemplateResult,
-    dir: 'ltr' | 'rtl' | 'auto' = 'ltr'
+    dir: CSSStyleDeclaration['direction'] = 'ltr'
 ): Promise<T> {
     const test = await owcFixture<Theme>(html`
         <sp-theme system="spectrum" scale="medium" color="light">

@@ -44,9 +44,6 @@ export class ColorWheel extends Focusable {
         return [styles];
     }
 
-    @property({ type: String, reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
