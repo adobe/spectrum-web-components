@@ -12,8 +12,8 @@
  * governing permissions and limitations under the License.
  */
 
-import fg from 'fast-glob';
 import { build } from 'esbuild';
+import fg from 'fast-glob';
 import fs from 'fs';
 
 const relativeImportRegex = RegExp(
@@ -79,7 +79,7 @@ export const buildPackage = async (paths) => {
         outdir: '.',
         outbase: '.',
         sourcemap: true,
-        target: ['es2018'],
+        target: ['es2020'],
     };
     if (devPaths.length) {
         builds.push(

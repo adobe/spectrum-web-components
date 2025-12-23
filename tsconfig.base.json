@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+
+        // Output settings (shared)
+        "declaration": true,
+        "esModuleInterop": false,
+
+        // Decorators (required for Lit)
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+        // Module settings (shared)
+        "module": "ESNext",
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "sourceMap": true,
+        // Strict type checking (shared)
+        "strict": true,
+        // ES2020 unified target
+        "target": "ES2020",
+        "useDefineForClassFields": false
+    },
+    "display": "Base TypeScript Config for Spectrum Web Components"
+}

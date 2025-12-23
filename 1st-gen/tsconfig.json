@@ -1,32 +1,24 @@
 {
     "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
+        // 1st-gen specific: Build configuration
         "baseUrl": "./packages",
-        "declaration": true,
         "emitDeclarationOnly": true,
-        "experimentalDecorators": true,
         "importHelpers": true,
         "inlineSources": true,
-        "isolatedModules": true,
-        "lib": ["es2018", "dom", "dom.iterable"],
-        "module": "esNext",
+        // 1st-gen specific: Classic Node resolution for tsc builds
         "moduleResolution": "node",
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+
+        // Cross-generation import mapping
         "paths": {
             "@spectrum-web-components/core/*": [
                 "../2nd-gen/packages/core/*/dist"
             ]
         },
-        "resolveJsonModule": true,
         "rootDir": ".",
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "target": "es2018",
+
+        // Test framework types
         "types": ["mocha", "chai", "sinon", "node", "swc"]
     },
+    "extends": "../tsconfig.base.json",
     "include": ["./global.d.ts"]
 }
