@@ -1,0 +1,65 @@
+{
+    "name": "swc-vscode-token",
+    "displayName": "SWC token() Intellisense",
+    "publisher": "adobe",
+    "description": "Autocomplete, hover, and diagnostics for token() values",
+    "version": "0.0.1",
+    "private": true,
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "contributors": [
+        "Stephanie Eckles <5t3ph@users.noreply.github.com>"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/",
+    "repository": {
+        "directory": "2nd-gen/packages/tools/swc-vscode-token",
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "icon": "resources/icon.png",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "main": "./out/client/extension.js",
+    "activationEvents": [
+        "onLanguage:css",
+        "onLanguage:scss",
+        "onLanguage:postcss",
+        "onLanguage:javascript",
+        "onLanguage:typescript"
+    ],
+    "scripts": {
+        "tokens": "swc-tokens --outputType tokens --out ./tokens.json --prefix swc",
+        "build": "node esbuild.config.js",
+        "package": "vsce package --no-dependencies",
+        "deploy": "yarn build && yarn package",
+        "test": "vitest --run",
+        "test:watch": "vitest --watch"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^8.1.0",
+        "vscode-languageserver": "^8.1.0"
+    },
+    "devDependencies": {
+        "@adobe/swc-tokens": "workspace:*",
+        "@types/node": "^24.10.2",
+        "@types/vscode": "^1.85.0",
+        "esbuild": "^0.27.1",
+        "typescript": "5.9.3",
+        "vitest": "4.0.15",
+        "vsce": "^2.15.0"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "2nd-gen"
+    ]
+}

@@ -10,14 +10,19 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
+
+import {
+    capitalize,
+    Container,
+    VRT,
+} from '../../../.storybook/decorators/utilities.js';
 
 // ────────────────
 //    METADATA
@@ -80,6 +85,7 @@ export const Default: Story = {
     args: {
         size: 'm',
     },
+    tags: ['!dev'],
 };
 
 /**
@@ -98,7 +104,7 @@ export const WithIcon: Story = {
  */
 export const SemanticVariants: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             Badge.VARIANTS_SEMANTIC.map(
                 (variant) => html`
                     <swc-badge variant=${variant as BadgeVariant}
@@ -121,7 +127,7 @@ export const Outline: Story = {
         },
     },
     render: () =>
-        CONTAINER(
+        Container(
             Badge.VARIANTS_SEMANTIC.map(
                 (variant) => html`
                     <swc-badge variant=${variant as BadgeVariant} outline
@@ -138,7 +144,7 @@ export const Outline: Story = {
  */
 export const ColorVariants: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             Badge.VARIANTS_COLOR.map(
                 (variant) => html`
                     <swc-badge variant=${variant as BadgeVariant}
@@ -152,7 +158,7 @@ export const ColorVariants: Story = {
 
 export const Sizes: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             Badge.VALID_SIZES.map(
                 (size) => html`
                     <swc-badge size=${size as BadgeSize}
@@ -169,7 +175,7 @@ export const Sizes: Story = {
  */
 export const Subtle: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             Badge.VARIANTS.map(
                 (variant) => html`
                     <swc-badge variant=${variant as BadgeVariant} subtle
@@ -181,30 +187,66 @@ export const Subtle: Story = {
     tags: ['!dev'],
 };
 
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
-}
+/**
+ * VRT story for visual regression testing.
+ * Displays semantic variants with different slot content configurations
+ * in light/medium/LTR and dark/large/RTL.
+ */
+export const VisualRegressionTest: Story = {
+    render: () =>
+        VRT([
+            // Default style - semantic variants with icon variations
+            {
+                Template: (permArgs) => template({ ...args, ...permArgs }),
+                permutations: [
+                    {
+                        variant: Badge.VARIANTS,
+                        'default-slot': ['Badge'],
+                        'icon-slot': ['', '✓'],
+                    },
+                    {
+                        variant: Badge.VARIANTS,
+                        'default-slot': [''],
+                        'icon-slot': ['✓'],
+                    },
+                    {
+                        variant: Badge.VARIANTS,
+                        subtle: [true],
+                    },
+                    {
+                        variant: Badge.VARIANTS_SEMANTIC,
+                        outline: [true],
+                    },
+                    {
+                        variant: ['informative'],
+                        'default-slot': ['Badge'],
+                        fixed: [
+                            'inline-start',
+                            'inline-end',
+                            'block-start',
+                            'block-end',
+                        ],
+                    },
+                ],
+            },
+            {
+                Template: (permArgs) =>
+                    template({
+                        ...args,
+                        ...permArgs,
+                        style: 'max-inline-size: 120px',
+                    }),
+                permutations: [
+                    {
+                        variant: ['neutral'],
+                        'default-slot': ['Very long label that should wrap'],
+                        'icon-slot': ['', '✓'],
+                    },
+                ],
+            },
+        ]),
+    parameters: {
+        layout: 'fullscreen',
+    },
+    tags: ['!autodocs'],
+};

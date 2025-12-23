@@ -9,7 +9,7 @@ const config = {
     stories: [
         {
             directory: 'guides',
-            files: '*.@(md|mdx)',
+            files: '**/*.@(md|mdx)',
             titlePrefix: 'Guides',
         },
         {
@@ -27,6 +27,7 @@ const config = {
         '@storybook/addon-a11y',
         '@storybook/addon-designs',
         '@storybook/addon-vitest',
+        '@chromatic-com/storybook',
     ],
     viteFinal: async (config) => {
         return mergeConfig(config, {
@@ -58,6 +59,10 @@ const config = {
                         '../../core'
                     ),
                     '@adobe/swc': resolve(__dirname, '../components'),
+                    '@adobe/postcss-token': resolve(
+                        __dirname,
+                        '../../tools/postcss-token'
+                    ),
                 },
             },
         });

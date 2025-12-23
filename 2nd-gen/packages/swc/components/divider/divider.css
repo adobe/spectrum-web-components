@@ -15,74 +15,60 @@
 }
 
 .spectrum-Divider {
-    --spectrum-divider-background-color: var(--spectrum-gray-200);
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
-    --spectrum-divider-inline-minimum-size: var(
-        --spectrum-divider-horizontal-minimum-width
+    --_swc-divider-thickness: var(
+        --swc-divider-thickness,
+        token('divider-thickness-medium')
     );
-    --spectrum-divider-block-minimum-size: var(
-        --spectrum-divider-vertical-minimum-height
-    );
-}
-
-.spectrum-Divider--sizeS {
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
-}
-
-.spectrum-Divider--sizeL {
-    --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
-    --spectrum-divider-background-color: var(--spectrum-gray-800);
-}
-
-/* static white variant colors */
-.spectrum-Divider--staticWhite {
-    --spectrum-divider-background-color: var(--spectrum-transparent-white-200);
-}
-
-.spectrum-Divider--staticWhite.spectrum-Divider--sizeL {
-    --spectrum-divider-background-color: var(--spectrum-transparent-white-800);
-}
-
-/* static black variant colors */
-.spectrum-Divider--staticBlack {
-    --spectrum-divider-background-color: var(--spectrum-transparent-black-200);
-}
-
-.spectrum-Divider--staticBlack.spectrum-Divider--sizeL {
-    --spectrum-divider-background-color: var(--spectrum-transparent-black-800);
-}
-
-.spectrum-Divider {
-    block-size: var(--spectrum-divider-thickness);
-    inline-size: 100%;
 
     /* Show the overflow for hr in Edge and IE. */
     overflow: visible;
     border: none;
-    border-width: var(--spectrum-divider-thickness);
-    border-radius: var(--spectrum-divider-thickness);
-    background-color: var(
-        --highcontrast-divider-background-color,
-        var(--spectrum-divider-background-color)
-    );
+    border-width: var(--_swc-divider-thickness);
+    border-radius: var(--_swc-divider-thickness);
+    background-color: var(--swc-divider-background-color, token('gray-200'));
+    block-size: var(--_swc-divider-thickness);
+    inline-size: 100%;
 }
 
 .spectrum-Divider:not(.spectrum-Divider--vertical) {
-    min-inline-size: var(--spectrum-divider-inline-minimum-size);
+    min-inline-size: token('divider-horizontal-minimum-width');
 }
 
-/* vertical dividers */
 .spectrum-Divider--vertical {
-    inline-size: var(--spectrum-divider-thickness);
-    min-block-size: var(--spectrum-divider-block-minimum-size);
+    inline-size: var(--_swc-divider-thickness);
+    min-block-size: token('divider-vertical-minimum-height');
     margin-block: 0;
     block-size: 100%;
     align-self: flex-start;
 }
 
-/* windows high contrast mode */
+:host([size='s']) {
+    --swc-divider-thickness: token('divider-thickness-small');
+}
+
+:host([size='l']) {
+    --swc-divider-thickness: token('divider-thickness-large');
+    --swc-divider-background-color: token('gray-800');
+}
+
+.spectrum-Divider--staticWhite {
+    --swc-divider-background-color: token('transparent-white-200');
+}
+
+.spectrum-Divider--staticWhite:where(.spectrum-Divider--sizeL) {
+    --swc-divider-background-color: token('transparent-white-800');
+}
+
+.spectrum-Divider--staticBlack {
+    --swc-divider-background-color: token('transparent-black-200');
+}
+
+.spectrum-Divider--staticBlack:where(.spectrum-Divider--sizeL) {
+    --swc-divider-background-color: token('transparent-black-800');
+}
+
 @media (forced-colors: active) {
     .spectrum-Divider {
-        --highcontrast-divider-background-color: CanvasText;
+        --swc-divider-background-color: CanvasText;
     }
 }

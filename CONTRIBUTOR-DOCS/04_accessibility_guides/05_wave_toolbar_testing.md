@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / [Accessbility Guide](README.md) / Wave toolbar testing
+[CONTRIBUTOR-DOCS](../README.md) / [Accessibility Guide](README.md) / Wave toolbar testing
 
 <!-- Document title (editable) -->
 
