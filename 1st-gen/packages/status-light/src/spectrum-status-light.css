@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-:host([dir]),
 :host {
     --spectrum-statuslight-height: var(--spectrum-component-height-100);
     --spectrum-statuslight-dot-size: var(--spectrum-status-light-dot-size-medium);
@@ -51,7 +50,7 @@
     --spectrum-statuslight-spacing-bottom-to-label: var(--spectrum-component-bottom-to-text-300);
 }
 
-:host([dir]) {
+:host {
     --spectrum-statuslight-corner-radius: 50%;
     --spectrum-statuslight-font-weight: 400;
     --spectrum-statuslight-border-width: var(--spectrum-border-width-100);
@@ -201,7 +200,7 @@
 }
 
 @media (forced-colors: active) {
-    :host([dir]) {
+    :host {
         --highcontrast-statuslight-content-color-default: CanvasText;
         --highcontrast-statuslight-subdued-content-color-default: CanvasText;
 
