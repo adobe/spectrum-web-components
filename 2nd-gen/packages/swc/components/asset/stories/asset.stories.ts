@@ -29,11 +29,10 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-// export const Default: Story = {
-//     render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
-// };
-
 export const Default: Story = {
+    args: {
+        variant: 'file',
+    },
     render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
 
     // render: () => html`

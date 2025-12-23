@@ -10,37 +10,10 @@
  * governing permissions and limitations under the License.
  */
 
-:host {
-    inline-size: 100%;
-    block-size: 100%;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-}
+import { defineConfig } from 'vitest/config';
 
-::slotted(*) {
-    max-inline-size: 100%;
-    max-block-size: 100%;
-    object-fit: contain;
-    transition: opacity token('animation-duration-100');
-}
-
-.file,
-.folder {
-    inline-size: max(48px, min(100%, 80px));
-    block-size: 100%;
-    margin: 20px;
-}
-
-.folderBackground {
-    fill: token('gray-200');
-}
-
-.fileBackground {
-    fill: light-dark(token('gray-25'), token('gray-200'));
-}
-
-.fileOutline,
-.folderOutline {
-    fill: token('gray-500');
-}
+export default defineConfig({
+    test: {
+        environment: 'node',
+    },
+});
