@@ -157,7 +157,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                     })}
                     aria-label=${ariaLabelPrevious}
                     quiet
-                    dir="rtl"
                     tabindex="-1"
                     @click=${this._handleScrollClick}
                 >

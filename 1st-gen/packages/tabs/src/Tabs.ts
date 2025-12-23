@@ -129,9 +129,8 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
-    public override set dir(dir: CSSStyleDeclaration['direction']) {
-        if (dir === this.dir) return;
-        this.setAttribute('dir', dir);
+    public override get dir(): CSSStyleDeclaration['direction'] {
+        return getComputedStyle(this).direction;
     }
 
     @property({ reflect: true })
