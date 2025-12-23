@@ -807,7 +807,7 @@ BackgroundClickTest.swc_vrt = {
     skip: true,
 };
 
-export const PickerInModalOverlay = (): TemplateResult => {
+export const PickerInOverlay = (): TemplateResult => {
     return html`
         <div>
             <div>
@@ -881,7 +881,7 @@ export const PickerInModalOverlay = (): TemplateResult => {
         </div>
     `;
 };
-PickerInModalOverlay.swc_vrt = {
+PickerInOverlay.swc_vrt = {
     skip: true,
 };
 
