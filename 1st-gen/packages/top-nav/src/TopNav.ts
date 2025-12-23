@@ -44,6 +44,11 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         return [tabsSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
 
+    public override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) return;
+        this.setAttribute('dir', dir);
+    }
+
     @property({ type: String })
     public label = '';
 

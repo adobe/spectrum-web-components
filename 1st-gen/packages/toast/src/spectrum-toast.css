@@ -148,8 +148,7 @@
     margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 
-.body ::slotted([slot="action"]:dir(rtl)),
-:host([dir="rtl"]) .body ::slotted([slot="action"]) {
+.body ::slotted([slot="action"]:dir(rtl)) {
     margin-inline-end: var(--mod-toast-spacing-text-and-action-button-to-divider, var(--spectrum-toast-spacing-text-and-action-button-to-divider));
 }
 
