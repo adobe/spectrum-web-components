@@ -18,8 +18,7 @@
     position: relative;
 }
 
-#separator:dir(rtl),
-:host([dir="rtl"]) #separator {
+#separator:dir(rtl) {
     transform: scaleX(-1);
 }
 
@@ -67,7 +66,7 @@
     outline: none;
     margin-block-start: var(--mod-breadcrumbs-text-spacing-block-start, var(--spectrum-breadcrumbs-text-spacing-block-start));
     margin-block-end: var(--mod-breadcrumbs-text-spacing-block-end, var(--spectrum-breadcrumbs-text-spacing-block-end));
-    -webkit-text-decoration: none;
+    text-decoration: none;
     text-decoration: none;
     display: block;
     position: relative;
@@ -89,7 +88,7 @@
 
 #item-link[href]:focus-visible,
 #item-link[tabindex]:focus-visible {
-    -webkit-text-decoration: underline;
+    text-decoration: underline;
     text-decoration: underline;
     text-decoration-thickness: var(--mod-breadcrumbs-text-decoration-thickness, var(--spectrum-breadcrumbs-text-decoration-thickness));
     text-underline-offset: var(--mod-breadcrumbs-text-decoration-gap, var(--spectrum-breadcrumbs-text-decoration-gap));
@@ -98,7 +97,7 @@
 @media (hover: hover) {
     #item-link[href]:hover,
     #item-link[tabindex]:hover {
-        -webkit-text-decoration: underline;
+        text-decoration: underline;
         text-decoration: underline;
         text-decoration-thickness: var(--mod-breadcrumbs-text-decoration-thickness, var(--spectrum-breadcrumbs-text-decoration-thickness));
         text-underline-offset: var(--mod-breadcrumbs-text-decoration-gap, var(--spectrum-breadcrumbs-text-decoration-gap));

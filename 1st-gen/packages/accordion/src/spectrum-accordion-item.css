@@ -46,7 +46,7 @@
 }
 
 .iconContainer:dir(rtl),
-:host([dir="rtl"]) .iconContainer {
+.iconContainer {
     transform: scaleX(-1);
 }
 

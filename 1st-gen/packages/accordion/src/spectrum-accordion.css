@@ -35,10 +35,10 @@
     --spectrum-accordion-item-content-font-style: var(--spectrum-body-sans-serif-font-style);
     --spectrum-accordion-item-content-font-size: var(--spectrum-body-size-s);
     --spectrum-accordion-item-content-line-height: var(--spectrum-line-height-100);
-    --spectrum-accordion-background-color-default: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-default));
-    --spectrum-accordion-background-color-hover: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-hover));
-    --spectrum-accordion-background-color-down: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-down));
-    --spectrum-accordion-background-color-key-focus: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-key-focus));
+    --spectrum-accordion-background-color-default: rgb(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-default));
+    --spectrum-accordion-background-color-hover: rgb(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-hover));
+    --spectrum-accordion-background-color-down: rgb(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-down));
+    --spectrum-accordion-background-color-key-focus: rgb(var(--spectrum-gray-900-rgb), var(--spectrum-background-opacity-key-focus));
     --spectrum-accordion-item-header-color-default: var(--spectrum-neutral-content-color-default);
     --spectrum-accordion-item-header-color-hover: var(--spectrum-neutral-content-color-hover);
     --spectrum-accordion-item-header-color-down: var(--spectrum-neutral-content-color-down);
@@ -51,8 +51,7 @@
     );
 }
 
-:host:dir(rtl),
-:host([dir="rtl"]) {
+:host:dir(rtl) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
