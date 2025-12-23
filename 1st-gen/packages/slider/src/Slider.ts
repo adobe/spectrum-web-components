@@ -55,6 +55,10 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
         return [sliderStyles];
     }
 
+    public override get dir(): CSSStyleDeclaration['direction'] {
+        return getComputedStyle(this).direction;
+    }
+
     public override handleController: HandleController = new HandleController(
         this
     );
