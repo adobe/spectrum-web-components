@@ -159,8 +159,7 @@
     --spectrum-menu-back-icon-margin: var(--spectrum-navigational-indicator-top-to-back-icon-extra-large);
 }
 
-:host:dir(rtl),
-:host([dir="rtl"]) {
+:host(:dir(rtl)) {
     --spectrum-menu-item-focus-indicator-direction-scalar: -1;
 }
 
@@ -184,11 +183,13 @@
 
 :host([selects]) ::slotted(sp-menu-item) {
     --spectrum-menu-checkmark-display: var(--spectrum-menu-checkmark-display-hidden);
+
     padding-inline-start: var(--mod-menu-item-selectable-edge-to-text-not-selected, var(--spectrum-menu-item-selectable-edge-to-text-not-selected));
 }
 
 :host([selects]) ::slotted(sp-menu-item[selected]) {
     --spectrum-menu-checkmark-display: var(--spectrum-menu-checkmark-display-shown);
+
     padding-inline-start: var(--mod-menu-item-label-inline-edge-to-content, var(--spectrum-menu-item-label-inline-edge-to-content));
 }
 

@@ -41,7 +41,7 @@ import {
 } from '../../../test/testing-helpers.js';
 
 type SelectsWithKeyboardTest = {
-    dir: 'ltr' | 'rtl' | 'auto';
+    dir: CSSStyleDeclaration['direction'];
     openKey: 'ArrowRight' | 'ArrowLeft';
     closeKey: 'ArrowRight' | 'ArrowLeft';
 };
