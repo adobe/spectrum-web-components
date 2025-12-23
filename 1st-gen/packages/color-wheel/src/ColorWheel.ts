@@ -117,10 +117,10 @@ export class ColorWheel extends Focusable {
                 delta = -this.effectiveStep;
                 break;
             case 'ArrowLeft':
-                delta = this.step * (this.dir === 'ltr' ? -1 : 1);
+                delta = this.effectiveStep * (this.dir === 'ltr' ? -1 : 1);
                 break;
             case 'ArrowRight':
-                delta = this.step * (this.dir === 'ltr' ? 1 : -1);
+                delta = this.effectiveStep * (this.dir === 'ltr' ? 1 : -1);
                 break;
             default:
                 return;
