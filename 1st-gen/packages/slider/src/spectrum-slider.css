@@ -43,16 +43,16 @@
     --spectrum-slider-input-left: calc(var(--spectrum-slider-handle-margin-left) / 4);
     --spectrum-slider-track-handleoffset: var(--spectrum-slider-handle-gap);
     --spectrum-slider-range-track-reset: 0;
+
     z-index: 0;
     min-inline-size: var(--mod-slider-min-size, var(--spectrum-slider-min-size));
-    -webkit-user-select: none;
+    user-select: none;
     user-select: none;
     display: block;
     position: relative;
 }
 
-:host:dir(rtl),
-:host([dir="rtl"]) {
+:host(:dir(rtl)) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 
@@ -210,7 +210,7 @@
 }
 
 :host([variant="range"]) #value {
-    -webkit-user-select: text;
+    user-select: text;
     user-select: text;
 }
 
@@ -299,8 +299,7 @@
     transform: translate(-50%, -50%);
 }
 
-:host:dir(rtl) .handle:before,
-:host([dir="rtl"]) .handle:before {
+:host:dir(rtl) .handle:before {
     transform: translate(50%, -50%);
 }
 
