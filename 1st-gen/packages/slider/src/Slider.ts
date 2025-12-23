@@ -96,11 +96,6 @@ export class Slider extends SizedMixin(ObserveSlotText(SliderHandle, ''), {
     @property()
     public type = '';
 
-    public override set dir(dir: CSSStyleDeclaration['direction']) {
-        if (dir === this.dir) return;
-        this.setAttribute('dir', dir);
-    }
-
     @property({ type: String })
     public set variant(variant: string) {
         const oldVariant = this.variant;
