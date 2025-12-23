@@ -830,12 +830,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected navigateBetweenRelatedMenus(event: MenuItemKeydownEvent): void {
         const { key, root } = event;
+        const dir = this.dir;
         const shouldOpenSubmenu =
-            (this.isLTR && key === 'ArrowRight') ||
-            (!this.isLTR && key === 'ArrowLeft');
+            (dir === 'ltr' && key === 'ArrowRight') ||
+            (dir === 'rtl' && key === 'ArrowLeft');
         const shouldCloseSelfAsSubmenu =
-            (this.isLTR && key === 'ArrowLeft') ||
-            (!this.isLTR && key === 'ArrowRight') ||
+            (dir === 'ltr' && key === 'ArrowLeft') ||
+            (dir === 'rtl' && key === 'ArrowRight') ||
             key === 'Escape';
         const lastFocusedItem = root as MenuItem;
         if (shouldOpenSubmenu) {

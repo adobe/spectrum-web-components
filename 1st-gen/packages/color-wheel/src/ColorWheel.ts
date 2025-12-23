@@ -117,10 +117,10 @@ export class ColorWheel extends Focusable {
                 delta = -this.effectiveStep;
                 break;
             case 'ArrowLeft':
-                delta = this.effectiveStep * (this.isLTR ? -1 : 1);
+                delta = this.step * (this.dir === 'ltr' ? -1 : 1);
                 break;
             case 'ArrowRight':
-                delta = this.effectiveStep * (this.isLTR ? 1 : -1);
+                delta = this.step * (this.dir === 'ltr' ? 1 : -1);
                 break;
             default:
                 return;
@@ -252,7 +252,7 @@ export class ColorWheel extends Focusable {
         const pointY = event.clientY - centerY;
         const value = (Math.atan2(pointY, pointX) * 180) / Math.PI;
 
-        return (360 + (360 + (this.isLTR ? value : 180 - value))) % 360;
+        return (360 + (360 + (this.dir === 'ltr' ? value : 180 - value))) % 360;
     }
 
     private handleGradientPointerdown(event: PointerEvent): void {
@@ -304,7 +304,7 @@ export class ColorWheel extends Focusable {
 
         // Calculate handle position on the wheel.
         const translateX =
-            (this.isLTR ? 1 : -1) *
+            (this.dir === 'ltr' ? 1 : -1) *
             (radius - trackWidth / 2) *
             Math.cos((this.value * Math.PI) / 180);
         const translateY =
