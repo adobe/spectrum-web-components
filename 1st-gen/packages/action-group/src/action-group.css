@@ -18,7 +18,7 @@
     --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
 }
 
-:host([dir][compact][vertical]) ::slotted(:nth-child(n)) {
+:host([compact][vertical]) ::slotted(:nth-child(n)) {
     margin-right: 0;
     margin-left: 0;
 }
