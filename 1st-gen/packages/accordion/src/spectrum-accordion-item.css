@@ -45,8 +45,7 @@
     inset-block-start: max(0px, calc((var(--mod-accordion-min-block-size, var(--spectrum-accordion-min-block-size)) - var(--mod-accordion-disclosure-indicator-height, var(--spectrum-accordion-disclosure-indicator-height))) / 2));
 }
 
-.iconContainer:dir(rtl),
-.iconContainer {
+.iconContainer:dir(rtl) {
     transform: scaleX(-1);
 }
 
