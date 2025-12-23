@@ -33,7 +33,7 @@
     z-index: 0;
 }
 
-:host([dir="rtl"]) .wheel,
-:host([dir="rtl"]) ::slotted([slot="gradient"]) {
+.wheel:dir(rtl),
+::slotted([slot="gradient"]:dir(rtl)) {
     transform: scaleX(-1);
 }

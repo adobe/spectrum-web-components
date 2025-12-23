@@ -36,3 +36,7 @@ svg,
 :host(:not(:root)) {
     overflow: hidden;
 }
+
+:host(:dir(rtl)) {
+    --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
+}

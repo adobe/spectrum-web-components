@@ -25,8 +25,9 @@
 
 :host {
     --spectrum-colorarea-border-color: #0000001a;
+
     cursor: default;
-    -webkit-user-select: none;
+    user-select: none;
     user-select: none;
     min-inline-size: var(--mod-colorarea-min-width, var(--spectrum-color-area-minimum-width));
     min-block-size: var(--mod-colorarea-min-height, var(--spectrum-color-area-minimum-height));
@@ -58,8 +59,7 @@
     inset-block-start: 0;
 }
 
-.handle:dir(rtl),
-:host([dir="rtl"]) .handle {
+.handle:dir(rtl) {
     inset-inline-end: 0;
 }
 
