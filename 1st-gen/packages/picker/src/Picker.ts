@@ -16,7 +16,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    render,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -43,10 +42,8 @@ import type {
     MenuItemKeydownEvent,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { Placement } from '@spectrum-web-components/overlay';
-import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
-import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src/slottable-request-event.js';
-import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import type { Placement } from '@floating-ui/dom';
 import {
     IS_MOBILE,
     IS_TOUCH_DEVICE,
@@ -96,7 +93,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     @query('#button')
     public button!: HTMLButtonElement;
 
-    public dependencyManager = new DependencyManagerController(this);
+    @query('sp-popover.dropdown')
+    public dropdownElement!: HTMLElement;
 
     private deprecatedMenu: Menu | null = null;
 
@@ -111,14 +109,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
-
-    /**
-     * Forces the Picker to render as a popover on mobile instead of a tray.
-     *
-     * @memberof PickerBase
-     */
-    @property({ type: Boolean, reflect: true, attribute: 'force-popover' })
-    public forcePopover = false;
 
     /** Whether the items are currently loading. */
     @property({ type: Boolean, reflect: true })
@@ -155,9 +145,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     public get selfManageFocusElement(): boolean {
         return true;
     }
-
-    @query('sp-overlay')
-    public overlayElement!: Overlay;
 
     protected tooltipEl?: Tooltip;
 
@@ -436,8 +423,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         }
     }
 
-    public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
-
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -576,17 +561,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         }
     }
 
-    protected renderOverlay(menu: TemplateResult): TemplateResult {
-        if (this.strategy?.overlay === undefined) {
-            return menu;
-        }
-        const container = this.renderContainer(menu);
-        render(container, this.strategy?.overlay as unknown as HTMLElement, {
-            host: this,
-        });
-        return this.strategy?.overlay as unknown as TemplateResult;
-    }
-
     protected get renderDescriptionSlot(): TemplateResult {
         return html`
             <div id=${DESCRIPTION_ID}>
@@ -720,40 +694,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         `;
     }
 
-    protected renderContainer(menu: TemplateResult): TemplateResult {
-        const accessibleMenu = html`
-            ${this.dismissHelper} ${menu} ${this.dismissHelper}
-        `;
-        // @todo: test in mobile
-        if (this.isMobile.matches && !this.forcePopover) {
-            this.dependencyManager.add('sp-tray');
-            import('@spectrum-web-components/tray/sp-tray.js');
-            return html`
-                <sp-tray
-                    id="popover"
-                    role="presentation"
-                    style=${styleMap(this.containerStyles)}
-                >
-                    ${accessibleMenu}
-                </sp-tray>
-            `;
-        }
-        this.dependencyManager.add('sp-popover');
-        import('@spectrum-web-components/popover/sp-popover.js');
-        return html`
-            <sp-popover
-                id="popover"
-                role="presentation"
-                style=${styleMap(this.containerStyles)}
-                placement=${this.placement}
-            >
-                ${accessibleMenu}
-            </sp-popover>
-        `;
-    }
-
-    protected hasRenderedOverlay = false;
-
     private onScroll(): void {
         this.dispatchEvent(
             new Event('scroll', {
@@ -763,40 +703,43 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         );
     }
 
+    /**
+     * Renders the dropdown with the menu.
+     * Uses Floating UI for positioning (managed by InteractionController).
+     */
     protected get renderMenu(): TemplateResult {
-        const menu = html`
-            <sp-menu
-                aria-labelledby="applied-label"
-                @change=${this.handleChange}
-                id="menu"
-                @keydown=${{
-                    handleEvent: this.handleEnterKeydown,
-                    capture: true,
-                }}
-                @scroll=${this.onScroll}
-                role=${this.listRole}
-                .selects=${this.selects}
-                .selected=${this.value ? [this.value] : []}
-                .shouldSupportDragAndSelect=${!this.isTouchDevice.matches}
-                size=${this.size}
-                @sp-menu-item-keydown=${this.handleEscape}
-                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+        return html`
+            <sp-popover
+                class="dropdown"
+                role="presentation"
+                style=${styleMap(this.containerStyles)}
+                placement=${this.placement}
             >
-                <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
-            </sp-menu>
+                ${this.dismissHelper}
+                <sp-menu
+                    aria-labelledby="applied-label"
+                    @change=${this.handleChange}
+                    id="menu"
+                    @keydown=${{
+                        handleEvent: this.handleEnterKeydown,
+                        capture: true,
+                    }}
+                    @scroll=${this.onScroll}
+                    role=${this.listRole}
+                    .selects=${this.selects}
+                    .selected=${this.value ? [this.value] : []}
+                    .shouldSupportDragAndSelect=${!this.isTouchDevice.matches}
+                    size=${this.size}
+                    @sp-menu-item-keydown=${this.handleEscape}
+                    @sp-menu-item-added-or-updated=${this.shouldManageSelection}
+                >
+                    <slot
+                        @slotchange=${this.shouldScheduleManageSelection}
+                    ></slot>
+                </sp-menu>
+                ${this.dismissHelper}
+            </sp-popover>
         `;
-        this.hasRenderedOverlay =
-            this.hasRenderedOverlay ||
-            this.focused ||
-            this.open ||
-            !!this.deprecatedMenu;
-        if (this.hasRenderedOverlay) {
-            if (this.dependencyManager.loaded) {
-                this.dependencyManager.add('sp-overlay');
-            }
-            return this.renderOverlay(menu);
-        }
-        return menu;
     }
 
     /**

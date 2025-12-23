@@ -56,12 +56,11 @@
     flex-shrink: 0;
 }
 
-sp-overlay {
-    pointer-events: none;
-}
-
-sp-menu {
-    pointer-events: initial;
+/* Dropdown container - positioned by Floating UI */
+sp-popover.dropdown {
+    position: fixed;
+    z-index: 1000;
+    min-width: var(--swc-menu-width, 100%);
 }
 
 :host > sp-menu {
@@ -99,10 +98,6 @@ sp-menu {
     position: absolute;
     width: 1px;
     white-space: nowrap;
-}
-
-sp-overlay:not(:defined) {
-    display: none;
 }
 
 /* remove-focus-ring-safari-hack is a custom css class that we are using to

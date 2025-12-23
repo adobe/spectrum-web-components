@@ -6153,6 +6153,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker@workspace:1st-gen/packages/picker"
   dependencies:
+    "@floating-ui/dom": "npm:1.7.4"
     "@spectrum-web-components/base": "npm:1.10.0"
     "@spectrum-web-components/button": "npm:1.10.0"
     "@spectrum-web-components/field-label": "npm:1.10.0"
@@ -6160,13 +6161,11 @@ __metadata:
     "@spectrum-web-components/icons-ui": "npm:1.10.0"
     "@spectrum-web-components/icons-workflow": "npm:1.10.0"
     "@spectrum-web-components/menu": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
     "@spectrum-web-components/popover": "npm:1.10.0"
     "@spectrum-web-components/progress-circle": "npm:1.10.0"
     "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
     "@spectrum-web-components/shared": "npm:1.10.0"
     "@spectrum-web-components/tooltip": "npm:1.10.0"
-    "@spectrum-web-components/tray": "npm:1.10.0"
   languageName: unknown
   linkType: soft
 
