@@ -46,8 +46,8 @@ import { type Locale, Locales } from './locales.js';
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-export let dir: 'ltr' | 'rtl' =
-    (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
+export let dir: CSSStyleDeclaration['direction'] =
+    (urlParams.get('sp_dir') as CSSStyleDeclaration['direction']) || 'ltr';
 export const theme: SystemVariant =
     (urlParams.get('sp_theme') as SystemVariant) || 'spectrum';
 export let system: SystemVariant =
@@ -167,7 +167,7 @@ export class StoryDecorator extends SpectrumElement {
     public scale: Scale = window.__swc_hack_knobs__.defaultScale;
 
     @property({ type: String, reflect: true, attribute: 'dir' })
-    public direction: 'ltr' | 'rtl' =
+    public direction: CSSStyleDeclaration['direction'] =
         window.__swc_hack_knobs__.defaultDirection;
 
     @property({ type: Boolean, attribute: 'reduce-motion', reflect: true })
@@ -219,7 +219,7 @@ export class StoryDecorator extends SpectrumElement {
                 this.direction =
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
-                        value as 'ltr' | 'rtl';
+                        value as CSSStyleDeclaration['direction'];
                 if (document.documentElement.dir !== dir) {
                     document.documentElement.dir = dir;
                 }
@@ -420,7 +420,7 @@ export class StoryDecorator extends SpectrumElement {
                 ?checked=${this.reduceMotion}
                 @change=${this.updateTheme}
             >
-                Reduce Motion
+                Reduce motion
             </sp-switch>
         `;
     }

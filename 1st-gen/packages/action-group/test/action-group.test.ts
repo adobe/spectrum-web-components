@@ -52,7 +52,7 @@ import {
     mouseClickOn,
     sendTabKey,
     testForLitDevWarnings,
-} from '../../../test/testing-helpers';
+} from '../../../test/testing-helpers.js';
 import { controlled } from '../stories/action-group-tooltip.stories.js';
 import '../stories/action-group.stories.js';
 import { HasActionMenuAsChild } from '../stories/action-group.stories.js';
@@ -1480,7 +1480,7 @@ describe('ActionGroup', () => {
         `);
         await acceptKeyboardInput(el);
     });
-    it('accepts keybord input when [dir="ltr"]', async () => {
+    it('accepts keybord input when in left-to-right direction', async () => {
         const el = await fixture<ActionGroup>(html`
             <sp-action-group
                 label="Selects Single Group"

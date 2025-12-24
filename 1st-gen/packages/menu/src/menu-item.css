@@ -40,11 +40,11 @@
     inset: 0;
 }
 
-:host([dir="ltr"]) [icon-only]::slotted(:last-of-type) {
+:host(:dir(ltr)) [icon-only]::slotted(:last-of-type) {
     margin-right: auto;
 }
 
-:host([dir="rtl"]) [icon-only]::slotted(:last-of-type) {
+:host(:dir(rtl)) [icon-only]::slotted(:last-of-type) {
     margin-left: auto;
 }
 

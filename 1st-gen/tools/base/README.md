@@ -36,10 +36,6 @@ With powerful CSS selectors like `:host(:dir(rtl))` and `:host-content([dir=rtl]
 
 Placing a `dir` attribute on an element built from `SpectrumMixin` before attaching it to the DOM will prevent it from resolving the text direction value to a parent `sp-theme` or `document` element. Elements applied to the page in this way will also NOT participate in observing any such elements, so their `dir` values will remain as initialized regardless of changes in other parts of your documents. If you choose to leverage this, be aware that any child (in both light DOM and shadow DOM) of this element will need to have a `dir` attribute applied as well if you do not want it resolving to a parent `sp-theme` or `document` element itself. In this way, it is likely that you would benefit from leveraging an `sp-theme` element to create scope in your document for managing this custom content direction section of your page.
 
-#### `isLTR`
-
-While CSS offers many powerful solutions for styling content in various directions, sometimes JS functionality depends on the specific of that direction. Elements built from `SpectrumMixin` have the `this.isLTR` getter that will resolve to `true` when `dir === 'ltr'`.
-
 #### public shadowRoot!: ShadowRoot;
 
 Elements built from `SpectrumMixin` assume that you will be using shadow DOM in the resulting custom element. To simplify TypeScript usage the presence of `this.shadowRoot` is asserted as non-null so that you have direct access to it without extended type checking.

@@ -502,9 +502,10 @@ export class HandleController {
         const offset = event.clientX;
         const size = rect.width;
 
-        const directionalOffset = this.host.isLTR
-            ? offset - minOffset
-            : size - (offset - minOffset);
+        const dir = getComputedStyle(this.host).direction ?? 'ltr';
+
+        const directionalOffset =
+            dir === 'ltr' ? offset - minOffset : size - (offset - minOffset);
         const normalized = directionalOffset / size;
 
         return model.normalization.fromNormalized(
@@ -525,8 +526,9 @@ export class HandleController {
             dragging: this.draggingHandle?.handleName === model.name,
             'handle-highlight': model.highlight,
         };
+        const dir = getComputedStyle(this.host).direction ?? 'ltr';
         const style = {
-            [this.host.isLTR ? 'left' : 'right']: `${
+            [dir === 'ltr' ? 'left' : 'right']: `${
                 model.normalizedValue * 100
             }%`,
             'z-index': zIndex.toString(),

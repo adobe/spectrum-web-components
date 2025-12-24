@@ -54,9 +54,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     @property({ type: String, attribute: 'label-next' })
     public labelNext = 'Scroll to next tabs';
 
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @state()
     private overflowState: TabsOverflowState = {
         canScrollLeft: false,
@@ -160,7 +157,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                     })}
                     aria-label=${ariaLabelPrevious}
                     quiet
-                    dir="rtl"
                     tabindex="-1"
                     @click=${this._handleScrollClick}
                 >

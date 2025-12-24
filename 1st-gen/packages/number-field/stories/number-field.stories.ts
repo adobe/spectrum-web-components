@@ -15,6 +15,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { NumberField } from '@spectrum-web-components/number-field/src/NumberField.js';
 
@@ -256,7 +258,7 @@ decimals.args = {
 };
 
 export const germanDecimals = (args: StoryArgs): TemplateResult => {
-    let currentDir: 'ltr' | 'rtl' | '' = 'ltr';
+    let currentDir: CSSStyleDeclaration['direction'] = 'ltr';
     let currentSystem: 'spectrum' | 'spectrum-two' | 'express' = 'spectrum-two';
     if (window.__swc_hack_knobs__) {
         currentDir = window.__swc_hack_knobs__.defaultDirection;
