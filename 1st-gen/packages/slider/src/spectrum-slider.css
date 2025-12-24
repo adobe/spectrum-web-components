@@ -46,7 +46,7 @@
 
     z-index: 0;
     min-inline-size: var(--mod-slider-min-size, var(--spectrum-slider-min-size));
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     display: block;
     position: relative;
@@ -210,7 +210,7 @@
 }
 
 :host([variant="range"]) #value {
-    user-select: text;
+    -webkit-user-select: text;
     user-select: text;
 }
 

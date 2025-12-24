@@ -27,7 +27,7 @@
     --spectrum-colorarea-border-color: #0000001a;
 
     cursor: default;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     min-inline-size: var(--mod-colorarea-min-width, var(--spectrum-color-area-minimum-width));
     min-block-size: var(--mod-colorarea-min-height, var(--spectrum-color-area-minimum-height));

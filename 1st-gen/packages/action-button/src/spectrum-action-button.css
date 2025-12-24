@@ -12,7 +12,7 @@
 
 :host {
     cursor: pointer;
-    user-select: none;
+    -webkit-user-select: none;
     user-select: none;
     box-sizing: border-box;
     font-family: var(--mod-button-font-family, var(--mod-sans-font-family-stack, var(--spectrum-sans-font-family-stack)));
@@ -21,7 +21,7 @@
     line-height: var(--mod-button-line-height, var(--mod-line-height-100, var(--spectrum-line-height-100)));
     text-transform: none;
     vertical-align: top;
-    appearance: button;
+    -webkit-appearance: button;
     transition:
         background var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
         border-color var(--mod-button-animation-duration, var(--mod-animation-duration-100, var(--spectrum-animation-duration-100))) ease-out,
@@ -31,7 +31,7 @@
     justify-content: center;
     align-items: center;
     margin: 0;
-    text-decoration: none;
+    -webkit-text-decoration: none;
     text-decoration: none;
     display: inline-flex;
     overflow: visible;
