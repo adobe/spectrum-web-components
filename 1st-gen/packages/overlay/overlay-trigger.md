@@ -11,6 +11,22 @@
     </div>
 </sp-alert-banner>
 
+## When to use overlay-trigger
+
+Use `<overlay-trigger>` when you need **multiple interaction types on a single trigger element**. This component excels at:
+
+- **Hover tooltip + click dialog**: Show a tooltip on hover and open a dialog on click
+- **Multiple related actions**: Different overlays for click, hover, and longpress on the same element
+- **Simplified API**: Slot-based approach with automatic content lifecycle management
+
+**Don't use `<overlay-trigger>` when you need:**
+
+- **Virtual positioning**: `VirtualTrigger` for cursor-based positioning (use [`<sp-overlay>`](./README.md) or [imperative API](./imperative-api.md))
+- **Single interaction only**: For one interaction type, [`<sp-overlay>`](./README.md) is simpler
+- **Fine-grained control**: Advanced features like custom focus behavior (use [`<sp-overlay>`](./README.md))
+
+See the [Getting Started Guide](./GETTING-STARTED.md) for a complete comparison of entry points.
+
 ## Overview
 
 An `<overlay-trigger>` element supports the delivery of temporary overlay content based on interaction with a persistent trigger element. An element prepared to receive accessible interactions (e.g. an `<sp-button>`, or `<button>`, etc.) is addressed to `slot="trigger"`, and the content to display (either via `click` or `hover`/`focus` interactions) is addressed to `slot="click-content"` or `slot="hover-content"`, respectively. A trigger element can be linked to the delivery of content, intended for a single interaction, or both. Content addressed to `slot="hover-content"` is made available when the mouse enters or leaves the target element. Keyboard navigation will make this content available when focus enters or leaves the target element. Be thoughtful with what content you address to `slot="hover-content"`, as the content available via "hover" will be transient and non-interactive.
@@ -80,6 +96,101 @@ When using the `placement` attribute of an `<overlay-trigger>` (`"top" |"top-sta
 The `type` of an Overlay outlines a number of things about the interaction model within which it works:
 
 **Note:** The `type` attribute only affects click-triggered overlays. Hover overlays always use `hint` type behavior, and longpress overlays always use `auto` type behavior. For more control over hover and longpress overlay types, use `<sp-overlay>` directly.
+
+## Combining multiple interactions
+
+One of the key benefits of `<overlay-trigger>` is supporting multiple interaction types on a single trigger:
+
+```html
+<!-- Tooltip on hover, dialog on click -->
+<overlay-trigger placement="top">
+    <sp-button slot="trigger">Help</sp-button>
+
+    <!-- Shows on hover - always non-interactive (hint type) -->
+    <sp-tooltip slot="hover-content">Click for more information</sp-tooltip>
+
+    <!-- Shows on click - interactive (uses type attribute) -->
+    <sp-popover slot="click-content">
+        <sp-dialog size="s">
+            <h2 slot="heading">Help</h2>
+            <p>Detailed help content goes here...</p>
+            <sp-button
+                slot="button"
+                onclick="this.dispatchEvent(new Event('close', {bubbles: true}))"
+            >
+                Got it
+            </sp-button>
+        </sp-dialog>
+    </sp-popover>
+</overlay-trigger>
+```
+
+### Important: Hover content limitations
+
+Content in `slot="hover-content"` is **always non-interactive** because it uses `hint` type behavior:
+
+- Cannot contain focusable elements
+- Closes when the user interacts with the page
+- Best for tooltips and brief informational content
+
+If you need interactive content on hover, use [`<sp-overlay>`](./README.md) with `trigger="id@hover"` and `type="auto"` instead.
+
+### Interaction type combinations
+
+Common patterns:
+
+**Tooltip + Action:**
+
+```html
+<overlay-trigger>
+    <sp-button slot="trigger">Delete</sp-button>
+    <sp-tooltip slot="hover-content">Delete item</sp-tooltip>
+    <sp-popover slot="click-content">
+        <sp-dialog>
+            <h2 slot="heading">Confirm deletion</h2>
+            <p>Are you sure?</p>
+        </sp-dialog>
+    </sp-popover>
+</overlay-trigger>
+```
+
+**Longpress + Hover:**
+
+```html
+<overlay-trigger>
+    <sp-action-button slot="trigger" hold-affordance>
+        <sp-icon-settings slot="icon"></sp-icon-settings>
+    </sp-action-button>
+    <sp-tooltip slot="hover-content">Hold for more options</sp-tooltip>
+    <sp-popover slot="longpress-content">
+        <sp-menu>
+            <sp-menu-item>Option 1</sp-menu-item>
+            <sp-menu-item>Option 2</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</overlay-trigger>
+```
+
+**All three interactions:**
+
+```html
+<overlay-trigger>
+    <sp-button slot="trigger">Actions</sp-button>
+    <sp-tooltip slot="hover-content">Quick action menu</sp-tooltip>
+    <sp-popover slot="click-content">
+        <sp-menu>
+            <sp-menu-item>Copy</sp-menu-item>
+            <sp-menu-item>Paste</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+    <sp-popover slot="longpress-content">
+        <sp-menu>
+            <sp-menu-item>Advanced option 1</sp-menu-item>
+            <sp-menu-item>Advanced option 2</sp-menu-item>
+        </sp-menu>
+    </sp-popover>
+</overlay-trigger>
+```
 
 <sp-tabs selected="modal" auto label="Type attribute options">
 <sp-tab value="modal">Modal</sp-tab>
@@ -240,6 +351,76 @@ The `triggered-by` attribute accepts a space-separated string of overlay types:
 
 When not specified, the component will automatically detect which content types are present, but this may result in additional rendering cycles. For optimal performance, especially in applications with many overlay triggers, explicitly declaring the content types you plan to use is recommended.
 
-### Accessibility
+### Accessibility best practices
 
-When using an `<overlay-trigger>` element, it is important to be sure the that content you project into `slot="trigger"` is "interactive". This means that an element within that branch of DOM will be able to receive focus, and said element will appropriately convert keyboard interactions to `click` events, similar to what you'd find with `<a href="#">Anchors</a>`, `<button>Buttons</button>`, etc. You can find further reading on the subject of accessible keyboard interactions at [https://www.w3.org/WAI/WCAG21/Understanding/keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).
+When using `<overlay-trigger>`, follow these accessibility guidelines:
+
+#### Interactive trigger elements
+
+The content in `slot="trigger"` must be "interactive" - able to receive focus and respond to keyboard events. Use:
+
+- `<sp-button>` or native `<button>`
+- `<sp-action-button>`
+- `<a href="#">` (links)
+- Other focusable, keyboard-accessible elements
+
+**Don't use:**
+
+- `<div>` or `<span>` without proper ARIA roles and keyboard handlers
+- Elements that can't receive focus
+
+#### ARIA attributes
+
+Add appropriate ARIA attributes to trigger elements:
+
+```html
+<overlay-trigger type="modal">
+    <sp-button slot="trigger" aria-haspopup="dialog" aria-expanded="false">
+        Open Dialog
+    </sp-button>
+    <sp-popover slot="click-content">
+        <sp-dialog aria-labelledby="dialog-title">
+            <h2 id="dialog-title" slot="heading">Dialog Title</h2>
+            <p>Dialog content...</p>
+        </sp-dialog>
+    </sp-popover>
+</overlay-trigger>
+```
+
+**Recommended attributes:**
+
+- `aria-haspopup`: Indicates the type of overlay (`"dialog"`, `"menu"`, `"true"`)
+- `aria-expanded`: Reflects overlay open/closed state (managed automatically by overlay system)
+- `aria-labelledby` / `aria-label`: Labels for overlay content
+
+#### Keyboard navigation
+
+The overlay system handles most keyboard interactions:
+
+- **ESC**: Closes overlay and returns focus to trigger
+- **TAB**: Navigates within interactive overlays
+- **Enter/Space**: Activates trigger button
+
+For hover tooltips, ensure keyboard users can access the same information:
+
+```html
+<!-- Good: Tooltip accessible via focus -->
+<overlay-trigger>
+    <sp-button slot="trigger">Help</sp-button>
+    <sp-tooltip slot="hover-content">
+        This tooltip shows on both hover and keyboard focus
+    </sp-tooltip>
+</overlay-trigger>
+```
+
+#### Screen reader support
+
+Follow these guidelines:
+
+- Use proper heading structure in overlay content
+- Provide descriptive labels for all interactive elements
+- Ensure error messages in overlays are announced
+
+For more details, see the [Accessibility Guide](./ACCESSIBILITY.md).
+
+Learn more about accessible keyboard interactions at [W3C WCAG 2.1 Understanding keyboard](https://www.w3.org/WAI/WCAG21/Understanding/keyboard).

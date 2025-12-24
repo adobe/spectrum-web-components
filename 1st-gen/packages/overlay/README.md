@@ -1,6 +1,122 @@
+## 📚 Documentation
+
+**New to overlays?** Start with the [Getting Started Guide](./GETTING-STARTED.md) to choose the right approach for your use case.
+
+### 🚀 Getting started
+
+- **[Getting Started Guide](./GETTING-STARTED.md)** 📘 - Interactive decision tree to choose the right overlay approach
+- **[README](./README.md)** 📄 - Component overview and basic usage (this document)
+
+### 📖 Learn more
+
+- **[Architecture](./ARCHITECTURE.md)** 🏗️ - How the overlay system works internally
+  - Overlay stack management
+  - Interaction controllers (Click, Hover, Longpress)
+  - Placement engine and collision detection
+  - Event lifecycle
+- **[Accessibility](./ACCESSIBILITY.md)** ♿ - Focus management and ARIA patterns
+  - Focus trapping and restoration
+  - Keyboard navigation
+  - Screen reader support
+  - WCAG compliance
+- **[Performance](./PERFORMANCE.md)** ⚡ - Optimization strategies and benchmarks
+  - Lazy loading with slottable-request
+  - triggered-by optimization
+  - Memory management
+  - Performance metrics
+
+### 🔧 Entry points
+
+Choose the right API for your use case:
+
+- **[`<sp-overlay>`](./README.md#usage)** 🎯 - Declarative overlay element (this document)
+  - Single interaction per trigger
+  - Fine-grained control
+  - Virtual positioning support
+- **[`<overlay-trigger>`](./overlay-trigger.md)** 🎭 - Multiple interactions per trigger
+  - Combined hover + click patterns
+  - Slot-based API
+  - Automatic lifecycle management
+- **[Imperative API](./imperative-api.md)** ⚙️ - Programmatic overlay control
+  - Dynamic overlay creation
+  - VirtualTrigger for cursor positioning
+  - Full lifecycle control
+- **[Trigger Directive](./trigger-directive.md)** 🔗 - Lit template integration
+  - Lit framework specific
+  - Reactive content updates
+  - TypeScript integration
+- **[Slottable Request](./slottable-request.md)** 🚀 - Lazy content loading
+  - Performance optimization
+  - Reduce initial DOM size
+  - On-demand content creation
+
+### 🎯 Integration guides
+
+Real-world patterns and best practices:
+
+- **[Forms Integration](./FORMS-INTEGRATION.md)** 📝 - Validation and field helpers
+  - Validation popovers
+  - Field error display
+  - Picker integration
+  - Form field helpers
+- **[Menus Integration](./MENUS-INTEGRATION.md)** 📋 - Action menus and dropdowns
+  - Context menus
+  - Action menus
+  - Dropdown patterns
+  - Menu positioning
+
+### 🔍 Troubleshooting
+
+- **[Troubleshooting Guide](./TROUBLESHOOTING.md)** 🔧 - Symptom-based problem diagnosis
+  - Overlay won't open
+  - Overlay won't close
+  - Positioning issues
+  - Focus management problems
+  - Performance issues
+  - Accessibility issues
+
+### 📊 Additional resources
+
+- **[Storybook Examples](https://opensource.adobe.com/spectrum-web-components/storybook)** - Interactive examples and demos
+- **[GitHub Discussions](https://github.com/adobe/spectrum-web-components/discussions)** - Ask questions and share feedback
+- **[GitHub Issues](https://github.com/adobe/spectrum-web-components/issues)** - Report bugs and request features
+
+---
+
 ## Overview
 
 An `<sp-overlay>` element is used to decorate content that you would like to present to your visitors as "overlaid" on the rest of the application. This includes dialogs (modal and not), pickers, tooltips, context menus, et al.
+
+## Choosing an entry point
+
+The overlay system provides several ways to create overlays. Use this guide to choose the right approach:
+
+**Use `<sp-overlay>`** (this component) when you need:
+
+- Single interaction type per trigger (click, hover, or longpress)
+- Fine-grained control over overlay behavior
+- Virtual triggers for cursor-based positioning
+- Direct access to all overlay features
+
+**Use [`<overlay-trigger>`](./overlay-trigger.md)** when you need:
+
+- Multiple interaction types on one trigger (hover tooltip + click dialog)
+- Simpler slot-based API
+- Automatic content lifecycle management
+
+**Use [Imperative API](./imperative-api.md)** when you need:
+
+- Programmatic overlay creation and control
+- Dynamic positioning with `VirtualTrigger`
+- Context menus or complex lifecycle management
+
+**Use [Trigger directive](./trigger-directive.md)** when you're:
+
+- Building Lit-based applications
+- Need reactive content updates
+- Want template composition benefits
+
+See the [Getting Started Guide](./GETTING-STARTED.md) for a detailed decision tree and comparison.
 
 ### Usage
 
@@ -51,6 +167,96 @@ By leveraging the `trigger` attribute to pass an ID reference to another element
 ### Anatomy
 
 When a `<sp-overlay>` element is opened, it will pass that state to its direct children elements as the property `open`, which it will set to `true`. Elements should react to this by initiating any transition between closed and open that they see fit. Similarly, `open` will be set to `false` when the `<sp-overlay>` element is closed.
+
+## Architecture overview
+
+Understanding the key components of the overlay system will help you use it effectively:
+
+### Interaction controllers
+
+The overlay system uses **interaction controllers** to manage different trigger types:
+
+- **ClickController**: Handles click interactions on trigger elements
+- **HoverController**: Manages hover and focus interactions with delayed close behavior
+- **LongpressController**: Detects longpress gestures on trigger elements
+
+Each controller binds appropriate DOM events to the trigger element and manages the overlay's open/close state.
+
+### Overlay stack
+
+Multiple overlays are managed by a global **overlay stack** that:
+
+- Tracks all open overlays in order
+- Manages focus trapping for modal overlays
+- Handles ESC key presses (closing from top to bottom)
+- Prevents conflicts between overlays
+
+### Placement system
+
+The **PlacementController** uses [Floating UI](https://floating-ui.com/) to:
+
+- Position overlays relative to trigger elements
+- Calculate fallback placements when space is constrained
+- Apply offsets and maintain required spacing
+- Update position when content or viewport changes
+
+### Overlay types and focus behavior
+
+Different overlay types have specific focus management:
+
+- **`modal` and `page`**: Always trap focus within overlay (modal prevents ESC close)
+- **`auto`**: Accepts focus, closes on outside click or focus loss
+- **`manual`**: Accepts focus, only closes on ESC or programmatic close
+- **`hint`**: No focus management, closes on any interaction
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed technical documentation.
+
+## Performance considerations
+
+### The `delayed` attribute
+
+Use `delayed` for hover tooltips to prevent unnecessary overlay creation:
+
+```html
+<sp-overlay trigger="button@hover" type="hint" delayed>
+    <sp-tooltip>This tooltip has a warm-up delay</sp-tooltip>
+</sp-overlay>
+```
+
+The first hover waits 1000ms before opening. Subsequent hovers open immediately until 1000ms passes with no overlays open.
+
+### Lazy content loading with `slottable-request`
+
+For overlays with large or expensive content, use the `slottable-request` event to load content only when needed:
+
+```javascript
+overlay.addEventListener('slottable-request', (event) => {
+    if (event.data === removeSlottableRequest) {
+        // Overlay closing - remove content
+        overlay.innerHTML = '';
+    } else {
+        // Overlay opening - add content
+        overlay.innerHTML = '<sp-popover>Large content here</sp-popover>';
+    }
+});
+```
+
+See [slottable-request.md](./slottable-request.md) and [PERFORMANCE.md](./PERFORMANCE.md) for more optimization strategies.
+
+### Virtual triggers
+
+When you need to position an overlay at specific coordinates (like for context menus), use `VirtualTrigger`:
+
+```javascript
+import { VirtualTrigger } from '@spectrum-web-components/overlay';
+
+const overlay = document.querySelector('sp-overlay');
+overlay.triggerElement = new VirtualTrigger(x, y);
+overlay.open = true;
+
+// Update position dynamically
+overlay.triggerElement.updateBoundingClientRect(newX, newY);
+```
 
 ### Options
 
@@ -445,6 +651,33 @@ The `overlay` value in this case will hold a reference to the actual `<sp-overla
 
 This means that in both cases, if the transition is meant to be a part of the opening or closing of the overlay in question you will need to re-dispatch the `transitionrun`, `transitionend`, and `transitioncancel` events from that transition from the closest direct child of the `<sp-overlay>`.
 
+## Common patterns
+
+Quick links to implementation patterns for specific use cases:
+
+### Tooltips
+
+- **Simple tooltip**: `<sp-overlay trigger="id@hover" type="hint">`
+- **Tooltip with click action**: Use [`<overlay-trigger>`](./overlay-trigger.md) with both hover and click content
+
+### Modal dialogs
+
+- **Confirmation**: `<sp-overlay trigger="id@click" type="modal">` with `<sp-dialog-wrapper>`
+- **Form input**: Modal with `receivesFocus="true"` to focus first field
+- **Full-screen**: Use `type="page"` with `mode="fullscreenTakeover"`
+
+### Dropdown menus
+
+- **Action menu**: `<sp-overlay trigger="id@click" type="auto">` with `<sp-menu>`
+- **Context menu**: [Imperative API](./imperative-api.md) with `VirtualTrigger`
+- **Picker**: See [Menus Integration](./MENUS-INTEGRATION.md)
+
+### Form helpers
+
+- **Validation error**: `<sp-overlay type="auto" receives-focus="false">`
+- **Field help**: Hover tooltip with `type="hint"`
+- **Date picker**: See [Forms Integration](./FORMS-INTEGRATION.md)
+
 ### Integration patterns
 
 #### Action bar system
@@ -548,6 +781,35 @@ This means that in both cases, if the transition is meant to be a part of the op
     </sp-overlay>
 </sp-popover>
 ```
+
+## Troubleshooting quick reference
+
+Common issues and their solutions:
+
+### Overlay appears behind other content
+
+- **Check z-index**: Ensure trigger element doesn't have higher z-index than overlay
+- **CSS containment**: Remove `contain:` property from parent elements or move overlay outside
+- **Clip-path**: Move overlay outside elements with `clip-path`, use `triggerElement` property to maintain association
+
+### Overlay doesn't position correctly
+
+- **Missing trigger**: Ensure `trigger` attribute references valid element ID with `@interaction` suffix
+- **No placement**: Set `placement` attribute when using positioned overlays
+- **VirtualTrigger**: When using `triggerElement` property, placement only works with valid trigger
+
+### Overlay doesn't close when expected
+
+- **Wrong type**: Use `type="auto"` for click-to-close, `type="modal"` for explicit dismissal
+- **Manual type**: `type="manual"` only closes on ESC key or programmatic close
+- **Focus trap**: Modal overlays prevent closing until user interacts with content
+
+### Content doesn't update
+
+- **Static content**: Content is set when overlay is created, use `slottable-request` for dynamic updates
+- **Reactive frameworks**: Ensure framework change detection runs after overlay opens
+
+See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for detailed solutions and debugging techniques.
 
 ### Advanced topics
 

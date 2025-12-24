@@ -15,14 +15,56 @@ import {
     InteractionTypes,
 } from './InteractionController.js';
 
+/**
+ * Manages click/tap interactions for overlay triggers.
+ *
+ * The ClickController handles opening and closing overlays in response to click events.
+ * It implements special logic to prevent accidental toggling when the overlay is already open.
+ *
+ * **Behavior:**
+ * - Opens overlay on click when closed
+ * - Closes overlay on outside click (based on overlay `type`)
+ * - Prevents toggle when clicking trigger while overlay is open
+ *
+ * **Event Handling:**
+ * 1. `pointerdown` on trigger - Sets `preventNextToggle` flag if overlay is open
+ * 2. `click` on trigger - Toggles overlay state (unless prevented)
+ *
+ * **Used by:**
+ * - `<sp-overlay trigger="id@click">`
+ * - `<overlay-trigger>` with `click-content` slot
+ *
+ * @extends {InteractionController}
+ *
+ * @example Typical usage pattern
+ * ```html
+ * <sp-button id="menu-btn">Menu</sp-button>
+ * <sp-overlay trigger="menu-btn@click" type="auto">
+ *   <sp-popover>
+ *     <sp-menu>
+ *       <sp-menu-item>Option 1</sp-menu-item>
+ *       <sp-menu-item>Option 2</sp-menu-item>
+ *     </sp-menu>
+ *   </sp-popover>
+ * </sp-overlay>
+ * ```
+ *
+ * @see {@link HoverController} for hover interactions
+ * @see {@link LongpressController} for longpress interactions
+ * @see {@link https://opensource.adobe.com/spectrum-web-components/components/overlay/ARCHITECTURE.md#interaction-controllers | Architecture Documentation}
+ */
 export class ClickController extends InteractionController {
     override type = InteractionTypes.click;
 
     /**
-     * An overlay with a `click` interaction should not close on click `triggerElement`.
+     * Flag to prevent toggling the overlay when clicking the trigger while already open.
+     *
+     * An overlay with a `click` interaction should not close on click of the `triggerElement`.
      * When a click is initiated (`pointerdown`), apply `preventNextToggle` when the
-     * overlay is `open` to prevent from toggling the overlay when the click event
+     * overlay is `open` to prevent toggling the overlay when the click event
      * propagates later in the interaction.
+     *
+     * @private
      */
     private preventNextToggle = false;
 
