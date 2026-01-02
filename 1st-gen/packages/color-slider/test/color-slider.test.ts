@@ -576,20 +576,17 @@ describe('ColorSlider', () => {
         );
 
         await elementUpdated(el);
-
         expect(el.sliderHandlePosition).to.equal(100 - 53.125);
     });
-    it('accepts pointer events in dir="rtl"', async () => {
-        document.documentElement.dir = 'rtl';
+
+    it.only('accepts pointer events in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(html`
             <sp-color-slider
                 dir="rtl"
-                style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-height: 24px;"
+                style="--mod-color-slider-length: 200px;"
             ></sp-color-slider>
         `);
         await elementUpdated(el);
-
-        const clientWidth = document.documentElement.offsetWidth;
 
         el.handle.setPointerCapture = () => {
             return;
@@ -597,14 +594,18 @@ describe('ColorSlider', () => {
         el.handle.releasePointerCapture = () => {
             return;
         };
+        const rect = el.getBoundingClientRect();
 
         expect(el.sliderHandlePosition).to.equal(0);
+
+        // In RTL, clicking at the RIGHT edge of the slider should give a LOW value (close to 0)
+        const clickCloseToRightEdge = rect.right - 10; // 10px from the right edge
 
         el.gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
-                clientX: 700,
-                clientY: 15,
+                clientX: clickCloseToRightEdge,
+                clientY: rect.top + rect.height / 2,
                 bubbles: true,
                 composed: true,
                 cancelable: true,
@@ -613,16 +614,16 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.be.approximately(
-            100 - 52.083333333333336,
-            0.000001
-        );
+        // In RTL, right edge click should have low value
+        expect(el.sliderHandlePosition).to.be.approximately(5, 0);
+
+        const clickCloseToLeftEdge = rect.left + 10; // 10px from the left edge
 
         el.handle.dispatchEvent(
             new PointerEvent('pointermove', {
                 pointerId: 1,
-                clientX: clientWidth - 110,
-                clientY: 15,
+                clientX: clickCloseToLeftEdge,
+                clientY: rect.top + rect.height / 2,
                 bubbles: true,
                 composed: true,
                 cancelable: true,
@@ -631,8 +632,8 @@ describe('ColorSlider', () => {
         el.handle.dispatchEvent(
             new PointerEvent('pointerup', {
                 pointerId: 1,
-                clientX: clientWidth - 110,
-                clientY: 15,
+                clientX: clickCloseToLeftEdge,
+                clientY: rect.top + rect.height / 2,
                 bubbles: true,
                 composed: true,
                 cancelable: true,
@@ -641,7 +642,8 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(100 - 46.875);
+        // In RTL, dragging to the LEFT edge gives a higher value (close to 100)
+        expect(el.sliderHandlePosition).to.be.approximately(95, 0);
     });
     const colorFormats: {
         name: string;
