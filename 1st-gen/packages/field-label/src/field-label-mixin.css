@@ -95,12 +95,21 @@ label:lang(zh) {
     vertical-align: var(--mod-field-label-asterisk-vertical-align, baseline);
 }
 
+:host([side-aligned="start"]),
+:host([side-aligned="end"]) {
+    column-gap: var(--mod-fieldlabel-side-padding-right, var(--spectrum-field-label-side-padding-right));
+    row-gap: calc(var(--swc-scale-factor) * 12px); /* why? idk, this is how westbrook had it in the stories file */
+    grid-template-rows: auto auto; /* 2 rows instead of 3 */
+    grid-template-columns: 1fr 2fr; /* questioning if we want 3 columns, that's how css is */
+    inline-size: 100%; /* we need to override the other inline-size */
+}
+
 :host([side-aligned="start"]) label,
 :host([side-aligned="end"]) label {
     vertical-align: top;
     margin-block-start: var(--mod-fieldlabel-side-margin-block-start, var(--spectrum-field-label-side-margin-block-start));
     margin-block-end: 0;
-    margin-inline-end: var(--mod-fieldlabel-side-padding-right, var(--spectrum-field-label-side-padding-right));
+    /* margin-inline-end is set in the host's column-gap property */
     display: inline-block;
 
     /* styles from .spectrum-Textfield--sideLabel */

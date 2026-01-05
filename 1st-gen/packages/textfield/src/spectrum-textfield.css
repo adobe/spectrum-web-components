@@ -186,17 +186,17 @@
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-quiet-invalid, var(--spectrum-textfield-icon-spacing-inline-end-quiet-invalid));
 }
 
-/* TODO: does this do anything? */
-#textfield .spectrum-FieldLabel {
+/* changed selector from #textfield .spectrum-FieldLabel */
+label {
     grid-area: 1 / 1 / auto / span 1;
     margin-block-end: var(--mod-textfield-label-spacing-block, var(--spectrum-textfield-label-spacing-block));
 }
 
-:host([quiet]) .spectrum-FieldLabel {
+:host([quiet]) label {
     margin-block-end: var(--mod-textfield-label-spacing-block-quiet, var(--spectrum-textfield-label-spacing-block-quiet));
 }
 
-:host([disabled]) #textfield .spectrum-FieldLabel {
+:host([disabled]) label {
     color: var(--spectrum-textfield-text-color-disabled);
 }
 
@@ -456,6 +456,7 @@ div[aria-live="assertive"] {
     }
 }
 
+/* we don't have these selectors, but it is like this in css */
 .spectrum-Textfield--sideLabel {
     grid-template-rows: auto auto;
     grid-template-columns: auto auto auto;
