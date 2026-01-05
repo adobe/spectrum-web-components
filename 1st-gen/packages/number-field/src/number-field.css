@@ -39,18 +39,14 @@
     /* TODO: added stepper-button-width multiplied by 2 just to give extra space to the input field.
     That "2" is a magic number and should be removed when we are able (possibly after S2 migration). */
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) * 2 + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
+    --spectrum-stepper-container-width: var(--mod-stepper-container-width, var(--spectrum-stepper-width));
 
     /* resets the inline-size of sp-number-field to the newly defined stepper-width */
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
+    inline-size: max(var(--spectrum-stepper-container-width), var(--mod-stepper-width, var(--spectrum-stepper-width)));
 }
 
 :host([hide-stepper]) {
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
-}
-
-/* keeps the textfield 100% of the width of the sp-number-field so there isn't a gap between the containers */
-#textfield {
-    inline-size: 100%;
 }
 
 .input {
@@ -79,12 +75,6 @@
 
 :host([focused]:not([disabled])) #textfield:hover {
     --mod-stepper-buttons-border-color-focus-hover: var(--mod-stepper-border-color-focus-hover, var(--spectrum-stepper-border-color-focus-hover));
-}
-
-/* visually places the validation icon inside the input field */
-:host([invalid]:not([hide-stepper])) #textfield .icon,
-:host([valid]:not([hide-stepper])) #textfield .icon {
-    inset-inline-end: calc(var(--spectrum-stepper-button-width) + var(--spectrum-textfield-icon-spacing-inline-end-invalid));
 }
 
 /* includes the alert icon size in the input's padding similar to the valid variant */

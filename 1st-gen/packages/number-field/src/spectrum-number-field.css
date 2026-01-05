@@ -152,6 +152,7 @@
     --mod-infield-button-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-buttons-border-color-keyboard-focus, var(--spectrum-stepper-buttons-border-color-keyboard-focus)));
     --mod-textfield-focus-indicator-width: 0;
     --mod-textfield-border-color: var(--highcontrast-stepper-border-color-keyboard-focus, var(--mod-stepper-border-color-keyboard-focus, var(--spectrum-stepper-border-color-keyboard-focus)));
+
     outline: var(--spectrum-stepper-focus-indicator-width) solid;
     outline-color: var(--spectrum-stepper-focus-indicator-color);
     outline-offset: var(--spectrum-stepper-focus-indicator-gap);
@@ -249,6 +250,7 @@
 
 #textfield {
     --spectrum-stepper-width: var(--mod-stepper-width, calc(var(--spectrum-stepper-height) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--spectrum-stepper-button-width) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2));
+
     inline-size: var(--spectrum-stepper-width);
     block-size: var(--spectrum-stepper-height);
     border-radius: var(--spectrum-stepper-border-radius);
@@ -265,6 +267,11 @@
     border-inline-end-width: 0;
     border-start-end-radius: 0;
     border-end-end-radius: 0;
+
+    /* needs to be set here as well as #textfield because of the buttons */
+    --spectrum-stepper-width: var(--mod-stepper-width, calc(var(--spectrum-stepper-height) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--spectrum-stepper-button-width) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2));
+
+    inline-size: var(--spectrum-stepper-width);
 }
 
 .buttons {

@@ -16,7 +16,11 @@
 :host {
     display: inline-flex;
     flex-direction: column;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+
+    /* this allows the container to be set to something larger so that the label and help text can extend past the width of the input */
+
+    /* max() is used to ensure that the container width is at least as large as the input width */
+    inline-size: max(var(--mod-textfield-container-width, var(--spectrum-textfield-container-width)), var(--mod-textfield-width, var(--spectrum-textfield-width)));
 }
 
 :host([multiline]) {
@@ -31,17 +35,9 @@
     outline: none;
 }
 
-#textfield {
-    inline-size: 100%;
-}
-
 #textfield,
 textarea {
     resize: inherit;
-}
-
-.input {
-    min-inline-size: var(--spectrum-textfield-min-width);
 }
 
 :host([focused]) .input {
