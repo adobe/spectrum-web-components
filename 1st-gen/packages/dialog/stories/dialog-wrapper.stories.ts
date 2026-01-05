@@ -213,9 +213,10 @@ export const form = (
             >
                 <style>
                     #form-fields div {
-                        display: grid;
+                        display: flex;
+                        flex-direction: column;
+                        place-self: center;
                         row-gap: calc(var(--swc-scale-factor) * 12px);
-                        grid-template-columns: auto auto;
                     }
                 </style>
                 <div>
