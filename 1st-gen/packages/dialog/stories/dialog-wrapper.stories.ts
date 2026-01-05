@@ -211,13 +211,6 @@ export const form = (
                     handleCancel(args);
                 }}
             >
-                <style>
-                    #form-fields div {
-                        display: grid;
-                        row-gap: calc(var(--swc-scale-factor) * 12px);
-                        grid-template-columns: auto auto;
-                    }
-                </style>
                 <div>
                     <sp-textfield id="street" side-aligned="end" autofocus>
                         Street:
