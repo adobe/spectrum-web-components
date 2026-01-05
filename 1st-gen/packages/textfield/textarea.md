@@ -3,6 +3,7 @@
 `sp-textfield[multiline]` components are text areas that allow users to input custom multiline text entries with a keyboard. Various decorations can be displayed around the field to communicate the entry requirements.
 
 [View the design documentation for this component.](https://spectrum.adobe.com/page/text-area/)
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/textfield?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/textfield)
@@ -34,7 +35,7 @@ A text area consists of an area for the user to enter text and optional placehol
     id="story-0"
     multiline
     placeholder="Enter your life story"
-    pattern=".{0,1000}"
+    pattern="[\s\S]{0,1000}"
 >
     <sp-help-text slot="help-text">1000 character limit</sp-help-text>
     <sp-help-text slot="negative-help-text">
