@@ -192,6 +192,12 @@ class OverlayStack {
             this.closeOverlay(last);
             return;
         }
+        if (last?.type === 'modal') {
+            // Modal overlays use popover="manual" to allow stacking multiple modals.
+            // Handle Escape explicitly to close only the topmost modal.
+            this.closeOverlay(last);
+            return;
+        }
         if (supportsPopover) return;
         if (!last) return;
         this.closeOverlay(last);

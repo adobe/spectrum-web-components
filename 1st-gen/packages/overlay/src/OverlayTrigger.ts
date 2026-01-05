@@ -120,6 +120,14 @@ export class OverlayTrigger extends SpectrumElement {
 
     private hoverPlacement?: Placement;
 
+    /**
+     * Tracks whether hover should be temporarily suppressed after a modal overlay closes.
+     * This prevents the hover overlay from immediately opening when focus returns to
+     * the trigger after closing a modal overlay.
+     */
+    @state()
+    private hoverSuppressed = false;
+
     @state()
     private targetContent: HTMLElement[] = [];
 
@@ -181,6 +189,33 @@ export class OverlayTrigger extends SpectrumElement {
             this.open = type;
         } else if (this.open === type) {
             this.open = undefined;
+            // Suppress hover overlay briefly when a modal (click/longpress) overlay closes.
+            // This prevents hover from immediately opening when focus returns to the trigger.
+            // We must set disabled directly on the element because the template hasn't
+            // re-rendered yet when the HoverController tries to open.
+            if (type === 'click' || type === 'longpress') {
+                this.hoverSuppressed = true;
+                if (this.hoverOverlayElement) {
+                    this.hoverOverlayElement.disabled = true;
+                }
+                // The overlay's transition guarantee uses 3 animation frames before
+                // calling finish() which triggers returnFocus(). We need to wait longer
+                // than that before re-enabling hover to prevent it from opening.
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                this.hoverSuppressed = false;
+                                if (this.hoverOverlayElement) {
+                                    this.hoverOverlayElement.disabled =
+                                        this.disabled ||
+                                        !this.hoverContent.length;
+                                }
+                            });
+                        });
+                    });
+                });
+            }
         }
     }
 
@@ -254,7 +289,8 @@ export class OverlayTrigger extends SpectrumElement {
                 ?open=${this.open === 'hover' && !!this.hoverContent.length}
                 ?disabled=${this.disabled ||
                 !this.hoverContent.length ||
-                (!!this.open && this.open !== 'hover')}
+                (!!this.open && this.open !== 'hover') ||
+                this.hoverSuppressed}
                 .offset=${this.offset}
                 .placement=${this.hoverPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}

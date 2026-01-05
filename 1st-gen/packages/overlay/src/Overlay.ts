@@ -444,7 +444,11 @@ export class Overlay extends ComputedOverlayBase {
 
         switch (this.type) {
             case 'modal':
-                return 'auto';
+                // Use 'manual' to allow multiple modal overlays to be visible simultaneously.
+                // The browser's 'auto' popover only allows one at a time (light dismiss closes others).
+                // This restores the stacking behavior that existed when using showModal().
+                // The OverlayStack handles Escape key closing for modal overlays.
+                return 'manual';
             case 'page':
                 return 'manual';
             case 'hint':
