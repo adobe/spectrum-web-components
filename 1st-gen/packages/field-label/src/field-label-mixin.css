@@ -98,10 +98,15 @@ label:lang(zh) {
 :host([side-aligned="start"]),
 :host([side-aligned="end"]) {
     column-gap: var(--mod-fieldlabel-side-padding-right, var(--spectrum-field-label-side-padding-right));
-    row-gap: calc(var(--swc-scale-factor) * 12px); /* why? idk, this is how westbrook had it in the stories file */
+    margin-block-end: calc(var(--swc-scale-factor) * 12px); /* mimics row-gap westbrook had in the stories file */
     grid-template-rows: auto auto; /* 2 rows instead of 3 */
-    grid-template-columns: 1fr 2fr; /* questioning if we want 3 columns, that's how css is */
-    inline-size: 100%; /* we need to override the other inline-size */
+    grid-template-columns: 1fr 2fr auto; /* still haven't figured out what the 3rd column is for */
+    inline-size: 100%;
+}
+
+:host([side-aligned="start"]) input,
+:host([side-aligned="end"]) input {
+    inline-size: 240px;
 }
 
 :host([side-aligned="start"]) label,
@@ -109,6 +114,7 @@ label:lang(zh) {
     vertical-align: top;
     margin-block-start: var(--mod-fieldlabel-side-margin-block-start, var(--spectrum-field-label-side-margin-block-start));
     margin-block-end: 0;
+
     /* margin-inline-end is set in the host's column-gap property */
     display: inline-block;
 
@@ -119,6 +125,11 @@ label:lang(zh) {
 
 :host([side-aligned="end"]) label {
     text-align: end;
+}
+
+:host([side-aligned="start"]) ::slotted(sp-help-text),
+:host([side-aligned="end"]) ::slotted(sp-help-text) {
+    grid-area: 2 / 2 / auto / span 1;
 }
 
 @media (forced-colors: active) {

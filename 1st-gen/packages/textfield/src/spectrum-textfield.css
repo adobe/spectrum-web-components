@@ -478,6 +478,7 @@ div[aria-live="assertive"] {
     margin-inline-start: var(--mod-textfield-character-count-spacing-inline-side, var(--spectrum-textfield-character-count-spacing-inline-side));
 }
 
+/* using rule in field-label-mixin.css */
 .spectrum-Textfield--sideLabel .spectrum-HelpText {
     grid-area: 2 / 2 / auto / span 1;
 }
