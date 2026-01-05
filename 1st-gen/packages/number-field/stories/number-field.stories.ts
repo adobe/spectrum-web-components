@@ -242,6 +242,7 @@ export const decimals = (args: StoryArgs): TemplateResult => {
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
             } as unknown as Intl.NumberFormatOptions}
+            style="--mod-stepper-container-width: 100%;"
         >
             Enter a number with visible decimals
         </sp-number-field>
@@ -270,6 +271,7 @@ export const germanDecimals = (args: StoryArgs): TemplateResult => {
                     minimumFractionDigits: 1,
                     maximumFractionDigits: 2,
                 } as unknown as Intl.NumberFormatOptions}
+                style="--mod-stepper-container-width: 100%;"
             >
                 Enter a number with visible decimals
             </sp-number-field>
@@ -311,6 +313,7 @@ export const currency = (args: StoryArgs = {}): TemplateResult => {
                 currencyDisplay: 'code',
                 currencySign: 'accounting',
             } as unknown as Intl.NumberFormatOptions}
+            style="--mod-stepper-container-width: 100%;"
         >
             Enter a value in Euros
         </sp-number-field>
@@ -331,6 +334,7 @@ export const units = (args: StoryArgs): TemplateResult => {
                 unit: 'inch',
                 unitDisplay: 'long',
             } as unknown as Intl.NumberFormatOptions}
+            style="--mod-stepper-container-width: 100%;"
         >
             Enter a lengths in inches
         </sp-number-field>
@@ -350,6 +354,7 @@ export const pixels = (args: StoryArgs): TemplateResult => {
             }}
             ...=${spreadProps(args)}
             @change=${args.onChange}
+            style="--mod-stepper-container-width: 100%;"
         >
             Enter a lengths in pixels
         </sp-number-field>
@@ -361,7 +366,11 @@ pixels.args = {
 };
 
 export const minMax = (args: StoryArgs): TemplateResult => html`
-    <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+    <sp-number-field
+        ...=${spreadProps(args)}
+        @change=${args.onChange}
+        style="--mod-stepper-container-width: 100%;"
+    >
         Enter a value between 0 and 255
     </sp-number-field>
 `;
@@ -374,7 +383,11 @@ minMax.args = {
 
 export const hideStepper = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            style="--mod-stepper-container-width: 100%;"
+        >
             Enter a number without the stepper UI
         </sp-number-field>
     `;
@@ -386,7 +399,11 @@ hideStepper.args = {
 
 export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            style="--mod-stepper-container-width: 100%;"
+        >
             Enter a number without the stepper UI
         </sp-number-field>
     `;
@@ -399,7 +416,11 @@ hideStepperQuiet.args = {
 
 export const disabled = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            style="--mod-stepper-container-width: 100%;"
+        >
             This Number Field is disabled
         </sp-number-field>
     `;
@@ -411,7 +432,11 @@ disabled.args = {
 
 export const readOnly = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-number-field ...=${spreadProps(args)} @change=${args.onChange}>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            style="--mod-stepper-container-width: 100%;"
+        >
             You can only read the following value
         </sp-number-field>
     `;
@@ -423,13 +448,28 @@ readOnly.args = {
 
 export const validationIcons = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-number-field invalid ...=${spreadProps(args)}>
-            Invalid Number Field without Stepper
-        </sp-number-field>
-        <sp-number-field valid>Valid Number Field with Stepper</sp-number-field>
-        <sp-number-field invalid>
-            Invalid Number Field with Stepper
-        </sp-number-field>
+        <div>
+            <sp-number-field
+                invalid
+                ...=${spreadProps(args)}
+                style="--mod-stepper-container-width: 100%;"
+            >
+                Invalid Number Field without Stepper
+            </sp-number-field>
+        </div>
+        <div>
+            <sp-number-field valid style="--mod-stepper-container-width: 100%;">
+                Valid Number Field with Stepper
+            </sp-number-field>
+        </div>
+        <div>
+            <sp-number-field
+                invalid
+                style="--mod-stepper-container-width: 100%;"
+            >
+                Invalid Number Field with Stepper
+            </sp-number-field>
+        </div>
     `;
 };
 validationIcons.args = {

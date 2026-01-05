@@ -66,6 +66,7 @@ export const growsOnly = (): TemplateResult => {
             grows
             id="grows-only"
             placeholder="Does not grow or display incorrectly"
+            style="--mod-textfield-container-width: 100%;"
         >
             This Textfield has the "grows" attribute without the "multiline"
             attribute
@@ -179,7 +180,7 @@ export const sized = (): TemplateResult => html`
     <sp-textfield
         id="sized"
         placeholder="You can type here"
-        style="width: 400px"
+        style="--mod-textfield-width: 400px;"
     >
         This textfield hasn't been used yet
         <sp-help-text slot="help-text">

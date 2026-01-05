@@ -147,6 +147,7 @@ export const growsWithLargeWords = (): TemplateResult => html`
         value="Sed utperspiciatisundeomnisistenatuserrorsitvoluptatemaccusantiumdoloremquelaudantium,totamemaperiam, eaque ipsa quae ab illo inventore veritatis etquasiarchitectobeataevitaedictasuntexplicabo. Nemo enimipsamvoluptatemquiavoluptassitaspernaturautoditautfugitsedquiaconsequunturmagnidoloreseosquirationevoluptatemsequinesciunt."
         grows
         placeholder="Enter your life story"
+        style="--mod-textfield-container-width: 100%;"
     >
         Enter your life story with very long words...
     </sp-textfield>
@@ -190,7 +191,7 @@ export const sized = (): TemplateResult => html`
         multiline
         id="sized"
         placeholder="You can type here"
-        style="width: 400px"
+        style="--mod-textfield-width: 400px;"
     >
         This textfield hasn't been used yet
         <sp-help-text slot="help-text">
@@ -210,6 +211,7 @@ Line 4
 Line 5"
         placeholder="Enter your life story"
         rows="5"
+        style="--mod-textfield-container-width: 100%;"
     >
         Enter your life story with very long words...
     </sp-textfield>
@@ -227,6 +229,7 @@ Line 4
 Line 5"
         placeholder="Enter your life story"
         rows="3"
+        style="--mod-textfield-container-width: 100%;"
     >
         Enter your life story with very long words...
     </sp-textfield>
@@ -239,6 +242,7 @@ export const with1Row = (): TemplateResult => html`
         value="Line 1"
         placeholder="Enter your life story"
         rows="1"
+        style="--mod-textfield-container-width: 100%;"
     >
         Enter your life story with very long words...
     </sp-textfield>
