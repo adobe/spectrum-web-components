@@ -1,7 +1,6 @@
 import {
     Canvas,
     Description,
-    Story,
     Markdown,
     useOf,
 } from '@storybook/addon-docs/blocks';
@@ -27,11 +26,9 @@ export const SpectrumStories = ({
     const resolvedOf = useOf(of || 'meta', ['meta']);
 
     // Get stories and filter by tag
-    let taggedStories = Object.values(
-        resolvedOf.type === 'meta'
-            ? resolvedOf.csfFile.stories
-            : [resolvedOf.story]
-    ).filter((story: any) => story.tags?.includes(tag));
+    let taggedStories = Object.values(resolvedOf.csfFile.stories).filter(
+        (story: any) => story.tags?.includes(tag)
+    );
 
     // Sort by explicit order if provided, otherwise preserve current order
     taggedStories = taggedStories.sort((a: any, b: any) => {

@@ -20,7 +20,7 @@ const config = {
         },
         {
             directory: 'guides',
-            files: '**/*.mdx',
+            files: '**/!(*documentation).mdx',
             titlePrefix: 'Guides',
         },
     ],
