@@ -6,4 +6,4 @@ The following steps will get you started:
 
 1. Go to cursor, hit Cmd + Shift + P
 2. Search for “Extensions: Install from VSIX…”
-3. Select the extension file from this directory and download
+3. Select the extension file from this directory and install
