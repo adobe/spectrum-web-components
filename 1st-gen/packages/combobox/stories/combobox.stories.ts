@@ -284,3 +284,50 @@ controlled.parameters = {
     // Disables Chromatic's snapshotting on a global level
     chromatic: { disableSnapshot: true },
 };
+
+/**
+ * Test story to verify change event includes both value and itemText,
+ * especially for options with duplicate itemText values.
+ */
+export const duplicateItemText = (): TemplateResult => {
+    const optionsWithDuplicates: ComboboxOption[] = [
+        { value: 'val1', itemText: 'Same Display Text' },
+        { value: 'val2', itemText: 'Same Display Text' },
+        { value: 'val3', itemText: 'Unique Text' },
+    ];
+
+    const handleChange = (event: CustomEvent): void => {
+        const { value, itemText } = event.detail;
+
+        // Update the output display
+        const output = document.getElementById('change-event-output');
+        if (output) {
+            output.textContent = `value: "${value}", itemText: "${itemText}"`;
+        }
+    };
+
+    return html`
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <sp-field-label for="combobox-duplicate-test">
+                Options with duplicate itemText
+            </sp-field-label>
+            <sp-combobox
+                id="combobox-duplicate-test"
+                .options=${optionsWithDuplicates}
+                @change=${handleChange}
+                style="width: 200px;"
+            ></sp-combobox>
+            <div>
+                <strong>Last change event:</strong>
+                <code id="change-event-output">None yet</code>
+            </div>
+            <p style="color: gray; font-size: 12px;">
+                Select "Same Display Text" multiple times from the dropdown.
+                Each selection should show a different value (val1 or val2).
+            </p>
+        </div>
+    `;
+};
+duplicateItemText.swc_vrt = {
+    skip: true,
+};
