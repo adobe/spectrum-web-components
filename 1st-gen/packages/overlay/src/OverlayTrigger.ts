@@ -128,6 +128,12 @@ export class OverlayTrigger extends SpectrumElement {
     @state()
     private hoverSuppressed = false;
 
+    /**
+     * Timeout handle for the hover suppression delay.
+     * Used to clear pending timeouts when overlays close in quick succession.
+     */
+    private hoverSuppressionTimeout?: ReturnType<typeof setTimeout>;
+
     @state()
     private targetContent: HTMLElement[] = [];
 
@@ -198,23 +204,21 @@ export class OverlayTrigger extends SpectrumElement {
                 if (this.hoverOverlayElement) {
                     this.hoverOverlayElement.disabled = true;
                 }
-                // The overlay's transition guarantee uses 3 animation frames before
-                // calling finish() which triggers returnFocus(). We need to wait longer
-                // than that before re-enabling hover to prevent it from opening.
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                this.hoverSuppressed = false;
-                                if (this.hoverOverlayElement) {
-                                    this.hoverOverlayElement.disabled =
-                                        this.disabled ||
-                                        !this.hoverContent.length;
-                                }
-                            });
-                        });
-                    });
-                });
+                // Clear any pending timeout to avoid race conditions
+                if (this.hoverSuppressionTimeout) {
+                    clearTimeout(this.hoverSuppressionTimeout);
+                }
+                // Use a fixed timeout to re-enable hover after the close transition
+                // and focus return have completed. This is more predictable than
+                // chaining requestAnimationFrame calls.
+                this.hoverSuppressionTimeout = setTimeout(() => {
+                    this.hoverSuppressed = false;
+                    if (this.hoverOverlayElement) {
+                        this.hoverOverlayElement.disabled =
+                            this.disabled || !this.hoverContent.length;
+                    }
+                    this.hoverSuppressionTimeout = undefined;
+                }, 100);
             }
         }
     }
@@ -391,5 +395,14 @@ export class OverlayTrigger extends SpectrumElement {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         return complete;
+    }
+
+    override disconnectedCallback(): void {
+        super.disconnectedCallback();
+        // Clean up any pending hover suppression timeout
+        if (this.hoverSuppressionTimeout) {
+            clearTimeout(this.hoverSuppressionTimeout);
+            this.hoverSuppressionTimeout = undefined;
+        }
     }
 }
