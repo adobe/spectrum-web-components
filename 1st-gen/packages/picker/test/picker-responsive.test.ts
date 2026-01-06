@@ -15,6 +15,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -60,6 +61,20 @@ describe('Picker, responsive', () => {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
+        });
+
+        afterEach(async () => {
+            // Properly close any open overlays to prevent state leakage.
+            if (el && el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
+            // Reset mobile simulation.
+            if (el && el.isMobile) {
+                el.isMobile.matches = false;
+            }
+            await nextFrame();
         });
 
         it('is a Tray in mobile', async () => {
@@ -115,6 +130,20 @@ describe('Picker, responsive', () => {
         beforeEach(async () => {
             el = await pickerFixture({ forcePopover: true });
             await elementUpdated(el);
+        });
+
+        afterEach(async () => {
+            // Properly close any open overlays to prevent state leakage.
+            if (el && el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
+            // Reset mobile simulation.
+            if (el && el.isMobile) {
+                el.isMobile.matches = false;
+            }
+            await nextFrame();
         });
 
         it('is a Popover in mobile', async function () {
@@ -177,7 +206,13 @@ describe('Picker, responsive', () => {
     });
 
     describe('touch device detection', () => {
-        afterEach(() => {
+        afterEach(async () => {
+            // Properly close any open overlays to prevent state leakage.
+            if (el && el.open) {
+                const closed = oneEvent(el, 'sp-closed');
+                el.open = false;
+                await closed;
+            }
             // Reset touch device and mobile simulation.
             if (el && el.isTouchDevice) {
                 el.isTouchDevice.matches = false;
@@ -185,6 +220,7 @@ describe('Picker, responsive', () => {
             if (el && el.isMobile) {
                 el.isMobile.matches = false;
             }
+            await nextFrame();
         });
 
         it('sets shouldSupportDragAndSelect to false on touch devices', async () => {
@@ -201,11 +237,13 @@ describe('Picker, responsive', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await nextFrame();
 
             // Wait for menu to be ready.
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 500 }
             );
 
             // Check that shouldSupportDragAndSelect is false.
@@ -224,11 +262,13 @@ describe('Picker, responsive', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await nextFrame();
 
             // Wait for menu to be ready.
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 500 }
             );
 
             // Check that shouldSupportDragAndSelect is true.
@@ -254,16 +294,21 @@ describe('Picker, responsive', () => {
             el.open = true;
             await opened;
             await elementUpdated(el);
+            // Allow overlaid content to fully settle.
+            await nextFrame();
+            await nextFrame();
 
-            // Wait for menu to be ready.
+            // Wait for menu to be ready with items.
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 500 }
             );
 
             // Wait for menu to be fully updated.
             await el.optionsMenu.updateComplete;
             await elementUpdated(el.optionsMenu);
+            await nextFrame();
 
             // Verify shouldSupportDragAndSelect is false on touch devices.
             expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.false;
@@ -276,10 +321,11 @@ describe('Picker, responsive', () => {
             // Ensure menu is not in scrolling state (which would prevent selection).
             el.optionsMenu.isScrolling = false;
 
-            // Click the menu item.
+            // Click the menu item and wait for the picker to close.
             const closed = oneEvent(el, 'sp-closed');
             menuItem.click();
             await closed;
+            await nextFrame();
 
             // Verify the change event was dispatched.
             expect(changeSpy.callCount).to.equal(1);
@@ -299,11 +345,13 @@ describe('Picker, responsive', () => {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await nextFrame();
 
             // Wait for menu to be ready.
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 500 }
             );
 
             // The fix: shouldSupportDragAndSelect should be false based on isTouchDevice.
