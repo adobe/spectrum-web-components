@@ -275,11 +275,18 @@ describe('Picker, responsive', () => {
 
             // Ensure menu is not in scrolling state (which would prevent selection).
             el.optionsMenu.isScrolling = false;
+            // Wait for state to settle after setting isScrolling
+            await elementUpdated(el.optionsMenu);
+
+            // Wait for both change and closed events explicitly to avoid race conditions
+            const changeEvent = oneEvent(el, 'change');
+            const closed = oneEvent(el, 'sp-closed');
 
             // Click the menu item.
-            const closed = oneEvent(el, 'sp-closed');
             menuItem.click();
-            await closed;
+
+            // Wait for both events to ensure they've fired
+            await Promise.all([changeEvent, closed]);
 
             // Verify the change event was dispatched.
             expect(changeSpy.callCount).to.equal(1);
