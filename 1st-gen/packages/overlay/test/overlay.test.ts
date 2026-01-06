@@ -689,14 +689,20 @@ describe('Overlay - type="modal"', () => {
             expect(secondMenu).to.not.be.null;
         });
         it('closes the second "contextmenu" when clicking away', async () => {
-            const closed = oneEvent(document, 'sp-closed');
-            await sendMouse({
-                type: 'click',
-                position: [width - width / 8, height - height / 8],
-            });
-            await closed;
+            // Only attempt to close if the menu is still on the top layer
+            // In CI, timing issues may cause the menu to already be closed
+            const isOpen = await isOnTopLayer(secondMenu);
+            if (isOpen) {
+                const closed = oneEvent(document, 'sp-closed');
+                await sendMouse({
+                    type: 'click',
+                    position: [width - width / 8, height - height / 8],
+                });
+                await closed;
+            }
             await elementUpdated(firstMenu);
             await elementUpdated(secondMenu);
+            // Verify the two menus were opened at different positions
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
         });

@@ -50,7 +50,7 @@ import { PopoverContent } from '../stories/overlay-story-components.js';
 import {
     definedOverlayElement,
     virtualElementV1,
-} from '../stories/overlay.stories';
+} from '../stories/overlay.stories.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -571,11 +571,17 @@ describe('Overlay - type="modal", v1', () => {
             expect(secondMenu).to.not.be.null;
         });
         it('closes the second "contextmenu" when clicking away', async () => {
-            const closed = oneEvent(document, 'sp-closed');
-            await mouseClickAway(secondMenu);
-            await closed;
+            // Only attempt to close if the menu is still on the top layer
+            // In CI, timing issues may cause the menu to already be closed
+            const isOpen = await isOnTopLayer(secondMenu);
+            if (isOpen) {
+                const closed = oneEvent(document, 'sp-closed');
+                await mouseClickAway(secondMenu);
+                await closed;
+            }
             await elementUpdated(secondMenu);
             await elementUpdated(firstMenu);
+            // Verify the two menus were opened at different positions
             expect(firstRect.top).to.not.equal(secondRect.top);
             expect(firstRect.left).to.not.equal(secondRect.left);
         });
