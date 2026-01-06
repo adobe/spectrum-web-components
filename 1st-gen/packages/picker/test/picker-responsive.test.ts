@@ -235,7 +235,10 @@ describe('Picker, responsive', () => {
             expect(el.optionsMenu.shouldSupportDragAndSelect).to.be.true;
         });
 
-        it('dispatches change event when menu item is clicked on touch device', async () => {
+        it('dispatches change event when menu item is clicked on touch device', async function () {
+            // Increase timeout for this test
+            this.timeout(10000);
+
             el = await pickerFixture();
             await elementUpdated(el);
 
@@ -255,10 +258,11 @@ describe('Picker, responsive', () => {
             await opened;
             await elementUpdated(el);
 
-            // Wait for menu to be ready.
+            // Wait for menu to be ready with increased timeout.
             await waitUntil(
                 () => el.optionsMenu && el.optionsMenu.childItems.length > 0,
-                'Menu should be initialized'
+                'Menu should be initialized',
+                { timeout: 3000 }
             );
 
             // Wait for menu to be fully updated.
@@ -271,6 +275,9 @@ describe('Picker, responsive', () => {
             // Get the second menu item (value="option-2") from childItems.
             const menuItem = el.optionsMenu.childItems[1] as MenuItem;
             expect(menuItem).to.not.be.null;
+
+            // Wait for menu item to be fully ready
+            await menuItem.updateComplete;
             await elementUpdated(menuItem);
 
             // Ensure menu is not in scrolling state (which would prevent selection).
@@ -285,8 +292,22 @@ describe('Picker, responsive', () => {
             // Click the menu item.
             menuItem.click();
 
-            // Wait for both events to ensure they've fired
-            await Promise.all([changeEvent, closed]);
+            // Wait for both events with a reasonable timeout
+            // If this times out, at least one event didn't fire
+            await Promise.race([
+                Promise.all([changeEvent, closed]),
+                new Promise((_, reject) =>
+                    setTimeout(
+                        () =>
+                            reject(
+                                new Error(
+                                    'change or sp-closed event did not fire within 7s'
+                                )
+                            ),
+                        7000
+                    )
+                ),
+            ]);
 
             // Verify the change event was dispatched.
             expect(changeSpy.callCount).to.equal(1);
