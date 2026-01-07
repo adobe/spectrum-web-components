@@ -200,9 +200,7 @@ For use within overlays, ensure the popover has appropriate width constraints:
 
 #### Keyboard navigation
 
-The `<sp-truncated>` component does not receive keyboard focus by itself, as it functions as inline content. The tooltip only appears on mouse hover, not on keyboard focus. This means keyboard-only users (who are not using screen readers) cannot access the tooltip to view the full content.
-
-**Important accessibility limitation:** Since `<sp-truncated>` does not receive keyboard focus, keyboard-only users cannot trigger the tooltip hover interaction. Additionally, the click handler does not include keyboard event handlers (`/* eslint-disable lit-a11y/click-events-have-key-events */`), so keyboard users cannot copy the full content via keyboard alone. This is a known accessibility limitation.
+**Important accessibility limitation:** The `<sp-truncated>` component does not receive keyboard focus, as it functions as inline content. The tooltip only appears on mouse hover, so keyboard-only users (who are not using screen readers) cannot access the full content. Additionally, the click handler does not include keyboard event handlers (`/* eslint-disable lit-a11y/click-events-have-key-events */`), so keyboard users cannot copy the content via keyboard alone.
 
 #### Click to copy
 
@@ -234,7 +232,6 @@ For custom overflow content, ensure that the slotted content is semantically mea
 
 For more information on accessibility best practices for truncated text, refer to:
 
-- [Spectrum Design System - Text Overflow Guidelines](https://spectrum.adobe.com/page/text-field/#Text-overflow)
 - [WCAG 2.1 Success Criterion 1.4.8 - Visual Presentation](https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html)
 
 ### Design reference
