@@ -1026,8 +1026,5 @@ modalClickBlocking.swc_vrt = {
 
 modalClickBlocking.parameters = {
     tags: ['!dev'],
-};
-
-modalClickBlocking.parameters = {
     chromatic: { disableSnapshot: true },
 };

@@ -841,21 +841,13 @@ describe('Overlay - type="modal"', () => {
                 <sp-button id="trigger">Open Overlay</sp-button>
                 <sp-overlay trigger="trigger@click" type="modal">
                     <sp-popover>
-                        <sp-button
-                            id="internal-button"
-                            @click=${internalButtonClickSpy}
-                        >
+                        <sp-button id="internal-button">
                             Internal Button
                         </sp-button>
                         <p>Modal content</p>
                     </sp-popover>
                 </sp-overlay>
-                <sp-button
-                    id="external-button"
-                    @click=${externalButtonClickSpy}
-                >
-                    External Button
-                </sp-button>
+                <sp-button id="external-button">External Button</sp-button>
             </div>
         `);
 
@@ -864,9 +856,9 @@ describe('Overlay - type="modal"', () => {
         const externalButton = el.querySelector(
             '#external-button'
         ) as HTMLElement;
-        const internalButton = el.querySelector(
-            '#internal-button'
-        ) as HTMLElement;
+
+        // Add event listener to external button
+        externalButton.addEventListener('click', externalButtonClickSpy);
 
         await elementUpdated(overlay);
 
@@ -876,6 +868,13 @@ describe('Overlay - type="modal"', () => {
         await opened;
 
         expect(overlay.open).to.be.true;
+
+        // Get internal button after overlay opens (it's now in the popover)
+        const popover = document.querySelector('sp-popover') as HTMLElement;
+        const internalButton = popover.querySelector(
+            '#internal-button'
+        ) as HTMLElement;
+        internalButton.addEventListener('click', internalButtonClickSpy);
 
         // Try to click external button - should be blocked
         externalButton.click();
