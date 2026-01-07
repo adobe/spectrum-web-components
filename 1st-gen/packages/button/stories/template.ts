@@ -34,6 +34,8 @@ export interface Properties {
     iconOnly?: boolean;
     label?: string;
     componentName?: string;
+    aetherParticles?: boolean;
+    showTestImage?: boolean;
 }
 
 export const Template = ({
