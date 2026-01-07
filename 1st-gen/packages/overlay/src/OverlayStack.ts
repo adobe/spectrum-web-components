@@ -31,8 +31,6 @@ class OverlayStack {
 
     private bodyScrollBlocked = false;
 
-    private modalBackdrop: HTMLElement | null = null;
-
     constructor() {
         this.bindEvents();
     }
@@ -92,7 +90,6 @@ class OverlayStack {
         overlay.open = false;
 
         this.manageBodyScroll();
-        this.manageModalBackdrop();
     }
 
     /**
@@ -178,33 +175,6 @@ class OverlayStack {
     }
 
     /**
-     * Manage backdrop element for modal/page overlays to block clicks outside.
-     * The backdrop intercepts pointer events that might bypass capture phase listeners.
-     */
-    private manageModalBackdrop(): void {
-        const hasModalOverlay = this.stack.some(
-            (overlay) =>
-                overlay.open &&
-                (overlay.type === 'modal' || overlay.type === 'page')
-        );
-
-        if (hasModalOverlay && !this.modalBackdrop) {
-            this.modalBackdrop = document.createElement('div');
-            this.modalBackdrop.style.cssText = `
-                position: fixed;
-                inset: 0;
-                z-index: 999998;
-                background: transparent;
-                pointer-events: auto;
-            `;
-            document.body.appendChild(this.modalBackdrop);
-        } else if (!hasModalOverlay && this.modalBackdrop) {
-            this.modalBackdrop.remove();
-            this.modalBackdrop = null;
-        }
-    }
-
-    /**
      * Cache the `pointerdownTarget` for later testing and prevent clicks outside modal overlays
      *
      * @param event {PointerEvent}
@@ -260,14 +230,6 @@ class OverlayStack {
 
         const modalOverlays = this.getModalOverlays();
         if (!modalOverlays.length) return;
-
-        // If click is on the backdrop, block it
-        if (event.target === this.modalBackdrop) {
-            event.preventDefault();
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            return;
-        }
 
         // Check if the click is inside any modal dialog
         // When a popover dialog is open, clicking inside it will have the dialog
@@ -447,7 +409,6 @@ class OverlayStack {
                 once: true,
             });
             this.manageBodyScroll();
-            this.manageModalBackdrop();
         });
     }
 
