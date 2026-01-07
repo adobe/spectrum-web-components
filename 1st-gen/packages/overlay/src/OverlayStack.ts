@@ -163,13 +163,8 @@ class OverlayStack {
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
-        // Cache pointerdown path and last overlay for valid interactions (used by handlePointerup)
-        // Also block pointerdown outside modal overlays to prevent click handlers from running
-        if (!this.stack.length) {
-            this.pointerdownPath = event.composedPath();
-            this.lastOverlay = this.stack[this.stack.length - 1];
-            return;
-        }
+        // Nothing to manage if no overlays are open
+        if (!this.stack.length) return;
 
         const modalOverlays = this.getModalOverlays();
         const pointerPath = event.composedPath();
