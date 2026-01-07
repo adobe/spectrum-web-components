@@ -179,8 +179,7 @@ class OverlayStack {
 
     /**
      * Manage backdrop element for modal/page overlays to block clicks outside.
-     * The backdrop catches all pointer events, and we check if they're inside
-     * the modal dialog before allowing them through.
+     * The backdrop intercepts pointer events that might bypass capture phase listeners.
      */
     private manageModalBackdrop(): void {
         const hasModalOverlay = this.stack.some(
@@ -190,8 +189,6 @@ class OverlayStack {
         );
 
         if (hasModalOverlay && !this.modalBackdrop) {
-            // Create backdrop element that covers the entire screen
-            // It will be below the dialog (which is in top layer) but above everything else
             this.modalBackdrop = document.createElement('div');
             this.modalBackdrop.style.cssText = `
                 position: fixed;
@@ -200,11 +197,8 @@ class OverlayStack {
                 background: transparent;
                 pointer-events: auto;
             `;
-            // The backdrop will catch pointer events, and our handlers will check
-            // if the click is inside a modal before allowing it through
             document.body.appendChild(this.modalBackdrop);
         } else if (!hasModalOverlay && this.modalBackdrop) {
-            // Remove backdrop when no modal overlays are open
             this.modalBackdrop.remove();
             this.modalBackdrop = null;
         }
@@ -216,19 +210,27 @@ class OverlayStack {
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
-        this.pointerdownPath = event.composedPath();
-        this.lastOverlay = this.stack[this.stack.length - 1];
-
-        // Check for modal overlays and prevent pointerdown outside them
-        // This ensures we block the interaction before click handlers can run
-        if (!this.stack.length) return;
+        // Cache pointerdown path and last overlay for valid interactions (used by handlePointerup)
+        // Also block pointerdown outside modal overlays to prevent click handlers from running
+        if (!this.stack.length) {
+            this.pointerdownPath = event.composedPath();
+            this.lastOverlay = this.stack[this.stack.length - 1];
+            return;
+        }
 
         const modalOverlays = this.getModalOverlays();
-        if (!modalOverlays.length) return;
-
         const pointerPath = event.composedPath();
+
+        if (!modalOverlays.length) {
+            // No modal overlays, cache path for handlePointerup
+            this.pointerdownPath = pointerPath;
+            this.lastOverlay = this.stack[this.stack.length - 1];
+            return;
+        }
+
         if (!this.isEventInsideModal(pointerPath, modalOverlays)) {
             // Block pointerdown outside modal overlays
+            // Don't cache path/lastOverlay for blocked interactions
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
@@ -238,7 +240,12 @@ class OverlayStack {
                     event.pointerId
                 );
             }
+            return;
         }
+
+        // Event is inside a modal overlay, cache path for handlePointerup
+        this.pointerdownPath = pointerPath;
+        this.lastOverlay = this.stack[this.stack.length - 1];
     };
 
     /**
@@ -254,7 +261,7 @@ class OverlayStack {
         const modalOverlays = this.getModalOverlays();
         if (!modalOverlays.length) return;
 
-        // If click is on the backdrop, it's outside - block it
+        // If click is on the backdrop, block it
         if (event.target === this.modalBackdrop) {
             event.preventDefault();
             event.stopPropagation();
