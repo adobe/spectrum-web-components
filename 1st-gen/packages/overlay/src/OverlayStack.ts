@@ -139,36 +139,19 @@ class OverlayStack {
                 return true;
             }
 
-            try {
-                let dialogEl: HTMLElement | null = overlay.dialogEl;
-                if (!dialogEl) {
-                    // Try to get it from the shadow root if not available via query
-                    const shadowRoot = overlay.shadowRoot;
-                    if (shadowRoot) {
-                        dialogEl = shadowRoot.querySelector('.dialog');
-                        if (!dialogEl) {
-                            continue;
-                        }
-                    } else {
-                        continue;
-                    }
-                }
+            const dialogEl = overlay.dialogEl;
+            if (!dialogEl) continue;
 
-                // When clicking inside a popover dialog, the dialog element
-                // should be in the composedPath even though it's in the top layer
-                if (eventPath.includes(dialogEl)) {
+            // Check if dialog element is in the path
+            if (eventPath.includes(dialogEl)) {
+                return true;
+            }
+
+            // Check if any element in the path is contained by dialog
+            for (const element of eventPath) {
+                if (element instanceof Node && dialogEl.contains(element)) {
                     return true;
                 }
-
-                // Check if any element in the path is contained by dialog
-                for (const element of eventPath) {
-                    if (element instanceof Node && dialogEl.contains(element)) {
-                        return true;
-                    }
-                }
-            } catch {
-                // dialogEl might not be accessible yet, ignore
-                continue;
             }
         }
         return false;
@@ -204,12 +187,6 @@ class OverlayStack {
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
-            // Also cancel the pointer event to prevent click from firing
-            if (event instanceof PointerEvent) {
-                (event.target as HTMLElement)?.releasePointerCapture?.(
-                    event.pointerId
-                );
-            }
             return;
         }
 
