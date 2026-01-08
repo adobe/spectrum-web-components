@@ -226,7 +226,7 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         const passThroughSwatchActions: ((swatch: Swatch) => void)[] = [];
         if (Object.keys(targetValues).length) {
             passThroughSwatchActions.push((swatch) => {
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     if (
                         'selects' in targetValues &&
                         targetValues.selects !== 'multiple' &&
