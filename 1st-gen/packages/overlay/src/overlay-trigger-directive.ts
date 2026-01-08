@@ -136,13 +136,33 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
         }
     }
 
-    override reconnected(): void {
-        // Do not re-initialize until an overlay instance exists.
-        // The overlay-ready callback is responsible for wiring the initial listener.
-        if (!this.overlay) {
-            return;
+    override disconnected(): void {
+        // When the trigger element is disconnected (e.g., via Lit's cache() directive),
+        // clean up the overlay state to ensure proper behavior on reconnection.
+        // Without this cleanup, the old overlay instance would be reused but in a
+        // broken state where handleOverlayReady never fires again.
+        if (this.overlay) {
+            this.overlay.open = false;
+            this.overlay.remove();
         }
-        this.init();
+        // Clear the overlay reference in the strategy so a new one will be created
+        // on the next open, which will trigger handleOverlayReady again.
+        if (this.strategy) {
+            (this.strategy as unknown as { _overlay: undefined })._overlay =
+                undefined;
+        }
+        super.disconnected();
+    }
+
+    override reconnected(): void {
+        // If overlay was never created (user never opened it), there's nothing to reconnect.
+        // The overlay and listenerHost are only set when handleOverlayReady fires,
+        // which happens on first open. Without this guard, init() would fail
+        // trying to add a listener to undefined listenerHost.
+        //
+        // If overlay WAS created before disconnect, we cleared the references in disconnected(),
+        // so this.overlay will be undefined and we'll skip init(). A fresh overlay will be
+        // created on the next open via handleOverlayReady.
     }
 }
 
