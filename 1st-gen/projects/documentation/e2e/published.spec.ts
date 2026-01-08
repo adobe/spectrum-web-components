@@ -29,11 +29,11 @@ test.describe('search and go', () => {
 
         const formattedSearchString = searchString.replace(/\s+/g, '-');
         let href = category
-            ? `/${category}/${formattedSearchString}`
-            : `/${formattedSearchString}`;
+            ? `/${category}/${formattedSearchString}/`
+            : `/${formattedSearchString}/`;
 
         // add the SWC_DIR to the href
-        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs` : ''}${href}`;
+        href = `${process.env.SWC_DIR ? `/${process.env.SWC_DIR}/docs/first-gen-docs` : ''}${href}`;
 
         const menuItem = page.locator(menuItemSelector(href));
 
@@ -41,12 +41,10 @@ test.describe('search and go', () => {
         await page.waitForTimeout(500); // Allow search to process
         await expect(menuItem).toBeVisible({ timeout: 10000 });
 
-        // Wait for menu item to be fully interactive
-        await page.waitForTimeout(200);
-        await page.keyboard.press('ArrowDown');
-
-        await expect(menuItem).toBeFocused({ timeout: 5000 });
-        await page.keyboard.press('Enter');
+        // Click directly on the target menu item since ArrowDown only moves
+        // to the first result, which may not be the item we're looking for
+        // when multiple matches exist (e.g., searching "base" returns many results)
+        await menuItem.click();
 
         // Wait for navigation to complete
         await page.waitForLoadState('networkidle', { timeout: 15000 });
@@ -63,8 +61,13 @@ test.describe('search and go', () => {
         const searchField = await page.getByRole('searchbox', {
             name: 'Search',
         });
-
+        await expect(searchField, 'Search field should be visible').toBeVisible(
+            { timeout: 10000 }
+        );
         await searchField.focus();
+        await expect(searchField, 'Search field should be focused').toBeFocused(
+            { timeout: 10000 }
+        );
         await page.waitForTimeout(500); // Ensure focus is set
     });
 

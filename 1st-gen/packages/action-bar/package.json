@@ -68,7 +68,8 @@
         "@spectrum-web-components/base": "1.10.0",
         "@spectrum-web-components/button": "1.10.0",
         "@spectrum-web-components/field-label": "1.10.0",
-        "@spectrum-web-components/popover": "1.10.0"
+        "@spectrum-web-components/popover": "1.10.0",
+        "@spectrum-web-components/shared": "1.10.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
