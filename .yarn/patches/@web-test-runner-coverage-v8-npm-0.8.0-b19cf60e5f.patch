@@ -1,0 +1,22 @@
+diff --git a/dist/index.js b/dist/index.js
+index 997bcfc..b19cf60 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -63,7 +63,16 @@ async function v8ToIstanbul(config, testFiles, coverage, userAgent) {
+             !path.startsWith('/__web-test-runner') &&
+             !path.startsWith('/__web-dev-server')) {
+             try {
+-                const filePath = (0, path_1.join)(config.rootDir, (0, utils_1.toFilePath)(path));
++                // Handle __wds-outside-root__ paths which reference files outside the rootDir
++                let filePath;
++                const outsideRootMatch = path.match(/^\/__wds-outside-root__\/\d+\/(.+)$/);
++                if (outsideRootMatch) {
++                    // For outside-root files, resolve relative to workspace root (parent of rootDir)
++                    const workspaceRoot = (0, path_1.dirname)(config.rootDir);
++                    filePath = (0, path_1.join)(workspaceRoot, (0, utils_1.toFilePath)(outsideRootMatch[1]));
++                } else {
++                    filePath = (0, path_1.join)(config.rootDir, (0, utils_1.toFilePath)(path));
++                }
+                 if (!testFiles.includes(filePath) && included(filePath) && !excluded(filePath)) {
+                     const browserUrl = `${url.pathname}${url.search}${url.hash}`;
+                     const cachedSource = cachedSources.get(browserUrl);

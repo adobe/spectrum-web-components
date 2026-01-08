@@ -1,0 +1,59 @@
+{
+    "name": "example-project-webpack",
+    "version": "1.2.8",
+    "private": true,
+    "description": "An example project that uses the web components and gives an example of how to bundle them minimally with webpack.",
+    "license": "Apache-2.0",
+    "author": "Adobe",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "build": "webpack",
+        "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
+        "serve": "webpack serve"
+    },
+    "dependencies": {
+        "@spectrum-web-components/button": "1.10.0",
+        "@spectrum-web-components/field-label": "1.10.0",
+        "@spectrum-web-components/menu": "1.10.0",
+        "@spectrum-web-components/picker": "1.10.0",
+        "@spectrum-web-components/styles": "1.10.0",
+        "lit": "^2.5.0 || ^3.1.3"
+    },
+    "devDependencies": {
+        "clean-webpack-plugin": "4.0.0",
+        "copy-webpack-plugin": "12.0.2",
+        "css-loader": "6.11.0",
+        "http-server": "14.1.1",
+        "mini-css-extract-plugin": "2.9.4",
+        "style-loader": "4.0.0",
+        "webpack": "5.101.3",
+        "webpack-bundle-analyzer": "4.10.2",
+        "webpack-cli": "5.1.4",
+        "webpack-dev-server": "5.2.2"
+    },
+    "browserslist": [
+        "defaults",
+        "not IE 11"
+    ],
+    "customElements": "custom-elements.json",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "1st-gen/projects/example-project-webpack"
+    },
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "keywords": [
+        "design-system",
+        "spectrum",
+        "adobe",
+        "adobe-spectrum",
+        "web components",
+        "web-components",
+        "lit-element",
+        "lit-html"
+    ],
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/"
+}

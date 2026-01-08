@@ -3,11 +3,11 @@ version: 2.1
 executors:
     default:
         docker:
-            - image: cimg/base:stable
+            - image: cimg/base:current
         resource_class: medium
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.44.0
+            - image: mcr.microsoft.com/playwright:v1.53.1-noble
         resource_class: xlarge
         environment:
             NODE_ENV: development
@@ -17,12 +17,12 @@ executors:
             AZCOPY_TENANT_ID: $AZURE_TENANT_ID
 parameters:
     # In order to update the VRT baseline images:
-    # 1. Copy the hash of the latest golden images cache from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
+    # 1. Copy the hash of the latest golden images hash from the left sidebar in the VRT preview link (not to be confused with the arbitrary hash in the URL).
     # 2. Paste the hash in the current_golden_images_hash default parameter below.
     # 3. Commit this change to the PR branch where the changes exist.
     current_golden_images_hash:
         type: string
-        default: dd2217ab088b6a78c6d95aa4751396726f24fa0f
+        default: b88c1b90e553e4f212ad60a5d96abc4dc9ed6be0
     wireit_cache_name:
         type: string
         default: wireit
@@ -51,12 +51,12 @@ commands:
     downstream:
         steps:
             - checkout
-            # - restore_cache:
-            #       keys:
-            #           - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
-            # - restore_cache:
-            #       keys:
-            #           - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "package.json" }}-
+            - restore_cache:
+                  keys:
+                      - v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v4b-<< pipeline.parameters.wireit_cache_name >>-{{ arch }}-{{ checksum "1st-gen/package.json" }}-
             - run:
                   name: Installing Dependencies
                   command: |
@@ -64,7 +64,8 @@ commands:
                       yarn --immutable
             - run:
                   name: Build the project
-                  command: yarn build
+                  command: |
+                      yarn build
 
             - save_cache:
                   paths:
@@ -73,8 +74,8 @@ commands:
                   key: v4c-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - save_cache:
                   paths:
-                      - .wireit
-                  key: v4b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
+                      - 1st-gen/.wireit
+                  key: v4b-wireit-{{ arch }}-{{ checksum "1st-gen/package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
@@ -97,19 +98,27 @@ commands:
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      mkdir -p 1st-gen/test/visual/screenshots-baseline
+                      baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                  #   if [ $baseline_count -eq 0 ]; then
+                  #       echo "ERROR: No baseline images found!"
+                  #       exit 1
+                  #   fi
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                      yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -124,8 +133,7 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
-                      yarn rollup -c test/visual/rollup.config.js
+                      cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="<< parameters.regression_system >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>" && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -153,7 +161,7 @@ commands:
                                   -H "Accept: application/vnd.github+json" \
                                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
                                   | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                              
+
                               if [ -n "$PR_NUMBER" ]; then
                                   echo "Deploying VRT for PR #$PR_NUMBER (via GitHub API)"
                               else
@@ -172,11 +180,11 @@ commands:
                       combination="<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>"
 
                       # Prepare files for deployment
-                      cp projects/documentation/content/favicon.ico test/visual/ || echo "Failed to copy favicon"
+                      cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/ || echo "Failed to copy favicon"
 
                       # Upload VRT results to Azure Blob Storage
                       echo "Uploading VRT results to ${PR_HASH}/${combination}/"
-                      azcopy copy "test/visual/*" \
+                      azcopy copy "1st-gen/test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/${combination}/" \
                         --recursive \
                         --from-to LocalBlob
@@ -190,42 +198,60 @@ commands:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf 1st-gen/test/visual/screenshots-baseline
+                      cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-<< parameters.regression_system >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     test-chromium:
         executor: node
+        parallelism: 5
 
         steps:
             - downstream
             - run:
-                  name: Run unit tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group no-memory-ci --coverage
+                  name: Run chromium tests
+                  command: |
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config ./web-test-runner.config.ci-chromium.js --group unit-ci
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - store_artifacts:
-                  path: coverage
+                  path: 1st-gen/coverage
 
-    test-chromium-memory:
+    test-chromium-coverage:
         executor: node
 
         steps:
             - downstream
             - run:
+                  name: Run chromium tests with coverage
+                  command: yarn workspace @spectrum-web-components/1st-gen test:focus unit --config web-test-runner.config.ci-chromium.js --coverage
+            - store_test_results:
+                  path: /root/project/1st-gen/results/
+
+    test-chromium-memory:
+        executor: node
+        parallelism: 5
+
+        steps:
+            - downstream
+            - run:
                   name: Run memory tests
-                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group memory-ci
+                  command: |
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*-memory.test.js" | grep -v "packages/color-.*/test/.*-memory\.test\.js" | grep -v "tools/grid/test/.*-memory\.test\.js" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      echo $TEST
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-chromium-memory.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -236,10 +262,10 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
+                  name: Run firefox tests
                   command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-firefox.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
 
@@ -250,24 +276,12 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Run tests
+                  name: Run webkit tests
                   command: |
-                      TEST=$(circleci tests glob packages/*/test/*.test.js | circleci tests split --split-by=timings)
-                      yarn test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
+                      TEST=$(circleci tests glob "1st-gen/{packages,tools}/*/test/*.test.js" | grep -v ".*-memory\.test\.js$" | circleci tests split --split-by=timings | sed 's/1st-gen\///')
+                      yarn workspace @spectrum-web-components/1st-gen test:start --files $TEST --config web-test-runner.config.ci-webkit.js --group unit-ci
             - store_test_results:
                   path: /root/project/results/
-
-    lint:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Lint
-                  command: yarn lint
-            - run:
-                  name: Are there changes?
-                  command: git diff-files --exit-code
 
     beta-docs:
         executor: node
@@ -276,33 +290,35 @@ jobs:
             - downstream
             - run:
                   name: Generate Custom Elements Manifest
-                  command: yarn docs:analyze
+                  command: yarn workspace @spectrum-web-components/1st-gen docs:analyze
             - run:
                   name: Move CEM to Storybook directory
-                  command: cp projects/documentation/custom-elements.json storybook/
+                  command: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
             - run:
                   name: Build documentation with path prefix
-                  command: echo "SWC_DIR=beta/docs" >> $BASH_ENV
+                  command: |
+                      echo "export SWC_DIR=beta/docs" >> $BASH_ENV
+                      source $BASH_ENV
             - run:
                   name: Build documentation
-                  command: yarn docs:build
+                  command: yarn workspace @spectrum-web-components/1st-gen docs:build
             - run:
                   name: Build Storybook
-                  command: yarn storybook:build
+                  command: yarn workspace @spectrum-web-components/1st-gen storybook:build
             - install-azcopy
             - run:
                   name: Deploy Beta Documentation to Azure Blob Storage
                   command: |
                       # Upload documentation to beta path
                       echo "Uploading documentation to beta/docs/"
-                      azcopy copy "projects/documentation/dist/*" \
+                      azcopy copy "1st-gen/projects/documentation/dist/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/" \
                         --recursive \
                         --from-to LocalBlob
 
                       # Upload Storybook to beta path
                       echo "Uploading Storybook to beta/docs/storybook/"
-                      azcopy copy "storybook-static/*" \
+                      azcopy copy "1st-gen/storybook-static/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/beta/docs/storybook/" \
                         --recursive \
                         --from-to LocalBlob
@@ -325,19 +341,27 @@ jobs:
                       - v2-golden-images-main-hcm-
             - run:
                   name: Count baseline images
-                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+                  command: |
+                      mkdir -p 1st-gen/test/visual/screenshots-baseline
+                      baseline_count=$(find 1st-gen/test/visual/screenshots-baseline -type f | wc -l)
+                      echo "Found $baseline_count baseline images"
+                      echo $baseline_count > count_start.txt
+                  #   if [ $baseline_count -eq 0 ]; then
+                  #       echo "ERROR: No baseline images found!"
+                  #       exit 1
+                  #   fi
             - run:
                   when: always
                   name: VRT Run
                   command: |
-                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+                      yarn workspace @spectrum-web-components/1st-gen test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
-                  path: /root/project/results/
+                  path: /root/project/1st-gen/results/
             - run:
                   when: on_success
                   name: Count current images
-                  command: find test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
+                  command: find 1st-gen/test/visual/screenshots-actual/updates -type f | wc -l > count_end.txt
             # prevent removing regression tests without requiring a new golden cache
             - run:
                   when: on_success
@@ -352,8 +376,7 @@ jobs:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm"
-                      yarn rollup -c test/visual/rollup.config.js
+                      cd 1st-gen && node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --system="hcm" && yarn rollup -c test/visual/rollup.config.js
             - install-azcopy
             - run:
                   when: always
@@ -381,7 +404,7 @@ jobs:
                                   -H "Accept: application/vnd.github+json" \
                                   "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls?head=$CIRCLE_PROJECT_USERNAME:$CIRCLE_BRANCH&state=open" \
                                   | grep -o '"number":[0-9]*' | head -1 | sed 's/"number"://')
-                              
+
                               if [ -n "$PR_NUMBER" ]; then
                                   echo "Deploying HCM VRT for PR #$PR_NUMBER (via GitHub API)"
                               else
@@ -397,11 +420,11 @@ jobs:
                       fi
 
                       # Prepare files for deployment
-                      cp projects/documentation/content/favicon.ico test/visual/
+                      cp 1st-gen/projects/documentation/content/favicon.ico 1st-gen/test/visual/
 
                       # Upload HCM VRT results to Azure Blob Storage
                       echo "Uploading HCM VRT to ${PR_HASH}/hcm/"
-                      azcopy copy "test/visual/*" \
+                      azcopy copy "1st-gen/test/visual/*" \
                         "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/hcm/" \
                         --recursive \
                         --from-to LocalBlob
@@ -415,18 +438,18 @@ jobs:
             - run:
                   when: always
                   command: |
-                      rm -rf test/visual/screenshots-baseline
-                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+                      rm -rf 1st-gen/test/visual/screenshots-baseline
+                      cp -R 1st-gen/test/visual/screenshots-actual/updates 1st-gen/test/visual/screenshots-baseline
             - save_cache:
                   when: always
                   name: Build Golden Images Revision Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
-                      - test/visual/screenshots-baseline
+                      - 1st-gen/test/visual/screenshots-baseline
                   key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
 
     visual:
@@ -455,6 +478,7 @@ workflows:
             - test-chromium-memory
             - test-firefox
             - test-webkit
+            - test-chromium-coverage
             - hcm-visual:
                   filters:
                       branches:

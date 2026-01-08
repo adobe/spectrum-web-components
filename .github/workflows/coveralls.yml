@@ -20,10 +20,10 @@ jobs:
               uses: ./.github/actions/setup-job
 
             - name: Install Playwright
-              run: yarn playwright install --with-deps
+              run: cd 1st-gen && yarn playwright install --with-deps
 
             - name: Run unit tests with coverage
-              run: yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
+              run: cd 1st-gen && yarn test:ci --config web-test-runner.config.ci-chromium.js --group coveralls-ci --coverage
               continue-on-error: true
 
             - name: Upload coverage to Coveralls

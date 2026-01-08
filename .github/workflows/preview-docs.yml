@@ -3,12 +3,14 @@ name: Preview Documentation (Azure Blob Storage)
 on:
     pull_request:
         types: [opened, synchronize, reopened, closed]
-        branches:
-            - '**'
 
 permissions:
     contents: read
     pull-requests: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+    cancel-in-progress: true
 
 env:
     AZCOPY_AUTO_LOGIN_TYPE: SPN
@@ -21,8 +23,11 @@ jobs:
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
         runs-on: ubuntu-latest
         name: Build and Deploy Job
+        timeout-minutes: 30
         outputs:
-            doc_url: ${{ steps.deploy.outputs.docs_url }}
+            first_gen_docs_url: ${{ steps.deploy.outputs.first_gen_docs_url }}
+            first_gen_storybook_url: ${{ steps.deploy.outputs.first_gen_storybook_url }}
+            second_gen_storybook_url: ${{ steps.deploy.outputs.second_gen_storybook_url }}
         steps:
             ## --- SETUP --- ##
             - name: Check out code
@@ -63,60 +68,164 @@ jobs:
               shell: bash
               run: yarn install --immutable
 
-            - name: Build
+            - name: Build all generations
               run: yarn build
 
             - name: Generate Custom Elements Manifest
-              run: yarn docs:analyze
+              run: yarn workspace @spectrum-web-components/1st-gen docs:analyze
 
             - name: Move CEM to Storybook directory
-              run: cp projects/documentation/custom-elements.json storybook/
+              run: cp 1st-gen/projects/documentation/custom-elements.json 1st-gen/storybook/
 
             - name: Build documentation with path prefix
               env:
-                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs
+                  SWC_DIR: ${{ steps.pr_hash.outputs.hash }}/docs/first-gen-docs
               run: |
-                  cd projects/documentation
-                  yarn build
+                  yarn workspace @spectrum-web-components/1st-gen docs:build
 
-            - name: Build Storybook
-              run: yarn storybook:build
+            - name: Build first-gen Storybook
+              run: yarn workspace @spectrum-web-components/1st-gen storybook:build
+
+            - name: Build second-gen Storybook
+              run: yarn workspace @spectrum-web-components/2nd-gen storybook:build
 
             ## --- DEPLOY TO AZURE BLOB STORAGE --- ##
             - name: Setup AzCopy
               uses: ./.github/actions/setup-azcopy
 
-            - name: Deploy to Azure Blob Storage
+            - name: Deploy first-gen documentation to Azure Blob Storage
+              env:
+                  PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+              run: |
+                  echo "Uploading first-gen documentation to ${PR_HASH}/docs/first-gen-docs/"
+                  azcopy copy "1st-gen/projects/documentation/dist/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-docs/" \
+                    --recursive \
+                    --from-to LocalBlob
+                  echo "✅ First-gen documentation uploaded successfully"
+
+            - name: Deploy first-gen Storybook to Azure Blob Storage
+              env:
+                  PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+              run: |
+                  echo "Uploading first-gen Storybook to ${PR_HASH}/docs/first-gen-storybook/"
+                  azcopy copy "1st-gen/projects/documentation/dist/storybook/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/first-gen-storybook/" \
+                    --recursive \
+                    --from-to LocalBlob
+                  echo "✅ First-gen Storybook uploaded successfully"
+
+            - name: Deploy second-gen Storybook to Azure Blob Storage
+              env:
+                  PR_HASH: ${{ steps.pr_hash.outputs.hash }}
+              run: |
+                  echo "Uploading second-gen Storybook to ${PR_HASH}/docs/second-gen-storybook/"
+                  azcopy copy "2nd-gen/packages/swc/storybook-static/*" \
+                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/second-gen-storybook/" \
+                    --recursive \
+                    --from-to LocalBlob
+                  echo "✅ Second-gen Storybook uploaded successfully"
+
+            - name: Set deployment URLs
               id: deploy
               env:
                   PR_HASH: ${{ steps.pr_hash.outputs.hash }}
               run: |
-                  # Upload documentation
-                  echo "Uploading documentation to ${PR_HASH}/docs/"
-                  azcopy copy "projects/documentation/dist/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/" \
-                    --recursive \
-                    --from-to LocalBlob
+                  first_gen_docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-docs/"
+                  first_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/first-gen-storybook/"
+                  second_gen_storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/second-gen-storybook/"
 
-                  # Upload Storybook
-                  echo "Uploading Storybook to ${PR_HASH}/docs/storybook/"
-                  azcopy copy "storybook-static/*" \
-                    "https://swcpreviews.blob.core.windows.net/\$web/${PR_HASH}/docs/storybook/" \
-                    --recursive \
-                    --from-to LocalBlob
+                  echo "first_gen_docs_url=${first_gen_docs_url}" >> "$GITHUB_OUTPUT"
+                  echo "first_gen_storybook_url=${first_gen_storybook_url}" >> "$GITHUB_OUTPUT"
+                  echo "second_gen_storybook_url=${second_gen_storybook_url}" >> "$GITHUB_OUTPUT"
 
-                  # Set output URLs
-                  docs_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/"
-                  storybook_url="https://swcpreviews.z13.web.core.windows.net/${PR_HASH}/docs/storybook/"
-                  echo "docs_url=${docs_url}" >> "$GITHUB_OUTPUT"
-                  echo "storybook_url=${storybook_url}" >> "$GITHUB_OUTPUT"
-                  echo "Deployed to: ${docs_url}"
+                  echo "📦 All deployments completed:"
+                  echo "  - Documentation: ${first_gen_docs_url}"
+                  echo "  - First-gen Storybook: ${first_gen_storybook_url}"
+                  echo "  - Second-gen Storybook: ${second_gen_storybook_url}"
+
+            - name: Post Previews Comment
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/.github/scripts/build-preview-urls-comment.js');
+                      const { commentOrUpdate } = await import('${{ github.workspace }}/.github/scripts/comment-or-update.js');
+
+                      const prNumber = context.payload.pull_request.number;
+                      const body = buildPreviewURLComment(prNumber);
+
+                      console.log(`Posting comment to PR #${prNumber}`);
+                      commentOrUpdate(github, context, '## 📚 Branch Preview Links', body);
+
+    smoke_tests:
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        needs: build_and_deploy_job
+        runs-on: ubuntu-latest
+        name: Smoke Tests
+        timeout-minutes: 15
+        steps:
+            - name: Checkout PR branch
+              uses: actions/checkout@v4
+
+            - name: Wait for deployment
+              env:
+                  DOC_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
+              run: |
+                  echo "Waiting for deployment to be available at: ${DOC_URL}"
+
+                  # Wait up to 10 minutes for the deployment to be available
+                  max_attempts=60
+                  attempt=1
+
+                  while [ $attempt -le $max_attempts ]; do
+                    echo "Attempt $attempt/$max_attempts: Checking if site is available..."
+                    
+                    if curl -f -s --max-time 10 "${DOC_URL}" > /dev/null; then
+                      echo "✅ ${DOC_URL} is now available!"
+                      break
+                    else
+                      echo "❌ Site not ready yet, waiting 10 seconds..."
+                      sleep 10
+                      attempt=$((attempt + 1))
+                    fi
+                  done
+
+                  if [ $attempt -gt $max_attempts ]; then
+                    echo "❌ Timeout: Site was not available after 10 minutes"
+                    exit 1
+                  fi
+
+            - name: Setup Job and Install Dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Install Playwright Browsers
+              run: cd 1st-gen && yarn playwright install --with-deps
+
+            - name: Run Playwright tests
+              run: cd 1st-gen && yarn playwright test projects/documentation/e2e/published.spec.ts
+              env:
+                  DOC_PREVIEW_URL: ${{ needs.build_and_deploy_job.outputs.first_gen_docs_url }}
+                  SWC_DIR: pr-${{ github.event.pull_request.number }}
+                  NODE_ENV: CI
+
+            - name: Upload Playwright Report
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30
 
     close_pull_request_job:
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
         runs-on: ubuntu-latest
         name: Clean up PR deployment
+        timeout-minutes: 5
         steps:
+            - name: Check out code
+              uses: actions/checkout@v5
+              with:
+                  fetch-depth: 0
             - name: Generate PR hash
               id: pr_hash
               run: |

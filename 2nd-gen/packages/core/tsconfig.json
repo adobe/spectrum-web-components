@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": false,
+        "composite": true,
+        "noEmit": false,
+        "outDir": "./dist",
+        "paths": {
+            "@spectrum-web-components/core/*": ["./*"],
+            "@spectrum-web-components/core/shared/*": ["./shared/*"]
+        },
+        "rootDir": "./"
+    },
+    "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.stories.ts"],
+    "extends": "../../tsconfig.json",
+    "include": ["**/*.ts"]
+}
