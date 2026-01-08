@@ -14,11 +14,14 @@
 @import url("./textfield-overrides.css");
 
 :host {
-    display: inline-flex;
-    flex-direction: column;
+    display: inline-grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto;
+    margin: 0;
+    position: relative;
+    overflow: visible;
 
     /* this allows the container to be set to something larger so that the label and help text can extend past the width of the input */
-
     /* max() is used to ensure that the container width is at least as large as the input width */
     inline-size: max(var(--mod-textfield-container-width, var(--spectrum-textfield-container-width)), var(--mod-textfield-width, var(--spectrum-textfield-width)));
 }
@@ -33,6 +36,12 @@
 
 :host([disabled]:focus-visible) {
     outline: none;
+}
+
+#textfield {
+    box-sizing: border-box;
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    grid-area: 2 / 1 / auto / span 2;
 }
 
 #textfield,
@@ -113,9 +122,6 @@ textarea {
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     resize: none;
     overflow: hidden;

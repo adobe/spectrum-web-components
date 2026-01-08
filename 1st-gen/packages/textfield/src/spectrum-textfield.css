@@ -128,28 +128,16 @@
     --spectrum-text-area-min-block-size-quiet: var(--spectrum-component-height-300);
 }
 
-#textfield {
-    text-overflow: ellipsis;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto;
-    margin: 0;
-    display: inline-grid;
-    position: relative;
-    overflow: visible;
-}
-
 :host([invalid]) #textfield .icon,
 :host([valid]) #textfield .icon {
     pointer-events: all;
-    grid-area: 2 / 2;
+
+    /* span 2 columns based on the subgrid in #textfield*/
+    grid-column: 2;
+
     margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
-}
-
-#textfield.spectrum-Textfield--sideLabel .icon {
-    grid-area: 1 / 2 / span 1 / span 1;
 }
 
 :host([valid]) #textfield .icon {
@@ -185,24 +173,34 @@
     inset-inline-end: var(--mod-textfield-icon-spacing-inline-end-quiet-invalid, var(--spectrum-textfield-icon-spacing-inline-end-quiet-invalid));
 }
 
-#textfield .spectrum-FieldLabel {
-    grid-area: 1 / 1 / auto / span 1;
+label {
     margin-block-end: var(--mod-textfield-label-spacing-block, var(--spectrum-textfield-label-spacing-block));
+}
+
+/* span 2 columns when there's no char count, which we don't have implemented anyway */
+label:not(:has(~ .spectrum-Textfield-characterCount)) {
+    grid-area: 1 / 1 / auto / span 2;
 }
 
 :host([quiet]) .spectrum-FieldLabel {
     margin-block-end: var(--mod-textfield-label-spacing-block-quiet, var(--spectrum-textfield-label-spacing-block-quiet));
 }
 
-:host([disabled]) #textfield .spectrum-FieldLabel {
+:host([disabled]) label {
     color: var(--spectrum-textfield-text-color-disabled);
 }
 
-#textfield .spectrum-HelpText {
+/* TODO: is there a different way around this */
+div[aria-live="assertive"] {
+    display: contents; /* Makes the helptext div transparent to the grid */
+}
+
+::slotted(sp-help-text) {
     grid-area: 3 / 1 / auto / span 2;
     margin-block-start: var(--mod-textfield-helptext-spacing-block, var(--spectrum-textfield-helptext-spacing-block));
 }
 
+/* not implemented */
 .spectrum-Textfield-characterCount {
     inline-size: auto;
     font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
@@ -226,6 +224,7 @@
     line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
     min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
     padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
@@ -244,7 +243,9 @@
     text-overflow: ellipsis;
     appearance: none;
     outline: none;
-    grid-area: 2 / 1 / auto / span 2;
+
+    /* span 2 columns based on the subgrid in #textfield*/
+    grid-column: 1 / span 2;
     margin: 0;
 }
 
@@ -469,13 +470,10 @@
     margin-inline-start: var(--mod-textfield-character-count-spacing-inline-side, var(--spectrum-textfield-character-count-spacing-inline-side));
 }
 
-.spectrum-Textfield--sideLabel .spectrum-HelpText {
+:host([side-aligned="start"]) ::slotted(sp-help-text),
+:host([side-aligned="end"]) ::slotted(sp-help-text) {
     grid-area: 2 / 2 / auto / span 1;
-}
-
-.spectrum-Textfield--sideLabel .input,
-.spectrum-Textfield--sideLabel .icon {
-    grid-area: 1 / 2 / span 1 / span 1;
+    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
 }
 
 :host([multiline]) {
