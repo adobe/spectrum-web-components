@@ -11,6 +11,7 @@
  */
 import {
     html,
+    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -470,6 +471,14 @@ export class Overlay extends ComputedOverlayBase {
             return false;
 
         return true;
+    }
+
+    /**
+     * Determines if the overlay needs a modal backdrop to block external clicks.
+     * Modal and page overlays require a backdrop to intercept pointer events.
+     */
+    protected get needsModalBackdrop(): boolean {
+        return this.open && (this.type === 'modal' || this.type === 'page');
     }
 
     /**
@@ -1131,6 +1140,11 @@ export class Overlay extends ComputedOverlayBase {
          * to ensure that the overlay stacks above most other elements during fallback delivery.
          */
         return html`
+            ${this.needsModalBackdrop
+                ? html`
+                      <div class="modal-backdrop"></div>
+                  `
+                : nothing}
             <div
                 class="dialog"
                 part="dialog"
