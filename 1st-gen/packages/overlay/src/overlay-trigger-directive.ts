@@ -147,14 +147,13 @@ export class OverlayTriggerDirective extends SlottableRequestDirective {
         }
         // Clear the overlay reference in the strategy so a new one will be created
         // on the next open, which will trigger handleOverlayReady again.
-        if (this.strategy) {
-            (this.strategy as unknown as { _overlay: undefined })._overlay =
-                undefined;
-        }
+        this.strategy?.clearOverlay();
         super.disconnected();
     }
 
     override reconnected(): void {
+        // Intentionally empty: don't call init() since the overlay reference was cleared in disconnected() and will be recreated on next open.
+        //
         // If overlay was never created (user never opened it), there's nothing to reconnect.
         // The overlay and listenerHost are only set when handleOverlayReady fires,
         // which happens on first open. Without this guard, init() would fail

@@ -118,7 +118,7 @@ export class HoverController extends InteractionController {
 
     override prepareDescription(): void {
         // require "content" to apply relationship
-        if (!this.overlay.elements.length) return;
+        if (!this.overlay || !this.overlay.elements.length) return;
 
         const triggerRoot = this.target.getRootNode();
         const contentRoot = this.overlay.elements[0].getRootNode();
@@ -131,6 +131,7 @@ export class HoverController extends InteractionController {
     }
 
     private prepareOverlayRelativeDescription(): void {
+        if (!this.overlay) return;
         const releaseDescription = conditionAttributeWithId(
             this.target,
             'aria-describedby',
@@ -143,11 +144,13 @@ export class HoverController extends InteractionController {
     }
 
     private prepareContentRelativeDescription(): void {
+        if (!this.overlay) return;
+        const overlay = this.overlay; // Capture for closure
         const elementIds: string[] = [];
-        const appliedIds = this.overlay.elements.map((el) => {
+        const appliedIds = overlay.elements.map((el) => {
             elementIds.push(el.id);
             if (!el.id) {
-                el.id = `${this.overlay.tagName.toLowerCase()}-helper-${randomID()}`;
+                el.id = `${overlay.tagName.toLowerCase()}-helper-${randomID()}`;
             }
             return el.id;
         });
@@ -159,7 +162,7 @@ export class HoverController extends InteractionController {
         );
         this.releaseDescription = () => {
             releaseDescription();
-            this.overlay.elements.map((el, index) => {
+            overlay.elements.map((el, index) => {
                 el.id = this.elementIds[index];
             });
             this.releaseDescription = noop;
@@ -229,7 +232,7 @@ export class HoverController extends InteractionController {
     }
 
     override initOverlay(): void {
-        if (!this.abortController) {
+        if (!this.abortController || !this.overlay) {
             return;
         }
         const { signal } = this.abortController;

@@ -172,6 +172,8 @@ describe('Overlay trigger directive', () => {
         // Now click the cached trigger to open the overlay.
         const opened = oneEvent(cachedTrigger, 'sp-opened');
         cachedTrigger.click();
-        await opened;
+        const openedEvent = await opened;
+
+        expect(openedEvent, 'sp-opened event should be dispatched').to.exist;
     });
 });
