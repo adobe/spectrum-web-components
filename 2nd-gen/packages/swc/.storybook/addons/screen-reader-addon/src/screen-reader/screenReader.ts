@@ -81,11 +81,17 @@ export default class ScreenReader {
     voiceEnabled = false;
     textEnabled = false;
     private storyDocument: Document | null = null;
-    private lastAnnouncedElement: Element | null = null;
+
+    // Debounce for preventing rapid duplicate announcements
+    private static readonly ANNOUNCE_DEBOUNCE_MS = 150;
+    private announceDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+    private pendingAnnouncement: { element: Element; text: string } | null =
+        null;
 
     // Bound handlers for proper cleanup
     private handleFocusIn: (event: FocusEvent) => void;
     private handleKeyDown: (event: KeyboardEvent) => void;
+    private handleChange: (event: Event) => void;
     private handleMutation: (mutations: MutationRecord[]) => void;
 
     private mutationObserver: MutationObserver | null = null;
@@ -94,6 +100,7 @@ export default class ScreenReader {
     constructor() {
         this.handleFocusIn = this.onFocusIn.bind(this);
         this.handleKeyDown = this.onKeyDown.bind(this);
+        this.handleChange = this.onChange.bind(this);
         this.handleMutation = this.onMutation.bind(this);
     }
 
@@ -236,13 +243,18 @@ export default class ScreenReader {
 
     /**
      * Generate announcement for an element based on its role and state
+     * Uses debouncing to prevent rapid duplicate announcements while still
+     * allowing the same element to be re-announced after the debounce period
      */
     announceElement(element: Element | null): void {
-        if (!element || element === this.lastAnnouncedElement) {
+        if (!element) {
             return;
         }
 
-        this.lastAnnouncedElement = element;
+        // Skip elements hidden from accessibility tree
+        if (element.closest('[aria-hidden="true"]')) {
+            return;
+        }
 
         const role = this.computeRole(element);
         const name = this.getAccessibleName(element);
@@ -251,14 +263,50 @@ export default class ScreenReader {
         // Build the announcement based on role
         let announcement = this.buildRoleAnnouncement(element, role, name);
 
+        // Add disabled state if aria-disabled is true
+        // Note: native disabled attribute makes elements unfocusable, so we only check aria-disabled
+        if (element.getAttribute('aria-disabled') === 'true') {
+            announcement += ', disabled';
+        }
+
         // Add description if available
         if (description) {
             announcement += ` ${description}`;
         }
 
-        if (announcement) {
-            this.say(announcement);
+        if (!announcement) {
+            return;
         }
+
+        // Debounce: if same element and same text, reset timer
+        // This prevents rapid duplicate announcements but allows re-announcing later
+        if (
+            this.pendingAnnouncement?.element === element &&
+            this.pendingAnnouncement?.text === announcement
+        ) {
+            // Same announcement pending, just reset the timer
+            if (this.announceDebounceTimer) {
+                clearTimeout(this.announceDebounceTimer);
+            }
+        } else {
+            // Different announcement, clear any pending and announce immediately
+            if (this.announceDebounceTimer) {
+                clearTimeout(this.announceDebounceTimer);
+                // Announce the previous pending one immediately if different
+                if (this.pendingAnnouncement) {
+                    this.say(this.pendingAnnouncement.text);
+                }
+            }
+        }
+
+        this.pendingAnnouncement = { element, text: announcement };
+        this.announceDebounceTimer = setTimeout(() => {
+            if (this.pendingAnnouncement) {
+                this.say(this.pendingAnnouncement.text);
+                this.pendingAnnouncement = null;
+            }
+            this.announceDebounceTimer = null;
+        }, ScreenReader.ANNOUNCE_DEBOUNCE_MS);
     }
 
     /**
@@ -270,10 +318,7 @@ export default class ScreenReader {
         name: string
     ): string {
         const announcements: Record<string, RoleAnnouncementFn> = {
-            link: () => {
-                const visited = element.matches(':visited') ? 'visited ' : '';
-                return `${visited}Link, ${name || 'unlabeled'}. Press Enter to follow.`;
-            },
+            link: () => `Link, ${name || 'unlabeled'}. Press Enter to follow.`,
             button: () => {
                 const pressed = element.getAttribute('aria-pressed');
                 const expanded = element.getAttribute('aria-expanded');
@@ -679,6 +724,35 @@ export default class ScreenReader {
     }
 
     /**
+     * Handle change events for elements with checked property.
+     * This covers native inputs and custom elements (like sp-checkbox)
+     * that use the checked property instead of aria-checked.
+     */
+    private onChange(event: Event): void {
+        if (!this.isRunning) {
+            return;
+        }
+
+        const target = event.target as Element & { checked?: boolean };
+        if (!target) {
+            return;
+        }
+
+        // Check if element has a checked property (native input or custom element)
+        if ('checked' in target) {
+            const role = this.computeRole(target);
+            if (role === 'radio') {
+                if (target.checked) {
+                    this.say('selected');
+                }
+            } else {
+                // checkbox, switch, or any element with checked
+                this.say(target.checked ? 'checked' : 'not checked');
+            }
+        }
+    }
+
+    /**
      * Check for aria-activedescendant changes (used by menus, listboxes, etc.)
      */
     checkActiveDescendant(element: Element | null): void {
@@ -712,41 +786,69 @@ export default class ScreenReader {
     }
 
     /**
-     * Watch for DOM mutations to catch dynamic changes
+     * Watch for aria attribute mutations - this is how real screen readers work.
+     * They observe the accessibility tree, which updates when aria attributes change.
      */
     private onMutation(mutations: MutationRecord[]): void {
         if (!this.isRunning) {
             return;
         }
 
-        const watchedAttrs = [
-            'aria-selected',
-            'aria-checked',
-            'aria-expanded',
-            'aria-activedescendant',
-            'aria-pressed',
-            'aria-invalid',
-        ];
-
         mutations.forEach((mutation) => {
-            if (mutation.type === 'attributes') {
-                const target = mutation.target as Element;
+            if (mutation.type !== 'attributes' || !mutation.attributeName) {
+                return;
+            }
 
-                if (
-                    mutation.attributeName &&
-                    watchedAttrs.indexOf(mutation.attributeName) !== -1
-                ) {
-                    if (mutation.attributeName === 'aria-activedescendant') {
-                        this.checkActiveDescendant(target);
-                    } else if (
-                        target.getAttribute(mutation.attributeName) ===
-                            'true' &&
-                        mutation.attributeName === 'aria-selected'
-                    ) {
+            const target = mutation.target as Element;
+            const attr = mutation.attributeName;
+            const value = target.getAttribute(attr);
+
+            // Handle aria-activedescendant (virtual focus for listbox/menu navigation)
+            if (attr === 'aria-activedescendant') {
+                this.checkActiveDescendant(target);
+                return;
+            }
+
+            // Announce state changes based on aria attribute
+            let announcement = '';
+
+            switch (attr) {
+                case 'aria-checked':
+                    if (value === 'mixed') {
+                        announcement = 'partially checked';
+                    } else {
+                        // Check if it's a switch (on/off) or checkbox (checked/not checked)
+                        const isSwitch =
+                            target.getAttribute('role') === 'switch';
+                        if (isSwitch) {
+                            announcement = value === 'true' ? 'on' : 'off';
+                        } else {
+                            announcement =
+                                value === 'true' ? 'checked' : 'not checked';
+                        }
+                    }
+                    break;
+
+                case 'aria-pressed':
+                    announcement = value === 'true' ? 'pressed' : 'not pressed';
+                    break;
+
+                case 'aria-expanded':
+                    announcement = value === 'true' ? 'expanded' : 'collapsed';
+                    break;
+
+                case 'aria-selected':
+                    if (value === 'true') {
+                        // For selected, announce the element (for listbox options, etc.)
                         this.updateFocusIndicator(target);
                         this.announceElement(target);
+                        return;
                     }
-                }
+                    break;
+            }
+
+            if (announcement) {
+                this.say(announcement);
             }
         });
     }
@@ -813,12 +915,11 @@ export default class ScreenReader {
             attributes: true,
             subtree: true,
             attributeFilter: [
-                'aria-selected',
-                'aria-checked',
-                'aria-expanded',
-                'aria-activedescendant',
-                'aria-pressed',
-                'aria-invalid',
+                'aria-checked', // Checkbox, switch, radio
+                'aria-pressed', // Toggle buttons
+                'aria-expanded', // Expandable elements (accordion, menu trigger)
+                'aria-selected', // Options, tabs
+                'aria-activedescendant', // Virtual focus for listbox/menu
             ],
         });
     }
@@ -897,13 +998,17 @@ export default class ScreenReader {
             this.handleKeyDown as EventListener,
             true
         );
+        this.storyDocument.addEventListener(
+            'change',
+            this.handleChange as EventListener,
+            true
+        );
 
         // Set up mutation observers
         this.setupMutationObserver();
         this.setupLiveRegionObserver();
 
         this.isRunning = true;
-        this.lastAnnouncedElement = null;
 
         this.say('Screen reader enabled. Use Tab or arrow keys to navigate.');
 
@@ -935,6 +1040,11 @@ export default class ScreenReader {
                 this.handleKeyDown as EventListener,
                 true
             );
+            this.storyDocument.removeEventListener(
+                'change',
+                this.handleChange as EventListener,
+                true
+            );
         }
 
         // Clean up mutation observers
@@ -960,8 +1070,15 @@ export default class ScreenReader {
             this.removeStyles();
         }
 
+        // Clean up debounce timer
+        if (this.announceDebounceTimer) {
+            clearTimeout(this.announceDebounceTimer);
+            this.announceDebounceTimer = null;
+        }
+        this.pendingAnnouncement = null;
+
         this.isRunning = false;
-        this.lastAnnouncedElement = null;
+        this.storyDocument = null;
 
         if (this.voiceEnabled || this.textEnabled) {
             this.say('Screen reader disabled');
