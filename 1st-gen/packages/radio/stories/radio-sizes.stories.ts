@@ -51,23 +51,11 @@ export default {
                 type: 'boolean',
             },
         },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
     },
     args: {
         checked: false,
         disabled: false,
         emphasized: false,
-        invalid: false,
     },
 };
 

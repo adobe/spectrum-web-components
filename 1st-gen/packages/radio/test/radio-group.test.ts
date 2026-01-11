@@ -610,6 +610,25 @@ describe('Radio Group', () => {
 
         expect(changeSpy.calledWith(undefined)).to.be.false;
     });
+
+    it('updates [aria-invalid] when [invalid] changes', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group invalid>
+                <sp-radio value="first">Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(el.getAttribute('aria-invalid')).to.equal('true');
+        el.invalid = false;
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
+        el.invalid = true;
+        await elementUpdated(el);
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(el.getAttribute('aria-invalid')).to.equal('true');
+    });
 });
 
 describe('Radio Group - late children', () => {

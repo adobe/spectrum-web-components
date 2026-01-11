@@ -140,4 +140,16 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     protected override handleSlotchange(): void {
         this.rovingTabindexController.clearElementCache();
     }
+
+    protected override updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+
+        if (changes.has('invalid')) {
+            if (this.invalid) {
+                this.setAttribute('aria-invalid', 'true');
+            } else {
+                this.removeAttribute('aria-invalid');
+            }
+        }
+    }
 }

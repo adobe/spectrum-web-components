@@ -54,23 +54,11 @@ export default {
                 type: 'boolean',
             },
         },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
     },
     args: {
         checked: false,
         disabled: false,
         emphasized: false,
-        invalid: false,
     },
 };
 
@@ -78,7 +66,6 @@ export interface StoryArgs {
     checked?: boolean;
     disabled?: boolean;
     emphasized?: boolean;
-    invalid?: boolean;
     readonly?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
     [prop: string]: unknown;
@@ -111,11 +98,6 @@ export const Autofocus = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
     `;
-};
-
-export const Invalid = (args: StoryArgs): TemplateResult => renderRadio(args);
-Invalid.args = {
-    invalid: true,
 };
 
 export const Disabled = (args: StoryArgs): TemplateResult => renderRadio(args);
@@ -161,7 +143,7 @@ export const tabIndexExample = (): TemplateResult => {
             <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
             <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
+            <sp-radio value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };
@@ -175,7 +157,7 @@ export const horizontalTabIndexExample = (): TemplateResult => {
             <sp-radio disabled value="three" tabindex="3">Tab Index 3</sp-radio>
             <sp-radio value="one" tabindex="1" autofocus>Tab Index 1</sp-radio>
             <sp-radio value="four" tabindex="4">Tab Index 4</sp-radio>
-            <sp-radio invalid value="two" tabindex="2">Tab Index 2</sp-radio>
+            <sp-radio value="two" tabindex="2">Tab Index 2</sp-radio>
         </sp-radio-group>
     `;
 };

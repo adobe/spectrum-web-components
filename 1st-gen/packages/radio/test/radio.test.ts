@@ -113,14 +113,6 @@ describe('Radio', () => {
         expect(el.checked).to.be.false;
     });
 
-    it('renders [invalid]', async () => {
-        const el = await fixture<Radio>(html`
-            <sp-radio invalid>Component</sp-radio>
-        `);
-
-        expect(el.getAttribute('aria-invalid')).to.equal('true');
-    });
-
     describe('accepts "clicks"', () => {
         let el!: Radio;
         beforeEach(async () => {
