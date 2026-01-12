@@ -36,8 +36,13 @@ class OverlayStack {
     }
 
     bindEvents(): void {
-        this.document.addEventListener('pointerdown', this.handlePointerdown);
+        this.document.addEventListener('pointerdown', this.handlePointerdown, {
+            capture: true,
+        });
         this.document.addEventListener('pointerup', this.handlePointerup);
+        this.document.addEventListener('click', this.handleClick, {
+            capture: true,
+        });
         this.document.addEventListener('keydown', this.handleKeydown);
         this.document.addEventListener('scroll', this.handleScroll, {
             capture: true,
@@ -105,13 +110,110 @@ class OverlayStack {
     }
 
     /**
-     * Cach the `pointerdownTarget` for later testing
+     * Get all open modal/page overlays from the stack.
+     * Cached to avoid repeated filtering.
+     */
+    private getModalOverlays(): Overlay[] {
+        return this.stack.filter(
+            (overlay) =>
+                overlay.open &&
+                (overlay.type === 'modal' || overlay.type === 'page')
+        );
+    }
+
+    /**
+     * Check if an event path intersects with any modal overlay dialog.
+     * This is the core logic for determining if a click/pointer event is inside a modal.
      *
-     * @param event {ClickEvent}
+     * @param eventPath {EventTarget[]} The composed path from the event
+     * @param modalOverlays {Overlay[]} The modal overlays to check against
+     * @returns {boolean} True if the event is inside any modal overlay
+     */
+    private isEventInsideModal(
+        eventPath: EventTarget[],
+        modalOverlays: Overlay[]
+    ): boolean {
+        for (const overlay of modalOverlays) {
+            // Check if overlay element itself is in the path
+            if (eventPath.includes(overlay)) {
+                return true;
+            }
+
+            const dialogEl = overlay.dialogEl;
+            if (!dialogEl) continue;
+
+            // Check if dialog element is in the path
+            if (eventPath.includes(dialogEl)) {
+                return true;
+            }
+
+            // Check if any element in the path is contained by dialog
+            for (const element of eventPath) {
+                if (element instanceof Node && dialogEl.contains(element)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Cache the `pointerdownTarget` for later testing and prevent clicks outside modal overlays
+     *
+     * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
-        this.pointerdownPath = event.composedPath();
+        // Nothing to manage if no overlays are open
+        if (!this.stack.length) return;
+
+        const modalOverlays = this.getModalOverlays();
+        const pointerPath = event.composedPath();
+
+        if (!modalOverlays.length) {
+            // No modal overlays, cache path for handlePointerup
+            this.pointerdownPath = pointerPath;
+            this.lastOverlay = this.stack[this.stack.length - 1];
+            return;
+        }
+
+        if (!this.isEventInsideModal(pointerPath, modalOverlays)) {
+            // Block pointerdown outside modal overlays
+            // Don't cache path/lastOverlay for blocked interactions
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            return;
+        }
+
+        // Event is inside a modal overlay, cache path for handlePointerup
+        this.pointerdownPath = pointerPath;
         this.lastOverlay = this.stack[this.stack.length - 1];
+    };
+
+    /**
+     * Prevent clicks outside modal overlays from reaching external elements.
+     * This replicates the behavior of dialog.showModal() which was removed
+     * in favor of showPopover() for performance reasons.
+     *
+     * @param event {MouseEvent}
+     */
+    handleClick = (event: MouseEvent): void => {
+        if (!this.stack.length) return;
+
+        const modalOverlays = this.getModalOverlays();
+        if (!modalOverlays.length) return;
+
+        // Check if the click is inside any modal dialog
+        // When a popover dialog is open, clicking inside it will have the dialog
+        // element in the composedPath. Clicking outside won't.
+        const clickPath = event.composedPath();
+        if (!this.isEventInsideModal(clickPath, modalOverlays)) {
+            // If click is outside all modal overlays, prevent it from reaching the target
+            // This replicates the behavior that showModal() provided automatically
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            event.preventDefault();
+        }
     };
 
     /**

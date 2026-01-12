@@ -41,12 +41,10 @@ test.describe('search and go', () => {
         await page.waitForTimeout(500); // Allow search to process
         await expect(menuItem).toBeVisible({ timeout: 10000 });
 
-        // Wait for menu item to be fully interactive
-        await page.waitForTimeout(200);
-        await page.keyboard.press('ArrowDown');
-
-        await expect(menuItem).toBeFocused({ timeout: 5000 });
-        await page.keyboard.press('Enter');
+        // Click directly on the target menu item since ArrowDown only moves
+        // to the first result, which may not be the item we're looking for
+        // when multiple matches exist (e.g., searching "base" returns many results)
+        await menuItem.click();
 
         // Wait for navigation to complete
         await page.waitForLoadState('networkidle', { timeout: 15000 });
