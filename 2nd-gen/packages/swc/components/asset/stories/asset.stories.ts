@@ -36,7 +36,8 @@ argTypes['default-slot'] = {
 };
 
 /**
- * The `file` and `folder` variants center themselves horizontally and vertically in the space provided.
+ * An asset visually represents a file, folder, or image in your application.
+ * File and folder representations center themselves horizontally and vertically in the space provided.
  * Images are contained within the element, growing to the element's full height while centering within the width provided.
  */
 const meta: Meta = {
@@ -85,6 +86,8 @@ export const Overview: Story = {
 // ──────────────────────────
 
 /**
+ * ### Visual structure
+ *
  * An asset consists of:
  *
  * 1. **Icon or image content** - Either a file/folder icon or custom slotted content
@@ -92,9 +95,17 @@ export const Overview: Story = {
  *
  * The asset automatically centers its content both horizontally and vertically within the available space.
  *
- * ### Content
+ * ### Technical structure
+ *
+ * #### Slots
  *
  * - **Default slot**: Custom content to display (typically an image) when variant is not set
+ *
+ * #### Properties
+ *
+ * Properties that control the asset's appearance:
+ *
+ * - [**Variant**](#variants): Controls which built-in icon to display (`file`, `folder`, or unset for custom content)
  * - **Label**: Accessible label for screen readers (used as `aria-label` on the icon SVGs)
  */
 export const Anatomy: Story = {
@@ -103,8 +114,8 @@ export const Anatomy: Story = {
         ${template({ ...args, variant: 'folder', label: 'packages/swc/' })}
         ${template({
             ...args,
-            label: 'images/profile_sm.png',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="Headshot of Jenn" />`,
+            label: 'User avatar',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User avatar preview" />`,
         })}
     `,
     tags: ['anatomy'],
@@ -136,8 +147,8 @@ export const Variants: Story = {
         })}
         ${template({
             ...args,
-            label: 'banners/sunset.jpg',
-            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="sunset over a sandy beach" />`,
+            label: 'User profile image',
+            'default-slot': `<img src="https://picsum.photos/id/64/80/80" alt="User profile preview" />`,
         })}
     `,
     parameters: {
@@ -158,6 +169,7 @@ export const Variants: Story = {
  * #### ARIA implementation
  *
  * - **Icon labeling**: File and folder SVG icons automatically use the `label` property as `aria-label`
+ * - **Semantic role**: SVG icons use `role="img"` to identify them as image content
  * - **Non-interactive**: Assets have no interactive behavior and are not focusable
  *
  * #### Visual accessibility
@@ -169,10 +181,13 @@ export const Variants: Story = {
  * ### Best practices
  *
  * - Always provide a descriptive `label` attribute for file and folder variants
- * - Use specific, meaningful labels or alt text (e.g., "Project proposal PDF", "projects/2025/proposal.pdf", or not just "File")
+ * - Use specific, meaningful labels (e.g., "Project proposal PDF" not just "File")
+ * - When using images in the default slot, provide descriptive `alt` text on the `<img>` element
  * - The `label` on the asset itself should describe the asset's purpose or context
  * - For decorative images, use an empty `alt=""` attribute on the img tag
+ * - Ensure images have sufficient contrast against their backgrounds
  * - Test with screen readers to verify assets are announced appropriately in context
+ * - Consider the surrounding context - assets should be clearly associated with related content
  */
 export const Accessibility: Story = {
     render: (args) => html`
