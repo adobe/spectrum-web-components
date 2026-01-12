@@ -13,9 +13,9 @@
 import {
     CSSResultArray,
     html,
-    INPUT_COMPONENT_PATTERN,
     nothing,
     PropertyValues,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -30,7 +30,6 @@ import {
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
@@ -83,55 +82,6 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
     currentAncestorWithSelects?: Menu;
 }
 
-/**
- * Fires to forward keyboard event information to parent menu.
- */
-export class MenuItemKeydownEvent extends KeyboardEvent {
-    root?: MenuItem;
-    private _event?: KeyboardEvent;
-    constructor({ root, event }: { root?: MenuItem; event?: KeyboardEvent }) {
-        super('sp-menu-item-keydown', { bubbles: true, composed: true });
-        this.root = root;
-        this._event = event;
-    }
-
-    public override get altKey(): boolean {
-        return this._event?.altKey || false;
-    }
-
-    public override get code(): string {
-        return this._event?.code || '';
-    }
-
-    public override get ctrlKey(): boolean {
-        return this._event?.ctrlKey || false;
-    }
-
-    public override get isComposing(): boolean {
-        return this._event?.isComposing || false;
-    }
-
-    public override get key(): string {
-        return this._event?.key || '';
-    }
-
-    public override get location(): number {
-        return this._event?.location || 0;
-    }
-
-    public override get metaKey(): boolean {
-        return this._event?.metaKey || false;
-    }
-
-    public override get repeat(): boolean {
-        return this._event?.repeat || false;
-    }
-
-    public override get shiftKey(): boolean {
-        return this._event?.shiftKey || false;
-    }
-}
-
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
 
 /**
@@ -145,7 +95,7 @@ export type MenuItemChildren = { icon: Element[]; content: Node[] };
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
  */
 export class MenuItem extends LikeAnchor(
-    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'))
 ) {
     public static override get styles(): CSSResultArray {
         return [menuItemStyles, checkmarkStyles, chevronStyles];
@@ -154,7 +104,7 @@ export class MenuItem extends LikeAnchor(
     abortControllerSubmenu!: AbortController;
 
     /**
-     * whether the menu item is active or has an active descendant
+     * Whether the menu item is active or has an active descendant
      */
     @property({ type: Boolean, reflect: true })
     public active = false;
@@ -162,19 +112,19 @@ export class MenuItem extends LikeAnchor(
     private dependencyManager = new DependencyManagerController(this);
 
     /**
-     * whether the menu item has keyboard focus
-     */
-    @property({ type: Boolean, reflect: true })
-    public focused = false;
-
-    /**
-     * whether the menu item is selected
+     * Whether the menu item is selected
      */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
     /**
-     * value of the menu item which is used for selection
+     * Whether the menu item is disabled
+     */
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
+    /**
+     * Value of the menu item which is used for selection
      */
     @property({ type: String })
     public get value(): string {
@@ -197,7 +147,7 @@ export class MenuItem extends LikeAnchor(
 
     /**
      * @private
-     * text content of the menu item minus whitespace
+     * Text content of the menu item minus whitespace
      */
     public get itemText(): string {
         return this.itemChildren.content.reduce(
@@ -207,7 +157,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     /**
-     * whether the menu item has a submenu
+     * Whether the menu item has a submenu
      */
     @property({ type: Boolean, reflect: true, attribute: 'has-submenu' })
     public hasSubmenu = false;
@@ -219,7 +169,7 @@ export class MenuItem extends LikeAnchor(
     iconSlot!: HTMLSlotElement;
 
     /**
-     * whether menu item text content should not wrap
+     * Whether menu item text content should not wrap
      */
     @property({
         type: Boolean,
@@ -238,13 +188,6 @@ export class MenuItem extends LikeAnchor(
     public overlayElement!: Overlay;
 
     private submenuElement?: HTMLElement;
-
-    /**
-     * the focusable element of the menu item
-     */
-    public override get focusElement(): HTMLElement {
-        return this;
-    }
 
     protected get hasIcon(): boolean {
         return this.slotContentIsPresent;
@@ -281,8 +224,6 @@ export class MenuItem extends LikeAnchor(
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
         });
-        this.addEventListener('focus', this.handleFocus);
-        this.addEventListener('blur', this.handleBlur);
 
         new MutationController(this, {
             config: {
@@ -305,20 +246,15 @@ export class MenuItem extends LikeAnchor(
     }
 
     /**
-     * whether submenu is open
+     * Whether submenu is open
      */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
     /**
-     * whether menu item's submenu is opened via keyboard
+     * Whether menu item's submenu is opened via keyboard
      */
     private _openedViaKeyboard = false;
-
-    /**
-     * whether menu item's submenu is closed via pointer leave
-     */
-    private _closedViaPointer = false;
 
     /**
      * Touch interaction state for submenu toggling
@@ -346,10 +282,6 @@ export class MenuItem extends LikeAnchor(
         );
     };
 
-    private proxyFocus = (): void => {
-        this.focus();
-    };
-
     private shouldProxyClick(): boolean {
         let handled = false;
         if (this.anchorElement) {
@@ -375,7 +307,6 @@ export class MenuItem extends LikeAnchor(
                     },
                     capture: true,
                 }}
-                @focusin=${(event: Event) => event.stopPropagation()}
             ></slot>
         `;
         if (!this.hasSubmenu) {
@@ -452,7 +383,7 @@ export class MenuItem extends LikeAnchor(
     }
 
     /**
-     * determines if item has a submenu and updates the `aria-haspopup` attribute
+     * Determines if item has a submenu and updates the `aria-haspopup` attribute
      */
     protected manageSubmenu(event: Event & { target: HTMLSlotElement }): void {
         this.submenuElement = event.target.assignedElements({
@@ -495,9 +426,6 @@ export class MenuItem extends LikeAnchor(
             this.open &&
             event.pointerType !== 'touch'
         ) {
-            this.addEventListener('focus', this.handleSubmenuFocus, {
-                once: true,
-            });
             this.overlayElement?.addEventListener(
                 'beforetoggle',
                 this.handleBeforetoggle
@@ -537,8 +465,6 @@ export class MenuItem extends LikeAnchor(
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
-        this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('mouseover', this.handleMouseover);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
@@ -546,136 +472,9 @@ export class MenuItem extends LikeAnchor(
         }
     }
 
-    private getActiveElementSafely(): HTMLElement | null {
-        let root = this.getRootNode() as Document | ShadowRoot;
-        let activeElement = root.activeElement as HTMLElement;
-
-        // If no active element in current context and we're in shadow DOM,
-        // traverse up to find the document-level active element
-        if (!activeElement && root !== document) {
-            while (root && root !== document && 'host' in root) {
-                root = (root as ShadowRoot).host.getRootNode() as
-                    | Document
-                    | ShadowRoot;
-                activeElement = root.activeElement as HTMLElement;
-                if (activeElement) break;
-            }
-        }
-
-        return activeElement;
-    }
-
-    handleMouseover(event: MouseEvent): void {
-        const target = event.target as HTMLElement;
-        if (target === this) {
-            // Check for active input elements across shadow boundaries
-            const activeElement = this.getActiveElementSafely();
-
-            // Only focus this menu item if no input element is currently active
-            // This prevents interrupting user input in search boxes, text fields, etc.
-            if (!activeElement || !this.isInputElement(activeElement)) {
-                this.focus();
-            }
-            this.focused = false;
-        }
-    }
-
-    /**
-     * Determines if an element is an input field that should retain focus.
-     * Uses multiple detection strategies to identify input elements generically.
-     */
-    private isInputElement(element: HTMLElement): boolean {
-        // Check for native HTML input elements
-        if (this.isNativeInputElement(element)) {
-            return true;
-        }
-
-        // Check for contenteditable elements (rich text editors)
-        if (element.contentEditable === 'true') {
-            return true;
-        }
-
-        // Check for Spectrum Web Components with input-like behavior
-        if (this.isSpectrumInputComponent(element)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if an element is a native HTML input element.
-     */
-    private isNativeInputElement(element: HTMLElement): boolean {
-        return (
-            element instanceof HTMLInputElement ||
-            element instanceof HTMLTextAreaElement ||
-            element instanceof HTMLSelectElement
-        );
-    }
-
-    /**
-     * Checks if an element is a Spectrum Web Component with input behavior.
-     * Uses ARIA roles and component patterns for generic detection.
-     */
-    private isSpectrumInputComponent(element: HTMLElement): boolean {
-        // Check if it's a Spectrum Web Component
-        if (!element.tagName.startsWith('SP-')) {
-            return false;
-        }
-
-        // Check ARIA role for input-like behavior
-        const role = element.getAttribute('role');
-        const inputRoles = ['textbox', 'searchbox', 'combobox', 'slider'];
-        if (role && inputRoles.includes(role)) {
-            return true;
-        }
-
-        // Check for components that typically contain input elements
-        // This covers components like sp-search, sp-textfield, sp-number-field, etc.
-        const inputComponentPattern = INPUT_COMPONENT_PATTERN;
-        if (inputComponentPattern.test(element.tagName)) {
-            return true;
-        }
-
-        return false;
-    }
-    /**
-     * forward key info from keydown event to parent menu
-     */
-    handleKeydown = (event: KeyboardEvent): void => {
-        const { target, key } = event;
-        const openSubmenuKey =
-            this.hasSubmenu && !this.open && [' ', 'Enter'].includes(key);
-        if (target === this) {
-            if (
-                ['ArrowLeft', 'ArrowRight', 'Escape'].includes(key) ||
-                openSubmenuKey
-            )
-                event.preventDefault();
-            this.dispatchEvent(
-                new MenuItemKeydownEvent({ root: this, event: event })
-            );
-        }
-    };
-
     protected closeOverlaysForRoot(): void {
         if (this.open) return;
         this.menuData.parentMenu?.closeDescendentOverlays();
-    }
-
-    protected handleFocus(event: FocusEvent): void {
-        const { target } = event;
-        if (target === this) {
-            this.focused = true;
-        }
-    }
-
-    protected handleBlur(event: FocusEvent): void {
-        const { target } = event;
-        if (target === this) {
-            this.focused = false;
-        }
     }
 
     protected handleSubmenuClick(event: Event): void {
@@ -692,15 +491,6 @@ export class MenuItem extends LikeAnchor(
         this.openOverlay(true);
     }
 
-    protected handleSubmenuFocus(): void {
-        requestAnimationFrame(() => {
-            // Wait till after `closeDescendentOverlays` has happened in Menu
-            // to reopen (keep open) the direct descendent of this Menu Item
-            this.overlayElement.open = this.open;
-            this.focused = false;
-        });
-    }
-
     protected handleBeforetoggle = (event: Event): void => {
         if ((event as Event & { newState: string }).newState === 'closed') {
             this.open = true;
@@ -712,7 +502,9 @@ export class MenuItem extends LikeAnchor(
         }
     };
 
-    protected handlePointerenter(event: PointerEvent): void {
+    protected handleItemPointerenterForSubmenu = (
+        event: PointerEvent
+    ): void => {
         // For touch devices, don't open on pointerenter - let click handle it
         if (event.pointerType === 'touch') {
             return;
@@ -724,27 +516,29 @@ export class MenuItem extends LikeAnchor(
             this.recentlyLeftChild = false;
             return;
         }
-        this.focus();
+
+        // Open submenu on hover
         this.openOverlay();
-    }
+    };
 
     protected leaveTimeout?: ReturnType<typeof setTimeout>;
     protected recentlyLeftChild = false;
 
-    protected handlePointerleave(event: PointerEvent): void {
+    protected handleItemPointerleaveForSubmenu = (
+        event: PointerEvent
+    ): void => {
         // For touch devices, don't close on pointerleave - let click handle it
         if (event.pointerType === 'touch') {
             return;
         }
 
-        this._closedViaPointer = true;
         if (this.open && !this.recentlyLeftChild) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
                 this.open = false;
             }, POINTERLEAVE_TIMEOUT);
         }
-    }
+    };
 
     /**
      * When there is a `change` event in the submenu for this item
@@ -780,7 +574,6 @@ export class MenuItem extends LikeAnchor(
     }
 
     protected cleanup(): void {
-        this._closedViaPointer = false;
         this.setAttribute('aria-expanded', 'false');
         this.open = false;
         this.active = false;
@@ -816,21 +609,6 @@ export class MenuItem extends LikeAnchor(
         this.updateAriaSelected();
     }
 
-    protected override willUpdate(changes: PropertyValues<this>): void {
-        super.updated(changes);
-
-        // make sure focus returns to the anchor element when submenu is closed
-        if (
-            changes.has('open') &&
-            !this.open &&
-            this.hasSubmenu &&
-            !this._closedViaPointer &&
-            this.matches(':focus-within')
-        ) {
-            this.focus();
-        }
-    }
-
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (
@@ -848,7 +626,6 @@ export class MenuItem extends LikeAnchor(
             }
         }
         if (this.anchorElement) {
-            this.anchorElement.addEventListener('focus', this.proxyFocus);
             this.anchorElement.tabIndex = -1;
         }
         if (changes.has('selected')) {
@@ -869,12 +646,12 @@ export class MenuItem extends LikeAnchor(
                 );
                 this.addEventListener(
                     'pointerenter',
-                    this.handlePointerenter,
+                    this.handleItemPointerenterForSubmenu,
                     options
                 );
                 this.addEventListener(
                     'pointerleave',
-                    this.handlePointerleave,
+                    this.handleItemPointerleaveForSubmenu,
                     options
                 );
                 this.addEventListener(
@@ -892,8 +669,6 @@ export class MenuItem extends LikeAnchor(
         super.connectedCallback();
         this.triggerUpdate();
     }
-
-    _parentElement!: HTMLElement;
 
     public override disconnectedCallback(): void {
         this.menuData.cleanupSteps.forEach((removal) => removal(this));
@@ -923,18 +698,6 @@ export class MenuItem extends LikeAnchor(
         this.dispatchUpdate();
     }
 
-    public override focus(): void {
-        super.focus();
-        // ensure focus event fires in Chromium for tests
-        this.dispatchEvent(new FocusEvent('focus'));
-    }
-
-    public override blur(): void {
-        // ensure focus event fires in Chromium for tests
-        this.dispatchEvent(new FocusEvent('blur'));
-        super.blur();
-    }
-
     public dispatchUpdate(): void {
         if (!this.isConnected) {
             return;
@@ -949,10 +712,8 @@ export class MenuItem extends LikeAnchor(
         selectionRoot?: Menu;
         cleanupSteps: ((item: MenuItem) => void)[];
     } = {
-        // menu that controls ArrowUp/ArrowDown navigation
         focusRoot: undefined,
         parentMenu: undefined,
-        // menu or menu group that controls selection
         selectionRoot: undefined,
         cleanupSteps: [],
     };

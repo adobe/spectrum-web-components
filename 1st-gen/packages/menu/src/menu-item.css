@@ -48,10 +48,6 @@
     margin-left: auto;
 }
 
-/* N: Manually adding this selector because I can't use this selector in
-** spectrum-menu.css without touching all the other `.spectrum-Menu-item`s in
-** that file which I don't want to surface
-*/
 @media (forced-colors: active) {
     :host {
         forced-color-adjust: none;
@@ -66,10 +62,4 @@
 
 :host([no-wrap]) #label {
     display: block;
-}
-
-/** Host is :focus bt not :focus-visible so we remove the outline */
-:host([focused]:not(:focus-visible)) {
-    outline: none;
-    box-shadow: none;
 }
