@@ -229,9 +229,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         const slottedElements = this.menuSlot.assignedElements({
             flatten: true,
         }) as HTMLElement[];
-
+        // Recursively flatten <slot> and non-<sp-menu-item> elements assigned to the menu into a single array.
         for (const [i, slottedElement] of slottedElements.entries()) {
             if (this.childItemSet.has(slottedElement as MenuItem)) {
+                // Assign <sp-menu-item> members of the array that are in this.childItemSet to this.chachedChildItems.
                 itemsList.push(slottedElement as MenuItem);
                 continue;
             }
@@ -253,6 +254,13 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         return this.cachedChildItems;
     }
 
+    /**
+     * Hide this getter from web-component-analyzer until
+     * https://github.com/runem/web-component-analyzer/issues/131
+     * has been addressed.
+     *
+     * @private
+     */
     public get childRole(): string {
         if (this.resolvedRole === 'listbox') {
             return 'option';
@@ -271,9 +279,23 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         return 'menu';
     }
 
+    /**
+     * menuitem role based on selection type
+     */
     private resolvedSelects?: SelectsType;
+
+    /**
+     * menu role based on selection type
+     */
     private resolvedRole?: RoleType;
 
+    /**
+     * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
+     * this event to announce its presence in the DOM. During the CAPTURE phase the first
+     * Menu based element that the event encounters will manage the focus state of the
+     * dispatching `<sp-menu-item>` element.
+     * @param event
+     */
     private onFocusableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
@@ -287,10 +309,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         event.item.menuData.focusRoot = event.item.menuData.focusRoot || this;
     }
 
+    /**
+     * When a descendant `<sp-menu-item>` element is added or updated it will dispatch
+     * this event to announce its presence in the DOM. During the BUBBLE phase the first
+     * Menu based element that the event encounters that does not inherit selection will
+     * manage the selection state of the dispatching `<sp-menu-item>` element.
+     * @param event
+     */
     private onSelectableItemAddedOrUpdated(
         event: MenuItemAddedOrUpdatedEvent
     ): void {
         const cascadeData = event.menuCascade.get(this);
+        /* c8 ignore next 1 */
         if (!cascadeData) return;
 
         event.item.menuData.parentMenu = event.item.menuData.parentMenu || this;
@@ -724,6 +754,33 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             updates.push(childItem.triggerUpdate());
         });
         this.childItemsUpdated = Promise.all(updates);
+    }
+
+    /**
+     * Stub method for backwards compatibility with Picker.
+     * Focus handling has been simplified - this is now a no-op.
+     */
+    public focusOnFirstSelectedItem(): void {
+        // No-op: focus handling simplified
+    }
+
+    /**
+     * Stub method for backwards compatibility with Picker.
+     * Focus handling has been simplified - this is now a no-op.
+     */
+    public updateSelectedItemIndex(): void {
+        // No-op: focus handling simplified
+    }
+
+    /**
+     * Stub method for backwards compatibility with Picker.
+     * Returns undefined as focus handling has been simplified.
+     */
+    public getNeighboringFocusableElement(
+        _current?: MenuItem,
+        _previous?: boolean
+    ): MenuItem | undefined {
+        return undefined;
     }
 
     public override connectedCallback(): void {

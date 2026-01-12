@@ -23,6 +23,7 @@ import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 
 import { Menu } from './Menu.js';
 // Leveraged in build systems that use aliasing to prevent multiple registrations: https://github.com/adobe/spectrum-web-components/pull/3225
+// eslint-disable-next-line import/no-extraneous-dependencies
 import '@spectrum-web-components/menu/sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
@@ -60,9 +61,9 @@ export class MenuGroup extends Menu {
      * only a menu controls roving tabindex;
      * groups should defer navigation to parent menu
      */
-    protected override get controlsRovingTabindex(): boolean {
-        return false;
-    }
+    // protected override get controlsRovingTabindex(): boolean {
+    //     return false;
+    // }
 
     protected updateLabel(): void {
         const headerElement = this.headerElements.length

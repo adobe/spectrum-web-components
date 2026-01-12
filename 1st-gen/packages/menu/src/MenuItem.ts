@@ -82,6 +82,25 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
     currentAncestorWithSelects?: Menu;
 }
 
+/**
+ * Fires when a keyboard event occurs on a menu item.
+ * Used for backwards compatibility with Picker.
+ */
+export class MenuItemKeydownEvent extends Event {
+    public key: string;
+
+    constructor(
+        public originalEvent: KeyboardEvent,
+        public item: MenuItem
+    ) {
+        super('sp-menu-item-keydown', {
+            bubbles: true,
+            composed: true,
+        });
+        this.key = originalEvent.key;
+    }
+}
+
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
 
 /**
@@ -116,6 +135,13 @@ export class MenuItem extends LikeAnchor(
      */
     @property({ type: Boolean, reflect: true })
     public selected = false;
+
+    /**
+     * Whether the menu item is visually focused.
+     * Used for backwards compatibility with Combobox.
+     */
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
     /**
      * Whether the menu item is disabled
