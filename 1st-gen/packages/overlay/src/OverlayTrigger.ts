@@ -120,20 +120,6 @@ export class OverlayTrigger extends SpectrumElement {
 
     private hoverPlacement?: Placement;
 
-    /**
-     * Tracks whether hover should be temporarily suppressed after a modal overlay closes.
-     * This prevents the hover overlay from immediately opening when focus returns to
-     * the trigger after closing a modal overlay.
-     */
-    @state()
-    private hoverSuppressed = false;
-
-    /**
-     * Timeout handle for the hover suppression delay.
-     * Used to clear pending timeouts when overlays close in quick succession.
-     */
-    private hoverSuppressionTimeout?: ReturnType<typeof setTimeout>;
-
     @state()
     private targetContent: HTMLElement[] = [];
 
@@ -195,31 +181,6 @@ export class OverlayTrigger extends SpectrumElement {
             this.open = type;
         } else if (this.open === type) {
             this.open = undefined;
-            // Suppress hover overlay briefly when a modal (click/longpress) overlay closes.
-            // This prevents hover from immediately opening when focus returns to the trigger.
-            // We must set disabled directly on the element because the template hasn't
-            // re-rendered yet when the HoverController tries to open.
-            if (type === 'click' || type === 'longpress') {
-                this.hoverSuppressed = true;
-                if (this.hoverOverlayElement) {
-                    this.hoverOverlayElement.disabled = true;
-                }
-                // Clear any pending timeout to avoid race conditions
-                if (this.hoverSuppressionTimeout) {
-                    clearTimeout(this.hoverSuppressionTimeout);
-                }
-                // Use a fixed timeout to re-enable hover after the close transition
-                // and focus return have completed. This is more predictable than
-                // chaining requestAnimationFrame calls.
-                this.hoverSuppressionTimeout = setTimeout(() => {
-                    this.hoverSuppressed = false;
-                    if (this.hoverOverlayElement) {
-                        this.hoverOverlayElement.disabled =
-                            this.disabled || !this.hoverContent.length;
-                    }
-                    this.hoverSuppressionTimeout = undefined;
-                }, 100);
-            }
         }
     }
 
@@ -293,8 +254,7 @@ export class OverlayTrigger extends SpectrumElement {
                 ?open=${this.open === 'hover' && !!this.hoverContent.length}
                 ?disabled=${this.disabled ||
                 !this.hoverContent.length ||
-                (!!this.open && this.open !== 'hover') ||
-                this.hoverSuppressed}
+                (!!this.open && this.open !== 'hover')}
                 .offset=${this.offset}
                 .placement=${this.hoverPlacement || this.placement}
                 .triggerElement=${this.targetContent[0]}
@@ -395,14 +355,5 @@ export class OverlayTrigger extends SpectrumElement {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         return complete;
-    }
-
-    override disconnectedCallback(): void {
-        super.disconnectedCallback();
-        // Clean up any pending hover suppression timeout
-        if (this.hoverSuppressionTimeout) {
-            clearTimeout(this.hoverSuppressionTimeout);
-            this.hoverSuppressionTimeout = undefined;
-        }
     }
 }
