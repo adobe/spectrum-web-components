@@ -45,7 +45,7 @@ describe('ContextualHelp', () => {
         );
     });
 
-    it('has proper ARIA attributes for accessibility', async () => {
+    it('has proper ARIA attributes for accessibility (desktop disclosure)', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
         await elementUpdated(el);
@@ -55,8 +55,8 @@ describe('ContextualHelp', () => {
         ) as HTMLElement;
         expect(button).to.exist;
 
-        // Check aria-haspopup is set to dialog (not menu)
-        expect(button).to.have.attribute('aria-haspopup', 'dialog');
+        // Desktop: Treated as disclosure widget, no aria-haspopup
+        expect(button).not.to.have.attribute('aria-haspopup');
 
         // Check aria-expanded is false when closed
         expect(button).to.have.attribute('aria-expanded', 'false');
@@ -83,8 +83,11 @@ describe('ContextualHelp', () => {
         }
     });
 
-    it('sets aria-haspopup="dialog" for informational popover (not menu)', async () => {
+    it('sets aria-haspopup="dialog" on mobile (modal dialog)', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        el.isMobile.matches = true;
+        el.requestUpdate();
 
         await elementUpdated(el);
 
@@ -92,8 +95,10 @@ describe('ContextualHelp', () => {
             'sp-action-button'
         ) as HTMLElement;
         expect(button).to.exist;
-        // Should be "dialog" not "true"/"menu" since contextual help displays informational content
+        // Mobile: Opens a modal dialog, so aria-haspopup="dialog" is appropriate
         expect(button).to.have.attribute('aria-haspopup', 'dialog');
+        expect(button).to.have.attribute('aria-expanded');
+        expect(button).to.have.attribute('aria-controls');
     });
     it('is a popover on web', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
