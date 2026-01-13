@@ -157,7 +157,7 @@ export abstract class ProgressCircleBase extends SizedMixin(SpectrumElement, {
             );
         };
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (
                 !hasAccessibleName() &&
                 this.getAttribute('role') === 'progressbar'
