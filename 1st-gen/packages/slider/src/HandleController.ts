@@ -639,7 +639,7 @@ export class HandleController {
                         result.range.min
                     );
                 }
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     if (!previous) {
                         window.__swc.warn(
                             this.host,
@@ -660,7 +660,7 @@ export class HandleController {
                     }
                     result.clamp.max = Math.min(next.value, result.range.max);
                 }
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     if (!next) {
                         window.__swc.warn(
                             this.host,

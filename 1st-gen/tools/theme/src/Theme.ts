@@ -442,7 +442,7 @@ function checkForIssues(
     scale: Scale | '',
     themeFragmentsByKind: ThemeFragmentMap
 ): void {
-    if (window.__swc.DEBUG) {
+    if (window.__swc?.DEBUG) {
         const issues: string[] = [];
         const checkForAttribute = (
             name: 'system' | 'color' | 'scale',
