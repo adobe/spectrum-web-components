@@ -64,11 +64,11 @@ const SPECTRUM_TOKENS = [
 const CUSTOM_TOKENS = [
     {
         file: 'animation',
-        resolveAliases: 'false',
+        resolveAliases: false,
     },
     {
         file: 'typography',
-        resolveAliases: 'true',
+        resolveAliases: true,
     },
 ];
 
@@ -509,9 +509,17 @@ ${scaling.join('\n')}
 // Load individual token JSON files
 async function loadTokenJson(file, src) {
     const base = src === 'spectrum' ? '@adobe/spectrum-tokens/src' : './custom';
-    return JSON.parse(
-        await readFile(require.resolve(`${base}/${file}.json`), 'utf8')
-    );
+    const filePath = `${base}/${file}.json`;
+
+    try {
+        return JSON.parse(
+            await readFile(require.resolve(`${filePath}`), 'utf8')
+        );
+    } catch (error) {
+        throw new Error(`Failed to load token file: ${filePath}`, {
+            cause: error,
+        });
+    }
 }
 
 // Load, concat, and resolve all token JSON sources
