@@ -94,5 +94,5 @@ export const linked = (args: StoryArgs = {}): TemplateResult => Link(args);
 export const disabled = (args: StoryArgs = {}): TemplateResult => Link(args);
 disabled.args = { disabled: true };
 export const decorative = (args: StoryArgs = {}): TemplateResult =>
-    Template({ ...args, isDecorative: true, label: undefined });
+    Template({ ...args, isDecorative: true, label: '' });
 decorative.args = { isDecorative: true };

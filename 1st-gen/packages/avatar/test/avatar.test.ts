@@ -148,6 +148,24 @@ describe('Avatar', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('does not set aria-hidden when is-decorative is true with href but no label', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                is-decorative
+                src="https://picsum.photos/500/500"
+                href="https://adobe.com"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        const imageEl = el.shadowRoot
+            ? (el.shadowRoot.querySelector('img') as HTMLImageElement)
+            : (el.querySelector('img') as HTMLImageElement);
+        // When decorative and has href, aria-hidden should NOT be set
+        // because the link needs accessible text
+        expect(imageEl.hasAttribute('aria-hidden')).to.be.false;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+    });
     it('label takes precedence over is-decorative', async () => {
         const el = await fixture<Avatar>(html`
             <sp-avatar
