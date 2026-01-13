@@ -72,10 +72,7 @@ export class RovingTabindexController<
                 }
                 return;
             }
-            const updatable = el as unknown as {
-                requestUpdate?: () => void;
-            };
-            if (updatable.requestUpdate) updatable.requestUpdate();
+            (el as HTMLElement & { requestUpdate?(): void }).requestUpdate?.();
         });
     }
 

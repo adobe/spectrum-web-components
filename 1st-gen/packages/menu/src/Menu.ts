@@ -24,9 +24,13 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { MenuItem } from './MenuItem.js';
-import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
+import type {
+    MenuItemAddedOrUpdatedEvent,
+    MenuItemKeydownEvent,
+} from './MenuItem.js';
 import type { Overlay } from '@spectrum-web-components/overlay';
 import menuStyles from './menu.css.js';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 export interface MenuChildItem {
     menuItem: MenuItem;
@@ -56,6 +60,17 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [menuStyles];
     }
+
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
+    private get isSubmenu(): boolean {
+        return this.slot === 'submenu';
+    }
+
+    protected rovingTabindexController?: RovingTabindexController<MenuItem>;
 
     /**
      * iPad scroll detection properties
@@ -131,25 +146,29 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     /**
-     * Label of the menu
+     * label of the menu
      */
     @property({ type: String, reflect: true })
     public label = '';
 
     /**
-     * Whether menu should be ignored by parent menus
+     * whether menu should be ignored by roving tabindex controller
      */
     @property({ type: Boolean, reflect: true })
     public ignore = false;
 
     /**
-     * How the menu allows selection of its items
+     * how the menu allows selection of its items:
+     * - `undefined` (default): no selection is allowed
+     * - `"inherit"`: the selection behavior is managed from an ancestor
+     * - `"single"`: only one item can be selected at a time
+     *  - `"multiple"`: multiple items can be selected
      */
     @property({ type: String, reflect: true })
     public selects: undefined | 'inherit' | 'single' | 'multiple';
 
     /**
-     * Value of the selected item(s)
+     * value of the selected item(s)
      */
     @property({ type: String })
     public value = '';
@@ -159,6 +178,9 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     @property({ type: String, attribute: 'value-separator' })
     public valueSeparator = ',';
 
+    /**
+     * selected items values as string
+     */
     @property({ attribute: false })
     public get selected(): string[] {
         return !this.selects ? [] : this._selected;
@@ -197,6 +219,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     public menuSlot!: HTMLSlotElement;
 
     private childItemSet = new Set<MenuItem>();
+    public focusedItemIndex = 0;
+    public focusInItemIndex = 0;
 
     /**
      * Whether to support the pointerdown-drag-pointerup selection strategy.
@@ -207,10 +231,18 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     public shouldSupportDragAndSelect = false;
 
+    public get focusInItem(): MenuItem | undefined {
+        return this.rovingTabindexController?.focusInElement;
+    }
+
+    protected get controlsRovingTabindex(): boolean {
+        return true;
+    }
+
     private selectedItemsMap = new Map<MenuItem, boolean>();
 
     /**
-     * Child items managed by menu
+     * child items managed by menu
      */
     public get childItems(): MenuItem[] {
         if (!this.cachedChildItems) {
@@ -251,6 +283,8 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
 
         this.cachedChildItems = [...itemsList];
+        this.rovingTabindexController?.clearElementCache();
+
         return this.cachedChildItems;
     }
 
@@ -379,12 +413,47 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     }
 
     private async removeChildItem(item: MenuItem): Promise<void> {
+        if (item.focused || item.hasAttribute('focused') || item.active) {
+            this._updateFocus = this.getNeighboringFocusableElement(item);
+        }
         this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
     }
 
     public constructor() {
         super();
+
+        /**
+         * only create an RTI if menu controls keyboard navigation and one does not already exist
+         */
+        if (!this.rovingTabindexController && this.controlsRovingTabindex) {
+            this.rovingTabindexController =
+                new RovingTabindexController<MenuItem>(this, {
+                    direction: 'vertical',
+                    focusInIndex: (elements: MenuItem[] | undefined) => {
+                        let firstEnabledIndex = -1;
+                        const firstSelectedIndex = elements?.findIndex(
+                            (el, index) => {
+                                if (
+                                    !elements[firstEnabledIndex] &&
+                                    !el.disabled
+                                ) {
+                                    firstEnabledIndex = index;
+                                }
+                                return el.selected && !el.disabled;
+                            }
+                        );
+                        return elements &&
+                            firstSelectedIndex &&
+                            elements[firstSelectedIndex]
+                            ? firstSelectedIndex
+                            : firstEnabledIndex;
+                    },
+                    elements: () => this.childItems,
+                    isFocusableElement: this.isFocusableElement.bind(this),
+                    hostDelegatesFocus: true,
+                });
+        }
 
         this.addEventListener(
             'sp-menu-item-added-or-updated',
@@ -393,15 +462,19 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.addEventListener(
             'sp-menu-item-added-or-updated',
             this.onFocusableItemAddedOrUpdated,
-            { capture: true }
+            {
+                capture: true,
+            }
         );
         this.addEventListener('click', this.handleClick);
         this.addEventListener('touchend', this.handlePointerup);
+        this.addEventListener('focusout', this.handleFocusout);
+        this.addEventListener('sp-menu-item-keydown', this.handleKeydown);
         this.addEventListener('pointerup', this.handlePointerup);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
         this.addEventListener('sp-closed', this.handleSubmenuClosed);
 
-        // iPad scroll detection
+        // Add touch event listeners for iPad scroll detection
         this.addEventListener('touchstart', this.handleTouchStart, {
             passive: true,
         });
@@ -410,6 +483,56 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         });
     }
 
+    /**
+     * for picker elements, will set focus on first selected item
+     */
+    public focusOnFirstSelectedItem({
+        preventScroll,
+    }: FocusOptions = {}): void {
+        if (!this.rovingTabindexController) return;
+        const selectedItem = this.selectedItems.find((el) =>
+            this.isFocusableElement(el)
+        );
+        if (!selectedItem) {
+            this.focus({ preventScroll });
+            return;
+        }
+
+        if (selectedItem && !preventScroll) {
+            selectedItem.scrollIntoView({ block: 'nearest' });
+        }
+        this.rovingTabindexController?.focusOnItem(selectedItem);
+    }
+
+    public override focus({ preventScroll }: FocusOptions = {}): void {
+        if (this.rovingTabindexController) {
+            if (
+                !this.childItems.length ||
+                this.childItems.every((childItem) => childItem.disabled)
+            ) {
+                return;
+            }
+            if (
+                this.childItems.some(
+                    (childItem) => childItem.menuData.focusRoot !== this
+                )
+            ) {
+                super.focus({ preventScroll });
+                return;
+            }
+            this.rovingTabindexController.focus({ preventScroll });
+        }
+    }
+
+    /**
+     * Handles touchstart events for iPad scroll detection.
+     *
+     * Records the initial touch position and timestamp to establish a baseline
+     * for detecting scroll gestures. Only processes single-touch events to
+     * avoid interference with multi-touch gestures.
+     *
+     * @param event - The TouchEvent from the touchstart event
+     */
     private handleTouchStart(event: TouchEvent): void {
         if (event.touches.length === 1) {
             this.touchStartY = event.touches[0].clientY;
@@ -418,6 +541,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
+    /**
+     * Handles touchmove events for iPad scroll detection.
+     *
+     * Calculates the vertical movement distance and time elapsed since touchstart.
+     * If the movement exceeds the threshold (10px) and happens within the time
+     * threshold (300ms), it marks the interaction as scrolling. This helps
+     * distinguish between intentional scroll gestures and accidental touches.
+     *
+     * @param event - The TouchEvent from the touchmove event
+     */
     private handleTouchMove(event: TouchEvent): void {
         if (
             event.touches.length === 1 &&
@@ -460,6 +593,11 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
     // if the click and pointerup events are on the same target, we should not
     // handle the click event.
     private pointerUpTarget = null as EventTarget | null;
+
+    private handleFocusout(): void {
+        if (!this.matches(':focus-within'))
+            this.rovingTabindexController?.reset();
+    }
 
     private handleClick(event: Event): void {
         if (this.pointerUpTarget === event.target) {
@@ -507,12 +645,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
             }
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
-
         if (event.defaultPrevented) {
+            const index = this.childItems.indexOf(target);
+            if (target?.menuData?.focusRoot === this && index > -1) {
+                this.focusedItemIndex = index;
+            }
             return;
         }
-
         if (target?.href && target.href.length) {
+            // This event will NOT ALLOW CANCELATION as link action
+            // cancelation should occur on the `<sp-menu-item>` itself.
             this.dispatchEvent(
                 new Event('change', {
                     bubbles: true,
@@ -532,6 +674,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         } else {
             return;
         }
+        this.prepareToCleanUp();
     }
 
     private descendentOverlays = new Map<Overlay, Overlay>();
@@ -564,6 +707,33 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
     };
 
+    /**
+     * given a menu item, returns the next focusable menu item before or after it;
+     * if no menu item is provided, returns the first focusable menu item
+     * @param menuItem {MenuItem}
+     * @param before {boolean} return the item before; default is false
+     * @returns {MenuItem}
+     */
+    public getNeighboringFocusableElement(
+        menuItem?: MenuItem,
+        before = false
+    ): MenuItem {
+        const diff = before ? -1 : 1;
+        const elements = this.rovingTabindexController?.elements || [];
+        const index = menuItem ? elements.indexOf(menuItem) : -1;
+        let newIndex = Math.min(Math.max(0, index + diff), elements.length - 1);
+        while (
+            !this.isFocusableElement(elements[newIndex]) &&
+            0 < newIndex &&
+            newIndex < elements.length - 1
+        ) {
+            newIndex += diff;
+        }
+        return this.isFocusableElement(elements[newIndex])
+            ? (elements[newIndex] as MenuItem)
+            : menuItem || elements[0];
+    }
+
     public handleSubmenuOpened = (event: Event): void => {
         event.stopPropagation();
         const target = event.composedPath()[0] as Overlay;
@@ -573,6 +743,12 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                 composed: true,
             })
         );
+
+        const openedItem = event
+            .composedPath()
+            .find((el) => this.childItemSet.has(el as MenuItem));
+        /* c8 ignore next 1 */
+        if (!openedItem) return;
     };
 
     public async selectOrToggleItem(targetItem: MenuItem): Promise<void> {
@@ -627,13 +803,14 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         );
 
         if (!applyDefault) {
+            // Cancel the event & don't apply the selection
             this._selected = oldSelected;
             this.selectedItems = oldSelectedItems;
             this.selectedItemsMap = oldSelectedItemsMap;
             this.value = oldValue;
             return;
         }
-
+        // Apply the selection changes to the menu items
         if (resolvedSelects === 'single') {
             for (const oldItem of oldSelectedItemsMap.keys()) {
                 if (oldItem !== targetItem) {
@@ -651,14 +828,129 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         }
     }
 
-    public closeDescendentOverlays(): void {
-        this.descendentOverlays.forEach((overlay) => {
-            overlay.open = false;
-        });
-        this.descendentOverlays = new Map<Overlay, Overlay>();
+    protected navigateBetweenRelatedMenus(event: MenuItemKeydownEvent): void {
+        const { key, root } = event;
+        const shouldOpenSubmenu =
+            (this.isLTR && key === 'ArrowRight') ||
+            (!this.isLTR && key === 'ArrowLeft');
+        const shouldCloseSelfAsSubmenu =
+            (this.isLTR && key === 'ArrowLeft') ||
+            (!this.isLTR && key === 'ArrowRight') ||
+            key === 'Escape';
+        const lastFocusedItem = root as MenuItem;
+        if (shouldOpenSubmenu) {
+            if (lastFocusedItem?.hasSubmenu) {
+                //open submenu and set focus
+                event.stopPropagation();
+                lastFocusedItem.openOverlay(true);
+            }
+        } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
+            event.stopPropagation();
+            this.dispatchEvent(new Event('close', { bubbles: true }));
+            this.updateSelectedItemIndex();
+        }
+    }
+
+    public handleKeydown(event: Event): void {
+        if (event.defaultPrevented || !this.rovingTabindexController) {
+            return;
+        }
+        const { key, root, shiftKey, target } = event as MenuItemKeydownEvent;
+        const openSubmenuKey = ['Enter', ' '].includes(key);
+        if (shiftKey && target !== this && this.hasAttribute('tabindex')) {
+            this.removeAttribute('tabindex');
+            const replaceTabindex = (
+                event: FocusEvent | KeyboardEvent
+            ): void => {
+                if (
+                    !(event as KeyboardEvent).shiftKey &&
+                    !this.hasAttribute('tabindex')
+                ) {
+                    document.removeEventListener('keyup', replaceTabindex);
+                    this.removeEventListener('focusout', replaceTabindex);
+                }
+            };
+            document.addEventListener('keyup', replaceTabindex);
+            this.addEventListener('focusout', replaceTabindex);
+        }
+        if (key === 'Tab') {
+            this.closeDescendentOverlays();
+            return;
+        }
+        if (openSubmenuKey && root?.hasSubmenu && !root.open) {
+            // Remove focus while opening overlay from keyboard or the visible focus
+            // will slip back to the first item in the menu.
+            event.preventDefault();
+            root.openOverlay(true);
+            return;
+        }
+        if (key === ' ' || key === 'Enter') {
+            event.preventDefault();
+            root?.focusElement?.click();
+            if (root) this.selectOrToggleItem(root);
+            return;
+        }
+        this.navigateBetweenRelatedMenus(event as MenuItemKeydownEvent);
+    }
+
+    private _hasUpdatedSelectedItemIndex = false;
+
+    /**
+     * on focus, removes focus from focus styling item, and updates the selected item index
+     */
+    private prepareToCleanUp(): void {
+        document.addEventListener(
+            'focusout',
+            () => {
+                requestAnimationFrame(() => {
+                    const focusedItem = this.focusInItem;
+                    if (focusedItem) {
+                        focusedItem.focused = false;
+                    }
+                });
+            },
+            { once: true }
+        );
+    }
+
+    public updateSelectedItemIndex(): void {
+        let firstOrFirstSelectedIndex = 0;
+        const selectedItemsMap = new Map<MenuItem, boolean>();
+        const selected: string[] = [];
+        const selectedItems: MenuItem[] = [];
+        let itemIndex = this.childItems.length;
+        while (itemIndex) {
+            itemIndex -= 1;
+            const childItem = this.childItems[itemIndex];
+            if (childItem.menuData.selectionRoot === this) {
+                if (
+                    childItem.selected ||
+                    (!this._hasUpdatedSelectedItemIndex &&
+                        this.selected.includes(childItem.value))
+                ) {
+                    firstOrFirstSelectedIndex = itemIndex;
+                    selectedItemsMap.set(childItem, true);
+                    selected.unshift(childItem.value);
+                    selectedItems.unshift(childItem);
+                }
+                // Remove "focused" from non-"selected" items ONLY
+                // Preserve "focused" on index===0 when no selection
+                if (itemIndex !== firstOrFirstSelectedIndex) {
+                    childItem.focused = false;
+                }
+            }
+        }
+
+        this.selectedItemsMap = selectedItemsMap;
+        this._selected = selected;
+        this.selectedItems = selectedItems;
+        this.value = this.selected.join(this.valueSeparator);
+        this.focusedItemIndex = firstOrFirstSelectedIndex;
+        this.focusInItemIndex = firstOrFirstSelectedIndex;
     }
 
     private _willUpdateItems = false;
+    private _updateFocus?: MenuItem;
 
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
@@ -677,7 +969,26 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         } else {
             await new Promise((res) => requestAnimationFrame(() => res(true)));
         }
+        if (this.cachedChildItems === undefined) {
+            this.updateSelectedItemIndex();
+            this.updateItemFocus();
+        }
+
         this._willUpdateItems = false;
+    }
+
+    private updateItemFocus(): void {
+        this.focusInItem?.setAttribute('tabindex', '0');
+        if (this.childItems.length == 0) {
+            return;
+        }
+    }
+
+    public closeDescendentOverlays(): void {
+        this.descendentOverlays.forEach((overlay) => {
+            overlay.open = false;
+        });
+        this.descendentOverlays = new Map<Overlay, Overlay>();
     }
 
     private handleSlotchange({
@@ -698,6 +1009,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     });
                 }
             });
+        }
+        if (this._updateFocus) {
+            this.rovingTabindexController?.focusOnItem(this._updateFocus);
+            this._updateFocus = undefined;
         }
     }
 
@@ -756,38 +1071,16 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
         this.childItemsUpdated = Promise.all(updates);
     }
 
-    /**
-     * Stub method for backwards compatibility with Picker.
-     * Focus handling has been simplified - this is now a no-op.
-     */
-    public focusOnFirstSelectedItem(): void {
-        // No-op: focus handling simplified
-    }
-
-    /**
-     * Stub method for backwards compatibility with Picker.
-     * Focus handling has been simplified - this is now a no-op.
-     */
-    public updateSelectedItemIndex(): void {
-        // No-op: focus handling simplified
-    }
-
-    /**
-     * Stub method for backwards compatibility with Picker.
-     * Returns undefined as focus handling has been simplified.
-     */
-    public getNeighboringFocusableElement(
-        _current?: MenuItem,
-        _previous?: boolean
-    ): MenuItem | undefined {
-        return undefined;
-    }
-
     public override connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role') && !this.ignore) {
             this.setAttribute('role', this.ownRole);
         }
+        this.updateComplete.then(() => this.updateItemFocus());
+    }
+
+    private isFocusableElement(el: MenuItem): boolean {
+        return el ? !el.disabled : false;
     }
 
     public override disconnectedCallback(): void {
@@ -801,6 +1094,10 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
+    /* c8 ignore next 3 */
+    protected resolveCacheUpdated = (): void => {
+        return;
+    };
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;

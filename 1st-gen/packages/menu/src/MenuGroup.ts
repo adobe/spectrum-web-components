@@ -61,9 +61,9 @@ export class MenuGroup extends Menu {
      * only a menu controls roving tabindex;
      * groups should defer navigation to parent menu
      */
-    // protected override get controlsRovingTabindex(): boolean {
-    //     return false;
-    // }
+    protected override get controlsRovingTabindex(): boolean {
+        return false;
+    }
 
     protected updateLabel(): void {
         const headerElement = this.headerElements.length
