@@ -479,10 +479,12 @@ export class Overlay extends ComputedOverlayBase {
 
     /**
      * Determines if the overlay needs a modal backdrop to block external clicks.
-     * Modal and page overlays require a backdrop to intercept pointer events.
+     * Only page overlays need the backdrop since they don't have light dismiss.
+     * Modal overlays use popover="manual" for stacking and handle light dismiss
+     * via handlePointerup in OverlayStack.
      */
     protected get needsModalBackdrop(): boolean {
-        return this.open && (this.type === 'modal' || this.type === 'page');
+        return this.open && this.type === 'page';
     }
 
     /**
