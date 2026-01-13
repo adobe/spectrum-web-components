@@ -12,7 +12,8 @@
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { stub } from 'sinon';
 
 describe('Avatar', () => {
     testForLitDevWarnings(
@@ -99,7 +100,70 @@ describe('Avatar', () => {
         const imageEl = el.shadowRoot
             ? (el.shadowRoot.querySelector('img') as HTMLImageElement)
             : (el.querySelector('img') as HTMLImageElement);
-        expect(imageEl.hasAttribute('alt')).to.be.false;
+        // When no label is provided, alt should default to empty string for accessibility
+        expect(imageEl.hasAttribute('alt')).to.be.true;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+    });
+    it('loads with is-decorative attribute', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                is-decorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        expect(el).to.not.be.undefined;
+        expect(el.isDecorative).to.be.true;
+        const imageEl = el.shadowRoot
+            ? (el.shadowRoot.querySelector('img') as HTMLImageElement)
+            : (el.querySelector('img') as HTMLImageElement);
+        expect(imageEl.hasAttribute('alt')).to.be.true;
+        expect(imageEl.getAttribute('alt')).to.equal('');
+        expect(imageEl.getAttribute('aria-hidden')).to.equal('true');
+    });
+    it('loads accessibly with is-decorative', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                is-decorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads accessibly with is-decorative and href when label is provided', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                is-decorative
+                label="User profile"
+                src="https://picsum.photos/500/500"
+                href="https://adobe.com"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('label takes precedence over is-decorative', async () => {
+        const el = await fixture<Avatar>(html`
+            <sp-avatar
+                label="Shantanu Narayen"
+                is-decorative
+                src="https://picsum.photos/500/500"
+            ></sp-avatar>
+        `);
+
+        await elementUpdated(el);
+        const imageEl = el.shadowRoot
+            ? (el.shadowRoot.querySelector('img') as HTMLImageElement)
+            : (el.querySelector('img') as HTMLImageElement);
+        expect(imageEl.getAttribute('alt')).to.equal('Shantanu Narayen');
+        // When label is provided, is-decorative should be ignored
+        expect(imageEl.hasAttribute('aria-hidden')).to.be.false;
     });
     it('can receive a `tabindex` without an `href`', async () => {
         try {
@@ -118,5 +182,89 @@ describe('Avatar', () => {
                 throw error;
             }).to.throw('There should be no error.');
         }
+    });
+    describe('dev mode', () => {
+        let consoleWarnStub!: ReturnType<typeof stub>;
+        before(() => {
+            window.__swc.verbose = true;
+            consoleWarnStub = stub(console, 'warn');
+        });
+        afterEach(() => {
+            consoleWarnStub.resetHistory();
+        });
+        after(() => {
+            window.__swc.verbose = false;
+            consoleWarnStub.restore();
+        });
+        it('does not warn when label is provided', async () => {
+            const el = await fixture<Avatar>(html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://picsum.photos/500/500"
+                ></sp-avatar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.false;
+        });
+        it('does not warn when is-decorative is provided', async () => {
+            const el = await fixture<Avatar>(html`
+                <sp-avatar
+                    is-decorative
+                    src="https://picsum.photos/500/500"
+                ></sp-avatar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.false;
+        });
+        it('warns when neither label nor is-decorative is provided', async () => {
+            const el = await fixture<Avatar>(html`
+                <sp-avatar src="https://picsum.photos/500/500"></sp-avatar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('accessible'),
+                'confirm accessibility-centric message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-avatar',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
+        it('warns when is-decorative and href are provided without label', async () => {
+            const el = await fixture<Avatar>(html`
+                <sp-avatar
+                    is-decorative
+                    src="https://picsum.photos/500/500"
+                    href="https://adobe.com"
+                ></sp-avatar>
+            `);
+
+            await elementUpdated(el);
+
+            expect(consoleWarnStub.called).to.be.true;
+            const spyCall = consoleWarnStub.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('is-decorative'),
+                'confirm decorative link message'
+            ).to.be.true;
+            expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+                data: {
+                    localName: 'sp-avatar',
+                    type: 'accessibility',
+                    level: 'default',
+                },
+            });
+        });
     });
 });

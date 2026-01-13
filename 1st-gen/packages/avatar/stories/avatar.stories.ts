@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { AvatarSize } from '@spectrum-web-components/avatar';
-import { avatar } from './images';
+import { avatar } from './images.js';
 
 export default {
     component: 'sp-avatar',
@@ -22,6 +22,7 @@ export default {
         disabled: { control: 'boolean' },
         label: { control: 'text' },
         src: { control: 'text' },
+        isDecorative: { control: 'boolean' },
     },
     args: {
         disabled: false,
@@ -35,15 +36,22 @@ interface StoryArgs {
     label?: string;
     src?: string;
     size?: AvatarSize;
+    isDecorative?: boolean;
 }
 
 const Template = ({
     label = 'Place Dog',
     src = avatar,
     size = 100,
+    isDecorative = false,
 }: StoryArgs = {}): TemplateResult => {
     return html`
-        <sp-avatar label=${label} src=${src} size=${size}></sp-avatar>
+        <sp-avatar
+            label=${label}
+            src=${src}
+            size=${size}
+            ?is-decorative=${isDecorative}
+        ></sp-avatar>
     `;
 };
 
@@ -85,3 +93,6 @@ export const size700 = (args: StoryArgs = {}): TemplateResult =>
 export const linked = (args: StoryArgs = {}): TemplateResult => Link(args);
 export const disabled = (args: StoryArgs = {}): TemplateResult => Link(args);
 disabled.args = { disabled: true };
+export const decorative = (args: StoryArgs = {}): TemplateResult =>
+    Template({ ...args, isDecorative: true, label: undefined });
+decorative.args = { isDecorative: true };
