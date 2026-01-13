@@ -126,7 +126,11 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (changes.has('label') || changes.has('isDecorative')) {
+        if (
+            changes.has('label') ||
+            changes.has('isDecorative') ||
+            changes.has('href')
+        ) {
             this.warnMissingAlt();
         }
     }
