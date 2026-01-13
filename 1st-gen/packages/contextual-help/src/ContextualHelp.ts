@@ -87,9 +87,18 @@ export class ContextualHelp extends SpectrumElement {
     @property({ type: Boolean })
     open = false;
 
-    private popoverId = `contextual-help-popover-${Math.random().toString(36).substr(2, 9)}`;
-    private headingId = `contextual-help-heading-${Math.random().toString(36).substr(2, 9)}`;
-    private contentId = `contextual-help-content-${Math.random().toString(36).substr(2, 9)}`;
+    static instanceCount = 0;
+    private popoverId: string;
+    private headingId: string;
+    private contentId: string;
+
+    constructor() {
+        super();
+        const id = ContextualHelp.instanceCount++;
+        this.popoverId = `contextual-help-popover-${id}`;
+        this.headingId = `contextual-help-heading-${id}`;
+        this.contentId = `contextual-help-content-${id}`;
+    }
 
     public get buttonAriaLabel(): string {
         if (this.label) {
