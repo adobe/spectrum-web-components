@@ -272,16 +272,16 @@ export const StaticColors: Story = {
 
 ### Required tags
 
-| Tag | Usage |
-|-----|-------|
-| `'autodocs'`, `'dev'` | Playground story only |
-| `'overview'` | Overview story |
-| `'anatomy'` | Anatomy stories |
-| `'options'` | Variant, size, and style stories |
-| `'states'` | State demonstration stories |
-| `'behaviors'` | Method, event, and automatic behavior stories |
-| `'a11y'` | Accessibility story |
-| `'migrated'` | On meta object |
+| Tag                   | Usage                                         |  
+|-----------------------|-----------------------------------------------|  
+| `'autodocs'`, `'dev'` | Playground story only                         |  
+| `'overview'`          | Overview story                                |  
+| `'anatomy'`           | Anatomy stories                               |  
+| `'options'`           | Variant, size, and style stories              |  
+| `'states'`            | State demonstration stories                   |  
+| `'behaviors'`         | Method, event, and automatic behavior stories |  
+| `'a11y'`              | Accessibility story                           |  
+| `'migrated'`          | On meta object                                |
 
 ### Exclusion tags
 
