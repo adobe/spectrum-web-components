@@ -77,6 +77,12 @@
     --mod-stepper-buttons-border-color-focus-hover: var(--mod-stepper-border-color-focus-hover, var(--spectrum-stepper-border-color-focus-hover));
 }
 
+/* visually places the validation icon inside the input field */
+:host([invalid]:not([hide-stepper])) #textfield .icon,
+:host([valid]:not([hide-stepper])) #textfield .icon {
+    inset-inline-end: calc(var(--spectrum-stepper-button-width) + var(--spectrum-textfield-icon-spacing-inline-end-invalid));
+}
+
 /* includes the alert icon size in the input's padding similar to the valid variant */
 :host([invalid]) .input {
     padding-inline-end: calc(var(--mod-textfield-icon-spacing-inline-start-valid, var(--spectrum-textfield-icon-spacing-inline-start-valid)) + var(--mod-textfield-icon-size-valid, var(--spectrum-textfield-icon-size-valid)) + var(--mod-textfield-icon-spacing-inline-end-valid, var(--spectrum-textfield-icon-spacing-inline-end-valid)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
