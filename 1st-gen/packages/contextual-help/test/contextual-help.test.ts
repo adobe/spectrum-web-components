@@ -14,7 +14,7 @@ import { nextFrame } from '@spectrum-web-components/overlay/src/AbstractOverlay.
 import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { ContextualHelp, DEFAULT_ARIA_LABELS } from '../src/ContextualHelp.js';
-import { ContextualHelpMarkup } from '../stories';
+import { ContextualHelpMarkup } from '../stories/index.js';
 import { render, TemplateResult } from 'lit';
 
 describe('ContextualHelp', () => {
@@ -44,6 +44,59 @@ describe('ContextualHelp', () => {
             DEFAULT_ARIA_LABELS.help
         );
     });
+
+    it('has proper ARIA attributes for accessibility', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        await elementUpdated(el);
+
+        const button = el.shadowRoot?.querySelector(
+            'sp-action-button'
+        ) as HTMLElement;
+        expect(button).to.exist;
+
+        // Check aria-haspopup is set
+        expect(button).to.have.attribute('aria-haspopup', 'true');
+
+        // Check aria-expanded is false when closed
+        expect(button).to.have.attribute('aria-expanded', 'false');
+
+        // Check aria-controls references the popover
+        const ariaControls = button.getAttribute('aria-controls');
+        expect(ariaControls).to.exist;
+        expect(ariaControls).to.match(/^contextual-help-popover-/);
+
+        // Open the popover
+        const opened = oneEvent(el, 'sp-opened');
+        button.click();
+        await opened;
+        await elementUpdated(el);
+
+        // Check aria-expanded is true when open
+        expect(button).to.have.attribute('aria-expanded', 'true');
+
+        // Verify the popover has the matching ID
+        const popover = el.shadowRoot?.querySelector('sp-popover');
+        expect(popover).to.exist;
+        if (ariaControls) {
+            expect(popover).to.have.attribute('id', ariaControls);
+        }
+    });
+
+    it('sets aria-haspopup="dialog" on mobile', async () => {
+        const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
+
+        el.isMobile.matches = true;
+        el.requestUpdate();
+
+        await elementUpdated(el);
+
+        const button = el.shadowRoot?.querySelector(
+            'sp-action-button'
+        ) as HTMLElement;
+        expect(button).to.exist;
+        expect(button).to.have.attribute('aria-haspopup', 'dialog');
+    });
     it('is a popover on web', async () => {
         const el = await fixture<ContextualHelp>(ContextualHelpMarkup());
 
@@ -59,6 +112,12 @@ describe('ContextualHelp', () => {
 
         popover = el.shadowRoot?.querySelector('sp-popover');
         expect(popover).to.exist;
+
+        // Verify ARIA attributes for accessibility
+        expect(popover).to.have.attribute('role', 'region');
+        expect(popover).to.have.attribute('aria-labelledby');
+        expect(popover).to.have.attribute('aria-describedby');
+
         const headingSlot = popover?.querySelector(
             'slot[name="heading"]'
         ) as HTMLSlotElement;

@@ -87,6 +87,10 @@ export class ContextualHelp extends SpectrumElement {
     @property({ type: Boolean })
     open = false;
 
+    private popoverId = `contextual-help-popover-${Math.random().toString(36).substr(2, 9)}`;
+    private headingId = `contextual-help-heading-${Math.random().toString(36).substr(2, 9)}`;
+    private contentId = `contextual-help-content-${Math.random().toString(36).substr(2, 9)}`;
+
     public get buttonAriaLabel(): string {
         if (this.label) {
             return this.label;
@@ -105,7 +109,7 @@ export class ContextualHelp extends SpectrumElement {
 
             return html`
                 <sp-dialog-base underlay>
-                    <sp-dialog dismissable size="s">
+                    <sp-dialog dismissable size="s" id=${this.popoverId}>
                         <slot name="heading" slot="heading"></slot>
                         <slot></slot>
                         <slot name="link"></slot>
@@ -116,10 +120,20 @@ export class ContextualHelp extends SpectrumElement {
             import('@spectrum-web-components/popover/sp-popover.js');
 
             return html`
-                <sp-popover class="popover">
+                <sp-popover
+                    class="popover"
+                    id=${this.popoverId}
+                    role="region"
+                    aria-labelledby=${this.headingId}
+                    aria-describedby=${this.contentId}
+                >
                     <section>
-                        <slot name="heading"></slot>
-                        <slot></slot>
+                        <div id=${this.headingId}>
+                            <slot name="heading"></slot>
+                        </div>
+                        <div id=${this.contentId} class="body">
+                            <slot></slot>
+                        </div>
                         <slot name="link"></slot>
                     </section>
                 </sp-popover>
@@ -153,6 +167,9 @@ export class ContextualHelp extends SpectrumElement {
                 size="s"
                 id="trigger"
                 aria-label=${this.buttonAriaLabel}
+                aria-haspopup=${this.isMobile.matches ? 'dialog' : 'true'}
+                aria-expanded=${this.open ? 'true' : 'false'}
+                aria-controls=${this.popoverId}
                 .active=${this.open}
             >
                 ${this.variant === 'help'
