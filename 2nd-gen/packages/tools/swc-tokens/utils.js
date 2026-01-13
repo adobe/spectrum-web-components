@@ -552,9 +552,17 @@ async function loadAllTokens(prefix, debug = false) {
     );
 }
 
-// Returns combined total token JSON
-export const allTokens = (prefix, debug = false) =>
-    loadAllTokens(prefix, debug);
+// Cache for loaded tokens (keyed by prefix)
+const tokenCache = new Map();
+
+// Returns combined total token JSON (cached)
+export const allTokens = (prefix, debug = false) => {
+    const cacheKey = `${prefix ?? ''}:${debug}`;
+    if (!tokenCache.has(cacheKey)) {
+        tokenCache.set(cacheKey, loadAllTokens(prefix, debug));
+    }
+    return tokenCache.get(cacheKey);
+};
 
 // Lookup individual token values for use in component styles
 export async function lookupToken(key, prefix) {
