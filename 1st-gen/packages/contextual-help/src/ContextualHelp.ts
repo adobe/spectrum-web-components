@@ -116,9 +116,11 @@ export class ContextualHelp extends SpectrumElement {
             import('@spectrum-web-components/dialog/sp-dialog-base.js');
             import('@spectrum-web-components/dialog/sp-dialog.js');
 
+            // sp-dialog (via AlertDialog) handles aria-labelledby and aria-describedby
+            // automatically from the heading and content slots, so we rely on that native handling
             return html`
                 <sp-dialog-base underlay>
-                    <sp-dialog dismissable size="s" id=${this.popoverId}>
+                    <sp-dialog dismissable size="s">
                         <slot name="heading" slot="heading"></slot>
                         <slot></slot>
                         <slot name="link"></slot>
@@ -176,7 +178,7 @@ export class ContextualHelp extends SpectrumElement {
                 size="s"
                 id="trigger"
                 aria-label=${this.buttonAriaLabel}
-                aria-haspopup=${this.isMobile.matches ? 'dialog' : 'true'}
+                aria-haspopup="dialog"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-controls=${this.popoverId}
                 .active=${this.open}
