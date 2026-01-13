@@ -111,7 +111,7 @@ export class DialogWrapper extends DialogBase {
             !this.headline ||
             this.headlineVisibility === 'none';
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!this.headline) {
                 window.__swc.warn(
                     this,
