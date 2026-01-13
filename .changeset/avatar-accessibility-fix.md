@@ -1,5 +1,5 @@
 ---
-'@spectrum-web-components/avatar': minor
+'@spectrum-web-components/avatar': patch
 ---
 
 **Added**: Added `is-decorative` attribute to `<sp-avatar>` to allow developers to explicitly mark avatars as decorative. When set, the avatar is hidden from screen readers with `alt=""` and `aria-hidden="true"`.
