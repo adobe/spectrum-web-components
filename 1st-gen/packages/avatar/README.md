@@ -163,7 +163,7 @@ The `label` attribute of the `<sp-avatar>` will be passed into the `<img>` eleme
 
 ```html demo
 <sp-avatar
-    label="Shantanu Narayen"
+    label="John Doe"
     src="https://picsum.photos/500/500"
 ></sp-avatar>
 ```
@@ -182,7 +182,7 @@ When an avatar has an `href` attribute, it becomes a link and requires an access
 
 ```html demo
 <sp-avatar
-    label="View Shantanu Narayen's profile"
+    label="View John Doe's profile"
     src="https://picsum.photos/500/500"
     href="https://adobe.com"
 ></sp-avatar>
