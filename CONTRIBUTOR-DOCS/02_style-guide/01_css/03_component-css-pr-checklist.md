@@ -47,7 +47,7 @@ Use this checklist when opening or reviewing a PR.
 
 ## Variants & States
 
-- [ ]  Variants that should expose custom properties use `:host([variant=&quot;…&quot;])`
+- [ ]  Variants that should expose custom properties use `:host([variant="..."])`
 - [ ]  Variants that should *not* expose custom properties use class modifiers
 - [ ]  States are attached to `:host` unless the state is internal by design
 

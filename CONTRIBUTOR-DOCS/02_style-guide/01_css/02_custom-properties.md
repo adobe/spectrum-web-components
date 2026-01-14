@@ -64,7 +64,7 @@ _*"partially" due to possible eventual exposure when we introduce parts_
     - This distinction directly affects which selector type is used (`:host()` vs internal class selectors). See [Variant Selectors and Inheritance](01_component-css.md#shadow-dom-specificity-and-custom-property-inheritance).
 - May be exposed via inclusion in private property, or inline with CSS property
     - Include in private property if value has repeated usage throughout base (non-variant) component styles
-- In migrated components, legacy `--mod-* `properties should not be preserved; instead, collapse the chain into a single component-level property.
+- In migrated components, legacy `--mod-*`properties should not be preserved; instead, collapse the chain into a single component-level property.
 
 ### Internal vs. Exposed vs. Static
 
@@ -201,7 +201,7 @@ More examples and further information on how `token()` retrieves and processes t
 
 ## Adding Global Tokens
 
-Additional global tokens or token overrides may be necessary if values are unique to SWC, and not available - currently or planned - in the design token source package, `@adobe/spectrum-tokens` .
+Additional global tokens or token overrides may be necessary if values are unique to SWC, and not available - currently or planned - in the design token source package, `@adobe/spectrum-tokens`.
 
 Examples of current custom global tokens include global animation transition timings and web-friendly font stacks.
 

@@ -27,7 +27,7 @@ The following are high-level guidelines for the CSS creation for components.
 
 ## Contributor TL;DR
 
-> For examples of all these rules in practice, review the [reference migration for Badge](#reference-migration-badge) as well as examples for avoiding issues in the [anti-patterns guide](05_anti-patterns.md).
+> For examples of all these rules in practice, review the [reference migration for Badge](04_spectrum-swc-migration.md#reference-migration-badge) as well as examples for avoiding issues in the [anti-patterns guide](05_anti-patterns.md).
 
 - `:host` is for defining how the container participates in the global layout, not the core component styles
 - Follow the prescribed rule order
@@ -51,7 +51,7 @@ Follow this outline for ordering rulesets within component stylesheets. This wil
             - `vertical-align: middle` to keep a vertically centered position next to other `inline-block` elements (ex. a row of badges outside of a flex or grid context)
 3. `* { box-sizing: border-box; }`
     - Unless there is a strong reason not to, this rule should be included in all components. Expand to pseudo-elements if in use.
-    - Required if the component or its descendants set  `padding` and/or `border` to avoid the compounding affect against the element's size.
+    - Required if the component or its descendants set  `padding` and/or `border` to avoid the compounding effect against the element's size.
 4. component styles
     - base class: `.swc-ComponentName`
     - subcomponents: `.swc-ComponentName-sub-component`
@@ -75,7 +75,7 @@ Sizes, variants, and states should primarily modify the component via updating c
 
 Most components are scoped enough that following the prescribed rule order will avoid specificity clashes. However, in some cases such as compounded variants or variants plus states, selectors can still start to bump up specificity.
 
-The issue with bumping up specificity is that is makes valid overrides - such as for a `:disabled` state - more challenging.
+The issue with bumping up specificity is that it makes valid overrides - such as for a `:disabled` state - more challenging.
 
 Try to keep specificity no greater than `(0,1,0)` which means a maximum of 1 class.
 
@@ -220,14 +220,14 @@ Exempt from tokens but relevant to CSS are values for properties such as:
 
 Often, specs will be very prescriptive about what equates to `padding` for an element. That padding may vary for scenarios such as between the top of the component to it's text label vs. from the top to an optional icon.
 
-It is tempting to use those values as prescribed in order to match the specs. However, the `display`  choice of `grid` or `flex` should be taken into account first.
+It is tempting to use those values as prescribed in order to match the specs. However, the `display` choice of `grid` or `flex` should be taken into account first.
 
 For example:
 
 - Prefer `gap` over overly prescriptive selectors that apply or remove margin
-  - *Exception*: if using `grid-template-areas` , the `gap` will still exist even if the grid area is not populated, so `margin` may be more appropriate
+  - *Exception*: if using `grid-template-areas`, the `gap` will still exist even if the grid area is not populated, so `margin` may be more appropriate
 - Prefer alignment properties in coordination with min/max sizes before overly prescribing `padding` values
-  - *Example*: for Badge, there is a `min-block-size` and the specs provide different block padding values for an icon vs. a text label. By using flexbox and `align-items: center` , we only really need to set the *text-relative* block padding, which is more of a defense mechanism in case the badge label needs to wrap to prevent the text touching the component edge.
+  - *Example*: for Badge, there is a `min-block-size` and the specs provide different block padding values for an icon vs. a text label. By using flexbox and `align-items: center`, we only really need to set the *text-relative* block padding, which is more of a defense mechanism in case the badge label needs to wrap to prevent the text touching the component edge.
     - Badge also uses `:has()` to conditionally adjust padding when icons are present; this replaces Spectrum-era spacing rules.
 
 The ultimate intent here is to prioritize working with the grain of CSS layout models.
