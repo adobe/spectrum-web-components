@@ -132,9 +132,8 @@
 :host([valid]) #textfield .icon {
     pointer-events: all;
 
-    /* span 2 columns based on the subgrid in #textfield*/
+    /* span 2 columns based on the subgrid in #textfield */
     grid-column: 2;
-
     margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
@@ -224,7 +223,7 @@ div[aria-live="assertive"] {
     line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
     min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    inline-size: 100%;
     block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
     padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
@@ -244,7 +243,7 @@ div[aria-live="assertive"] {
     appearance: none;
     outline: none;
 
-    /* span 2 columns based on the subgrid in #textfield*/
+    /* span 2 columns based on the subgrid in #textfield */
     grid-column: 1 / span 2;
     margin: 0;
 }
