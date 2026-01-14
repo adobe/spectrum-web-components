@@ -106,8 +106,15 @@ flowchart TD
 
 </details>
 
-Alias resolution is controlled per source file via the `SPECTRUM_TOKENS` configuration in `utils.js`.
+### Controlling Alias Resolution
+
+Alias resolution is controlled per source file via configuration in `utils.js`. The `SPECTRUM_TOKENS` and `CUSTOM_TOKENS` lists the source JSON filenames and also flags files to either resolve found aliases or not.
+
 Some sources intentionally preserve aliases to ensure correct composition across multiple token layers.
+
+Additionally, resolution of `CUSTOM_TOKENS` can be managed per token, as described for [custom tokens and overrides](#custom-tokens-and-overrides).
+
+### Alias Resolution Logic
 
 <details>
 <summary>View Mermaid chart of alias resolution</summary>
@@ -134,20 +141,18 @@ flowchart TD
 
 </details>
 
-Within `utils.js` is a `SPECTRUM_TOKENS` constant that lists the source JSON filenames and also flags the file to either resolve found aliases or not.
-
 ## Stylesheet Generation
 
 The unified stylesheet splits tokens into two groups:
 
 - non-scaling:
-    - static, primitive values
-    - `light-dark()` eligible color tokens
+    - primitive values (`corner-radius-100`)
+    - `light-dark()` eligible color tokens (`blue-800`)
     - values that never change across size scales
 - scaling
     - tokens that composite medium and large values
 
-The final unified stylesheet uses the following selectors for those token groups:
+The token groups are segmented into specific selectors in the final unified stylesheet:
 
 ```css
 :root {
@@ -192,7 +197,7 @@ It acts as a read-only query interface over the processed token map produced by 
 > `lookupToken()` does not perform token parsing, normalization, or resolution itself. It only queries the already-processed token data.
 
 <details>
-<summary>View Mermaid diagram of `lookupToken()` flow</summary>
+<summary>View Mermaid diagram of lookupToken() flow</summary>
 
 ```mermaid
 sequenceDiagram

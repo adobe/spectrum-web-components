@@ -138,7 +138,7 @@ Error: token() not found: 'not-a-real-token'
 
 ## Testing
 
-Tests are written using [Vitest](https://vitest.dev/) and are located in `./tests`.
+Tests are written using [Vitest](https://vitest.dev/).
 
 ```bash
 yarn test
