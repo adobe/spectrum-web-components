@@ -78,22 +78,21 @@ export class Avatar extends LikeAnchor(Focusable) {
 
     private _size = defaultSize;
 
+    /**
+     * Renders the avatar image with appropriate accessibility attributes.
+     * Label takes precedence over isDecorative. When decorative and has href,
+     * aria-hidden is not set so the link remains accessible.
+     */
     protected override render(): TemplateResult {
-        // Determine alt attribute value
-        // Label takes precedence over isDecorative
-        let altValue: string | undefined;
+        let altValue = '';
         let ariaHidden: 'true' | undefined;
         if (this.label) {
             altValue = this.label;
-            // When label is provided, don't set aria-hidden even if isDecorative is true
             ariaHidden = undefined;
         } else if (this.isDecorative) {
             altValue = '';
-            // If decorative and has href, don't hide from screen readers (link needs accessible text)
-            // Only hide when decorative and NOT a link
             ariaHidden = this.href ? undefined : 'true';
         } else {
-            // Default to empty string for accessibility, but warn in dev mode
             altValue = '';
             ariaHidden = undefined;
         }
