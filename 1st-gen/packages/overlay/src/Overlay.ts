@@ -484,7 +484,7 @@ export class Overlay extends ComputedOverlayBase {
      * via handlePointerup in OverlayStack.
      */
     protected get needsModalBackdrop(): boolean {
-        return this.open && this.type === 'page';
+        return this.open && (this.type === 'modal' || this.type === 'page');
     }
 
     /**
