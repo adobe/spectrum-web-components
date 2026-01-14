@@ -27,9 +27,13 @@
         --swc-statuslight-top-to-dot,
         token('status-light-top-to-dot-medium')
     );
+    --_swc-statuslight-text-to-visual: var(
+        --swc-statuslight-text-to-visual,
+        token('status-light-text-to-visual-100')
+    );
 
     display: flex;
-    gap: token('status-light-text-to-visual-100');
+    gap: var(--_swc-statuslight-text-to-visual);
     align-items: flex-start;
     min-block-size: var(
         --swc-statuslight-height,
@@ -81,6 +85,7 @@
     --swc-statuslight-top-to-text: token('component-top-to-text-75');
     --swc-statuslight-bottom-to-text: token('component-bottom-to-text-75');
     --swc-statuslight-top-to-dot: token('status-light-top-to-dot-small');
+    --swc-statuslight-text-to-visual: token('status-light-text-to-visual-75');
     --swc-statuslight-height: token('component-height-75');
     --swc-statuslight-dot-size: token('status-light-dot-size-small');
     --swc-statuslight-font-size: token('font-size-75');
@@ -90,6 +95,7 @@
     --swc-statuslight-top-to-text: token('component-top-to-text-200');
     --swc-statuslight-bottom-to-text: token('component-bottom-to-text-200');
     --swc-statuslight-top-to-dot: token('status-light-top-to-dot-large');
+    --swc-statuslight-text-to-visual: token('status-light-text-to-visual-200');
     --swc-statuslight-height: token('component-height-200');
     --swc-statuslight-dot-size: token('status-light-dot-size-large');
     --swc-statuslight-font-size: token('font-size-200');
@@ -99,6 +105,7 @@
     --swc-statuslight-top-to-text: token('component-top-to-text-300');
     --swc-statuslight-bottom-to-text: token('component-bottom-to-text-300');
     --swc-statuslight-top-to-dot: token('status-light-top-to-dot-extra-large');
+    --swc-statuslight-text-to-visual: token('status-light-text-to-visual-300');
     --swc-statuslight-height: token('component-height-300');
     --swc-statuslight-dot-size: token('status-light-dot-size-extra-large');
     --swc-statuslight-font-size: token('font-size-300');
@@ -115,7 +122,7 @@
 }
 
 :host([variant='negative']) {
-    --swc-statuslight-dot-color: token('neutral-visual-color');
+    --swc-statuslight-dot-color: token('negative-visual-color');
 }
 
 :host([variant='notice']) {
