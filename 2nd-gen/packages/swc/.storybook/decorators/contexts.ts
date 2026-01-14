@@ -33,5 +33,5 @@ export const withContext: DecoratorFunction = (Story, context) => {
         document.documentElement.classList.remove('spectrum-theme--sizeL');
     }
 
-    return html`${Story(context)} `;
+    return html`${Story(context)}`;
 };
