@@ -232,6 +232,20 @@ class OverlayStack {
         this.lastOverlay = undefined;
 
         const lastIndex = this.stack.length - 1;
+        const clickedBackdrop = composedPath.some(
+            (el) =>
+                el instanceof HTMLElement &&
+                el.classList.contains('modal-backdrop')
+        );
+        if (clickedBackdrop) {
+            const topOverlay = this.stack[this.stack.length - 1];
+            // Only modal overlays close on backdrop click.
+            // Page overlays are blocking and should not be light-dismissable.
+            if (topOverlay?.type === 'modal') {
+                this.closeOverlay(topOverlay);
+            }
+            return;
+        }
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
                 (el) =>
