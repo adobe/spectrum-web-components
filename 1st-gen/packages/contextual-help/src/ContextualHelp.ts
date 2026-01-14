@@ -89,14 +89,12 @@ export class ContextualHelp extends SpectrumElement {
 
     static instanceCount = 0;
     private popoverId: string;
-    private headingId: string;
     private contentId: string;
 
     constructor() {
         super();
         const id = ContextualHelp.instanceCount++;
         this.popoverId = `contextual-help-popover-${id}`;
-        this.headingId = `contextual-help-heading-${id}`;
         this.contentId = `contextual-help-content-${id}`;
     }
 
@@ -136,14 +134,13 @@ export class ContextualHelp extends SpectrumElement {
                     class="popover"
                     id=${this.popoverId}
                     role="region"
-                    aria-labelledby=${this.headingId}
-                    aria-describedby=${this.contentId}
+                    aria-labelledby=${this.contentId}
                 >
-                    <section>
-                        <div id=${this.headingId}>
+                    <section id=${this.contentId}>
+                        <div>
                             <slot name="heading"></slot>
                         </div>
-                        <div id=${this.contentId} class="body">
+                        <div class="body">
                             <slot></slot>
                         </div>
                         <slot name="link"></slot>

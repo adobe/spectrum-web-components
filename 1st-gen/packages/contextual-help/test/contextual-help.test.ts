@@ -119,9 +119,16 @@ describe('ContextualHelp', () => {
         // Verify ARIA attributes for accessibility
         expect(popover).to.have.attribute('role', 'region');
         expect(popover).to.have.attribute('aria-labelledby');
-        expect(popover).to.have.attribute('aria-describedby');
 
-        const headingSlot = popover?.querySelector(
+        const ariaLabelledBy = popover?.getAttribute('aria-labelledby');
+        expect(ariaLabelledBy).to.match(/^contextual-help-content-/);
+
+        // Verify the section with matching ID exists
+        const section = popover?.querySelector('section');
+        expect(section).to.exist;
+        expect(section).to.have.attribute('id', ariaLabelledBy || '');
+
+        const headingSlot = section?.querySelector(
             'slot[name="heading"]'
         ) as HTMLSlotElement;
         const heading = headingSlot.assignedElements()[0].textContent;
