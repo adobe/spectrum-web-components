@@ -28,7 +28,7 @@
     },
     "devDependencies": {
         "postcss": "8.5.6",
-        "vitest": "^4.0.15"
+        "vitest": "4.0.15"
     },
     "peerDependencies": {
         "postcss": "8.5.6"

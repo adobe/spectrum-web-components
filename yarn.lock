@@ -162,7 +162,7 @@ __metadata:
   dependencies:
     "@adobe/swc-tokens": "workspace:*"
     postcss: "npm:8.5.6"
-    vitest: "npm:^4.0.15"
+    vitest: "npm:4.0.15"
   peerDependencies:
     postcss: 8.5.6
   languageName: unknown
@@ -195,7 +195,7 @@ __metadata:
   dependencies:
     "@adobe/spectrum-tokens": "npm:^14.0.0"
     prettier: "npm:^3.7.4"
-    vitest: "npm:^4.0.15"
+    vitest: "npm:4.0.15"
     yargs: "npm:^18.0.0"
   bin:
     swc-tokens: index.js
@@ -237,7 +237,7 @@ __metadata:
     vite: "npm:7.1.7"
     vite-plugin-dts: "npm:4.5.4"
     vite-plugin-lit-css: "npm:2.2.1"
-    vitest: "npm:^4.0.15"
+    vitest: "npm:4.0.15"
   languageName: unknown
   linkType: soft
 
@@ -29453,7 +29453,7 @@ __metadata:
     "@types/vscode": "npm:^1.85.0"
     esbuild: "npm:^0.27.1"
     typescript: "npm:5.9.2"
-    vitest: "npm:^4.0.15"
+    vitest: "npm:4.0.15"
     vsce: "npm:^2.15.0"
     vscode-languageclient: "npm:^8.1.0"
     vscode-languageserver: "npm:^8.1.0"
@@ -31421,7 +31421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^4.0.15":
+"vitest@npm:4.0.15":
   version: 4.0.15
   resolution: "vitest@npm:4.0.15"
   dependencies:

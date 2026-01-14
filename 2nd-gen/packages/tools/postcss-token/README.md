@@ -52,9 +52,9 @@ All of the above are handled by `@adobe/swc-tokens`.
 
 ```mermaid
 flowchart LR
-    A[Design Token Data] --> B[@adobe/swc-tokens]
-    B -->|lookupToken()| C[@adobe/postcss-token]
-    C --> D[Final CSS Output]
+    A["Design Token Data"] --> B["@adobe/swc-tokens"]
+    B -->|"lookupToken()"| C["@adobe/postcss-token"]
+    C --> D["Final CSS Output"]
 ```
 
 ## Usage
@@ -138,7 +138,7 @@ Error: token() did not find 'not-a-real-token'
 
 ## Testing
 
-Tests are written using [Vitest](https://vitest.dev/) and are located in `./tests`.
+Tests are written using [Vitest](https://vitest.dev/).
 
 ```bash
 yarn test

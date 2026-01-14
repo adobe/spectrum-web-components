@@ -14,6 +14,9 @@
 
     /* Ensure an adaptive-capable background */
     .sbdocs-preview {
-        background-color: var(--swc-gray-25) !important;
+        background-color: var(
+            --swc-gray-25,
+            light-dark(rgb(255 255 255), rgb(17 17 17))
+        ) !important;
     }
 </style>
