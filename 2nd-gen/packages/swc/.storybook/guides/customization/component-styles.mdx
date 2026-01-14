@@ -49,7 +49,15 @@ swc-badge[outline][variant='positive'] {
 }
 ```
 
-If your override is applied too broadly, re-assess how the selector is scoped.
+If you notice the visual impact of your override is unexpected, re-assess how the selector is scoped. For example, you may have used the simple component selector instead of a compound attribute selector.
+
+```css
+/* Avoid using only the component selector */
+swc-badge
+
+/* Use a compound attribute selector */
+swc-badge[VARIANT]
+```
 
 To exclude a style further, overrides can be applied via custom classes for specific component instances.
 

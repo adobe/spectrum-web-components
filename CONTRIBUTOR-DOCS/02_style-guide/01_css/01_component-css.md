@@ -31,7 +31,7 @@ The following are high-level guidelines for the CSS creation for components.
 
 - `:host` is for defining how the container participates in the global layout, not the core component styles
 - Follow the prescribed rule order
-- Strive to keep selector specificity ≤ `\(0,1,0\)`
+- Strive to keep selector specificity ≤ `\(0,1,0\)` with [explicit management](#managing-specificity)
 - Use variants and custom property exposure intentionally
 - Prefer CSS layout primitives when applying component specs
 - Introduce cascade layers if needed as a specificity controller, using the prescribed layer order
@@ -58,6 +58,7 @@ Follow this outline for ordering rulesets within component stylesheets. This wil
     - t-shirt sizes: `:host([size="s"])`
         - Uses `:host()` to maintain exposure of size-related custom properties
     - other variants
+        - generally ordered from lower-specificity simple selectors to compound selectors as part of specificity management
         - `.swc-ComponentName--variant` - used for variants excluded from custom property exposure
         - `:host([variant="value"])` - used for variants that should maintain custom property exposure
     - states: `:host([aria-expanded])` , `:host:focus-visible` , etc.
@@ -98,7 +99,7 @@ Occasionally, specificity bumping *is* necessary, but carefully evaluate the ord
 
 **Exceptions to max-specificity rule**:
 
-- use of pseudo-classes and pseudo-elements are an acceptable bump to specificity, and should be applied outside of `:where()`
+- use of pseudo-classes and pseudo-elements (ex. `.spectrum-Button:hover`) are an acceptable bump to specificity, and should be applied outside of `:where()`
 - compound attribute selectors in `:host()` are permissable, and most often should not use `:where()` as their computed value will be treated differently, as described next
 
 ### Shadow DOM Specificity and Custom Property Inheritance
