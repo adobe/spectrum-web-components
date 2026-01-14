@@ -222,8 +222,8 @@ div[aria-live="assertive"] {
 .input {
     line-height: var(--spectrum-textfield-input-line-height);
     box-sizing: border-box;
-    min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
     inline-size: 100%;
+    min-inline-size: var(--mod-textfield-min-width, var(--spectrum-textfield-min-width));
     block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
     padding-block-start: calc(var(--mod-textfield-spacing-block-start, var(--spectrum-textfield-spacing-block-start)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
     padding-block-end: calc(var(--mod-textfield-spacing-block-end, var(--spectrum-textfield-spacing-block-end)) - var(--mod-textfield-border-width, var(--spectrum-textfield-border-width)));
@@ -242,9 +242,6 @@ div[aria-live="assertive"] {
     text-overflow: ellipsis;
     appearance: none;
     outline: none;
-
-    /* span 2 columns based on the subgrid in #textfield */
-    grid-column: 1 / span 2;
     margin: 0;
 }
 

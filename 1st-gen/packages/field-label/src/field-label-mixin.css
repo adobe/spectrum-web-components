@@ -86,23 +86,6 @@ label:lang(zh) {
     vertical-align: var(--mod-field-label-asterisk-vertical-align, baseline);
 }
 
-:host([side-aligned="start"]),
-:host([side-aligned="end"]) {
-    grid-template-rows: auto auto;
-
-    /* not currently using the 3rd column for char count */
-    grid-template-columns: 1fr auto auto;
-
-    /* side aligned textfields will take up the full width of the container */
-    inline-size: 100%;
-}
-
-/* adding some selectors to iron out side label textfield */
-:host([side-aligned="start"]) #textfield,
-:host([side-aligned="end"]) #textfield {
-    grid-area: 1 / 2 / auto / auto;
-}
-
 :host([side-aligned="start"]) label,
 :host([side-aligned="end"]) label {
     vertical-align: top;

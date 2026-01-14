@@ -22,6 +22,7 @@
     overflow: visible;
 
     /* this allows the container to be set to something larger so that the label and help text can extend past the width of the input */
+
     /* max() is used to ensure that the container width is at least as large as the input width */
     inline-size: max(var(--mod-textfield-container-width, var(--spectrum-textfield-container-width)), var(--mod-textfield-width, var(--spectrum-textfield-width)));
 }
@@ -32,6 +33,17 @@
 
 :host([multiline][readonly]) {
     resize: none;
+}
+
+:host([side-aligned="start"]),
+:host([side-aligned="end"]) {
+    grid-template-rows: auto auto;
+
+    /* not currently using the 3rd column for char count */
+    grid-template-columns: 1fr auto auto;
+
+    /* side aligned textfields will take up the full width of the container */
+    inline-size: 100%;
 }
 
 :host([disabled]:focus-visible) {
@@ -47,6 +59,11 @@
 #textfield,
 textarea {
     resize: inherit;
+}
+
+:host([side-aligned="start"]) #textfield,
+:host([side-aligned="end"]) #textfield {
+    grid-area: 1 / 2 / auto / auto;
 }
 
 :host([focused]) .input {
@@ -122,6 +139,9 @@ textarea {
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     resize: none;
     overflow: hidden;
