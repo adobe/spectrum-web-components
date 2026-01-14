@@ -173,8 +173,19 @@ function convertRGB(input) {
         : `rgb(${r} ${g} ${b})`;
 }
 
-// Handle CSS format conversions for final CSS values
-function cssFormatConversions(name, value) {
+// Transfrom non-CSS compatible values into correct CSS syntax
+function cssSyntaxConversions(name, value) {
+    const VALUE_MAPS = {
+        'font-weight': {
+            light: '300',
+            regular: '400',
+            medium: '500',
+            bold: '700',
+            'extra-bold': '800',
+            black: '900',
+        },
+    };
+
     if (isVar(value)) {
         return value;
     }
@@ -186,17 +197,11 @@ function cssFormatConversions(name, value) {
         return `${Math.floor(parseFloat(value) * 100)}%`;
     }
 
-    if (name.includes('font-weight')) {
-        return (
-            {
-                light: '300',
-                regular: '400',
-                medium: '500',
-                bold: '700',
-                'extra-bold': '800',
-                black: '900',
-            }[value] ?? value
-        );
+    for (const key in VALUE_MAPS) {
+        if (name.includes(key)) {
+            const table = VALUE_MAPS[key];
+            return table[value] ?? value;
+        }
     }
 
     return value;
@@ -243,7 +248,7 @@ function buildRawLookup(json) {
  * - tokensMap: the raw lookup returned by buildRawLookup(json)
  * - value: a string like "{foo}" OR a primitive OR an object (possibly with nested aliases)
  *
- * Returns: resolved primitive / object (with aliases resolved) or undefined if missing/circular.
+ * Returns: resolved primitive / object (with aliases resolved), or a custom property for multi-set targets (ex. scales), or undefined if missing/circular.
  */
 function resolveAlias(lookup, value, prefix, seen, debug) {
     const log = typeof debug === 'function' ? debug : () => {};
@@ -267,9 +272,10 @@ function resolveAlias(lookup, value, prefix, seen, debug) {
         return undefined;
     }
 
-    seen.add(name);
+    const nextSeen = new Set(seen);
+    nextSeen.add(name);
 
-    // --- shallow resolution for multi-set targets ---
+    // --- shallow resolution for multi-set targets (ex. scales) ---
     if (isAlias(target)) {
         // Uncomment as needed
         // log(
@@ -287,7 +293,7 @@ function resolveAlias(lookup, value, prefix, seen, debug) {
         return Object.fromEntries(
             Object.entries(target).map(([k, v]) => [
                 k,
-                resolveAlias(lookup, v, prefix, new Set(seen), debug),
+                resolveAlias(lookup, v, prefix, nextSeen, debug),
             ])
         );
     }
@@ -431,7 +437,7 @@ export async function generateCSS(prefix, debug = false) {
 
     const write = (k, v, arr) =>
         arr.push(
-            `  ${createPropertyName(k, prefix)}: ${cssFormatConversions(k, v)};`
+            `  ${createPropertyName(k, prefix)}: ${cssSyntaxConversions(k, v)};`
         );
 
     for (const [name, value] of Object.entries(tokens)) {
@@ -573,7 +579,7 @@ export async function lookupToken(key, prefix) {
 
     return typeof tokens[key] === 'object'
         ? `var(${createPropertyName(key, prefix)})`
-        : cssFormatConversions(key, tokens[key]);
+        : cssSyntaxConversions(key, tokens[key]);
 }
 
 // test exports (non-public API)
@@ -581,7 +587,7 @@ export const __test__ = {
     createPropertyName,
     convertToProperty,
     convertRGB,
-    cssFormatConversions,
+    cssSyntaxConversions,
     buildRawLookup,
     resolveAlias,
     resolveAliasesInString,
