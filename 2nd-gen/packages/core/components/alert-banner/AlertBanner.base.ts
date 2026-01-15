@@ -61,7 +61,7 @@ export abstract class AlertBannerBase extends SpectrumElement {
             this.removeAttribute('variant');
             this._variant = '';
 
-            if (window.__swc.DEBUG) {
+            if (window.__swc?.DEBUG) {
                 window.__swc.warn(
                     this,
                     `<${this.localName}> element expects the "variant" attribute to be one of the following:`,
