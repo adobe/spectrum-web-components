@@ -26,12 +26,12 @@
     "dependencies": {
         "@adobe/swc-tokens": "0.0.1"
     },
+    "peerDependencies": {
+        "postcss": "8.5.6"
+    },
     "devDependencies": {
         "postcss": "8.5.6",
         "vitest": "4.0.15"
-    },
-    "peerDependencies": {
-        "postcss": "8.5.6"
     },
     "keywords": [
         "design-system",
