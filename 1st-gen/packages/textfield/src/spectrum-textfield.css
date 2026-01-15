@@ -134,8 +134,10 @@
     margin-inline-start: auto;
     position: absolute;
     inset-block-start: 0;
+}
 
-    /* span 2 columns based on the grid in multiline #textfield */
+:host([multiline][grows][invalid]) #textfield .icon,
+:host([multiline][grows][valid]) #textfield .icon {
     grid-area: 2 / 2;
 }
 
