@@ -1072,6 +1072,45 @@ export function runPickerTests(): void {
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
         });
+        it('stops propagation of arrow key events', async () => {
+            const keydownSpy = spy();
+            const wrapper = await fixture<HTMLDivElement>(html`
+                <div @keydown=${() => keydownSpy()}>
+                    <sp-picker
+                        label="Select"
+                        value="option-2"
+                        @change=${(event: Event) => event.preventDefault()}
+                    >
+                        <sp-menu-item value="option-1">Option 1</sp-menu-item>
+                        <sp-menu-item value="option-2">Option 2</sp-menu-item>
+                        <sp-menu-item value="option-3">Option 3</sp-menu-item>
+                    </sp-picker>
+                </div>
+            `);
+            const picker = wrapper.querySelector('sp-picker') as Picker;
+
+            await elementUpdated(picker);
+
+            picker.focus();
+            await elementUpdated(picker);
+
+            // Test navigation arrow keys (don't open picker, just change selection)
+            await sendKeys({ press: 'ArrowLeft' });
+            await elementUpdated(picker);
+
+            expect(
+                keydownSpy.callCount,
+                'ArrowLeft event should not propagate'
+            ).to.equal(0);
+
+            await sendKeys({ press: 'ArrowRight' });
+            await elementUpdated(picker);
+
+            expect(
+                keydownSpy.callCount,
+                'ArrowRight event should not propagate'
+            ).to.equal(0);
+        });
         it('loads', async () => {
             expect(el).to.not.be.undefined;
         });

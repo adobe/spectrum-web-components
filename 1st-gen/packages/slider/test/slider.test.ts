@@ -118,6 +118,52 @@ describe('Slider', () => {
         expect(el.value).to.equal(46);
         expect(el.highlight).to.be.true;
     });
+    it('stops propagation of arrow key events', async () => {
+        const keydownSpy = spy();
+        const el = await fixture<Slider>(html`
+            <div @keydown=${() => keydownSpy()}>
+                <sp-slider value="50"></sp-slider>
+            </div>
+        `);
+        const slider = el.querySelector('sp-slider') as Slider;
+
+        await elementUpdated(slider);
+
+        slider.focus();
+        await sendKeys({ press: 'ArrowDown' });
+        await elementUpdated(slider);
+
+        expect(slider.value).to.equal(49);
+        expect(
+            keydownSpy.callCount,
+            'arrow key event should not propagate'
+        ).to.equal(0);
+
+        await sendKeys({ press: 'ArrowUp' });
+        await elementUpdated(slider);
+
+        expect(slider.value).to.equal(50);
+        expect(
+            keydownSpy.callCount,
+            'arrow key event should not propagate'
+        ).to.equal(0);
+
+        await sendKeys({ press: 'ArrowLeft' });
+        await elementUpdated(slider);
+
+        expect(
+            keydownSpy.callCount,
+            'arrow key event should not propagate'
+        ).to.equal(0);
+
+        await sendKeys({ press: 'ArrowRight' });
+        await elementUpdated(slider);
+
+        expect(
+            keydownSpy.callCount,
+            'arrow key event should not propagate'
+        ).to.equal(0);
+    });
     it('accepts pointer events', async () => {
         let pointerId = -1;
         const el = await fixture<Slider>(html`
