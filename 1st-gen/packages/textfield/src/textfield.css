@@ -52,6 +52,7 @@
 
 #textfield {
     box-sizing: border-box;
+    position: relative;
     inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
     grid-area: 2 / 1 / auto / span 2;
 }
