@@ -1,5 +1,5 @@
 /*!
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  *
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -289,115 +289,115 @@
 }
 
 .swc-Badge--subtle {
-    &.swc-Badge--gray {
+    &:where(.swc-Badge--gray) {
         --swc-badge-background-color: token(
             'gray-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--red {
+    &:where(.swc-Badge--red) {
         --swc-badge-background-color: token(
             'red-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--orange {
+    &:where(.swc-Badge--orange) {
         --swc-badge-background-color: token(
             'orange-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--yellow {
+    &:where(.swc-Badge--yellow) {
         --swc-badge-background-color: token(
             'yellow-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--chartreuse {
+    &:where(.swc-Badge--chartreuse) {
         --swc-badge-background-color: token(
             'chartreuse-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--celery {
+    &:where(.swc-Badge--celery) {
         --swc-badge-background-color: token(
             'celery-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--green {
+    &:where(.swc-Badge--green) {
         --swc-badge-background-color: token(
             'green-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--seafoam {
+    &:where(.swc-Badge--seafoam) {
         --swc-badge-background-color: token(
             'seafoam-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--cyan {
+    &:where(.swc-Badge--cyan) {
         --swc-badge-background-color: token(
             'cyan-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--blue {
+    &:where(.swc-Badge--blue) {
         --swc-badge-background-color: token(
             'blue-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--indigo {
+    &:where(.swc-Badge--indigo) {
         --swc-badge-background-color: token(
             'indigo-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--purple {
+    &:where(.swc-Badge--purple) {
         --swc-badge-background-color: token(
             'purple-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--fuchsia {
+    &:where(.swc-Badge--fuchsia) {
         --swc-badge-background-color: token(
             'fuchsia-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--magenta {
+    &:where(.swc-Badge--magenta) {
         --swc-badge-background-color: token(
             'magenta-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--pink {
+    &:where(.swc-Badge--pink) {
         --swc-badge-background-color: token(
             'pink-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--turquoise {
+    &:where(.swc-Badge--turquoise) {
         --swc-badge-background-color: token(
             'turquoise-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--brown {
+    &:where(.swc-Badge--brown) {
         --swc-badge-background-color: token(
             'brown-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--cinnamon {
+    &:where(.swc-Badge--cinnamon) {
         --swc-badge-background-color: token(
             'cinnamon-subtle-background-color-default'
         );
     }
 
-    &.swc-Badge--silver {
+    &:where(.swc-Badge--silver) {
         --swc-badge-background-color: token(
             'silver-subtle-background-color-default'
         );

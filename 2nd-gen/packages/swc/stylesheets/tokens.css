@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -1980,42 +1980,6 @@
     --swc-code-line-height: var(--swc-line-height-200);
     --swc-code-cjk-line-height: var(--swc-cjk-line-height-200);
     --swc-code-color: var(--swc-gray-800);
-    --swc-line-height-font-size-25: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-line-height-font-size-50: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-line-height-font-size-75: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-line-height-font-size-100: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-line-height-font-size-200: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-line-height-font-size-300: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-line-height-font-size-400: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-line-height-font-size-500: var(--spectrum-theme--sizeM, 26px)
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-line-height-font-size-600: var(--spectrum-theme--sizeM, 30px)
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-line-height-font-size-700: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-line-height-font-size-800: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-line-height-font-size-900: var(--spectrum-theme--sizeM, 42px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-line-height-font-size-1000: var(--spectrum-theme--sizeM, 46px)
-        var(--spectrum-theme--sizeL, 56px);
-    --swc-line-height-font-size-1100: var(--spectrum-theme--sizeM, 52px)
-        var(--spectrum-theme--sizeL, 64px);
-    --swc-line-height-font-size-1200: var(--spectrum-theme--sizeM, 58px)
-        var(--spectrum-theme--sizeL, 72px);
-    --swc-line-height-font-size-1300: var(--spectrum-theme--sizeM, 66px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-line-height-font-size-1400: var(--spectrum-theme--sizeM, 74px)
-        var(--spectrum-theme--sizeL, 90px);
-    --swc-line-height-font-size-1500: var(--spectrum-theme--sizeM, 84px)
-        var(--spectrum-theme--sizeL, 102px);
     --swc-animation-duration-0: 0ms;
     --swc-animation-duration-100: 130ms;
     --swc-animation-duration-200: 160ms;

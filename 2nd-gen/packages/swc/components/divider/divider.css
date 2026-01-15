@@ -14,6 +14,10 @@
     display: block;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .swc-Divider {
     --_swc-divider-thickness: var(
         --swc-divider-thickness,
