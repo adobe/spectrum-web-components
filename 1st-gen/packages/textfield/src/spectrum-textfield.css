@@ -475,7 +475,7 @@ div[aria-live="assertive"] {
 :host([side-aligned="start"]) ::slotted(sp-help-text),
 :host([side-aligned="end"]) ::slotted(sp-help-text) {
     grid-area: 2 / 2 / auto / span 1;
-    inline-size: var(--mod-textfield-width, var(--spectrum-textfield-width));
+    inline-size: var(--mod-textfield-width, auto);
 }
 
 :host([multiline]) {

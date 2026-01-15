@@ -40,10 +40,7 @@
     grid-template-rows: auto auto;
 
     /* not currently using the 3rd column for char count */
-    grid-template-columns: 1fr auto auto;
-
-    /* side aligned textfields will take up the full width of the container */
-    inline-size: 100%;
+    grid-template-columns: auto auto auto;
 }
 
 :host([disabled]:focus-visible) {
@@ -65,6 +62,7 @@ textarea {
 :host([side-aligned="start"]) #textfield,
 :host([side-aligned="end"]) #textfield {
     grid-area: 1 / 2 / auto / auto;
+    inline-size: var(--mod-textfield-width, auto);
 }
 
 :host([focused]) .input {
