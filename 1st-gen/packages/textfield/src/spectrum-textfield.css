@@ -245,6 +245,10 @@ div[aria-live="assertive"] {
     margin: 0;
 }
 
+:host([multiline]) #textfield .input {
+    grid-column: 1 / span 2;
+}
+
 :host([type="number"]) .input {
     appearance: textfield;
 }

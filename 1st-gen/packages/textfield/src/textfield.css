@@ -139,9 +139,6 @@ textarea {
 }
 
 :host([multiline][grows]:not([rows])) .input:not(#sizer) {
-    position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     resize: none;
     overflow: hidden;
