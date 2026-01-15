@@ -218,13 +218,15 @@ The main package provides a CLI to produce either the unified stylesheet `tokens
 
 > For purposes of the main package, those files are git ignored and intended for debugging purposes only.
 
-For the consuming package `@adobe/swc`, the following CLI command is used:
+For the primary consuming package `@adobe/swc`, the following CLI command is used:
 
 ```bash
 swc-tokens --outputType stylesheet --out ./stylesheets/tokens.css --prefix swc
 ```
 
 This outputs the stylesheet into the noted `--out` directory and filename, with the use of `swc` as a prefix for all custom properties.
+
+> **Note**: The `--prefix` value must match with the `prefix` option for `@adobe/postcss-token`, if using.
 
 Valid `--outputType` values include:
 
@@ -241,7 +243,7 @@ The following command can be used in the main package to produce a debug log - `
 yarn debug:tokens
 ```
 
-Generate commands are available to produce outputs like are available to consuming packages
+Generate commands are available to produce outputs like those available to consuming packages.
 
 ```bash
 yarn generate:stylesheet
