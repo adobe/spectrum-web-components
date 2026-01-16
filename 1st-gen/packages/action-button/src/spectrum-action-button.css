@@ -101,7 +101,7 @@
     --spectrum-actionbutton-focus-indicator-color: var(--highcontrast-actionbutton-focus-indicator-color, var(--mod-actionbutton-focus-indicator-color, var(--spectrum-focus-indicator-color)));
 }
 
-:host:dir(rtl) {
+:host(:dir(rtl)) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 

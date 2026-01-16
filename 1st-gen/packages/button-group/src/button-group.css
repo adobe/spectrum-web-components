@@ -18,6 +18,6 @@
     --spectrum-actionbutton-label-text-align: left;
 }
 
-:host([vertical]) ::slotted(sp-action-button:dir(rtl)) {
+:host([vertical]:dir(rtl)) ::slotted(sp-action-button) {
     --spectrum-actionbutton-label-text-align: right;
 }

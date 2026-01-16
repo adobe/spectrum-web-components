@@ -19,8 +19,8 @@
     margin: 0 var(--spectrum-fieldgroup-margin) 0 0;
 }
 
-:host([horizontal]) slot:not([name])::slotted(*:not(:last-child):dir(rtl)),
-:host(:not([vertical])) slot:not([name])::slotted(*:not(:last-child):dir(rtl)) {
+:host([horizontal]:dir(rtl)) slot:not([name])::slotted(*:not(:last-child)),
+:host(:not([vertical]):dir(rtl)) slot:not([name])::slotted(*:not(:last-child)) {
     /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item+.spectrum-FieldGroup-item */
     margin: 0 0 0 var(--spectrum-fieldgroup-margin);
 }

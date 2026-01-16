@@ -86,7 +86,7 @@
     --mod-thumbnail-size: var(--mod-table-thumbnail-size, var(--spectrum-table-thumbnail-size));
 }
 
-:host:dir(rtl) {
+:host(:dir(rtl)) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 

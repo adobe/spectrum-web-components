@@ -51,7 +51,7 @@
     );
 }
 
-:host:dir(rtl) {
+:host(:dir(rtl)) {
     --spectrum-logical-rotation: matrix(-1, 0, 0, 1, 0, 0);
 }
 

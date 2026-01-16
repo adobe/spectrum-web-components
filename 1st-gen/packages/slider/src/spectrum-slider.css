@@ -299,7 +299,7 @@
     transform: translate(-50%, -50%);
 }
 
-:host:dir(rtl) .handle:before {
+:host(:dir(rtl)) .handle:before {
     transform: translate(50%, -50%);
 }
 
