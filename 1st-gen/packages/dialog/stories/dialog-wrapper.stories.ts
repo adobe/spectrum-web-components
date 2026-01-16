@@ -14,7 +14,6 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
