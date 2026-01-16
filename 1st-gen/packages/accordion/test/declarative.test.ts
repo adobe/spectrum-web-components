@@ -106,25 +106,21 @@ describe('Accordion Item - declarative', () => {
         // Default should be h3
         expect(heading.tagName.toLowerCase()).to.equal('h3');
 
-        // Test level 1
         el.level = 1;
         await elementUpdated(el);
         const heading1 = root.querySelector('#heading') as HTMLElement;
         expect(heading1.tagName.toLowerCase()).to.equal('h1');
 
-        // Test level 2
         el.level = 2;
         await elementUpdated(el);
         const heading2 = root.querySelector('#heading') as HTMLElement;
         expect(heading2.tagName.toLowerCase()).to.equal('h2');
 
-        // Test level 4
         el.level = 4;
         await elementUpdated(el);
         const heading4 = root.querySelector('#heading') as HTMLElement;
         expect(heading4.tagName.toLowerCase()).to.equal('h4');
 
-        // Test level 6
         el.level = 6;
         await elementUpdated(el);
         const heading6 = root.querySelector('#heading') as HTMLElement;

@@ -119,7 +119,8 @@ export class AccordionItem extends SizedMixin(Focusable, {
     };
 
     private getHeadingLevel(): number {
-        return Math.max(1, Math.min(6, this.level || 3));
+        const level = this.level ?? 3;
+        return Math.max(1, Math.min(6, level));
     }
 
     private renderHeading(): TemplateResult {
