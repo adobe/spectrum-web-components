@@ -395,12 +395,13 @@ export class MenuItem extends LikeAnchor(
                 this.dependencyManager.loaded}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
                 receives-focus="false"
-                .offset=${[-10, -5] as [number, number]}
+                .offset=${[-10, 0] as [number, number]}
                 .type=${'auto'}
                 @close=${(event: Event) => event.stopPropagation()}
                 @slottable-request=${this.handleSlottableRequest}
             >
                 <sp-popover
+                    style="margin-block-start: var(--system-submenu-offset-block, -5px)"
                     @change=${(event: Event) => {
                         this.handleSubmenuChange(event);
                         this.open = false;
