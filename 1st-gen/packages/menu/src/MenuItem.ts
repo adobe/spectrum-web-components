@@ -331,7 +331,6 @@ export class MenuItem extends LikeAnchor(
         if (this.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            event.stopPropagation();
             return false;
         }
 

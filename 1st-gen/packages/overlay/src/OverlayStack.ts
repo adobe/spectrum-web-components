@@ -176,7 +176,6 @@ class OverlayStack {
                 !this.isEventInsideModal(pointerPath, pageOverlays)
             ) {
                 event.preventDefault();
-                event.stopPropagation();
                 event.stopImmediatePropagation();
                 return;
             }
@@ -210,7 +209,6 @@ class OverlayStack {
             // If click is outside all page overlays, prevent it from reaching the target
             // This replicates the behavior that showModal() provided automatically
             event.stopImmediatePropagation();
-            event.stopPropagation();
             event.preventDefault();
         }
     };
@@ -232,19 +230,29 @@ class OverlayStack {
         this.lastOverlay = undefined;
 
         const lastIndex = this.stack.length - 1;
-        const clickedBackdrop = composedPath.some(
-            (el) =>
-                el instanceof HTMLElement &&
-                el.classList.contains('modal-backdrop')
+
+        // Early optimization: only check for backdrop clicks if modal/page overlays exist
+        // (only they have backdrops). This avoids iterating through composedPath unnecessarily.
+        const hasModalOrPageOverlay = this.stack.some(
+            (overlay) =>
+                overlay.open &&
+                (overlay.type === 'modal' || overlay.type === 'page')
         );
-        if (clickedBackdrop) {
-            const topOverlay = this.stack[this.stack.length - 1];
-            // Only modal overlays close on backdrop click.
-            // Page overlays are blocking and should not be light-dismissable.
-            if (topOverlay?.type === 'modal') {
-                this.closeOverlay(topOverlay);
+        if (hasModalOrPageOverlay) {
+            const clickedBackdrop = composedPath.some(
+                (el) =>
+                    el instanceof HTMLDivElement &&
+                    el.classList.contains('modal-backdrop')
+            );
+            if (clickedBackdrop) {
+                const topOverlay = this.stack[this.stack.length - 1];
+                // Only modal overlays close on backdrop click.
+                // Page overlays are blocking and should not be light-dismissable.
+                if (topOverlay?.type === 'modal') {
+                    this.closeOverlay(topOverlay);
+                }
+                return;
             }
-            return;
         }
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
