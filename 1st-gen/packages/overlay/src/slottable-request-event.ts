@@ -23,7 +23,7 @@ export class SlottableRequestEvent extends Event {
         this.name = name;
         this.data = data;
         this.slotName = key !== undefined ? `${name}.${key}` : name;
-        if (window.__swc?.DEBUG) {
+        if (window.__swc?.DEBUG && window.__swc?.warn) {
             window.__swc.warn(
                 undefined,
                 `⚠️  WARNING ⚠️ : \`slottable-request\` events are experimental and there is no guarantees behind usage of them in an application!! Their shape and presence within the library could be changed at anytime.

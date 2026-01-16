@@ -1,42 +1,42 @@
 {
-    "sans-font-family-stack": {
-        "value": "'{sans-serif-font-family}', 'Adobe Clean', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
-    },
-    "sans-serif-font": {
-        "value": "{sans-font-family-stack}",
-        "skipResolution": true
-    },
-    "serif-font-family-stack": {
-        "value": "adobe-clean-serif, '{serif-font-family}', 'Source Serif Pro', Georgia, serif"
-    },
-    "serif-font": {
-        "value": "{serif-font-family-stack}",
-        "skipResolution": true
-    },
-    "code-font-family-stack": {
-        "value": "'{code-font-family}',  Monaco, monospace"
-    },
-    "font-family-he": {
-        "value": "myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
-    },
-    "font-family-ar": {
-        "value": "myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
-    },
-    "font-family": {
-        "value": "{sans-font-family-stack}",
-        "skipResolution": true
-    },
-    "font-style": {
-        "value": "{default-font-style}"
-    },
-    "font-size": {
-        "value": "{font-size-100}"
+    "cjk-font": {
+        "skipResolution": true,
+        "value": "{cjk-font-family-stack}"
     },
     "cjk-font-family-stack": {
         "value": "adobe-clean-han-japanese, {cjk-font-family}, sans-serif;"
     },
-    "cjk-font": {
-        "value": "{cjk-font-family-stack}",
-        "skipResolution": true
+    "code-font-family-stack": {
+        "value": "'{code-font-family}',  Monaco, monospace"
+    },
+    "font-family": {
+        "skipResolution": true,
+        "value": "{sans-font-family-stack}"
+    },
+    "font-family-ar": {
+        "value": "myriad-hebrew, adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
+    },
+    "font-family-he": {
+        "value": "myriad-arabic, adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
+    },
+    "font-size": {
+        "value": "{font-size-100}"
+    },
+    "font-style": {
+        "value": "{default-font-style}"
+    },
+    "sans-font-family-stack": {
+        "value": "'{sans-serif-font-family}', 'Adobe Clean', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif"
+    },
+    "sans-serif-font": {
+        "skipResolution": true,
+        "value": "{sans-font-family-stack}"
+    },
+    "serif-font": {
+        "skipResolution": true,
+        "value": "{serif-font-family-stack}"
+    },
+    "serif-font-family-stack": {
+        "value": "adobe-clean-serif, '{serif-font-family}', 'Source Serif Pro', Georgia, serif"
     }
 }

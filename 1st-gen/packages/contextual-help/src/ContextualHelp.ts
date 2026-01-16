@@ -87,6 +87,17 @@ export class ContextualHelp extends SpectrumElement {
     @property({ type: Boolean })
     open = false;
 
+    static instanceCount = 0;
+    private popoverId: string;
+    private contentId: string;
+
+    constructor() {
+        super();
+        const id = ContextualHelp.instanceCount++;
+        this.popoverId = `contextual-help-popover-${id}`;
+        this.contentId = `contextual-help-content-${id}`;
+    }
+
     public get buttonAriaLabel(): string {
         if (this.label) {
             return this.label;
@@ -103,9 +114,12 @@ export class ContextualHelp extends SpectrumElement {
             import('@spectrum-web-components/dialog/sp-dialog-base.js');
             import('@spectrum-web-components/dialog/sp-dialog.js');
 
+            // sp-dialog (via AlertDialog) handles aria-labelledby and aria-describedby
+            // automatically from the heading and content slots, so we rely on that native handling
+            // ID is still needed for aria-controls on the button
             return html`
                 <sp-dialog-base underlay>
-                    <sp-dialog dismissable size="s">
+                    <sp-dialog dismissable size="s" id=${this.popoverId}>
                         <slot name="heading" slot="heading"></slot>
                         <slot></slot>
                         <slot name="link"></slot>
@@ -116,10 +130,19 @@ export class ContextualHelp extends SpectrumElement {
             import('@spectrum-web-components/popover/sp-popover.js');
 
             return html`
-                <sp-popover class="popover">
-                    <section>
-                        <slot name="heading"></slot>
-                        <slot></slot>
+                <sp-popover
+                    class="popover"
+                    id=${this.popoverId}
+                    role="region"
+                    aria-labelledby=${this.contentId}
+                >
+                    <section id=${this.contentId}>
+                        <div>
+                            <slot name="heading"></slot>
+                        </div>
+                        <div class="body">
+                            <slot></slot>
+                        </div>
                         <slot name="link"></slot>
                     </section>
                 </sp-popover>
@@ -153,6 +176,11 @@ export class ContextualHelp extends SpectrumElement {
                 size="s"
                 id="trigger"
                 aria-label=${this.buttonAriaLabel}
+                aria-haspopup=${ifDefined(
+                    this.isMobile.matches ? 'dialog' : undefined
+                )}
+                aria-expanded=${this.open ? 'true' : 'false'}
+                aria-controls=${this.popoverId}
                 .active=${this.open}
             >
                 ${this.variant === 'help'

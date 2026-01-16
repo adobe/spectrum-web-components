@@ -5,8 +5,14 @@
     "animation-duration-100": {
         "value": "130ms"
     },
+    "animation-duration-1000": {
+        "value": "500ms"
+    },
     "animation-duration-200": {
         "value": "160ms"
+    },
+    "animation-duration-2000": {
+        "value": "1000ms"
     },
     "animation-duration-300": {
         "value": "190ms"
@@ -14,11 +20,17 @@
     "animation-duration-400": {
         "value": "220ms"
     },
+    "animation-duration-4000": {
+        "value": "2000ms"
+    },
     "animation-duration-500": {
         "value": "250ms"
     },
     "animation-duration-600": {
         "value": "300ms"
+    },
+    "animation-duration-6000": {
+        "value": "3000ms"
     },
     "animation-duration-700": {
         "value": "350ms"
@@ -29,31 +41,19 @@
     "animation-duration-900": {
         "value": "450ms"
     },
-    "animation-duration-1000": {
-        "value": "500ms"
-    },
-    "animation-duration-2000": {
-        "value": "1000ms"
-    },
-    "animation-duration-4000": {
-        "value": "2000ms"
-    },
-    "animation-duration-6000": {
-        "value": "3000ms"
-    },
-    "animation-linear": {
-        "value": "cubic-bezier(0, 0, 1, 1)"
+    "animation-ease-in": {
+        "value": "cubic-bezier(0.5, 0, 1, 1)"
     },
     "animation-ease-in-out": {
         "value": "cubic-bezier(0.45, 0, 0.4, 1)"
     },
-    "animation-ease-in": {
-        "value": "cubic-bezier(0.5, 0, 1, 1)"
+    "animation-ease-linear": {
+        "value": "cubic-bezier(0, 0, 1, 1)"
     },
     "animation-ease-out": {
         "value": "cubic-bezier(0, 0, 0.4, 1)"
     },
-    "animation-ease-linear": {
+    "animation-linear": {
         "value": "cubic-bezier(0, 0, 1, 1)"
     }
 }

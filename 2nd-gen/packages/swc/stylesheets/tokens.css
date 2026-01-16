@@ -1982,44 +1982,44 @@
     --swc-code-color: var(--swc-gray-800);
     --swc-animation-duration-0: 0ms;
     --swc-animation-duration-100: 130ms;
+    --swc-animation-duration-1000: 500ms;
     --swc-animation-duration-200: 160ms;
+    --swc-animation-duration-2000: 1000ms;
     --swc-animation-duration-300: 190ms;
     --swc-animation-duration-400: 220ms;
+    --swc-animation-duration-4000: 2000ms;
     --swc-animation-duration-500: 250ms;
     --swc-animation-duration-600: 300ms;
+    --swc-animation-duration-6000: 3000ms;
     --swc-animation-duration-700: 350ms;
     --swc-animation-duration-800: 400ms;
     --swc-animation-duration-900: 450ms;
-    --swc-animation-duration-1000: 500ms;
-    --swc-animation-duration-2000: 1000ms;
-    --swc-animation-duration-4000: 2000ms;
-    --swc-animation-duration-6000: 3000ms;
-    --swc-animation-linear: cubic-bezier(0, 0, 1, 1);
-    --swc-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --swc-animation-ease-in: cubic-bezier(0.5, 0, 1, 1);
-    --swc-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
+    --swc-animation-ease-in-out: cubic-bezier(0.45, 0, 0.4, 1);
     --swc-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
+    --swc-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
+    --swc-animation-linear: cubic-bezier(0, 0, 1, 1);
+    --swc-cjk-font: var(--swc-cjk-font-family-stack);
+    --swc-cjk-font-family-stack:
+        adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
+    --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+    --swc-font-family: var(--swc-sans-font-family-stack);
+    --swc-font-family-ar: 'myriad-hebrew, adobe-clean, ' Source Sans Pro
+        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
+        Trebuchet MS ', ' Lucida Grande ', sans-serif';
+    --swc-font-family-he: 'myriad-arabic, adobe-clean, ' Source Sans Pro
+        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
+        Trebuchet MS ', ' Lucida Grande ', sans-serif';
+    --swc-font-style: normal;
     --swc-sans-font-family-stack:
         'Adobe Clean Spectrum VF', 'Adobe Clean', 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --swc-sans-serif-font: var(--swc-sans-font-family-stack);
+    --swc-serif-font: var(--swc-serif-font-family-stack);
     --swc-serif-font-family-stack:
         adobe-clean-serif, 'Adobe Clean Serif', 'Source Serif Pro', Georgia,
         serif;
-    --swc-serif-font: var(--swc-serif-font-family-stack);
-    --swc-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
-    --swc-font-family-he: 'myriad-arabic, adobe-clean, ' Source Sans Pro
-        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
-        Trebuchet MS ', ' Lucida Grande ', sans-serif';
-    --swc-font-family-ar: 'myriad-hebrew, adobe-clean, ' Source Sans Pro
-        ', -apple-system, BlinkMacSystemFont, ' Segoe UI ', Roboto, Ubuntu, '
-        Trebuchet MS ', ' Lucida Grande ', sans-serif';
-    --swc-font-family: var(--swc-sans-font-family-stack);
-    --swc-font-style: normal;
-    --swc-cjk-font-family-stack:
-        adobe-clean-han-japanese, Adobe Clean Han, sans-serif;
-    --swc-cjk-font: var(--swc-cjk-font-family-stack);
 }
 
 :root,

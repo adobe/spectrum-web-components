@@ -364,8 +364,6 @@ function normalizePrimitive(
 }
 
 function normalizeSetGroup(sets, lookup, prefix, debug) {
-    // const log = typeof debug === 'function' ? debug : () => {};
-
     const out = {};
 
     for (const [name, set] of Object.entries(sets)) {
