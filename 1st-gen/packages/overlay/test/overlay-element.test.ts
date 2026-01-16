@@ -346,6 +346,64 @@ describe('sp-overlay', () => {
                 expect(this.manual.open).to.be.true;
             });
         });
+        describe('stacked sibling modal overlays', function () {
+            it('keeps first modal visible when second sibling modal opens', async function () {
+                const fixture = await styledFixture<HTMLDivElement>(html`
+                    <div>
+                        <sp-overlay type="modal" class="modal-1">
+                            <sp-tooltip>First Modal Content</sp-tooltip>
+                        </sp-overlay>
+                        <sp-overlay type="modal" class="modal-2">
+                            <sp-tooltip>Second Modal Content</sp-tooltip>
+                        </sp-overlay>
+                    </div>
+                `);
+
+                const modal1 = fixture.querySelector('.modal-1') as Overlay;
+                const modal2 = fixture.querySelector('.modal-2') as Overlay;
+
+                expect(modal1.open).to.be.false;
+                expect(modal2.open).to.be.false;
+
+                // Open the first modal
+                let opened = oneEvent(modal1, 'sp-opened');
+                modal1.open = true;
+                await opened;
+
+                expect(modal1.open).to.be.true;
+                expect(modal2.open).to.be.false;
+
+                // Open the second sibling modal - first modal should stay visible
+                opened = oneEvent(modal2, 'sp-opened');
+                modal2.open = true;
+                await opened;
+
+                expect(
+                    modal1.open,
+                    'first modal should stay open when second sibling modal opens'
+                ).to.be.true;
+                expect(modal2.open).to.be.true;
+
+                // Close second modal with Escape - first modal should remain
+                const closed2 = oneEvent(modal2, 'sp-closed');
+                await sendKeys({ press: 'Escape' });
+                await closed2;
+
+                expect(
+                    modal1.open,
+                    'first modal should remain open after second modal closes'
+                ).to.be.true;
+                expect(modal2.open).to.be.false;
+
+                // Close first modal
+                const closed1 = oneEvent(modal1, 'sp-closed');
+                await sendKeys({ press: 'Escape' });
+                await closed1;
+
+                expect(modal1.open).to.be.false;
+                expect(modal2.open).to.be.false;
+            });
+        });
     });
     describe('[type="page"]', () => {
         opensDeclaratively('page');

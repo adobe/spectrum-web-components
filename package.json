@@ -45,6 +45,7 @@
         "2nd-gen/packages/tools/*"
     ],
     "resolutions": {
+        "@web/test-runner-coverage-v8": "patch:@web/test-runner-coverage-v8@npm%3A0.8.0#~/.yarn/patches/@web-test-runner-coverage-v8-npm-0.8.0-b19cf60e5f.patch",
         "playwright": "1.53.1"
     },
     "devDependencies": {

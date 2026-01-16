@@ -18,6 +18,7 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -978,5 +979,52 @@ nestedModalOverlays.swc_vrt = {
 };
 
 nestedModalOverlays.parameters = {
+    chromatic: { disableSnapshot: true },
+};
+
+export const modalClickBlocking = (): TemplateResult => html`
+    <div style="padding: 20px;">
+        <h2>Modal Overlay Click Blocking Test</h2>
+        <p>
+            Click "Open overlay" to open a modal overlay. Then try clicking the
+            "External" button. The external button should NOT be clickable when
+            the modal is open.
+        </p>
+        <sp-button id="trigger">Open overlay</sp-button>
+
+        <sp-overlay trigger="trigger@click" type="modal" placement="bottom">
+            <sp-popover style="padding: 10px">
+                <sp-button
+                    onclick="alert('Internal button clicked! This should work.')"
+                >
+                    Add a div
+                </sp-button>
+                <p style="margin-top: 10px;">
+                    This is inside the modal overlay. Clicking the button above
+                    should work.
+                </p>
+            </sp-popover>
+        </sp-overlay>
+
+        <sp-button
+            id="externalButton"
+            onclick="alert('External button clicked! This should NOT work when modal is open.')"
+            style="margin-top: 20px;"
+        >
+            External
+        </sp-button>
+        <p style="margin-top: 10px; color: red;">
+            ⚠️ When the modal is open, clicking "External" should be blocked. If
+            you can click it and see the alert, the fix is not working.
+        </p>
+    </div>
+`;
+
+modalClickBlocking.swc_vrt = {
+    skip: true,
+};
+
+modalClickBlocking.parameters = {
+    tags: ['!dev'],
     chromatic: { disableSnapshot: true },
 };
