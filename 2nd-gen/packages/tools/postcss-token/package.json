@@ -24,7 +24,7 @@
         "test:watch": "vitest --watch"
     },
     "dependencies": {
-        "@adobe/swc-tokens": "0.0.1"
+        "@adobe/swc-tokens": "workspace:*"
     },
     "peerDependencies": {
         "postcss": "8.5.6"
