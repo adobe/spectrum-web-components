@@ -117,6 +117,6 @@ describe('postcss-token plugin', () => {
                 `a { color: token('this-token-does-not-exist'); }`,
                 { from: undefined }
             )
-        ).rejects.toThrow(`token() did not find 'this-token-does-not-exist'`);
+        ).rejects.toThrow(`token() not found: 'this-token-does-not-exist'`);
     });
 });

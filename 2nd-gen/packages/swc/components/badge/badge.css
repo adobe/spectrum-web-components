@@ -1,5 +1,5 @@
 /*!
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  *
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -14,14 +14,14 @@
 :host {
     display: inline-block;
     vertical-align: middle;
-    align-self: start;
-
-    > * {
-        box-sizing: border-box;
-    }
+    place-self: start;
 }
 
-.spectrum-Badge {
+* {
+    box-sizing: border-box;
+}
+
+.swc-Badge {
     --_swc-badge-border-width: token('border-width-200');
     --_swc-badge-border-width-deduction: calc(
         var(--_swc-badge-border-width) * 2
@@ -55,14 +55,14 @@
     );
 }
 
-.spectrum-Badge:has(.spectrum-Badge-icon) {
+.swc-Badge:has(.swc-Badge-icon) {
     --swc-badge-padding-inline: var(
         --swc-badge-with-icon-padding-inline,
         token('component-edge-to-visual-100')
     );
 }
 
-.spectrum-Badge-label {
+.swc-Badge-label {
     font-size: var(--swc-badge-font-size, token('font-size-100'));
     font-weight: token('medium-font-weight');
     line-height: var(--swc-badge-line-height, token('line-height-100'));
@@ -74,7 +74,7 @@
     }
 }
 
-.spectrum-Badge-icon {
+.swc-Badge-icon {
     --_swc-badge-icon-size: token('workflow-icon-size-100');
 
     block-size: var(--swc-badge-icon-size, var(--_swc-badge-icon-size));
@@ -120,31 +120,31 @@
     --swc-badge-icon-size: token('workflow-icon-size-300');
 }
 
-.spectrum-Badge--fixed-inline-start {
+.swc-Badge--fixed-inline-start {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
 }
 
-.spectrum-Badge--fixed-inline-end {
+.swc-Badge--fixed-inline-end {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
 }
 
-.spectrum-Badge--fixed-block-start {
+.swc-Badge--fixed-block-start {
     border-start-start-radius: 0;
     border-start-end-radius: 0;
 }
 
-.spectrum-Badge--fixed-block-end {
+.swc-Badge--fixed-block-end {
     border-end-start-radius: 0;
     border-end-end-radius: 0;
 }
 
-.spectrum-Badge--celery,
-.spectrum-Badge--chartreuse,
-.spectrum-Badge--notice,
-.spectrum-Badge--orange,
-.spectrum-Badge--yellow {
+:host([variant='notice']),
+:host([variant='celery']),
+:host([variant='chartreuse']),
+:host([variant='orange']),
+:host([variant='yellow']) {
     --swc-badge-label-icon-color: token('black');
 }
 
@@ -172,79 +172,79 @@
     --swc-badge-background-color: token('notice-background-color-default');
 }
 
-.spectrum-Badge--gray {
+.swc-Badge--gray {
     --swc-badge-background-color: token('gray-background-color-default');
 }
 
-.spectrum-Badge--red {
+.swc-Badge--red {
     --swc-badge-background-color: token('red-background-color-default');
 }
 
-.spectrum-Badge--orange {
+.swc-Badge--orange {
     --swc-badge-background-color: token('orange-background-color-default');
 }
 
-.spectrum-Badge--yellow {
+.swc-Badge--yellow {
     --swc-badge-background-color: token('yellow-background-color-default');
 }
 
-.spectrum-Badge--chartreuse {
+.swc-Badge--chartreuse {
     --swc-badge-background-color: token('chartreuse-background-color-default');
 }
 
-.spectrum-Badge--celery {
+.swc-Badge--celery {
     --swc-badge-background-color: token('celery-background-color-default');
 }
 
-.spectrum-Badge--green {
+.swc-Badge--green {
     --swc-badge-background-color: token('green-background-color-default');
 }
 
-.spectrum-Badge--seafoam {
+.swc-Badge--seafoam {
     --swc-badge-background-color: token('seafoam-background-color-default');
 }
 
-.spectrum-Badge--cyan {
+.swc-Badge--cyan {
     --swc-badge-background-color: token('cyan-background-color-default');
 }
 
-.spectrum-Badge--blue {
+.swc-Badge--blue {
     --swc-badge-background-color: token('blue-background-color-default');
 }
 
-.spectrum-Badge--indigo {
+.swc-Badge--indigo {
     --swc-badge-background-color: token('indigo-background-color-default');
 }
 
-.spectrum-Badge--purple {
+.swc-Badge--purple {
     --swc-badge-background-color: token('purple-background-color-default');
 }
 
-.spectrum-Badge--fuchsia {
+.swc-Badge--fuchsia {
     --swc-badge-background-color: token('fuchsia-background-color-default');
 }
 
-.spectrum-Badge--magenta {
+.swc-Badge--magenta {
     --swc-badge-background-color: token('magenta-background-color-default');
 }
 
-.spectrum-Badge--pink {
+.swc-Badge--pink {
     --swc-badge-background-color: token('pink-background-color-default');
 }
 
-.spectrum-Badge--turquoise {
+.swc-Badge--turquoise {
     --swc-badge-background-color: token('turquoise-background-color-default');
 }
 
-.spectrum-Badge--brown {
+.swc-Badge--brown {
     --swc-badge-background-color: token('brown-background-color-default');
 }
 
-.spectrum-Badge--cinnamon {
+.swc-Badge--cinnamon {
     --swc-badge-background-color: token('cinnamon-background-color-default');
 }
 
-.spectrum-Badge--silver {
+.swc-Badge--silver {
     --swc-badge-background-color: token('silver-background-color-default');
 }
 
@@ -288,116 +288,116 @@
     );
 }
 
-.spectrum-Badge--subtle {
-    &.spectrum-Badge--gray {
+.swc-Badge--subtle {
+    &:where(.swc-Badge--gray) {
         --swc-badge-background-color: token(
             'gray-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--red {
+    &:where(.swc-Badge--red) {
         --swc-badge-background-color: token(
             'red-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--orange {
+    &:where(.swc-Badge--orange) {
         --swc-badge-background-color: token(
             'orange-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--yellow {
+    &:where(.swc-Badge--yellow) {
         --swc-badge-background-color: token(
             'yellow-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--chartreuse {
+    &:where(.swc-Badge--chartreuse) {
         --swc-badge-background-color: token(
             'chartreuse-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--celery {
+    &:where(.swc-Badge--celery) {
         --swc-badge-background-color: token(
             'celery-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--green {
+    &:where(.swc-Badge--green) {
         --swc-badge-background-color: token(
             'green-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--seafoam {
+    &:where(.swc-Badge--seafoam) {
         --swc-badge-background-color: token(
             'seafoam-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--cyan {
+    &:where(.swc-Badge--cyan) {
         --swc-badge-background-color: token(
             'cyan-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--blue {
+    &:where(.swc-Badge--blue) {
         --swc-badge-background-color: token(
             'blue-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--indigo {
+    &:where(.swc-Badge--indigo) {
         --swc-badge-background-color: token(
             'indigo-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--purple {
+    &:where(.swc-Badge--purple) {
         --swc-badge-background-color: token(
             'purple-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--fuchsia {
+    &:where(.swc-Badge--fuchsia) {
         --swc-badge-background-color: token(
             'fuchsia-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--magenta {
+    &:where(.swc-Badge--magenta) {
         --swc-badge-background-color: token(
             'magenta-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--pink {
+    &:where(.swc-Badge--pink) {
         --swc-badge-background-color: token(
             'pink-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--turquoise {
+    &:where(.swc-Badge--turquoise) {
         --swc-badge-background-color: token(
             'turquoise-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--brown {
+    &:where(.swc-Badge--brown) {
         --swc-badge-background-color: token(
             'brown-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--cinnamon {
+    &:where(.swc-Badge--cinnamon) {
         --swc-badge-background-color: token(
             'cinnamon-subtle-background-color-default'
         );
     }
 
-    &.spectrum-Badge--silver {
+    &:where(.swc-Badge--silver) {
         --swc-badge-background-color: token(
             'silver-subtle-background-color-default'
         );

@@ -21,16 +21,16 @@ export const withContext: DecoratorFunction = (Story, context) => {
     const scale = context.globals.scale;
 
     document.documentElement.classList.remove(
-        'spectrum-theme--light',
-        'spectrum-theme--dark',
-        'spectrum-theme--adaptive'
+        'swc-theme--light',
+        'swc-theme--dark',
+        'swc-theme--adaptive'
     );
-    document.documentElement.classList.add(`spectrum-theme--${theme}`);
+    document.documentElement.classList.add(`swc-theme--${theme}`);
 
     if (scale === 'large') {
-        document.documentElement.classList.add('spectrum-theme--sizeL');
+        document.documentElement.classList.add('swc-theme--sizeL');
     } else {
-        document.documentElement.classList.remove('spectrum-theme--sizeL');
+        document.documentElement.classList.remove('swc-theme--sizeL');
     }
 
     return html`${Story(context)}`;

@@ -22,27 +22,27 @@
 
 /* Theme scaling setup */
 :root,
-.spectrum-theme,
-.spectrum-theme--sizeM {
-    --spectrum-theme-size: var(--spectrum-theme--sizeM,);
-    --spectrum-theme--sizeM: var(--spectrum-theme-size,);
-    --spectrum-theme--sizeL: var(--spectrum-theme-size,);
+.swc-theme,
+.swc-theme--sizeM {
+    --swc-theme-size: var(--swc-theme--sizeM,);
+    --swc-theme--sizeM: var(--swc-theme-size,);
+    --swc-theme--sizeL: var(--swc-theme-size,);
 }
 
-.spectrum-theme--sizeL {
-    --spectrum-theme-size: var(--spectrum-theme--sizeL);
+.swc-theme--sizeL {
+    --swc-theme-size: var(--swc-theme--sizeL);
 }
 
 /* Theme colors setup */
 :root,
-.spectrum-theme--light {
+.swc-theme--light {
     color-scheme: light;
 }
 
-.spectrum-theme--dark {
+.swc-theme--dark {
     color-scheme: dark;
 }
 
-.spectrum-theme--adaptive {
+.swc-theme--adaptive {
     color-scheme: light dark;
 }
