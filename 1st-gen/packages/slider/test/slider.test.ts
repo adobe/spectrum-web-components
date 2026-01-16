@@ -118,7 +118,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(46);
         expect(el.highlight).to.be.true;
     });
-    it('stops propagation of arrow key events', async () => {
+    it('stops propagation of arrow key events but allows other keys to propagate', async () => {
         const keydownSpy = spy();
         const el = await fixture<Slider>(html`
             <div @keydown=${() => keydownSpy()}>
@@ -130,13 +130,15 @@ describe('Slider', () => {
         await elementUpdated(slider);
 
         slider.focus();
+
+        // Arrow keys should NOT propagate
         await sendKeys({ press: 'ArrowDown' });
         await elementUpdated(slider);
 
         expect(slider.value).to.equal(49);
         expect(
             keydownSpy.callCount,
-            'arrow key event should not propagate'
+            'ArrowDown event should not propagate'
         ).to.equal(0);
 
         await sendKeys({ press: 'ArrowUp' });
@@ -145,7 +147,7 @@ describe('Slider', () => {
         expect(slider.value).to.equal(50);
         expect(
             keydownSpy.callCount,
-            'arrow key event should not propagate'
+            'ArrowUp event should not propagate'
         ).to.equal(0);
 
         await sendKeys({ press: 'ArrowLeft' });
@@ -153,7 +155,7 @@ describe('Slider', () => {
 
         expect(
             keydownSpy.callCount,
-            'arrow key event should not propagate'
+            'ArrowLeft event should not propagate'
         ).to.equal(0);
 
         await sendKeys({ press: 'ArrowRight' });
@@ -161,8 +163,17 @@ describe('Slider', () => {
 
         expect(
             keydownSpy.callCount,
-            'arrow key event should not propagate'
+            'ArrowRight event should not propagate'
         ).to.equal(0);
+
+        // Other keys SHOULD propagate
+        await sendKeys({ press: 'Tab' });
+        await elementUpdated(slider);
+
+        expect(
+            keydownSpy.callCount,
+            'Tab event should propagate'
+        ).to.be.greaterThan(0);
     });
     it('accepts pointer events', async () => {
         let pointerId = -1;

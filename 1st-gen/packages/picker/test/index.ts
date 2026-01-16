@@ -1072,7 +1072,7 @@ export function runPickerTests(): void {
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
         });
-        it('stops propagation of arrow key events', async () => {
+        it('stops propagation of arrow key events but allows other keys to propagate', async () => {
             const keydownSpy = spy();
             const wrapper = await fixture<HTMLDivElement>(html`
                 <div @keydown=${() => keydownSpy()}>
@@ -1094,7 +1094,7 @@ export function runPickerTests(): void {
             picker.focus();
             await elementUpdated(picker);
 
-            // Test navigation arrow keys (don't open picker, just change selection)
+            // Arrow keys should NOT propagate
             await sendKeys({ press: 'ArrowLeft' });
             await elementUpdated(picker);
 
@@ -1110,6 +1110,17 @@ export function runPickerTests(): void {
                 keydownSpy.callCount,
                 'ArrowRight event should not propagate'
             ).to.equal(0);
+
+            // Enter key SHOULD propagate (opens picker, but event bubbles)
+            const opened = oneEvent(picker, 'sp-opened');
+            await sendKeys({ press: 'Enter' });
+            await opened;
+            await elementUpdated(picker);
+
+            expect(
+                keydownSpy.callCount,
+                'Enter event should propagate'
+            ).to.be.greaterThan(0);
         });
         it('loads', async () => {
             expect(el).to.not.be.undefined;
