@@ -91,4 +91,56 @@ describe('Accordion Item - declarative', () => {
 
         expect(toggleSpy.callCount).to.equal(1);
     });
+    it('uses the correct heading level', async () => {
+        const el = await fixture<AccordionItem>(html`
+            <sp-accordion-item label="Test Item">
+                <div>Item content</div>
+            </sp-accordion-item>
+        `);
+
+        await elementUpdated(el);
+
+        const root = el.shadowRoot as ShadowRoot;
+        const heading = root.querySelector('#heading') as HTMLElement;
+
+        // Default should be h3
+        expect(heading.tagName.toLowerCase()).to.equal('h3');
+
+        // Test level 1
+        el.level = 1;
+        await elementUpdated(el);
+        const heading1 = root.querySelector('#heading') as HTMLElement;
+        expect(heading1.tagName.toLowerCase()).to.equal('h1');
+
+        // Test level 2
+        el.level = 2;
+        await elementUpdated(el);
+        const heading2 = root.querySelector('#heading') as HTMLElement;
+        expect(heading2.tagName.toLowerCase()).to.equal('h2');
+
+        // Test level 4
+        el.level = 4;
+        await elementUpdated(el);
+        const heading4 = root.querySelector('#heading') as HTMLElement;
+        expect(heading4.tagName.toLowerCase()).to.equal('h4');
+
+        // Test level 6
+        el.level = 6;
+        await elementUpdated(el);
+        const heading6 = root.querySelector('#heading') as HTMLElement;
+        expect(heading6.tagName.toLowerCase()).to.equal('h6');
+
+        // Test invalid levels are clamped
+        el.level = 0;
+        await elementUpdated(el);
+        const headingClampedLow = root.querySelector('#heading') as HTMLElement;
+        expect(headingClampedLow.tagName.toLowerCase()).to.equal('h1');
+
+        el.level = 10;
+        await elementUpdated(el);
+        const headingClampedHigh = root.querySelector(
+            '#heading'
+        ) as HTMLElement;
+        expect(headingClampedHigh.tagName.toLowerCase()).to.equal('h6');
+    });
 });
