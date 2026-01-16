@@ -11,7 +11,6 @@
  */
 
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
-import { isWebKit } from '@spectrum-web-components/shared';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
 import { noop } from './AbstractOverlay.js';
 import {
@@ -54,10 +53,12 @@ export class HoverController extends InteractionController {
             return;
         }
 
-        if (
-            isWebKit() &&
-            this.target[lastInteractionType] === InteractionTypes.click
-        ) {
+        // Don't open hover overlay if the last interaction was a click.
+        // This prevents hover from opening when focus returns to trigger
+        // after closing a modal overlay via Escape key.
+        // Previously this check was WebKit-only, but Chromium also needs it
+        // because it reports :focus-visible=true for programmatic focus after keyboard events.
+        if (this.target[lastInteractionType] === InteractionTypes.click) {
             return;
         }
 

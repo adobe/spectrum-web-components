@@ -668,7 +668,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             this.deprecatedMenu?.toggleAttribute('ignore', true);
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
