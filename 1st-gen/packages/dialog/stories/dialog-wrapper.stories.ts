@@ -212,37 +212,54 @@ export const form = (
                 }}
             >
                 <style>
-                    #form-fields div {
+                    .form-container {
                         display: flex;
                         flex-direction: column;
-                        place-self: center;
+                        align-items: end;
                         row-gap: calc(var(--swc-scale-factor) * 12px);
+                        --mod-textfield-width: 240px;
+                        --mod-textfield-container-width: 100%;
+                    }
+                    .form-item {
+                        padding-inline-end: calc(
+                            var(--swc-scale-factor) * 24px
+                        );
                     }
                 </style>
-                <div>
-                    <sp-textfield id="street" side-aligned="end" autofocus>
-                        Street:
-                    </sp-textfield>
-                    <sp-textfield id="city" side-aligned="end">
-                        City:
-                    </sp-textfield>
-                    <sp-textfield id="state" side-aligned="end">
-                        State:
-                    </sp-textfield>
-                    <sp-textfield id="zip" side-aligned="end">
-                        Zip:
-                    </sp-textfield>
-                    <sp-textfield
-                        id="instructions"
-                        side-aligned="end"
-                        multiline
-                    >
-                        Special instructions:
-                        <sp-help-text slot="help-text">
-                            For example, gate code or other information to help
-                            the driver find you
-                        </sp-help-text>
-                    </sp-textfield>
+                <div class="form-container">
+                    <div class="form-item">
+                        <sp-textfield id="street" side-aligned="end" autofocus>
+                            Street:
+                        </sp-textfield>
+                    </div>
+                    <div class="form-item">
+                        <sp-textfield id="city" side-aligned="end">
+                            City:
+                        </sp-textfield>
+                    </div>
+                    <div class="form-item">
+                        <sp-textfield id="state" side-aligned="end">
+                            State:
+                        </sp-textfield>
+                    </div>
+                    <div class="form-item">
+                        <sp-textfield id="zip" side-aligned="end">
+                            Zip:
+                        </sp-textfield>
+                    </div>
+                    <div class="form-item">
+                        <sp-textfield
+                            id="instructions"
+                            side-aligned="end"
+                            multiline
+                        >
+                            Special instructions:
+                            <sp-help-text slot="help-text">
+                                For example, gate code or other information to
+                                help the driver find you
+                            </sp-help-text>
+                        </sp-textfield>
+                    </div>
                 </div>
             </sp-dialog-wrapper>
         </overlay-trigger>
