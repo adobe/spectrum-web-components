@@ -134,7 +134,7 @@ Error: token() did not find 'not-a-real-token'
 
 ### `prefix`
 
-**Required** to match prefix provided to `@adobe/swc-tokens` in order to correctly reference custom properties from the token stylesheet.
+**Required** to match prefix provided via CLI to `@adobe/swc-tokens` in order to correctly reference custom properties from the token stylesheet.
 
 ## Testing
 
