@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-const esbuild = require('esbuild');
-const path = require('path');
+import esbuild from 'esbuild';
+import path from 'path';
 
 esbuild
     .build({
