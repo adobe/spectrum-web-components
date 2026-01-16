@@ -9,5 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-export * from './Asset.base.js';
-export * from './Asset.types.js';
+
+export const ASSET_VARIANTS = ['file', 'folder'] as const;
+
+export type AssetVariant = (typeof ASSET_VARIANTS)[number];
