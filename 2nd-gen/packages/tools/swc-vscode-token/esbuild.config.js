@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -10,8 +11,8 @@
  * governing permissions and limitations under the License.
  */
 
-import esbuild from 'esbuild';
-import path from 'path';
+const esbuild = require('esbuild');
+const path = require('path');
 
 esbuild
     .build({

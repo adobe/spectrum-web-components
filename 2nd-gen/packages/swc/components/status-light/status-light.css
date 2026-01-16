@@ -11,10 +11,17 @@
  */
 
 :host {
-    display: block;
+    display: inline-block;
+    vertical-align: middle;
+    place-self: start;
 }
 
-.spectrum-StatusLight {
+*,
+*:before {
+    box-sizing: border-box;
+}
+
+.swc-StatusLight {
     --_swc-statuslight-top-to-text: var(
         --swc-statuslight-top-to-text,
         token('component-top-to-text-100')
@@ -41,7 +48,6 @@
     );
     padding-block-start: var(--_swc-statuslight-top-to-text);
     padding-block-end: var(--_swc-statuslight-bottom-to-text);
-    box-sizing: border-box;
     font-size: var(--swc-statuslight-font-size, token('font-size-100'));
     font-weight: token('regular-font-weight');
     font-family: token('sans-font-family-stack');
@@ -134,64 +140,64 @@
 }
 
 /* Non-Semantic Colors */
-.spectrum-StatusLight--yellow {
+.swc-StatusLight--yellow {
     --swc-statuslight-dot-color: token('yellow-visual-color');
 }
 
-.spectrum-StatusLight--chartreuse {
+.swc-StatusLight--chartreuse {
     --swc-statuslight-dot-color: token('chartreuse-visual-color');
 }
 
-.spectrum-StatusLight--celery {
+.swc-StatusLight--celery {
     --swc-statuslight-dot-color: token('celery-visual-color');
 }
 
-.spectrum-StatusLight--seafoam {
+.swc-StatusLight--seafoam {
     --swc-statuslight-dot-color: token('seafoam-visual-color');
 }
 
-.spectrum-StatusLight--cyan {
+.swc-StatusLight--cyan {
     --swc-statuslight-dot-color: token('cyan-visual-color');
 }
 
-.spectrum-StatusLight--indigo {
+.swc-StatusLight--indigo {
     --swc-statuslight-dot-color: token('indigo-visual-color');
 }
 
-.spectrum-StatusLight--purple {
+.swc-StatusLight--purple {
     --swc-statuslight-dot-color: token('purple-visual-color');
 }
 
-.spectrum-StatusLight--fuchsia {
+.swc-StatusLight--fuchsia {
     --swc-statuslight-dot-color: token('fuchsia-visual-color');
 }
 
-.spectrum-StatusLight--magenta {
+.swc-StatusLight--magenta {
     --swc-statuslight-dot-color: token('magenta-visual-color');
 }
 
-.spectrum-StatusLight--pink {
+.swc-StatusLight--pink {
     --swc-statuslight-dot-color: token('pink-visual-color');
 }
 
-.spectrum-StatusLight--turquoise {
+.swc-StatusLight--turquoise {
     --swc-statuslight-dot-color: token('turquoise-visual-color');
 }
 
-.spectrum-StatusLight--cinnamon {
+.swc-StatusLight--cinnamon {
     --swc-statuslight-dot-color: token('cinnamon-visual-color');
 }
 
-.spectrum-StatusLight--brown {
+.swc-StatusLight--brown {
     --swc-statuslight-dot-color: token('brown-visual-color');
 }
 
-.spectrum-StatusLight--silver {
+.swc-StatusLight--silver {
     --swc-statuslight-dot-color: token('silver-visual-color');
 }
 
 @media (forced-colors: active) {
-    .spectrum-StatusLight {
+    .swc-StatusLight {
         --swc-statuslight-content-color: CanvasText;
 
         forced-color-adjust: none;

@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
+/* ⚠️ NOTE: This file is dynamically generated via swc-tokens */
+
 /* stylelint-disable value-keyword-case */
 
 :root {
@@ -2021,2266 +2023,1920 @@
 }
 
 :root,
-.spectrum-theme {
-    --swc-checkbox-control-size-small: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-checkbox-control-size-medium: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-checkbox-control-size-large: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-checkbox-control-size-extra-large: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-checkbox-top-to-control-small: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-checkbox-top-to-control-medium: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-checkbox-top-to-control-large: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-checkbox-top-to-control-extra-large: var(
-            --spectrum-theme--sizeM,
-            14px
-        )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-switch-control-width-small: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-switch-control-width-medium: var(--spectrum-theme--sizeM, 26px)
-        var(--spectrum-theme--sizeL, 34px);
-    --swc-switch-control-width-large: var(--spectrum-theme--sizeM, 30px)
-        var(--spectrum-theme--sizeL, 38px);
-    --swc-switch-control-width-extra-large: var(--spectrum-theme--sizeM, 34px)
-        var(--spectrum-theme--sizeL, 46px);
-    --swc-switch-control-height-small: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-switch-control-height-medium: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-switch-control-height-large: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-switch-control-height-extra-large: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-switch-top-to-control-small: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-switch-top-to-control-medium: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-switch-top-to-control-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-switch-top-to-control-extra-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-radio-button-control-size-small: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-radio-button-control-size-medium: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-radio-button-control-size-large: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-radio-button-control-size-extra-large: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-radio-button-top-to-control-small: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-radio-button-top-to-control-medium: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-radio-button-top-to-control-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-radio-button-top-to-control-extra-large: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-field-label-text-to-asterisk-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-field-label-text-to-asterisk-medium: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-field-label-text-to-asterisk-large: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-field-label-text-to-asterisk-extra-large: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-field-label-top-to-asterisk-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-field-label-top-to-asterisk-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-label-top-to-asterisk-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-field-label-top-to-asterisk-extra-large: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-status-light-dot-size-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-status-light-dot-size-medium: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-status-light-dot-size-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-status-light-dot-size-extra-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-status-light-top-to-dot-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-status-light-top-to-dot-medium: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-status-light-top-to-dot-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-status-light-top-to-dot-extra-large: var(
-            --spectrum-theme--sizeM,
-            17px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-action-button-edge-to-hold-icon-medium: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-action-button-edge-to-hold-icon-large: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 6px);
+.swc-theme {
+    --swc-checkbox-control-size-small: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-checkbox-control-size-medium: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-checkbox-control-size-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-checkbox-control-size-extra-large: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 26px);
+    --swc-checkbox-top-to-control-small: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-checkbox-top-to-control-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-checkbox-top-to-control-large: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-checkbox-top-to-control-extra-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-switch-control-width-small: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-switch-control-width-medium: var(--swc-theme--sizeM, 26px)
+        var(--swc-theme--sizeL, 34px);
+    --swc-switch-control-width-large: var(--swc-theme--sizeM, 30px)
+        var(--swc-theme--sizeL, 38px);
+    --swc-switch-control-width-extra-large: var(--swc-theme--sizeM, 34px)
+        var(--swc-theme--sizeL, 46px);
+    --swc-switch-control-height-small: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-switch-control-height-medium: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-switch-control-height-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-switch-control-height-extra-large: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 26px);
+    --swc-switch-top-to-control-small: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-switch-top-to-control-medium: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-switch-top-to-control-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-switch-top-to-control-extra-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-radio-button-control-size-small: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-radio-button-control-size-medium: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-radio-button-control-size-large: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-radio-button-control-size-extra-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-radio-button-top-to-control-small: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-radio-button-top-to-control-medium: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-radio-button-top-to-control-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-radio-button-top-to-control-extra-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-field-label-text-to-asterisk-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-field-label-text-to-asterisk-medium: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-field-label-text-to-asterisk-large: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-field-label-text-to-asterisk-extra-large: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-field-label-top-to-asterisk-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-field-label-top-to-asterisk-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-label-top-to-asterisk-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-field-label-top-to-asterisk-extra-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-status-light-dot-size-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-status-light-dot-size-medium: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-status-light-dot-size-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-status-light-dot-size-extra-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-status-light-top-to-dot-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-status-light-top-to-dot-medium: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-status-light-top-to-dot-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-status-light-top-to-dot-extra-large: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-action-button-edge-to-hold-icon-medium: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-action-button-edge-to-hold-icon-large: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
     --swc-action-button-edge-to-hold-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             6px
         )
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-tooltip-tip-width: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-tooltip-tip-height: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-tooltip-maximum-width: var(--spectrum-theme--sizeM, 160px)
-        var(--spectrum-theme--sizeL, 200px);
-    --swc-progress-circle-size-small: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-progress-circle-size-medium: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-progress-circle-size-large: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-progress-circle-thickness-small: var(--spectrum-theme--sizeM, 2px)
-        var(--spectrum-theme--sizeL, 3px);
-    --swc-progress-circle-thickness-medium: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 4px);
-    --swc-progress-circle-thickness-large: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-toast-height: var(--spectrum-theme--sizeM, 52px)
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-toast-maximum-width: var(--spectrum-theme--sizeM, 336px)
-        var(--spectrum-theme--sizeL, 420px);
-    --swc-toast-top-to-workflow-icon: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-toast-top-to-text: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-toast-bottom-to-text: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-action-bar-height: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-action-bar-top-to-item-counter: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-swatch-size-extra-small: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-swatch-size-small: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-swatch-size-medium: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-swatch-size-large: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-progress-bar-thickness-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-progress-bar-thickness-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-progress-bar-thickness-large: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-progress-bar-thickness-extra-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-meter-width: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-meter-thickness-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-meter-thickness-large: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tag-top-to-avatar-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tag-top-to-avatar-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-tag-top-to-avatar-large: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-tag-top-to-cross-icon-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tag-top-to-cross-icon-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tag-top-to-cross-icon-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 7px);
+    --swc-tooltip-tip-width: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-tooltip-tip-height: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-tooltip-maximum-width: var(--swc-theme--sizeM, 160px)
+        var(--swc-theme--sizeL, 200px);
+    --swc-progress-circle-size-small: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-progress-circle-size-medium: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-progress-circle-size-large: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-progress-circle-thickness-small: var(--swc-theme--sizeM, 2px)
+        var(--swc-theme--sizeL, 3px);
+    --swc-progress-circle-thickness-medium: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 4px);
+    --swc-progress-circle-thickness-large: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-toast-height: var(--swc-theme--sizeM, 52px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-toast-maximum-width: var(--swc-theme--sizeM, 336px)
+        var(--swc-theme--sizeL, 420px);
+    --swc-toast-top-to-workflow-icon: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-toast-top-to-text: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-toast-bottom-to-text: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-action-bar-height: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-action-bar-top-to-item-counter: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-swatch-size-extra-small: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-swatch-size-small: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-swatch-size-medium: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-swatch-size-large: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-progress-bar-thickness-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-progress-bar-thickness-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-progress-bar-thickness-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-progress-bar-thickness-extra-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-meter-width: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-meter-thickness-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-meter-thickness-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tag-top-to-avatar-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tag-top-to-avatar-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-tag-top-to-avatar-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-tag-top-to-cross-icon-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tag-top-to-cross-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tag-top-to-cross-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
     --swc-menu-item-edge-to-content-not-selected-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             28px
         )
-        var(--spectrum-theme--sizeL, 24px);
+        var(--swc-theme--sizeL, 24px);
     --swc-menu-item-edge-to-content-not-selected-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             32px
         )
-        var(--spectrum-theme--sizeL, 42px);
+        var(--swc-theme--sizeL, 42px);
     --swc-menu-item-edge-to-content-not-selected-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             38px
         )
-        var(--spectrum-theme--sizeL, 47px);
+        var(--swc-theme--sizeL, 47px);
     --swc-menu-item-edge-to-content-not-selected-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             45px
         )
-        var(--spectrum-theme--sizeL, 54px);
-    --swc-menu-item-top-to-disclosure-icon-small: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-menu-item-top-to-disclosure-icon-medium: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-menu-item-top-to-disclosure-icon-large: var(
-            --spectrum-theme--sizeM,
-            14px
-        )
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 54px);
+    --swc-menu-item-top-to-disclosure-icon-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-menu-item-top-to-disclosure-icon-medium: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-menu-item-top-to-disclosure-icon-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
     --swc-menu-item-top-to-disclosure-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-menu-item-top-to-selected-icon-small: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-menu-item-top-to-selected-icon-medium: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-menu-item-top-to-selected-icon-large: var(
-            --spectrum-theme--sizeM,
-            14px
-        )
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-menu-item-top-to-selected-icon-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-menu-item-top-to-selected-icon-medium: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-menu-item-top-to-selected-icon-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
     --swc-menu-item-top-to-selected-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-slider-control-to-field-label-small: var(
-            --spectrum-theme--sizeM,
-            -4px
-        )
-        var(--spectrum-theme--sizeL, -8px);
-    --swc-slider-control-to-field-label-medium: var(
-            --spectrum-theme--sizeM,
-            -12px
-        )
-        var(--spectrum-theme--sizeL, -16px);
-    --swc-slider-control-to-field-label-large: var(
-            --spectrum-theme--sizeM,
-            -16px
-        )
-        var(--spectrum-theme--sizeL, -20px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-slider-control-to-field-label-small: var(--swc-theme--sizeM, -4px)
+        var(--swc-theme--sizeL, -8px);
+    --swc-slider-control-to-field-label-medium: var(--swc-theme--sizeM, -12px)
+        var(--swc-theme--sizeL, -16px);
+    --swc-slider-control-to-field-label-large: var(--swc-theme--sizeM, -16px)
+        var(--swc-theme--sizeL, -20px);
     --swc-slider-control-to-field-label-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             -20px
         )
-        var(--spectrum-theme--sizeL, -28px);
-    --swc-picker-visual-to-disclosure-icon-small: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-picker-visual-to-disclosure-icon-medium: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-picker-visual-to-disclosure-icon-large: var(
-            --spectrum-theme--sizeM,
-            9px
-        )
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, -28px);
+    --swc-picker-visual-to-disclosure-icon-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-picker-visual-to-disclosure-icon-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-picker-visual-to-disclosure-icon-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
     --swc-picker-visual-to-disclosure-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-text-area-minimum-width: var(--spectrum-theme--sizeM, 112px)
-        var(--spectrum-theme--sizeL, 140px);
-    --swc-text-area-minimum-height: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-thumbnail-size-50: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-thumbnail-size-75: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-thumbnail-size-100: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-thumbnail-size-200: var(--spectrum-theme--sizeM, 28px)
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-thumbnail-size-300: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-thumbnail-size-400: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-thumbnail-size-500: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-thumbnail-size-600: var(--spectrum-theme--sizeM, 44px)
-        var(--spectrum-theme--sizeL, 48px);
-    --swc-thumbnail-size-700: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 52px);
-    --swc-thumbnail-size-800: var(--spectrum-theme--sizeM, 52px)
-        var(--spectrum-theme--sizeL, 56px);
-    --swc-thumbnail-size-900: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 64px);
-    --swc-thumbnail-size-1000: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 72px);
-    --swc-opacity-checkerboard-square-size-medium: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-breadcrumbs-height-multiline: var(--spectrum-theme--sizeM, 72px)
-        var(--spectrum-theme--sizeL, 90px);
-    --swc-breadcrumbs-top-to-text-multiline: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-breadcrumbs-bottom-to-text-multiline: var(
-            --spectrum-theme--sizeM,
-            9px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-breadcrumbs-top-text-to-bottom-text: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 13px);
+    --swc-text-area-minimum-width: var(--swc-theme--sizeM, 112px)
+        var(--swc-theme--sizeL, 140px);
+    --swc-text-area-minimum-height: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-thumbnail-size-50: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-thumbnail-size-75: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-thumbnail-size-100: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-thumbnail-size-200: var(--swc-theme--sizeM, 28px)
+        var(--swc-theme--sizeL, 32px);
+    --swc-thumbnail-size-300: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 36px);
+    --swc-thumbnail-size-400: var(--swc-theme--sizeM, 36px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-thumbnail-size-500: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 44px);
+    --swc-thumbnail-size-600: var(--swc-theme--sizeM, 44px)
+        var(--swc-theme--sizeL, 48px);
+    --swc-thumbnail-size-700: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 52px);
+    --swc-thumbnail-size-800: var(--swc-theme--sizeM, 52px)
+        var(--swc-theme--sizeL, 56px);
+    --swc-thumbnail-size-900: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 64px);
+    --swc-thumbnail-size-1000: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 72px);
+    --swc-opacity-checkerboard-square-size-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-breadcrumbs-height-multiline: var(--swc-theme--sizeM, 72px)
+        var(--swc-theme--sizeL, 90px);
+    --swc-breadcrumbs-top-to-text-multiline: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-breadcrumbs-bottom-to-text-multiline: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-breadcrumbs-top-text-to-bottom-text: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
     --swc-breadcrumbs-truncated-menu-to-bottom-text: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             4px
         )
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-avatar-size-50: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-avatar-size-75: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-avatar-size-100: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-avatar-size-200: var(--spectrum-theme--sizeM, 28px)
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-avatar-size-300: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-avatar-size-400: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-avatar-size-500: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-avatar-size-600: var(--spectrum-theme--sizeM, 44px)
-        var(--spectrum-theme--sizeL, 48px);
-    --swc-avatar-size-700: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 52px);
-    --swc-avatar-size-800: var(--spectrum-theme--sizeM, 52px)
-        var(--spectrum-theme--sizeL, 56px);
-    --swc-avatar-size-900: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 64px);
-    --swc-avatar-size-1000: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 72px);
-    --swc-avatar-size-1100: var(--spectrum-theme--sizeM, 72px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-avatar-size-1200: var(--spectrum-theme--sizeM, 80px)
-        var(--spectrum-theme--sizeL, 88px);
-    --swc-avatar-size-1300: var(--spectrum-theme--sizeM, 88px)
-        var(--spectrum-theme--sizeL, 96px);
-    --swc-avatar-size-1400: var(--spectrum-theme--sizeM, 96px)
-        var(--spectrum-theme--sizeL, 104px);
-    --swc-avatar-size-1500: var(--spectrum-theme--sizeM, 104px)
-        var(--spectrum-theme--sizeL, 112px);
-    --swc-alert-banner-minimum-height: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 64px);
-    --swc-alert-banner-width: var(--spectrum-theme--sizeM, 832px)
-        var(--spectrum-theme--sizeL, 680px);
-    --swc-alert-banner-top-to-workflow-icon: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-alert-banner-top-to-text: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-alert-banner-bottom-to-text: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-color-area-width: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-color-area-minimum-width: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-color-area-height: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-color-area-minimum-height: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-color-wheel-width: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-color-wheel-minimum-width: var(--spectrum-theme--sizeM, 175px)
-        var(--spectrum-theme--sizeL, 219px);
-    --swc-color-slider-length: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-color-slider-minimum-length: var(--spectrum-theme--sizeM, 80px)
-        var(--spectrum-theme--sizeL, 100px);
-    --swc-coach-mark-width: var(--spectrum-theme--sizeM, 296px)
-        var(--spectrum-theme--sizeL, 216px);
-    --swc-coach-mark-minimum-width: var(--spectrum-theme--sizeM, 296px)
-        var(--spectrum-theme--sizeL, 216px);
-    --swc-coach-mark-maximum-width: var(--spectrum-theme--sizeM, 380px)
-        var(--spectrum-theme--sizeL, 248px);
-    --swc-coach-mark-edge-to-content: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 16px);
+        var(--swc-theme--sizeL, 5px);
+    --swc-avatar-size-50: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-avatar-size-75: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-avatar-size-100: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-avatar-size-200: var(--swc-theme--sizeM, 28px)
+        var(--swc-theme--sizeL, 32px);
+    --swc-avatar-size-300: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 36px);
+    --swc-avatar-size-400: var(--swc-theme--sizeM, 36px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-avatar-size-500: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 44px);
+    --swc-avatar-size-600: var(--swc-theme--sizeM, 44px)
+        var(--swc-theme--sizeL, 48px);
+    --swc-avatar-size-700: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 52px);
+    --swc-avatar-size-800: var(--swc-theme--sizeM, 52px)
+        var(--swc-theme--sizeL, 56px);
+    --swc-avatar-size-900: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 64px);
+    --swc-avatar-size-1000: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 72px);
+    --swc-avatar-size-1100: var(--swc-theme--sizeM, 72px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-avatar-size-1200: var(--swc-theme--sizeM, 80px)
+        var(--swc-theme--sizeL, 88px);
+    --swc-avatar-size-1300: var(--swc-theme--sizeM, 88px)
+        var(--swc-theme--sizeL, 96px);
+    --swc-avatar-size-1400: var(--swc-theme--sizeM, 96px)
+        var(--swc-theme--sizeL, 104px);
+    --swc-avatar-size-1500: var(--swc-theme--sizeM, 104px)
+        var(--swc-theme--sizeL, 112px);
+    --swc-alert-banner-minimum-height: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 64px);
+    --swc-alert-banner-width: var(--swc-theme--sizeM, 832px)
+        var(--swc-theme--sizeL, 680px);
+    --swc-alert-banner-top-to-workflow-icon: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-alert-banner-top-to-text: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 21px);
+    --swc-alert-banner-bottom-to-text: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-color-area-width: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-color-area-minimum-width: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-color-area-height: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-color-area-minimum-height: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-color-wheel-width: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-color-wheel-minimum-width: var(--swc-theme--sizeM, 175px)
+        var(--swc-theme--sizeL, 219px);
+    --swc-color-slider-length: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-color-slider-minimum-length: var(--swc-theme--sizeM, 80px)
+        var(--swc-theme--sizeL, 100px);
+    --swc-coach-mark-width: var(--swc-theme--sizeM, 296px)
+        var(--swc-theme--sizeL, 216px);
+    --swc-coach-mark-minimum-width: var(--swc-theme--sizeM, 296px)
+        var(--swc-theme--sizeL, 216px);
+    --swc-coach-mark-maximum-width: var(--swc-theme--sizeM, 380px)
+        var(--swc-theme--sizeL, 248px);
+    --swc-coach-mark-edge-to-content: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 16px);
     --swc-coach-mark-pagination-text-to-bottom-edge: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             33px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-coach-mark-media-height: var(--spectrum-theme--sizeM, 222px)
-        var(--spectrum-theme--sizeL, 162px);
-    --swc-coach-mark-media-minimum-height: var(--spectrum-theme--sizeM, 166px)
-        var(--spectrum-theme--sizeL, 121px);
-    --swc-accordion-top-to-text-compact-small: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 4px);
-    --swc-accordion-top-to-text-spacious-medium: var(
-            --spectrum-theme--sizeM,
-            13px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-accordion-top-to-text-compact-large: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-accordion-top-to-text-spacious-large: var(
-            --spectrum-theme--sizeM,
-            16px
-        )
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-coach-mark-media-height: var(--swc-theme--sizeM, 222px)
+        var(--swc-theme--sizeL, 162px);
+    --swc-coach-mark-media-minimum-height: var(--swc-theme--sizeM, 166px)
+        var(--swc-theme--sizeL, 121px);
+    --swc-accordion-top-to-text-compact-small: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 4px);
+    --swc-accordion-top-to-text-spacious-medium: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-accordion-top-to-text-compact-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-accordion-top-to-text-spacious-large: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 19px);
     --swc-accordion-top-to-text-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 11px);
     --swc-accordion-top-to-text-spacious-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-accordion-bottom-to-text-compact-small: var(
-            --spectrum-theme--sizeM,
-            2px
-        )
-        var(--spectrum-theme--sizeL, 4px);
-    --swc-accordion-bottom-to-text-spacious-small: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-accordion-bottom-to-text-compact-medium: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 8px);
+        var(--swc-theme--sizeL, 21px);
+    --swc-accordion-bottom-to-text-compact-small: var(--swc-theme--sizeM, 2px)
+        var(--swc-theme--sizeL, 4px);
+    --swc-accordion-bottom-to-text-spacious-small: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-accordion-bottom-to-text-compact-medium: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 8px);
     --swc-accordion-bottom-to-text-spacious-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             13px
         )
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-accordion-bottom-to-text-compact-large: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-accordion-bottom-to-text-spacious-large: var(
-            --spectrum-theme--sizeM,
-            16px
-        )
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 18px);
+    --swc-accordion-bottom-to-text-compact-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-accordion-bottom-to-text-spacious-large: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 19px);
     --swc-accordion-bottom-to-text-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-accordion-bottom-to-text-spacious-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-accordion-minimum-width: var(--spectrum-theme--sizeM, 200px)
-        var(--spectrum-theme--sizeL, 250px);
-    --swc-accordion-content-area-top-to-content: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 21px);
+    --swc-accordion-minimum-width: var(--swc-theme--sizeM, 200px)
+        var(--swc-theme--sizeL, 250px);
+    --swc-accordion-content-area-top-to-content: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
     --swc-accordion-content-area-bottom-to-content: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-color-handle-size: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-color-handle-size-key-focus: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
+        var(--swc-theme--sizeL, 20px);
+    --swc-color-handle-size: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-color-handle-size-key-focus: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
     --swc-table-column-header-row-top-to-text-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-table-column-header-row-top-to-text-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             6px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-table-column-header-row-top-to-text-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 13px);
     --swc-table-column-header-row-top-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             13px
         )
-        var(--spectrum-theme--sizeL, 16px);
+        var(--swc-theme--sizeL, 16px);
     --swc-table-column-header-row-bottom-to-text-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             9px
         )
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 11px);
     --swc-table-column-header-row-bottom-to-text-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-table-column-header-row-bottom-to-text-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 13px);
     --swc-table-column-header-row-bottom-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             13px
         )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-table-row-height-small-compact: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-table-row-height-medium-compact: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-table-row-height-large-compact: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-table-row-height-extra-large-compact: var(
-            --spectrum-theme--sizeM,
-            48px
-        )
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-table-row-height-small: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-table-row-height-medium: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-table-row-height-large: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-table-row-height-extra-large: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-table-row-height-small-spacious: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-table-row-height-medium-spacious: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-table-row-height-large-spacious: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-table-row-height-extra-large-spacious: var(
-            --spectrum-theme--sizeM,
-            64px
-        )
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-table-row-top-to-text-small-compact: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-table-row-top-to-text-medium-compact: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-table-row-top-to-text-large-compact: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 12px);
+        var(--swc-theme--sizeL, 17px);
+    --swc-table-row-height-small-compact: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-table-row-height-medium-compact: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-table-row-height-large-compact: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-table-row-height-extra-large-compact: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-table-row-height-small: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-table-row-height-medium: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-table-row-height-large: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-table-row-height-extra-large: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-table-row-height-small-spacious: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-table-row-height-medium-spacious: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-table-row-height-large-spacious: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-table-row-height-extra-large-spacious: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-table-row-top-to-text-small-compact: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-table-row-top-to-text-medium-compact: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-table-row-top-to-text-large-compact: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 12px);
     --swc-table-row-top-to-text-extra-large-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             12px
         )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-table-row-bottom-to-text-small-compact: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-table-row-bottom-to-text-medium-compact: var(
-            --spectrum-theme--sizeM,
-            9px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-table-row-bottom-to-text-large-compact: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 14px);
+        var(--swc-theme--sizeL, 15px);
+    --swc-table-row-bottom-to-text-small-compact: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-table-row-bottom-to-text-medium-compact: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-table-row-bottom-to-text-large-compact: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
     --swc-table-row-bottom-to-text-extra-large-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             14px
         )
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-table-row-top-to-text-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-table-row-top-to-text-medium: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-table-row-top-to-text-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-table-row-top-to-text-extra-large: var(--spectrum-theme--sizeM, 17px)
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-table-row-bottom-to-text-small: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-table-row-bottom-to-text-medium: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-table-row-bottom-to-text-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-table-row-bottom-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
-            17px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-table-row-top-to-text-small-spacious: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-table-row-top-to-text-medium-spacious: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-table-row-top-to-text-large-spacious: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 23px);
+        var(--swc-theme--sizeL, 18px);
+    --swc-table-row-top-to-text-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-table-row-top-to-text-medium: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-table-row-top-to-text-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-table-row-top-to-text-extra-large: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 21px);
+    --swc-table-row-bottom-to-text-small: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-table-row-bottom-to-text-medium: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-table-row-bottom-to-text-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-table-row-bottom-to-text-extra-large: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-table-row-top-to-text-small-spacious: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-table-row-top-to-text-medium-spacious: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-table-row-top-to-text-large-spacious: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 23px);
     --swc-table-row-top-to-text-extra-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             21px
         )
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-table-row-bottom-to-text-small-spacious: var(
-            --spectrum-theme--sizeM,
-            13px
-        )
-        var(--spectrum-theme--sizeL, 16px);
+        var(--swc-theme--sizeL, 26px);
+    --swc-table-row-bottom-to-text-small-spacious: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 16px);
     --swc-table-row-bottom-to-text-medium-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-table-row-bottom-to-text-large-spacious: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 23px);
+        var(--swc-theme--sizeL, 18px);
+    --swc-table-row-bottom-to-text-large-spacious: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 23px);
     --swc-table-row-bottom-to-text-extra-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             21px
         )
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-table-checkbox-to-text: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-table-header-row-checkbox-to-top-small: var(
-            --spectrum-theme--sizeM,
-            10px
-        )
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-table-header-row-checkbox-to-top-medium: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-table-header-row-checkbox-to-top-large: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 27px);
+    --swc-table-checkbox-to-text: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-table-header-row-checkbox-to-top-small: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-table-header-row-checkbox-to-top-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-table-header-row-checkbox-to-top-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 17px);
     --swc-table-header-row-checkbox-to-top-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             15px
         )
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-table-row-checkbox-to-top-small-compact: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-table-row-checkbox-to-top-small: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
+        var(--swc-theme--sizeL, 21px);
+    --swc-table-row-checkbox-to-top-small-compact: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-table-row-checkbox-to-top-small: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
     --swc-table-row-checkbox-to-top-small-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             14px
         )
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-table-row-checkbox-to-top-medium-compact: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-table-row-checkbox-to-top-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
+        var(--swc-theme--sizeL, 19px);
+    --swc-table-row-checkbox-to-top-medium-compact: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-table-row-checkbox-to-top-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
     --swc-table-row-checkbox-to-top-medium-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-table-row-checkbox-to-top-large-compact: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-table-row-checkbox-to-top-large: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 22px);
+        var(--swc-theme--sizeL, 21px);
+    --swc-table-row-checkbox-to-top-large-compact: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-table-row-checkbox-to-top-large: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 22px);
     --swc-table-row-checkbox-to-top-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             20px
         )
-        var(--spectrum-theme--sizeL, 27px);
+        var(--swc-theme--sizeL, 27px);
     --swc-table-row-checkbox-to-top-extra-large-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             15px
         )
-        var(--spectrum-theme--sizeL, 21px);
-    --swc-table-row-checkbox-to-top-extra-large: var(
-            --spectrum-theme--sizeM,
-            19px
-        )
-        var(--spectrum-theme--sizeL, 26px);
+        var(--swc-theme--sizeL, 21px);
+    --swc-table-row-checkbox-to-top-extra-large: var(--swc-theme--sizeM, 19px)
+        var(--swc-theme--sizeL, 26px);
     --swc-table-row-checkbox-to-top-extra-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             23px
         )
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-table-section-header-row-height-small: var(
-            --spectrum-theme--sizeM,
-            24px
-        )
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-table-section-header-row-height-medium: var(
-            --spectrum-theme--sizeM,
-            32px
-        )
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-table-section-header-row-height-large: var(
-            --spectrum-theme--sizeM,
-            40px
-        )
-        var(--spectrum-theme--sizeL, 50px);
+        var(--swc-theme--sizeL, 31px);
+    --swc-table-section-header-row-height-small: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-table-section-header-row-height-medium: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-table-section-header-row-height-large: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
     --swc-table-section-header-row-height-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             48px
         )
-        var(--spectrum-theme--sizeL, 60px);
+        var(--swc-theme--sizeL, 60px);
     --swc-table-thumbnail-to-top-minimum-small-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             4px
         )
-        var(--spectrum-theme--sizeL, 5px);
+        var(--swc-theme--sizeL, 5px);
     --swc-table-thumbnail-to-top-minimum-medium-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             5px
         )
-        var(--spectrum-theme--sizeL, 6px);
+        var(--swc-theme--sizeL, 6px);
     --swc-table-thumbnail-to-top-minimum-large-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-table-thumbnail-to-top-minimum-extra-large-compact: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-table-thumbnail-to-top-minimum-small: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-table-thumbnail-to-top-minimum-medium: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-table-thumbnail-to-top-minimum-large: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
+    --swc-table-thumbnail-to-top-minimum-small: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-table-thumbnail-to-top-minimum-medium: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-table-thumbnail-to-top-minimum-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
     --swc-table-thumbnail-to-top-minimum-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-table-thumbnail-to-top-minimum-small-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-table-thumbnail-to-top-minimum-medium-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-table-thumbnail-to-top-minimum-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-table-thumbnail-to-top-minimum-extra-large-spacious: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-tab-item-height-small: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-tab-item-height-medium: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-tab-item-height-large: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-tab-item-height-extra-large: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-tab-item-compact-height-small: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-tab-item-compact-height-medium: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-tab-item-compact-height-large: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-tab-item-compact-height-extra-large: var(
-            --spectrum-theme--sizeM,
-            48px
-        )
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-tab-item-to-tab-item-horizontal-small: var(
-            --spectrum-theme--sizeM,
-            21px
-        )
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-tab-item-to-tab-item-horizontal-medium: var(
-            --spectrum-theme--sizeM,
-            24px
-        )
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-tab-item-to-tab-item-horizontal-large: var(
-            --spectrum-theme--sizeM,
-            27px
-        )
-        var(--spectrum-theme--sizeL, 33px);
+        var(--swc-theme--sizeL, 12px);
+    --swc-tab-item-height-small: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-tab-item-height-medium: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-tab-item-height-large: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-tab-item-height-extra-large: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-tab-item-compact-height-small: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-tab-item-compact-height-medium: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-tab-item-compact-height-large: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-tab-item-compact-height-extra-large: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-tab-item-to-tab-item-horizontal-small: var(--swc-theme--sizeM, 21px)
+        var(--swc-theme--sizeL, 27px);
+    --swc-tab-item-to-tab-item-horizontal-medium: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-tab-item-to-tab-item-horizontal-large: var(--swc-theme--sizeM, 27px)
+        var(--swc-theme--sizeL, 33px);
     --swc-tab-item-to-tab-item-horizontal-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             30px
         )
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-tab-item-to-tab-item-vertical-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tab-item-to-tab-item-vertical-medium: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tab-item-to-tab-item-vertical-large: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
+        var(--swc-theme--sizeL, 36px);
+    --swc-tab-item-to-tab-item-vertical-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tab-item-to-tab-item-vertical-medium: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tab-item-to-tab-item-vertical-large: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
     --swc-tab-item-to-tab-item-vertical-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             5px
         )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-tab-item-start-to-edge-small: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-tab-item-start-to-edge-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tab-item-start-to-edge-large: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-tab-item-start-to-edge-extra-large: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tab-item-top-to-text-small: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-tab-item-bottom-to-text-small: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tab-item-top-to-text-medium: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-tab-item-bottom-to-text-medium: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tab-item-top-to-text-large: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-tab-item-bottom-to-text-large: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-tab-item-top-to-text-extra-large: var(--spectrum-theme--sizeM, 19px)
-        var(--spectrum-theme--sizeL, 25px);
-    --swc-tab-item-bottom-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
-            20px
-        )
-        var(--spectrum-theme--sizeL, 25px);
-    --swc-tab-item-top-to-text-compact-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tab-item-bottom-to-text-compact-small: var(
-            --spectrum-theme--sizeM,
-            5px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-tab-item-top-to-text-compact-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-tab-item-bottom-to-text-compact-medium: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tab-item-top-to-text-compact-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-tab-item-bottom-to-text-compact-large: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 14px);
+        var(--swc-theme--sizeL, 6px);
+    --swc-tab-item-start-to-edge-small: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-tab-item-start-to-edge-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tab-item-start-to-edge-large: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-tab-item-start-to-edge-extra-large: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tab-item-top-to-text-small: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-tab-item-bottom-to-text-small: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tab-item-top-to-text-medium: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-tab-item-bottom-to-text-medium: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tab-item-top-to-text-large: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-tab-item-bottom-to-text-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-tab-item-top-to-text-extra-large: var(--swc-theme--sizeM, 19px)
+        var(--swc-theme--sizeL, 25px);
+    --swc-tab-item-bottom-to-text-extra-large: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 25px);
+    --swc-tab-item-top-to-text-compact-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tab-item-bottom-to-text-compact-small: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-tab-item-top-to-text-compact-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-tab-item-bottom-to-text-compact-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tab-item-top-to-text-compact-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-tab-item-bottom-to-text-compact-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
     --swc-tab-item-top-to-text-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             12px
         )
-        var(--spectrum-theme--sizeL, 15px);
+        var(--swc-theme--sizeL, 15px);
     --swc-tab-item-bottom-to-text-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             13px
         )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-tab-item-top-to-workflow-icon-small: var(
-            --spectrum-theme--sizeM,
-            13px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tab-item-top-to-workflow-icon-medium: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tab-item-top-to-workflow-icon-large: var(
-            --spectrum-theme--sizeM,
-            17px
-        )
-        var(--spectrum-theme--sizeL, 23px);
+        var(--swc-theme--sizeL, 17px);
+    --swc-tab-item-top-to-workflow-icon-small: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tab-item-top-to-workflow-icon-medium: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tab-item-top-to-workflow-icon-large: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 23px);
     --swc-tab-item-top-to-workflow-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             19px
         )
-        var(--spectrum-theme--sizeL, 26px);
+        var(--swc-theme--sizeL, 26px);
     --swc-tab-item-top-to-workflow-icon-compact-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             3px
         )
-        var(--spectrum-theme--sizeL, 5px);
+        var(--swc-theme--sizeL, 5px);
     --swc-tab-item-top-to-workflow-icon-compact-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-tab-item-top-to-workflow-icon-compact-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             9px
         )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 13px);
     --swc-tab-item-top-to-workflow-icon-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-tab-item-focus-indicator-gap-small: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-tab-item-focus-indicator-gap-medium: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tab-item-focus-indicator-gap-large: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 16px);
+    --swc-tab-item-focus-indicator-gap-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-tab-item-focus-indicator-gap-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tab-item-focus-indicator-gap-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
     --swc-tab-item-focus-indicator-gap-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-side-navigation-width: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-side-navigation-minimum-width: var(--spectrum-theme--sizeM, 144px)
-        var(--spectrum-theme--sizeL, 180px);
+        var(--swc-theme--sizeL, 12px);
+    --swc-side-navigation-width: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-side-navigation-minimum-width: var(--swc-theme--sizeM, 144px)
+        var(--swc-theme--sizeL, 180px);
     --swc-side-navigation-second-level-edge-to-text: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             38px
         )
-        var(--spectrum-theme--sizeL, 44px);
+        var(--swc-theme--sizeL, 44px);
     --swc-side-navigation-third-level-edge-to-text: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             64px
         )
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-side-navigation-item-to-item: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-side-navigation-item-to-header: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-side-navigation-bottom-to-text: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tray-top-to-content-area: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-arrow-icon-size-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-arrow-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-arrow-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-arrow-icon-size-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-arrow-icon-size-400: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-arrow-icon-size-500: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-arrow-icon-size-600: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-asterisk-icon-size-100: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-asterisk-icon-size-200: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-asterisk-icon-size-300: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-checkmark-icon-size-50: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-checkmark-icon-size-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-checkmark-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-checkmark-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-checkmark-icon-size-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-checkmark-icon-size-400: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-checkmark-icon-size-500: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-checkmark-icon-size-600: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-chevron-icon-size-50: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-chevron-icon-size-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-chevron-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-chevron-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-chevron-icon-size-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-chevron-icon-size-400: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-chevron-icon-size-500: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-chevron-icon-size-600: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-cross-icon-size-75: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-cross-icon-size-100: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-cross-icon-size-200: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-cross-icon-size-300: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-cross-icon-size-400: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-cross-icon-size-500: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-cross-icon-size-600: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-dash-icon-size-50: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-dash-icon-size-75: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-dash-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-dash-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-dash-icon-size-300: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-dash-icon-size-400: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-dash-icon-size-500: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-dash-icon-size-600: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-side-navigation-header-to-item: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-switch-handle-size-small: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-switch-handle-selected-size-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-switch-handle-selected-size-medium: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-switch-handle-selected-size-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-switch-handle-selected-size-extra-large: var(
-            --spectrum-theme--sizeM,
-            14px
-        )
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-switch-handle-size-medium: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-switch-handle-size-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-switch-handle-size-extra-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-tag-label-to-clear-icon-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tag-label-to-clear-icon-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tag-label-to-clear-icon-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tag-edge-to-clear-icon-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tag-edge-to-clear-icon-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tag-edge-to-clear-icon-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-title-cjk-size-l: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-title-cjk-size-m: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-title-cjk-size-s: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-title-cjk-size-xl: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-title-cjk-size-xs: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-title-cjk-size-xxl: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-title-cjk-size-xxxl: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-title-size-l: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-title-size-m: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-title-size-s: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-title-size-xl: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-title-size-xs: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-title-size-xxl: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-title-size-xxxl: var(--spectrum-theme--sizeM, 25px)
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-opacity-checkerboard-square-size-small: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-alert-banner-top-to-alert-icon: var(--spectrum-theme--sizeM, 37px)
-        var(--spectrum-theme--sizeL, 29px);
-    --swc-accordion-top-to-text-spacious-small: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-default-width-small: var(--spectrum-theme--sizeM, 192px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-field-default-width-medium: var(--spectrum-theme--sizeM, 208px)
-        var(--spectrum-theme--sizeL, 256px);
-    --swc-field-default-width-large: var(--spectrum-theme--sizeM, 224px)
-        var(--spectrum-theme--sizeL, 272px);
-    --swc-field-default-width-extra-large: var(--spectrum-theme--sizeM, 240px)
-        var(--spectrum-theme--sizeL, 288px);
-    --swc-tag-minimum-width-small: var(--spectrum-theme--sizeM, 21px)
-        var(--spectrum-theme--sizeL, 25px);
-    --swc-tag-minimum-width-medium: var(--spectrum-theme--sizeM, 27px)
-        var(--spectrum-theme--sizeL, 34px);
-    --swc-tag-minimum-width-large: var(--spectrum-theme--sizeM, 33px)
-        var(--spectrum-theme--sizeL, 42px);
-    --swc-in-field-button-edge-to-fill-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-in-field-button-edge-to-fill-extra-large: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-in-field-progress-circle-edge-to-fill: var(
-            --spectrum-theme--sizeM,
-            1px
-        )
-        var(--spectrum-theme--sizeL, 2px);
-    --swc-in-field-progress-circle-size-75: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-in-field-progress-circle-size-100: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-in-field-progress-circle-size-200: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-in-field-progress-circle-size-300: var(--spectrum-theme--sizeM, 26px)
-        var(--spectrum-theme--sizeL, 30px);
+        var(--swc-theme--sizeL, 70px);
+    --swc-side-navigation-item-to-item: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-side-navigation-item-to-header: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-side-navigation-bottom-to-text: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tray-top-to-content-area: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-arrow-icon-size-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-arrow-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-arrow-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-arrow-icon-size-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-arrow-icon-size-400: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-arrow-icon-size-500: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-arrow-icon-size-600: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-asterisk-icon-size-100: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-asterisk-icon-size-200: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-asterisk-icon-size-300: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-checkmark-icon-size-50: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-checkmark-icon-size-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-checkmark-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-checkmark-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-checkmark-icon-size-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-checkmark-icon-size-400: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-checkmark-icon-size-500: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-checkmark-icon-size-600: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-chevron-icon-size-50: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-chevron-icon-size-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-chevron-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-chevron-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-chevron-icon-size-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-chevron-icon-size-400: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-chevron-icon-size-500: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-chevron-icon-size-600: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-cross-icon-size-75: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-cross-icon-size-100: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-cross-icon-size-200: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-cross-icon-size-300: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-cross-icon-size-400: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-cross-icon-size-500: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-cross-icon-size-600: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-dash-icon-size-50: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-dash-icon-size-75: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-dash-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-dash-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-dash-icon-size-300: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-dash-icon-size-400: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-dash-icon-size-500: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-dash-icon-size-600: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-side-navigation-header-to-item: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-switch-handle-size-small: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-switch-handle-selected-size-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-switch-handle-selected-size-medium: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-switch-handle-selected-size-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-switch-handle-selected-size-extra-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-switch-handle-size-medium: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-switch-handle-size-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-switch-handle-size-extra-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-tag-label-to-clear-icon-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tag-label-to-clear-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tag-label-to-clear-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tag-edge-to-clear-icon-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tag-edge-to-clear-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tag-edge-to-clear-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-title-cjk-size-l: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-title-cjk-size-m: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-title-cjk-size-s: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-title-cjk-size-xl: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-title-cjk-size-xs: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-title-cjk-size-xxl: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-title-cjk-size-xxxl: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 27px);
+    --swc-title-size-l: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-title-size-m: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-title-size-s: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-title-size-xl: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-title-size-xs: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-title-size-xxl: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 27px);
+    --swc-title-size-xxxl: var(--swc-theme--sizeM, 25px)
+        var(--swc-theme--sizeL, 31px);
+    --swc-opacity-checkerboard-square-size-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-alert-banner-top-to-alert-icon: var(--swc-theme--sizeM, 37px)
+        var(--swc-theme--sizeL, 29px);
+    --swc-accordion-top-to-text-spacious-small: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-default-width-small: var(--swc-theme--sizeM, 192px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-field-default-width-medium: var(--swc-theme--sizeM, 208px)
+        var(--swc-theme--sizeL, 256px);
+    --swc-field-default-width-large: var(--swc-theme--sizeM, 224px)
+        var(--swc-theme--sizeL, 272px);
+    --swc-field-default-width-extra-large: var(--swc-theme--sizeM, 240px)
+        var(--swc-theme--sizeL, 288px);
+    --swc-tag-minimum-width-small: var(--swc-theme--sizeM, 21px)
+        var(--swc-theme--sizeL, 25px);
+    --swc-tag-minimum-width-medium: var(--swc-theme--sizeM, 27px)
+        var(--swc-theme--sizeL, 34px);
+    --swc-tag-minimum-width-large: var(--swc-theme--sizeM, 33px)
+        var(--swc-theme--sizeL, 42px);
+    --swc-in-field-button-edge-to-fill-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-in-field-button-edge-to-fill-extra-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-in-field-progress-circle-edge-to-fill: var(--swc-theme--sizeM, 1px)
+        var(--swc-theme--sizeL, 2px);
+    --swc-in-field-progress-circle-size-75: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-in-field-progress-circle-size-100: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-in-field-progress-circle-size-200: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-in-field-progress-circle-size-300: var(--swc-theme--sizeM, 26px)
+        var(--swc-theme--sizeL, 30px);
     --swc-alert-dialog-description-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
+        var(--swc-theme--sizeL, var(--swc-body-size-s));
     --swc-alert-dialog-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-xxl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+        var(--swc-theme--sizeL, var(--swc-title-size-xl));
     --swc-coach-mark-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
+        var(--swc-theme--sizeL, var(--swc-body-size-s));
     --swc-coach-mark-pagination-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-s)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+        var(--swc-theme--sizeL, var(--swc-body-size-xs));
     --swc-coach-mark-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
+        var(--swc-theme--sizeL, var(--swc-title-size-s));
     --swc-standard-dialog-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-xxl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+        var(--swc-theme--sizeL, var(--swc-title-size-xl));
     --swc-standard-dialog-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-s));
-    --swc-status-light-text-to-visual-75: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-status-light-text-to-visual-100: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-status-light-text-to-visual-200: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-status-light-text-to-visual-300: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-link-out-icon-size-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-link-out-icon-size-100: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-link-out-icon-size-200: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-link-out-icon-size-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-link-out-icon-size-400: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-menu-item-top-to-thumbnail-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-menu-item-top-to-thumbnail-medium: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-menu-item-top-to-thumbnail-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-menu-item-top-to-thumbnail-extra-large: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, var(--swc-body-size-s));
+    --swc-status-light-text-to-visual-75: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-status-light-text-to-visual-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-status-light-text-to-visual-200: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-status-light-text-to-visual-300: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-link-out-icon-size-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-link-out-icon-size-100: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-link-out-icon-size-200: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-link-out-icon-size-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-link-out-icon-size-400: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-menu-item-top-to-thumbnail-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-menu-item-top-to-thumbnail-medium: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-menu-item-top-to-thumbnail-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-menu-item-top-to-thumbnail-extra-large: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
     --swc-illustrated-message-small-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
+        var(--swc-theme--sizeL, var(--swc-title-size-s));
     --swc-illustrated-message-small-cjk-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-cjk-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-s));
+        var(--swc-theme--sizeL, var(--swc-title-cjk-size-s));
     --swc-illustrated-message-medium-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-xl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-l));
+        var(--swc-theme--sizeL, var(--swc-title-size-l));
     --swc-illustrated-message-medium-cjk-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-cjk-size-xl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-l));
+        var(--swc-theme--sizeL, var(--swc-title-cjk-size-l));
     --swc-illustrated-message-large-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-xxl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-xl));
+        var(--swc-theme--sizeL, var(--swc-title-size-xl));
     --swc-illustrated-message-large-cjk-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-cjk-size-xxl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-xl));
+        var(--swc-theme--sizeL, var(--swc-title-cjk-size-xl));
     --swc-illustrated-message-medium-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-s)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+        var(--swc-theme--sizeL, var(--swc-body-size-xs));
     --swc-illustrated-message-large-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-s)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+        var(--swc-theme--sizeL, var(--swc-body-size-xs));
     --swc-drop-zone-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-xl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-l));
+        var(--swc-theme--sizeL, var(--swc-title-size-l));
     --swc-drop-zone-cjk-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-cjk-size-xl)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-cjk-size-l));
+        var(--swc-theme--sizeL, var(--swc-title-cjk-size-l));
     --swc-drop-zone-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-s)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+        var(--swc-theme--sizeL, var(--swc-body-size-xs));
     --swc-breadcrumbs-separator-to-bottom-text-multiline: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-breadcrumbs-start-edge-to-text-large: var(
-            --spectrum-theme--sizeM,
-            9px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-breadcrumbs-start-edge-to-text-medium: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-breadcrumbs-start-edge-to-text-multiline: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-breadcrumbs-top-to-separator-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-breadcrumbs-top-to-separator-medium: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-breadcrumbs-top-to-separator-multiline: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-breadcrumbs-text-to-separator-large: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-breadcrumbs-text-to-separator-medium: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-breadcrumbs-text-to-separator-multiline: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 5px);
+        var(--swc-theme--sizeL, 15px);
+    --swc-breadcrumbs-start-edge-to-text-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-breadcrumbs-start-edge-to-text-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-breadcrumbs-start-edge-to-text-multiline: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-breadcrumbs-top-to-separator-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-breadcrumbs-top-to-separator-medium: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-breadcrumbs-top-to-separator-multiline: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-breadcrumbs-text-to-separator-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-breadcrumbs-text-to-separator-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-breadcrumbs-text-to-separator-multiline: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
     --swc-contextual-help-body-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-body-size-s)
         )
-        var(--spectrum-theme--sizeL, var(--swc-body-size-xs));
+        var(--swc-theme--sizeL, var(--swc-body-size-xs));
     --swc-contextual-help-title-font-size: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             var(--swc-title-size-m)
         )
-        var(--spectrum-theme--sizeL, var(--swc-title-size-s));
+        var(--swc-theme--sizeL, var(--swc-title-size-s));
     --swc-accordion-content-area-edge-to-content-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-accordion-content-area-edge-to-content-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             9px
         )
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 11px);
     --swc-accordion-content-area-edge-to-content-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             12px
         )
-        var(--spectrum-theme--sizeL, 15px);
+        var(--swc-theme--sizeL, 15px);
     --swc-accordion-content-area-edge-to-content-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             15px
         )
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 19px);
     --swc-accordion-disclosure-indicator-to-text-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-accordion-disclosure-indicator-to-text-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 13px);
     --swc-accordion-disclosure-indicator-to-text-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             14px
         )
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 17px);
     --swc-accordion-disclosure-indicator-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-meter-thickness-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-meter-thickness-extra-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-action-bar-close-button-to-counter: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-action-bar-counter-font-size: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-avatar-group-size-50: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-avatar-group-size-75: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-avatar-group-size-100: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-avatar-group-size-200: var(--spectrum-theme--sizeM, 28px)
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-avatar-group-size-300: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-avatar-group-size-400: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-avatar-group-size-500: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-avatar-to-avatar-50: var(--spectrum-theme--sizeM, -4px)
-        var(--spectrum-theme--sizeL, -5px);
-    --swc-avatar-to-avatar-75: var(--spectrum-theme--sizeM, -5px)
-        var(--spectrum-theme--sizeL, -6px);
-    --swc-avatar-to-avatar-100: var(--spectrum-theme--sizeM, -6px)
-        var(--spectrum-theme--sizeL, -7px);
-    --swc-avatar-to-avatar-200: var(--spectrum-theme--sizeM, -7px)
-        var(--spectrum-theme--sizeL, -8px);
-    --swc-avatar-to-avatar-300: var(--spectrum-theme--sizeM, -8px)
-        var(--spectrum-theme--sizeL, -9px);
-    --swc-avatar-to-avatar-400: var(--spectrum-theme--sizeM, -9px)
-        var(--spectrum-theme--sizeL, -10px);
-    --swc-avatar-to-avatar-500: var(--spectrum-theme--sizeM, -10px)
-        var(--spectrum-theme--sizeL, -11px);
-    --swc-rating-height-small: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-rating-height-medium: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-select-box-horizontal-minimum-height: var(
-            --spectrum-theme--sizeM,
-            80px
-        )
-        var(--spectrum-theme--sizeL, 100px);
-    --swc-select-box-horizontal-width: var(--spectrum-theme--sizeM, 368px)
-        var(--spectrum-theme--sizeL, 460px);
-    --swc-select-box-vertical-height: var(--spectrum-theme--sizeM, 170px)
-        var(--spectrum-theme--sizeL, 212px);
-    --swc-select-box-horizontal-end-to-content: var(
-            --spectrum-theme--sizeM,
-            32px
-        )
-        var(--spectrum-theme--sizeL, 40px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-meter-thickness-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-meter-thickness-extra-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-action-bar-close-button-to-counter: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-action-bar-counter-font-size: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-avatar-group-size-50: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-avatar-group-size-75: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-avatar-group-size-100: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-avatar-group-size-200: var(--swc-theme--sizeM, 28px)
+        var(--swc-theme--sizeL, 32px);
+    --swc-avatar-group-size-300: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 36px);
+    --swc-avatar-group-size-400: var(--swc-theme--sizeM, 36px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-avatar-group-size-500: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 44px);
+    --swc-avatar-to-avatar-50: var(--swc-theme--sizeM, -4px)
+        var(--swc-theme--sizeL, -5px);
+    --swc-avatar-to-avatar-75: var(--swc-theme--sizeM, -5px)
+        var(--swc-theme--sizeL, -6px);
+    --swc-avatar-to-avatar-100: var(--swc-theme--sizeM, -6px)
+        var(--swc-theme--sizeL, -7px);
+    --swc-avatar-to-avatar-200: var(--swc-theme--sizeM, -7px)
+        var(--swc-theme--sizeL, -8px);
+    --swc-avatar-to-avatar-300: var(--swc-theme--sizeM, -8px)
+        var(--swc-theme--sizeL, -9px);
+    --swc-avatar-to-avatar-400: var(--swc-theme--sizeM, -9px)
+        var(--swc-theme--sizeL, -10px);
+    --swc-avatar-to-avatar-500: var(--swc-theme--sizeM, -10px)
+        var(--swc-theme--sizeL, -11px);
+    --swc-rating-height-small: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-rating-height-medium: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-select-box-horizontal-minimum-height: var(--swc-theme--sizeM, 80px)
+        var(--swc-theme--sizeL, 100px);
+    --swc-select-box-horizontal-width: var(--swc-theme--sizeM, 368px)
+        var(--swc-theme--sizeL, 460px);
+    --swc-select-box-vertical-height: var(--swc-theme--sizeM, 170px)
+        var(--swc-theme--sizeL, 212px);
+    --swc-select-box-horizontal-end-to-content: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
     --swc-select-box-horizontal-illustration-to-label: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             10px
         )
-        var(--spectrum-theme--sizeL, 12px);
+        var(--swc-theme--sizeL, 12px);
     --swc-select-box-horizontal-label-to-description: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             2px
         )
-        var(--spectrum-theme--sizeL, 3px);
-    --swc-select-box-horizontal-start-to-content: var(
-            --spectrum-theme--sizeM,
-            24px
-        )
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-select-box-horizontal-top-to-content: var(
-            --spectrum-theme--sizeM,
-            16px
-        )
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-select-box-top-to-checkbox: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-select-box-vertical-edge-to-content: var(
-            --spectrum-theme--sizeM,
-            24px
-        )
-        var(--spectrum-theme--sizeL, 30px);
+        var(--swc-theme--sizeL, 3px);
+    --swc-select-box-horizontal-start-to-content: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-select-box-horizontal-top-to-content: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-select-box-top-to-checkbox: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-select-box-vertical-edge-to-content: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
     --swc-select-box-vertical-illustration-to-label: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
+        var(--swc-theme--sizeL, 10px);
     --swc-slider-control-to-field-label-editable-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             -4px
         )
-        var(--spectrum-theme--sizeL, -8px);
+        var(--swc-theme--sizeL, -8px);
     --swc-slider-control-to-field-label-editable-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             -12px
         )
-        var(--spectrum-theme--sizeL, -16px);
+        var(--swc-theme--sizeL, -16px);
     --swc-slider-control-to-field-label-editable-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             -16px
         )
-        var(--spectrum-theme--sizeL, -20px);
+        var(--swc-theme--sizeL, -20px);
     --swc-slider-control-to-field-label-editable-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             -20px
         )
-        var(--spectrum-theme--sizeL, -24px);
+        var(--swc-theme--sizeL, -24px);
     --swc-slider-control-to-field-label-side-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 20px);
+        var(--swc-theme--sizeL, 20px);
     --swc-slider-control-to-field-label-side-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             16px
         )
-        var(--spectrum-theme--sizeL, 20px);
+        var(--swc-theme--sizeL, 20px);
     --swc-slider-control-to-field-label-side-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             20px
         )
-        var(--spectrum-theme--sizeL, 24px);
+        var(--swc-theme--sizeL, 24px);
     --swc-slider-control-to-field-label-side-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             24px
         )
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-slider-control-to-text-field-small: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-slider-control-to-text-field-medium: var(
-            --spectrum-theme--sizeM,
-            16px
-        )
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-slider-control-to-text-field-large: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
+        var(--swc-theme--sizeL, 28px);
+    --swc-slider-control-to-text-field-small: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-slider-control-to-text-field-medium: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-slider-control-to-text-field-large: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
     --swc-slider-control-to-text-field-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             24px
         )
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-slider-handle-height-precision-small: var(
-            --spectrum-theme--sizeM,
-            20px
-        )
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-slider-handle-height-precision-medium: var(
-            --spectrum-theme--sizeM,
-            22px
-        )
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-slider-handle-height-precision-large: var(
-            --spectrum-theme--sizeM,
-            24px
-        )
-        var(--spectrum-theme--sizeL, 30px);
+        var(--swc-theme--sizeL, 28px);
+    --swc-slider-handle-height-precision-small: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-slider-handle-height-precision-medium: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 26px);
+    --swc-slider-handle-height-precision-large: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
     --swc-slider-handle-height-precision-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             26px
         )
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-slider-handle-small: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-slider-handle-medium: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-slider-handle-large: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-slider-handle-extra-large: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-segmented-control-item-height: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-in-field-stepper-to-end-small: var(--spectrum-theme--sizeM, 0px)
-        var(--spectrum-theme--sizeL, 3px);
-    --swc-in-field-stepper-to-end-extra-large: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
+        var(--swc-theme--sizeL, 32px);
+    --swc-slider-handle-small: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-slider-handle-medium: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-slider-handle-large: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-slider-handle-extra-large: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-segmented-control-item-height: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-in-field-stepper-to-end-small: var(--swc-theme--sizeM, 0px)
+        var(--swc-theme--sizeL, 3px);
+    --swc-in-field-stepper-to-end-extra-large: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
     --swc-number-field-with-stepper-minimum-width-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             104px
         )
-        var(--spectrum-theme--sizeL, 126px);
+        var(--swc-theme--sizeL, 126px);
     --swc-number-field-with-stepper-minimum-width-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             120px
         )
-        var(--spectrum-theme--sizeL, 150px);
+        var(--swc-theme--sizeL, 150px);
     --swc-number-field-with-stepper-minimum-width-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             144px
         )
-        var(--spectrum-theme--sizeL, 174px);
+        var(--swc-theme--sizeL, 174px);
     --swc-number-field-with-stepper-minimum-width-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             168px
         )
-        var(--spectrum-theme--sizeL, 198px);
+        var(--swc-theme--sizeL, 198px);
     --swc-number-field-visual-to-in-field-stepper-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             5px
         )
-        var(--spectrum-theme--sizeL, 7px);
+        var(--swc-theme--sizeL, 7px);
     --swc-number-field-visual-to-in-field-stepper-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             6px
         )
-        var(--spectrum-theme--sizeL, 8px);
+        var(--swc-theme--sizeL, 8px);
     --swc-number-field-visual-to-in-field-stepper-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-number-field-visual-to-in-field-stepper-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             8px
         )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tree-view-disclosure-indicator-height: var(
-            --spectrum-theme--sizeM,
-            32px
-        )
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-tree-view-disclosure-indicator-width: var(
-            --spectrum-theme--sizeM,
-            34px
-        )
-        var(--spectrum-theme--sizeL, 42px);
-    --swc-tree-view-minimum-height: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-tree-view-minimum-width: var(--spectrum-theme--sizeM, 160px)
-        var(--spectrum-theme--sizeL, 200px);
-    --swc-tree-view-bottom-to-label: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-tree-view-drag-handle-to-checkbox: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tree-view-edge-to-checkbox: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-tree-view-edge-to-drag-handle: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tree-view-end-edge-to-action-area: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-tree-view-item-to-header: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-tree-view-label-to-action-area: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-tree-view-level-increment: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-tree-view-minimum-top-to-context-area: var(
-            --spectrum-theme--sizeM,
-            8px
-        )
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-tree-view-top-to-action-button: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tree-view-top-to-checkbox: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-tree-view-top-to-disclosure-indicator: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tree-view-top-to-drag-handle: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-tree-view-top-to-label: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-add-icon-size-50: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-add-icon-size-75: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-add-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-add-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-add-icon-size-300: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-drag-handle-icon-size-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-drag-handle-icon-size-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-drag-handle-icon-size-200: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-drag-handle-icon-size-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-tag-field-default-width-small: var(--spectrum-theme--sizeM, 240px)
-        var(--spectrum-theme--sizeL, 264px);
-    --swc-tag-field-default-width-medium: var(--spectrum-theme--sizeM, 264px)
-        var(--spectrum-theme--sizeL, 288px);
-    --swc-tag-field-default-width-large: var(--spectrum-theme--sizeM, 288px)
-        var(--spectrum-theme--sizeL, 312px);
-    --swc-tag-field-minimum-width: var(--spectrum-theme--sizeM, 180px)
-        var(--spectrum-theme--sizeL, 200px);
-    --swc-tag-field-minimum-height-small: var(--spectrum-theme--sizeM, 44px)
-        var(--spectrum-theme--sizeL, 54px);
-    --swc-tag-field-minimum-height-medium: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 68px);
-    --swc-tag-field-minimum-height-large: var(--spectrum-theme--sizeM, 68px)
-        var(--spectrum-theme--sizeL, 82px);
-    --swc-tag-field-edge-to-content-small: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-tag-field-edge-to-content-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-tag-field-edge-to-content-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-list-view-minimum-height: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-list-view-minimum-width: var(--spectrum-theme--sizeM, 200px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-list-view-end-edge-to-content: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-stack-item-header-minimum-width: var(--spectrum-theme--sizeM, 200px)
-        var(--spectrum-theme--sizeL, 240px);
-    --swc-stack-item-start-edge-to-content: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-stack-item-drag-handle-to-control: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-stack-item-text-to-control: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-stack-item-edge-to-control: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-stack-item-edge-to-visual: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-stack-item-action-to-navigation: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-accordion-bottom-to-text-extra-large: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-accordion-bottom-to-text-large: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-accordion-bottom-to-text-medium: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-accordion-bottom-to-text-small: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-accordion-top-to-text-extra-large: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-accordion-top-to-text-large: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-accordion-top-to-text-medium: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-accordion-top-to-text-small: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-select-box-horizontal-minimum-width: var(
-            --spectrum-theme--sizeM,
-            188px
-        )
-        var(--spectrum-theme--sizeL, 220px);
-    --swc-side-navigation-counter-to-disclosure: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-side-navigation-edge-to-indicator: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-side-navigation-indicator-to-content: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 8px);
+        var(--swc-theme--sizeL, 10px);
+    --swc-tree-view-disclosure-indicator-height: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-tree-view-disclosure-indicator-width: var(--swc-theme--sizeM, 34px)
+        var(--swc-theme--sizeL, 42px);
+    --swc-tree-view-minimum-height: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-tree-view-minimum-width: var(--swc-theme--sizeM, 160px)
+        var(--swc-theme--sizeL, 200px);
+    --swc-tree-view-bottom-to-label: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-tree-view-drag-handle-to-checkbox: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tree-view-edge-to-checkbox: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-tree-view-edge-to-drag-handle: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tree-view-end-edge-to-action-area: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-tree-view-item-to-header: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-tree-view-label-to-action-area: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-tree-view-level-increment: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-tree-view-minimum-top-to-context-area: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-tree-view-top-to-action-button: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tree-view-top-to-checkbox: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-tree-view-top-to-disclosure-indicator: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tree-view-top-to-drag-handle: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-tree-view-top-to-label: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-add-icon-size-50: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-add-icon-size-75: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-add-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-add-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-add-icon-size-300: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-drag-handle-icon-size-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-drag-handle-icon-size-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-drag-handle-icon-size-200: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-drag-handle-icon-size-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-tag-field-default-width-small: var(--swc-theme--sizeM, 240px)
+        var(--swc-theme--sizeL, 264px);
+    --swc-tag-field-default-width-medium: var(--swc-theme--sizeM, 264px)
+        var(--swc-theme--sizeL, 288px);
+    --swc-tag-field-default-width-large: var(--swc-theme--sizeM, 288px)
+        var(--swc-theme--sizeL, 312px);
+    --swc-tag-field-minimum-width: var(--swc-theme--sizeM, 180px)
+        var(--swc-theme--sizeL, 200px);
+    --swc-tag-field-minimum-height-small: var(--swc-theme--sizeM, 44px)
+        var(--swc-theme--sizeL, 54px);
+    --swc-tag-field-minimum-height-medium: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 68px);
+    --swc-tag-field-minimum-height-large: var(--swc-theme--sizeM, 68px)
+        var(--swc-theme--sizeL, 82px);
+    --swc-tag-field-edge-to-content-small: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-tag-field-edge-to-content-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-tag-field-edge-to-content-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-list-view-minimum-height: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-list-view-minimum-width: var(--swc-theme--sizeM, 200px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-list-view-end-edge-to-content: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-stack-item-header-minimum-width: var(--swc-theme--sizeM, 200px)
+        var(--swc-theme--sizeL, 240px);
+    --swc-stack-item-start-edge-to-content: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-stack-item-drag-handle-to-control: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-stack-item-text-to-control: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-stack-item-edge-to-control: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-stack-item-edge-to-visual: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-stack-item-action-to-navigation: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-accordion-bottom-to-text-extra-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-accordion-bottom-to-text-large: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-accordion-bottom-to-text-medium: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-accordion-bottom-to-text-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-accordion-top-to-text-extra-large: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-accordion-top-to-text-large: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-accordion-top-to-text-medium: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-accordion-top-to-text-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-select-box-horizontal-minimum-width: var(--swc-theme--sizeM, 188px)
+        var(--swc-theme--sizeL, 220px);
+    --swc-side-navigation-counter-to-disclosure: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-side-navigation-edge-to-indicator: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-side-navigation-indicator-to-content: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
     --swc-side-navigation-second-level-edge-to-indicator: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             30px
         )
-        var(--spectrum-theme--sizeL, 36px);
+        var(--swc-theme--sizeL, 36px);
     --swc-side-navigation-second-level-with-icon-edge-to-text: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             28px
         )
-        var(--spectrum-theme--sizeL, 34px);
+        var(--swc-theme--sizeL, 34px);
     --swc-side-navigation-second-level-with-icon-edge-to-indicator: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             20px
         )
-        var(--spectrum-theme--sizeL, 26px);
+        var(--swc-theme--sizeL, 26px);
     --swc-side-navigation-third-level-edge-to-indicator: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             56px
         )
-        var(--spectrum-theme--sizeL, 62px);
+        var(--swc-theme--sizeL, 62px);
     --swc-side-navigation-third-level-with-icon-edge-to-text: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             44px
         )
-        var(--spectrum-theme--sizeL, 50px);
+        var(--swc-theme--sizeL, 50px);
     --swc-side-navigation-third-level-with-icon-edge-to-indicator: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             36px
         )
-        var(--spectrum-theme--sizeL, 42px);
+        var(--swc-theme--sizeL, 42px);
     --swc-side-navigation-trailing-accessory-area-to-edge: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             4px
         )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-side-navigation-indicator-height: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-workflow-icon-size-50: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-workflow-icon-size-75: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-workflow-icon-size-100: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-workflow-icon-size-200: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-workflow-icon-size-300: var(--spectrum-theme--sizeM, 26px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-text-to-visual-50: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-text-to-visual-75: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-text-to-visual-100: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-text-to-visual-200: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-text-to-visual-300: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-text-to-visual-400: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-text-to-control-50: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-text-to-control-75: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-text-to-control-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-text-to-control-200: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-text-to-control-300: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-visual-to-control-100: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-component-height-50: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-component-height-75: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-component-height-100: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-component-height-200: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-component-height-300: var(--spectrum-theme--sizeM, 48px)
-        var(--spectrum-theme--sizeL, 60px);
-    --swc-component-height-400: var(--spectrum-theme--sizeM, 56px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-component-height-500: var(--spectrum-theme--sizeM, 64px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-component-pill-edge-to-visual-75: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-component-pill-edge-to-visual-100: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-component-pill-edge-to-visual-200: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-component-pill-edge-to-visual-300: var(--spectrum-theme--sizeM, 21px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-component-pill-edge-to-visual-only-75: var(
-            --spectrum-theme--sizeM,
-            4px
-        )
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-component-pill-edge-to-visual-only-100: var(
-            --spectrum-theme--sizeM,
-            6px
-        )
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-component-pill-edge-to-visual-only-200: var(
-            --spectrum-theme--sizeM,
-            9px
-        )
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-component-pill-edge-to-visual-only-300: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-pill-edge-to-text-75: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-pill-edge-to-text-100: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-component-pill-edge-to-text-200: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 25px);
-    --swc-component-pill-edge-to-text-300: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-component-edge-to-visual-50: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-component-edge-to-visual-75: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-component-edge-to-visual-100: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-component-edge-to-visual-200: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-component-edge-to-visual-300: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-component-edge-to-visual-only-50: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-component-edge-to-visual-only-75: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-component-edge-to-visual-only-100: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-component-edge-to-visual-only-200: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-component-edge-to-visual-only-300: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-edge-to-text-50: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-component-edge-to-text-75: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-component-edge-to-text-100: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-edge-to-text-200: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-component-edge-to-text-300: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-component-top-to-workflow-icon-50: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-component-top-to-workflow-icon-75: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-component-top-to-workflow-icon-100: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-component-top-to-workflow-icon-200: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-component-top-to-workflow-icon-300: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-top-to-text-50: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 4px);
-    --swc-component-top-to-text-75: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-component-top-to-text-100: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-component-top-to-text-200: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-component-top-to-text-300: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-component-bottom-to-text-50: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-component-bottom-to-text-75: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-component-bottom-to-text-100: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-component-bottom-to-text-200: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-component-bottom-to-text-300: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 18px);
-    --swc-component-to-menu-small: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-component-to-menu-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-component-to-menu-large: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-component-to-menu-extra-large: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-field-edge-to-disclosure-icon-75: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-edge-to-disclosure-icon-100: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-edge-to-disclosure-icon-200: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-field-edge-to-disclosure-icon-300: var(--spectrum-theme--sizeM, 17px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-end-edge-to-disclosure-icon-75: var(
-            --spectrum-theme--sizeM,
-            7px
-        )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-end-edge-to-disclosure-icon-100: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-end-edge-to-disclosure-icon-200: var(
-            --spectrum-theme--sizeM,
-            14px
-        )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-field-end-edge-to-disclosure-icon-300: var(
-            --spectrum-theme--sizeM,
-            17px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-top-to-disclosure-icon-75: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-top-to-disclosure-icon-100: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-top-to-disclosure-icon-200: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-field-top-to-disclosure-icon-300: var(--spectrum-theme--sizeM, 17px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-top-to-alert-icon-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-field-top-to-alert-icon-medium: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-top-to-alert-icon-large: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-top-to-alert-icon-extra-large: var(
-            --spectrum-theme--sizeM,
-            13px
-        )
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-field-top-to-validation-icon-small: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-top-to-validation-icon-medium: var(
-            --spectrum-theme--sizeM,
-            11px
-        )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-top-to-validation-icon-large: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 6px);
+    --swc-side-navigation-indicator-height: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-workflow-icon-size-50: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-workflow-icon-size-75: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-workflow-icon-size-100: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-workflow-icon-size-200: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-workflow-icon-size-300: var(--swc-theme--sizeM, 26px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-text-to-visual-50: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-text-to-visual-75: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-text-to-visual-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-text-to-visual-200: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-text-to-visual-300: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-text-to-visual-400: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-text-to-control-50: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-text-to-control-75: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-text-to-control-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-text-to-control-200: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-text-to-control-300: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-visual-to-control-100: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-component-height-50: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 26px);
+    --swc-component-height-75: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-component-height-100: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-component-height-200: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-component-height-300: var(--swc-theme--sizeM, 48px)
+        var(--swc-theme--sizeL, 60px);
+    --swc-component-height-400: var(--swc-theme--sizeM, 56px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-component-height-500: var(--swc-theme--sizeM, 64px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-component-pill-edge-to-visual-75: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-component-pill-edge-to-visual-100: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-component-pill-edge-to-visual-200: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-component-pill-edge-to-visual-300: var(--swc-theme--sizeM, 21px)
+        var(--swc-theme--sizeL, 27px);
+    --swc-component-pill-edge-to-visual-only-75: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-component-pill-edge-to-visual-only-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-component-pill-edge-to-visual-only-200: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-component-pill-edge-to-visual-only-300: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-pill-edge-to-text-75: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-pill-edge-to-text-100: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-component-pill-edge-to-text-200: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 25px);
+    --swc-component-pill-edge-to-text-300: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-component-edge-to-visual-50: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-component-edge-to-visual-75: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-component-edge-to-visual-100: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-component-edge-to-visual-200: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-component-edge-to-visual-300: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-component-edge-to-visual-only-50: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-component-edge-to-visual-only-75: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-component-edge-to-visual-only-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-component-edge-to-visual-only-200: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-component-edge-to-visual-only-300: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-edge-to-text-50: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-component-edge-to-text-75: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-component-edge-to-text-100: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-edge-to-text-200: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-component-edge-to-text-300: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-component-top-to-workflow-icon-50: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-component-top-to-workflow-icon-75: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-component-top-to-workflow-icon-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-component-top-to-workflow-icon-200: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-component-top-to-workflow-icon-300: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-top-to-text-50: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 4px);
+    --swc-component-top-to-text-75: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-component-top-to-text-100: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-component-top-to-text-200: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-component-top-to-text-300: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-component-bottom-to-text-50: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-component-bottom-to-text-75: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-component-bottom-to-text-100: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-component-bottom-to-text-200: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-component-bottom-to-text-300: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 18px);
+    --swc-component-to-menu-small: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-component-to-menu-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-component-to-menu-large: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-component-to-menu-extra-large: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-field-edge-to-disclosure-icon-75: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-edge-to-disclosure-icon-100: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-edge-to-disclosure-icon-200: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-field-edge-to-disclosure-icon-300: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-end-edge-to-disclosure-icon-75: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-end-edge-to-disclosure-icon-100: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-end-edge-to-disclosure-icon-200: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-field-end-edge-to-disclosure-icon-300: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-top-to-disclosure-icon-75: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-top-to-disclosure-icon-100: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-top-to-disclosure-icon-200: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-field-top-to-disclosure-icon-300: var(--swc-theme--sizeM, 17px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-top-to-alert-icon-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-field-top-to-alert-icon-medium: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-top-to-alert-icon-large: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-top-to-alert-icon-extra-large: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-field-top-to-validation-icon-small: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-top-to-validation-icon-medium: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-top-to-validation-icon-large: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
     --swc-field-top-to-validation-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-top-to-progress-circle-small: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-field-top-to-progress-circle-medium: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-field-top-to-progress-circle-large: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-top-to-progress-circle-small: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-field-top-to-progress-circle-medium: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-field-top-to-progress-circle-large: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
     --swc-field-top-to-progress-circle-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-edge-to-alert-icon-small: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-field-edge-to-alert-icon-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-edge-to-alert-icon-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-field-edge-to-alert-icon-extra-large: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-edge-to-validation-icon-small: var(--spectrum-theme--sizeM, 9px)
-        var(--spectrum-theme--sizeL, 11px);
-    --swc-field-edge-to-validation-icon-medium: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-edge-to-validation-icon-large: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-edge-to-alert-icon-small: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-field-edge-to-alert-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-edge-to-alert-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-field-edge-to-alert-icon-extra-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-edge-to-validation-icon-small: var(--swc-theme--sizeM, 9px)
+        var(--swc-theme--sizeL, 11px);
+    --swc-field-edge-to-validation-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-edge-to-validation-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
     --swc-field-edge-to-validation-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             18px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-text-to-alert-icon-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-field-text-to-alert-icon-medium: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-text-to-alert-icon-large: var(--spectrum-theme--sizeM, 15px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-field-text-to-alert-icon-extra-large: var(
-            --spectrum-theme--sizeM,
-            18px
-        )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-field-text-to-validation-icon-small: var(--spectrum-theme--sizeM, 8px)
-        var(--spectrum-theme--sizeL, 10px);
-    --swc-field-text-to-validation-icon-medium: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-field-text-to-validation-icon-large: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 19px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-text-to-alert-icon-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-field-text-to-alert-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-text-to-alert-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-field-text-to-alert-icon-extra-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-field-text-to-validation-icon-small: var(--swc-theme--sizeM, 8px)
+        var(--swc-theme--sizeL, 10px);
+    --swc-field-text-to-validation-icon-medium: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-field-text-to-validation-icon-large: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 19px);
     --swc-field-text-to-validation-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             18px
         )
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-side-label-character-count-to-field: var(
-            --spectrum-theme--sizeM,
-            12px
-        )
-        var(--spectrum-theme--sizeL, 15px);
+        var(--swc-theme--sizeL, 22px);
+    --swc-side-label-character-count-to-field: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
     --swc-disclosure-indicator-top-to-disclosure-icon-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
+        var(--swc-theme--sizeL, 9px);
     --swc-disclosure-indicator-top-to-disclosure-icon-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 13px);
     --swc-disclosure-indicator-top-to-disclosure-icon-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             14px
         )
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 17px);
     --swc-disclosure-indicator-top-to-disclosure-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 22px);
+        var(--swc-theme--sizeL, 22px);
     --swc-navigational-indicator-top-to-back-icon-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             6px
         )
-        var(--spectrum-theme--sizeL, 7px);
+        var(--swc-theme--sizeL, 7px);
     --swc-navigational-indicator-top-to-back-icon-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             9px
         )
-        var(--spectrum-theme--sizeL, 12px);
+        var(--swc-theme--sizeL, 12px);
     --swc-navigational-indicator-top-to-back-icon-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             12px
         )
-        var(--spectrum-theme--sizeL, 16px);
+        var(--swc-theme--sizeL, 16px);
     --swc-navigational-indicator-top-to-back-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             15px
         )
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-color-control-track-width: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 30px);
-    --swc-corner-triangle-icon-size-75: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 6px);
-    --swc-corner-triangle-icon-size-100: var(--spectrum-theme--sizeM, 5px)
-        var(--spectrum-theme--sizeL, 7px);
-    --swc-corner-triangle-icon-size-200: var(--spectrum-theme--sizeM, 6px)
-        var(--spectrum-theme--sizeL, 8px);
-    --swc-corner-triangle-icon-size-300: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 8px);
+        var(--swc-theme--sizeL, 19px);
+    --swc-color-control-track-width: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 30px);
+    --swc-corner-triangle-icon-size-75: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 6px);
+    --swc-corner-triangle-icon-size-100: var(--swc-theme--sizeM, 5px)
+        var(--swc-theme--sizeL, 7px);
+    --swc-corner-triangle-icon-size-200: var(--swc-theme--sizeM, 6px)
+        var(--swc-theme--sizeL, 8px);
+    --swc-corner-triangle-icon-size-300: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 8px);
     --swc-field-top-to-disclosure-icon-compact-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             7px
         )
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-field-top-to-disclosure-icon-small: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
+        var(--swc-theme--sizeL, 9px);
+    --swc-field-top-to-disclosure-icon-small: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
     --swc-field-top-to-disclosure-icon-spacious-small: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             15px
         )
-        var(--spectrum-theme--sizeL, 18px);
+        var(--swc-theme--sizeL, 18px);
     --swc-field-top-to-disclosure-icon-compact-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             11px
         )
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-field-top-to-disclosure-icon-medium: var(
-            --spectrum-theme--sizeM,
-            15px
-        )
-        var(--spectrum-theme--sizeL, 18px);
+        var(--swc-theme--sizeL, 13px);
+    --swc-field-top-to-disclosure-icon-medium: var(--swc-theme--sizeM, 15px)
+        var(--swc-theme--sizeL, 18px);
     --swc-field-top-to-disclosure-icon-spacious-medium: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             19px
         )
-        var(--spectrum-theme--sizeL, 23px);
+        var(--swc-theme--sizeL, 23px);
     --swc-field-top-to-disclosure-icon-compact-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             14px
         )
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-field-top-to-disclosure-icon-large: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
+        var(--swc-theme--sizeL, 17px);
+    --swc-field-top-to-disclosure-icon-large: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
     --swc-field-top-to-disclosure-icon-spacious-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             22px
         )
-        var(--spectrum-theme--sizeL, 27px);
+        var(--swc-theme--sizeL, 27px);
     --swc-field-top-to-disclosure-icon-compact-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             17px
         )
-        var(--spectrum-theme--sizeL, 21px);
+        var(--swc-theme--sizeL, 21px);
     --swc-field-top-to-disclosure-icon-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             21px
         )
-        var(--spectrum-theme--sizeL, 26px);
+        var(--swc-theme--sizeL, 26px);
     --swc-field-top-to-disclosure-icon-spacious-extra-large: var(
-            --spectrum-theme--sizeM,
+            --swc-theme--sizeM,
             25px
         )
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-component-padding-vertical-50: var(--spectrum-theme--sizeM, 3px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-component-padding-vertical-75: var(--spectrum-theme--sizeM, 4px)
-        var(--spectrum-theme--sizeL, 5px);
-    --swc-component-padding-vertical-100: var(--spectrum-theme--sizeM, 7px)
-        var(--spectrum-theme--sizeL, 9px);
-    --swc-component-padding-vertical-200: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-component-padding-vertical-300: var(--spectrum-theme--sizeM, 13px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-font-size-25: var(--spectrum-theme--sizeM, 10px)
-        var(--spectrum-theme--sizeL, 12px);
-    --swc-font-size-50: var(--spectrum-theme--sizeM, 11px)
-        var(--spectrum-theme--sizeL, 13px);
-    --swc-font-size-75: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 15px);
-    --swc-font-size-100: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
-    --swc-font-size-200: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 19px);
-    --swc-font-size-300: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-font-size-400: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-font-size-500: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 27px);
-    --swc-font-size-600: var(--spectrum-theme--sizeM, 25px)
-        var(--spectrum-theme--sizeL, 31px);
-    --swc-font-size-700: var(--spectrum-theme--sizeM, 28px)
-        var(--spectrum-theme--sizeL, 34px);
-    --swc-font-size-800: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 39px);
-    --swc-font-size-900: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-font-size-1000: var(--spectrum-theme--sizeM, 40px)
-        var(--spectrum-theme--sizeL, 49px);
-    --swc-font-size-1100: var(--spectrum-theme--sizeM, 45px)
-        var(--spectrum-theme--sizeL, 55px);
-    --swc-font-size-1200: var(--spectrum-theme--sizeM, 51px)
-        var(--spectrum-theme--sizeL, 62px);
-    --swc-font-size-1300: var(--spectrum-theme--sizeM, 58px)
-        var(--spectrum-theme--sizeL, 70px);
-    --swc-font-size-1400: var(--spectrum-theme--sizeM, 65px)
-        var(--spectrum-theme--sizeL, 79px);
-    --swc-font-size-1500: var(--spectrum-theme--sizeM, 73px)
-        var(--spectrum-theme--sizeL, 88px);
-    --swc-line-height-font-size-25: var(--spectrum-theme--sizeM, 12px)
-        var(--spectrum-theme--sizeL, 14px);
-    --swc-line-height-font-size-50: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 16px);
-    --swc-line-height-font-size-75: var(--spectrum-theme--sizeM, 16px)
-        var(--spectrum-theme--sizeL, 20px);
-    --swc-line-height-font-size-100: var(--spectrum-theme--sizeM, 18px)
-        var(--spectrum-theme--sizeL, 22px);
-    --swc-line-height-font-size-200: var(--spectrum-theme--sizeM, 20px)
-        var(--spectrum-theme--sizeL, 24px);
-    --swc-line-height-font-size-300: var(--spectrum-theme--sizeM, 22px)
-        var(--spectrum-theme--sizeL, 26px);
-    --swc-line-height-font-size-400: var(--spectrum-theme--sizeM, 24px)
-        var(--spectrum-theme--sizeL, 28px);
-    --swc-line-height-font-size-500: var(--spectrum-theme--sizeM, 26px)
-        var(--spectrum-theme--sizeL, 32px);
-    --swc-line-height-font-size-600: var(--spectrum-theme--sizeM, 30px)
-        var(--spectrum-theme--sizeL, 36px);
-    --swc-line-height-font-size-700: var(--spectrum-theme--sizeM, 32px)
-        var(--spectrum-theme--sizeL, 40px);
-    --swc-line-height-font-size-800: var(--spectrum-theme--sizeM, 36px)
-        var(--spectrum-theme--sizeL, 44px);
-    --swc-line-height-font-size-900: var(--spectrum-theme--sizeM, 42px)
-        var(--spectrum-theme--sizeL, 50px);
-    --swc-line-height-font-size-1000: var(--spectrum-theme--sizeM, 46px)
-        var(--spectrum-theme--sizeL, 56px);
-    --swc-line-height-font-size-1100: var(--spectrum-theme--sizeM, 52px)
-        var(--spectrum-theme--sizeL, 64px);
-    --swc-line-height-font-size-1200: var(--spectrum-theme--sizeM, 58px)
-        var(--spectrum-theme--sizeL, 72px);
-    --swc-line-height-font-size-1300: var(--spectrum-theme--sizeM, 66px)
-        var(--spectrum-theme--sizeL, 80px);
-    --swc-line-height-font-size-1400: var(--spectrum-theme--sizeM, 74px)
-        var(--spectrum-theme--sizeL, 90px);
-    --swc-line-height-font-size-1500: var(--spectrum-theme--sizeM, 84px)
-        var(--spectrum-theme--sizeL, 102px);
-    --swc-font-size: var(--spectrum-theme--sizeM, 14px)
-        var(--spectrum-theme--sizeL, 17px);
+        var(--swc-theme--sizeL, 31px);
+    --swc-component-padding-vertical-50: var(--swc-theme--sizeM, 3px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-component-padding-vertical-75: var(--swc-theme--sizeM, 4px)
+        var(--swc-theme--sizeL, 5px);
+    --swc-component-padding-vertical-100: var(--swc-theme--sizeM, 7px)
+        var(--swc-theme--sizeL, 9px);
+    --swc-component-padding-vertical-200: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-component-padding-vertical-300: var(--swc-theme--sizeM, 13px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-font-size-25: var(--swc-theme--sizeM, 10px)
+        var(--swc-theme--sizeL, 12px);
+    --swc-font-size-50: var(--swc-theme--sizeM, 11px)
+        var(--swc-theme--sizeL, 13px);
+    --swc-font-size-75: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 15px);
+    --swc-font-size-100: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 17px);
+    --swc-font-size-200: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 19px);
+    --swc-font-size-300: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-font-size-400: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-font-size-500: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 27px);
+    --swc-font-size-600: var(--swc-theme--sizeM, 25px)
+        var(--swc-theme--sizeL, 31px);
+    --swc-font-size-700: var(--swc-theme--sizeM, 28px)
+        var(--swc-theme--sizeL, 34px);
+    --swc-font-size-800: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 39px);
+    --swc-font-size-900: var(--swc-theme--sizeM, 36px)
+        var(--swc-theme--sizeL, 44px);
+    --swc-font-size-1000: var(--swc-theme--sizeM, 40px)
+        var(--swc-theme--sizeL, 49px);
+    --swc-font-size-1100: var(--swc-theme--sizeM, 45px)
+        var(--swc-theme--sizeL, 55px);
+    --swc-font-size-1200: var(--swc-theme--sizeM, 51px)
+        var(--swc-theme--sizeL, 62px);
+    --swc-font-size-1300: var(--swc-theme--sizeM, 58px)
+        var(--swc-theme--sizeL, 70px);
+    --swc-font-size-1400: var(--swc-theme--sizeM, 65px)
+        var(--swc-theme--sizeL, 79px);
+    --swc-font-size-1500: var(--swc-theme--sizeM, 73px)
+        var(--swc-theme--sizeL, 88px);
+    --swc-line-height-font-size-25: var(--swc-theme--sizeM, 12px)
+        var(--swc-theme--sizeL, 14px);
+    --swc-line-height-font-size-50: var(--swc-theme--sizeM, 14px)
+        var(--swc-theme--sizeL, 16px);
+    --swc-line-height-font-size-75: var(--swc-theme--sizeM, 16px)
+        var(--swc-theme--sizeL, 20px);
+    --swc-line-height-font-size-100: var(--swc-theme--sizeM, 18px)
+        var(--swc-theme--sizeL, 22px);
+    --swc-line-height-font-size-200: var(--swc-theme--sizeM, 20px)
+        var(--swc-theme--sizeL, 24px);
+    --swc-line-height-font-size-300: var(--swc-theme--sizeM, 22px)
+        var(--swc-theme--sizeL, 26px);
+    --swc-line-height-font-size-400: var(--swc-theme--sizeM, 24px)
+        var(--swc-theme--sizeL, 28px);
+    --swc-line-height-font-size-500: var(--swc-theme--sizeM, 26px)
+        var(--swc-theme--sizeL, 32px);
+    --swc-line-height-font-size-600: var(--swc-theme--sizeM, 30px)
+        var(--swc-theme--sizeL, 36px);
+    --swc-line-height-font-size-700: var(--swc-theme--sizeM, 32px)
+        var(--swc-theme--sizeL, 40px);
+    --swc-line-height-font-size-800: var(--swc-theme--sizeM, 36px)
+        var(--swc-theme--sizeL, 44px);
+    --swc-line-height-font-size-900: var(--swc-theme--sizeM, 42px)
+        var(--swc-theme--sizeL, 50px);
+    --swc-line-height-font-size-1000: var(--swc-theme--sizeM, 46px)
+        var(--swc-theme--sizeL, 56px);
+    --swc-line-height-font-size-1100: var(--swc-theme--sizeM, 52px)
+        var(--swc-theme--sizeL, 64px);
+    --swc-line-height-font-size-1200: var(--swc-theme--sizeM, 58px)
+        var(--swc-theme--sizeL, 72px);
+    --swc-line-height-font-size-1300: var(--swc-theme--sizeM, 66px)
+        var(--swc-theme--sizeL, 80px);
+    --swc-line-height-font-size-1400: var(--swc-theme--sizeM, 74px)
+        var(--swc-theme--sizeL, 90px);
+    --swc-line-height-font-size-1500: var(--swc-theme--sizeM, 84px)
+        var(--swc-theme--sizeL, 102px);
+    --swc-font-size: var(--swc-theme--sizeM, 14px) var(--swc-theme--sizeL, 17px);
 }
