@@ -1,0 +1,100 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Component Styles" />
+
+# Component Styles
+
+Component styles can be customized in a few ways, listed in the recommended order of implementation:
+
+1. use of style related attributes per component such as `variant` and `size`
+2. providing [overrides of component custom properties](#overriding-component-custom-properties)
+3. _coming soon:_ writing styles for specific component shadow parts
+4. _coming soon:_ providing granular customization via the theme object
+5. extending the components to include custom styles
+6. [globally overriding design token](#globally-override-design-tokens) custom properties
+
+SWC strongly recommends using the least intrusive method possible for assigning custom styles. This will help keep your component styles overall inline with Spectrum design recommendations, and reduce the liklihood of compatibilty issues as the library evolves.
+
+## Migration from SWC 1st-gen
+
+For SWC 2nd-gen, the custom property API surface has been reduced, and `--mod` properties have been removed.
+
+Additionally, the namespace for custom properties has changed from `spectrum` to `swc`.
+
+## Overriding component custom properties
+
+Selected component styles are exposed for override via custom properties.
+
+{/* TODO - TBD: exposing eligible properties in documentation */}
+
+To determine what is available, inspect the component styles and note the availability of custom properties with the naming convention `--swc-[component]-[property]-[feature]`.
+
+### Applying custom property overrides
+
+Since most components feature multiple variants and/or state-based styles, selectors for overrides must also be scoped to specific attributes to prevent too greedily overriding values.
+
+```css
+/* Badge, size extra-large */
+swc-badge[size='xl'] {
+    --swc-badge-font-size: var(--swc-font-size-400);
+}
+```
+
+For components with compounding visual features, include all related features for proper scoping.
+
+```css
+/* Badge, outline, positive variant */
+swc-badge[outline][variant='positive'] {
+    --swc-badge-border-color: var(--swc-celery-background-color-default);
+}
+```
+
+If your override is applied too broadly, re-assess how the selector is scoped.
+
+To exclude a style further, overrides can be applied via custom classes for specific component instances.
+
+```css
+.divider--accent {
+    --swc-divider-background-color: var(--swc-accent-visual-color);
+}
+
+/* Apply directly to component instance:
+<swc-divider class="divider--accent" size="m"></swc-divider> */
+```
+
+### Custom property override exclusions
+
+There are some exclusions to what can be successfully overridden:
+
+- color properties for static white and static black variants
+- color properties when tied to non-semantic color palette variants
+    - _example_: the `magenta` variant of Badge
+- properties modified for forced-colors mode
+
+To modify non-semantic color palette variants, you may add a global override to re-assign those values instead.
+
+## Globally override design tokens
+
+For brand-specific reasons, you may need to override design tokens at a global application level.
+
+It is strongly encouraged to re-assign color values to existing Spectrum color tokens which have the built-in capability to adapt to light and dark theme contexts.
+
+For scaling values, you will need to provide both the medium and large values, even if only one value has been revised. Scaling values need to be attached to both `:root` and `.spectrum-theme` to continue successfully supporting dynamic scaling.
+
+Overrides should be included after the [main library stylesheet](docs/guides-customization-getting-started--docs), which allows overrides to work via the natural CSS cascade.
+
+```css
+/* Assumes @adobe/swc/stylesheets/swc.css is loaded prior */
+
+/* Overrides for non-scaling values */
+:root {
+    --swc-accent-color-500: var(--swc-indigo-500);
+}
+
+/* Overrides for scaling values */
+:root,
+.spectrum-theme {
+    --swc-avatar-size-400: var(--spectrum-theme--sizeM, 32px)
+        var(--spectrum-theme--sizeL, 48px);
+}
+```

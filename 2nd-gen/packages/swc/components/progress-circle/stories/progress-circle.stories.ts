@@ -18,6 +18,8 @@ import { ProgressCircle } from '@adobe/swc/progress-circle';
 
 import '@adobe/swc/progress-circle';
 
+import { HorizontalContainer } from '../../../.storybook/decorators/utilities.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -81,80 +83,77 @@ export const Default: Story = {
 };
 
 export const Sizes: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
+    render: () =>
+        HorizontalContainer([
+            html`<swc-progress-circle
                 .progress=${25}
                 size="s"
                 label="Small progress"
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 .progress=${25}
                 size="m"
                 label="Medium progress"
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 .progress=${25}
                 size="l"
                 label="Large progress"
-            ></swc-progress-circle>
-        </div>
-    `,
+            ></swc-progress-circle>`,
+        ]),
     tags: ['!dev'],
 };
 
 export const ProgressValues: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
+    render: () =>
+        HorizontalContainer([
+            html`<swc-progress-circle
                 .progress=${25}
                 label="25% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 .progress=${50}
                 label="50% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 .progress=${75}
                 label="75% complete"
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 .progress=${100}
                 label="Complete"
-            ></swc-progress-circle>
-        </div>
-    `,
+            ></swc-progress-circle>`,
+        ]),
     tags: ['!dev'],
 };
 
 export const Indeterminate: Story = {
-    render: () => html`
-        <div style="display: flex; gap: 24px; align-items: center;">
-            <swc-progress-circle
+    render: () =>
+        HorizontalContainer([
+            html`<swc-progress-circle
                 indeterminate
                 size="s"
                 label="Loading..."
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 indeterminate
                 size="m"
                 label="Loading..."
-            ></swc-progress-circle>
-            <swc-progress-circle
+            ></swc-progress-circle>`,
+            html`<swc-progress-circle
                 indeterminate
                 size="l"
                 label="Loading..."
-            ></swc-progress-circle>
-        </div>
-    `,
+            ></swc-progress-circle>`,
+        ]),
     tags: ['!dev'],
 };
 
 export const StaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+    },
     render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67)); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
             <swc-progress-circle
                 .progress=${60}
                 static-color="white"
@@ -179,57 +178,55 @@ export const StaticWhite: Story = {
 };
 
 export const StaticBlack: Story = {
+    args: {
+        'static-color': 'black',
+    },
     render: () => html`
-        <div
-            style="background: linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255)); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                .progress=${60}
-                static-color="black"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
+        <swc-progress-circle
+            .progress=${60}
+            static-color="black"
+            size="s"
+            label="Loading on light background"
+        ></swc-progress-circle>
+        <swc-progress-circle
+            .progress=${60}
+            static-color="black"
+            size="m"
+            label="Loading on light background"
+        ></swc-progress-circle>
+        <swc-progress-circle
+            .progress=${60}
+            static-color="black"
+            size="l"
+            label="Loading on light background"
+        ></swc-progress-circle>
     `,
     tags: ['!dev'],
 };
 
 export const IndeterminateStaticWhite: Story = {
+    args: {
+        'static-color': 'white',
+    },
     render: () => html`
-        <div
-            style="background-color: rgba(0,0,0,0.4); padding: 24px; display: flex; gap: 24px; align-items: center;"
-        >
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="s"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="m"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-            <swc-progress-circle
-                indeterminate
-                static-color="white"
-                size="l"
-                label="Loading on dark background"
-            ></swc-progress-circle>
-        </div>
+        <swc-progress-circle
+            indeterminate
+            static-color="white"
+            size="s"
+            label="Loading on dark background"
+        ></swc-progress-circle>
+        <swc-progress-circle
+            indeterminate
+            static-color="white"
+            size="m"
+            label="Loading on dark background"
+        ></swc-progress-circle>
+        <swc-progress-circle
+            indeterminate
+            static-color="white"
+            size="l"
+            label="Loading on dark background"
+        ></swc-progress-circle>
     `,
     tags: ['!dev'],
 };

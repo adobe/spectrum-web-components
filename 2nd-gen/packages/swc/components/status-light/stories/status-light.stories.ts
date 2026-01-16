@@ -9,14 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
+
+import {
+    capitalize,
+    Container,
+} from '../../../.storybook/decorators/utilities.js';
 
 // ────────────────
 //    METADATA
@@ -87,7 +91,7 @@ TextWrapping.storyName = 'Text wrapping';
  */
 export const SemanticVariants: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             StatusLight.VARIANTS_SEMANTIC.map(
                 (variant: StatusLightVariant) => html`
                     <swc-status-light variant="${variant as StatusLightVariant}"
@@ -106,7 +110,7 @@ SemanticVariants.storyName = 'Semantic variants';
  */
 export const NonsemanticVariants: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             StatusLight.VARIANTS_COLOR.map(
                 (variant: StatusLightVariant) => html`
                     <swc-status-light variant="${variant as StatusLightVariant}"
@@ -126,7 +130,7 @@ NonsemanticVariants.storyName = 'Non-semantic variants';
  */
 export const Sizes: Story = {
     render: () =>
-        CONTAINER(
+        Container(
             StatusLight.VALID_SIZES.map(
                 (size: StatusLightSize) => html`
                     <swc-status-light size="${size}"
@@ -141,14 +145,6 @@ export const Sizes: Story = {
 // ────────────────────────
 //    HELPER FUNCTIONS
 // ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /* @todo Pull this up into a utility function for more components to leverage. Are all sizes accounted for? */
 function sizeMap(str?: StatusLightSize): string {
@@ -165,20 +161,4 @@ function sizeMap(str?: StatusLightSize): string {
     };
 
     return str ? sizeLabels.labels[str] : '';
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
-        })}
-    >
-        ${content}
-    </div>`;
 }
