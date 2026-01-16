@@ -150,6 +150,14 @@ slot[name="longpress-describedby-descriptor"] {
     display: none;
 }
 
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999998;
+    background: transparent;
+    pointer-events: auto;
+}
+
 /* stylelint-disable */
 @supports selector(:open) {
     .dialog {

@@ -60,7 +60,7 @@ export class ProgressBar extends SizedMixin(
             this.removeAttribute('over-background');
             this.staticColor = 'white';
 
-            if (window.__swc.DEBUG) {
+            if (window.__swc?.DEBUG) {
                 window.__swc.warn(
                     this,
                     `The "over-background" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
@@ -165,7 +165,7 @@ export class ProgressBar extends SizedMixin(
             }
         }
 
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (
                 !this.label &&
                 !this.getAttribute('aria-label') &&
