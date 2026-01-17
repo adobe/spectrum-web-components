@@ -27,6 +27,7 @@ import radioStyles from './radio.css.js';
  * @element sp-radio
  *
  * @slot - text label of the Radio button
+ * @attr invalid - Uses the invalid style
  * @attr disabled - Uses the disabled style
  * @attr checked - Represents when the input is checked
  * @attr value - Identifies this radio button within its radio group
@@ -62,6 +63,14 @@ export class Radio extends SizedMixin(
 
     @property({ type: Boolean, reflect: true })
     public readonly = false;
+
+    /**
+     * @deprecated
+     * The invalid state of a single radio button is deprecated.
+     * Please use the invalid state of the radio group instead.
+     */
+    @property({ type: Boolean, reflect: true })
+    public invalid = false;
 
     public override click(): void {
         if (this.disabled) {
@@ -126,7 +135,13 @@ export class Radio extends SizedMixin(
 
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-
+        if (changes.has('invalid')) {
+            if (this.invalid) {
+                this.setAttribute('aria-invalid', 'true');
+            } else {
+                this.removeAttribute('aria-invalid');
+            }
+        }
         if (changes.has('checked')) {
             if (this.checked) {
                 this.setAttribute('aria-checked', 'true');

@@ -629,6 +629,41 @@ describe('Radio Group', () => {
         expect(el.hasAttribute('aria-invalid')).to.be.true;
         expect(el.getAttribute('aria-invalid')).to.equal('true');
     });
+
+    it('warns when [invalid] is used on children and updates group invalid state', async () => {
+        const consoleWarnSpy = spy(console, 'warn');
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first" invalid>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.true;
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+        expect(consoleWarnSpy.called).to.be.true;
+        expect(consoleWarnSpy.args[0][0]).to.include('DEPRECATION NOTICE');
+
+        consoleWarnSpy.restore();
+    });
+
+    it('should not have invalid state when children do not have invalid attribute', async () => {
+        const consoleWarnSpy = spy(console, 'warn');
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first">Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        expect(el.invalid).to.be.false;
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
+        expect(consoleWarnSpy.called).to.be.false;
+
+        consoleWarnSpy.restore();
+    });
 });
 
 describe('Radio Group - late children', () => {

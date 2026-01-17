@@ -34,6 +34,9 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
     public name = '';
 
+    @property({ type: Boolean, reflect: true })
+    public override invalid = false;
+
     @queryAssignedNodes()
     public defaultNodes!: Node[];
 
@@ -137,8 +140,52 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         }
     }
 
+    private _childInvalidObserver?: MutationObserver | null;
+
+    public override disconnectedCallback(): void {
+        this.clearInvalidObserver();
+        super.disconnectedCallback();
+    }
+
     protected override handleSlotchange(): void {
         this.rovingTabindexController.clearElementCache();
+        this.manageInvalidObserver();
+    }
+
+    private manageInvalidObserver(): void {
+        if (this._childInvalidObserver) {
+            this._childInvalidObserver.disconnect();
+        }
+        this._childInvalidObserver = new MutationObserver(() => {
+            this.checkInvalidState();
+        });
+        this.buttons.forEach((button) => {
+            this._childInvalidObserver?.observe(button, {
+                attributes: true,
+                attributeFilter: ['invalid'],
+            });
+        });
+        this.checkInvalidState();
+    }
+
+    private checkInvalidState(): void {
+        const invalidChild = this.buttons.find((button) => button.invalid);
+        if (invalidChild) {
+            if (!this.invalid) {
+                this.invalid = true;
+                window.__swc.warn(
+                    this,
+                    'The "invalid" attribute on <sp-radio> is deprecated. Please apply the "invalid" attribute to the parent <sp-radio-group> instead.',
+                    'https://opensource.adobe.com/spectrum-web-components/components/radio',
+                    { level: 'deprecation' }
+                );
+            }
+        }
+    }
+
+    private clearInvalidObserver(): void {
+        this._childInvalidObserver?.disconnect();
+        this._childInvalidObserver = null;
     }
 
     protected override updated(changes: PropertyValues<this>): void {
