@@ -78,9 +78,9 @@ export interface StoryArgs {
     checked?: boolean;
     disabled?: boolean;
     emphasized?: boolean;
+    invalid?: boolean;
     readonly?: boolean;
     size?: 's' | 'm' | 'l' | 'xl';
-    invalid?: boolean;
     [prop: string]: unknown;
 }
 
@@ -112,6 +112,7 @@ export const Autofocus = (args: StoryArgs): TemplateResult => {
         <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
+
 export const Invalid = (args: StoryArgs): TemplateResult => renderRadio(args);
 Invalid.args = {
     invalid: true,

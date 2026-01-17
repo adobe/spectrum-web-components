@@ -61,9 +61,6 @@ export class Radio extends SizedMixin(
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
-    @property({ type: Boolean, reflect: true })
-    public readonly = false;
-
     /**
      * @deprecated
      * The invalid state of a single radio button is deprecated.
@@ -71,6 +68,9 @@ export class Radio extends SizedMixin(
      */
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    @property({ type: Boolean, reflect: true })
+    public readonly = false;
 
     public override click(): void {
         if (this.disabled) {
