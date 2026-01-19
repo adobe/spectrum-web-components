@@ -530,6 +530,8 @@ export function runPickerTests(): void {
             // Wait for menu-items to be registered and selection to be managed
             await elementUpdated(delayedPicker);
             await nextFrame();
+            await nextFrame();
+            await aTimeout(150);
 
             // Value should still be preserved
             expect(delayedPicker.value).to.equal('item-2');
