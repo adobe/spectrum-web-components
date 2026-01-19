@@ -401,7 +401,6 @@ export class MenuItem extends LikeAnchor(
                 @slottable-request=${this.handleSlottableRequest}
             >
                 <sp-popover
-                    style="margin-block-start: var(--system-submenu-offset-block, -5px)"
                     @change=${(event: Event) => {
                         this.handleSubmenuChange(event);
                         this.open = false;

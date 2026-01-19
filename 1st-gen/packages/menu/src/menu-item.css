@@ -16,15 +16,6 @@
 @import url("./menu-item-overrides.css");
 
 :host {
-    /**
-     * Cross-axis offset for submenu popover positioning.
-     * This is the vertical offset from the parent menu item.
-     * Defined per-theme in system-theme-bridge.css:
-     * - Spectrum/Express: -5px
-     * - Spectrum Two: -9px
-     */
-    --swc-submenu-offset-block: var(--system-submenu-offset-block, -5px);
-
     text-align: initial;
 }
 
@@ -47,6 +38,10 @@
 #button {
     position: absolute;
     inset: 0;
+}
+
+sp-popover {
+    margin-block-start: var(--system-submenu-offset-block, -5px);
 }
 
 :host([dir="ltr"]) [icon-only]::slotted(:last-of-type) {
