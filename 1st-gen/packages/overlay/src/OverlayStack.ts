@@ -231,8 +231,9 @@ class OverlayStack {
 
         const lastIndex = this.stack.length - 1;
 
-        // Early optimization: only check for backdrop clicks if modal/page overlays exist
-        // (only they have backdrops). This avoids iterating through composedPath unnecessarily.
+        // Avoid the cost of event.composedPath() unless we actually have a modal/page
+        // overlay open. composedPath() walks and allocates the full event path and can
+        // be surprisingly expensive in hot paths.
         const hasModalOrPageOverlay = this.stack.some(
             (overlay) =>
                 overlay.open &&
