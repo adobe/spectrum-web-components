@@ -9,7 +9,7 @@ const config = {
     stories: [
         {
             directory: 'guides',
-            files: '*.@(md|mdx)',
+            files: '**/*.@(md|mdx)',
             titlePrefix: 'Guides',
         },
         {
@@ -58,6 +58,10 @@ const config = {
                         '../../core'
                     ),
                     '@adobe/swc': resolve(__dirname, '../components'),
+                    '@adobe/postcss-token': resolve(
+                        __dirname,
+                        '../../tools/postcss-token'
+                    ),
                 },
             },
         });

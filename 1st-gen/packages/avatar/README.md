@@ -162,10 +162,7 @@ The `<sp-avatar>` component requires proper accessibility attributes to ensure s
 The `label` attribute of the `<sp-avatar>` will be passed into the `<img>` element as the `alt` attribute for use in defining a textual representation of the image displayed. This is the recommended approach for avatars that convey meaningful information.
 
 ```html demo
-<sp-avatar
-    label="John Doe"
-    src="https://picsum.photos/500/500"
-></sp-avatar>
+<sp-avatar label="John Doe" src="https://picsum.photos/500/500"></sp-avatar>
 ```
 
 #### Decorative avatars

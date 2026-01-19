@@ -126,6 +126,7 @@ export class LongpressController extends InteractionController {
             // do not reapply until target is recycled
             this.releaseDescription !== noop ||
             // require "longpress content" to apply relationship
+            !this.overlay ||
             !this.overlay.elements.length
         ) {
             return;
