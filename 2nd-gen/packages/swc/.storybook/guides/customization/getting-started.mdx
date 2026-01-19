@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Customization/Getting Started" />
+
+# Getting Started
+
+With the deprecation of `<sp-theme>`, inclusion of a new stylesheet at the application-level is required. The stylesheet contains basic document typography values, a default application background-color, and all of the relevant Spectrum 2 design data tokens as custom properties.
+
+SWC also offers options to alter the [theme and scale contexts](/docs/guides-customization-theme-and-scales--docs).
+
+## Include the stylesheet
+
+{/* TODO: Help needed figuring out how to get this to export post-processing! Open to different name, ex. just `@adobe/swc/tokens.css */}
+
+The stylesheet is available via `@adobe/swc/stylesheets/swc.css`.
+
+Inclusion will be dependent on your application environment and build pipeline.
+
+### Application background color
+
+You may override the default application background color via the `--swc-application-background` custom property. Place this override after inclusion of the main stylesheet.
+
+```css
+:root {
+    --swc-application-background: [your-app-color];
+}
+```
+
+**Note**: It is strongly encouraged to use a Spectrum color token which has the built-in capability to adapt to light and dark theme contexts.
+
+## PostCSS Options
+
+Please note that if you are re-processing the stylesheet through PostCSS and using PostCSS Preset Env, you'll need to use the following options. Otherwise you will encounter issues with these features as the transpilation isn't successful for the applied use across shadow DOM.
+
+```json
+stage: 2,
+features: {
+    'nesting-rules': true,
+    'custom-properties': false,
+    'light-dark-function': false,
+    'logical-properties-and-values': false,
+}
+```

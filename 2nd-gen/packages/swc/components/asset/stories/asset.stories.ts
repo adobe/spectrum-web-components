@@ -81,5 +81,5 @@ export const Folder: Story = {
 // ────────────────────────
 
 function IMAGE_PLACEHOLDER_STRING(): string {
-    return `<img class="spectrum-Asset-image" alt="Example image" src="https://cdn2.thecatapi.com/images/d4i.jpg" height="128">`;
+    return `<img alt="Example image" src="https://cdn2.thecatapi.com/images/d4i.jpg" height="128">`;
 }
