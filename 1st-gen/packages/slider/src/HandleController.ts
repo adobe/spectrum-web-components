@@ -472,6 +472,14 @@ export class HandleController {
         const input = event.target as InputWithModel;
         input.model.handle.highlight = true;
         this.requestUpdate();
+        // Stop propagation for arrow keys since slider handles them internally
+        if (
+            ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
+                event.key
+            )
+        ) {
+            event.stopPropagation();
+        }
     };
 
     private dispatchChangeEvent(

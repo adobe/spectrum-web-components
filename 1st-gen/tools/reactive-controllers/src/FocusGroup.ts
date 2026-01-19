@@ -20,6 +20,12 @@ export type FocusGroupConfig<T> = {
     elements: () => T[];
     isFocusableElement?: (el: T) => boolean;
     listenerScope?: HTMLElement | (() => HTMLElement);
+    /**
+     * When true, arrow key events will stop propagation after being handled.
+     * This prevents parent elements from also reacting to arrow keys.
+     * @default false
+     */
+    stopKeyEventPropagation?: boolean;
 };
 
 function ensureMethod<T, RT>(
@@ -120,6 +126,12 @@ export class FocusGroupController<T extends HTMLElement>
 
     recentlyConnected = false;
 
+    /**
+     * When true, arrow key events will stop propagation after being handled.
+     * This prevents parent elements from also reacting to arrow keys.
+     */
+    stopKeyEventPropagation = false;
+
     constructor(
         host: ReactiveElement,
         {
@@ -130,12 +142,14 @@ export class FocusGroupController<T extends HTMLElement>
             focusInIndex,
             isFocusableElement,
             listenerScope,
+            stopKeyEventPropagation,
         }: FocusGroupConfig<T> = { elements: () => [] }
     ) {
         this.mutationObserver = new MutationObserver(() => {
             this.handleItemMutation();
         });
         this.hostDelegatesFocus = hostDelegatesFocus || false;
+        this.stopKeyEventPropagation = stopKeyEventPropagation || false;
         this.host = host;
         this.host.addController(this);
         this._elements = elements;
@@ -389,6 +403,9 @@ export class FocusGroupController<T extends HTMLElement>
                 break;
         }
         event.preventDefault();
+        if (this.stopKeyEventPropagation) {
+            event.stopPropagation();
+        }
         if (this.direction === 'grid' && this.currentIndex + diff < 0) {
             this.currentIndex = 0;
         } else if (
