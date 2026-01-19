@@ -183,7 +183,34 @@ export const submenu = (): TemplateResult => {
                                 slot="submenu"
                                 @change=${handleSecondDescendantChange}
                             >
-                                <sp-menu-item>S. Oxford St</sp-menu-item>
+                                <sp-menu-item id="submenu-item-3">
+                                    S. Oxford St
+                                    <sp-menu slot="submenu">
+                                        <sp-menu-item id="submenu-item-4">
+                                            123 S. Oxford St
+                                            <sp-menu slot="submenu">
+                                                <sp-menu-item>
+                                                    Apt 1A
+                                                </sp-menu-item>
+                                                <sp-menu-item>
+                                                    Apt 1B
+                                                </sp-menu-item>
+                                                <sp-menu-item>
+                                                    Apt 2A
+                                                </sp-menu-item>
+                                                <sp-menu-item>
+                                                    Apt 2B
+                                                </sp-menu-item>
+                                            </sp-menu>
+                                        </sp-menu-item>
+                                        <sp-menu-item>
+                                            125 S. Oxford St
+                                        </sp-menu-item>
+                                        <sp-menu-item>
+                                            127 S. Oxford St
+                                        </sp-menu-item>
+                                    </sp-menu>
+                                </sp-menu-item>
                                 <sp-menu-item>S. Portland Ave</sp-menu-item>
                                 <sp-menu-item>S. Elliot Pl</sp-menu-item>
                             </sp-menu>
@@ -310,15 +337,15 @@ export const contextMenu = (): TemplateResult => {
                         <span slot="header">Options</span>
                         <sp-menu-item>
                             Copy
-                            <span slot="value">⌘​S</span>
+                            <span slot="value">⌘S</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Paste
-                            <span slot="value">⌘​P</span>
+                            <span slot="value">⌘P</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Cut
-                            <span slot="value">⌘​X</span>
+                            <span slot="value">X</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
@@ -334,28 +361,28 @@ export const contextMenu = (): TemplateResult => {
                         </sp-menu-item>
                         <sp-menu-item>
                             Group
-                            <span slot="value">⌘​G</span>
+                            <span slot="value">⌘G</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Unlock
-                            <span slot="value">⌘​L</span>
+                            <span slot="value">⌘L</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
                             Bring to front
-                            <span slot="value">⇧​⌘​​]</span>
+                            <span slot="value">⇧⌘]</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Bring forward
-                            <span slot="value">⌘​​]</span>
+                            <span slot="value">⌘]</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Send backward
-                            <span slot="value">⌘​​[</span>
+                            <span slot="value">⌘[</span>
                         </sp-menu-item>
                         <sp-menu-item>
                             Send to back
-                            <span slot="value">⇧​⌘​​[</span>
+                            <span slot="value">⇧⌘[</span>
                         </sp-menu-item>
                         <sp-menu-divider></sp-menu-divider>
                         <sp-menu-item>
