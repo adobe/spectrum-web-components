@@ -15,6 +15,10 @@
     display: flex;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .spectrum-Asset {
     display: flex;
     align-items: center;
@@ -23,31 +27,30 @@
     block-size: 100%;
 }
 
-.spectrum-Asset-image {
+/* Slotted image */
+::slotted(*) {
     max-inline-size: 100%;
     max-block-size: 100%;
     object-fit: contain;
+    transition: opacity token('animation-duration-100');
 }
 
 .spectrum-Asset-folder,
 .spectrum-Asset-file {
     inline-size: clamp(48px, 100%, 80px);
     block-size: 100%;
-    margin: 20px;
+    margin: clamp(2px, 10%, 20px);
 }
 
 .spectrum-Asset-folderBackground {
-    fill: var(--spectrum-gray-200);
+    fill: token('gray-200');
 }
 
 .spectrum-Asset-fileBackground {
-    fill: var(--spectrum-gray-25);
+    fill: light-dark(token('gray-25'), token('gray-200'));
 }
 
-.spectrum-Asset-folderOutline {
-    fill: var(--spectrum-gray-500);
-}
-
+.spectrum-Asset-folderOutline,
 .spectrum-Asset-fileOutline {
-    fill: var(--spectrum-gray-500);
+    fill: token('gray-500');
 }
