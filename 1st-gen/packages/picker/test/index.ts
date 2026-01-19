@@ -483,6 +483,63 @@ export function runPickerTests(): void {
 
             expect(el.value, 'second time').to.equal('option-new');
         });
+        it('shows label when menu-items are added after value is set', async () => {
+            // Create a picker with value set but no menu-items initially
+            const pickerWithoutItems = await fixture<HTMLDivElement>(html`
+                <sp-theme scale="medium" color="light" system="spectrum">
+                    <sp-field-label for="picker-delayed">
+                        Test Picker
+                    </sp-field-label>
+                    <sp-picker
+                        id="picker-delayed"
+                        label="Test Picker"
+                        value="item-2"
+                    ></sp-picker>
+                </sp-theme>
+            `);
+            const delayedPicker = pickerWithoutItems.querySelector(
+                'sp-picker'
+            ) as Picker;
+
+            await elementUpdated(delayedPicker);
+            await nextFrame();
+
+            // Value should be preserved even though no menu-items exist yet
+            expect(delayedPicker.value).to.equal('item-2');
+            // Button should show placeholder label since no menu-items match yet
+            expect(
+                (delayedPicker.button.textContent || '').trim()
+            ).to.not.include('Finish');
+
+            // Now add menu-items
+            const item1 = document.createElement('sp-menu-item');
+            item1.value = 'item-1';
+            item1.textContent = 'Save';
+            delayedPicker.appendChild(item1);
+
+            const item2 = document.createElement('sp-menu-item');
+            item2.value = 'item-2';
+            item2.textContent = 'Finish';
+            delayedPicker.appendChild(item2);
+
+            const item3 = document.createElement('sp-menu-item');
+            item3.value = 'item-3';
+            item3.textContent = 'Review';
+            delayedPicker.appendChild(item3);
+
+            // Wait for menu-items to be registered and selection to be managed
+            await elementUpdated(delayedPicker);
+            await nextFrame();
+
+            // Value should still be preserved
+            expect(delayedPicker.value).to.equal('item-2');
+            // Button should now show the label from the matching menu-item
+            expect((delayedPicker.button.textContent || '').trim()).to.include(
+                'Finish'
+            );
+            // selectedItem should be set
+            expect(delayedPicker.selectedItem?.value).to.equal('item-2');
+        });
         it('manages its "name" value in the accessibility tree', async () => {
             await nextFrame();
             type NamedNode = { name: string };
