@@ -163,22 +163,22 @@ class OverlayStack {
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
+        if (!this.stack.length) return;
+
         const pointerPath = event.composedPath();
 
         // For page overlays only: block clicks outside (no light dismiss)
         // Modal overlays have light dismiss handled by handlePointerup
-        if (this.stack.length) {
-            const pageOverlays = this.stack.filter(
-                (o) => o.open && o.type === 'page'
-            );
-            if (
-                pageOverlays.length > 0 &&
-                !this.isEventInsideModal(pointerPath, pageOverlays)
-            ) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                return;
-            }
+        const pageOverlays = this.stack.filter(
+            (o) => o.open && o.type === 'page'
+        );
+        if (
+            pageOverlays.length > 0 &&
+            !this.isEventInsideModal(pointerPath, pageOverlays)
+        ) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
         }
 
         this.pointerdownPath = pointerPath;
