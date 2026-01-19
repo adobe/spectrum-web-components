@@ -93,10 +93,10 @@ async function publish() {
         );
         run('yarn changeset version', 'Versioning packages');
     }
-    // Step 3: Update version file for 2nd-gen
+    // Step 3: Update version files for both generations
     run(
-        'yarn genversion --source ./1st-gen/tools/base/package.json --semi --es6 --force ./2nd-gen/packages/core/shared/base/version.ts',
-        'Updating 2nd-gen version.ts from 1st-gen'
+        'node scripts/generate-versions.js',
+        'Updating version files for 1st-gen and 2nd-gen'
     );
 
     // Step 3.5: Refresh lockfile and rebuild after version changes

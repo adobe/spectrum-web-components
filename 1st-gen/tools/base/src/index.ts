@@ -13,4 +13,5 @@
 export * from './Base.js';
 export * from './sizedMixin.js';
 export * from './constants.js';
+export * from './version.js';
 export * from 'lit';
