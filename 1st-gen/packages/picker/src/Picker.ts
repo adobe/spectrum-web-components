@@ -986,6 +986,12 @@ export class Picker extends PickerBase {
             'Escape',
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
+        const arrowKeys = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+        ].includes(key);
         this.focused = true;
         if ('Escape' === key) {
             this.handleEscape(event);
@@ -997,9 +1003,13 @@ export class Picker extends PickerBase {
         if (openKeys) {
             this.keyboardOpen();
             event.preventDefault();
+            if (arrowKeys) {
+                event.stopPropagation();
+            }
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         const nextItem = this.optionsMenu?.getNeighboringFocusableElement(
             this.selectedItem,
             key === 'ArrowLeft'
