@@ -19,7 +19,10 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { when } from '@spectrum-web-components/base/src/directives.js';
+import {
+    unsafeStatic,
+    when,
+} from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
@@ -125,49 +128,22 @@ export class AccordionItem extends SizedMixin(Focusable, {
 
     private renderHeading(): TemplateResult {
         const level = this.getHeadingLevel();
-        const headingContent = html`
-            ${when(this.size, this.renderChevronIcon)}
-            <button
-                id="header"
-                @click=${this.onClick}
-                aria-expanded=${this.open}
-                aria-controls="content"
-                ?disabled=${this.disabled}
-            >
-                ${this.label}
-            </button>
-        `;
+        const tag = unsafeStatic(`h${level}`);
 
-        switch (level) {
-            case 1:
-                return html`
-                    <h1 id="heading">${headingContent}</h1>
-                `;
-            case 2:
-                return html`
-                    <h2 id="heading">${headingContent}</h2>
-                `;
-            case 3:
-                return html`
-                    <h3 id="heading">${headingContent}</h3>
-                `;
-            case 4:
-                return html`
-                    <h4 id="heading">${headingContent}</h4>
-                `;
-            case 5:
-                return html`
-                    <h5 id="heading">${headingContent}</h5>
-                `;
-            case 6:
-                return html`
-                    <h6 id="heading">${headingContent}</h6>
-                `;
-            default:
-                return html`
-                    <h3 id="heading">${headingContent}</h3>
-                `;
-        }
+        return html`
+            <${tag} id="heading">
+                ${when(this.size, this.renderChevronIcon)}
+                <button
+                    id="header"
+                    @click=${this.onClick}
+                    aria-expanded=${this.open}
+                    aria-controls="content"
+                    ?disabled=${this.disabled}
+                >
+                    ${this.label}
+                </button>
+            </${tag}>
+        `;
     }
 
     protected override render(): TemplateResult {
