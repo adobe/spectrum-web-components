@@ -511,7 +511,30 @@ export function runPickerTests(): void {
                 (delayedPicker.button.textContent || '').trim()
             ).to.not.include('Finish');
 
-            // Now add menu-items
+            // Simulate incomplete custom element upgrade: add items without values
+            const itemNoValue1 = document.createElement('sp-menu-item');
+            itemNoValue1.textContent = 'Incomplete 1';
+            delayedPicker.appendChild(itemNoValue1);
+
+            const itemNoValue2 = document.createElement('sp-menu-item');
+            itemNoValue2.textContent = 'Incomplete 2';
+            delayedPicker.appendChild(itemNoValue2);
+
+            await elementUpdated(delayedPicker);
+            await nextFrame();
+
+            // Value should still be preserved even with items that have no values
+            expect(delayedPicker.value).to.equal('item-2');
+            expect(
+                (delayedPicker.button.textContent || '').trim()
+            ).to.not.include('Finish');
+
+            // Remove incomplete items
+            itemNoValue1.remove();
+            itemNoValue2.remove();
+            await elementUpdated(delayedPicker);
+
+            // Now add menu-items with values
             const item1 = document.createElement('sp-menu-item');
             item1.value = 'item-1';
             item1.textContent = 'Save';

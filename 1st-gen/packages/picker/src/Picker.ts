@@ -864,10 +864,12 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             selectedItem.selected = !!this.selects;
             this.selectedItem = selectedItem;
         } else {
-            // Only clear the value if there are menu-items but none match.
-            // If there are no menu-items yet, they might be added later (e.g., lazy loaded),
-            // so preserve the value to allow matching when items are added.
-            if (this.menuItems.length > 0) {
+            // Only clear value when items exist with real values but none match.
+            // Preserve value if items are pending (lazy loaded, async render, incomplete upgrade).
+            const hasItemsWithValues = this.menuItems.some(
+                (item) => item.value && item.value.trim() !== ''
+            );
+            if (this.menuItems.length > 0 && hasItemsWithValues) {
                 this.value = '';
                 this.selectedItem = undefined;
             }
