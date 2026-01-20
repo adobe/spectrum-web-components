@@ -35,9 +35,7 @@ describe('swc-badge', () => {
             `);
 
             expect(badge.shadowRoot).toBeTruthy();
-            expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge')
-            ).toBeTruthy();
+            expect(badge.shadowRoot?.querySelector('.swc-Badge')).toBeTruthy();
         });
 
         test('should have correct default property values', async () => {
@@ -64,7 +62,7 @@ describe('swc-badge', () => {
 
             expect(badge.getAttribute('variant')).toBe('positive');
             expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge--positive')
+                badge.shadowRoot?.querySelector('.swc-Badge--positive')
             ).toBeTruthy();
         });
 
@@ -75,7 +73,7 @@ describe('swc-badge', () => {
 
             expect(badge.variant).toBe('negative');
             expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge--negative')
+                badge.shadowRoot?.querySelector('.swc-Badge--negative')
             ).toBeTruthy();
         });
 
@@ -87,7 +85,7 @@ describe('swc-badge', () => {
 
             expect(badge.hasAttribute('subtle')).toBe(true);
             expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge--subtle')
+                badge.shadowRoot?.querySelector('.swc-Badge--subtle')
             ).toBeTruthy();
         });
 
@@ -107,7 +105,7 @@ describe('swc-badge', () => {
 
             expect(badge.hasAttribute('outline')).toBe(true);
             expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge--outline')
+                badge.shadowRoot?.querySelector('.swc-Badge--outline')
             ).toBeTruthy();
         });
 
@@ -128,7 +126,7 @@ describe('swc-badge', () => {
             expect(badge.getAttribute('fixed')).toBe('inline-start');
             expect(
                 badge.shadowRoot?.querySelector(
-                    '.spectrum-Badge--fixed-inline-start'
+                    '.swc-Badge--fixed-inline-start'
                 )
             ).toBeTruthy();
         });
@@ -143,7 +141,7 @@ describe('swc-badge', () => {
 
             expect(badge.getAttribute('size')).toBe('l');
             expect(
-                badge.shadowRoot?.querySelector('.spectrum-Badge--sizeL')
+                badge.shadowRoot?.querySelector('.swc-Badge--sizeL')
             ).toBeTruthy();
         });
     });
@@ -192,8 +190,7 @@ describe('swc-badge', () => {
         test('should be accessible to screen readers', async () => {
             const badge = await fixture(html`<swc-badge>New</swc-badge>`);
 
-            const badgeElement =
-                badge.shadowRoot?.querySelector('.spectrum-Badge');
+            const badgeElement = badge.shadowRoot?.querySelector('.swc-Badge');
             expect(badgeElement).toBeTruthy();
             expect(badge.textContent).toBe('New');
         });
