@@ -92,7 +92,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         switch (variant) {
             case 'cta':
                 this._variant = 'accent';
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     window.__swc.warn(
                         this,
                         `The "cta" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "variant='accent'" instead.`,
@@ -105,7 +105,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 this.removeAttribute('variant');
                 this.staticColor = 'white';
                 this.treatment = 'outline';
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     window.__swc.warn(
                         this,
                         `The "overBackground" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "staticColor='white'" with "treatment='outline'" instead.`,
@@ -116,7 +116,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 return;
             case 'white':
                 this.staticColor = 'white';
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     window.__swc.warn(
                         this,
                         `The "white" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='white'" instead.`,
@@ -127,7 +127,7 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
                 return;
             case 'black':
                 this.staticColor = 'black';
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     window.__swc.warn(
                         this,
                         `The "black" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static-color='black'" instead.`,

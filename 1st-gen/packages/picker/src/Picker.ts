@@ -49,6 +49,7 @@ import type { SlottableRequestEvent } from '@spectrum-web-components/overlay/src
 import { DependencyManagerController } from '@spectrum-web-components/reactive-controllers/src/DependencyManger.js';
 import {
     IS_MOBILE,
+    IS_TOUCH_DEVICE,
     MatchMediaController,
 } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import type { Tooltip } from '@spectrum-web-components/tooltip';
@@ -84,6 +85,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     };
 
     public isMobile = new MatchMediaController(this, IS_MOBILE);
+
+    public isTouchDevice = new MatchMediaController(this, IS_TOUCH_DEVICE);
 
     public strategy!: DesktopController | MobileController;
 
@@ -556,19 +559,21 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     protected warnNoLabel(): void {
-        window.__swc.warn(
-            this,
-            `<${this.localName}> needs one of the following to be accessible:`,
-            'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
-            {
-                type: 'accessibility',
-                issues: [
-                    `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
-                    'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
-                    'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
-                ],
-            }
-        );
+        if (window.__swc?.DEBUG) {
+            window.__swc.warn(
+                this,
+                `<${this.localName}> needs one of the following to be accessible:`,
+                'https://opensource.adobe.com/spectrum-web-components/components/picker/#accessibility',
+                {
+                    type: 'accessibility',
+                    issues: [
+                        `an <sp-field-label> element with a \`for\` attribute referencing the \`id\` of the \`<${this.localName}>\`, or`,
+                        'value supplied to the "label" attribute, which will be displayed visually as placeholder text, or',
+                        'text content supplied in a <span> with slot="label", which will also be displayed visually as placeholder text.',
+                    ],
+                }
+            );
+        }
     }
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
@@ -663,7 +668,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             this.deprecatedMenu?.toggleAttribute('ignore', true);
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -772,6 +777,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 role=${this.listRole}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
+                .shouldSupportDragAndSelect=${!this.isTouchDevice.matches}
                 size=${this.size}
                 @sp-menu-item-keydown=${this.handleEscape}
                 @sp-menu-item-added-or-updated=${this.shouldManageSelection}
@@ -980,6 +986,12 @@ export class Picker extends PickerBase {
             'Escape',
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
+        const arrowKeys = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+        ].includes(key);
         this.focused = true;
         if ('Escape' === key) {
             this.handleEscape(event);
@@ -991,16 +1003,20 @@ export class Picker extends PickerBase {
         if (openKeys) {
             this.keyboardOpen();
             event.preventDefault();
+            if (arrowKeys) {
+                event.stopPropagation();
+            }
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         const nextItem = this.optionsMenu?.getNeighboringFocusableElement(
             this.selectedItem,
             key === 'ArrowLeft'
         );
         if (!this.value || nextItem !== this.selectedItem) {
             // updates picker text but does not fire change event until action is completed
-            if (!!nextItem) this.setValueFromItem(nextItem as MenuItem);
+            if (nextItem) this.setValueFromItem(nextItem as MenuItem);
         }
     };
 }

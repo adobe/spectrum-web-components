@@ -30,23 +30,11 @@ argTypes.variant = {
     options: StatusLight.VARIANTS,
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- *
- * We may have to explicitly bind the args to the component (particularly
- * helpful for the size property) so the Storybook controls work as expected.
- * 
- * i.e. render: (args) =>
-        html`<swc-status-light .size=${args.size} variant=${args.variant}
-            >${args['default-slot']}</swc-status-light
-        >`,
- */
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: StatusLight.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: StatusLight.VALID_SIZES,
+};
 
 args['default-slot'] = 'Status light';
 args.size = 'm';
@@ -184,7 +172,7 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
     return html`<div
         style=${styleMap({
             display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
+            gap: 'var(--swc-spacing-200)',
             'flex-wrap': 'wrap',
             'justify-content': 'center',
             // Used 80ch because that's generally considered the maximum readable width for text in a web page.

@@ -37,16 +37,11 @@ argTypes.fixed = {
     options: [undefined, ...Badge.FIXED_VALUES],
 };
 
-/*
- * @todo This is properly configuring the Select, but the control doesn't
- * seem to work; need to investigate.
- */
-
-// argTypes.size = {
-//     ...argTypes.size,
-//     control: { type: 'select' },
-//     options: Badge.VALID_SIZES,
-// };
+argTypes.size = {
+    ...argTypes.size,
+    control: { type: 'select' },
+    options: Badge.VALID_SIZES,
+};
 
 args['default-slot'] = 'Badge';
 
@@ -203,7 +198,7 @@ function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
     return html`<div
         style=${styleMap({
             display: 'flex',
-            gap: 'var(--spectrum-spacing-200)',
+            gap: 'var(--swc-spacing-200)',
             'flex-wrap': 'wrap',
             'justify-content': 'center',
             // Used 80ch because that's generally considered the maximum readable width for text in a web page.

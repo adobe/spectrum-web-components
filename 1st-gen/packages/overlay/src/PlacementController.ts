@@ -24,6 +24,7 @@ import {
     shift,
     size,
 } from '@floating-ui/dom';
+import { isWebKit } from '@spectrum-web-components/shared';
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import type { OpenableElement } from './overlay-types.js';
 import type { Overlay } from './Overlay.js';
@@ -277,6 +278,11 @@ export class PlacementController implements ReactiveController {
 
         // Wait for document fonts to be ready before computing placement.
         await (document.fonts ? document.fonts.ready : Promise.resolve());
+
+        if (isWebKit()) {
+            // Computing placement requires a frame for layout stability in WebKit
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+        }
 
         // Determine the flip middleware based on the type of trigger element.
         const flipMiddleware = !(options.trigger instanceof HTMLElement)

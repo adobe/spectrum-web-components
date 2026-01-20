@@ -70,7 +70,7 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         const dialog = (
             this.shadowRoot.querySelector('slot') as HTMLSlotElement
         ).assignedElements()[0] as Dialog;
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!dialog) {
                 window.__swc.warn(
                     this,
