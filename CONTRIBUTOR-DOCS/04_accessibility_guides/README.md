@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Accessbility Guide
+[CONTRIBUTOR-DOCS](../README.md) / Accessibility Guide
 
 <!-- Document title (editable) -->
 

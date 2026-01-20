@@ -10,7 +10,13 @@
  * governing permissions and limitations under the License.
  */
 
-import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    nextFrame,
+    oneEvent,
+} from '@open-wc/testing';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { stub } from 'sinon';
 import { trigger } from '@spectrum-web-components/overlay/src/overlay-trigger-directive.js';
@@ -20,6 +26,9 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
+import { LitElement } from '@spectrum-web-components/base';
+import { cache } from 'lit/directives/cache.js';
+import { Button } from '@spectrum-web-components/button';
 
 describe('Overlay trigger directive', () => {
     describe('dev mode', () => {
@@ -87,5 +96,84 @@ describe('Overlay trigger directive', () => {
                 },
             });
         });
+    });
+
+    it('does not throw when directive reconnects before overlay exists', async function () {
+        // Define a test component that uses cache() to trigger reconnection.
+        class CachedOverlayTriggerTest extends LitElement {
+            private show = true;
+
+            protected override render(): TemplateResult {
+                const cachedButton = html`
+                    <sp-button
+                        ${trigger(
+                            () => html`
+                                <sp-popover>
+                                    <sp-dialog no-divider>
+                                        Cached popover
+                                    </sp-dialog>
+                                </sp-popover>
+                            `,
+                            { triggerInteraction: 'click' }
+                        )}
+                    >
+                        Cached Trigger
+                    </sp-button>
+                `;
+
+                return html`
+                    <sp-button
+                        @click=${() => {
+                            this.show = !this.show;
+                            this.requestUpdate();
+                        }}
+                    >
+                        Toggle cached host
+                    </sp-button>
+                    ${cache(this.show ? cachedButton : html``)}
+                `;
+            }
+        }
+        customElements.define(
+            'cached-overlay-trigger-test',
+            CachedOverlayTriggerTest
+        );
+
+        const wrapper = await fixture<CachedOverlayTriggerTest>(html`
+            <cached-overlay-trigger-test></cached-overlay-trigger-test>
+        `);
+        await elementUpdated(wrapper);
+
+        const shadowRoot = wrapper.shadowRoot as ShadowRoot;
+        const toggleButton = shadowRoot.querySelector('sp-button') as Button;
+        expect(toggleButton).to.exist;
+
+        // Get the cached trigger button (initially visible).
+        let cachedTrigger = shadowRoot.querySelectorAll(
+            'sp-button'
+        )[1] as Button;
+        expect(cachedTrigger, 'cached trigger should exist initially').to.exist;
+
+        // Toggle off to disconnect the cached button.
+        toggleButton.click();
+        await nextFrame();
+        await elementUpdated(wrapper);
+
+        // Toggle back on to reconnect the cached button.
+        toggleButton.click();
+        await nextFrame();
+        await elementUpdated(wrapper);
+
+        // Get the reconnected cached trigger button.
+        cachedTrigger = shadowRoot.querySelectorAll('sp-button')[1] as Button;
+        expect(cachedTrigger, 'cached trigger should exist after toggle').to
+            .exist;
+
+        // Now click the cached trigger to open the overlay.
+        const opened = oneEvent(cachedTrigger, 'sp-opened');
+        cachedTrigger.click();
+        const openedEvent = await opened;
+
+        expect(openedEvent, 'sp-opened event should be dispatched').to.exist;
     });
 });

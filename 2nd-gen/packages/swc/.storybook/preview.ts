@@ -1,9 +1,6 @@
 /** @type { import('@storybook/web-components').Preview } */
-import '../tokens/global-vars.css';
-import '../tokens/index.css';
-import '../tokens/light-vars.css';
-import '../tokens/medium-vars.css';
-import './assets/preview.css';
+import '../stylesheets/swc.css';
+// import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -17,6 +14,7 @@ import {
     withStaticColorsDemo,
     withTextDirectionWrapper,
 } from './decorators';
+import { withContext } from './decorators/contexts';
 import { FontLoader } from './loaders/font-loader';
 import { globalTypes } from './types';
 
@@ -40,13 +38,45 @@ setStorybookHelpersConfig(storybookHelperOptions);
 setCustomElementsManifest(customElements);
 
 const preview = {
+    globalTypes: {
+        theme: {
+            description: 'Global theme for components',
+            toolbar: {
+                title: 'Theme',
+                items: [
+                    { value: 'light', title: 'Light' },
+                    { value: 'dark', title: 'Dark' },
+                    { value: 'adaptive', title: 'Adaptive' },
+                ],
+                dynamicTitle: true,
+            },
+        },
+        scale: {
+            description: 'Global scale for components',
+            toolbar: {
+                title: 'Scale',
+                items: [
+                    { value: 'medium', title: 'Medium' },
+                    { value: 'large', title: 'Large' },
+                ],
+                dynamicTitle: true,
+            },
+        },
+        globalTypes,
+    },
+    initialGlobals: {
+        theme: 'light',
+        scale: 'medium',
+    },
     decorators: [
+        withContext,
         withStaticColorsDemo,
         withFlexLayout,
         withTextDirectionWrapper,
     ],
     parameters: {
         layout: 'centered',
+        backgrounds: { disable: true }, // Use custom context switches
         controls: {
             expanded: true,
             hideNoControlsWarning: true,
@@ -137,6 +167,12 @@ const preview = {
                     'Guides',
                     [
                         'Getting started guide',
+                        'Customization',
+                        [
+                            'Getting Started',
+                            'Theme and Scales',
+                            'Component Styles',
+                        ],
                         'Contributor guides',
                         [
                             'Getting involved',
@@ -192,7 +228,6 @@ const preview = {
     },
     tags: ['!autodocs', '!dev'], // We only want the playground stories to be visible in the docs and sidenav. Since a majority of our stories are tagged with '!autodocs' and '!dev', we set those tags globally. We can opt in to visibility by adding the 'autodocs' or 'dev' tags to individual stories.
     loaders: [FontLoader],
-    globalTypes,
 };
 
 export default preview;

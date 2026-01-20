@@ -77,6 +77,10 @@ const config = {
                         '../../core'
                     ),
                     '@adobe/swc': resolve(__dirname, '../components'),
+                    '@adobe/postcss-token': resolve(
+                        __dirname,
+                        '../../tools/postcss-token'
+                    ),
                 },
             },
         });

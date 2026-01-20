@@ -28,7 +28,7 @@ argTypes.variant = {
     options: [undefined, 'file', 'folder'],
 };
 
-// since we cant't use HTML templates in a slot control,
+// since we can't use HTML templates in a slot control,
 // we need to use a select option and render a predefined HTML template based on the selected option
 argTypes['default-slot'] = {
     ...argTypes['default-slot'],
