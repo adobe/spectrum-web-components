@@ -19,6 +19,7 @@
     },
     "type": "module",
     "main": "index.js",
+    "types": "index.d.ts",
     "scripts": {
         "test": "vitest --run",
         "test:watch": "vitest --watch"
