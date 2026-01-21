@@ -59,6 +59,13 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
+    /**
+     * The accessible label for the checkbox. For header rows, this defaults to 'Select All'.
+     * For body rows, this should be set to the text content of the first cell in the row.
+     */
+    @property({ type: String })
+    public label = '';
+
     public override click(): void {
         this.checkbox.click();
     }
@@ -70,9 +77,11 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?indeterminate=${this.indeterminate}
                 ?disabled=${this.disabled}
                 ?emphasized=${this.emphasized}
-                aria-hidden=${ifDefined(this.selectsSingle)}
+                aria-hidden=${ifDefined(this.selectsSingle ? true : undefined)}
                 class="checkbox"
-            ></sp-checkbox>
+            >
+                <span class="visually-hidden">${this.label}</span>
+            </sp-checkbox>
         `;
     }
 }
