@@ -99,7 +99,7 @@ export default defineConfig({
         // Needed for Storybook to work
         alias: {
             '@spectrum-web-components/core': resolve(__dirname, '../core'),
-            '@adobe/swc': resolve(__dirname, './components'),
+            '@adobe/spectrum-wc': resolve(__dirname, './components'),
             '@adobe/postcss-token': resolve(
                 __dirname,
                 '../tools/postcss-token'

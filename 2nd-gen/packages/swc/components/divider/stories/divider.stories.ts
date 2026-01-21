@@ -14,9 +14,9 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import { Divider } from '@adobe/swc/divider';
+import { Divider } from '@adobe/spectrum-wc/divider';
 
-import '@adobe/swc/divider';
+import '@adobe/spectrum-wc/divider';
 
 // ────────────────
 //    METADATA

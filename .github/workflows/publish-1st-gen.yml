@@ -1,0 +1,121 @@
+name: Publish 1st-gen
+
+on:
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
+                required: false
+                default: 'latest'
+    push:
+        branches:
+            - main
+        paths:
+            - '1st-gen/**'
+            - '.changeset/**'
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        env:
+            YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup job and install dependencies
+              uses: ./.github/actions/setup-job
+
+            - name: Set Git identity
+              run: |
+                  git config --global user.email "support+actions@github.com"
+                  git config --global user.name "github-actions-bot"
+
+            - name: Check for changesets
+              id: check-changesets
+              run: |
+                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+                    echo "has_changesets=false" >> $GITHUB_OUTPUT
+                  else
+                    echo "has_changesets=true" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Build packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn build:1st-gen
+
+            - name: Generate custom elements manifests
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen custom-element-json
+
+            - name: Confirm build artifacts
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen build:confirm
+
+            - name: Version packages
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  if [ "${{ github.event.inputs.tag }}" == "latest" ] || [ -z "${{ github.event.inputs.tag }}" ]; then
+                    yarn workspace @spectrum-web-components/1st-gen changelog:global
+                    yarn changeset version
+                  else
+                    yarn changeset version --snapshot ${{ github.event.inputs.tag }}
+                  fi
+
+            - name: Refresh lockfile and rebuild
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  yarn install --refresh-lockfile
+                  yarn build:1st-gen
+
+            - name: Configure NPM authentication
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
+            - name: Publish to npm
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  TAG="${{ github.event.inputs.tag }}"
+                  if [ -z "$TAG" ] || [ "$TAG" == "latest" ]; then
+                    yarn changeset publish --no-git-tag
+                  else
+                    yarn changeset publish --no-git-tag --tag $TAG
+                  fi
+
+            - name: Build React wrappers
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: yarn workspace @spectrum-web-components/1st-gen build:react
+
+            - name: Publish React wrappers
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  TAG="${{ github.event.inputs.tag }}"
+                  if [ -z "$TAG" ] || [ "$TAG" == "latest" ]; then
+                    PUBLISH_CMD="npm publish --access public"
+                  else
+                    PUBLISH_CMD="npm publish --tag $TAG --access public"
+                  fi
+                  cd 1st-gen/react
+                  for dir in */; do
+                    (cd "$dir" && $PUBLISH_CMD) || exit 1
+                  done
+
+            - name: Commit and push changes
+              if: steps.check-changesets.outputs.has_changesets == 'true' && (github.event.inputs.tag == 'latest' || github.event.inputs.tag == '')
+              run: |
+                  git add .
+                  git commit -m "chore: release 1st-gen packages #publish" || echo "No changes to commit"
+                  git push
+
+            - name: Create git tag
+              if: steps.check-changesets.outputs.has_changesets == 'true' && (github.event.inputs.tag == 'latest' || github.event.inputs.tag == '')
+              run: node ./1st-gen/scripts/create-git-tag.js

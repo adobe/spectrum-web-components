@@ -151,9 +151,9 @@
                     [
                         "^lit",
                         "^@lit",
-                        "^(?!@adobe/swc|@spectrum-web-components)@?\\w"
+                        "^(?!@adobe/spectrum-wc|@spectrum-web-components)@?\\w"
                     ],
-                    ["^@adobe/swc", "^@spectrum-web-components"],
+                    ["^@adobe/spectrum-wc", "^@spectrum-web-components"],
                     ["^\\u0000"],
                     ["^\\."],
                     ["^.+\\.(css|scss|sass|less|styl)$"]

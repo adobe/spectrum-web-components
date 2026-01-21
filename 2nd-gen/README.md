@@ -5,7 +5,7 @@ This workspace contains the second generation of Spectrum Web Components, built 
 ## Packages
 
 - **[@spectrum-web-components/core](./packages/core)** - Abstract base classes providing shared functionality
-- **[@adobe/swc](./packages/swc)** - Concrete component implementations with styling
+- **[@adobe/spectrum-wc](./packages/swc)** - Concrete component implementations with styling
 
 ## Getting Started
 
