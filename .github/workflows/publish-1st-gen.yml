@@ -67,10 +67,12 @@ jobs:
                   MOVED=0
                   for file in .changeset/*.md; do
                     if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
-                      if grep -q "@adobe/spectrum-wc\|@spectrum-web-components/core\|2nd-gen" "$file"; then
+                      # Only back up changesets that mention 2nd-gen packages (@adobe/spectrum-wc)
+                      # @spectrum-web-components/core is part of 1st-gen, so don't back it up
+                      if grep -q "@adobe/spectrum-wc\|2nd-gen" "$file"; then
                         mv "$file" .changeset-backup/
                         echo "Backed up: $(basename "$file")"
-                        ((MOVED++))
+                        MOVED=$((MOVED + 1))
                       fi
                     fi
                   done
