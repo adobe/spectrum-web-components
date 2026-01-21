@@ -141,6 +141,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     }
 
     private _childInvalidObserver?: MutationObserver | null;
+    private _managedInvalid = false;
 
     public override disconnectedCallback(): void {
         this.clearInvalidObserver();
@@ -159,12 +160,12 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         this._childInvalidObserver = new MutationObserver(() => {
             this.checkInvalidState();
         });
-        this.buttons.forEach((button) => {
-            this._childInvalidObserver?.observe(button, {
-                attributes: true,
-                attributeFilter: ['invalid'],
-            });
+        this._childInvalidObserver.observe(this, {
+            attributes: true,
+            attributeFilter: ['invalid'],
+            subtree: true,
         });
+
         this.checkInvalidState();
     }
 
@@ -173,6 +174,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         if (invalidChild) {
             if (!this.invalid) {
                 this.invalid = true;
+                this._managedInvalid = true;
                 window.__swc.warn(
                     this,
                     'The "invalid" attribute on <sp-radio> is deprecated. Please apply the "invalid" attribute to the parent <sp-radio-group> instead.',
@@ -180,6 +182,11 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
                     { level: 'deprecation' }
                 );
             }
+        } else if (this.invalid && this._managedInvalid) {
+            // Only clear invalid state if it was set by us (via child sync)
+            this.invalid = false;
+            this._managedInvalid = false;
+            this.removeAttribute('aria-invalid');
         }
     }
 

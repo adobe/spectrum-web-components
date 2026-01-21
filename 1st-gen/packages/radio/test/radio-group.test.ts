@@ -366,6 +366,8 @@ describe('Radio Group', () => {
                 </sp-radio-group>
             </div>
         `);
+        // Create __swc if it doesn't exist
+        window.__swc = window.__swc || { warn: () => {} };
     });
 
     it('loads', () => {
@@ -631,7 +633,7 @@ describe('Radio Group', () => {
     });
 
     it('warns when [invalid] is used on children and updates group invalid state', async () => {
-        const consoleWarnSpy = spy(console, 'warn');
+        const swcWarnSpy = spy(window.__swc, 'warn');
         const el = await fixture<RadioGroup>(html`
             <sp-radio-group>
                 <sp-radio value="first" invalid>Option 1</sp-radio>
@@ -642,14 +644,13 @@ describe('Radio Group', () => {
 
         expect(el.invalid).to.be.true;
         expect(el.hasAttribute('aria-invalid')).to.be.true;
-        expect(consoleWarnSpy.called).to.be.true;
-        expect(consoleWarnSpy.args[0][0]).to.include('DEPRECATION NOTICE');
-
-        consoleWarnSpy.restore();
+        expect(swcWarnSpy.called).to.be.true;
+        expect(swcWarnSpy.args[0][1]).to.include('deprecated');
+        swcWarnSpy.restore();
     });
 
     it('should not have invalid state when children do not have invalid attribute', async () => {
-        const consoleWarnSpy = spy(console, 'warn');
+        const swcWarnSpy = spy(window.__swc, 'warn');
         const el = await fixture<RadioGroup>(html`
             <sp-radio-group>
                 <sp-radio value="first">Option 1</sp-radio>
@@ -660,9 +661,30 @@ describe('Radio Group', () => {
 
         expect(el.invalid).to.be.false;
         expect(el.hasAttribute('aria-invalid')).to.be.false;
-        expect(consoleWarnSpy.called).to.be.false;
+        expect(swcWarnSpy.called).to.be.false;
+        swcWarnSpy.restore();
+    });
 
-        consoleWarnSpy.restore();
+    it('should update group invalid state when child radio has invalid attribute and then remove it', async () => {
+        const el = await fixture<RadioGroup>(html`
+            <sp-radio-group>
+                <sp-radio value="first" checked>Option 1</sp-radio>
+                <sp-radio value="second">Option 2</sp-radio>
+            </sp-radio-group>
+        `);
+        await elementUpdated(el);
+
+        const childRadio = el.querySelector('sp-radio') as Radio;
+        childRadio.setAttribute('invalid', 'true');
+
+        await elementUpdated(el);
+        expect(el.invalid).to.be.true;
+        expect(el.hasAttribute('aria-invalid')).to.be.true;
+
+        childRadio.removeAttribute('invalid');
+        await elementUpdated(el);
+        expect(el.invalid).to.be.false;
+        expect(el.hasAttribute('aria-invalid')).to.be.false;
     });
 });
 
