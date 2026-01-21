@@ -19,6 +19,21 @@ import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
 
+import {
+    testBadgeDefaults,
+    testDefaultSlotContent,
+    testFixedProperty,
+    testFixedPropertySetViaAttribute,
+    testIconSlot,
+    testOutlinePropertyReflection,
+    testOutlinePropertySetViaAttribute,
+    testSizeProperty,
+    testSizePropertySetViaAttribute,
+    testSubtlePropertyReflection,
+    testSubtlePropertySetViaAttribute,
+    testVariantPropertyReflection,
+} from '../test/badge.test.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
@@ -71,7 +86,6 @@ export default meta;
 // ───────────────
 
 type BadgeVariant = typeof Badge.prototype.variant;
-type BadgeSize = typeof Badge.prototype.size;
 
 /**
  * Badges can contain label, icon, or label and icon. Text wrapping is also included when a `max-inline-size` is applied to the badge.
@@ -79,6 +93,12 @@ type BadgeSize = typeof Badge.prototype.size;
 export const Default: Story = {
     args: {
         size: 'm',
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testBadgeDefaults(badge);
+        await testDefaultSlotContent(badge);
     },
 };
 
@@ -89,7 +109,11 @@ export const WithIcon: Story = {
     args: {
         ['icon-slot']: '✓',
     },
-    // Removes the story from the side navigation while keeping in the docs view
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testIconSlot(badge);
+    },
     tags: ['!dev'],
 };
 
@@ -97,16 +121,14 @@ export const WithIcon: Story = {
  * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color. This is the preferred way to assign color to a badge because it will align more consistently with other components in your UI with the same meaning.
  */
 export const SemanticVariants: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_SEMANTIC.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
+    args: {
+        variant: 'positive',
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testVariantPropertyReflection(badge);
+    },
     tags: ['!dev'],
 };
 
@@ -120,16 +142,15 @@ export const Outline: Story = {
             options: Badge.VARIANTS_SEMANTIC,
         },
     },
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_SEMANTIC.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} outline
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
+    args: {
+        outline: true,
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testOutlinePropertyReflection(badge);
+        await testOutlinePropertySetViaAttribute(badge);
+    },
     tags: ['!dev'],
 };
 
@@ -151,16 +172,15 @@ export const ColorVariants: Story = {
 };
 
 export const Sizes: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VALID_SIZES.map(
-                (size) => html`
-                    <swc-badge size=${size as BadgeSize}
-                        >${capitalize(size)}</swc-badge
-                    >
-                `
-            )
-        ),
+    args: {
+        size: 'l',
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testSizeProperty(badge);
+        await testSizePropertySetViaAttribute(badge);
+    },
     tags: ['!dev'],
 };
 
@@ -168,16 +188,31 @@ export const Sizes: Story = {
  * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
  */
 export const Subtle: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} subtle
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
+    args: {
+        subtle: true,
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testSubtlePropertyReflection(badge);
+        await testSubtlePropertySetViaAttribute(badge);
+    },
+    tags: ['!dev'],
+};
+
+/**
+ * Badge can be positioned in a fixed location relative to its parent container using the `fixed` property.
+ */
+export const Fixed: Story = {
+    args: {
+        fixed: 'inline-start',
+    },
+    play: async ({ canvasElement }) => {
+        const badge = canvasElement.querySelector('swc-badge') as Badge;
+
+        await testFixedProperty(badge);
+        await testFixedPropertySetViaAttribute(badge);
+    },
     tags: ['!dev'],
 };
 

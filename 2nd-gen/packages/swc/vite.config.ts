@@ -97,6 +97,16 @@ export default defineConfig({
             '@adobe/swc': resolve(__dirname, './components'),
         },
     },
+    server: {
+        fs: {
+            // Allow Vite to serve dependencies hoisted to workspace and repo roots.
+            allow: [
+                resolve(__dirname, '..'),
+                resolve(__dirname, '../..'),
+                resolve(__dirname, '../../..'),
+            ],
+        },
+    },
     esbuild: {
         target: 'es2022',
     },

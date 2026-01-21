@@ -43,10 +43,11 @@
         "dev:core": "yarn workspace @spectrum-web-components/core dev",
         "storybook": "yarn analyze && storybook dev -p 6006",
         "storybook:build": "yarn analyze && storybook build",
-        "test": "vitest --run",
-        "test:coverage": "vitest --coverage",
-        "test:ui": "vitest --ui",
-        "test:watch": "run-p dev:core vitest"
+        "test": "vitest --run --project storybook",
+        "test:browser": "vitest --project storybook --browser.headless=false",
+        "test:coverage": "vitest --coverage --project storybook",
+        "test:ui": "vitest --ui --project storybook",
+        "test:watch": "yarn dev:core & vitest"
     },
     "types": "./dist/index.d.ts",
     "dependencies": {
@@ -65,6 +66,7 @@
         "@types/react": "19.1.16",
         "@types/react-dom": "19.1.9",
         "@vitest/browser": "3.2.4",
+        "@vitest/coverage-istanbul": "3.2.4",
         "@vitest/coverage-v8": "3.2.4",
         "@vitest/ui": "3.2.4",
         "@wc-toolkit/storybook-helpers": "10.0.0",
