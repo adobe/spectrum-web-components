@@ -869,7 +869,7 @@ When using row selection:
 
 ##### Checkbox labeling
 
-All selection checkboxes have accessible labels to comply with WCAG 4.1.2 (Name, Role, Value):
+All selection checkboxes have accessible labels to comply with WCAG 4.1.2 (Name, Role, Value). The labels are applied via `aria-label` on the checkbox's internal input element.
 
 | Checkbox location           | Default label             | Customization                    |
 | --------------------------- | ------------------------- | -------------------------------- |
