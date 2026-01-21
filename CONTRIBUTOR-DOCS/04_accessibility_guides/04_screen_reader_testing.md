@@ -6,4 +6,254 @@
 
 # Screen reader testing
 
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Screen reader testing](#screen-reader-testing)
+  - [Overview](#overview)
+  - [Why test with screen readers](#why-test-with-screen-readers)
+    - [Goals of screen reader testing](#goals-of-screen-reader-testing)
+    - [Relationship to keyboard accessibility](#relationship-to-keyboard-accessibility)
+  - [Common screen reader and browser pairings](#common-screen-reader-and-browser-pairings)
+    - [Desktop pairings](#desktop-pairings)
+    - [Mobile pairings](#mobile-pairings)
+  - [Screen reader modes](#screen-reader-modes)
+    - [Browse mode (document/scan mode)](#browse-mode-documentscan-mode)
+    - [Focus mode (forms/application/input mode)](#focus-mode-formsapplicationinput-mode)
+    - [Table mode](#table-mode)
+  - [Keyboard shortcuts](#keyboard-shortcuts)
+    - [VoiceOver (macOS)](#voiceover-macos)
+    - [NVDA (Windows)](#nvda-windows)
+    - [JAWS (Windows)](#jaws-windows)
+    - [Additional resources](#additional-resources)
+  - [Testing workflow](#testing-workflow)
+
+</details>
+
 <!-- Document content (editable) -->
+
+## Overview
+
+Screen reader testing is essential for verifying that Spectrum Web Components provide an equivalent experience for users who rely on assistive technology. This guide covers the fundamentals of screen reader testing, including browser pairings, interaction modes, and keyboard shortcuts.
+
+## Why test with screen readers
+
+Screen readers convert visual content into synthesized speech or braille output, enabling users who are blind or have low vision to navigate and interact with web content. Testing with screen readers helps ensure that:
+
+- All content is perceivable through audio or braille
+- Interactive elements are operable with assistive technology
+- The purpose and state of components is communicated clearly
+- Users can complete tasks efficiently
+
+### Goals of screen reader testing
+
+When testing components with screen readers, focus on these key outcomes:
+
+1. **Equivalent experience**: Users should be able to accomplish the same tasks as users who can see the screen, and sighted screen reader users should not have conflicting or confusing information from the visible content and the screen reader
+2. **Task completion**: All interactive workflows should be completable
+3. **Meaningful information**: Content should be announced in a logical order with appropriate context
+4. **Efficient navigation**: Users should be able to navigate quickly using headings, landmarks, and other semantic structures
+
+### Relationship to keyboard accessibility
+
+Screen reader testing builds on [keyboard testing](03_keyboard_testing.md). Before testing with a screen reader:
+
+1. Verify all interactive elements are keyboard accessible
+2. Confirm focus order is logical
+3. Ensure focus indicators are visible
+
+Screen readers add an additional layer of testing by verifying that keyboard interactions are properly announced and that non-interactive content is also accessible.
+
+## Common screen reader and browser pairings
+
+Screen readers work best with specific browsers. Use these recommended pairings for the most accurate testing results.
+
+### Desktop pairings
+
+| Platform | Screen reader | Browser | Notes                                             |
+|----------|---------------|---------|---------------------------------------------------|
+| macOS    | VoiceOver     | Safari  | Built-in; best compatibility with Safari          |
+| Windows  | NVDA          | Firefox | Free and open-source; excellent standards support |
+| Windows  | NVDA          | Chrome  | Good alternative pairing                          |
+| Windows  | JAWS          | Chrome  | Commercial; widely used in enterprise             |
+| Windows  | JAWS          | Edge    | Good compatibility                                |
+| Windows  | Narrator      | Edge    | Built-in; improving rapidly                       |
+| Linux    | Orca          | Firefox | Built-in to GNOME desktop                         |
+
+### Mobile pairings
+
+| Platform | Screen reader | Browser | Notes                                          |
+|----------|---------------|---------|------------------------------------------------|
+| iOS      | VoiceOver     | Safari  | Built-in; only supported browser engine on iOS |
+| Android  | TalkBack      | Chrome  | Built-in; best compatibility with Chrome       |
+
+**Recommended minimum testing:** Test with at least VoiceOver/Safari (macOS) and NVDA/Firefox (Windows) to cover the most common usage patterns.
+
+## Screen reader modes
+
+Screen readers operate in different modes that affect how users interact with content. Understanding these modes is crucial for testing components correctly.
+
+### Browse mode (document/scan mode)
+
+Browse mode (called "Scan mode" in Narrator, "Document mode" in some screen readers) is for reading and navigating content.
+
+**Characteristics:**
+
+- Linear reading through page content using arrow keys
+- Quick navigation shortcuts (e.g., <kbd>H</kbd> for headings, <kbd>K</kbd> for links)
+- Can read non-focusable text content
+- Virtual cursor moves through the accessibility tree
+
+**Common navigation shortcuts in browse mode:**
+
+| Action           | VoiceOver                                                            | NVDA                            | JAWS                            |
+|------------------|----------------------------------------------------------------------|---------------------------------|---------------------------------|
+| Next heading     | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>H</kbd>                    | <kbd>H</kbd>                    | <kbd>H</kbd>                    |
+| Previous heading | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | <kbd>Shift</kbd> + <kbd>H</kbd> | <kbd>Shift</kbd> + <kbd>H</kbd> |
+| Next link        | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>L</kbd>                    | <kbd>K</kbd>                    | <kbd>Tab</kbd>                  |
+| Next button      | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>J</kbd>                    | <kbd>B</kbd>                    | <kbd>B</kbd>                    |
+| Next form field  | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>J</kbd>                    | <kbd>F</kbd>                    | <kbd>F</kbd>                    |
+| Next landmark    | <kbd>VO</kbd> + <kbd>Command</kbd> + <kbd>L</kbd>                    | <kbd>D</kbd>                    | <kbd>R</kbd>                    |
+
+**Note:** <kbd>VO</kbd> refers to the VoiceOver modifier keys, typically <kbd>Control</kbd> + <kbd>Option</kbd>.
+
+### Focus mode (forms/application/input mode)
+
+Focus mode is for interacting with form controls and custom widgets. In this mode, keystrokes are passed directly to the focused element rather than being interpreted as navigation commands.
+
+**Characteristics:**
+
+- Direct keyboard input to interactive elements
+- Arrow keys control the element, not the virtual cursor
+- Automatically entered when focusing certain controls (auto forms mode)
+- Required for interacting with custom widgets using `role="application"` or `role="listbox"`
+
+**Entering and exiting focus mode:**
+
+| Action           | NVDA                                                    | JAWS                                      |
+|------------------|---------------------------------------------------------|-------------------------------------------|
+| Enter focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd> or automatic         | <kbd>Enter</kbd> on control or automatic  |
+| Exit focus mode  | <kbd>Escape</kbd> or <kbd>NVDA</kbd> + <kbd>Space</kbd> | <kbd>Numpad +</kbd> or <kbd>Escape</kbd>  |
+
+**Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode" which automatically switches modes based on the focused element.
+
+**Associated information:** In focus mode, screen readers announce associated information such as:
+
+- Labels (from `<label>`, `aria-label`, or `aria-labelledby`)
+- Descriptions (from `aria-describedby`)
+- Required state (from `required` or `aria-required`)
+- Invalid state (from `aria-invalid`)
+
+> **Important:** In focus mode, only interactive elements and their associated labels/descriptions are announced. If content is not a label or description for a focusable element, it will not be read. For non-interactive content, screen reader users must switch to Browse mode. This is expected behavior, not a bug — ensure you test both modes when evaluating component accessibility.
+
+### Table mode
+
+Table mode provides specialized navigation within data tables.
+
+**Characteristics:**
+
+- Cell-by-cell navigation using arrow keys
+- Automatic announcement of row and column headers
+- Context about position within the table
+
+**Common table navigation shortcuts:**
+
+| Action             | VoiceOver                              | NVDA                                                      | JAWS                                                      |
+|--------------------|----------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
+| Next cell right    | <kbd>VO</kbd> + <kbd>Right Arrow</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Right Arrow</kbd> | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Right Arrow</kbd> |
+| Next cell down     | <kbd>VO</kbd> + <kbd>Down Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Down Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Down Arrow</kbd>  |
+| Previous cell left | <kbd>VO</kbd> + <kbd>Left Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Left Arrow</kbd>  | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Left Arrow</kbd>  |
+| Previous cell up   | <kbd>VO</kbd> + <kbd>Up Arrow</kbd>    | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Up Arrow</kbd>    | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Up Arrow</kbd>    |
+
+## Keyboard shortcuts
+
+Each screen reader has its own set of keyboard shortcuts. Below are essential shortcuts for testing.
+
+### VoiceOver (macOS)
+
+**Starting and stopping:**
+
+| Action                  | Shortcut                               |
+|-------------------------|----------------------------------------|
+| Turn VoiceOver on/off   | <kbd>Command</kbd> + <kbd>F5</kbd>     |
+| VoiceOver modifier (VO) | <kbd>Control</kbd> + <kbd>Option</kbd> |
+
+**Navigation:**
+
+| Action                | Shortcut                                                   |
+|-----------------------|------------------------------------------------------------|
+| Read next item        | <kbd>VO</kbd> + <kbd>Right Arrow</kbd>                     |
+| Read previous item    | <kbd>VO</kbd> + <kbd>Left Arrow</kbd>                      |
+| Interact with element | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd>   |
+| Stop interacting      | <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd>     |
+| Activate element      | <kbd>VO</kbd> + <kbd>Space</kbd>                           |
+| Open rotor            | <kbd>VO</kbd> + <kbd>U</kbd>                               |
+
+### NVDA (Windows)
+
+**Starting and stopping:**
+
+| Action        | Shortcut                                                 |
+|---------------|----------------------------------------------------------|
+| Start NVDA    | <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>N</kbd>          |
+| Stop NVDA     | <kbd>NVDA</kbd> + <kbd>Q</kbd>                           |
+| NVDA modifier(Insert/CapsLock) | <kbd>Insert</kbd> or <kbd>Caps Lock</kbd> (configurable) |
+
+**Navigation:**
+
+| Action                   | Shortcut                                |
+|--------------------------|-----------------------------------------|
+| Read next item           | <kbd>Down Arrow</kbd> (browse mode)     |
+| Read previous item       | <kbd>Up Arrow</kbd> (browse mode)       |
+| Toggle browse/focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd>      |
+| Read from cursor         | <kbd>NVDA</kbd> + <kbd>Down Arrow</kbd> |
+| Stop reading             | <kbd>Ctrl</kbd>                         |
+| Elements list            | <kbd>NVDA</kbd> + <kbd>F7</kbd>         |
+
+### JAWS (Windows)
+
+**Starting and stopping:**
+
+| Action        | Shortcut                           |
+|---------------|------------------------------------|
+| Start JAWS    | Launch from Start menu             |
+| Quit JAWS     | <kbd>Insert</kbd> + <kbd>F4</kbd>  |
+| JAWS modifier | <kbd>Insert</kbd>                  |
+
+**Navigation:**
+
+| Action                | Shortcut                                  |
+|-----------------------|-------------------------------------------|
+| Read next item        | <kbd>Down Arrow</kbd> (browse mode)       |
+| Read previous item    | <kbd>Up Arrow</kbd> (browse mode)         |
+| Toggle virtual cursor | <kbd>Insert</kbd> + <kbd>Z</kbd>          |
+| Read from cursor      | <kbd>Insert</kbd> + <kbd>Down Arrow</kbd> |
+| Stop reading          | <kbd>Ctrl</kbd>                           |
+| Links list            | <kbd>Insert</kbd> + <kbd>F7</kbd>         |
+
+### Additional resources
+
+For comprehensive keyboard shortcut references, see:
+
+- [Deque University Screen Reader Keyboard Shortcuts](https://dequeuniversity.com/screenreaders/) — printable cheatsheets for all major screen readers
+- [WebAIM Screen Reader User Survey](https://webaim.org/projects/screenreadersurvey/) — usage statistics and preferences
+- [VoiceOver User Guide (Apple)](https://support.apple.com/guide/voiceover/welcome/mac)
+- [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
+- [JAWS Documentation (Freedom Scientific)](https://support.freedomscientific.com/Products/Blindness/JAWS)
+
+## Testing workflow
+
+Follow this workflow when testing components with screen readers:
+
+1. **Start with keyboard testing**: Verify keyboard accessibility first
+2. **Enable the screen reader**: Use the recommended browser pairing
+3. **Navigate to the component**: Use heading or landmark navigation
+4. **Test in browse mode**: Verify content is announced correctly
+5. **Test in focus mode**: Interact with controls and verify announcements
+6. **Test state changes**: Verify dynamic updates are announced (e.g., expanded/collapsed, selected, error states)
+7. **Complete user tasks**: Verify entire workflows are achievable
+8. **Document issues**: Note any missing announcements, confusing order, or blocked interactions
+
+For more testing resources and tools, see [Accessibility resources](06_accessibility_resources.md).

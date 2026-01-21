@@ -21,7 +21,7 @@
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
     - [✅ Correct Approach](#-correct-approach)
-- [3. Re-implementing Variants with Extra Classes in `render()`](#3-re-implementing-variants-with-extra-classes-in-render)
+- [3. Excess Variant Classes in `render()`](#3-excess-variant-classes-in-render)
     - [❌ Anti-Pattern](#-anti-pattern)
     - [Why This Happens](#why-this-happens)
     - [Why This Is a Problem](#why-this-is-a-problem)
