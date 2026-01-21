@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
+import postcssToken from '@adobe/postcss-token';
 import autoprefixer from 'autoprefixer';
 import { glob } from 'glob';
 import { resolve } from 'path';
@@ -19,7 +21,7 @@ import litCss from 'vite-plugin-lit-css';
 
 export default defineConfig({
     plugins: [
-        litCss({ exclude: ['./tokens/*.css'] }),
+        litCss({ exclude: ['./stylesheets/*.css'] }),
         dts({
             include: ['**/*.ts'],
             exclude: ['**/*.test.ts', '**/*.stories.ts'],
@@ -42,12 +44,15 @@ export default defineConfig({
     css: {
         postcss: {
             plugins: [
+                postcssToken({ prefix: 'swc' }),
                 autoprefixer(),
                 postcssPresetEnv({
                     stage: 2, // Use stage 2 features (stable)
                     features: {
                         'nesting-rules': true,
                         'custom-properties': false, // Let lit-css handle this
+                        'light-dark-function': false,
+                        'logical-properties-and-values': false,
                     },
                 }),
             ],
@@ -95,6 +100,11 @@ export default defineConfig({
         alias: {
             '@spectrum-web-components/core': resolve(__dirname, '../core'),
             '@adobe/swc': resolve(__dirname, './components'),
+            '@adobe/postcss-token': resolve(
+                __dirname,
+                '../tools/postcss-token'
+            ),
+            '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
         },
     },
     server: {

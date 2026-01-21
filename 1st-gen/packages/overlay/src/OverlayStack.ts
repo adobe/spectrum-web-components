@@ -158,34 +158,30 @@ class OverlayStack {
     }
 
     /**
-     * Cache the `pointerdownTarget` for later testing and prevent clicks outside modal overlays
+     * Cache the `pointerdownTarget` for later testing and prevent clicks outside page overlays
      *
      * @param event {PointerEvent}
      */
     handlePointerdown = (event: Event): void => {
-        // Nothing to manage if no overlays are open
-        if (!this.stack.length) return;
-
-        const modalOverlays = this.getModalOverlays();
         const pointerPath = event.composedPath();
 
-        if (!modalOverlays.length) {
-            // No modal overlays, cache path for handlePointerup
-            this.pointerdownPath = pointerPath;
-            this.lastOverlay = this.stack[this.stack.length - 1];
-            return;
+        // For page overlays only: block clicks outside (no light dismiss)
+        // Modal overlays have light dismiss handled by handlePointerup
+        if (this.stack.length) {
+            const pageOverlays = this.stack.filter(
+                (o) => o.open && o.type === 'page'
+            );
+            if (
+                pageOverlays.length > 0 &&
+                !this.isEventInsideModal(pointerPath, pageOverlays)
+            ) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+                return;
+            }
         }
 
-        if (!this.isEventInsideModal(pointerPath, modalOverlays)) {
-            // Block pointerdown outside modal overlays
-            // Don't cache path/lastOverlay for blocked interactions
-            event.preventDefault();
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            return;
-        }
-
-        // Event is inside a modal overlay, cache path for handlePointerup
         this.pointerdownPath = pointerPath;
         this.lastOverlay = this.stack[this.stack.length - 1];
     };
@@ -203,12 +199,15 @@ class OverlayStack {
         const modalOverlays = this.getModalOverlays();
         if (!modalOverlays.length) return;
 
-        // Check if the click is inside any modal dialog
-        // When a popover dialog is open, clicking inside it will have the dialog
-        // element in the composedPath. Clicking outside won't.
+        // Only block clicks for page overlays, not modal overlays.
+        // Modal overlays use popover="manual" for stacking and have light dismiss.
+        const pageOverlays = modalOverlays.filter((o) => o.type === 'page');
+        if (!pageOverlays.length) return;
+
+        // Check if the click is inside any page overlay dialog
         const clickPath = event.composedPath();
-        if (!this.isEventInsideModal(clickPath, modalOverlays)) {
-            // If click is outside all modal overlays, prevent it from reaching the target
+        if (!this.isEventInsideModal(clickPath, pageOverlays)) {
+            // If click is outside all page overlays, prevent it from reaching the target
             // This replicates the behavior that showModal() provided automatically
             event.stopImmediatePropagation();
             event.stopPropagation();
@@ -233,6 +232,20 @@ class OverlayStack {
         this.lastOverlay = undefined;
 
         const lastIndex = this.stack.length - 1;
+        const clickedBackdrop = composedPath.some(
+            (el) =>
+                el instanceof HTMLElement &&
+                el.classList.contains('modal-backdrop')
+        );
+        if (clickedBackdrop) {
+            const topOverlay = this.stack[this.stack.length - 1];
+            // Only modal overlays close on backdrop click.
+            // Page overlays are blocking and should not be light-dismissable.
+            if (topOverlay?.type === 'modal') {
+                this.closeOverlay(topOverlay);
+            }
+            return;
+        }
         const nonAncestorOverlays = this.stack.filter((overlay, i) => {
             const inStack = composedPath.find(
                 (el) =>
@@ -291,6 +304,12 @@ class OverlayStack {
         }
         if (last?.type === 'manual') {
             // Manual overlays should close on "Escape" key, but not when losing focus or interacting with other parts of the page.
+            this.closeOverlay(last);
+            return;
+        }
+        if (last?.type === 'modal') {
+            // Modal overlays use popover="manual" to allow stacking multiple modals.
+            // Handle Escape explicitly to close only the topmost modal.
             this.closeOverlay(last);
             return;
         }
