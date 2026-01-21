@@ -9,7 +9,7 @@ on:
                 default: 'latest'
     push:
         branches:
-            - main
+            - SWC-1405
         paths:
             - '1st-gen/**'
             - '.changeset/**'
@@ -33,10 +33,54 @@ jobs:
                   git config --global user.email "support+actions@github.com"
                   git config --global user.name "github-actions-bot"
 
-            - name: Check for changesets
+            - name: Extract tag from commit message or use default
+              id: extract-tag
+              run: |
+                  # Get tag from workflow_dispatch input (if manually triggered)
+                  WORKFLOW_TAG="${{ github.event.inputs.tag }}"
+
+                  # If not manually triggered, try to extract from commit message
+                  if [ -z "$WORKFLOW_TAG" ]; then
+                    COMMIT_MSG="${{ github.event.head_commit.message }}"
+                    # Look for [tag:xxx] pattern in commit message
+                    if echo "$COMMIT_MSG" | grep -qE '\[tag:([a-zA-Z0-9-]+)\]'; then
+                      WORKFLOW_TAG=$(echo "$COMMIT_MSG" | grep -oE '\[tag:([a-zA-Z0-9-]+)\]' | sed 's/\[tag://;s/\]//')
+                    else
+                      # Default to snapshot-test if no tag specified
+                      WORKFLOW_TAG="snapshot-test"
+                    fi
+                  fi
+
+                  echo "tag=$WORKFLOW_TAG" >> $GITHUB_OUTPUT
+                  echo "Using npm tag: $WORKFLOW_TAG"
+
+            - name: Filter changesets for 1st-gen
               id: check-changesets
               run: |
-                  if [ -z "$(ls -A .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+                  # Create backup directory
+                  mkdir -p .changeset-backup
+
+                  # Count total changesets
+                  TOTAL=$(ls -1 .changeset/*.md 2>/dev/null | grep -v README | wc -l | tr -d ' ')
+
+                  # Move 2nd-gen related changesets to backup
+                  MOVED=0
+                  for file in .changeset/*.md; do
+                    if [ -f "$file" ] && [ "$(basename "$file")" != "README.md" ]; then
+                      if grep -q "@adobe/spectrum-wc\|@spectrum-web-components/core\|2nd-gen" "$file"; then
+                        mv "$file" .changeset-backup/
+                        echo "Backed up: $(basename "$file")"
+                        ((MOVED++))
+                      fi
+                    fi
+                  done
+
+                  REMAINING=$((TOTAL - MOVED))
+                  echo "Total changesets: $TOTAL"
+                  echo "Backed up 2nd-gen: $MOVED"
+                  echo "Remaining for 1st-gen: $REMAINING"
+
+                  if [ "$REMAINING" -eq 0 ]; then
                     echo "has_changesets=false" >> $GITHUB_OUTPUT
                   else
                     echo "has_changesets=true" >> $GITHUB_OUTPUT
@@ -59,11 +103,12 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                  if [ "${{ github.event.inputs.tag }}" == "latest" ] || [ -z "${{ github.event.inputs.tag }}" ]; then
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  if [ "$TAG" == "latest" ]; then
                     yarn workspace @spectrum-web-components/1st-gen changelog:global
                     yarn changeset version
                   else
-                    yarn changeset version --snapshot ${{ github.event.inputs.tag }}
+                    yarn changeset version --snapshot $TAG
                   fi
 
             - name: Refresh lockfile and rebuild
@@ -82,8 +127,8 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
-                  TAG="${{ github.event.inputs.tag }}"
-                  if [ -z "$TAG" ] || [ "$TAG" == "latest" ]; then
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  if [ "$TAG" == "latest" ]; then
                     yarn changeset publish --no-git-tag
                   else
                     yarn changeset publish --no-git-tag --tag $TAG
@@ -98,8 +143,8 @@ jobs:
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
-                  TAG="${{ github.event.inputs.tag }}"
-                  if [ -z "$TAG" ] || [ "$TAG" == "latest" ]; then
+                  TAG="${{ steps.extract-tag.outputs.tag }}"
+                  if [ "$TAG" == "latest" ]; then
                     PUBLISH_CMD="npm publish --access public"
                   else
                     PUBLISH_CMD="npm publish --tag $TAG --access public"
@@ -109,13 +154,22 @@ jobs:
                     (cd "$dir" && $PUBLISH_CMD) || exit 1
                   done
 
+            - name: Restore backed up changesets
+              if: always()
+              run: |
+                  if [ -d ".changeset-backup" ]; then
+                    mv .changeset-backup/*.md .changeset/ 2>/dev/null || true
+                    rmdir .changeset-backup 2>/dev/null || true
+                    echo "Restored backed up changesets"
+                  fi
+
             - name: Commit and push changes
-              if: steps.check-changesets.outputs.has_changesets == 'true' && (github.event.inputs.tag == 'latest' || github.event.inputs.tag == '')
+              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
               run: |
                   git add .
                   git commit -m "chore: release 1st-gen packages #publish" || echo "No changes to commit"
                   git push
 
             - name: Create git tag
-              if: steps.check-changesets.outputs.has_changesets == 'true' && (github.event.inputs.tag == 'latest' || github.event.inputs.tag == '')
+              if: steps.check-changesets.outputs.has_changesets == 'true' && steps.extract-tag.outputs.tag == 'latest'
               run: node ./1st-gen/scripts/create-git-tag.js
