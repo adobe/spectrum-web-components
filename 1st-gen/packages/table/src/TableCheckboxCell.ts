@@ -12,6 +12,7 @@
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -70,6 +71,33 @@ export class TableCheckboxCell extends SpectrumElement {
         this.checkbox.click();
     }
 
+    /**
+     * Updates the aria-label on the checkbox's internal input element.
+     */
+    private updateInputAriaLabel(): void {
+        if (this.checkbox?.inputElement && this.label) {
+            this.checkbox.inputElement.setAttribute('aria-label', this.label);
+        }
+    }
+
+    protected override async updated(changed: PropertyValues): Promise<void> {
+        super.updated(changed);
+        if (changed.has('label')) {
+            // Wait for the checkbox to render before updating aria-label.
+            await this.checkbox?.updateComplete;
+            this.updateInputAriaLabel();
+        }
+    }
+
+    protected override async firstUpdated(
+        changed: PropertyValues
+    ): Promise<void> {
+        super.firstUpdated(changed);
+        // Wait for the checkbox to render before updating aria-label.
+        await this.checkbox?.updateComplete;
+        this.updateInputAriaLabel();
+    }
+
     protected override render(): TemplateResult {
         return html`
             <sp-checkbox
@@ -79,9 +107,7 @@ export class TableCheckboxCell extends SpectrumElement {
                 ?emphasized=${this.emphasized}
                 aria-hidden=${ifDefined(this.selectsSingle ? true : undefined)}
                 class="checkbox"
-            >
-                <span class="visually-hidden">${this.label}</span>
-            </sp-checkbox>
+            ></sp-checkbox>
         `;
     }
 }
