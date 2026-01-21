@@ -6,7 +6,7 @@ on:
             tag:
                 description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
                 required: false
-                default: 'latest'
+                default: 'snapshot-test'
     push:
         branches:
             - SWC-1405
