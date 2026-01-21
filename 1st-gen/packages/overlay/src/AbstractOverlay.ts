@@ -282,7 +282,7 @@ export class AbstractOverlay extends SpectrumElement {
 
         const v1 = !v2 && overlayContent && optionsV1;
         if (v1) {
-            if (window.__swc.DEBUG) {
+            if (window.__swc?.DEBUG) {
                 window.__swc.warn(
                     overlay,
                     `You are interacting with an ${overlay.localName} element via a deprecated imperative API. This API will be removed in a future version of the SWC library. Consider leveraging an ${overlay.localName} directly.`,
