@@ -10,9 +10,9 @@ on:
     push:
         branches:
             - SWC-1405
-        paths:
-            - '1st-gen/**'
-            - '.changeset/**'
+        # paths:
+        #     - '1st-gen/**'
+        #     - '.changeset/**'
 
 jobs:
     publish:
