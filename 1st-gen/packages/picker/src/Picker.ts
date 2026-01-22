@@ -16,7 +16,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    render,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -576,15 +575,79 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         }
     }
 
-    protected renderOverlay(menu: TemplateResult): TemplateResult {
-        if (this.strategy?.overlay === undefined) {
-            return menu;
+    /**
+     * Handle overlay closed event.
+     * Using sp-closed instead of beforetoggle to avoid Safari + VoiceOver crash.
+     * The native beforetoggle event from the Popover API causes VoiceOver to crash
+     * when it fires during accessibility tree updates.
+     */
+    protected handleOverlayClosed(): void {
+        if (!this.strategy || this.strategy.preventNextToggle === 'no') {
+            this.open = false;
         }
-        const container = this.renderContainer(menu);
-        render(container, this.strategy?.overlay as unknown as HTMLElement, {
-            host: this,
+        if (!this.open) {
+            this.optionsMenu?.updateSelectedItemIndex();
+            this.optionsMenu?.closeDescendentOverlays();
+        }
+    }
+
+    /**
+     * Handle clicks outside the picker to close it (light-dismiss behavior).
+     * This is needed because we use type='manual' to avoid Safari + VoiceOver crashes
+     * that occur with type='auto' and the Popover API's beforetoggle event.
+     */
+    private handleDocumentClick = (event: MouseEvent): void => {
+        if (!this.open) return;
+
+        const path = event.composedPath();
+        // Check if click was inside the picker or its overlay
+        const clickedInside = path.some((el) => {
+            if (el === this) return true;
+            if (el instanceof Element) {
+                // Check for overlay elements
+                if (el.tagName === 'SP-OVERLAY') return true;
+                if (el.closest('sp-overlay')) return true;
+            }
+            return false;
         });
-        return this.strategy?.overlay as unknown as TemplateResult;
+
+        if (!clickedInside) {
+            this.open = false;
+            if (this.strategy) {
+                this.strategy.open = false;
+            }
+        }
+    };
+
+    /**
+     * Render the overlay wrapper for the menu.
+     *
+     * Safari + VoiceOver Accessibility Notes:
+     * - Uses type='manual' instead of 'auto' to avoid crashes from the Popover API's
+     *   beforetoggle event which fires during accessibility tree updates.
+     * - Uses @sp-closed instead of @beforetoggle for the same reason.
+     * - Light-dismiss behavior is implemented via handleDocumentClick instead.
+     */
+    protected renderOverlay(menu: TemplateResult): TemplateResult {
+        const container = this.renderContainer(menu);
+        this.dependencyManager.add('sp-overlay');
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        return html`
+            <sp-overlay
+                @slottable-request=${this.handleSlottableRequest}
+                @sp-closed=${this.handleOverlayClosed}
+                .triggerElement=${this as HTMLElement}
+                .offset=${0}
+                ?open=${this.open && this.dependencyManager.loaded}
+                .placement=${this.isMobile.matches && !this.forcePopover
+                    ? undefined
+                    : this.placement}
+                .type=${'manual'}
+                .receivesFocus=${'auto'}
+            >
+                ${container}
+            </sp-overlay>
+        `;
     }
 
     protected get renderDescriptionSlot(): TemplateResult {
@@ -594,19 +657,38 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             </div>
         `;
     }
-    // a helper to throw focus to the button is needed because Safari
-    // won't include buttons in the tab order even with tabindex="0"
+
+    /**
+     * Computed aria-label for the button to avoid Safari + VoiceOver crash
+     * that occurs when using aria-labelledby with elements that change content
+     */
+    protected get buttonAriaLabel(): string {
+        const label = this.appliedLabel || this.label || '';
+        const selectedLabel =
+            this.value && this.selectedItem ? this.selectedItem.itemText : '';
+        // Combine label and selected value for full accessible name
+        return selectedLabel ? `${label} ${selectedLabel}`.trim() : label;
+    }
+
+    /**
+     * Render the picker button and menu.
+     *
+     * Safari + VoiceOver Accessibility Note:
+     * Uses aria-label instead of aria-labelledby on the button. Using aria-labelledby
+     * to reference child elements causes VoiceOver to crash when those elements'
+     * content changes during value selection. The buttonAriaLabel getter computes
+     * the accessible name as a string value instead.
+     */
     protected override render(): TemplateResult {
         if (this.tooltipEl) {
             this.tooltipEl.disabled = this.open;
         }
         return html`
             <button
-                aria-controls=${ifDefined(this.open ? 'menu' : undefined)}
                 aria-describedby="tooltip ${DESCRIPTION_ID}"
                 aria-expanded=${this.open ? 'true' : 'false'}
                 aria-haspopup="true"
-                aria-labelledby="icon label applied-label pending-label"
+                aria-label=${ifDefined(this.buttonAriaLabel || undefined)}
                 id="button"
                 class=${ifDefined(
                     this.labelAlignment
@@ -699,6 +781,20 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         super.updated(changes);
         if (changes.has('open')) {
             this.strategy.open = this.open;
+            // Manage click-outside listener for light-dismiss behavior
+            // This replaces the Popover API's auto-dismiss which we can't use
+            // due to Safari + VoiceOver crashes with beforetoggle events
+            if (this.open) {
+                // Use setTimeout to avoid catching the click that opened the picker
+                setTimeout(() => {
+                    document.addEventListener(
+                        'click',
+                        this.handleDocumentClick
+                    );
+                }, 0);
+            } else {
+                document.removeEventListener('click', this.handleDocumentClick);
+            }
         }
     }
 
@@ -763,10 +859,17 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         );
     }
 
+    /**
+     * Render the menu content.
+     *
+     * Safari + VoiceOver Accessibility Note:
+     * aria-labelledby is intentionally omitted from the menu. Using aria-labelledby
+     * to reference elements in the picker's shadow DOM causes VoiceOver to crash
+     * when the referenced element's content changes during value updates.
+     */
     protected get renderMenu(): TemplateResult {
         const menu = html`
             <sp-menu
-                aria-labelledby="applied-label"
                 @change=${this.handleChange}
                 id="menu"
                 @keydown=${{
@@ -785,18 +888,9 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
         `;
-        this.hasRenderedOverlay =
-            this.hasRenderedOverlay ||
-            this.focused ||
-            this.open ||
-            !!this.deprecatedMenu;
-        if (this.hasRenderedOverlay) {
-            if (this.dependencyManager.loaded) {
-                this.dependencyManager.add('sp-overlay');
-            }
-            return this.renderOverlay(menu);
-        }
-        return menu;
+        // Always render via overlay to avoid VoiceOver crash when menu
+        // moves between shadow DOM contexts on open/close
+        return this.renderOverlay(menu);
     }
 
     /**
@@ -946,6 +1040,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     public override disconnectedCallback(): void {
         this.close();
         this.strategy?.releaseDescription();
+        // Clean up click-outside listener
+        document.removeEventListener('click', this.handleDocumentClick);
         super.disconnectedCallback();
     }
 }

@@ -49,25 +49,8 @@ export class InteractionController implements ReactiveController {
     public set open(open: boolean) {
         if (this._open === open) return;
         this._open = open;
-
-        if (this.overlay) {
-            this.host.open = open;
-            return;
-        }
-
-        // When there is no Overlay and `open` is moving to `true`, lazily import/create
-        // an Overlay and apply that state to it.
-        customElements
-            .whenDefined('sp-overlay')
-            .then(async (): Promise<void> => {
-                const { Overlay } = await import(
-                    '@spectrum-web-components/overlay/src/Overlay.js'
-                );
-                this.overlay = new Overlay();
-                this.host.open = true;
-                this.host.requestUpdate();
-            });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+        // Sync with host - overlay is managed declaratively via template
+        this.host.open = open;
     }
 
     private _overlay!: AbstractOverlay;
@@ -109,48 +92,19 @@ export class InteractionController implements ReactiveController {
         if (event.newState === 'closed') {
             if (this.preventNextToggle === 'no') {
                 this.open = false;
-            } else if (!this.pointerdownState) {
-                // Prevent browser driven closure while opening the Picker
-                // and the expected event series has not completed.
-                this.overlay?.manuallyKeepOpen();
             }
+            // Note: manuallyKeepOpen is handled by Picker.handleBeforetoggle
+            // which has access to the template's overlayElement
         }
         if (!this.open) {
-            this.host.optionsMenu.updateSelectedItemIndex();
-            this.host.optionsMenu.closeDescendentOverlays();
+            this.host.optionsMenu?.updateSelectedItemIndex();
+            this.host.optionsMenu?.closeDescendentOverlays();
         }
     }
 
     initOverlay(): void {
-        if (this.overlay) {
-            this.overlay.addEventListener('beforetoggle', (event: Event) => {
-                this.handleBeforetoggle(
-                    event as Event & {
-                        target: Overlay;
-                        newState: 'open' | 'closed';
-                    }
-                );
-            });
-            this.overlay.type =
-                this.host.isMobile.matches && !this.host.forcePopover
-                    ? 'modal'
-                    : 'auto';
-            this.overlay.triggerElement = this.host as HTMLElement;
-            this.overlay.placement =
-                this.host.isMobile.matches && !this.host.forcePopover
-                    ? undefined
-                    : this.host.placement;
-            // We should not be applying open is set programmatically via the picker's open.property.
-            // Focus should only be applied if a user action causes the menu to open. Otherwise,
-            // we could be pulling focus from a user when an picker with an open menu loads.
-            this.overlay.receivesFocus = 'false';
-            this.overlay.willPreventClose =
-                this.preventNextToggle !== 'no' && this.open;
-            this.overlay.addEventListener(
-                'slottable-request',
-                this.host.handleSlottableRequest
-            );
-        }
+        // Overlay is managed declaratively via template in Picker.renderOverlay()
+        // This method is kept for backward compatibility but does nothing
     }
 
     public handlePointerdown(_event: PointerEvent): void {}
@@ -182,10 +136,10 @@ export class InteractionController implements ReactiveController {
         this.host.addEventListener('sp-closed', () => {
             if (
                 !this.open &&
-                this.host.optionsMenu.matches(':focus-within') &&
-                !this.host.button.matches(':focus')
+                this.host.optionsMenu?.matches(':focus-within') &&
+                !this.host.button?.matches(':focus')
             ) {
-                this.host.button.focus();
+                this.host.button?.focus();
             }
         });
     }
@@ -195,13 +149,10 @@ export class InteractionController implements ReactiveController {
     }
 
     public hostUpdated(): void {
-        if (
-            this.overlay &&
-            this.host.dependencyManager.loaded &&
-            this.host.open !== this.overlay.open
-        ) {
-            this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-            this.overlay.open = this.host.open;
+        // Overlay is managed declaratively via template
+        // Just sync internal state with host
+        if (this._open !== this.host.open) {
+            this._open = this.host.open;
         }
     }
 }
