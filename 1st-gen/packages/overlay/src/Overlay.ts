@@ -31,6 +31,7 @@ import {
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { randomID } from '@spectrum-web-components/shared/src/random-id.js';
+import { isWebKit } from '@spectrum-web-components/shared';
 import type {
     OpenableElement,
     OverlayState,
@@ -580,6 +581,8 @@ export class Overlay extends ComputedOverlayBase {
                 // disable escape key capture to close the overlay, the focus-trap library captures it otherwise
                 escapeDeactivates: false,
                 allowOutsideClick: this.allowOutsideClick,
+                // On Safari/WebKit, be more lenient with focus returns to avoid VoiceOver conflicts
+                returnFocusOnDeactivate: !isWebKit(),
             });
 
             if (this.type === 'modal' || this.type === 'page') {
@@ -611,9 +614,13 @@ export class Overlay extends ComputedOverlayBase {
             return;
         }
 
-        // Wait for the next two animation frames to ensure the DOM is updated.
+        // Wait for the DOM to update before applying focus.
+        // Safari/WebKit only needs one frame to avoid timing issues with VoiceOver.
+        // Double await nextFrame() can cause focus management conflicts with screen readers.
         await nextFrame();
-        await nextFrame();
+        if (!isWebKit()) {
+            await nextFrame();
+        }
 
         // If the open state has changed during the delay, do not proceed.
         if (targetOpenState === this.open && !this.open) {
