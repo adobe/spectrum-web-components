@@ -1,6 +1,9 @@
 /** @type { import('@storybook/web-components').Preview } */
+import './../../../../1st-gen/tools/styles/tokens/global-vars.css';
+import './../../../../1st-gen/tools/styles/tokens/index.css';
+import './../../../../1st-gen/tools/styles/tokens/light-vars.css';
+import './../../../../1st-gen/tools/styles/tokens/medium-vars.css';
 import '../stylesheets/swc.css';
-// import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -16,7 +19,6 @@ import {
 } from './decorators';
 import { withContext } from './decorators/contexts';
 import { FontLoader } from './loaders/font-loader';
-import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -40,9 +42,13 @@ setCustomElementsManifest(customElements);
 const preview = {
     globalTypes: {
         theme: {
+            name: 'Theme',
             description: 'Global theme for components',
+            defaultValue: 'light',
+            type: 'string',
             toolbar: {
                 title: 'Theme',
+                icon: 'paintbrush',
                 items: [
                     { value: 'light', title: 'Light' },
                     { value: 'dark', title: 'Dark' },
@@ -52,7 +58,10 @@ const preview = {
             },
         },
         scale: {
+            name: 'Scale',
             description: 'Global scale for components',
+            defaultValue: 'medium',
+            type: 'string',
             toolbar: {
                 title: 'Scale',
                 items: [
@@ -62,11 +71,26 @@ const preview = {
                 dynamicTitle: true,
             },
         },
-        globalTypes,
+        textDirection: {
+            name: 'Text direction',
+            description: 'Direction of the content flow',
+            defaultValue: 'ltr',
+            type: 'string',
+            toolbar: {
+                title: 'Text direction',
+                icon: 'transfer',
+                items: [
+                    { right: '➡️', value: 'ltr', title: 'Left to right (ltr)' },
+                    { right: '⬅️', value: 'rtl', title: 'Right to left (rtl)' },
+                ],
+                dynamicTitle: true,
+            },
+        },
     },
     initialGlobals: {
         theme: 'light',
         scale: 'medium',
+        textDirection: 'ltr',
     },
     decorators: [
         withContext,
