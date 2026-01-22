@@ -90,6 +90,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     public strategy!: DesktopController | MobileController;
 
+    protected abortController?: AbortController;
+
     @state()
     appliedLabel?: string;
 
@@ -692,7 +694,15 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     protected bindButtonKeydownListener(): void {
-        this.button.addEventListener('keydown', this.handleKeydown);
+        // Initialize AbortController if not already created (it may have been created in connectedCallback)
+        if (!this.abortController) {
+            this.abortController = new AbortController();
+        }
+        const { signal } = this.abortController;
+
+        this.button.addEventListener('keydown', this.handleKeydown, {
+            signal,
+        });
     }
 
     protected override updated(changes: PropertyValues<this>): void {
@@ -940,12 +950,22 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         });
 
         this.recentlyConnected = this.hasUpdated;
-        this.addEventListener('focus', this.handleFocus);
+
+        // Initialize AbortController for host-level event listeners if not already created
+        if (!this.abortController) {
+            this.abortController = new AbortController();
+        }
+
+        this.addEventListener('focus', this.handleFocus, {
+            signal: this.abortController.signal,
+        });
     }
 
     public override disconnectedCallback(): void {
         this.close();
         this.strategy?.releaseDescription();
+        // Clean up event listeners to prevent memory leaks
+        this.abortController?.abort();
         super.disconnectedCallback();
     }
 }
