@@ -46,12 +46,7 @@
 }
 
 :host([hide-stepper]) {
-    /* calculate stepper width without 2 times button width */
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
-}
-
-:host([hide-stepper]) #textfield {
-    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
 .input {
