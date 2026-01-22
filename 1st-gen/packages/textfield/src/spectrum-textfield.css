@@ -13,9 +13,10 @@
 :host {
     --spectrum-textfield-input-line-height: var(--spectrum-textfield-height);
     --spectrum-texfield-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-width: 240px;
     --spectrum-textfield-container-width: var(--spectrum-textfield-width);
-    --spectrum-textfield-min-width: var(--spectrum-text-field-minimum-width-multiplier);
+    --spectrum-textfield-min-width: calc(var(--spectrum-text-field-minimum-width-multiplier) * var(--spectrum-textfield-height));
     --spectrum-textfield-spacing-inline-quiet: var(--spectrum-field-edge-to-text-quiet);
     --spectrum-textfield-spacing-block-quiet: var(--spectrum-field-edge-to-border-quiet);
     --spectrum-textfield-label-spacing-block: var(--spectrum-field-label-to-component);
@@ -49,7 +50,6 @@
     --spectrum-textfield-focus-indicator-color: var(--spectrum-focus-indicator-color);
     --spectrum-text-area-min-inline-size: var(--spectrum-text-area-minimum-width);
     --spectrum-text-area-min-block-size: var(--spectrum-text-area-minimum-height);
-    --spectrum-textfield-height: var(--spectrum-component-height-100);
     --spectrum-textfield-label-spacing-block-quiet: var(--spectrum-field-label-to-component-quiet-medium);
     --spectrum-textfield-label-spacing-inline-side-label: var(--spectrum-spacing-200);
     --spectrum-textfield-placeholder-font-size: var(--spectrum-font-size-100);
