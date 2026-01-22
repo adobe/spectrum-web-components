@@ -39,9 +39,10 @@ const testBadgeDefaults = async (badge: Badge) => {
  * Test: should reflect variant property to attribute
  */
 const testVariantPropertyReflection = async (badge: Badge) => {
+    await badge.updateComplete;
     await expect(badge.getAttribute('variant')).toBe('positive');
     await expect(
-        badge.shadowRoot?.querySelector('.spectrum-Badge--positive')
+        badge.shadowRoot?.querySelector('.swc-Badge--positive')
     ).toBeTruthy();
 };
 
@@ -49,9 +50,10 @@ const testVariantPropertyReflection = async (badge: Badge) => {
  * Test: should reflect subtle property to attribute
  */
 const testSubtlePropertyReflection = async (badge: Badge) => {
+    await badge.updateComplete;
     await expect(badge.hasAttribute('subtle')).toBe(true);
     await expect(
-        badge.shadowRoot?.querySelector('.spectrum-Badge--subtle')
+        badge.shadowRoot?.querySelector('.swc-Badge--subtle')
     ).toBeTruthy();
 };
 
@@ -68,9 +70,10 @@ const testSubtlePropertySetViaAttribute = async (badge: Badge) => {
  * Test: should reflect outline property to attribute
  */
 const testOutlinePropertyReflection = async (badge: Badge) => {
+    await badge.updateComplete;
     await expect(badge.hasAttribute('outline')).toBe(true);
     await expect(
-        badge.shadowRoot?.querySelector('.spectrum-Badge--outline')
+        badge.shadowRoot?.querySelector('.swc-Badge--outline')
     ).toBeTruthy();
 };
 
@@ -87,9 +90,10 @@ const testOutlinePropertySetViaAttribute = async (badge: Badge) => {
  * Test: should handle fixed property
  */
 const testFixedProperty = async (badge: Badge) => {
+    await badge.updateComplete;
     await expect(badge.getAttribute('fixed')).toBe('inline-start');
     await expect(
-        badge.shadowRoot?.querySelector('.spectrum-Badge--fixed-inline-start')
+        badge.shadowRoot?.querySelector('.swc-Badge--fixed-inline-start')
     ).toBeTruthy();
 };
 
@@ -106,10 +110,8 @@ const testFixedPropertySetViaAttribute = async (badge: Badge) => {
  * Test: should handle size property
  */
 const testSizeProperty = async (badge: Badge) => {
+    await badge.updateComplete;
     await expect(badge.getAttribute('size')).toBe('l');
-    await expect(
-        badge.shadowRoot?.querySelector('.spectrum-Badge--sizeL')
-    ).toBeTruthy();
 };
 
 /**

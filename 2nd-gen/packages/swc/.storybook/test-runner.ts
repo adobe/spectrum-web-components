@@ -3,6 +3,7 @@ import type { TestRunnerConfig } from '@storybook/test-runner';
 
 const config: TestRunnerConfig = {
     async postVisit(page, context) {
+        // Run aXe validation
         const results = await new AxeBuilder({ page })
             .include('#storybook-root')
             .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
