@@ -191,9 +191,9 @@ label:not(:has(~ .spectrum-Textfield-characterCount)) {
     color: var(--spectrum-textfield-text-color-disabled);
 }
 
-/* TODO: is there a different way around this */
 div[aria-live="assertive"] {
-    display: contents; /* Makes the helptext div transparent to the grid */
+    /* Make the helptext div span both grid columns */
+    grid-column: span 2;
 }
 
 ::slotted(sp-help-text) {
