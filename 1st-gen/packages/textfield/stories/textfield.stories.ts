@@ -187,3 +187,50 @@ export const sized = (): TemplateResult => html`
         </sp-help-text>
     </sp-textfield>
 `;
+
+export const sideAligned = (): TemplateResult => html`
+    <div>
+        <sp-textfield
+            id="side-aligned-start"
+            placeholder="You can type here"
+            side-aligned="start"
+        >
+            Side aligned start label with wrapping text
+            <sp-help-text slot="help-text">
+                Side aligned start help text
+            </sp-help-text>
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="side-aligned-end"
+            placeholder="You can type here"
+            side-aligned="end"
+        >
+            Side aligned end label with wrapping text
+            <sp-help-text slot="help-text">
+                Side aligned end help text
+            </sp-help-text>
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="valid-side-aligned-start"
+            value="Good work"
+            side-aligned="end"
+            valid
+        >
+            Valid textfield
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="invalid-side-aligned-start"
+            value="Something isn't right"
+            side-aligned="end"
+            invalid
+        >
+            Invalid textfield
+        </sp-textfield>
+    </div>
+`;

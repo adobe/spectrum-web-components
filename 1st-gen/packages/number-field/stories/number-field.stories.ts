@@ -523,3 +523,54 @@ export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
+
+export const sideAligned = (args: StoryArgs = {}): TemplateResult => html`
+    <div>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            side-aligned="start"
+        >
+            Side aligned start label
+            <sp-help-text slot="help-text">
+                Side aligned start help text
+            </sp-help-text>
+        </sp-number-field>
+    </div>
+    <div>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            side-aligned="end"
+        >
+            Side aligned end label
+            <sp-help-text slot="help-text">
+                Side aligned end help text
+            </sp-help-text>
+        </sp-number-field>
+    </div>
+    <div>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            side-aligned="end"
+            valid
+        >
+            Valid textfield
+        </sp-number-field>
+    </div>
+    <div>
+        <sp-number-field
+            ...=${spreadProps(args)}
+            @change=${args.onChange}
+            side-aligned="end"
+            invalid
+        >
+            Invalid textfield
+        </sp-number-field>
+    </div>
+`;
+
+sideAligned.args = {
+    value: 100,
+};
