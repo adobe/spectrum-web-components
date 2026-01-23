@@ -592,19 +592,27 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     /**
+     * Close the picker via light-dismiss.
+     * Sets overlay.open = false to ensure sp-closed event is dispatched.
+     */
+    private closeLightDismiss(): void {
+        if (this.overlayElement) {
+            this.overlayElement.open = false;
+        }
+        this.close();
+    }
+
+    /**
      * Handle clicks outside the picker to close it (light-dismiss behavior).
-     * This is needed because we use type='manual' to avoid Safari + VoiceOver crashes
-     * that occur with type='auto' and the Popover API's beforetoggle event.
+     * This is needed because we use type='manual' to avoid Safari + VoiceOver crashes.
      */
     private handleDocumentClick = (event: MouseEvent): void => {
         if (!this.open) return;
 
         const path = event.composedPath();
-        // Check if click was inside the picker or its overlay
         const clickedInside = path.some((el) => {
             if (el === this) return true;
             if (el instanceof Element) {
-                // Check for overlay elements
                 if (el.tagName === 'SP-OVERLAY') return true;
                 if (el.closest('sp-overlay')) return true;
             }
@@ -612,10 +620,33 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         });
 
         if (!clickedInside) {
-            this.open = false;
-            if (this.strategy) {
-                this.strategy.open = false;
+            this.closeLightDismiss();
+        }
+    };
+
+    /**
+     * Handle focus leaving the picker to close it (light-dismiss behavior for tab-out).
+     * This is needed because we use type='manual' to avoid Safari + VoiceOver crashes.
+     * Uses composedPath() to correctly detect focus across shadow DOM boundaries.
+     */
+    private handleDocumentFocusIn = (event: FocusEvent): void => {
+        if (!this.open) return;
+
+        // Use composedPath to check across shadow DOM boundaries
+        const path = event.composedPath();
+        const focusInside = path.some((el) => {
+            if (el === this) return true;
+            if (el instanceof Element) {
+                if (el.tagName === 'SP-OVERLAY') return true;
+                if (el.tagName === 'SP-POPOVER') return true;
+                if (el.tagName === 'SP-TRAY') return true;
+                if (el.tagName === 'SP-MENU') return true;
             }
+            return false;
+        });
+
+        if (!focusInside) {
+            this.closeLightDismiss();
         }
     };
 
@@ -626,7 +657,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
      * - Uses type='manual' instead of 'auto' to avoid crashes from the Popover API's
      *   beforetoggle event which fires during accessibility tree updates.
      * - Uses @sp-closed instead of @beforetoggle for the same reason.
-     * - Light-dismiss behavior is implemented via handleDocumentClick instead.
+     * - Light-dismiss is implemented via handleDocumentClick/handleDocumentFocusIn.
      */
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         const container = this.renderContainer(menu);
@@ -643,7 +674,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                     ? undefined
                     : this.placement}
                 .type=${'manual'}
-                .receivesFocus=${'auto'}
+                .receivesFocus=${'false'}
             >
                 ${container}
             </sp-overlay>
@@ -659,15 +690,68 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     /**
+     * Get the label text from either the label attribute or slotted label content.
+     */
+    protected get labelText(): string {
+        // First try the label attribute
+        if (this.label) {
+            return this.label;
+        }
+        // Then try slotted label content
+        const slottedLabel = this.querySelector('[slot="label"]');
+        if (slottedLabel) {
+            return slottedLabel.textContent?.trim() || '';
+        }
+        return '';
+    }
+
+    /**
      * Computed aria-label for the button to avoid Safari + VoiceOver crash
-     * that occurs when using aria-labelledby with elements that change content
+     * that occurs when using aria-labelledby with elements that change content.
+     *
+     * Replicates the original aria-labelledby="icon label applied-label pending-label"
+     * Structure when no selection: {label} {appliedLabel} {pendingLabel}
+     * Structure when selected with field-label: {selectedItem} {appliedLabel} {pendingLabel}
+     * Structure when selected without field-label: {selectedItem} {label} {pendingLabel}
      */
     protected get buttonAriaLabel(): string {
-        const label = this.appliedLabel || this.label || '';
-        const selectedLabel =
-            this.value && this.selectedItem ? this.selectedItem.itemText : '';
-        // Combine label and selected value for full accessible name
-        return selectedLabel ? `${label} ${selectedLabel}`.trim() : label;
+        const parts: string[] = [];
+        const label = this.labelText;
+
+        if (this.value && this.selectedItem) {
+            // Get selected item's text
+            let selectedLabel = this.selectedItem.itemText;
+
+            // If no text content, try to get icon's label (for icon-only menu items)
+            if (!selectedLabel) {
+                const iconElements = this.selectedItemContent.icon;
+                for (const icon of iconElements) {
+                    if (icon instanceof HTMLElement) {
+                        const iconLabel = icon.getAttribute('label');
+                        if (iconLabel) {
+                            selectedLabel = iconLabel;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (selectedLabel) parts.push(selectedLabel);
+            // When selected, use appliedLabel if available, otherwise fall back to label
+            if (this.appliedLabel) {
+                parts.push(this.appliedLabel);
+            } else if (label) {
+                parts.push(label);
+            }
+        } else {
+            // No selection - use placeholder label, then appliedLabel
+            if (label) parts.push(label);
+            if (this.appliedLabel) parts.push(this.appliedLabel);
+        }
+
+        if (this.pending && this.pendingLabel) parts.push(this.pendingLabel);
+
+        return parts.join(' ');
     }
 
     /**
@@ -781,21 +865,50 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         super.updated(changes);
         if (changes.has('open')) {
             this.strategy.open = this.open;
-            // Manage click-outside listener for light-dismiss behavior
-            // This replaces the Popover API's auto-dismiss which we can't use
-            // due to Safari + VoiceOver crashes with beforetoggle events
+            // Manage light-dismiss listeners for type='manual' overlay
             if (this.open) {
-                // Use setTimeout to avoid catching the click that opened the picker
+                // Close other open pickers when this one opens.
+                // This is needed because type='manual' overlays don't get
+                // auto-closed by the OverlayStack.
+                this.closeOtherPickers();
                 setTimeout(() => {
                     document.addEventListener(
                         'click',
                         this.handleDocumentClick
                     );
+                    document.addEventListener(
+                        'focusin',
+                        this.handleDocumentFocusIn
+                    );
                 }, 0);
             } else {
                 document.removeEventListener('click', this.handleDocumentClick);
+                document.removeEventListener(
+                    'focusin',
+                    this.handleDocumentFocusIn
+                );
             }
         }
+    }
+
+    /**
+     * Close other open pickers when this picker opens.
+     * Since we use type='manual' overlays (to avoid Safari + VoiceOver crashes),
+     * the OverlayStack doesn't automatically close other overlays.
+     * We need to explicitly close the overlay to dispatch sp-closed events.
+     */
+    private closeOtherPickers(): void {
+        const allPickers = document.querySelectorAll('sp-picker');
+        allPickers.forEach((picker) => {
+            const pickerBase = picker as PickerBase;
+            if (pickerBase !== (this as PickerBase) && pickerBase.open) {
+                // Close the overlay to dispatch sp-closed event
+                if (pickerBase.overlayElement) {
+                    pickerBase.overlayElement.open = false;
+                }
+                pickerBase.open = false;
+            }
+        });
     }
 
     protected override firstUpdated(changes: PropertyValues<this>): void {
@@ -1040,8 +1153,8 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     public override disconnectedCallback(): void {
         this.close();
         this.strategy?.releaseDescription();
-        // Clean up click-outside listener
         document.removeEventListener('click', this.handleDocumentClick);
+        document.removeEventListener('focusin', this.handleDocumentFocusIn);
         super.disconnectedCallback();
     }
 }
