@@ -13,23 +13,59 @@
 <!-- This preconnect opens the connection for typekit to more quickly load fonts -->
 <link rel="preconnect" href="https://use.typekit.net" crossorigin />
 <link rel="dns-prefetch" href="https://use.typekit.net" />
-
-<!-- For Adobe Clean font support -->
-<link rel="stylesheet" href="https://use.typekit.net/evk7lzt.css" />
-<script src="https://use.typekit.net/evk7lzt.js"></script>
+<!-- For Adobe Clean Spectrum VF font support -->
+<link rel="stylesheet" href="https://use.typekit.net/obc6cux.css" />
+<script src="https://use.typekit.net/obc6cux.js"></script>
+<!-- This is the script that attempts to pre-load the typekit fonts -->
 <script>
-    try {
-        Typekit.load({
-            async: true,
-            events: {
-                active: function () {
-                    document.dispatchEvent(new Event('typekit-loaded'));
+    window.global = window;
+
+    let isLoading = false;
+
+    const script = document.createElement('script');
+    script.src = '//use.typekit.net/obc6cux.js';
+    script.type = 'text/javascript';
+    script.async = 'true';
+    script.onload = script.onreadystatechange = function () {
+        const readyState = this.readyState;
+        if (
+            isLoading ||
+            (readyState && readyState != 'complete' && readyState != 'loaded')
+        )
+            return;
+        isLoading = true;
+
+        try {
+            Typekit.load({
+                kitId: 'obc6cux',
+                async: true,
+                scriptTimeout: 3000,
+                // https://github.com/typekit/webfontloader?tab=readme-ov-file#configuration
+                loading: function () {
+                    window.FontsLoading = true;
                 },
-            },
-        });
-    } catch (e) {
-        console.error('Typekit failed to load:', e);
-    }
+                events: {
+                    active: function () {
+                        window.FontsLoading = false;
+                        window.currentKitId = this.kitId;
+                        console.log(`Font loaded [id: ${this.kitId}]`);
+    
+                        // Fire a custom event to indicate the Adobe Fonts have loaded
+                        document.dispatchEvent(
+                            new CustomEvent('typekit-loaded', {
+                                detail: { kitId: this.kitId },
+                            })
+                        );
+                    },
+                }
+            });
+        } catch (e) {
+            console.log('Typekit failed to load:', e);
+        }
+    };
+
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(script, firstScript);
 </script>
 
 <style>
