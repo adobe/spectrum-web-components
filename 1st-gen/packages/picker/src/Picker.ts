@@ -16,7 +16,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    render,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -577,14 +576,10 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
-        if (this.strategy?.overlay === undefined) {
-            return menu;
-        }
         const container = this.renderContainer(menu);
-        render(container, this.strategy?.overlay as unknown as HTMLElement, {
-            host: this,
-        });
-        return this.strategy?.overlay as unknown as TemplateResult;
+        return html`
+            <sp-overlay ?open=${this.open}>${container}</sp-overlay>
+        `;
     }
 
     protected get renderDescriptionSlot(): TemplateResult {
@@ -697,6 +692,9 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
+        if (this.overlayElement && !this.strategy.overlay) {
+            this.strategy.overlay = this.overlayElement;
+        }
         if (changes.has('open')) {
             this.strategy.open = this.open;
         }
