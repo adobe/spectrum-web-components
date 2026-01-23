@@ -437,6 +437,30 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
+    protected handleBeforetoggle = (
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void => {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.strategy?.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.strategy?.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement?.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.optionsMenu.updateSelectedItemIndex();
+            this.optionsMenu.closeDescendentOverlays();
+        }
+    };
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -577,8 +601,28 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
         const container = this.renderContainer(menu);
+        this.dependencyManager.add('sp-overlay');
+        import('@spectrum-web-components/overlay/sp-overlay.js');
         return html`
-            <sp-overlay ?open=${this.open}>${container}</sp-overlay>
+            <sp-overlay
+                @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
+                .triggerElement=${this as HTMLElement}
+                .offset=${0}
+                ?open=${this.open && this.dependencyManager.loaded}
+                .placement=${this.isMobile.matches && !this.forcePopover
+                    ? undefined
+                    : this.placement}
+                .type=${this.isMobile.matches && !this.forcePopover
+                    ? 'modal'
+                    : 'auto'}
+                .receivesFocus=${'false'}
+                .willPreventClose=${this.strategy?.preventNextToggle !== 'no' &&
+                this.open &&
+                this.dependencyManager.loaded}
+            >
+                ${container}
+            </sp-overlay>
         `;
     }
 
@@ -692,18 +736,26 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (this.overlayElement && !this.strategy.overlay) {
-            this.strategy.overlay = this.overlayElement;
-        }
         if (changes.has('open')) {
-            this.strategy.open = this.open;
+            // Ensure InteractionController has reference to declaratively rendered overlay
+            if (this.overlayElement && !this.strategy.overlay) {
+                this.strategy.overlay = this.overlayElement;
+            }
         }
     }
 
-    protected override firstUpdated(changes: PropertyValues<this>): void {
+    protected override async firstUpdated(
+        changes: PropertyValues<this>
+    ): Promise<void> {
         super.firstUpdated(changes);
         this.bindButtonKeydownListener();
         this.bindEvents();
+
+        // Wait for overlay element to be available and connect it
+        await this.updateComplete;
+        if (this.overlayElement && !this.strategy.overlay) {
+            this.strategy.overlay = this.overlayElement;
+        }
     }
 
     protected get dismissHelper(): TemplateResult {

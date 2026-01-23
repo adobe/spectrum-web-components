@@ -50,24 +50,13 @@ export class InteractionController implements ReactiveController {
         if (this._open === open) return;
         this._open = open;
 
-        if (this.overlay) {
-            this.host.open = open;
-            return;
-        }
+        // Sync with host's open state
+        this.host.open = open;
 
-        // When there is no Overlay and `open` is moving to `true`, lazily import/create
-        // an Overlay and apply that state to it.
-        customElements
-            .whenDefined('sp-overlay')
-            .then(async (): Promise<void> => {
-                const { Overlay } = await import(
-                    '@spectrum-web-components/overlay/src/Overlay.js'
-                );
-                this.overlay = new Overlay();
-                this.host.open = true;
-                this.host.requestUpdate();
-            });
-        import('@spectrum-web-components/overlay/sp-overlay.js');
+        // If overlay hasn't been connected yet, try to connect it now
+        if (!this.overlay && this.host.overlayElement) {
+            this.overlay = this.host.overlayElement;
+        }
     }
 
     private _overlay!: AbstractOverlay;
@@ -195,13 +184,14 @@ export class InteractionController implements ReactiveController {
     }
 
     public hostUpdated(): void {
-        if (
-            this.overlay &&
-            this.host.dependencyManager.loaded &&
-            this.host.open !== this.overlay.open
-        ) {
+        // Connect to declaratively rendered overlay if not already connected
+        if (!this.overlay && this.host.overlayElement) {
+            this.overlay = this.host.overlayElement;
+        }
+
+        // Sync willPreventClose state with the overlay
+        if (this.overlay && this.host.dependencyManager.loaded) {
             this.overlay.willPreventClose = this.preventNextToggle !== 'no';
-            this.overlay.open = this.host.open;
         }
     }
 }
