@@ -49,6 +49,14 @@
     --spectrum-stepper-width: calc(var(--mod-stepper-height, var(--spectrum-stepper-height)) * var(--mod-stepper-min-width-multiplier, var(--spectrum-text-field-minimum-width-multiplier)) + var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) + var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) * 2);
 }
 
+:host([side-aligned="start"]),
+:host([side-aligned="end"]) {
+    /* more space for side-aligned number fields */
+    --spectrum-stepper-container-width: var(--mod-stepper-container-width, var(--mod-textfield-width, var(--spectrum-textfield-width)));
+
+    grid-template-columns: minmax(10ch, 1fr) fit-content(15ch);
+}
+
 .input {
     font-variant-numeric: tabular-nums;
 }

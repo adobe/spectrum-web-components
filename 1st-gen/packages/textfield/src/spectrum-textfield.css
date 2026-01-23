@@ -207,6 +207,8 @@ div[aria-live="assertive"] {
     font-size: var(--mod-textfield-character-count-font-size, var(--spectrum-textfield-character-count-font-size));
     font-family: var(--mod-textfield-character-count-font-family, var(--spectrum-textfield-character-count-font-family));
     font-weight: var(--mod-textfield-character-count-font-weight, var(--spectrum-textfield-character-count-font-weight));
+
+    /* our grid system in :host would need to be adjusted to support this */
     grid-area: 1 / 2 / auto / span 1;
     justify-content: flex-end;
     align-items: flex-end;

@@ -16,7 +16,6 @@
 :host {
     display: inline-grid;
     grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto;
     margin: 0;
     position: relative;
     overflow: visible;
@@ -38,9 +37,7 @@
 :host([side-aligned="start"]),
 :host([side-aligned="end"]) {
     grid-template-rows: auto auto;
-
-    /* not currently using the 3rd column for char count */
-    grid-template-columns: auto auto auto;
+    grid-template-columns: minmax(10ch, 1fr) minmax(16ch, 2fr);
 }
 
 :host([disabled]:focus-visible) {
