@@ -6,4 +6,706 @@
 
 # Keyboard testing
 
+<!-- Generated TOC - DO NOT EDIT -->
+
+<details open>
+<summary><strong>In this doc</strong></summary>
+
+- [Overview](#overview)
+- [Why keyboard accessibility matters](#why-keyboard-accessibility-matters)
+    - [Who benefits from keyboard accessibility](#who-benefits-from-keyboard-accessibility)
+    - [Common accessibility barriers](#common-accessibility-barriers)
+- [Platform setup instructions](#platform-setup-instructions)
+    - [MacOS keyboard navigation](#macos-keyboard-navigation)
+    - [Safari browser settings](#safari-browser-settings)
+    - [Other browsers](#other-browsers)
+- [Keyboard navigation basics](#keyboard-navigation-basics)
+    - [Essential keyboard interactions](#essential-keyboard-interactions)
+    - [Component-specific patterns](#component-specific-patterns)
+- [Testing checklist](#testing-checklist)
+- [Interactive examples](#interactive-examples)
+    - [Skip links](#skip-links)
+    - [Visible focus indicators](#visible-focus-indicators)
+    - [Logical focus order](#logical-focus-order)
+    - [Button vs. link behavior](#button-vs-link-behavior)
+    - [Modal dialog](#modal-dialog)
+    - [Tabs pattern](#tabs-pattern)
+    - [Form controls](#form-controls)
+    - [Tooltip](#tooltip)
+- [Common issues and how to fix them](#common-issues-and-how-to-fix-them)
+- [Resources](#resources)
+
+</details>
+
 <!-- Document content (editable) -->
+
+## Overview
+
+This guide provides comprehensive instructions for testing keyboard accessibility in Spectrum Web Components. Keyboard testing is a critical part of accessibility validation. 
+
+Whether you're a contributor testing your component implementation or a consumer validating your application's accessibility, this guide will help you ensure that all users can navigate and interact with your interface using only a keyboard.
+
+> **Did you know?** Approximately **[15% of all digital accessibility issues](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/)** relate to keyboard support gaps, and manual keyboard testing catches issues that automated tools cannot detect.
+
+## Why keyboard accessibility matters
+
+Keyboard accessibility ensures that users who cannot or prefer not to use a mouse can still fully interact with web content. This is not just about supporting a specific disability—it's about making interfaces work for everyone.
+
+### Who benefits from keyboard accessibility
+
+- **Users with motor disabilities**: People with limited fine motor control, tremors, paralysis, or repetitive stress injuries who cannot operate a mouse
+- **Screen reader users**: People who are blind or have low vision navigate entirely via keyboard
+- **Voice control users**: Software like Dragon NaturallySpeaking sends keyboard commands to the browser
+- **Power users**: Many sighted users prefer keyboard navigation for speed and efficiency
+- **Situational limitations**: Anyone temporarily unable to use a mouse (broken arm, holding a baby, using a trackpad-less device)
+
+### Common accessibility barriers
+
+Without proper keyboard support, users may encounter:
+
+- **Inaccessible interactive elements**: Custom components that only respond to mouse clicks
+- **Invisible focus**: Users cannot see where they are on the page
+- **Keyboard traps**: Users get stuck in a section and cannot navigate away
+- **Illogical tab order**: Focus jumps randomly instead of following visual flow
+- **Missing skip links**: Users must tab through repetitive content on every page
+
+## Platform setup instructions
+
+> ⚠️ **Important for MacOS and Safari users**
+>
+> By default, MacOS and Safari do not enable full keyboard navigation. You must manually enable these settings before testing keyboard accessibility. **This is the most commonly overlooked setup step.**
+
+### MacOS keyboard navigation
+
+To enable keyboard navigation system-wide on MacOS:
+
+1. Open **System Settings** (or System Preferences on older versions)
+2. Navigate to **Keyboard**
+3. Enable **"Keyboard navigation"** toggle
+   - On older MacOS versions, go to **Shortcuts** tab and select **"All controls"** under "Full Keyboard Access"
+
+This setting allows you to use <kbd>Tab</kbd> to navigate to all controls, not just text fields and lists.
+
+<!-- TODO: Add screenshot of MacOS keyboard settings -->
+
+### Safari browser settings
+
+Safari requires an additional setting to enable full keyboard navigation:
+
+1. Open **Safari** and go to **Settings** (or Preferences)
+2. Navigate to the **Advanced** tab
+3. Under **Accessibility**, check **"Press Tab to highlight each item on a webpage"**
+
+<!-- TODO: Add screenshot of Safari advanced accessibility settings -->
+
+### Other browsers
+
+- **Chrome/Edge**: Full keyboard navigation is enabled by default
+- **Firefox**: Full keyboard navigation is enabled by default. For additional options, see `about:preferences#general` under "Browsing"
+
+## Keyboard navigation basics
+
+### Essential keyboard interactions
+
+The following table summarizes the core keyboard interactions that all accessible web content must support:
+
+| Key | Action |
+|-----|--------|
+| <kbd>Tab</kbd> | Move focus forward to the next interactive element |
+| <kbd>Shift</kbd> + <kbd>Tab</kbd> | Move focus backward to the previous interactive element |
+| <kbd>Enter</kbd> / <kbd>Return</kbd> | Activate links, buttons, and form submission |
+| <kbd>Space</kbd> | Activate buttons, toggle checkboxes/switches, expand dropdowns |
+| <kbd>Arrow keys</kbd> | Navigate within components (menus, tabs, sliders, radio groups) |
+| <kbd>Escape</kbd> | Close modals, overlays, menus, and popovers |
+| <kbd>Home</kbd> | Move to first item in a list or beginning of text |
+| <kbd>End</kbd> | Move to last item in a list or end of text |
+
+ > ⚠️ **Important for Link Navigation**
+ > While buttons use both <kbd>Enter</kbd> and <kbd>Space</kbd> to activate, **links only use <kbd>Enter</kbd> to activate.**
+
+### Component-specific patterns
+
+Different component types have specific keyboard conventions based on [W3C ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/):
+
+| Component type | Keyboard pattern |
+|----------------|------------------|
+| **Tabs** | <kbd>Tab</kbd> to tab list, <kbd>Arrow keys</kbd> between tabs, <kbd>Enter</kbd>/<kbd>Space</kbd> to select |
+| **Menu/Dropdown** | <kbd>Enter</kbd>/<kbd>Space</kbd>/<kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select, <kbd>Escape</kbd> to close |
+| **Modal dialog** | <kbd>Tab</kbd> cycles within modal (focus trap), <kbd>Escape</kbd> closes |
+| **Accordion** | <kbd>Tab</kbd> to headers, <kbd>Enter</kbd>/<kbd>Space</kbd> to expand/collapse |
+| **Slider** | <kbd>Arrow keys</kbd> to adjust value, <kbd>Home</kbd>/<kbd>End</kbd> for min/max |
+| **Tree view** | <kbd>Arrow Up</kbd>/<kbd>Down</kbd> between items, <kbd>Arrow Right</kbd>/<kbd>Left</kbd> to expand/collapse |
+| **Combobox** | <kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select, <kbd>Escape</kbd> to close |
+| **Radio group** | <kbd>Tab</kbd> to group, <kbd>Arrow keys</kbd> between options (selection follows focus) |
+| **Checkbox group** | <kbd>Tab</kbd> between checkboxes, <kbd>Space</kbd> to toggle |
+
+## Testing checklist
+
+Use this checklist when testing keyboard accessibility:
+
+- [ ] **All interactive elements are focusable**: Can you reach every button, link, form control, and custom widget using <kbd>Tab</kbd>?
+- [ ] **Focus is visible**: Can you always see where focus is on the page?
+- [ ] **No keyboard traps**: Can you navigate away from every element and section?
+- [ ] **Logical focus order**: Does focus move in a predictable order matching visual layout (generally left-to-right, top-to-bottom)?
+- [ ] **Skip links work**: Can you skip past navigation to main content?
+- [ ] **All actions are keyboard-operable**: Can you perform every action that's possible with a mouse?
+- [ ] **Escape closes overlays**: Do modals, menus, and popovers close with <kbd>Escape</kbd>?
+- [ ] **Focus returns appropriately**: After closing a modal, does focus return to the element that opened it?
+- [ ] **Arrow key patterns work**: Do tabs, menus, and other compound widgets respond to arrow keys correctly?
+- [ ] **Disabled elements are handled correctly**: Disabled elements should either be skipped by tab or clearly indicate their disabled state
+
+## Interactive examples
+
+The following examples let you practice keyboard testing techniques. Try navigating through each example using only your keyboard.
+
+### Skip links
+
+Skip links allow keyboard users to bypass repetitive navigation and jump directly to main content. Press <kbd>Tab</kbd> once after page load—a skip link should appear.
+
+<div class="example-container">
+  <a href="#skip-main-content" class="skip-link">Skip to main content</a>
+  <nav aria-label="Example navigation">
+    <ul style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0 0 1rem 0;">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <main id="skip-main-content" tabindex="-1">
+    <p>This is the main content area. When using the skip link, focus jumps here.</p>
+  </main>
+</div>
+
+<style>
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background: var(--spectrum-accent-color-900, #0054b6);
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+</style>
+
+**What to test:**
+1. Press <kbd>Tab</kbd> immediately after loading—the skip link should become visible
+2. Press <kbd>Enter</kbd> to activate the skip link
+3. Focus should move to the main content area
+
+### Visible focus indicators
+
+Focus indicators show which element currently has keyboard focus. They must be clearly visible with sufficient contrast.
+
+<div class="example-container">
+  <p>Tab through these buttons and observe the focus indicators:</p>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+    <button type="button" class="demo-button">Primary action</button>
+    <button type="button" class="demo-button secondary">Secondary action</button>
+    <button type="button" class="demo-button" disabled>Disabled button</button>
+  </div>
+</div>
+
+<style>
+.demo-button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--spectrum-accent-color-900, #0054b6);
+  background: var(--spectrum-accent-color-900, #0054b6);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.demo-button:hover:not(:disabled) {
+  background: var(--spectrum-accent-color-1000, #003d87);
+}
+
+.demo-button:focus {
+  outline: 3px solid var(--spectrum-accent-color-700, #1473e6);
+  outline-offset: 2px;
+}
+
+.demo-button.secondary {
+  background: transparent;
+  color: var(--spectrum-accent-color-900, #0054b6);
+}
+
+.demo-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>
+
+**What to test:**
+1. Tab through each button and verify focus is clearly visible
+2. Focus indicators should have sufficient contrast (at least 3:1 against adjacent colors)
+3. Disabled button should be skipped or clearly indicate disabled state
+
+### Logical focus order
+
+Focus should follow a logical, predictable order that matches the visual layout.
+
+<div class="example-container">
+  <form class="focus-order-form">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <label for="first-name">First name</label>
+        <input type="text" id="first-name" placeholder="Jane">
+      </div>
+      <div>
+        <label for="last-name">Last name</label>
+        <input type="text" id="last-name" placeholder="Doe">
+      </div>
+      <div style="grid-column: span 2;">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="jane.doe@example.com">
+      </div>
+      <div style="grid-column: span 2;">
+        <button type="submit" class="demo-button">Submit form</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<style>
+.focus-order-form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.focus-order-form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.focus-order-form input:focus {
+  outline: 2px solid var(--spectrum-accent-color-700, #1473e6);
+  outline-offset: 1px;
+  border-color: var(--spectrum-accent-color-700, #1473e6);
+}
+</style>
+
+**What to test:**
+1. Tab through the form fields in order
+2. Focus should move: First name → Last name → Email → Submit button
+3. Order should match the visual reading order (left-to-right, top-to-bottom)
+
+### Button vs. link behavior
+
+Buttons and links have different purposes and keyboard behaviors. Understanding the difference is critical for proper implementation.
+
+<div class="example-container">
+  <p><strong>Links</strong> navigate to a URL. They are activated with <kbd>Enter</kbd>:</p>
+  <p style="margin-bottom: 1rem;">
+    <a href="https://opensource.adobe.com/spectrum-web-components/">Visit SWC documentation</a>
+  </p>
+  
+  <p><strong>Buttons</strong> perform actions. They are activated with <kbd>Enter</kbd> or <kbd>Space</kbd>:</p>
+  <button type="button" class="demo-button" onclick="alert('Button clicked!')">Perform action</button>
+</div>
+
+**What to test:**
+1. Focus on the link and press <kbd>Enter</kbd>—it should navigate (or show navigation intent)
+2. Focus on the link and press <kbd>Space</kbd>—it should scroll the page, NOT activate the link
+3. Focus on the button and press <kbd>Enter</kbd>—it should activate
+4. Focus on the button and press <kbd>Space</kbd>—it should also activate
+
+### Modal dialog
+
+Modal dialogs must trap focus within the dialog and return focus when closed.
+
+<div class="example-container">
+  <button type="button" class="demo-button" id="open-modal-btn">Open modal dialog</button>
+  
+  <div id="demo-modal" class="demo-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="demo-modal-content">
+      <h3 id="modal-title">Modal dialog</h3>
+      <p>This is a modal dialog. Focus is trapped within this dialog until it is closed.</p>
+      <p>Try pressing <kbd>Tab</kbd>—focus should cycle between the interactive elements inside.</p>
+      <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+        <button type="button" class="demo-button" id="modal-action-btn">Primary action</button>
+        <button type="button" class="demo-button secondary" id="close-modal-btn">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.demo-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.demo-modal[hidden] {
+  display: none;
+}
+
+.demo-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.demo-modal-content h3 {
+  margin-top: 0;
+}
+</style>
+
+<script>
+(function() {
+  const modal = document.getElementById('demo-modal');
+  const openBtn = document.getElementById('open-modal-btn');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const actionBtn = document.getElementById('modal-action-btn');
+  
+  if (!modal || !openBtn || !closeBtn) return;
+  
+  const focusableElements = [actionBtn, closeBtn];
+  let lastFocusedElement;
+  
+  function openModal() {
+    lastFocusedElement = document.activeElement;
+    modal.hidden = false;
+    focusableElements[0].focus();
+  }
+  
+  function closeModal() {
+    modal.hidden = true;
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
+  }
+  
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  actionBtn.addEventListener('click', () => {
+    alert('Action performed!');
+    closeModal();
+  });
+  
+  modal.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+    
+    if (e.key === 'Tab') {
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+      
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          lastFocusable.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          firstFocusable.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  });
+})();
+</script>
+
+**What to test:**
+1. Press <kbd>Enter</kbd> on "Open modal dialog" button
+2. Focus should move into the modal
+3. Press <kbd>Tab</kbd> repeatedly—focus should cycle within the modal (focus trap)
+4. Press <kbd>Escape</kbd>—the modal should close
+5. Focus should return to the "Open modal dialog" button
+
+### Tabs pattern
+
+Tab interfaces allow keyboard navigation between tab panels using arrow keys.
+
+<div class="example-container">
+  <div class="demo-tabs" role="tablist" aria-label="Example tabs">
+    <button role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" class="demo-tab" tabindex="0">
+      Tab one
+    </button>
+    <button role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" class="demo-tab" tabindex="-1">
+      Tab two
+    </button>
+    <button role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" class="demo-tab" tabindex="-1">
+      Tab three
+    </button>
+  </div>
+  <div id="panel-1" role="tabpanel" aria-labelledby="tab-1" class="demo-tabpanel">
+    <p>Content for tab one. This panel is visible when the first tab is selected.</p>
+  </div>
+  <div id="panel-2" role="tabpanel" aria-labelledby="tab-2" class="demo-tabpanel" hidden>
+    <p>Content for tab two. This panel is visible when the second tab is selected.</p>
+  </div>
+  <div id="panel-3" role="tabpanel" aria-labelledby="tab-3" class="demo-tabpanel" hidden>
+    <p>Content for tab three. This panel is visible when the third tab is selected.</p>
+  </div>
+</div>
+
+<style>
+.demo-tabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+}
+
+.demo-tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.demo-tab[aria-selected="true"] {
+  border-bottom-color: var(--spectrum-accent-color-900, #0054b6);
+  font-weight: 600;
+}
+
+.demo-tab:focus {
+  outline: 2px solid var(--spectrum-accent-color-700, #1473e6);
+  outline-offset: -2px;
+}
+
+.demo-tab:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.demo-tabpanel {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+
+.demo-tabpanel[hidden] {
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+  const tabs = document.querySelectorAll('.demo-tab');
+  const panels = document.querySelectorAll('.demo-tabpanel');
+  
+  if (!tabs.length) return;
+  
+  function selectTab(selectedTab) {
+    tabs.forEach(tab => {
+      const isSelected = tab === selectedTab;
+      tab.setAttribute('aria-selected', isSelected);
+      tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+      
+      const panelId = tab.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId);
+      if (panel) {
+        panel.hidden = !isSelected;
+      }
+    });
+  }
+  
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTab(tab));
+    
+    tab.addEventListener('keydown', (e) => {
+      let newIndex;
+      
+      switch (e.key) {
+        case 'ArrowRight':
+          newIndex = (index + 1) % tabs.length;
+          break;
+        case 'ArrowLeft':
+          newIndex = (index - 1 + tabs.length) % tabs.length;
+          break;
+        case 'Home':
+          newIndex = 0;
+          break;
+        case 'End':
+          newIndex = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+      
+      e.preventDefault();
+      selectTab(tabs[newIndex]);
+      tabs[newIndex].focus();
+    });
+  });
+})();
+</script>
+
+**What to test:**
+1. Press <kbd>Tab</kbd> to focus the tab list
+2. Press <kbd>Arrow Right</kbd>—focus and selection should move to the next tab
+3. Press <kbd>Arrow Left</kbd>—focus and selection should move to the previous tab
+4. Press <kbd>Home</kbd>—focus should move to the first tab
+5. Press <kbd>End</kbd>—focus should move to the last tab
+6. Tab panel content should update as tabs are selected
+
+### Form controls
+
+Different form controls have different keyboard behaviors.
+
+<div class="example-container">
+  <form class="form-controls-demo">
+    <fieldset>
+      <legend>Choose a size (radio buttons)</legend>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <label><input type="radio" name="size" value="small"> Small</label>
+        <label><input type="radio" name="size" value="medium" checked> Medium</label>
+        <label><input type="radio" name="size" value="large"> Large</label>
+      </div>
+    </fieldset>
+    
+    <fieldset style="margin-top: 1rem;">
+      <legend>Select toppings (checkboxes)</legend>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <label><input type="checkbox" name="toppings" value="cheese"> Cheese</label>
+        <label><input type="checkbox" name="toppings" value="pepperoni"> Pepperoni</label>
+        <label><input type="checkbox" name="toppings" value="mushrooms"> Mushrooms</label>
+      </div>
+    </fieldset>
+    
+    <div style="margin-top: 1rem;">
+      <label for="select-demo">Choose a country (dropdown)</label>
+      <select id="select-demo" style="display: block; margin-top: 0.25rem; padding: 0.5rem;">
+        <option value="">Select a country</option>
+        <option value="us">United States</option>
+        <option value="ca">Canada</option>
+        <option value="uk">United Kingdom</option>
+        <option value="au">Australia</option>
+      </select>
+    </div>
+  </form>
+</div>
+
+<style>
+.form-controls-demo fieldset {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.form-controls-demo legend {
+  font-weight: 600;
+  padding: 0 0.5rem;
+}
+
+.form-controls-demo input:focus,
+.form-controls-demo select:focus {
+  outline: 2px solid var(--spectrum-accent-color-700, #1473e6);
+  outline-offset: 2px;
+}
+</style>
+
+**What to test:**
+1. **Radio buttons**: <kbd>Tab</kbd> to the radio group, then use <kbd>Arrow keys</kbd> to move between options (selection follows focus)
+2. **Checkboxes**: <kbd>Tab</kbd> between each checkbox, <kbd>Space</kbd> to toggle
+3. **Select dropdown**: <kbd>Tab</kbd> to focus, <kbd>Space</kbd> or <kbd>Arrow Down</kbd> to open, <kbd>Arrow keys</kbd> to navigate, <kbd>Enter</kbd> to select
+
+### Tooltip
+
+Tooltips should be keyboard-accessible when they provide essential information.
+
+<div class="example-container">
+  <p>Tab to the button below to see the tooltip appear on focus:</p>
+  <button type="button" class="demo-button tooltip-trigger" aria-describedby="tooltip-content">
+    Hover or focus me
+  </button>
+  <div role="tooltip" id="tooltip-content" class="demo-tooltip">
+    This tooltip provides additional context about the button's action.
+  </div>
+</div>
+
+<style>
+.tooltip-trigger {
+  position: relative;
+}
+
+.demo-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: #1a1a1a;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+  z-index: 100;
+}
+
+.demo-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a1a;
+}
+
+.tooltip-trigger:hover + .demo-tooltip,
+.tooltip-trigger:focus + .demo-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+</style>
+
+**What to test:**
+1. Press <kbd>Tab</kbd> to focus the button
+2. The tooltip should appear when the button receives focus
+3. The tooltip should be readable and not block other content
+4. Press <kbd>Tab</kbd> again—focus should move away and tooltip should hide
+
+## Common issues and how to fix them
+
+| Issue | Problem | Solution |
+|-------|---------|----------|
+| **Focus outline removed** | CSS like `outline: none` makes focus invisible | Replace with visible custom focus styles: `outline: 2px solid blue; outline-offset: 2px;` |
+| **Positive tabindex** | `tabindex="1"` or higher disrupts natural tab order | Use `tabindex="0"` for focusable, `tabindex="-1"` for programmatic focus only |
+| **Click-only handlers** | `onclick` without keyboard support | Add `onkeydown` handlers for <kbd>Enter</kbd> and <kbd>Space</kbd>, or use `<button>` elements |
+| **Mouse-only hover** | Information only shown on `:hover` | Add `:focus` styles alongside `:hover` |
+| **Non-semantic elements** | `<div>` or `<span>` used for buttons/links | Use native `<button>` or `<a>` elements |
+| **Missing focus management** | Modal closes but focus is lost | Trap focus within modals; return focus on close |
+| **Focus not visible** | Low contrast focus indicators | Ensure focus indicators have at least 3:1 contrast ratio |
+
+## Resources
+
+For more information on keyboard accessibility, consult these authoritative sources:
+
+- [W3C ARIA Authoring Practices Guide (APG)](https://www.w3.org/WAI/ARIA/apg/) - Design patterns and keyboard behaviors for common components
+- [WebAIM Keyboard Accessibility](https://webaim.org/techniques/keyboard) - Practical guide to keyboard testing
+- [WCAG 2.1 Keyboard Success Criteria](https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=211#keyboard-accessible) - The official accessibility guidelines for keyboard access
+- [Deque University - How Keyboard Testing Improves Accessibility](https://www.deque.com/blog/how-keyboard-testing-improves-digital-accessibility/) - Why keyboard testing matters
+- [web.dev Learn Accessibility](https://web.dev/learn/accessibility) - Google's comprehensive accessibility course
