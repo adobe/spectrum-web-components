@@ -97,7 +97,7 @@ The `selects` attribute enables row selection functionality. When `selects="sing
 
 When using selection, checkboxes are automatically given accessible labels for screen readers:
 
-- **Header checkbox**: Uses the `select-all-label` attribute (defaults to "Select All")
+- **Header row checkbox**: Uses the `select-all-label` attribute (defaults to "Select All")
 - **Body row checkboxes**: Uses the text content of the first `<sp-table-cell>` in each row
 
 You can customize the header checkbox label using the `select-all-label` attribute:
@@ -865,7 +865,7 @@ When using row selection:
 
 - `aria-selected` is applied to selectable rows
 - Selection state is announced to screen readers
-- Checkboxes in selection cells are properly labeled for screen readers
+- Checkboxes in selection cells are properly labelled for screen readers
 
 ##### Checkbox labeling
 
