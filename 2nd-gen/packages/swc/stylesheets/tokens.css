@@ -2012,14 +2012,14 @@
         Trebuchet MS ', ' Lucida Grande ', sans-serif';
     --swc-font-style: normal;
     --swc-sans-font-family-stack:
-        'Adobe Clean Spectrum VF', 'Adobe Clean', 'Source Sans Pro',
+        adobe-clean-spectrum-vf, 'Adobe Clean Spectrum VF', 'Source Sans Pro',
         -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
         'Trebuchet MS', 'Lucida Grande', sans-serif;
     --swc-sans-serif-font: var(--swc-sans-font-family-stack);
     --swc-serif-font: var(--swc-serif-font-family-stack);
     --swc-serif-font-family-stack:
-        adobe-clean-serif, 'Adobe Clean Serif', 'Source Serif Pro', Georgia,
-        serif;
+        adobe-clean-spectrum-srf-vf, 'Adobe Clean Serif', 'Source Serif Pro',
+        Georgia, serif;
 }
 
 :root,
