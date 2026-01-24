@@ -331,4 +331,168 @@ describe('Table Selects', () => {
         expect(rowOneCheckboxCell.checkbox.checked).to.be.true;
         expect(rowThreeCheckboxCell.checkbox.checked).to.be.true;
     });
+
+    describe('Checkbox accessibility labels', () => {
+        it('header checkbox has default "Select All" aria-label', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table selects="multiple">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body>
+                        <sp-table-row value="row1">
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+            await elementUpdated(el);
+
+            const headerCheckboxCell = el.querySelector(
+                'sp-table-head sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            await headerCheckboxCell.updateComplete;
+
+            expect(headerCheckboxCell.label).to.equal('Select All');
+            expect(
+                headerCheckboxCell.checkbox.inputElement.getAttribute(
+                    'aria-label'
+                )
+            ).to.equal('Select All');
+        });
+
+        it('header checkbox uses custom select-all-label', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table
+                    selects="multiple"
+                    select-all-label="Select all files"
+                >
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body>
+                        <sp-table-row value="row1">
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+            await elementUpdated(el);
+
+            const headerCheckboxCell = el.querySelector(
+                'sp-table-head sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            await headerCheckboxCell.updateComplete;
+
+            expect(headerCheckboxCell.label).to.equal('Select all files');
+            expect(
+                headerCheckboxCell.checkbox.inputElement.getAttribute(
+                    'aria-label'
+                )
+            ).to.equal('Select all files');
+        });
+
+        it('body row checkbox uses first cell text as aria-label', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table selects="multiple">
+                    <sp-table-head>
+                        <sp-table-head-cell>File Name</sp-table-head-cell>
+                        <sp-table-head-cell>Type</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body>
+                        <sp-table-row value="row1">
+                            <sp-table-cell>Budget.pdf</sp-table-cell>
+                            <sp-table-cell>PDF</sp-table-cell>
+                        </sp-table-row>
+                        <sp-table-row value="row2">
+                            <sp-table-cell>Report.xlsx</sp-table-cell>
+                            <sp-table-cell>Excel</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+            await elementUpdated(el);
+
+            const row1CheckboxCell = el.querySelector(
+                'sp-table-row[value="row1"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+            const row2CheckboxCell = el.querySelector(
+                'sp-table-row[value="row2"] sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            await row1CheckboxCell.updateComplete;
+            await row2CheckboxCell.updateComplete;
+
+            expect(row1CheckboxCell.label).to.equal('Budget.pdf');
+            expect(
+                row1CheckboxCell.checkbox.inputElement.getAttribute(
+                    'aria-label'
+                )
+            ).to.equal('Budget.pdf');
+
+            expect(row2CheckboxCell.label).to.equal('Report.xlsx');
+            expect(
+                row2CheckboxCell.checkbox.inputElement.getAttribute(
+                    'aria-label'
+                )
+            ).to.equal('Report.xlsx');
+        });
+
+        it('body row checkbox uses fallback label when first cell is empty', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table selects="multiple">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body>
+                        <sp-table-row value="my-row">
+                            <sp-table-cell></sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+            await elementUpdated(el);
+
+            const rowCheckboxCell = el.querySelector(
+                'sp-table-row sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            await rowCheckboxCell.updateComplete;
+
+            // Falls back to "Select {row.value}"
+            expect(rowCheckboxCell.label).to.equal('Select my-row');
+            expect(
+                rowCheckboxCell.checkbox.inputElement.getAttribute('aria-label')
+            ).to.equal('Select my-row');
+        });
+
+        it('single select mode checkboxes also have aria-labels', async () => {
+            const el = await fixture<Table>(html`
+                <sp-table selects="single">
+                    <sp-table-head>
+                        <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    </sp-table-head>
+                    <sp-table-body>
+                        <sp-table-row value="row1">
+                            <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        </sp-table-row>
+                    </sp-table-body>
+                </sp-table>
+            `);
+            await elementUpdated(el);
+
+            const rowCheckboxCell = el.querySelector(
+                'sp-table-row sp-table-checkbox-cell'
+            ) as TableCheckboxCell;
+
+            await rowCheckboxCell.updateComplete;
+
+            expect(rowCheckboxCell.label).to.equal('Row Item Alpha');
+            expect(
+                rowCheckboxCell.checkbox.inputElement.getAttribute('aria-label')
+            ).to.equal('Row Item Alpha');
+        });
+    });
 });
