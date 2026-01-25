@@ -236,7 +236,7 @@ __metadata:
     typescript: "npm:5.9.2"
     vite: "npm:7.1.7"
     vite-plugin-dts: "npm:4.5.4"
-    vite-plugin-lit-css: "npm:2.2.1"
+    vite-plugin-lit-css: "npm:2.2.2"
     vitest: "npm:4.0.15"
   languageName: unknown
   linkType: soft
@@ -31314,13 +31314,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-lit-css@npm:2.2.1":
-  version: 2.2.1
-  resolution: "vite-plugin-lit-css@npm:2.2.1"
+"vite-plugin-lit-css@npm:2.2.2":
+  version: 2.2.2
+  resolution: "vite-plugin-lit-css@npm:2.2.2"
   peerDependencies:
     lit: ^2.0.0 || ^3.0.0
     vite: ^5.2.10 || ^6.0.0 || ^7.0.0
-  checksum: 10c0/82314dc4e11cf6580f9b124aed3e42456b315ddbbf6da282b4ae4bf5db9eebef0ce70c386fa129d992dd30786a46285e9baca3b499691ce6d8f1a97fc173a4a9
+  checksum: 10c0/1a8e12e13992dc55a7b301ad20c266d542066cc51d671e93af25b6e986dc34678e274882f17e852241a8d47fc31ccb013f704c00cdfccef03e4bdc9012d0bc13
   languageName: node
   linkType: hard
 
