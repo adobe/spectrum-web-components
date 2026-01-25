@@ -88,7 +88,7 @@
     ],
     "devDependencies": {
         "@changesets/changelog-github": "0.5.1",
-        "@changesets/cli": "2.29.7",
+        "@changesets/cli": "2.29.8",
         "@commitlint/cli": "19.8.1",
         "@commitlint/config-conventional": "19.8.1",
         "@custom-elements-manifest/analyzer": "0.10.6",
