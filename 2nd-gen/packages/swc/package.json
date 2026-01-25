@@ -71,7 +71,7 @@
         "@vitest/coverage-v8": "3.2.4",
         "@vitest/ui": "3.2.4",
         "@wc-toolkit/storybook-helpers": "10.0.0",
-        "autoprefixer": "10.4.21",
+        "autoprefixer": "10.4.23",
         "glob": "11.0.3",
         "playwright": "1.53.1",
         "postcss": "8.5.6",
