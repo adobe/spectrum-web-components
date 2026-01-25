@@ -117,7 +117,7 @@
         "@types/command-line-usage": "5.0.4",
         "@types/common-tags": "1.8.4",
         "@types/mocha": "10.0.10",
-        "@types/node": "20.19.17",
+        "@types/node": "20.19.30",
         "@types/react": "18.3.24",
         "@types/sinon": "17.0.4",
         "@types/webpack": "5.28.5",
