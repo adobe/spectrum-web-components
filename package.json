@@ -58,7 +58,7 @@
         "@playwright/test": "1.53.1",
         "genversion": "3.2.0",
         "husky": "9.1.7",
-        "lint-staged": "16.2.6",
+        "lint-staged": "16.2.7",
         "npm-run-all2": "8.0.4",
         "replace-in-file": "8.3.0",
         "yargs": "17.7.2"
