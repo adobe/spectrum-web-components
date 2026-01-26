@@ -452,6 +452,7 @@ export class Menu extends SizedMixin(SpectrumElement, { noDefaultSize: true }) {
                     elements: () => this.childItems,
                     isFocusableElement: this.isFocusableElement.bind(this),
                     hostDelegatesFocus: true,
+                    stopKeyEventPropagation: true,
                 });
         }
 
