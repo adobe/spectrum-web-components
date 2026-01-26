@@ -23,6 +23,7 @@ export const args = {
     disabled: false,
     variant: 'cta',
     pending: false,
+    showTestImage: false,
 };
 
 export const argTypes = {
@@ -97,6 +98,18 @@ export const argTypes = {
             type: 'text',
         },
     },
+    showTestImage: {
+        name: 'showTestImage',
+        type: { name: 'boolean', required: false },
+        description: 'Show test image for development purposes.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
 };
 
 export const makeOverBackground =
@@ -128,6 +141,8 @@ export function renderButton(properties: Properties): TemplateResult {
             ?pending=${!!properties.pending}
             ?quiet="${!!properties.quiet}"
             ?no-wrap="${!!properties.noWrap}"
+            ?aether-particles=${!!properties.aetherParticles}
+            ?show-test-image=${!!properties.showTestImage}
             size=${ifDefined(properties.size)}
             target=${ifDefined(properties.target)}
             treatment=${ifDefined(properties.treatment)}

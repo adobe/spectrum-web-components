@@ -39,6 +39,7 @@ export default {
             lazyCompilation: true,
         },
     },
+    staticDirs: ['./assets'],
     async webpackFinal(config) {
         return merge(config, {
             resolve: {
