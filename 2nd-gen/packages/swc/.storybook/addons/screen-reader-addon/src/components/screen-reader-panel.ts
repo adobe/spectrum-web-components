@@ -51,6 +51,7 @@ export class ScreenReaderPanel extends LitElement {
     private screenReader: ScreenReader | null = null;
     private channel: ReturnType<typeof addons.getChannel> | null = null;
     private themeMediaQuery: MediaQueryList | null = null;
+    private restartTimeout: ReturnType<typeof setTimeout> | null = null;
 
     static override styles = css`
         :host {
@@ -171,9 +172,17 @@ export class ScreenReaderPanel extends LitElement {
         if (this.isActive && this.screenReader) {
             this.screenReader.stop();
             this.screenReader = null;
+            this.isActive = false;
+
+            // Clear any pending restart timeout
+            if (this.restartTimeout) {
+                clearTimeout(this.restartTimeout);
+                this.restartTimeout = null;
+            }
 
             // Wait for new story to load, then restart
-            setTimeout(() => {
+            this.restartTimeout = setTimeout(() => {
+                this.restartTimeout = null;
                 if (this.voice || this.text) {
                     this.startScreenReader();
                 }
@@ -207,12 +216,23 @@ export class ScreenReaderPanel extends LitElement {
     }
 
     private startScreenReader(): void {
+        // Clear any pending restart timeout to prevent duplicate instances
+        if (this.restartTimeout) {
+            clearTimeout(this.restartTimeout);
+            this.restartTimeout = null;
+        }
+
         const iframe = this.findStorybookIframe();
 
         if (!iframe) {
             // eslint-disable-next-line no-console
             console.error('[Screen Reader Addon] Cannot find preview iframe');
             return;
+        }
+
+        // Stop existing instance if any (shouldn't happen, but be safe)
+        if (this.screenReader) {
+            this.screenReader.stop();
         }
 
         this.screenReader = new ScreenReader();
@@ -224,6 +244,11 @@ export class ScreenReaderPanel extends LitElement {
     }
 
     private stopScreenReader(): void {
+        if (this.restartTimeout) {
+            clearTimeout(this.restartTimeout);
+            this.restartTimeout = null;
+        }
+
         if (this.screenReader) {
             this.screenReader.stop();
             this.screenReader = null;
