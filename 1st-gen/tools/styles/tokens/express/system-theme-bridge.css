@@ -316,6 +316,7 @@
     --system-menu-item-focus-indicator-offset: 0;
     --system-menu-item-spacing-multiplier: 0;
     --system-menu-item-focus-indicator-outline-style: none;
+    --system-submenu-offset-block: -5px;
     --system-meter-min-width: var(--spectrum-meter-minimum-width);
     --system-meter-max-width: var(--spectrum-meter-maximum-width);
     --system-meter-inline-size: var(--spectrum-progressbar-size-2500);
