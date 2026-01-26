@@ -36,8 +36,10 @@
 
 :host([side-aligned="start"]),
 :host([side-aligned="end"]) {
+    --spectrum-textfield-grid-template-columns-side-label: minmax(10ch, 1fr) minmax(16ch, 2fr);
+
     grid-template-rows: auto auto;
-    grid-template-columns: minmax(10ch, 1fr) minmax(16ch, 2fr);
+    grid-template-columns: var(--mod-textfield-grid-template-columns-side-label, var(--spectrum-textfield-grid-template-columns-side-label));
 }
 
 :host([disabled]:focus-visible) {

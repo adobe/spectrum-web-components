@@ -53,8 +53,9 @@
 :host([side-aligned="end"]) {
     /* more space for side-aligned number fields */
     --spectrum-stepper-container-width: var(--mod-stepper-container-width, var(--mod-textfield-width, var(--spectrum-textfield-width)));
+    --spectrum-stepper-grid-template-columns-side-label: minmax(10ch, 1fr) fit-content(15ch);
 
-    grid-template-columns: minmax(10ch, 1fr) fit-content(15ch);
+    grid-template-columns: var(--mod-stepper-grid-template-columns-side-label, var(--spectrum-stepper-grid-template-columns-side-label));
 }
 
 .input {
