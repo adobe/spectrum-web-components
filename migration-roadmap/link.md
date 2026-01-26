@@ -7,15 +7,30 @@
 <details>
 <summary>CSS selectors</summary>
 
+**Base component:**
+
 - `.spectrum-Link`
+
+**Variants:**
+
+- `.spectrum-Link--inline`
 - `.spectrum-Link--quiet`
-- `.spectrum-Link--quiet:hover`
 - `.spectrum-Link--secondary`
 - `.spectrum-Link--staticBlack`
 - `.spectrum-Link--staticWhite`
+
+**States:**
+
 - `.spectrum-Link:active`
 - `.spectrum-Link:focus-visible`
 - `.spectrum-Link:hover`
+- `.spectrum-Link--quiet:hover`
+
+**Language-specific:**
+
+- `.spectrum-Link:lang(ja)`
+- `.spectrum-Link:lang(ko)`
+- `.spectrum-Link:lang(zh)`
 
 </details>
 
@@ -30,15 +45,13 @@ None found for this component.
 <summary>Modifiers</summary>
 
 - `--mod-link-animation-duration`
+- `--mod-link-inline-font-weight`
+- `--mod-link-line-height-cjk`
 - `--mod-link-text-color`
 - `--mod-link-text-color-active`
 - `--mod-link-text-color-black`
 - `--mod-link-text-color-focus`
 - `--mod-link-text-color-hover`
-- `--mod-link-text-color-primary-active`
-- `--mod-link-text-color-primary-default`
-- `--mod-link-text-color-primary-focus`
-- `--mod-link-text-color-primary-hover`
 - `--mod-link-text-color-secondary-active`
 - `--mod-link-text-color-secondary-default`
 - `--mod-link-text-color-secondary-focus`
@@ -61,6 +74,12 @@ None found for this component.
 - `target` - Values: `_blank`, `_parent`, `_self`, `_top` (from LikeAnchor mixin)
 - `referrerpolicy` - Values: `no-referrer`, `no-referrer-when-downgrade`, `origin`, `origin-when-cross-origin`, `same-origin`, `strict-origin`, `strict-origin-when-cross-origin`, `unsafe-url` (from LikeAnchor mixin)
 - `rel` - String attribute (from LikeAnchor mixin)
+
+**Inherited from Focusable:**
+
+- `autofocus` - When this control is rendered, focus it automatically
+- `disabled` - Disable this control. It will not receive focus or events
+- `tabIndex` - The tab index to apply to this control
 
 </details>
 
@@ -101,13 +120,13 @@ None found for this component.
 ```html
 <a
     class="spectrum-Link
-         spectrum-Link--quiet (if isQuiet)
-         spectrum-Link--[variant] (if variant)
-         spectrum-Link--static[StaticColor] (if staticColor)
-         is-hover (if isHovered)
-         is-active (if isActive)
-         is-focus-visible (if isFocused)
-         is-visited (if isVisited)"
+         spectrum-Link--quiet
+         spectrum-Link--[variant]
+         spectrum-Link--static[StaticColor]
+         is-hover
+         is-active
+         is-focus-visible
+         is-visited"
     id="[id]"
     href="[url]"
 >
@@ -123,14 +142,14 @@ None found for this component.
 ```html
 <a
     class="spectrum-Link
-         spectrum-Link--quiet (if isQuiet)
-         spectrum-Link--inline (if isInline)
-         spectrum-Link--[variant] (if variant)
-         spectrum-Link--static[StaticColor] (if staticColor)
-         is-hover (if isHovered)
-         is-active (if isActive)
-         is-focus-visible (if isFocused)
-         is-visited (if isVisited)"
+         spectrum-Link--quiet
+         spectrum-Link--inline
+         spectrum-Link--[variant]
+         spectrum-Link--static[StaticColor]
+         is-hover
+         is-active
+         is-focus-visible
+         is-visited"
     id="[id]"
     href="[url]"
 >
@@ -146,14 +165,14 @@ None found for this component.
 ```diff
  <a
    class="spectrum-Link
-          spectrum-Link--quiet (if isQuiet)
-+         spectrum-Link--inline (if isInline)
-          spectrum-Link--[variant] (if variant)
-          spectrum-Link--static[StaticColor] (if staticColor)
-          is-hover (if isHovered)
-          is-active (if isActive)
-          is-focus-visible (if isFocused)
-          is-visited (if isVisited)"
+          spectrum-Link--quiet
++         spectrum-Link--inline
+          spectrum-Link--[variant]
+          spectrum-Link--static[StaticColor]
+          is-hover
+          is-active
+          is-focus-visible
+          is-visited"
    id="[id]"
    href="[url]"
  >
@@ -164,25 +183,25 @@ None found for this component.
 **Key changes:**
 
 - New modifier: `spectrum-Link--inline` class added for inline link styling
-- The `TemplateWithFillerText` wrapper changed from `<div>` to `<p>` for better semantic HTML
 
 </details>
 
 ### CSS => SWC mapping
 
-| CSS selector                   | Attribute or slot               | Status          |
-| ------------------------------ | ------------------------------- | --------------- |
-| `.spectrum-Link`               | Base component                  | Implemented     |
-| `.spectrum-Link--quiet`        | `quiet`                         | Implemented     |
-| `.spectrum-Link--secondary`    | `variant="secondary"`           | Implemented     |
-| `.spectrum-Link--staticBlack`  | `static-color="black"`          | Implemented     |
-| `.spectrum-Link--staticWhite`  | `static-color="white"`          | Implemented     |
-| `.spectrum-Link:hover`         | Hover state (automatic)         | Implemented     |
-| `.spectrum-Link:active`        | Active state (automatic)        | Implemented     |
-| `.spectrum-Link:focus-visible` | Focus visible state (automatic) | Implemented     |
-| `.spectrum-Link--quiet:hover`  | Hover state with quiet variant  | Implemented     |
-| `.spectrum-Link--inline`       |                                 | Missing from WC |
-| (text content)                 | Default slot                    | Implemented     |
+| CSS selector                                                                    | Attribute or slot         | Status          |
+| ------------------------------------------------------------------------------- | ------------------------- | --------------- |
+| `.spectrum-Link`                                                                | `:host`                   | Implemented     |
+| `.spectrum-Link--inline`                                                        |                           | Missing from WC |
+| `.spectrum-Link--quiet`                                                         | `quiet`                   | Implemented     |
+| `.spectrum-Link--secondary`                                                     | `variant="secondary"`     | Implemented     |
+| `.spectrum-Link--staticBlack`                                                   | `static-color="black"`    | Implemented     |
+| `.spectrum-Link--staticWhite`                                                   | `static-color="white"`    | Implemented     |
+| `.spectrum-Link:hover`                                                          | CSS `:hover`              | Implemented     |
+| `.spectrum-Link:active`                                                         | CSS `:active`             | Implemented     |
+| `.spectrum-Link:focus-visible`                                                  | CSS `:focus`              | Implemented     |
+| `.spectrum-Link--quiet:hover`                                                   | CSS `:hover`              | Implemented     |
+| `.spectrum-Link:lang(ja)`, `.spectrum-Link:lang(ko)`, `.spectrum-Link:lang(zh)` | Language-specific styling | Implemented     |
+| (text content)                                                                  | Default slot              | Implemented     |
 
 ## Summary of changes
 
@@ -192,17 +211,9 @@ None found for this component.
 
 - `.spectrum-Link--inline` - New modifier for inline link styling
 
-The `inline` modifier was added in Spectrum 2 to support inline links within paragraphs that have different styling requirements than standalone links (specifically for text decoration behavior).
+The `inline` modifier was added in Spectrum 2 to support inline links within paragraphs that have different styling requirements than standalone links (specifically for text decoration and font-weight behavior). This is now the default variant in S2, with the previous default becoming the standalone variant.
 
 ### CSS Spectrum 2 changes
-
-**New feature in Spectrum 2:**
-
-- Added `isInline` parameter and corresponding `spectrum-Link--inline` class modifier for inline link styling within text content
-
-**Wrapper element change:**
-
-- The `TemplateWithFillerText` example changed from using a `<div>` wrapper to a `<p>` (paragraph) wrapper, which better represents the semantic use case for inline links
 
 **No structural changes to core Link component:**
 
@@ -211,6 +222,6 @@ The `inline` modifier was added in Spectrum 2 to support inline links within par
 
 ## Resources
 
-- [CSS migration]()
-- [Spectrum 2 preview]()
-- [React]()
+- [CSS migration](https://github.com/adobe/spectrum-css/pull/3570)
+- [Spectrum 2 preview](https://spectrumcss.z13.web.core.windows.net/pr-2352/index.html?path=/docs/components-link--docs)
+- [React](https://react-spectrum.adobe.com/Link)
