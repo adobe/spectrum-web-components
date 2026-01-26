@@ -10,15 +10,13 @@ import {
 } from '@wc-toolkit/storybook-helpers';
 import customElements from './custom-elements.json';
 import { withContext } from './decorators/contexts';
-import { withStaticColorBackground } from './decorators/static-color-background';
+import { withStaticColorPlayground } from './decorators/static-color-playground';
 
 import {
     withFlexLayout,
     withStaticColorsDemo,
-    withTextDirectionWrapper,
 } from './decorators';
 import { FontLoader } from './loaders/font-loader';
-import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -71,33 +69,16 @@ const preview = {
                 dynamicTitle: true,
             },
         },
-        textDirection: {
-            name: 'Text direction',
-            description: 'Direction of the content flow',
-            defaultValue: 'ltr',
-            type: 'string',
-            toolbar: {
-                title: 'Text direction',
-                icon: 'transfer',
-                items: [
-                    { right: '➡️', value: 'ltr', title: 'Left to right (ltr)' },
-                    { right: '⬅️', value: 'rtl', title: 'Right to left (rtl)' },
-                ],
-                dynamicTitle: true,
-            },
-        },
     },
     initialGlobals: {
         theme: 'light',
         scale: 'medium',
-        textDirection: 'ltr',
     },
     decorators: [
         withContext,
-        withStaticColorBackground,
+        withStaticColorPlayground,
         withStaticColorsDemo,
         withFlexLayout,
-        withTextDirectionWrapper,
     ],
     parameters: {
         layout: 'centered',

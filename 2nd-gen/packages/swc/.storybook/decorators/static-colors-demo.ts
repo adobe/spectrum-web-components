@@ -16,6 +16,14 @@ import { html } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
 /**
+ * Static color background settings - matching spectrum-css gradients
+ */
+const staticColorSettings = {
+    black: 'linear-gradient(45deg, rgb(255 241 246), rgb(238 245 255))',
+    white: 'linear-gradient(45deg, rgb(64 0 22), rgb(14 24 67))',
+} as const;
+
+/**
  * Decorator that displays static color variants side-by-side with appropriate backgrounds.
  * The first child gets a dark gradient background (for static-color="white"),
  * and the last child gets a light gradient background (for static-color="black").
@@ -47,12 +55,12 @@ export const withStaticColorsDemo: DecoratorFunction = makeDecorator({
 
                 .spectrum-examples-static-colors > *:first-child {
                     color: white;
-                    background: var(--spectrum-examples-gradient-static-white);
+                    background: ${staticColorSettings.white};
                 }
 
                 .spectrum-examples-static-colors > *:last-child {
                     color: black;
-                    background: var(--spectrum-examples-gradient-static-black);
+                    background: ${staticColorSettings.black};
                 }
             </style>
             <div

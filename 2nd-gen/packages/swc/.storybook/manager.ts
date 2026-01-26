@@ -42,17 +42,10 @@ addons.setConfig({
         barSelectedColor: 'rgb(2, 101, 220)',
         barBg: 'rgb(255, 255, 255)',
 
-        // buttonBg: "rgb(255, 255, 255)",
-        // buttonBorder: "transparent",
-        // booleanBg: "rgb(255, 255, 255)",
-        // booleanSelectedBg: "rgb(213, 213, 213)",
-
         /* Form colors */
         inputBg: 'rgb(255, 255, 255)',
         inputBorder: 'rgb(177, 177, 177)',
         inputTextColor: 'rgb(34, 34, 34)',
         inputBorderRadius: 4,
-
-        // gridCellSize?: number;
     }),
 });

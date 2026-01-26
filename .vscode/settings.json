@@ -39,7 +39,13 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "lit-plugin.strict": true,
-    "cSpell.words": ["activedescendant", "AUTODOCS", "coachmark", "valuetext"],
+    "cSpell.words": [
+        "activedescendant",
+        "AUTODOCS",
+        "coachmark",
+        "effectful",
+        "valuetext"
+    ],
     "[mdx]": {
         "editor.codeActionsOnSave": {
             "source.organizeImports": "never"

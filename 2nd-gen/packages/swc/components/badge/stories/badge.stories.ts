@@ -36,25 +36,41 @@ import {
 
 const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
+// @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
 argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
     options: Badge.VARIANTS,
-    defaultValue: 'informative',
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'informative',
+        },
+    },
 };
 
 argTypes.fixed = {
     ...argTypes.fixed,
     control: { type: 'select' },
     options: ['', ...Badge.FIXED_VALUES],
-    defaultValue: '',
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: '',
+        },
+    },
 };
 
 argTypes.size = {
     ...argTypes.size,
     control: { type: 'select' },
     options: Badge.VALID_SIZES,
-    defaultValue: 'm',
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'm',
+        },
+    },
 };
 
 /**
@@ -306,7 +322,6 @@ export const Outline: Story = {
     `,
     parameters: { 'section-order': 4 },
     tags: ['options'],
-    args: {},
 };
 
 /**
@@ -331,7 +346,6 @@ export const Subtle: Story = {
     `,
     parameters: { 'section-order': 5 },
     tags: ['options'],
-    args: {},
 };
 
 /**

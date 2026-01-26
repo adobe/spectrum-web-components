@@ -73,7 +73,6 @@ export default meta;
 // ────────────────────
 
 export const Playground: Story = {
-    args: {},
     tags: ['autodocs', 'dev'],
 };
 
@@ -87,7 +86,6 @@ export const Overview: Story = {
         ${template({ ...args, size: 'm' })}
         <p>Content below the divider</p>
     `,
-    args: {},
     parameters: {
         flexLayout: 'column-stretch',
     },

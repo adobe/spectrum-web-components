@@ -30,8 +30,7 @@ export const OverviewStory = () => {
             title: 'Read Spectrum Design Guidance',
             onClick: () => {
                 window.open(
-                    `https://s2.spectrum.corp.adobe.com/page/${componentName}/`,
-                    '_blank'
+                    `https://s2.spectrum.corp.adobe.com/page/${componentName}/`
                 );
             },
         });
@@ -42,10 +41,7 @@ export const OverviewStory = () => {
         additionalActions.push({
             title: 'View Figma',
             onClick: () => {
-                window.open(
-                    resolvedOf.csfFile.meta?.parameters?.design?.url,
-                    '_blank'
-                );
+                window.open(resolvedOf.csfFile.meta?.parameters?.design?.url);
             },
         });
     }
@@ -55,7 +51,7 @@ export const OverviewStory = () => {
         additionalActions.push({
             title: 'View source on GitHub',
             onClick: () => {
-                window.open(`${githubBaseUrl}/${componentName}`, '_blank');
+                window.open(`${githubBaseUrl}/${componentName}`);
             },
         });
     }
@@ -66,8 +62,7 @@ export const OverviewStory = () => {
             title: 'Debug in Stackblitz',
             onClick: () => {
                 window.open(
-                    resolvedOf.csfFile.meta?.parameters?.stackblitz?.url,
-                    '_blank'
+                    resolvedOf.csfFile.meta?.parameters?.stackblitz?.url
                 );
             },
         });

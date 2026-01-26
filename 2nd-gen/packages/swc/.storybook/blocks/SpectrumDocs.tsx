@@ -16,7 +16,7 @@ const mdxModules = import.meta.glob<{ default: React.ComponentType }>(
  * based on the current component's title and the specified tag.
  *
  * @param of - The Storybook meta or story to resolve the component from
- * @param tag - The MDX filename to load (e.g., "a11y", "usage", "examples")
+ * @param tag - The story tag to filter by (e.g., "usage", "a11y", "examples")
  */
 export const SpectrumDocs = ({
     of,
