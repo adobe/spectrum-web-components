@@ -9,7 +9,7 @@ import { formatComponentName } from '../helpers/index.js';
  * @param of - The Storybook meta or story to resolve the component from
  * @param packageName - Optional override for the package name (defaults to derived kebab-case from title)
  * @param componentName - Optional override for the component class name (defaults to derived PascalCase from title)
- * @param tagName - Optional override for the custom element tag name (defaults to sp-{packageName})
+* @param tagName - Optional override for the custom element tag name (defaults to swc-{packageName})
  */
 export const GettingStarted = ({ of }: { of?: any }) => {
     const resolvedOf = useOf(of || 'meta', ['meta']);
