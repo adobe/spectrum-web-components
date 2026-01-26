@@ -1,0 +1,437 @@
+/*!
+ * Copyright 2025 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+:host {
+    display: inline-flex;
+    vertical-align: top;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.swc-Checkbox {
+    /* Private variables for internal calculations */
+    --_swc-checkbox-border-width: token('border-width-200');
+    --_swc-checkbox-selected-border-width: calc(
+        var(
+                --swc-checkbox-control-size,
+                token('checkbox-control-size-medium')
+            ) /
+            2
+    );
+
+    /* Color tokens */
+    --_swc-checkbox-checkmark-color: token('gray-25');
+    --_swc-checkbox-background-color: token('gray-25');
+    --_swc-checkbox-content-color-default: token(
+        'neutral-content-color-default'
+    );
+    --_swc-checkbox-content-color-hover: token('neutral-content-color-hover');
+    --_swc-checkbox-content-color-down: token('neutral-content-color-down');
+    --_swc-checkbox-content-color-focus: token(
+        'neutral-content-color-key-focus'
+    );
+    --_swc-checkbox-control-color-default: token(
+        'neutral-content-color-default'
+    );
+    --_swc-checkbox-control-color-hover: token('neutral-content-color-hover');
+    --_swc-checkbox-control-color-down: token('neutral-content-color-down');
+    --_swc-checkbox-control-color-focus: token(
+        'neutral-content-color-key-focus'
+    );
+    --_swc-checkbox-focus-indicator-color: token('focus-indicator-color');
+    --_swc-checkbox-control-color-disabled: token('disabled-content-color');
+    --_swc-checkbox-invalid-color-default: token('negative-color-900');
+    --_swc-checkbox-invalid-color-hover: token('negative-color-1000');
+    --_swc-checkbox-invalid-color-down: token('negative-color-1000');
+    --_swc-checkbox-invalid-color-focus: token('negative-color-1000');
+    --_swc-checkbox-emphasized-color-default: token(
+        'accent-content-color-default'
+    );
+    --_swc-checkbox-emphasized-color-hover: token('accent-content-color-hover');
+    --_swc-checkbox-emphasized-color-down: token('accent-content-color-down');
+    --_swc-checkbox-emphasized-color-focus: token(
+        'accent-content-color-key-focus'
+    );
+    --_swc-checkbox-control-selected-color-default: token(
+        'neutral-content-color-default'
+    );
+    --_swc-checkbox-control-selected-color-hover: token(
+        'neutral-content-color-hover'
+    );
+    --_swc-checkbox-control-selected-color-down: token(
+        'neutral-content-color-down'
+    );
+
+    color: var(
+        --swc-checkbox-content-color,
+        var(--_swc-checkbox-content-color-default)
+    );
+    display: inline-flex;
+    align-items: flex-start;
+    position: relative;
+    min-block-size: var(--swc-checkbox-height, token('component-height-100'));
+    max-inline-size: 100%;
+}
+
+.swc-Checkbox-label {
+    text-align: start;
+    margin-inline-start: var(
+        --swc-checkbox-text-to-control,
+        token('text-to-control-100')
+    );
+    margin-block-start: var(
+        --swc-checkbox-top-to-text,
+        token('component-top-to-text-100')
+    );
+    margin-block-end: var(
+        --swc-checkbox-bottom-to-text,
+        token('component-bottom-to-text-100')
+    );
+    font-size: var(--swc-checkbox-font-size, token('font-size-100'));
+    font-weight: token('regular-font-weight');
+    font-style: token('default-font-style');
+    line-height: var(--swc-checkbox-line-height, token('line-height-100'));
+    transition: color
+        var(--swc-checkbox-animation-duration, token('animation-duration-100'))
+        ease-in-out;
+    cursor: pointer;
+
+    &:lang(ja),
+    &:lang(zh),
+    &:lang(ko) {
+        --swc-checkbox-line-height: token('cjk-line-height-100');
+    }
+}
+
+/**
+ * The input is visually hidden (with opacity), and remains accessible using assistive tech.
+ * It is still sized and positioned where it would naturally be present so that touch users can find it with haptics.
+ */
+.swc-Checkbox #input {
+    color: var(--_swc-checkbox-control-color-default);
+    margin: 0;
+    overflow: visible;
+    box-sizing: border-box;
+    padding: 0;
+    position: absolute;
+    inline-size: 100%;
+    block-size: 100%;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.swc-Checkbox-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    inline-size: var(
+        --swc-checkbox-control-size,
+        token('checkbox-control-size-medium')
+    );
+    block-size: var(
+        --swc-checkbox-control-size,
+        token('checkbox-control-size-medium')
+    );
+    margin-block-start: var(
+        --swc-checkbox-top-to-control,
+        token('checkbox-top-to-control-medium')
+    );
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    /* The control box itself (::before) */
+    &:before {
+        border-color: var(--_swc-checkbox-control-color-default);
+        background-color: var(--_swc-checkbox-background-color);
+        display: block;
+        z-index: 0;
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        inline-size: var(
+            --swc-checkbox-control-size,
+            token('checkbox-control-size-medium')
+        );
+        block-size: var(
+            --swc-checkbox-control-size,
+            token('checkbox-control-size-medium')
+        );
+        border-radius: var(
+            --swc-checkbox-control-corner-radius,
+            token('corner-radius-small-size-medium')
+        );
+        border-width: var(--_swc-checkbox-border-width);
+        border-style: solid;
+        transition:
+            border token('animation-duration-100') ease-in-out,
+            box-shadow token('animation-duration-100') ease-in-out;
+    }
+
+    /* Focus indicator (::after) */
+    &:after {
+        border-radius: calc(
+            var(
+                    --swc-checkbox-control-corner-radius,
+                    token('corner-radius-small-size-medium')
+                ) +
+                token('focus-indicator-gap')
+        );
+        content: '';
+        display: block;
+        position: absolute;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
+        inset-block-end: 0;
+        inset-block-start: 0;
+        margin: token('focus-indicator-gap');
+        transition:
+            box-shadow token('animation-duration-100') ease-out,
+            margin token('animation-duration-100') ease-out;
+        transform: translate(0, 0); /* force ff to render on the pixel grid */
+    }
+}
+
+.swc-Checkbox-checkmark,
+.swc-Checkbox-partialCheckmark {
+    color: var(--_swc-checkbox-checkmark-color);
+    opacity: 0;
+    transform: scale(0);
+    transition:
+        opacity token('animation-duration-100') ease-in-out,
+        transform token('animation-duration-100') ease-in-out;
+}
+
+/* Hover state */
+.swc-Checkbox:hover {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-color-hover);
+    }
+
+    .swc-Checkbox-label {
+        color: var(--_swc-checkbox-content-color-hover);
+    }
+}
+
+/* Active/down state */
+:host(:not([readonly])) .swc-Checkbox:active {
+    .swc-Checkbox-control {
+        transform: perspective(token('component-size-minimum-perspective-down'))
+            translateZ(token('component-size-difference-down'));
+    }
+
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-color-down);
+    }
+
+    .swc-Checkbox-label {
+        color: var(--_swc-checkbox-content-color-down);
+    }
+}
+
+/* Checked state */
+:host([checked]) {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-selected-color-default);
+        background-color: var(--_swc-checkbox-checkmark-color);
+        border-width: var(--_swc-checkbox-selected-border-width);
+    }
+
+    .swc-Checkbox-checkmark {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+:host([checked]) .swc-Checkbox:hover {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-selected-color-hover);
+    }
+}
+
+:host([checked]) .swc-Checkbox:active {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-selected-color-down);
+    }
+}
+
+/* Focus state */
+:host(:focus-visible) {
+    .swc-Checkbox-control:after {
+        box-shadow: 0 0 0 token('focus-indicator-thickness')
+            var(--_swc-checkbox-focus-indicator-color);
+        margin: calc(token('focus-indicator-gap') * -1);
+    }
+
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-color-focus);
+    }
+
+    .swc-Checkbox-label {
+        color: var(--_swc-checkbox-content-color-focus);
+    }
+}
+
+/* Indeterminate state */
+:host([indeterminate]) {
+    .swc-Checkbox-control:before {
+        border-width: var(--_swc-checkbox-selected-border-width);
+    }
+
+    .swc-Checkbox-checkmark {
+        display: none;
+    }
+
+    .swc-Checkbox-partialCheckmark {
+        display: block;
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Invalid state */
+:host([invalid]) {
+    --_swc-checkbox-control-color-default: var(
+        --_swc-checkbox-invalid-color-default
+    );
+    --_swc-checkbox-control-color-hover: var(
+        --_swc-checkbox-invalid-color-hover
+    );
+    --_swc-checkbox-control-color-down: var(--_swc-checkbox-invalid-color-down);
+    --_swc-checkbox-control-color-focus: var(
+        --_swc-checkbox-invalid-color-focus
+    );
+    --_swc-checkbox-control-selected-color-default: var(
+        --_swc-checkbox-invalid-color-default
+    );
+    --_swc-checkbox-control-selected-color-hover: var(
+        --_swc-checkbox-invalid-color-hover
+    );
+    --_swc-checkbox-control-selected-color-down: var(
+        --_swc-checkbox-invalid-color-down
+    );
+}
+
+/* Emphasized state */
+:host([emphasized]) {
+    --_swc-checkbox-control-selected-color-default: var(
+        --_swc-checkbox-emphasized-color-default
+    );
+    --_swc-checkbox-control-selected-color-hover: var(
+        --_swc-checkbox-emphasized-color-hover
+    );
+    --_swc-checkbox-control-selected-color-down: var(
+        --_swc-checkbox-emphasized-color-down
+    );
+}
+
+:host([emphasized]:focus-visible[checked]) {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-emphasized-color-focus);
+    }
+}
+
+:host([emphasized][indeterminate]:focus-visible:not([invalid])) {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-emphasized-color-focus);
+    }
+}
+
+/* Disabled state */
+:host([disabled]) {
+    .swc-Checkbox-control:before {
+        border-color: var(--_swc-checkbox-control-color-disabled);
+        background-color: var(--_swc-checkbox-background-color);
+    }
+
+    .swc-Checkbox-label {
+        color: var(--_swc-checkbox-control-color-disabled);
+    }
+
+    .swc-Checkbox-label {
+        cursor: default;
+    }
+}
+
+/* Size variants */
+:host([size='s']) {
+    --swc-checkbox-control-corner-radius: token(
+        'corner-radius-small-size-small'
+    );
+    --swc-checkbox-font-size: token('font-size-75');
+    --swc-checkbox-height: token('component-height-75');
+    --swc-checkbox-control-size: token('checkbox-control-size-small');
+    --swc-checkbox-top-to-text: token('component-top-to-text-75');
+    --swc-checkbox-bottom-to-text: token('component-bottom-to-text-75');
+    --swc-checkbox-text-to-control: token('text-to-control-75');
+    --swc-checkbox-top-to-control: token('checkbox-top-to-control-small');
+}
+
+:host([size='l']) {
+    --swc-checkbox-control-corner-radius: token(
+        'corner-radius-small-size-large'
+    );
+    --swc-checkbox-font-size: token('font-size-200');
+    --swc-checkbox-height: token('component-height-200');
+    --swc-checkbox-control-size: token('checkbox-control-size-large');
+    --swc-checkbox-top-to-text: token('component-top-to-text-200');
+    --swc-checkbox-bottom-to-text: token('component-bottom-to-text-200');
+    --swc-checkbox-text-to-control: token('text-to-control-200');
+    --swc-checkbox-top-to-control: token('checkbox-top-to-control-large');
+}
+
+:host([size='xl']) {
+    --swc-checkbox-control-corner-radius: token(
+        'corner-radius-small-size-extra-large'
+    );
+    --swc-checkbox-font-size: token('font-size-300');
+    --swc-checkbox-height: token('component-height-300');
+    --swc-checkbox-control-size: token('checkbox-control-size-extra-large');
+    --swc-checkbox-top-to-text: token('component-top-to-text-300');
+    --swc-checkbox-bottom-to-text: token('component-bottom-to-text-300');
+    --swc-checkbox-text-to-control: token('text-to-control-300');
+    --swc-checkbox-top-to-control: token('checkbox-top-to-control-extra-large');
+}
+
+/* Windows high contrast mode */
+@media (forced-colors: active) {
+    :host(:focus-visible) .swc-Checkbox-control {
+        forced-color-adjust: none;
+        outline-color: var(--_swc-checkbox-focus-indicator-color);
+        outline-offset: token('focus-indicator-gap');
+        outline-width: token('focus-indicator-thickness');
+    }
+
+    .swc-Checkbox {
+        --_swc-checkbox-content-color-default: CanvasText;
+        --_swc-checkbox-content-color-hover: CanvasText;
+        --_swc-checkbox-content-color-down: CanvasText;
+        --_swc-checkbox-content-color-focus: CanvasText;
+        --_swc-checkbox-background-color: Canvas;
+        --_swc-checkbox-control-color-default: ButtonText;
+        --_swc-checkbox-control-color-focus: Highlight;
+        --_swc-checkbox-control-selected-color-default: Highlight;
+        --_swc-checkbox-control-selected-color-hover: Highlight;
+        --_swc-checkbox-control-selected-color-down: Highlight;
+        --_swc-checkbox-control-color-disabled: GrayText;
+        --_swc-checkbox-focus-indicator-color: CanvasText;
+    }
+}

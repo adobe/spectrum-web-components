@@ -1,0 +1,15 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(git log:*)",
+            "Bash(ls:*)",
+            "Bash(npm run build:picker:*)",
+            "Bash(npm run build:*)",
+            "Bash(git show:*)",
+            "Bash(npm test:*)",
+            "Bash(npx tsc:*)",
+            "Bash(yarn build:ts:*)",
+            "mcp__ide__getDiagnostics"
+        ]
+    }
+}
