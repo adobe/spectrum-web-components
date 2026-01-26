@@ -701,7 +701,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             // await the same here.
             this.shouldScheduleManageSelection();
         }
-        // Maybe it's finally time to remove this support?s
+        // Maybe it's finally time to remove this support?
         if (!this.hasUpdated) {
             this.deprecatedMenu = this.querySelector(':scope > sp-menu');
             this.deprecatedMenu?.toggleAttribute('ignore', true);
@@ -736,11 +736,12 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('open')) {
-            // Ensure InteractionController has reference to declaratively rendered overlay
-            if (this.overlayElement && !this.strategy.overlay) {
-                this.strategy.overlay = this.overlayElement;
-            }
+        if (
+            changes.has('open') &&
+            this.overlayElement &&
+            !this.strategy.overlay
+        ) {
+            this.strategy.overlay = this.overlayElement;
         }
     }
 
@@ -751,7 +752,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
         this.bindButtonKeydownListener();
         this.bindEvents();
 
-        // Wait for overlay element to be available and connect it
         await this.updateComplete;
         if (this.overlayElement && !this.strategy.overlay) {
             this.strategy.overlay = this.overlayElement;
@@ -865,7 +865,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 ((event.target as HTMLElement).getRootNode() as ShadowRoot)
                     .host === this)
         ) {
-            //s set a flag to manage selection on the next frame
             this.willManageSelection = true;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -931,9 +930,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
-        // if (this.overlayElement) {
-        //     await this.overlayElement.updateComplete;
-        // }
         return complete;
     }
 
