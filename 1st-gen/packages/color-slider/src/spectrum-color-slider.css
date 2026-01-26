@@ -27,7 +27,7 @@
     min-inline-size: var(--mod-color-slider-minimum-length, var(--spectrum-color-slider-minimum-length));
     inline-size: var(--mod-color-slider-length, var(--spectrum-color-slider-length));
     block-size: var(--mod-color-slider-control-track-width, var(--spectrum-color-control-track-width));
-    -webkit-user-select: none;
+    user-select: none;
     user-select: none;
     cursor: default;
     display: block;
