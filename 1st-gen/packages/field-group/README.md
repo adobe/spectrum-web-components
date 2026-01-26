@@ -121,6 +121,23 @@ Help text can be accessibly associated with an `<sp-field-group>` element by usi
 </sp-field-group>
 ```
 
+### States
+
+#### Invalid
+
+When a group of checkboxes fails validation, use the `invalid` attribute on the field group along with `negative-help-text` to explain the error. Set the `invalid` attribute on individual checkboxes as well to apply the appropriate visual styling.
+
+```html
+<sp-field-group vertical label="Required selections" invalid>
+    <sp-checkbox invalid>Option A</sp-checkbox>
+    <sp-checkbox invalid>Option B</sp-checkbox>
+    <sp-checkbox invalid>Option C</sp-checkbox>
+    <sp-help-text slot="negative-help-text" icon>
+        Select at least one option to continue.
+    </sp-help-text>
+</sp-field-group>
+```
+
 ### Accessibility
 
 #### Include a label
@@ -131,9 +148,9 @@ Every field group should have a label. A field without a label is ambiguous and 
 
 The description in the help text is flexible and encompasses a range of guidance. Sometimes this guidance is about what to input, and sometime it’s about how to input. This includes information such as:
 
--   An overall description of the input field
--   Hints for what kind of information needs to be input
--   Specific formatting examples or requirements
+- An overall description of the input field
+- Hints for what kind of information needs to be input
+- Specific formatting examples or requirements
 
 Learn more about [using help text](https://spectrum.adobe.com/page/text-field/#Use-help-text-to-show-hints,-formatting,-and-requirements).
 
