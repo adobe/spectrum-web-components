@@ -9,6 +9,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const config = {
     stories: [
         {
+            directory: 'guides',
+            files: '**/*.@(md|mdx)',
+            titlePrefix: 'Guides',
+        },
+        {
             directory: '../components',
             files: '**/*.stories.ts',
             titlePrefix: 'Components',
@@ -77,6 +82,10 @@ const config = {
                         '../../core'
                     ),
                     '@adobe/swc': resolve(__dirname, '../components'),
+                    '@adobe/postcss-token': resolve(
+                        __dirname,
+                        '../../tools/postcss-token'
+                    ),
                 },
             },
         });

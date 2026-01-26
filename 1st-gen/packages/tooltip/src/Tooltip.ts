@@ -233,7 +233,7 @@ export class Tooltip extends SpectrumElement {
         // Check if we've reached the document root without finding a parent
         // This happens when the tooltip is at the top level without a container
         if (root === document) {
-            if (window.__swc.DEBUG) {
+            if (window.__swc?.DEBUG) {
                 window.__swc.warn(
                     this,
                     `[INITIAL_TRAVERSAL] Self-managed <${this.localName}> is at document root without a parent element. Self-managed tooltips must be nested inside focusable elements like <sp-action-button>, <sp-button>, or elements with tabindex.`,
@@ -267,7 +267,7 @@ export class Tooltip extends SpectrumElement {
             // Check if we've reached the document root during traversal
             // This happens when no focusable ancestor is found
             if (root === document) {
-                if (window.__swc.DEBUG) {
+                if (window.__swc?.DEBUG) {
                     window.__swc.warn(
                         this,
                         `[TRAVERSAL_EXHAUSTED] Self-managed <${this.localName}> could not find a focusable trigger element. All ancestor elements are non-focusable. Ensure the tooltip is nested inside an interactive element like <sp-action-button>, <sp-button>, or add tabindex="0" to a parent element.`,

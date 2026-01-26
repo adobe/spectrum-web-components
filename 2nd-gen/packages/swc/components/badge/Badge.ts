@@ -101,14 +101,12 @@ export class Badge extends BadgeBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-Badge']: true,
-                    [`spectrum-Badge--size${this.size?.toUpperCase()}`]:
-                        typeof this.size !== 'undefined',
-                    [`spectrum-Badge--${this.variant}`]:
+                    ['swc-Badge']: true,
+                    [`swc-Badge--${this.variant}`]:
                         typeof this.variant !== 'undefined',
-                    [`spectrum-Badge--subtle`]: this.subtle,
-                    [`spectrum-Badge--outline`]: this.outline,
-                    [`spectrum-Badge--fixed-${this.fixed}`]:
+                    [`swc-Badge--subtle`]: this.subtle,
+                    [`swc-Badge--outline`]: this.outline,
+                    [`swc-Badge--fixed-${this.fixed}`]:
                         typeof this.fixed !== 'undefined',
                 })}
             >
@@ -117,16 +115,14 @@ export class Badge extends BadgeBase {
                     () => html`
                         <div
                             class=${classMap({
-                                [`spectrum-Badge-icon`]: true,
-                                [`spectrum-Badge-icon--no-label`]:
-                                    !this.slotHasContent,
+                                [`swc-Badge-icon`]: true,
                             })}
                         >
                             <slot name="icon"></slot>
                         </div>
                     `
                 )}
-                <div class="spectrum-Badge-label">
+                <div class="swc-Badge-label">
                     <slot></slot>
                 </div>
             </div>

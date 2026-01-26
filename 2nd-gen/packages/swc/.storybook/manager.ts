@@ -1,9 +1,7 @@
 import { addons } from '@storybook/manager-api';
 import { create } from '@storybook/theming';
-import '../tokens/global-vars.css';
-import '../tokens/index.css';
-import '../tokens/light-vars.css';
-import '../tokens/medium-vars.css';
+import '../stylesheets/swc.css';
+import './assets/preview.css';
 import './assets/manager.css';
 
 import logo from './assets/logo.svg';

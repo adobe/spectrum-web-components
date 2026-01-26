@@ -668,7 +668,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             this.deprecatedMenu?.toggleAttribute('ignore', true);
             this.deprecatedMenu?.setAttribute('selects', 'inherit');
         }
-        if (window.__swc.DEBUG) {
+        if (window.__swc?.DEBUG) {
             if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
@@ -986,6 +986,12 @@ export class Picker extends PickerBase {
             'Escape',
         ].includes(key);
         const openKeys = ['ArrowUp', 'ArrowDown', 'Enter', ' '].includes(key);
+        const arrowKeys = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+        ].includes(key);
         this.focused = true;
         if ('Escape' === key) {
             this.handleEscape(event);
@@ -997,9 +1003,13 @@ export class Picker extends PickerBase {
         if (openKeys) {
             this.keyboardOpen();
             event.preventDefault();
+            if (arrowKeys) {
+                event.stopPropagation();
+            }
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         const nextItem = this.optionsMenu?.getNeighboringFocusableElement(
             this.selectedItem,
             key === 'ArrowLeft'

@@ -10,3 +10,4 @@
  * governing permissions and limitations under the License.
  */
 export * from './Asset.base.js';
+export * from './Asset.types.js';

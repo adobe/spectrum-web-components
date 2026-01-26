@@ -32,12 +32,12 @@ export class Divider extends DividerBase {
         return html`
             <div
                 class=${classMap({
-                    ['spectrum-Divider']: true,
-                    [`spectrum-Divider--size${this.size?.toUpperCase()}`]:
+                    ['swc-Divider']: true,
+                    [`swc-Divider--size${this.size?.toUpperCase()}`]:
                         this.size != null,
-                    [`spectrum-Divider--static${capitalize(this.staticColor)}`]:
+                    [`swc-Divider--static${capitalize(this.staticColor)}`]:
                         this.staticColor != null,
-                    [`spectrum-Divider--vertical`]: this.vertical,
+                    [`swc-Divider--vertical`]: this.vertical,
                 })}
             ></div>
         `;
