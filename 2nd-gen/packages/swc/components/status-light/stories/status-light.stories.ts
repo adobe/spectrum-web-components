@@ -15,8 +15,8 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
 import { StatusLight } from '@adobe/swc/status-light';
 import {
-    STATUSLIGHT_VARIANTS_COLOR_S2,
-    STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+    STATUS_LIGHT_VARIANTS_COLOR_S2,
+    STATUS_LIGHT_VARIANTS_SEMANTIC_S2,
     StatusLightColorVariantS2,
     StatusLightSemanticVariantS2,
 } from '@spectrum-web-components/core/components/status-light';
@@ -186,7 +186,7 @@ export const Sizes: Story = {
  */
 export const SemanticVariants: Story = {
     render: (args) => html`
-        ${STATUSLIGHT_VARIANTS_SEMANTIC_S2.map(
+        ${STATUS_LIGHT_VARIANTS_SEMANTIC_S2.map(
             (variant: StatusLightSemanticVariantS2) =>
                 template({
                     ...args,
@@ -207,7 +207,7 @@ export const SemanticVariants: Story = {
  */
 export const NonSemanticVariants: Story = {
     render: (args) => html`
-        ${STATUSLIGHT_VARIANTS_COLOR_S2.map(
+        ${STATUS_LIGHT_VARIANTS_COLOR_S2.map(
             (variant: StatusLightColorVariantS2) =>
                 template({
                     ...args,
