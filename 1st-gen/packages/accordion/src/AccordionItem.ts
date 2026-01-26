@@ -82,7 +82,8 @@ export class AccordionItem extends SizedMixin(Focusable, {
     public override disabled = false;
 
     /**
-     * The heading level (1-6) to use for the accordion item title.
+     * The heading level (2-6) to use for the accordion item title.
+     * This property is set by the parent sp-accordion element.
      * Defaults to 3.
      */
     @property({ type: Number, reflect: true })
@@ -120,7 +121,7 @@ export class AccordionItem extends SizedMixin(Focusable, {
 
     private getHeadingLevel(): number {
         const level = this.level ?? 3;
-        return Math.max(1, Math.min(6, level));
+        return Math.max(2, Math.min(6, level));
     }
 
     private renderHeading(): TemplateResult {
@@ -139,10 +140,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
         `;
 
         switch (level) {
-            case 1:
-                return html`
-                    <h1 id="heading">${headingContent}</h1>
-                `;
             case 2:
                 return html`
                     <h2 id="heading">${headingContent}</h2>
