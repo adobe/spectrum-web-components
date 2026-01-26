@@ -15,14 +15,14 @@
  */
 import type { ElementSize } from '@spectrum-web-components/core/shared/base/index.js';
 
-export const STATUS_LIGHT_VALID_SIZES: ElementSize[] = [
+export const STATUSLIGHT_VALID_SIZES: ElementSize[] = [
     's',
     'm',
     'l',
     'xl',
 ] as const satisfies ElementSize[];
 
-export const STATUS_LIGHT_VARIANTS_SEMANTIC = [
+export const STATUSLIGHT_VARIANTS_SEMANTIC = [
     'neutral',
     'info',
     'positive',
@@ -30,16 +30,16 @@ export const STATUS_LIGHT_VARIANTS_SEMANTIC = [
     'notice',
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_SEMANTIC_S1 = [
-    ...STATUS_LIGHT_VARIANTS_SEMANTIC,
+export const STATUSLIGHT_VARIANTS_SEMANTIC_S1 = [
+    ...STATUSLIGHT_VARIANTS_SEMANTIC,
     'accent',
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_SEMANTIC_S2 = [
-    ...STATUS_LIGHT_VARIANTS_SEMANTIC,
+export const STATUSLIGHT_VARIANTS_SEMANTIC_S2 = [
+    ...STATUSLIGHT_VARIANTS_SEMANTIC,
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_COLOR_S1 = [
+export const STATUSLIGHT_VARIANTS_COLOR_S1 = [
     'fuchsia',
     'indigo',
     'magenta',
@@ -51,8 +51,8 @@ export const STATUS_LIGHT_VARIANTS_COLOR_S1 = [
     'cyan',
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_COLOR_S2 = [
-    ...STATUS_LIGHT_VARIANTS_COLOR_S1,
+export const STATUSLIGHT_VARIANTS_COLOR_S2 = [
+    ...STATUSLIGHT_VARIANTS_COLOR_S1,
     'pink',
     'turquoise',
     'brown',
@@ -60,32 +60,32 @@ export const STATUS_LIGHT_VARIANTS_COLOR_S2 = [
     'silver',
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_S1 = [
-    ...STATUS_LIGHT_VARIANTS_SEMANTIC_S1,
-    ...STATUS_LIGHT_VARIANTS_COLOR_S1,
+export const STATUSLIGHT_VARIANTS_S1 = [
+    ...STATUSLIGHT_VARIANTS_SEMANTIC_S1,
+    ...STATUSLIGHT_VARIANTS_COLOR_S1,
 ] as const;
 
-export const STATUS_LIGHT_VARIANTS_S2 = [
-    ...STATUS_LIGHT_VARIANTS_SEMANTIC_S2,
-    ...STATUS_LIGHT_VARIANTS_COLOR_S2,
+export const STATUSLIGHT_VARIANTS_S2 = [
+    ...STATUSLIGHT_VARIANTS_SEMANTIC_S2,
+    ...STATUSLIGHT_VARIANTS_COLOR_S2,
 ] as const;
 
 export type StatusLightSemanticVariantS1 =
-    (typeof STATUS_LIGHT_VARIANTS_SEMANTIC_S1)[number];
+    (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S1)[number];
 export type StatusLightSemanticVariantS2 =
-    (typeof STATUS_LIGHT_VARIANTS_SEMANTIC_S2)[number];
+    (typeof STATUSLIGHT_VARIANTS_SEMANTIC_S2)[number];
 export type StatusLightSemanticVariant =
     | StatusLightSemanticVariantS1
     | StatusLightSemanticVariantS2;
 
 export type StatusLightColorVariantS1 =
-    (typeof STATUS_LIGHT_VARIANTS_COLOR_S1)[number];
+    (typeof STATUSLIGHT_VARIANTS_COLOR_S1)[number];
 export type StatusLightColorVariantS2 =
-    (typeof STATUS_LIGHT_VARIANTS_COLOR_S2)[number];
+    (typeof STATUSLIGHT_VARIANTS_COLOR_S2)[number];
 export type StatusLightColorVariant =
     | StatusLightColorVariantS1
     | StatusLightColorVariantS2;
 
-export type StatusLightVariantS1 = (typeof STATUS_LIGHT_VARIANTS_S1)[number];
-export type StatusLightVariantS2 = (typeof STATUS_LIGHT_VARIANTS_S2)[number];
+export type StatusLightVariantS1 = (typeof STATUSLIGHT_VARIANTS_S1)[number];
+export type StatusLightVariantS2 = (typeof STATUSLIGHT_VARIANTS_S2)[number];
 export type StatusLightVariant = StatusLightVariantS1 | StatusLightVariantS2;
