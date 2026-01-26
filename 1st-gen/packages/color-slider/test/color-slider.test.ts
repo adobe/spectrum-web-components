@@ -579,7 +579,7 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(100 - 53.125);
     });
 
-    it.only('accepts pointer events in dir="rtl"', async () => {
+    it('accepts pointer events in dir="rtl"', async () => {
         const el = await fixture<ColorSlider>(html`
             <sp-color-slider
                 dir="rtl"
