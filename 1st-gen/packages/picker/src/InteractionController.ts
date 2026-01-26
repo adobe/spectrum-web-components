@@ -15,6 +15,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { AbstractOverlay } from '@spectrum-web-components/overlay/src/AbstractOverlay.js';
+import { Overlay } from '@spectrum-web-components/overlay/src/Overlay.js';
 import { PickerBase } from './Picker.js';
 
 export enum InteractionTypes {
@@ -83,8 +84,38 @@ export class InteractionController implements ReactiveController {
 
     releaseDescription(): void {}
 
+    protected handleBeforetoggle(
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.pointerdownState) {
+                this.overlay?.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.host.optionsMenu.updateSelectedItemIndex();
+            this.host.optionsMenu.closeDescendentOverlays();
+        }
+    }
+
     initOverlay(): void {
         if (this.overlay) {
+            this.overlay.addEventListener('beforetoggle', (event: Event) => {
+                this.handleBeforetoggle(
+                    event as Event & {
+                        target: Overlay;
+                        newState: 'open' | 'closed';
+                    }
+                );
+            });
             this.overlay.type =
                 this.host.isMobile.matches && !this.host.forcePopover
                     ? 'modal'
@@ -100,6 +131,10 @@ export class InteractionController implements ReactiveController {
             this.overlay.receivesFocus = 'false';
             this.overlay.willPreventClose =
                 this.preventNextToggle !== 'no' && this.open;
+            this.overlay.addEventListener(
+                'slottable-request',
+                this.host.handleSlottableRequest
+            );
         }
     }
 
