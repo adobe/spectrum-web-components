@@ -218,10 +218,6 @@ export class MenuItem extends LikeAnchor(
     @query('slot[name="icon"]')
     iconSlot!: HTMLSlotElement;
 
-    public override get dir(): CSSStyleDeclaration['direction'] {
-        return getComputedStyle(this).direction ?? 'ltr';
-    }
-
     /**
      * whether menu item text content should not wrap
      */

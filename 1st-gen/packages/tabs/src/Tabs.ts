@@ -129,10 +129,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
     @property({ type: Boolean, reflect: true })
     public compact = false;
 
-    public override get dir(): CSSStyleDeclaration['direction'] {
-        return getComputedStyle(this).direction;
-    }
-
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
