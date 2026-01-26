@@ -1,9 +1,6 @@
 /** @type { import('@storybook/web-components').Preview } */
-import './../../../../1st-gen/tools/styles/tokens/global-vars.css';
-import './../../../../1st-gen/tools/styles/tokens/index.css';
-import './../../../../1st-gen/tools/styles/tokens/light-vars.css';
-import './../../../../1st-gen/tools/styles/tokens/medium-vars.css';
 import '../stylesheets/swc.css';
+import './assets/preview.css';
 import DocumentTemplate from './DocumentTemplate.mdx';
 
 import { setCustomElementsManifest } from '@storybook/web-components';
@@ -12,13 +9,16 @@ import {
     type Options,
 } from '@wc-toolkit/storybook-helpers';
 import customElements from './custom-elements.json';
+import { withContext } from './decorators/contexts';
+import { withStaticColorBackground } from './decorators/static-color-background';
+
 import {
     withFlexLayout,
     withStaticColorsDemo,
     withTextDirectionWrapper,
 } from './decorators';
-import { withContext } from './decorators/contexts';
 import { FontLoader } from './loaders/font-loader';
+import { globalTypes } from './types';
 
 const storybookHelperOptions: Options = {
     categoryOrder: [
@@ -94,6 +94,7 @@ const preview = {
     },
     decorators: [
         withContext,
+        withStaticColorBackground,
         withStaticColorsDemo,
         withFlexLayout,
         withTextDirectionWrapper,
@@ -190,49 +191,6 @@ const preview = {
                     'Components',
                     'Guides',
                     [
-                        'Getting started guide',
-                        'Customization',
-                        [
-                            'Getting Started',
-                            'Theme and Scales',
-                            'Component Styles',
-                        ],
-                        'Contributor guides',
-                        [
-                            'Getting involved',
-                            'Using the issue tracker',
-                            'Working in the SWC repo',
-                            'Making a pull request',
-                            'Participating in PR reviews',
-                            'Releasing SWC',
-                            'Authoring SWC guides',
-                            'Patching dependencies',
-                            'Accessibility testing',
-                        ],
-                        'Style guide',
-                        'Project planning',
-                        [
-                            'Overview',
-                            'Components',
-                            'Milestones',
-                            'Workstreams',
-                            [
-                                'About workstreams',
-                                '2nd-gen definition and development',
-                                '2nd-gen component migration',
-                                [
-                                    'Overview',
-                                    'Factor rendering out of 1st-gen component',
-                                    'Move base class to 2nd-gen core',
-                                    'Formalize Spectrum data model',
-                                    'Add 2nd-gen component',
-                                    'Migrate rendering and styles',
-                                ],
-                                'Accessibility improvements',
-                                'Component improvements',
-                                '1st-gen Spectrum 2 enhancements',
-                            ],
-                        ],
                         'Accessibility guides',
                         [
                             'Overview',
@@ -243,9 +201,7 @@ const preview = {
                             'Wave toolbar testing',
                             'Accessibility resources',
                         ],
-                        'React wrappers',
                     ],
-                    'Resources',
                 ],
             },
         },

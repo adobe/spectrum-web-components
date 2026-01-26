@@ -1,5 +1,7 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import headerImage from '../assets/images/banner_introduction_S2_desktop_2x_1689964089087.png';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 
@@ -25,21 +27,24 @@ SWC 2nd-gen is the next version of Spectrum Web Components. It updates the desig
 
 ## What this means for teams
 
-<sp-accordion allow-multiple size="m" class="docs-accordion">
-    <sp-accordion-item label="If you are starting a new project">
-        Use 2nd-gen SWC. It matches the current Spectrum guidelines and offers
-        better performance and consistency.
-    </sp-accordion-item>
-    <sp-accordion-item label="If your project already uses 1st-gen SWC">
-        You can continue using it, but you may want to plan a migration. Some
-        components and APIs have changed in 2nd-gen, so updates may require code
-        changes or testing.
-    </sp-accordion-item>
-    <sp-accordion-item label="If you maintain a large 1st-gen codebase">
-        Migration will take more time. Review your components, compare APIs, and
-        update your patterns gradually. Not everything must move at once.
-    </sp-accordion-item>
-</sp-accordion>
+<sp-theme system="spectrum" scale="medium" color="light">
+    <sp-accordion allow-multiple size="m" class="docs-accordion">
+        <sp-accordion-item label="If you are starting a new project">
+            Use 2nd-gen SWC. It matches the current Spectrum guidelines and
+            offers better performance and consistency.
+        </sp-accordion-item>
+        <sp-accordion-item label="If your project already uses 1st-gen SWC">
+            You can continue using it, but you may want to plan a migration.
+            Some components and APIs have changed in 2nd-gen, so updates may
+            require code changes or testing.
+        </sp-accordion-item>
+        <sp-accordion-item label="If you maintain a large 1st-gen codebase">
+            Migration will take more time. Review your components, compare APIs,
+            and update your patterns gradually. Not everything must move at
+            once.
+        </sp-accordion-item>
+    </sp-accordion>
+</sp-theme>
 
 ## Why 2nd-gen is recommended
 

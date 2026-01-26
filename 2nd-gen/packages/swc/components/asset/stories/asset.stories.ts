@@ -14,25 +14,18 @@ import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
-import '@adobe/swc/asset';
+import { Asset } from '@adobe/swc/asset';
 
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { args, argTypes, template } = getStorybookHelpers('swc-asset');
+const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
 
 argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
-    options: [undefined, 'file', 'folder'],
-};
-
-// since we can't use HTML templates in a slot control,
-// we need to use a select option and render a predefined HTML template based on the selected option
-argTypes['default-slot'] = {
-    ...argTypes['default-slot'],
-    control: { type: 'text' },
+    options: [undefined, ...Asset.VARIANTS],
 };
 
 /**
@@ -44,13 +37,16 @@ const meta: Meta = {
     component: 'swc-asset',
     args,
     argTypes,
-    render: (args) => template(args),
+    actions: {
+        handles: events,
+    },
     parameters: {
         docs: {
             subtitle: `Visually represent files, folders, or images in your application`,
         },
         flexLayout: 'row-nowrap',
     },
+    render: (args) => template(args),
     tags: ['migrated'],
 };
 
