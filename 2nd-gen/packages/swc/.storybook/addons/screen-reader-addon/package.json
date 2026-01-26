@@ -20,6 +20,7 @@
         "wcag"
     ],
     "license": "Apache-2.0",
+    "main": "manager.js",
     "name": "@spectrum-web-components/screen-reader-addon",
     "peerDependencies": {
         "@lit/react": ">=1.0.0",
