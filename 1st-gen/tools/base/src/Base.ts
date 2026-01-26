@@ -13,8 +13,10 @@
 import { SpectrumElement as CoreSpectrumElement } from '@spectrum-web-components/core/shared/base/Base.js';
 import { coreVersion, version } from './version.js';
 
-// Re-export everything from core except SpectrumElement
-export * from '@spectrum-web-components/core/shared/base/Base.js';
+export {
+    type SpectrumInterface,
+    SpectrumMixin,
+} from '@spectrum-web-components/core/shared/base/Base.js';
 
 /**
  * Base class for 1st-gen Spectrum Web Components.
