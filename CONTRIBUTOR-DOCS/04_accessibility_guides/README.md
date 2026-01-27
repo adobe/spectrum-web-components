@@ -89,8 +89,8 @@ Many jurisdictions have legal requirements for digital accessibility:
 
 - **[Americans with Disabilities Act (ADA)](https://www.ada.gov/topics/intro-to-ada/)** requires federal and state government entities as well as private entities that own, operate, lease, or lease to places of public accommodation must be accessible to people with disabilities
 - **[Section 508](https://www.section508.gov/)** applies to US federal government entities but impacts any entity that does buisness with the US federal government
-- **[European Accessibility Act](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM%3A2015%3A0615%3AFINa)** establishes accessibility standards for the EU; applies to "applies to any business's product or service that is sold or in use within the Eurozone, not just EU member state businesses" [deque blog post](https://www.deque.com/blog/eu-web-accessibility-compliance-and-legislation/)
-- **[Accessibility for Ontarians with Disabilities Act (AODA)](https://www.ontario.ca/laws/statute/05a11a)** "applies to every person or organization in the public and private sectors of the Province of Ontario, including the Legislative Assembly of Ontario" to comply with defined accessibility standards
+- **[European Accessibility Act](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0882)** establishes accessibility standards for the EU; applies to "any business's product or service that is sold or in use within the Eurozone, not just EU member state businesses" ([Deque blog post](https://www.deque.com/blog/eu-web-accessibility-compliance-and-legislation/))
+- **[Accessibility for Ontarians with Disabilities Act (AODA)](https://www.canlii.org/en/on/laws/stat/so-2005-c-11/latest/so-2005-c-11.html)** "applies to every person or organization in the public and private sectors of the Province of Ontario, including the Legislative Assembly of Ontario" to comply with defined accessibility standards
 
 ## Types of disabilities
 
