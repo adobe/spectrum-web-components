@@ -187,10 +187,6 @@ label:not(:has(~ .spectrum-Textfield-characterCount)) {
     margin-block-end: var(--mod-textfield-label-spacing-block-quiet, var(--spectrum-textfield-label-spacing-block-quiet));
 }
 
-:host([disabled]) label {
-    color: var(--spectrum-textfield-text-color-disabled);
-}
-
 /* TODO: is there a different way around this */
 div[aria-live="assertive"] {
     display: contents; /* Makes the helptext div transparent to the grid */
