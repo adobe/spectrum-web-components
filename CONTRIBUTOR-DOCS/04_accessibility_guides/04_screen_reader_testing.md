@@ -137,6 +137,8 @@ Focus mode is for interacting with form controls and custom widgets. In this mod
 | Enter focus mode | <kbd>NVDA</kbd> + <kbd>Space</kbd> or automatic         | <kbd>Enter</kbd> on control or automatic  |
 | Exit focus mode  | <kbd>Escape</kbd> or <kbd>NVDA</kbd> + <kbd>Space</kbd> | <kbd>Numpad +</kbd> or <kbd>Escape</kbd>  |
 
+**Note:** VoiceOver does not use the browse/focus mode paradigm. Instead, it uses **Quick Nav** (toggled with <kbd>Left Arrow</kbd> + <kbd>Right Arrow</kbd> pressed simultaneously) to enable single-key navigation, and the **Interact model** (<kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd> to drill into elements, <kbd>VO</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd> to move back up). VoiceOver handles form controls more seamlessly without requiring an explicit mode switch.
+
 **Auto forms mode:** JAWS and NVDA automatically switch to focus mode when landing on certain form controls. JAWS can be configured to use "Auto Forms Mode" which automatically switches modes based on the focused element.
 
 **Associated information:** In focus mode, screen readers announce associated information such as:
