@@ -323,7 +323,7 @@ Every checkbox must have a label that clearly describes its purpose. The label c
 
 #### Label groups of related checkboxes
 
-Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option. (See [field group's label documentation](/field-group/#label) for more information.)
+Sets of checkboxes should always have a clear label that describes what the list of options represents and guides users what to do. This is important for accessibility, since a screen reader will read the label before each option. (See [field group's label documentation](../field-group/#label) for more information.)
 
 ```html
 <sp-field-group label="Select your toppings">
