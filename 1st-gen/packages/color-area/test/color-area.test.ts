@@ -364,7 +364,7 @@ describe('ColorArea', () => {
         expect(el.x).to.equal(0.67);
         expect(el.y).to.equal(0.75);
 
-        el.dir = 'ltr';
+        el.setAttribute('dir', 'ltr');
 
         await sendKeys({ press: 'Home' });
         await changeEvent;

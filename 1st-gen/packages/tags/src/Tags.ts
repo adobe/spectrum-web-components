@@ -101,6 +101,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     };
 
     private handleSlotchange(): void {
+        this.rovingTabindexController.handleItemMutation();
         this.rovingTabindexController.clearElementCache();
     }
 

@@ -27,10 +27,6 @@
     --spectrum-slider-handle-border-color-key-focus: var(--system-slider-handle-border-color-key-focus);
     --spectrum-slider-handle-focus-ring-color-key-focus: var(--system-slider-handle-focus-ring-color-key-focus);
     --spectrum-slider-track-corner-radius: var(--system-slider-track-corner-radius);
-    --spectrum-slider-handle-border-radius: var(--system-slider-handle-border-radius);
-}
-
-:host {
     --spectrum-slider-handle-border-radius: var(--system-slider-size-m-handle-border-radius);
 }
 

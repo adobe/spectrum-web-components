@@ -59,7 +59,7 @@ export const ScaledIndicator = {
             :host([direction='vertical']) #selection-indicator {
                 height: ${this.baseSize}px;
             }
-            :host([dir][direction='horizontal']) #selection-indicator {
+            :host([direction='horizontal']) #selection-indicator {
                 width: ${this.baseSize}px;
             }
         `;
@@ -72,7 +72,7 @@ export const ScaledIndicator = {
  */
 export function calculateScrollTargetForRightSide(
     index: number,
-    direction: 'rtl' | 'ltr',
+    direction: CSSStyleDeclaration['direction'],
     tabs: Tab[],
     container: HTMLDivElement
 ): number {
@@ -88,7 +88,7 @@ export function calculateScrollTargetForRightSide(
  */
 export function calculateScrollTargetForLeftSide(
     index: number,
-    direction: 'rtl' | 'ltr',
+    direction: CSSStyleDeclaration['direction'],
     tabs: Tab[],
     container: HTMLDivElement
 ): number {
@@ -128,9 +128,6 @@ export class Tabs extends SizedMixin(Focusable, { noDefaultSize: true }) {
      */
     @property({ type: Boolean, reflect: true })
     public compact = false;
-
-    @property({ reflect: true })
-    public override dir!: 'ltr' | 'rtl';
 
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =

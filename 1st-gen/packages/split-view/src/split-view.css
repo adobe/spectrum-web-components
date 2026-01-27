@@ -61,13 +61,13 @@
     cursor: ns-resize;
 }
 
-:host([resizable][dir="ltr"]) #splitter.is-resized-start,
-:host([resizable][dir="rtl"]) #splitter.is-resized-end {
+:host([resizable]) #splitter.is-resized-start:dir(ltr),
+:host([resizable]) #splitter.is-resized-end:dir(rtl) {
     cursor: e-resize;
 }
 
-:host([resizable][dir="ltr"]) #splitter.is-resized-end,
-:host([resizable][dir="rtl"]) #splitter.is-resized-start {
+:host([resizable]) #splitter.is-resized-end:dir(ltr),
+:host([resizable]) #splitter.is-resized-start:dir(rtl) {
     cursor: w-resize;
 }
 
@@ -84,13 +84,13 @@
     cursor: ew-resize;
 }
 
-:host([resizable][dir="ltr"][collapsible]) #splitter.is-collapsed-start,
-:host([resizable][dir="rtl"][collapsible]) #splitter.is-collapsed-end {
+:host([resizable][collapsible]) #splitter.is-collapsed-start:dir(ltr),
+:host([resizable][collapsible]) #splitter.is-collapsed-end:dir(rtl) {
     cursor: e-resize;
 }
 
-:host([resizable][dir="ltr"][collapsible]) #splitter.is-collapsed-end,
-:host([resizable][dir="rtl"][collapsible]) #splitter.is-collapsed-start {
+:host([resizable][collapsible]) #splitter.is-collapsed-end:dir(ltr),
+:host([resizable][collapsible]) #splitter.is-collapsed-start:dir(rtl) {
     cursor: w-resize;
 }
 

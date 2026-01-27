@@ -15,17 +15,19 @@
         --highcontrast-color-slider-border-color: CanvasText;
         --highcontrast-color-slider-border-color-disabled: GrayText;
         --highcontrast-color-slider-background-color-disabled: Canvas;
+
         forced-color-adjust: none;
     }
 }
 
 :host {
-    --spectrum-color-slider-border-color-default: rgba(var(--spectrum-gray-900-rgb), var(--spectrum-color-slider-border-opacity));
+    --spectrum-color-slider-border-color-default: rgb(var(--spectrum-gray-900-rgb), var(--spectrum-color-slider-border-opacity));
     --mod-colorhandle-hitarea-border-radius: var(--mod-color-slider-handle-hitarea-border-radius, 0px);
+
     min-inline-size: var(--mod-color-slider-minimum-length, var(--spectrum-color-slider-minimum-length));
     inline-size: var(--mod-color-slider-length, var(--spectrum-color-slider-length));
     block-size: var(--mod-color-slider-control-track-width, var(--spectrum-color-control-track-width));
-    -webkit-user-select: none;
+    user-select: none;
     user-select: none;
     cursor: default;
     display: block;
@@ -77,6 +79,7 @@
 
 :host([disabled]) .checkerboard {
     --spectrum-color-slider-border-color-local: var(--highcontrast-color-slider-border-color-disabled, var(--mod-color-slider-border-color-disabled, var(--spectrum-disabled-background-color)));
+
     background: var(--highcontrast-color-slider-background-color-disabled, var(--mod-color-slider-background-color-disabled, var(--spectrum-disabled-background-color)));
 }
 
@@ -87,8 +90,7 @@
     border-radius: var(--mod-color-slider-border-rounding, var(--spectrum-color-slider-border-rounding));
 }
 
-.gradient:dir(rtl),
-:host([dir="rtl"]) .gradient {
+.gradient:dir(rtl) {
     transform: scaleX(-1);
 }
 

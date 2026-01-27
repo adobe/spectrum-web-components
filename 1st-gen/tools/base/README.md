@@ -1,6 +1,6 @@
 ## Description
 
-The `SpectrumElement` base class as created by mixing `SpectrumMixin` onto `LitElement` adopts `dir` values from the `document` at connection time with a fallback to `lrt`. In a TypeScript context, it also enforces the presence of `this.shadowRoot` on extending components.
+The `SpectrumElement` base class as created by mixing `SpectrumMixin` onto `LitElement` provides text direction support via the CSS `:dir()` pseudo-class, which automatically inherits directionality from the DOM hierarchy. In a TypeScript context, it also enforces the presence of `this.shadowRoot` on extending components.
 
 ### Usage
 
@@ -32,13 +32,11 @@ export MyElement extends SpectrumMixin(HTMLElement) {}
 
 #### `dir` management
 
-With powerful CSS selectors like `:host(:dir(rtl))` and `:host-content([dir=rtl])` not yet enjoying cross-browser support, reliably delivering content in both "left to right" and "right to left" while relying on Shadow DOM means certain trade offs need to be made. While every custom element build from `SpectrumMixin` could have its `dir` attribute applied to manage this, doing so is not only a pain for apply, it's a pain to maintain over time. To support the flexibility to deliver content in both of these directions, elements built from `SpectrumMixin` will observe the `dir` attribute of either the `document` or a containing `sp-theme`. This will allow your sites and applications to manage content direction in a single place while also opening the possibility of having multiple content directions on the same page by scoping those content sections with `sp-theme` elements.
+Elements built from `SpectrumMixin` leverage the CSS `:dir()` pseudo-class to handle text direction. This modern approach automatically inherits directionality from the DOM hierarchy without requiring explicit `dir` attributes on individual components. The `:dir()` pseudo-class is well-supported across modern browsers and provides a performant, declarative way to manage both "left to right" (LTR) and "right to left" (RTL) content.
 
-Placing a `dir` attribute on an element built from `SpectrumMixin` before attaching it to the DOM will prevent it from resolving the text direction value to a parent `sp-theme` or `document` element. Elements applied to the page in this way will also NOT participate in observing any such elements, so their `dir` values will remain as initialized regardless of changes in other parts of your documents. If you choose to leverage this, be aware that any child (in both light DOM and shadow DOM) of this element will need to have a `dir` attribute applied as well if you do not want it resolving to a parent `sp-theme` or `document` element itself. In this way, it is likely that you would benefit from leveraging an `sp-theme` element to create scope in your document for managing this custom content direction section of your page.
+To manage content direction in your application, set the `dir` attribute on `document.documentElement` or on an `sp-theme` element. Components will automatically inherit the direction and apply appropriate RTL/LTR styles using CSS selectors like `:host(:dir(rtl))` and `:dir(rtl)`. This allows you to manage content direction in a single place while also enabling multiple content directions on the same page by scoping those content sections with `sp-theme` elements.
 
-#### `isLTR`
-
-While CSS offers many powerful solutions for styling content in various directions, sometimes JS functionality depends on the specific of that direction. Elements built from `SpectrumMixin` have the `this.isLTR` getter that will resolve to `true` when `dir === 'ltr'`.
+When JavaScript access to the direction value is needed, components can use the `dir` getter which returns `getComputedStyle(this).direction` (defaulting to `'ltr'` if not set).
 
 #### public shadowRoot!: ShadowRoot;
 

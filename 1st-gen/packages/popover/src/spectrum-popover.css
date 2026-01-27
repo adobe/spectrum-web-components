@@ -56,6 +56,7 @@
 
 :host {
     --spectrum-popover-filter: drop-shadow(var(--mod-popover-shadow-horizontal, var(--spectrum-popover-shadow-horizontal)) var(--mod-popover-shadow-vertical, var(--spectrum-popover-shadow-vertical)) var(--mod-popover-shadow-blur, var(--spectrum-popover-shadow-blur)) var(--mod-popover-shadow-color, var(--spectrum-popover-shadow-color)));
+
     box-sizing: border-box;
     padding: var(--mod-popover-content-area-spacing-vertical, var(--spectrum-popover-content-area-spacing-vertical)) 0;
     border-radius: var(--mod-popover-corner-radius, var(--spectrum-popover-corner-radius));
@@ -156,10 +157,7 @@
 
 :host([open]) .spectrum-Popover--start-bottom:dir(rtl),
 :host([open]) .spectrum-Popover--start-top:dir(rtl),
-:host([open]) .spectrum-Popover--start:dir(rtl),
-:host([dir="rtl"][open]) .spectrum-Popover--start-bottom,
-:host([dir="rtl"][open]) .spectrum-Popover--start-top,
-:host([dir="rtl"][open]) .spectrum-Popover--start {
+:host([open]) .spectrum-Popover--start:dir(rtl) {
     transform: translateX(var(--mod-popover-animation-distance, var(--spectrum-popover-animation-distance))) translateZ(0);
 }
 
@@ -177,10 +175,7 @@
 
 :host([open]) .spectrum-Popover--end-bottom:dir(rtl),
 :host([open]) .spectrum-Popover--end-top:dir(rtl),
-:host([open]) .spectrum-Popover--end:dir(rtl),
-:host([dir="rtl"][open]) .spectrum-Popover--end-bottom,
-:host([dir="rtl"][open]) .spectrum-Popover--end-top,
-:host([dir="rtl"][open]) .spectrum-Popover--end {
+:host([open]) .spectrum-Popover--end:dir(rtl) {
     transform: translateX(calc(var(--mod-popover-animation-distance, var(--spectrum-popover-animation-distance)) * -1)) translateZ(0);
 }
 
@@ -299,10 +294,7 @@
 
 :host([tip]) .spectrum-Popover--start #tip:dir(rtl),
 :host([tip]) .spectrum-Popover--start-bottom #tip:dir(rtl),
-:host([tip]) .spectrum-Popover--start-top #tip:dir(rtl),
-:host([dir="rtl"][tip]) .spectrum-Popover--start #tip,
-:host([dir="rtl"][tip]) .spectrum-Popover--start-bottom #tip,
-:host([dir="rtl"][tip]) .spectrum-Popover--start-top #tip {
+:host([tip]) .spectrum-Popover--start-top #tip:dir(rtl) {
     transform: none;
 }
 
@@ -315,9 +307,6 @@
 
 :host([tip]) .spectrum-Popover--end #tip:dir(rtl),
 :host([tip]) .spectrum-Popover--end-bottom #tip:dir(rtl),
-:host([tip]) .spectrum-Popover--end-top #tip:dir(rtl),
-:host([dir="rtl"][tip]) .spectrum-Popover--end #tip,
-:host([dir="rtl"][tip]) .spectrum-Popover--end-bottom #tip,
-:host([dir="rtl"][tip]) .spectrum-Popover--end-top #tip {
+:host([tip]) .spectrum-Popover--end-top #tip:dir(rtl) {
     transform: scaleX(1);
 }

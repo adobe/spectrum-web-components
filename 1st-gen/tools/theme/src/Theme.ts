@@ -47,26 +47,18 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         return ['color', 'scale', 'lang', 'dir', 'system'];
     }
 
-    _dir: 'ltr' | 'rtl' | '' = '';
-
-    override set dir(dir: 'ltr' | 'rtl' | '') {
-        if (dir === this.dir) return;
-        this.setAttribute('dir', dir);
-        this._dir = dir;
-        const targetDir = dir === 'rtl' ? dir : 'ltr';
-        /* c8 ignore next 3 */
-        this.trackedChildren.forEach((el) => {
-            el.setAttribute('dir', targetDir);
-        });
-    }
-
     /**
      * Reading direction of the content scoped to this `sp-theme` element.
-     * @type {"ltr" | "rtl" | ""}
+     * @type {CSSStyleDeclaration['direction']}
      * @attr
      */
-    override get dir(): 'ltr' | 'rtl' | '' {
-        return this._dir;
+    override get dir(): CSSStyleDeclaration['direction'] {
+        return getComputedStyle(this).direction ?? 'ltr';
+    }
+
+    override set dir(dir: CSSStyleDeclaration['direction']) {
+        if (dir === this.dir) return;
+        this.setAttribute('dir', dir);
     }
 
     protected attributeChangedCallback(
@@ -88,7 +80,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.system = value as SystemVariant;
             this._provideSystemContext();
         } else if (attrName === 'dir') {
-            this.dir = value as 'ltr' | 'rtl' | '';
+            this.dir = value as CSSStyleDeclaration['direction'];
         }
     }
     private requestUpdate(): void {

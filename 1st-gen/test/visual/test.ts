@@ -148,7 +148,7 @@ export const test = (
     name: string,
     color: Color,
     scale: Scale,
-    dir: 'ltr' | 'rtl'
+    dir: CSSStyleDeclaration['direction']
 ) => {
     Object.keys(tests).map((story) => {
         if (story !== 'default' && !tests[story].swc_vrt?.skip) {
@@ -328,7 +328,10 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
             // Otherwise test all combinations
             const colors: Color[] = ['lightest', 'light', 'dark', 'darkest'];
             const scales: Scale[] = ['medium', 'large'];
-            const directions: ('ltr' | 'rtl')[] = ['ltr', 'rtl'];
+            const directions: CSSStyleDeclaration['direction'][] = [
+                'ltr',
+                'rtl',
+            ];
 
             // Generate tests for every combination of color, scale and direction
             colors.forEach((color: Color) => {

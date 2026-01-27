@@ -25,6 +25,7 @@
 
 :host {
     --spectrum-colorarea-border-color: #0000001a;
+
     cursor: default;
     -webkit-user-select: none;
     user-select: none;
@@ -58,8 +59,7 @@
     inset-block-start: 0;
 }
 
-.handle:dir(rtl),
-:host([dir="rtl"]) .handle {
+.handle:dir(rtl) {
     inset-inline-end: 0;
 }
 

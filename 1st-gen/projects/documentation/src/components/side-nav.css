@@ -31,12 +31,8 @@ aside {
         position: fixed;
         top: 0;
         left: 0;
-        transition: transform
-                var(
-                    --spectrum-dialog-confirm-background-entry-animation-duration,
-                    var(--spectrum-animation-duration-600)
-                )
-                cubic-bezier(0, 0, 0.4, 1),
+        transition:
+            transform var(--spectrum-dialog-confirm-background-entry-animation-duration, var(--spectrum-animation-duration-600)) cubic-bezier(0, 0, 0.4, 1),
             visibility 0s linear var(--spectrum-animation-duration-600);
         transform: translateX(-100%);
         z-index: 10;
@@ -44,7 +40,7 @@ aside {
         visibility: hidden;
     }
 
-    [dir='rtl'] + aside {
+    aside:dir(rtl) {
         right: 0;
         left: auto;
         transform: translateX(100%);
@@ -71,7 +67,7 @@ aside {
 
 .navigation {
     width: calc(var(--swc-scale-factor) * 240px - 48px);
-    padding: 0 24px 24px 24px;
+    padding: 0 24px 24px;
     flex: 1;
     flex-grow: 1;
     overflow: auto;
@@ -86,11 +82,11 @@ docs-spectrum-logo {
     padding-top: 7px;
 }
 
-:host([dir='ltr']) docs-spectrum-logo {
+docs-spectrum-logo:dir(ltr) {
     margin-right: 16px;
 }
 
-:host([dir='rtl']) docs-spectrum-logo {
+docs-spectrum-logo:dir(rtl) {
     margin-left: 16px;
 }
 
@@ -101,9 +97,7 @@ docs-spectrum-logo {
 
 docs-search {
     width: calc(var(--swc-scale-factor) * 192px);
-    padding: 0 calc(var(--swc-scale-factor) * 24px)
-        calc(var(--swc-scale-factor) * 24px)
-        calc(var(--swc-scale-factor) * 24px);
+    padding: 0 calc(var(--swc-scale-factor) * 24px) calc(var(--swc-scale-factor) * 24px);
 }
 
 sp-sidenav {

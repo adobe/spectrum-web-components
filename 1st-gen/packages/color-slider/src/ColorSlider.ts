@@ -49,9 +49,6 @@ export class ColorSlider extends Focusable {
         return [opacityCheckerBoardStyles, styles];
     }
 
-    @property({ type: String, reflect: true })
-    public override dir!: 'ltr' | 'rtl';
-
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
@@ -59,7 +56,10 @@ export class ColorSlider extends Focusable {
     public focused = false;
 
     @query('.handle')
-    private handle!: ColorHandle;
+    public handle!: ColorHandle;
+
+    @query('.gradient')
+    public gradient!: HTMLElement;
 
     @property({ type: String })
     public label = 'hue';
@@ -129,10 +129,10 @@ export class ColorSlider extends Focusable {
                 delta = -this.step;
                 break;
             case 'ArrowLeft':
-                delta = this.step * (this.isLTR ? -1 : 1);
+                delta = this.step * (this.dir === 'ltr' ? -1 : 1);
                 break;
             case 'ArrowRight':
-                delta = this.step * (this.isLTR ? 1 : -1);
+                delta = this.step * (this.dir === 'ltr' ? 1 : -1);
                 break;
             default:
                 return;
@@ -269,7 +269,9 @@ export class ColorSlider extends Focusable {
 
         const percent = Math.max(0, Math.min(1, (offset - minOffset) / size));
         const sliderHandlePosition =
-            this.vertical || !this.isLTR ? 100 - 100 * percent : 100 * percent;
+            this.vertical || this.dir === 'rtl'
+                ? 100 - 100 * percent
+                : 100 * percent;
 
         return sliderHandlePosition;
     }
