@@ -31,6 +31,16 @@ jobs:
             - name: Setup job and install dependencies
               uses: ./.github/actions/setup-job
 
+            - name: Verify npm CLI version for trusted publishing
+              run: |
+                  npm --version
+                  NPM_VERSION=$(npm --version | cut -d. -f1)
+                  if [ "$NPM_VERSION" -lt 11 ]; then
+                    echo "Upgrading npm for trusted publishing support (requires 11.5.1+)"
+                    npm install -g npm@latest
+                    npm --version
+                  fi
+
             - name: Set Git identity
               run: |
                   git config --global user.email "support+actions@github.com"
@@ -121,6 +131,16 @@ jobs:
               run: |
                   yarn install --refresh-lockfile
                   yarn build:1st-gen
+
+            - name: Verify OIDC token availability
+              if: steps.check-changesets.outputs.has_changesets == 'true'
+              run: |
+                  if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+                    echo "✓ OIDC token is available"
+                  else
+                    echo "✗ OIDC token NOT available - trusted publishing will fail"
+                    exit 1
+                  fi
 
             - name: Publish to npm
               if: steps.check-changesets.outputs.has_changesets == 'true'
