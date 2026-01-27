@@ -53,7 +53,7 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
             case 'column-center':
                 compiledStyles = {
                     display: 'flex',
-                    gap: 'var(--spectrum-spacing-100)',
+                    gap: 'var(--swc-spacing-100)',
                     flexDirection: 'column',
                     alignItems: 'center',
                     'max-inline-size': '80ch',
@@ -64,7 +64,7 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
             case 'column-stretch':
                 compiledStyles = {
                     display: 'flex',
-                    gap: 'var(--spectrum-spacing-100)',
+                    gap: 'var(--swc-spacing-100)',
                     flexDirection: 'column',
                     alignItems: 'stretch',
                     'max-inline-size': '80ch',
@@ -75,7 +75,7 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
             case 'row-wrap':
                 compiledStyles = {
                     display: 'flex',
-                    gap: 'var(--spectrum-spacing-200)',
+                    gap: 'var(--swc-spacing-200)',
                     flexDirection: 'row',
                     flexWrap: 'wrap',
                     alignItems: 'center',
@@ -88,7 +88,7 @@ export const withFlexLayout: DecoratorFunction = makeDecorator({
             case 'row-nowrap':
                 compiledStyles = {
                     display: 'flex',
-                    gap: 'var(--spectrum-spacing-200)',
+                    gap: 'var(--swc-spacing-200)',
                     flexDirection: 'row',
                     flexWrap: 'nowrap',
                     alignItems: 'center',
