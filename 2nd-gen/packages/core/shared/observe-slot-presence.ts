@@ -39,7 +39,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
     {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args: any[]) {
-            super(args);
+            super(...args);
 
             new MutationController(this, {
                 config: {
@@ -80,7 +80,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             );
         }
 
-        public managePresenceObservedSlot = (): void => {
+        public managePresenceObservedSlot(): void {
             let changes = false;
             lightDomSelectors.forEach((selector) => {
                 const nextValue = !!this.querySelector(`:scope > ${selector}`);
@@ -97,7 +97,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
                     this.requestUpdate();
                 });
             }
-        };
+        }
     }
     return SlotPresenceObservingElement;
 }

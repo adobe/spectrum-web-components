@@ -16,7 +16,6 @@ import {
     html,
     nothing,
     PropertyValues,
-    render,
     SizedMixin,
     SpectrumElement,
     TemplateResult,
@@ -438,6 +437,30 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     public handleSlottableRequest = (_event: SlottableRequestEvent): void => {};
 
+    protected handleBeforetoggle = (
+        event: Event & {
+            target: Overlay;
+            newState: 'open' | 'closed';
+        }
+    ): void => {
+        if (event.composedPath()[0] !== event.target) {
+            return;
+        }
+        if (event.newState === 'closed') {
+            if (this.strategy?.preventNextToggle === 'no') {
+                this.open = false;
+            } else if (!this.strategy?.pointerdownState) {
+                // Prevent browser driven closure while opening the Picker
+                // and the expected event series has not completed.
+                this.overlayElement?.manuallyKeepOpen();
+            }
+        }
+        if (!this.open) {
+            this.optionsMenu.updateSelectedItemIndex();
+            this.optionsMenu.closeDescendentOverlays();
+        }
+    };
+
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
             return content;
@@ -577,14 +600,30 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     }
 
     protected renderOverlay(menu: TemplateResult): TemplateResult {
-        if (this.strategy?.overlay === undefined) {
-            return menu;
-        }
         const container = this.renderContainer(menu);
-        render(container, this.strategy?.overlay as unknown as HTMLElement, {
-            host: this,
-        });
-        return this.strategy?.overlay as unknown as TemplateResult;
+        this.dependencyManager.add('sp-overlay');
+        import('@spectrum-web-components/overlay/sp-overlay.js');
+        return html`
+            <sp-overlay
+                @slottable-request=${this.handleSlottableRequest}
+                @beforetoggle=${this.handleBeforetoggle}
+                .triggerElement=${this as HTMLElement}
+                .offset=${0}
+                ?open=${this.open && this.dependencyManager.loaded}
+                .placement=${this.isMobile.matches && !this.forcePopover
+                    ? undefined
+                    : this.placement}
+                .type=${this.isMobile.matches && !this.forcePopover
+                    ? 'modal'
+                    : 'auto'}
+                .receivesFocus=${'false'}
+                .willPreventClose=${this.strategy?.preventNextToggle !== 'no' &&
+                this.open &&
+                this.dependencyManager.loaded}
+            >
+                ${container}
+            </sp-overlay>
+        `;
     }
 
     protected get renderDescriptionSlot(): TemplateResult {
@@ -662,7 +701,7 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
             // await the same here.
             this.shouldScheduleManageSelection();
         }
-        // Maybe it's finally time to remove this support?s
+        // Maybe it's finally time to remove this support?
         if (!this.hasUpdated) {
             this.deprecatedMenu = this.querySelector(':scope > sp-menu');
             this.deprecatedMenu?.toggleAttribute('ignore', true);
@@ -697,15 +736,26 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('open')) {
-            this.strategy.open = this.open;
+        if (
+            changes.has('open') &&
+            this.overlayElement &&
+            !this.strategy.overlay
+        ) {
+            this.strategy.overlay = this.overlayElement;
         }
     }
 
-    protected override firstUpdated(changes: PropertyValues<this>): void {
+    protected override async firstUpdated(
+        changes: PropertyValues<this>
+    ): Promise<void> {
         super.firstUpdated(changes);
         this.bindButtonKeydownListener();
         this.bindEvents();
+
+        await this.updateComplete;
+        if (this.overlayElement && !this.strategy.overlay) {
+            this.strategy.overlay = this.overlayElement;
+        }
     }
 
     protected get dismissHelper(): TemplateResult {
@@ -815,7 +865,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
                 ((event.target as HTMLElement).getRootNode() as ShadowRoot)
                     .host === this)
         ) {
-            //s set a flag to manage selection on the next frame
             this.willManageSelection = true;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -889,9 +938,6 @@ export class PickerBase extends SizedMixin(SpectrumElement, {
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
-        // if (this.overlayElement) {
-        //     await this.overlayElement.updateComplete;
-        // }
         return complete;
     }
 
