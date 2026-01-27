@@ -1,5 +1,25 @@
 # Change Log
 
+## 1.11.0
+
+### Minor Changes
+
+- [#5814](https://github.com/adobe/spectrum-web-components/pull/5814) [`6b887f2`](https://github.com/adobe/spectrum-web-components/commit/6b887f21b59971f6ef71dc6ccddd31e6284b829e) Thanks [@marissahuysentruyt](https://github.com/marissahuysentruyt)! - **Added**: Automatic dismiss button detection and visually-hidden helpers for screen reader accessibility
+    - **Added**: `<sp-tray>` now automatically detects keyboard-accessible dismiss buttons (like `<sp-button>`, `<sp-close-button>`, or HTML `<button>` elements) in slotted content
+    - **Added**: When no dismiss buttons are detected, the tray automatically renders visually-hidden dismiss buttons before and after its content to support mobile screen readers (particularly VoiceOver on iOS)
+    - **Added**: New `has-keyboard-dismiss` boolean attribute to manually override auto-detection when slotted content has custom dismiss functionality that cannot be automatically detected
+    - **Added**: Auto-detection recognizes `<sp-dialog dismissable>` and `<sp-dialog-wrapper dismissable>` components with built-in dismiss functionality in shadow DOM
+    - **Enhanced**: Improved mobile screen reader accessibility by ensuring dismissal options are always available when appropriate
+
+### Patch Changes
+
+- Updated dependencies [[`b95e254`](https://github.com/adobe/spectrum-web-components/commit/b95e25413830825a506b7d4025d6b4d982691771), [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/reactive-controllers@1.11.0
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/modal@1.11.0
+    - @spectrum-web-components/underlay@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes
