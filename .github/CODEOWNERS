@@ -1,1 +1,8 @@
+# Protect the CODEOWNERS file itself
+/.github/CODEOWNERS @adobe/swc-maintainers
+
+# Protect publish workflows
+/.github/workflows/publish-*.yml @adobe/swc-maintainers
+
+# Everything else
 *  @adobe/swc-maintainers

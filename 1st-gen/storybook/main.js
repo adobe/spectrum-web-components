@@ -54,7 +54,9 @@ export default {
                     '@spectrum-web-components/core': resolve(
                         '../2nd-gen/packages/core/dist'
                     ),
-                    '@adobe/swc': resolve('../2nd-gen/packages/swc/dist'),
+                    '@adobe/spectrum-wc': resolve(
+                        '../2nd-gen/packages/swc/dist'
+                    ),
                 },
             },
         });
