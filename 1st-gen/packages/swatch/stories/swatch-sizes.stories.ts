@@ -16,6 +16,7 @@ import {
 } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/swatch/sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch-group.js';
 
 export default {
     title: 'Swatch/Sizes',
@@ -29,7 +30,7 @@ const template = ({
     size: ElementSize;
     color?: string;
 }): TemplateResult => html`
-    <div style="display: flex; gap: 5px;">
+    <sp-swatch-group selects="multiple">
         <sp-swatch color=${color} size=${size}></sp-swatch>
         <sp-swatch color=${color} rounding="none" size=${size}></sp-swatch>
         <sp-swatch color=${color} rounding="full" size=${size}></sp-swatch>
@@ -49,7 +50,7 @@ const template = ({
             size=${size}
             mixed-value
         ></sp-swatch>
-    </div>
+    </sp-swatch-group>
 `;
 
 export const XS = (): TemplateResult => template({ size: 'xs' });
