@@ -17,6 +17,9 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
+        permissions:
+            id-token: write # Required for OIDC trusted publishing
+            contents: write # Required for git push
         env:
             YARN_ENABLE_IMMUTABLE_INSTALLS: false
         steps:
@@ -119,15 +122,8 @@ jobs:
                   yarn install --refresh-lockfile
                   yarn build:1st-gen
 
-            - name: Configure NPM authentication
-              if: steps.check-changesets.outputs.has_changesets == 'true'
-              run: |
-                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
             - name: Publish to npm
               if: steps.check-changesets.outputs.has_changesets == 'true'
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   TAG="${{ steps.extract-tag.outputs.tag }}"
                   if [ "$TAG" == "latest" ]; then
@@ -142,8 +138,6 @@ jobs:
 
             - name: Publish React wrappers
               if: steps.check-changesets.outputs.has_changesets == 'true'
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
                   TAG="${{ steps.extract-tag.outputs.tag }}"
                   if [ "$TAG" == "latest" ]; then

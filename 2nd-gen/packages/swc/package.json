@@ -15,10 +15,6 @@
     },
     "type": "module",
     "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
-        },
         "./*": {
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
@@ -26,12 +22,18 @@
         "./components/*": {
             "types": "./dist/components/*/index.d.ts",
             "import": "./dist/components/*/index.js"
+        },
+        "./utils/*": {
+            "types": "./dist/utils/*.d.ts",
+            "import": "./dist/utils/*.js"
+        },
+        "./stylesheets/*.css": {
+            "default": "./stylesheets/*.css"
         }
     },
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
     "files": [
-        "dist/"
+        "dist/",
+        "stylesheets/"
     ],
     "scripts": {
         "analyze": "cem analyze --config cem.config.js",
@@ -48,7 +50,6 @@
         "test:ui": "vitest --ui",
         "test:watch": "run-p dev:core vitest"
     },
-    "types": "./dist/index.d.ts",
     "dependencies": {
         "@spectrum-web-components/core": "0.0.1",
         "lit": "^2.5.0 || ^3.1.3"
@@ -100,5 +101,7 @@
     "customElements": ".storybook/custom-elements.json",
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js"
 }
