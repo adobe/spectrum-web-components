@@ -178,7 +178,7 @@ of assets, etc. where the checkboxes need to be noticed.
 
 The `invalid` attribute indicates that the checkbox's value is invalid. When set, appropriate ARIA attributes will be automatically applied.
 
-When a checkbox is in an invalid state, provide help text to explain the error and guide the user toward a solution. Wrap the checkbox in an `<sp-field-group>` to associate the help text with the checkbox. (See [help text](#help-text) for more information.)
+When a checkbox is in an invalid state, provide help text to explain the error and guide the user toward a solution. Wrap the checkbox in an [`<sp-field-group>`](../field-group) to associate the help text with the checkbox. (See [help text](#help-text) for more information.)
 
 ```html
 <sp-field-group vertical label="Terms and conditions" invalid>
