@@ -56,7 +56,6 @@
         "@commitlint/cli": "19.8.1",
         "@commitlint/config-conventional": "19.8.1",
         "@playwright/test": "1.53.1",
-        "genversion": "3.2.0",
         "husky": "9.1.7",
         "lint-staged": "16.2.6",
         "npm-run-all2": "8.0.4",

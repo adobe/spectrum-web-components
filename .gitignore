@@ -75,8 +75,6 @@ react
 !1st-gen/tools/*/test/global.d.ts
 !1st-gen/tools/*/global.d.ts
 !1st-gen/tools/*/local.d.ts
-!1st-gen/tools/base/src/version.js
-!1st-gen/tools/base/src/version.d.ts
 
 # cache directories
 .wireit
