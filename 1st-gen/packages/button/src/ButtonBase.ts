@@ -89,7 +89,6 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
         if (this.disabled) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            event.stopPropagation();
             return false;
         }
 

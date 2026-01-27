@@ -95,7 +95,6 @@ export class LongpressController extends InteractionController {
     private handleKeydown(event: KeyboardEvent): void {
         const { code, altKey } = event;
         if (altKey && code === 'ArrowDown') {
-            event.stopPropagation();
             event.stopImmediatePropagation();
         }
     }
