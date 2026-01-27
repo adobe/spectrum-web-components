@@ -20,7 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 
-import styles from './field-label.css.js';
+import styles from './field-label-mixin.css.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared';
@@ -65,7 +65,10 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         excludedSelectors
     ) {
         public static get styles(): CSSResultArray {
-            return [styles, asteriskIconStyles];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const parent = Object.getPrototypeOf(this) as any;
+            const parentStyles = (parent.styles || []) as CSSResultArray;
+            return [...parentStyles, styles, asteriskIconStyles];
         }
 
         @property({ type: Boolean, reflect: true })
@@ -80,7 +83,7 @@ export const FieldLabelMixin = <T extends Constructor<SpectrumElement>>(
         public renderFieldLabel(fieldId: string): TemplateResult {
             return html`
                 <label
-                    id="${fieldId}-label}"
+                    id="${fieldId}-label"
                     for="${fieldId}"
                     ?hidden="${!this.slotHasContent}"
                 >

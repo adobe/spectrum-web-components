@@ -12,7 +12,6 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
@@ -66,6 +65,7 @@ export const growsOnly = (): TemplateResult => {
             grows
             id="grows-only"
             placeholder="Does not grow or display incorrectly"
+            style="--mod-textfield-container-width: 100%;"
         >
             This Textfield has the "grows" attribute without the "multiline"
             attribute
@@ -179,11 +179,58 @@ export const sized = (): TemplateResult => html`
     <sp-textfield
         id="sized"
         placeholder="You can type here"
-        style="width: 400px"
+        style="--mod-textfield-width: 400px;"
     >
         This textfield hasn't been used yet
         <sp-help-text slot="help-text">
             Even empty Textfield display correctly while waiting for content.
         </sp-help-text>
     </sp-textfield>
+`;
+
+export const sideAligned = (): TemplateResult => html`
+    <div>
+        <sp-textfield
+            id="side-aligned-start"
+            placeholder="You can type here"
+            side-aligned="start"
+        >
+            Side aligned start label with wrapping text
+            <sp-help-text slot="help-text">
+                Side aligned start help text
+            </sp-help-text>
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="side-aligned-end"
+            placeholder="You can type here"
+            side-aligned="end"
+        >
+            Side aligned end label with wrapping text
+            <sp-help-text slot="help-text">
+                Side aligned end help text
+            </sp-help-text>
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="valid-side-aligned-start"
+            value="Good work"
+            side-aligned="end"
+            valid
+        >
+            Valid textfield
+        </sp-textfield>
+    </div>
+    <div>
+        <sp-textfield
+            id="invalid-side-aligned-start"
+            value="Something isn't right"
+            side-aligned="end"
+            invalid
+        >
+            Invalid textfield
+        </sp-textfield>
+    </div>
 `;

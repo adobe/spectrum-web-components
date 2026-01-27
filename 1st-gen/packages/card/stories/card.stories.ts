@@ -12,7 +12,7 @@
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/card/sp-card.js';
-import { landscape, portrait } from './images';
+import { landscape, portrait } from './images.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-file-txt.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
@@ -374,6 +374,7 @@ export const SlottedHeading = (args: StoryArgs): TemplateResult => {
                 class="slotted-textfield-heading"
                 slot="heading"
                 value="Apr 23 Project"
+                style="--mod-textfield-width: 100%;"
                 quiet
             ></sp-textfield>
             <div slot="subheading">Last modified on 6/17/2020, 3:37 PM</div>
