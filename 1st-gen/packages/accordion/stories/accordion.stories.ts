@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@spectrum-web-components/base';
 import { AccordionMarkup } from './/index.js';
 import { argTypes } from './args.js';
 
@@ -60,59 +60,3 @@ export const Disabled = (args?: Properties): TemplateResult =>
 Disabled.args = {
     disabled: true,
 };
-
-export const HeadingLevels = (): TemplateResult => html`
-    <style>
-        .heading-levels-example {
-            max-width: 800px;
-        }
-        .heading-levels-example h1 {
-            font-size: 28px;
-            margin: 0 0 24px 0;
-        }
-        .heading-levels-example h2 {
-            font-size: 20px;
-            margin: 32px 0 16px 0;
-        }
-        .heading-levels-example sp-accordion {
-            margin-bottom: 16px;
-        }
-    </style>
-    <div class="heading-levels-example">
-        <h1>Main Page Title</h1>
-
-        <sp-accordion level="2">
-            <sp-accordion-item label="First Section">
-                <div>
-                    Content for the first main section. All items in this
-                    accordion use level 2 headings because they are of equal
-                    importance.
-                </div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Second Section">
-                <div>Content for the second main section.</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Third Section">
-                <div>Content for the third main section.</div>
-            </sp-accordion-item>
-        </sp-accordion>
-
-        <h2>Subsection Title</h2>
-
-        <sp-accordion level="3">
-            <sp-accordion-item label="Subsection A">
-                <div>
-                    Content for subsection A. All items in this accordion use
-                    level 3 headings because they are nested under a level 2
-                    heading.
-                </div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Subsection B">
-                <div>Content for subsection B.</div>
-            </sp-accordion-item>
-            <sp-accordion-item label="Subsection C">
-                <div>Content for subsection C.</div>
-            </sp-accordion-item>
-        </sp-accordion>
-    </div>
-`;

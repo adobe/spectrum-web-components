@@ -144,10 +144,6 @@ export class AccordionItem extends SizedMixin(Focusable, {
                 return html`
                     <h2 id="heading">${headingContent}</h2>
                 `;
-            case 3:
-                return html`
-                    <h3 id="heading">${headingContent}</h3>
-                `;
             case 4:
                 return html`
                     <h4 id="heading">${headingContent}</h4>
