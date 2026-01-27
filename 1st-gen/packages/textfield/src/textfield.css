@@ -16,6 +16,7 @@
 :host {
     display: inline-grid;
     grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr;
     margin: 0;
     position: relative;
     overflow: visible;

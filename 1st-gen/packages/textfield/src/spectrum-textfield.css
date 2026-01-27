@@ -178,11 +178,6 @@ label {
     margin-block-end: var(--mod-textfield-label-spacing-block, var(--spectrum-textfield-label-spacing-block));
 }
 
-/* span 2 columns when there's no char count, which we don't have implemented anyway */
-label:not(:has(~ .spectrum-Textfield-characterCount)) {
-    grid-area: 1 / 1 / auto / span 2;
-}
-
 :host([quiet]) .spectrum-FieldLabel {
     margin-block-end: var(--mod-textfield-label-spacing-block-quiet, var(--spectrum-textfield-label-spacing-block-quiet));
 }
