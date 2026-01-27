@@ -7,16 +7,11 @@ on:
                 description: 'NPM dist-tag (e.g., latest, beta, snapshot)'
                 required: false
                 default: 'snapshot-test'
-    push:
-        branches:
-            - SWC-1405
-        # paths:
-        #     - '1st-gen/**'
-        #     - '.changeset/**'
 
 jobs:
     publish:
         runs-on: ubuntu-latest
+        environment: npm-publish # Requires approval from authorized users
         permissions:
             id-token: write # Required for OIDC trusted publishing
             contents: write # Required for git push
