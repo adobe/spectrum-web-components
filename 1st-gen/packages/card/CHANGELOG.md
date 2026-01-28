@@ -1,5 +1,19 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- Updated dependencies [[`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891), [`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595), [`7c26e3a`](https://github.com/adobe/spectrum-web-components/commit/7c26e3afa534342f09d956c7f1d1acda7e0da939)]:
+    - @spectrum-web-components/shared@1.11.0
+    - @spectrum-web-components/base@1.11.0
+    - @spectrum-web-components/styles@1.11.0
+    - @spectrum-web-components/popover@1.11.0
+    - @spectrum-web-components/asset@1.11.0
+    - @spectrum-web-components/divider@1.11.0
+    - @spectrum-web-components/checkbox@1.11.0
+    - @spectrum-web-components/icons-workflow@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

@@ -10,35 +10,76 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj as Story } from '@storybook/web-components';
+import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
+
+import { Asset } from '@adobe/swc/asset';
 
 import '@adobe/swc/asset';
 
+// ────────────────
+//    METADATA
+// ────────────────
+
+const { events, args, argTypes, template } = getStorybookHelpers('swc-asset');
+
+argTypes.variant = {
+    ...argTypes.variant,
+    control: { type: 'select' },
+    options: [undefined, ...Asset.VARIANTS],
+};
+
+/**
+ * Use an asset element to visually represent a file, folder, or image.
+ * File and folder representations center themselves within the available space.
+ * Images are contained to the element’s size and centered.
+ */
 const meta: Meta = {
     title: 'Asset',
     component: 'swc-asset',
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: ['file', 'folder', undefined],
+    args,
+    argTypes,
+    parameters: {
+        actions: {
+            handles: events,
         },
     },
+    tags: ['migrated'],
+    render: (args) => template(args),
 };
 
 export default meta;
-type Story = StoryObj;
 
-// export const Default: Story = {
-//     render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
-// };
+// ───────────────
+//    STORIES
+// ───────────────
+
+args['default-slot'] = IMAGE_PLACEHOLDER_STRING();
 
 export const Default: Story = {
-    render: (args) => html` <swc-asset variant="${args.variant}"></swc-asset> `,
-
-    // render: () => html`
-    //     <swc-asset style="height: 128px">
-    //         <img src=${portrait} alt="Demo Graphic" />
-    //     </swc-asset>
-    // `,
+    args: {
+        variant: undefined,
+    },
 };
+
+export const File: Story = {
+    args: {
+        variant: 'file',
+    },
+    tags: ['!dev'],
+};
+
+export const Folder: Story = {
+    args: {
+        variant: 'folder',
+    },
+    tags: ['!dev'],
+};
+
+// ────────────────────────
+//    HELPER FUNCTIONS
+// ────────────────────────
+
+function IMAGE_PLACEHOLDER_STRING(): string {
+    return `<img alt="Example image" src="https://cdn2.thecatapi.com/images/d4i.jpg" height="128">`;
+}

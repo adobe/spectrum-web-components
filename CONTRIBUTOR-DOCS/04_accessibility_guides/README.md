@@ -1,6 +1,6 @@
 <!-- Generated breadcrumbs - DO NOT EDIT -->
 
-[CONTRIBUTOR-DOCS](../README.md) / Accessbility Guide
+[CONTRIBUTOR-DOCS](../README.md) / Accessibility Guide
 
 <!-- Document title (editable) -->
 
@@ -11,32 +11,33 @@
 <details open>
 <summary><strong>In this doc</strong></summary>
 
-- [Overview](#overview)
-- [What is accessibility?](#what-is-accessibility)
-- [Why accessibility matters](#why-accessibility-matters)
+- [Accessibility Guide](#accessibility-guide)
+  - [Overview](#overview)
+  - [What is accessibility?](#what-is-accessibility)
+  - [Why accessibility matters](#why-accessibility-matters)
     - [User inclusion](#user-inclusion)
     - [Ethical considerations](#ethical-considerations)
     - [Business benefits](#business-benefits)
     - [Legal requirements](#legal-requirements)
-- [Types of disabilities](#types-of-disabilities)
+  - [Types of disabilities](#types-of-disabilities)
     - [Visual disabilities](#visual-disabilities)
     - [Auditory disabilities](#auditory-disabilities)
     - [Motor disabilities](#motor-disabilities)
     - [Cognitive, learning, and neurological disabilities](#cognitive-learning-and-neurological-disabilities)
     - [Temporary and situational disabilities](#temporary-and-situational-disabilities)
-- [Assistive technologies](#assistive-technologies)
+  - [Assistive technologies](#assistive-technologies)
     - [Screen readers](#screen-readers)
     - [Alternative input methods](#alternative-input-methods)
     - [Visual assistance tools](#visual-assistance-tools)
-- [Web Content Accessibility Guidelines (WCAG)](#web-content-accessibility-guidelines-wcag)
+  - [Web Content Accessibility Guidelines (WCAG)](#web-content-accessibility-guidelines-wcag)
     - [Purpose](#purpose)
     - [Organization](#organization)
     - [Conformance levels](#conformance-levels)
-- [Authoring Tool Accessibility Guidelines (ATAG)](#authoring-tool-accessibility-guidelines-atag)
+  - [Authoring Tool Accessibility Guidelines (ATAG)](#authoring-tool-accessibility-guidelines-atag)
     - [Why ATAG matters for component libraries](#why-atag-matters-for-component-libraries)
     - [ATAG principles](#atag-principles)
-- [Resources](#resources)
-- [Next steps](#next-steps)
+  - [Resources](#resources)
+  - [Next steps](#next-steps)
 
 </details>
 
@@ -67,12 +68,15 @@ In the context of web components, accessibility ensures that custom elements wor
 ## Why accessibility matters
 
 ### User inclusion
-Accordiing to the [World Health Organization](https://www.who.int/news-room/fact-sheets/detail/disability-and-health), approximately one in six people, or 16%% of the world's population, lives with some form of disability. Building accessible components ensures your applications serve the widest possible audience.
+
+According to the [World Health Organization](https://www.who.int/news-room/fact-sheets/detail/disability-and-health), approximately one in six people, or 16% of the world's population, lives with some form of disability. Building accessible components ensures your applications serve the widest possible audience.
 
 ### Ethical considerations
+
 Building accessible software is simply the right thing to do. Digital content has become essential to modern life, and excluding people with disabilities from accessing it perpetuates inequality.
 
 ### Business benefits
+
 - **Larger market reach**: More users can access your applications
 - **Better SEO**: Accessible HTML often improves search engine optimization
 - **Improved usability for everyone**: Accessibility features benefit all users (e.g., captions help in noisy environments)
@@ -80,34 +84,40 @@ Building accessible software is simply the right thing to do. Digital content ha
 - **Increased compatibility**: with more web-enabled devices and assistive technologies being adopted by users
 
 ### Legal requirements
+
 Many jurisdictions have legal requirements for digital accessibility:
-- **[Americans with Disabilities Act (ADA)](hhttps://www.ada.gov/topics/intro-to-ada/)** requires federal and state government entities as well as private entities that own, operate, lease, or lease to places of public accommodation must be accessible to people with disabilities
+
+- **[Americans with Disabilities Act (ADA)](https://www.ada.gov/topics/intro-to-ada/)** requires federal and state government entities as well as private entities that own, operate, lease, or lease to places of public accommodation must be accessible to people with disabilities
 - **[Section 508](https://www.section508.gov/)** applies to US federal government entities but impacts any entity that does buisness with the US federal government
-- **[European Accessibility Act](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM%3A2015%3A0615%3AFINa)** establishes accessbility standards for the EU; applies to "applies to any business’s product or service that is sold or in use within the Eurozone, not just EU member state businesses" [deque blog post](https://www.deque.com/blog/eu-web-accessibility-compliance-and-legislation/) 
-- **[Accessibility for Ontarians with Disabilities Act (AODA)](https://www.ontario.ca/laws/statute/05a11a)** "applies to every person or organization in the public and private sectors of the Province of Ontario, including the Legislative Assembly of Ontario" to comply with defined accessbility guidelines for EU member states
+- **[European Accessibility Act](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0882)** establishes accessibility standards for the EU; applies to "any business's product or service that is sold or in use within the Eurozone, not just EU member state businesses" ([Deque blog post](https://www.deque.com/blog/eu-web-accessibility-compliance-and-legislation/))
+- **[Accessibility for Ontarians with Disabilities Act (AODA)](https://www.canlii.org/en/on/laws/stat/so-2005-c-11/latest/so-2005-c-11.html)** "applies to every person or organization in the public and private sectors of the Province of Ontario, including the Legislative Assembly of Ontario" to comply with defined accessibility standards
 
 ## Types of disabilities
 
 When building accessible components, consider these categories of disabilities:
 
 ### Visual disabilities
+
 - Blindness: Complete inability to see
 - Low vision: Reduced visual acuity that cannot be corrected with glasses
 - Color blindness: Difficulty distinguishing between certain colors
 - Light sensitivity: Difficulty with bright lights or certain color contrasts
 
 ### Auditory disabilities
+
 - Deafness: Complete inability to hear
 - Hard of hearing: Partial hearing loss
 - Audio processing disorders: Difficulty processing auditory information
 
 ### Motor disabilities
+
 - Limited fine motor control: Difficulty with precise movements like clicking small targets
 - Tremors or spasms: Involuntary movements affecting interaction
 - Paralysis: Inability to move certain body parts
 - Repetitive stress injuries: Pain or difficulty from repeated motions
 
 ### Cognitive, learning, and neurological disabilities
+
 - Learning disabilities: Dyslexia, dyscalculia, and other processing differences
 - Memory impairments: Difficulty retaining or recalling information
 - Attention disorders: Difficulty maintaining focus
@@ -115,6 +125,7 @@ When building accessible components, consider these categories of disabilities:
 - Seizure disorders:  Different types of epilepsy and migraines, often triggered by visual or auditory stimuli
 
 ### Temporary and situational disabilities
+
 - Temporary: Broken arm, eye surgery recovery, ear infection
 - Situational: Bright sunlight affecting screen visibility, noisy environment, holding a baby while trying to navigate with one hand
 
@@ -123,19 +134,22 @@ When building accessible components, consider these categories of disabilities:
 Users interact with web components using various assistive technologies:
 
 ### Screen readers
+
 - **[JAWS](https://www.freedomscientific.com/products/software/jaws/)**: Popular Windows screen reader, often used with Chrome or Edge browsers
 - **[NVDA](https://www.nvaccess.org/about-nvda/)**: Free, open-source Windows screen reader, often used with Firefox browsers
-- **[VoiceOver](hhttps://support.apple.com/guide/voiceover/turn-voiceover-on-or-off-vo2682/mac)**: Built-in screen reader for macOS and iOS, often used with Safari browsers
+- **[VoiceOver](https://support.apple.com/guide/voiceover/turn-voiceover-on-or-off-vo2682/mac)**: Built-in screen reader for macOS and iOS, often used with Safari browsers
 - **[TalkBack](https://support.google.com/accessibility/android/answer/6007100?hl=en)**: Built-in screen reader for Android, often used with Chrome browsers
 - **[Narrator](https://support.microsoft.com/en-us/windows/complete-guide-to-narrator-e4397a0d-ef4f-b386-d8ae-c172f109bdb1)**: Built-in Windows screen reader, often used with Edge browsers
 
 ### Alternative input methods
+
 - **Keyboard navigation**: Users navigate without a mouse using <kbd>Tab</kbd>, arrow keys, <kbd>Enter</kbd>, <kbd>Space</kbd>, and <kbd>Escape</kbd>
 - **Voice control**: Software like Dragon NaturallySpeaking allows voice commands
 - **Switch devices**: Single or dual-switch systems for users with limited mobility
 - **Eye tracking**: Systems that track eye movement for navigation
 
 ### Visual assistance tools
+
 - **Screen magnification**: Software that enlarges portions of the screen
 - **High contrast modes**: Operating system settings that increase contrast
 - **Custom stylesheets**: User-defined CSS to override default styles
@@ -145,9 +159,11 @@ Users interact with web components using various assistive technologies:
 The **[Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/glance/)** are the international standard for web accessibility, developed by the World Wide Web Consortium (W3C).
 
 ### Purpose
+
 WCAG provides a single shared standard for web content accessibility that meets the needs of individuals, organizations, and governments internationally.
 
 ### Organization
+
 WCAG is organized around four principles (often remembered as **POUR**):
 
 1. **Perceivable**: Information and user interface components must be presentable to users in ways they can perceive
@@ -156,6 +172,7 @@ WCAG is organized around four principles (often remembered as **POUR**):
 4. **Robust**: Content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies and future tools
 
 ### Conformance levels
+
 WCAG defines three conformance levels:
 
 - **Level A**: The minimum level of accessibility. Addresses the most basic web accessibility features
@@ -169,13 +186,15 @@ WCAG defines three conformance levels:
 The **[Authoring Tool Accessibility Guidelines (ATAG)](https://www.w3.org/WAI/standards-guidelines/atag/)** provide standards for tools used to create web content, including component libraries, content management systems, and development frameworks.
 
 ### Why ATAG matters for component libraries
+
 Spectrum Web Components is an authoring tool in the sense that it provides building blocks for creating web content and applications. ATAG is relevant because:
 
 1. **Accessible by default**: Components should make it easy to create accessible content without requiring deep accessibility expertise. (Our components should handle as much semantic HTML and ARIA internally as much as possible.)
-2. **Support accessible content creation**: Components should not create barriers to producing accessible applications. (It should be possible to use our components in and accessible way.)
+2. **Support accessible content creation**: Components should not create barriers to producing accessible applications. (It should be possible to use our components in an accessible way.)
 3. **Promote accessibility**: Documentation and APIs should encourage accessible patterns. (Our documentation and APIs should encourage accessible patterns.)
 
 ### ATAG principles
+
 ATAG has two main parts:
 
 - **Part A**: Make the authoring tool user interface accessible (the component library itself must be usable by developers with disabilities)

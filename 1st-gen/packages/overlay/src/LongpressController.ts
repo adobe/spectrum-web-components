@@ -95,7 +95,6 @@ export class LongpressController extends InteractionController {
     private handleKeydown(event: KeyboardEvent): void {
         const { code, altKey } = event;
         if (altKey && code === 'ArrowDown') {
-            event.stopPropagation();
             event.stopImmediatePropagation();
         }
     }
@@ -127,6 +126,7 @@ export class LongpressController extends InteractionController {
             // do not reapply until target is recycled
             this.releaseDescription !== noop ||
             // require "longpress content" to apply relationship
+            !this.overlay ||
             !this.overlay.elements.length
         ) {
             return;
