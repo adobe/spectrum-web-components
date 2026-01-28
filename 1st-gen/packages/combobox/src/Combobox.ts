@@ -52,6 +52,7 @@ export type ComboboxOption = {
  * @element sp-combobox
  * @slot - Supply Menu Item elements to the default slot in order to populate the available options
  * @slot tooltip - Tooltip to to be applied to the the Picker Button
+ * @fires change - Announces that a selection has been made. The event detail contains `value` and `itemText` of the selected option.
  */
 export class Combobox extends Textfield {
     public static override get styles(): CSSResultArray {
@@ -104,6 +105,13 @@ export class Combobox extends Textfield {
     private input!: HTMLInputElement;
 
     private itemValue = '';
+
+    /**
+     * Tracks the value when an item is selected from the menu dropdown.
+     * This ensures we preserve the exact selected value even when multiple
+     * options have the same itemText.
+     */
+    private _menuSelectedValue: string = '';
 
     /**
      * An array of options to present in the Menu provided while typing into the input
@@ -302,11 +310,32 @@ export class Combobox extends Textfield {
         const selected = (this.options || this.optionEls).find(
             (item) => item.value === target?.value
         );
+        this.itemValue = selected?.value || '';
+        this._menuSelectedValue = selected?.value || '';
         this.value = selected?.itemText || '';
+        this.handleChange();
+        // Clear _menuSelectedValue after the update cycle completes to prevent stale values
+        // when selecting options with the same itemText (where value doesn't change).
+        this.updateComplete.then(() => {
+            this._menuSelectedValue = '';
+        });
         event.preventDefault();
         this.open = false;
         this._returnItems();
         this.focus();
+    }
+
+    protected override handleChange(): void {
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    value: this.itemValue,
+                    itemText: this.value,
+                },
+            })
+        );
     }
 
     public handleClosed(): void {
@@ -339,10 +368,15 @@ export class Combobox extends Textfield {
         }
         if (changed.has('value')) {
             this.filterAvailableOptions();
-            this.itemValue =
-                this.availableOptions.find(
-                    (option) => option.itemText === this.value
-                )?.value ?? '';
+            if (this._menuSelectedValue) {
+                this.itemValue = this._menuSelectedValue;
+                this._menuSelectedValue = '';
+            } else {
+                this.itemValue =
+                    this.availableOptions.find(
+                        (option) => option.itemText === this.value
+                    )?.value ?? '';
+            }
         }
         return super.shouldUpdate(changed);
     }
