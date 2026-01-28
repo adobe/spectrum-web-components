@@ -41,7 +41,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args: any[]) {
-            super(args);
+            super(...args);
 
             new MutationController(this, {
                 config: {

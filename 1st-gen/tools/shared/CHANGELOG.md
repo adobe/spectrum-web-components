@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.11.0
+
+### Patch Changes
+
+- [#5968](https://github.com/adobe/spectrum-web-components/pull/5968) [`f8bdeec`](https://github.com/adobe/spectrum-web-components/commit/f8bdeecf8a230822122a990fb977d3654649f891) Thanks [@rubencarvalho](https://github.com/rubencarvalho)! - Improve reliability when composing components and mixins that observe slot presence.
+
+- Updated dependencies [[`9cb816b`](https://github.com/adobe/spectrum-web-components/commit/9cb816b5ac80387fdc9bb87381f5149fecb1b595)]:
+    - @spectrum-web-components/base@1.11.0
+
 ## 1.10.0
 
 ### Patch Changes

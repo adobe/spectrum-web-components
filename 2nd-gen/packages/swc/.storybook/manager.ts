@@ -1,3 +1,5 @@
+/// <reference types="./storybook-env.d.ts" />
+
 import { addons } from '@storybook/manager-api';
 import { create } from '@storybook/theming';
 import '../stylesheets/swc.css';
