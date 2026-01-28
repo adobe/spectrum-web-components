@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,8 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { html, TemplateResult } from 'lit';
-import { styleMap } from 'lit/directives/style-map.js';
+import { html } from 'lit';
 import type { Meta, StoryObj as Story } from '@storybook/web-components';
 import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 
@@ -19,36 +18,67 @@ import { Badge } from '@adobe/swc/badge';
 
 import '@adobe/swc/badge';
 
+import {
+    BADGE_VALID_SIZES,
+    BADGE_VARIANTS_COLOR_S2,
+    BADGE_VARIANTS_S2,
+    BADGE_VARIANTS_SEMANTIC,
+    type BadgeColorVariantS2,
+    type BadgeSemanticVariant,
+    type BadgeSize,
+    FIXED_VALUES,
+    type FixedValues,
+} from '../../../../core/components/badge/Badge.types.js';
+
 // ────────────────
 //    METADATA
 // ────────────────
 
-const { events, args, argTypes, template } = getStorybookHelpers('swc-badge');
+const { args, argTypes, template } = getStorybookHelpers('swc-badge');
 
+// @todo: Carry the args table defaultValue pattern to all argTypes in all components. Explore how to get our custom types to properly reflect with this new pattern.
 argTypes.variant = {
     ...argTypes.variant,
     control: { type: 'select' },
     options: Badge.VARIANTS,
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'informative',
+        },
+    },
 };
 
 argTypes.fixed = {
     ...argTypes.fixed,
     control: { type: 'select' },
-    options: [undefined, ...Badge.FIXED_VALUES],
+    options: ['', ...Badge.FIXED_VALUES],
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: '',
+        },
+    },
 };
 
 argTypes.size = {
     ...argTypes.size,
     control: { type: 'select' },
     options: Badge.VALID_SIZES,
+    table: {
+        category: 'attributes',
+        defaultValue: {
+            summary: 'm',
+        },
+    },
 };
 
-args['default-slot'] = 'Badge';
-
 /**
- * Badges are for showing a small amount of color-categorized metadata. They're ideal for getting a user's attention. There are two additional styles - subtle fill and outline - in addition to the default, bold fill style.
+ * Similar to [status lights](/docs/components-status-light--readme), they use color and text to convey status or category information.
  *
- * Because outline and subtle fill styles draw a similar level of attention, choose only one to use consistently within a single product. Bold fill can be paired with either style, and is reserved for high-attention badging only.
+ * Badges come in three styles: bold fill (default), subtle fill, and outline.
+ * Choose one style consistently within a product - `outline` and `subtle` fill draw similar attention levels.
+ * Reserve bold fill for high-attention badging only.
  */
 const meta: Meta = {
     title: 'Badge',
@@ -57,154 +87,402 @@ const meta: Meta = {
     argTypes,
     render: (args) => template(args),
     parameters: {
-        actions: {
-            handles: events,
+        docs: {
+            subtitle: `Display small amounts of color-categorized metadata to get a user's attention.`,
         },
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/design/Mngz9H7WZLbrCvGQf3GnsY/S2---Desktop?node-id=36806-6551',
+        },
+        stackblitz: {
+            url: 'https://stackblitz.com/edit/vitejs-vite-4glrpeeb?file=package.json',
+        },
+        flexLayout: 'row-wrap',
     },
     tags: ['migrated'],
 };
 
 export default meta;
 
-// ───────────────
-//    STORIES
-// ───────────────
+// ────────────────────
+//    HELPERS
+// ────────────────────
 
-type BadgeVariant = typeof Badge.prototype.variant;
-type BadgeSize = typeof Badge.prototype.size;
+const sizeLabels = {
+    s: 'Small',
+    m: 'Medium',
+    l: 'Large',
+    xl: 'Extra-large',
+} as const satisfies Record<BadgeSize, string>;
+
+const semanticLabels = {
+    accent: 'New',
+    informative: 'Active',
+    neutral: 'Archived',
+    positive: 'Approved',
+    notice: 'Pending approval',
+    negative: 'Rejected',
+} as const satisfies Record<BadgeSemanticVariant, string>;
+
+const nonSemanticLabels = {
+    fuchsia: 'Marketing',
+    indigo: 'Engineering',
+    magenta: 'Design',
+    purple: 'Product',
+    seafoam: 'Support',
+    yellow: 'Busy',
+    gray: 'Available',
+    red: 'Sales',
+    orange: 'Research',
+    chartreuse: 'Quality',
+    celery: 'Documentation',
+    green: 'Legal',
+    cyan: 'Analytics',
+    blue: 'Security',
+    pink: 'Creative',
+    turquoise: 'Training',
+    brown: 'Facilities',
+    cinnamon: 'Compliance',
+    silver: 'Version 1.2.10',
+} as const satisfies Record<BadgeColorVariantS2, string>;
+
+const allVariantsLabels = { ...semanticLabels, ...nonSemanticLabels };
+
+const fixedLabels = {
+    'block-start': 'Block start',
+    'block-end': 'Block end',
+    'inline-start': 'Inline start',
+    'inline-end': 'Inline end',
+} as const satisfies Record<FixedValues, string>;
+
+// ────────────────────
+//    AUTODOCS STORY
+// ────────────────────
+
+export const Playground: Story = {
+    render: (args) => template(args),
+    args: {
+        size: 'm',
+        variant: 'informative',
+        'default-slot': 'Active',
+    },
+    tags: ['autodocs', 'dev'],
+};
+
+// ──────────────────────────────
+//    OVERVIEW STORIES
+// ──────────────────────────────
+
+export const Overview: Story = {
+    render: (args) => html` ${template(args)} `,
+    tags: ['overview'],
+    args: {
+        size: 'm',
+        variant: 'informative',
+        'default-slot': 'Active',
+    },
+};
+
+// ──────────────────────────
+//    ANATOMY STORIES
+// ──────────────────────────
 
 /**
- * Badges can contain label, icon, or label and icon. Text wrapping is also included when a `max-inline-size` is applied to the badge.
+ * A badge consists of:
+ *
+ * 1. **Container** - Colored background with rounded corners
+ * 2. **Label** - Text content describing the status or category (required)
+ * 3. **Icon** (optional) - Visual indicator positioned before the label
+ *
+ * ### Content
+ *
+ * - **Default slot**: Text content describing the status or category (required for accessibility)
+ * - **icon slot**: (optional) - Visual indicator positioned before the label
  */
-export const Default: Story = {
+export const Anatomy: Story = {
+    render: (args) => html`
+        ${template({ ...args, 'default-slot': 'Label only' })}
+        ${template({ ...args, 'icon-slot': '✓', 'aria-label': 'Icon only' })}
+        ${template({
+            ...args,
+            'icon-slot': '✓',
+            'default-slot': 'Icon and label',
+        })}
+    `,
+    tags: ['anatomy'],
+    args: {
+        variant: 'informative',
+        size: 'm',
+    },
+};
+
+// ──────────────────────────
+//    OPTIONS STORIES
+// ──────────────────────────
+
+/**
+ * Badges come in four sizes to fit various contexts:
+ *
+ * - **Small (`s`)**: Compact spaces, inline with text, or in tables
+ * - **Medium (`m`)**: Default size for most common usage scenarios
+ * - **Large (`l`)**: Increased emphasis in cards or content areas
+ * - **Extra-large (`xl`)**: Maximum visibility for primary status indicators
+ *
+ * The `m` size is the default and most frequently used option. Use larger sizes sparingly to create a hierarchy of importance on a page.
+ */
+export const Sizes: Story = {
+    render: (args) => html`
+        ${BADGE_VALID_SIZES.map((size) =>
+            template({
+                ...args,
+                size,
+                'default-slot': sizeLabels[size],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 1 },
+    tags: ['options'],
+    args: {
+        variant: 'informative',
+    },
+};
+
+/**
+ * Semantic variants provide meaning through color and should be used when status has specific significance.
+ * These variants align consistently with other design system components that use the same semantic meanings.
+ *
+ * Use these variants for the following statuses:
+ *
+ * - **accent**: New, beta, prototype, draft
+ * - **informative**: Active, in use, live, published
+ * - **neutral**: Archived, deleted, paused, not started, ended
+ * - **positive**: Approved, complete, success, purchased, licensed
+ * - **notice**: Pending, expiring soon, limited, deprecated
+ * - **negative**: Rejected, error, alert, failed
+ */
+export const SemanticVariants: Story = {
+    render: (args) => html`
+        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            template({
+                ...args,
+                variant,
+                'default-slot': semanticLabels[variant],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 2 },
+    tags: ['options'],
+};
+SemanticVariants.storyName = 'Semantic variants';
+
+/**
+ * Non-semantic variants use distinctive colors for visual categorization without inherent meaning.
+ * These are ideal for color-coding categories, teams, or projects - especially when there are 8 categories or fewer.
+ *
+ * Use non-semantic variants when:
+ * - Categories don't have universal status meanings
+ * - Visual distinction matters more than semantic meaning
+ * - Creating department, team, or project color schemes
+ *
+ * > **Note**: 2nd-gen adds `pink`, `turquoise`, `brown`, `cinnamon`, and `silver` variants.
+ * 1st-gen variants `gray`, `red`, `orange`, `green`, and `blue` are not available in 2nd-gen.
+ */
+export const NonSemanticVariants: Story = {
+    render: (args) => html`
+        ${BADGE_VARIANTS_COLOR_S2.map((variant) =>
+            template({
+                ...args,
+                variant,
+                'default-slot': nonSemanticLabels[variant],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 3 },
+    tags: ['options'],
+};
+NonSemanticVariants.storyName = 'Non-semantic variants';
+
+/**
+ * The `outline` style provides a bordered appearance with a transparent background.
+ * This style reduces visual weight while maintaining semantic meaning.
+ *
+ * **Important**: The outline style is only valid for semantic variants (`accent`, `informative`, `neutral`, `positive`, `notice`, `negative`).
+ * Attempting to use `outline` with non-semantic color variants will not apply the style.
+ */
+export const Outline: Story = {
+    render: (args) => html`
+        ${BADGE_VARIANTS_SEMANTIC.map((variant) =>
+            template({
+                ...args,
+                variant,
+                outline: true,
+                'default-slot': semanticLabels[variant],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 4 },
+    tags: ['options'],
+};
+
+/**
+ * The `subtle` style reduces visual prominence with a softer background fill.
+ * Unlike outline, subtle is available for **all** variants (semantic and non-semantic).
+ *
+ * Use subtle style when:
+ * - Multiple badges appear together and need less visual competition
+ * - Status is secondary to main content
+ * - Maintaining design system color palette while reducing emphasis
+ */
+export const Subtle: Story = {
+    render: (args) => html`
+        ${BADGE_VARIANTS_S2.map((variant) =>
+            template({
+                ...args,
+                variant,
+                subtle: true,
+                'default-slot': allVariantsLabels[variant],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 5 },
+    tags: ['options'],
+};
+
+/**
+ * The `fixed` attribute adjusts border radius based on edge positioning, creating the appearance that the badge is "fixed" to a UI edge.
+ *
+ * Fixed positioning options:
+ *
+ * - **block-start**: Top edge (removes top-left and top-right border radius)
+ * - **block-end**: Bottom edge (removes bottom-left and bottom-right border radius)
+ * - **inline-start**: Left edge (removes top-left and bottom-left border radius)
+ * - **inline-end**: Right edge (removes top-right and bottom-right border radius)
+ *
+ * This is purely visual styling - actual positioning must be handled separately with CSS.
+ *
+ * All fixed positions shown below for comparison.
+ */
+export const Fixed: Story = {
+    render: (args) => html`
+        ${FIXED_VALUES.map((fixed) =>
+            template({
+                ...args,
+                fixed,
+                'default-slot': fixedLabels[fixed],
+            })
+        )}
+    `,
+    parameters: { 'section-order': 6 },
+    tags: ['options'],
+    args: {
+        variant: 'informative',
+        size: 'm',
+    },
+};
+
+// ──────────────────────────────
+//    BEHAVIORS STORIES
+// ──────────────────────────────
+
+/**
+ * When a badge's label is too long for the available horizontal space, it wraps to form multiple lines.
+ * Text wrapping can be controlled by applying a `max-inline-size` constraint to the badge.
+ *
+ * This ensures badges remain readable even with longer status messages or category names.
+ */
+export const TextWrapping: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Document review pending approval from manager',
+            style: 'max-inline-size: 120px',
+        })}
+    `,
+    tags: ['behaviors'],
     args: {
         size: 'm',
     },
 };
 
-/**
- * Badges can be rendered with or without an icon. Icons can be passed to the component using the `icon` slot and can be sourced from either the Spectrum icon library or a custom icon library as needed.
- */
-export const WithIcon: Story = {
-    args: {
-        ['icon-slot']: '✓',
-    },
-    // Removes the story from the side navigation while keeping in the docs view
-    tags: ['!dev'],
-};
+// ────────────────────────────────
+//    ACCESSIBILITY STORIES
+// ────────────────────────────────
 
 /**
- * Semantic variants allow you to render the badge with a descriptive name that maps to a design-system-aligned color. This is the preferred way to assign color to a badge because it will align more consistently with other components in your UI with the same meaning.
+ * ### Features
+ *
+ * The `<swc-badge>` element implements several accessibility features:
+ *
+ * #### Color meaning
+ *
+ * - Colors are used in combination with text labels and/or icons to ensure that status information is not conveyed through color alone
+ * - Users with color vision deficiencies can understand badge meaning through text content
+ * - High contrast mode is supported with appropriate color overrides
+ *
+ * #### Non-interactive element
+ *
+ * - Badges have no interactive behavior and are not focusable
+ * - Screen readers will announce the badge content as static text
+ * - No keyboard interaction is required or expected
+ *
+ * ### Best practices
+ *
+ * - Use semantic variants (`positive`, `negative`, `notice`, `informative`, `neutral`, `accent`) when the status has specific meaning
+ * - Include clear, descriptive labels that explain the status without relying on color alone
+ * - For icon-only badges, provide descriptive text in the default slot or use the `aria-label` attribute directly on the element
+ * - Ensure sufficient color contrast between the badge and its background
+ * - Badges are not interactive elements - for interactive status indicators, consider using buttons, tags, or links instead
+ * - When using multiple badges together, ensure they're clearly associated with their related content
+ * - Use consistent badge variants across your application for the same statuses
+ * - Test with screen readers to verify badge content is announced in context
+ * - Consider placement carefully - badges should be close to the content they describe
  */
-export const SemanticVariants: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_SEMANTIC.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-
-/**
- * The `outline` style is only valid for semantic color variants.
- */
-export const Outline: Story = {
-    argTypes: {
-        variant: {
-            control: { type: 'select' },
-            options: Badge.VARIANTS_SEMANTIC,
-        },
-    },
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_SEMANTIC.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} outline
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-
-/**
- * Color variants are available for the badge component and provide a more granular access to the full color palette in the design system.
- */
-export const ColorVariants: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS_COLOR.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant}
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-
-export const Sizes: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VALID_SIZES.map(
-                (size) => html`
-                    <swc-badge size=${size as BadgeSize}
-                        >${capitalize(size)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-
-/**
- * The `subtle` style is available for all variants. It is useful when you want to reduce the visual prominence of the badge while still mapping to the design system color palette.
- */
-export const Subtle: Story = {
-    render: () =>
-        CONTAINER(
-            Badge.VARIANTS.map(
-                (variant) => html`
-                    <swc-badge variant=${variant as BadgeVariant} subtle
-                        >${capitalize(variant)}</swc-badge
-                    >
-                `
-            )
-        ),
-    tags: ['!dev'],
-};
-
-// ────────────────────────
-//    HELPER FUNCTIONS
-// ────────────────────────
-
-/* @todo Pull this up into a utility function for all components to leverage */
-function capitalize(str?: string): string {
-    if (typeof str !== 'string') {
-        return '';
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/* @todo Pull this up into a decorator for all stories to leverage */
-function CONTAINER(content: TemplateResult<1>[]): TemplateResult {
-    return html`<div
-        style=${styleMap({
-            display: 'flex',
-            gap: 'var(--swc-spacing-200)',
-            'flex-wrap': 'wrap',
-            'justify-content': 'center',
-            // Used 80ch because that's generally considered the maximum readable width for text in a web page.
-            'max-inline-size': '80ch',
+export const Accessibility: Story = {
+    render: (args) => html`
+        ${template({
+            ...args,
+            variant: 'positive',
+            'default-slot': 'Approved',
         })}
-    >
-        ${content}
-    </div>`;
-}
+        ${template({
+            ...args,
+            variant: 'negative',
+            'default-slot': 'Rejected',
+        })}
+        ${template({
+            ...args,
+            variant: 'notice',
+            'default-slot': 'Pending approval',
+        })}
+        ${template({
+            ...args,
+            variant: 'informative',
+            'default-slot': 'Active',
+        })}
+        ${template({
+            ...args,
+            variant: 'neutral',
+            'default-slot': 'Archived',
+        })}
+        ${template({
+            ...args,
+            variant: 'celery',
+            'default-slot': 'Documentation',
+        })}
+        ${template({
+            ...args,
+            variant: 'yellow',
+            'default-slot': 'Busy',
+        })}
+        ${template({
+            ...args,
+            variant: 'silver',
+            'default-slot': 'Version 1.2.10',
+        })}
+    `,
+    tags: ['a11y'],
+    args: {
+        size: 'm',
+    },
+};
