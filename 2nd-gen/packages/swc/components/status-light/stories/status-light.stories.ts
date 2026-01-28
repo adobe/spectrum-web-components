@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,6 +17,20 @@ import { getStorybookHelpers } from '@wc-toolkit/storybook-helpers';
 import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
+
+import {
+    testColorVariants,
+    testDefaultSlotContent,
+    testDisabledAttributeWarning,
+    testSemanticVariants,
+    testSizeProperty,
+    testSizePropertySetViaAttribute,
+    testSizeVariants,
+    testStatusLightDefaults,
+    testUnsupportedVariantWarning,
+    testVariantPropertyReflection,
+    testVariantPropertySetViaAttribute,
+} from '../test/status-light.test.js';
 
 // ────────────────
 //    METADATA
@@ -63,6 +77,20 @@ type StatusLightSize = typeof StatusLight.prototype.size;
  * alone is not enough to communicate the status. Do not change the text color to match the dot.
  */
 export const Default: Story = {};
+Default.play = async ({ canvasElement }) => {
+    const statusLight = canvasElement.querySelector(
+        'swc-status-light'
+    ) as StatusLight;
+
+    await testStatusLightDefaults(statusLight);
+    await testDefaultSlotContent(statusLight);
+    await testVariantPropertyReflection(statusLight);
+    await testVariantPropertySetViaAttribute(statusLight);
+    await testSizeProperty(statusLight);
+    await testSizePropertySetViaAttribute(statusLight);
+    await testUnsupportedVariantWarning(statusLight);
+    await testDisabledAttributeWarning(statusLight);
+};
 
 /** When the text is too long for the horizontal space available, it wraps to form another line. */
 export const TextWrapping: Story = {
@@ -99,6 +127,9 @@ export const SemanticVariants: Story = {
     tags: ['!dev'],
 };
 SemanticVariants.storyName = 'Semantic variants';
+SemanticVariants.play = async ({ canvasElement }) => {
+    await testSemanticVariants(canvasElement);
+};
 
 /**
  * When status lights are used to color code categories and labels that are commonly found in data visualization,
@@ -118,6 +149,9 @@ export const NonsemanticVariants: Story = {
     tags: ['!dev'],
 };
 NonsemanticVariants.storyName = 'Non-semantic variants';
+NonsemanticVariants.play = async ({ canvasElement }) => {
+    await testColorVariants(canvasElement);
+};
 
 /**
  * Status lights come in four different sizes: small, medium, large, and extra-large. The medium size is the
@@ -136,6 +170,9 @@ export const Sizes: Story = {
             )
         ),
     tags: ['!dev'],
+};
+Sizes.play = async ({ canvasElement }) => {
+    await testSizeVariants(canvasElement);
 };
 
 // ────────────────────────

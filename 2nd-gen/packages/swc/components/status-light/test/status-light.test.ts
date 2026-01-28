@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,252 +10,206 @@
  * governing permissions and limitations under the License.
  */
 
-import { html } from 'lit';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { expect } from '@storybook/test';
 
-import type { StatusLight } from '@adobe/swc/status-light';
+import { StatusLight } from '@adobe/swc/status-light';
 
 import '@adobe/swc/status-light';
 
-import { fixture } from '../../../utils/test-utils.js';
+import { getSwcTestGlobals } from '../../../utils/test-utils.js';
 
-describe('swc-status-light', () => {
-    beforeEach(() => {
-        document.body.innerHTML = '';
-    });
+const testStatusLightDefaults = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    await statusLight.updateComplete;
+    await expect(statusLight.variant).toBe('info');
+    await expect(statusLight.size).toBe('m');
+};
 
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Defaults
-    // ──────────────────────────────────────────────────────────────
+const testVariantPropertyReflection = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    await statusLight.updateComplete;
+    await expect(statusLight.getAttribute('variant')).toBe(statusLight.variant);
+    await expect(
+        statusLight.shadowRoot?.querySelector(
+            `.swc-StatusLight--${statusLight.variant}`
+        )
+    ).toBeTruthy();
+};
 
-    describe('defaults', () => {
-        test('should render with shadow root', async () => {
-            const statusLight = await fixture(html`
-                <swc-status-light>Test Status</swc-status-light>
-            `);
+const testVariantPropertySetViaAttribute = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    statusLight.setAttribute('variant', 'negative');
+    await statusLight.updateComplete;
+    await expect(statusLight.variant).toBe('negative');
+    await expect(statusLight.getAttribute('variant')).toBe('negative');
+    await expect(
+        statusLight.shadowRoot?.querySelector('.swc-StatusLight--negative')
+    ).toBeTruthy();
+};
 
-            expect(statusLight.shadowRoot).toBeTruthy();
-            expect(
-                statusLight.shadowRoot?.querySelector('.swc-StatusLight')
-            ).toBeTruthy();
-        });
+const testSemanticVariants = async (root: ParentNode): Promise<void> => {
+    for (const variant of StatusLight.VARIANTS_SEMANTIC) {
+        const statusLight = root.querySelector(
+            `swc-status-light[variant="${variant}"]`
+        ) as StatusLight | null;
 
-        test('should have correct default property values', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+        await expect(statusLight).toBeTruthy();
+        if (!statusLight) {
+            continue;
+        }
 
-            expect(statusLight.variant).toBe('info');
-            expect(statusLight.size).toBe('m');
-        });
-    });
+        await statusLight.updateComplete;
+        await expect(statusLight.variant).toBe(variant);
+        await expect(
+            statusLight.shadowRoot?.querySelector(
+                `.swc-StatusLight--${variant}`
+            )
+        ).toBeTruthy();
+    }
+};
 
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Properties / Attributes
-    // ──────────────────────────────────────────────────────────────
+const testColorVariants = async (root: ParentNode): Promise<void> => {
+    for (const variant of StatusLight.VARIANTS_COLOR) {
+        const statusLight = root.querySelector(
+            `swc-status-light[variant="${variant}"]`
+        ) as StatusLight | null;
 
-    describe('properties and attributes', () => {
-        test('should reflect variant property to attribute', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+        await expect(statusLight).toBeTruthy();
+        if (!statusLight) {
+            continue;
+        }
 
-            statusLight.variant = 'positive';
-            await statusLight.updateComplete;
+        await statusLight.updateComplete;
+        await expect(statusLight.variant).toBe(variant);
+        await expect(
+            statusLight.shadowRoot?.querySelector(
+                `.swc-StatusLight--${variant}`
+            )
+        ).toBeTruthy();
+    }
+};
 
-            expect(statusLight.getAttribute('variant')).toBe('positive');
-            expect(
-                statusLight.shadowRoot?.querySelector(
-                    '.swc-StatusLight--positive'
-                )
-            ).toBeTruthy();
-        });
+const testSizeProperty = async (statusLight: StatusLight): Promise<void> => {
+    await statusLight.updateComplete;
+    await expect(statusLight.getAttribute('size')).toBe(statusLight.size);
+    await expect(
+        statusLight.shadowRoot?.querySelector(
+            `.swc-StatusLight--size${statusLight.size.toUpperCase()}`
+        )
+    ).toBeTruthy();
+};
 
-        test('should set variant via attribute', async () => {
-            const statusLight = await fixture<StatusLight>(html`
-                <swc-status-light variant="negative"></swc-status-light>
-            `);
+const testSizePropertySetViaAttribute = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    statusLight.setAttribute('size', 's');
+    await statusLight.updateComplete;
+    await expect(statusLight.size).toBe('s');
+    await expect(statusLight.getAttribute('size')).toBe('s');
+    await expect(
+        statusLight.shadowRoot?.querySelector('.swc-StatusLight--sizeS')
+    ).toBeTruthy();
+};
 
-            expect(statusLight.variant).toBe('negative');
-            expect(
-                statusLight.shadowRoot?.querySelector(
-                    '.swc-StatusLight--negative'
-                )
-            ).toBeTruthy();
-        });
+const testSizeVariants = async (root: ParentNode): Promise<void> => {
+    for (const size of StatusLight.VALID_SIZES) {
+        const statusLight = root.querySelector(
+            `swc-status-light[size="${size}"]`
+        ) as StatusLight | null;
 
-        test('should handle semantic variants', async () => {
-            const variants = [
-                'neutral',
-                'info',
-                'positive',
-                'negative',
-                'notice',
-            ] as const;
+        await expect(statusLight).toBeTruthy();
+        if (!statusLight) {
+            continue;
+        }
 
-            for (const variant of variants) {
-                const statusLight = await fixture<StatusLight>(html`
-                    <swc-status-light variant=${variant}></swc-status-light>
-                `);
+        await statusLight.updateComplete;
+        await expect(statusLight.size).toBe(size);
+        await expect(
+            statusLight.shadowRoot?.querySelector(
+                `.swc-StatusLight--size${size.toUpperCase()}`
+            )
+        ).toBeTruthy();
+    }
+};
 
-                expect(statusLight.variant).toBe(variant);
-                expect(
-                    statusLight.shadowRoot?.querySelector(
-                        `.swc-StatusLight--${variant}`
-                    )
-                ).toBeTruthy();
-            }
-        });
+const testDefaultSlotContent = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    await expect(statusLight.textContent?.trim()).toBeTruthy();
+};
 
-        test('should handle color variants', async () => {
-            const colorVariants = [
-                'fuchsia',
-                'indigo',
-                'magenta',
-                'purple',
-                'seafoam',
-                'yellow',
-                'chartreuse',
-                'celery',
-                'cyan',
-                'pink',
-                'turquoise',
-                'brown',
-                'cinnamon',
-                'silver',
-            ] as const;
+const testUnsupportedVariantWarning = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    const swcGlobals = getSwcTestGlobals();
+    const originalWarn = swcGlobals.warn;
+    const originalDebug = swcGlobals.DEBUG ?? false;
+    const originalIssuedWarnings = swcGlobals.issuedWarnings;
+    const warnings: unknown[][] = [];
 
-            for (const variant of colorVariants) {
-                const statusLight = await fixture<StatusLight>(html`
-                    <swc-status-light variant=${variant}></swc-status-light>
-                `);
+    swcGlobals.warn = (...args: unknown[]) => {
+        warnings.push(args);
+    };
+    swcGlobals.DEBUG = true;
+    swcGlobals.issuedWarnings = new Set();
 
-                expect(statusLight.variant).toBe(variant);
-                expect(
-                    statusLight.shadowRoot?.querySelector(
-                        `.swc-StatusLight--${variant}`
-                    )
-                ).toBeTruthy();
-            }
-        });
+    statusLight.setAttribute('variant', 'accent');
+    await statusLight.updateComplete;
 
-        test('should handle size property', async () => {
-            const statusLight = await fixture<StatusLight>(
-                html`<swc-status-light></swc-status-light>`
-            );
+    await expect(warnings.length).toBeGreaterThan(0);
+    await expect(warnings[0][0]).toBe(statusLight);
+    await expect(warnings[0][1]).toBe(
+        `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
+    );
 
-            expect(statusLight.size).toBe('m');
+    swcGlobals.warn = originalWarn;
+    swcGlobals.DEBUG = originalDebug;
+    swcGlobals.issuedWarnings = originalIssuedWarnings;
+};
 
-            statusLight.size = 's';
-            await statusLight.updateComplete;
+const testDisabledAttributeWarning = async (
+    statusLight: StatusLight
+): Promise<void> => {
+    const swcGlobals = getSwcTestGlobals();
+    const originalWarn = swcGlobals.warn;
+    const originalDebug = swcGlobals.DEBUG ?? false;
+    const originalIssuedWarnings = swcGlobals.issuedWarnings;
+    const warnings: unknown[][] = [];
 
-            expect(statusLight.getAttribute('size')).toBe('s');
-            expect(
-                statusLight.shadowRoot?.querySelector('.swc-StatusLight--sizeS')
-            ).toBeTruthy();
-        });
-    });
+    swcGlobals.warn = (...args: unknown[]) => {
+        warnings.push(args);
+    };
+    swcGlobals.DEBUG = true;
+    swcGlobals.issuedWarnings = new Set();
 
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Slots
-    // ──────────────────────────────────────────────────────────────
+    statusLight.setAttribute('variant', 'positive');
+    statusLight.setAttribute('disabled', '');
+    await statusLight.updateComplete;
 
-    describe('slots', () => {
-        test('should render default slot content', async () => {
-            const statusLight = await fixture(html`
-                <swc-status-light>Status Label</swc-status-light>
-            `);
+    await expect(warnings.length).toBeGreaterThan(0);
+    await expect(warnings[0][0]).toBe(statusLight);
+    await expect(warnings[0][1]).toContain(
+        'does not support the disabled state'
+    );
 
-            expect(statusLight.textContent).toBe('Status Label');
-        });
-    });
+    swcGlobals.warn = originalWarn;
+    swcGlobals.DEBUG = originalDebug;
+    swcGlobals.issuedWarnings = originalIssuedWarnings;
+};
 
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Events
-    // ──────────────────────────────────────────────────────────────
-
-    describe.skip('events', () => {
-        // StatusLight component does not dispatch custom events
-    });
-
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Accessibility
-    // ──────────────────────────────────────────────────────────────
-    // @TODO: Add accessibility tests with axe-core / playwright
-    describe('accessibility', () => {
-        test('should be accessible to screen readers', async () => {
-            const statusLight = await fixture(html`
-                <swc-status-light variant="positive">Approved</swc-status-light>
-            `);
-
-            const statusLightElement =
-                statusLight.shadowRoot?.querySelector('.swc-StatusLight');
-            expect(statusLightElement).toBeTruthy();
-            expect(statusLight.textContent).toBe('Approved');
-        });
-    });
-
-    // ──────────────────────────────────────────────────────────────
-    // TEST: Dev Mode Warnings
-    // ──────────────────────────────────────────────────────────────
-
-    describe('dev mode warnings', () => {
-        let originalWarn: typeof window.__swc.warn;
-        let originalDebug: boolean;
-
-        beforeEach(() => {
-            // Create __swc if it doesn't exist
-            window.__swc = window.__swc || { warn: () => {} };
-            // Store original warn function and debug state
-            originalWarn = window.__swc.warn;
-            originalDebug = window.__swc.DEBUG ?? false;
-            // Reset issued warnings to avoid dedupe interference
-            window.__swc.issuedWarnings = new Set();
-            // Enable debug guard
-            window.__swc.DEBUG = true;
-        });
-
-        afterEach(() => {
-            // Restore original warn function and debug state
-            window.__swc.warn = originalWarn;
-            window.__swc.DEBUG = originalDebug;
-        });
-
-        test('should warn when unsupported variant is used', async () => {
-            const warnSpy = vi.fn();
-            window.__swc.warn = warnSpy as unknown as typeof window.__swc.warn;
-
-            const statusLight = await fixture<StatusLight>(html`
-                <swc-status-light variant="accent"></swc-status-light>
-            `);
-
-            await statusLight.updateComplete;
-
-            expect(warnSpy).toHaveBeenCalled();
-            expect(warnSpy.mock.calls[0][0]).toBe(statusLight);
-            expect(warnSpy.mock.calls[0][1]).toBe(
-                `<${statusLight.localName}> element expects the "variant" attribute to be one of the following:`
-            );
-        });
-
-        test('should warn when disabled attribute is used', async () => {
-            const warnSpy = vi.fn();
-            window.__swc.warn = warnSpy as unknown as typeof window.__swc.warn;
-
-            const statusLight = await fixture<StatusLight>(html`
-                <swc-status-light
-                    variant="positive"
-                    disabled
-                ></swc-status-light>
-            `);
-
-            await statusLight.updateComplete;
-
-            expect(warnSpy).toHaveBeenCalled();
-            expect(warnSpy.mock.calls[0][0]).toBe(statusLight);
-            expect(warnSpy.mock.calls[0][1]).toContain(
-                'does not support the disabled state'
-            );
-        });
-    });
-});
+export {
+    testStatusLightDefaults,
+    testVariantPropertyReflection,
+    testVariantPropertySetViaAttribute,
+    testSemanticVariants,
+    testColorVariants,
+    testSizeProperty,
+    testSizePropertySetViaAttribute,
+    testSizeVariants,
+    testDefaultSlotContent,
+    testUnsupportedVariantWarning,
+    testDisabledAttributeWarning,
+};

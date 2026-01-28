@@ -107,6 +107,16 @@ export default defineConfig({
             '@adobe/swc-tokens': resolve(__dirname, '../tools/swc-tokens'),
         },
     },
+    server: {
+        fs: {
+            // Allow Vite to serve dependencies hoisted to workspace and repo roots.
+            allow: [
+                resolve(__dirname, '..'),
+                resolve(__dirname, '../..'),
+                resolve(__dirname, '../../..'),
+            ],
+        },
+    },
     esbuild: {
         target: 'es2022',
     },
