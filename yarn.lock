@@ -5652,19 +5652,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/accordion@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/accordion@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/fa857f8dfe50205d875468b55f2f7e126be3f67ada1206f691f78ed03f0376d9485586b99fa2347a12bbd58873f7952416a60c8d6996d3f1b6fbc91db843a680
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/accordion@npm:1.11.0, @spectrum-web-components/accordion@workspace:1st-gen/packages/accordion":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/accordion@workspace:1st-gen/packages/accordion"
@@ -5676,19 +5663,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/action-bar@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/action-bar@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/action-group": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-  checksum: 10c0/792c3e1f33e912af744a752ae92a409e6e48844f55759ab4cb5496bcfc6274da1172ff5b2618d9f4fc89be25ed8d0a6b2121261a19b3f090b69272f4f58549e8
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/action-bar@npm:1.11.0, @spectrum-web-components/action-bar@workspace:1st-gen/packages/action-bar":
   version: 0.0.0-use.local
@@ -5703,19 +5677,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/action-button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/9e0b64b4fdc2dcaa2adca7fb92aee2f60bdeed32641016a68561fed52b73cd8ab29d16e04d4f5295b4dcc4fb2c4c2c8b709376ea96dc7ff64a773e6663d71ef2
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/action-button@npm:1.11.0, @spectrum-web-components/action-button@workspace:1st-gen/packages/action-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-button@workspace:1st-gen/packages/action-button"
@@ -5728,19 +5689,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/action-group@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/action-group@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-  checksum: 10c0/29eb8ed1e37d341f05c3755e35024088f3d556a392a8718fd609bfd296909f8ba5e6682029617f16588f46f91ea2860e110be215535afc2eba1bfca0401dcadc
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/action-group@npm:1.11.0, @spectrum-web-components/action-group@workspace:1st-gen/packages/action-group":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/action-group@workspace:1st-gen/packages/action-group"
@@ -5752,20 +5700,6 @@ __metadata:
     "@spectrum-web-components/reactive-controllers": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/action-menu@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/action-menu@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/picker": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/cc78337cf605d001ce5c3a3537fa30e926d3ec6dd5710d9f5f7cf9cf82dfc60d9e8ae150ea89c700d6a3c6bb479e94aad1bcea71357ed376b308effd3a32f76d
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/action-menu@npm:1.11.0, @spectrum-web-components/action-menu@workspace:1st-gen/packages/action-menu":
   version: 0.0.0-use.local
@@ -5781,18 +5715,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/alert-banner@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/alert-banner@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-  checksum: 10c0/d4cea54b472e72092d2fff00f31dc55f4f30c393ab259a85b0d027dfd6fde1519a218480d84bd7d69e3516482f38b7527b0ee1bf769e6b106657bfde30076239
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/alert-banner@npm:1.11.0, @spectrum-web-components/alert-banner@workspace:1st-gen/packages/alert-banner":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/alert-banner@workspace:1st-gen/packages/alert-banner"
@@ -5803,21 +5725,6 @@ __metadata:
     "@spectrum-web-components/icons-workflow": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/alert-dialog@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/alert-dialog@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/button-group": "npm:1.10.0"
-    "@spectrum-web-components/divider": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/f05d335b89d7920fa9bfeb317e08b91d42ce4cd78e27eba5c13e6a8b4cc3c2ea1dc939760045f49448ff110576610105c74d3391a9ebff17ba519ec70572ace8
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/alert-dialog@npm:1.11.0, @spectrum-web-components/alert-dialog@workspace:1st-gen/packages/alert-dialog":
   version: 0.0.0-use.local
@@ -5833,16 +5740,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/asset@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/asset@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-  checksum: 10c0/b761f35a530cc12bd5d448220633ded41b201563a8e058274f15d7fe25122aae562d6ef347fb51ddf19adae723c46180d345b0b8e38003bc85305b7a1aaaabb0
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/asset@npm:1.11.0, @spectrum-web-components/asset@workspace:1st-gen/packages/asset":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/asset@workspace:1st-gen/packages/asset"
@@ -5852,16 +5749,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/avatar@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/avatar@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/47b092745b44659e6d614215a83c5d55b91e6a799f5e9a0a9bd899cc79e55e89bdfda1f52039816c59f86116da68769dc1ebad4a65a1907964b80e19d923ff15
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/avatar@npm:1.11.0, @spectrum-web-components/avatar@workspace:1st-gen/packages/avatar":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/avatar@workspace:1st-gen/packages/avatar"
@@ -5870,17 +5757,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/badge@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/badge@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/9969a5636a35afa097d01195d1791104a9eba6eb0d71181c59c2f8e41c6b7115cac3031707953949fcf3bd735e3173d73f1eb7fca692b20e6bdb9189286a43d4
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/badge@npm:1.11.0, @spectrum-web-components/badge@workspace:1st-gen/packages/badge":
   version: 0.0.0-use.local
@@ -5892,16 +5768,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/base@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/base@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/core": "npm:0.0.1"
-    lit: "npm:^2.5.0 || ^3.1.3"
-  checksum: 10c0/e30221137b291ae0d87e1a3984aa031e6a42d3f3e93d767a81a71d438781021d25e15e499c9d4749466b8582104c2eafb81aff720a448f6d39eab67826a2c00e
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/base@npm:1.11.0, @spectrum-web-components/base@workspace:1st-gen/tools/base":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/base@workspace:1st-gen/tools/base"
@@ -5910,19 +5776,6 @@ __metadata:
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/breadcrumbs@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/breadcrumbs@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/action-menu": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/link": "npm:1.10.0"
-    "@spectrum-web-components/menu": "npm:1.10.0"
-  checksum: 10c0/0d27f4061c53b306bc3b805de1c9bc7ed093cae0b0e5b135945de5e7939ad0140de3398ffe15b4428936dfeca408fb88fd16f7e456ab488919910effac30819c
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/breadcrumbs@npm:1.11.0, @spectrum-web-components/breadcrumbs@workspace:1st-gen/packages/breadcrumbs":
   version: 0.0.0-use.local
@@ -5939,89 +5792,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/bundle@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/bundle@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/accordion": "npm:1.10.0"
-    "@spectrum-web-components/action-bar": "npm:1.10.0"
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/action-group": "npm:1.10.0"
-    "@spectrum-web-components/action-menu": "npm:1.10.0"
-    "@spectrum-web-components/alert-banner": "npm:1.10.0"
-    "@spectrum-web-components/asset": "npm:1.10.0"
-    "@spectrum-web-components/avatar": "npm:1.10.0"
-    "@spectrum-web-components/badge": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/breadcrumbs": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/button-group": "npm:1.10.0"
-    "@spectrum-web-components/card": "npm:1.10.0"
-    "@spectrum-web-components/checkbox": "npm:1.10.0"
-    "@spectrum-web-components/clear-button": "npm:1.10.0"
-    "@spectrum-web-components/close-button": "npm:1.10.0"
-    "@spectrum-web-components/coachmark": "npm:1.10.0"
-    "@spectrum-web-components/color-area": "npm:1.10.0"
-    "@spectrum-web-components/color-field": "npm:1.10.0"
-    "@spectrum-web-components/color-handle": "npm:1.10.0"
-    "@spectrum-web-components/color-loupe": "npm:1.10.0"
-    "@spectrum-web-components/color-slider": "npm:1.10.0"
-    "@spectrum-web-components/color-wheel": "npm:1.10.0"
-    "@spectrum-web-components/combobox": "npm:1.10.0"
-    "@spectrum-web-components/contextual-help": "npm:1.10.0"
-    "@spectrum-web-components/dialog": "npm:1.10.0"
-    "@spectrum-web-components/divider": "npm:1.10.0"
-    "@spectrum-web-components/dropzone": "npm:1.10.0"
-    "@spectrum-web-components/field-group": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/grid": "npm:1.10.0"
-    "@spectrum-web-components/help-text": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/iconset": "npm:1.10.0"
-    "@spectrum-web-components/illustrated-message": "npm:1.10.0"
-    "@spectrum-web-components/infield-button": "npm:1.10.0"
-    "@spectrum-web-components/link": "npm:1.10.0"
-    "@spectrum-web-components/menu": "npm:1.10.0"
-    "@spectrum-web-components/meter": "npm:1.10.0"
-    "@spectrum-web-components/modal": "npm:1.10.0"
-    "@spectrum-web-components/number-field": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/picker": "npm:1.10.0"
-    "@spectrum-web-components/picker-button": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/progress-bar": "npm:1.10.0"
-    "@spectrum-web-components/progress-circle": "npm:1.10.0"
-    "@spectrum-web-components/radio": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/search": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/sidenav": "npm:1.10.0"
-    "@spectrum-web-components/slider": "npm:1.10.0"
-    "@spectrum-web-components/split-view": "npm:1.10.0"
-    "@spectrum-web-components/status-light": "npm:1.10.0"
-    "@spectrum-web-components/styles": "npm:1.10.0"
-    "@spectrum-web-components/swatch": "npm:1.10.0"
-    "@spectrum-web-components/switch": "npm:1.10.0"
-    "@spectrum-web-components/table": "npm:1.10.0"
-    "@spectrum-web-components/tabs": "npm:1.10.0"
-    "@spectrum-web-components/tags": "npm:1.10.0"
-    "@spectrum-web-components/textfield": "npm:1.10.0"
-    "@spectrum-web-components/theme": "npm:1.10.0"
-    "@spectrum-web-components/thumbnail": "npm:1.10.0"
-    "@spectrum-web-components/toast": "npm:1.10.0"
-    "@spectrum-web-components/tooltip": "npm:1.10.0"
-    "@spectrum-web-components/top-nav": "npm:1.10.0"
-    "@spectrum-web-components/tray": "npm:1.10.0"
-    "@spectrum-web-components/truncated": "npm:1.10.0"
-    "@spectrum-web-components/underlay": "npm:1.10.0"
-  checksum: 10c0/d5c322d37a4c08f90f8eda99d6010bb54eec4f03b7bc7f6ac880bcc5b6421e0c06f54c377394723915512045dd0547e32ee403fb4bc7502774cc93dd85b21fc6
-  languageName: node
-  linkType: hard
-
-"@spectrum-web-components/bundle@workspace:1st-gen/tools/bundle":
+"@spectrum-web-components/bundle@workspace:*, @spectrum-web-components/bundle@workspace:1st-gen/tools/bundle":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/bundle@workspace:1st-gen/tools/bundle"
   dependencies:
@@ -6102,16 +5873,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/button-group@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/button-group@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-  checksum: 10c0/3139d36ee22fea706b6fc622fc13e28f19b751640c39dc0027e39cb16a283f1eb25ab6bd6fcc606db52dfde9d30671b3e2b850e9ecbb886b7c2162f157f8d3ab
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/button-group@npm:1.11.0, @spectrum-web-components/button-group@workspace:1st-gen/packages/button-group":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/button-group@workspace:1st-gen/packages/button-group"
@@ -6120,22 +5881,6 @@ __metadata:
     "@spectrum-web-components/button": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/clear-button": "npm:1.10.0"
-    "@spectrum-web-components/close-button": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/progress-circle": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/1dc1a0c8408767977b7ebf1b0362fd58f458f518f1815a3762884acaa780e023ae02ed1c4c55b5a2456ca791ff09ef0229494c5f7fd5061c430d7c233ffd42b4
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/button@npm:1.11.0, @spectrum-web-components/button@workspace:1st-gen/packages/button":
   version: 0.0.0-use.local
@@ -6152,22 +5897,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/card@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/card@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/asset": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/checkbox": "npm:1.10.0"
-    "@spectrum-web-components/divider": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/styles": "npm:1.10.0"
-  checksum: 10c0/12aa29b7a2851cd0f058c4cad6d0804fa1e0559f87e5fd3c2b17ccec25191b3c3c38d7e71493d9c8ed3154c7204ce33bf266a964967da69cc0c4ee92aaffad56
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/card@npm:1.11.0, @spectrum-web-components/card@workspace:1st-gen/packages/card":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/card@workspace:1st-gen/packages/card"
@@ -6183,18 +5912,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/checkbox@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/checkbox@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/ab5202cfc40688abb1f0df73360dce63d453d95d9f16aa8f9c4fdbf5ccfc781ce719840aee8aeb2f076d93a422b145e33c109f5201aaaa4ea40c4821dc9de53b
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/checkbox@npm:1.11.0, @spectrum-web-components/checkbox@workspace:1st-gen/packages/checkbox":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/checkbox@workspace:1st-gen/packages/checkbox"
@@ -6206,15 +5923,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/clear-button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/clear-button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/fa2d79a6ba8b14484a0194defef9eb5e37fd5189f8ca8f55c4d9c70b623f500a7d995cda7c01be41c704a33e6c7619dcb2436faa8bdc72c0d04c4a78fc2ebe02
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/clear-button@npm:1.11.0, @spectrum-web-components/clear-button@workspace:1st-gen/packages/clear-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/clear-button@workspace:1st-gen/packages/clear-button"
@@ -6223,15 +5931,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/close-button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/close-button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/b4fd88112902239a9e7029292d369571aaa270bd74874060fab615e1b4305839163910a5ffa45ceae9dce750f7443626857568a8578c7af9f6c5862f4fd7eff4
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/close-button@npm:1.11.0, @spectrum-web-components/close-button@workspace:1st-gen/packages/close-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/close-button@workspace:1st-gen/packages/close-button"
@@ -6239,22 +5938,6 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/coachmark@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/coachmark@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/asset": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/button-group": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/afec8697fa81dfae735782edde8dfe8468fc9061030996981a10b339af46f21febf09f4fc50a4f14394af7773ba4299e4b7f6612f204dbbedff25a89483ad086
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/coachmark@npm:1.11.0, @spectrum-web-components/coachmark@workspace:1st-gen/packages/coachmark":
   version: 0.0.0-use.local
@@ -6272,19 +5955,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-area@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-area@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/color-handle": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/fbf346b26c0302ad7c11c7c17df35ffc66288800b8370adac56b53d37ace59d2a262d0858bd31ac9c2cee64f0a1e68da5d9ac3fd11033990045e47a5d38e3948
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/color-area@npm:1.11.0, @spectrum-web-components/color-area@workspace:1st-gen/packages/color-area":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-area@workspace:1st-gen/packages/color-area"
@@ -6297,17 +5967,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-field@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-field@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/color-handle": "npm:1.10.0"
-    "@spectrum-web-components/textfield": "npm:1.10.0"
-  checksum: 10c0/b1a60a81c5aef3ccf5afd670a3de6e3b972f4d1cfa0f3f59a10af689ba81be713c5dc559ca419a0f124dae73ee79befb22cc7eb41069ddffb5d87c48949ddddb
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/color-field@npm:1.11.0, @spectrum-web-components/color-field@workspace:1st-gen/packages/color-field":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-field@workspace:1st-gen/packages/color-field"
@@ -6317,17 +5976,6 @@ __metadata:
     "@spectrum-web-components/textfield": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/color-handle@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-handle@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/color-loupe": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-  checksum: 10c0/d0436e1096922c5f52547aede0e4c8932044a49c4c94144856453223ca4cd01263cb940dc7b06302f1910aa0ad064850e0d2120ee2c3aa0de2b58e91bce42d16
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/color-handle@npm:1.11.0, @spectrum-web-components/color-handle@workspace:1st-gen/packages/color-handle":
   version: 0.0.0-use.local
@@ -6339,16 +5987,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-loupe@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-loupe@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-  checksum: 10c0/d336aa9b148d9c671851da54f087c0cecf0995daf27f3d44f9c9aa3b507ca467ba17e373d26710515922abf43e3c31b1907edb1a1b64a9492c12f036219ab131
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/color-loupe@npm:1.11.0, @spectrum-web-components/color-loupe@workspace:1st-gen/packages/color-loupe":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-loupe@workspace:1st-gen/packages/color-loupe"
@@ -6357,19 +5995,6 @@ __metadata:
     "@spectrum-web-components/opacity-checkerboard": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/color-slider@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-slider@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/color-handle": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/0a311e40c2edc868904a9749856293927af88a4dfdfc7c7d49e49d7eb62cd5ad8cd0ff92d365707e431e31652af44164877ce7e9e36d1ae44d8a31d0c91397d1
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/color-slider@npm:1.11.0, @spectrum-web-components/color-slider@workspace:1st-gen/packages/color-slider":
   version: 0.0.0-use.local
@@ -6383,18 +6008,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/color-wheel@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/color-wheel@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/color-handle": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/aaaffa48ef768e6ae309c33da01d8f0cd3e02db5e72eba00a24aee0449f98cb4571c39902d5a2247d49159bf3aec0cf72e33b6837d0e503ab8b9aadc60e98989
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/color-wheel@npm:1.11.0, @spectrum-web-components/color-wheel@workspace:1st-gen/packages/color-wheel":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/color-wheel@workspace:1st-gen/packages/color-wheel"
@@ -6405,25 +6018,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/combobox@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/combobox@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/menu": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/picker-button": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/progress-circle": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/textfield": "npm:1.10.0"
-  checksum: 10c0/1dc91fad991909cf1ea6af5a77ee18cd02bfe8924a4463571418b14f3fe7e84eb8add86f0f0c93d79c4a7b6d3a5087b0ce4e28eb075e16741e265da044b63095
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/combobox@npm:1.11.0, @spectrum-web-components/combobox@workspace:1st-gen/packages/combobox":
   version: 0.0.0-use.local
@@ -6443,21 +6037,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/contextual-help@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/contextual-help@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/dialog": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-  checksum: 10c0/6758f0bb679fc7891c2e71d45782e0ac5c5bdb37f950bdc81b56d432e70bd05a77f7a9a76a0ac7a5b0aeda30190877339cd0fdc2cbc3c5cf529b8cdf555f0e54
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/contextual-help@npm:1.11.0, @spectrum-web-components/contextual-help@workspace:1st-gen/packages/contextual-help":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/contextual-help@workspace:1st-gen/packages/contextual-help"
@@ -6472,15 +6051,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/core@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@spectrum-web-components/core@npm:0.0.1"
-  dependencies:
-    lit: "npm:^2.5.0 || ^3.1.3"
-  checksum: 10c0/5e6f034b374556aa7009f801b8812d774daf3e9f6ea825b3710a4691c401cdf2c5d4385d0f7714d702ce0607eea77ff0b235589ff2f190017cfeaf31560b25f9
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/core@npm:0.0.2, @spectrum-web-components/core@workspace:2nd-gen/packages/core":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/core@workspace:2nd-gen/packages/core"
@@ -6494,7 +6064,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/custom-vars-viewer@npm:1.10.0, @spectrum-web-components/custom-vars-viewer@workspace:1st-gen/projects/css-custom-vars-viewer":
+"@spectrum-web-components/custom-vars-viewer@workspace:*, @spectrum-web-components/custom-vars-viewer@workspace:1st-gen/projects/css-custom-vars-viewer":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/custom-vars-viewer@workspace:1st-gen/projects/css-custom-vars-viewer"
   dependencies:
@@ -6507,7 +6077,7 @@ __metadata:
     "@spectrum-web-components/link": "npm:1.11.0"
     "@spectrum-web-components/menu": "npm:1.11.0"
     "@spectrum-web-components/picker": "npm:1.11.0"
-    "@spectrum-web-components/story-decorator": "npm:1.10.0"
+    "@spectrum-web-components/story-decorator": "workspace:*"
     "@spectrum-web-components/styles": "npm:1.11.0"
     "@spectrum-web-components/swatch": "npm:1.11.0"
     "@spectrum-web-components/table": "npm:1.11.0"
@@ -6534,23 +6104,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/dialog@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/dialog@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/alert-dialog": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/button-group": "npm:1.10.0"
-    "@spectrum-web-components/divider": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/modal": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/underlay": "npm:1.10.0"
-  checksum: 10c0/026b40ec0f8ba457d4f2098a865c3cd87060644de4be6b2e3c11184324316c53dad0e73b88fd098ebb96930d4208158e800ff97540f0800bd8d80ae8222b39a6
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/dialog@npm:1.11.0, @spectrum-web-components/dialog@workspace:1st-gen/packages/dialog":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/dialog@workspace:1st-gen/packages/dialog"
@@ -6567,16 +6120,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/divider@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/divider@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-  checksum: 10c0/20bc1fb8544690ea8dc2ea3728b1e24aad58bc32ae55cb1b563330c6a1c42e4bc4f9ebafafefe1b5b7452539ccf8a9cefb0dd1edb2beae3d0016dd9cb364cf9d
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/divider@npm:1.11.0, @spectrum-web-components/divider@workspace:1st-gen/packages/divider":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/divider@workspace:1st-gen/packages/divider"
@@ -6585,15 +6128,6 @@ __metadata:
     "@spectrum-web-components/core": "npm:0.0.2"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/dropzone@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/dropzone@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/c8a2b4942c2c4f7de25997697caa56784176a96cb887a8d108187faff61155d5cedd82c2295fc3ebe49913237531417e2444fb78c0beaab0faeb5800f264cb5b
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/dropzone@npm:1.11.0, @spectrum-web-components/dropzone@workspace:1st-gen/packages/dropzone":
   version: 0.0.0-use.local
@@ -6616,16 +6150,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/field-group@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/field-group@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/help-text": "npm:1.10.0"
-  checksum: 10c0/eebcbe3755fe5cc03eb53444ca2090c2f0ecd99e6bc70d4ebdb854917ab9e22032eca5624764a2b72198f375350a5d6aac6e7ceeff7eb975bc541b0502bd7d7e
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/field-group@npm:1.11.0, @spectrum-web-components/field-group@workspace:1st-gen/packages/field-group":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/field-group@workspace:1st-gen/packages/field-group"
@@ -6634,19 +6158,6 @@ __metadata:
     "@spectrum-web-components/help-text": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/field-label@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/field-label@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/50a905d9986771368e89231192fae36f7f9212c947a6ae83498adafc074523e32a98ddae53fc6a11019ba8f0013855e3a2daa546f4b3a16e6dfb286a4c2ae410
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/field-label@npm:1.11.0, @spectrum-web-components/field-label@workspace:1st-gen/packages/field-label":
   version: 0.0.0-use.local
@@ -6660,19 +6171,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/grid@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/grid@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@lit-labs/virtualizer": "npm:2.0.12"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    lit: "npm:^2.5.0 || ^3.1.3"
-  checksum: 10c0/586b09434a6534eab3e8b57fd632004823c90436d756daa7b3ebcb2f824c19590cf9ca4c564dc00cc7e9c9f4bbaa1ca7453089ea0283e7f96e1103f36874738b
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/grid@npm:1.11.0, @spectrum-web-components/grid@workspace:1st-gen/tools/grid":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/grid@workspace:1st-gen/tools/grid"
@@ -6685,17 +6183,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/help-text@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/help-text@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/e75d69acd11767d3924e106f08a38918d60e94b3da661efc8fb1caf944b0cface06f6206347e654f120567de733ce7910f823cce57a7d1ec466d85f5c2ecb6dc
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/help-text@npm:1.11.0, @spectrum-web-components/help-text@workspace:1st-gen/packages/help-text":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/help-text@workspace:1st-gen/packages/help-text"
@@ -6706,17 +6193,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icon@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/icon@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/iconset": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-  checksum: 10c0/beedde787ba12749e4e9777be9135af26cb7ef0a50373de71439634aea2ff1369249d2d4719302648b3f266c096a535e4a800bbbca43b1b3bc19022b1093a8e2
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/icon@npm:1.11.0, @spectrum-web-components/icon@workspace:1st-gen/packages/icon":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icon@workspace:1st-gen/packages/icon"
@@ -6726,17 +6202,6 @@ __metadata:
     "@spectrum-web-components/reactive-controllers": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/icons-ui@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/icons-ui@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/iconset": "npm:1.10.0"
-  checksum: 10c0/b6eb99491f2af0cb4387094e01abda827121bcc4a7bd081e101e4b265c6a7a736ccfa602043b9d7014ec521dded0134e7649be5a7a3328397c2f2dd34c7b13cb
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/icons-ui@npm:1.11.0, @spectrum-web-components/icons-ui@workspace:1st-gen/packages/icons-ui":
   version: 0.0.0-use.local
@@ -6754,16 +6219,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons-workflow@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/icons-workflow@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-  checksum: 10c0/e3b24f6d24d30eeee1c330b7eaf7528cd9880d0449e2525f99ba0b866aab9e9d295892ced3f8b6848fa0114058d32556f5aa58731555a77e98410cf83141ec59
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/icons-workflow@npm:1.11.0, @spectrum-web-components/icons-workflow@workspace:1st-gen/packages/icons-workflow":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons-workflow@workspace:1st-gen/packages/icons-workflow"
@@ -6779,16 +6234,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/icons@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/icons@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/iconset": "npm:1.10.0"
-  checksum: 10c0/0c67d7a9a93b7be447667a463e5f628de15ee18b7d71d2ba6740a5b9eac5ddf95b69f07dfdc8a7757cd0ad3a3c8bc3a2402e6068fde0bd59c695469f1b1132ac
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/icons@npm:1.11.0, @spectrum-web-components/icons@workspace:1st-gen/packages/icons":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/icons@workspace:1st-gen/packages/icons"
@@ -6798,15 +6243,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/iconset@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/iconset@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/15739f681ba1877ab53b41a4a9dec0e46e4d1e3253fe41fc7659764c6b2fe9b344104932be716893da4dfc7b8cd6d5cd0734721b6ea9c0e8f3fdee15e41fe57c
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/iconset@npm:1.11.0, @spectrum-web-components/iconset@workspace:1st-gen/packages/iconset":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/iconset@workspace:1st-gen/packages/iconset"
@@ -6814,16 +6250,6 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/illustrated-message@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/illustrated-message@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/styles": "npm:1.10.0"
-  checksum: 10c0/bf0dee9fd4ecca7bb8d020eacdd4c0999cb1e20969ae087c44a3f96448ced1db09478f00fb35178ab326855d875d51ee8a059585ce52f3dd3e224a617f6d3640
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/illustrated-message@npm:1.11.0, @spectrum-web-components/illustrated-message@workspace:1st-gen/packages/illustrated-message":
   version: 0.0.0-use.local
@@ -6834,16 +6260,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/infield-button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/infield-button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-  checksum: 10c0/e5d2145fda641cd30466eeda6bf327187b485954afab6be9a24b5dbf8d7b0b05f85fba36bf5bcc9f7b07fdd20d769de0ffcc9a298172bb4733ec5166369d30b7
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/infield-button@npm:1.11.0, @spectrum-web-components/infield-button@workspace:1st-gen/packages/infield-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/infield-button@workspace:1st-gen/packages/infield-button"
@@ -6853,16 +6269,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/link@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/link@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/1f40d630fb6eab597bd84cab18c24322bb0b292ad0e7492128d9cb432da988e873d8433f0e7c2ed6ab06073b0aa97a7021f687f4a106bd5dc65afc3e336bdda3
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/link@npm:1.11.0, @spectrum-web-components/link@workspace:1st-gen/packages/link":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/link@workspace:1st-gen/packages/link"
@@ -6871,24 +6277,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/menu@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/menu@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/divider": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/61855898ec4bef85edae98abcfe5de8125da624cfe26ee90dcdd01ce5b350326d6c8e1715e91b948c92ece92b39b3a6a27389f8d2712737c2006b1d92b66d37c
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/menu@npm:1.11.0, @spectrum-web-components/menu@workspace:1st-gen/packages/menu":
   version: 0.0.0-use.local
@@ -6907,18 +6295,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/meter@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/meter@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/fda56045bb9bf1f0efbc83722931578e8f079d08155a9c2921cda4c7d7538b5bc92f815063f05ce0aab35e0889b81ab8ef1e447bcc1fd01b93608195469195a7
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/meter@npm:1.11.0, @spectrum-web-components/meter@workspace:1st-gen/packages/meter":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/meter@workspace:1st-gen/packages/meter"
@@ -6930,15 +6306,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/modal@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/modal@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/66240665fe7dbcec5c8bf59ff98ea66c11624ef8754a38688aeb806826be9ca8aad39980f88d9038b42c33eb9c90916aaf81e86473ee7f4c687bd1f1e6b6fb66
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/modal@npm:1.11.0, @spectrum-web-components/modal@workspace:1st-gen/packages/modal":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/modal@workspace:1st-gen/packages/modal"
@@ -6946,22 +6313,6 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/number-field@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/number-field@npm:1.10.0"
-  dependencies:
-    "@internationalized/number": "npm:3.6.5"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/infield-button": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/textfield": "npm:1.10.0"
-  checksum: 10c0/5881834bb891df4d8c7fd7e403ec35bf9ef6b4245a6779fdf2c9836a42518e510d8e2b8b34448ddaaefc62cf3f4c3e38d1641ec81a0f29932dc21fc425b7afc6
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/number-field@npm:1.11.0, @spectrum-web-components/number-field@workspace:1st-gen/packages/number-field":
   version: 0.0.0-use.local
@@ -6979,15 +6330,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/opacity-checkerboard@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/opacity-checkerboard@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/fb34c8ba86dc1e11e011dd1e6b0b2b5745d4983c92960b4e59fe23f9650f8dc7f047d03be6cc59503d51a52a6742c95c32e42c48c283c3353f645daa818bca2c
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/opacity-checkerboard@npm:1.11.0, @spectrum-web-components/opacity-checkerboard@workspace:1st-gen/tools/opacity-checkerboard":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/opacity-checkerboard@workspace:1st-gen/tools/opacity-checkerboard"
@@ -6995,22 +6337,6 @@ __metadata:
     "@spectrum-web-components/base": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/overlay@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/overlay@npm:1.10.0"
-  dependencies:
-    "@floating-ui/dom": "npm:1.7.4"
-    "@floating-ui/utils": "npm:0.2.10"
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/theme": "npm:1.10.0"
-    focus-trap: "npm:7.6.5"
-  checksum: 10c0/27104d7fef16781c74e8856dfdf74327f73a6d042ce7a3ba57e80f364b2171b7ab3398a4cb30f39fcb91b0606887a9b81b3a4f67446a2dc3714a894ac3c1e50b
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/overlay@npm:1.11.0, @spectrum-web-components/overlay@workspace:1st-gen/packages/overlay":
   version: 0.0.0-use.local
@@ -7027,19 +6353,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/picker-button@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/picker-button@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/d7b19f0835b17553b64e36d89cef452483e4358dbf9d93707f895a0ae8e2e0a351b80c471144325d4c24bd936d26d884bcd25eacedb594c7a40b09cf1ca72ed6
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/picker-button@npm:1.11.0, @spectrum-web-components/picker-button@workspace:1st-gen/packages/picker-button":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/picker-button@workspace:1st-gen/packages/picker-button"
@@ -7051,28 +6364,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/picker@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/picker@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/menu": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/popover": "npm:1.10.0"
-    "@spectrum-web-components/progress-circle": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/tooltip": "npm:1.10.0"
-    "@spectrum-web-components/tray": "npm:1.10.0"
-  checksum: 10c0/aaf377640692981f31220b41ee6b344780054f9a0d9a8450a94e70e22367b916f1858502273b42fceac01e72edd1e42df3f87911a3a289664b0b7b116fee269e
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/picker@npm:1.11.0, @spectrum-web-components/picker@workspace:1st-gen/packages/picker":
   version: 0.0.0-use.local
@@ -7095,16 +6386,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/popover@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/popover@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-  checksum: 10c0/183025bc49d1cf859032679e74da07dbf90118b044a491068974a823a1247facd30edbb3177338e301f065a7d80c4ab65ac1cc02c69afb820a857eca6d3c1d52
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/popover@npm:1.11.0, @spectrum-web-components/popover@workspace:1st-gen/packages/popover":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/popover@workspace:1st-gen/packages/popover"
@@ -7113,18 +6394,6 @@ __metadata:
     "@spectrum-web-components/overlay": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/progress-bar@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/progress-bar@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/dad4352020302668ae5fa50f7d01fb66e7cecace078a39d106a2ec7b13ced894aa7240eb6074c5afef0ea468cb9cfb4dd1910d1eed72e7cfdc7b6f13ced2bfa6
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/progress-bar@npm:1.11.0, @spectrum-web-components/progress-bar@workspace:1st-gen/packages/progress-bar":
   version: 0.0.0-use.local
@@ -7137,17 +6406,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/progress-circle@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/progress-circle@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/0ef929939bb0d28c91a2820e5025a4aabeb3ff4b9c1dd8e65521ce210d08cd61f6cc63019d48408fe07cae0b12ffa55984657225fddc3bf2aff14d034b603b92
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/progress-circle@npm:1.11.0, @spectrum-web-components/progress-circle@workspace:1st-gen/packages/progress-circle":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/progress-circle@workspace:1st-gen/packages/progress-circle"
@@ -7157,19 +6415,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/radio@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/radio@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/field-group": "npm:1.10.0"
-    "@spectrum-web-components/help-text": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/c5a0d464508d041c671d4081a8f772987d2042d28e34047072771a6b520e99395d94b34a8aa9e42e27729f8b9fc935fb77c70033c9da0d8162d9e61599befcf0
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/radio@npm:1.11.0, @spectrum-web-components/radio@workspace:1st-gen/packages/radio":
   version: 0.0.0-use.local
@@ -7183,17 +6428,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/reactive-controllers@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/reactive-controllers@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/progress-circle": "npm:1.10.0"
-    colorjs.io: "npm:0.5.2"
-    lit: "npm:^2.5.0 || ^3.1.3"
-  checksum: 10c0/fa0e0084f370964ece23d9eb43a9e72038d4275fd8de20df490327913891fdb7ef2e123d4d0b55b609beb346a1280eb71d1b952f618640f07b14ceb05e9dffe2
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/reactive-controllers@npm:1.11.0, @spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/reactive-controllers@workspace:1st-gen/tools/reactive-controllers"
@@ -7203,19 +6437,6 @@ __metadata:
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/search@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/search@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/textfield": "npm:1.10.0"
-  checksum: 10c0/1860c723785c03b135b1e29ac342b81dd60e9a90edaa5d58fa64eda5b81ea005c93f5ebbd00eaccf552b41be9b39b35840d476227c82f7b5b29f94f96de66ca1
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/search@npm:1.11.0, @spectrum-web-components/search@workspace:1st-gen/packages/search":
   version: 0.0.0-use.local
@@ -7229,17 +6450,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/shared@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/shared@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    focus-visible: "npm:5.2.1"
-  checksum: 10c0/f5158c4c406e9ee9305aad3c32033e46cd08f8728aaf5a3b503142b37b4fbd2e039798ee2f692e50517e2358bacfc8bab15cf0926403fde1da98894a835047de
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/shared@npm:1.11.0, @spectrum-web-components/shared@workspace:1st-gen/tools/shared":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/shared@workspace:1st-gen/tools/shared"
@@ -7250,17 +6460,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/sidenav@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/sidenav@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/534f99e6e0155e69fbd2af6063179c7b553ffdf6377358d48a4b9b980e44be26d9a1df6be37cdbfb32cbbf8e7e046fa58c2ff45aee55c679441c1ceb11c6cae6
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/sidenav@npm:1.11.0, @spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/sidenav@workspace:1st-gen/packages/sidenav"
@@ -7270,22 +6469,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/slider@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/slider@npm:1.10.0"
-  dependencies:
-    "@internationalized/number": "npm:3.6.5"
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/field-label": "npm:1.10.0"
-    "@spectrum-web-components/number-field": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/theme": "npm:1.10.0"
-  checksum: 10c0/95322af868626310a7002a9c1b63d146bcac47f83d80f1d55a30b800ce2b43ec47730084cce86e392b3be0f9a49d701310e0c21e2b8e3a686a4181a86b735c03
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/slider@npm:1.11.0, @spectrum-web-components/slider@workspace:1st-gen/packages/slider":
   version: 0.0.0-use.local
@@ -7302,16 +6485,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/split-view@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/split-view@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/0c557c6cb4ddf43880c78b9623c1f7cdd55dd5d17f9a88aa5d9dcfa0ec1c1be3acce67d14f17d7c27dd629e83134c6ba2620b4bf55cc447928b3a668e324e4a5
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/split-view@npm:1.11.0, @spectrum-web-components/split-view@workspace:1st-gen/packages/split-view":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/split-view@workspace:1st-gen/packages/split-view"
@@ -7320,16 +6493,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/status-light@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/status-light@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-  checksum: 10c0/a5dab13678174722c4ba049c4044b654998cc89298461d40b06033b9f82cd9cc7d9de3d8f53bdd50d040e1add318ea6a1440f5fa80d67353ba24ff457358b161
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/status-light@npm:1.11.0, @spectrum-web-components/status-light@workspace:1st-gen/packages/status-light":
   version: 0.0.0-use.local
@@ -7340,7 +6503,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/story-decorator@npm:1.10.0, @spectrum-web-components/story-decorator@workspace:1st-gen/projects/story-decorator":
+"@spectrum-web-components/story-decorator@workspace:*, @spectrum-web-components/story-decorator@workspace:1st-gen/projects/story-decorator":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/story-decorator@workspace:1st-gen/projects/story-decorator"
   dependencies:
@@ -7357,16 +6520,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/styles@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/styles@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    lit: "npm:^2.5.0 || ^3.1.3"
-  checksum: 10c0/3ac07ea303e8d44972e5274caa42528437998e66eda400b0a41377642ade7a9db11eaa9e0511e63fbcf73b6aabc35e8eb4968f455b4420acd4cb23a2171443c3
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/styles@npm:1.11.0, @spectrum-web-components/styles@workspace:1st-gen/tools/styles":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/styles@workspace:1st-gen/tools/styles"
@@ -7375,21 +6528,6 @@ __metadata:
     lit: "npm:^2.5.0 || ^3.1.3"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/swatch@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/swatch@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/a0b1d6b784941aacc92e5142e115973f18e5253d0ebb0563c3e1082766450efbed0a844579fce56179418e92d14190f0c501a9e6a95cadb8c073021284c0cc75
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/swatch@npm:1.11.0, @spectrum-web-components/swatch@workspace:1st-gen/packages/swatch":
   version: 0.0.0-use.local
@@ -7405,16 +6543,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/switch@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/switch@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/checkbox": "npm:1.10.0"
-  checksum: 10c0/b57a092c15a723cb4d9c67bfc452c1817a854041620c0a38b0f192e61da926d99098525bed35e364760f8b11c8f3737fcde612b5d3ba257d2114fa61d2017656
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/switch@npm:1.11.0, @spectrum-web-components/switch@workspace:1st-gen/packages/switch":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/switch@workspace:1st-gen/packages/switch"
@@ -7423,20 +6551,6 @@ __metadata:
     "@spectrum-web-components/checkbox": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/table@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/table@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@lit-labs/virtualizer": "npm:2.0.12"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/checkbox": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-  checksum: 10c0/bb8beaddddc3f65ebf388856dae2284b6eeaf7902189f5ed2ede1470ede6808dd8f9a927ae84b68847d1783b7770f5dae7b61bc9cd45f808dacad89cf4fb35fe
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/table@npm:1.11.0, @spectrum-web-components/table@workspace:1st-gen/packages/table":
   version: 0.0.0-use.local
@@ -7450,21 +6564,6 @@ __metadata:
     "@spectrum-web-components/icons-ui": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/tabs@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/tabs@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/action-button": "npm:1.10.0"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/d12ebb74df91ae1eeaed1c66b81672843dacf2b72f17800c9bb22381a2f9afa543270e0e90d022033169c8d3e9fe8e71bf91c55aaadfeece2140a7284aea7956
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/tabs@npm:1.11.0, @spectrum-web-components/tabs@workspace:1st-gen/packages/tabs":
   version: 0.0.0-use.local
@@ -7480,18 +6579,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tags@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/tags@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/f6d6bf864214d1309f7170629cc5d580f5a388b9317121a099eae1c7c2732d7ea11c75213d77ee6911c984c1822dea2bba96d1fa6d80297e35e3953837b0b782
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/tags@npm:1.11.0, @spectrum-web-components/tags@workspace:1st-gen/packages/tags":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tags@workspace:1st-gen/packages/tags"
@@ -7502,20 +6589,6 @@ __metadata:
     "@spectrum-web-components/shared": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/textfield@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/textfield@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/help-text": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-ui": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/5faadf6541c60a1f8290e1290c13318ee764be6b39c984eac96ba2c7bafb478b4b0e57781b0149ccbebc3a647dec02bef39949de06267559b5271889fb6266a9
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/textfield@npm:1.11.0, @spectrum-web-components/textfield@workspace:1st-gen/packages/textfield":
   version: 0.0.0-use.local
@@ -7530,17 +6603,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/theme@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/theme@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/core": "npm:0.0.1"
-    "@spectrum-web-components/styles": "npm:1.10.0"
-  checksum: 10c0/ffb5b09f928efe04f1704bca7a44f372c50a7a809404427d1c18e669032f853fa6eedb239f4f25350767707f11b9baaba6291a39268bf8b0e1f8ae16dd987fd2
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/theme@npm:1.11.0, @spectrum-web-components/theme@workspace:1st-gen/tools/theme":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/theme@workspace:1st-gen/tools/theme"
@@ -7551,16 +6613,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/thumbnail@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/thumbnail@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/opacity-checkerboard": "npm:1.10.0"
-  checksum: 10c0/5cc73c72300faced328c95ba9c4ba88ba53f01c7dfc897d10b96b77fb563c3c3d330596f1b4bdad1ecc956a79ffc1abc6cdc28ced5059944630f7ecf7b97f7a4
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/thumbnail@npm:1.11.0, @spectrum-web-components/thumbnail@workspace:1st-gen/packages/thumbnail":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/thumbnail@workspace:1st-gen/packages/thumbnail"
@@ -7569,19 +6621,6 @@ __metadata:
     "@spectrum-web-components/opacity-checkerboard": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/toast@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/toast@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/button": "npm:1.10.0"
-    "@spectrum-web-components/icon": "npm:1.10.0"
-    "@spectrum-web-components/icons-workflow": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/186903d3d6b4b18fb50898af6190c728685485d4470e5870f3c154700472da1e4b923f70d012daddec3b3a6b540dcaf84abdf6d0015f9c2f14088967c79553f6
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/toast@npm:1.11.0, @spectrum-web-components/toast@workspace:1st-gen/packages/toast":
   version: 0.0.0-use.local
@@ -7595,18 +6634,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/tooltip@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/tooltip@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-  checksum: 10c0/e5049408aef6b4fd4249964f578e1c124a8c6396201d01def9e7319728d6285dfe2b13fc41d04553b016cc0903b97860045759b030cf5bac507a24f0fd189be8
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/tooltip@npm:1.11.0, @spectrum-web-components/tooltip@workspace:1st-gen/packages/tooltip":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/tooltip@workspace:1st-gen/packages/tooltip"
@@ -7618,18 +6645,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/top-nav@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/top-nav@npm:1.10.0"
-  dependencies:
-    "@lit-labs/observers": "npm:2.0.2"
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/tabs": "npm:1.10.0"
-  checksum: 10c0/741499720649f50f9673f9cd799caad3f4b8809bb855daed25fb6dc59f6b15131b5bb76e25adf2dc911c939ebadc52062e883eb565f5fdc667bed24163f36f69
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/top-nav@npm:1.11.0, @spectrum-web-components/top-nav@workspace:1st-gen/packages/top-nav":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/top-nav@workspace:1st-gen/packages/top-nav"
@@ -7640,19 +6655,6 @@ __metadata:
     "@spectrum-web-components/tabs": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/tray@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/tray@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/modal": "npm:1.10.0"
-    "@spectrum-web-components/reactive-controllers": "npm:1.10.0"
-    "@spectrum-web-components/shared": "npm:1.10.0"
-    "@spectrum-web-components/underlay": "npm:1.10.0"
-  checksum: 10c0/4b28ddc2d690697c386d96282fcd0dd3327687a126f1d2f96c3a07f7445f7360c15c8b1310d29f54a8b3517a801be9fb35c4517872b9302180d28f86944dc209
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/tray@npm:1.11.0, @spectrum-web-components/tray@workspace:1st-gen/packages/tray":
   version: 0.0.0-use.local
@@ -7666,18 +6668,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@spectrum-web-components/truncated@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/truncated@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-    "@spectrum-web-components/overlay": "npm:1.10.0"
-    "@spectrum-web-components/styles": "npm:1.10.0"
-    "@spectrum-web-components/tooltip": "npm:1.10.0"
-  checksum: 10c0/4722853602244397f5ffd4a7341c9e5d9c9ccf3cdc8ace79573365d7d046ac4717e019f7de9e0db31b9da6ece9da76309979e0ab661ffd6d6d9fbe4090d0db89
-  languageName: node
-  linkType: hard
-
 "@spectrum-web-components/truncated@npm:1.11.0, @spectrum-web-components/truncated@workspace:1st-gen/tools/truncated":
   version: 0.0.0-use.local
   resolution: "@spectrum-web-components/truncated@workspace:1st-gen/tools/truncated"
@@ -7688,15 +6678,6 @@ __metadata:
     "@spectrum-web-components/tooltip": "npm:1.11.0"
   languageName: unknown
   linkType: soft
-
-"@spectrum-web-components/underlay@npm:1.10.0":
-  version: 1.10.0
-  resolution: "@spectrum-web-components/underlay@npm:1.10.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:1.10.0"
-  checksum: 10c0/b26221b443c9d624a81a692e612090ccbf5e88c72eacd68742b7727e27121e83744bc1789cd8e64ed055986d84b9fae7f73d6e31fe8df80fd9761c7709b1ff52
-  languageName: node
-  linkType: hard
 
 "@spectrum-web-components/underlay@npm:1.11.0, @spectrum-web-components/underlay@workspace:1st-gen/packages/underlay":
   version: 0.0.0-use.local
@@ -14964,8 +13945,8 @@ __metadata:
     "@rollup/plugin-json": "npm:6.1.0"
     "@rollup/plugin-node-resolve": "npm:15.3.1"
     "@rollup/plugin-replace": "npm:^6.0.2"
-    "@spectrum-web-components/bundle": "npm:1.10.0"
-    "@spectrum-web-components/custom-vars-viewer": "npm:1.10.0"
+    "@spectrum-web-components/bundle": "workspace:*"
+    "@spectrum-web-components/custom-vars-viewer": "workspace:*"
     "@toycode/markdown-it-class": "npm:1.2.4"
     "@types/lunr": "npm:2.3.7"
     "@types/prismjs": "npm:1.26.5"
