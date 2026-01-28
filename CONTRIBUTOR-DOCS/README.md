@@ -26,6 +26,7 @@
     - [Authoring contributor docs](01_contributor-guides/07_authoring-contributor-docs/README.md)
     - [Patching dependencies](01_contributor-guides/08_patching-dependencies.md)
     - [Accessibility testing](01_contributor-guides/09_accessibility-testing.md)
+    - [TypeScript configuration](01_contributor-guides/10_typescript-configuration.md)
 - [Style guide](02_style-guide/README.md)
     - [2nd-Gen CSS](02_style-guide/01_css/README.md)
 - [Project planning](03_project-planning/README.md)
