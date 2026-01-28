@@ -317,14 +317,14 @@ The most significant change is the complete removal of the `.spectrum-Tooltip-ty
 | `.spectrum-Tooltip.is-open`                                                              | `open` attribute                        | Implemented      |
 | `.spectrum-Tooltip:lang(ja)`, `.spectrum-Tooltip:lang(ko)`, `.spectrum-Tooltip:lang(zh)` | Language-specific styling               | Implemented      |
 | `.spectrum-Tooltip p`                                                                    | Paragraph styling within tooltip        | Implemented      |
-| `.spectrum-Tooltip--bottom-left`                                                         |                                         | Missing from WC  |
-| `.spectrum-Tooltip--bottom-right`                                                        |                                         | Missing from WC  |
-| `.spectrum-Tooltip--top-left`                                                            |                                         | Missing from WC  |
-| `.spectrum-Tooltip--top-right`                                                           |                                         | Missing from WC  |
-| `.spectrum-Tooltip--left-bottom`                                                         |                                         | Missing from WC  |
-| `.spectrum-Tooltip--left-top`                                                            |                                         | Missing from WC  |
-| `.spectrum-Tooltip--right-bottom`                                                        |                                         | Missing from WC  |
-| `.spectrum-Tooltip--right-top`                                                           |                                         | Missing from WC  |
+| `.spectrum-Tooltip--bottom-left`                                                         | `placement="bottom-start"` (logical)    | Implemented      |
+| `.spectrum-Tooltip--bottom-right`                                                        | `placement="bottom-end"` (logical)      | Implemented      |
+| `.spectrum-Tooltip--top-left`                                                            | `placement="top-start"` (logical)       | Implemented      |
+| `.spectrum-Tooltip--top-right`                                                           | `placement="top-end"` (logical)         | Implemented      |
+| `.spectrum-Tooltip--left-top`                                                            | `placement="left-start"` (logical)      | Implemented      |
+| `.spectrum-Tooltip--left-bottom`                                                         | `placement="left-end"` (logical)        | Implemented      |
+| `.spectrum-Tooltip--right-top`                                                           | `placement="right-start"` (logical)     | Implemented      |
+| `.spectrum-Tooltip--right-bottom`                                                        | `placement="right-end"` (logical)       | Implemented      |
 | `.spectrum-Tooltip--start`                                                               |                                         | Missing from WC  |
 | `.spectrum-Tooltip--start-top`                                                           |                                         | Missing from WC  |
 | `.spectrum-Tooltip--start-bottom`                                                        |                                         | Missing from WC  |
@@ -344,10 +344,24 @@ The most significant change is the complete removal of the `.spectrum-Tooltip-ty
 
 ### CSS => SWC implementation gaps
 
+**Physical vs logical property naming:**
+
+CSS uses physical property names (`left`, `right`, `top`, `bottom`) while WC uses logical property names (`start`, `end`) for secondary positioning. These are functionally equivalent:
+
+- `.spectrum-Tooltip--bottom-left` → `placement="bottom-start"`
+- `.spectrum-Tooltip--bottom-right` → `placement="bottom-end"`
+- `.spectrum-Tooltip--top-left` → `placement="top-start"`
+- `.spectrum-Tooltip--top-right` → `placement="top-end"`
+- `.spectrum-Tooltip--left-top` → `placement="left-start"`
+- `.spectrum-Tooltip--left-bottom` → `placement="left-end"`
+- `.spectrum-Tooltip--right-top` → `placement="right-start"`
+- `.spectrum-Tooltip--right-bottom` → `placement="right-end"`
+
+Logical properties provide better RTL (right-to-left) language support by automatically adapting to text direction.
+
 **Missing from WC:**
 
-- Legacy placement values: `bottom-left`, `bottom-right`, `top-left`, `top-right`, `left-bottom`, `left-top`, `right-bottom`, `right-top`
-- Logical placement values: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
+- Pure logical placement values: `start`, `start-top`, `start-bottom`, `end`, `end-top`, `end-bottom`
 
 **Missing from CSS:**
 
@@ -362,8 +376,6 @@ The most significant change is the complete removal of the `.spectrum-Tooltip-ty
 **Deprecated:**
 
 - `.spectrum-Tooltip--positive` variant was removed in Spectrum 2
-
-The missing placement values in WC use legacy naming conventions. Spectrum 2 standardizes on `-start` and `-end` suffixes instead of `-left`/`-right`, and adds logical placement options (`start`/`end`) for better RTL support.
 
 ### CSS Spectrum 2 changes
 
