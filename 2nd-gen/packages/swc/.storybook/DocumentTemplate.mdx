@@ -9,12 +9,7 @@ import {
     Subtitle,
     useOf,
 } from '@storybook/addon-docs/blocks';
-import {
-    GettingStarted,
-    SpectrumDocs,
-    SpectrumStories,
-    OverviewStory,
-} from './blocks';
+import { GettingStarted, SpectrumStories, OverviewStory } from './blocks';
 
 export const checkIsSingleStory = () => {
     const resolvedOf = useOf('meta', ['meta']);
@@ -40,6 +35,25 @@ export const AdvancedExamplesStories = () => {
 
 }
 
+export const ConditionalSection = ({ tag, title, hideTitle = false }) => {
+    const resolvedOf = useOf('meta', ['meta']);
+    const hasStories = Object.values(resolvedOf.csfFile.stories).some(
+        (story) => story.tags?.includes(tag)
+    );
+
+    if (!hasStories) {
+        return null;
+    }
+
+    return (
+        <>
+            {title && <h2>{title}</h2>}
+            <SpectrumStories tag={tag} hideTitle={hideTitle} />
+        </>
+    );
+
+};
+
 <Meta isTemplate />
 
 <Title />
@@ -48,7 +62,12 @@ export const AdvancedExamplesStories = () => {
 <SingleStoryDescription />
 <OverviewStory />
 <GettingStarted />
-<SpectrumDocs tag="usage" />
+
+<ConditionalSection tag="anatomy" title="Anatomy" hideTitle={true} />
+<ConditionalSection tag="options" title="Options" />
+<ConditionalSection tag="states" title="States" />
+<ConditionalSection tag="behaviors" title="Behaviors" />
+<ConditionalSection tag="a11y" title="Accessibility" hideTitle={true} />
 
 ## API
 
