@@ -11,7 +11,7 @@
  */
 
 import { TemplateResult } from '@spectrum-web-components/base';
-import { AccordionMarkup } from './';
+import { AccordionMarkup } from './/index.js';
 import { argTypes } from './args.js';
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
@@ -35,6 +35,7 @@ type Properties = {
     open?: boolean;
     density?: 'compact' | 'spacious' | undefined;
     size?: 's' | 'm' | 'l' | 'xl';
+    level?: number;
 };
 
 export const Default = (args?: Properties): TemplateResult =>
