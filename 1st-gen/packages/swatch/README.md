@@ -32,7 +32,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
 <sp-tab-panel value="xs">
 
 ```html
-<div style="display: flex;gap: 5px;">
+<sp-swatch-group selects="multiple">
     <sp-swatch color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
     <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
     <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="xs"></sp-swatch>
@@ -56,7 +56,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         mixed-value
         size="xs"
     ></sp-swatch>
-</div>
+</sp-swatch-group>
 ```
 
 </sp-tab-panel>
@@ -64,7 +64,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
 <sp-tab-panel value="s">
 
 ```html
-<div style="display: flex;gap: 5px;">
+<sp-swatch-group selects="multiple">
     <sp-swatch color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
     <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
     <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="s"></sp-swatch>
@@ -88,7 +88,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         mixed-value
         size="s"
     ></sp-swatch>
-</div>
+</sp-swatch-group>
 ```
 
 </sp-tab-panel>
@@ -96,7 +96,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
 <sp-tab-panel value="m">
 
 ```html
-<div style="display: flex;gap: 5px;">
+<sp-swatch-group selects="multiple">
     <sp-swatch color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
     <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
     <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="m"></sp-swatch>
@@ -120,7 +120,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         mixed-value
         size="m"
     ></sp-swatch>
-</div>
+</sp-swatch-group>
 ```
 
 </sp-tab-panel>
@@ -128,7 +128,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
 <sp-tab-panel value="l">
 
 ```html
-<div style="display: flex;gap: 5px;">
+<sp-swatch-group selects="multiple">
     <sp-swatch color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
     <sp-swatch rounding="none" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
     <sp-swatch rounding="full" color="rgb(255 0 0 / 0.7)" size="l"></sp-swatch>
@@ -152,7 +152,7 @@ import { Swatch } from '@spectrum-web-components/swatch';
         mixed-value
         size="l"
     ></sp-swatch>
-</div>
+</sp-swatch-group>
 ```
 
 </sp-tab-panel>
